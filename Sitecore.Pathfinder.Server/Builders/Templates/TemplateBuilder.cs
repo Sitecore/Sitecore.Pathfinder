@@ -11,7 +11,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
   using Sitecore.Extensions.StringExtensions;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Emitters;
-  using Sitecore.Pathfinder.Models.Templates;
+  using Sitecore.Pathfinder.Projects.Templates;
 
   public class TemplateBuilder
   {

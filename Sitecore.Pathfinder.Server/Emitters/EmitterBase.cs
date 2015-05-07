@@ -1,6 +1,6 @@
 ﻿namespace Sitecore.Pathfinder.Emitters
 {
-  using Sitecore.Pathfinder.Models;
+  using Sitecore.Pathfinder.Projects;
 
   public abstract class EmitterBase : IEmitter
   {
@@ -21,8 +21,8 @@
 
     public double Sortorder { get; }
 
-    public abstract bool CanEmit(IEmitContext context, ModelBase model);
+    public abstract bool CanEmit(IEmitContext context, ProjectElementBase model);
 
-    public abstract void Emit(IEmitContext context, ModelBase model);
+    public abstract void Emit(IEmitContext context, ProjectElementBase model);
   }
 }

@@ -2,7 +2,7 @@ namespace Sitecore.Pathfinder.Building.Linting
 {
   using System.ComponentModel.Composition;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Models;
+  using Sitecore.Pathfinder.Projects;
 
   [Export(typeof(ITask))]
   public class Lint : TaskBase
@@ -21,8 +21,7 @@ namespace Sitecore.Pathfinder.Building.Linting
 
       context.Trace.TraceInformation(ConsoleTexts.Text1010);
 
-      var project = new Project(context.CompositionService, context.FileSystem, outputDirectory);
-      project.Parse();
+      // var project = new Project(context.CompositionService, context.FileSystem, outputDirectory);
     }
   }
 }

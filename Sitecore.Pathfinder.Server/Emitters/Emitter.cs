@@ -7,19 +7,21 @@
   using Sitecore.Pathfinder.Data;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.IO;
-  using Sitecore.Pathfinder.Models;
+  using Sitecore.Pathfinder.Parsing;
+  using Sitecore.Pathfinder.Projects;
   using Sitecore.SecurityModel;
 
   [Export]
   public class Emitter
   {
     [ImportingConstructor]
-    public Emitter([NotNull] ICompositionService compositionService, [NotNull] IDataService dataService, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystem)
+    public Emitter([NotNull] ICompositionService compositionService, [NotNull] IDataService dataService, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystem, [Sitecore.NotNull] IParseService parseService)
     {
       this.CompositionService = compositionService;
       this.DataService = dataService;
       this.Trace = traceService;
       this.FileSystem = fileSystem;
+      this.ParseService = parseService;
     }
 
     [NotNull]
@@ -34,6 +36,9 @@
 
     [NotNull]
     public IFileSystemService FileSystem { get; }
+
+    [NotNull]
+    public IParseService ParseService { get; }
 
     [NotNull]
     public ITraceService Trace { get; }
@@ -53,12 +58,12 @@
       var context = new EmitContext(this.CompositionService, this.Trace, this.DataService, this.FileSystem);
       var emitters = this.Emitters.OrderBy(e => e.Sortorder).ToList();
 
-      var retries = new List<Tuple<ModelBase, Exception>>();
+      var retries = new List<Tuple<ProjectElementBase, Exception>>();
 
       // todo: use proper user
       using (new SecurityDisabler())
       {
-        foreach (var model in project.Models)
+        foreach (var model in project.Elements)
         {
           this.EmitModel(context, model, emitters, retries);
         }
@@ -67,7 +72,7 @@
       }
     }
 
-    protected virtual void EmitModel([NotNull] IEmitContext context, [NotNull] ModelBase model, [NotNull] List<IEmitter> emitters, [NotNull] List<Tuple<ModelBase, Exception>> retries)
+    protected virtual void EmitModel([NotNull] IEmitContext context, [NotNull] ProjectElementBase model, [NotNull] List<IEmitter> emitters, [NotNull] List<Tuple<ProjectElementBase, Exception>> retries)
     {
       foreach (var emitter in emitters)
       {
@@ -82,7 +87,7 @@
         }
         catch (RetryableBuildException ex)
         {
-          retries.Add(new Tuple<ModelBase, Exception>(model, ex));
+          retries.Add(new Tuple<ProjectElementBase, Exception>(model, ex));
         }
         catch (BuildException ex)
         {
@@ -90,7 +95,7 @@
         }
         catch (Exception ex)
         {
-          retries.Add(new Tuple<ModelBase, Exception>(model, ex));
+          retries.Add(new Tuple<ProjectElementBase, Exception>(model, ex));
         }
       }
     }
@@ -98,20 +103,18 @@
     [NotNull]
     protected virtual IProject ParseProject([NotNull] string projectDirectory)
     {
-      var project = new Project(this.CompositionService, this.FileSystem, projectDirectory);
-
-      project.Parse();
+      var project = new Project(this.CompositionService, this.FileSystem, this.ParseService, projectDirectory);
 
       return project;
     }
 
-    protected virtual void RetryEmit([NotNull] IEmitContext context, [NotNull] List<IEmitter> emitters, [NotNull] List<Tuple<ModelBase, Exception>> retries)
+    protected virtual void RetryEmit([NotNull] IEmitContext context, [NotNull] List<IEmitter> emitters, [NotNull] List<Tuple<ProjectElementBase, Exception>> retries)
     {
       var count = retries.Count;
 
       while (count > 0)
       {
-        var list = new List<Tuple<ModelBase, Exception>>(retries);
+        var list = new List<Tuple<ProjectElementBase, Exception>>(retries);
         list.Reverse();
 
         retries.Clear();
@@ -126,7 +129,7 @@
           }
           catch (Exception ex)
           {
-            retries.Add(new Tuple<ModelBase, Exception>(model, ex));
+            retries.Add(new Tuple<ProjectElementBase, Exception>(model, ex));
           }
         }
 

@@ -6,6 +6,7 @@
   using System.IO;
   using System.Linq;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Projects;
 
   [Export(typeof(IParser))]
   public class ItemParser : ParserBase
@@ -23,9 +24,10 @@
     [ImportMany]
     public IEnumerable<IItemParser> ItemFileBuilders { get; private set; }
 
-    public override void Parse(IParseContext context)
+    public override bool CanParse(IParseContext context, ISourceFile sourceFile)
     {
       this.ParseItems(context, context.Project.ProjectDirectory);
+      return false;
     }
 
     protected virtual ParseResult ParseItem([NotNull] IParseContext context, [NotNull] string databaseName, [NotNull] string fileName)

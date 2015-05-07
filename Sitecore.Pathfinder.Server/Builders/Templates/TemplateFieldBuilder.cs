@@ -2,7 +2,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
 {
   using Sitecore.Data.Items;
   using Sitecore.Pathfinder.Emitters;
-  using Sitecore.Pathfinder.Models.Templates;
+  using Sitecore.Pathfinder.Projects.Templates;
 
   public class TemplateFieldBuilder
   {

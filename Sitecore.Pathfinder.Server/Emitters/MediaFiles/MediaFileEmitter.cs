@@ -6,8 +6,8 @@ namespace Sitecore.Pathfinder.Emitters.MediaFiles
   using Sitecore.Data.Items;
   using Sitecore.Data.Managers;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Models;
-  using Sitecore.Pathfinder.Models.MediaItems;
+  using Sitecore.Pathfinder.Projects;
+  using Sitecore.Pathfinder.Projects.MediaFiles;
   using Sitecore.Resources.Media;
 
   [Export(typeof(IEmitter))]
@@ -17,14 +17,14 @@ namespace Sitecore.Pathfinder.Emitters.MediaFiles
     {
     }
 
-    public override bool CanEmit(IEmitContext context, ModelBase model)
+    public override bool CanEmit(IEmitContext context, ProjectElementBase model)
     {
-      return model is MediaFileModel;
+      return model is MediaFile;
     }
 
-    public override void Emit(IEmitContext context, ModelBase model)
+    public override void Emit(IEmitContext context, ProjectElementBase model)
     {
-      var mediaFileModel = (MediaFileModel)model;
+      var mediaFileModel = (MediaFile)model;
 
       var database = Factory.GetDatabase(mediaFileModel.DatabaseName);
       var name = Path.GetFileNameWithoutExtension(model.SourceFileName);

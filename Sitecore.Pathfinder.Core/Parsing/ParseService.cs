@@ -4,26 +4,17 @@
   using System.ComponentModel.Composition;
   using System.Linq;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.IO;
-  using Sitecore.Pathfinder.Models;
+  using Sitecore.Pathfinder.Projects;
 
-  [Export]
-  public class ParseService
+  [Export(typeof(IParseService))]
+  [PartCreationPolicy(CreationPolicy.Shared)]
+  public class ParseService : IParseService
   {
     [ImportingConstructor]
-    public ParseService([NotNull] ICompositionService compositionService, [NotNull] IFileSystemService fileSystemService)
+    public ParseService([NotNull] ICompositionService compositionService)
     {
       this.CompositionService = compositionService;
-      this.FileSystemService = fileSystemService;
-
-      this.CompositionService.SatisfyImportsOnce(this);
     }
-
-    [NotNull]
-    public ICompositionService CompositionService { get; }
-
-    [NotNull]
-    public IFileSystemService FileSystemService { get; }
 
     // ReSharper disable once UnusedAutoPropertyAccessor.Local
     [NotNull]
@@ -31,19 +22,20 @@
     public IEnumerable<IParser> Parsers { get; private set; }
 
     [NotNull]
-    public virtual void Start([NotNull] IProject project)
+    protected ICompositionService CompositionService { get; }
+
+    [NotNull]
+    public virtual void Parse([NotNull] IProject project, [NotNull] ISourceFile sourceFile)
     {
       // todo: change to abstract factory pattern
-      var context = new ParseContext(this.CompositionService, this.FileSystemService, project);
+      var context = new ParseContext(this.CompositionService, project);
 
-      this.Start(context);
-    }
-
-    protected virtual void Start([NotNull] IParseContext context)
-    {
       foreach (var parser in this.Parsers.OrderBy(c => c.Sortorder))
       {
-        parser.Parse(context);
+        if (parser.CanParse(context, sourceFile))
+        {
+          parser.Parse(context, sourceFile);
+        }
       }
     }
   }

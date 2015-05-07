@@ -4,7 +4,7 @@
   using System.ComponentModel.Composition;
   using Sitecore.Data.Items;
   using Sitecore.Pathfinder.Emitters;
-  using Sitecore.Pathfinder.Models.Items;
+  using Sitecore.Pathfinder.Projects.Items;
 
   [Export(typeof(IFieldResolver))]
   public class CheckboxFieldResolver : FieldResolverBase

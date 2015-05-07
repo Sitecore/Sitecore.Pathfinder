@@ -5,8 +5,8 @@
   using System.Text;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Extensions.StringExtensions;
-  using Sitecore.Pathfinder.Models.Items;
-  using Sitecore.Pathfinder.Models.SerializationFiles;
+  using Sitecore.Pathfinder.Projects.Items;
+  using Sitecore.Pathfinder.Projects.SerializationFiles;
 
   [Export(typeof(IItemParser))]
   public class SerializationFileParser : ItemParserBase
@@ -24,8 +24,8 @@
 
     public override void Parse(IItemParseContext context)
     {
-      var itemModel = new SerializationFileModel(context.FileName);
-      context.ParseContext.Project.Models.Add(itemModel);
+      var itemModel = new SerializationFile(context.FileName);
+      context.ParseContext.Project.Elements.Add(itemModel);
 
       itemModel.SerializationFile = context.FileName;
 

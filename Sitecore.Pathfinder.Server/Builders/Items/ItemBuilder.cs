@@ -10,7 +10,7 @@
   using Sitecore.Pathfinder.Builders.FieldResolvers;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Emitters;
-  using Sitecore.Pathfinder.Models.Items;
+  using Sitecore.Pathfinder.Projects.Items;
 
   public class ItemBuilder
   {

@@ -16,8 +16,8 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Extensions.StringExtensions;
   using Sitecore.Pathfinder.Extensions.XElementExtensions;
-  using Sitecore.Pathfinder.Models;
-  using Sitecore.Pathfinder.Models.Layouts;
+  using Sitecore.Pathfinder.Projects;
+  using Sitecore.Pathfinder.Projects.Layouts;
   using Sitecore.Text;
 
   [Export(typeof(IEmitter))]
@@ -43,12 +43,12 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
     {
     }
 
-    public override bool CanEmit(IEmitContext context, ModelBase model)
+    public override bool CanEmit(IEmitContext context, ProjectElementBase model)
     {
       return model is LayoutModel;
     }
 
-    public override void Emit(IEmitContext context, ModelBase model)
+    public override void Emit(IEmitContext context, ProjectElementBase model)
     {
       var layoutModel = (LayoutModel)model;
 

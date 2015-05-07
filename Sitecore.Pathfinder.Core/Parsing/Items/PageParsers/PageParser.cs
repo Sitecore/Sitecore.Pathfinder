@@ -6,7 +6,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.PageParsers
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Extensions.StringExtensions;
   using Sitecore.Pathfinder.Extensions.XElementExtensions;
-  using Sitecore.Pathfinder.Models.Templates;
+  using Sitecore.Pathfinder.Projects.Templates;
 
   [Export(typeof(IItemParser))]
   public class PageParser : ItemParserBase
@@ -44,7 +44,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.PageParsers
       }
 
       var templateModel = new TemplateModel(context.FileName);
-      context.ParseContext.Project.Models.Add(templateModel);
+      context.ParseContext.Project.Elements.Add(templateModel);
 
       var n = context.ItemPath.LastIndexOf('/');
       templateModel.Name = context.ItemPath.Mid(n + 1);

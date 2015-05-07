@@ -6,8 +6,8 @@
   using Sitecore.Data.Items;
   using Sitecore.Data.Serialization;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Models;
-  using Sitecore.Pathfinder.Models.SerializationFiles;
+  using Sitecore.Pathfinder.Projects;
+  using Sitecore.Pathfinder.Projects.SerializationFiles;
 
   [Export(typeof(IEmitter))]
   public class SerializationFileEmitter : EmitterBase
@@ -21,14 +21,14 @@
     {
     }
 
-    public override bool CanEmit(IEmitContext context, ModelBase model)
+    public override bool CanEmit(IEmitContext context, ProjectElementBase model)
     {
-      return model is SerializationFileModel;
+      return model is SerializationFile;
     }
 
-    public override void Emit(IEmitContext context, ModelBase model)
+    public override void Emit(IEmitContext context, ProjectElementBase model)
     {
-      var itemModel = (SerializationFileModel)model;
+      var itemModel = (SerializationFile)model;
 
       try
       {

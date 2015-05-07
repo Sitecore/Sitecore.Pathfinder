@@ -1,5 +1,6 @@
 ﻿namespace Sitecore.Pathfinder.IO
 {
+  using System;
   using System.Collections.Generic;
   using Sitecore.Pathfinder.Diagnostics;
 
@@ -25,6 +26,8 @@
 
     [NotNull]
     IEnumerable<string> GetFiles([NotNull] string directory, [NotNull] string pattern);
+
+    DateTime GetLastWriteTimeUtc([NotNull] string sourceFileName);
 
     [NotNull]
     string[] ReadAllLines([NotNull] string fileName);

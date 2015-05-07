@@ -18,7 +18,6 @@
       var compositionService = this.RegisterCompositionService(configuration);
 
       var build = compositionService.GetExportedValue<Build>();
-
       build.Start();
 
       Trace.Write("Done");
@@ -38,13 +37,13 @@
       Directory.CreateDirectory(pluginDirectory);
 
       var applicationExportProvider = new CatalogExportProvider(new ApplicationCatalog());
-      var directoryExportProvider = new CatalogExportProvider(new DirectoryCatalog(pluginDirectory));
+      var pluginExportProvider = new CatalogExportProvider(new DirectoryCatalog(pluginDirectory));
 
-      // directory exports takes precedence over application exports
-      var compositionContainer = new CompositionContainer(directoryExportProvider, applicationExportProvider);
+      // plugin directory exports takes precedence over application exports
+      var compositionContainer = new CompositionContainer(pluginExportProvider, applicationExportProvider);
 
       applicationExportProvider.SourceProvider = compositionContainer;
-      directoryExportProvider.SourceProvider = compositionContainer;
+      pluginExportProvider.SourceProvider = compositionContainer;
 
       // register the composition service itself for DI
       compositionContainer.ComposeExportedValue<ICompositionService>(compositionContainer);

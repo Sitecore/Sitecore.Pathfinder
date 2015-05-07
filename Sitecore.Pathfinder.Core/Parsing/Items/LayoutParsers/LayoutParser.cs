@@ -2,7 +2,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.LayoutParsers
 {
   using System;
   using System.ComponentModel.Composition;
-  using Sitecore.Pathfinder.Models.Layouts;
+  using Sitecore.Pathfinder.Projects.Layouts;
 
   [Export(typeof(IItemParser))]
   public class LayoutParser : ItemParserBase
@@ -21,7 +21,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.LayoutParsers
     public override void Parse(IItemParseContext context)
     {
       var itemModel = new LayoutModel(context.FileName);
-      context.ParseContext.Project.Models.Add(itemModel);
+      context.ParseContext.Project.Elements.Add(itemModel);
 
       itemModel.Name = context.ItemName;
       itemModel.DatabaseName = context.DatabaseName;

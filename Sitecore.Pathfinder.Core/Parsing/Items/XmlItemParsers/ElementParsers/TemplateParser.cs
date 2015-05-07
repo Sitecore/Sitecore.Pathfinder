@@ -4,7 +4,7 @@
   using System.Xml.Linq;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Extensions.XElementExtensions;
-  using Sitecore.Pathfinder.Models.Templates;
+  using Sitecore.Pathfinder.Projects.Templates;
 
   [Export(typeof(IElementParser))]
   public class TemplateParser : ElementParserBase
@@ -17,7 +17,7 @@
     public override void Parse(IItemParseContext context, XmlItemParser parser, XElement element)
     {
       var templateModel = new TemplateModel(context.FileName);
-      context.ParseContext.Project.Models.Add(templateModel);
+      context.ParseContext.Project.Elements.Add(templateModel);
 
       templateModel.Name = element.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(templateModel.Name))

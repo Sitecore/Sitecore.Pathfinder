@@ -1,31 +1,21 @@
 ﻿namespace Sitecore.Pathfinder.IO
 {
+  using System;
   using System.Collections.Generic;
   using System.ComponentModel.Composition;
   using System.Diagnostics;
   using System.IO;
   using System.Text;
-  using Sitecore.Pathfinder.Diagnostics;
 
   [Export(typeof(IFileSystemService))]
   public class FileSystemService : IFileSystemService
   {
-    [ImportingConstructor]
-    public FileSystemService([NotNull] ITraceService trace)
-    {
-      this.Trace = trace;
-    }
-
-    [NotNull]
-    public ITraceService Trace { get; }
-
     public void Copy(string sourceFileName, string destinationFileName)
     {
       var directoryName = Path.GetDirectoryName(destinationFileName);
       if (string.IsNullOrEmpty(directoryName))
       {
-        this.Trace.TraceError(Texts.Text2028);
-        return;
+        throw new DirectoryNotFoundException();
       }
 
       Directory.CreateDirectory(directoryName);
@@ -72,6 +62,11 @@
     public IEnumerable<string> GetFiles(string directory, string pattern)
     {
       return Directory.GetFiles(directory, pattern);
+    }
+
+    public DateTime GetLastWriteTimeUtc(string sourceFileName)
+    {
+      return File.GetLastWriteTimeUtc(sourceFileName);
     }
 
     public string[] ReadAllLines(string fileName)

@@ -8,7 +8,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.ComponentParsers
   using Sitecore.Pathfinder.Extensions.StringExtensions;
   using Sitecore.Pathfinder.Extensions.XElementExtensions;
   using Sitecore.Pathfinder.IO;
-  using Sitecore.Pathfinder.Models.Templates;
+  using Sitecore.Pathfinder.Projects.Templates;
 
   [Export(typeof(IItemParser))]
   public class ComponentParser : ItemParserBase
@@ -60,7 +60,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.ComponentParsers
     protected TemplateModel CreatePrivateTemplate([NotNull] IItemParseContext context, [NotNull] XElement root)
     {
       var templateModel = new TemplateModel(context.FileName);
-      context.ParseContext.Project.Models.Add(templateModel);
+      context.ParseContext.Project.Elements.Add(templateModel);
 
       // todo: remove duplicated code from TemplateParser
       this.Parse(context, templateModel, root);
@@ -75,7 +75,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.ComponentParsers
     protected void CreatePublicTemplate([NotNull] IItemParseContext context, [NotNull] TemplateModel privateTemplate)
     {
       var templateModel = new TemplateModel(context.FileName);
-      context.ParseContext.Project.Models.Add(templateModel);
+      context.ParseContext.Project.Elements.Add(templateModel);
 
       templateModel.Name = privateTemplate.Name.Mid(2);
       templateModel.DatabaseName = privateTemplate.DatabaseName;

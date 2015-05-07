@@ -5,8 +5,8 @@
   using System.IO;
   using Sitecore.Diagnostics;
   using Sitecore.IO;
-  using Sitecore.Pathfinder.Models;
-  using Sitecore.Pathfinder.Models.BinFiles;
+  using Sitecore.Pathfinder.Projects;
+  using Sitecore.Pathfinder.Projects.BinFiles;
 
   [Export(typeof(IEmitter))]
   public class BinFileEmitter : EmitterBase
@@ -15,14 +15,14 @@
     {
     }
 
-    public override bool CanEmit(IEmitContext context, ModelBase model)
+    public override bool CanEmit(IEmitContext context, ProjectElementBase model)
     {
-      return model is BinFileModel;
+      return model is BinFile;
     }
 
-    public override void Emit(IEmitContext context, ModelBase model)
+    public override void Emit(IEmitContext context, ProjectElementBase model)
     {
-      var binFileModel = (BinFileModel)model;
+      var binFileModel = (BinFile)model;
       var destinationFileName = FileUtil.MapPath(binFileModel.DestinationFileName);
 
       // todo: check for assembly version

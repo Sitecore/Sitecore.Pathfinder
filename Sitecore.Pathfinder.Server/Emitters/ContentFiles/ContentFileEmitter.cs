@@ -5,8 +5,8 @@
   using System.IO;
   using Sitecore.Diagnostics;
   using Sitecore.IO;
-  using Sitecore.Pathfinder.Models;
-  using Sitecore.Pathfinder.Models.ContentFiles;
+  using Sitecore.Pathfinder.Projects;
+  using Sitecore.Pathfinder.Projects.ContentFiles;
 
   [Export(typeof(IEmitter))]
   public class ContentFileEmitter : EmitterBase
@@ -15,14 +15,14 @@
     {
     }
 
-    public override bool CanEmit(IEmitContext context, ModelBase model)
+    public override bool CanEmit(IEmitContext context, ProjectElementBase model)
     {
-      return model is ContentFileModel;
+      return model is ContentFile;
     }
 
-    public override void Emit(IEmitContext context, ModelBase model)
+    public override void Emit(IEmitContext context, ProjectElementBase model)
     {
-      var contentFileModel = (ContentFileModel)model;
+      var contentFileModel = (ContentFile)model;
       var destinationFileName = FileUtil.MapPath(contentFileModel.DestinationFileName);
 
       // todo: backup to uninstall folder

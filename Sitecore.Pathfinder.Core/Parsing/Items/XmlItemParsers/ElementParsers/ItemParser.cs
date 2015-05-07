@@ -8,8 +8,8 @@
   using Sitecore.Pathfinder.Extensions.StringExtensions;
   using Sitecore.Pathfinder.Extensions.XElementExtensions;
   using Sitecore.Pathfinder.IO;
-  using Sitecore.Pathfinder.Models.Items;
-  using Sitecore.Pathfinder.Models.Templates;
+  using Sitecore.Pathfinder.Projects.Items;
+  using Sitecore.Pathfinder.Projects.Templates;
 
   [Export(typeof(IElementParser))]
   public class ItemParser : ElementParserBase
@@ -22,7 +22,7 @@
     public override void Parse(IItemParseContext context, XmlItemParser parser, XElement element)
     {
       var itemModel = new ItemModel(context.FileName);
-      context.ParseContext.Project.Models.Add(itemModel);
+      context.ParseContext.Project.Elements.Add(itemModel);
 
       itemModel.Name = element.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(itemModel.Name))
@@ -124,7 +124,7 @@
     protected virtual TemplateModel ParseTemplate([NotNull] IItemParseContext context, [NotNull] XElement element)
     {
       var templateBuilder = new TemplateModel(context.FileName);
-      context.ParseContext.Project.Models.Add(templateBuilder);
+      context.ParseContext.Project.Elements.Add(templateBuilder);
 
       templateBuilder.ItemIdOrPath = this.GetTemplateIdOrPath(context, element);
       if (string.IsNullOrEmpty(templateBuilder.ItemIdOrPath))
