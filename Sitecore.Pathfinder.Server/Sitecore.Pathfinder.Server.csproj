@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{42808013-7A25-4C07-91FA-BE4F7AA8E0B1}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sitecore.Pathfinder</RootNamespace>
+    <AssemblyName>Sitecore.Pathfinder.Server</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.XmlTransform, Version=2.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Xdt.2.1.1\lib\net40\Microsoft.Web.XmlTransform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NuGet.Core, Version=2.8.50926.602, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\NuGet.Core.2.8.3\lib\net40-Client\NuGet.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Sitecore.ContentSearch">
+      <HintPath>..\Components\Sitecore.ContentSearch.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.Kernel">
+      <HintPath>..\Components\Sitecore.Kernel.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\AvailablePackages.aspx" />
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\InstalledPackages.aspx" />
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\Publish.aspx" />
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\InstallPackage.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Diagnostics\TraceService.cs" />
+    <Compile Include="Emitters\Items\ItemEmitter.cs" />
+    <Compile Include="Emitters\ContentFiles\ContentFileEmitter.cs" />
+    <Compile Include="Emitters\Emitter.cs" />
+    <Compile Include="Emitters\EmitContext.cs" />
+    <Compile Include="Emitters\BinFiles\BinFileEmitter.cs" />
+    <Compile Include="Emitters\IEmitContext.cs" />
+    <Compile Include="Data\DataService.cs" />
+    <Compile Include="Builders\FieldResolvers\CheckboxFieldResolver.cs" />
+    <Compile Include="Builders\FieldResolvers\FieldResolverBase.cs" />
+    <Compile Include="Builders\FieldResolvers\IFieldResolver.cs" />
+    <Compile Include="Builders\FieldResolvers\ImageFieldResolver.cs" />
+    <Compile Include="Builders\FieldResolvers\LinkFieldResolver.cs" />
+    <Compile Include="Data\IDataService.cs" />
+    <Compile Include="Builders\Items\ItemBuilder.cs" />
+    <Compile Include="Builders\Templates\TemplateBuilder.cs" />
+    <Compile Include="Builders\Templates\TemplateFieldBuilder.cs" />
+    <Compile Include="Builders\Templates\TemplateSectionBuilder.cs" />
+    <Compile Include="Emitters\IEmitter.cs" />
+    <Compile Include="Emitters\EmitService.cs" />
+    <Compile Include="Emitters\EmitterBase.cs" />
+    <Compile Include="Emitters\Layouts\LayoutEmitter.cs" />
+    <Compile Include="Emitters\MediaFiles\MediaFileEmitter.cs" />
+    <Compile Include="Emitters\SerializationFiles\SerializationFileEmitter.cs" />
+    <Compile Include="Emitters\Templates\TemplateEmitter.cs" />
+    <Compile Include="Packages\Packages\NugetPackage.cs" />
+    <Compile Include="Packages\Packages\PackageBase.cs" />
+    <Compile Include="Packages\PackageService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sitecore.Pathfinder.Core\Sitecore.Pathfinder.Core.csproj">
+      <Project>{c674eebf-bbf6-4eda-af5b-a4d58d0be986}</Project>
+      <Name>Sitecore.Pathfinder.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Builders\Layouts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\Local.pubxml" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>51841</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:51794/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

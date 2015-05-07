@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C73D309B-6D61-42BD-A5B1-661710F1CDC7}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sitecore.Pathfinder</RootNamespace>
+    <AssemblyName>scc</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Website.Demo\.sitecore.tools\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Framework.ConfigurationModel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Framework.ConfigurationModel.1.0.0-beta3\lib\net45\Microsoft.Framework.ConfigurationModel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Framework.ConfigurationModel.Json, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Framework.ConfigurationModel.Json.1.0.0-beta3\lib\net45\Microsoft.Framework.ConfigurationModel.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.XmlTransform, Version=2.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Xdt.2.1.1\lib\net40\Microsoft.Web.XmlTransform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NuGet.Core, Version=1.1.229.159, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\NuGet.Core.1.1.229.159\lib\net40\NuGet.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Building\Constants.cs" />
+    <Compile Include="Building\Deploying\CopyToWebsite\CopyPackageToWebsite.cs" />
+    <Compile Include="Building\Deploying\Install\Install.cs" />
+    <Compile Include="Building\Deploying\Publishing\Publish.cs" />
+    <Compile Include="Building\Initializing\BeforeBuilds\BeforeBuild.cs" />
+    <Compile Include="Building\Initializing\InstallLayout\InstallLayout.cs" />
+    <Compile Include="Building\Initializing\Initialization\Init.cs" />
+    <Compile Include="Building\Packaging\CreateNupkg\CreateNupkg.cs" />
+    <Compile Include="Building\Linting\Lint.cs" />
+    <Compile Include="Building\Preprocessing\Data\ProjectField.cs" />
+    <Compile Include="Building\Preprocessing\Data\ProjectItem.cs" />
+    <Compile Include="Building\Preprocessing\IncrementalBuilds\Preprocessors\MediaFilePreprocessor.cs" />
+    <Compile Include="Building\Preprocessing\IncrementalBuilds\Preprocessors\RenderingPreprocessorBase.cs" />
+    <Compile Include="Building\Preprocessing\IncrementalBuilds\Preprocessors\SublayoutRenderingPreprocessor.cs" />
+    <Compile Include="Building\Preprocessing\IncrementalBuilds\Preprocessors\ViewRenderingPreprocessor.cs" />
+    <Compile Include="Building\Preprocessing\IncrementalBuilds\Preprocessors\WebControlRenderingPreprocessor.cs" />
+    <Compile Include="Building\Preprocessing\IncrementalBuilds\Preprocessors\XmlItemFilePreprocessor.cs" />
+    <Compile Include="Building\Preprocessing\Rebuild\Rebuild.cs" />
+    <Compile Include="Building\Preprocessing\IncrementalBuilds\PreprocessingContext.cs" />
+    <Compile Include="Building\Preprocessing\Clean\Clean.cs" />
+    <Compile Include="Building\Preprocessing\IncrementalBuilds\IPreprocessingContext.cs" />
+    <Compile Include="Diagnostics\TraceService.cs" />
+    <Compile Include="Extensions\ConfigurationExtensions\ConfigurationExtensions.cs" />
+    <Compile Include="Building\Preprocessing\IncrementalBuilds\Preprocessors\PreprocessorBase.cs" />
+    <Compile Include="Building\Preprocessing\IncrementalBuilds\Preprocessors\SerializationFilePreprocessor.cs" />
+    <Compile Include="Building\Preprocessing\IncrementalBuilds\Preprocessors\ContentFilePreprocessor.cs" />
+    <Compile Include="Building\Preprocessing\IncrementalBuilds\Preprocessors\IPreprocessor.cs" />
+    <Compile Include="Building\Build.cs" />
+    <Compile Include="Building\Preprocessing\IncrementalBuilds\IncrementalBuild.cs" />
+    <Compile Include="Building\Preprocessing\IncrementalBuilds\ProjectVisitor.cs" />
+    <Compile Include="Startup.cs" />
+    <Compile Include="Building\Packaging\CreateNuspec\CreateNuspec.cs" />
+    <Compile Include="Building\BuildContext.cs" />
+    <Compile Include="Building\IBuildContext.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Building\ITask.cs" />
+    <Compile Include="Building\TaskBase.cs" />
+    <Compile Include="Diagnostics\ConsoleTexts.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\project\scc.cmd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\website\bin\NuGet.Core.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\Publish.aspx">
+      <Link>wwwroot\website\sitecore\shell\client\Applications\Pathfinder\Publish.aspx</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="..\Sitecore.Pathfinder.Server\bin\Sitecore.Pathfinder.Core.dll">
+      <Link>wwwroot\website\bin\Sitecore.Pathfinder.Core.dll</Link>
+    </Content>
+    <Content Include="templates\Page.page.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="templates\Component.component.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="templates\Layout.layout.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="templates\layout\layouts\MvcLayout.item.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="templates\Rendering.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="..\Sitecore.Pathfinder.Server\bin\Sitecore.Pathfinder.Server.dll">
+      <Link>wwwroot\website\bin\Sitecore.Pathfinder.Server.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="schemas\item.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="schemas\layout.core.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="templates\layout\layouts\MvcLayout.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="templates\layout\web.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="schemas\layout.master.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="wwwroot\project\sitecore.config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="texts.en-US.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="sitecore.config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="schemas\sitecore.config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\AvailablePackages.aspx">
+      <Link>wwwroot\website\sitecore\shell\client\Applications\Pathfinder\AvailablePackages.aspx</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\InstalledPackages.aspx">
+      <Link>wwwroot\website\sitecore\shell\client\Applications\Pathfinder\InstalledPackages.aspx</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\InstallPackage.aspx">
+      <Link>wwwroot\website\sitecore\shell\client\Applications\Pathfinder\InstallPackage.aspx</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>aspxcodebehind</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="templates\layout\renderings\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="templates\Template.item.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="templates\Item.item.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\project\content\Home\Welcome.item.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sitecore.Pathfinder.Core\Sitecore.Pathfinder.Core.csproj">
+      <Project>{c674eebf-bbf6-4eda-af5b-a4d58d0be986}</Project>
+      <Name>Sitecore.Pathfinder.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

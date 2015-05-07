@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C674EEBF-BBF6-4EDA-AF5B-A4D58D0BE986}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sitecore.Pathfinder</RootNamespace>
+    <AssemblyName>Sitecore.Pathfinder.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\IProject.cs" />
+    <Compile Include="Models\Layouts\LayoutModel.cs" />
+    <Compile Include="Models\LinkBase.cs" />
+    <Compile Include="Models\Project.cs" />
+    <Compile Include="Parsing\ParseService.cs" />
+    <Compile Include="Parsing\ParseContext.cs" />
+    <Compile Include="Parsing\BinFiles\BinFileParser.cs" />
+    <Compile Include="Parsing\ParserBase.cs" />
+    <Compile Include="Parsing\ContentFiles\ContentFileParser.cs" />
+    <Compile Include="Parsing\IParser.cs" />
+    <Compile Include="Parsing\Items\IItemParseContext.cs" />
+    <Compile Include="Parsing\Items\ItemParseContext.cs" />
+    <Compile Include="Parsing\Items\ItemParser.cs" />
+    <Compile Include="Parsing\Items\ComponentParsers\ComponentParser.cs" />
+    <Compile Include="Parsing\Items\IItemParser.cs" />
+    <Compile Include="Parsing\Items\ItemParserBase.cs" />
+    <Compile Include="Parsing\Items\LayoutParsers\LayoutParser.cs" />
+    <Compile Include="Parsing\Items\MediaParsers\MediaParser.cs" />
+    <Compile Include="Parsing\Items\PageParsers\PageParser.cs" />
+    <Compile Include="Parsing\Items\SerializationFileParsers\SerializationFileParser.cs" />
+    <Compile Include="Parsing\Items\XmlItemParsers\ElementParsers\ElementParserBase.cs" />
+    <Compile Include="Parsing\Items\XmlItemParsers\ElementParsers\IElementParser.cs" />
+    <Compile Include="Parsing\Items\XmlItemParsers\ElementParsers\ItemParser.cs" />
+    <Compile Include="Parsing\Items\XmlItemParsers\ElementParsers\PathParser.cs" />
+    <Compile Include="Parsing\Items\XmlItemParsers\ElementParsers\TemplateParser.cs" />
+    <Compile Include="Parsing\Items\XmlItemParsers\XmlItemParser.cs" />
+    <Compile Include="Parsing\IParseContext.cs" />
+    <Compile Include="Parsing\ParseResult.cs" />
+    <Compile Include="Models\SerializationFiles\SerializationFileModel.cs" />
+    <Compile Include="Models\FileModelBase.cs" />
+    <Compile Include="Models\BinFiles\BinFileModel.cs" />
+    <Compile Include="Models\ContentFiles\ContentFileModel.cs" />
+    <Compile Include="Models\Items\FieldModel.cs" />
+    <Compile Include="Models\Items\ItemModel.cs" />
+    <Compile Include="Models\ItemModelBase.cs" />
+    <Compile Include="Models\MediaFiles\MediaFileModel.cs" />
+    <Compile Include="Models\ModelBase.cs" />
+    <Compile Include="Models\Templates\TemplateModel.cs" />
+    <Compile Include="Models\Templates\TemplateFieldModel.cs" />
+    <Compile Include="Models\Templates\TemplateSectionModel.cs" />
+    <Compile Include="Diagnostics\BuildException.cs" />
+    <Compile Include="Diagnostics\CodeAnnotations.cs" />
+    <Compile Include="Diagnostics\ConfigurationException.cs" />
+    <Compile Include="Diagnostics\ITraceService.cs" />
+    <Compile Include="Diagnostics\RetryableBuildException.cs" />
+    <Compile Include="Diagnostics\Texts.cs" />
+    <Compile Include="Diagnostics\TraceException.cs" />
+    <Compile Include="Diagnostics\TraceServiceBase.cs" />
+    <Compile Include="Extensions\StringExtensions\StringExtensions.cs" />
+    <Compile Include="Extensions\XElementExtensions\XElementExtensions.cs" />
+    <Compile Include="IO\FileSystemService.cs" />
+    <Compile Include="IO\IFileSystemService.cs" />
+    <Compile Include="IO\PathHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

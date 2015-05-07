@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://pathfinder.sitecore.net",
+  "type": "object",
+  "properties": {
+    "tasks": {
+      "id": "http://pathfinder.sitecore.net/tasks",
+      "type": "string"
+    },
+    "project": {
+      "id": "http://pathfinder.sitecore.net/project",
+      "type": "string"
+    },
+    "update": {
+      "id": "http://pathfinder.sitecore.net/update",
+      "type": "array",
+      "items": [
+        {
+          "id": "http://pathfinder.sitecore.net/update/0",
+          "type": "object",
+          "properties": {
+            "src": {
+              "id": "http://pathfinder.sitecore.net/update/0/src",
+              "type": "string"
+            },
+            "actions": {
+              "id": "http://pathfinder.sitecore.net/update/0/actions",
+              "type": "array",
+              "items": {
+                "id": "http://pathfinder.sitecore.net/update/0/actions/0",
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "required": [
+    "tasks",
+    "project",
+    "update"
+  ]
+}

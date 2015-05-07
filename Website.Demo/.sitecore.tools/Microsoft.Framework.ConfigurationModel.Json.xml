@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Framework.ConfigurationModel.Json</name>
+    </assembly>
+    <members>
+        <member name="P:Microsoft.Framework.ConfigurationModel.Json.Resources.Error_CommitWhenKeyMissing">
+            <summary>
+            Unable to commit because the following keys are missing from the configuration file: {0}.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Framework.ConfigurationModel.Json.Resources.FormatError_CommitWhenKeyMissing(System.Object)">
+            <summary>
+            Unable to commit because the following keys are missing from the configuration file: {0}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Framework.ConfigurationModel.Json.Resources.Error_CommitWhenNewKeyFound">
+            <summary>
+            Unable to commit because a new key was added to the configuration file after last load operation. The newly added key is '{0}'.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Framework.ConfigurationModel.Json.Resources.FormatError_CommitWhenNewKeyFound(System.Object)">
+            <summary>
+            Unable to commit because a new key was added to the configuration file after last load operation. The newly added key is '{0}'.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Framework.ConfigurationModel.Json.Resources.Error_InvalidFilePath">
+            <summary>
+            File path must be a non-empty string.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Framework.ConfigurationModel.Json.Resources.FormatError_InvalidFilePath">
+            <summary>
+            File path must be a non-empty string.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Framework.ConfigurationModel.Json.Resources.Error_KeyIsDuplicated">
+            <summary>
+            A duplicate key '{0}' was found.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Framework.ConfigurationModel.Json.Resources.FormatError_KeyIsDuplicated(System.Object)">
+            <summary>
+            A duplicate key '{0}' was found.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Framework.ConfigurationModel.Json.Resources.Error_RootMustBeAnObject">
+            <summary>
+            Only an object can be the root. Path '{0}', line {1} position {2}.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Framework.ConfigurationModel.Json.Resources.FormatError_RootMustBeAnObject(System.Object,System.Object,System.Object)">
+            <summary>
+            Only an object can be the root. Path '{0}', line {1} position {2}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Framework.ConfigurationModel.Json.Resources.Error_UnexpectedEnd">
+            <summary>
+            Unexpected end when parsing JSON. Path '{0}', line {1} position {2}.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Framework.ConfigurationModel.Json.Resources.FormatError_UnexpectedEnd(System.Object,System.Object,System.Object)">
+            <summary>
+            Unexpected end when parsing JSON. Path '{0}', line {1} position {2}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Framework.ConfigurationModel.Json.Resources.Error_UnsupportedJSONToken">
+            <summary>
+            Unsupported JSON token '{0}' was found. Path '{1}', line {2} position {3}.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Framework.ConfigurationModel.Json.Resources.FormatError_UnsupportedJSONToken(System.Object,System.Object,System.Object,System.Object)">
+            <summary>
+            Unsupported JSON token '{0}' was found. Path '{1}', line {2} position {3}.
+            </summary>
+        </member>
+    </members>
+</doc>

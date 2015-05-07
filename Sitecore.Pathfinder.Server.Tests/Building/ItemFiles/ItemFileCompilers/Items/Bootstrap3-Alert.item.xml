@@ -1,0 +1,43 @@
+﻿<ItemPath:Sitecore.Client.Applications.Bootstrap3.Components 
+  xmlns:Item="item"
+  xmlns:Template="template"
+  xmlns:ItemPath="itempath"
+  xmlns:ViewRendering="template:Sitecore.Templates.System.Layout.Renderings.View rendering"
+  xmlns:Folder="template:Sitecore.Templates.Common.Folder"
+  Database="core">
+
+  <ViewRendering:Bootstrap3-Alert>
+    <Datasource-Location Name="Datasource Location" Value="PageSettings" />
+    <Datasource-Template Name="Datasource Template" Value="template: Sitecore.Client.Applications.Bootstrap3.Components.Boostrap3-Alert.Bootstrap3-Alert-Parameters" />
+    <Model Value="Sitecore.Shell.Client.Bootstrap3.Layouts.Renderings.Bootstrap3.Components.Bootstrap3Alerts.Bootstrap3AlertRenderingModel,Sitecore.Speak.Bootstrap3" />
+    <Default-Parameters Name="Default Parameters">Text=Alert&amp;Subtext=Text</Default-Parameters>
+    <Path Value="file: /sitecore/shell/client/Bootstrap3/Layouts/Renderings/Bootstrap3/Components/Bootstrap3-Alerts/Bootstrap3-Alert.cshtml" />
+    <Open-Properties-After-Add Name="Open Properties after Add" Value="-" />
+    <Parameters-Template Name="Parameters Template" Value="template: Sitecore.Client.Applications.Bootstrap3.Components.Boostrap3-Alert.Bootstrap3-Alert-Parameters" />
+    <Place-Holders Name="Place Holders" Value="$Id.Content" />
+
+    <Template:Bootstrap3-Alert-Parameter>
+      <Appearance>
+        <Subtext />
+        <Text />
+        <Type Type="Droplist" Source="item: Sitecore.Client.Applications.Bootstrap3.Components.Bootstrap3-Alert.AlertType" />
+      </Appearance>
+      <Behavior>
+        <HasCloseButton Type="Checkbox" />
+      </Behavior>
+      <Script>
+        <EnableScript Type="Checkbox" />
+      </Script>
+    </Template:Bootstrap3-Alert-Parameter>
+
+    <Folder:AlertType>
+      <Folder:Danger />
+      <Folder:Default />
+      <Folder:Info />
+      <Folder:Success />
+      <Folder:Warning />
+    </Folder:AlertType>
+    
+  </ViewRendering:Bootstrap3-Alert>
+
+</ItemPath:Sitecore.Client.Applications.Bootstrap3.Components>

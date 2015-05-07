@@ -1,0 +1,3 @@
+<Page>
+  <Component Component="/sitecore/templates/Components/Hello" />
+</Page>

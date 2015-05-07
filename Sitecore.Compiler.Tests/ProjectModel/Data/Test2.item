@@ -1,0 +1,75 @@
+----item----
+version: 1
+id: {D8D9C1A0-8B0A-4DAB-BD37-4608910CD5E9}
+database: core
+path: /sitecore/client/Bootstrap3/Templates/BootstrapApps/Branches/Bootstrap3-App-Info/$name/Page1/DetailsPage2/PageSettings/Text1
+parent: {10A32C3D-6FB1-4547-9477-1F0D2DE461DD}
+name: Text1
+master: {00000000-0000-0000-0000-000000000000}
+template: {D078AE48-624D-4954-8184-095950520046}
+templatekey: Bootstrap3-Block-Text
+
+----field----
+field: {9F723981-4CB1-47B3-906D-E2BA374EA6AC}
+name: Image
+key: image
+content-length: 160
+
+<image mediapath="" alt="tree" width="" height="" hspace="" vspace="" showineditor="" usethumbnail="" src="" mediaid="{1D0941B1-93DD-4AD6-804E-8293DF5FE817}" />
+----field----
+field: {FD8A299A-7DA5-4688-8B03-1DE703CDC690}
+name: Columns
+key: columns
+content-length: 38
+
+{2E34E9E2-29D7-4550-995F-CFA19DC35C97}
+----version----
+language: en
+version: 1
+revision: 305adbd5-a23e-4577-8290-e0173d36100e
+
+----field----
+field: {77A5574F-6FF6-424C-AF0F-31837953F414}
+name: Heading
+key: heading
+content-length: 12
+
+DetailsPage2
+----field----
+field: {388FBC88-F68C-4C12-B8DF-6CF320C3C6C6}
+name: Text
+key: text
+content-length: 1257
+
+<p>Lorem ipsum dolor sit amet, vel no saepe invenire, magna similique vis no. Eam tollit gloriatur ad, quaeque euismod tractatos usu eu. Apeirian detraxit consequat vis ne, natum brute quidam nec no. Sit in accusamus aliquando, an his aeque iusto delicata.</p>
+<p>Facer libris qui ea, mel ludus persius suscipiantur te. Eos soleat inimicus liberavisse at. Ex sit mazim soluta lobortis, ut nec bonorum splendide, mel tation erroribus principes eu. Cum ne vero albucius disputando. Et vidit movet sea. Falli appetere ut vix, eu offendit sapientem est. Postulant delicatissimi ex mea, ne modo nostrud salutandi usu, cu ignota dissentiunt his.</p>
+<p>No wisi hendrerit per, ius ei stet oportere scribentur. Nam ex quando petentium, ei sea sonet timeam. Ex erat docendi urbanitas vix, equidem appetere vix an, mei legere offendit ponderum te. In per vidit dicta democritum, ut fuisset voluptua repudiandae eum. Cum at eius reformidans. In vocent dolores eos, ea vel idque soluta similique.</p>
+<p>No wisi hendrerit per, ius ei stet oportere scribentur. Nam ex quando petentium, ei sea sonet timeam. Ex erat docendi urbanitas vix, equidem appetere vix an, mei legere offendit ponderum te. In per vidit dicta democritum, ut fuisset voluptua repudiandae eum.</p>
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20140425T123043
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+305adbd5-a23e-4577-8290-e0173d36100e
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20140427T114522:635341959225366232
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

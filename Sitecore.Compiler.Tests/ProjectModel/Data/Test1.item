@@ -1,0 +1,124 @@
+----item----
+version: 1
+id: {3660A9CF-559C-4399-8721-055216C66CF7}
+database: core
+path: /sitecore/client/Bootstrap3/Content/Bootstrap3/Typography/PageSettings/Sections/Forms
+parent: {C5D081B4-5362-4A43-A99B-6D206177D0ED}
+name: Forms
+master: {00000000-0000-0000-0000-000000000000}
+template: {A87A00B1-E6DB-45AB-8B54-636FEC3B5523}
+templatekey: Folder
+
+----field----
+field: {BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}
+name: __Sortorder
+key: __sortorder
+content-length: 2
+
+50
+----field----
+field: {F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}
+name: __Renderings
+key: __renderings
+content-length: 9758
+
+<r>
+  <d id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}" l="{11111111-1111-1111-1111-111111111111}">
+    <r id="{09459429-2686-4C46-8E0E-E7055C6FF833}" par="ExtraSmall=*&amp;Large=*&amp;Medium=12&amp;Small=*&amp;Id=FormsRow" />
+    <r id="{7E178D66-073C-4605-82AA-B7C3CE8B005A}" par="Text=Forms" ph="FormsRow.Column1" />
+    <r id="{999A4B35-A6E4-42ED-95CB-88BD8A3DEE08}" par="Text=Default%20styles" ph="FormsRow.Column1" />
+    <r id="{AAC4C147-02E4-4628-9864-C4AAD848AE18}" par="Text=Individual%20form%20controls%20receive%20styling%2C%20but%20without%20any%20required%20base%20class%20on%20the%20form%20or%20large%20changes%20in%20markup.%20Results%20in%20stacked%2C%20left-aligned%20labels%20on%20top%20of%20form%20controls." ph="FormsRow.Column1" />
+    <r id="{CF751C6C-05C5-4C25-8FD9-4EBFCF36D315}" par="FormDataSource=%7B82D2BCF6-CF01-48E9-880B-11DE7DD014BA%7D" ph="FormsRow.Column1" />
+    <r id="{999A4B35-A6E4-42ED-95CB-88BD8A3DEE08}" par="Text=Optional%20layouts" ph="FormsRow.Column1" />
+    <r id="{AAC4C147-02E4-4628-9864-C4AAD848AE18}" par="Text=Included%20with%20Bootstrap%20are%20three%20optional%20form%20layouts%20for%20common%20use%20cases." ph="FormsRow.Column1" />
+    <r id="{A4B01F49-C6BF-4FAE-ACDE-3B2B6CE26EAD}" par="Text=Inline%20form" ph="FormsRow.Column1" />
+    <r id="{AAC4C147-02E4-4628-9864-C4AAD848AE18}" par="Text=Add%20.form-search%20to%20the%20form%20and%20.search-query%20to%20the%20input%20for%20an%20extra-rounded%20text%20input." ph="FormsRow.Column1" />
+    <r id="{CF751C6C-05C5-4C25-8FD9-4EBFCF36D315}" par="FormDataSource=%7BCF0D495D-4140-4199-90F9-91D98A1D2D01%7D&amp;Layout=Inline" ph="FormsRow.Column1" />
+    <r id="{A4B01F49-C6BF-4FAE-ACDE-3B2B6CE26EAD}" par="Text=Horizontal%20form" ph="FormsRow.Column1" />
+    <r id="{AAC4C147-02E4-4628-9864-C4AAD848AE18}" par="Text=Right%20%20align%20labels%20and%20float%20them%20to%20the%20left%20to%20make%20them%20appear%20on%20the%20same%20line%20as%20controls." ph="FormsRow.Column1" />
+    <r id="{CF751C6C-05C5-4C25-8FD9-4EBFCF36D315}" par="FormDataSource=%7B99FF6A91-2010-49B3-823C-1BBE7636629E%7D&amp;Layout=Horizontal" ph="FormsRow.Column1" />
+    <r id="{999A4B35-A6E4-42ED-95CB-88BD8A3DEE08}" par="Text=Supported%20form%20controls" ph="FormsRow.Column1" />
+    <r id="{AAC4C147-02E4-4628-9864-C4AAD848AE18}" par="Text=Examples%20of%20standard%20form%20controls%20supported%20in%20an%20example%20form%20layout." ph="FormsRow.Column1" />
+    <r id="{A4B01F49-C6BF-4FAE-ACDE-3B2B6CE26EAD}" par="Text=Inputs" ph="FormsRow.Column1" />
+    <r id="{AAC4C147-02E4-4628-9864-C4AAD848AE18}" par="Text=Most%20common%20form%20control%2C%20text-based%20input%20fields.%20Includes%20support%20for%20all%20HTML5%20types%3A%20text%2C%20password%2C%20datetime%2C%20datetime-local%2C%20date%2C%20month%2C%20time%2C%20week%2C%20number%2C%20email%2C%20url%2C%20search%2C%20tel%2C%20and%20color." ph="FormsRow.Column1" />
+    <r id="{3E59E78E-6FA5-4355-B3C4-49577C4D1E0D}" par="Watermark=Text%20input" ph="FormsRow.Column1" />
+    <r id="{A4B01F49-C6BF-4FAE-ACDE-3B2B6CE26EAD}" par="Text=Textarea" ph="FormsRow.Column1" />
+    <r id="{AAC4C147-02E4-4628-9864-C4AAD848AE18}" par="Text=Form%20control%20which%20supports%20multiple%20lines%20of%20text.%20Change%20rows%20attribute%20as%20necessary." ph="FormsRow.Column1" />
+    <r id="{92C0CA00-828A-4779-8696-95EE6C46954E}" par="Watermark=Text%20area" ph="FormsRow.Column1" />
+    <r id="{A4B01F49-C6BF-4FAE-ACDE-3B2B6CE26EAD}" par="Text=Checkboxes%20and%20radios" ph="FormsRow.Column1" />
+    <r id="{AAC4C147-02E4-4628-9864-C4AAD848AE18}" par="Text=Checkboxes%20are%20for%20selecting%20one%20or%20several%20options%20in%20a%20list%20while%20radios%20are%20for%20selecting%20one%20option%20from%20many." ph="FormsRow.Column1" />
+    <r id="{0FB74AD1-9D78-4CFB-89DA-DED2D33C1940}" par="Text=Option%20one%20is%20this%20and%20that%E2%80%94be%20sure%20to%20include%20why%20it%27s%20great" ph="FormsRow.Column1" />
+    <r id="{2FDF9C86-8AF7-4754-BB76-62B79E166759}" par="IsChecked=1&amp;Name=RadioGroup1&amp;Text=Option%20one%20is%20this%20and%20that%E2%80%94be%20sure%20to%20include%20why%20it%27s%20great" ph="FormsRow.Column1" />
+    <r id="{2FDF9C86-8AF7-4754-BB76-62B79E166759}" par="Name=RadioGroup1&amp;Text=Option%20two%20can%20be%20something%20else%20and%20selecting%20it%20will%20deselect%20option%20one" ph="FormsRow.Column1" />
+    <r id="{682B5C14-6DCA-4747-AB25-391BAB392E40}" par="Text=Inline%20checkboxes" ph="FormsRow.Column1" />
+    <r id="{0FB74AD1-9D78-4CFB-89DA-DED2D33C1940}" par="Text=1&amp;IsInline=1" ph="FormsRow.Column1" />
+    <r id="{0FB74AD1-9D78-4CFB-89DA-DED2D33C1940}" par="Text=2&amp;IsInline=1" ph="FormsRow.Column1" />
+    <r id="{0FB74AD1-9D78-4CFB-89DA-DED2D33C1940}" par="Text=3&amp;IsInline=1" ph="FormsRow.Column1" />
+    <r id="{5F3E0F76-42B0-4169-990A-315A9389685B}" par="" ph="FormsRow.Column1" />
+    <r id="{2FDF9C86-8AF7-4754-BB76-62B79E166759}" par="Text=4&amp;Name=Radio1&amp;IsInline=1" ph="FormsRow.Column1" />
+    <r id="{2FDF9C86-8AF7-4754-BB76-62B79E166759}" par="Text=5&amp;Name=Radio1&amp;IsInline=1" ph="FormsRow.Column1" />
+    <r id="{2FDF9C86-8AF7-4754-BB76-62B79E166759}" par="Text=6&amp;Name=Radio1&amp;IsInline=1" ph="FormsRow.Column1" />
+    <r id="{A4B01F49-C6BF-4FAE-ACDE-3B2B6CE26EAD}" par="Text=Selects" ph="FormsRow.Column1" />
+    <r id="{AAC4C147-02E4-4628-9864-C4AAD848AE18}" par="Text=Use%20the%20default%20option%20or%20specify%20a%20multiple%3D%22multiple%22%20to%20show%20multiple%20options%20at%20once." ph="FormsRow.Column1" />
+    <r id="{B0FACC2D-64F5-4B02-8ACD-120630F9E3EB}" par="DisplayFieldName=%24itemName&amp;ItemsDataSource=%7B0D068481-7E83-4C7E-9D39-5CA5CAA272B5%7D&amp;ValueFieldName=%24itemId" ph="FormsRow.Column1" />
+    <r id="{5F3E0F76-42B0-4169-990A-315A9389685B}" par="" ph="FormsRow.Column1" />
+    <r id="{B0FACC2D-64F5-4B02-8ACD-120630F9E3EB}" par="DisplayFieldName=%24itemName&amp;IsMultiple=1&amp;ItemsDataSource=%7B0D068481-7E83-4C7E-9D39-5CA5CAA272B5%7D&amp;ValueFieldName=%24itemId" ph="FormsRow.Column1" />
+    <r id="{A4B01F49-C6BF-4FAE-ACDE-3B2B6CE26EAD}" par="Text=Static%20control" ph="FormsRow.Column1" />
+    <r id="{AAC4C147-02E4-4628-9864-C4AAD848AE18}" par="Text=When%20you%20need%20to%20place%20plain%20text%20next%20to%20a%20form%20label%20within%20a%20horizontal%20form%2C%20use%20the%20.form-control-static%20class%20on%20a%20%3Cp%3E." ph="FormsRow.Column1" />
+    <r id="{AD311E7F-FAA7-481A-9E02-BBBBA92A8F5C}" par="Text=email%40example.com" ph="FormsRow.Column1" />
+    <r id="{999A4B35-A6E4-42ED-95CB-88BD8A3DEE08}" par="Text=Extending%20form%20controls" ph="FormsRow.Column1" />
+    <r id="{AAC4C147-02E4-4628-9864-C4AAD848AE18}" par="Text=Adding%20on%20top%20of%20existing%20browser%20controls%2C%20Bootstrap%20includes%20other%20useful%20form%20components." ph="FormsRow.Column1" />
+    <r id="{A4B01F49-C6BF-4FAE-ACDE-3B2B6CE26EAD}" par="Text=Form%20actions" ph="FormsRow.Column1" />
+    <r id="{AAC4C147-02E4-4628-9864-C4AAD848AE18}" par="Text=End%20a%20form%20with%20a%20group%20of%20actions%20(buttons).%20When%20placed%20within%20a%20.form-actions%2C%20the%20buttons%20will%20automatically%20indent%20to%20line%20up%20with%20the%20form%20controls." ph="FormsRow.Column1" />
+    <r id="{41C1C9AB-651B-4F4A-B4F9-13DF61C8AA8D}" par="Id=FormsActions" ph="FormsRow.Column1" />
+    <r id="{57DDF236-BAA2-4422-A4C1-75D27AED1184}" par="Text=Save%20Changes&amp;Type=Primary" ph="FormsActions.Content" />
+    <r id="{57DDF236-BAA2-4422-A4C1-75D27AED1184}" par="Text=Cancel" ph="FormsActions.Content" />
+    <r id="{999A4B35-A6E4-42ED-95CB-88BD8A3DEE08}" par="Text=Control%20sizing" ph="FormsRow.Column1" />
+    <r id="{AAC4C147-02E4-4628-9864-C4AAD848AE18}" par="Text=Set%20heights%20using%20classes%20like%20.input-lg%2C%20and%20set%20widths%20using%20grid%20column%20classes%20like%20.col-lg-*." ph="FormsRow.Column1" />
+    <r id="{A4B01F49-C6BF-4FAE-ACDE-3B2B6CE26EAD}" par="Text=Height%20sizing" ph="FormsRow.Column1" />
+    <r id="{AAC4C147-02E4-4628-9864-C4AAD848AE18}" par="Text=Create%20taller%20or%20shorter%20form%20controls%20that%20match%20button%20sizes." ph="FormsRow.Column1" />
+    <r id="{3E59E78E-6FA5-4355-B3C4-49577C4D1E0D}" par="Watermark=.input-lg&amp;RelativeSize=Large" ph="FormsRow.Column1" />
+    <r id="{3E59E78E-6FA5-4355-B3C4-49577C4D1E0D}" par="Watermark=Default" ph="FormsRow.Column1" />
+    <r id="{3E59E78E-6FA5-4355-B3C4-49577C4D1E0D}" par="Watermark=.input-sm&amp;RelativeSize=Small" ph="FormsRow.Column1" />
+    <r id="{B0FACC2D-64F5-4B02-8ACD-120630F9E3EB}" par="DisplayFieldName=%24itemName&amp;ItemsDataSource=%7B0D068481-7E83-4C7E-9D39-5CA5CAA272B5%7D&amp;ValueFieldName=%24itemId&amp;RelativeSize=Large" ph="FormsRow.Column1" />
+    <r id="{B0FACC2D-64F5-4B02-8ACD-120630F9E3EB}" par="DisplayFieldName=%24itemName&amp;ItemsDataSource=%7B0D068481-7E83-4C7E-9D39-5CA5CAA272B5%7D&amp;ValueFieldName=%24itemId" ph="FormsRow.Column1" />
+    <r id="{B0FACC2D-64F5-4B02-8ACD-120630F9E3EB}" par="DisplayFieldName=%24itemName&amp;ItemsDataSource=%7B0D068481-7E83-4C7E-9D39-5CA5CAA272B5%7D&amp;ValueFieldName=%24itemId&amp;RelativeSize=Small" ph="FormsRow.Column1" />
+    <r id="{A4B01F49-C6BF-4FAE-ACDE-3B2B6CE26EAD}" par="Text=Help%20text" ph="FormsRow.Column1" />
+    <r id="{AAC4C147-02E4-4628-9864-C4AAD848AE18}" par="Text=Block%20level%20help%20text%20for%20form%20controls." ph="FormsRow.Column1" />
+    <r id="{3E59E78E-6FA5-4355-B3C4-49577C4D1E0D}" par="Type=Text" ph="FormsRow.Column1" />
+    <r id="{64E85416-E48C-426E-8946-0482FC56F230}" par="Text=A%20longer%20block%20of%20help%20text%20that%20breaks%20onto%20a%20new%20line%20and%20may%20extend%20beyond%20one%20line." ph="FormsRow.Column1" />
+  </d>
+</r>
+----version----
+language: en
+version: 1
+revision: 13a27a57-9e86-46ad-be6d-906ea55d5242
+
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20130819T183313
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+13a27a57-9e86-46ad-be6d-906ea55d5242
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20140522T142519:635363655190081505
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
