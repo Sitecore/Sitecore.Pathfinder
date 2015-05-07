@@ -18,7 +18,7 @@
       this.Icon = string.Empty;
       this.TemplateIdOrPath = string.Empty;
       this.Fields = new List<FieldModel>();
-    }
+    }        
 
     [NotNull]
     public string DatabaseName { get; set; }

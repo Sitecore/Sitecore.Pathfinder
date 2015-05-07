@@ -43,13 +43,16 @@
   <ItemGroup>
     <Compile Include="Extensions\CompositionServiceExtensions\CompositionServiceExtensions.cs" />
     <Compile Include="Parsing\MediaFiles\MediaFileParser.cs" />
+    <Compile Include="Parsing\Components\ComponentParser.cs" />
     <Compile Include="Parsing\SerializationFiles\SerializationFileParser.cs" />
     <Compile Include="Parsing\IParseService.cs" />
     <Compile Include="Projects\IProject.cs" />
     <Compile Include="Projects\ISourceFile.cs" />
     <Compile Include="Projects\Layouts\LayoutModel.cs" />
     <Compile Include="Projects\LinkBase.cs" />
+    <Compile Include="Projects\LogicalItem.cs" />
     <Compile Include="Projects\Project.cs" />
+    <Compile Include="Projects\Components\Component.cs" />
     <Compile Include="Projects\SourceFile.cs" />
     <Compile Include="Parsing\ParseService.cs" />
     <Compile Include="Parsing\ParseContext.cs" />
