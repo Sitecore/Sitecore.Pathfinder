@@ -23,7 +23,7 @@
 
       context.BuildContext.FileSystem.Copy(fileName, destinationFileName);
 
-      context.BuildContext.SourceFiles.Add(destinationFileName);
+      context.BuildContext.ModifiedProjectItems.Add(destinationFileName);
       context.BuildContext.SourceMap.Add(destinationFileName, fileName);
     }
   }

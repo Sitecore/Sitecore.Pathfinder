@@ -26,7 +26,7 @@
 
       var fileName = Path.GetFileName(destinationFileName);
       var fileNameWithoutExtensions = PathHelper.GetFileNameWithoutExtensions(destinationFileName);
-      var contentDirectoryName = PathHelper.NormalizeWebPath(context.ContentDirectory).Mid("content".Length);
+      var contentDirectoryName = PathHelper.NormalizeItemPath(context.ContentDirectory).Mid("content".Length);
 
       var contents = context.BuildContext.FileSystem.ReadAllText(sourceFileName);
 

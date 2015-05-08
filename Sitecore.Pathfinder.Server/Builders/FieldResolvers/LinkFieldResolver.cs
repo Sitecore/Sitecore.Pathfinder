@@ -2,7 +2,6 @@
 {
   using System;
   using System.ComponentModel.Composition;
-  using Sitecore.Data.Items;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Emitters;
   using Sitecore.Pathfinder.Projects.Items;
@@ -10,31 +9,31 @@
   [Export(typeof(IFieldResolver))]
   public class LinkFieldResolver : FieldResolverBase
   {
-    public override bool CanHandle(IEmitContext context, FieldModel fieldModel, Item item)
+    public override bool CanHandle(IEmitContext context, Field field, Sitecore.Data.Items.Item item)
     {
-      var field = item.Fields[fieldModel.Name];
-      if (field == null)
+      var f = item.Fields[field.Name];
+      if (f == null)
       {
         return false;
       }
 
-      return string.Compare(field.Type, "general link", StringComparison.OrdinalIgnoreCase) == 0 || string.Compare(field.Type, "link", StringComparison.OrdinalIgnoreCase) == 0;
+      return string.Compare(f.Type, "general link", StringComparison.OrdinalIgnoreCase) == 0 || string.Compare(f.Type, "link", StringComparison.OrdinalIgnoreCase) == 0;
     }
 
-    public override void Handle(IEmitContext context, FieldModel fieldModel, Item item)
+    public override void Handle(IEmitContext context, Field field, Sitecore.Data.Items.Item item)
     {
-      if (!fieldModel.Value.StartsWith("/sitecore", StringComparison.OrdinalIgnoreCase))
+      if (!field.Value.StartsWith("/sitecore", StringComparison.OrdinalIgnoreCase))
       {
         return;
       }
 
-      var targetItem = item.Database.GetItem(fieldModel.Value);
+      var targetItem = item.Database.GetItem(field.Value);
       if (targetItem == null)
       {
-        throw new RetryableBuildException(Texts.Text2030, fieldModel.SourceFileName, fieldModel.SourceElement, fieldModel.Value);
+        throw new RetryableBuildException(Texts.Text2030, field.SourceFile.SourceFileName, field.SourceElement, field.Value);
       }
 
-      fieldModel.Value = $"<link text=\"\" linktype=\"internal\" url=\"\" anchor=\"\" title=\"\" class=\"\" target=\"\" querystring=\"\" id=\"{targetItem.ID}\" />";
+      field.Value = $"<link text=\"\" linktype=\"internal\" url=\"\" anchor=\"\" title=\"\" class=\"\" target=\"\" querystring=\"\" id=\"{targetItem.ID}\" />";
     }
   }
 }

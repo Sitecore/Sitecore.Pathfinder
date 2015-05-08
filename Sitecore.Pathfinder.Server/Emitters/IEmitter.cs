@@ -6,8 +6,8 @@
   {
     double Sortorder { get; }
 
-    bool CanEmit([NotNull] IEmitContext context, [NotNull] ProjectElementBase model);
+    bool CanEmit([NotNull] IEmitContext context, [NotNull] ProjectItem projectItem);
 
-    void Emit([NotNull] IEmitContext context, [NotNull] ProjectElementBase model);
+    void Emit([NotNull] IEmitContext context, [NotNull] ProjectItem projectItem);
   }
 }

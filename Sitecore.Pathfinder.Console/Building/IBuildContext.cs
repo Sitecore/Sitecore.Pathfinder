@@ -5,6 +5,7 @@
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.IO;
+  using Sitecore.Pathfinder.Projects;
 
   public interface IBuildContext
   {
@@ -28,13 +29,16 @@
     IList<string> OutputFiles { get; }
 
     [NotNull]
+    IProject Project { get; }
+
+    [NotNull]
     string ProjectDirectory { get; }
 
     [NotNull]
     string SolutionDirectory { get; }
 
     [NotNull]
-    IList<string> SourceFiles { get; }
+    IList<ProjectItem> ModifiedProjectItems { get; }
 
     [NotNull]
     IDictionary<string, string> SourceMap { get; }

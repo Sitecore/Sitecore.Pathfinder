@@ -12,17 +12,17 @@
     {
     }
 
-    public override bool CanEmit(IEmitContext context, ProjectElementBase model)
+    public override bool CanEmit(IEmitContext context, ProjectItem projectItem)
     {
       // do not apply to inheriting classes
-      return model.GetType() == typeof(TemplateModel);
+      return projectItem is Template;
     }
 
-    public override void Emit(IEmitContext context, ProjectElementBase model)
+    public override void Emit(IEmitContext context, ProjectItem projectItem)
     {
-      var itemModel = (TemplateModel)model;
+      var template = (Template)projectItem;
 
-      var templateBuilder = new TemplateBuilder(itemModel);
+      var templateBuilder = new TemplateBuilder(template);
       templateBuilder.Build(context);
     }
   }

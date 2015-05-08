@@ -43,27 +43,27 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
     {
     }
 
-    public override bool CanEmit(IEmitContext context, ProjectElementBase model)
+    public override bool CanEmit(IEmitContext context, ProjectItem projectItem)
     {
-      return model is LayoutModel;
+      return projectItem is Layout;
     }
 
-    public override void Emit(IEmitContext context, ProjectElementBase model)
+    public override void Emit(IEmitContext context, ProjectItem projectItem)
     {
-      var layoutModel = (LayoutModel)model;
+      var layout = (Layout)projectItem;
 
-      var database = Factory.GetDatabase(layoutModel.DatabaseName);
+      var database = Factory.GetDatabase(layout.Item.DatabaseName);
 
-      var item = database.GetItem(layoutModel.ItemIdOrPath);
+      var item = database.GetItem(layout.Item.ItemIdOrPath);
       if (item == null)
       {
-        throw new RetryableBuildException(Texts.Text2003, layoutModel.SourceFileName, 0, 0, layoutModel.ItemIdOrPath);
+        throw new RetryableBuildException(Texts.Text2003, layout.SourceFile.SourceFileName, 0, 0, layout.Item.ItemIdOrPath);
       }
 
       var errors = new List<Message>();
       var warnings = new List<Message>();
 
-      var text = context.FileSystem.ReadAllText(layoutModel.SourceFileName);
+      var text = context.FileSystem.ReadAllText(layout.SourceFile.SourceFileName);
 
       XDocument doc;
       try
@@ -72,13 +72,13 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
       }
       catch
       {
-        throw new BuildException(Texts.Text2014, layoutModel.SourceFileName);
+        throw new BuildException(Texts.Text2014, layout.SourceFile.SourceFileName);
       }
 
       var root = doc.Root;
       if (root == null)
       {
-        throw new BuildException(Texts.Text2014, layoutModel.SourceFileName);
+        throw new BuildException(Texts.Text2014, layout.SourceFile.SourceFileName);
       }
 
       var writer = new StringWriter();
@@ -87,27 +87,27 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
         Formatting = Formatting.Indented
       };
 
-      this.WriteLayout(layoutModel, output, database, root, errors, warnings);
+      this.WriteLayout(layout, output, database, root, errors, warnings);
 
       if (!errors.Any())
       {
-        var layoutItem = this.GetDestinationItem(context, layoutModel, item);
+        var layoutItem = this.GetDestinationItem(context, layout, item);
         this.SaveLayoutField(layoutItem, writer.ToString());
       }
 
       foreach (var error in errors)
       {
-        context.Trace.TraceError(Texts.Text2026, error.Text, layoutModel.SourceFileName, error.Line, error.Column);
+        context.Trace.TraceError(Texts.Text2026, error.Text, layout.SourceFile.SourceFileName, error.Line, error.Column);
       }
 
       foreach (var warning in warnings)
       {
-        context.Trace.TraceWarning(Texts.Text2027, warning.Text, layoutModel.SourceFileName, warning.Line, warning.Column);
+        context.Trace.TraceWarning(Texts.Text2027, warning.Text, layout.SourceFile.SourceFileName, warning.Line, warning.Column);
       }
 
       if (errors.Any())
       {
-        throw new BuildException(Texts.Text2020, layoutModel.SourceFileName);
+        throw new BuildException(Texts.Text2020, layout.SourceFile.SourceFileName);
       }
     }
 
@@ -130,7 +130,7 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
     }
 
     [NotNull]
-    protected Item GetDestinationItem([NotNull] IEmitContext context, [NotNull] LayoutModel layoutModel, [NotNull] Item item)
+    protected Item GetDestinationItem([NotNull] IEmitContext context, [NotNull] Layout layout, [NotNull] Item item)
     {
       if (item.TemplateID != TemplateIDs.Template)
       {
@@ -156,7 +156,7 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
 
       if (item == null)
       {
-        throw new BuildException(Texts.Text2024, layoutModel.SourceFileName);
+        throw new BuildException(Texts.Text2024, layout.SourceFile.SourceFileName);
       }
 
       return item;
@@ -254,7 +254,7 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
       output.WriteAttributeString("ds", item?.ID.ToString() ?? dataSource);
     }
 
-    private void WriteDevice([NotNull] LayoutModel layoutModel, [NotNull] XmlTextWriter output, [NotNull] IEnumerable<Item> renderingItems, [NotNull] Database database, [NotNull] XElement deviceElement, [NotNull] List<Message> errors, [NotNull] List<Message> warnings)
+    private void WriteDevice([NotNull] Layout layout, [NotNull] XmlTextWriter output, [NotNull] IEnumerable<Item> renderingItems, [NotNull] Database database, [NotNull] XElement deviceElement, [NotNull] List<Message> errors, [NotNull] List<Message> warnings)
     {
       output.WriteStartElement("d");
 
@@ -288,14 +288,14 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
       var layoutPath = deviceElement.GetAttributeValue("Layout");
       if (!string.IsNullOrEmpty(layoutPath))
       {
-        var layout = database.GetItem(layoutPath);
-        if (layout == null)
+        var l = database.GetItem(layoutPath);
+        if (l == null)
         {
-          throw new RetryableBuildException(Texts.Text2029, layoutModel.SourceFileName, deviceElement, deviceElement.Attribute("Layout"), layoutPath);
+          throw new RetryableBuildException(Texts.Text2029, layout.SourceFile.SourceFileName, deviceElement, deviceElement.Attribute("Layout"), layoutPath);
         }
 
-        output.WriteAttributeString("l", layout.ID.ToString());
-        layoutPlaceholders = this.GetPlaceholders(deviceElement, layout);
+        output.WriteAttributeString("l", l.ID.ToString());
+        layoutPlaceholders = this.GetPlaceholders(deviceElement, l);
       }
 
       foreach (var renderingElement in deviceElement.Elements())
@@ -306,7 +306,7 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
       output.WriteEndElement();
     }
 
-    private void WriteLayout([NotNull] LayoutModel layoutModel, [NotNull] XmlTextWriter output, [NotNull] Database database, [NotNull] XElement layoutElement, [NotNull] List<Message> errors, [NotNull] List<Message> warnings)
+    private void WriteLayout([NotNull] Layout layout, [NotNull] XmlTextWriter output, [NotNull] Database database, [NotNull] XElement layoutElement, [NotNull] List<Message> errors, [NotNull] List<Message> warnings)
     {
       // todo: cache this in the build context
       // todo: use better search
@@ -317,7 +317,7 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
       // Do not make this Elements("Device") - XML namespaces will mess it up.
       foreach (var deviceElement in layoutElement.Elements())
       {
-        this.WriteDevice(layoutModel, output, renderingItems, database, deviceElement, errors, warnings);
+        this.WriteDevice(layout, output, renderingItems, database, deviceElement, errors, warnings);
       }
 
       output.WriteEndElement();

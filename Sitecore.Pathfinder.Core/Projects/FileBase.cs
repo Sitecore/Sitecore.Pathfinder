@@ -3,7 +3,7 @@
   using System.IO;
   using Sitecore.Pathfinder.Diagnostics;
 
-  public abstract class FileBase : ProjectElementBase
+  public abstract class FileBase : ProjectItem
   {
     private string qualifiedName;
 

@@ -14,30 +14,30 @@
 
   public class ItemBuilder
   {
-    public ItemBuilder([NotNull] ItemModel itemModel)
+    public ItemBuilder([NotNull] Projects.Items.Item projectItem)
     {
-      this.ItemModel = itemModel;
+      this.ProjectItem = projectItem;
     }
 
     [CanBeNull]
-    public Item Item { get; set; }
+    public Sitecore.Data.Items.Item Item { get; set; }
 
     [NotNull]
-    public ItemModel ItemModel { get; }
+    public Projects.Items.Item ProjectItem { get; }
 
     [ImportMany]
     [NotNull]
     protected IEnumerable<IFieldResolver> FieldHandlers { get; set; }
 
     [CanBeNull]
-    protected Item TemplateItem { get; set; }
+    protected Sitecore.Data.Items.Item TemplateItem { get; set; }
 
     public void Build([NotNull] IEmitContext context)
     {
-      var database = context.DataService.GetDatabase(this.ItemModel.DatabaseName);
+      var database = context.DataService.GetDatabase(this.ProjectItem.DatabaseName);
       if (database == null)
       {
-        throw new BuildException(Texts.Text2018, this.ItemModel.SourceFileName, 0, 0, this.ItemModel.DatabaseName);
+        throw new BuildException(Texts.Text2018, this.ProjectItem.SourceFile.SourceFileName, 0, 0, this.ProjectItem.DatabaseName);
       }
 
       if (this.TemplateItem == null)
@@ -47,7 +47,7 @@
 
       if (this.TemplateItem == null)
       {
-        throw new RetryableBuildException(Texts.Text2017, this.ItemModel.SourceFileName, 0, 0, this.ItemModel.TemplateIdOrPath);
+        throw new RetryableBuildException(Texts.Text2017, this.ProjectItem.SourceFile.SourceFileName, 0, 0, this.ProjectItem.TemplateIdOrPath);
       }
 
       if (this.Item == null)
@@ -68,70 +68,70 @@
 
     protected void CreateNewItem([NotNull] IEmitContext context, [NotNull] Database database)
     {
-      if (ID.IsID(this.ItemModel.ItemIdOrPath))
+      if (ID.IsID(this.ProjectItem.ItemIdOrPath))
       {
-        throw new BuildException(Texts.Text2002, this.ItemModel.SourceFileName);
+        throw new BuildException(Texts.Text2002, this.ProjectItem.SourceFile.SourceFileName);
       }
 
       if (this.TemplateItem == null)
       {
-        throw new BuildException(Texts.Text2016, this.ItemModel.SourceFileName, 0, 0, this.ItemModel.TemplateIdOrPath);
+        throw new BuildException(Texts.Text2016, this.ProjectItem.SourceFile.SourceFileName, 0, 0, this.ProjectItem.TemplateIdOrPath);
       }
 
-      var item = database.CreateItemPath(this.ItemModel.ItemIdOrPath, new TemplateItem(this.TemplateItem));
+      var item = database.CreateItemPath(this.ProjectItem.ItemIdOrPath, new TemplateItem(this.TemplateItem));
       if (item == null)
       {
-        throw new RetryableBuildException(Texts.Text2019, this.ItemModel.SourceFileName, 0, 0, this.ItemModel.ItemIdOrPath);
+        throw new RetryableBuildException(Texts.Text2019, this.ProjectItem.SourceFile.SourceFileName, 0, 0, this.ProjectItem.ItemIdOrPath);
       }
 
       this.Item = item;
-      this.ItemModel.ItemIdOrPath = item.ID.ToString();
+      this.ProjectItem.ItemIdOrPath = item.ID.ToString();
     }
 
     protected virtual void ResolveItem([NotNull] IEmitContext context)
     {
-      var database = context.DataService.GetDatabase(this.ItemModel.DatabaseName);
+      var database = context.DataService.GetDatabase(this.ProjectItem.DatabaseName);
       if (database == null)
       {
         return;
       }
 
-      if (ID.IsID(this.ItemModel.ItemIdOrPath))
+      if (ID.IsID(this.ProjectItem.ItemIdOrPath))
       {
-        this.Item = database.GetItem(this.ItemModel.ItemIdOrPath);
+        this.Item = database.GetItem(this.ProjectItem.ItemIdOrPath);
       }
-      else if (this.ItemModel.ItemIdOrPath.Contains("/"))
+      else if (this.ProjectItem.ItemIdOrPath.Contains("/"))
       {
-        this.Item = database.GetItem(this.ItemModel.ItemIdOrPath);
+        this.Item = database.GetItem(this.ProjectItem.ItemIdOrPath);
       }
 
       if (this.Item != null)
       {
-        this.ItemModel.ItemIdOrPath = this.Item.ID.ToString();
+        this.ProjectItem.ItemIdOrPath = this.Item.ID.ToString();
       }
     }
 
     protected void ResolveTemplateItem([NotNull] IEmitContext context)
     {
-      var database = context.DataService.GetDatabase(this.ItemModel.DatabaseName);
+      var database = context.DataService.GetDatabase(this.ProjectItem.DatabaseName);
       if (database == null)
       {
         return;
       }
 
-      if (ID.IsID(this.ItemModel.TemplateIdOrPath))
+      if (ID.IsID(this.ProjectItem.TemplateIdOrPath))
       {
-        this.TemplateItem = database.GetItem(this.ItemModel.TemplateIdOrPath);
+        this.TemplateItem = database.GetItem(this.ProjectItem.TemplateIdOrPath);
       }
 
-      if (this.TemplateItem == null && this.ItemModel.TemplateIdOrPath.Contains("/"))
+      if (this.TemplateItem == null && this.ProjectItem.TemplateIdOrPath.Contains("/"))
       {
-        this.TemplateItem = database.GetItem(this.ItemModel.TemplateIdOrPath);
+        this.TemplateItem = database.GetItem(this.ProjectItem.TemplateIdOrPath);
       }
 
       if (this.TemplateItem != null)
       {
-        this.ItemModel.TemplateIdOrPath = this.TemplateItem.ID.ToString();
+        this.ProjectItem.TemplateIdOrPath = this.TemplateItem.ID.ToString();
       }
     }
 
@@ -139,12 +139,12 @@
     {
       if (this.Item == null)
       {
-        throw new BuildException(Texts.Text2003, this.ItemModel.SourceFileName);
+        throw new BuildException(Texts.Text2003, this.ProjectItem.SourceFile.SourceFileName);
       }
 
-      foreach (var field in this.ItemModel.Fields)
+      foreach (var field in this.ProjectItem.Fields)
       {
-        foreach (var fieldHandler in context.FieldHandlers)
+        foreach (var fieldHandler in context.FieldResolvers)
         {
           if (!fieldHandler.CanHandle(context, field, this.Item))
           {
@@ -160,12 +160,12 @@
     {
       if (this.Item == null)
       {
-        throw new BuildException(Texts.Text2003, this.ItemModel.SourceFileName);
+        throw new BuildException(Texts.Text2003, this.ProjectItem.SourceFile.SourceFileName);
       }
 
       if (this.TemplateItem == null)
       {
-        throw new BuildException(Texts.Text2017, this.ItemModel.SourceFileName);
+        throw new BuildException(Texts.Text2017, this.ProjectItem.SourceFile.SourceFileName);
       }
 
       using (new EditContext(this.Item))
@@ -176,7 +176,7 @@
           this.Item.ChangeTemplate(templateItem);
         }
 
-        foreach (var field in this.ItemModel.Fields)
+        foreach (var field in this.ProjectItem.Fields)
         {
           this.Item[field.Name] = field.Value;
         }
@@ -198,11 +198,11 @@
 
       var templateFields = template.GetFields(true);
 
-      foreach (var field in this.ItemModel.Fields)
+      foreach (var field in this.ProjectItem.Fields)
       {
         if (templateFields.All(f => string.Compare(f.Name, field.Name, StringComparison.OrdinalIgnoreCase) != 0))
         {
-          throw new RetryableBuildException(Texts.Text2035, this.ItemModel.SourceFileName, field.SourceElement);
+          throw new RetryableBuildException(Texts.Text2035, this.ProjectItem.SourceFile.SourceFileName, field.SourceElement);
         }
       }
     }

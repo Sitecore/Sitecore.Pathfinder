@@ -7,7 +7,6 @@ namespace Sitecore.Pathfinder.Builders.Templates
   using Sitecore.Data;
   using Sitecore.Data.Items;
   using Sitecore.Data.Managers;
-  using Sitecore.Data.Templates;
   using Sitecore.Extensions.StringExtensions;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Emitters;
@@ -15,14 +14,16 @@ namespace Sitecore.Pathfinder.Builders.Templates
 
   public class TemplateBuilder
   {
-    private static readonly char[] Pipe = { '|' };
+    private static readonly char[] Pipe = {
+      '|'
+    };
 
     [CanBeNull]
     private IEnumerable<TemplateSectionBuilder> sectionBuilders;
 
-    public TemplateBuilder([NotNull] TemplateModel templateModel)
+    public TemplateBuilder([NotNull] Template template)
     {
-      this.TemplateModel = templateModel;
+      this.Template = template;
     }
 
     [CanBeNull]
@@ -33,17 +34,17 @@ namespace Sitecore.Pathfinder.Builders.Templates
     {
       get
       {
-        return this.sectionBuilders ?? (this.sectionBuilders = this.TemplateModel.Sections.Select(s => new TemplateSectionBuilder(s)).ToList());
+        return this.sectionBuilders ?? (this.sectionBuilders = this.Template.Sections.Select(s => new TemplateSectionBuilder(s)).ToList());
       }
     }
 
     [NotNull]
-    public TemplateModel TemplateModel { get; }
+    public Template Template { get; }
 
     [CanBeNull]
     public Item Build([NotNull] IEmitContext context)
     {
-      var inheritedFields = this.GetInheritedFields(this.TemplateModel);
+      var inheritedFields = this.GetInheritedFields(this.Template);
 
       if (this.Item == null)
       {
@@ -76,7 +77,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
       var standardValuesItem = item.Add("__Standard Values", new TemplateID(item.TemplateID));
       if (standardValuesItem == null)
       {
-        throw new BuildException(Texts.Text2023, this.TemplateModel.SourceFileName);
+        throw new BuildException(Texts.Text2023, this.Template.SourceFile.SourceFileName);
       }
 
       using (new EditContext(item))
@@ -85,9 +86,9 @@ namespace Sitecore.Pathfinder.Builders.Templates
       }
     }
 
-    protected virtual void CreateNewTemplate([NotNull] IEmitContext context, [NotNull] IEnumerable<TemplateField> inheritedFields)
+    protected virtual void CreateNewTemplate([NotNull] IEmitContext context, [NotNull] IEnumerable<Sitecore.Data.Templates.TemplateField> inheritedFields)
     {
-      var database = context.DataService.GetDatabase(this.TemplateModel.DatabaseName);
+      var database = context.DataService.GetDatabase(this.Template.DatabaseName);
       if (database == null)
       {
         return;
@@ -96,34 +97,34 @@ namespace Sitecore.Pathfinder.Builders.Templates
       var parentItem = this.GetParentItem(context, database);
       if (parentItem == null)
       {
-        throw new BuildException(Texts.Text2004, this.TemplateModel.SourceFileName);
+        throw new BuildException(Texts.Text2004, this.Template.SourceFile.SourceFileName);
       }
 
-      if (string.IsNullOrEmpty(this.TemplateModel.ItemIdOrPath))
+      if (string.IsNullOrEmpty(this.Template.ItemIdOrPath))
       {
-        this.TemplateModel.ItemIdOrPath = Guid.NewGuid().ToString("B").ToUpperInvariant();
+        this.Template.ItemIdOrPath = Guid.NewGuid().ToString("B").ToUpperInvariant();
       }
 
       Item item;
-      if (ID.IsID(this.TemplateModel.ItemIdOrPath))
+      if (ID.IsID(this.Template.ItemIdOrPath))
       {
-        item = ItemManager.AddFromTemplate(this.TemplateModel.Name, new TemplateID(TemplateIDs.Template), parentItem, new ID(this.TemplateModel.ItemIdOrPath));
+        item = ItemManager.AddFromTemplate(this.Template.ItemName, new TemplateID(TemplateIDs.Template), parentItem, new ID(this.Template.ItemIdOrPath));
       }
       else
       {
-        item = ItemManager.AddFromTemplate(this.TemplateModel.Name, new TemplateID(TemplateIDs.Template), parentItem);
+        item = ItemManager.AddFromTemplate(this.Template.ItemName, new TemplateID(TemplateIDs.Template), parentItem);
       }
 
       if (item == null)
       {
-        throw new BuildException(Texts.Text2023, this.TemplateModel.SourceFileName);
+        throw new BuildException(Texts.Text2023, this.Template.SourceFile.SourceFileName);
       }
 
       this.Item = item;
       using (new EditContext(item))
       {
-        item[FieldIDs.BaseTemplate] = this.TemplateModel.BaseTemplates;
-        item.Appearance.Icon = this.TemplateModel.Icon;
+        item[FieldIDs.BaseTemplate] = this.Template.BaseTemplates;
+        item.Appearance.Icon = this.Template.Icon;
       }
 
       foreach (var section in this.Sections)
@@ -135,7 +136,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
       var standardValuesItem = item.Add("__Standard Values", new TemplateID(item.TemplateID));
       if (standardValuesItem == null)
       {
-        throw new BuildException(Texts.Text2023, this.TemplateModel.SourceFileName);
+        throw new BuildException(Texts.Text2023, this.Template.SourceFile.SourceFileName);
       }
 
       using (new EditContext(item))
@@ -220,32 +221,32 @@ namespace Sitecore.Pathfinder.Builders.Templates
     }
 
     [NotNull]
-    protected IEnumerable<TemplateField> GetInheritedFields([NotNull] TemplateModel templateModel)
+    protected IEnumerable<Sitecore.Data.Templates.TemplateField> GetInheritedFields([NotNull] Template template)
     {
-      var fields = new List<TemplateField>();
+      var fields = new List<Sitecore.Data.Templates.TemplateField>();
 
-      var database = Factory.GetDatabase(templateModel.DatabaseName);
+      var database = Factory.GetDatabase(template.DatabaseName);
       var baseTemplates = new List<Item>();
 
-      var templates = templateModel.BaseTemplates.Split(Pipe, StringSplitOptions.RemoveEmptyEntries);
+      var templates = template.BaseTemplates.Split(Pipe, StringSplitOptions.RemoveEmptyEntries);
       foreach (var templateId in templates)
       {
         // resolve possible item paths
         var baseTemplateItem = database.GetItem(templateId);
         if (baseTemplateItem == null)
         {
-          throw new RetryableBuildException(Texts.Text2037, templateModel.SourceFileName, 0, 0, templateId);
+          throw new RetryableBuildException(Texts.Text2037, template.SourceFile.SourceFileName, 0, 0, templateId);
         }
 
         baseTemplates.Add(baseTemplateItem);
 
-        var template = TemplateManager.GetTemplate(baseTemplateItem.ID, database);
-        if (template == null)
+        var t = TemplateManager.GetTemplate(baseTemplateItem.ID, database);
+        if (t == null)
         {
-          throw new RetryableBuildException(Texts.Text2036, templateModel.SourceFileName, 0, 0, templateId);
+          throw new RetryableBuildException(Texts.Text2036, template.SourceFile.SourceFileName, 0, 0, templateId);
         }
 
-        var templateFields = template.GetFields(true);
+        var templateFields = t.GetFields(true);
 
         foreach (var templateField in templateFields)
         {
@@ -256,7 +257,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
         }
       }
 
-      templateModel.BaseTemplates = string.Join("|", baseTemplates.Select(t => t.ID.ToString()));
+      template.BaseTemplates = string.Join("|", baseTemplates.Select(t => t.ID.ToString()));
 
       return fields;
     }
@@ -266,7 +267,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
     {
       Item parentItem = null;
 
-      var parentPath = this.TemplateModel.ItemIdOrPath;
+      var parentPath = this.Template.ItemIdOrPath;
       parentPath = parentPath.Left(parentPath.LastIndexOf('/'));
 
       if (!string.IsNullOrEmpty(parentPath))
@@ -304,15 +305,15 @@ namespace Sitecore.Pathfinder.Builders.Templates
 
     protected virtual void ResolveItem([NotNull] IEmitContext context)
     {
-      var database = context.DataService.GetDatabase(this.TemplateModel.DatabaseName);
+      var database = context.DataService.GetDatabase(this.Template.DatabaseName);
       if (database == null)
       {
         return;
       }
 
-      if (!string.IsNullOrEmpty(this.TemplateModel.ItemIdOrPath))
+      if (!string.IsNullOrEmpty(this.Template.ItemIdOrPath))
       {
-        this.Item = database.GetItem(this.TemplateModel.ItemIdOrPath);
+        this.Item = database.GetItem(this.Template.ItemIdOrPath);
       }
 
       if (this.Item == null)
@@ -320,7 +321,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
         return;
       }
 
-      this.TemplateModel.ItemIdOrPath = this.Item.ID.ToString();
+      this.Template.ItemIdOrPath = this.Item.ID.ToString();
 
       foreach (var section in this.Sections)
       {
@@ -417,9 +418,9 @@ namespace Sitecore.Pathfinder.Builders.Templates
       }
     }
 
-    protected virtual void UpdateField([NotNull] TemplateSectionBuilder templateSectionBuilder, [NotNull] TemplateFieldBuilder templateFieldBuilder, [NotNull] IEnumerable<TemplateField> inheritedFields)
+    protected virtual void UpdateField([NotNull] TemplateSectionBuilder templateSectionBuilder, [NotNull] TemplateFieldBuilder templateFieldBuilder, [NotNull] IEnumerable<Sitecore.Data.Templates.TemplateField> inheritedFields)
     {
-      if (inheritedFields.Any(f => string.Compare(f.Name, templateFieldBuilder.TemplaterFieldModel.Name, StringComparison.OrdinalIgnoreCase) == 0))
+      if (inheritedFields.Any(f => string.Compare(f.Name, templateFieldBuilder.TemplaterField.Name, StringComparison.OrdinalIgnoreCase) == 0))
       {
         return;
       }
@@ -427,7 +428,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
       var item = templateFieldBuilder.Item;
       if (item == null)
       {
-        item = ItemManager.AddFromTemplate(templateFieldBuilder.TemplaterFieldModel.Name, new TemplateID(TemplateIDs.TemplateField), templateSectionBuilder.Item);
+        item = ItemManager.AddFromTemplate(templateFieldBuilder.TemplaterField.Name, new TemplateID(TemplateIDs.TemplateField), templateSectionBuilder.Item);
         if (item == null)
         {
           // todo: report error
@@ -443,19 +444,19 @@ namespace Sitecore.Pathfinder.Builders.Templates
 
       using (new EditContext(item))
       {
-        item.Name = templateFieldBuilder.TemplaterFieldModel.Name;
-        item["Type"] = templateFieldBuilder.TemplaterFieldModel.Type;
-        item["Shared"] = templateFieldBuilder.TemplaterFieldModel.Shared ? "1" : string.Empty;
-        item["Unversioned"] = templateFieldBuilder.TemplaterFieldModel.Unversioned ? "1" : string.Empty;
-        item["Source"] = templateFieldBuilder.TemplaterFieldModel.Source;
+        item.Name = templateFieldBuilder.TemplaterField.Name;
+        item["Type"] = templateFieldBuilder.TemplaterField.Type;
+        item["Shared"] = templateFieldBuilder.TemplaterField.Shared ? "1" : string.Empty;
+        item["Unversioned"] = templateFieldBuilder.TemplaterField.Unversioned ? "1" : string.Empty;
+        item["Source"] = templateFieldBuilder.TemplaterField.Source;
       }
     }
 
-    protected virtual void UpdateSection([NotNull] TemplateBuilder templateBuilder, [NotNull] TemplateSectionBuilder templateSectionBuilder, [NotNull] IEnumerable<TemplateField> inheritedFields)
+    protected virtual void UpdateSection([NotNull] TemplateBuilder templateBuilder, [NotNull] TemplateSectionBuilder templateSectionBuilder, [NotNull] IEnumerable<Sitecore.Data.Templates.TemplateField> inheritedFields)
     {
       if (templateSectionBuilder.Item == null)
       {
-        templateSectionBuilder.Item = ItemManager.AddFromTemplate(templateSectionBuilder.TemplateSectionModel.Name, new TemplateID(TemplateIDs.TemplateSection), templateBuilder.Item);
+        templateSectionBuilder.Item = ItemManager.AddFromTemplate(templateSectionBuilder.TemplateSection.Name, new TemplateID(TemplateIDs.TemplateSection), templateBuilder.Item);
         if (templateSectionBuilder.Item == null)
         {
           // todo: report error 
@@ -469,11 +470,11 @@ namespace Sitecore.Pathfinder.Builders.Templates
           templateSectionBuilder.Item.MoveTo(templateBuilder.Item);
         }
 
-        if (templateSectionBuilder.Item.Name != templateSectionBuilder.TemplateSectionModel.Name)
+        if (templateSectionBuilder.Item.Name != templateSectionBuilder.TemplateSection.Name)
         {
           using (new EditContext(templateSectionBuilder.Item))
           {
-            templateSectionBuilder.Item.Name = templateSectionBuilder.TemplateSectionModel.Name;
+            templateSectionBuilder.Item.Name = templateSectionBuilder.TemplateSection.Name;
           }
         }
       }
@@ -484,7 +485,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
       }
     }
 
-    protected virtual void UpdateTemplate([NotNull] IEnumerable<TemplateField> inheritedFields)
+    protected virtual void UpdateTemplate([NotNull] IEnumerable<Sitecore.Data.Templates.TemplateField> inheritedFields)
     {
       var item = this.Item;
       if (item == null)
@@ -494,12 +495,12 @@ namespace Sitecore.Pathfinder.Builders.Templates
 
       using (new EditContext(item))
       {
-        item[FieldIDs.BaseTemplate] = this.TemplateModel.BaseTemplates;
-        item.Name = this.TemplateModel.Name;
+        item[FieldIDs.BaseTemplate] = this.Template.BaseTemplates;
+        item.Name = this.Template.ItemName;
 
-        if (!string.IsNullOrEmpty(this.TemplateModel.Icon))
+        if (!string.IsNullOrEmpty(this.Template.Icon))
         {
-          item.Appearance.Icon = this.TemplateModel.Icon;
+          item.Appearance.Icon = this.Template.Icon;
         }
       }
 

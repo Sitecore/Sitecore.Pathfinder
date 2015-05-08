@@ -1,6 +1,7 @@
 ﻿namespace Sitecore.Pathfinder.Building.Packaging.CreateNuspec
 {
   using System.ComponentModel.Composition;
+  using System.IO;
   using System.Linq;
   using System.Text;
   using System.Xml;
@@ -36,7 +37,7 @@
         context.FileSystem.DeleteFile(nuspecFileName);
       }
 
-      if (!context.SourceFiles.Any())
+      if (!context.ModifiedProjectItems.Any())
       {
         return;
       }
@@ -46,7 +47,7 @@
 
     protected void BuildNuspecFile([NotNull] IBuildContext context, [NotNull] string nuspecFileName)
     {
-      var outputPath = context.OutputDirectory;
+      var outputPath = context.SolutionDirectory;
       var packageId = context.Configuration.Get("packaging:nuspec:id");
       var packageVersion = context.Configuration.Get("packaging:nuspec:version");
       var title = context.Configuration.Get("packaging:nuspec:title");
@@ -55,7 +56,6 @@
       var description = context.Configuration.Get("packaging:nuspec:description");
       var summary = context.Configuration.Get("packaging:nuspec:summary");
       var tags = context.Configuration.Get("packaging:nuspec:tags");
-
       using (var output = new XmlTextWriter(nuspecFileName, Encoding.UTF8))
       {
         output.Formatting = Formatting.Indented;
@@ -76,15 +76,19 @@
 
         output.WriteStartElement("files");
 
-        foreach (var sourceFileName in context.SourceFiles)
+        var configFileName = context.Configuration.Get(Constants.ConfigFileName);
+        output.WriteStartElement("file");
+        output.WriteAttributeString("src", Path.Combine(context.SolutionDirectory, configFileName));
+        output.WriteAttributeString("target", "content\\" + configFileName);
+        output.WriteEndElement();
+
+        foreach (var projectItem in context.ModifiedProjectItems)
         {
-          var targetFileName = PathHelper.UnmapPath(outputPath, sourceFileName).TrimStart('\\');
+          var targetFileName = "content\\" + PathHelper.UnmapPath(outputPath, projectItem.SourceFile.SourceFileName).TrimStart('\\');
 
           output.WriteStartElement("file");
-
-          output.WriteAttributeString("src", sourceFileName);
+          output.WriteAttributeString("src", projectItem.SourceFile.SourceFileName);
           output.WriteAttributeString("target", targetFileName);
-
           output.WriteEndElement();
         }
 
@@ -92,6 +96,7 @@
 
         output.WriteEndElement();
       }
+
     }
   }
 }

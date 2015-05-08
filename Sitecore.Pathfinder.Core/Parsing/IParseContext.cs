@@ -10,6 +10,21 @@
     ICompositionService CompositionService { get; }
 
     [NotNull]
+    string DatabaseName { get; }
+
+    [NotNull]
+    string ItemName { get; }
+
+    [NotNull]
+    string ItemPath { get; }
+
+    [NotNull]
     IProject Project { get; }
+
+    [NotNull]
+    ISourceFile SourceFile { get; }
+
+    [NotNull]
+    string GetRelativeFileName([NotNull] ISourceFile sourceFile);
   }
 }

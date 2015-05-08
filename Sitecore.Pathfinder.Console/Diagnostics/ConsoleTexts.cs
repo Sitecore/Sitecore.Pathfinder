@@ -22,6 +22,7 @@
     public const int Text1009 = 1009;
 
     public const int Text1010 = 1010;
+    public const int Text1011 = 1011;
 
     // Warnings
     public const int Text2000 = 2000;

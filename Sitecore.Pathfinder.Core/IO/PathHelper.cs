@@ -107,7 +107,7 @@
     }
 
     [NotNull]
-    public static string NormalizeWebPath([NotNull] string filePath)
+    public static string NormalizeItemPath([NotNull] string filePath)
     {
       return filePath.Replace("\\", "/");
     }

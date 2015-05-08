@@ -5,6 +5,7 @@
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.IO;
+  using Sitecore.Pathfinder.Projects;
 
   public class BuildContext : IBuildContext
   {
@@ -15,7 +16,7 @@
       this.CompositionService = compositionService;
       this.FileSystem = fileSystem;
 
-      this.SourceFiles = new List<string>();
+      this.ModifiedProjectItems = new List<ProjectItem>();
       this.SourceMap = new Dictionary<string, string>();
       this.OutputFiles = new List<string>();
       this.IsDeployable = true;
@@ -46,6 +47,8 @@
 
     public IList<string> OutputFiles { get; }
 
+    public IProject Project { get; private set; }
+
     public string ProjectDirectory
     {
       get
@@ -72,10 +75,17 @@
       }
     }
 
-    public IList<string> SourceFiles { get; }
+    public IList<ProjectItem> ModifiedProjectItems { get; }
 
     public IDictionary<string, string> SourceMap { get; }
 
     public ITraceService Trace { get; }
+
+    [NotNull]
+    public IBuildContext Load([NotNull] IProject project)
+    {
+      this.Project = project;
+      return this;
+    }
   }
 }

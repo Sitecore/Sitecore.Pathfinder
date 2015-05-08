@@ -10,14 +10,10 @@
     <tags />
   </metadata>
   <files>
-    <file src="e:\Sitecore\Sitecore.Pathfinder\Website.Demo\.sitecore.package\serialization\master\sitecore\content\Home\HelloWorld.item.xml" target="serialization\master\sitecore\content\Home\HelloWorld.item.xml" />
-    <file src="e:\Sitecore\Sitecore.Pathfinder\Website.Demo\.sitecore.package\serialization\master\sitecore\content\Home\HelloWorld.layout.xml" target="serialization\master\sitecore\content\Home\HelloWorld.layout.xml" />
-    <file src="e:\Sitecore\Sitecore.Pathfinder\Website.Demo\.sitecore.package\serialization\master\sitecore\content\Home\Welcome.item.xml" target="serialization\master\sitecore\content\Home\Welcome.item.xml" />
-    <file src="e:\Sitecore\Sitecore.Pathfinder\Website.Demo\.sitecore.package\content\project\layout\web.config" target="content\project\layout\web.config" />
-    <file src="e:\Sitecore\Sitecore.Pathfinder\Website.Demo\.sitecore.package\content\project\layout\layouts\MvcLayout.cshtml" target="content\project\layout\layouts\MvcLayout.cshtml" />
-    <file src="e:\Sitecore\Sitecore.Pathfinder\Website.Demo\.sitecore.package\serialization\master\sitecore\layout\layouts\MvcLayout.item.xml" target="serialization\master\sitecore\layout\layouts\MvcLayout.item.xml" />
-    <file src="e:\Sitecore\Sitecore.Pathfinder\Website.Demo\.sitecore.package\content\project\layout\renderings\HelloWorld.cshtml" target="content\project\layout\renderings\HelloWorld.cshtml" />
-    <file src="e:\Sitecore\Sitecore.Pathfinder\Website.Demo\.sitecore.package\serialization\master\sitecore\layout\renderings\HelloWorld.item.xml" target="serialization\master\sitecore\layout\renderings\HelloWorld.item.xml" />
-    <file src="e:\Sitecore\Sitecore.Pathfinder\Website.Demo\.sitecore.package\serialization\master\sitecore\media library\mushrooms.jpg" target="serialization\master\sitecore\media library\mushrooms.jpg" />
+    <file src="E:\Sitecore\Sitecore.Pathfinder\Website.Demo\sitecore.config.json" target="content\sitecore.config.json" />
+    <file src="E:\Sitecore\Sitecore.Pathfinder\Website.Demo\content\Home\HelloWorld.layout.xml" target="content\content\Home\HelloWorld.layout.xml" />
+    <file src="E:\Sitecore\Sitecore.Pathfinder\Website.Demo\content\Home\Welcome.item.xml" target="content\content\Home\Welcome.item.xml" />
+    <file src="E:\Sitecore\Sitecore.Pathfinder\Website.Demo\layout\layouts\MvcLayout.item.xml" target="content\layout\layouts\MvcLayout.item.xml" />
+    <file src="E:\Sitecore\Sitecore.Pathfinder\Website.Demo\media library\mushrooms.jpg" target="content\media library\mushrooms.jpg" />
   </files>
 </package>

@@ -30,7 +30,7 @@
 
       foreach (var fileName in context.OutputFiles)
       {
-        var destinationFileName = PathHelper.Combine(destinationDirectory, Path.GetFileName(fileName));
+        var destinationFileName = PathHelper.Combine(destinationDirectory, Path.GetFileName(fileName) ?? string.Empty);
 
         context.FileSystem.Copy(fileName, destinationFileName);
       }

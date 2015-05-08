@@ -3,114 +3,63 @@
   using System;
   using System.Collections.Generic;
   using System.ComponentModel.Composition;
-  using System.IO;
-  using System.Linq;
+  using System.Xml.Linq;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Projects;
+  using Sitecore.Pathfinder.Extensions.StringExtensions;
+  using Sitecore.Pathfinder.Parsing.Items.ElementParsers;
 
   [Export(typeof(IParser))]
   public class ItemParser : ParserBase
   {
-    [ImportingConstructor]
-    public ItemParser([NotNull] ICompositionService compositionService) : base(Items)
-    {
-      this.CompositionService = compositionService;
-    }
+    private const string FileExtension = ".item.xml";
 
-    [NotNull]
-    public ICompositionService CompositionService { get; }
+    public ItemParser() : base(Items)
+    {
+    }
 
     [NotNull]
     [ImportMany]
-    public IEnumerable<IItemParser> ItemFileBuilders { get; private set; }
+    public IEnumerable<IElementParser> ElementParsers { get; [UsedImplicitly] private set; }
 
-    public override bool CanParse(IParseContext context, ISourceFile sourceFile)
+    public override bool CanParse(IParseContext context)
     {
-      this.ParseItems(context, context.Project.ProjectDirectory);
-      return false;
+      return context.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
-    protected virtual ParseResult ParseItem([NotNull] IParseContext context, [NotNull] string databaseName, [NotNull] string fileName)
+    public override void Parse(IParseContext context)
     {
-      // todo: use abstract factory pattern
-      var itemFileBuildContext = new ItemParseContext(context, databaseName, fileName);
-      var buildResult = ParseResult.None;
+      var root = context.SourceFile.ReadAsXml();
 
-      foreach (var itemFileBuilder in this.ItemFileBuilders.OrderBy(b => b.Priority))
+      var parentItemPath = context.ItemPath;
+
+      var n = parentItemPath.LastIndexOf('/');
+      if (n >= 0)
       {
-        if (!itemFileBuilder.CanParse(itemFileBuildContext))
-        {
-          continue;
-        }
-
-        itemFileBuilder.Parse(itemFileBuildContext);
+        parentItemPath = parentItemPath.Left(n);
       }
 
-      return buildResult;
+      var itemParseContext = new ItemParseContext(context, this, parentItemPath);
+
+      this.ParseElement(itemParseContext, root);
     }
 
-    protected virtual void ParseItems([NotNull] IParseContext context, [NotNull] string projectDirectory)
+    public void ParseElement([NotNull] ItemParseContext context, [NotNull] XElement element)
     {
-      var serializationDirectory = Path.Combine(projectDirectory, "serialization");
-      if (!context.FileSystem.DirectoryExists(serializationDirectory))
+      foreach (var elementParser in this.ElementParsers)
       {
-        return;
-      }
-
-      foreach (var databaseDirectory in context.FileSystem.GetDirectories(serializationDirectory))
-      {
-        var databaseName = Path.GetFileNameWithoutExtension(databaseDirectory) ?? "master";
-
-        this.ParseItems(context, databaseName, databaseDirectory);
-      }
-    }
-
-    protected virtual void ParseItems([NotNull] IParseContext context, [NotNull] string databaseName, [NotNull] string directory)
-    {
-      var fileNames = this.GetFileNames(context, directory);
-
-      foreach (var fileName in fileNames)
-      {
-        var result = this.ParseItem(context, databaseName, fileName);
-        if (result != ParseResult.Success)
+        if (elementParser.CanParse(context, element))
         {
-          continue;
-        }
-
-        var subFileNames = this.GetFileNames(context, directory, fileName);
-        foreach (var subFileName in subFileNames)
-        {
-          this.ParseItem(context, databaseName, subFileName);
+          elementParser.Parse(context, element);
         }
       }
-
-      foreach (var subdirectory in context.FileSystem.GetDirectories(directory))
-      {
-        this.ParseItems(context, databaseName, subdirectory);
-      }
     }
 
-    [NotNull]
-    private IEnumerable<string> GetFileNames([NotNull] IParseContext context, [NotNull] string directory, [NotNull] string parentFileName = "")
+    public void ParseElements([NotNull] ItemParseContext context, [NotNull] XElement element)
     {
-      var pattern = string.IsNullOrEmpty(parentFileName) ? "*" : Path.GetFileName(parentFileName) + ".*";
-
-      var fileNames = context.FileSystem.GetFiles(directory, pattern).ToList();
-
-      fileNames.Remove(parentFileName);
-
-      // remove sub file names
-      var subFileNames = new List<string>();
-
-      foreach (var fileName in fileNames)
+      foreach (var e in element.Elements())
       {
-        var subFileName = fileName + ".";
-        subFileNames.AddRange(fileNames.Where(f => f.StartsWith(subFileName, StringComparison.OrdinalIgnoreCase)));
+        this.ParseElement(context, e);
       }
-
-      fileNames.RemoveAll(f => subFileNames.Contains(f));
-
-      return fileNames;
     }
   }
 }

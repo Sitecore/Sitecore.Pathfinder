@@ -6,8 +6,8 @@
 
   public interface IFieldResolver
   {
-    bool CanHandle([NotNull] IEmitContext context, [NotNull] FieldModel fieldModel, [NotNull] Item item);
+    bool CanHandle([NotNull] IEmitContext context, [NotNull] Field field, [NotNull] Sitecore.Data.Items.Item item);
 
-    void Handle([NotNull] IEmitContext context, [NotNull] FieldModel fieldModel, [NotNull] Item item);
+    void Handle([NotNull] IEmitContext context, [NotNull] Field field, [NotNull] Sitecore.Data.Items.Item item);
   }
 }

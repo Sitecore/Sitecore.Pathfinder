@@ -11,6 +11,7 @@
   "SCC1008": "Installing package on website...",
   "SCC1009": "Publishing...",
   "SCC1010": "Linting...",
+  "SCC1011": "Loading project...",
 
   "SCC2000": "Pipeline is empty. There are no tasks to execute.",
 

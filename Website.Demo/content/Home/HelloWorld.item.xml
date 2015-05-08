@@ -1,7 +1,0 @@
-﻿<Item xmlns="http://www.sitecore.net/pathfinder/item" Template.Create="/sitecore/templates/Sample/HelloWorld">
-  <Field Name="Title">Hello</Field>
-  <Field Name="Text">Hello World</Field>
-  <Field Name="Image" Field.Type="Image">/sitecore/media library/mushrooms</Field>
-  <Field Name="__Workflow"></Field>
-  <Field Name="__Workflow State"></Field>
-</Item>

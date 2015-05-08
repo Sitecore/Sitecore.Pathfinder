@@ -9,44 +9,53 @@
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Extensions.ConfigurationExtensions;
   using Sitecore.Pathfinder.IO;
+  using Sitecore.Pathfinder.Projects;
 
   [Export]
   public class Build
   {
-    private static readonly char[] Space = {
+    private static readonly char[] Space = 
+    {
       ' '
     };
 
     [ImportingConstructor]
-    public Build([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystemService)
+    public Build([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystemService, [NotNull] IProjectService projectService)
     {
       this.CompositionService = compositionService;
       this.Configuration = configuration;
       this.Trace = traceService;
       this.FileSystemService = fileSystemService;
+      this.ProjectService = projectService;
     }
-
-    [NotNull]
-    public ICompositionService CompositionService { get; }
-
-    [NotNull]
-    public IConfiguration Configuration { get; }
-
-    [NotNull]
-    public IFileSystemService FileSystemService { get; }
 
     [NotNull]
     [ImportMany]
     public IEnumerable<ITask> Tasks { get; [UsedImplicitly] private set; }
 
     [NotNull]
-    public ITraceService Trace { get; }
+    protected ICompositionService CompositionService { get; }
+
+    [NotNull]
+    protected IConfiguration Configuration { get; }
+
+    [NotNull]
+    protected IFileSystemService FileSystemService { get; }
+
+    [NotNull]
+    protected IProjectService ProjectService { get; }
+
+    [NotNull]
+    protected ITraceService Trace { get; }
 
     public virtual void Start()
     {
       this.LoadConfiguration();
 
-      var context = new BuildContext(this.Configuration, this.Trace, this.CompositionService, this.FileSystemService);
+      var project = this.LoadProject();
+
+      // todo: use abstract factory pattern
+      var context = new BuildContext(this.Configuration, this.Trace, this.CompositionService, this.FileSystemService).Load(project);
 
       this.Execute(context);
     }
@@ -182,6 +191,22 @@
       {
         configuration.Set(Constants.OutputDirectory, outputDirectory);
       }
+    }
+
+    [NotNull]
+    protected virtual IProject LoadProject()
+    {
+      this.Trace.TraceInformation(ConsoleTexts.Text1011);
+
+      // todo: refactor this
+      var projectDirectory = PathHelper.Combine(this.Configuration.Get(Constants.SolutionDirectory), this.Configuration.Get(Constants.ProjectDirectory));
+      var databaseName = this.Configuration.Get(Constants.Database);
+      var ignoreDirectories = this.Configuration.Get(Constants.SystemDirectories).Split(Space, StringSplitOptions.RemoveEmptyEntries).ToList();
+
+      ignoreDirectories.Add(Path.GetFileName(this.Configuration.Get(Constants.ToolsPath)));
+      ignoreDirectories.Add(Path.GetFileName(this.Configuration.Get(Constants.OutputDirectory)));
+
+      return this.ProjectService.LoadProject(projectDirectory, databaseName, ignoreDirectories.ToArray());
     }
   }
 }

@@ -5,6 +5,7 @@
   using Sitecore.Pathfinder.Data;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.IO;
+  using Sitecore.Pathfinder.Projects;
 
   public interface IEmitContext
   {
@@ -12,10 +13,13 @@
     IDataService DataService { get; }
 
     [NotNull]
-    IEnumerable<IFieldResolver> FieldHandlers { get; }
+    IEnumerable<IFieldResolver> FieldResolvers { get; }
 
     [NotNull]
     IFileSystemService FileSystem { get; }
+
+    [NotNull]
+    IProject Project { get; }
 
     [NotNull]
     ITraceService Trace { get; }

@@ -48,46 +48,48 @@
       // todo: change to abstract factory pattern
       this.Trace.ProjectDirectory = projectDirectory;
 
-      var project = this.ParseProject(projectDirectory);
+      var project = new Project(this.CompositionService, this.FileSystem, this.ParseService).Load(projectDirectory, "master");
 
       this.Emit(project);
     }
 
     protected virtual void Emit([NotNull] IProject project)
     {
-      var context = new EmitContext(this.CompositionService, this.Trace, this.DataService, this.FileSystem);
+      // todo: use abstract factory pattern
+      var context = new EmitContext(this.CompositionService, this.Trace, this.DataService, this.FileSystem).Load(project);
+
       var emitters = this.Emitters.OrderBy(e => e.Sortorder).ToList();
 
-      var retries = new List<Tuple<ProjectElementBase, Exception>>();
+      var retries = new List<Tuple<ProjectItem, Exception>>();
 
       // todo: use proper user
       using (new SecurityDisabler())
       {
-        foreach (var model in project.Elements)
+        foreach (var projectItem in project.Items)
         {
-          this.EmitModel(context, model, emitters, retries);
+          this.EmitProjectItem(context, projectItem, emitters, retries);
         }
 
         this.RetryEmit(context, emitters, retries);
       }
     }
 
-    protected virtual void EmitModel([NotNull] IEmitContext context, [NotNull] ProjectElementBase model, [NotNull] List<IEmitter> emitters, [NotNull] List<Tuple<ProjectElementBase, Exception>> retries)
+    protected virtual void EmitProjectItem([NotNull] IEmitContext context, [NotNull] ProjectItem projectItem, [NotNull] List<IEmitter> emitters, [NotNull] ICollection<Tuple<ProjectItem, Exception>> retries)
     {
       foreach (var emitter in emitters)
       {
-        if (!emitter.CanEmit(context, model))
+        if (!emitter.CanEmit(context, projectItem))
         {
           continue;
         }
 
         try
         {
-          emitter.Emit(context, model);
+          emitter.Emit(context, projectItem);
         }
         catch (RetryableBuildException ex)
         {
-          retries.Add(new Tuple<ProjectElementBase, Exception>(model, ex));
+          retries.Add(new Tuple<ProjectItem, Exception>(projectItem, ex));
         }
         catch (BuildException ex)
         {
@@ -95,70 +97,55 @@
         }
         catch (Exception ex)
         {
-          retries.Add(new Tuple<ProjectElementBase, Exception>(model, ex));
+          retries.Add(new Tuple<ProjectItem, Exception>(projectItem, ex));
         }
       }
     }
 
-    [NotNull]
-    protected virtual IProject ParseProject([NotNull] string projectDirectory)
+    protected virtual void RetryEmit([NotNull] IEmitContext context, [NotNull] List<IEmitter> emitters, [NotNull] ICollection<Tuple<ProjectItem, Exception>> retries)
     {
-      var project = new Project(this.CompositionService, this.FileSystem, this.ParseService, projectDirectory);
-
-      return project;
-    }
-
-    protected virtual void RetryEmit([NotNull] IEmitContext context, [NotNull] List<IEmitter> emitters, [NotNull] List<Tuple<ProjectElementBase, Exception>> retries)
-    {
-      var count = retries.Count;
-
-      while (count > 0)
+      while (true)
       {
-        var list = new List<Tuple<ProjectElementBase, Exception>>(retries);
-        list.Reverse();
-
-        retries.Clear();
-
-        foreach (var tuple in list)
+        var retryAgain = new List<Tuple<ProjectItem, Exception>>();
+        foreach (var projectItem in retries.Reverse().Select(retry => retry.Item1))
         {
-          var model = tuple.Item1;
-
           try
           {
-            this.EmitModel(context, model, emitters, retries);
+            this.EmitProjectItem(context, projectItem, emitters, retryAgain);
           }
           catch (Exception ex)
           {
-            retries.Add(new Tuple<ProjectElementBase, Exception>(model, ex));
+            retries.Add(new Tuple<ProjectItem, Exception>(projectItem, ex));
           }
         }
 
-        if (retries.Count >= count)
+        if (retryAgain.Count >= retries.Count)
         {
           // did not succeed to install any items
+          retries = retryAgain;
           break;
         }
 
-        count = retries.Count;
+        retries = retryAgain;
       }
 
-      foreach (var tuple in retries)
+      foreach (var retry in retries)
       {
-        var fileName = tuple.Item1;
-        var ex = tuple.Item2;
+        var projectItem = retry.Item1;
+        var exception = retry.Item2;
 
-        var buildException = ex as BuildException;
+        var buildException = exception as BuildException;
         if (buildException != null)
         {
           this.Trace.TraceError(buildException.Text, buildException.FileName, buildException.Line, buildException.Column, buildException.Args);
         }
-        else if (ex != null)
+        else if (exception != null)
         {
-          this.Trace.TraceError(Texts.Text9998, fileName, 0, 0, ex.Message);
+          this.Trace.TraceError(Texts.Text9998, projectItem.SourceFile.SourceFileName, 0, 0, exception.Message);
         }
         else
         {
-          this.Trace.TraceError(Texts.Text9999, "An error occured in " + fileName);
+          this.Trace.TraceError(Texts.Text9999, "An error occured in " + projectItem.SourceFile.SourceFileName);
         }
       }
     }

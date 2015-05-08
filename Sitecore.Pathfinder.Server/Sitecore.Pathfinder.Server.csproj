@@ -82,10 +82,10 @@
   <ItemGroup>
     <Compile Include="Diagnostics\TraceService.cs" />
     <Compile Include="Emitters\Items\ItemEmitter.cs" />
-    <Compile Include="Emitters\ContentFiles\ContentFileEmitter.cs" />
+    <Compile Include="Emitters\Files\ContentFileEmitter.cs" />
     <Compile Include="Emitters\Emitter.cs" />
     <Compile Include="Emitters\EmitContext.cs" />
-    <Compile Include="Emitters\BinFiles\BinFileEmitter.cs" />
+    <Compile Include="Emitters\Files\BinFileEmitter.cs" />
     <Compile Include="Emitters\IEmitContext.cs" />
     <Compile Include="Data\DataService.cs" />
     <Compile Include="Builders\FieldResolvers\CheckboxFieldResolver.cs" />
@@ -102,8 +102,8 @@
     <Compile Include="Emitters\EmitService.cs" />
     <Compile Include="Emitters\EmitterBase.cs" />
     <Compile Include="Emitters\Layouts\LayoutEmitter.cs" />
-    <Compile Include="Emitters\MediaFiles\MediaFileEmitter.cs" />
-    <Compile Include="Emitters\SerializationFiles\SerializationFileEmitter.cs" />
+    <Compile Include="Emitters\Files\MediaFileEmitter.cs" />
+    <Compile Include="Emitters\Files\SerializationFileEmitter.cs" />
     <Compile Include="Emitters\Templates\TemplateEmitter.cs" />
     <Compile Include="Packages\Packages\NugetPackage.cs" />
     <Compile Include="Packages\Packages\PackageBase.cs" />
@@ -119,9 +119,7 @@
       <Name>Sitecore.Pathfinder.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Builders\Layouts\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Properties\PublishProfiles\Local.pubxml" />
   </ItemGroup>

@@ -29,6 +29,11 @@
       {
         context.FileSystem.DeleteDirectory(dir);
       }
+
+      foreach (var projectItem in context.Project.Items)
+      {
+        projectItem.SourceFile.IsModified = true;
+      }
     }
   }
 }

@@ -29,7 +29,7 @@
       }
 
       this.Copy(context, fileName, destinationFileName);
-      context.BuildContext.SourceFiles.Add(destinationFileName);
+      context.BuildContext.ModifiedProjectItems.Add(destinationFileName);
       context.BuildContext.SourceMap.Add(destinationFileName, fileName);
 
       if (!this.HasItemFile(context, fileName))
@@ -45,7 +45,7 @@
       var serializationDirectory = Path.Combine(context.BuildContext.OutputDirectory, context.SerializationDirectory);
 
       var serializationFileName = Path.Combine(serializationDirectory, PathHelper.GetFileNameWithoutExtensions(fileName) + ".item.xml");
-      var pathField = PathHelper.NormalizeWebPath(PathHelper.UnmapPath(contentRootDirectory, destinationFileName));
+      var pathField = PathHelper.NormalizeItemPath(PathHelper.UnmapPath(contentRootDirectory, destinationFileName));
 
       var item = new ProjectItem
       {
@@ -65,7 +65,7 @@
         item.WriteItemXml(stream);
       }
 
-      context.BuildContext.SourceFiles.Add(serializationFileName);
+      context.BuildContext.ModifiedProjectItems.Add(serializationFileName);
       context.BuildContext.SourceMap.Add(fileName, serializationFileName);
     }
 

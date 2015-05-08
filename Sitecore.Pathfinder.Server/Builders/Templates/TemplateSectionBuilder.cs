@@ -11,9 +11,9 @@ namespace Sitecore.Pathfinder.Builders.Templates
     [CanBeNull]
     private IEnumerable<TemplateFieldBuilder> fieldBuilders;
 
-    public TemplateSectionBuilder([NotNull] TemplateSectionModel templateSectionModel)
+    public TemplateSectionBuilder([NotNull] TemplateSection templateSection)
     {
-      this.TemplateSectionModel = templateSectionModel;
+      this.TemplateSection = templateSection;
     }
 
     [NotNull]
@@ -21,7 +21,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
     {
       get
       {
-        return this.fieldBuilders ?? (this.fieldBuilders = this.TemplateSectionModel.Fields.Select(f => new TemplateFieldBuilder(f)).ToList());
+        return this.fieldBuilders ?? (this.fieldBuilders = this.TemplateSection.Fields.Select(f => new TemplateFieldBuilder(f)).ToList());
       }
     }
 
@@ -29,13 +29,13 @@ namespace Sitecore.Pathfinder.Builders.Templates
     public Item Item { get; set; }
 
     [NotNull]
-    public TemplateSectionModel TemplateSectionModel { get; }
+    public TemplateSection TemplateSection { get; }
 
     public void ResolveItem([NotNull] IEmitContext context, [CanBeNull] Item templateItem)
     {
       if (this.Item == null && templateItem != null)
       {
-        this.Item = templateItem.Children[this.TemplateSectionModel.Name];
+        this.Item = templateItem.Children[this.TemplateSection.Name];
       }
 
       if (this.Item == null)

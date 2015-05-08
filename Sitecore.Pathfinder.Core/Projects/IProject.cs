@@ -6,7 +6,10 @@
   public interface IProject
   {
     [NotNull]
-    ICollection<ProjectElementBase> Elements { get; }
+    string DatabaseName { get; set; }
+
+    [NotNull]
+    ICollection<ProjectItem> Items { get; }
 
     [NotNull]
     string ProjectDirectory { get; }

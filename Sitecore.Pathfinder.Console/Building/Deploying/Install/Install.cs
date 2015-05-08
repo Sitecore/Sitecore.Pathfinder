@@ -36,6 +36,7 @@ namespace Sitecore.Pathfinder.Building.Deploying.Install
       try
       {
         this.InstallPackage(context, url);
+        this.MarkProjectItemsAsNotModified(context);
       }
       catch (Exception ex)
       {
@@ -65,6 +66,14 @@ namespace Sitecore.Pathfinder.Building.Deploying.Install
       }
 
       context.Trace.Writeline(output);
+    }
+
+    protected void MarkProjectItemsAsNotModified([NotNull] IBuildContext context)
+    {
+      foreach (var projectItem in context.Project.Items)
+      {
+        projectItem.SourceFile.IsModified = false;
+      }
     }
   }
 }

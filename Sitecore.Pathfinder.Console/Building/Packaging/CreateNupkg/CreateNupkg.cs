@@ -44,7 +44,7 @@
         return;
       }
 
-      if (!context.SourceFiles.Any())
+      if (!context.ModifiedProjectItems.Any())
       {
         return;
       }

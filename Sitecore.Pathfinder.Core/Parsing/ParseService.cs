@@ -28,13 +28,13 @@
     public virtual void Parse([NotNull] IProject project, [NotNull] ISourceFile sourceFile)
     {
       // todo: change to abstract factory pattern
-      var context = new ParseContext(this.CompositionService, project);
+      var context = new ParseContext(this.CompositionService, project, sourceFile);
 
       foreach (var parser in this.Parsers.OrderBy(c => c.Sortorder))
       {
-        if (parser.CanParse(context, sourceFile))
+        if (parser.CanParse(context))
         {
-          parser.Parse(context, sourceFile);
+          parser.Parse(context);
         }
       }
     }

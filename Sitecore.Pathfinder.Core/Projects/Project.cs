@@ -20,12 +20,14 @@
       this.ParseService = parseService;
     }
 
-    public ICollection<ProjectElementBase> Elements { get; } = new List<ProjectElementBase>();
+    public string DatabaseName { get; set; }
+
+    public ICollection<ProjectItem> Items { get; } = new List<ProjectItem>();
 
     public string ProjectDirectory { get; private set; }
 
     [NotNull]
-    public ICollection<ISourceFile> SourceFiles { get; } = new List<SourceFile>();
+    public ICollection<ISourceFile> SourceFiles { get; } = new List<ISourceFile>();
 
     [NotNull]
     protected ICompositionService CompositionService { get; }
@@ -40,7 +42,7 @@
     {
       if (string.IsNullOrEmpty(this.ProjectDirectory))
       {
-        throw new InvalidOperationException("Project has not been loaded. Call the Load() method before");
+        throw new InvalidOperationException("Project has not been loaded. Call Load() first");
       }
 
       if (this.SourceFiles.Any(s => string.Compare(s.SourceFileName, sourceFileName, StringComparison.OrdinalIgnoreCase) == 0))
@@ -54,9 +56,13 @@
       this.ParseService.Parse(this, sourceFile);
     }
 
-    public void Load([NotNull] string projectDirectory)
+    [NotNull]
+    public Project Load([NotNull] string projectDirectory, [NotNull] string databaseName)
     {
       this.ProjectDirectory = projectDirectory;
+      this.DatabaseName = databaseName;
+
+      return this;
     }
 
     public void Remove(string sourceFileName)
