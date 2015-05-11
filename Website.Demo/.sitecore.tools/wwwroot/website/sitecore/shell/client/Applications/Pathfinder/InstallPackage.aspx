@@ -32,9 +32,10 @@
     packageService.UninstallPackage(packageId);
   }
 
-  if (WebUtil.GetQueryString("w") == "0")
+  var response = output.ToString();
+  if (!string.IsNullOrEmpty(response) || WebUtil.GetQueryString("w") == "0")
   {
-    this.Response.Write(HttpUtility.HtmlEncode(output.ToString()));
+    this.Response.Write(HttpUtility.HtmlEncode(response));
   }
   else
   {

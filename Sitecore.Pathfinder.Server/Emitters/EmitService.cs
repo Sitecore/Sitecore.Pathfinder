@@ -10,13 +10,13 @@
 
   public class EmitService
   {
-    public EmitService([Sitecore.NotNull] string projectDirectory)
+    public EmitService([Sitecore.NotNull] string solutionDirectory)
     {
-      this.ProjectDirectory = projectDirectory;
+      this.SolutionDirectory = solutionDirectory;
     }
 
     [Sitecore.NotNull]
-    public string ProjectDirectory { get; }
+    public string SolutionDirectory { get; }
 
     public virtual void Start()
     {
@@ -24,7 +24,7 @@
       var compositionService = this.RegisterCompositionService(configuration);
 
       var emitter = compositionService.GetExportedValue<Emitter>();
-      emitter.Start(this.ProjectDirectory);
+      emitter.Start();
     }
 
     [Sitecore.NotNull]
@@ -57,10 +57,10 @@
       var configuration = new Configuration();
       configuration.Add(new MemoryConfigurationSource());
 
+      configuration.Set(Pathfinder.Constants.ToolsDirectory, Path.Combine(this.SolutionDirectory, "content\\.sitecore.tools"));
       configuration.Set(Pathfinder.Constants.ConfigFileName, "sitecore.config.json");
 
       return configuration;
     }
-
   }
 }

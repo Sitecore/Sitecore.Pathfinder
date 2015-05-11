@@ -47,7 +47,7 @@
     [CanBeNull]
     protected virtual Item DoLoadItem([NotNull] string fileName, [NotNull] LoadOptions options)
     {
-      using (var reader = new StreamReader(File.Open(fileName, FileMode.Open, FileAccess.Read, FileShare.Read)))
+      using (var reader = new StreamReader(System.IO.File.Open(fileName, FileMode.Open, FileAccess.Read, FileShare.Read)))
       {
         var disabledLocally = ItemHandler.DisabledLocally;
         try

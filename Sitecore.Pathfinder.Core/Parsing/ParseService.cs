@@ -3,17 +3,19 @@
   using System.Collections.Generic;
   using System.ComponentModel.Composition;
   using System.Linq;
+  using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Projects;
 
   [Export(typeof(IParseService))]
-  [PartCreationPolicy(CreationPolicy.Shared)]
   public class ParseService : IParseService
   {
     [ImportingConstructor]
-    public ParseService([NotNull] ICompositionService compositionService)
+    public ParseService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ITokenService tokenService)
     {
       this.CompositionService = compositionService;
+      this.Configuration = configuration;
+      this.TokenService = tokenService;
     }
 
     // ReSharper disable once UnusedAutoPropertyAccessor.Local
@@ -25,17 +27,25 @@
     protected ICompositionService CompositionService { get; }
 
     [NotNull]
-    public virtual void Parse([NotNull] IProject project, [NotNull] ISourceFile sourceFile)
+    protected IConfiguration Configuration { get; }
+
+    [NotNull]
+    protected ITokenService TokenService { get; }
+
+    public virtual void Parse(IProject project, ISourceFile sourceFile)
     {
       // todo: change to abstract factory pattern
-      var context = new ParseContext(this.CompositionService, project, sourceFile);
+      var context = new ParseContext(this.CompositionService, this.Configuration, this.TokenService).Load(project, sourceFile);
 
       foreach (var parser in this.Parsers.OrderBy(c => c.Sortorder))
       {
-        if (parser.CanParse(context))
+        if (!parser.CanParse(context))
         {
-          parser.Parse(context);
+          continue;
         }
+
+        parser.Parse(context);
+        break;
       }
     }
   }

@@ -62,7 +62,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConsoleTexts.cs" />
+    <Compile Include="Configuration\ConfigurationService.cs" />
+    <Compile Include="Configuration\IConfigurationService.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Extensions\CompositionServiceExtensions\CompositionServiceExtensions.cs" />
     <Compile Include="Extensions\ConfigurationExtensions\ConfigurationExtensions.cs" />
@@ -73,12 +74,19 @@
     <Compile Include="Parsing\Items\ItemParseContext.cs" />
     <Compile Include="Parsing\Items\ItemParser.cs" />
     <Compile Include="Parsing\Layouts\LayoutParser.cs" />
+    <Compile Include="Parsing\Layouts\LayoutRenderingParser.cs" />
+    <Compile Include="Parsing\Layouts\RenderingParser.cs" />
+    <Compile Include="Parsing\Layouts\SublayoutRenderingParser.cs" />
+    <Compile Include="Parsing\Layouts\ViewRenderingParser.cs" />
+    <Compile Include="Parsing\Layouts\WebFormsRenderingParser.cs" />
     <Compile Include="Parsing\Other\ComponentParser.cs" />
     <Compile Include="Parsing\Other\PageTypeParser.cs" />
     <Compile Include="Parsing\Files\MediaFileParser.cs" />
     <Compile Include="Parsing\Files\SerializationFileParser.cs" />
     <Compile Include="Parsing\IParseService.cs" />
     <Compile Include="Projects\IProjectService.cs" />
+    <Compile Include="Projects\ITokenService.cs" />
+    <Compile Include="Projects\Layouts\Rendering.cs" />
     <Compile Include="Projects\Other\PageType.cs" />
     <Compile Include="Projects\IProject.cs" />
     <Compile Include="Projects\ISourceFile.cs" />
@@ -98,7 +106,7 @@
     <Compile Include="Parsing\IParseContext.cs" />
     <Compile Include="Parsing\ParseResult.cs" />
     <Compile Include="Projects\Files\SerializationFile.cs" />
-    <Compile Include="Projects\FileBase.cs" />
+    <Compile Include="Projects\Files\File.cs" />
     <Compile Include="Projects\Files\BinFile.cs" />
     <Compile Include="Projects\Files\ContentFile.cs" />
     <Compile Include="Projects\Items\Field.cs" />
@@ -113,9 +121,10 @@
     <Compile Include="Diagnostics\ConfigurationException.cs" />
     <Compile Include="Diagnostics\ITraceService.cs" />
     <Compile Include="Diagnostics\RetryableBuildException.cs" />
-    <Compile Include="Diagnostics\Texts.cs" />
+    <Compile Include="Projects\TokenService.cs" />
+    <Compile Include="Texts.cs" />
     <Compile Include="Diagnostics\TraceException.cs" />
-    <Compile Include="Diagnostics\TraceServiceBase.cs" />
+    <Compile Include="Diagnostics\TraceService.cs" />
     <Compile Include="Extensions\StringExtensions\StringExtensions.cs" />
     <Compile Include="Extensions\XElementExtensions\XElementExtensions.cs" />
     <Compile Include="IO\FileSystemService.cs" />

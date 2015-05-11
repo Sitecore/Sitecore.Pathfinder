@@ -13,7 +13,7 @@
     public PackageService()
     {
       // todo: make this configurable
-      var pathfinder = Path.Combine(Configuration.Settings.DataFolder, "pathfinder");
+      var pathfinder = Path.Combine(Sitecore.Configuration.Settings.DataFolder, "pathfinder");
       this.AvailableRepository = Path.Combine(pathfinder, "packages");
       this.InstalledRepository = Path.Combine(pathfinder, "installed");
 
@@ -46,7 +46,7 @@
 
       foreach (var availablePackage in availablePackages)
       {
-        var installedPackage = installedPackages.FirstOrDefault(p => p.PackageId == availablePackage.PackageId);
+        var installedPackage = installedPackages.FirstOrDefault(p => string.Compare(p.PackageId, availablePackage.PackageId, StringComparison.OrdinalIgnoreCase) == 0);
         if (installedPackage == null)
         {
           continue;
@@ -73,7 +73,7 @@
 
       foreach (var installedPackage in installedPackages)
       {
-        var availablePackage = availablePackages.FirstOrDefault(p => p.PackageId == installedPackage.PackageId);
+        var availablePackage = availablePackages.FirstOrDefault(p => string.Compare(p.PackageId, installedPackage.PackageId, StringComparison.OrdinalIgnoreCase) == 0);
         if (availablePackage == null)
         {
           continue;
@@ -139,7 +139,7 @@
       var packageManager = new PackageManager(availableRepository, this.InstalledRepository);
       packageManager.PackageInstalled += this.InstallPackage;
 
-      var installedPackage = installedPackages.FirstOrDefault(i => i.Id == packageId);
+      var installedPackage = installedPackages.FirstOrDefault(i => string.Compare(i.Id, packageId, StringComparison.OrdinalIgnoreCase) == 0);
       if (installedPackage != null)
       {
         if (installedPackage.Version == availablePackage.Version)

@@ -4,6 +4,7 @@
   using System.Xml.Linq;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.IO;
+  using Sitecore.Pathfinder.Parsing;
 
   public class SourceFile : ISourceFile
   {
@@ -17,44 +18,57 @@
 
     public bool IsModified { get; set; }
 
-    public DateTime LastWriteTimeUtc { get; private set; }
+    public DateTime LastWriteTimeUtc { get; }
 
     public string SourceFileName { get; }
 
     [NotNull]
     protected IFileSystemService FileSystem { get; }
 
-    public string[] ReadAsLines()
+    public string[] ReadAsLines(IParseContext context)
     {
-      return this.FileSystem.ReadAllLines(this.SourceFileName);
+      var lines = this.FileSystem.ReadAllLines(this.SourceFileName);
+
+      for (var index = 0; index < lines.Length; index++)
+      {
+        lines[index] = context.ReplaceTokens(lines[index]);
+      }
+
+      return lines;
     }
 
-    public XElement ReadAsXml()
+    public string ReadAsText(IParseContext context)
     {
-      var text = this.FileSystem.ReadAllText(this.SourceFileName);
+      var contents = this.FileSystem.ReadAllText(this.SourceFileName);
+
+      contents = context.ReplaceTokens(contents);
+
+      return contents;
+    }
+
+    public XElement ReadAsXml(IParseContext context)
+    {
+      var contents = this.FileSystem.ReadAllText(this.SourceFileName);
+
+      contents = context.ReplaceTokens(contents);
 
       XDocument doc;
       try
       {
-        doc = XDocument.Parse(text, LoadOptions.PreserveWhitespace | LoadOptions.SetLineInfo);
+        doc = XDocument.Parse(contents, LoadOptions.PreserveWhitespace | LoadOptions.SetLineInfo);
       }
       catch
       {
-        throw new BuildException(Texts.Text1000, this.SourceFileName);
+        throw new BuildException(Texts.Text2000, this.SourceFileName);
       }
 
       var root = doc.Root;
       if (root == null)
       {
-        throw new BuildException(Texts.Text1000, this.SourceFileName);
+        throw new BuildException(Texts.Text2000, this.SourceFileName);
       }
 
       return root;
-    }
-
-    public void Touch()
-    {
-      this.LastWriteTimeUtc = DateTime.MinValue;
     }
   }
 }

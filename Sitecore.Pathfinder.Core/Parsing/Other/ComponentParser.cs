@@ -28,7 +28,7 @@
 
     public override void Parse(IParseContext context)
     {
-      var root = context.SourceFile.ReadAsXml();
+      var root = context.SourceFile.ReadAsXml(context);
 
       var privateTemplate = this.CreatePrivateTemplate(context, context.SourceFile, root);
       if (privateTemplate == null)

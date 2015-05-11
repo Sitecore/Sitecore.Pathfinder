@@ -29,7 +29,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.Initialization
 
     protected virtual void CopyResourceFiles([NotNull] IBuildContext context, [NotNull] string projectDirectory)
     {
-      var sourceDirectory = Path.Combine(context.Configuration.Get(Constants.ToolsPath), "wwwroot\\project\\*");
+      var sourceDirectory = Path.Combine(context.Configuration.Get(Constants.ToolsDirectory), "wwwroot\\project\\*");
 
       context.FileSystem.XCopy(sourceDirectory, projectDirectory);
     }
@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.Initialization
     protected virtual void CreateConfigurationFile([NotNull] IBuildContext context, [NotNull] string projectDirectory)
     {
       this.CopyResourceFiles(context, projectDirectory);
-      context.Trace.Writeline(ConsoleTexts.Text4002, context.Configuration.Get(Constants.ConfigFileName));
+      context.Trace.Writeline(Texts.Text1015, context.Configuration.Get(Constants.ConfigFileName));
     }
 
     protected virtual void CreateProjectDirectory([NotNull] IBuildContext context, [NotNull] string projectDirectory)
@@ -45,8 +45,8 @@ namespace Sitecore.Pathfinder.Building.Initializing.Initialization
       context.FileSystem.CreateDirectory(projectDirectory);
       this.CopyResourceFiles(context, projectDirectory);
 
-      context.Trace.Writeline(ConsoleTexts.Text4000);
-      context.Trace.Writeline(ConsoleTexts.Text4001, context.Configuration.Get(Constants.ConfigFileName));
+      context.Trace.Writeline(Texts.Text1013);
+      context.Trace.Writeline(Texts.Text1014, context.Configuration.Get(Constants.ConfigFileName));
     }
   }
 }

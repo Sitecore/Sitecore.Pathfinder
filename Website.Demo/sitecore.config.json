@@ -1,7 +1,7 @@
 {
   // wwwroot points to the base directory of the website
   // The wwwroot directory must contain a 'Data' and a 'Website' folder
-  "wwwroot": "e:\\inetpub\\wwwroot\\Sitecore.8.0.rev150223",
+  "wwwroot": "e:\\inetpub\\wwwroot\\Pathfinder",
   "hostname": "http://pathfinder",
 
   // relative project directory to solution directory
@@ -11,6 +11,6 @@
   "database": "master",
 
   // build pipeline
-  "pipeline": "clean incremental-build nuget-pack"
+  "pipeline": "clean incremental-build nuget-pack copy-to-website install publish"
 }
                                        

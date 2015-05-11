@@ -2,9 +2,10 @@
 {
   using System.Diagnostics;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Projects.Files;
   using Sitecore.Pathfinder.Projects.Items;
 
-  public class Component : FileBase
+  public class Component : File
   {
     public Component([NotNull] ISourceFile sourceFileName, [NotNull] Item privateTemplate, [NotNull] Item publicTemplate) : base(sourceFileName)
     {

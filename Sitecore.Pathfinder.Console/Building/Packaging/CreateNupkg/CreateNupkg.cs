@@ -23,7 +23,7 @@
         return;
       }
 
-      context.Trace.TraceInformation(ConsoleTexts.Text1005);
+      context.Trace.TraceInformation(Texts.Text1005);
 
       var packageFileName = context.Configuration.Get("nuget:filename");
       var nuspecFileName = PathHelper.Combine(context.SolutionDirectory, packageFileName);

@@ -12,7 +12,7 @@
 
     public override void Execute(IBuildContext context)
     {
-      context.Trace.TraceInformation(ConsoleTexts.Text1001);
+      context.Trace.TraceInformation(Texts.Text1001);
 
       foreach (var projectItem in context.Project.Items)
       {

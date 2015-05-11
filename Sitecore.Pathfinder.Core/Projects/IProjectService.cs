@@ -5,6 +5,6 @@
   public interface IProjectService
   {
     [NotNull]
-    IProject LoadProject([NotNull] string projectDirectory, [NotNull] string databaseName, [NotNull] string[] ignoreDirectories);
+    IProject LoadProject();
   }
 }

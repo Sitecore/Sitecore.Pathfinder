@@ -13,7 +13,7 @@
 
     public override void Execute(IBuildContext context)
     {
-      context.Trace.TraceInformation(ConsoleTexts.Text1002);
+      context.Trace.TraceInformation(Texts.Text1002);
 
       foreach (var projectItem in context.Project.Items)
       {
@@ -31,7 +31,7 @@
         context.ModifiedProjectItems.Add(projectItem);
       }
 
-      context.Trace.TraceInformation(ConsoleTexts.Text1003, context.ModifiedProjectItems.Count);
+      context.Trace.TraceInformation(Texts.Text1003, context.ModifiedProjectItems.Count);
     }
   }
 }

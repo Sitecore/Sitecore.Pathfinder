@@ -17,10 +17,10 @@ namespace Sitecore.Pathfinder.Building.Deploying.Publishing
     {
       if (!context.IsDeployable)
       {
-        throw new BuildException(ConsoleTexts.Text3011);
+        throw new BuildException(Texts.Text3011);
       }
 
-      context.Trace.TraceInformation(ConsoleTexts.Text1009);
+      context.Trace.TraceInformation(Texts.Text1009);
 
       var hostName = context.Configuration.Get(Constants.HostName).TrimEnd('/');
       var publishUrl = context.Configuration.Get(Constants.PublishUrl).TrimStart('/');
@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Building.Deploying.Publishing
       }
       catch (Exception ex)
       {
-        context.Trace.TraceError(ConsoleTexts.Text3008, ex.Message);
+        context.Trace.TraceError(Texts.Text3008, ex.Message);
       }
     }
   }

@@ -45,7 +45,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Diagnostics\TraceService.cs" />
     <Compile Include="Helpers\CompositionServiceHelper.cs" />
     <Compile Include="Projects\ProjectTests.cs" />
     <Compile Include="Projects\SourceFileTests.cs" />

@@ -2,7 +2,7 @@
 {
   using Sitecore.Pathfinder.Diagnostics;
 
-  public class BinFile : FileBase
+  public class BinFile : File
   {
     public BinFile([NotNull] ISourceFile sourceFile) : base(sourceFile)
     {

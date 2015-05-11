@@ -25,7 +25,7 @@
     {
       var binFile = (BinFile)projectItem;
 
-      var destinationFileName = PathHelper.UnmapPath(context.Project.ProjectDirectory, binFile.SourceFile.SourceFileName);
+      var destinationFileName = "/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(context.Project.ProjectDirectory, binFile.SourceFile.SourceFileName));
       destinationFileName = FileUtil.MapPath(destinationFileName);
 
       // todo: check for assembly version

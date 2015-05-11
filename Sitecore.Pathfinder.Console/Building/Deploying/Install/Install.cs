@@ -2,6 +2,7 @@ namespace Sitecore.Pathfinder.Building.Deploying.Install
 {
   using System;
   using System.ComponentModel.Composition;
+  using System.IO;
   using System.Net;
   using System.Web;
   using Sitecore.Pathfinder.Diagnostics;
@@ -18,12 +19,12 @@ namespace Sitecore.Pathfinder.Building.Deploying.Install
     {
       if (!context.IsDeployable)
       {
-        throw new BuildException(ConsoleTexts.Text3011);
+        throw new BuildException(Texts.Text3011);
       }
 
-      context.Trace.TraceInformation(ConsoleTexts.Text1008);
+      context.Trace.TraceInformation(Texts.Text1008);
 
-      var packageId = context.Configuration.Get("packaging:nuspec:id");
+      var packageId = Path.GetFileNameWithoutExtension(context.Configuration.Get("nuget:filename"));
       if (string.IsNullOrEmpty(packageId))
       {
         return;
@@ -38,9 +39,21 @@ namespace Sitecore.Pathfinder.Building.Deploying.Install
         this.InstallPackage(context, url);
         this.MarkProjectItemsAsNotModified(context);
       }
+      catch (WebException ex)
+      {
+        var message = ex.Message;
+
+        var stream = ex.Response.GetResponseStream();
+        if (stream != null)
+        {
+          message = new StreamReader(stream).ReadToEnd();
+        }
+
+        context.Trace.TraceError(Texts.Text3008, message);
+      }
       catch (Exception ex)
       {
-        context.Trace.TraceError(ConsoleTexts.Text3008, ex.Message);
+        context.Trace.TraceError(Texts.Text3008, ex.Message);
       }
     }
 

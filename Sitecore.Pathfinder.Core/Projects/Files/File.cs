@@ -1,15 +1,15 @@
-﻿namespace Sitecore.Pathfinder.Projects
+﻿namespace Sitecore.Pathfinder.Projects.Files
 {
   using System.IO;
   using Sitecore.Pathfinder.Diagnostics;
 
-  public abstract class FileBase : ProjectItem
+  public class File : ProjectItem
   {
     private string qualifiedName;
 
     private string shortName;
 
-    protected FileBase([NotNull] ISourceFile sourceFile) : base(sourceFile)
+    public File([NotNull] ISourceFile sourceFile) : base(sourceFile)
     {
     }
 

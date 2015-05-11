@@ -28,7 +28,7 @@
 
     public const string IgnoreDirectories = "ignoredirectories";
 
-    public const string ToolsPath = "system:toolspath";
+    public const string ToolsDirectory = "system:toolspath";
 
     public const string Wwwroot = "wwwroot";
   }

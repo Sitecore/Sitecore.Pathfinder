@@ -10,8 +10,16 @@ namespace Sitecore.Pathfinder.Projects.Items
     {
       this.SourceFile = sourceFile;
       this.Name = string.Empty;
-      this.Language = string.Empty;
       this.Value = string.Empty;
+      this.Language = string.Empty;
+    }
+
+    public Field([NotNull] ISourceFile sourceFile, [NotNull] string name, [NotNull] string value)
+    {
+      this.SourceFile = sourceFile;
+      this.Name = name;
+      this.Value = value;
+      this.Language = string.Empty;
     }
 
     [NotNull]

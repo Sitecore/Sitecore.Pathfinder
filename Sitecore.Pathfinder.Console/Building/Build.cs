@@ -3,29 +3,26 @@
   using System;
   using System.Collections.Generic;
   using System.ComponentModel.Composition;
-  using System.IO;
   using System.Linq;
-  using Microsoft.Framework.ConfigurationModel;
+  using Sitecore.Pathfinder.Configuration;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Extensions.ConfigurationExtensions;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects;
 
   [Export]
   public class Build
   {
-    private static readonly char[] Space = 
-    {
+    private static readonly char[] Space = {
       ' '
     };
 
     [ImportingConstructor]
-    public Build([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystemService, [NotNull] IProjectService projectService)
+    public Build([NotNull] ICompositionService compositionService, [NotNull] IConfigurationService configurationService, [NotNull] ITraceService trace, [NotNull] IFileSystemService fileSystem, [NotNull] IProjectService projectService)
     {
       this.CompositionService = compositionService;
-      this.Configuration = configuration;
-      this.Trace = traceService;
-      this.FileSystemService = fileSystemService;
+      this.ConfigurationService = configurationService;
+      this.Trace = trace;
+      this.FileSystem = fileSystem;
       this.ProjectService = projectService;
     }
 
@@ -37,10 +34,10 @@
     protected ICompositionService CompositionService { get; }
 
     [NotNull]
-    protected IConfiguration Configuration { get; }
+    protected IConfigurationService ConfigurationService { get; }
 
     [NotNull]
-    protected IFileSystemService FileSystemService { get; }
+    protected IFileSystemService FileSystem { get; }
 
     [NotNull]
     protected IProjectService ProjectService { get; }
@@ -50,12 +47,13 @@
 
     public virtual void Start()
     {
-      this.LoadConfiguration();
+      this.ConfigurationService.Load(true);
 
-      var project = this.LoadProject();
+      this.Trace.TraceInformation(Texts.Text1011);
+      var project = this.ProjectService.LoadProject();
 
       // todo: use abstract factory pattern
-      var context = new BuildContext(this.Configuration, this.Trace, this.CompositionService, this.FileSystemService).Load(project);
+      var context = new BuildContext(this.ConfigurationService.Configuration, this.Trace, this.CompositionService, this.FileSystem).Load(project);
 
       this.Execute(context);
     }
@@ -65,7 +63,7 @@
       var pipeline = this.GetPipeline(context);
       if (!pipeline.Any())
       {
-        context.Trace.TraceWarning(ConsoleTexts.Text2000);
+        context.Trace.TraceWarning(Texts.Text1012);
         return;
       }
 
@@ -85,7 +83,7 @@
       var task = this.Tasks.FirstOrDefault(t => string.Compare(t.TaskName, taskName, StringComparison.OrdinalIgnoreCase) == 0);
       if (task == null)
       {
-        context.Trace.TraceError(ConsoleTexts.Text3001, taskName);
+        context.Trace.TraceError(Texts.Text3001, taskName);
         return;
       }
 
@@ -98,17 +96,17 @@
         context.Trace.TraceError(ex.Text, ex.FileName, ex.Line, ex.Column, ex.Message);
         context.IsAborted = true;
 
-        if (string.Compare(context.Configuration.Get(Pathfinder.Constants.DebugMode), "true", StringComparison.OrdinalIgnoreCase) == 0)
+        if (string.Compare(context.Configuration.Get(Constants.DebugMode), "true", StringComparison.OrdinalIgnoreCase) == 0)
         {
           throw;
         }
       }
       catch (Exception ex)
       {
-        context.Trace.TraceError(ConsoleTexts.Text3009, ex.Message + ex.StackTrace);
+        context.Trace.TraceError(Texts.Text3009, ex.Message + ex.StackTrace);
         context.IsAborted = true;
 
-        if (string.Compare(context.Configuration.Get(Pathfinder.Constants.DebugMode), "true", StringComparison.OrdinalIgnoreCase) == 0)
+        if (string.Compare(context.Configuration.Get(Constants.DebugMode), "true", StringComparison.OrdinalIgnoreCase) == 0)
         {
           throw;
         }
@@ -144,62 +142,6 @@
       }
 
       return taskNames;
-    }
-
-    protected virtual void LoadConfiguration()
-    {
-      var configuration = this.Configuration as IConfigurationSourceRoot;
-      if (configuration == null)
-      {
-        throw new ConfigurationException(ConsoleTexts.Text3000);
-      }
-
-      // cut off executable name
-      var commandLineArgs = Environment.GetCommandLineArgs().Skip(1).ToArray();
-
-      // add system config
-      var fileName = Path.Combine(configuration.Get(Pathfinder.Constants.ToolsPath), configuration.Get(Pathfinder.Constants.ConfigFileName));
-      if (!File.Exists(fileName))
-      {
-        throw new ConfigurationException(ConsoleTexts.Text3002, fileName);
-      }
-
-      configuration.AddJsonFile(fileName);
-
-      // add command line
-      configuration.AddCommandLine(commandLineArgs);
-
-      // set website path
-      var toolsDirectory = configuration.Get(Pathfinder.Constants.ToolsPath);
-      var solutionDirectory = PathHelper.Combine(toolsDirectory, configuration.Get(Pathfinder.Constants.SolutionDirectory) ?? string.Empty);
-      configuration.Set(Pathfinder.Constants.SolutionDirectory, solutionDirectory);
-
-      // add build config
-      var websiteConfigFileName = PathHelper.Combine(solutionDirectory, configuration.Get(Pathfinder.Constants.ConfigFileName));
-      if (File.Exists(websiteConfigFileName))
-      {
-        configuration.AddFile(websiteConfigFileName);
-      }
-
-      // set project path
-      var projectDirectory = PathHelper.NormalizeFilePath(configuration.Get(Pathfinder.Constants.ProjectDirectory) ?? string.Empty).TrimStart('\\');
-      configuration.Set(Pathfinder.Constants.ProjectDirectory, projectDirectory);
-
-    }
-
-    [NotNull]
-    protected virtual IProject LoadProject()
-    {
-      this.Trace.TraceInformation(ConsoleTexts.Text1011);
-
-      // todo: refactor this
-      var projectDirectory = PathHelper.Combine(this.Configuration.Get(Pathfinder.Constants.SolutionDirectory), this.Configuration.Get(Pathfinder.Constants.ProjectDirectory));
-      var databaseName = this.Configuration.Get(Pathfinder.Constants.Database);
-      var ignoreDirectories = this.Configuration.Get(Pathfinder.Constants.IgnoreDirectories).Split(Space, StringSplitOptions.RemoveEmptyEntries).ToList();
-
-      ignoreDirectories.Add(Path.GetFileName(this.Configuration.Get(Pathfinder.Constants.ToolsPath)));
-
-      return this.ProjectService.LoadProject(projectDirectory, databaseName, ignoreDirectories.ToArray());
     }
   }
 }

@@ -29,7 +29,7 @@
 
       item.IsEmittable = false;
 
-      var lines = context.SourceFile.ReadAsLines();
+      var lines = context.SourceFile.ReadAsLines(context);
       this.ParseLines(item, lines, 0);
 
       var serializationFile = new SerializationFile(context.SourceFile, item);

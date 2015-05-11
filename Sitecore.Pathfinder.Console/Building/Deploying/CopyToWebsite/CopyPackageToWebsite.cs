@@ -16,10 +16,10 @@
     {
       if (!context.IsDeployable)
       {
-        throw new BuildException(ConsoleTexts.Text3011);
+        throw new BuildException(Texts.Text3011);
       }
 
-      context.Trace.TraceInformation(ConsoleTexts.Text1007);
+      context.Trace.TraceInformation(Texts.Text1007);
 
       var destinationDirectory = context.Configuration.Get(Constants.Wwwroot);
       destinationDirectory = PathHelper.Combine(destinationDirectory, context.Configuration.Get(Constants.DataFolderName));

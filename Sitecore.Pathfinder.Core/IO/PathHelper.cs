@@ -87,6 +87,11 @@
     public static string GetFileNameWithoutExtensions([NotNull] string fileName)
     {
       var s = NormalizeFilePath(fileName).LastIndexOf('\\');
+      if (s < 0)
+      {
+        s = 0;
+      }
+
       var e = fileName.IndexOf('.', s);
       return fileName.Mid(s + 1, e - s - 1);
     }
@@ -103,13 +108,13 @@
     [NotNull]
     public static string NormalizeFilePath([NotNull] string filePath)
     {
-      return filePath.Replace("/", "\\");
+      return filePath.Replace("/", "\\").TrimEnd('\\');
     }
 
     [NotNull]
     public static string NormalizeItemPath([NotNull] string filePath)
     {
-      return filePath.Replace("\\", "/");
+      return filePath.Replace("\\", "/").TrimEnd('/');
     }
 
     [NotNull]
@@ -120,7 +125,7 @@
 
       if (fileName.StartsWith(rootPath, StringComparison.OrdinalIgnoreCase))
       {
-        return fileName.Mid(rootPath.Length);
+        return fileName.Mid(rootPath.Length).TrimStart('\\');
       }
 
       return fileName;

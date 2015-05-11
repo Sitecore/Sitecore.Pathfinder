@@ -25,7 +25,7 @@
     {
       var contentFile = (ContentFile)projectItem;
 
-      var destinationFileName = PathHelper.UnmapPath(context.Project.ProjectDirectory, contentFile.SourceFile.SourceFileName);
+      var destinationFileName = "/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(context.Project.ProjectDirectory, contentFile.SourceFile.SourceFileName));
       destinationFileName = FileUtil.MapPath(destinationFileName);
 
       // todo: backup to uninstall folder

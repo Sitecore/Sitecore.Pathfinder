@@ -7,9 +7,9 @@
   using System.Linq;
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.IO;
+  using Sitecore.Pathfinder.Configuration;
   using Sitecore.Pathfinder.Data;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Extensions.ConfigurationExtensions;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Parsing;
   using Sitecore.Pathfinder.Projects;
@@ -19,20 +19,21 @@
   public class Emitter
   {
     [ImportingConstructor]
-    public Emitter([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IDataService dataService, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystem, [Sitecore.NotNull] IParseService parseService)
+    public Emitter([NotNull] ICompositionService compositionService, [NotNull] IConfigurationService configurationService, [NotNull] IDataService dataService, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystem, [Sitecore.NotNull] IProjectService projectService)
     {
       this.CompositionService = compositionService;
-      this.Configuration = configuration;
+      this.ConfigurationService = configurationService;
       this.DataService = dataService;
       this.Trace = traceService;
       this.FileSystem = fileSystem;
-      this.ParseService = parseService;
+      this.ProjectService = projectService;
     }
 
     [NotNull]
     protected ICompositionService CompositionService { get; }
 
-    protected IConfiguration Configuration { get; set; }
+    [NotNull]
+    protected IConfigurationService ConfigurationService { get; set; }
 
     [NotNull]
     protected IDataService DataService { get; }
@@ -45,19 +46,19 @@
     protected IFileSystemService FileSystem { get; }
 
     [NotNull]
-    protected IParseService ParseService { get; }
+    protected IProjectService ProjectService { get; }
 
     [NotNull]
     protected ITraceService Trace { get; }
 
-    public virtual void Start([NotNull] string projectDirectory)
+    public virtual void Start()
     {
-      this.LoadConfiguration(projectDirectory);
+      this.ConfigurationService.Load(false);
 
-      this.Trace.ProjectDirectory = projectDirectory;
+      // todo: remove this
+      this.Trace.ProjectDirectory = this.ConfigurationService.Configuration.Get(Pathfinder.Constants.SolutionDirectory);
 
-      // todo: change to abstract factory pattern
-      var project = new Project(this.CompositionService, this.FileSystem, this.ParseService).Load(projectDirectory, "master");
+      var project = this.ProjectService.LoadProject();
 
       this.Emit(project);
     }
@@ -108,35 +109,9 @@
         {
           retries.Add(new Tuple<ProjectItem, Exception>(projectItem, ex));
         }
+
+        break;
       }
-    }
-
-    protected virtual void LoadConfiguration(string directory)
-    {
-      var configuration = this.Configuration as IConfigurationSourceRoot;
-      if (configuration == null)
-      {
-        throw new ConfigurationException(ConsoleTexts.Text3000);
-      }
-
-      // add command line
-      var commandLineArgs = Environment.GetCommandLineArgs().Skip(1).ToArray();
-      configuration.AddCommandLine(commandLineArgs);
-
-      // set website path
-      var solutionDirectory = FileUtil.MapPath(directory);
-      configuration.Set(Pathfinder.Constants.SolutionDirectory, solutionDirectory);
-
-      // add build config
-      var websiteConfigFileName = PathHelper.Combine(solutionDirectory, configuration.Get(Pathfinder.Constants.ConfigFileName));
-      if (File.Exists(websiteConfigFileName))
-      {
-        configuration.AddFile(websiteConfigFileName);
-      }
-
-      // set project path
-      var projectDirectory = PathHelper.NormalizeFilePath(configuration.Get(Pathfinder.Constants.ProjectDirectory) ?? string.Empty).TrimStart('\\');
-      configuration.Set(Pathfinder.Constants.ProjectDirectory, projectDirectory);
     }
 
     protected virtual void RetryEmit([NotNull] IEmitContext context, [NotNull] List<IEmitter> emitters, [NotNull] ICollection<Tuple<ProjectItem, Exception>> retries)

@@ -101,7 +101,6 @@
     <Content Include="sitecore\shell\client\Applications\Pathfinder\InstallPackage.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Diagnostics\TraceService.cs" />
     <Compile Include="Emitters\Items\ItemEmitter.cs" />
     <Compile Include="Emitters\Files\ContentFileEmitter.cs" />
     <Compile Include="Emitters\Emitter.cs" />

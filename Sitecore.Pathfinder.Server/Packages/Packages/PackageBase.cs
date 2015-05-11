@@ -1,6 +1,7 @@
 ﻿namespace Sitecore.Pathfinder.Packages.Packages
 {
   using NuGet;
+  using Sitecore.Pathfinder.Diagnostics;
 
   public abstract class PackageBase
   {
@@ -17,6 +18,7 @@
     [NotNull]
     public abstract string Status { get; }
 
+    [NotNull]
     public SemanticVersion UpdateVersion { get; set; }
 
     [NotNull]

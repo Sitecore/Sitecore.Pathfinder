@@ -24,7 +24,7 @@
 
     public override void Parse(IParseContext context)
     {
-      var root = context.SourceFile.ReadAsXml();
+      var root = context.SourceFile.ReadAsXml(context);
 
       var baseTemplates = new List<string>();
       foreach (var element in root.Elements())

@@ -33,12 +33,11 @@
       item.DatabaseName = context.ParseContext.DatabaseName;
       item.ItemIdOrPath = context.ParentItemPath + "/" + item.ItemName;
       item.TemplateIdOrPath = this.GetTemplateIdOrPath(context, element);
-      item.SourceElement = element;
 
       if (!string.IsNullOrEmpty(element.GetAttributeValue("Template.Create")))
       {
-        var templateModel = this.ParseTemplate(context, element);
-        item.TemplateIdOrPath = templateModel.ItemIdOrPath;
+        var template = this.ParseTemplate(context, element);
+        item.TemplateIdOrPath = template.ItemIdOrPath;
       }
 
       this.ParseChildElements(context, item, element);
@@ -118,29 +117,29 @@
     [NotNull]
     protected virtual Template ParseTemplate([NotNull] ItemParseContext context, [NotNull] XElement element)
     {
-      var templateBuilder = new Template(context.ParseContext.SourceFile);
-      context.ParseContext.Project.Items.Add(templateBuilder);
+      var template = new Template(context.ParseContext.SourceFile);
+      context.ParseContext.Project.Items.Add(template);
 
-      templateBuilder.ItemIdOrPath = this.GetTemplateIdOrPath(context, element);
-      if (string.IsNullOrEmpty(templateBuilder.ItemIdOrPath))
+      template.ItemIdOrPath = this.GetTemplateIdOrPath(context, element);
+      if (string.IsNullOrEmpty(template.ItemIdOrPath))
       {
         throw new BuildException(Texts.Text2010, context.ParseContext.SourceFile.SourceFileName, element);
       }
 
-      templateBuilder.DatabaseName = context.ParseContext.DatabaseName;
-      templateBuilder.Icon = element.GetAttributeValue("Template.Icon");
-      templateBuilder.BaseTemplates = element.GetAttributeValue("Template.BaseTemplates");
-      if (string.IsNullOrEmpty(templateBuilder.BaseTemplates))
+      template.DatabaseName = context.ParseContext.DatabaseName;
+      template.Icon = element.GetAttributeValue("Template.Icon");
+      template.BaseTemplates = element.GetAttributeValue("Template.BaseTemplates");
+      if (string.IsNullOrEmpty(template.BaseTemplates))
       {
-        templateBuilder.BaseTemplates = "{1930BBEB-7805-471A-A3BE-4858AC7CF696}";
+        template.BaseTemplates = "{1930BBEB-7805-471A-A3BE-4858AC7CF696}";
       }
 
       // get template name
-      var n = templateBuilder.ItemIdOrPath.LastIndexOf('/');
-      templateBuilder.ItemName = templateBuilder.ItemIdOrPath.Mid(n + 1);
+      var n = template.ItemIdOrPath.LastIndexOf('/');
+      template.ItemName = template.ItemIdOrPath.Mid(n + 1);
 
       var sectionBuilder = new TemplateSection();
-      templateBuilder.Sections.Add(sectionBuilder);
+      template.Sections.Add(sectionBuilder);
       sectionBuilder.Name = "Fields";
 
       foreach (var child in element.Elements())
@@ -166,7 +165,7 @@
         fieldModel.Source = child.GetAttributeValue("Field.Source") ?? string.Empty;
       }
 
-      return templateBuilder;
+      return template;
     }
   }
 }

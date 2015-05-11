@@ -28,7 +28,7 @@
 
     public override void Parse(IParseContext context)
     {
-      var root = context.SourceFile.ReadAsXml();
+      var root = context.SourceFile.ReadAsXml(context);
 
       var parentItemPath = context.ItemPath;
 

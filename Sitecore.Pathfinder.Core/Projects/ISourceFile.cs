@@ -3,6 +3,7 @@
   using System;
   using System.Xml.Linq;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Parsing;
 
   public interface ISourceFile
   {
@@ -14,9 +15,12 @@
     string SourceFileName { get; }
 
     [NotNull]
-    string[] ReadAsLines();
+    string[] ReadAsLines([NotNull] IParseContext context);
 
     [NotNull]
-    XElement ReadAsXml();
+    XElement ReadAsXml([NotNull] IParseContext context);
+
+    [NotNull]
+    string ReadAsText([NotNull] IParseContext context);
   }
 }

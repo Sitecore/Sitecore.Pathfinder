@@ -56,12 +56,9 @@
     [NotNull]
     public string ItemName { get; set; } = string.Empty;
 
-    public override string QualifiedName => this.QualifiedName;
+    public override string QualifiedName => this.ItemIdOrPath;
 
     public override string ShortName => this.ItemName;
-
-    [CanBeNull]
-    public XElement SourceElement { get; set; }
 
     [NotNull]
     public string TemplateIdOrPath { get; set; } = string.Empty;

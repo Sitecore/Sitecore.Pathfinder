@@ -2,11 +2,15 @@
 {
   using System.Collections.Generic;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.IO;
 
   public interface IProject
   {
     [NotNull]
     string DatabaseName { get; set; }
+
+    [NotNull]
+    IFileSystemService FileSystem { get; }
 
     [NotNull]
     ICollection<ProjectItem> Items { get; }

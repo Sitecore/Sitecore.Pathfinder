@@ -14,14 +14,17 @@
   // default pipeline
   "pipeline": "init",
 
+  // init pipeline
   "init": {
     "pipeline": "init"
   },
 
+  // NuGet
   "nuget": {
     "filename": "sitecore.nuspec"
   },
 
+  // deploying URLs
   "deploying": {
     "packagedirectory": "packages",
     "installurl": "/sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx?w=0&iu=",

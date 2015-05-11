@@ -31,7 +31,7 @@
     [NotNull]
     protected virtual CompositionContainer RegisterCompositionService([NotNull] IConfiguration configuration)
     {
-      var toolspath = configuration.Get(Constants.ToolsPath);
+      var toolspath = configuration.Get(Constants.ToolsDirectory);
 
       var pluginDirectory = Path.Combine(toolspath, "plugins");
       Directory.CreateDirectory(pluginDirectory);
@@ -55,12 +55,12 @@
     [NotNull]
     protected virtual IConfigurationSourceRoot RegisterConfiguration()
     {
-      var configuration = new Configuration();
+      var configuration = new Microsoft.Framework.ConfigurationModel.Configuration();
       configuration.Add(new MemoryConfigurationSource());
 
       var toolsPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
 
-      configuration.Set(Constants.ToolsPath, toolsPath);
+      configuration.Set(Constants.ToolsDirectory, toolsPath);
       configuration.Set(Constants.ConfigFileName, "sitecore.config.json");
 
       return configuration;

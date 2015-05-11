@@ -4,7 +4,7 @@
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Projects.Items;
 
-  public class SerializationFile : FileBase
+  public class SerializationFile : File
   {
     public SerializationFile([NotNull] ISourceFile sourceFile, [NotNull] Item item) : base(sourceFile)
     {
