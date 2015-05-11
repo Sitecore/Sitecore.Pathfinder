@@ -11,6 +11,6 @@
 
     public string TaskName { get; }
 
-    public abstract void Execute(IBuildContext context);
+    public abstract void Run(IBuildContext context);
   }
 }

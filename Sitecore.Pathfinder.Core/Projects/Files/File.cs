@@ -9,12 +9,17 @@
 
     private string shortName;
 
-    public File([NotNull] ISourceFile sourceFile) : base(sourceFile)
+    public File([NotNull] IProject project, [NotNull] ISourceFile sourceFile) : base(project, sourceFile)
     {
     }
 
     public override string QualifiedName => this.qualifiedName ?? (this.qualifiedName = this.SourceFile.SourceFileName);
 
     public override string ShortName => this.shortName ?? (this.shortName = Path.GetFileName(this.SourceFile.SourceFileName));
+
+    public override void Analyze()
+    {
+      this.IsAnalyzed = true;
+    }
   }
 }

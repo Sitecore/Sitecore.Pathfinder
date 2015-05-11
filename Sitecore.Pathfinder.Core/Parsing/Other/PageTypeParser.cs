@@ -43,7 +43,7 @@
         baseTemplates.Add(componentPath);
       }
 
-      var template = new Template(context.SourceFile);
+      var template = new Template(context.Project, context.SourceFile);
       context.Project.Items.Add(template);
 
       template.ItemName = context.ItemName;
@@ -51,7 +51,7 @@
       template.ItemIdOrPath = context.ItemPath;
       template.BaseTemplates = string.Join("|", baseTemplates);
 
-      var pageType = new PageType(context.SourceFile);
+      var pageType = new PageType(context.Project, context.SourceFile);
       context.Project.Items.Add(pageType);
     }
   }

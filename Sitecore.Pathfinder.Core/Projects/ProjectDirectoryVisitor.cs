@@ -15,21 +15,33 @@
     }
 
     [NotNull]
-    public string[] IgnoreDirectories { get; set; }
-
-    [NotNull]
     protected IFileSystemService FileSystem { get; }
 
     [NotNull]
+    protected string[] IgnoreDirectories { get; set; }
+
+    [NotNull]
     protected IProject Project { get; private set; }
+
+    [NotNull]
+    public ProjectDirectoryVisitor Load([NotNull] string[] ignoreDirectories)
+    {
+      this.IgnoreDirectories = ignoreDirectories;
+      return this;
+    }
 
     public virtual void Visit([NotNull] IProject project)
     {
       this.Project = project;
 
-
-
       this.Visit(this.Project.ProjectDirectory);
+    }
+
+    protected virtual bool IsSystemDirectory([NotNull] string directory)
+    {
+      var directoryName = Path.GetFileName(directory);
+
+      return this.IgnoreDirectories.Contains(directoryName, StringComparer.OrdinalIgnoreCase);
     }
 
     protected virtual void Visit([NotNull] string directory)
@@ -50,13 +62,6 @@
 
         this.Visit(subdirectory);
       }
-    }
-
-    protected virtual bool IsSystemDirectory([NotNull] string directory)
-    {
-      var directoryName = Path.GetFileName(directory);
-
-      return this.IgnoreDirectories.Contains(directoryName, StringComparer.OrdinalIgnoreCase);
     }
   }
 }

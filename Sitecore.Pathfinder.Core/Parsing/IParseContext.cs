@@ -3,6 +3,7 @@
   using System.ComponentModel.Composition;
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects;
 
   public interface IParseContext

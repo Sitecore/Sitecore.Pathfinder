@@ -3,7 +3,9 @@
   using System;
   using System.Collections.Generic;
   using System.ComponentModel.Composition;
+  using System.IO;
   using System.Xml.Linq;
+  using System.Xml.Schema;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Extensions.StringExtensions;
   using Sitecore.Pathfinder.Parsing.Items.ElementParsers;
@@ -30,6 +32,8 @@
     {
       var root = context.SourceFile.ReadAsXml(context);
 
+      this.ValidateXmlSchema(context, root, "http://www.sitecore.net/pathfinder/item", "item.xsd");
+
       var parentItemPath = context.ItemPath;
 
       var n = parentItemPath.LastIndexOf('/');
@@ -45,12 +49,23 @@
 
     public void ParseElement([NotNull] ItemParseContext context, [NotNull] XElement element)
     {
-      foreach (var elementParser in this.ElementParsers)
+      try
       {
-        if (elementParser.CanParse(context, element))
+        foreach (var elementParser in this.ElementParsers)
         {
-          elementParser.Parse(context, element);
+          if (elementParser.CanParse(context, element))
+          {
+            elementParser.Parse(context, element);
+          }
         }
+      }
+      catch (BuildException ex)
+      {
+        context.ParseContext.Project.Trace.TraceError(Texts.Text3013, context.ParseContext.SourceFile.SourceFileName, ex.Line, ex.Column, ex.Message);
+      }
+      catch (Exception ex)
+      {
+        context.ParseContext.Project.Trace.TraceError(Texts.Text3013, context.ParseContext.SourceFile.SourceFileName, 0, 0, ex.Message);
       }
     }
 

@@ -21,7 +21,7 @@
     [NotNull]
     public IConfiguration Configuration { get; }
 
-    public virtual void Load(bool includeCommandLineArgs)
+    public virtual void Load(LoadConfigurationOptions options)
     {
       var configurationSourceRoot = this.Configuration as IConfigurationSourceRoot;
       if (configurationSourceRoot == null)
@@ -40,7 +40,7 @@
 
       configurationSourceRoot.AddJsonFile(fileName);
 
-      if (includeCommandLineArgs)
+      if ((options & LoadConfigurationOptions.IncludeCommandLine) == LoadConfigurationOptions.IncludeCommandLine)
       {
         // add command line
         // cut off executable name

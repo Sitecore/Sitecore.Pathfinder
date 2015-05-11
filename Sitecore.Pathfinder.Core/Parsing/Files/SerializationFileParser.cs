@@ -24,7 +24,7 @@
 
     public override void Parse(IParseContext context)
     {
-      var item = new Item(context.SourceFile);
+      var item = new Item(context.Project, context.SourceFile);
       context.Project.Items.Add(item);
 
       item.IsEmittable = false;
@@ -32,7 +32,7 @@
       var lines = context.SourceFile.ReadAsLines(context);
       this.ParseLines(item, lines, 0);
 
-      var serializationFile = new SerializationFile(context.SourceFile, item);
+      var serializationFile = new SerializationFile(context.Project, context.SourceFile, item);
       context.Project.Items.Add(serializationFile);
     }
 

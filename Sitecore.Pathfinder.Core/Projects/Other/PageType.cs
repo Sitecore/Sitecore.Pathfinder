@@ -7,7 +7,7 @@
 
   public class PageType : File
   {
-    public PageType([NotNull] ISourceFile sourceFileName) : base(sourceFileName)
+    public PageType(IProject project, [NotNull] ISourceFile sourceFileName) : base(project, sourceFileName)
     {
     }
 

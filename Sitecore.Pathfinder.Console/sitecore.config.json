@@ -9,6 +9,7 @@
   // project directory relative to solution directory
   "projectdirectory": "",
 
+  // default database name (master, core or web)
   "database": "master",
 
   // default pipeline

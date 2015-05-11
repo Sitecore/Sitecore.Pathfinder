@@ -2,9 +2,6 @@ namespace Sitecore.Pathfinder.Diagnostics
 {
   public interface ITraceService
   {
-    [CanBeNull]
-    string ProjectDirectory { get; set; }
-
     void TraceError(int text);
 
     void TraceError(int text, [NotNull] params object[] args);

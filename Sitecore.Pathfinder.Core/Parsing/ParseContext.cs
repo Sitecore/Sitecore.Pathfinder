@@ -57,19 +57,18 @@
 
     public virtual string GetRelativeFileName(ISourceFile sourceFile)
     {
-      if (!sourceFile.SourceFileName.StartsWith(this.Project.ProjectDirectory, StringComparison.OrdinalIgnoreCase))
+      if (sourceFile.SourceFileName.StartsWith(this.Project.ProjectDirectory, StringComparison.OrdinalIgnoreCase))
       {
-        return sourceFile.SourceFileName;
+        return sourceFile.SourceFileName.Mid(this.Project.ProjectDirectory.Length + 1);
       }
 
-      return sourceFile.SourceFileName.Mid(this.Project.ProjectDirectory.Length + 1);
+      return sourceFile.SourceFileName;
     }
 
     public IParseContext Load(IProject project, ISourceFile sourceFile)
     {
       this.Project = project;
       this.SourceFile = sourceFile;
-
       return this;
     }
 
@@ -83,13 +82,13 @@
 
       var contextTokens = new Dictionary<string, string>
       {
-        ["ItemPath"] = this.ItemPath,
-        ["FilePathWithoutExtensions"] = filePathWithExtensions,
+        ["ItemPath"] = this.ItemPath, 
+        ["FilePathWithoutExtensions"] = filePathWithExtensions, 
         ["FilePath"] = filePath, 
         ["Database"] = this.DatabaseName, 
-        ["FileNameWithoutExtensions"] = fileNameWithoutExtensions,
-        ["FileName"] = fileName,
-        ["DirectoryName"] = directoryName,
+        ["FileNameWithoutExtensions"] = fileNameWithoutExtensions, 
+        ["FileName"] = fileName, 
+        ["DirectoryName"] = directoryName, 
       };
 
       return this.TokenService.Replace(text, contextTokens);

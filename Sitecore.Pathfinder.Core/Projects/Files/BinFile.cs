@@ -4,7 +4,7 @@
 
   public class BinFile : File
   {
-    public BinFile([NotNull] ISourceFile sourceFile) : base(sourceFile)
+    public BinFile([NotNull] IProject project, [NotNull] ISourceFile sourceFile) : base(project, sourceFile)
     {
     }
   }

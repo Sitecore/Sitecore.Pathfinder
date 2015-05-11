@@ -38,9 +38,6 @@
     IList<ProjectItem> ModifiedProjectItems { get; }
 
     [NotNull]
-    IDictionary<string, string> SourceMap { get; }
-
-    [NotNull]
     ITraceService Trace { get; }
   }
 }

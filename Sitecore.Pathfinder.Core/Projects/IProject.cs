@@ -21,6 +21,9 @@
     [NotNull]
     ICollection<ISourceFile> SourceFiles { get; }
 
+    [NotNull]
+    ITraceService Trace { get; }
+
     void Add([NotNull] string sourceFileName);
 
     void Remove([NotNull] string sourceFileName);

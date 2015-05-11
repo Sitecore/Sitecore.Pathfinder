@@ -4,7 +4,7 @@
 
   public class ContentFile : File
   {
-    public ContentFile([NotNull] ISourceFile sourceFile) : base(sourceFile)
+    public ContentFile([NotNull] IProject project, [NotNull] ISourceFile sourceFile) : base(project, sourceFile)
     {
     }
   }

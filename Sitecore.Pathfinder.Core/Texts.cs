@@ -44,6 +44,10 @@
 
     public const int Text1020 = 1020;
 
+    public const int Text1021 = 1021;
+    public const int Text1022 = 1022;
+    public const int Text1023 = 1023;
+
     public const int Text2000 = 2000;
 
     public const int Text2002 = 2002;
@@ -140,8 +144,6 @@
 
     public const int Text3014 = 3014;
 
-    public const int Text3015 = 3015;
-
     public const int Text3016 = 3016;
 
     public const int Text3017 = 3017;
@@ -157,6 +159,7 @@
     public const int Text3022 = 3022;
 
     public const int Text3023 = 3023;
+    public const int Text3024 = 3024;
 
     public const int Text9998 = 9998;
 
@@ -176,7 +179,19 @@
       { Text1009, "Publishing..." }, 
       { Text1010, "Linting..." }, 
       { Text1011, "Loading project..." }, 
-      { Text1012, "Pipeline is empty. There are no tasks to execute." }, 
+      { Text1012, "Pipeline is empty. There are no tasks to execute." },
+      { Text1013, "Hi there." },
+      { Text1014, "Your project directory was missing, so I have created it. You must update the 'wwwroot' and 'hostname' in the '{0}' configuration file before continuing." },
+      { Text1015, "Your configuration file and sample files were missing, so I have created them. You must update the 'wwwroot' and 'hostname' in the '{0}' configuration file before continuing." },
+      { Text1016, "Hey - you haven't changed the the 'wwwroot' and 'hostname' in the '{0}' configuration file." },
+      { Text1017, "Hey - there is no 'Data' directory under the 'wwwwroot' - are you sure, you have set the 'wwwroot' correctly in the configuration file" },
+      { Text1018, "Hey - there is no 'Website' directory under the 'wwwwroot' - are you sure, you have set the 'wwwroot' correctly in the configuration file" },
+      { Text1019, "Just so you know, I have copied the 'Sitecore.Pathfinder.Server.dll' and 'NuGet.Core.dll' assemblies to the '/bin' directory in the website and a number of '.aspx' files to the '/sitecore/shell/client/Applications/Pathfinder' directory" },
+      { Text1020, "Just so you know, I have updated the 'Sitecore.Pathfinder.Server.dll' and 'NuGet.Core.dll' assemblies in the '/bin' directory in the website and a number of '.aspx' files in the '/sitecore/shell/client/Applications/Pathfinder' directory to the latest version" },
+      { Text1021, "Linting items: {0}" },
+      { Text1022, "NuGet file size: {0}" },
+      { Text1023, "Project files: {0} / project items: {1}" },
+
       { Text2000, "Item file is not valid" }, 
       { Text2002, "Cannot create new item from an ID" }, 
       { Text2003, "Item not found" }, 
@@ -223,8 +238,8 @@
       { Text3010, "Directory is empty" }, 
       { Text3011, "Package contains errors and will not be deployed" }, 
       { Text3012, "The file does not contain valid XML: {0}" }, 
+      { Text3013, "{0}" }, 
       { Text3014, "{0}" }, 
-      { Text3015, "{0}" }, 
       { Text3016, "Directory is empty: {0}" }, 
       { Text3017, "Cannot writer serialization item: Database is null" }, 
       { Text3018, "Cannot writer serialization item: ID is null" }, 
@@ -233,14 +248,8 @@
       { Text3021, "Cannot writer serialization item: ParentID is null" }, 
       { Text3022, "Cannot writer serialization item: TemplateID is null" }, 
       { Text3023, "Cannot writer serialization item: TemplateName is null" }, 
-      { Text1013, "Hi there." }, 
-      { Text1014, "Your project directory was missing, so I have created it. You must update the 'wwwroot' and 'hostname' in the '{0}' configuration file before continuing." }, 
-      { Text1015, "Your configuration file and sample files were missing, so I have created them. You must update the 'wwwroot' and 'hostname' in the '{0}' configuration file before continuing." }, 
-      { Text1016, "Hey - you haven't changed the the 'wwwroot' and 'hostname' in the '{0}' configuration file." }, 
-      { Text1017, "Hey - there is no 'Data' directory under the 'wwwwroot' - are you sure, you have set the 'wwwroot' correctly in the configuration file" }, 
-      { Text1018, "Hey - there is no 'Website' directory under the 'wwwwroot' - are you sure, you have set the 'wwwroot' correctly in the configuration file" }, 
-      { Text1019, "Just so you know, I have copied the 'Sitecore.Pathfinder.Server.dll' and 'NuGet.Core.dll' assemblies to the '/bin' directory in the website and a number of '.aspx' files to the '/sitecore/shell/client/Applications/Pathfinder' directory" }, 
-      { Text1020, "Just so you know, I have updated the 'Sitecore.Pathfinder.Server.dll' and 'NuGet.Core.dll' assemblies in the '/bin' directory in the website and a number of '.aspx' files in the '/sitecore/shell/client/Applications/Pathfinder' directory to the latest version" }, 
+      { Text3024, "Reference not found {0}" }, 
+
       { Text9998, "{0}" }, 
       { Text9999, "An error occured: {0}" }
     };

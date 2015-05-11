@@ -30,7 +30,7 @@
 
     public override void Parse(IParseContext context)
     {
-      var item = new Item(context.SourceFile);
+      var item = new Item(context.Project, context.SourceFile);
       context.Project.Items.Add(item);
 
       item.ItemName = context.ItemName;
@@ -44,7 +44,7 @@
       item.Fields.Add(new Field(context.SourceFile, "Path", path));
       item.Fields.Add(new Field(context.SourceFile, "Place Holders", string.Join(",", placeHolders)));
 
-      var rendering = new Rendering(context.SourceFile, item);
+      var rendering = new Rendering(context.Project, context.SourceFile, item);
       context.Project.Items.Add(rendering);
     }
 

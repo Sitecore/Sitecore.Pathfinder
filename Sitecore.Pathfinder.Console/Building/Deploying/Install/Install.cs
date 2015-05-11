@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Building.Deploying.Install
     {
     }
 
-    public override void Execute(IBuildContext context)
+    public override void Run(IBuildContext context)
     {
       if (!context.IsDeployable)
       {
@@ -64,17 +64,6 @@ namespace Sitecore.Pathfinder.Building.Deploying.Install
       if (string.IsNullOrEmpty(output))
       {
         return;
-      }
-
-      // use SourceMap to remap file names
-      var solutionDirectory = context.SolutionDirectory;
-
-      foreach (var pair in context.SourceMap)
-      {
-        var targetFileName = PathHelper.UnmapPath(solutionDirectory, pair.Key).TrimStart('\\');
-        var sourceFile = PathHelper.UnmapPath(solutionDirectory, pair.Value).TrimStart('\\');
-
-        output = output.Replace(targetFileName, sourceFile);
       }
 
       context.Trace.Writeline(output);

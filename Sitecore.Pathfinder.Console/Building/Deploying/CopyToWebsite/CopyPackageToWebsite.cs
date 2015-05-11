@@ -12,7 +12,7 @@
     {
     }
 
-    public override void Execute(IBuildContext context)
+    public override void Run(IBuildContext context)
     {
       if (!context.IsDeployable)
       {

@@ -2,12 +2,20 @@
 {
   using System;
   using System.ComponentModel.Composition;
+  using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Extensions.StringExtensions;
 
   [Export(typeof(ITraceService))]
   public class TraceService : ITraceService
   {
-    public string ProjectDirectory { get; set; }
+    [ImportingConstructor]
+    public TraceService([NotNull] IConfiguration configuration)
+    {
+      this.Configuration = configuration;
+    }
+
+    [NotNull]
+    protected IConfiguration Configuration { get; }
 
     public void TraceError(int text)
     {
@@ -88,7 +96,7 @@
       message = string.Format(message, args);
       var fileInfo = !string.IsNullOrEmpty(fileName) ? fileName : "scc.exe";
 
-      var projectDirectory = this.ProjectDirectory;
+      var projectDirectory = this.Configuration.Get(Pathfinder.Constants.SolutionDirectory);
       if (!string.IsNullOrEmpty(projectDirectory))
       {
         if (fileInfo.StartsWith(projectDirectory))

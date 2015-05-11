@@ -1,12 +1,13 @@
 namespace Sitecore.Pathfinder.Projects.Templates
 {
+  using System;
   using System.Collections.Generic;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Projects.Items;
 
-  public class Template : Item
+  public class Template : ItemBase
   {
-    public Template([NotNull] ISourceFile sourceFile) : base(sourceFile)
+    public Template([NotNull] IProject project, [NotNull] ISourceFile sourceFile) : base(project, sourceFile)
     {
       this.BaseTemplates = string.Empty;
       this.Sections = new List<TemplateSection>();
@@ -17,5 +18,21 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
     [NotNull]
     public IList<TemplateSection> Sections { get; }
+
+    public override void Analyze()
+    {
+      base.Analyze();
+
+      if (string.IsNullOrEmpty(this.BaseTemplates))
+      {
+        return;
+      }
+
+      var templates = this.BaseTemplates.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries);
+      foreach (var template in templates)
+      {
+        this.References.AddTemplateReference(template);
+      }
+    }
   }
 }

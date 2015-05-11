@@ -13,9 +13,10 @@
   public class Project : IProject
   {
     [ImportingConstructor]
-    public Project([NotNull] ICompositionService compositionService, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService)
+    public Project([NotNull] ICompositionService compositionService, ITraceService trace, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService)
     {
       this.CompositionService = compositionService;
+      this.Trace = trace;
       this.FileSystem = fileSystem;
       this.ParseService = parseService;
     }
@@ -29,6 +30,8 @@
     public string ProjectDirectory { get; private set; } = string.Empty;
 
     public ICollection<ISourceFile> SourceFiles { get; } = new List<ISourceFile>();
+
+    public ITraceService Trace { get; set; }
 
     [NotNull]
     protected ICompositionService CompositionService { get; }

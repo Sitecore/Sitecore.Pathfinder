@@ -6,7 +6,7 @@ namespace Sitecore.Pathfinder.Projects.Layouts
 
   public class Rendering : ContentFile
   {
-    public Rendering([NotNull] ISourceFile sourceFile, [NotNull] Item item) : base(sourceFile)
+    public Rendering([NotNull] IProject project, [NotNull] ISourceFile sourceFile, [NotNull] Item item) : base(project, sourceFile)
     {
       this.Item = item;
     }

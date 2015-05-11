@@ -10,7 +10,7 @@
     {
     }
 
-    public override void Execute(IBuildContext context)
+    public override void Run(IBuildContext context)
     {
       context.Trace.TraceInformation(Texts.Text1001);
 

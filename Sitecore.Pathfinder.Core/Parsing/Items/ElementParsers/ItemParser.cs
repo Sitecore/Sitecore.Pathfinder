@@ -3,6 +3,7 @@
   using System;
   using System.ComponentModel.Composition;
   using System.Linq;
+  using System.Xml;
   using System.Xml.Linq;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Extensions.StringExtensions;
@@ -21,7 +22,7 @@
 
     public override void Parse(ItemParseContext context, XElement element)
     {
-      var item = new Item(context.ParseContext.SourceFile);
+      var item = new Item(context.ParseContext.Project, context.ParseContext.SourceFile);
       context.ParseContext.Project.Items.Add(item);
 
       item.ItemName = element.GetAttributeValue("Name");
@@ -46,10 +47,10 @@
     [NotNull]
     protected virtual string GetTemplateIdOrPath([NotNull] ItemParseContext context, [NotNull] XElement element)
     {
-      var templateIdOrPath = element.GetAttributeValue("Template") ?? string.Empty;
+      var templateIdOrPath = element.GetAttributeValue("Template");
       if (string.IsNullOrEmpty(templateIdOrPath))
       {
-        templateIdOrPath = element.GetAttributeValue("Template.Create") ?? string.Empty;
+        templateIdOrPath = element.GetAttributeValue("Template.Create");
       }
 
       if (string.IsNullOrEmpty(templateIdOrPath))
@@ -97,7 +98,9 @@
       var field = item.Fields.FirstOrDefault(f => string.Compare(f.Name, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
       if (field != null)
       {
-        throw new BuildException(Texts.Text2012, context.ParseContext.SourceFile.SourceFileName, fieldElement, fieldName);
+        var lineInfo = (IXmlLineInfo)fieldElement;
+        context.ParseContext.Project.Trace.TraceError(Texts.Text2012, context.ParseContext.SourceFile.SourceFileName, lineInfo.LineNumber, lineInfo.LinePosition, fieldName);
+        return;
       }
 
       var value = fieldElement.GetAttributeValue("Value");
@@ -117,7 +120,7 @@
     [NotNull]
     protected virtual Template ParseTemplate([NotNull] ItemParseContext context, [NotNull] XElement element)
     {
-      var template = new Template(context.ParseContext.SourceFile);
+      var template = new Template(context.ParseContext.Project, context.ParseContext.SourceFile);
       context.ParseContext.Project.Items.Add(template);
 
       template.ItemIdOrPath = this.GetTemplateIdOrPath(context, element);
@@ -162,7 +165,7 @@
 
         fieldModel.Shared = child.GetAttributeValue("Field.Sharing") == "Shared";
         fieldModel.Unversioned = child.GetAttributeValue("Field.Sharing") == "Unversioned";
-        fieldModel.Source = child.GetAttributeValue("Field.Source") ?? string.Empty;
+        fieldModel.Source = child.GetAttributeValue("Field.Source");
       }
 
       return template;

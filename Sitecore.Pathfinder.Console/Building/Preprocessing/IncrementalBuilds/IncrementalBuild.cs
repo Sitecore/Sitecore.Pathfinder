@@ -1,7 +1,6 @@
 ﻿namespace Sitecore.Pathfinder.Building.Preprocessing.IncrementalBuilds
 {
   using System.ComponentModel.Composition;
-  using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Projects.Items;
 
   [Export(typeof(ITask))]
@@ -11,7 +10,7 @@
     {
     }
 
-    public override void Execute(IBuildContext context)
+    public override void Run(IBuildContext context)
     {
       context.Trace.TraceInformation(Texts.Text1002);
 

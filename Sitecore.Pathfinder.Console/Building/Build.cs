@@ -12,7 +12,8 @@
   [Export]
   public class Build
   {
-    private static readonly char[] Space = {
+    private static readonly char[] Space = 
+    {
       ' '
     };
 
@@ -47,18 +48,20 @@
 
     public virtual void Start()
     {
-      this.ConfigurationService.Load(true);
+      this.ConfigurationService.Load(LoadConfigurationOptions.IncludeCommandLine);
 
       this.Trace.TraceInformation(Texts.Text1011);
       var project = this.ProjectService.LoadProject();
+      this.Trace.TraceInformation(Texts.Text1023, project.SourceFiles.Count, project.Items.Count);
+
 
       // todo: use abstract factory pattern
       var context = new BuildContext(this.ConfigurationService.Configuration, this.Trace, this.CompositionService, this.FileSystem).Load(project);
 
-      this.Execute(context);
+      this.Run(context);
     }
 
-    protected virtual void Execute([NotNull] IBuildContext context)
+    protected virtual void Run([NotNull] IBuildContext context)
     {
       var pipeline = this.GetPipeline(context);
       if (!pipeline.Any())
@@ -69,7 +72,7 @@
 
       foreach (var taskName in pipeline)
       {
-        this.ExecuteTask(context, taskName);
+        this.RunTask(context, taskName);
 
         if (context.IsAborted)
         {
@@ -78,7 +81,7 @@
       }
     }
 
-    protected virtual void ExecuteTask([NotNull] IBuildContext context, [NotNull] string taskName)
+    protected virtual void RunTask([NotNull] IBuildContext context, [NotNull] string taskName)
     {
       var task = this.Tasks.FirstOrDefault(t => string.Compare(t.TaskName, taskName, StringComparison.OrdinalIgnoreCase) == 0);
       if (task == null)
@@ -89,7 +92,7 @@
 
       try
       {
-        task.Execute(context);
+        task.Run(context);
       }
       catch (BuildException ex)
       {
@@ -103,7 +106,7 @@
       }
       catch (Exception ex)
       {
-        context.Trace.TraceError(Texts.Text3009, ex.Message + ex.StackTrace);
+        context.Trace.TraceError(Texts.Text3009, ex.Message);
         context.IsAborted = true;
 
         if (string.Compare(context.Configuration.Get(Constants.DebugMode), "true", StringComparison.OrdinalIgnoreCase) == 0)

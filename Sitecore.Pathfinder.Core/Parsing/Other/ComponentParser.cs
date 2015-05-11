@@ -38,14 +38,14 @@
 
       var publicTemplate = this.CreatePublicTemplate(context, context.SourceFile, privateTemplate);
 
-      var component = new Component(context.SourceFile, privateTemplate, publicTemplate);
+      var component = new Component(context.Project, context.SourceFile, privateTemplate, publicTemplate);
       context.Project.Items.Add(component);
     }
 
     [NotNull]
     protected Template CreatePrivateTemplate([NotNull] IParseContext context, [NotNull] ISourceFile sourceFile, [NotNull] XElement root)
     {
-      var privateTemplate = new Template(sourceFile);
+      var privateTemplate = new Template(context.Project, sourceFile);
       context.Project.Items.Add(privateTemplate);
 
       // todo: remove duplicated code from TemplateParser
@@ -61,7 +61,7 @@
     [NotNull]
     protected Template CreatePublicTemplate([NotNull] IParseContext context, [NotNull] ISourceFile sourceFile, [NotNull] Template privateTemplate)
     {
-      var publicTemplate = new Template(sourceFile);
+      var publicTemplate = new Template(context.Project, sourceFile);
       context.Project.Items.Add(publicTemplate);
 
       publicTemplate.ItemName = privateTemplate.ItemName.Mid(2);

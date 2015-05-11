@@ -25,6 +25,9 @@
     [NotNull]
     protected IFileSystemService FileSystem { get; }
 
+    [NotNull]
+    public static ISourceFile Empty { get; } = new EmptySourceFile();
+
     public string[] ReadAsLines(IParseContext context)
     {
       var lines = this.FileSystem.ReadAllLines(this.SourceFileName);

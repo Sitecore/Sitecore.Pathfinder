@@ -1,5 +1,6 @@
 ﻿namespace Sitecore.Pathfinder.Parsing
 {
+  using System;
   using System.Collections.Generic;
   using System.ComponentModel.Composition;
   using System.Linq;
@@ -18,10 +19,12 @@
       this.TokenService = tokenService;
     }
 
-    // ReSharper disable once UnusedAutoPropertyAccessor.Local
     [NotNull]
     [ImportMany]
     public IEnumerable<IParser> Parsers { get; private set; }
+
+    [NotNull]
+    public ITraceService TraceService { get; set; }
 
     [NotNull]
     protected ICompositionService CompositionService { get; }
@@ -37,15 +40,26 @@
       // todo: change to abstract factory pattern
       var context = new ParseContext(this.CompositionService, this.Configuration, this.TokenService).Load(project, sourceFile);
 
-      foreach (var parser in this.Parsers.OrderBy(c => c.Sortorder))
+      try
       {
-        if (!parser.CanParse(context))
+        foreach (var parser in this.Parsers.OrderBy(c => c.Sortorder))
         {
-          continue;
-        }
+          if (!parser.CanParse(context))
+          {
+            continue;
+          }
 
-        parser.Parse(context);
-        break;
+          parser.Parse(context);
+          break;
+        }
+      }
+      catch (BuildException ex)
+      {
+        project.Trace.TraceError(Texts.Text3013, sourceFile.SourceFileName, ex.Line, ex.Column, ex.Message);
+      }
+      catch (Exception ex)
+      {
+        project.Trace.TraceError(Texts.Text3013, sourceFile.SourceFileName, 0, 0, ex.Message);
       }
     }
   }

@@ -11,7 +11,7 @@ namespace Sitecore.Pathfinder.Parsing.Layouts
   [Export(typeof(IParser))]
   public class ViewRenderingParser : RenderingParser
   {
-    public const string ViewRenderingId = "{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}";
+    public const string ViewRenderingId = "/sitecore/templates/System/Layout/Renderings/View rendering";
 
     public ViewRenderingParser() : base(".cshtml", ViewRenderingId)
     {

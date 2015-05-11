@@ -16,54 +16,54 @@
 
     public override void Parse(ItemParseContext context, XElement element)
     {
-      var templateModel = new Template(context.ParseContext.SourceFile);
-      context.ParseContext.Project.Items.Add(templateModel);
+      var template = new Template(context.ParseContext.Project, context.ParseContext.SourceFile);
+      context.ParseContext.Project.Items.Add(template);
 
-      templateModel.ItemName = element.GetAttributeValue("Name");
-      if (string.IsNullOrEmpty(templateModel.ItemName))
+      template.ItemName = element.GetAttributeValue("Name");
+      if (string.IsNullOrEmpty(template.ItemName))
       {
-        templateModel.ItemName = context.ParseContext.ItemName;
+        template.ItemName = context.ParseContext.ItemName;
       }
 
-      templateModel.DatabaseName = context.ParseContext.DatabaseName;
-      templateModel.ItemIdOrPath = context.ParentItemPath + "/" + templateModel.ItemName;
-      templateModel.BaseTemplates = element.GetAttributeValue("BaseTemplates") ?? string.Empty;
-      templateModel.Icon = element.GetAttributeValue("Icon") ?? string.Empty;
+      template.DatabaseName = context.ParseContext.DatabaseName;
+      template.ItemIdOrPath = context.ParentItemPath + "/" + template.ItemName;
+      template.BaseTemplates = element.GetAttributeValue("BaseTemplates");
+      template.Icon = element.GetAttributeValue("Icon");
 
       foreach (var sectionElement in element.Elements())
       {
-        this.ParseSection(context, templateModel, sectionElement);
+        this.ParseSection(context, template, sectionElement);
       }
     }
 
     protected virtual void ParseField([NotNull] ItemParseContext context, [NotNull] TemplateSection templateSection, [NotNull] XElement fieldElement)
     {
-      var templateFieldModel = new TemplateField();
-      templateSection.Fields.Add(templateFieldModel);
+      var templateField = new TemplateField();
+      templateSection.Fields.Add(templateField);
 
-      templateFieldModel.Name = fieldElement.GetAttributeValue("Name");
-      if (string.IsNullOrEmpty(templateFieldModel.Name))
+      templateField.Name = fieldElement.GetAttributeValue("Name");
+      if (string.IsNullOrEmpty(templateField.Name))
       {
         throw new BuildException(Texts.Text2008, context.ParseContext.SourceFile.SourceFileName, fieldElement);
       }
 
-      templateFieldModel.Shared = fieldElement.GetAttributeValue("Sharing") == "Shared";
-      templateFieldModel.Unversioned = fieldElement.GetAttributeValue("Sharing") == "Unversioned";
-      templateFieldModel.Source = fieldElement.GetAttributeValue("Source") ?? string.Empty;
+      templateField.Shared = fieldElement.GetAttributeValue("Sharing") == "Shared";
+      templateField.Unversioned = fieldElement.GetAttributeValue("Sharing") == "Unversioned";
+      templateField.Source = fieldElement.GetAttributeValue("Source");
 
-      templateFieldModel.Type = fieldElement.GetAttributeValue("Type");
-      if (string.IsNullOrEmpty(templateFieldModel.Type))
+      templateField.Type = fieldElement.GetAttributeValue("Type");
+      if (string.IsNullOrEmpty(templateField.Type))
       {
-        templateFieldModel.Type = "Single-Line Text";
+        templateField.Type = "Single-Line Text";
       }
     }
 
     protected virtual void ParseSection([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] XElement sectionElement)
     {
-      var templateSectionModel = new TemplateSection();
-      template.Sections.Add(templateSectionModel);
+      var templateSection = new TemplateSection();
+      template.Sections.Add(templateSection);
 
-      templateSectionModel.Name = sectionElement.GetAttributeValue("Name");
+      templateSection.Name = sectionElement.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(template.ItemName))
       {
         throw new BuildException(Texts.Text2007, context.ParseContext.SourceFile.SourceFileName, sectionElement);
@@ -71,7 +71,7 @@
 
       foreach (var fieldElement in sectionElement.Elements())
       {
-        this.ParseField(context, templateSectionModel, fieldElement);
+        this.ParseField(context, templateSection, fieldElement);
       }
     }
   }

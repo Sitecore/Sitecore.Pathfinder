@@ -11,13 +11,13 @@
     {
     }
 
-    public override void Execute(IBuildContext context)
+    public override void Run(IBuildContext context)
     {
       var clean = new Clean();
-      clean.Execute(context);
+      clean.Run(context);
 
       var incrementalBuild = new IncrementalBuild();
-      incrementalBuild.Execute(context);
+      incrementalBuild.Run(context);
     }
   }
 }

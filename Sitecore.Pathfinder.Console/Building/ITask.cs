@@ -7,6 +7,6 @@
     [NotNull]
     string TaskName { get; }
 
-    void Execute([NotNull] IBuildContext context);
+    void Run([NotNull] IBuildContext context);
   }
 }

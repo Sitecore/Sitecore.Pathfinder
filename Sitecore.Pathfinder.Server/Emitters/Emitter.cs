@@ -53,10 +53,7 @@
 
     public virtual void Start()
     {
-      this.ConfigurationService.Load(false);
-
-      // todo: remove this
-      this.Trace.ProjectDirectory = this.ConfigurationService.Configuration.Get(Pathfinder.Constants.SolutionDirectory);
+      this.ConfigurationService.Load(LoadConfigurationOptions.None);  
 
       var project = this.ProjectService.LoadProject();
 

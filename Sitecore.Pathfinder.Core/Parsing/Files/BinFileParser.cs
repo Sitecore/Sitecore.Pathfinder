@@ -20,7 +20,7 @@
 
     public override void Parse(IParseContext context)
     {
-      var binFile = new BinFile(context.SourceFile);
+      var binFile = new BinFile(context.Project, context.SourceFile);
       context.Project.Items.Add(binFile);
     }
   }

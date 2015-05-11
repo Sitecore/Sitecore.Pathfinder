@@ -4,7 +4,6 @@
   using System.ComponentModel.Composition;
   using System.Diagnostics;
   using System.IO;
-  using System.Linq;
   using NuGet;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.IO;
@@ -16,7 +15,7 @@
     {
     }
 
-    public override void Execute(IBuildContext context)
+    public override void Run(IBuildContext context)
     {
       if (!context.IsDeployable)
       {
@@ -44,12 +43,9 @@
         return;
       }
 
-      if (!context.ModifiedProjectItems.Any())
-      {
-        return;
-      }
-
       this.BuildNupkgFile(nuspecFileName, nupkgFileName);
+
+      context.Trace.TraceInformation(Texts.Text1022, new FileInfo(nupkgFileName).Length.ToString("#,##0"));
 
       context.OutputFiles.Add(nupkgFileName);
     }

@@ -3,11 +3,11 @@
   using System.Diagnostics;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Projects.Files;
-  using Sitecore.Pathfinder.Projects.Items;
+  using Sitecore.Pathfinder.Projects.Templates;
 
   public class Component : File
   {
-    public Component([NotNull] ISourceFile sourceFileName, [NotNull] Item privateTemplate, [NotNull] Item publicTemplate) : base(sourceFileName)
+    public Component([NotNull] IProject project, [NotNull] ISourceFile sourceFileName, [NotNull] Template privateTemplate, [NotNull] Template publicTemplate) : base(project, sourceFileName)
     {
       this.PrivateTemplate = privateTemplate;
       this.PublicTemplate = publicTemplate;
@@ -20,9 +20,9 @@
     }
 
     [NotNull]
-    public Item PrivateTemplate { get; }
+    public Template PrivateTemplate { get; }
 
     [NotNull]
-    public Item PublicTemplate { get; }
+    public Template PublicTemplate { get; }
   }
 }

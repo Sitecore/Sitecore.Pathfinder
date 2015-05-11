@@ -14,7 +14,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
     {
     }
 
-    public override void Execute(IBuildContext context)
+    public override void Run(IBuildContext context)
     {
       var projectDirectory = context.SolutionDirectory;
       if (!context.FileSystem.DirectoryExists(projectDirectory))

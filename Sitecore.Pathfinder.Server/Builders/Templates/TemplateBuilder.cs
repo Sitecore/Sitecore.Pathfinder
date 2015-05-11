@@ -14,10 +14,6 @@ namespace Sitecore.Pathfinder.Builders.Templates
 
   public class TemplateBuilder
   {
-    private static readonly char[] Pipe = {
-      '|'
-    };
-
     [CanBeNull]
     private IEnumerable<TemplateSectionBuilder> sectionBuilders;
 
@@ -228,7 +224,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
       var database = Factory.GetDatabase(template.DatabaseName);
       var baseTemplates = new List<Item>();
 
-      var templates = template.BaseTemplates.Split(Pipe, StringSplitOptions.RemoveEmptyEntries);
+      var templates = template.BaseTemplates.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries);
       foreach (var templateId in templates)
       {
         // resolve possible item paths

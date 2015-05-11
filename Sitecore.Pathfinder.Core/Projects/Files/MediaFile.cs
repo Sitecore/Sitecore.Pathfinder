@@ -6,7 +6,7 @@
 
   public class MediaFile : File
   {
-    public MediaFile([NotNull] ISourceFile sourceFileName, [NotNull] Item mediaItem) : base(sourceFileName)
+    public MediaFile(IProject project, [NotNull] ISourceFile sourceFileName, [NotNull] Item mediaItem) : base(project, sourceFileName)
     {
       this.MediaItem = mediaItem;
 

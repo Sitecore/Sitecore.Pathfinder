@@ -12,6 +12,8 @@
 
     public const string HostName = "HostName";
 
+    public const string IgnoreDirectories = "ignoredirectories";
+
     public const string InstallUrl = "deploying:installurl";
 
     public const string ItemPath = "itemPath";
@@ -26,10 +28,18 @@
 
     public const string SolutionDirectory = "solutiondirectory";
 
-    public const string IgnoreDirectories = "ignoredirectories";
-
     public const string ToolsDirectory = "system:toolspath";
 
     public const string Wwwroot = "wwwroot";
+
+    public static readonly char[] Pipe = 
+    {
+      '|'
+    };
+
+    public static readonly char[] Space = 
+    {
+      '|'
+    };
   }
 }

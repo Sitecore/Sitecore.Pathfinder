@@ -35,7 +35,7 @@
 
     public override void Parse(IParseContext context)
     {
-      var mediaItem = new Item(context.SourceFile);
+      var mediaItem = new Item(context.Project, context.SourceFile);
       context.Project.Items.Add(mediaItem);
 
       // todo: set template
@@ -44,7 +44,7 @@
       mediaItem.ItemIdOrPath = context.ItemPath;
       mediaItem.IsEmittable = false;
 
-      var mediaFile = new MediaFile(context.SourceFile, mediaItem);
+      var mediaFile = new MediaFile(context.Project, context.SourceFile, mediaItem);
       context.Project.Items.Add(mediaFile);
     }
   }

@@ -9,6 +9,7 @@
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Building;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Extensions.CompositionServiceExtensions;
 
   public class Startup
   {
@@ -17,7 +18,7 @@
       var configuration = this.RegisterConfiguration();
       var compositionService = this.RegisterCompositionService(configuration);
 
-      var build = compositionService.GetExportedValue<Build>();
+      var build = compositionService.Resolve<Build>();
       build.Start();
 
       Trace.Write("Done");
@@ -58,9 +59,9 @@
       var configuration = new Microsoft.Framework.ConfigurationModel.Configuration();
       configuration.Add(new MemoryConfigurationSource());
 
-      var toolsPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
+      var toolsDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
 
-      configuration.Set(Constants.ToolsDirectory, toolsPath);
+      configuration.Set(Constants.ToolsDirectory, toolsDirectory);
       configuration.Set(Constants.ConfigFileName, "sitecore.config.json");
 
       return configuration;

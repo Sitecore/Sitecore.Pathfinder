@@ -11,6 +11,11 @@
   "database": "master",
 
   // build pipeline
-  "pipeline": "clean incremental-build nuget-pack copy-to-website install publish"
+  "pipeline": "lint nuget-pack copy-to-website install publish",
+
+  "external-references": {
+    "/sitecore/templates/Sample/Sample Item": "template",
+    "/sitecore/templates/System/Layout/Renderings/View rendering": "template"
+  }
 }
                                        
