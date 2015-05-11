@@ -7,16 +7,10 @@
   // relative project directory to solution directory
   "projectdirectory": "",
 
-  // relative directory to output directory
-  // the content directory must start with 'content'
-  "contentdirectory": "content/project",
-
-  // relative directory to output directory
-  // the serialization directory must start with 'serialization' followed by the database name
-  "serializationdirectory": "serialization/master/sitecore",
+  // Sitecore database name (master, core, or web)
   "database": "master",
 
   // build pipeline
-  "pipeline": "clean incremental-build create-nuspec create-nupkg copy-to-website install publish"
+  "pipeline": "clean incremental-build nuget-pack copy-to-website install publish"
 }
                                        

@@ -98,7 +98,7 @@
         context.Trace.TraceError(ex.Text, ex.FileName, ex.Line, ex.Column, ex.Message);
         context.IsAborted = true;
 
-        if (string.Compare(context.Configuration.Get(Constants.DebugMode), "true", StringComparison.OrdinalIgnoreCase) == 0)
+        if (string.Compare(context.Configuration.Get(Pathfinder.Constants.DebugMode), "true", StringComparison.OrdinalIgnoreCase) == 0)
         {
           throw;
         }
@@ -108,7 +108,7 @@
         context.Trace.TraceError(ConsoleTexts.Text3009, ex.Message + ex.StackTrace);
         context.IsAborted = true;
 
-        if (string.Compare(context.Configuration.Get(Constants.DebugMode), "true", StringComparison.OrdinalIgnoreCase) == 0)
+        if (string.Compare(context.Configuration.Get(Pathfinder.Constants.DebugMode), "true", StringComparison.OrdinalIgnoreCase) == 0)
         {
           throw;
         }
@@ -148,7 +148,7 @@
 
     protected virtual void LoadConfiguration()
     {
-      var configuration = this.Configuration as IConfigurationSourceContainer;
+      var configuration = this.Configuration as IConfigurationSourceRoot;
       if (configuration == null)
       {
         throw new ConfigurationException(ConsoleTexts.Text3000);
@@ -158,7 +158,7 @@
       var commandLineArgs = Environment.GetCommandLineArgs().Skip(1).ToArray();
 
       // add system config
-      var fileName = Path.Combine(configuration.Get(Constants.ToolsPath), configuration.Get(Constants.ConfigFileName));
+      var fileName = Path.Combine(configuration.Get(Pathfinder.Constants.ToolsPath), configuration.Get(Pathfinder.Constants.ConfigFileName));
       if (!File.Exists(fileName))
       {
         throw new ConfigurationException(ConsoleTexts.Text3002, fileName);
@@ -170,27 +170,21 @@
       configuration.AddCommandLine(commandLineArgs);
 
       // set website path
-      var toolsDirectory = configuration.Get(Constants.ToolsPath);
-      var solutionDirectory = PathHelper.Combine(toolsDirectory, configuration.Get(Constants.SolutionDirectory) ?? string.Empty);
-      configuration.Set(Constants.SolutionDirectory, solutionDirectory);
+      var toolsDirectory = configuration.Get(Pathfinder.Constants.ToolsPath);
+      var solutionDirectory = PathHelper.Combine(toolsDirectory, configuration.Get(Pathfinder.Constants.SolutionDirectory) ?? string.Empty);
+      configuration.Set(Pathfinder.Constants.SolutionDirectory, solutionDirectory);
 
       // add build config
-      var websiteConfigFileName = PathHelper.Combine(solutionDirectory, configuration.Get(Constants.ConfigFileName));
+      var websiteConfigFileName = PathHelper.Combine(solutionDirectory, configuration.Get(Pathfinder.Constants.ConfigFileName));
       if (File.Exists(websiteConfigFileName))
       {
         configuration.AddFile(websiteConfigFileName);
       }
 
       // set project path
-      var projectDirectory = PathHelper.NormalizeFilePath(configuration.Get(Constants.ProjectDirectory) ?? string.Empty).TrimStart('\\');
-      configuration.Set(Constants.ProjectDirectory, projectDirectory);
+      var projectDirectory = PathHelper.NormalizeFilePath(configuration.Get(Pathfinder.Constants.ProjectDirectory) ?? string.Empty).TrimStart('\\');
+      configuration.Set(Pathfinder.Constants.ProjectDirectory, projectDirectory);
 
-      // set output path
-      var outputDirectory = PathHelper.Combine(solutionDirectory, PathHelper.NormalizeFilePath(configuration.Get(Constants.OutputDirectory) ?? string.Empty).TrimStart('\\'));
-      if (!string.IsNullOrEmpty(outputDirectory))
-      {
-        configuration.Set(Constants.OutputDirectory, outputDirectory);
-      }
     }
 
     [NotNull]
@@ -199,12 +193,11 @@
       this.Trace.TraceInformation(ConsoleTexts.Text1011);
 
       // todo: refactor this
-      var projectDirectory = PathHelper.Combine(this.Configuration.Get(Constants.SolutionDirectory), this.Configuration.Get(Constants.ProjectDirectory));
-      var databaseName = this.Configuration.Get(Constants.Database);
-      var ignoreDirectories = this.Configuration.Get(Constants.SystemDirectories).Split(Space, StringSplitOptions.RemoveEmptyEntries).ToList();
+      var projectDirectory = PathHelper.Combine(this.Configuration.Get(Pathfinder.Constants.SolutionDirectory), this.Configuration.Get(Pathfinder.Constants.ProjectDirectory));
+      var databaseName = this.Configuration.Get(Pathfinder.Constants.Database);
+      var ignoreDirectories = this.Configuration.Get(Pathfinder.Constants.IgnoreDirectories).Split(Space, StringSplitOptions.RemoveEmptyEntries).ToList();
 
-      ignoreDirectories.Add(Path.GetFileName(this.Configuration.Get(Constants.ToolsPath)));
-      ignoreDirectories.Add(Path.GetFileName(this.Configuration.Get(Constants.OutputDirectory)));
+      ignoreDirectories.Add(Path.GetFileName(this.Configuration.Get(Pathfinder.Constants.ToolsPath)));
 
       return this.ProjectService.LoadProject(projectDirectory, databaseName, ignoreDirectories.ToArray());
     }

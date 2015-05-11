@@ -3,9 +3,13 @@
   using System;
   using System.Collections.Generic;
   using System.ComponentModel.Composition;
+  using System.IO;
   using System.Linq;
+  using Microsoft.Framework.ConfigurationModel;
+  using Sitecore.IO;
   using Sitecore.Pathfinder.Data;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Extensions.ConfigurationExtensions;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Parsing;
   using Sitecore.Pathfinder.Projects;
@@ -15,9 +19,10 @@
   public class Emitter
   {
     [ImportingConstructor]
-    public Emitter([NotNull] ICompositionService compositionService, [NotNull] IDataService dataService, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystem, [Sitecore.NotNull] IParseService parseService)
+    public Emitter([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IDataService dataService, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystem, [Sitecore.NotNull] IParseService parseService)
     {
       this.CompositionService = compositionService;
+      this.Configuration = configuration;
       this.DataService = dataService;
       this.Trace = traceService;
       this.FileSystem = fileSystem;
@@ -25,29 +30,33 @@
     }
 
     [NotNull]
-    public ICompositionService CompositionService { get; }
+    protected ICompositionService CompositionService { get; }
+
+    protected IConfiguration Configuration { get; set; }
 
     [NotNull]
-    public IDataService DataService { get; }
+    protected IDataService DataService { get; }
 
     [NotNull]
     [ImportMany]
-    public IEnumerable<IEmitter> Emitters { get; private set; }
+    protected IEnumerable<IEmitter> Emitters { get; private set; }
 
     [NotNull]
-    public IFileSystemService FileSystem { get; }
+    protected IFileSystemService FileSystem { get; }
 
     [NotNull]
-    public IParseService ParseService { get; }
+    protected IParseService ParseService { get; }
 
     [NotNull]
-    public ITraceService Trace { get; }
+    protected ITraceService Trace { get; }
 
     public virtual void Start([NotNull] string projectDirectory)
     {
-      // todo: change to abstract factory pattern
+      this.LoadConfiguration(projectDirectory);
+
       this.Trace.ProjectDirectory = projectDirectory;
 
+      // todo: change to abstract factory pattern
       var project = new Project(this.CompositionService, this.FileSystem, this.ParseService).Load(projectDirectory, "master");
 
       this.Emit(project);
@@ -100,6 +109,34 @@
           retries.Add(new Tuple<ProjectItem, Exception>(projectItem, ex));
         }
       }
+    }
+
+    protected virtual void LoadConfiguration(string directory)
+    {
+      var configuration = this.Configuration as IConfigurationSourceRoot;
+      if (configuration == null)
+      {
+        throw new ConfigurationException(ConsoleTexts.Text3000);
+      }
+
+      // add command line
+      var commandLineArgs = Environment.GetCommandLineArgs().Skip(1).ToArray();
+      configuration.AddCommandLine(commandLineArgs);
+
+      // set website path
+      var solutionDirectory = FileUtil.MapPath(directory);
+      configuration.Set(Pathfinder.Constants.SolutionDirectory, solutionDirectory);
+
+      // add build config
+      var websiteConfigFileName = PathHelper.Combine(solutionDirectory, configuration.Get(Pathfinder.Constants.ConfigFileName));
+      if (File.Exists(websiteConfigFileName))
+      {
+        configuration.AddFile(websiteConfigFileName);
+      }
+
+      // set project path
+      var projectDirectory = PathHelper.NormalizeFilePath(configuration.Get(Pathfinder.Constants.ProjectDirectory) ?? string.Empty).TrimStart('\\');
+      configuration.Set(Pathfinder.Constants.ProjectDirectory, projectDirectory);
     }
 
     protected virtual void RetryEmit([NotNull] IEmitContext context, [NotNull] List<IEmitter> emitters, [NotNull] ICollection<Tuple<ProjectItem, Exception>> retries)

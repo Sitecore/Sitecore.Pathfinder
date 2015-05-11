@@ -23,9 +23,6 @@
     bool IsDeployable { get; set; }
 
     [NotNull]
-    string OutputDirectory { get; set; }
-
-    [NotNull]
     IList<string> OutputFiles { get; }
 
     [NotNull]

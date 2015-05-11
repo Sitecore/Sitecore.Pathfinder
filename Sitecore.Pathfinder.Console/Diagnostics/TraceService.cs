@@ -33,7 +33,7 @@
           throw new TraceException("Configuration element 'error-messages-language' not found");
         }
 
-        var fileName = PathHelper.Combine(this.configuration.Get(Building.Constants.ToolsPath), "texts." + language + ".json");
+        var fileName = PathHelper.Combine(this.configuration.Get(Pathfinder.Constants.ToolsPath), "texts." + language + ".json");
         if (!File.Exists(fileName))
         {
           throw new TraceException("Error text file not found: " + fileName);
@@ -62,7 +62,7 @@
         throw new TraceException($"Error message SCC'{text}' not found");
       }
 
-      var solutionDirectory = this.configuration.Get(Building.Constants.SolutionDirectory);
+      var solutionDirectory = this.configuration.Get(Pathfinder.Constants.SolutionDirectory);
       if (fileName.StartsWith(solutionDirectory, StringComparison.OrdinalIgnoreCase))
       {
         fileName = fileName.Mid(solutionDirectory.Length + 1);

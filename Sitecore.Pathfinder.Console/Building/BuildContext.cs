@@ -32,19 +32,6 @@
 
     public bool IsDeployable { get; set; }
 
-    public string OutputDirectory
-    {
-      get
-      {
-        return this.Configuration.Get(Constants.OutputDirectory);
-      }
-
-      set
-      {
-        this.Configuration.Set(Constants.OutputDirectory, value);
-      }
-    }
-
     public IList<string> OutputFiles { get; }
 
     public IProject Project { get; private set; }
@@ -53,12 +40,12 @@
     {
       get
       {
-        return this.Configuration.Get(Constants.ProjectDirectory);
+        return this.Configuration.Get(Pathfinder.Constants.ProjectDirectory);
       }
 
       set
       {
-        this.Configuration.Set(Constants.ProjectDirectory, value);
+        this.Configuration.Set(Pathfinder.Constants.ProjectDirectory, value);
       }
     }
 
@@ -66,12 +53,12 @@
     {
       get
       {
-        return this.Configuration.Get(Constants.SolutionDirectory);
+        return this.Configuration.Get(Pathfinder.Constants.SolutionDirectory);
       }
 
       set
       {
-        this.Configuration.Set(Constants.SolutionDirectory, value);
+        this.Configuration.Set(Pathfinder.Constants.SolutionDirectory, value);
       }
     }
 

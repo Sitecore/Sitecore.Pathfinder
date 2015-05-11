@@ -24,6 +24,16 @@
             Unable to commit because a new key was added to the configuration file after last load operation. The newly added key is '{0}'.
             </summary>
         </member>
+        <member name="P:Microsoft.Framework.ConfigurationModel.Json.Resources.Error_FileNotFound">
+            <summary>
+            The configuration file '{0}' was not found and is not optional.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Framework.ConfigurationModel.Json.Resources.FormatError_FileNotFound(System.Object)">
+            <summary>
+            The configuration file '{0}' was not found and is not optional.
+            </summary>
+        </member>
         <member name="P:Microsoft.Framework.ConfigurationModel.Json.Resources.Error_InvalidFilePath">
             <summary>
             File path must be a non-empty string.

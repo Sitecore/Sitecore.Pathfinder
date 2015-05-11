@@ -55,11 +55,10 @@ namespace Sitecore.Pathfinder.Building.Deploying.Install
 
       // use SourceMap to remap file names
       var solutionDirectory = context.SolutionDirectory;
-      var outputDirectory = context.OutputDirectory;
 
       foreach (var pair in context.SourceMap)
       {
-        var targetFileName = PathHelper.UnmapPath(outputDirectory, pair.Key).TrimStart('\\');
+        var targetFileName = PathHelper.UnmapPath(solutionDirectory, pair.Key).TrimStart('\\');
         var sourceFile = PathHelper.UnmapPath(solutionDirectory, pair.Value).TrimStart('\\');
 
         output = output.Replace(targetFileName, sourceFile);

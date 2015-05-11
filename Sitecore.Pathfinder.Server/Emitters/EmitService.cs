@@ -4,28 +4,31 @@
   using System.ComponentModel.Composition.Hosting;
   using System.IO;
   using System.Reflection;
+  using Microsoft.Framework.ConfigurationModel;
+  using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Parsing;
 
   public class EmitService
   {
-    public EmitService([NotNull] string projectDirectory)
+    public EmitService([Sitecore.NotNull] string projectDirectory)
     {
       this.ProjectDirectory = projectDirectory;
     }
 
-    [NotNull]
+    [Sitecore.NotNull]
     public string ProjectDirectory { get; }
 
     public virtual void Start()
     {
-      var compositionService = this.RegisterCompositionService();
+      var configuration = this.RegisterConfiguration();
+      var compositionService = this.RegisterCompositionService(configuration);
 
       var emitter = compositionService.GetExportedValue<Emitter>();
       emitter.Start(this.ProjectDirectory);
     }
 
-    [NotNull]
-    protected virtual CompositionContainer RegisterCompositionService()
+    [Sitecore.NotNull]
+    protected virtual CompositionContainer RegisterCompositionService([NotNull] IConfiguration configuration)
     {
       var assembly = Assembly.GetExecutingAssembly();
       var directory = Path.GetDirectoryName(assembly.Location) ?? string.Empty;
@@ -43,8 +46,21 @@
 
       // register the composition service itself for DI
       compositionContainer.ComposeExportedValue<ICompositionService>(compositionContainer);
+      compositionContainer.ComposeExportedValue(configuration);
 
       return compositionContainer;
     }
+
+    [NotNull]
+    protected virtual IConfigurationSourceRoot RegisterConfiguration()
+    {
+      var configuration = new Configuration();
+      configuration.Add(new MemoryConfigurationSource());
+
+      configuration.Set(Pathfinder.Constants.ConfigFileName, "sitecore.config.json");
+
+      return configuration;
+    }
+
   }
 }

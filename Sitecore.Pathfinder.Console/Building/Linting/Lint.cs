@@ -13,15 +13,6 @@ namespace Sitecore.Pathfinder.Building.Linting
 
     public override void Execute(IBuildContext context)
     {
-      var outputDirectory = context.OutputDirectory;
-      if (!context.FileSystem.DirectoryExists(outputDirectory))
-      {
-        return;
-      }
-
-      context.Trace.TraceInformation(ConsoleTexts.Text1010);
-
-      // var project = new Project(context.CompositionService, context.FileSystem, outputDirectory);
     }
   }
 }

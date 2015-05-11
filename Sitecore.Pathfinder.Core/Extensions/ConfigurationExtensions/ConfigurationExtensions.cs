@@ -7,7 +7,7 @@
   public static class ConfigurationExtensions
   {
     [NotNull]
-    public static IConfigurationSourceContainer AddFile([NotNull] this IConfigurationSourceContainer configuration, [NotNull] string path)
+    public static IConfigurationSourceRoot AddFile([NotNull] this IConfigurationSourceRoot configuration, [NotNull] string path)
     {
       if (!File.Exists(path))
       {

@@ -2,9 +2,9 @@
 {
   using Sitecore.Pathfinder.Diagnostics;
 
-  public abstract class LinkBase
+  public abstract class Reference
   {
-    protected LinkBase([NotNull] string type)
+    protected Reference([NotNull] string type)
     {
       this.Type = type;
     }

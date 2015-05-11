@@ -10,11 +10,14 @@
       this.SourceFile = sourceFile;
     }
 
-    [NotNull]
-    public ICollection<LinkBase> Links { get; } = new List<LinkBase>();
+    [CanBeNull]
+    public ProjectItem Owner { get; set; }
 
     [NotNull]
     public abstract string QualifiedName { get; }
+
+    [NotNull]
+    public ICollection<Reference> References { get; } = new List<Reference>();
 
     [NotNull]
     public abstract string ShortName { get; }

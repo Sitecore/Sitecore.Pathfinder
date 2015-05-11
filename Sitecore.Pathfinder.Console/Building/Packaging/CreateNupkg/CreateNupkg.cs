@@ -12,7 +12,7 @@
   [Export(typeof(ITask))]
   public class CreateNupkg : TaskBase
   {
-    public CreateNupkg() : base("create-nupkg")
+    public CreateNupkg() : base("nuget-pack")
     {
     }
 
@@ -25,8 +25,8 @@
 
       context.Trace.TraceInformation(ConsoleTexts.Text1005);
 
-      var packageFileName = context.Configuration.Get("packaging:nuspec:filename");
-      var nuspecFileName = PathHelper.Combine(context.OutputDirectory, packageFileName);
+      var packageFileName = context.Configuration.Get("nuget:filename");
+      var nuspecFileName = PathHelper.Combine(context.SolutionDirectory, packageFileName);
       if (string.IsNullOrEmpty(nuspecFileName))
       {
         return;
