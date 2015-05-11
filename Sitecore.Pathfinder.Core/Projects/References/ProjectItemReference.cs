@@ -3,10 +3,11 @@
   using System;
   using System.Linq;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Projects.Locations;
 
   public class ProjectItemReference : Reference
   {
-    public ProjectItemReference([NotNull] IProject project, [NotNull] string referenceType, [NotNull] string qualifiedName) : base(project, referenceType)
+    public ProjectItemReference([NotNull] IProject project, [NotNull] Location sourceLocation, [NotNull] string referenceType, [NotNull] string qualifiedName) : base(project, sourceLocation, referenceType)
     {
       this.QualifiedName = qualifiedName;
     }
@@ -14,25 +15,14 @@
     [NotNull]
     public string QualifiedName { get; }
 
-    [CanBeNull]
-    public ProjectItem Target { get; private set; }
-
-    public override bool Resolve()
+    public override bool TryResolve(out IElement element)
     {
-      if (this.IsResolved)
-      {
-        return this.IsValid;
-      }
-
-      this.IsResolved = true;
-
-      var targets = this.Project.Items.Where(i => string.Compare(i.QualifiedName, this.QualifiedName, StringComparison.OrdinalIgnoreCase) == 0).ToList();
+      var declarations = this.Project.Items.Where(i => string.Compare(i.QualifiedName, this.QualifiedName, StringComparison.OrdinalIgnoreCase) == 0).ToList();
 
       // todo: report ambigeous reference, if targets.Count > 1
-      this.Target = targets.FirstOrDefault();
-      this.IsValid = this.Target != null;
+      element = declarations.FirstOrDefault();
 
-      return this.IsValid;
+      return true;
     }
 
     public override string ToString()

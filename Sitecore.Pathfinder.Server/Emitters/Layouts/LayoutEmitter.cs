@@ -57,13 +57,13 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
       var item = database.GetItem(layout.Item.ItemIdOrPath);
       if (item == null)
       {
-        throw new RetryableBuildException(Texts.Text2003, layout.SourceFile.SourceFileName, 0, 0, layout.Item.ItemIdOrPath);
+        throw new RetryableBuildException(Texts.Text2003, layout.Location.SourceFileName, 0, 0, layout.Item.ItemIdOrPath);
       }
 
       var errors = new List<Message>();
       var warnings = new List<Message>();
 
-      var text = context.FileSystem.ReadAllText(layout.SourceFile.SourceFileName);
+      var text = context.FileSystem.ReadAllText(layout.Location.SourceFileName);
 
       XDocument doc;
       try
@@ -72,13 +72,13 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
       }
       catch
       {
-        throw new BuildException(Texts.Text2014, layout.SourceFile.SourceFileName);
+        throw new BuildException(Texts.Text2014, layout.Location.SourceFileName);
       }
 
       var root = doc.Root;
       if (root == null)
       {
-        throw new BuildException(Texts.Text2014, layout.SourceFile.SourceFileName);
+        throw new BuildException(Texts.Text2014, layout.Location.SourceFileName);
       }
 
       var writer = new StringWriter();
@@ -97,17 +97,17 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
 
       foreach (var error in errors)
       {
-        context.Trace.TraceError(Texts.Text2026, error.Text, layout.SourceFile.SourceFileName, error.Line, error.Column);
+        context.Trace.TraceError(Texts.Text2026, error.Text, layout.Location.SourceFileName, error.Line, error.Column);
       }
 
       foreach (var warning in warnings)
       {
-        context.Trace.TraceWarning(Texts.Text2027, warning.Text, layout.SourceFile.SourceFileName, warning.Line, warning.Column);
+        context.Trace.TraceWarning(Texts.Text2027, warning.Text, layout.Location.SourceFileName, warning.Line, warning.Column);
       }
 
       if (errors.Any())
       {
-        throw new BuildException(Texts.Text2020, layout.SourceFile.SourceFileName);
+        throw new BuildException(Texts.Text2020, layout.Location.SourceFileName);
       }
     }
 
@@ -156,7 +156,7 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
 
       if (item == null)
       {
-        throw new BuildException(Texts.Text2024, layout.SourceFile.SourceFileName);
+        throw new BuildException(Texts.Text2024, layout.Location.SourceFileName);
       }
 
       return item;
@@ -291,7 +291,7 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
         var l = database.GetItem(layoutPath);
         if (l == null)
         {
-          throw new RetryableBuildException(Texts.Text2029, layout.SourceFile.SourceFileName, deviceElement, deviceElement.Attribute("Layout"), layoutPath);
+          throw new RetryableBuildException(Texts.Text2029, layout.Location.SourceFileName, deviceElement, deviceElement.Attribute("Layout"), layoutPath);
         }
 
         output.WriteAttributeString("l", l.ID.ToString());

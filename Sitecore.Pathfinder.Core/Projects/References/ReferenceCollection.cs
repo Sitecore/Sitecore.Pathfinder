@@ -3,6 +3,8 @@
   using System.Collections;
   using System.Collections.Generic;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Projects.Items;
+  using Sitecore.Pathfinder.Projects.Locations;
 
   public class ReferenceCollection : ICollection<Reference>
   {
@@ -37,17 +39,17 @@
     }
 
     [NotNull]
-    public ProjectItemReference AddFieldReference([NotNull] string fieldValue)
+    public ProjectItemReference AddFieldReference(Field field)
     {
-      var reference = new ProjectItemReference(this.ProjectItem.Project, "field reference", fieldValue);
+      var reference = new ProjectItemReference(this.ProjectItem.Project, field.Location, "field reference", field.Value);
       this.Add(reference);
       return reference;
     }
 
     [NotNull]
-    public Reference AddTemplateReference([NotNull] string templateIdOrPath)
+    public Reference AddTemplateReference(Location sourceLocation, [NotNull] string templateIdOrPath)
     {
-      var reference = new ProjectItemReference(this.ProjectItem.Project, "template", templateIdOrPath);
+      var reference = new ProjectItemReference(this.ProjectItem.Project, sourceLocation, "template", templateIdOrPath);
       this.Add(reference);
       return reference;
     }

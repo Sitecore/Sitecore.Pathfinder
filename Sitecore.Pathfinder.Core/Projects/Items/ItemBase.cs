@@ -2,8 +2,6 @@
 {
   using System;
   using System.Collections.Generic;
-  using System.Linq;
-  using System.Runtime.CompilerServices;
   using Sitecore.Pathfinder.Diagnostics;
 
   public abstract class ItemBase : ProjectItem
@@ -22,32 +20,6 @@
     public string Icon { get; set; } = string.Empty;
 
     public bool IsEmittable { get; set; } = true;
-
-    [IndexerName("Field")]
-    public string this[string fieldName]
-    {
-      get
-      {
-        var field = this.Fields.FirstOrDefault(f => string.Compare(f.Name, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
-        return field?.Value ?? string.Empty;
-      }
-
-      set
-      {
-        var field = this.Fields.FirstOrDefault(f => string.Compare(f.Name, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
-        if (field == null)
-        {
-          field = new Field(this.SourceFile)
-          {
-            Name = fieldName
-          };
-
-          this.Fields.Add(field);
-        }
-
-        field.Value = value;
-      }
-    }
 
     [NotNull]
     public string ItemIdOrPath { get; set; } = string.Empty;
@@ -75,7 +47,7 @@
       {
         if (field.Value.StartsWith("/sitecore", StringComparison.OrdinalIgnoreCase))
         {
-          this.References.AddFieldReference(field.Value);
+          this.References.AddFieldReference(field);
         }
       }
 

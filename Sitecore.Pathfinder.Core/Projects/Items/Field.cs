@@ -1,22 +1,22 @@
 namespace Sitecore.Pathfinder.Projects.Items
 {
-  using System.Xml.Linq;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Projects.Locations;
 
   // todo: consider basing this on ProjectElement
   public class Field
   {
-    public Field([NotNull] ISourceFile sourceFile)
+    public Field([NotNull] Location location)
     {
-      this.SourceFile = sourceFile;
+      this.Location = location;
       this.Name = string.Empty;
       this.Value = string.Empty;
       this.Language = string.Empty;
     }
 
-    public Field([NotNull] ISourceFile sourceFile, [NotNull] string name, [NotNull] string value)
+    public Field([NotNull] Location location, [NotNull] string name, [NotNull] string value)
     {
-      this.SourceFile = sourceFile;
+      this.Location = location;
       this.Name = name;
       this.Value = value;
       this.Language = string.Empty;
@@ -26,13 +26,10 @@ namespace Sitecore.Pathfinder.Projects.Items
     public string Language { get; set; }
 
     [NotNull]
-    public string Name { get; set; }
-
-    [CanBeNull]
-    public XElement SourceElement { get; set; }
+    public Location Location { get; set; }
 
     [NotNull]
-    public ISourceFile SourceFile { get; }
+    public string Name { get; set; }
 
     [NotNull]
     public string Value { get; set; }

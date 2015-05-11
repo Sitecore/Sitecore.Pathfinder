@@ -109,7 +109,7 @@
         value = fieldElement.Value;
       }
 
-      field = new Field(item.SourceFile);
+      field = new Field(item.Location);
       item.Fields.Add(field);
 
       field.Name = fieldName;

@@ -4,7 +4,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
   public class Item : ItemBase
   {
-    public Item([NotNull] IProject project, [NotNull] ISourceFile sourceFile) : base(project, sourceFile)
+    public item.LocationItem([NotNull] IProject project, [NotNull] Location sourceFile) : base(project, sourceFile)
     {
     }
   }

@@ -8,6 +8,7 @@
   using Sitecore.Pathfinder.Projects;
   using Sitecore.Pathfinder.Projects.Items;
   using Sitecore.Pathfinder.Projects.Layouts;
+  using Sitecore.Pathfinder.Projects.Locations;
 
   public abstract class RenderingParser : ParserBase
   {
@@ -30,7 +31,7 @@
 
     public override void Parse(IParseContext context)
     {
-      var item = new Item(context.Project, context.SourceFile);
+      var item = new Item(context.Project, new Location(context.SourceFile));
       context.Project.Items.Add(item);
 
       item.ItemName = context.ItemName;
@@ -41,8 +42,8 @@
       var path = "/" + PathHelper.NormalizeItemPath(Path.Combine(context.Configuration.Get(Constants.ProjectDirectory), context.GetRelativeFileName(context.SourceFile)));
       var placeHolders = this.GetPlaceholders(context, context.SourceFile);
 
-      item.Fields.Add(new Field(context.SourceFile, "Path", path));
-      item.Fields.Add(new Field(context.SourceFile, "Place Holders", string.Join(",", placeHolders)));
+      item.Fields.Add(new Field(item.Location, "Path", path));
+      item.Fields.Add(new Field(item.Location, "Place Holders", string.Join(",", placeHolders)));
 
       var rendering = new Rendering(context.Project, context.SourceFile, item);
       context.Project.Items.Add(rendering);
