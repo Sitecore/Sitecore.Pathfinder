@@ -2,12 +2,12 @@
 {
   using System.Diagnostics;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects.Items;
-  using Sitecore.Pathfinder.TreeNodes;
 
   public class MediaFile : File
   {
-    public MediaFile(IProject project, [NotNull] ITextSpan textSpan, [NotNull] Item mediaItem) : base(project, textSpan)
+    public MediaFile(IProject project, [NotNull] ITreeNode treeNode, [NotNull] Item mediaItem) : base(project, treeNode)
     {
       this.MediaItem = mediaItem;
 

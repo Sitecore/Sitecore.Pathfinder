@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.TreeNodes
+﻿namespace Sitecore.Pathfinder.Documents
 {
   using System.Collections.Generic;
   using System.ComponentModel.Composition;
@@ -11,15 +11,15 @@
   {
     [NotNull]
     [ImportMany]
-    protected IEnumerable<IDocumentLoader> Loaders { get; private set; }
+    protected IEnumerable<IDocumentLexer> Loaders { get; private set; }
 
     public IDocument LoadDocument(IParseContext context, ISourceFile sourceFile)
     {
       foreach (var loader in this.Loaders)
       {
-        if (loader.CanLoad(context, sourceFile))
+        if (loader.CanLex(context, sourceFile))
         {
-          return loader.Load(context, sourceFile);
+          return loader.Lex(context, sourceFile);
         }
       }
 

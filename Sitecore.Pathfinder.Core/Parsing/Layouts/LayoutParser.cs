@@ -21,7 +21,7 @@
 
     public override void Parse(IParseContext context)
     {
-      var item = new Item(context.Project, context.Document.Root.TextSpan);
+      var item = new Item(context.Project, context.Document.Root);
       context.Project.Items.Add(item);
 
       item.ItemName = context.ItemName;
@@ -29,7 +29,7 @@
       item.ItemIdOrPath = context.ItemPath;
       item.IsEmittable = false;
 
-      var layout = new Layout(context.Project, context.Document.Root.TextSpan, item);
+      var layout = new Layout(context.Project, context.Document.Root, item);
       context.Project.Items.Add(layout);
     }
   }

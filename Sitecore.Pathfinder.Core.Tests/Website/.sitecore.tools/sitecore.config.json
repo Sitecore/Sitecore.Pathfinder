@@ -1,0 +1,43 @@
+{
+  // "$schema": ".schemas/config.json",
+  "wwwroot": "",
+  "hostname": "",
+
+  // solution directory relative to tools path
+  "solutiondirectory": "..",
+
+  // project directory relative to solution directory
+  "projectdirectory": "",
+
+  // default database name (master, core or web)
+  "database": "master",
+
+  // default pipeline
+  "pipeline": "init",
+
+  // init pipeline
+  "init": {
+    "pipeline": "init"
+  },
+
+  // NuGet
+  "nuget": {
+    "filename": "sitecore.nuspec"
+  },
+
+  // deploying URLs
+  "deploying": {
+    "packagedirectory": "packages",
+    "installurl": "/sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx?w=0&iu=",
+    "publishurl": "/sitecore/shell/client/Applications/Pathfinder/Publish.aspx?m=i&db="
+  },
+
+  // directories to ignore
+  "ignoredirectories": ".settings .sitecore.tools node_modules",
+
+  "websiteFolderName": "Website",
+  "dataFolderName": "Data",
+
+  "error-messages-language": "en-US",
+  "ignore-blank-error-messages": false
+}

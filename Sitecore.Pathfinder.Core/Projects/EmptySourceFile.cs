@@ -3,8 +3,8 @@
   using System;
   using System.Xml.Linq;
   using Newtonsoft.Json.Linq;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Parsing;
-  using Sitecore.Pathfinder.TreeNodes;
 
   public class EmptySourceFile : ISourceFile
   {

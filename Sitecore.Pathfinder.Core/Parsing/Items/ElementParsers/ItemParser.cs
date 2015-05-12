@@ -4,11 +4,11 @@
   using System.ComponentModel.Composition;
   using System.Linq;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Extensions.StringExtensions;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects.Items;
   using Sitecore.Pathfinder.Projects.Templates;
-  using Sitecore.Pathfinder.TreeNodes;
 
   [Export(typeof(IElementParser))]
   public class ItemParser : ElementParserBase
@@ -20,7 +20,7 @@
 
     public override void Parse(ItemParseContext context, ITreeNode treeNode)
     {
-      var item = new Item(context.ParseContext.Project, treeNode.TextSpan);
+      var item = new Item(context.ParseContext.Project, treeNode);
       context.ParseContext.Project.Items.Add(item);
 
       item.ItemName = treeNode.GetAttributeValue("Name");
@@ -90,19 +90,19 @@
       var fieldName = fieldElement.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(fieldName))
       {
-        throw new BuildException(Texts.Text2011, fieldElement.TextSpan);
+        throw new BuildException(Texts.Text2011, fieldElement);
       }
 
       var field = item.Fields.FirstOrDefault(f => string.Compare(f.Name, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
       if (field != null)
       {
-        context.ParseContext.Project.Trace.TraceError(Texts.Text2012, fieldElement.TextSpan, fieldName);
+        context.ParseContext.Project.Trace.TraceError(Texts.Text2012, fieldElement, fieldName);
         return;
       }
 
       var value = fieldElement.GetAttributeValue("Value");
 
-      field = new Field(item.TextSpan);
+      field = new Field(item.TreeNode);
       item.Fields.Add(field);
 
       field.Name = fieldName;
@@ -112,13 +112,13 @@
     [NotNull]
     protected virtual Template ParseTemplate([NotNull] ItemParseContext context, [NotNull] ITreeNode treeNode)
     {
-      var template = new Template(context.ParseContext.Project, treeNode.TextSpan);
+      var template = new Template(context.ParseContext.Project, treeNode);
       context.ParseContext.Project.Items.Add(template);
 
       template.ItemIdOrPath = this.GetTemplateIdOrPath(context, treeNode);
       if (string.IsNullOrEmpty(template.ItemIdOrPath))
       {
-        throw new BuildException(Texts.Text2010, treeNode.TextSpan);
+        throw new BuildException(Texts.Text2010, treeNode);
       }
 
       template.DatabaseName = context.ParseContext.DatabaseName;
@@ -141,7 +141,7 @@
       {
         if (child.Name != "Field")
         {
-          throw new BuildException(Texts.Text2015, child.TextSpan);
+          throw new BuildException(Texts.Text2015, child);
         }
 
         var name = child.GetAttributeValue("Name");

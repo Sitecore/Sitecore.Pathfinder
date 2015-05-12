@@ -2,8 +2,8 @@
 {
   using System.ComponentModel.Composition;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects.Templates;
-  using Sitecore.Pathfinder.TreeNodes;
 
   [Export(typeof(IElementParser))]
   public class TemplateParser : ElementParserBase
@@ -15,7 +15,7 @@
 
     public override void Parse(ItemParseContext context, ITreeNode treeNode)
     {
-      var template = new Template(context.ParseContext.Project, treeNode.TextSpan);
+      var template = new Template(context.ParseContext.Project, treeNode);
       context.ParseContext.Project.Items.Add(template);
 
       template.ItemName = treeNode.GetAttributeValue("Name");
@@ -43,7 +43,7 @@
       templateField.Name = fieldTreeNode.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(templateField.Name))
       {
-        throw new BuildException(Texts.Text2008, fieldTreeNode.TextSpan);
+        throw new BuildException(Texts.Text2008, fieldTreeNode);
       }
 
       templateField.Shared = fieldTreeNode.GetAttributeValue("Sharing") == "Shared";
@@ -65,7 +65,7 @@
       templateSection.Name = sectionTreeNode.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(template.ItemName))
       {
-        throw new BuildException(Texts.Text2007, sectionTreeNode.TextSpan);
+        throw new BuildException(Texts.Text2007, sectionTreeNode);
       }
 
       foreach (var fieldTreeNode in sectionTreeNode.TreeNodes)

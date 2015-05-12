@@ -1,11 +1,11 @@
 ﻿namespace Sitecore.Pathfinder.Projects.Files
 {
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.TreeNodes;
+  using Sitecore.Pathfinder.Documents;
 
   public class BinFile : File
   {
-    public BinFile([NotNull] IProject project, [NotNull] ITextSpan textSpan) : base(project, textSpan)
+    public BinFile([NotNull] IProject project, [NotNull] ITreeNode treeNode) : base(project, treeNode)
     {
     }
   }

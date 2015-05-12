@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.TreeNodes.Xml
+﻿namespace Sitecore.Pathfinder.Documents.Xml
 {
   using System;
   using System.ComponentModel.Composition;
@@ -6,15 +6,15 @@
   using Sitecore.Pathfinder.Parsing;
   using Sitecore.Pathfinder.Projects;
 
-  [Export(typeof(IDocumentLoader))]
-  public class XmlDocumentLoader : IDocumentLoader
+  [Export(typeof(IDocumentLexer))]
+  public class XmlDocumentLexer : IDocumentLexer
   {
-    public bool CanLoad(IParseContext context, ISourceFile sourceFile)
+    public bool CanLex(IParseContext context, ISourceFile sourceFile)
     {
       return string.Compare(Path.GetExtension(sourceFile.SourceFileName), ".xml", StringComparison.OrdinalIgnoreCase) == 0;
     }
 
-    public IDocument Load(IParseContext context, ISourceFile sourceFile)
+    public IDocument Lex(IParseContext context, ISourceFile sourceFile)
     {
       return new XmlDocument(context, sourceFile);
     }

@@ -5,11 +5,11 @@
   using System.Linq;
   using System.Runtime.CompilerServices;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.TreeNodes;
+  using Sitecore.Pathfinder.Documents;
 
   public abstract class ItemBase : ProjectItem
   {
-    protected ItemBase([NotNull] IProject project, [NotNull] ITextSpan textSpan) : base(project, textSpan)
+    protected ItemBase([NotNull] IProject project, [NotNull] ITreeNode treeNode) : base(project, treeNode)
     {
     }
 
@@ -38,7 +38,7 @@
         var field = this.Fields.FirstOrDefault(f => string.Compare(f.Name, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
         if (field == null)
         {
-          field = new Field(this.TextSpan)
+          field = new Field(this.TreeNode)
           {
             Name = fieldName
           };
@@ -54,7 +54,7 @@
     public string ItemIdOrPath { get; set; } = string.Empty;
 
     [NotNull]
-    public string ItemName { get; set; } = string.Empty;
+    public string ItemName { get; set; }
 
     public override string QualifiedName => this.ItemIdOrPath;
 

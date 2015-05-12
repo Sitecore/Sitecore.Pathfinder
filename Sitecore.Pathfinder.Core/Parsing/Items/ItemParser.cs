@@ -4,9 +4,9 @@
   using System.Collections.Generic;
   using System.ComponentModel.Composition;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Extensions.StringExtensions;
   using Sitecore.Pathfinder.Parsing.Items.ElementParsers;
-  using Sitecore.Pathfinder.TreeNodes;
 
   [Export(typeof(IParser))]
   public class ItemParser : ParserBase

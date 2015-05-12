@@ -1,7 +1,7 @@
 ﻿namespace Sitecore.Pathfinder.Diagnostics
 {
   using System;
-  using Sitecore.Pathfinder.TreeNodes;
+  using Sitecore.Pathfinder.Documents;
 
   public class BuildException : Exception
   {
@@ -22,12 +22,12 @@
       this.Args = args;
     }
 
-    public BuildException(int text, [NotNull] ITextSpan textSpan, [NotNull] params object[] args)
+    public BuildException(int text, [NotNull] ITreeNode treeNode, [NotNull] params object[] args)
     {
       this.Text = text;
-      this.FileName = textSpan.Document.SourceFile.SourceFileName;
-      this.LineNumber = textSpan.LineNumber;
-      this.LinePosition = textSpan.LinePosition;
+      this.FileName = treeNode.Document.SourceFile.SourceFileName;
+      this.LineNumber = treeNode.LineNumber;
+      this.LinePosition = treeNode.LinePosition;
       this.Args = args;
     }
 

@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.TreeNodes.Json
+﻿namespace Sitecore.Pathfinder.Documents.Json
 {
   using System.Linq;
   using Newtonsoft.Json.Linq;
@@ -57,7 +57,7 @@
           case JTokenType.Float:
           case JTokenType.Integer:
           case JTokenType.String:
-            var propertyTreeNode = new JsonPropertyTreeNode(this, property);
+            var propertyTreeNode = new JsonObjectTreeNode(this, property.Name, property);
             treeNode.Attributes.Add(propertyTreeNode);
             break;
         }

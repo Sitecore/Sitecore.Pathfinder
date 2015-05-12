@@ -2,13 +2,13 @@
 {
   using System.Diagnostics;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects.Files;
   using Sitecore.Pathfinder.Projects.Templates;
-  using Sitecore.Pathfinder.TreeNodes;
 
   public class Component : File
   {
-    public Component([NotNull] IProject project, [NotNull] ITextSpan textSpan, [NotNull] Template privateTemplate, [NotNull] Template publicTemplate) : base(project, textSpan)
+    public Component([NotNull] IProject project, [NotNull] ITreeNode treeNode, [NotNull] Template privateTemplate, [NotNull] Template publicTemplate) : base(project, treeNode)
     {
       this.PrivateTemplate = privateTemplate;
       this.PublicTemplate = publicTemplate;

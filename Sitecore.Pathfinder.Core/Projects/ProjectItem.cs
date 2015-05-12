@@ -1,15 +1,15 @@
 ﻿namespace Sitecore.Pathfinder.Projects
 {
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects.References;
-  using Sitecore.Pathfinder.TreeNodes;
 
   public abstract class ProjectItem
   {
-    protected ProjectItem([NotNull] IProject project, [NotNull] ITextSpan textSpan)
+    protected ProjectItem([NotNull] IProject project, [NotNull] ITreeNode treeNode)
     {
       this.Project = project;
-      this.TextSpan = textSpan;
+      this.TreeNode = treeNode;
       this.References = new ReferenceCollection(this);
     }
 
@@ -31,7 +31,7 @@
     public abstract string ShortName { get; }
 
     [NotNull]
-    public ITextSpan TextSpan { get; }
+    public ITreeNode TreeNode { get; }
 
     public abstract void Analyze();
 
@@ -41,7 +41,7 @@
       {
         if (!reference.Resolve())
         {
-          this.Project.Trace.TraceWarning(Texts.Text3024, this.TextSpan.Document.SourceFile.SourceFileName, 0, 0, reference.ToString());
+          this.Project.Trace.TraceWarning(Texts.Text3024, this.TreeNode.Document.SourceFile.SourceFileName, 0, 0, reference.ToString());
         }
       }
     }

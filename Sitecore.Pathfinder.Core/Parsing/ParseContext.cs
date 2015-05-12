@@ -6,10 +6,10 @@
   using System.IO;
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Extensions.StringExtensions;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects;
-  using Sitecore.Pathfinder.TreeNodes;
 
   public class ParseContext : IParseContext
   {

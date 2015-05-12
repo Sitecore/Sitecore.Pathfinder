@@ -2,8 +2,8 @@
 {
   using System;
   using System.ComponentModel.Composition;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects.Files;
-  using Sitecore.Pathfinder.TreeNodes;
 
   [Export(typeof(IParser))]
   public class BinFileParser : ParserBase
@@ -21,7 +21,7 @@
 
     public override void Parse(IParseContext context)
     {
-      var binFile = new BinFile(context.Project, new TextSpan(context.Document));
+      var binFile = new BinFile(context.Project, context.Document.Root);
       context.Project.Items.Add(binFile);
     }
   }

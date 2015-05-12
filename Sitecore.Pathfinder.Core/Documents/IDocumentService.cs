@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.TreeNodes
+﻿namespace Sitecore.Pathfinder.Documents
 {
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Parsing;

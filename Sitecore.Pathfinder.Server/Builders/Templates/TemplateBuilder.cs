@@ -73,7 +73,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
       var standardValuesItem = item.Add("__Standard Values", new TemplateID(item.TemplateID));
       if (standardValuesItem == null)
       {
-        throw new BuildException(Texts.Text2023, this.Template.TextSpan);
+        throw new BuildException(Texts.Text2023, this.Template.TreeNode);
       }
 
       using (new EditContext(item))
@@ -93,7 +93,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
       var parentItem = this.GetParentItem(context, database);
       if (parentItem == null)
       {
-        throw new BuildException(Texts.Text2004, this.Template.TextSpan);
+        throw new BuildException(Texts.Text2004, this.Template.TreeNode);
       }
 
       if (string.IsNullOrEmpty(this.Template.ItemIdOrPath))
@@ -113,7 +113,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
 
       if (item == null)
       {
-        throw new BuildException(Texts.Text2023, this.Template.TextSpan);
+        throw new BuildException(Texts.Text2023, this.Template.TreeNode);
       }
 
       this.Item = item;
@@ -132,7 +132,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
       var standardValuesItem = item.Add("__Standard Values", new TemplateID(item.TemplateID));
       if (standardValuesItem == null)
       {
-        throw new BuildException(Texts.Text2023, this.Template.TextSpan);
+        throw new BuildException(Texts.Text2023, this.Template.TreeNode);
       }
 
       using (new EditContext(item))
@@ -231,7 +231,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
         var baseTemplateItem = database.GetItem(templateId);
         if (baseTemplateItem == null)
         {
-          throw new RetryableBuildException(Texts.Text2037, template.TextSpan, templateId);
+          throw new RetryableBuildException(Texts.Text2037, template.TreeNode, templateId);
         }
 
         baseTemplates.Add(baseTemplateItem);
@@ -239,7 +239,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
         var t = TemplateManager.GetTemplate(baseTemplateItem.ID, database);
         if (t == null)
         {
-          throw new RetryableBuildException(Texts.Text2036, template.TextSpan, templateId);
+          throw new RetryableBuildException(Texts.Text2036, template.TreeNode, templateId);
         }
 
         var templateFields = t.GetFields(true);

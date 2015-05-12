@@ -3,12 +3,12 @@ namespace Sitecore.Pathfinder.Projects.Templates
   using System;
   using System.Collections.Generic;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects.Items;
-  using Sitecore.Pathfinder.TreeNodes;
 
   public class Template : ItemBase
   {
-    public Template([NotNull] IProject project, [NotNull] ITextSpan textSpan) : base(project, textSpan)
+    public Template([NotNull] IProject project, [NotNull] ITreeNode treeNode) : base(project, treeNode)
     {
       this.BaseTemplates = string.Empty;
       this.Sections = new List<TemplateSection>();

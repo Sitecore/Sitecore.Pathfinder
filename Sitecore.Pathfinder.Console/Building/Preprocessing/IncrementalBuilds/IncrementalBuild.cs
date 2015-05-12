@@ -22,7 +22,7 @@
           continue;
         }
 
-        if (!projectItem.TextSpan.Document.SourceFile.IsModified)
+        if (!projectItem.TreeNode.Document.SourceFile.IsModified)
         {
           continue;
         }

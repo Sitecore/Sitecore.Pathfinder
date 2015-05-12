@@ -7,10 +7,10 @@
   using System.Linq;
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Parsing;
   using Sitecore.Pathfinder.Projects.Items;
-  using Sitecore.Pathfinder.TreeNodes;
 
   [Export(typeof(IProjectService))]
   public class ProjectService : IProjectService
@@ -62,7 +62,7 @@
     {
       foreach (var pair in this.Configuration.GetSubKeys("external-references"))
       {
-        var external = new ExternalReferenceItem(project, TextSpan.Empty);
+        var external = new ExternalReferenceItem(project, TreeNode.Empty);
         project.Items.Add(external);
 
         external.ItemIdOrPath = pair.Key;

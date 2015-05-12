@@ -4,11 +4,11 @@
   using System.ComponentModel.Composition;
   using System.IO;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Extensions.StringExtensions;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects.Other;
   using Sitecore.Pathfinder.Projects.Templates;
-  using Sitecore.Pathfinder.TreeNodes;
 
   [Export(typeof(IParser))]
   public class ComponentParser : ParserBase
@@ -36,14 +36,14 @@
 
       var publicTemplate = this.CreatePublicTemplate(context, privateTemplate);
 
-      var component = new Component(context.Project, root.TextSpan, privateTemplate, publicTemplate);
+      var component = new Component(context.Project, root, privateTemplate, publicTemplate);
       context.Project.Items.Add(component);
     }
 
     [NotNull]
     protected Template CreatePrivateTemplate([NotNull] IParseContext context, [NotNull] ITreeNode root)
     {
-      var privateTemplate = new Template(context.Project, root.TextSpan);
+      var privateTemplate = new Template(context.Project, root);
       context.Project.Items.Add(privateTemplate);
 
       // todo: remove duplicated code from TemplateParser
@@ -59,7 +59,7 @@
     [NotNull]
     protected Template CreatePublicTemplate([NotNull] IParseContext context, [NotNull] Template privateTemplate)
     {
-      var publicTemplate = new Template(context.Project, privateTemplate.TextSpan);
+      var publicTemplate = new Template(context.Project, privateTemplate.TreeNode);
       context.Project.Items.Add(publicTemplate);
 
       publicTemplate.ItemName = privateTemplate.ItemName.Mid(2);
@@ -97,7 +97,7 @@
       fieldModel.Name = fieldTreeNode.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(fieldModel.Name))
       {
-        throw new BuildException(Texts.Text2008, fieldTreeNode.TextSpan);
+        throw new BuildException(Texts.Text2008, fieldTreeNode);
       }
 
       fieldModel.Shared = string.Compare(fieldTreeNode.GetAttributeValue("Sharing"), "Shared", StringComparison.OrdinalIgnoreCase) == 0;
@@ -119,7 +119,7 @@
       sectionModel.Name = sectionTreeNode.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(template.ItemName))
       {
-        throw new BuildException(Texts.Text2007, sectionTreeNode.TextSpan);
+        throw new BuildException(Texts.Text2007, sectionTreeNode);
       }
 
       foreach (var fieldElement in sectionTreeNode.TreeNodes)

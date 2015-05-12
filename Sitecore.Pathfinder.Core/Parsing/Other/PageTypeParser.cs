@@ -30,19 +30,19 @@
       {
         if (treeNode.Name != "Component")
         {
-          throw new BuildException(Texts.Text2032, treeNode.TextSpan);
+          throw new BuildException(Texts.Text2032, treeNode);
         }
 
         var componentPath = treeNode.GetAttributeValue("Component");
         if (string.IsNullOrEmpty(componentPath))
         {
-          throw new BuildException(Texts.Text2033, treeNode.TextSpan);
+          throw new BuildException(Texts.Text2033, treeNode);
         }
 
         baseTemplates.Add(componentPath);
       }
 
-      var template = new Template(context.Project, root.TextSpan);
+      var template = new Template(context.Project, root);
       context.Project.Items.Add(template);
 
       template.ItemName = context.ItemName;
@@ -50,7 +50,7 @@
       template.ItemIdOrPath = context.ItemPath;
       template.BaseTemplates = string.Join("|", baseTemplates);
 
-      var pageType = new PageType(context.Project, root.TextSpan);
+      var pageType = new PageType(context.Project, root);
       context.Project.Items.Add(pageType);
     }
   }

@@ -2,7 +2,7 @@
 {
   using System.Xml.Linq;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.TreeNodes;
+  using Sitecore.Pathfinder.Documents;
 
   public interface IElementParser
   {

@@ -4,9 +4,9 @@
   using System.ComponentModel.Composition;
   using System.IO;
   using System.Linq;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects.Files;
   using Sitecore.Pathfinder.Projects.Items;
-  using Sitecore.Pathfinder.TreeNodes;
 
   [Export(typeof(IParser))]
   public class MediaFileParser : ParserBase
@@ -35,7 +35,7 @@
 
     public override void Parse(IParseContext context)
     {
-      var mediaItem = new Item(context.Project, new TextSpan(context.Document));
+      var mediaItem = new Item(context.Project, context.Document.Root);
       context.Project.Items.Add(mediaItem);
 
       // todo: set template
@@ -44,7 +44,7 @@
       mediaItem.ItemIdOrPath = context.ItemPath;
       mediaItem.IsEmittable = false;
 
-      var mediaFile = new MediaFile(context.Project, new TextSpan(context.Document), mediaItem);
+      var mediaFile = new MediaFile(context.Project, context.Document.Root, mediaItem);
       context.Project.Items.Add(mediaFile);
     }
   }

@@ -4,10 +4,10 @@
   using System.ComponentModel.Composition;
   using System.Text;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Extensions.StringExtensions;
   using Sitecore.Pathfinder.Projects.Files;
   using Sitecore.Pathfinder.Projects.Items;
-  using Sitecore.Pathfinder.TreeNodes;
 
   [Export(typeof(IParser))]
   public class SerializationFileParser : ParserBase
@@ -25,7 +25,7 @@
 
     public override void Parse(IParseContext context)
     {
-      var item = new Item(context.Project, new TextSpan(context.Document));
+      var item = new Item(context.Project, context.Document.Root);
       context.Project.Items.Add(item);
 
       item.IsEmittable = false;
@@ -33,7 +33,7 @@
       var lines = context.Document.SourceFile.ReadAsLines(context);
       this.ParseLines(item, lines, 0);
 
-      var serializationFile = new SerializationFile(context.Project, new TextSpan(context.Document), item);
+      var serializationFile = new SerializationFile(context.Project, context.Document.Root, item);
       context.Project.Items.Add(serializationFile);
     }
 
@@ -65,7 +65,7 @@
 
     protected virtual int ParseField([NotNull] Item serializationFile, [NotNull] string[] lines, int startIndex, [NotNull] string language, int version)
     {
-      var field = new Field(serializationFile.TextSpan);
+      var field = new Field(serializationFile.TreeNode);
       serializationFile.Fields.Add(field);
 
       field.Language = language;

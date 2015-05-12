@@ -5,7 +5,6 @@
   using Newtonsoft.Json.Linq;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Parsing;
-  using Sitecore.Pathfinder.TreeNodes;
 
   public interface ISourceFile
   {
