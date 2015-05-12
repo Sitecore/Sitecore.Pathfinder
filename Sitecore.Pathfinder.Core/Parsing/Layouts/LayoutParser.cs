@@ -16,12 +16,12 @@
 
     public override bool CanParse(IParseContext context)
     {
-      return context.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
+      return context.Document.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
-      var item = new Item(context.Project, context.SourceFile);
+      var item = new Item(context.Project, context.Document.Root.TextSpan);
       context.Project.Items.Add(item);
 
       item.ItemName = context.ItemName;
@@ -29,7 +29,7 @@
       item.ItemIdOrPath = context.ItemPath;
       item.IsEmittable = false;
 
-      var layout = new Layout(context.Project, context.SourceFile, item);
+      var layout = new Layout(context.Project, context.Document.Root.TextSpan, item);
       context.Project.Items.Add(layout);
     }
   }

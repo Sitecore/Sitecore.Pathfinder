@@ -5,11 +5,10 @@
   using System.Xml.Linq;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Extensions.XElementExtensions;
-  using Sitecore.Pathfinder.Projects;
 
   public class XmlElementTreeNode : TreeNode
   {
-    public XmlElementTreeNode(ISourceFile sourceFile, XElement element, [CanBeNull] ITreeNode parent = null) : base(element.Name.LocalName, new TextSpan(sourceFile, element), parent)
+    public XmlElementTreeNode([NotNull] IDocument document, [NotNull] XElement element, [CanBeNull] ITreeNode parent = null) : base(element.Name.LocalName, new TextSpan(document, ((IXmlLineInfo)element).LineNumber, ((IXmlLineInfo)element).LineNumber), parent)
     {
       var value = element.GetAttributeValue("Value");
       if (string.IsNullOrEmpty(value))
@@ -22,11 +21,7 @@
         return;
       }
 
-      var textNode = element.Nodes().FirstOrDefault(n => n.NodeType == XmlNodeType.Text);
-      if (textNode != null)
-      {
-        this.Attributes.Add(new XmlAttributeTreeNodeAttribute(sourceFile, textNode.ToString(), new TextSpan()));
-      }
+      this.Attributes.Add(new XmlElementValueTreeNodeAttribute(document, element));
     }
   }
 }

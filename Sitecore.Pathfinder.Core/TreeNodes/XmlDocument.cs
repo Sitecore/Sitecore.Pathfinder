@@ -5,32 +5,30 @@
   using Sitecore.Pathfinder.Parsing;
   using Sitecore.Pathfinder.Projects;
 
-  public class XmlDocument : IDocument
+  public class XmlDocument : Document
   {
-    public XmlDocument([NotNull] ISourceFile sourceFile)
+    public XmlDocument([NotNull] ISourceFile sourceFile) : base(sourceFile)
     {
-      this.SourceFile = sourceFile;
     }
 
-    public ITreeNode Root { get; private set; } = TreeNode.Empty;
+    public override ITreeNode Root { get; protected set; }
 
-    public ISourceFile SourceFile { get; }
-
-    public void Parse(IParseContext context)
+    public void Parse([NotNull] IParseContext context)
     {
       var root = this.SourceFile.ReadAsXml(context);
 
       this.Root = this.Parse(null, root);
     }
 
+    [NotNull]
     private ITreeNode Parse([CanBeNull] ITreeNode parent, [NotNull] XElement element)
     {
-      var treeNode = new XmlElementTreeNode(this.SourceFile, element, parent);
+      var treeNode = new XmlElementTreeNode(this, element, parent);
       parent?.TreeNodes.Add(treeNode);
 
       foreach (var attribute in element.Attributes())
       {
-        var attributeTreeNode = new XmlAttributeTreeNodeAttribute(this.SourceFile, attribute);
+        var attributeTreeNode = new XmlAttributeTreeNodeAttribute(this, attribute);
         treeNode.Attributes.Add(attributeTreeNode);
       }
 

@@ -25,7 +25,7 @@
     {
       var binFile = (BinFile)projectItem;
 
-      var destinationFileName = "/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(context.Project.ProjectDirectory, binFile.TextSpan.SourceFileName));
+      var destinationFileName = "/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(context.Project.ProjectDirectory, binFile.TextSpan.Document.SourceFile.SourceFileName));
       destinationFileName = FileUtil.MapPath(destinationFileName);
 
       // todo: check for assembly version
@@ -33,11 +33,11 @@
       try
       {
         context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName) ?? string.Empty);
-        context.FileSystem.Copy(binFile.TextSpan.SourceFileName, destinationFileName);
+        context.FileSystem.Copy(binFile.TextSpan.Document.SourceFile.SourceFileName, destinationFileName);
       }
       catch (Exception ex)
       {
-        Log.Error($"Failed to copy assembly: {binFile.TextSpan.SourceFileName} -> {destinationFileName}", ex);
+        Log.Error($"Failed to copy assembly: {binFile.TextSpan.Document.SourceFile.SourceFileName} -> {destinationFileName}", ex);
       }
     }
   }

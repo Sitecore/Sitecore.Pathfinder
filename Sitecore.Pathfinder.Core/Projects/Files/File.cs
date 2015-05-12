@@ -14,9 +14,9 @@
     {
     }
 
-    public override string QualifiedName => this.qualifiedName ?? (this.qualifiedName = this.TextSpan.SourceFile.SourceFileName);
+    public override string QualifiedName => this.qualifiedName ?? (this.qualifiedName = this.TextSpan.Document.SourceFile.SourceFileName);
 
-    public override string ShortName => this.shortName ?? (this.shortName = Path.GetFileName(this.TextSpan.SourceFile.SourceFileName));
+    public override string ShortName => this.shortName ?? (this.shortName = Path.GetFileName(this.TextSpan.Document.SourceFile.SourceFileName));
 
     public override void Analyze()
     {

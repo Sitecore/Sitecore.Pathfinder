@@ -6,18 +6,15 @@
   using Sitecore.Pathfinder.Parsing;
   using Sitecore.Pathfinder.Projects;
 
-  public class JsonDocument : IDocument
+  public class JsonDocument : Document
   {
-    public JsonDocument([NotNull] ISourceFile sourceFile)
+    public JsonDocument([NotNull] ISourceFile sourceFile) : base(sourceFile)
     {
-      this.SourceFile = sourceFile;
     }
 
-    public ITreeNode Root { get; private set; } = TreeNode.Empty;
+    public override ITreeNode Root { get; protected set; } = TreeNode.Empty;
 
-    public ISourceFile SourceFile { get; }
-
-    public void Parse(IParseContext context)
+    public void Parse([NotNull] IParseContext context)
     {
       var json = this.SourceFile.ReadAsJson(context);
 
@@ -30,9 +27,10 @@
       this.Root = this.Parse(root.Name, root.Value<JObject>(), null);
     }
 
+    [NotNull]
     private ITreeNode Parse([NotNull] string name, [NotNull] JObject jobject, [CanBeNull] ITreeNode parent)
     {
-      var treeNode = new JsonObjectTreeNode(this.SourceFile, name, jobject, parent);
+      var treeNode = new JsonObjectTreeNode(this, name, jobject, parent);
       parent?.TreeNodes.Add(treeNode);
 
       foreach (var property in jobject.Properties())
@@ -48,7 +46,7 @@
           case JTokenType.Float:
           case JTokenType.Integer:
           case JTokenType.String:
-            var propertyTreeNode = new JsonPropertyTreeNode(this.SourceFile, property);
+            var propertyTreeNode = new JsonPropertyTreeNode(this, property);
             treeNode.Attributes.Add(propertyTreeNode);
             break;
         }

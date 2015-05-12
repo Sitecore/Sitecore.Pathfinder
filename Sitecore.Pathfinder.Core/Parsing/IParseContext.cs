@@ -5,6 +5,7 @@
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects;
+  using Sitecore.Pathfinder.TreeNodes;
 
   public interface IParseContext
   {
@@ -27,7 +28,7 @@
     IProject Project { get; }
 
     [NotNull]
-    ISourceFile SourceFile { get; }
+    IDocument Document { get; }
 
     [NotNull]
     string GetRelativeFileName([NotNull] ISourceFile sourceFile);

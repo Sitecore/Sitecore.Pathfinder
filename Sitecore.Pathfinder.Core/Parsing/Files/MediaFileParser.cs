@@ -6,12 +6,12 @@
   using System.Linq;
   using Sitecore.Pathfinder.Projects.Files;
   using Sitecore.Pathfinder.Projects.Items;
+  using Sitecore.Pathfinder.TreeNodes;
 
   [Export(typeof(IParser))]
   public class MediaFileParser : ParserBase
   {
-    private static readonly string[] FileExtensions = 
-    {
+    private static readonly string[] FileExtensions = {
       ".png", 
       ".gif", 
       ".bmp", 
@@ -29,13 +29,13 @@
 
     public override bool CanParse(IParseContext context)
     {
-      var fileExtension = Path.GetExtension(context.SourceFile.SourceFileName);
+      var fileExtension = Path.GetExtension(context.Document.SourceFile.SourceFileName);
       return FileExtensions.Contains(fileExtension, StringComparer.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
-      var mediaItem = new Item(context.Project, context.SourceFile);
+      var mediaItem = new Item(context.Project, new TextSpan(context.Document));
       context.Project.Items.Add(mediaItem);
 
       // todo: set template
@@ -44,7 +44,7 @@
       mediaItem.ItemIdOrPath = context.ItemPath;
       mediaItem.IsEmittable = false;
 
-      var mediaFile = new MediaFile(context.Project, context.SourceFile, mediaItem);
+      var mediaFile = new MediaFile(context.Project, new TextSpan(context.Document), mediaItem);
       context.Project.Items.Add(mediaFile);
     }
   }

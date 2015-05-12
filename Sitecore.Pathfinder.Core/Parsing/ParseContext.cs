@@ -9,13 +9,15 @@
   using Sitecore.Pathfinder.Extensions.StringExtensions;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects;
+  using Sitecore.Pathfinder.TreeNodes;
 
   public class ParseContext : IParseContext
   {
-    public ParseContext([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ITokenService tokenService)
+    public ParseContext([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IProjectService projectService, [NotNull] ITokenService tokenService)
     {
       this.CompositionService = compositionService;
       this.Configuration = configuration;
+      this.ProjectService = projectService;
       this.TokenService = tokenService;
     }
 
@@ -23,16 +25,21 @@
 
     public IConfiguration Configuration { get; }
 
+    [NotNull]
+    protected IProjectService ProjectService { get;  }
+
     public virtual string DatabaseName => this.Project.DatabaseName;
 
     public virtual string ItemName
     {
       get
       {
-        var s = this.SourceFile.SourceFileName.LastIndexOf('\\') + 1;
-        var e = this.SourceFile.SourceFileName.IndexOf('.', s);
+        var fileName = this.Document.SourceFile.SourceFileName;
 
-        return this.SourceFile.SourceFileName.Mid(s, e - s);
+        var s = fileName.LastIndexOf('\\') + 1;
+        var e = fileName.IndexOf('.', s);
+
+        return fileName.Mid(s, e - s);
       }
     }
 
@@ -40,7 +47,7 @@
     {
       get
       {
-        var itemPath = this.GetRelativeFileName(this.SourceFile);
+        var itemPath = this.GetRelativeFileName(this.Document.SourceFile);
 
         itemPath = PathHelper.GetDirectoryAndFileNameWithoutExtensions(itemPath);
 
@@ -50,7 +57,7 @@
 
     public IProject Project { get; private set; }
 
-    public ISourceFile SourceFile { get; private set; }
+    public IDocument Document { get; private set; }
 
     [NotNull]
     protected ITokenService TokenService { get; }
@@ -68,13 +75,13 @@
     public IParseContext Load(IProject project, ISourceFile sourceFile)
     {
       this.Project = project;
-      this.SourceFile = sourceFile;
+      this.Document = this.ProjectService.LoadDocument(sourceFile);
       return this;
     }
 
     public string ReplaceTokens(string text)
     {
-      var filePath = "/" + PathHelper.NormalizeItemPath(this.GetRelativeFileName(this.SourceFile));
+      var filePath = "/" + PathHelper.NormalizeItemPath(this.GetRelativeFileName(this.Document.SourceFile));
       var filePathWithExtensions = PathHelper.NormalizeItemPath(PathHelper.GetDirectoryAndFileNameWithoutExtensions(filePath));
       var fileName = Path.GetFileName(filePath);
       var fileNameWithoutExtensions = PathHelper.GetFileNameWithoutExtensions(fileName);

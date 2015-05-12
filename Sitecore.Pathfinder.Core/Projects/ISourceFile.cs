@@ -19,6 +19,7 @@
     [CanBeNull]
     IDocument Document { get; }
 
+    [NotNull]
     JObject ReadAsJson([NotNull] IParseContext context);
 
     [NotNull]

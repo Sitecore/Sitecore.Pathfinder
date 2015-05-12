@@ -1,14 +1,12 @@
 ﻿namespace Sitecore.Pathfinder.TreeNodes
 {
+  using System.Xml;
   using System.Xml.Linq;
-  using Sitecore.Pathfinder.Projects;
+  using Sitecore.Pathfinder.Diagnostics;
 
   public class XmlAttributeTreeNodeAttribute : TreeNodeAttribute
   {
-    public XmlAttributeTreeNodeAttribute(ISourceFile sourceFile, XAttribute attribute) : base(attribute.Name.LocalName, attribute.Value, new TextSpan(sourceFile, attribute))
-    {
-    }
-    public XmlAttributeTreeNodeAttribute(ISourceFile sourceFile, string value) : base("Value", value, new TextSpan(sourceFile, attribute))
+    public XmlAttributeTreeNodeAttribute([NotNull] IDocument document, [NotNull] XAttribute attribute) : base(attribute.Name.LocalName, attribute.Value, new TextSpan(document, ((IXmlLineInfo)attribute).LineNumber, ((IXmlLineInfo)attribute).LinePosition))
     {
     }
   }

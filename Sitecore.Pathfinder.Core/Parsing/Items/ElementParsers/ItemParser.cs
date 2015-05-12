@@ -112,7 +112,7 @@
     [NotNull]
     protected virtual Template ParseTemplate([NotNull] ItemParseContext context, [NotNull] ITreeNode treeNode)
     {
-      var template = new Template(context.ParseContext.Project, context.ParseContext.SourceFile);
+      var template = new Template(context.ParseContext.Project, treeNode.TextSpan);
       context.ParseContext.Project.Items.Add(template);
 
       template.ItemIdOrPath = this.GetTemplateIdOrPath(context, treeNode);

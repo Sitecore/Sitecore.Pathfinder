@@ -16,7 +16,7 @@
 
       foreach (var projectItem in context.Project.Items)
       {
-        projectItem.TextSpan.IsModified = true;
+        projectItem.TextSpan.Document.SourceFile.IsModified = true;
       }
     }
   }

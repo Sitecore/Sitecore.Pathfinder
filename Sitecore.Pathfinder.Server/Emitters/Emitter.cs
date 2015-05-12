@@ -150,11 +150,11 @@
         }
         else if (exception != null)
         {
-          this.Trace.TraceError(Texts.Text9998, projectItem.TextSpan.SourceFileName, 0, 0, exception.Message);
+          this.Trace.TraceError(Texts.Text9998, projectItem.TextSpan, exception.Message);
         }
         else
         {
-          this.Trace.TraceError(Texts.Text9999, "An error occured in " + projectItem.TextSpan.SourceFileName);
+          this.Trace.TraceError(Texts.Text9999, "An error occured in " + projectItem.TextSpan.Document.SourceFile.SourceFileName);
         }
       }
     }

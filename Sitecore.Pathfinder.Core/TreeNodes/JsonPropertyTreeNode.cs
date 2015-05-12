@@ -1,11 +1,11 @@
 ﻿namespace Sitecore.Pathfinder.TreeNodes
 {
   using Newtonsoft.Json.Linq;
-  using Sitecore.Pathfinder.Projects;
+  using Sitecore.Pathfinder.Diagnostics;
 
   public class JsonPropertyTreeNode : TreeNodeAttribute
   {
-    public JsonPropertyTreeNode(ISourceFile sourceFile, JProperty jproperty) : base(jproperty.Name, jproperty.Value.ToString(), new TextSpan(sourceFile, jproperty))
+    public JsonPropertyTreeNode([NotNull] IDocument document, [NotNull] JProperty jproperty) : base(jproperty.Name, jproperty.Value.ToString(), new TextSpan(document))
     {
     }
   }

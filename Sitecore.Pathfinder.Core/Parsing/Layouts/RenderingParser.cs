@@ -8,6 +8,7 @@
   using Sitecore.Pathfinder.Projects;
   using Sitecore.Pathfinder.Projects.Items;
   using Sitecore.Pathfinder.Projects.Layouts;
+  using Sitecore.Pathfinder.TreeNodes;
 
   public abstract class RenderingParser : ParserBase
   {
@@ -25,12 +26,12 @@
 
     public override bool CanParse(IParseContext context)
     {
-      return context.SourceFile.SourceFileName.EndsWith(this.FileExtension, StringComparison.OrdinalIgnoreCase);
+      return context.Document.SourceFile.SourceFileName.EndsWith(this.FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
-      var item = new Item(context.Project, context.SourceFile);
+      var item = new Item(context.Project, context.Document.Root.TextSpan);
       context.Project.Items.Add(item);
 
       item.ItemName = context.ItemName;
@@ -38,13 +39,13 @@
       item.TemplateIdOrPath = this.TemplateIdOrPath;
       item.ItemIdOrPath = context.ItemPath;
 
-      var path = "/" + PathHelper.NormalizeItemPath(Path.Combine(context.Configuration.Get(Constants.ProjectDirectory), context.GetRelativeFileName(context.SourceFile)));
-      var placeHolders = this.GetPlaceholders(context, context.SourceFile);
+      var path = "/" + PathHelper.NormalizeItemPath(Path.Combine(context.Configuration.Get(Constants.ProjectDirectory), context.GetRelativeFileName(context.Document.SourceFile)));
+      var placeHolders = this.GetPlaceholders(context, context.Document.SourceFile);
 
-      item.Fields.Add(new Field(context.SourceFile, "Path", path));
-      item.Fields.Add(new Field(context.SourceFile, "Place Holders", string.Join(",", placeHolders)));
+      item.Fields.Add(new Field(new TextSpan(context.Document), "Path", path));
+      item.Fields.Add(new Field(new TextSpan(context.Document), "Place Holders", string.Join(",", placeHolders)));
 
-      var rendering = new Rendering(context.Project, context.SourceFile, item);
+      var rendering = new Rendering(context.Project, context.Document.Root.TextSpan, item);
       context.Project.Items.Add(rendering);
     }
 

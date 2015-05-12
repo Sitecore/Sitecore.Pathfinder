@@ -3,14 +3,12 @@
   using System;
   using System.ComponentModel.Composition;
   using System.IO;
-  using System.Xml.Linq;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Extensions.StringExtensions;
-  using Sitecore.Pathfinder.Extensions.XElementExtensions;
   using Sitecore.Pathfinder.IO;
-  using Sitecore.Pathfinder.Projects;
   using Sitecore.Pathfinder.Projects.Other;
   using Sitecore.Pathfinder.Projects.Templates;
+  using Sitecore.Pathfinder.TreeNodes;
 
   [Export(typeof(IParser))]
   public class ComponentParser : ParserBase
@@ -23,33 +21,33 @@
 
     public override bool CanParse(IParseContext context)
     {
-      return context.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
+      return context.Document.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
-      var root = context.SourceFile.ReadAsXml(context);
+      var root = context.Document.Root;
 
-      var privateTemplate = this.CreatePrivateTemplate(context, context.SourceFile, root);
+      var privateTemplate = this.CreatePrivateTemplate(context, root);
       if (privateTemplate == null)
       {
         throw new BuildException(Texts.Text2031);
       }
 
-      var publicTemplate = this.CreatePublicTemplate(context, context.SourceFile, privateTemplate);
+      var publicTemplate = this.CreatePublicTemplate(context, privateTemplate);
 
-      var component = new Component(context.Project, context.SourceFile, privateTemplate, publicTemplate);
+      var component = new Component(context.Project, root.TextSpan, privateTemplate, publicTemplate);
       context.Project.Items.Add(component);
     }
 
     [NotNull]
-    protected Template CreatePrivateTemplate([NotNull] IParseContext context, [NotNull] ISourceFile sourceFile, [NotNull] XElement root)
+    protected Template CreatePrivateTemplate([NotNull] IParseContext context, [NotNull] ITreeNode root)
     {
-      var privateTemplate = new Template(context.Project, sourceFile);
+      var privateTemplate = new Template(context.Project, root.TextSpan);
       context.Project.Items.Add(privateTemplate);
 
       // todo: remove duplicated code from TemplateParser
-      this.Parse(context, sourceFile, privateTemplate, root);
+      this.Parse(context, privateTemplate, root);
 
       privateTemplate.ItemName = "__" + privateTemplate.ItemName;
       var n = privateTemplate.ItemIdOrPath.LastIndexOf('/');
@@ -59,20 +57,20 @@
     }
 
     [NotNull]
-    protected Template CreatePublicTemplate([NotNull] IParseContext context, [NotNull] ISourceFile sourceFile, [NotNull] Template privateTemplate)
+    protected Template CreatePublicTemplate([NotNull] IParseContext context, [NotNull] Template privateTemplate)
     {
-      var publicTemplate = new Template(context.Project, sourceFile);
+      var publicTemplate = new Template(context.Project, privateTemplate.TextSpan);
       context.Project.Items.Add(publicTemplate);
 
       publicTemplate.ItemName = privateTemplate.ItemName.Mid(2);
       publicTemplate.DatabaseName = privateTemplate.DatabaseName;
-      publicTemplate.ItemIdOrPath = PathHelper.NormalizeItemPath(Path.GetDirectoryName(privateTemplate.ItemIdOrPath)) + "/" + publicTemplate.ItemName;
+      publicTemplate.ItemIdOrPath = PathHelper.NormalizeItemPath(Path.GetDirectoryName(privateTemplate.ItemIdOrPath) ?? string.Empty) + "/" + publicTemplate.ItemName;
       publicTemplate.BaseTemplates = privateTemplate.ItemIdOrPath;
 
       return publicTemplate;
     }
 
-    protected void Parse([NotNull] IParseContext context, [NotNull] ISourceFile sourceFile, [NotNull] Template template, [NotNull] XElement element)
+    protected void Parse([NotNull] IParseContext context, [NotNull] Template template, [NotNull] ITreeNode element)
     {
       template.ItemName = element.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(template.ItemName))
@@ -82,51 +80,51 @@
 
       template.DatabaseName = context.DatabaseName;
       template.ItemIdOrPath = context.ItemPath;
-      template.BaseTemplates = element.GetAttributeValue("BaseTemplates") ?? string.Empty;
-      template.Icon = element.GetAttributeValue("Icon") ?? string.Empty;
+      template.BaseTemplates = element.GetAttributeValue("BaseTemplates");
+      template.Icon = element.GetAttributeValue("Icon");
 
-      foreach (var sectionElement in element.Elements())
+      foreach (var sectionTreeNode in element.TreeNodes)
       {
-        this.ParseSection(context, sourceFile, template, sectionElement);
+        this.ParseSection(context, template, sectionTreeNode);
       }
     }
 
-    protected void ParseField([NotNull] IParseContext context, [NotNull] ISourceFile sourceFile, [NotNull] TemplateSection section, [NotNull] XElement fieldElement)
+    protected void ParseField([NotNull] IParseContext context, [NotNull] TemplateSection section, [NotNull] ITreeNode fieldTreeNode)
     {
       var fieldModel = new TemplateField();
       section.Fields.Add(fieldModel);
 
-      fieldModel.Name = fieldElement.GetAttributeValue("Name");
+      fieldModel.Name = fieldTreeNode.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(fieldModel.Name))
       {
-        throw new BuildException(Texts.Text2008, sourceFile.SourceFileName, fieldElement);
+        throw new BuildException(Texts.Text2008, fieldTreeNode.TextSpan);
       }
 
-      fieldModel.Shared = string.Compare(fieldElement.GetAttributeValue("Sharing"), "Shared", StringComparison.OrdinalIgnoreCase) == 0;
-      fieldModel.Unversioned = string.Compare(fieldElement.GetAttributeValue("Sharing"), "Unversioned", StringComparison.OrdinalIgnoreCase) == 0;
-      fieldModel.Source = fieldElement.GetAttributeValue("Source") ?? string.Empty;
+      fieldModel.Shared = string.Compare(fieldTreeNode.GetAttributeValue("Sharing"), "Shared", StringComparison.OrdinalIgnoreCase) == 0;
+      fieldModel.Unversioned = string.Compare(fieldTreeNode.GetAttributeValue("Sharing"), "Unversioned", StringComparison.OrdinalIgnoreCase) == 0;
+      fieldModel.Source = fieldTreeNode.GetAttributeValue("Source");
 
-      fieldModel.Type = fieldElement.GetAttributeValue("Type");
+      fieldModel.Type = fieldTreeNode.GetAttributeValue("Type");
       if (string.IsNullOrEmpty(fieldModel.Type))
       {
         fieldModel.Type = "Single-Line Text";
       }
     }
 
-    protected void ParseSection([NotNull] IParseContext context, [NotNull] ISourceFile sourceFile, [NotNull] Template template, [NotNull] XElement sectionElement)
+    protected void ParseSection([NotNull] IParseContext context, [NotNull] Template template, [NotNull] ITreeNode sectionTreeNode)
     {
       var sectionModel = new TemplateSection();
       template.Sections.Add(sectionModel);
 
-      sectionModel.Name = sectionElement.GetAttributeValue("Name");
+      sectionModel.Name = sectionTreeNode.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(template.ItemName))
       {
-        throw new BuildException(Texts.Text2007, sourceFile.SourceFileName, sectionElement);
+        throw new BuildException(Texts.Text2007, sectionTreeNode.TextSpan);
       }
 
-      foreach (var fieldElement in sectionElement.Elements())
+      foreach (var fieldElement in sectionTreeNode.TreeNodes)
       {
-        this.ParseField(context, sourceFile, sectionModel, fieldElement);
+        this.ParseField(context, sectionModel, fieldElement);
       }
     }
   }

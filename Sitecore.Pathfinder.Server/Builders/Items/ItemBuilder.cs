@@ -37,7 +37,7 @@
       var database = context.DataService.GetDatabase(this.ProjectItem.DatabaseName);
       if (database == null)
       {
-        throw new BuildException(Texts.Text2018, this.ProjectItem.TextSpan.SourceFileName, 0, 0, this.ProjectItem.DatabaseName);
+        throw new BuildException(Texts.Text2018, this.ProjectItem.TextSpan, this.ProjectItem.DatabaseName);
       }
 
       if (this.TemplateItem == null)
@@ -47,7 +47,7 @@
 
       if (this.TemplateItem == null)
       {
-        throw new RetryableBuildException(Texts.Text2017, this.ProjectItem.TextSpan.SourceFileName, 0, 0, this.ProjectItem.TemplateIdOrPath);
+        throw new RetryableBuildException(Texts.Text2017, this.ProjectItem.TextSpan, this.ProjectItem.TemplateIdOrPath);
       }
 
       if (this.Item == null)
@@ -70,18 +70,18 @@
     {
       if (ID.IsID(this.ProjectItem.ItemIdOrPath))
       {
-        throw new BuildException(Texts.Text2002, this.ProjectItem.TextSpan.SourceFileName);
+        throw new BuildException(Texts.Text2002, this.ProjectItem.TextSpan);
       }
 
       if (this.TemplateItem == null)
       {
-        throw new BuildException(Texts.Text2016, this.ProjectItem.TextSpan.SourceFileName, 0, 0, this.ProjectItem.TemplateIdOrPath);
+        throw new BuildException(Texts.Text2016, this.ProjectItem.TextSpan, this.ProjectItem.TemplateIdOrPath);
       }
 
       var item = database.CreateItemPath(this.ProjectItem.ItemIdOrPath, new TemplateItem(this.TemplateItem));
       if (item == null)
       {
-        throw new RetryableBuildException(Texts.Text2019, this.ProjectItem.TextSpan.SourceFileName, 0, 0, this.ProjectItem.ItemIdOrPath);
+        throw new RetryableBuildException(Texts.Text2019, this.ProjectItem.TextSpan, this.ProjectItem.ItemIdOrPath);
       }
 
       this.Item = item;
@@ -139,7 +139,7 @@
     {
       if (this.Item == null)
       {
-        throw new BuildException(Texts.Text2003, this.ProjectItem.TextSpan.SourceFileName);
+        throw new BuildException(Texts.Text2003, this.ProjectItem.TextSpan);
       }
 
       foreach (var field in this.ProjectItem.Fields)
@@ -160,12 +160,12 @@
     {
       if (this.Item == null)
       {
-        throw new BuildException(Texts.Text2003, this.ProjectItem.TextSpan.SourceFileName);
+        throw new BuildException(Texts.Text2003, this.ProjectItem.TextSpan);
       }
 
       if (this.TemplateItem == null)
       {
-        throw new BuildException(Texts.Text2017, this.ProjectItem.TextSpan.SourceFileName);
+        throw new BuildException(Texts.Text2017, this.ProjectItem.TextSpan);
       }
 
       using (new EditContext(this.Item))
@@ -202,7 +202,7 @@
       {
         if (templateFields.All(f => string.Compare(f.Name, field.Name, StringComparison.OrdinalIgnoreCase) != 0))
         {
-          throw new RetryableBuildException(Texts.Text2035, this.ProjectItem.TextSpan.SourceFileName, field.SourceElement);
+          throw new RetryableBuildException(Texts.Text2035, this.ProjectItem.TextSpan);
         }
       }
     }

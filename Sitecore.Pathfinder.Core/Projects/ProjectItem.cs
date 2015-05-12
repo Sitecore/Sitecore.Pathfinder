@@ -41,7 +41,7 @@
       {
         if (!reference.Resolve())
         {
-          this.Project.Trace.TraceWarning(Texts.Text3024, this.TextSpan.SourceFile.SourceFileName, 0, 0, reference.ToString());
+          this.Project.Trace.TraceWarning(Texts.Text3024, this.TextSpan.Document.SourceFile.SourceFileName, 0, 0, reference.ToString());
         }
       }
     }

@@ -2,15 +2,30 @@
 {
   using System;
   using System.Xml.Linq;
+  using Newtonsoft.Json.Linq;
   using Sitecore.Pathfinder.Parsing;
+  using Sitecore.Pathfinder.TreeNodes;
 
   public class EmptySourceFile : ISourceFile
   {
+    public IDocument Document
+    {
+      get
+      {
+        throw new InvalidOperationException("Cannot read from empty source file");
+      }
+    }
+
     public bool IsModified { get; set; } = false;
 
     public DateTime LastWriteTimeUtc { get; } = DateTime.MinValue;
 
     public string SourceFileName { get; } = string.Empty;
+
+    public JObject ReadAsJson(IParseContext context)
+    {
+      throw new InvalidOperationException("Cannot read from empty source file");
+    }
 
     public string[] ReadAsLines(IParseContext context)
     {

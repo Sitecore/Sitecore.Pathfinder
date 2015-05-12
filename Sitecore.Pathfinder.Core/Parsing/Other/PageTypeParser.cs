@@ -4,7 +4,6 @@
   using System.Collections.Generic;
   using System.ComponentModel.Composition;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Extensions.XElementExtensions;
   using Sitecore.Pathfinder.Projects.Other;
   using Sitecore.Pathfinder.Projects.Templates;
 
@@ -19,31 +18,31 @@
 
     public override bool CanParse(IParseContext context)
     {
-      return context.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
+      return context.Document.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
-      var root = context.SourceFile.ReadAsXml(context);
+      var root = context.Document.Root;
 
       var baseTemplates = new List<string>();
-      foreach (var element in root.Elements())
+      foreach (var treeNode in root.TreeNodes)
       {
-        if (element.Name.LocalName != "Component")
+        if (treeNode.Name != "Component")
         {
-          throw new BuildException(Texts.Text2032, context.SourceFile.SourceFileName, element);
+          throw new BuildException(Texts.Text2032, treeNode.TextSpan);
         }
 
-        var componentPath = element.GetAttributeValue("Component");
+        var componentPath = treeNode.GetAttributeValue("Component");
         if (string.IsNullOrEmpty(componentPath))
         {
-          throw new BuildException(Texts.Text2033, context.SourceFile.SourceFileName, element);
+          throw new BuildException(Texts.Text2033, treeNode.TextSpan);
         }
 
         baseTemplates.Add(componentPath);
       }
 
-      var template = new Template(context.Project, context.SourceFile);
+      var template = new Template(context.Project, root.TextSpan);
       context.Project.Items.Add(template);
 
       template.ItemName = context.ItemName;
@@ -51,7 +50,7 @@
       template.ItemIdOrPath = context.ItemPath;
       template.BaseTemplates = string.Join("|", baseTemplates);
 
-      var pageType = new PageType(context.Project, context.SourceFile);
+      var pageType = new PageType(context.Project, root.TextSpan);
       context.Project.Items.Add(pageType);
     }
   }

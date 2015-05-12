@@ -15,7 +15,7 @@
 
     public override void Parse(ItemParseContext context, ITreeNode treeNode)
     {
-      var template = new Template(context.ParseContext.Project, context.ParseContext.SourceFile);
+      var template = new Template(context.ParseContext.Project, treeNode.TextSpan);
       context.ParseContext.Project.Items.Add(template);
 
       template.ItemName = treeNode.GetAttributeValue("Name");

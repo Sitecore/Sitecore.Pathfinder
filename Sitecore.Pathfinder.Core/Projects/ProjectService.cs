@@ -10,6 +10,7 @@
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Parsing;
   using Sitecore.Pathfinder.Projects.Items;
+  using Sitecore.Pathfinder.TreeNodes;
 
   [Export(typeof(IProjectService))]
   public class ProjectService : IProjectService
@@ -34,10 +35,27 @@
     protected IFileSystemService FileSystem { get; }
 
     [NotNull]
+    [ImportMany]
+    protected IEnumerable<IDocumentLoader> Loaders { get; private set; }
+
+    [NotNull]
     protected IParseService ParseService { get; }
 
     [NotNull]
     protected ITraceService Trace { get; set; }
+
+    public IDocument LoadDocument(ISourceFile sourceFile)
+    {
+      foreach (var loader in this.Loaders)
+      {
+        if (loader.CanLoad(sourceFile))
+        {
+          return loader.Load(sourceFile);
+        }
+      }
+
+      return new Document(sourceFile);
+    }
 
     public IProject LoadProject()
     {
@@ -61,7 +79,7 @@
     {
       foreach (var pair in this.Configuration.GetSubKeys("external-references"))
       {
-        var external = new ExternalReferenceItem(project, SourceFile.Empty);
+        var external = new ExternalReferenceItem(project, TextSpan.Empty);
         project.Items.Add(external);
 
         external.ItemIdOrPath = pair.Key;

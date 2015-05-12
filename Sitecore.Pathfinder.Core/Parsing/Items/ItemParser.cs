@@ -3,9 +3,6 @@
   using System;
   using System.Collections.Generic;
   using System.ComponentModel.Composition;
-  using System.IO;
-  using System.Xml.Linq;
-  using System.Xml.Schema;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Extensions.StringExtensions;
   using Sitecore.Pathfinder.Parsing.Items.ElementParsers;
@@ -26,15 +23,14 @@
 
     public override bool CanParse(IParseContext context)
     {
-      return context.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
+      return context.Document.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
       // this.ValidateXmlSchema(context, root, "http://www.sitecore.net/pathfinder/item", "item.xsd");
-
-      var document = context.SourceFile.Document;
-      if (document == null)
+      var document = context.Document;
+      if (document.Root == TreeNode.Empty)
       {
         // todo: report
         return;
@@ -66,11 +62,11 @@
       }
       catch (BuildException ex)
       {
-        context.ParseContext.Project.Trace.TraceError(Texts.Text3013, context.ParseContext.SourceFile.SourceFileName, ex.LineNumber, ex.LinePosition, ex.Message);
+        context.ParseContext.Project.Trace.TraceError(Texts.Text3013, context.ParseContext.Document.SourceFile.SourceFileName, ex.LineNumber, ex.LinePosition, ex.Message);
       }
       catch (Exception ex)
       {
-        context.ParseContext.Project.Trace.TraceError(Texts.Text3013, context.ParseContext.SourceFile.SourceFileName, 0, 0, ex.Message);
+        context.ParseContext.Project.Trace.TraceError(Texts.Text3013, context.ParseContext.Document.SourceFile.SourceFileName, 0, 0, ex.Message);
       }
     }
 
