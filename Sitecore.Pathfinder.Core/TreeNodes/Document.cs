@@ -10,9 +10,10 @@
     public Document([NotNull] ISourceFile sourceFile)
     {
       this.SourceFile = sourceFile;
+      this.Root = new TreeNode(string.Empty, new TextSpan(this));
     }
 
-    public virtual ITreeNode Root { get; protected set; } = TreeNode.Empty;
+    public virtual ITreeNode Root { get; }
 
     public ISourceFile SourceFile { get; }
   }

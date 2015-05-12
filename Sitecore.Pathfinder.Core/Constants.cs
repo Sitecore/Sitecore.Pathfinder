@@ -8,7 +8,7 @@
 
     public const string DataFolderName = "dataFolderName";
 
-    public const string DebugMode = "system:debugmode";
+    public const string Debug = "system:debug";
 
     public const string HostName = "HostName";
 
@@ -39,7 +39,7 @@
 
     public static readonly char[] Space = 
     {
-      '|'
+      ' '
     };
   }
 }

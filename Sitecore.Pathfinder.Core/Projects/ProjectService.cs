@@ -35,27 +35,10 @@
     protected IFileSystemService FileSystem { get; }
 
     [NotNull]
-    [ImportMany]
-    protected IEnumerable<IDocumentLoader> Loaders { get; private set; }
-
-    [NotNull]
     protected IParseService ParseService { get; }
 
     [NotNull]
     protected ITraceService Trace { get; set; }
-
-    public IDocument LoadDocument(ISourceFile sourceFile)
-    {
-      foreach (var loader in this.Loaders)
-      {
-        if (loader.CanLoad(sourceFile))
-        {
-          return loader.Load(sourceFile);
-        }
-      }
-
-      return new Document(sourceFile);
-    }
 
     public IProject LoadProject()
     {

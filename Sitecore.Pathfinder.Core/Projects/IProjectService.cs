@@ -6,9 +6,6 @@
   public interface IProjectService
   {
     [NotNull]
-    IDocument LoadDocument([NotNull] ISourceFile sourceFile);
-
-    [NotNull]
     IProject LoadProject();
   }
 }

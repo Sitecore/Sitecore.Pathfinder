@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.TreeNodes
+﻿namespace Sitecore.Pathfinder.TreeNodes.Json
 {
   using System.Linq;
   using Newtonsoft.Json.Linq;
@@ -8,24 +8,35 @@
 
   public class JsonDocument : Document
   {
-    public JsonDocument([NotNull] ISourceFile sourceFile) : base(sourceFile)
+    private ITreeNode root;
+
+    public JsonDocument([NotNull] IParseContext parseContext, [NotNull] ISourceFile sourceFile) : base(sourceFile)
     {
+      this.ParseContext = parseContext;
     }
 
-    public override ITreeNode Root { get; protected set; } = TreeNode.Empty;
-
-    public void Parse([NotNull] IParseContext context)
+    public override ITreeNode Root
     {
-      var json = this.SourceFile.ReadAsJson(context);
-
-      var root = json.Properties().FirstOrDefault(j => j.Type == JTokenType.Object);
-      if (root == null)
+      get
       {
-        return;
-      }
+        if (this.root == null)
+        {
+          var json = this.SourceFile.ReadAsJson(this.ParseContext);
 
-      this.Root = this.Parse(root.Name, root.Value<JObject>(), null);
+          var r = json.Properties().FirstOrDefault(j => j.Type == JTokenType.Object);
+          if (r == null)
+          {
+            return TreeNode.Empty;
+          }
+
+          this.root = this.Parse(r.Name, r.Value<JObject>(), null);
+        }
+
+        return this.root;
+      }
     }
+
+    protected IParseContext ParseContext { get; }
 
     [NotNull]
     private ITreeNode Parse([NotNull] string name, [NotNull] JObject jobject, [CanBeNull] ITreeNode parent)

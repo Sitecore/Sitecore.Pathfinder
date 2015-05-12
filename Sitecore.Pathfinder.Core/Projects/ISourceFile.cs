@@ -16,9 +16,6 @@
     [NotNull]
     string SourceFileName { get; }
 
-    [CanBeNull]
-    IDocument Document { get; }
-
     [NotNull]
     JObject ReadAsJson([NotNull] IParseContext context);
 

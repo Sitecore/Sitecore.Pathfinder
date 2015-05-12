@@ -13,11 +13,11 @@
 
   public class ParseContext : IParseContext
   {
-    public ParseContext([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IProjectService projectService, [NotNull] ITokenService tokenService)
+    public ParseContext([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IDocumentService documentServce, [NotNull] ITokenService tokenService)
     {
       this.CompositionService = compositionService;
       this.Configuration = configuration;
-      this.ProjectService = projectService;
+      this.DocumentServce = documentServce;
       this.TokenService = tokenService;
     }
 
@@ -26,7 +26,7 @@
     public IConfiguration Configuration { get; }
 
     [NotNull]
-    protected IProjectService ProjectService { get;  }
+    protected IDocumentService DocumentServce { get;  }
 
     public virtual string DatabaseName => this.Project.DatabaseName;
 
@@ -75,7 +75,7 @@
     public IParseContext Load(IProject project, ISourceFile sourceFile)
     {
       this.Project = project;
-      this.Document = this.ProjectService.LoadDocument(sourceFile);
+      this.Document = this.DocumentServce.LoadDocument(this, sourceFile);
       return this;
     }
 

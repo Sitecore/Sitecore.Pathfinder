@@ -1,18 +1,14 @@
 ﻿namespace Sitecore.Pathfinder.Projects
 {
   using System;
-  using System.IO;
   using System.Xml.Linq;
   using Newtonsoft.Json.Linq;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Parsing;
-  using Sitecore.Pathfinder.TreeNodes;
 
   public class SourceFile : ISourceFile
   {
-    private IDocument document;
-
     public SourceFile([NotNull] IFileSystemService fileSystem, [NotNull] string sourceFileName)
     {
       this.FileSystem = fileSystem;
@@ -32,30 +28,6 @@
     public DateTime LastWriteTimeUtc { get; }
 
     public string SourceFileName { get; }
-
-    public IDocument Document
-    {
-      get
-      {
-        if (this.document == null)
-        {
-          var extension = Path.GetExtension(this.SourceFileName).ToLowerInvariant();
-          switch (extension)
-          {
-            case ".xml":
-              this.document = new XmlDocument(this);
-              break;
-            case ".json":
-              this.document = new JsonDocument(this);
-              break;
-            default:
-              return null;
-          }
-        }
-
-        return this.document;
-      }
-    }
 
     public string[] ReadAsLines(IParseContext context)
     {

@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.TreeNodes
+﻿namespace Sitecore.Pathfinder.TreeNodes.Json
 {
   using Newtonsoft.Json.Linq;
   using Sitecore.Pathfinder.Diagnostics;

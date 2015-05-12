@@ -1,13 +1,14 @@
 ﻿namespace Sitecore.Pathfinder.TreeNodes
 {
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Parsing;
   using Sitecore.Pathfinder.Projects;
 
   public interface IDocumentLoader
   {
-    bool CanLoad([NotNull] ISourceFile sourceFile);
+    bool CanLoad(IParseContext context, [NotNull] ISourceFile sourceFile);
 
     [NotNull]
-    IDocument Load([NotNull] ISourceFile sourceFile);
+    IDocument Load(IParseContext context, [NotNull] ISourceFile sourceFile);
   }
 }

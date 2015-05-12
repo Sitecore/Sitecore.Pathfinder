@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.TreeNodes
+﻿namespace Sitecore.Pathfinder.TreeNodes.Xml
 {
   using System.Linq;
   using System.Xml;

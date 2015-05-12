@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.TreeNodes
+﻿namespace Sitecore.Pathfinder.TreeNodes.Xml
 {
   using System.Xml.Linq;
   using Sitecore.Pathfinder.Diagnostics;
@@ -7,18 +7,17 @@
 
   public class XmlDocument : Document
   {
-    public XmlDocument([NotNull] ISourceFile sourceFile) : base(sourceFile)
+    private ITreeNode root;
+
+    public XmlDocument([NotNull] IParseContext parseContext, [NotNull] ISourceFile sourceFile) : base(sourceFile)
     {
+      this.ParseContext = parseContext;
     }
 
-    public override ITreeNode Root { get; protected set; }
+    public override ITreeNode Root => this.root ?? (this.root = this.Parse(null, this.SourceFile.ReadAsXml(this.ParseContext)));
 
-    public void Parse([NotNull] IParseContext context)
-    {
-      var root = this.SourceFile.ReadAsXml(context);
-
-      this.Root = this.Parse(null, root);
-    }
+    [NotNull]
+    protected IParseContext ParseContext { get; }
 
     [NotNull]
     private ITreeNode Parse([CanBeNull] ITreeNode parent, [NotNull] XElement element)

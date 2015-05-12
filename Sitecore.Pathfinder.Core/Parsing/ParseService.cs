@@ -7,16 +7,17 @@
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Projects;
+  using Sitecore.Pathfinder.TreeNodes;
 
   [Export(typeof(IParseService))]
   public class ParseService : IParseService
   {
     [ImportingConstructor]
-    public ParseService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IProjectService projectService, [NotNull] ITokenService tokenService)
+    public ParseService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IDocumentService documentService, [NotNull] ITokenService tokenService)
     {
       this.CompositionService = compositionService;
       this.Configuration = configuration;
-      this.ProjectService = projectService;
+      this.DocumentService = documentService;
       this.TokenService = tokenService;
     }
 
@@ -34,7 +35,7 @@
     protected IConfiguration Configuration { get; }
 
     [NotNull]
-    protected IProjectService ProjectService { get; }
+    protected IDocumentService DocumentService { get; }
 
     [NotNull]
     protected ITokenService TokenService { get; }
@@ -42,7 +43,7 @@
     public virtual void Parse(IProject project, ISourceFile sourceFile)
     {
       // todo: change to abstract factory pattern
-      var context = new ParseContext(this.CompositionService, this.Configuration, this.ProjectService, this.TokenService).Load(project, sourceFile);
+      var context = new ParseContext(this.CompositionService, this.Configuration, this.DocumentService, this.TokenService).Load(project, sourceFile);
 
       try
       {
