@@ -2,7 +2,6 @@
 {
   using System.IO;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Projects.Locations;
 
   public class File : ProjectItem
   {
@@ -10,13 +9,13 @@
 
     private string shortName;
 
-    public File([NotNull] IProject project, [NotNull] Location declaration) : base(project, declaration)
+    public File([NotNull] IProject project, [NotNull] ISourceFile sourceFile) : base(project, sourceFile)
     {
     }
 
-    public override string QualifiedName => this.qualifiedName ?? (this.qualifiedName = this.Location.SourceFileName);
+    public override string QualifiedName => this.qualifiedName ?? (this.qualifiedName = this.SourceFile.SourceFileName);
 
-    public override string ShortName => this.shortName ?? (this.shortName = Path.GetFileName(this.Location.SourceFileName));
+    public override string ShortName => this.shortName ?? (this.shortName = Path.GetFileName(this.SourceFile.SourceFileName));
 
     public override void Analyze()
     {

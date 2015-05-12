@@ -7,7 +7,6 @@
   using Sitecore.Pathfinder.Extensions.StringExtensions;
   using Sitecore.Pathfinder.Projects.Files;
   using Sitecore.Pathfinder.Projects.Items;
-  using Sitecore.Pathfinder.Projects.Locations;
 
   [Export(typeof(IParser))]
   public class SerializationFileParser : ParserBase
@@ -65,8 +64,7 @@
 
     protected virtual int ParseField([NotNull] Item serializationFile, [NotNull] string[] lines, int startIndex, [NotNull] string language, int version)
     {
-      var location = new SerializationFileLocation(serializationFile.Location, startIndex);
-      var field = new Field(location);
+      var field = new Field(serializationFile.SourceFile);
       serializationFile.Fields.Add(field);
 
       field.Language = language;

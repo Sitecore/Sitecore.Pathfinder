@@ -73,7 +73,7 @@ namespace Sitecore.Pathfinder.Building.Deploying.Install
     {
       foreach (var projectItem in context.Project.Items)
       {
-        projectItem.Location.IsModified = false;
+        projectItem.SourceFile.IsModified = false;
       }
     }
   }
