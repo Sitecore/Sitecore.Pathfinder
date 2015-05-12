@@ -4,7 +4,7 @@
 
   public class ExternalReferenceItem : ItemBase
   {
-    public ExternalReferenceItem([NotNull] IProject project, [NotNull] ISourceFile sourceFile) : base(project, sourceFile)
+    public ExternalReferenceItem([NotNull] IProject project, [NotNull] ISourceFile textSpan) : base(project, textSpan)
     {
       this.IsEmittable = false;
     }

@@ -1,22 +1,22 @@
 namespace Sitecore.Pathfinder.Projects.Items
 {
-  using System.Xml.Linq;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.TreeNodes;
 
   // todo: consider basing this on ProjectElement
   public class Field
   {
-    public Field([NotNull] ISourceFile sourceFile)
+    public Field([NotNull] ITextSpan textSpan)
     {
-      this.SourceFile = sourceFile;
+      this.TextSpan = textSpan;
       this.Name = string.Empty;
       this.Value = string.Empty;
       this.Language = string.Empty;
     }
 
-    public Field([NotNull] ISourceFile sourceFile, [NotNull] string name, [NotNull] string value)
+    public Field([NotNull] ITextSpan textSpan, [NotNull] string name, [NotNull] string value)
     {
-      this.SourceFile = sourceFile;
+      this.TextSpan = textSpan;
       this.Name = name;
       this.Value = value;
       this.Language = string.Empty;
@@ -28,11 +28,8 @@ namespace Sitecore.Pathfinder.Projects.Items
     [NotNull]
     public string Name { get; set; }
 
-    [CanBeNull]
-    public XElement SourceElement { get; set; }
-
     [NotNull]
-    public ISourceFile SourceFile { get; }
+    public ITextSpan TextSpan { get; }
 
     [NotNull]
     public string Value { get; set; }

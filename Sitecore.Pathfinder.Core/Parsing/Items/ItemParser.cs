@@ -9,6 +9,7 @@
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Extensions.StringExtensions;
   using Sitecore.Pathfinder.Parsing.Items.ElementParsers;
+  using Sitecore.Pathfinder.TreeNodes;
 
   [Export(typeof(IParser))]
   public class ItemParser : ParserBase
@@ -30,12 +31,16 @@
 
     public override void Parse(IParseContext context)
     {
-      var root = context.SourceFile.ReadAsXml(context);
+      // this.ValidateXmlSchema(context, root, "http://www.sitecore.net/pathfinder/item", "item.xsd");
 
-      this.ValidateXmlSchema(context, root, "http://www.sitecore.net/pathfinder/item", "item.xsd");
+      var document = context.SourceFile.Document;
+      if (document == null)
+      {
+        // todo: report
+        return;
+      }
 
       var parentItemPath = context.ItemPath;
-
       var n = parentItemPath.LastIndexOf('/');
       if (n >= 0)
       {
@@ -44,24 +49,24 @@
 
       var itemParseContext = new ItemParseContext(context, this, parentItemPath);
 
-      this.ParseElement(itemParseContext, root);
+      this.ParseTreeNode(itemParseContext, document.Root);
     }
 
-    public void ParseElement([NotNull] ItemParseContext context, [NotNull] XElement element)
+    public void ParseTreeNode([NotNull] ItemParseContext context, [NotNull] ITreeNode treeNode)
     {
       try
       {
         foreach (var elementParser in this.ElementParsers)
         {
-          if (elementParser.CanParse(context, element))
+          if (elementParser.CanParse(context, treeNode))
           {
-            elementParser.Parse(context, element);
+            elementParser.Parse(context, treeNode);
           }
         }
       }
       catch (BuildException ex)
       {
-        context.ParseContext.Project.Trace.TraceError(Texts.Text3013, context.ParseContext.SourceFile.SourceFileName, ex.Line, ex.Column, ex.Message);
+        context.ParseContext.Project.Trace.TraceError(Texts.Text3013, context.ParseContext.SourceFile.SourceFileName, ex.LineNumber, ex.LinePosition, ex.Message);
       }
       catch (Exception ex)
       {
@@ -69,11 +74,11 @@
       }
     }
 
-    public void ParseElements([NotNull] ItemParseContext context, [NotNull] XElement element)
+    public void ParseTreeNodes([NotNull] ItemParseContext context, [NotNull] ITreeNode treeNode)
     {
-      foreach (var e in element.Elements())
+      foreach (var childNode in treeNode.TreeNodes)
       {
-        this.ParseElement(context, e);
+        this.ParseTreeNode(context, childNode);
       }
     }
   }

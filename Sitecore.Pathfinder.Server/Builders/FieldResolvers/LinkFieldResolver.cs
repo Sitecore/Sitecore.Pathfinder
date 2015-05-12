@@ -30,7 +30,7 @@
       var targetItem = item.Database.GetItem(field.Value);
       if (targetItem == null)
       {
-        throw new RetryableBuildException(Texts.Text2030, field.SourceFile.SourceFileName, field.SourceElement, field.Value);
+        throw new RetryableBuildException(Texts.Text2030, field.TextSpan.SourceFileName, field.SourceElement, field.Value);
       }
 
       field.Value = $"<link text=\"\" linktype=\"internal\" url=\"\" anchor=\"\" title=\"\" class=\"\" target=\"\" querystring=\"\" id=\"{targetItem.ID}\" />";

@@ -135,10 +135,19 @@
     <Compile Include="IO\IFileSystemService.cs" />
     <Compile Include="IO\PathHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TreeNodes\IDocument.cs" />
     <Compile Include="TreeNodes\ITextSpan.cs" />
     <Compile Include="TreeNodes\ITreeNode.cs" />
+    <Compile Include="TreeNodes\ITreeNodeAttribute.cs" />
+    <Compile Include="TreeNodes\JsonDocument.cs" />
+    <Compile Include="TreeNodes\JsonPropertyTreeNode.cs" />
+    <Compile Include="TreeNodes\JsonObjectTreeNode.cs" />
     <Compile Include="TreeNodes\TextSpan.cs" />
     <Compile Include="TreeNodes\TreeNode.cs" />
+    <Compile Include="TreeNodes\TreeNodeAttribute.cs" />
+    <Compile Include="TreeNodes\XmlAttributeTreeNodeAttribute.cs" />
+    <Compile Include="TreeNodes\XmlElementTreeNode.cs" />
+    <Compile Include="TreeNodes\XmlDocument.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

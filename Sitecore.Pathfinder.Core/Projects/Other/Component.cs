@@ -4,10 +4,11 @@
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Projects.Files;
   using Sitecore.Pathfinder.Projects.Templates;
+  using Sitecore.Pathfinder.TreeNodes;
 
   public class Component : File
   {
-    public Component([NotNull] IProject project, [NotNull] ISourceFile sourceFileName, [NotNull] Template privateTemplate, [NotNull] Template publicTemplate) : base(project, sourceFileName)
+    public Component([NotNull] IProject project, [NotNull] ITextSpan textSpan, [NotNull] Template privateTemplate, [NotNull] Template publicTemplate) : base(project, textSpan)
     {
       this.PrivateTemplate = privateTemplate;
       this.PublicTemplate = publicTemplate;

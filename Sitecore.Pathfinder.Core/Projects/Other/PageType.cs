@@ -4,10 +4,11 @@
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Projects.Files;
   using Sitecore.Pathfinder.Projects.Items;
+  using Sitecore.Pathfinder.TreeNodes;
 
   public class PageType : File
   {
-    public PageType(IProject project, [NotNull] ISourceFile sourceFileName) : base(project, sourceFileName)
+    public PageType(IProject project, [NotNull] ITextSpan textSpan) : base(project, textSpan)
     {
     }
 

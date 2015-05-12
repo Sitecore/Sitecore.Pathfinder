@@ -96,7 +96,7 @@
       }
       catch (BuildException ex)
       {
-        context.Trace.TraceError(ex.Text, ex.FileName, ex.Line, ex.Column, ex.Message);
+        context.Trace.TraceError(ex.Text, ex.FileName, ex.LineNumber, ex.LinePosition, ex.Message);
         context.IsAborted = true;
 
         if (string.Compare(context.Configuration.Get(Constants.DebugMode), "true", StringComparison.OrdinalIgnoreCase) == 0)

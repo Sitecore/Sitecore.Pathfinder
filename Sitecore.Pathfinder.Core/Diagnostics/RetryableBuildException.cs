@@ -8,7 +8,7 @@
     {
     }
 
-    public RetryableBuildException(int text, [NotNull] string fileName, int line = 0, int column = 0, [NotNull] params object[] args) : base(text, fileName, line, column, args)
+    public RetryableBuildException(int text, [NotNull] string fileName, int lineNumber = 0, int linePosition = 0, [NotNull] params object[] args) : base(text, fileName, lineNumber, linePosition, args)
     {
     }
 

@@ -30,7 +30,7 @@
       var mediaItem = item.Database.GetItem(field.Value);
       if (mediaItem == null)
       {
-        throw new RetryableBuildException(Texts.Text2021, field.SourceFile.SourceFileName, field.SourceElement, field.Value);
+        throw new RetryableBuildException(Texts.Text2021, field.TextSpan.SourceFileName, field.SourceElement, field.Value);
       }
 
       field.Value = $"<image mediapath=\"\" alt=\"Vista15\" width=\"\" height=\"\" hspace=\"\" vspace=\"\" showineditor=\"\" usethumbnail=\"\" src=\"\" mediaid=\"{mediaItem.ID}\" />";

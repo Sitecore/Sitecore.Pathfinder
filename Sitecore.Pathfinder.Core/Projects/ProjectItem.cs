@@ -2,13 +2,14 @@
 {
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Projects.References;
+  using Sitecore.Pathfinder.TreeNodes;
 
   public abstract class ProjectItem
   {
-    protected ProjectItem([NotNull] IProject project, [NotNull] ISourceFile sourceFile)
+    protected ProjectItem([NotNull] IProject project, [NotNull] ITextSpan textSpan)
     {
       this.Project = project;
-      this.SourceFile = sourceFile;
+      this.TextSpan = textSpan;
       this.References = new ReferenceCollection(this);
     }
 
@@ -30,7 +31,7 @@
     public abstract string ShortName { get; }
 
     [NotNull]
-    public ISourceFile SourceFile { get; }
+    public ITextSpan TextSpan { get; }
 
     public abstract void Analyze();
 
@@ -40,7 +41,7 @@
       {
         if (!reference.Resolve())
         {
-          this.Project.Trace.TraceWarning(Texts.Text3024, this.SourceFile.SourceFileName, 0, 0, reference.ToString());
+          this.Project.Trace.TraceWarning(Texts.Text3024, this.TextSpan.SourceFile.SourceFileName, 0, 0, reference.ToString());
         }
       }
     }

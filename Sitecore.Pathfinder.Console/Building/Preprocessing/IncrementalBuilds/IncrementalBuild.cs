@@ -22,7 +22,7 @@
           continue;
         }
 
-        if (!projectItem.SourceFile.IsModified)
+        if (!projectItem.TextSpan.IsModified)
         {
           continue;
         }

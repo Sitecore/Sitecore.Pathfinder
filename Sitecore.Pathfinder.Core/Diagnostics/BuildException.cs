@@ -3,6 +3,7 @@
   using System;
   using System.Xml;
   using System.Xml.Linq;
+  using Sitecore.Pathfinder.TreeNodes;
 
   public class BuildException : Exception
   {
@@ -16,12 +17,21 @@
       this.FileName = string.Empty;
     }
 
-    public BuildException(int text, [NotNull] string fileName, int line = 0, int column = 0, [NotNull] params object[] args)
+    public BuildException(int text, [NotNull] string fileName, int lineNumber = 0, int linePosition = 0, [NotNull] params object[] args)
     {
       this.Text = text;
       this.FileName = fileName;
-      this.Line = line;
-      this.Column = column;
+      this.LineNumber = lineNumber;
+      this.LinePosition = linePosition;
+      this.Args = args;
+    }
+
+    public BuildException(int text, ITextSpan textSpan, [NotNull] params object[] args)
+    {
+      this.Text = text;
+      this.FileName = textSpan.SourceFile.SourceFileName;
+      this.LineNumber = textSpan.LineNumber;
+      this.LinePosition = textSpan.LinePosition;
       this.Args = args;
     }
 
@@ -37,8 +47,8 @@
         return;
       }
 
-      this.Line = lineInfo.LineNumber;
-      this.Column = lineInfo.LinePosition;
+      this.LineNumber = lineInfo.LineNumber;
+      this.LinePosition = lineInfo.LinePosition;
     }
 
     public BuildException(int text, [NotNull] string fileName, [NotNull] XElement element, [CanBeNull] XAttribute attribute, [NotNull] params object[] args)
@@ -53,19 +63,19 @@
         lineInfo = attribute;
       }
 
-      this.Line = lineInfo.LineNumber;
-      this.Column = lineInfo.LinePosition;
+      this.LineNumber = lineInfo.LineNumber;
+      this.LinePosition = lineInfo.LinePosition;
     }
 
     [NotNull]
     public object[] Args { get; }
 
-    public int Column { get; }
-
     [NotNull]
     public string FileName { get; }
 
-    public int Line { get; }
+    public int LineNumber { get; }
+
+    public int LinePosition { get; }
 
     public int Text { get; }
   }

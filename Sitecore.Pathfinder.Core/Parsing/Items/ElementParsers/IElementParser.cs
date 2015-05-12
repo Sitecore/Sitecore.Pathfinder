@@ -2,11 +2,12 @@
 {
   using System.Xml.Linq;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.TreeNodes;
 
   public interface IElementParser
   {
-    bool CanParse([NotNull] ItemParseContext context, [NotNull] XElement element);
+    bool CanParse([NotNull] ItemParseContext context, [NotNull] ITreeNode treeNode);
 
-    void Parse([NotNull] ItemParseContext context, [NotNull] XElement element);
+    void Parse([NotNull] ItemParseContext context, [NotNull] ITreeNode treeNode);
   }
 }

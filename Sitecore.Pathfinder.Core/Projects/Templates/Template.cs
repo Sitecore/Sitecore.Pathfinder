@@ -7,7 +7,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
   public class Template : ItemBase
   {
-    public Template([NotNull] IProject project, [NotNull] ISourceFile sourceFile) : base(project, sourceFile)
+    public Template([NotNull] IProject project, [NotNull] ISourceFile textSpan) : base(project, textSpan)
     {
       this.BaseTemplates = string.Empty;
       this.Sections = new List<TemplateSection>();

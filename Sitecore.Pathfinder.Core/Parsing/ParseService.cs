@@ -55,7 +55,7 @@
       }
       catch (BuildException ex)
       {
-        project.Trace.TraceError(Texts.Text3013, sourceFile.SourceFileName, ex.Line, ex.Column, ex.Message);
+        project.Trace.TraceError(Texts.Text3013, sourceFile.SourceFileName, ex.LineNumber, ex.LinePosition, ex.Message);
       }
       catch (Exception ex)
       {

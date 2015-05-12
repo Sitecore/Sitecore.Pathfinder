@@ -6,12 +6,21 @@
   public interface ITreeNode
   {
     [NotNull]
-    IList<ITreeNode> Nodes { get; }
+    IList<ITreeNodeAttribute> Attributes { get; }
+
+    [NotNull]
+    string Name { get; }
 
     [CanBeNull]
     ITreeNode Parent { get; }
 
     [NotNull]
     ITextSpan TextSpan { get; }
+
+    [NotNull]
+    IList<ITreeNode> TreeNodes { get; }
+
+    [NotNull]
+    string GetAttributeValue([NotNull] string attributeName);
   }
 }

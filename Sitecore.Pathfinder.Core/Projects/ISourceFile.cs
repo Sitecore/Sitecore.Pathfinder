@@ -2,8 +2,10 @@
 {
   using System;
   using System.Xml.Linq;
+  using Newtonsoft.Json.Linq;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Parsing;
+  using Sitecore.Pathfinder.TreeNodes;
 
   public interface ISourceFile
   {
@@ -14,13 +16,18 @@
     [NotNull]
     string SourceFileName { get; }
 
+    [CanBeNull]
+    IDocument Document { get; }
+
+    JObject ReadAsJson([NotNull] IParseContext context);
+
     [NotNull]
     string[] ReadAsLines([NotNull] IParseContext context);
 
     [NotNull]
-    XElement ReadAsXml([NotNull] IParseContext context);
+    string ReadAsText([NotNull] IParseContext context);
 
     [NotNull]
-    string ReadAsText([NotNull] IParseContext context);
+    XElement ReadAsXml([NotNull] IParseContext context);
   }
 }

@@ -100,7 +100,7 @@
         }
         catch (BuildException ex)
         {
-          this.Trace.TraceError(ex.Text, ex.FileName, ex.Line, ex.Column, ex.Args);
+          this.Trace.TraceError(ex.Text, ex.FileName, ex.LineNumber, ex.LinePosition, ex.Args);
         }
         catch (Exception ex)
         {
@@ -146,15 +146,15 @@
         var buildException = exception as BuildException;
         if (buildException != null)
         {
-          this.Trace.TraceError(buildException.Text, buildException.FileName, buildException.Line, buildException.Column, buildException.Args);
+          this.Trace.TraceError(buildException.Text, buildException.FileName, buildException.LineNumber, buildException.LinePosition, buildException.Args);
         }
         else if (exception != null)
         {
-          this.Trace.TraceError(Texts.Text9998, projectItem.SourceFile.SourceFileName, 0, 0, exception.Message);
+          this.Trace.TraceError(Texts.Text9998, projectItem.TextSpan.SourceFileName, 0, 0, exception.Message);
         }
         else
         {
-          this.Trace.TraceError(Texts.Text9999, "An error occured in " + projectItem.SourceFile.SourceFileName);
+          this.Trace.TraceError(Texts.Text9999, "An error occured in " + projectItem.TextSpan.SourceFileName);
         }
       }
     }
