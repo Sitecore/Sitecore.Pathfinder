@@ -483,11 +483,16 @@ namespace Sitecore.Pathfinder.Builders.Templates
           templateSectionBuilder.Item.MoveTo(templateBuilder.Item);
         }
 
-        if (templateSectionBuilder.Item.Name != templateSectionBuilder.TemplateSection.Name)
+        using (new EditContext(templateSectionBuilder.Item))
         {
-          using (new EditContext(templateSectionBuilder.Item))
+          if (templateSectionBuilder.Item.Name != templateSectionBuilder.TemplateSection.Name)
           {
             templateSectionBuilder.Item.Name = templateSectionBuilder.TemplateSection.Name;
+          }
+
+          if (!string.IsNullOrEmpty(templateSectionBuilder.TemplateSection.Icon))
+          {
+            templateSectionBuilder.Item.Appearance.Icon = templateSectionBuilder.TemplateSection.Icon;
           }
         }
       }
@@ -508,12 +513,29 @@ namespace Sitecore.Pathfinder.Builders.Templates
 
       using (new EditContext(item))
       {
-        item[FieldIDs.BaseTemplate] = this.Template.BaseTemplates;
-        item.Name = this.Template.ItemName;
+        if (item.Name != this.Template.ItemName)
+        {
+          item.Name = this.Template.ItemName;
+        }
+
+        if (!string.IsNullOrEmpty(this.Template.BaseTemplates))
+        {
+          item[FieldIDs.BaseTemplate] = this.Template.BaseTemplates;
+        }
 
         if (!string.IsNullOrEmpty(this.Template.Icon))
         {
           item.Appearance.Icon = this.Template.Icon;
+        }
+
+        if (!string.IsNullOrEmpty(this.Template.ShortHelp))
+        {
+          item.Help.ToolTip = this.Template.ShortHelp;
+        }
+
+        if (!string.IsNullOrEmpty(this.Template.LongHelp))
+        {
+          item.Help.Text = this.Template.LongHelp;
         }
       }
 

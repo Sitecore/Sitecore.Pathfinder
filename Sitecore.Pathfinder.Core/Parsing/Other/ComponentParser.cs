@@ -70,9 +70,9 @@
       return publicTemplate;
     }
 
-    protected void Parse([NotNull] IParseContext context, [NotNull] Template template, [NotNull] ITreeNode element)
+    protected void Parse([NotNull] IParseContext context, [NotNull] Template template, [NotNull] ITreeNode treeNode)
     {
-      template.ItemName = element.GetAttributeValue("Name");
+      template.ItemName = treeNode.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(template.ItemName))
       {
         template.ItemName = context.ItemName;
@@ -80,10 +80,12 @@
 
       template.DatabaseName = context.DatabaseName;
       template.ItemIdOrPath = context.ItemPath;
-      template.BaseTemplates = element.GetAttributeValue("BaseTemplates");
-      template.Icon = element.GetAttributeValue("Icon");
+      template.BaseTemplates = treeNode.GetAttributeValue("BaseTemplates");
+      template.Icon = treeNode.GetAttributeValue("Icon");
+      template.ShortHelp = treeNode.GetAttributeValue("ShortHelp");
+      template.LongHelp = treeNode.GetAttributeValue("LongHelp");
 
-      foreach (var sectionTreeNode in element.TreeNodes)
+      foreach (var sectionTreeNode in treeNode.TreeNodes)
       {
         this.ParseSection(context, template, sectionTreeNode);
       }
@@ -91,40 +93,41 @@
 
     protected void ParseField([NotNull] IParseContext context, [NotNull] TemplateSection section, [NotNull] ITreeNode fieldTreeNode)
     {
-      var fieldModel = new TemplateField();
-      section.Fields.Add(fieldModel);
+      var templateField = new TemplateField();
+      section.Fields.Add(templateField);
 
-      fieldModel.Name = fieldTreeNode.GetAttributeValue("Name");
-      if (string.IsNullOrEmpty(fieldModel.Name))
+      templateField.Name = fieldTreeNode.GetAttributeValue("Name");
+      if (string.IsNullOrEmpty(templateField.Name))
       {
         throw new BuildException(Texts.Text2008, fieldTreeNode);
       }
 
-      fieldModel.Shared = string.Compare(fieldTreeNode.GetAttributeValue("Sharing"), "Shared", StringComparison.OrdinalIgnoreCase) == 0;
-      fieldModel.Unversioned = string.Compare(fieldTreeNode.GetAttributeValue("Sharing"), "Unversioned", StringComparison.OrdinalIgnoreCase) == 0;
-      fieldModel.Source = fieldTreeNode.GetAttributeValue("Source");
+      templateField.Shared = string.Compare(fieldTreeNode.GetAttributeValue("Sharing"), "Shared", StringComparison.OrdinalIgnoreCase) == 0;
+      templateField.Unversioned = string.Compare(fieldTreeNode.GetAttributeValue("Sharing"), "Unversioned", StringComparison.OrdinalIgnoreCase) == 0;
+      templateField.Source = fieldTreeNode.GetAttributeValue("Source");
 
-      fieldModel.Type = fieldTreeNode.GetAttributeValue("Type");
-      if (string.IsNullOrEmpty(fieldModel.Type))
+      templateField.Type = fieldTreeNode.GetAttributeValue("Type");
+      if (string.IsNullOrEmpty(templateField.Type))
       {
-        fieldModel.Type = "Single-Line Text";
+        templateField.Type = "Single-Line Text";
       }
     }
 
     protected void ParseSection([NotNull] IParseContext context, [NotNull] Template template, [NotNull] ITreeNode sectionTreeNode)
     {
-      var sectionModel = new TemplateSection();
-      template.Sections.Add(sectionModel);
+      var templateSection = new TemplateSection();
+      template.Sections.Add(templateSection);
 
-      sectionModel.Name = sectionTreeNode.GetAttributeValue("Name");
+      templateSection.Name = sectionTreeNode.GetAttributeValue("Name");
+      templateSection.Icon = sectionTreeNode.GetAttributeValue("Icon");
       if (string.IsNullOrEmpty(template.ItemName))
       {
         throw new BuildException(Texts.Text2007, sectionTreeNode);
       }
 
-      foreach (var fieldElement in sectionTreeNode.TreeNodes)
+      foreach (var fieldTreeNode in sectionTreeNode.TreeNodes)
       {
-        this.ParseField(context, sectionModel, fieldElement);
+        this.ParseField(context, templateSection, fieldTreeNode);
       }
     }
   }

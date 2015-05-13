@@ -126,6 +126,7 @@
       var templateSection = new TemplateSection();
       template.Sections.Add(templateSection);
       templateSection.Name = "Fields";
+      templateSection.Icon = "Applications/16x16/form_blue.png";
 
       var fieldTreeNodes = this.GetFieldTreeNode(treeNode);
       if (fieldTreeNodes != null)

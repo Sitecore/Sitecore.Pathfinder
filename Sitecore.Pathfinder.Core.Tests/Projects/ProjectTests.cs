@@ -80,6 +80,7 @@
       Assert.AreEqual(1, template.Sections.Count);
 
       var section = template.Sections[0];
+      Assert.AreEqual("Applications/16x16/About.png", section.Icon);
       Assert.AreEqual("Fields", section.Name);
       Assert.AreEqual(2, section.Fields.Count);
 

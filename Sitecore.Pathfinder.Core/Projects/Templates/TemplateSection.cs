@@ -16,6 +16,9 @@ namespace Sitecore.Pathfinder.Projects.Templates
     public IList<TemplateField> Fields { get; }
 
     [NotNull]
+    public string Icon { get; set; }
+
+    [NotNull]
     public string Name { get; set; }
   }
 }

@@ -70,6 +70,8 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
       template.Sections.Add(templateSection);
 
       templateSection.Name = sectionTreeNode.GetAttributeValue("Name");
+      templateSection.Icon = sectionTreeNode.GetAttributeValue("Icon");
+
       if (string.IsNullOrEmpty(template.ItemName))
       {
         throw new BuildException(Texts.Text2007, sectionTreeNode);

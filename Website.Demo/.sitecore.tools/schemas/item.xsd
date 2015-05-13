@@ -118,6 +118,7 @@
             </xs:element>
           </xs:sequence>
           <xs:attribute name="Name" type="xs:string" use="required" />
+          <xs:attribute name="Icon" type="xs:string" use="optional" />
         </xs:complexType>
       </xs:element>
     </xs:sequence>
