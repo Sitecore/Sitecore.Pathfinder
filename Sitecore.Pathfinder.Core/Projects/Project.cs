@@ -4,6 +4,7 @@
   using System.Collections.Generic;
   using System.ComponentModel.Composition;
   using System.Linq;
+  using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Parsing;
@@ -12,10 +13,13 @@
   [PartCreationPolicy(CreationPolicy.NonShared)]
   public class Project : IProject
   {
+    private string projectUniqueId;
+
     [ImportingConstructor]
-    public Project([NotNull] ICompositionService compositionService, ITraceService trace, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService)
+    public Project([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService)
     {
       this.CompositionService = compositionService;
+      this.Configuration = configuration;
       this.Trace = trace;
       this.FileSystem = fileSystem;
       this.ParseService = parseService;
@@ -25,9 +29,11 @@
 
     public IFileSystemService FileSystem { get; }
 
-    public ICollection<ProjectItem> Items { get; } = new List<ProjectItem>();
+    public ICollection<IProjectItem> Items { get; } = new List<IProjectItem>();
 
     public string ProjectDirectory { get; private set; } = string.Empty;
+
+    public string ProjectUniqueId => this.projectUniqueId ?? (this.projectUniqueId = this.Configuration.Get(Pathfinder.Constants.Configuration.ProjectUniqueId));
 
     public ICollection<ISourceFile> SourceFiles { get; } = new List<ISourceFile>();
 
@@ -35,6 +41,9 @@
 
     [NotNull]
     protected ICompositionService CompositionService { get; }
+
+    [NotNull]
+    protected IConfiguration Configuration { get; }
 
     [NotNull]
     protected IParseService ParseService { get; }

@@ -26,17 +26,17 @@
 
     public override void Parse(IParseContext context)
     {
-      var root = context.Document.Root;
+      var treeNode = context.Document.Root;
 
-      var privateTemplate = this.CreatePrivateTemplate(context, root);
+      var privateTemplate = this.CreatePrivateTemplate(context, treeNode);
       if (privateTemplate == null)
       {
         throw new BuildException(Texts.Text2031);
       }
 
-      var publicTemplate = this.CreatePublicTemplate(context, privateTemplate);
+      var publicTemplate = this.CreatePublicTemplate(context, treeNode, privateTemplate);
 
-      var component = new Component(context.Project, root, privateTemplate, publicTemplate);
+      var component = new Component(context.Project, treeNode, privateTemplate, publicTemplate);
       context.Project.Items.Add(component);
     }
 
@@ -57,14 +57,19 @@
     }
 
     [NotNull]
-    protected Template CreatePublicTemplate([NotNull] IParseContext context, [NotNull] Template privateTemplate)
+    protected Template CreatePublicTemplate([NotNull] IParseContext context, [NotNull] ITreeNode treeNode, [NotNull] Template privateTemplate)
     {
       var publicTemplate = new Template(context.Project, privateTemplate.TreeNode);
       context.Project.Items.Add(publicTemplate);
 
-      publicTemplate.ItemName = privateTemplate.ItemName.Mid(2);
+      var itemName = privateTemplate.ItemName.Mid(2);
+      var itemIdOrPath = PathHelper.NormalizeItemPath(Path.GetDirectoryName(privateTemplate.ItemIdOrPath) ?? string.Empty) + "/" + itemName;
+      var projectId = treeNode.GetAttributeValue("PublicTemplate.Id", "{" + itemIdOrPath + "}");
+
+      publicTemplate.ProjectId = projectId;
+      publicTemplate.ItemName = itemName;
       publicTemplate.DatabaseName = privateTemplate.DatabaseName;
-      publicTemplate.ItemIdOrPath = PathHelper.NormalizeItemPath(Path.GetDirectoryName(privateTemplate.ItemIdOrPath) ?? string.Empty) + "/" + publicTemplate.ItemName;
+      publicTemplate.ItemIdOrPath = itemIdOrPath;
       publicTemplate.BaseTemplates = privateTemplate.ItemIdOrPath;
 
       return publicTemplate;
@@ -72,15 +77,22 @@
 
     protected void Parse([NotNull] IParseContext context, [NotNull] Template template, [NotNull] ITreeNode treeNode)
     {
-      template.ItemName = treeNode.GetAttributeValue("Name");
-      if (string.IsNullOrEmpty(template.ItemName))
+      var parentItemPath = context.ItemPath;
+      var n = parentItemPath.LastIndexOf('/');
+      if (n >= 0)
       {
-        template.ItemName = context.ItemName;
+        parentItemPath = parentItemPath.Left(n);
       }
 
+      var itemName = treeNode.GetAttributeValue("Name", context.ItemName);
+      var itemIdOrPath = parentItemPath + "/" + template.ItemName;
+      var projectId = treeNode.GetAttributeValue("PrivateTemplate.Id", "{" + itemIdOrPath + "}");
+
+      template.ProjectId = projectId;
+      template.ItemName = itemName;
       template.DatabaseName = context.DatabaseName;
-      template.ItemIdOrPath = context.ItemPath;
-      template.BaseTemplates = treeNode.GetAttributeValue("BaseTemplates");
+      template.ItemIdOrPath = itemIdOrPath;
+      template.BaseTemplates = treeNode.GetAttributeValue("BaseTemplates", Constants.Templates.StandardTemplate);
       template.Icon = treeNode.GetAttributeValue("Icon");
       template.ShortHelp = treeNode.GetAttributeValue("ShortHelp");
       template.LongHelp = treeNode.GetAttributeValue("LongHelp");

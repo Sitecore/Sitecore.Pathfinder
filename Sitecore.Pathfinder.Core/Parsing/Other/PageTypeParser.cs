@@ -45,6 +45,7 @@
       var template = new Template(context.Project, root);
       context.Project.Items.Add(template);
 
+      template.ProjectId = "{" + context.ItemPath + "}";
       template.ItemName = context.ItemName;
       template.DatabaseName = context.DatabaseName;
       template.ItemIdOrPath = context.ItemPath;

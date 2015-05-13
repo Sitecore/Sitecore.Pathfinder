@@ -15,14 +15,14 @@
     {
       var item = new Item(context.ParseContext.Project, treeNode);
 
-      item.ItemName = treeNode.GetAttributeValue("Name");
-      if (string.IsNullOrEmpty(item.ItemName))
-      {
-        item.ItemName = context.ParseContext.ItemName;
-      }
+      var itemName = treeNode.GetAttributeValue("Name", context.ParseContext.ItemName);
+      var itemIdOrPath = context.ParentItemPath + "/" + itemName;
+      var projectId = treeNode.GetAttributeValue("Id", "{" + itemIdOrPath + "}");
 
+      item.ProjectId = projectId;
+      item.ItemName = itemName;
       item.DatabaseName = context.ParseContext.DatabaseName;
-      item.ItemIdOrPath = context.ParentItemPath + "/" + item.ItemName;
+      item.ItemIdOrPath = itemIdOrPath;
       item.TemplateIdOrPath = this.GetTemplateIdOrPath(context, treeNode);
 
       if (!string.IsNullOrEmpty(treeNode.GetAttributeValue("Template.Create")))
@@ -102,22 +102,22 @@
     {
       var template = new Template(context.ParseContext.Project, treeNode);
 
-      template.ItemIdOrPath = this.GetTemplateIdOrPath(context, treeNode);
-      if (string.IsNullOrEmpty(template.ItemIdOrPath))
+      var itemIdOrPath = this.GetTemplateIdOrPath(context, treeNode);
+      if (string.IsNullOrEmpty(itemIdOrPath))
       {
         throw new BuildException(Texts.Text2010, treeNode);
       }
 
+      var projectId = treeNode.GetAttributeValue("Template.Id", "{" + itemIdOrPath + "}");
+      var baseTemplates = treeNode.GetAttributeValue("Template.BaseTemplates", Constants.Templates.StandardTemplate);
+
+      template.ProjectId = projectId;
+      template.ItemIdOrPath = itemIdOrPath;
       template.DatabaseName = context.ParseContext.DatabaseName;
       template.Icon = treeNode.GetAttributeValue("Template.Icon");
-      template.BaseTemplates = treeNode.GetAttributeValue("Template.BaseTemplates");
+      template.BaseTemplates = baseTemplates;
       template.ShortHelp = treeNode.GetAttributeValue("Template.ShortHelp");
       template.LongHelp = treeNode.GetAttributeValue("Template.LongHelp");
-
-      if (string.IsNullOrEmpty(template.BaseTemplates))
-      {
-        template.BaseTemplates = Constants.Templates.StandardTemplate;
-      }
 
       // get template name
       var n = template.ItemIdOrPath.LastIndexOf('/');
@@ -138,17 +138,12 @@
           var templateField = new TemplateField();
           templateSection.Fields.Add(templateField);
           templateField.Name = name;
-          templateField.Type = child.GetAttributeValue("Field.Type");
+          templateField.Type = child.GetAttributeValue("Field.Type", "Single-Line Text");
           templateField.Shared = string.Compare(child.GetAttributeValue("Field.Sharing"), "Shared", StringComparison.OrdinalIgnoreCase) == 0;
           templateField.Unversioned = string.Compare(child.GetAttributeValue("Field.Sharing"), "Unversioned", StringComparison.OrdinalIgnoreCase) == 0;
           templateField.Source = child.GetAttributeValue("Field.Source");
           templateField.ShortHelp = child.GetAttributeValue("Field.ShortHelp");
           templateField.LongHelp = child.GetAttributeValue("Field.LongHelp");
-
-          if (string.IsNullOrEmpty(templateField.Type))
-          {
-            templateField.Type = "Single-Line Text";
-          }
         }
       }
 

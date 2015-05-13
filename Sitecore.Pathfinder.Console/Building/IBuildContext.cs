@@ -35,7 +35,7 @@
     string SolutionDirectory { get; }
 
     [NotNull]
-    IList<ProjectItem> ModifiedProjectItems { get; }
+    IList<IProjectItem> ModifiedProjectItems { get; }
 
     [NotNull]
     ITraceService Trace { get; }

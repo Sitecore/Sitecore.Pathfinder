@@ -10,7 +10,8 @@
   using Sitecore.Pathfinder.Builders.FieldResolvers;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Emitters;
-  using Sitecore.Pathfinder.Projects.Items;
+  using Sitecore.Pathfinder.Extensions.StringExtensions;
+  using Sitecore.Pathfinder.IO;
 
   public class ItemBuilder
   {
@@ -20,7 +21,7 @@
     }
 
     [CanBeNull]
-    public Sitecore.Data.Items.Item Item { get; set; }
+    public Item Item { get; set; }
 
     [NotNull]
     public Projects.Items.Item ProjectItem { get; }
@@ -30,7 +31,7 @@
     protected IEnumerable<IFieldResolver> FieldHandlers { get; set; }
 
     [CanBeNull]
-    protected Sitecore.Data.Items.Item TemplateItem { get; set; }
+    protected Item TemplateItem { get; set; }
 
     public void Build([NotNull] IEmitContext context)
     {
@@ -68,17 +69,21 @@
 
     protected void CreateNewItem([NotNull] IEmitContext context, [NotNull] Database database)
     {
-      if (ID.IsID(this.ProjectItem.ItemIdOrPath))
-      {
-        throw new BuildException(Texts.Text2002, this.ProjectItem.TreeNode);
-      }
-
       if (this.TemplateItem == null)
       {
         throw new BuildException(Texts.Text2016, this.ProjectItem.TreeNode, this.ProjectItem.TemplateIdOrPath);
       }
 
-      var item = database.CreateItemPath(this.ProjectItem.ItemIdOrPath, new TemplateItem(this.TemplateItem));
+      var parentItemPath = PathHelper.GetItemParentPath(this.ProjectItem.ItemIdOrPath);
+
+      var parentItem = database.CreateItemPath(parentItemPath);
+      if (parentItem == null)
+      {
+        throw new RetryableBuildException(Texts.Text2019, this.ProjectItem.TreeNode, parentItemPath);
+      }
+
+      // item is created with correct ID
+      var item = ItemManager.AddFromTemplate(this.ProjectItem.ItemName, this.TemplateItem.ID, parentItem, new ID(this.ProjectItem.Guid));
       if (item == null)
       {
         throw new RetryableBuildException(Texts.Text2019, this.ProjectItem.TreeNode, this.ProjectItem.ItemIdOrPath);
@@ -96,15 +101,7 @@
         return;
       }
 
-      if (ID.IsID(this.ProjectItem.ItemIdOrPath))
-      {
-        this.Item = database.GetItem(this.ProjectItem.ItemIdOrPath);
-      }
-      else if (this.ProjectItem.ItemIdOrPath.Contains("/"))
-      {
-        this.Item = database.GetItem(this.ProjectItem.ItemIdOrPath);
-      }
-
+      this.Item = database.GetItem(new ID(this.ProjectItem.Guid));
       if (this.Item != null)
       {
         this.ProjectItem.ItemIdOrPath = this.Item.ID.ToString();
@@ -168,8 +165,32 @@
         throw new BuildException(Texts.Text2017, this.ProjectItem.TreeNode);
       }
 
+      // move
+      if (string.Compare(this.Item.Paths.Path, this.ProjectItem.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) != 0 && string.Compare(this.Item.ID.ToString(), this.ProjectItem.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) != 0)
+      {
+        var parentItemPath = PathHelper.GetItemParentPath(this.ProjectItem.ItemIdOrPath);
+
+        var parentItem = this.Item.Database.GetItem(parentItemPath);
+        if (parentItem == null)
+        {
+          parentItem = this.Item.Database.CreateItemPath(parentItemPath);
+          if (parentItem == null)
+          {
+            throw new RetryableBuildException(Texts.Text3028, this.ProjectItem.TreeNode, parentItemPath);
+          }
+        }
+
+        this.Item.MoveTo(parentItem);
+      }
+
+      // rename and update fields
       using (new EditContext(this.Item))
       {
+        if (this.Item.Name != this.ProjectItem.ItemName)
+        {
+          this.Item.Name = this.ProjectItem.ItemName;
+        }
+
         if (this.Item.TemplateID != this.TemplateItem.ID)
         {
           var templateItem = new TemplateItem(this.TemplateItem);

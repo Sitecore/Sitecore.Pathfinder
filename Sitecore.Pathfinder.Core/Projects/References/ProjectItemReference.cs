@@ -15,7 +15,7 @@
     public string QualifiedName { get; }
 
     [CanBeNull]
-    public ProjectItem Target { get; private set; }
+    public IProjectItem Target { get; private set; }
 
     public override bool Resolve()
     {

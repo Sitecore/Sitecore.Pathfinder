@@ -12,7 +12,7 @@
 
     public override void Bind()
     {
-      this.IsBound = true;
+      this.IsBindComplete = true;
     }
   }
 }

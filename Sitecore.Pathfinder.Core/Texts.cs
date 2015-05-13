@@ -50,8 +50,6 @@
 
     public const int Text2000 = 2000;
 
-    public const int Text2002 = 2002;
-
     public const int Text2003 = 2003;
 
     public const int Text2004 = 2004;
@@ -163,6 +161,8 @@
     public const int Text3025 = 3025;
     public const int Text3026 = 3026;
     public const int Text3027 = 3027;
+    public const int Text3028 = 3028;
+    public const int Text3029 = 3029;
 
     public const int Text9998 = 9998;
 
@@ -184,11 +184,11 @@
       { Text1011, "Loading project..." }, 
       { Text1012, "Pipeline is empty. There are no tasks to execute." },
       { Text1013, "Hi there." },
-      { Text1014, "Your project directory was missing, so I have created it. You must update the 'wwwroot' and 'hostname' in the '{0}' configuration file before continuing." },
-      { Text1015, "Your configuration file and sample files were missing, so I have created them. You must update the 'wwwroot' and 'hostname' in the '{0}' configuration file before continuing." },
-      { Text1016, "Hey - you haven't changed the the 'wwwroot' and 'hostname' in the '{0}' configuration file." },
-      { Text1017, "Hey - there is no 'Data' directory under the 'wwwwroot' - are you sure, you have set the 'wwwroot' correctly in the configuration file" },
-      { Text1018, "Hey - there is no 'Website' directory under the 'wwwwroot' - are you sure, you have set the 'wwwroot' correctly in the configuration file" },
+      { Text1014, "Your project directory was missing, so I have created it. You must update the 'project-unique-id', 'wwwroot' and 'hostname' in the '{0}' configuration file before continuing." },
+      { Text1015, "Your configuration file and sample files were missing, so I have created them. You must update the 'project-unique-id', 'wwwroot' and 'hostname' in the '{0}' configuration file before continuing." },
+      { Text1016, "Hey - you haven't changed the the 'project-unique-id', 'wwwroot' or 'hostname' in the '{0}' configuration file." },
+      { Text1017, "Hey - there is no 'Data' directory under the 'wwwroot' directory - are you sure, you have set the 'wwwroot' correctly in the configuration file" },
+      { Text1018, "Hey - there is no 'Website' directory under the 'wwwroot' directory - are you sure, you have set the 'wwwroot' correctly in the configuration file" },
       { Text1019, "Just so you know, I have copied the 'Sitecore.Pathfinder.Server.dll' and 'NuGet.Core.dll' assemblies to the '/bin' directory in the website and a number of '.aspx' files to the '/sitecore/shell/client/Applications/Pathfinder' directory" },
       { Text1020, "Just so you know, I have updated the 'Sitecore.Pathfinder.Server.dll' and 'NuGet.Core.dll' assemblies in the '/bin' directory in the website and a number of '.aspx' files in the '/sitecore/shell/client/Applications/Pathfinder' directory to the latest version" },
       { Text1021, "Linting items: {0}" },
@@ -196,7 +196,6 @@
       { Text1023, "Project files: {0} / project items: {1}" },
 
       { Text2000, "Item file is not valid" }, 
-      { Text2002, "Cannot create new item from an ID" }, 
       { Text2003, "Item not found" }, 
       { Text2004, "Failed to create template." }, 
       { Text2005, "'Path' element must have a 'Path' attribute" }, 
@@ -255,6 +254,8 @@
       { Text3025, "Source file is empty" }, 
       { Text3026, "Json file is not valid" }, 
       { Text3027, "Value is specified in both 'Value' attribute and in element. Using value from attribute" }, 
+      { Text3028, "Could not create item: {0}" }, 
+      { Text3029, "Unique ID clash: {0} / {1}" }, 
 
       { Text9998, "{0}" }, 
       { Text9999, "An error occured: {0}" }

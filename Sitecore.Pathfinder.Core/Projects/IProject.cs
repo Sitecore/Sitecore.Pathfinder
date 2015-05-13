@@ -13,10 +13,13 @@
     IFileSystemService FileSystem { get; }
 
     [NotNull]
-    ICollection<ProjectItem> Items { get; }
+    ICollection<IProjectItem> Items { get; }
 
     [NotNull]
     string ProjectDirectory { get; }
+
+    [NotNull]
+    string ProjectUniqueId { get; }
 
     [NotNull]
     ICollection<ISourceFile> SourceFiles { get; }

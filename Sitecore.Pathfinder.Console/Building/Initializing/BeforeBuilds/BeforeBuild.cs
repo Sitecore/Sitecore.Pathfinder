@@ -4,7 +4,6 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
   using System.ComponentModel.Composition;
   using System.Diagnostics;
   using System.IO;
-  using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.IO;
 
   [Export(typeof(ITask))]
@@ -28,9 +27,24 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
         return;
       }
 
+      var projectUniqueId = context.Configuration.Get(Constants.Configuration.ProjectUniqueId);
+      if (string.Compare(projectUniqueId, "{project-unique-id}", StringComparison.OrdinalIgnoreCase) == 0)
+      {
+        context.Trace.Writeline(Texts.Text1016, context.Configuration.Get(Constants.ConfigFileName));
+        context.IsAborted = true;
+        return;
+      }
+
       var hostName = context.Configuration.Get(Constants.HostName);
+      if (string.Compare(hostName, "http://sitecore.default", StringComparison.OrdinalIgnoreCase) == 0)
+      {
+        context.Trace.Writeline(Texts.Text1016, context.Configuration.Get(Constants.ConfigFileName));
+        context.IsAborted = true;
+        return;
+      }
+
       var wwwroot = context.Configuration.Get(Constants.Wwwroot);
-      if (string.Compare(hostName, "http://sitecore.default", StringComparison.OrdinalIgnoreCase) == 0 && string.Compare(wwwroot, "c:\\inetpub\\wwwroot\\Sitecore.Default", StringComparison.OrdinalIgnoreCase) == 0)
+      if (string.Compare(wwwroot, "c:\\inetpub\\wwwroot\\Sitecore.Default", StringComparison.OrdinalIgnoreCase) == 0)
       {
         context.Trace.Writeline(Texts.Text1016, context.Configuration.Get(Constants.ConfigFileName));
         context.IsAborted = true;

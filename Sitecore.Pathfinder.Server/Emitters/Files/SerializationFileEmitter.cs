@@ -21,12 +21,12 @@
     {
     }
 
-    public override bool CanEmit(IEmitContext context, ProjectItem projectItem)
+    public override bool CanEmit(IEmitContext context, IProjectItem projectItem)
     {
       return projectItem is SerializationFile;
     }
 
-    public override void Emit(IEmitContext context, ProjectItem projectItem)
+    public override void Emit(IEmitContext context, IProjectItem projectItem)
     {
       var itemModel = (SerializationFile)projectItem;
 

@@ -6,6 +6,7 @@
   using System.Runtime.CompilerServices;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
+  using Sitecore.Pathfinder.IO;
 
   public abstract class ItemBase : ProjectItem
   {
@@ -80,7 +81,7 @@
         }
       }
 
-      this.IsBound = true;
+      this.IsBindComplete = true;
     }
   }
 }

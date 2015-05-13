@@ -44,6 +44,11 @@
       ' '
     };
 
+    public static class Configuration
+    {
+      public const string ProjectUniqueId = "project-unique-id";
+    }
+
     public static class Templates
     {
       public const string Layout = "{3A45A723-64EE-4919-9D41-02FD40FD1466}";

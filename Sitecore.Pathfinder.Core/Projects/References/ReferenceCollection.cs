@@ -17,7 +17,7 @@
     {
       get
       {
-        if (!this.ProjectItem.IsBound)
+        if (!this.ProjectItem.IsBindComplete)
         {
           this.ProjectItem.Bind();
         }
@@ -59,7 +59,7 @@
 
     public bool Contains([NotNull] Reference item)
     {
-      if (!this.ProjectItem.IsBound)
+      if (!this.ProjectItem.IsBindComplete)
       {
         this.ProjectItem.Bind();
       }
@@ -69,7 +69,7 @@
 
     public void CopyTo(Reference[] array, int arrayIndex)
     {
-      if (!this.ProjectItem.IsBound)
+      if (!this.ProjectItem.IsBindComplete)
       {
         this.ProjectItem.Bind();
       }
@@ -79,7 +79,7 @@
 
     public IEnumerator<Reference> GetEnumerator()
     {
-      if (!this.ProjectItem.IsBound)
+      if (!this.ProjectItem.IsBindComplete)
       {
         this.ProjectItem.Bind();
       }

@@ -3,15 +3,11 @@
   using System;
   using System.Collections.Generic;
   using System.ComponentModel.Composition;
-  using System.IO;
   using System.Linq;
-  using Microsoft.Framework.ConfigurationModel;
-  using Sitecore.IO;
   using Sitecore.Pathfinder.Configuration;
   using Sitecore.Pathfinder.Data;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.IO;
-  using Sitecore.Pathfinder.Parsing;
   using Sitecore.Pathfinder.Projects;
   using Sitecore.SecurityModel;
 
@@ -53,7 +49,7 @@
 
     public virtual void Start()
     {
-      this.ConfigurationService.Load(LoadConfigurationOptions.None);  
+      this.ConfigurationService.Load(LoadConfigurationOptions.None);
 
       var project = this.ProjectService.LoadProject();
 
@@ -67,7 +63,7 @@
 
       var emitters = this.Emitters.OrderBy(e => e.Sortorder).ToList();
 
-      var retries = new List<Tuple<ProjectItem, Exception>>();
+      var retries = new List<Tuple<IProjectItem, Exception>>();
 
       // todo: use proper user
       using (new SecurityDisabler())
@@ -81,7 +77,7 @@
       }
     }
 
-    protected virtual void EmitProjectItem([NotNull] IEmitContext context, [NotNull] ProjectItem projectItem, [NotNull] List<IEmitter> emitters, [NotNull] ICollection<Tuple<ProjectItem, Exception>> retries)
+    protected virtual void EmitProjectItem([NotNull] IEmitContext context, [NotNull] IProjectItem projectItem, [NotNull] List<IEmitter> emitters, [NotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
     {
       foreach (var emitter in emitters)
       {
@@ -96,7 +92,7 @@
         }
         catch (RetryableBuildException ex)
         {
-          retries.Add(new Tuple<ProjectItem, Exception>(projectItem, ex));
+          retries.Add(new Tuple<IProjectItem, Exception>(projectItem, ex));
         }
         catch (BuildException ex)
         {
@@ -104,18 +100,18 @@
         }
         catch (Exception ex)
         {
-          retries.Add(new Tuple<ProjectItem, Exception>(projectItem, ex));
+          retries.Add(new Tuple<IProjectItem, Exception>(projectItem, ex));
         }
 
         break;
       }
     }
 
-    protected virtual void RetryEmit([NotNull] IEmitContext context, [NotNull] List<IEmitter> emitters, [NotNull] ICollection<Tuple<ProjectItem, Exception>> retries)
+    protected virtual void RetryEmit([NotNull] IEmitContext context, [NotNull] List<IEmitter> emitters, [NotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
     {
       while (true)
       {
-        var retryAgain = new List<Tuple<ProjectItem, Exception>>();
+        var retryAgain = new List<Tuple<IProjectItem, Exception>>();
         foreach (var projectItem in retries.Reverse().Select(retry => retry.Item1))
         {
           try
@@ -124,7 +120,7 @@
           }
           catch (Exception ex)
           {
-            retries.Add(new Tuple<ProjectItem, Exception>(projectItem, ex));
+            retries.Add(new Tuple<IProjectItem, Exception>(projectItem, ex));
           }
         }
 

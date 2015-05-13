@@ -4,7 +4,6 @@
   using System.ComponentModel.Composition;
   using System.Text;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Extensions.StringExtensions;
   using Sitecore.Pathfinder.Projects.Files;
   using Sitecore.Pathfinder.Projects.Items;
@@ -144,6 +143,7 @@
         switch (name)
         {
           case "id":
+            serializationFile.ProjectId = value;
             break;
           case "database":
             serializationFile.DatabaseName = value;

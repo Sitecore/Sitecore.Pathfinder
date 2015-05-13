@@ -16,12 +16,12 @@
     {
     }
 
-    public override bool CanEmit(IEmitContext context, ProjectItem projectItem)
+    public override bool CanEmit(IEmitContext context, IProjectItem projectItem)
     {
       return projectItem is ContentFile;
     }
 
-    public override void Emit(IEmitContext context, ProjectItem projectItem)
+    public override void Emit(IEmitContext context, IProjectItem projectItem)
     {
       var contentFile = (ContentFile)projectItem;
 

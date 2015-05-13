@@ -96,6 +96,16 @@
       return fileName.Mid(s + 1, e - s - 1);
     }
 
+    [NotNull]
+    public static string GetItemParentPath([NotNull] string itemPath)
+    {
+      itemPath = NormalizeItemPath(itemPath).TrimEnd('/');
+
+      var n = itemPath.LastIndexOf('/');
+
+      return n >= 0 ? itemPath.Left(n) : itemPath;
+    }
+
     public static bool MatchesPattern([NotNull] string fileName, [NotNull] string pattern)
     {
       var s = Path.GetFileName(fileName) ?? string.Empty;

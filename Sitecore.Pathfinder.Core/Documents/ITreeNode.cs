@@ -28,6 +28,6 @@
     string Value { get; }
 
     [NotNull]
-    string GetAttributeValue([NotNull] string attributeName);
+    string GetAttributeValue([NotNull] string attributeName, [NotNull] string defaultValue = "");
   }
 }

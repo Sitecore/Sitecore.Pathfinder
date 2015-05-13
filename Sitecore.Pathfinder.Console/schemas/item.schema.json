@@ -14,9 +14,11 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "Id": { "type": "string" },
         "Name": { "type": "string" },
         "Template": { "type": "string" },
         "Template.Create": { "type": "string" },
+        "Template.Id": { "type": "string" },
         "Fields": {
           "type": "array",
           "items": {
@@ -39,6 +41,7 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "Id": { "type": "string" },
         "Name": { "type": "string" },
         "BaseTemplates": { "type": "string" },
         "Icon": { "type": "string" },
@@ -59,7 +62,7 @@
                     "Name": { "type": "string" },
                     "Type": { "$ref": "#/definitions/FieldType" },
                     "Source": { "type": "string" },
-                    "Sharing": { "$ref": "#/definitions/Sharing" }
+                    "Sharing": { "$ref": "#/definitions/Sharing" },
                     "ShortHelp": { "type": "string" },
                     "LongHelp": { "type": "string" },
                     "StandardValue": { "type": "string" }

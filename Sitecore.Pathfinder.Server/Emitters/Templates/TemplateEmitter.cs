@@ -12,13 +12,13 @@
     {
     }
 
-    public override bool CanEmit(IEmitContext context, ProjectItem projectItem)
+    public override bool CanEmit(IEmitContext context, IProjectItem projectItem)
     {
       // do not apply to inheriting classes
       return projectItem is Template;
     }
 
-    public override void Emit(IEmitContext context, ProjectItem projectItem)
+    public override void Emit(IEmitContext context, IProjectItem projectItem)
     {
       var template = (Template)projectItem;
 

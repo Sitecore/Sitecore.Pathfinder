@@ -52,7 +52,7 @@
       ignoreDirectories.Add(Path.GetFileName(this.Configuration.GetString(Pathfinder.Constants.ToolsDirectory)));
 
       // todo: consider caching project on disk
-      var project = new Project(this.CompositionService, this.Trace, this.FileSystem, this.ParseService).Load(projectDirectory, databaseName);
+      var project = new Project(this.CompositionService, this.Configuration, this.Trace, this.FileSystem, this.ParseService).Load(projectDirectory, databaseName);
 
       this.LoadExternalReferences(project);
       this.LoadProjectItems(project, ignoreDirectories, ignoreFileNames);
@@ -66,6 +66,7 @@
       {
         var external = new ExternalReferenceItem(project, TreeNode.Empty);
         project.Items.Add(external);
+        external.ProjectId = pair.Key;
         external.ItemIdOrPath = pair.Key;
         external.ItemName = Path.GetFileName(pair.Key) ?? string.Empty;
 
@@ -77,6 +78,7 @@
 
         external = new ExternalReferenceItem(project, TreeNode.Empty);
         project.Items.Add(external);
+        external.ProjectId = value;
         external.ItemIdOrPath = value;
         external.ItemName = Path.GetFileName(value);
       }

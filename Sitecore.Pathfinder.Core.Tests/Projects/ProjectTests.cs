@@ -23,7 +23,7 @@
     [Test]
     public void AddRemoveTests()
     {
-      var project = new Project(this.Services.CompositionService, this.Services.Trace, this.Services.FileSystem, this.Services.ParseService).Load(this.ProjectDirectory, "master");
+      var project = new Project(this.Services.CompositionService, this.Services.Configuration, this.Services.Trace, this.Services.FileSystem, this.Services.ParseService).Load(this.ProjectDirectory, "master");
 
       var fileName = Path.Combine(this.ProjectDirectory, "content\\Home\\HelloWorld.item.xml");
 

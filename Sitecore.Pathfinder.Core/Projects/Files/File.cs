@@ -3,6 +3,7 @@
   using System.IO;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
+  using Sitecore.Pathfinder.IO;
 
   public class File : ProjectItem
   {
@@ -20,7 +21,7 @@
 
     public override void Bind()
     {
-      this.IsBound = true;
+      this.IsBindComplete = true;
     }
   }
 }

@@ -40,6 +40,7 @@
       context.Project.Items.Add(mediaItem);
 
       // todo: set template
+      mediaItem.ProjectId = "{" + context.ItemPath + "}";
       mediaItem.ItemName = context.ItemName;
       mediaItem.DatabaseName = context.DatabaseName;
       mediaItem.ItemIdOrPath = context.ItemPath;

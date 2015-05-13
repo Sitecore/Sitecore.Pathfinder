@@ -21,8 +21,8 @@
 
     public double Sortorder { get; }
 
-    public abstract bool CanEmit(IEmitContext context, ProjectItem projectItem);
+    public abstract bool CanEmit(IEmitContext context, IProjectItem projectItem);
 
-    public abstract void Emit(IEmitContext context, ProjectItem projectItem);
+    public abstract void Emit(IEmitContext context, IProjectItem projectItem);
   }
 }

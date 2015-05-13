@@ -96,6 +96,7 @@
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:group ref="ItemGroup" />
     </xs:sequence>
+    <xs:attribute name="Id" type="xs:string" use="optional" />
     <xs:attribute name="Name" type="xs:string" use="optional" />
     <xs:attribute name="Template" type="xs:string" use="optional" />
     <xs:attribute name="Template.Create" type="xs:string" use="optional" />
@@ -127,6 +128,7 @@
         </xs:complexType>
       </xs:element>
     </xs:sequence>
+    <xs:attribute name="Id" type="xs:string" use="optional" />
     <xs:attribute name="Name" type="xs:string" use="optional" />
     <xs:attribute name="BaseTemplates" type="xs:string" use="optional" />
     <xs:attribute name="Icon" type="xs:string" use="optional" />

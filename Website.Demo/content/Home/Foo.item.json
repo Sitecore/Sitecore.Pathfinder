@@ -1,7 +1,6 @@
 ﻿{
   "Item": {
     "Template.Create": "/sitecore/templates/Sample/HelloWorld",
-    "Name": "wefwef",
     "Fields": [
       { "Name": "Title", "Value": "Hello" },
       { "Name": "Text", "Value": "Hello World" },

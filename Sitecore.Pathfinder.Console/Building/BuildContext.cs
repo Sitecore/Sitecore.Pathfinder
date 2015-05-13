@@ -16,7 +16,7 @@
       this.CompositionService = compositionService;
       this.FileSystem = fileSystem;
 
-      this.ModifiedProjectItems = new List<ProjectItem>();
+      this.ModifiedProjectItems = new List<IProjectItem>();
       this.OutputFiles = new List<string>();
       this.IsDeployable = true;
     }
@@ -61,7 +61,7 @@
       }
     }
 
-    public IList<ProjectItem> ModifiedProjectItems { get; }
+    public IList<IProjectItem> ModifiedProjectItems { get; }
 
     public ITraceService Trace { get; }
 

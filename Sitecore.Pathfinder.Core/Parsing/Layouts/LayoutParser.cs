@@ -24,6 +24,7 @@
       var item = new Item(context.Project, context.Document.Root);
       context.Project.Items.Add(item);
 
+      item.ProjectId = "{" + context.ItemPath + "}";
       item.ItemName = context.ItemName;
       item.DatabaseName = context.DatabaseName;
       item.ItemIdOrPath = context.ItemPath;

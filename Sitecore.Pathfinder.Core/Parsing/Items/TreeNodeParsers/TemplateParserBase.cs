@@ -11,15 +11,15 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
     {
       var template = new Template(context.ParseContext.Project, treeNode);
 
-      template.ItemName = treeNode.GetAttributeValue("Name");
-      if (string.IsNullOrEmpty(template.ItemName))
-      {
-        template.ItemName = context.ParseContext.ItemName;
-      }
+      var itemName = treeNode.GetAttributeValue("Name", context.ParseContext.ItemName);
+      var itemIdOrPath = context.ParentItemPath + "/" + template.ItemName;
+      var projectId = treeNode.GetAttributeValue("Id", "{" + itemIdOrPath + "}");
 
+      template.ProjectId = projectId;
+      template.ItemName = itemName;
       template.DatabaseName = context.ParseContext.DatabaseName;
-      template.ItemIdOrPath = context.ParentItemPath + "/" + template.ItemName;
-      template.BaseTemplates = treeNode.GetAttributeValue("BaseTemplates");
+      template.ItemIdOrPath = itemIdOrPath;
+      template.BaseTemplates = treeNode.GetAttributeValue("BaseTemplates", Constants.Templates.StandardTemplate);
       template.Icon = treeNode.GetAttributeValue("Icon");
       template.ShortHelp = treeNode.GetAttributeValue("ShortHelp");
       template.LongHelp = treeNode.GetAttributeValue("LongHelp");
@@ -53,18 +53,13 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         throw new BuildException(Texts.Text2008, fieldTreeNode);
       }
 
-      templateField.Type = fieldTreeNode.GetAttributeValue("Type");
+      templateField.Type = fieldTreeNode.GetAttributeValue("Type", "Single-Line Text");
       templateField.Shared = string.Compare(fieldTreeNode.GetAttributeValue("Sharing"), "Shared", StringComparison.OrdinalIgnoreCase) == 0;
       templateField.Unversioned = string.Compare(fieldTreeNode.GetAttributeValue("Sharing"), "Unversioned", StringComparison.OrdinalIgnoreCase) == 0;
       templateField.Source = fieldTreeNode.GetAttributeValue("Source");
       templateField.ShortHelp = fieldTreeNode.GetAttributeValue("ShortHelp");
       templateField.LongHelp = fieldTreeNode.GetAttributeValue("LongHelp");
       templateField.StandardValue = fieldTreeNode.GetAttributeValue("StandardValue");
-
-      if (string.IsNullOrEmpty(templateField.Type))
-      {
-        templateField.Type = "Single-Line Text";
-      }
     }
 
     protected virtual void ParseSection([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] ITreeNode sectionTreeNode)

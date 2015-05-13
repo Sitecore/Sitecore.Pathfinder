@@ -25,9 +25,10 @@
 
     public string Value { get; }
 
-    public string GetAttributeValue(string attributeName)
+    public string GetAttributeValue(string attributeName, string defaultValue = "")
     {
-      return this.Attributes.FirstOrDefault(a => a.Name == attributeName)?.Value ?? string.Empty;
+      var value = this.Attributes.FirstOrDefault(a => a.Name == attributeName)?.Value;
+      return !string.IsNullOrEmpty(value) ? value : defaultValue;
     }
 
     public IList<ITreeNode> Attributes { get; } = new List<ITreeNode>();
