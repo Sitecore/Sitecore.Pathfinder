@@ -34,17 +34,25 @@
 
     public const string Wwwroot = "wwwroot";
 
-    public static readonly char[] Pipe = {
+    public static readonly char[] Pipe =
+    {
       '|'
     };
 
-    public static readonly char[] Space = {
+    public static readonly char[] Space =
+    {
       ' '
     };
 
-    public static class Items
+    public static class Templates
     {
-      public const string StandardTemplateItemId = "{1930BBEB-7805-471A-A3BE-4858AC7CF696}";
+      public const string Layout = "{3A45A723-64EE-4919-9D41-02FD40FD1466}";
+
+      public const string StandardTemplate = "{1930BBEB-7805-471A-A3BE-4858AC7CF696}";
+
+      public const string Sublayout = "{0A98E368-CDB9-4E1E-927C-8E0C24A003FB}";
+
+      public const string ViewRendering = "{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}";
     }
   }
 }

@@ -113,7 +113,7 @@
       template.BaseTemplates = treeNode.GetAttributeValue("Template.BaseTemplates");
       if (string.IsNullOrEmpty(template.BaseTemplates))
       {
-        template.BaseTemplates = Constants.Items.StandardTemplateItemId;
+        template.BaseTemplates = Constants.Templates.StandardTemplate;
       }
 
       // get template name

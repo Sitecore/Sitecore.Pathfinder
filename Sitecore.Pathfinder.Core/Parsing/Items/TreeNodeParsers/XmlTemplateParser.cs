@@ -1,7 +1,6 @@
 ﻿namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 {
   using System.ComponentModel.Composition;
-  using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Documents.Xml;
 
@@ -13,12 +12,12 @@
       return treeNode.Name == "Template" && treeNode.Document is XmlDocument;
     }
 
-    protected override ITreeNode GetFieldsTreeNode([NotNull] ITreeNode treeNode)
+    protected override ITreeNode GetFieldsTreeNode(ITreeNode treeNode)
     {
       return treeNode;
     }
 
-    protected override ITreeNode GetSectionsTreeNode([NotNull] ITreeNode treeNode)
+    protected override ITreeNode GetSectionsTreeNode(ITreeNode treeNode)
     {
       return treeNode;
     }
