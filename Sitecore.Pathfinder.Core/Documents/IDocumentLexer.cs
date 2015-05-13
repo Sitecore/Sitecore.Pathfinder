@@ -6,9 +6,9 @@
 
   public interface IDocumentLexer
   {
-    bool CanLex(IParseContext context, [NotNull] ISourceFile sourceFile);
+    bool CanLex([NotNull] IParseContext context, [NotNull] ISourceFile sourceFile);
 
     [NotNull]
-    IDocument Lex(IParseContext context, [NotNull] ISourceFile sourceFile);
+    IDocument Lex([NotNull] IParseContext context, [NotNull] ISourceFile sourceFile);
   }
 }

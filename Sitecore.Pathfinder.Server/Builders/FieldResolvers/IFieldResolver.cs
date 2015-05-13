@@ -1,6 +1,5 @@
 ﻿namespace Sitecore.Pathfinder.Builders.FieldResolvers
 {
-  using Sitecore.Data.Items;
   using Sitecore.Pathfinder.Emitters;
   using Sitecore.Pathfinder.Projects.Items;
 

@@ -2,6 +2,7 @@
 {
   using System;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Parsing;
   using Sitecore.Pathfinder.Projects;
 
   public class Document : IDocument
@@ -36,6 +37,10 @@
       {
         throw new InvalidOperationException("Document is not in edit mode");
       }
+    }
+
+    public virtual void ValidateSchema(IParseContext context, string schemaNamespace, string schemaFileName)
+    {
     }
   }
 }

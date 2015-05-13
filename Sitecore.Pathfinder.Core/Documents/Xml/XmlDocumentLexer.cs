@@ -3,6 +3,7 @@
   using System;
   using System.ComponentModel.Composition;
   using System.IO;
+  using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Parsing;
   using Sitecore.Pathfinder.Projects;
 

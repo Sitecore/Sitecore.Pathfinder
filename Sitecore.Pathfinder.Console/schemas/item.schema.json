@@ -1,0 +1,133 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "Item": { "$ref": "#/definitions/Item" },
+    "Template": { "$ref": "#/definitions/Template" }
+  },
+
+  "definitions": {
+    "Item": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "Name": { "type": "string" },
+        "Template": { "type": "string" },
+        "Template.Create": { "type": "string" },
+        "Fields": {
+          "type": "array",
+          "items": {
+            "properties": {
+              "Name": { "type": "string" },
+              "Value": { "type": "string" },
+              "Field.Type": { "$ref": "#/definitions/FieldType" }
+            }
+          }
+        },
+        "Item": { "$ref": "#/definitions/Item" },
+        "template": { "$ref": "#/definitions/Template" }
+      }
+    },
+
+    "Template": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "Name": { "type": "string" },
+        "BaseTemplates": { "type": "string" },
+        "Icon": { "type": "string" },
+        "Sections": {
+          "type": "array",
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "Name": { "type": "string" },
+              "Fields": {
+                "type": "array",
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "Name": { "type": "string" },
+                    "Type": { "$ref": "#/definitions/FieldType" },
+                    "Source": { "type": "string" },
+                    "Sharing": { "$ref": "#/definitions/Sharing" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "FieldType": {
+      "enum": [
+        "Single-Line Text",
+        "Checkbox",
+        "Rich Text",
+        "Image",
+
+        "Multi-Line Text",
+        "Date",
+        "Datetime",
+
+        "Accounts Multilist",
+        "AccountSelector",
+        "Attachment",
+        "Campaign Tree",
+        "Checklist",
+        "Countable Edit",
+        "Custom",
+        "Datasource",
+        "Droplink",
+        "Droplist",
+        "Droptree",
+        "File",
+        "File Drop Area",
+        "General Link",
+        "General Link with Search",
+        "Grouped Droplink",
+        "Grouped Droplist",
+        "Icon",
+        "IFrame",
+        "Integer",
+        "Internal Link",
+        "Layout",
+        "Multilist",
+        "Multilist with Search",
+        "Name Lookup Value List",
+        "Name Value List",
+        "Number",
+        "Page Preview",
+        "Password",
+        "Profile Card Value",
+        "Profile Cards",
+        "Query Builder",
+        "Query Datasource",
+        "Rendering Datasource",
+        "Rules",
+        "Security",
+        "Sitecore User",
+        "Template Field Source",
+        "Thumbnail",
+        "Tracking",
+        "tree",
+        "Treelist",
+        "TreelistEx",
+        "Tristate",
+        "Version Link",
+        "Word Document"
+      ]
+    },
+
+    "Sharing": {
+      "enum": [
+        "Shared",
+        "Unversioned"
+      ]
+    }
+  }
+}

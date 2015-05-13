@@ -67,10 +67,14 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Extensions\CompositionServiceExtensions\CompositionServiceExtensions.cs" />
     <Compile Include="Extensions\ConfigurationExtensions\ConfigurationExtensions.cs" />
-    <Compile Include="Parsing\Items\ElementParsers\ElementParserBase.cs" />
-    <Compile Include="Parsing\Items\ElementParsers\IElementParser.cs" />
-    <Compile Include="Parsing\Items\ElementParsers\ItemParser.cs" />
-    <Compile Include="Parsing\Items\ElementParsers\TemplateParser.cs" />
+    <Compile Include="Parsing\Items\TreeNodeParsers\ItemParserBase.cs" />
+    <Compile Include="Parsing\Items\TreeNodeParsers\JsonItemParser.cs" />
+    <Compile Include="Parsing\Items\TreeNodeParsers\JsonTemplateParser.cs" />
+    <Compile Include="Parsing\Items\TreeNodeParsers\TemplateParserBase.cs" />
+    <Compile Include="Parsing\Items\TreeNodeParsers\TreeNodeParserBase.cs" />
+    <Compile Include="Parsing\Items\TreeNodeParsers\ITreeNodeParser.cs" />
+    <Compile Include="Parsing\Items\TreeNodeParsers\XmlItemParser.cs" />
+    <Compile Include="Parsing\Items\TreeNodeParsers\XmlTemplateParser.cs" />
     <Compile Include="Parsing\Items\ItemParseContext.cs" />
     <Compile Include="Parsing\Items\ItemParser.cs" />
     <Compile Include="Parsing\Layouts\LayoutParser.cs" />
@@ -143,10 +147,10 @@
     <Compile Include="Documents\ITreeNode.cs" />
     <Compile Include="Documents\Json\JsonDocument.cs" />
     <Compile Include="Documents\Json\JsonDocumentLexer.cs" />
-    <Compile Include="Documents\Json\JsonObjectTreeNode.cs" />
+    <Compile Include="Documents\Json\JsonTreeNode.cs" />
     <Compile Include="Documents\TreeNode.cs" />
     <Compile Include="Documents\Xml\XmlDocumentLexer.cs" />
-    <Compile Include="Documents\Xml\XmlElementTreeNode.cs" />
+    <Compile Include="Documents\Xml\XmlTreeNode.cs" />
     <Compile Include="Documents\Xml\XmlDocument.cs" />
   </ItemGroup>
   <ItemGroup>

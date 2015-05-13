@@ -14,8 +14,8 @@
   "pipeline": "lint nuget-pack copy-to-website install publish",
 
   "external-references": {
-    "/sitecore/templates/Sample/Sample Item": "template",
-    "/sitecore/templates/System/Layout/Renderings/View rendering": "template"
+    "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}": "/sitecore/templates/Sample/Sample Item",
+    "{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}": "/sitecore/templates/System/Layout/Renderings/View rendering"
   }
 }
                                        

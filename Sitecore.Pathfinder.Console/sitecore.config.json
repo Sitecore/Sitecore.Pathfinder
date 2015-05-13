@@ -34,6 +34,11 @@
 
   // directories to ignore
   "ignoredirectories": ".settings .sitecore.tools node_modules",
+  "ignorefilenames": "scc.cmd sitecore.nuspec sitecore.nupkg project.json",
+
+  "external-references": {
+    "{1930BBEB-7805-471A-A3BE-4858AC7CF696}": "/sitecore/templates/System/Templates/Standard template"
+  },
 
   "websiteFolderName": "Website",
   "dataFolderName": "Data",

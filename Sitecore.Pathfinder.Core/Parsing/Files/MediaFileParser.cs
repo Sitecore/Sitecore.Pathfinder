@@ -11,7 +11,8 @@
   [Export(typeof(IParser))]
   public class MediaFileParser : ParserBase
   {
-    private static readonly string[] FileExtensions = {
+    private static readonly string[] FileExtensions = 
+    {
       ".png", 
       ".gif", 
       ".bmp", 

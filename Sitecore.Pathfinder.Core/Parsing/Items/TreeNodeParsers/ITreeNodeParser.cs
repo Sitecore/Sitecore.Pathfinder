@@ -1,10 +1,9 @@
-﻿namespace Sitecore.Pathfinder.Parsing.Items.ElementParsers
+﻿namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 {
-  using System.Xml.Linq;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
 
-  public interface IElementParser
+  public interface ITreeNodeParser
   {
     bool CanParse([NotNull] ItemParseContext context, [NotNull] ITreeNode treeNode);
 

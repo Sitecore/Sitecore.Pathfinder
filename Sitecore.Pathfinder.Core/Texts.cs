@@ -160,6 +160,9 @@
 
     public const int Text3023 = 3023;
     public const int Text3024 = 3024;
+    public const int Text3025 = 3025;
+    public const int Text3026 = 3026;
+    public const int Text3027 = 3027;
 
     public const int Text9998 = 9998;
 
@@ -249,6 +252,9 @@
       { Text3022, "Cannot writer serialization item: TemplateID is null" }, 
       { Text3023, "Cannot writer serialization item: TemplateName is null" }, 
       { Text3024, "Reference not found {0}" }, 
+      { Text3025, "Source file is empty" }, 
+      { Text3026, "Json file is not valid" }, 
+      { Text3027, "Value is specified in both 'Value' attribute and in element. Using value from attribute" }, 
 
       { Text9998, "{0}" }, 
       { Text9999, "An error occured: {0}" }

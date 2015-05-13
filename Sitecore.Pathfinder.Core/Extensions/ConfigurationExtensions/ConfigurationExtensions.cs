@@ -1,5 +1,7 @@
 ﻿namespace Sitecore.Pathfinder.Extensions.ConfigurationExtensions
 {
+  using System;
+  using System.Collections.Generic;
   using System.IO;
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Diagnostics;
@@ -31,6 +33,20 @@
       }
 
       return configuration;
+    }
+
+    [NotNull]
+    public static IEnumerable<string> GetList([NotNull] this IConfiguration configuration, [NotNull] string key)
+    {
+      var value = configuration.Get(key) ?? string.Empty;
+      var parts = value.Split(Pathfinder.Constants.Space, StringSplitOptions.RemoveEmptyEntries);
+      return parts;
+    }
+
+    [NotNull]
+    public static string GetString([NotNull] this IConfiguration configuration, [NotNull] string key, [NotNull] string defaultValue = "")
+    {
+      return configuration.Get(key) ?? defaultValue;
     }
   }
 }

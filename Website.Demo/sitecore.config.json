@@ -1,7 +1,7 @@
 {
   // wwwroot points to the base directory of the website
   // The wwwroot directory must contain a 'Data' and a 'Website' folder
-  "wwwroot": "e:\\inetpub\\wwwroot\\Sitecore.8.0.rev150223",
+  "wwwroot": "e:\\inetpub\\wwwroot\\Pathfinder",
   "hostname": "http://pathfinder",
 
   // relative project directory to solution directory
@@ -14,9 +14,8 @@
   "pipeline": "lint nuget-pack copy-to-website install publish",
   
   "external-references": {
-    "/sitecore/templates/Sample/Sample Item": "template",
-    "/sitecore/templates/System/Layout/Renderings/View rendering": "template",
-    "{1930BBEB-7805-471A-A3BE-4858AC7CF696}": "template"
+    "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}": "/sitecore/templates/Sample/Sample Item",
+    "{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}": "/sitecore/templates/System/Layout/Renderings/View rendering"
   }
 }
                                        

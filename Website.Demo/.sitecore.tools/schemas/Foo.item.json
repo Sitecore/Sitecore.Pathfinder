@@ -1,0 +1,9 @@
+{
+  "Item": {
+    "Name": "HelloWorld",
+    "Template": "/sitecore/sdfsdf",
+    "Fields": [
+      { "Name": "Title", "Value": "Hola", "Field.Type": "Single-Line Text"}
+    ]
+  }
+}

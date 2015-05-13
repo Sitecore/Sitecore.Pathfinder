@@ -119,6 +119,18 @@
     <Content Include="wwwroot\website\bin\Microsoft.Framework.ConfigurationModel.Interfaces.dll" />
     <Content Include="wwwroot\website\bin\Microsoft.Framework.ConfigurationModel.Json.dll" />
     <Content Include="wwwroot\website\bin\Microsoft.Framework.ConfigurationModel.Xml.dll" />
+    <Content Include="schemas\item.schema.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\project\.settings\settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="templates\Item.item.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="templates\Template.item.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="wwwroot\project\scc.cmd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

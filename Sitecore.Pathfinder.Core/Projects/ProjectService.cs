@@ -8,6 +8,7 @@
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
+  using Sitecore.Pathfinder.Extensions.ConfigurationExtensions;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Parsing;
   using Sitecore.Pathfinder.Projects.Items;
@@ -43,17 +44,18 @@
     public IProject LoadProject()
     {
       // todo: refactor this
-      var projectDirectory = PathHelper.Combine(this.Configuration.Get(Pathfinder.Constants.SolutionDirectory), this.Configuration.Get(Pathfinder.Constants.ProjectDirectory));
-      var databaseName = this.Configuration.Get(Pathfinder.Constants.Database);
-      var ignoreDirectories = this.Configuration.Get(Pathfinder.Constants.IgnoreDirectories).Split(Pathfinder.Constants.Space, StringSplitOptions.RemoveEmptyEntries).ToList();
+      var projectDirectory = PathHelper.Combine(this.Configuration.GetString(Pathfinder.Constants.SolutionDirectory), this.Configuration.GetString(Pathfinder.Constants.ProjectDirectory));
+      var databaseName = this.Configuration.GetString(Pathfinder.Constants.Database);
 
-      ignoreDirectories.Add(Path.GetFileName(this.Configuration.Get(Pathfinder.Constants.ToolsDirectory)));
+      var ignoreFileNames = this.Configuration.GetList(Pathfinder.Constants.IgnoreFileNames).ToList();
+      var ignoreDirectories = this.Configuration.GetList(Pathfinder.Constants.IgnoreDirectories).ToList();
+      ignoreDirectories.Add(Path.GetFileName(this.Configuration.GetString(Pathfinder.Constants.ToolsDirectory)));
 
       // todo: consider caching project on disk
       var project = new Project(this.CompositionService, this.Trace, this.FileSystem, this.ParseService).Load(projectDirectory, databaseName);
 
       this.LoadExternalReferences(project);
-      this.LoadProjectItems(project, ignoreDirectories);
+      this.LoadProjectItems(project, ignoreDirectories, ignoreFileNames);
 
       return project;
     }
@@ -64,15 +66,25 @@
       {
         var external = new ExternalReferenceItem(project, TreeNode.Empty);
         project.Items.Add(external);
-
         external.ItemIdOrPath = pair.Key;
         external.ItemName = Path.GetFileName(pair.Key) ?? string.Empty;
+
+        var value = this.Configuration.Get("external-references:" + pair.Key);
+        if (string.IsNullOrEmpty(value))
+        {
+          continue;
+        }
+
+        external = new ExternalReferenceItem(project, TreeNode.Empty);
+        project.Items.Add(external);
+        external.ItemIdOrPath = value;
+        external.ItemName = Path.GetFileName(value);
       }
     }
 
-    protected virtual void LoadProjectItems([NotNull] Project project, [NotNull] List<string> ignoreDirectories)
+    protected virtual void LoadProjectItems([NotNull] Project project, [NotNull] IEnumerable<string> ignoreDirectories, [NotNull] IEnumerable<string> ignoreFileNames)
     {
-      var visitor = new ProjectDirectoryVisitor(this.FileSystem).Load(ignoreDirectories.ToArray());
+      var visitor = new ProjectDirectoryVisitor(this.FileSystem).Load(ignoreDirectories, ignoreFileNames);
       visitor.Visit(project);
     }
   }

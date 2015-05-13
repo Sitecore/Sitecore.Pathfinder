@@ -14,6 +14,8 @@
 
     public const string IgnoreDirectories = "ignoredirectories";
 
+    public const string IgnoreFileNames = "ignorefilenames";
+
     public const string InstallUrl = "deploying:installurl";
 
     public const string ItemPath = "itemPath";
@@ -32,14 +34,17 @@
 
     public const string Wwwroot = "wwwroot";
 
-    public static readonly char[] Pipe = 
-    {
+    public static readonly char[] Pipe = {
       '|'
     };
 
-    public static readonly char[] Space = 
-    {
+    public static readonly char[] Space = {
       ' '
     };
+
+    public static class Items
+    {
+      public const string StandardTemplateItemId = "{1930BBEB-7805-471A-A3BE-4858AC7CF696}";
+    }
   }
 }

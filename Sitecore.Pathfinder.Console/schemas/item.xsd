@@ -101,14 +101,6 @@
     <xs:attribute name="Template.Icon" type="xs:string" use="optional" />
   </xs:complexType>
 
-  <xs:complexType name="ItemPath">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:group ref="ElementGroup" />
-    </xs:sequence>
-    <xs:attribute name="Path" type="xs:string" use="required" />
-    <xs:attribute name="Database" type="xs:string" use="required" />
-  </xs:complexType>
-
   <xs:complexType name="Template">
     <xs:sequence>
       <xs:element minOccurs="1" maxOccurs="unbounded" name="Section">
@@ -145,11 +137,9 @@
       <xs:element name="Field" type="Field" />
       <xs:element name="Item" type="Item" />
       <xs:element name="Template" type="Template" />
-      <xs:element name="ItemPath" type="ItemPath" />
     </xs:choice>
   </xs:group>
 
   <xs:element name="Item" type="Item" />
   <xs:element name="Template" type="Template" />
-  <xs:element name="ItemPath" type="ItemPath" />
 </xs:schema>
