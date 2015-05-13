@@ -4,22 +4,25 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
   public class TemplateField
   {
-    public TemplateField()
-    {
-      this.Name = string.Empty;
-      this.Source = string.Empty;
-    }
+    [NotNull]
+    public string LongHelp { get; set; } = string.Empty;
 
     [NotNull]
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
     public bool Shared { get; set; }
 
     [NotNull]
-    public string Source { get; set; }
+    public string ShortHelp { get; set; } = string.Empty;
 
     [NotNull]
-    public string Type { get; set; }
+    public string Source { get; set; } = string.Empty;
+
+    [NotNull]
+    public string StandardValue { get; set; } = string.Empty;
+
+    [NotNull]
+    public string Type { get; set; } = string.Empty;
 
     public bool Unversioned { get; set; }
   }

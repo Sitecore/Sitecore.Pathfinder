@@ -76,9 +76,25 @@ namespace Sitecore.Pathfinder.Builders.Templates
         throw new BuildException(Texts.Text2023, this.Template.TreeNode);
       }
 
+      // update standard value link
       using (new EditContext(item))
       {
         item[FieldIDs.StandardValueHolderId] = standardValuesItem.ID.ToString();
+      }
+
+      // update field values
+      using (new EditContext(standardValuesItem))
+      {
+        foreach (var section in this.Sections)
+        {
+          foreach (var field in section.Fields)
+          {
+            if (!string.IsNullOrEmpty(field.TemplaterField.StandardValue))
+            {
+              standardValuesItem[field.TemplaterField.Name] = field.TemplaterField.StandardValue;
+            }
+          }
+        }
       }
     }
 
@@ -457,11 +473,33 @@ namespace Sitecore.Pathfinder.Builders.Templates
 
       using (new EditContext(item))
       {
-        item.Name = templateFieldBuilder.TemplaterField.Name;
-        item["Type"] = templateFieldBuilder.TemplaterField.Type;
+        if (!string.IsNullOrEmpty(templateFieldBuilder.TemplaterField.Name))
+        {
+          item.Name = templateFieldBuilder.TemplaterField.Name;
+        }
+
+        if (!string.IsNullOrEmpty(templateFieldBuilder.TemplaterField.Type))
+        {
+          item["Type"] = templateFieldBuilder.TemplaterField.Type;
+        }
+
         item["Shared"] = templateFieldBuilder.TemplaterField.Shared ? "1" : string.Empty;
         item["Unversioned"] = templateFieldBuilder.TemplaterField.Unversioned ? "1" : string.Empty;
-        item["Source"] = templateFieldBuilder.TemplaterField.Source;
+
+        if (!string.IsNullOrEmpty(templateFieldBuilder.TemplaterField.Source))
+        {
+          item["Source"] = templateFieldBuilder.TemplaterField.Source;
+        }
+
+        if (!string.IsNullOrEmpty(templateFieldBuilder.TemplaterField.ShortHelp))
+        {
+          item["__Short description"] = templateFieldBuilder.TemplaterField.ShortHelp;
+        }
+
+        if (!string.IsNullOrEmpty(templateFieldBuilder.TemplaterField.LongHelp))
+        {
+          item["__Long description"] = templateFieldBuilder.TemplaterField.LongHelp;
+        }
       }
     }
 

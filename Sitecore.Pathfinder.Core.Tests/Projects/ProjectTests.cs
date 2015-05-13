@@ -80,13 +80,16 @@
       Assert.AreEqual(1, template.Sections.Count);
 
       var section = template.Sections[0];
-      Assert.AreEqual("Applications/16x16/About.png", section.Icon);
       Assert.AreEqual("Fields", section.Name);
+      Assert.AreEqual("Applications/16x16/About.png", section.Icon);
       Assert.AreEqual(2, section.Fields.Count);
 
       var field = section.Fields[0];
       Assert.AreEqual("Title", field.Name);
       Assert.AreEqual("Single-Line Text", field.Type);
+      Assert.AreEqual("ShortHelp", field.ShortHelp);
+      Assert.AreEqual("LongHelp", field.LongHelp);
+      Assert.AreEqual("StandardValue", field.StandardValue);
 
       Assert.AreEqual("Rich Text", section.Fields[1].Type);
     }

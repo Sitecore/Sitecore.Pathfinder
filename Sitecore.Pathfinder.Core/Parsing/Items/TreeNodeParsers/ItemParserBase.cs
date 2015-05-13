@@ -139,14 +139,16 @@
           templateSection.Fields.Add(templateField);
           templateField.Name = name;
           templateField.Type = child.GetAttributeValue("Field.Type");
+          templateField.Shared = string.Compare(child.GetAttributeValue("Field.Sharing"), "Shared", StringComparison.OrdinalIgnoreCase) == 0;
+          templateField.Unversioned = string.Compare(child.GetAttributeValue("Field.Sharing"), "Unversioned", StringComparison.OrdinalIgnoreCase) == 0;
+          templateField.Source = child.GetAttributeValue("Field.Source");
+          templateField.ShortHelp = child.GetAttributeValue("Field.ShortHelp");
+          templateField.LongHelp = child.GetAttributeValue("Field.LongHelp");
+
           if (string.IsNullOrEmpty(templateField.Type))
           {
             templateField.Type = "Single-Line Text";
           }
-
-          templateField.Shared = child.GetAttributeValue("Field.Sharing") == "Shared";
-          templateField.Unversioned = child.GetAttributeValue("Field.Sharing") == "Unversioned";
-          templateField.Source = child.GetAttributeValue("Field.Source");
         }
       }
 

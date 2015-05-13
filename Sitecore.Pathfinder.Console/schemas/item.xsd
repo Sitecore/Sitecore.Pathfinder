@@ -86,6 +86,8 @@
         <xs:attribute name="Field.Type" type="FieldType" use="optional" />
         <xs:attribute name="Field.Sharing" type="Sharing" use="optional" />
         <xs:attribute name="Field.Source" type="xs:string" use="optional" />
+        <xs:attribute name="Field.ShortHelp" type="xs:string" use="optional" />
+        <xs:attribute name="Field.LongHelp" type="xs:string" use="optional" />
       </xs:extension>
     </xs:simpleContent>
   </xs:complexType>
@@ -114,6 +116,9 @@
                 <xs:attribute name="Type" type="FieldType" use="optional" />
                 <xs:attribute name="Source" type="xs:string" use="optional" />
                 <xs:attribute name="Sharing" type="Sharing" use="optional" />
+                <xs:attribute name="ShortHelp" type="xs:string" use="optional" />
+                <xs:attribute name="LongHelp" type="xs:string" use="optional" />
+                <xs:attribute name="StandardValue" type="xs:string" use="optional" />
               </xs:complexType>
             </xs:element>
           </xs:sequence>

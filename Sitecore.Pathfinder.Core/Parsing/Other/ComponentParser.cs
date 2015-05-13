@@ -102,11 +102,14 @@
         throw new BuildException(Texts.Text2008, fieldTreeNode);
       }
 
+      templateField.Type = fieldTreeNode.GetAttributeValue("Type");
       templateField.Shared = string.Compare(fieldTreeNode.GetAttributeValue("Sharing"), "Shared", StringComparison.OrdinalIgnoreCase) == 0;
       templateField.Unversioned = string.Compare(fieldTreeNode.GetAttributeValue("Sharing"), "Unversioned", StringComparison.OrdinalIgnoreCase) == 0;
       templateField.Source = fieldTreeNode.GetAttributeValue("Source");
+      templateField.ShortHelp = fieldTreeNode.GetAttributeValue("ShortHelp");
+      templateField.LongHelp = fieldTreeNode.GetAttributeValue("LongHelp");
+      templateField.StandardValue = fieldTreeNode.GetAttributeValue("StandardValue");
 
-      templateField.Type = fieldTreeNode.GetAttributeValue("Type");
       if (string.IsNullOrEmpty(templateField.Type))
       {
         templateField.Type = "Single-Line Text";

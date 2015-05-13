@@ -11,7 +11,10 @@
         "Fields": [
           {
             "Name": "Title",
-            "Type": "Single-Line Text"
+            "Type": "Single-Line Text",
+            "ShortHelp": "ShortHelp",
+            "LongHelp": "LongHelp",
+            "StandardValue": "StandardValue"
           },
           {
             "Name": "Text",

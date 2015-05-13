@@ -25,7 +25,7 @@
               "Value": { "type": "string" },
               "Field.Type": { "$ref": "#/definitions/FieldType" }
             },
-            "required": ["Name", "Value"]
+            "required": [ "Name", "Value" ]
           }
         },
         "Item": { "$ref": "#/definitions/Item" },
@@ -58,12 +58,15 @@
                     "Type": { "$ref": "#/definitions/FieldType" },
                     "Source": { "type": "string" },
                     "Sharing": { "$ref": "#/definitions/Sharing" }
+                    "ShortHelp": { "type": "string" },
+                    "LongHelp": { "type": "string" },
+                    "StandardValue": { "type": "string" }
                   },
-                  "required": ["Name"]
+                  "required": [ "Name" ]
                 }
               }
             },
-            "required": ["Name", "Fields"]
+            "required": [ "Name", "Fields" ]
           }
         }
       }
