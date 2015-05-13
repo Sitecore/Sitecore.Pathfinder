@@ -10,19 +10,24 @@ namespace Sitecore.Pathfinder.Projects.Templates
   {
     public Template([NotNull] IProject project, [NotNull] ITreeNode treeNode) : base(project, treeNode)
     {
-      this.BaseTemplates = string.Empty;
       this.Sections = new List<TemplateSection>();
     }
 
     [NotNull]
-    public string BaseTemplates { get; set; }
+    public string BaseTemplates { get; set; } = string.Empty;
+
+    [NotNull]
+    public string LongHelp { get; set; } = string.Empty;
 
     [NotNull]
     public IList<TemplateSection> Sections { get; }
 
-    public override void Analyze()
+    [NotNull]
+    public string ShortHelp { get; set; } = string.Empty;
+
+    public override void Bind()
     {
-      base.Analyze();
+      base.Bind();
 
       if (string.IsNullOrEmpty(this.BaseTemplates))
       {

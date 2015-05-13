@@ -39,6 +39,8 @@
         "Name": { "type": "string" },
         "BaseTemplates": { "type": "string" },
         "Icon": { "type": "string" },
+        "ShortHelp": { "type": "string" },
+        "LongHelp": { "type": "string" },
         "Sections": {
           "type": "array",
           "items": {

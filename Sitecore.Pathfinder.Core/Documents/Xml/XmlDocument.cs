@@ -20,6 +20,7 @@
     public XmlDocument([NotNull] IParseContext parseContext, [NotNull] ISourceFile sourceFile) : base(sourceFile)
     {
       this.ParseContext = parseContext;
+      this.IsEditable = true;
     }
 
     public override ITreeNode Root => this.root ?? (this.root = this.Parse(null, this.RootElement));

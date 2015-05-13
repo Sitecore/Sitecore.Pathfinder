@@ -13,7 +13,7 @@
       this.References = new ReferenceCollection(this);
     }
 
-    public bool IsAnalyzed { get; set; }
+    public bool IsBound { get; set; }
 
     [CanBeNull]
     public ProjectItem Owner { get; set; }
@@ -33,7 +33,7 @@
     [NotNull]
     public ITreeNode TreeNode { get; }
 
-    public abstract void Analyze();
+    public abstract void Bind();
 
     public virtual void Lint()
     {

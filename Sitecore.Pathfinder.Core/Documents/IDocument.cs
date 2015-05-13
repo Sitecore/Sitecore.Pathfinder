@@ -6,6 +6,8 @@
 
   public interface IDocument
   {
+    bool IsEditable { get; }
+
     bool IsEditing { get; }
 
     [NotNull]

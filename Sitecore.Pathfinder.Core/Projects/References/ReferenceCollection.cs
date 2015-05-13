@@ -17,9 +17,9 @@
     {
       get
       {
-        if (!this.ProjectItem.IsAnalyzed)
+        if (!this.ProjectItem.IsBound)
         {
-          this.ProjectItem.Analyze();
+          this.ProjectItem.Bind();
         }
 
         return this.references.Count;
@@ -59,9 +59,9 @@
 
     public bool Contains([NotNull] Reference item)
     {
-      if (!this.ProjectItem.IsAnalyzed)
+      if (!this.ProjectItem.IsBound)
       {
-        this.ProjectItem.Analyze();
+        this.ProjectItem.Bind();
       }
 
       return this.references.Contains(item);
@@ -69,9 +69,9 @@
 
     public void CopyTo(Reference[] array, int arrayIndex)
     {
-      if (!this.ProjectItem.IsAnalyzed)
+      if (!this.ProjectItem.IsBound)
       {
-        this.ProjectItem.Analyze();
+        this.ProjectItem.Bind();
       }
 
       this.references.CopyTo(array, arrayIndex);
@@ -79,9 +79,9 @@
 
     public IEnumerator<Reference> GetEnumerator()
     {
-      if (!this.ProjectItem.IsAnalyzed)
+      if (!this.ProjectItem.IsBound)
       {
-        this.ProjectItem.Analyze();
+        this.ProjectItem.Bind();
       }
 
       return this.references.GetEnumerator();

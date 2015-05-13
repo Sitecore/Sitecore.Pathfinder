@@ -18,9 +18,9 @@
 
     public override string ShortName => this.shortName ?? (this.shortName = Path.GetFileName(this.TreeNode.Document.SourceFile.SourceFileName));
 
-    public override void Analyze()
+    public override void Bind()
     {
-      this.IsAnalyzed = true;
+      this.IsBound = true;
     }
   }
 }

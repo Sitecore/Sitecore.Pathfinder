@@ -15,6 +15,8 @@
       this.Root = new TreeNode(this, string.Empty);
     }
 
+    public bool IsEditable { get; protected set; }
+
     public bool IsEditing { get; protected set; }
 
     public virtual ITreeNode Root { get; }

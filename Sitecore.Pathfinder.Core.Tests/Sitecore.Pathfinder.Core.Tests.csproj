@@ -85,10 +85,18 @@
     <Compile Include="Tests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="Website\.sitecore.tools\sitecore.config.json">
+    <None Include="..\Sitecore.Pathfinder.Console\sitecore.config.json">
+      <Link>Website\.sitecore.tools\sitecore.config.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
+    <Content Include="Website\.sitecore.tools\schemas\item.schema.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Website\.sitecore.tools\schemas\item.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Website\content\Home\Foo.item.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

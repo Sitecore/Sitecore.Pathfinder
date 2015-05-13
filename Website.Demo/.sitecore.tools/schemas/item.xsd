@@ -99,6 +99,8 @@
     <xs:attribute name="Template.Create" type="xs:string" use="optional" />
     <xs:attribute name="Template.BaseTemplates" type="xs:string" use="optional" />
     <xs:attribute name="Template.Icon" type="xs:string" use="optional" />
+    <xs:attribute name="Template.ShortHelp" type="xs:string" use="optional" />
+    <xs:attribute name="Template.LongHelp" type="xs:string" use="optional" />
   </xs:complexType>
 
   <xs:complexType name="Template">
@@ -122,6 +124,8 @@
     <xs:attribute name="Name" type="xs:string" use="optional" />
     <xs:attribute name="BaseTemplates" type="xs:string" use="optional" />
     <xs:attribute name="Icon" type="xs:string" use="optional" />
+    <xs:attribute name="ShortHelp" type="xs:string" use="optional" />
+    <xs:attribute name="LongHelp" type="xs:string" use="optional" />
   </xs:complexType>
 
   <xs:group name="ElementGroup">

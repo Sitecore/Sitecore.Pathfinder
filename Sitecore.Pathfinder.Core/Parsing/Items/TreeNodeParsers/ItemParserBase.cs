@@ -111,6 +111,9 @@
       template.DatabaseName = context.ParseContext.DatabaseName;
       template.Icon = treeNode.GetAttributeValue("Template.Icon");
       template.BaseTemplates = treeNode.GetAttributeValue("Template.BaseTemplates");
+      template.ShortHelp = treeNode.GetAttributeValue("Template.ShortHelp");
+      template.LongHelp = treeNode.GetAttributeValue("Template.LongHelp");
+
       if (string.IsNullOrEmpty(template.BaseTemplates))
       {
         template.BaseTemplates = Constants.Templates.StandardTemplate;

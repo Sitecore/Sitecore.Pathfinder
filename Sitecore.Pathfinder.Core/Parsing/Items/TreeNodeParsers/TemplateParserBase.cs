@@ -21,6 +21,8 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
       template.ItemIdOrPath = context.ParentItemPath + "/" + template.ItemName;
       template.BaseTemplates = treeNode.GetAttributeValue("BaseTemplates");
       template.Icon = treeNode.GetAttributeValue("Icon");
+      template.ShortHelp = treeNode.GetAttributeValue("ShortHelp");
+      template.LongHelp = treeNode.GetAttributeValue("LongHelp");
 
       var sectionsTreeNode = this.GetSectionsTreeNode(treeNode);
       if (sectionsTreeNode != null)

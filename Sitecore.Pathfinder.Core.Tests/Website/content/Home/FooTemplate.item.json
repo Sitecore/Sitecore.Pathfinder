@@ -1,6 +1,9 @@
 ﻿{
-  "$schema": "/schemas/item.schema.json",
+  "$schema": "/Website/.sitecore.tools/schemas/item.schema.json",
   "Template": {
+    "Icon": "Applications/16x16/About.png",
+    "ShortHelp": "ShortHelp",
+    "LongHelp": "LongHelp",
     "Sections": [
       {
         "Name": "Fields",

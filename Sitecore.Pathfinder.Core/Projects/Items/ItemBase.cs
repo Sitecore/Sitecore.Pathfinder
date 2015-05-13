@@ -63,7 +63,7 @@
     [NotNull]
     public string TemplateIdOrPath { get; set; } = string.Empty;
 
-    public override void Analyze()
+    public override void Bind()
     {
       this.References.Clear();
 
@@ -80,7 +80,7 @@
         }
       }
 
-      this.IsAnalyzed = true;
+      this.IsBound = true;
     }
   }
 }

@@ -119,8 +119,25 @@ namespace Sitecore.Pathfinder.Builders.Templates
       this.Item = item;
       using (new EditContext(item))
       {
-        item[FieldIDs.BaseTemplate] = this.Template.BaseTemplates;
-        item.Appearance.Icon = this.Template.Icon;
+        if (!string.IsNullOrEmpty(this.Template.BaseTemplates))
+        {
+          item[FieldIDs.BaseTemplate] = this.Template.BaseTemplates;
+        }
+
+        if (!string.IsNullOrEmpty(this.Template.Icon))
+        {
+          item.Appearance.Icon = this.Template.Icon;
+        }
+
+        if (!string.IsNullOrEmpty(this.Template.ShortHelp))
+        {
+          item.Help.ToolTip = this.Template.ShortHelp;
+        }
+
+        if (!string.IsNullOrEmpty(this.Template.LongHelp))
+        {
+          item.Help.Text = this.Template.LongHelp;
+        }
       }
 
       foreach (var section in this.Sections)

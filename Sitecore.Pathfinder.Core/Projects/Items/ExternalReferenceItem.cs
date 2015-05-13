@@ -10,9 +10,9 @@
       this.IsEmittable = false;
     }
 
-    public override void Analyze()
+    public override void Bind()
     {
-      this.IsAnalyzed = true;
+      this.IsBound = true;
     }
   }
 }

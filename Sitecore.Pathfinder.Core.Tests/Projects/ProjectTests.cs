@@ -73,6 +73,9 @@
       var template = projectItem as Template;
       Assert.IsNotNull(template);
       Assert.AreEqual("FooTemplate", template.ItemName);
+      Assert.AreEqual("Applications/16x16/About.png", template.Icon);
+      Assert.AreEqual("ShortHelp", template.ShortHelp);
+      Assert.AreEqual("LongHelp", template.LongHelp);
       Assert.AreEqual("/sitecore/content/Home/FooTemplate", template.ItemIdOrPath);
       Assert.AreEqual(1, template.Sections.Count);
 
