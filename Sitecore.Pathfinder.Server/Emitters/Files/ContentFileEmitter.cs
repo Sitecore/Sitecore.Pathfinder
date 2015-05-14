@@ -25,18 +25,18 @@
     {
       var contentFile = (ContentFile)projectItem;
 
-      var destinationFileName = "/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(context.Project.ProjectDirectory, contentFile.TreeNode.Document.SourceFile.SourceFileName));
+      var destinationFileName = "/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(context.Project.ProjectDirectory, contentFile.TextNode.TextDocument.SourceFile.SourceFileName));
       destinationFileName = FileUtil.MapPath(destinationFileName);
 
       // todo: backup to uninstall folder
       try
       {
         context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName) ?? string.Empty);
-        context.FileSystem.Copy(contentFile.TreeNode.Document.SourceFile.SourceFileName, destinationFileName);
+        context.FileSystem.Copy(contentFile.TextNode.TextDocument.SourceFile.SourceFileName, destinationFileName);
       }
       catch (Exception ex)
       {
-        Log.Error($"Failed to copy assembly: {contentFile.TreeNode.Document.SourceFile.SourceFileName} -> {destinationFileName}", ex);
+        Log.Error($"Failed to copy assembly: {contentFile.TextNode.TextDocument.SourceFile.SourceFileName} -> {destinationFileName}", ex);
       }
     }
   }

@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.Documents.Json
+﻿namespace Sitecore.Pathfinder.TextDocuments.Json
 {
   using System;
   using System.ComponentModel.Composition;
@@ -6,17 +6,17 @@
   using Sitecore.Pathfinder.Parsing;
   using Sitecore.Pathfinder.Projects;
 
-  [Export(typeof(IDocumentLexer))]
-  public class JsonDocumentLexer : IDocumentLexer
+  [Export(typeof(ITextDocumentLexer))]
+  public class JsonTextDocumentLexer : ITextDocumentLexer
   {
     public bool CanLex(IParseContext context, ISourceFile sourceFile)
     {
       return string.Compare(Path.GetExtension(sourceFile.SourceFileName), ".json", StringComparison.OrdinalIgnoreCase) == 0;
     }
 
-    public IDocument Lex(IParseContext context, ISourceFile sourceFile)
+    public ITextDocument Lex(IParseContext context, ISourceFile sourceFile)
     {
-      return new JsonDocument(context, sourceFile);
+      return new JsonTextDocument(context, sourceFile);
     }
   }
 }

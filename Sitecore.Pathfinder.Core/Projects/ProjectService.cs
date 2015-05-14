@@ -7,11 +7,11 @@
   using System.Linq;
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Extensions.ConfigurationExtensions;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Parsing;
   using Sitecore.Pathfinder.Projects.Items;
+  using Sitecore.Pathfinder.TextDocuments;
 
   [Export(typeof(IProjectService))]
   public class ProjectService : IProjectService
@@ -64,11 +64,12 @@
     {
       foreach (var pair in this.Configuration.GetSubKeys("external-references"))
       {
-        var external = new ExternalReferenceItem(project, TreeNode.Empty);
+        var external = new ExternalReferenceItem(project, pair.Key, TextNode.Empty)
+        {
+          ItemIdOrPath = pair.Key,
+          ItemName = Path.GetFileName(pair.Key) ?? string.Empty
+        };
         project.Items.Add(external);
-        external.ProjectId = pair.Key;
-        external.ItemIdOrPath = pair.Key;
-        external.ItemName = Path.GetFileName(pair.Key) ?? string.Empty;
 
         var value = this.Configuration.Get("external-references:" + pair.Key);
         if (string.IsNullOrEmpty(value))
@@ -76,11 +77,12 @@
           continue;
         }
 
-        external = new ExternalReferenceItem(project, TreeNode.Empty);
+        external = new ExternalReferenceItem(project, value, TextNode.Empty)
+        {
+          ItemIdOrPath = value,
+          ItemName = Path.GetFileName(value)
+        };
         project.Items.Add(external);
-        external.ProjectId = value;
-        external.ItemIdOrPath = value;
-        external.ItemName = Path.GetFileName(value);
       }
     }
 

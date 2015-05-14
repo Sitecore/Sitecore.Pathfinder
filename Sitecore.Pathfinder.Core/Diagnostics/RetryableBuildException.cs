@@ -1,6 +1,6 @@
 ﻿namespace Sitecore.Pathfinder.Diagnostics
 {
-  using Sitecore.Pathfinder.Documents;
+  using Sitecore.Pathfinder.TextDocuments;
 
   public class RetryableBuildException : BuildException
   {
@@ -12,7 +12,7 @@
     {
     }
 
-    public RetryableBuildException(int text, [NotNull] ITreeNode treeNode, [NotNull] params object[] args) : base(text, treeNode, args)
+    public RetryableBuildException(int text, [NotNull] ITextNode textNode, [NotNull] params object[] args) : base(text, textNode, args)
     {
     }
   }

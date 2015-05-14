@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.Documents
+﻿namespace Sitecore.Pathfinder.TextDocuments
 {
   using System.Collections.Generic;
   using System.ComponentModel.Composition;
@@ -6,14 +6,14 @@
   using Sitecore.Pathfinder.Parsing;
   using Sitecore.Pathfinder.Projects;
 
-  [Export(typeof(IDocumentService))]
-  public class DocumentService : IDocumentService
+  [Export(typeof(ITextDocumentService))]
+  public class TextDocumentService : ITextDocumentService
   {
     [NotNull]
     [ImportMany]
-    protected IEnumerable<IDocumentLexer> Loaders { get; private set; }
+    protected IEnumerable<ITextDocumentLexer> Loaders { get; private set; }
 
-    public IDocument LoadDocument(IParseContext context, ISourceFile sourceFile)
+    public ITextDocument LoadDocument(IParseContext context, ISourceFile sourceFile)
     {
       foreach (var loader in this.Loaders)
       {
@@ -23,7 +23,7 @@
         }
       }
 
-      return new Document(sourceFile);
+      return new TextDocument(sourceFile);
     }
   }
 }

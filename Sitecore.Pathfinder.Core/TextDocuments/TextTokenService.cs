@@ -1,10 +1,10 @@
-﻿namespace Sitecore.Pathfinder.Projects
+﻿namespace Sitecore.Pathfinder.TextDocuments
 {
   using System.Collections.Generic;
   using System.ComponentModel.Composition;
 
-  [Export(typeof(ITokenService))]
-  public class TokenService : ITokenService
+  [Export(typeof(ITextTokenService))]
+  public class TextTokenService : ITextTokenService
   {
     private readonly Dictionary<string, string> globalTokens = new Dictionary<string, string>();
 

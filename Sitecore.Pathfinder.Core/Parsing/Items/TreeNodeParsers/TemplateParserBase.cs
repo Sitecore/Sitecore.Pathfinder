@@ -2,32 +2,32 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 {
   using System;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects.Templates;
+  using Sitecore.Pathfinder.TextDocuments;
 
-  public abstract class TemplateParserBase : TreeNodeParserBase
+  public abstract class TemplateParserBase : TextNodeParserBase
   {
-    public override void Parse(ItemParseContext context, ITreeNode treeNode)
+    public override void Parse(ItemParseContext context, ITextNode textNode)
     {
-      var template = new Template(context.ParseContext.Project, treeNode);
+      var itemName = textNode.GetAttributeValue("Name", context.ParseContext.ItemName);
+      var itemIdOrPath = context.ParentItemPath + "/" + itemName;
+      var projectUniqueId = textNode.GetAttributeValue("Id", itemName);
 
-      var itemName = treeNode.GetAttributeValue("Name", context.ParseContext.ItemName);
-      var itemIdOrPath = context.ParentItemPath + "/" + template.ItemName;
-      var projectId = treeNode.GetAttributeValue("Id", "{" + itemIdOrPath + "}");
-
-      template.ProjectId = projectId;
-      template.ItemName = itemName;
-      template.DatabaseName = context.ParseContext.DatabaseName;
-      template.ItemIdOrPath = itemIdOrPath;
-      template.BaseTemplates = treeNode.GetAttributeValue("BaseTemplates", Constants.Templates.StandardTemplate);
-      template.Icon = treeNode.GetAttributeValue("Icon");
-      template.ShortHelp = treeNode.GetAttributeValue("ShortHelp");
-      template.LongHelp = treeNode.GetAttributeValue("LongHelp");
-
-      var sectionsTreeNode = this.GetSectionsTreeNode(treeNode);
-      if (sectionsTreeNode != null)
+      var template = new Template(context.ParseContext.Project, projectUniqueId, textNode)
       {
-        foreach (var sectionTreeNode in sectionsTreeNode.TreeNodes)
+        ItemName = itemName,
+        DatabaseName = context.ParseContext.DatabaseName,
+        ItemIdOrPath = itemIdOrPath,
+        BaseTemplates = textNode.GetAttributeValue("BaseTemplates", Constants.Templates.StandardTemplate),
+        Icon = textNode.GetAttributeValue("Icon"),
+        ShortHelp = textNode.GetAttributeValue("ShortHelp"),
+        LongHelp = textNode.GetAttributeValue("LongHelp")
+      };
+
+      var sectionsTextNode = this.GetSectionsTextNode(textNode);
+      if (sectionsTextNode != null)
+      {
+        foreach (var sectionTreeNode in sectionsTextNode.ChildNodes)
         {
           this.ParseSection(context, template, sectionTreeNode);
         }
@@ -37,53 +37,53 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
     }
 
     [CanBeNull]
-    protected abstract ITreeNode GetFieldsTreeNode([NotNull] ITreeNode treeNode);
+    protected abstract ITextNode GetFieldsTextNode([NotNull] ITextNode textNode);
 
     [CanBeNull]
-    protected abstract ITreeNode GetSectionsTreeNode([NotNull] ITreeNode treeNode);
+    protected abstract ITextNode GetSectionsTextNode([NotNull] ITextNode textNode);
 
-    protected virtual void ParseField([NotNull] ItemParseContext context, [NotNull] TemplateSection templateSection, [NotNull] ITreeNode fieldTreeNode)
+    protected virtual void ParseField([NotNull] ItemParseContext context, [NotNull] TemplateSection templateSection, [NotNull] ITextNode fieldTextNode)
     {
       var templateField = new TemplateField();
       templateSection.Fields.Add(templateField);
 
-      templateField.Name = fieldTreeNode.GetAttributeValue("Name");
+      templateField.Name = fieldTextNode.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(templateField.Name))
       {
-        throw new BuildException(Texts.Text2008, fieldTreeNode);
+        throw new BuildException(Texts.Text2008, fieldTextNode);
       }
 
-      templateField.Type = fieldTreeNode.GetAttributeValue("Type", "Single-Line Text");
-      templateField.Shared = string.Compare(fieldTreeNode.GetAttributeValue("Sharing"), "Shared", StringComparison.OrdinalIgnoreCase) == 0;
-      templateField.Unversioned = string.Compare(fieldTreeNode.GetAttributeValue("Sharing"), "Unversioned", StringComparison.OrdinalIgnoreCase) == 0;
-      templateField.Source = fieldTreeNode.GetAttributeValue("Source");
-      templateField.ShortHelp = fieldTreeNode.GetAttributeValue("ShortHelp");
-      templateField.LongHelp = fieldTreeNode.GetAttributeValue("LongHelp");
-      templateField.StandardValue = fieldTreeNode.GetAttributeValue("StandardValue");
+      templateField.Type = fieldTextNode.GetAttributeValue("Type", "Single-Line Text");
+      templateField.Shared = string.Compare(fieldTextNode.GetAttributeValue("Sharing"), "Shared", StringComparison.OrdinalIgnoreCase) == 0;
+      templateField.Unversioned = string.Compare(fieldTextNode.GetAttributeValue("Sharing"), "Unversioned", StringComparison.OrdinalIgnoreCase) == 0;
+      templateField.Source = fieldTextNode.GetAttributeValue("Source");
+      templateField.ShortHelp = fieldTextNode.GetAttributeValue("ShortHelp");
+      templateField.LongHelp = fieldTextNode.GetAttributeValue("LongHelp");
+      templateField.StandardValue = fieldTextNode.GetAttributeValue("StandardValue");
     }
 
-    protected virtual void ParseSection([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] ITreeNode sectionTreeNode)
+    protected virtual void ParseSection([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] ITextNode sectionTextNode)
     {
       var templateSection = new TemplateSection();
       template.Sections.Add(templateSection);
 
-      templateSection.Name = sectionTreeNode.GetAttributeValue("Name");
-      templateSection.Icon = sectionTreeNode.GetAttributeValue("Icon");
+      templateSection.Name = sectionTextNode.GetAttributeValue("Name");
+      templateSection.Icon = sectionTextNode.GetAttributeValue("Icon");
 
       if (string.IsNullOrEmpty(template.ItemName))
       {
-        throw new BuildException(Texts.Text2007, sectionTreeNode);
+        throw new BuildException(Texts.Text2007, sectionTextNode);
       }
 
-      var fieldsTreeNode = this.GetFieldsTreeNode(sectionTreeNode);
-      if (fieldsTreeNode == null)
+      var fieldsTextNode = this.GetFieldsTextNode(sectionTextNode);
+      if (fieldsTextNode == null)
       {
         return;
       }
 
-      foreach (var fieldTreeNode in fieldsTreeNode.TreeNodes)
+      foreach (var fieldTextNode in fieldsTextNode.ChildNodes)
       {
-        this.ParseField(context, templateSection, fieldTreeNode);
+        this.ParseField(context, templateSection, fieldTextNode);
       }
     }
   }

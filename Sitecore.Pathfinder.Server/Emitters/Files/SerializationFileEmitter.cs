@@ -32,15 +32,15 @@
 
       try
       {
-        var item = this.DoLoadItem(itemModel.TreeNode.Document.SourceFile.SourceFileName, LoadOptions);
+        var item = this.DoLoadItem(itemModel.TextNode.TextDocument.SourceFile.SourceFileName, LoadOptions);
         if (item == null)
         {
-          throw new RetryableBuildException(Texts.Text2022, itemModel.TreeNode);
+          throw new RetryableBuildException(Texts.Text2022, itemModel.TextNode);
         }
       }
       catch (Exception ex)
       {
-        throw new RetryableBuildException(Texts.Text2022, itemModel.TreeNode, ex.Message);
+        throw new RetryableBuildException(Texts.Text2022, itemModel.TextNode, ex.Message);
       }
     }
 

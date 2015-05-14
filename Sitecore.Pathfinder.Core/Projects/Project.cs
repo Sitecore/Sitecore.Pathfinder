@@ -8,6 +8,7 @@
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Parsing;
+  using Sitecore.Pathfinder.TextDocuments;
 
   [Export(typeof(IProject))]
   [PartCreationPolicy(CreationPolicy.NonShared)]

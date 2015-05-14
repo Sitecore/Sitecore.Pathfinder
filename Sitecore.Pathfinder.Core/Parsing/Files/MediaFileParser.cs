@@ -4,14 +4,13 @@
   using System.ComponentModel.Composition;
   using System.IO;
   using System.Linq;
-  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects.Files;
   using Sitecore.Pathfinder.Projects.Items;
 
   [Export(typeof(IParser))]
   public class MediaFileParser : ParserBase
   {
-    private static readonly string[] FileExtensions = 
+    private static readonly string[] FileExtensions =
     {
       ".png", 
       ".gif", 
@@ -30,23 +29,23 @@
 
     public override bool CanParse(IParseContext context)
     {
-      var fileExtension = Path.GetExtension(context.Document.SourceFile.SourceFileName);
+      var fileExtension = Path.GetExtension(context.TextDocument.SourceFile.SourceFileName);
       return FileExtensions.Contains(fileExtension, StringComparer.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
-      var mediaItem = new Item(context.Project, context.Document.Root);
+      // todo: set template
+      var mediaItem = new Item(context.Project, context.ItemName, context.TextDocument.Root)
+      {
+        ItemName = context.ItemName, 
+        DatabaseName = context.DatabaseName, 
+        ItemIdOrPath = context.ItemPath, 
+        IsEmittable = false
+      };
       context.Project.Items.Add(mediaItem);
 
-      // todo: set template
-      mediaItem.ProjectId = "{" + context.ItemPath + "}";
-      mediaItem.ItemName = context.ItemName;
-      mediaItem.DatabaseName = context.DatabaseName;
-      mediaItem.ItemIdOrPath = context.ItemPath;
-      mediaItem.IsEmittable = false;
-
-      var mediaFile = new MediaFile(context.Project, context.Document.Root, mediaItem);
+      var mediaFile = new MediaFile(context.Project, context.TextDocument.Root, mediaItem);
       context.Project.Items.Add(mediaFile);
     }
   }

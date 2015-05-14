@@ -73,7 +73,7 @@ namespace Sitecore.Pathfinder.Building.Deploying.Install
     {
       foreach (var projectItem in context.Project.Items)
       {
-        projectItem.TreeNode.Document.SourceFile.IsModified = false;
+        projectItem.TextNode.TextDocument.SourceFile.IsModified = false;
       }
     }
   }

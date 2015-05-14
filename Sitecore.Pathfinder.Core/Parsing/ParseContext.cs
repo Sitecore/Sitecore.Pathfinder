@@ -6,27 +6,24 @@
   using System.IO;
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Extensions.StringExtensions;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects;
+  using Sitecore.Pathfinder.TextDocuments;
 
   public class ParseContext : IParseContext
   {
-    public ParseContext([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IDocumentService documentServce, [NotNull] ITokenService tokenService)
+    public ParseContext([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ITextDocumentService textDocumentServce, [NotNull] ITextTokenService textTokenService)
     {
       this.CompositionService = compositionService;
       this.Configuration = configuration;
-      this.DocumentServce = documentServce;
-      this.TokenService = tokenService;
+      this.TextDocumentServce = textDocumentServce;
+      this.TextTokenService = textTokenService;
     }
 
     public ICompositionService CompositionService { get; }
 
     public IConfiguration Configuration { get; }
-
-    [NotNull]
-    protected IDocumentService DocumentServce { get;  }
 
     public virtual string DatabaseName => this.Project.DatabaseName;
 
@@ -34,7 +31,7 @@
     {
       get
       {
-        var fileName = this.Document.SourceFile.SourceFileName;
+        var fileName = this.TextDocument.SourceFile.SourceFileName;
 
         var s = fileName.LastIndexOf('\\') + 1;
         var e = fileName.IndexOf('.', s);
@@ -47,7 +44,7 @@
     {
       get
       {
-        var itemPath = this.GetRelativeFileName(this.Document.SourceFile);
+        var itemPath = this.GetRelativeFileName(this.TextDocument.SourceFile);
 
         itemPath = PathHelper.GetDirectoryAndFileNameWithoutExtensions(itemPath);
 
@@ -57,10 +54,13 @@
 
     public IProject Project { get; private set; }
 
-    public IDocument Document { get; private set; }
+    public ITextDocument TextDocument { get; private set; }
 
     [NotNull]
-    protected ITokenService TokenService { get; }
+    protected ITextDocumentService TextDocumentServce { get; }
+
+    [NotNull]
+    protected ITextTokenService TextTokenService { get; }
 
     public virtual string GetRelativeFileName(ISourceFile sourceFile)
     {
@@ -75,13 +75,13 @@
     public IParseContext Load(IProject project, ISourceFile sourceFile)
     {
       this.Project = project;
-      this.Document = this.DocumentServce.LoadDocument(this, sourceFile);
+      this.TextDocument = this.TextDocumentServce.LoadDocument(this, sourceFile);
       return this;
     }
 
     public string ReplaceTokens(string text)
     {
-      var filePath = "/" + PathHelper.NormalizeItemPath(this.GetRelativeFileName(this.Document.SourceFile));
+      var filePath = "/" + PathHelper.NormalizeItemPath(this.GetRelativeFileName(this.TextDocument.SourceFile));
       var filePathWithExtensions = PathHelper.NormalizeItemPath(PathHelper.GetDirectoryAndFileNameWithoutExtensions(filePath));
       var fileName = Path.GetFileName(filePath);
       var fileNameWithoutExtensions = PathHelper.GetFileNameWithoutExtensions(fileName);
@@ -98,7 +98,7 @@
         ["DirectoryName"] = directoryName, 
       };
 
-      return this.TokenService.Replace(text, contextTokens);
+      return this.TextTokenService.Replace(text, contextTokens);
     }
   }
 }

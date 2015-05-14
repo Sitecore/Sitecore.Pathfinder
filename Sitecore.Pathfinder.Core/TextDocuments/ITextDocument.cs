@@ -1,17 +1,17 @@
-﻿namespace Sitecore.Pathfinder.Documents
+﻿namespace Sitecore.Pathfinder.TextDocuments
 {
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Parsing;
   using Sitecore.Pathfinder.Projects;
 
-  public interface IDocument
+  public interface ITextDocument
   {
     bool IsEditable { get; }
 
     bool IsEditing { get; }
 
     [NotNull]
-    ITreeNode Root { get; }
+    ITextNode Root { get; }
 
     [NotNull]
     ISourceFile SourceFile { get; }

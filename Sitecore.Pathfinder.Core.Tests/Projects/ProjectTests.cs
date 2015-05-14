@@ -49,7 +49,7 @@
       Assert.AreEqual("/sitecore/content/Home/Foo", item.ItemIdOrPath);
       Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", item.TemplateIdOrPath);
 
-      var treeNode = projectItem.TreeNode;
+      var treeNode = projectItem.TextNode;
       Assert.AreEqual("Item", treeNode.Name);
       Assert.AreEqual(1, treeNode.Attributes.Count);
 
@@ -119,7 +119,7 @@
       Assert.IsNotNull(field);
       Assert.AreEqual("Hello", field.Value);
 
-      var treeNode = projectItem.TreeNode;
+      var treeNode = projectItem.TextNode;
       Assert.AreEqual("Item", treeNode.Name);
       Assert.AreEqual(1, treeNode.Attributes.Count);
 

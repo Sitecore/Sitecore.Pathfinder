@@ -1,9 +1,9 @@
-﻿namespace Sitecore.Pathfinder.Projects
+﻿namespace Sitecore.Pathfinder.TextDocuments
 {
   using System.Collections.Generic;
   using Sitecore.Pathfinder.Diagnostics;
 
-  public interface ITokenService
+  public interface ITextTokenService
   {
     [NotNull]
     string this[[NotNull] string tokenName] { get; set; }

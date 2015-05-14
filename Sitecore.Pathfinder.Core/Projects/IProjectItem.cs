@@ -2,23 +2,21 @@
 {
   using System;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects.References;
+  using Sitecore.Pathfinder.TextDocuments;
 
   public interface IProjectItem
   {
     Guid Guid { get; }
 
-    bool IsBindComplete { get; }
-
     [CanBeNull]
-    ProjectItem Owner { get; set; }
+    IProjectItem Owner { get; set; }
 
     [NotNull]
     IProject Project { get; }
 
     [NotNull]
-    string ProjectId { get; }
+    string ProjectUniqueId { get; }
 
     [NotNull]
     string QualifiedName { get; }
@@ -30,7 +28,7 @@
     string ShortName { get; }
 
     [NotNull]
-    ITreeNode TreeNode { get; }
+    ITextNode TextNode { get; }
 
     void Bind();
 

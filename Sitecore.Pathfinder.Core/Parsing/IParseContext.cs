@@ -3,9 +3,8 @@
   using System.ComponentModel.Composition;
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Documents;
-  using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects;
+  using Sitecore.Pathfinder.TextDocuments;
 
   public interface IParseContext
   {
@@ -28,7 +27,7 @@
     IProject Project { get; }
 
     [NotNull]
-    IDocument Document { get; }
+    ITextDocument TextDocument { get; }
 
     [NotNull]
     string GetRelativeFileName([NotNull] ISourceFile sourceFile);

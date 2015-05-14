@@ -16,21 +16,22 @@
 
     public override bool CanParse(IParseContext context)
     {
-      return context.Document.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
+      return context.TextDocument.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
-      var item = new Item(context.Project, context.Document.Root);
+      var item = new Item(context.Project, context.ItemName, context.TextDocument.Root)
+      {
+        ItemName = context.ItemName, 
+        DatabaseName = context.DatabaseName, 
+        ItemIdOrPath = context.ItemPath, 
+        IsEmittable = false
+      };
+
       context.Project.Items.Add(item);
 
-      item.ProjectId = "{" + context.ItemPath + "}";
-      item.ItemName = context.ItemName;
-      item.DatabaseName = context.DatabaseName;
-      item.ItemIdOrPath = context.ItemPath;
-      item.IsEmittable = false;
-
-      var layout = new Layout(context.Project, context.Document.Root, item);
+      var layout = new Layout(context.Project, context.TextDocument.Root, item);
       context.Project.Items.Add(layout);
     }
   }

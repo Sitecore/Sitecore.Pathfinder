@@ -1,25 +1,25 @@
 ﻿namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 {
   using System.ComponentModel.Composition;
-  using Sitecore.Pathfinder.Documents;
-  using Sitecore.Pathfinder.Documents.Xml;
+  using Sitecore.Pathfinder.TextDocuments;
+  using Sitecore.Pathfinder.TextDocuments.Xml;
 
-  [Export(typeof(ITreeNodeParser))]
+  [Export(typeof(ITextNodeParser))]
   public class XmlTemplateParser : TemplateParserBase
   {
-    public override bool CanParse(ItemParseContext context, ITreeNode treeNode)
+    public override bool CanParse(ItemParseContext context, ITextNode textNode)
     {
-      return treeNode.Name == "Template" && treeNode.Document is XmlDocument;
+      return textNode.Name == "Template" && textNode.TextDocument is XmlTextDocument;
     }
 
-    protected override ITreeNode GetFieldsTreeNode(ITreeNode treeNode)
+    protected override ITextNode GetFieldsTextNode(ITextNode textNode)
     {
-      return treeNode;
+      return textNode;
     }
 
-    protected override ITreeNode GetSectionsTreeNode(ITreeNode treeNode)
+    protected override ITextNode GetSectionsTextNode(ITextNode textNode)
     {
-      return treeNode;
+      return textNode;
     }
   }
 }

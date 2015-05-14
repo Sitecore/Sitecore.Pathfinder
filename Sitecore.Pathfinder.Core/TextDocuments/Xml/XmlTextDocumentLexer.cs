@@ -1,23 +1,22 @@
-﻿namespace Sitecore.Pathfinder.Documents.Xml
+﻿namespace Sitecore.Pathfinder.TextDocuments.Xml
 {
   using System;
   using System.ComponentModel.Composition;
   using System.IO;
-  using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Parsing;
   using Sitecore.Pathfinder.Projects;
 
-  [Export(typeof(IDocumentLexer))]
-  public class XmlDocumentLexer : IDocumentLexer
+  [Export(typeof(ITextDocumentLexer))]
+  public class XmlTextDocumentLexer : ITextDocumentLexer
   {
     public bool CanLex(IParseContext context, ISourceFile sourceFile)
     {
       return string.Compare(Path.GetExtension(sourceFile.SourceFileName), ".xml", StringComparison.OrdinalIgnoreCase) == 0;
     }
 
-    public IDocument Lex(IParseContext context, ISourceFile sourceFile)
+    public ITextDocument Lex(IParseContext context, ISourceFile sourceFile)
     {
-      return new XmlDocument(context, sourceFile);
+      return new XmlTextDocument(context, sourceFile);
     }
   }
 }

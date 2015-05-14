@@ -3,49 +3,49 @@
   using System;
   using System.Linq;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Extensions.StringExtensions;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects.Items;
   using Sitecore.Pathfinder.Projects.Templates;
+  using Sitecore.Pathfinder.TextDocuments;
 
-  public abstract class ItemParserBase : TreeNodeParserBase
+  public abstract class ItemParserBase : TextNodeParserBase
   {
-    public override void Parse(ItemParseContext context, ITreeNode treeNode)
+    public override void Parse(ItemParseContext context, ITextNode textNode)
     {
-      var item = new Item(context.ParseContext.Project, treeNode);
-
-      var itemName = treeNode.GetAttributeValue("Name", context.ParseContext.ItemName);
+      var itemName = textNode.GetAttributeValue("Name", context.ParseContext.ItemName);
       var itemIdOrPath = context.ParentItemPath + "/" + itemName;
-      var projectId = treeNode.GetAttributeValue("Id", "{" + itemIdOrPath + "}");
+      var projectId = textNode.GetAttributeValue("Id", itemName);
 
-      item.ProjectId = projectId;
-      item.ItemName = itemName;
-      item.DatabaseName = context.ParseContext.DatabaseName;
-      item.ItemIdOrPath = itemIdOrPath;
-      item.TemplateIdOrPath = this.GetTemplateIdOrPath(context, treeNode);
-
-      if (!string.IsNullOrEmpty(treeNode.GetAttributeValue("Template.Create")))
+      var item = new Item(context.ParseContext.Project, projectId, textNode)
       {
-        var template = this.ParseTemplate(context, treeNode);
+        ItemName = itemName,
+        DatabaseName = context.ParseContext.DatabaseName,
+        ItemIdOrPath = itemIdOrPath,
+        TemplateIdOrPath = this.GetTemplateIdOrPath(context, textNode)
+      };
+
+      if (!string.IsNullOrEmpty(textNode.GetAttributeValue("Template.Create")))
+      {
+        var template = this.ParseTemplate(context, textNode);
         item.TemplateIdOrPath = template.ItemIdOrPath;
       }
 
       context.ParseContext.Project.Items.Add(item);
 
-      this.ParseTreeNodes(context, item, treeNode);
+      this.ParseChildNodes(context, item, textNode);
     }
 
     [CanBeNull]
-    protected abstract ITreeNode GetFieldTreeNode([NotNull] ITreeNode treeNode);
+    protected abstract ITextNode GetFieldTreeNode([NotNull] ITextNode textNode);
 
     [NotNull]
-    protected virtual string GetTemplateIdOrPath([NotNull] ItemParseContext context, [NotNull] ITreeNode treeNode)
+    protected virtual string GetTemplateIdOrPath([NotNull] ItemParseContext context, [NotNull] ITextNode textNode)
     {
-      var templateIdOrPath = treeNode.GetAttributeValue("Template");
+      var templateIdOrPath = textNode.GetAttributeValue("Template");
       if (string.IsNullOrEmpty(templateIdOrPath))
       {
-        templateIdOrPath = treeNode.GetAttributeValue("Template.Create");
+        templateIdOrPath = textNode.GetAttributeValue("Template.Create");
       }
 
       if (string.IsNullOrEmpty(templateIdOrPath))
@@ -66,31 +66,31 @@
       return templateIdOrPath;
     }
 
-    protected virtual void ParseFieldTreeNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITreeNode fieldTreeNode)
+    protected virtual void ParseFieldTreeNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode fieldTextNode)
     {
-      var fieldName = fieldTreeNode.GetAttributeValue("Name");
+      var fieldName = fieldTextNode.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(fieldName))
       {
-        throw new BuildException(Texts.Text2011, fieldTreeNode);
+        throw new BuildException(Texts.Text2011, fieldTextNode);
       }
 
       var field = item.Fields.FirstOrDefault(f => string.Compare(f.Name, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
       if (field != null)
       {
-        context.ParseContext.Project.Trace.TraceError(Texts.Text2012, fieldTreeNode.Document.SourceFile.SourceFileName, fieldTreeNode.LineNumber, fieldTreeNode.LinePosition, fieldName);
+        context.ParseContext.Project.Trace.TraceError(Texts.Text2012, fieldTextNode.TextDocument.SourceFile.SourceFileName, fieldTextNode.LineNumber, fieldTextNode.LinePosition, fieldName);
         return;
       }
 
-      var treeNodeValue = fieldTreeNode.Value;
-      var attributeValue = fieldTreeNode.GetAttributeValue("Value");
+      var treeNodeValue = fieldTextNode.Value;
+      var attributeValue = fieldTextNode.GetAttributeValue("Value");
       if (!string.IsNullOrEmpty(treeNodeValue) && !string.IsNullOrEmpty(attributeValue))
       {
-        context.ParseContext.Project.Trace.TraceWarning(Texts.Text3027, fieldTreeNode.Document.SourceFile.SourceFileName, fieldTreeNode.LineNumber, fieldTreeNode.LinePosition, fieldName);
+        context.ParseContext.Project.Trace.TraceWarning(Texts.Text3027, fieldTextNode.TextDocument.SourceFile.SourceFileName, fieldTextNode.LineNumber, fieldTextNode.LinePosition, fieldName);
       }
 
       var value = !string.IsNullOrEmpty(attributeValue) ? attributeValue : treeNodeValue;
 
-      field = new Field(item.TreeNode);
+      field = new Field(item.TextNode);
       item.Fields.Add(field);
 
       field.Name = fieldName;
@@ -98,40 +98,38 @@
     }
 
     [NotNull]
-    protected virtual Template ParseTemplate([NotNull] ItemParseContext context, [NotNull] ITreeNode treeNode)
+    protected virtual Template ParseTemplate([NotNull] ItemParseContext context, [NotNull] ITextNode textNode)
     {
-      var template = new Template(context.ParseContext.Project, treeNode);
-
-      var itemIdOrPath = this.GetTemplateIdOrPath(context, treeNode);
+      var itemIdOrPath = this.GetTemplateIdOrPath(context, textNode);
       if (string.IsNullOrEmpty(itemIdOrPath))
       {
-        throw new BuildException(Texts.Text2010, treeNode);
+        throw new BuildException(Texts.Text2010, textNode);
       }
 
-      var projectId = treeNode.GetAttributeValue("Template.Id", "{" + itemIdOrPath + "}");
-      var baseTemplates = treeNode.GetAttributeValue("Template.BaseTemplates", Constants.Templates.StandardTemplate);
+      var n = itemIdOrPath.LastIndexOf('/');
+      var itemName = itemIdOrPath.Mid(n + 1);
+      var projectUniqueId = textNode.GetAttributeValue("Template.Id", itemName);
 
-      template.ProjectId = projectId;
-      template.ItemIdOrPath = itemIdOrPath;
-      template.DatabaseName = context.ParseContext.DatabaseName;
-      template.Icon = treeNode.GetAttributeValue("Template.Icon");
-      template.BaseTemplates = baseTemplates;
-      template.ShortHelp = treeNode.GetAttributeValue("Template.ShortHelp");
-      template.LongHelp = treeNode.GetAttributeValue("Template.LongHelp");
-
-      // get template name
-      var n = template.ItemIdOrPath.LastIndexOf('/');
-      template.ItemName = template.ItemIdOrPath.Mid(n + 1);
+      var template = new Template(context.ParseContext.Project, projectUniqueId, textNode)
+      {
+        ItemName = itemName,
+        DatabaseName = context.ParseContext.DatabaseName,
+        ItemIdOrPath = itemIdOrPath,
+        Icon = textNode.GetAttributeValue("Template.Icon"),
+        BaseTemplates = textNode.GetAttributeValue("Template.BaseTemplates", Constants.Templates.StandardTemplate),
+        ShortHelp = textNode.GetAttributeValue("Template.ShortHelp"),
+        LongHelp = textNode.GetAttributeValue("Template.LongHelp")
+      };
 
       var templateSection = new TemplateSection();
       template.Sections.Add(templateSection);
       templateSection.Name = "Fields";
       templateSection.Icon = "Applications/16x16/form_blue.png";
 
-      var fieldTreeNodes = this.GetFieldTreeNode(treeNode);
+      var fieldTreeNodes = this.GetFieldTreeNode(textNode);
       if (fieldTreeNodes != null)
       {
-        foreach (var child in fieldTreeNodes.TreeNodes)
+        foreach (var child in fieldTreeNodes.ChildNodes)
         {
           var name = child.GetAttributeValue("Name");
 
@@ -151,6 +149,6 @@
       return template;
     }
 
-    protected abstract void ParseTreeNodes([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITreeNode treeNode);
+    protected abstract void ParseChildNodes([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode textNode);
   }
 }

@@ -17,11 +17,7 @@
     {
       get
       {
-        if (!this.ProjectItem.IsBindComplete)
-        {
-          this.ProjectItem.Bind();
-        }
-
+        this.ProjectItem.Bind();
         return this.references.Count;
       }
     }
@@ -59,30 +55,21 @@
 
     public bool Contains([NotNull] Reference item)
     {
-      if (!this.ProjectItem.IsBindComplete)
-      {
-        this.ProjectItem.Bind();
-      }
+      this.ProjectItem.Bind();
 
       return this.references.Contains(item);
     }
 
     public void CopyTo(Reference[] array, int arrayIndex)
     {
-      if (!this.ProjectItem.IsBindComplete)
-      {
-        this.ProjectItem.Bind();
-      }
+      this.ProjectItem.Bind();
 
       this.references.CopyTo(array, arrayIndex);
     }
 
     public IEnumerator<Reference> GetEnumerator()
     {
-      if (!this.ProjectItem.IsBindComplete)
-      {
-        this.ProjectItem.Bind();
-      }
+      this.ProjectItem.Bind();
 
       return this.references.GetEnumerator();
     }

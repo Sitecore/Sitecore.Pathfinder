@@ -6,19 +6,19 @@
   using System.Linq;
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects;
+  using Sitecore.Pathfinder.TextDocuments;
 
   [Export(typeof(IParseService))]
   public class ParseService : IParseService
   {
     [ImportingConstructor]
-    public ParseService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IDocumentService documentService, [NotNull] ITokenService tokenService)
+    public ParseService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ITextDocumentService textDocumentService, [NotNull] ITextTokenService textTokenService)
     {
       this.CompositionService = compositionService;
       this.Configuration = configuration;
-      this.DocumentService = documentService;
-      this.TokenService = tokenService;
+      this.TextDocumentService = textDocumentService;
+      this.TextTokenService = textTokenService;
     }
 
     [NotNull]
@@ -35,15 +35,15 @@
     protected IConfiguration Configuration { get; }
 
     [NotNull]
-    protected IDocumentService DocumentService { get; }
+    protected ITextDocumentService TextDocumentService { get; }
 
     [NotNull]
-    protected ITokenService TokenService { get; }
+    protected ITextTokenService TextTokenService { get; }
 
     public virtual void Parse(IProject project, ISourceFile sourceFile)
     {
       // todo: change to abstract factory pattern
-      var context = new ParseContext(this.CompositionService, this.Configuration, this.DocumentService, this.TokenService).Load(project, sourceFile);
+      var context = new ParseContext(this.CompositionService, this.Configuration, this.TextDocumentService, this.TextTokenService).Load(project, sourceFile);
 
       try
       {

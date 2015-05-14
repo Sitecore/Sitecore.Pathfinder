@@ -2,12 +2,12 @@
 {
   using System.Diagnostics;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects.Items;
+  using Sitecore.Pathfinder.TextDocuments;
 
   public class SerializationFile : File
   {
-    public SerializationFile([NotNull] IProject project, [NotNull] ITreeNode treeNode, [NotNull] Item item) : base(project, treeNode)
+    public SerializationFile([NotNull] IProject project, [NotNull] ITextNode textNode, [NotNull] Item item) : base(project, textNode)
     {
       this.Item = item;
 

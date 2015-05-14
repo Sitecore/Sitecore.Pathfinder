@@ -18,15 +18,15 @@
 
     public override bool CanParse(IParseContext context)
     {
-      return context.Document.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
+      return context.TextDocument.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
-      var root = context.Document.Root;
+      var root = context.TextDocument.Root;
 
       var baseTemplates = new List<string>();
-      foreach (var treeNode in root.TreeNodes)
+      foreach (var treeNode in root.ChildNodes)
       {
         if (treeNode.Name != "Component")
         {
@@ -42,14 +42,14 @@
         baseTemplates.Add(componentPath);
       }
 
-      var template = new Template(context.Project, root);
+      var template = new Template(context.Project, context.ItemName, root)
+      {
+        ItemName = context.ItemName,
+        DatabaseName = context.DatabaseName,
+        ItemIdOrPath = context.ItemPath,
+        BaseTemplates = string.Join("|", baseTemplates)
+      };
       context.Project.Items.Add(template);
-
-      template.ProjectId = "{" + context.ItemPath + "}";
-      template.ItemName = context.ItemName;
-      template.DatabaseName = context.DatabaseName;
-      template.ItemIdOrPath = context.ItemPath;
-      template.BaseTemplates = string.Join("|", baseTemplates);
 
       var pageType = new PageType(context.Project, root);
       context.Project.Items.Add(pageType);

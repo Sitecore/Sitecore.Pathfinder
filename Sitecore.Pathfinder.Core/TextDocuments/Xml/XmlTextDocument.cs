@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.Documents.Xml
+﻿namespace Sitecore.Pathfinder.TextDocuments.Xml
 {
   using System;
   using System.Collections.Generic;
@@ -9,21 +9,21 @@
   using Sitecore.Pathfinder.Parsing;
   using Sitecore.Pathfinder.Projects;
 
-  public class XmlDocument : Document
+  public class XmlTextDocument : TextDocument
   {
     protected static readonly Dictionary<string, XmlSchemaSet> Schemas = new Dictionary<string, XmlSchemaSet>();
 
-    private ITreeNode root;
+    private ITextNode root;
 
     private XElement rootElement;
 
-    public XmlDocument([NotNull] IParseContext parseContext, [NotNull] ISourceFile sourceFile) : base(sourceFile)
+    public XmlTextDocument([NotNull] IParseContext parseContext, [NotNull] ISourceFile sourceFile) : base(sourceFile)
     {
       this.ParseContext = parseContext;
       this.IsEditable = true;
     }
 
-    public override ITreeNode Root => this.root ?? (this.root = this.Parse(null, this.RootElement));
+    public override ITextNode Root => this.root ?? (this.root = this.Parse(null, this.RootElement));
 
     [NotNull]
     protected IParseContext ParseContext { get; }
@@ -77,10 +77,10 @@
         switch (args.Severity)
         {
           case XmlSeverityType.Error:
-            context.Project.Trace.TraceError(Texts.Text3013, context.Document.SourceFile.SourceFileName, args.Exception.LineNumber, args.Exception.LinePosition, args.Message);
+            context.Project.Trace.TraceError(Texts.Text3013, context.TextDocument.SourceFile.SourceFileName, args.Exception.LineNumber, args.Exception.LinePosition, args.Message);
             break;
           case XmlSeverityType.Warning:
-            context.Project.Trace.TraceWarning(Texts.Text3014, context.Document.SourceFile.SourceFileName, args.Exception.LineNumber, args.Exception.LinePosition, args.Message);
+            context.Project.Trace.TraceWarning(Texts.Text3014, context.TextDocument.SourceFile.SourceFileName, args.Exception.LineNumber, args.Exception.LinePosition, args.Message);
             break;
         }
       };
@@ -91,7 +91,7 @@
       }
       catch (Exception ex)
       {
-        context.Project.Trace.TraceError(Texts.Text3012, context.Document.SourceFile.SourceFileName, 0, 0, ex.Message);
+        context.Project.Trace.TraceError(Texts.Text3012, context.TextDocument.SourceFile.SourceFileName, 0, 0, ex.Message);
       }
     }
 
@@ -111,10 +111,10 @@
     }
 
     [NotNull]
-    private ITreeNode Parse([CanBeNull] ITreeNode parent, [NotNull] XElement element)
+    private ITextNode Parse([CanBeNull] ITextNode parent, [NotNull] XElement element)
     {
-      var treeNode = new XmlTreeNode(this, element, parent);
-      parent?.TreeNodes.Add(treeNode);
+      var treeNode = new XmlTextNode(this, element, parent);
+      parent?.ChildNodes.Add(treeNode);
 
       foreach (var attribute in element.Attributes())
       {
@@ -123,7 +123,7 @@
           continue;
         }
 
-        var attributeTreeNode = new XmlTreeNode(this, attribute);
+        var attributeTreeNode = new XmlTextNode(this, attribute);
         treeNode.Attributes.Add(attributeTreeNode);
       }
 

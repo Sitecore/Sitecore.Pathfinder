@@ -4,83 +4,48 @@
   using System.Security.Cryptography;
   using System.Text;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Documents;
-  using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects.References;
+  using Sitecore.Pathfinder.TextDocuments;
 
   public abstract class ProjectItem : IProjectItem
   {
-    private Guid guid = Guid.Empty;
-
-    private string projectId;
-
-    protected ProjectItem([NotNull] IProject project, [NotNull] ITreeNode treeNode)
+    protected ProjectItem([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode)
     {
       this.Project = project;
-      this.TreeNode = treeNode;
+      this.TextNode = textNode;
       this.References = new ReferenceCollection(this);
 
-      this.ProjectId = PathHelper.NormalizeItemPath(PathHelper.UnmapPath(project.ProjectDirectory, treeNode.Document.SourceFile.SourceFileName));
-    }
+      // this.ProjectUniqueId = PathHelper.NormalizeItemPath(PathHelper.UnmapPath(project.ProjectDirectory, textNode.TextDocument.SourceFile.SourceFileName));
+      this.ProjectUniqueId = projectUniqueId;
 
-    public Guid Guid
-    {
-      get
+      Guid guid;
+      if (!Guid.TryParse(this.ProjectUniqueId, out guid))
       {
-        if (this.guid == Guid.Empty)
-        {
-          // project id is a guid, keep it otherwise calculate it
-          Guid g;
-          if (!Guid.TryParse(this.ProjectId, out g))
-          {
-            // calculate guid from project unique id and project id
-            var text = this.Project.ProjectUniqueId + "/" + this.ProjectId;
-            var bytes = Encoding.UTF8.GetBytes(text);
-            var hash = MD5.Create().ComputeHash(bytes);
-            g = new Guid(hash);
-          }
-
-          this.guid = g;
-        }
-
-        return this.guid;
+        // calculate guid from project unique id and project id
+        var text = this.Project.ProjectUniqueId + "/" + this.ProjectUniqueId;
+        var bytes = Encoding.UTF8.GetBytes(text);
+        var hash = MD5.Create().ComputeHash(bytes);
+        guid = new Guid(hash);
       }
+
+      this.Guid = guid;
     }
 
-    public bool IsBindComplete { get; set; }
+    public Guid Guid { get; }
 
-    [CanBeNull]
-    public ProjectItem Owner { get; set; }
+    public IProjectItem Owner { get; set; }
 
-    [NotNull]
     public IProject Project { get; }
 
-    [NotNull]
-    public string ProjectId
-    {
-      get
-      {
-        return this.projectId;
-      }
+    public string ProjectUniqueId { get; }
 
-      set
-      {
-        this.projectId = value;
-        this.guid = Guid.Empty;
-      }
-    }
-
-    [NotNull]
     public abstract string QualifiedName { get; }
 
-    [NotNull]
     public ReferenceCollection References { get; }
 
-    [NotNull]
     public abstract string ShortName { get; }
 
-    [NotNull]
-    public ITreeNode TreeNode { get; }
+    public ITextNode TextNode { get; }
 
     public abstract void Bind();
 
@@ -90,7 +55,7 @@
       {
         if (!reference.Resolve())
         {
-          this.Project.Trace.TraceWarning(Texts.Text3024, this.TreeNode.Document.SourceFile.SourceFileName, 0, 0, reference.ToString());
+          this.Project.Trace.TraceWarning(Texts.Text3024, this.TextNode.TextDocument.SourceFile.SourceFileName, 0, 0, reference.ToString());
         }
       }
     }

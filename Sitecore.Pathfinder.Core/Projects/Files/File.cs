@@ -2,8 +2,8 @@
 {
   using System.IO;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.IO;
+  using Sitecore.Pathfinder.TextDocuments;
 
   public class File : ProjectItem
   {
@@ -11,17 +11,22 @@
 
     private string shortName;
 
-    public File([NotNull] IProject project, [NotNull] ITreeNode treeNode) : base(project, treeNode)
+    public File([NotNull] IProject project, [NotNull] ITextNode textNode) : base(project, GetProjectUniqueId(project, textNode), textNode)
     {
     }
 
-    public override string QualifiedName => this.qualifiedName ?? (this.qualifiedName = this.TreeNode.Document.SourceFile.SourceFileName);
+    public override string QualifiedName => this.qualifiedName ?? (this.qualifiedName = this.TextNode.TextDocument.SourceFile.SourceFileName);
 
-    public override string ShortName => this.shortName ?? (this.shortName = Path.GetFileName(this.TreeNode.Document.SourceFile.SourceFileName));
+    public override string ShortName => this.shortName ?? (this.shortName = Path.GetFileName(this.TextNode.TextDocument.SourceFile.SourceFileName));
 
     public override void Bind()
     {
-      this.IsBindComplete = true;
+    }
+
+    [NotNull]
+    private static string GetProjectUniqueId([NotNull] IProject project, [NotNull] ITextNode textNode)
+    {
+      return PathHelper.NormalizeItemPath(PathHelper.UnmapPath(project.ProjectDirectory, textNode.TextDocument.SourceFile.SourceFileName));
     }
   }
 }

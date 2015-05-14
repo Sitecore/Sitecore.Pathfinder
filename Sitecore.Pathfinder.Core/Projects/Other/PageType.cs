@@ -2,13 +2,13 @@
 {
   using System.Collections.Generic;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects.Files;
   using Sitecore.Pathfinder.Projects.Items;
+  using Sitecore.Pathfinder.TextDocuments;
 
   public class PageType : File
   {
-    public PageType(IProject project, [NotNull] ITreeNode treeNode) : base(project, treeNode)
+    public PageType([NotNull] IProject project, [NotNull] ITextNode textNode) : base(project, textNode)
     {
     }
 

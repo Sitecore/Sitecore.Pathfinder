@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.Projects
+﻿namespace Sitecore.Pathfinder.TextDocuments
 {
   using System;
   using System.Xml.Linq;
@@ -6,6 +6,7 @@
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Parsing;
+  using Sitecore.Pathfinder.Projects;
 
   public class SourceFile : ISourceFile
   {

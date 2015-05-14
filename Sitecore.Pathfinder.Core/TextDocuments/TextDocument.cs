@@ -1,25 +1,25 @@
-﻿namespace Sitecore.Pathfinder.Documents
+﻿namespace Sitecore.Pathfinder.TextDocuments
 {
   using System;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Parsing;
   using Sitecore.Pathfinder.Projects;
 
-  public class Document : IDocument
+  public class TextDocument : ITextDocument
   {
-    public static readonly IDocument Empty = new Document(Projects.SourceFile.Empty);
+    public static readonly ITextDocument Empty = new TextDocument(TextDocuments.SourceFile.Empty);
 
-    public Document([NotNull] ISourceFile sourceFile)
+    public TextDocument([NotNull] ISourceFile sourceFile)
     {
       this.SourceFile = sourceFile;
-      this.Root = new TreeNode(this, string.Empty);
+      this.Root = new TextNode(this, string.Empty);
     }
 
     public bool IsEditable { get; protected set; }
 
     public bool IsEditing { get; protected set; }
 
-    public virtual ITreeNode Root { get; }
+    public virtual ITextNode Root { get; }
 
     public ISourceFile SourceFile { get; }
 

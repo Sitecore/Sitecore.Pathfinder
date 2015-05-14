@@ -19,20 +19,21 @@
 
     public override bool CanParse(IParseContext context)
     {
-      return context.Document.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
+      return context.TextDocument.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
-      var item = new Item(context.Project, context.Document.Root);
+      // todo: not implemented yet
+      var item = new Item(context.Project, "Not implemented yet", context.TextDocument.Root);
       context.Project.Items.Add(item);
 
       item.IsEmittable = false;
 
-      var lines = context.Document.SourceFile.ReadAsLines(context);
+      var lines = context.TextDocument.SourceFile.ReadAsLines(context);
       this.ParseLines(item, lines, 0);
 
-      var serializationFile = new SerializationFile(context.Project, context.Document.Root, item);
+      var serializationFile = new SerializationFile(context.Project, context.TextDocument.Root, item);
       context.Project.Items.Add(serializationFile);
     }
 
@@ -64,7 +65,7 @@
 
     protected virtual int ParseField([NotNull] Item serializationFile, [NotNull] string[] lines, int startIndex, [NotNull] string language, int version)
     {
-      var field = new Field(serializationFile.TreeNode);
+      var field = new Field(serializationFile.TextNode);
       serializationFile.Fields.Add(field);
 
       field.Language = language;
@@ -143,7 +144,7 @@
         switch (name)
         {
           case "id":
-            serializationFile.ProjectId = value;
+            // serializationFile.ProjectUniqueId = value;
             break;
           case "database":
             serializationFile.DatabaseName = value;

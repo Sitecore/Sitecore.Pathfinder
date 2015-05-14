@@ -1,15 +1,15 @@
-﻿namespace Sitecore.Pathfinder.Documents
+﻿namespace Sitecore.Pathfinder.TextDocuments
 {
   using System.Collections.Generic;
   using Sitecore.Pathfinder.Diagnostics;
 
-  public interface ITreeNode
+  public interface ITextNode
   {
     [NotNull]
-    IList<ITreeNode> Attributes { get; }
+    IList<ITextNode> Attributes { get; }
 
     [NotNull]
-    IDocument Document { get; }
+    ITextDocument TextDocument { get; }
 
     int LineNumber { get; }
 
@@ -19,10 +19,10 @@
     string Name { get; }
 
     [CanBeNull]
-    ITreeNode Parent { get; }
+    ITextNode Parent { get; }
 
     [NotNull]
-    IList<ITreeNode> TreeNodes { get; }
+    IList<ITextNode> ChildNodes { get; }
 
     [NotNull]
     string Value { get; }

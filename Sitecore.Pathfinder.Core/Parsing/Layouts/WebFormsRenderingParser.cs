@@ -5,6 +5,7 @@
   using System.Text.RegularExpressions;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Projects;
+  using Sitecore.Pathfinder.TextDocuments;
 
   public abstract class WebFormsRenderingParser : RenderingParser
   {

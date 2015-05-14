@@ -1,17 +1,17 @@
-﻿namespace Sitecore.Pathfinder.Documents
+﻿namespace Sitecore.Pathfinder.TextDocuments
 {
   using System;
   using System.Collections.Generic;
   using System.Linq;
   using Sitecore.Pathfinder.Diagnostics;
 
-  public class TreeNode : ITreeNode
+  public class TextNode : ITextNode
   {
-    public static readonly ITreeNode Empty = new TreeNode(Documents.Document.Empty, string.Empty);
+    public static readonly ITextNode Empty = new TextNode(TextDocuments.TextDocument.Empty, string.Empty);
 
-    public TreeNode([NotNull] IDocument document, [NotNull] string name, string value = "", int lineNumber = 0, int linePosition = 0, [CanBeNull] ITreeNode parent = null)
+    public TextNode([NotNull] ITextDocument textDocument, [NotNull] string name, string value = "", int lineNumber = 0, int linePosition = 0, [CanBeNull] ITextNode parent = null)
     {
-      this.Document = document;
+      this.TextDocument = textDocument;
       this.Name = name;
       this.Value = value;
       this.Parent = parent;
@@ -21,7 +21,7 @@
 
     public string Name { get; }
 
-    public IList<ITreeNode> TreeNodes { get; } = new List<ITreeNode>();
+    public IList<ITextNode> ChildNodes { get; } = new List<ITextNode>();
 
     public string Value { get; }
 
@@ -31,11 +31,11 @@
       return !string.IsNullOrEmpty(value) ? value : defaultValue;
     }
 
-    public IList<ITreeNode> Attributes { get; } = new List<ITreeNode>();
+    public IList<ITextNode> Attributes { get; } = new List<ITextNode>();
 
-    public ITreeNode Parent { get; }
+    public ITextNode Parent { get; }
 
-    public IDocument Document { get; }
+    public ITextDocument TextDocument { get; }
 
     public int LineNumber { get; }
 

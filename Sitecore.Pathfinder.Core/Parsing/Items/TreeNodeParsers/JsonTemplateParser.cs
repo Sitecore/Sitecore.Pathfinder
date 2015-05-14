@@ -2,25 +2,25 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 {
   using System.ComponentModel.Composition;
   using System.Linq;
-  using Sitecore.Pathfinder.Documents;
-  using Sitecore.Pathfinder.Documents.Json;
+  using Sitecore.Pathfinder.TextDocuments;
+  using Sitecore.Pathfinder.TextDocuments.Json;
 
-  [Export(typeof(ITreeNodeParser))]
+  [Export(typeof(ITextNodeParser))]
   public class JsonTemplateParser : TemplateParserBase
   {
-    public override bool CanParse(ItemParseContext context, ITreeNode treeNode)
+    public override bool CanParse(ItemParseContext context, ITextNode textNode)
     {
-      return treeNode.Name == "Template" && treeNode.Document is JsonDocument;
+      return textNode.Name == "Template" && textNode.TextDocument is JsonTextDocument;
     }
 
-    protected override ITreeNode GetFieldsTreeNode(ITreeNode treeNode)
+    protected override ITextNode GetFieldsTextNode(ITextNode textNode)
     {
-      return treeNode.TreeNodes.FirstOrDefault(n => n.Name == "Fields");
+      return textNode.ChildNodes.FirstOrDefault(n => n.Name == "Fields");
     }
 
-    protected override ITreeNode GetSectionsTreeNode(ITreeNode treeNode)
+    protected override ITextNode GetSectionsTextNode(ITextNode textNode)
     {
-      return treeNode.TreeNodes.FirstOrDefault(n => n.Name == "Sections");
+      return textNode.ChildNodes.FirstOrDefault(n => n.Name == "Sections");
     }
   }
 }

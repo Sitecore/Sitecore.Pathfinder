@@ -2,7 +2,6 @@
 {
   using System;
   using System.ComponentModel.Composition;
-  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects.Files;
 
   [Export(typeof(IParser))]
@@ -16,12 +15,12 @@
 
     public override bool CanParse(IParseContext context)
     {
-      return context.Document.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
+      return context.TextDocument.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
-      var binFile = new BinFile(context.Project, context.Document.Root);
+      var binFile = new BinFile(context.Project, context.TextDocument.Root);
       context.Project.Items.Add(binFile);
     }
   }

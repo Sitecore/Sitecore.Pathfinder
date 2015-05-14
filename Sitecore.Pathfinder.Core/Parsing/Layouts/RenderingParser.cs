@@ -4,11 +4,10 @@
   using System.Collections.Generic;
   using System.IO;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.IO;
-  using Sitecore.Pathfinder.Projects;
   using Sitecore.Pathfinder.Projects.Items;
   using Sitecore.Pathfinder.Projects.Layouts;
+  using Sitecore.Pathfinder.TextDocuments;
 
   public abstract class RenderingParser : ParserBase
   {
@@ -26,27 +25,28 @@
 
     public override bool CanParse(IParseContext context)
     {
-      return context.Document.SourceFile.SourceFileName.EndsWith(this.FileExtension, StringComparison.OrdinalIgnoreCase);
+      return context.TextDocument.SourceFile.SourceFileName.EndsWith(this.FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
-      var item = new Item(context.Project, context.Document.Root);
+      var path = "/" + PathHelper.NormalizeItemPath(Path.Combine(context.Configuration.Get(Constants.ProjectDirectory), context.GetRelativeFileName(context.TextDocument.SourceFile)));
+      var placeHolders = this.GetPlaceholders(context, context.TextDocument.SourceFile);
+
+      var item = new Item(context.Project, context.ItemName, context.TextDocument.Root)
+      {
+        ItemName = context.ItemName, 
+        DatabaseName = context.DatabaseName, 
+        TemplateIdOrPath = this.TemplateIdOrPath, 
+        ItemIdOrPath = context.ItemPath
+      };
+
+      item.Fields.Add(new Field(context.TextDocument.Root, "Path", path));
+      item.Fields.Add(new Field(context.TextDocument.Root, "Place Holders", string.Join(",", placeHolders)));
+
       context.Project.Items.Add(item);
 
-      item.ProjectId = "{" + context.ItemPath + "}";
-      item.ItemName = context.ItemName;
-      item.DatabaseName = context.DatabaseName;
-      item.TemplateIdOrPath = this.TemplateIdOrPath;
-      item.ItemIdOrPath = context.ItemPath;
-
-      var path = "/" + PathHelper.NormalizeItemPath(Path.Combine(context.Configuration.Get(Constants.ProjectDirectory), context.GetRelativeFileName(context.Document.SourceFile)));
-      var placeHolders = this.GetPlaceholders(context, context.Document.SourceFile);
-
-      item.Fields.Add(new Field(context.Document.Root, "Path", path));
-      item.Fields.Add(new Field(context.Document.Root, "Place Holders", string.Join(",", placeHolders)));
-
-      var rendering = new Rendering(context.Project, context.Document.Root, item);
+      var rendering = new Rendering(context.Project, context.TextDocument.Root, item);
       context.Project.Items.Add(rendering);
     }
 

@@ -2,30 +2,30 @@
 {
   using System.ComponentModel.Composition;
   using System.Linq;
-  using Sitecore.Pathfinder.Documents;
-  using Sitecore.Pathfinder.Documents.Json;
   using Sitecore.Pathfinder.Projects.Items;
+  using Sitecore.Pathfinder.TextDocuments;
+  using Sitecore.Pathfinder.TextDocuments.Json;
 
-  [Export(typeof(ITreeNodeParser))]
+  [Export(typeof(ITextNodeParser))]
   public class JsonItemParser : ItemParserBase
   {
-    public override bool CanParse(ItemParseContext context, ITreeNode treeNode)
+    public override bool CanParse(ItemParseContext context, ITextNode textNode)
     {
-      return treeNode.Name == "Item" && treeNode.Document is JsonDocument;
+      return textNode.Name == "Item" && textNode.TextDocument is JsonTextDocument;
     }
 
-    protected override ITreeNode GetFieldTreeNode(ITreeNode treeNode)
+    protected override ITextNode GetFieldTreeNode(ITextNode textNode)
     {
-      return treeNode.TreeNodes.FirstOrDefault(n => n.Name == "Fields");
+      return textNode.ChildNodes.FirstOrDefault(n => n.Name == "Fields");
     }
 
-    protected override void ParseTreeNodes(ItemParseContext context, Item item, ITreeNode treeNode)
+    protected override void ParseChildNodes(ItemParseContext context, Item item, ITextNode textNode)
     {
-      foreach (var childTreeNode in treeNode.TreeNodes)
+      foreach (var childTreeNode in textNode.ChildNodes)
       {
         if (childTreeNode.Name == "Fields")
         {
-          foreach (var fieldTreeNode in childTreeNode.TreeNodes)
+          foreach (var fieldTreeNode in childTreeNode.ChildNodes)
           {
             this.ParseFieldTreeNode(context, item, fieldTreeNode);
           }
@@ -33,7 +33,7 @@
         else
         {
           var newContext = new ItemParseContext(context.ParseContext, context.Parser, context.ParentItemPath + "/" + childTreeNode.Name);
-          context.Parser.ParseTreeNode(newContext, childTreeNode);
+          context.Parser.ParseTextNode(newContext, childTreeNode);
         }
       }
     }

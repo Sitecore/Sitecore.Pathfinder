@@ -73,7 +73,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
       var standardValuesItem = item.Add("__Standard Values", new TemplateID(item.TemplateID));
       if (standardValuesItem == null)
       {
-        throw new BuildException(Texts.Text2023, this.Template.TreeNode);
+        throw new BuildException(Texts.Text2023, this.Template.TextNode);
       }
 
       // update standard value link
@@ -109,13 +109,13 @@ namespace Sitecore.Pathfinder.Builders.Templates
       var parentItem = this.GetParentItem(context, database);
       if (parentItem == null)
       {
-        throw new BuildException(Texts.Text2004, this.Template.TreeNode);
+        throw new BuildException(Texts.Text2004, this.Template.TextNode);
       }
 
       var item = ItemManager.AddFromTemplate(this.Template.ItemName, new TemplateID(TemplateIDs.Template), parentItem, new ID(this.Template.Guid));
       if (item == null)
       {
-        throw new BuildException(Texts.Text2023, this.Template.TreeNode);
+        throw new BuildException(Texts.Text2023, this.Template.TextNode);
       }
 
       this.Item = item;
@@ -151,7 +151,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
       var standardValuesItem = item.Add("__Standard Values", new TemplateID(item.TemplateID));
       if (standardValuesItem == null)
       {
-        throw new BuildException(Texts.Text2023, this.Template.TreeNode);
+        throw new BuildException(Texts.Text2023, this.Template.TextNode);
       }
 
       using (new EditContext(item))
@@ -250,7 +250,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
         var baseTemplateItem = database.GetItem(templateId);
         if (baseTemplateItem == null)
         {
-          throw new RetryableBuildException(Texts.Text2037, template.TreeNode, templateId);
+          throw new RetryableBuildException(Texts.Text2037, template.TextNode, templateId);
         }
 
         baseTemplates.Add(baseTemplateItem);
@@ -258,7 +258,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
         var t = TemplateManager.GetTemplate(baseTemplateItem.ID, database);
         if (t == null)
         {
-          throw new RetryableBuildException(Texts.Text2036, template.TreeNode, templateId);
+          throw new RetryableBuildException(Texts.Text2036, template.TextNode, templateId);
         }
 
         var templateFields = t.GetFields(true);
@@ -524,7 +524,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
           parentItem = item.Database.CreateItemPath(parentItemPath);
           if (parentItem == null)
           {
-            throw new RetryableBuildException(Texts.Text3028, this.Template.TreeNode, parentItemPath);
+            throw new RetryableBuildException(Texts.Text3028, this.Template.TextNode, parentItemPath);
           }
         }
 

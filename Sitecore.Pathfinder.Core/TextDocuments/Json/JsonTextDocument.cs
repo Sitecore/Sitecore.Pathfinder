@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.Documents.Json
+﻿namespace Sitecore.Pathfinder.TextDocuments.Json
 {
   using System.Linq;
   using Newtonsoft.Json.Linq;
@@ -6,16 +6,16 @@
   using Sitecore.Pathfinder.Parsing;
   using Sitecore.Pathfinder.Projects;
 
-  public class JsonDocument : Document
+  public class JsonTextDocument : TextDocument
   {
-    private ITreeNode root;
+    private ITextNode root;
 
-    public JsonDocument([NotNull] IParseContext parseContext, [NotNull] ISourceFile sourceFile) : base(sourceFile)
+    public JsonTextDocument([NotNull] IParseContext parseContext, [NotNull] ISourceFile sourceFile) : base(sourceFile)
     {
       this.ParseContext = parseContext;
     }
 
-    public override ITreeNode Root
+    public override ITextNode Root
     {
       get
       {
@@ -26,13 +26,13 @@
           var r = json.Properties().FirstOrDefault(p => p.Name != "$schema");
           if (r == null)
           {
-            return TreeNode.Empty;
+            return TextNode.Empty;
           }
 
           var value = r.Value as JObject;
           if (value == null)
           {
-            throw new BuildException(Texts.Text3026, this.ParseContext.Document.SourceFile.SourceFileName, 0, 0);
+            throw new BuildException(Texts.Text3026, this.ParseContext.TextDocument.SourceFile.SourceFileName, 0, 0);
           }
 
           this.root = this.Parse(r.Name, value, null);
@@ -46,10 +46,10 @@
     protected IParseContext ParseContext { get; }
 
     [NotNull]
-    private ITreeNode Parse([NotNull] string name, [NotNull] JObject jobject, [CanBeNull] ITreeNode parent)
+    private ITextNode Parse([NotNull] string name, [NotNull] JObject jobject, [CanBeNull] ITextNode parent)
     {
-      var treeNode = new JsonTreeNode(this, name, jobject, parent);
-      parent?.TreeNodes.Add(treeNode);
+      var treeNode = new JsonTextNode(this, name, jobject, parent);
+      parent?.ChildNodes.Add(treeNode);
 
       foreach (var property in jobject.Properties())
       {
@@ -61,14 +61,14 @@
 
           case JTokenType.Array:
             var array = property.Value.Value<JArray>();
-            var arrayTreeNode = new JsonTreeNode(this, property.Name, array, parent);
+            var arrayTreeNode = new JsonTextNode(this, property.Name, array, parent);
 
             foreach (var o in array.OfType<JObject>())
             {
               this.Parse(string.Empty, o, arrayTreeNode);
             }
 
-            treeNode.TreeNodes.Add(arrayTreeNode);
+            treeNode.ChildNodes.Add(arrayTreeNode);
             break;
 
           case JTokenType.Boolean:
@@ -76,7 +76,7 @@
           case JTokenType.Float:
           case JTokenType.Integer:
           case JTokenType.String:
-            var propertyTreeNode = new JsonTreeNode(this, property.Name, property);
+            var propertyTreeNode = new JsonTextNode(this, property.Name, property);
             treeNode.Attributes.Add(propertyTreeNode);
             break;
         }
