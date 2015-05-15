@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Building.Linting
     public override void Run(IBuildContext context)
     {
       context.Trace.TraceInformation(Texts.Text1010);
-      context.Trace.TraceInformation(Texts.Text1021, context.Project.Items.Count);
+      context.Trace.TraceInformation(Texts.Text1021, context.Project.Items.Count());
 
       foreach (var projectItem1 in context.Project.Items)
       {

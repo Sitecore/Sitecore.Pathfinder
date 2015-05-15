@@ -23,7 +23,7 @@
       ".zip", 
     };
 
-    public MediaFileParser() : base(Media)
+    public MediaFileParser() : base(Constants.Parsers.Media)
     {
     }
 
@@ -35,18 +35,18 @@
 
     public override void Parse(IParseContext context)
     {
-      // todo: set template
-      var mediaItem = new Item(context.Project, context.ItemName, context.TextDocument.Root)
+      var mediaItem = new Item(context.Project, context.ItemPath, context.TextDocument.Root)
       {
-        ItemName = context.ItemName, 
-        DatabaseName = context.DatabaseName, 
-        ItemIdOrPath = context.ItemPath, 
+        ItemName = context.ItemName,
+        ItemIdOrPath = context.ItemPath,
+        DatabaseName = context.DatabaseName,
         IsEmittable = false
       };
-      context.Project.Items.Add(mediaItem);
+
+      mediaItem = context.Project.AddOrMerge(mediaItem);
 
       var mediaFile = new MediaFile(context.Project, context.TextDocument.Root, mediaItem);
-      context.Project.Items.Add(mediaFile);
+      context.Project.AddOrMerge(mediaFile);
     }
   }
 }

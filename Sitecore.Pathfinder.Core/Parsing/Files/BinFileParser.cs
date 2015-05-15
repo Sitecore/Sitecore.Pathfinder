@@ -9,7 +9,7 @@
   {
     private const string FileExtension = ".dll";
 
-    public BinFileParser() : base(BinFiles)
+    public BinFileParser() : base(Constants.Parsers.BinFiles)
     {
     }
 
@@ -21,7 +21,7 @@
     public override void Parse(IParseContext context)
     {
       var binFile = new BinFile(context.Project, context.TextDocument.Root);
-      context.Project.Items.Add(binFile);
+      context.Project.AddOrMerge(binFile);
     }
   }
 }

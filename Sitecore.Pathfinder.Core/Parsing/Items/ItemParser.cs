@@ -18,7 +18,7 @@
       ".item.json"
     };
 
-    public ItemParser() : base(Items)
+    public ItemParser() : base(Constants.Parsers.Items)
     {
     }
 

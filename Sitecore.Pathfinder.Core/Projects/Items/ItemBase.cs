@@ -27,6 +27,7 @@
 
     public override string ShortName => this.ItemName;
 
+    // todo: move to Item
     [NotNull]
     public string TemplateIdOrPath { get; set; } = string.Empty;
 

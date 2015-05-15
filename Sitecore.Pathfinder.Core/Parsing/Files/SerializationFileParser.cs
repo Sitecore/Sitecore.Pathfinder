@@ -13,7 +13,7 @@
   {
     private const string FileExtension = ".item";
 
-    public SerializationFileParser() : base(ContentFiles)
+    public SerializationFileParser() : base(Constants.Parsers.ContentFiles)
     {
     }
 
@@ -24,17 +24,30 @@
 
     public override void Parse(IParseContext context)
     {
-      // todo: not implemented yet
-      var item = new Item(context.Project, "Not implemented yet", context.TextDocument.Root);
-      context.Project.Items.Add(item);
-
-      item.IsEmittable = false;
-
+      var projectUniqueId = context.ItemPath;
       var lines = context.TextDocument.SourceFile.ReadAsLines(context);
-      this.ParseLines(item, lines, 0);
+
+      var tempItem = new Item(context.Project, "TempItem", context.TextDocument.Root);
+      this.ParseLines(tempItem, lines, 0, ref projectUniqueId);
+
+      var item = new Item(context.Project, projectUniqueId, context.TextDocument.Root)
+      {
+        ItemName = tempItem.ItemName,
+        ItemIdOrPath = tempItem.ItemIdOrPath,
+        DatabaseName = tempItem.DatabaseName,
+        TemplateIdOrPath = tempItem.TemplateIdOrPath,
+        Icon = tempItem.Icon
+      };
+
+      foreach (var field in tempItem.Fields)
+      {
+        item.Fields.Add(field);
+      }
+
+      item = context.Project.AddOrMerge(item);
 
       var serializationFile = new SerializationFile(context.Project, context.TextDocument.Root, item);
-      context.Project.Items.Add(serializationFile);
+      context.Project.AddOrMerge(serializationFile);
     }
 
     protected virtual int ParseContent([NotNull] Field field, [NotNull] string[] lines, int startIndex, int contentLength)
@@ -107,7 +120,7 @@
       return lines.Length;
     }
 
-    protected virtual int ParseLines([NotNull] Item serializationFile, [NotNull] string[] lines, int startIndex)
+    protected virtual int ParseLines([NotNull] Item serializationFile, [NotNull] string[] lines, int startIndex, [NotNull] ref string projectUniqueId)
     {
       var language = string.Empty;
       var version = 0;
@@ -144,7 +157,7 @@
         switch (name)
         {
           case "id":
-            // serializationFile.ProjectUniqueId = value;
+            projectUniqueId = value;
             break;
           case "database":
             serializationFile.DatabaseName = value;

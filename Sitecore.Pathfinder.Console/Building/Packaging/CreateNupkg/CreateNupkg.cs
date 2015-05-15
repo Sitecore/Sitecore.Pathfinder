@@ -19,6 +19,8 @@
     {
       if (!context.IsDeployable)
       {
+        context.Trace.TraceInformation(Texts.Text3011);
+        context.IsAborted = true;
         return;
       }
 

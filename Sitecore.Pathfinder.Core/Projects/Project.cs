@@ -8,12 +8,16 @@
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Parsing;
+  using Sitecore.Pathfinder.Projects.Items;
+  using Sitecore.Pathfinder.Projects.Templates;
   using Sitecore.Pathfinder.TextDocuments;
 
   [Export(typeof(IProject))]
   [PartCreationPolicy(CreationPolicy.NonShared)]
   public class Project : IProject
   {
+    private readonly List<IProjectItem> items = new List<IProjectItem>();
+
     private string projectUniqueId;
 
     [ImportingConstructor]
@@ -30,7 +34,7 @@
 
     public IFileSystemService FileSystem { get; }
 
-    public ICollection<IProjectItem> Items { get; } = new List<IProjectItem>();
+    public IEnumerable<IProjectItem> Items => this.items;
 
     public string ProjectDirectory { get; private set; } = string.Empty;
 
@@ -67,6 +71,24 @@
       this.ParseService.Parse(this, sourceFile);
     }
 
+    public virtual T AddOrMerge<T>(T projectItem) where T : IProjectItem
+    {
+      var newItem = projectItem as Item;
+      if (newItem != null)
+      {
+        return (T)this.MergeItem(newItem);
+      }
+
+      var newTemplate = projectItem as Template;
+      if (newTemplate != null)
+      {
+        return (T)this.MergeTemplate(newTemplate);
+      }
+
+      this.items.Add(projectItem);
+      return projectItem;
+    }
+
     [NotNull]
     public virtual Project Load([NotNull] string projectDirectory, [NotNull] string databaseName)
     {
@@ -74,6 +96,11 @@
       this.DatabaseName = databaseName;
 
       return this;
+    }
+
+    public virtual void Remove(IProjectItem projectItem)
+    {
+      this.items.Remove(projectItem);
     }
 
     public virtual void Remove(string sourceFileName)
@@ -84,6 +111,34 @@
       }
 
       this.SourceFiles.Remove(this.SourceFiles.FirstOrDefault(s => string.Compare(s.SourceFileName, sourceFileName, StringComparison.OrdinalIgnoreCase) == 0));
+    }
+
+    [NotNull]
+    protected virtual IProjectItem MergeItem<T>([NotNull] T newItem) where T : Item
+    {
+      var item = this.Items.OfType<Item>().FirstOrDefault(i => string.Compare(i.ItemIdOrPath, newItem.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) == 0);
+      if (item == null)
+      {
+        this.items.Add(newItem);
+        return newItem;
+      }
+
+      item.Merge(newItem);
+      return item;
+    }
+
+    [NotNull]
+    protected virtual IProjectItem MergeTemplate<T>([NotNull] T newTemplate) where T : Template
+    {
+      var template = this.Items.OfType<Template>().FirstOrDefault(i => string.Compare(i.ItemIdOrPath, newTemplate.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) == 0);
+      if (template == null)
+      {
+        this.items.Add(newTemplate);
+        return newTemplate;
+      }
+
+      template.Merge(newTemplate);
+      return template;
     }
   }
 }

@@ -12,7 +12,7 @@
   {
     private const string FileExtension = ".pagetype.xml";
 
-    public PageTypeParser() : base(Templates)
+    public PageTypeParser() : base(Constants.Parsers.Templates)
     {
     }
 
@@ -42,17 +42,18 @@
         baseTemplates.Add(componentPath);
       }
 
-      var template = new Template(context.Project, context.ItemName, root)
+      var template = new Template(context.Project, context.ItemPath, root)
       {
         ItemName = context.ItemName,
-        DatabaseName = context.DatabaseName,
         ItemIdOrPath = context.ItemPath,
+        DatabaseName = context.DatabaseName,
         BaseTemplates = string.Join("|", baseTemplates)
       };
-      context.Project.Items.Add(template);
+
+      context.Project.AddOrMerge(template);
 
       var pageType = new PageType(context.Project, root);
-      context.Project.Items.Add(pageType);
+      context.Project.AddOrMerge(pageType);
     }
   }
 }

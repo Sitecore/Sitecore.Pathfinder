@@ -55,5 +55,49 @@ namespace Sitecore.Pathfinder.Projects.Items
         }
       }
     }
+
+    public void Merge([NotNull] Item newItem)
+    {
+      // todo: throw exception if item and newItem value differ
+      if (!string.IsNullOrEmpty(newItem.ItemName))
+      {
+        this.ItemName = newItem.ItemName;
+      }
+
+      if (!string.IsNullOrEmpty(newItem.DatabaseName))
+      {
+        this.DatabaseName = newItem.DatabaseName;
+      }
+
+      if (!string.IsNullOrEmpty(newItem.TemplateIdOrPath))
+      {
+        this.TemplateIdOrPath = newItem.TemplateIdOrPath;
+      }
+
+      if (!string.IsNullOrEmpty(newItem.Icon))
+      {
+        this.Icon = newItem.Icon;
+      }
+
+      if (!newItem.IsEmittable)
+      {
+        this.IsEmittable = false;
+      }
+
+      // todo: add TextNode
+      // todo: add SourceFile
+      foreach (var newField in newItem.Fields)
+      {
+        var field = this.Fields.FirstOrDefault(f => string.Compare(f.Name, newField.Name, StringComparison.OrdinalIgnoreCase) == 0 && string.Compare(f.Language, newField.Language, StringComparison.OrdinalIgnoreCase) == 0 && f.Version == newField.Version);
+        if (field == null)
+        {
+          this.Fields.Add(newField);
+          continue;
+        }
+
+        // todo: throw exception if item and newItem value differ
+        field.Value = newField.Value;
+      }
+    }
   }
 }

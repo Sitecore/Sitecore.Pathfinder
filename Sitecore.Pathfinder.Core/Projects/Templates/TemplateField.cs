@@ -25,5 +25,43 @@ namespace Sitecore.Pathfinder.Projects.Templates
     public string Type { get; set; } = string.Empty;
 
     public bool Unversioned { get; set; }
+
+    public void Merge([NotNull] TemplateField newField)
+    {
+      if (!string.IsNullOrEmpty(newField.Type))
+      {
+        this.Type = newField.Type;
+      }
+
+      if (!string.IsNullOrEmpty(newField.Source))
+      {
+        this.Source = newField.Source;
+      }
+
+      if (newField.Shared)
+      {
+        this.Shared = true;
+      }
+
+      if (newField.Unversioned)
+      {
+        this.Unversioned = true;
+      }
+
+      if (!string.IsNullOrEmpty(newField.StandardValue))
+      {
+        this.StandardValue = newField.StandardValue;
+      }
+
+      if (!string.IsNullOrEmpty(newField.ShortHelp))
+      {
+        this.ShortHelp = newField.ShortHelp;
+      }
+
+      if (!string.IsNullOrEmpty(newField.LongHelp))
+      {
+        this.LongHelp = newField.LongHelp;
+      }
+    }
   }
 }

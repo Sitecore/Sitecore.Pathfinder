@@ -6,7 +6,7 @@
   [Export(typeof(IParser))]
   public class ContentFileParser : ParserBase
   {
-    public ContentFileParser() : base(ContentFiles)
+    public ContentFileParser() : base(Constants.Parsers.ContentFiles)
     {
     }
 
@@ -18,7 +18,7 @@
     public override void Parse(IParseContext context)
     {
       var contentFileModel = new ContentFile(context.Project, context.TextDocument.Root);
-      context.Project.Items.Add(contentFileModel);
+      context.Project.AddOrMerge(contentFileModel);
     }
   }
 }

@@ -1,6 +1,5 @@
 ﻿namespace Sitecore.Pathfinder.Projects
 {
-  using System;
   using System.Collections.Generic;
   using System.ComponentModel.Composition;
   using System.IO;
@@ -60,7 +59,7 @@
       return project;
     }
 
-    protected virtual void LoadExternalReferences([NotNull] Project project)
+    protected virtual void LoadExternalReferences([NotNull] IProject project)
     {
       foreach (var pair in this.Configuration.GetSubKeys("external-references"))
       {
@@ -69,7 +68,8 @@
           ItemIdOrPath = pair.Key,
           ItemName = Path.GetFileName(pair.Key) ?? string.Empty
         };
-        project.Items.Add(external);
+
+        project.AddOrMerge(external);
 
         var value = this.Configuration.Get("external-references:" + pair.Key);
         if (string.IsNullOrEmpty(value))
@@ -82,7 +82,7 @@
           ItemIdOrPath = value,
           ItemName = Path.GetFileName(value)
         };
-        project.Items.Add(external);
+        project.AddOrMerge(external);
       }
     }
 

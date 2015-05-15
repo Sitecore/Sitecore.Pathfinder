@@ -97,8 +97,8 @@
     [Test]
     public void LoadProjectTests()
     {
-      Assert.IsTrue(this.Project.Items.Count > 0);
-      Assert.IsTrue(this.Project.SourceFiles.Count > 0);
+      Assert.IsTrue(this.Project.Items.Any());
+      Assert.IsTrue(this.Project.SourceFiles.Any());
     }
 
     [Test]

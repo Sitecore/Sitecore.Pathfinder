@@ -52,7 +52,7 @@
 
       this.Trace.TraceInformation(Texts.Text1011);
       var project = this.ProjectService.LoadProject();
-      this.Trace.TraceInformation(Texts.Text1023, project.SourceFiles.Count, project.Items.Count);
+      this.Trace.TraceInformation(Texts.Text1023, project.SourceFiles.Count, project.Items.Count());
 
 
       // todo: use abstract factory pattern

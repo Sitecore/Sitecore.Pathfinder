@@ -15,9 +15,9 @@
     {
       var itemName = textNode.GetAttributeValue("Name", context.ParseContext.ItemName);
       var itemIdOrPath = context.ParentItemPath + "/" + itemName;
-      var projectId = textNode.GetAttributeValue("Id", itemName);
+      var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
 
-      var item = new Item(context.ParseContext.Project, projectId, textNode)
+      var item = new Item(context.ParseContext.Project, projectUniqueId, textNode)
       {
         ItemName = itemName,
         DatabaseName = context.ParseContext.DatabaseName,
@@ -31,9 +31,9 @@
         item.TemplateIdOrPath = template.ItemIdOrPath;
       }
 
-      context.ParseContext.Project.Items.Add(item);
-
       this.ParseChildNodes(context, item, textNode);
+
+      context.ParseContext.Project.AddOrMerge(item);
     }
 
     [CanBeNull]
@@ -61,9 +61,7 @@
       }
 
       // resolve relative paths
-      templateIdOrPath = PathHelper.NormalizeItemPath(PathHelper.Combine(context.ParseContext.ItemPath, templateIdOrPath));
-
-      return templateIdOrPath;
+      return PathHelper.NormalizeItemPath(PathHelper.Combine(context.ParseContext.ItemPath, templateIdOrPath));
     }
 
     protected virtual void ParseFieldTreeNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode fieldTextNode)
@@ -108,7 +106,7 @@
 
       var n = itemIdOrPath.LastIndexOf('/');
       var itemName = itemIdOrPath.Mid(n + 1);
-      var projectUniqueId = textNode.GetAttributeValue("Template.Id", itemName);
+      var projectUniqueId = textNode.GetAttributeValue("Template.Id", itemIdOrPath);
 
       var template = new Template(context.ParseContext.Project, projectUniqueId, textNode)
       {
@@ -145,8 +143,7 @@
         }
       }
 
-      context.ParseContext.Project.Items.Add(template);
-      return template;
+      return context.ParseContext.Project.AddOrMerge(template);
     }
 
     protected abstract void ParseChildNodes([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode textNode);

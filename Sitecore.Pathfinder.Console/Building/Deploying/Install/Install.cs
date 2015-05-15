@@ -19,7 +19,9 @@ namespace Sitecore.Pathfinder.Building.Deploying.Install
     {
       if (!context.IsDeployable)
       {
-        throw new BuildException(Texts.Text3011);
+        context.Trace.TraceInformation(Texts.Text3011);
+        context.IsAborted = true;
+        return;
       }
 
       context.Trace.TraceInformation(Texts.Text1008);

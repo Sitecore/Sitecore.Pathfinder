@@ -49,6 +49,23 @@
       public const string ProjectUniqueId = "project-unique-id";
     }
 
+    public static class Parsers
+    {
+      public const double BinFiles = 9999;
+
+      public const double ContentFiles = 9000;
+
+      public const double Items = 3000;
+
+      public const double Media = 2000;
+
+      public const double Renderings = 5000;
+
+      public const double System = 100;
+
+      public const double Templates = 1000;
+    }
+
     public static class Templates
     {
       public const string Layout = "{3A45A723-64EE-4919-9D41-02FD40FD1466}";

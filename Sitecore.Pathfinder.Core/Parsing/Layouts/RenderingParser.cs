@@ -11,7 +11,7 @@
 
   public abstract class RenderingParser : ParserBase
   {
-    protected RenderingParser([NotNull] string fileExtension, [NotNull] string templateIdOrPath) : base(Renderings)
+    protected RenderingParser([NotNull] string fileExtension, [NotNull] string templateIdOrPath) : base(Constants.Parsers.Renderings)
     {
       this.FileExtension = fileExtension;
       this.TemplateIdOrPath = templateIdOrPath;
@@ -33,21 +33,21 @@
       var path = "/" + PathHelper.NormalizeItemPath(Path.Combine(context.Configuration.Get(Constants.ProjectDirectory), context.GetRelativeFileName(context.TextDocument.SourceFile)));
       var placeHolders = this.GetPlaceholders(context, context.TextDocument.SourceFile);
 
-      var item = new Item(context.Project, context.ItemName, context.TextDocument.Root)
+      var item = new Item(context.Project, context.ItemPath, context.TextDocument.Root)
       {
         ItemName = context.ItemName, 
+        ItemIdOrPath = context.ItemPath, 
         DatabaseName = context.DatabaseName, 
-        TemplateIdOrPath = this.TemplateIdOrPath, 
-        ItemIdOrPath = context.ItemPath
+        TemplateIdOrPath = this.TemplateIdOrPath
       };
 
       item.Fields.Add(new Field(context.TextDocument.Root, "Path", path));
       item.Fields.Add(new Field(context.TextDocument.Root, "Place Holders", string.Join(",", placeHolders)));
 
-      context.Project.Items.Add(item);
+      item = context.Project.AddOrMerge(item);
 
       var rendering = new Rendering(context.Project, context.TextDocument.Root, item);
-      context.Project.Items.Add(rendering);
+      context.Project.AddOrMerge(rendering);
     }
 
     [NotNull]

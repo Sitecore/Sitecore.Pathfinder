@@ -14,7 +14,7 @@
     IFileSystemService FileSystem { get; }
 
     [NotNull]
-    ICollection<IProjectItem> Items { get; }
+    IEnumerable<IProjectItem> Items { get; }
 
     [NotNull]
     string ProjectDirectory { get; }
@@ -30,6 +30,10 @@
 
     void Add([NotNull] string sourceFileName);
 
+    T AddOrMerge<T>([NotNull] T projectItem) where T : IProjectItem;
+
+    void Remove([NotNull] IProjectItem projectItem);
+                                               
     void Remove([NotNull] string sourceFileName);
   }
 }
