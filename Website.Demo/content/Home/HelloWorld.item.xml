@@ -1,4 +1,4 @@
-﻿<Item xmlns="http://www.sitecore.net/pathfinder/item" Template.Create="/sitecore/templates/Sample/HelloWorld" Id="{HelloWorld:HelloWorld}">
+﻿<Item xmlns="http://www.sitecore.net/pathfinder/item" Template.Create="/sitecore/templates/Sample/HelloWorld">
   <Field Name="Title">Pathfinder</Field>
   <Field Name="Text">Welcome to Sitecore Pathfinder</Field>
   <Field Name="Image" Field.Type="Image">/sitecore/media library/mushrooms</Field>

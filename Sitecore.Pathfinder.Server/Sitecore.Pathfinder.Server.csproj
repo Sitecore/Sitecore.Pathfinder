@@ -121,13 +121,13 @@
     <Compile Include="Emitters\IEmitter.cs" />
     <Compile Include="Emitters\EmitService.cs" />
     <Compile Include="Emitters\EmitterBase.cs" />
-    <Compile Include="Emitters\Layouts\LayoutEmitter.cs" />
     <Compile Include="Emitters\Files\MediaFileEmitter.cs" />
     <Compile Include="Emitters\Files\SerializationFileEmitter.cs" />
     <Compile Include="Emitters\Templates\TemplateEmitter.cs" />
     <Compile Include="Packages\Packages\NugetPackage.cs" />
     <Compile Include="Packages\Packages\PackageBase.cs" />
     <Compile Include="Packages\PackageService.cs" />
+    <Compile Include="Parsing\Layouts\LayoutServerParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

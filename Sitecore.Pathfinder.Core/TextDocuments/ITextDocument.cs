@@ -15,7 +15,7 @@
 
     [NotNull]
     ISourceFile SourceFile { get; }
-
+                                             
     void BeginEdit();
 
     void EndEdit();

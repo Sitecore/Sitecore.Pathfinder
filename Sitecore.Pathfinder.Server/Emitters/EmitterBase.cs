@@ -10,6 +10,8 @@
 
     protected const double Items = 2000;
 
+    protected const double Layouts = 2500;
+
     protected const double MediaFiles = 3000;
 
     protected const double Templates = 1000;

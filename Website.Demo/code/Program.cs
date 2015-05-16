@@ -7,6 +7,6 @@ namespace ConsoleApplication1
             Pipper.IndexOf('y');
         }
 
-        public string Pipper;
+        public static string Pipper;
     }
 }

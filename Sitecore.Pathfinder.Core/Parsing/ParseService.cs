@@ -49,13 +49,10 @@
       {
         foreach (var parser in this.Parsers.OrderBy(c => c.Sortorder))
         {
-          if (!parser.CanParse(context))
+          if (parser.CanParse(context))
           {
-            continue;
+            parser.Parse(context);
           }
-
-          parser.Parse(context);
-          break;
         }
       }
       catch (BuildException ex)

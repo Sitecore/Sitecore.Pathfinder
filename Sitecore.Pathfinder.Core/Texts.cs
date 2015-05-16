@@ -163,6 +163,7 @@
     public const int Text3027 = 3027;
     public const int Text3028 = 3028;
     public const int Text3029 = 3029;
+    public const int Text3030 = 3030;
 
     public const int Text9998 = 9998;
 
@@ -256,6 +257,7 @@
       { Text3027, "Value is specified in both 'Value' attribute and in element. Using value from attribute" }, 
       { Text3028, "Could not create item: {0}" }, 
       { Text3029, "Unique ID clash: {0} / {1}" }, 
+      { Text3030, "Item not found when updating layout: {0}" }, 
 
       { Text9998, "{0}" }, 
       { Text9999, "An error occured: {0}" }

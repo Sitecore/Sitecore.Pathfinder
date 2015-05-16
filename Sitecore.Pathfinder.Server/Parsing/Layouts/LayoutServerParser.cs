@@ -1,6 +1,4 @@
-﻿using Sitecore_Texts = Sitecore.Texts;
-
-namespace Sitecore.Pathfinder.Emitters.Layouts
+﻿namespace Sitecore.Pathfinder.Parsing.Layouts
 {
   using System;
   using System.Collections.Generic;
@@ -14,15 +12,18 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
   using Sitecore.Data.Items;
   using Sitecore.Data.Managers;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Emitters;
   using Sitecore.Pathfinder.Extensions.StringExtensions;
   using Sitecore.Pathfinder.Extensions.XElementExtensions;
-  using Sitecore.Pathfinder.Projects;
+  using Sitecore.Pathfinder.Projects.Items;
   using Sitecore.Pathfinder.Projects.Layouts;
   using Sitecore.Text;
 
-  [Export(typeof(IEmitter))]
-  public class LayoutEmitter : EmitterBase
+  [Export(typeof(IParser))]
+  public class LayoutServerParser : ParserBase
   {
+    private const string FileExtension = ".layout.xml";
+
     private const string RenderingIdsFastQuery = "@@templateid='{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}' or " + "@@templateid='{2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}' or " + "@@templateid='{86776923-ECA5-4310-8DC0-AE65FE88D078}' or " + "@@templateid='{39587D7D-F06D-4CB4-A25E-AA7D847EDDD0}' or " + "@@templateid='{0A98E368-CDB9-4E1E-927C-8E0C24A003FB}' or " + "@@templateid='{83E993C5-C0FC-4472-86A9-2F6CFED694E4}' or " + "@@templateid='{1DDE3F02-0BD7-4779-867A-DC578ADF91EA}' or " + "@@templateid='{F1F1D639-4F54-40C2-8BE0-81266B392CEB}'";
 
     private static readonly List<string> IgnoreAttributes = new List<string>
@@ -39,80 +40,34 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
       "VaryByUser", 
     };
 
-    public LayoutEmitter() : base(Items)
+    public LayoutServerParser() : base(Constants.Parsers.Renderings)
     {
     }
 
-    public override bool CanEmit(IEmitContext context, IProjectItem projectItem)
+    public override bool CanParse(IParseContext context)
     {
-      return projectItem is Layout;
+      return context.TextDocument.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
-    public override void Emit(IEmitContext context, IProjectItem projectItem)
+    public override void Parse(IParseContext context)
     {
-      var layout = (Layout)projectItem;
+      var layout = this.ParseLayout(context);
 
-      var database = Factory.GetDatabase(layout.Item.DatabaseName);
-
-      var item = database.GetItem(layout.Item.ItemIdOrPath);
-      if (item == null)
+      var item = new Projects.Items.Item(context.Project, context.ItemPath, context.TextDocument.Root)
       {
-        throw new RetryableBuildException(Texts.Text2003, layout.TextNode, layout.Item.ItemIdOrPath);
-      }
-
-      var errors = new List<Message>();
-      var warnings = new List<Message>();
-
-      var text = context.FileSystem.ReadAllText(layout.TextNode.TextDocument.SourceFile.SourceFileName);
-
-      XDocument doc;
-      try
-      {
-        doc = XDocument.Parse(text, LoadOptions.SetLineInfo);
-      }
-      catch
-      {
-        throw new BuildException(Texts.Text2014, layout.TextNode.TextDocument.SourceFile.SourceFileName);
-      }
-
-      var root = doc.Root;
-      if (root == null)
-      {
-        throw new BuildException(Texts.Text2014, layout.TextNode.TextDocument.SourceFile.SourceFileName);
-      }
-
-      var writer = new StringWriter();
-      var output = new XmlTextWriter(writer)
-      {
-        Formatting = Formatting.Indented
+        ItemName = context.ItemName, 
+        DatabaseName = context.DatabaseName, 
+        ItemIdOrPath = context.ItemPath,
+        OverwriteWhenMerging = true
       };
 
-      this.WriteLayout(layout, output, database, root, errors, warnings);
+      item.Fields.Add(new Field(context.TextDocument.Root, "__Renderings", layout));
 
-      if (!errors.Any())
-      {
-        var layoutItem = this.GetDestinationItem(context, layout, item);
-        this.SaveLayoutField(layoutItem, writer.ToString());
-      }
-
-      foreach (var error in errors)
-      {
-        context.Trace.TraceError(Texts.Text2026, layout.TextNode.TextDocument.SourceFile.SourceFileName, error.Line, error.Column, error.Text);
-      }
-
-      foreach (var warning in warnings)
-      {
-        context.Trace.TraceWarning(Texts.Text2027, layout.TextNode.TextDocument.SourceFile.SourceFileName, warning.Line, warning.Column, warning.Text);
-      }
-
-      if (errors.Any())
-      {
-        throw new BuildException(Texts.Text2020, layout.TextNode);
-      }
+      context.Project.AddOrMerge(item);
     }
 
-    [NotNull]
-    public Item[] ResolveRenderingItemId([NotNull] Database database, [NotNull] IEnumerable<Item> renderingItems, [NotNull] string renderingItemId)
+    [Sitecore.NotNull]
+    public Sitecore.Data.Items.Item[] ResolveRenderingItemId([Sitecore.NotNull] Database database, [Sitecore.NotNull] IEnumerable<Sitecore.Data.Items.Item> renderingItems, [Sitecore.NotNull] string renderingItemId)
     {
       var matches = renderingItems.Where(r => r.Name == renderingItemId).ToArray();
 
@@ -130,7 +85,52 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
     }
 
     [NotNull]
-    protected Item GetDestinationItem([NotNull] IEmitContext context, [NotNull] Layout layout, [NotNull] Item item)
+    protected string ParseLayout([NotNull] IParseContext context)
+    {
+      var database = Factory.GetDatabase(context.DatabaseName);
+
+      var errors = new List<Message>();
+      var warnings = new List<Message>();
+
+      var root = context.TextDocument.SourceFile.ReadAsXml(context);
+      if (root == null)
+      {
+        throw new BuildException(Texts.Text2014, context.TextDocument.SourceFile.SourceFileName);
+      }
+
+      var writer = new StringWriter();
+      var output = new XmlTextWriter(writer)
+      {
+        Formatting = Formatting.Indented
+      };
+
+      this.WriteLayout(context, output, database, root, errors, warnings);
+
+      if (!errors.Any())
+      {
+        return writer.ToString();
+      }
+
+      foreach (var error in errors)
+      {
+        context.Project.Trace.TraceError(Texts.Text2026, context.TextDocument.SourceFile.SourceFileName, error.Line, error.Column, error.Text);
+      }
+
+      foreach (var warning in warnings)
+      {
+        context.Project.Trace.TraceWarning(Texts.Text2027, context.TextDocument.SourceFile.SourceFileName, warning.Line, warning.Column, warning.Text);
+      }
+
+      if (errors.Any())
+      {
+        throw new BuildException(Texts.Text2020, context.TextDocument.SourceFile.SourceFileName);
+      }
+
+      return string.Empty;
+    }
+
+    [Sitecore.NotNull]
+    protected Sitecore.Data.Items.Item GetDestinationItem([Sitecore.NotNull] IEmitContext context, [Sitecore.NotNull] Layout layout, [Sitecore.NotNull] Sitecore.Data.Items.Item item)
     {
       if (item.TemplateID != TemplateIDs.Template)
       {
@@ -162,7 +162,7 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
       return item;
     }
 
-    protected void SaveLayoutField([NotNull] Item item, [NotNull] string layout)
+    protected void SaveLayoutField([Sitecore.NotNull] Sitecore.Data.Items.Item item, [Sitecore.NotNull] string layout)
     {
       using (new EditContext(item))
       {
@@ -170,13 +170,13 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
       }
     }
 
-    [NotNull]
-    private Item[] FindRenderingItems([NotNull] IEnumerable<Item> renderingItems, [NotNull] string renderingItemId)
+    [Sitecore.NotNull]
+    private Sitecore.Data.Items.Item[] FindRenderingItems([Sitecore.NotNull] IEnumerable<Sitecore.Data.Items.Item> renderingItems, [Sitecore.NotNull] string renderingItemId)
     {
       var n = renderingItemId.LastIndexOf('.');
       if (n < 0)
       {
-        return new Item[0];
+        return new Sitecore.Data.Items.Item[0];
       }
 
       renderingItemId = renderingItemId.Mid(n + 1);
@@ -184,8 +184,8 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
       return renderingItems.Where(r => r.Name == renderingItemId).ToArray();
     }
 
-    [NotNull]
-    private string GetPlaceholders([NotNull] XElement renderingElement, [NotNull] Item renderingItem)
+    [Sitecore.NotNull]
+    private string GetPlaceholders([Sitecore.NotNull] XElement renderingElement, [Sitecore.NotNull] Sitecore.Data.Items.Item renderingItem)
     {
       var id = renderingElement.GetAttributeValue("Id");
       var result = ",";
@@ -206,20 +206,20 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
       return result;
     }
 
-    private bool IsContentProperty([NotNull] XElement renderingElement, [NotNull] XElement child)
+    private bool IsContentProperty([Sitecore.NotNull] XElement renderingElement, [Sitecore.NotNull] XElement child)
     {
       return child.Name.LocalName.StartsWith(renderingElement.Name.LocalName + ".");
     }
 
-    [NotNull]
-    private Item[] ResolveRenderingItem([NotNull] IEnumerable<Item> renderingItems, [NotNull] string renderingItemId)
+    [Sitecore.NotNull]
+    private Sitecore.Data.Items.Item[] ResolveRenderingItem([Sitecore.NotNull] IEnumerable<Sitecore.Data.Items.Item> renderingItems, [Sitecore.NotNull] string renderingItemId)
     {
       var path = "/" + renderingItemId.Replace(".", "/");
 
       return renderingItems.Where(r => r.Paths.Path.EndsWith(path, StringComparison.InvariantCultureIgnoreCase)).ToArray();
     }
 
-    private void WriteBool([NotNull] XmlTextWriter output, [NotNull] XElement renderingElement, [NotNull] string id, [NotNull] string attributeName, [NotNull] string name, [NotNull] List<Message> errors, bool ignoreValue = false)
+    private void WriteBool([Sitecore.NotNull] XmlTextWriter output, [Sitecore.NotNull] XElement renderingElement, [Sitecore.NotNull] string id, [Sitecore.NotNull] string attributeName, [Sitecore.NotNull] string name, [Sitecore.NotNull] List<Message> errors, bool ignoreValue = false)
     {
       var value = renderingElement.GetAttributeValue(attributeName);
       if (string.IsNullOrEmpty(value))
@@ -242,7 +242,7 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
       output.WriteAttributeString(name, b ? "1" : "0");
     }
 
-    private void WriteDataSource([NotNull] XmlTextWriter output, [NotNull] XElement renderingElement, [NotNull] Database database)
+    private void WriteDataSource([Sitecore.NotNull] XmlTextWriter output, [Sitecore.NotNull] XElement renderingElement, [Sitecore.NotNull] Database database)
     {
       var dataSource = renderingElement.GetAttributeValue("DataSource");
       if (string.IsNullOrEmpty(dataSource))
@@ -254,7 +254,7 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
       output.WriteAttributeString("ds", item?.ID.ToString() ?? dataSource);
     }
 
-    private void WriteDevice([NotNull] Layout layout, [NotNull] XmlTextWriter output, [NotNull] IEnumerable<Item> renderingItems, [NotNull] Database database, [NotNull] XElement deviceElement, [NotNull] List<Message> errors, [NotNull] List<Message> warnings)
+    private void WriteDevice([Sitecore.NotNull] IParseContext context, [Sitecore.NotNull] XmlTextWriter output, [Sitecore.NotNull] IEnumerable<Sitecore.Data.Items.Item> renderingItems, [Sitecore.NotNull] Database database, [Sitecore.NotNull] XElement deviceElement, [Sitecore.NotNull] List<Message> errors, [Sitecore.NotNull] List<Message> warnings)
     {
       output.WriteStartElement("d");
 
@@ -291,7 +291,7 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
         var l = database.GetItem(layoutPath);
         if (l == null)
         {
-          throw new RetryableBuildException(Texts.Text2029, layout.TextNode, layoutPath);
+          throw new RetryableBuildException(Texts.Text2029, context.TextDocument.SourceFile.SourceFileName, layoutPath);
         }
 
         output.WriteAttributeString("l", l.ID.ToString());
@@ -306,7 +306,7 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
       output.WriteEndElement();
     }
 
-    private void WriteLayout([NotNull] Layout layout, [NotNull] XmlTextWriter output, [NotNull] Database database, [NotNull] XElement layoutElement, [NotNull] List<Message> errors, [NotNull] List<Message> warnings)
+    private void WriteLayout([Sitecore.NotNull] IParseContext context, [Sitecore.NotNull] XmlTextWriter output, [Sitecore.NotNull] Database database, [Sitecore.NotNull] XElement layoutElement, [Sitecore.NotNull] List<Message> errors, [Sitecore.NotNull] List<Message> warnings)
     {
       // todo: cache this in the build context
       // todo: use better search
@@ -317,13 +317,13 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
       // Do not make this Elements("Device") - XML namespaces will mess it up.
       foreach (var deviceElement in layoutElement.Elements())
       {
-        this.WriteDevice(layout, output, renderingItems, database, deviceElement, errors, warnings);
+        this.WriteDevice(context, output, renderingItems, database, deviceElement, errors, warnings);
       }
 
       output.WriteEndElement();
     }
 
-    private void WriteParameters([NotNull] XmlTextWriter output, [NotNull] XElement renderingElement, [NotNull] Item renderingItem, [NotNull] string id, [NotNull] List<Message> errors, [NotNull] List<Message> warnings)
+    private void WriteParameters([Sitecore.NotNull] XmlTextWriter output, [Sitecore.NotNull] XElement renderingElement, [Sitecore.NotNull] Sitecore.Data.Items.Item renderingItem, [Sitecore.NotNull] string id, [Sitecore.NotNull] List<Message> errors, [Sitecore.NotNull] List<Message> warnings)
     {
       var fields = new Dictionary<string, string>();
 
@@ -409,7 +409,7 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
       output.WriteAttributeString("par", par.ToString());
     }
 
-    private void WritePlaceholder([NotNull] XmlTextWriter output, [NotNull] XElement renderingElement, [NotNull] string id, [NotNull] List<Message> warnings, [NotNull] string placeholders)
+    private void WritePlaceholder([Sitecore.NotNull] XmlTextWriter output, [Sitecore.NotNull] XElement renderingElement, [Sitecore.NotNull] string id, [Sitecore.NotNull] List<Message> warnings, [Sitecore.NotNull] string placeholders)
     {
       var placeholder = renderingElement.GetAttributeValue("Placeholder");
 
@@ -438,7 +438,7 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
       output.WriteAttributeString("ph", placeholder);
     }
 
-    private void WriteRendering([NotNull] XmlTextWriter output, [NotNull] IEnumerable<Item> renderingItems, [NotNull] Database database, [NotNull] XElement renderingElement, [NotNull] string placeholders, [NotNull] List<Message> errors, [NotNull] List<Message> warnings)
+    private void WriteRendering([Sitecore.NotNull] XmlTextWriter output, [Sitecore.NotNull] IEnumerable<Sitecore.Data.Items.Item> renderingItems, [Sitecore.NotNull] Database database, [Sitecore.NotNull] XElement renderingElement, [Sitecore.NotNull] string placeholders, [Sitecore.NotNull] List<Message> errors, [Sitecore.NotNull] List<Message> warnings)
     {
       string renderingItemId;
 
@@ -467,7 +467,7 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
         return;
       }
 
-      Item renderingItem;
+      Sitecore.Data.Items.Item renderingItem;
       if (ID.IsID(renderingItemId))
       {
         renderingItem = database.GetItem(renderingItemId);
@@ -542,14 +542,14 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
 
     public class Message
     {
-      public Message([NotNull] string text, int line, int column)
+      public Message([Sitecore.NotNull] string text, int line, int column)
       {
         this.Text = text;
         this.Line = line;
         this.Column = column;
       }
 
-      public Message([NotNull] string text, [NotNull] XElement element)
+      public Message([Sitecore.NotNull] string text, [Sitecore.NotNull] XElement element)
       {
         this.Text = text;
 
@@ -558,7 +558,7 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
         this.Column = lineInfo.LinePosition;
       }
 
-      public Message([NotNull] string text, [NotNull] XElement element, [NotNull] string attributeName)
+      public Message([Sitecore.NotNull] string text, [Sitecore.NotNull] XElement element, [Sitecore.NotNull] string attributeName)
       {
         this.Text = text;
 
@@ -587,7 +587,7 @@ namespace Sitecore.Pathfinder.Emitters.Layouts
 
       public int Line { get; }
 
-      [NotNull]
+      [Sitecore.NotNull]
       public string Text { get; }
     }
   }

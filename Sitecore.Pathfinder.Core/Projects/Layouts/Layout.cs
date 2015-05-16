@@ -7,12 +7,8 @@ namespace Sitecore.Pathfinder.Projects.Layouts
 
   public class Layout : ContentFile
   {
-    public Layout([NotNull] IProject project, [NotNull] ITextNode textNode, [NotNull] Item item) : base(project, textNode)
+    public Layout([NotNull] IProject project, [NotNull] ITextNode textNode) : base(project, textNode)
     {
-      this.Item = item;
     }
-
-    [NotNull]
-    public Item Item { get; }
   }
 }

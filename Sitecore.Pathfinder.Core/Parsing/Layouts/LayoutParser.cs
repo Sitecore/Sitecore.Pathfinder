@@ -25,13 +25,12 @@
       {
         ItemName = context.ItemName,
         DatabaseName = context.DatabaseName,
-        ItemIdOrPath = context.ItemPath,
-        IsEmittable = false,
+        ItemIdOrPath = context.ItemPath
       };
 
-      item = context.Project.AddOrMerge(item);
+      context.Project.AddOrMerge(item);
 
-      var layout = new Layout(context.Project, context.TextDocument.Root, item);
+      var layout = new Layout(context.Project, context.TextDocument.Root);
       context.Project.AddOrMerge(layout);
     }
   }
