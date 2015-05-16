@@ -127,5 +127,23 @@
       Assert.AreEqual("Template.Create", attr.Name);
       Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", attr.Value);
     }
+
+    [Test]
+    public void MergeTest()
+    {
+      var projectItem = this.Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/media library/Mushrooms");
+      Assert.IsNotNull(projectItem);
+      Assert.AreEqual("Mushrooms", projectItem.ShortName);
+      Assert.AreEqual("/sitecore/media library/Mushrooms", projectItem.QualifiedName);
+
+      var item = projectItem as Item;
+      Assert.IsNotNull(item);
+      Assert.AreEqual("Mushrooms", item.ItemName);
+      Assert.AreEqual("/sitecore/media library/Mushrooms", item.ItemIdOrPath);
+
+      var field = item.Fields.FirstOrDefault(f => f.Name == "Description");
+      Assert.IsNotNull(field);
+      Assert.AreEqual("Mushrooms", field.Value);
+    }
   }
 }

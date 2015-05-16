@@ -7,6 +7,12 @@ namespace Sitecore.Pathfinder.Projects.Items
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.TextDocuments;
 
+  public enum MergingMatch
+  {
+    MatchUsingItemPath,
+    MatchUsingSourceFile
+  }
+
   public class Item : ItemBase
   {
     public Item([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode) : base(project, projectUniqueId, textNode)
@@ -56,14 +62,23 @@ namespace Sitecore.Pathfinder.Projects.Items
       }
     }
 
+    public bool OverwriteWhenMerging { get; set; }
+
+    public MergingMatch MergingMatch { get; set; }
+
     public void Merge([NotNull] Item newItem)
     {
-      // todo: throw exception if item and newItem value differ
-      if (!string.IsNullOrEmpty(newItem.ItemName))
+      if (this.OverwriteWhenMerging)
       {
+        this.OverwriteProjectUniqueId(newItem.ProjectUniqueId);
         this.ItemName = newItem.ItemName;
+        this.ItemIdOrPath = newItem.ItemIdOrPath;
+        this.DatabaseName = newItem.DatabaseName;
+        this.IsEmittable = this.IsEmittable && newItem.IsEmittable;
+        this.OverwriteWhenMerging = newItem.OverwriteWhenMerging;
       }
 
+      // todo: throw exception if item and newItem value differ
       if (!string.IsNullOrEmpty(newItem.DatabaseName))
       {
         this.DatabaseName = newItem.DatabaseName;
@@ -84,6 +99,8 @@ namespace Sitecore.Pathfinder.Projects.Items
         this.IsEmittable = false;
       }
 
+      this.MergingMatch = this.MergingMatch == MergingMatch.MatchUsingSourceFile && newItem.MergingMatch == MergingMatch.MatchUsingSourceFile ? MergingMatch.MatchUsingSourceFile : MergingMatch.MatchUsingItemPath;
+
       // todo: add TextNode
       // todo: add SourceFile
       foreach (var newField in newItem.Fields)
@@ -95,7 +112,6 @@ namespace Sitecore.Pathfinder.Projects.Items
           continue;
         }
 
-        // todo: throw exception if item and newItem value differ
         field.Value = newField.Value;
       }
     }

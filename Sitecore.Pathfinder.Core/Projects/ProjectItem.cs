@@ -15,29 +15,16 @@
       this.TextNode = textNode;
       this.References = new ReferenceCollection(this);
 
-      // this.ProjectUniqueId = PathHelper.NormalizeItemPath(PathHelper.UnmapPath(project.ProjectDirectory, textNode.TextDocument.SourceFile.SourceFileName));
-      this.ProjectUniqueId = projectUniqueId;
-
-      Guid guid;
-      if (!Guid.TryParse(this.ProjectUniqueId, out guid))
-      {
-        // calculate guid from project unique id and project id
-        var text = this.Project.ProjectUniqueId + "/" + this.ProjectUniqueId;
-        var bytes = Encoding.UTF8.GetBytes(text);
-        var hash = MD5.Create().ComputeHash(bytes);
-        guid = new Guid(hash);
-      }
-
-      this.Guid = guid;
+      this.OverwriteProjectUniqueId(projectUniqueId);
     }
 
-    public Guid Guid { get; }
+    public Guid Guid { get; private set; }
 
     public IProjectItem Owner { get; set; }
 
     public IProject Project { get; }
 
-    public string ProjectUniqueId { get; }
+    public string ProjectUniqueId { get; private set; }
 
     public abstract string QualifiedName { get; }
 
@@ -58,6 +45,27 @@
           this.Project.Trace.TraceWarning(Texts.Text3024, this.TextNode.TextDocument.SourceFile.SourceFileName, 0, 0, reference.ToString());
         }
       }
+    }
+
+    protected internal void OverwriteProjectUniqueId([NotNull] string newProjectUniqueId)
+    {
+      this.ProjectUniqueId = newProjectUniqueId;
+      this.SetGuid();
+    }
+
+    private void SetGuid()
+    {
+      Guid guid;
+      if (!Guid.TryParse(this.ProjectUniqueId, out guid))
+      {
+        // calculate guid from project unique id and project id
+        var text = this.Project.ProjectUniqueId + "/" + this.ProjectUniqueId;
+        var bytes = Encoding.UTF8.GetBytes(text);
+        var hash = MD5.Create().ComputeHash(bytes);
+        guid = new Guid(hash);
+      }
+
+      this.Guid = guid;
     }
   }
 }

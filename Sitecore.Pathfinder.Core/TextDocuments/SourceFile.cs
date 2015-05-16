@@ -15,6 +15,7 @@
       this.FileSystem = fileSystem;
 
       this.SourceFileName = sourceFileName;
+      this.SourceFileNameWithoutExtensions = PathHelper.GetDirectoryAndFileNameWithoutExtensions(sourceFileName);
       this.LastWriteTimeUtc = fileSystem.GetLastWriteTimeUtc(this.SourceFileName);
     }
 
@@ -29,6 +30,8 @@
     public DateTime LastWriteTimeUtc { get; }
 
     public string SourceFileName { get; }
+
+    public string SourceFileNameWithoutExtensions { get; }
 
     public string[] ReadAsLines(IParseContext context)
     {

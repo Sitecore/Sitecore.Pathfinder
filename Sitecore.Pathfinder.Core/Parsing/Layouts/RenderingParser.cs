@@ -38,7 +38,8 @@
         ItemName = context.ItemName, 
         ItemIdOrPath = context.ItemPath, 
         DatabaseName = context.DatabaseName, 
-        TemplateIdOrPath = this.TemplateIdOrPath
+        TemplateIdOrPath = this.TemplateIdOrPath,
+        OverwriteWhenMerging = true
       };
 
       item.Fields.Add(new Field(context.TextDocument.Root, "Path", path));

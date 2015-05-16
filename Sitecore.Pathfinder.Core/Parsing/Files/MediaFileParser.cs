@@ -40,7 +40,9 @@
         ItemName = context.ItemName,
         ItemIdOrPath = context.ItemPath,
         DatabaseName = context.DatabaseName,
-        IsEmittable = false
+        IsEmittable = false,
+        OverwriteWhenMerging = true,
+        MergingMatch = MergingMatch.MatchUsingSourceFile
       };
 
       mediaItem = context.Project.AddOrMerge(mediaItem);

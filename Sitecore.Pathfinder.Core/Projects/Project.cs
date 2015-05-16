@@ -116,7 +116,22 @@
     [NotNull]
     protected virtual IProjectItem MergeItem<T>([NotNull] T newItem) where T : Item
     {
-      var item = this.Items.OfType<Item>().FirstOrDefault(i => string.Compare(i.ItemIdOrPath, newItem.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) == 0);
+      Item item = null;
+      if (newItem.MergingMatch == MergingMatch.MatchUsingSourceFile)
+      {
+        item = this.Items.OfType<Item>().FirstOrDefault(i => string.Compare(i.TextNode.TextDocument.SourceFile.SourceFileNameWithoutExtensions, newItem.TextNode.TextDocument.SourceFile.SourceFileNameWithoutExtensions, StringComparison.OrdinalIgnoreCase) == 0);
+      }
+
+      if (item == null)
+      {
+        item = this.Items.OfType<Item>().FirstOrDefault(i => i.MergingMatch == MergingMatch.MatchUsingSourceFile && string.Compare(i.TextNode.TextDocument.SourceFile.SourceFileNameWithoutExtensions, newItem.TextNode.TextDocument.SourceFile.SourceFileNameWithoutExtensions, StringComparison.OrdinalIgnoreCase) == 0);
+      }
+
+      if (item == null)
+      {
+        item = this.Items.OfType<Item>().FirstOrDefault(i => string.Compare(i.ItemIdOrPath, newItem.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) == 0);
+      }
+
       if (item == null)
       {
         this.items.Add(newItem);

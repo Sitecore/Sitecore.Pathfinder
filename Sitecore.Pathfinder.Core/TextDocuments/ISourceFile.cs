@@ -16,6 +16,9 @@
     string SourceFileName { get; }
 
     [NotNull]
+    string SourceFileNameWithoutExtensions { get; }
+
+    [NotNull]
     JObject ReadAsJson([NotNull] IParseContext context);
 
     [NotNull]
