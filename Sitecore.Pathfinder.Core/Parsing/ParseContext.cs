@@ -11,8 +11,10 @@
   using Sitecore.Pathfinder.Projects;
   using Sitecore.Pathfinder.TextDocuments;
 
+  [Export(typeof(IParseContext))]
   public class ParseContext : IParseContext
   {
+    [ImportingConstructor]
     public ParseContext([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ITextDocumentService textDocumentServce, [NotNull] ITextTokenService textTokenService)
     {
       this.CompositionService = compositionService;
@@ -72,7 +74,7 @@
       return sourceFile.SourceFileName;
     }
 
-    public IParseContext Load(IProject project, ISourceFile sourceFile)
+    public IParseContext With(IProject project, ISourceFile sourceFile)
     {
       this.Project = project;
       this.TextDocument = this.TextDocumentServce.LoadDocument(this, sourceFile);

@@ -16,7 +16,7 @@
     [TestFixtureSetUp]
     public void Startup()
     {
-      this.StartupTests();
+      this.Start();
       this.Project = this.Services.ProjectService.LoadProject();
     }
 

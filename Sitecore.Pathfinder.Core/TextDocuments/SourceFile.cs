@@ -6,7 +6,6 @@
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Parsing;
-  using Sitecore.Pathfinder.Projects;
 
   public class SourceFile : ISourceFile
   {
@@ -54,8 +53,15 @@
 
     public JObject ReadAsJson(IParseContext context)
     {
-      var contents = this.ReadAsText(context);
-      return JObject.Parse(contents);
+      try
+      {
+        var contents = this.ReadAsText(context);
+        return JObject.Parse(contents);
+      }
+      catch (Exception ex)
+      {
+        throw new BuildException(Texts.Text2000, this.SourceFileName, ex.Message);
+      }
     }
 
     public XElement ReadAsXml(IParseContext context)
@@ -67,9 +73,9 @@
       {
         doc = XDocument.Parse(contents, LoadOptions.PreserveWhitespace | LoadOptions.SetLineInfo);
       }
-      catch
+      catch (Exception ex)
       {
-        throw new BuildException(Texts.Text2000, this.SourceFileName);
+        throw new BuildException(Texts.Text2000, this.SourceFileName, ex.Message);
       }
 
       var root = doc.Root;

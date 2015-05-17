@@ -1,5 +1,6 @@
 ﻿namespace Sitecore.Pathfinder.Helpers
 {
+  using System;
   using System.ComponentModel.Composition;
   using System.ComponentModel.Composition.Hosting;
   using System.IO;
@@ -11,23 +12,38 @@
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Parsing;
   using Sitecore.Pathfinder.Projects;
+  using Sitecore.Pathfinder.TextDocuments;
 
   public class Services
   {
+    [NotNull]
     public CompositionContainer CompositionService { get; private set; }
 
+    [NotNull]
     public IConfigurationSourceRoot Configuration { get; private set; }
 
+    [NotNull]
     public IConfigurationService ConfigurationService { get; private set; }
 
+    [NotNull]
     public IFileSystemService FileSystem { get; private set; }
 
+    [NotNull]
     public IParseService ParseService { get; private set; }
 
+    [NotNull]
     public IProjectService ProjectService { get; private set; }
 
+    [NotNull]
+    public ITextDocumentService TextDocumentService { get; set; }
+
+    [NotNull]
+    public ITextTokenService TextTokenService { get; set; }
+
+    [NotNull]
     public ITraceService Trace { get; private set; }
 
+    [NotNull]
     public CompositionContainer RegisterCompositionService([NotNull] IConfiguration configuration)
     {
       var toolspath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
@@ -53,15 +69,20 @@
       return compositionContainer;
     }
 
-    public void Start()
+    public void Start([CanBeNull] Action mock = null)
     {
       this.Configuration = this.RegisterConfiguration();
       this.CompositionService = this.RegisterCompositionService(this.Configuration);
+
+      mock?.Invoke();
+
       this.Trace = this.CompositionService.Resolve<ITraceService>();
       this.FileSystem = this.CompositionService.Resolve<IFileSystemService>();
       this.ParseService = this.CompositionService.Resolve<IParseService>();
       this.ProjectService = this.CompositionService.Resolve<IProjectService>();
       this.ConfigurationService = this.CompositionService.Resolve<IConfigurationService>();
+      this.TextDocumentService = this.CompositionService.Resolve<ITextDocumentService>();
+      this.TextTokenService = this.CompositionService.Resolve<ITextTokenService>();
     }
 
     [NotNull]

@@ -33,7 +33,7 @@
     string GetRelativeFileName([NotNull] ISourceFile sourceFile);
 
     [NotNull]
-    IParseContext Load([NotNull] IProject project, [NotNull] ISourceFile sourceFile);
+    IParseContext With([NotNull] IProject project, [NotNull] ISourceFile sourceFile);
 
     [NotNull]
     string ReplaceTokens([NotNull] string text);

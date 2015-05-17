@@ -12,5 +12,12 @@
 
       return compositionContainer.GetExportedValue<T>();
     }
+
+    public static void Set<T>([NotNull] this ICompositionService compositionService, T value)
+    {
+      var compositionContainer = (CompositionContainer)compositionService;
+
+      compositionContainer.ComposeExportedValue(value);
+    }
   }
 }

@@ -43,7 +43,7 @@
     public virtual void Parse(IProject project, ISourceFile sourceFile)
     {
       // todo: change to abstract factory pattern
-      var context = new ParseContext(this.CompositionService, this.Configuration, this.TextDocumentService, this.TextTokenService).Load(project, sourceFile);
+      var context = new ParseContext(this.CompositionService, this.Configuration, this.TextDocumentService, this.TextTokenService).With(project, sourceFile);
 
       try
       {

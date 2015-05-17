@@ -7,7 +7,7 @@
   {
     private static readonly object[] EmptyArgs = new object[0];
 
-    public BuildException(int text)
+    public BuildException(int text) : base(Texts.Messages[text])
     {
       this.Text = text;
 
@@ -15,14 +15,14 @@
       this.FileName = string.Empty;
     }
 
-    public BuildException(int text, [NotNull] string fileName, [NotNull] params object[] args)
+    public BuildException(int text, [NotNull] string fileName, [NotNull] params object[] args) : base($"{fileName} (0, 0): {string.Format(Texts.Messages[text], args)}")
     {
       this.Text = text;
       this.FileName = fileName;
       this.Args = args;
     }
 
-    public BuildException(int text, [NotNull] ITextNode textNode, [NotNull] params object[] args)
+    public BuildException(int text, [NotNull] ITextNode textNode, [NotNull] params object[] args) : base($"{textNode.TextDocument.SourceFile.SourceFileName} ({textNode.LineNumber}, {textNode.LinePosition}): {string.Format(Texts.Messages[text], args)}")
     {
       this.Text = text;
       this.FileName = textNode.TextDocument.SourceFile.SourceFileName;

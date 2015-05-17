@@ -79,8 +79,11 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Helpers\Services.cs" />
+    <Compile Include="IO\MockedFileSystemService.cs" />
+    <Compile Include="Projects\JsonDocumentTests.cs" />
     <Compile Include="Projects\ProjectTests.cs" />
     <Compile Include="Projects\SourceFileTests.cs" />
+    <Compile Include="Projects\XmlDocumentTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests.cs" />
   </ItemGroup>

@@ -196,7 +196,7 @@
       { Text1022, "NuGet file size: {0}" },
       { Text1023, "Project files: {0} / project items: {1}" },
 
-      { Text2000, "Item file is not valid" }, 
+      { Text2000, "Item file is not valid: {0}" }, 
       { Text2003, "Item not found" }, 
       { Text2004, "Failed to create template." }, 
       { Text2005, "'Path' element must have a 'Path' attribute" }, 
