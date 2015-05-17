@@ -102,7 +102,7 @@
         if (string.Compare(context.Configuration.Get(Constants.Debug), "true", StringComparison.OrdinalIgnoreCase) == 0)
         {
           throw;
-        }
+        }                                                 
       }
       catch (Exception ex)
       {

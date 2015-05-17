@@ -33,7 +33,7 @@
   },
 
   // directories to ignore
-  "ignoredirectories": ".settings .sitecore.tools node_modules",
+  "ignoredirectories": ".settings .filetemplates .sitecore.tools node_modules",
   "ignorefilenames": "scc.cmd sitecore.nuspec sitecore.nupkg project.json",
 
   "external-references": {

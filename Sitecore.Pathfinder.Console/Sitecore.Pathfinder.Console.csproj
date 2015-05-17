@@ -112,7 +112,34 @@
     <Compile Include="Building\TaskBase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="wwwroot\project\.filetemplates\Component.component.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\project\.filetemplates\Item.item.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\project\.filetemplates\Layout.layout.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\project\.filetemplates\Page.page.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\project\.filetemplates\Template.item.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="wwwroot\project\.settings\tasks.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\project\layout\renderings\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\project\media library\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\project\system\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\project\templates\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="wwwroot\website\bin\Microsoft.Framework.ConfigurationModel.dll" />
@@ -125,12 +152,15 @@
     <Content Include="wwwroot\project\.settings\settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="templates\Item.item.json">
+    <None Include="wwwroot\project\.filetemplates\Item.item.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="templates\Template.item.json">
+    </None>
+    <None Include="wwwroot\project\.filetemplates\Rendering.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
+    <None Include="wwwroot\project\.filetemplates\Template.item.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="wwwroot\project\scc.cmd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -147,19 +177,7 @@
     <Content Include="..\Sitecore.Pathfinder.Server\bin\Sitecore.Pathfinder.Core.dll">
       <Link>wwwroot\website\bin\Sitecore.Pathfinder.Core.dll</Link>
     </Content>
-    <Content Include="templates\Page.page.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="templates\Component.component.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="templates\Layout.layout.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="templates\layout\layouts\MvcLayout.item.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="templates\Rendering.cshtml">
+    <Content Include="wwwroot\project\layout\layouts\MvcLayout.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="..\Sitecore.Pathfinder.Server\bin\Sitecore.Pathfinder.Server.dll">
@@ -174,10 +192,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="templates\layout\layouts\MvcLayout.cshtml">
+    <Content Include="wwwroot\project\layout\layouts\MvcLayout.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="templates\layout\web.config">
+    <Content Include="wwwroot\project\layout\web.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="schemas\layout.master.xsd">
@@ -220,18 +238,8 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="templates\layout\renderings\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="templates\Template.item.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="templates\Item.item.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="wwwroot\project\content\Home\Welcome.item.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

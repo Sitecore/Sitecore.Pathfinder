@@ -1,11 +1,13 @@
 ﻿namespace Sitecore.Pathfinder.TextDocuments
 {
   using System;
+  using System.Diagnostics;
   using System.Xml.Linq;
   using Newtonsoft.Json.Linq;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.IO;
 
+  [DebuggerDisplay("SourceFile: Path={SourceFileName}")]
   public class SourceFile : ISourceFile
   {
     public SourceFile([NotNull] IFileSystemService fileSystem, [NotNull] string sourceFileName)

@@ -1,11 +1,11 @@
 // Place your settings in this file to overwrite default and user settings.
 {
   "json.schemas": [
-		{
-			"fileMatch": [
-				"*.item.json"
-			],
-			"url": ".sitecore.tools/schemas/item.schema.json"
-		}
-	]
+    {
+      "fileMatch": [
+        "*.item.json"
+      ],
+      "url": ".sitecore.tools/schemas/item.schema.json"
+    }
+  ]
 }

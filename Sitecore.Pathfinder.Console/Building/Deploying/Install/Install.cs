@@ -45,7 +45,7 @@ namespace Sitecore.Pathfinder.Building.Deploying.Install
       {
         var message = ex.Message;
 
-        var stream = ex.Response.GetResponseStream();
+        var stream = ex.Response?.GetResponseStream();
         if (stream != null)
         {
           message = new StreamReader(stream).ReadToEnd();
@@ -62,7 +62,13 @@ namespace Sitecore.Pathfinder.Building.Deploying.Install
     public void InstallPackage([NotNull] IBuildContext context, [NotNull] string url)
     {
       var webClient = new WebClient();
-      var output = webClient.DownloadString(url).Trim();
+      var output = webClient.DownloadString(url);
+
+      if (!string.IsNullOrEmpty(output))
+      {
+        output = output.Trim();
+      }
+
       if (string.IsNullOrEmpty(output))
       {
         return;

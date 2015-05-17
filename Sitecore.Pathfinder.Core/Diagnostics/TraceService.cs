@@ -99,7 +99,7 @@
       var projectDirectory = this.Configuration.Get(Pathfinder.Constants.SolutionDirectory);
       if (!string.IsNullOrEmpty(projectDirectory))
       {
-        if (fileInfo.StartsWith(projectDirectory))
+        if (fileInfo.StartsWith(projectDirectory, StringComparison.OrdinalIgnoreCase))
         {
           fileInfo = fileInfo.Mid(projectDirectory.Length + 1);
         }

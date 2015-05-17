@@ -8,7 +8,7 @@
   [Export(typeof(IEmitter))]
   public class TemplateEmitter : EmitterBase
   {
-    public TemplateEmitter() : base(Templates)
+    public TemplateEmitter() : base(Constants.Emitters.Templates)
     {
     }
 

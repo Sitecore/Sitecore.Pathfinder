@@ -41,19 +41,19 @@
         throw new BuildException(Texts.Text2018, this.ProjectItem.Document, this.ProjectItem.DatabaseName);
       }
 
+      if (this.Item == null)
+      {
+        this.ResolveItem(context);
+      }
+
       if (this.TemplateItem == null)
       {
         this.ResolveTemplateItem(context);
       }
 
-      if (this.TemplateItem == null)
+      if (this.TemplateItem == null && this.Item != null)
       {
-        throw new RetryableBuildException(Texts.Text2017, this.ProjectItem.Document, this.ProjectItem.TemplateIdOrPath);
-      }
-
-      if (this.Item == null)
-      {
-        this.ResolveItem(context);
+        this.TemplateItem = this.Item.Template;
       }
 
       if (this.Item == null)

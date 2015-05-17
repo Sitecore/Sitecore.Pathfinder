@@ -49,6 +49,21 @@
       public const string ProjectUniqueId = "project-unique-id";
     }
 
+    public static class Emitters
+    {
+      public const double BinFiles = 9999;
+
+      public const double ContentFiles = 4000;
+
+      public const double Items = 2000;
+
+      public const double Layouts = 2500;
+
+      public const double MediaFiles = 1500;
+
+      public const double Templates = 1000;
+    }
+
     public static class Parsers
     {
       public const double BinFiles = 9999;

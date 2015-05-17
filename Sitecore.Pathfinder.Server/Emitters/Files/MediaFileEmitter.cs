@@ -5,6 +5,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
   using Sitecore.Configuration;
   using Sitecore.Data.Items;
   using Sitecore.Data.Managers;
+  using Sitecore.Pathfinder.Builders.Items;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects;
@@ -14,7 +15,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
   [Export(typeof(IEmitter))]
   public class MediaFileEmitter : EmitterBase
   {
-    public MediaFileEmitter() : base(MediaFiles)
+    public MediaFileEmitter() : base(Constants.Emitters.MediaFiles)
     {
     }
 
@@ -39,22 +40,28 @@ namespace Sitecore.Pathfinder.Emitters.Files
         KeepExisting = false, 
         Language = LanguageManager.DefaultLanguage, 
         Versioned = false, 
-        Destination = mediaFile.MediaItem.ItemIdOrPath
+        Destination = mediaFile.MediaItem.ItemIdOrPath,
       };
 
       // create parent path of media folders before uploading
-      var parentPath = PathHelper.NormalizeItemPath(Path.GetDirectoryName(mediaFile.MediaItem.ItemIdOrPath) ?? string.Empty);
+      var parentPath = PathHelper.GetItemParentPath(mediaFile.MediaItem.ItemIdOrPath);
       var mediaFolderTemplate = new TemplateItem(database.GetItem(TemplateIDs.MediaFolder));
       database.CreateItemPath(parentPath, mediaFolderTemplate);
 
       using (var stream = new FileStream(projectItem.Document.SourceFile.SourceFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
       {
+        // todo: figure out how to assign the correct item id to the new media item.
         var item = MediaManager.Creator.CreateFromStream(stream, "/upload/" + Path.GetFileName(projectItem.Document.SourceFile.SourceFileName), options);
         if (item == null)
         {
           throw new BuildException(Texts.Text2013, projectItem.Document);
         }
+
+        mediaFile.MediaItem.Guid = item.ID.ToGuid();
       }
+
+      var itemBuilder = new ItemBuilder(mediaFile.MediaItem);
+      itemBuilder.Build(context);
     }
   }
 }

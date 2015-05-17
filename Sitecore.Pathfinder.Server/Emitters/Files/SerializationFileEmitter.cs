@@ -17,7 +17,7 @@
       ForceUpdate = true
     };
 
-    public SerializationFileEmitter() : base(Items)
+    public SerializationFileEmitter() : base(Constants.Emitters.Items)
     {
     }
 

@@ -7,7 +7,6 @@
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects.Items;
   using Sitecore.Pathfinder.Projects.Layouts;
-  using Sitecore.Pathfinder.TextDocuments;
 
   public abstract class RenderingParser : ParserBase
   {
@@ -30,16 +29,11 @@
 
     public override void Parse(IParseContext context)
     {
-      var textDocument = context.Document as ITextDocument;
-      if (textDocument == null)
-      {
-        throw new BuildException(Texts.Text3031, context.Document);
-      }
-
+      var contents = context.Document.SourceFile.ReadAsText();
+      var placeHolders = this.GetPlaceholders(contents);
       var path = "/" + PathHelper.NormalizeItemPath(Path.Combine(context.Configuration.Get(Constants.ProjectDirectory), PathHelper.UnmapPath(context.Project.ProjectDirectory, context.Document.SourceFile.SourceFileName)));
-      var placeHolders = this.GetPlaceholders(textDocument.Contents);
 
-      var item = new Item(context.Project, context.ItemPath, textDocument.Root)
+      var item = new Item(context.Project, context.ItemPath, context.Document)
       {
         ItemName = context.ItemName, 
         ItemIdOrPath = context.ItemPath, 
@@ -48,8 +42,8 @@
         OverwriteWhenMerging = true
       };
 
-      item.Fields.Add(new Field(textDocument.Root, "Path", path));
-      item.Fields.Add(new Field(textDocument.Root, "Place Holders", string.Join(",", placeHolders)));
+      item.Fields.Add(new Field(item.TextNode, "Path", path));
+      item.Fields.Add(new Field(item.TextNode, "Place Holders", string.Join(",", placeHolders)));
 
       item = context.Project.AddOrMerge(item);
 

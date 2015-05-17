@@ -51,7 +51,7 @@
     {
       foreach (var pair in this.Configuration.GetSubKeys("external-references"))
       {
-        var external = new ExternalReferenceItem(project, pair.Key, TextNode.Empty)
+        var external = new ExternalReferenceItem(project, pair.Key, Document.Empty)
         {
           ItemIdOrPath = pair.Key, 
           ItemName = Path.GetFileName(pair.Key) ?? string.Empty
@@ -65,7 +65,7 @@
           continue;
         }
 
-        external = new ExternalReferenceItem(project, value, TextNode.Empty)
+        external = new ExternalReferenceItem(project, value, Document.Empty)
         {
           ItemIdOrPath = value, 
           ItemName = Path.GetFileName(value)

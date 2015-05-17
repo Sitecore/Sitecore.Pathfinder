@@ -12,7 +12,7 @@
   [Export(typeof(IEmitter))]
   public class BinFileEmitter : EmitterBase
   {
-    public BinFileEmitter() : base(BinFiles)
+    public BinFileEmitter() : base(Constants.Emitters.BinFiles)
     {
     }
 

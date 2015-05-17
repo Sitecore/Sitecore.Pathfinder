@@ -10,6 +10,6 @@
   </metadata>
   <files>
     <file src=".sitecore.tools\sitecore.config.json" target="content\.sitecore.tools\sitecore.config.json" />
-    <file src="**" target="content" exclude="scc.cmd;.sitecore.tools\**;.settings\**;node_modules\**"/>
+    <file src="**" target="content" exclude="scc.cmd;.sitecore.tools\**;.settings\**;node_modules\**;.filetemplates\**"/>
   </files>
 </package>

@@ -8,7 +8,7 @@
   [Export(typeof(IEmitter))]
   public class ItemEmitter : EmitterBase
   {
-    public ItemEmitter() : base(Items)
+    public ItemEmitter() : base(Constants.Emitters.Items)
     {
     }
 

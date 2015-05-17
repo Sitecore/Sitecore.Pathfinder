@@ -7,7 +7,7 @@
 
   public class TextNode : ITextNode
   {
-    public static readonly ITextNode Empty = new TextNode(null, string.Empty);
+    public static readonly ITextNode Empty = new TextNode(TextDocuments.Document.Empty, string.Empty);
 
     public TextNode([NotNull] IDocument document)
     {
