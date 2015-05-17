@@ -9,7 +9,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
   public class Template : ItemBase
   {
-    public Template([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode) : base(project, projectUniqueId, textNode)
+    public Template([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode document) : base(project, projectUniqueId, document)
     {
       this.Sections = new List<TemplateSection>();
     }

@@ -35,7 +35,7 @@
     public IProjectService ProjectService { get; private set; }
 
     [NotNull]
-    public ITextDocumentService TextDocumentService { get; set; }
+    public IDocumentService DocumentService { get; set; }
 
     [NotNull]
     public ITextTokenService TextTokenService { get; set; }
@@ -81,7 +81,7 @@
       this.ParseService = this.CompositionService.Resolve<IParseService>();
       this.ProjectService = this.CompositionService.Resolve<IProjectService>();
       this.ConfigurationService = this.CompositionService.Resolve<IConfigurationService>();
-      this.TextDocumentService = this.CompositionService.Resolve<ITextDocumentService>();
+      this.DocumentService = this.CompositionService.Resolve<IDocumentService>();
       this.TextTokenService = this.CompositionService.Resolve<ITextTokenService>();
     }
 

@@ -5,7 +5,6 @@
   using Newtonsoft.Json.Linq;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.IO;
-  using Sitecore.Pathfinder.Parsing;
 
   public class SourceFile : ISourceFile
   {
@@ -21,9 +20,6 @@
     [NotNull]
     public static ISourceFile Empty { get; } = new EmptySourceFile();
 
-    [NotNull]
-    protected IFileSystemService FileSystem { get; }
-
     public bool IsModified { get; set; }
 
     public DateTime LastWriteTimeUtc { get; }
@@ -32,41 +28,36 @@
 
     public string SourceFileNameWithoutExtensions { get; }
 
-    public string[] ReadAsLines(IParseContext context)
-    {
-      var lines = this.FileSystem.ReadAllLines(this.SourceFileName);
+    [NotNull]
+    protected IFileSystemService FileSystem { get; }
 
-      for (var index = 0; index < lines.Length; index++)
-      {
-        lines[index] = context.ReplaceTokens(lines[index]);
-      }
-
-      return lines;
-    }
-
-    public string ReadAsText(IParseContext context)
-    {
-      var contents = this.FileSystem.ReadAllText(this.SourceFileName);
-      contents = context.ReplaceTokens(contents);
-      return contents;
-    }
-
-    public JObject ReadAsJson(IParseContext context)
+    public JObject ReadAsJson()
     {
       try
       {
-        var contents = this.ReadAsText(context);
+        var contents = this.ReadAsText();
         return JObject.Parse(contents);
       }
       catch (Exception ex)
       {
-        throw new BuildException(Texts.Text2000, this.SourceFileName, ex.Message);
+        throw new BuildException(Texts.Text2000, this, ex.Message);
       }
     }
 
-    public XElement ReadAsXml(IParseContext context)
+    public string[] ReadAsLines()
     {
-      var contents = this.ReadAsText(context);
+      return this.FileSystem.ReadAllLines(this.SourceFileName);
+    }
+
+    public string ReadAsText()
+    {
+      var contents = this.FileSystem.ReadAllText(this.SourceFileName);
+      return contents;
+    }
+
+    public XElement ReadAsXml()
+    {
+      var contents = this.ReadAsText();
 
       XDocument doc;
       try
@@ -75,13 +66,13 @@
       }
       catch (Exception ex)
       {
-        throw new BuildException(Texts.Text2000, this.SourceFileName, ex.Message);
+        throw new BuildException(Texts.Text2000, this, ex.Message);
       }
 
       var root = doc.Root;
       if (root == null)
       {
-        throw new BuildException(Texts.Text2000, this.SourceFileName);
+        throw new BuildException(Texts.Text2000, this);
       }
 
       return root;

@@ -31,7 +31,7 @@
     public ITraceService Trace { get; }
 
     [NotNull]
-    public EmitContext Load([NotNull] IProject project)
+    public EmitContext With([NotNull] IProject project)
     {
       this.Project = project;
 

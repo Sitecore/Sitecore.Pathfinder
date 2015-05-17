@@ -28,21 +28,27 @@
 
     public override bool CanParse(IParseContext context)
     {
-      var fileName = context.TextDocument.SourceFile.SourceFileName;
+      var fileName = context.Document.SourceFile.SourceFileName;
       return FileExtensions.Any(extension => fileName.EndsWith(extension, StringComparison.OrdinalIgnoreCase));
     }
 
     public override void Parse(IParseContext context)
     {
-      var textNode = context.TextDocument.Root;
+      var textDocument = context.Document as ITextDocument;
+      if (textDocument == null)
+      {
+        throw new BuildException(Texts.Text3031, context.Document);
+      }
+
+      var textNode = textDocument.Root;
       if (textNode == TextNode.Empty)
       {
-        context.Project.Trace.TraceWarning(Texts.Text3025, textNode.TextDocument.SourceFile.SourceFileName, textNode.LineNumber, textNode.LinePosition);
+        context.Project.Trace.TraceWarning(Texts.Text3025, textDocument.SourceFile.SourceFileName, textNode.LineNumber, textNode.LinePosition);
         return;
       }
 
       // todo: should be dependent on the document, e.g. also validate json documents
-      context.TextDocument.ValidateSchema(context, "http://www.sitecore.net/pathfinder/item", "item.xsd");
+      textDocument.ValidateSchema(context, "http://www.sitecore.net/pathfinder/item", "item.xsd");
 
       var parentItemPath = PathHelper.GetItemParentPath(context.ItemPath);
       var itemParseContext = new ItemParseContext(context, this, parentItemPath);
@@ -72,11 +78,11 @@
       }
       catch (BuildException ex)
       {
-        context.ParseContext.Project.Trace.TraceError(Texts.Text3013, context.ParseContext.TextDocument.SourceFile.SourceFileName, ex.LineNumber, ex.LinePosition, ex.Message);
+        context.ParseContext.Project.Trace.TraceError(Texts.Text3013, context.ParseContext.Document.SourceFile.SourceFileName, ex.LineNumber, ex.LinePosition, ex.Message);
       }
       catch (Exception ex)
       {
-        context.ParseContext.Project.Trace.TraceError(Texts.Text3013, context.ParseContext.TextDocument.SourceFile.SourceFileName, 0, 0, ex.Message);
+        context.ParseContext.Project.Trace.TraceError(Texts.Text3013, context.ParseContext.Document.SourceFile.SourceFileName, 0, 0, ex.Message);
       }
     }
   }

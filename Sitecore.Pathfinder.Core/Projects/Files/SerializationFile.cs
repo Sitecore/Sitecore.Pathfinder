@@ -7,7 +7,7 @@
 
   public class SerializationFile : File
   {
-    public SerializationFile([NotNull] IProject project, [NotNull] ITextNode textNode, [NotNull] Item item) : base(project, textNode)
+    public SerializationFile([NotNull] IProject project, [NotNull] IDocument document, [NotNull] Item item) : base(project, document)
     {
       this.Item = item;
 

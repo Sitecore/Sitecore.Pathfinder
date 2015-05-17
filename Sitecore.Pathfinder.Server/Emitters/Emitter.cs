@@ -51,7 +51,7 @@
     {
       this.ConfigurationService.Load(LoadConfigurationOptions.None);
 
-      var project = this.ProjectService.LoadProject();
+      var project = this.ProjectService.LoadProjectFromConfiguration();
 
       this.Emit(project);
     }
@@ -59,7 +59,7 @@
     protected virtual void Emit([NotNull] IProject project)
     {
       // todo: use abstract factory pattern
-      var context = new EmitContext(this.CompositionService, this.Trace, this.DataService, this.FileSystem).Load(project);
+      var context = new EmitContext(this.CompositionService, this.Trace, this.DataService, this.FileSystem).With(project);
 
       var emitters = this.Emitters.OrderBy(e => e.Sortorder).ToList();
 
@@ -146,11 +146,11 @@
         }
         else if (exception != null)
         {
-          this.Trace.TraceError(Texts.Text9998, projectItem.TextNode, exception.Message);
+          this.Trace.TraceError(Texts.Text9998, projectItem.Document, exception.Message);
         }
         else
         {
-          this.Trace.TraceError(Texts.Text9999, "An error occured in " + projectItem.TextNode.TextDocument.SourceFile.SourceFileName);
+          this.Trace.TraceError(Texts.Text9999, "An error occured in " + projectItem.Document.SourceFile.SourceFileName);
         }
       }
     }

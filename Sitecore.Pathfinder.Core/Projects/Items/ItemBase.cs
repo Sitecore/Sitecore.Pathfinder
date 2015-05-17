@@ -5,8 +5,14 @@
 
   public abstract class ItemBase : ProjectItem
   {
-    protected ItemBase([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode) : base(project, projectUniqueId, textNode)
+    protected ItemBase([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] IDocument document) : base(project, projectUniqueId, document)
     {
+      this.TextNode = new TextNode(document);
+    }
+
+    protected ItemBase([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode) : base(project, projectUniqueId, textNode.Document)
+    {
+      this.TextNode = textNode;
     }
 
     [NotNull]
@@ -30,6 +36,9 @@
     // todo: move to Item
     [NotNull]
     public string TemplateIdOrPath { get; set; } = string.Empty;
+
+    [NotNull]
+    public ITextNode TextNode { get; }
 
     public override void Bind()
     {

@@ -25,33 +25,39 @@
 
     public override bool CanParse(IParseContext context)
     {
-      return context.TextDocument.SourceFile.SourceFileName.EndsWith(this.FileExtension, StringComparison.OrdinalIgnoreCase);
+      return context.Document.SourceFile.SourceFileName.EndsWith(this.FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
-      var path = "/" + PathHelper.NormalizeItemPath(Path.Combine(context.Configuration.Get(Constants.ProjectDirectory), context.GetRelativeFileName(context.TextDocument.SourceFile)));
-      var placeHolders = this.GetPlaceholders(context, context.TextDocument.SourceFile);
+      var textDocument = context.Document as ITextDocument;
+      if (textDocument == null)
+      {
+        throw new BuildException(Texts.Text3031, context.Document);
+      }
 
-      var item = new Item(context.Project, context.ItemPath, context.TextDocument.Root)
+      var path = "/" + PathHelper.NormalizeItemPath(Path.Combine(context.Configuration.Get(Constants.ProjectDirectory), PathHelper.UnmapPath(context.Project.ProjectDirectory, context.Document.SourceFile.SourceFileName)));
+      var placeHolders = this.GetPlaceholders(textDocument.Contents);
+
+      var item = new Item(context.Project, context.ItemPath, textDocument.Root)
       {
         ItemName = context.ItemName, 
         ItemIdOrPath = context.ItemPath, 
         DatabaseName = context.DatabaseName, 
-        TemplateIdOrPath = this.TemplateIdOrPath,
+        TemplateIdOrPath = this.TemplateIdOrPath, 
         OverwriteWhenMerging = true
       };
 
-      item.Fields.Add(new Field(context.TextDocument.Root, "Path", path));
-      item.Fields.Add(new Field(context.TextDocument.Root, "Place Holders", string.Join(",", placeHolders)));
+      item.Fields.Add(new Field(textDocument.Root, "Path", path));
+      item.Fields.Add(new Field(textDocument.Root, "Place Holders", string.Join(",", placeHolders)));
 
       item = context.Project.AddOrMerge(item);
 
-      var rendering = new Rendering(context.Project, context.TextDocument.Root, item);
+      var rendering = new Rendering(context.Project, context.Document, item);
       context.Project.AddOrMerge(rendering);
     }
 
     [NotNull]
-    protected abstract IEnumerable<string> GetPlaceholders([NotNull] IParseContext context, [NotNull] ISourceFile sourceFile);
+    protected abstract IEnumerable<string> GetPlaceholders([NotNull] string contents);
   }
 }

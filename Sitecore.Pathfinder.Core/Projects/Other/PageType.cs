@@ -8,7 +8,7 @@
 
   public class PageType : File
   {
-    public PageType([NotNull] IProject project, [NotNull] ITextNode textNode) : base(project, textNode)
+    public PageType([NotNull] IProject project, [NotNull] IDocument document) : base(project, document)
     {
     }
 

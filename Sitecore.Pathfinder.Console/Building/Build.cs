@@ -51,12 +51,12 @@
       this.ConfigurationService.Load(LoadConfigurationOptions.IncludeCommandLine);
 
       this.Trace.TraceInformation(Texts.Text1011);
-      var project = this.ProjectService.LoadProject();
+      var project = this.ProjectService.LoadProjectFromConfiguration();
       this.Trace.TraceInformation(Texts.Text1023, project.SourceFiles.Count, project.Items.Count());
 
 
       // todo: use abstract factory pattern
-      var context = new BuildContext(this.ConfigurationService.Configuration, this.Trace, this.CompositionService, this.FileSystem).Load(project);
+      var context = new BuildContext(this.ConfigurationService.Configuration, this.Trace, this.CompositionService, this.FileSystem).With(project);
 
       this.Run(context);
     }

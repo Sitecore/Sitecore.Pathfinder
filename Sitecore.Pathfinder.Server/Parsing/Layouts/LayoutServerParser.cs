@@ -46,14 +46,14 @@
 
     public override bool CanParse(IParseContext context)
     {
-      return context.TextDocument.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
+      return context.Document.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
       var layout = this.ParseLayout(context);
 
-      var item = new Projects.Items.Item(context.Project, context.ItemPath, context.TextDocument.Root)
+      var item = new Projects.Items.Item(context.Project, context.ItemPath, context.Document)
       {
         ItemName = context.ItemName, 
         DatabaseName = context.DatabaseName, 
@@ -61,7 +61,7 @@
         OverwriteWhenMerging = true
       };
 
-      item.Fields.Add(new Field(context.TextDocument.Root, "__Renderings", layout));
+      item.Fields.Add(new Field(item.TextNode, "__Renderings", layout));
 
       context.Project.AddOrMerge(item);
     }
@@ -92,10 +92,10 @@
       var errors = new List<Message>();
       var warnings = new List<Message>();
 
-      var root = context.TextDocument.SourceFile.ReadAsXml(context);
+      var root = context.Document.SourceFile.ReadAsXml();
       if (root == null)
       {
-        throw new BuildException(Texts.Text2014, context.TextDocument.SourceFile.SourceFileName);
+        throw new BuildException(Texts.Text2014, context.Document.SourceFile);
       }
 
       var writer = new StringWriter();
@@ -113,17 +113,17 @@
 
       foreach (var error in errors)
       {
-        context.Project.Trace.TraceError(Texts.Text2026, context.TextDocument.SourceFile.SourceFileName, error.Line, error.Column, error.Text);
+        context.Project.Trace.TraceError(Texts.Text2026, context.Document.SourceFile.SourceFileName, error.Line, error.Column, error.Text);
       }
 
       foreach (var warning in warnings)
       {
-        context.Project.Trace.TraceWarning(Texts.Text2027, context.TextDocument.SourceFile.SourceFileName, warning.Line, warning.Column, warning.Text);
+        context.Project.Trace.TraceWarning(Texts.Text2027, context.Document.SourceFile.SourceFileName, warning.Line, warning.Column, warning.Text);
       }
 
       if (errors.Any())
       {
-        throw new BuildException(Texts.Text2020, context.TextDocument.SourceFile.SourceFileName);
+        throw new BuildException(Texts.Text2020, context.Document.SourceFile);
       }
 
       return string.Empty;
@@ -156,7 +156,7 @@
 
       if (item == null)
       {
-        throw new BuildException(Texts.Text2024, layout.TextNode);
+        throw new BuildException(Texts.Text2024, layout.Document);
       }
 
       return item;
@@ -291,7 +291,7 @@
         var l = database.GetItem(layoutPath);
         if (l == null)
         {
-          throw new RetryableBuildException(Texts.Text2029, context.TextDocument.SourceFile.SourceFileName, layoutPath);
+          throw new RetryableBuildException(Texts.Text2029, context.Document.SourceFile, layoutPath);
         }
 
         output.WriteAttributeString("l", l.ID.ToString());

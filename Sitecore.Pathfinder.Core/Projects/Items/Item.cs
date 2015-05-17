@@ -3,18 +3,22 @@ namespace Sitecore.Pathfinder.Projects.Items
   using System;
   using System.Collections.Generic;
   using System.Linq;
-  using System.Runtime.CompilerServices;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.TextDocuments;
 
   public enum MergingMatch
   {
-    MatchUsingItemPath,
+    MatchUsingItemPath, 
+
     MatchUsingSourceFile
   }
 
   public class Item : ItemBase
   {
+    public Item([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] IDocument document) : base(project, projectUniqueId, document)
+    {
+    }
+
     public Item([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode) : base(project, projectUniqueId, textNode)
     {
     }
@@ -22,31 +26,9 @@ namespace Sitecore.Pathfinder.Projects.Items
     [NotNull]
     public IList<Field> Fields { get; } = new List<Field>();
 
-    [IndexerName("Field")]
-    public string this[string fieldName]
-    {
-      get
-      {
-        var field = this.Fields.FirstOrDefault(f => string.Compare(f.Name, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
-        return field?.Value ?? string.Empty;
-      }
+    public MergingMatch MergingMatch { get; set; }
 
-      set
-      {
-        var field = this.Fields.FirstOrDefault(f => string.Compare(f.Name, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
-        if (field == null)
-        {
-          field = new Field(this.TextNode)
-          {
-            Name = fieldName
-          };
-
-          this.Fields.Add(field);
-        }
-
-        field.Value = value;
-      }
-    }
+    public bool OverwriteWhenMerging { get; set; }
 
     public override void Bind()
     {
@@ -61,10 +43,6 @@ namespace Sitecore.Pathfinder.Projects.Items
         }
       }
     }
-
-    public bool OverwriteWhenMerging { get; set; }
-
-    public MergingMatch MergingMatch { get; set; }
 
     public void Merge([NotNull] Item newItem)
     {

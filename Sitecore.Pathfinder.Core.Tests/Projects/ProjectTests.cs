@@ -6,6 +6,7 @@
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Projects.Items;
   using Sitecore.Pathfinder.Projects.Templates;
+  using Sitecore.Pathfinder.TextDocuments;
 
   [TestFixture]
   public class ProjectTests : Tests
@@ -17,13 +18,13 @@
     public void Startup()
     {
       this.Start();
-      this.Project = this.Services.ProjectService.LoadProject();
+      this.Project = this.Services.ProjectService.LoadProjectFromConfiguration();
     }
 
     [Test]
     public void AddRemoveTests()
     {
-      var project = new Project(this.Services.CompositionService, this.Services.Configuration, this.Services.Trace, this.Services.FileSystem, this.Services.ParseService).Load(this.ProjectDirectory, "master");
+      var project = new Project(this.Services.CompositionService, this.Services.Configuration, this.Services.Trace, this.Services.FileSystem, this.Services.ParseService).With(this.ProjectDirectory, "master");
 
       var fileName = Path.Combine(this.ProjectDirectory, "content\\Home\\HelloWorld.item.xml");
 
@@ -49,7 +50,13 @@
       Assert.AreEqual("/sitecore/content/Home/Foo", item.ItemIdOrPath);
       Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", item.TemplateIdOrPath);
 
-      var treeNode = projectItem.TextNode;
+      var textDocument = projectItem.Document as ITextDocument;
+      if (textDocument == null)
+      {
+        throw new BuildException(Texts.Text3031, projectItem.Document);
+      }
+
+      var treeNode = textDocument.Root;
       Assert.AreEqual("Item", treeNode.Name);
       Assert.AreEqual(1, treeNode.Attributes.Count);
 
@@ -119,7 +126,13 @@
       Assert.IsNotNull(field);
       Assert.AreEqual("Hello", field.Value);
 
-      var treeNode = projectItem.TextNode;
+      var textDocument = projectItem.Document as ITextDocument;
+      if (textDocument == null)
+      {
+        throw new BuildException(Texts.Text3031, projectItem.Document);
+      }
+
+      var treeNode = textDocument.Root;
       Assert.AreEqual("Item", treeNode.Name);
       Assert.AreEqual(1, treeNode.Attributes.Count);
 

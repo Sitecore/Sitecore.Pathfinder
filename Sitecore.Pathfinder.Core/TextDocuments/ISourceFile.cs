@@ -4,7 +4,6 @@
   using System.Xml.Linq;
   using Newtonsoft.Json.Linq;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Parsing;
 
   public interface ISourceFile
   {
@@ -19,15 +18,15 @@
     string SourceFileNameWithoutExtensions { get; }
 
     [NotNull]
-    JObject ReadAsJson([NotNull] IParseContext context);
+    JObject ReadAsJson();
 
     [NotNull]
-    string[] ReadAsLines([NotNull] IParseContext context);
+    string[] ReadAsLines();
 
     [NotNull]
-    string ReadAsText([NotNull] IParseContext context);
+    string ReadAsText();
 
     [NotNull]
-    XElement ReadAsXml([NotNull] IParseContext context);
+    XElement ReadAsXml();
   }
 }

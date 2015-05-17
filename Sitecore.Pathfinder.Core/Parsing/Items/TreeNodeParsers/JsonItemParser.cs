@@ -11,7 +11,7 @@
   {
     public override bool CanParse(ItemParseContext context, ITextNode textNode)
     {
-      return textNode.Name == "Item" && textNode.TextDocument is JsonTextDocument;
+      return textNode.Name == "Item" && textNode.Document is JsonTextDocument;
     }
 
     protected override ITextNode GetFieldTreeNode(ITextNode textNode)

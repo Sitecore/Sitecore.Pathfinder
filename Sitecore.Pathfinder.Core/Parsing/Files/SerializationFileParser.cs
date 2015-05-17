@@ -7,6 +7,7 @@
   using Sitecore.Pathfinder.Extensions.StringExtensions;
   using Sitecore.Pathfinder.Projects.Files;
   using Sitecore.Pathfinder.Projects.Items;
+  using Sitecore.Pathfinder.TextDocuments;
 
   [Export(typeof(IParser))]
   public class SerializationFileParser : ParserBase
@@ -19,18 +20,24 @@
 
     public override bool CanParse(IParseContext context)
     {
-      return context.TextDocument.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
+      return context.Document.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
-      var projectUniqueId = context.ItemPath;
-      var lines = context.TextDocument.SourceFile.ReadAsLines(context);
+      var textDocument = context.Document as ITextDocument;
+      if (textDocument == null)
+      {
+        throw new BuildException(Texts.Text3031, context.Document);
+      }
 
-      var tempItem = new Item(context.Project, "TempItem", context.TextDocument.Root);
+      var projectUniqueId = context.ItemPath;
+      var lines = context.Document.SourceFile.ReadAsLines();
+
+      var tempItem = new Item(context.Project, "TempItem", textDocument.Root);
       this.ParseLines(tempItem, lines, 0, ref projectUniqueId);
 
-      var item = new Item(context.Project, projectUniqueId, context.TextDocument.Root)
+      var item = new Item(context.Project, projectUniqueId, textDocument.Root)
       {
         ItemName = tempItem.ItemName,
         ItemIdOrPath = tempItem.ItemIdOrPath,
@@ -46,7 +53,7 @@
 
       item = context.Project.AddOrMerge(item);
 
-      var serializationFile = new SerializationFile(context.Project, context.TextDocument.Root, item);
+      var serializationFile = new SerializationFile(context.Project, context.Document, item);
       context.Project.AddOrMerge(serializationFile);
     }
 

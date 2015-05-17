@@ -47,12 +47,12 @@ namespace Sitecore.Pathfinder.Emitters.Files
       var mediaFolderTemplate = new TemplateItem(database.GetItem(TemplateIDs.MediaFolder));
       database.CreateItemPath(parentPath, mediaFolderTemplate);
 
-      using (var stream = new FileStream(projectItem.TextNode.TextDocument.SourceFile.SourceFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+      using (var stream = new FileStream(projectItem.Document.SourceFile.SourceFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
       {
-        var item = MediaManager.Creator.CreateFromStream(stream, "/upload/" + Path.GetFileName(projectItem.TextNode.TextDocument.SourceFile.SourceFileName), options);
+        var item = MediaManager.Creator.CreateFromStream(stream, "/upload/" + Path.GetFileName(projectItem.Document.SourceFile.SourceFileName), options);
         if (item == null)
         {
-          throw new BuildException(Texts.Text2013, projectItem.TextNode);
+          throw new BuildException(Texts.Text2013, projectItem.Document);
         }
       }
     }

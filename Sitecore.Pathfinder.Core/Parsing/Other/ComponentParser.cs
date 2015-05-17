@@ -21,12 +21,18 @@
 
     public override bool CanParse(IParseContext context)
     {
-      return context.TextDocument.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
+      return context.Document.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
-      var textNode = context.TextDocument.Root;
+      var textDocument = context.Document as ITextDocument;
+      if (textDocument == null)
+      {
+        throw new BuildException(Texts.Text3031, context.Document);
+      }
+
+      var textNode = textDocument.Root;
 
       var privateTemplate = this.Parse(context, textNode);
       if (privateTemplate == null)
@@ -36,7 +42,7 @@
 
       var publicTemplate = this.CreatePublicTemplate(context, textNode, privateTemplate);
 
-      var component = new Component(context.Project, textNode, privateTemplate, publicTemplate);
+      var component = new Component(context.Project, context.Document, privateTemplate, publicTemplate);
       context.Project.AddOrMerge(component);
     }
 

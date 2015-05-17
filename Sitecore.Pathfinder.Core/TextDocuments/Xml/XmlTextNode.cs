@@ -8,19 +8,25 @@
   {
     private readonly XObject node;
 
-    public XmlTextNode([NotNull] ITextDocument textDocument, [NotNull] XElement element, [CanBeNull] ITextNode parent = null) : base(textDocument, element.Name.LocalName, !element.HasElements ? element.Value : string.Empty, ((IXmlLineInfo)element).LineNumber, ((IXmlLineInfo)element).LineNumber, parent)
+    public XmlTextNode([NotNull] ITextDocument document, [NotNull] XElement element, [CanBeNull] ITextNode parent = null) : base(document, element.Name.LocalName, !element.HasElements ? element.Value : string.Empty, ((IXmlLineInfo)element).LineNumber, ((IXmlLineInfo)element).LineNumber, parent)
     {
       this.node = element;
     }
 
-    public XmlTextNode([NotNull] ITextDocument textDocument, [NotNull] XAttribute attribute, [CanBeNull] ITextNode parent = null) : base(textDocument, attribute.Name.LocalName, attribute.Value, ((IXmlLineInfo)attribute).LineNumber, ((IXmlLineInfo)attribute).LineNumber, parent)
+    public XmlTextNode([NotNull] ITextDocument document, [NotNull] XAttribute attribute, [CanBeNull] ITextNode parent = null) : base(document, attribute.Name.LocalName, attribute.Value, ((IXmlLineInfo)attribute).LineNumber, ((IXmlLineInfo)attribute).LineNumber, parent)
     {
       this.node = attribute;
     }
 
-    public override void SetValue([NotNull] string value)
+    public override void SetValue(string value)
     {
-      this.TextDocument.EnsureIsEditing();
+      var textDocument = this.Document as ITextDocument;
+      if (textDocument == null)
+      {
+        throw new BuildException(Texts.Text3031, this.Document);
+      }
+
+      textDocument.EnsureIsEditing();
 
       var element = this.node as XElement;
       if (element != null)

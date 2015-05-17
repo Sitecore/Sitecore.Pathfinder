@@ -15,22 +15,22 @@
 
     public string SourceFileNameWithoutExtensions { get; } = string.Empty;
 
-    public JObject ReadAsJson(IParseContext context)
+    public JObject ReadAsJson()
     {
       throw new InvalidOperationException("Cannot read from empty source file");
     }
 
-    public string[] ReadAsLines(IParseContext context)
+    public string[] ReadAsLines()
     {
       throw new InvalidOperationException("Cannot read from empty source file");
     }
 
-    public string ReadAsText(IParseContext context)
+    public string ReadAsText()
     {
       throw new InvalidOperationException("Cannot read from empty source file");
     }
 
-    public XElement ReadAsXml(IParseContext context)
+    public XElement ReadAsXml()
     {
       throw new InvalidOperationException("Cannot read from empty source file");
     }

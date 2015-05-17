@@ -5,6 +5,6 @@
   public interface IProjectService
   {
     [NotNull]
-    IProject LoadProject();
+    IProject LoadProjectFromConfiguration();
   }
 }

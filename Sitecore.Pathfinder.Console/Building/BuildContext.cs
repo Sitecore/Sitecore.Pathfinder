@@ -66,7 +66,7 @@
     public ITraceService Trace { get; }
 
     [NotNull]
-    public IBuildContext Load([NotNull] IProject project)
+    public IBuildContext With([NotNull] IProject project)
     {
       this.Project = project;
       return this;

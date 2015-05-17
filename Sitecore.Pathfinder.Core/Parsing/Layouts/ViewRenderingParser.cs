@@ -5,8 +5,6 @@ namespace Sitecore.Pathfinder.Parsing.Layouts
   using System.Linq;
   using System.Text.RegularExpressions;
   using Sitecore.Pathfinder.Extensions.StringExtensions;
-  using Sitecore.Pathfinder.Projects;
-  using Sitecore.Pathfinder.TextDocuments;
 
   [Export(typeof(IParser))]
   public class ViewRenderingParser : RenderingParser
@@ -15,10 +13,8 @@ namespace Sitecore.Pathfinder.Parsing.Layouts
     {
     }
 
-    protected override IEnumerable<string> GetPlaceholders(IParseContext context, ISourceFile sourceFile)
+    protected override IEnumerable<string> GetPlaceholders(string contents)
     {
-      var contents = sourceFile.ReadAsText(context);
-
       var matches = Regex.Matches(contents, "\\@Html\\.Sitecore\\(\\)\\.Placeholder\\(([^\"\\)]*)\"([^\"]*)\"\\)", RegexOptions.IgnoreCase);
 
       var result = new List<string>();

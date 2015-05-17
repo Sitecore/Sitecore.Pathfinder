@@ -1,6 +1,5 @@
 ﻿namespace Sitecore.Pathfinder.Parsing
 {
-  using System.ComponentModel.Composition;
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Projects;
@@ -8,9 +7,6 @@
 
   public interface IParseContext
   {
-    [NotNull]
-    ICompositionService CompositionService { get; }
-
     [NotNull]
     IConfiguration Configuration { get; }
 
@@ -27,15 +23,9 @@
     IProject Project { get; }
 
     [NotNull]
-    ITextDocument TextDocument { get; }
+    IDocument Document { get; }
 
     [NotNull]
-    string GetRelativeFileName([NotNull] ISourceFile sourceFile);
-
-    [NotNull]
-    IParseContext With([NotNull] IProject project, [NotNull] ISourceFile sourceFile);
-
-    [NotNull]
-    string ReplaceTokens([NotNull] string text);
+    IParseContext With([NotNull] IProject project, [NotNull] IDocument document);
   }
 }

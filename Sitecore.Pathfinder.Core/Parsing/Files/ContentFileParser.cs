@@ -17,7 +17,7 @@
 
     public override void Parse(IParseContext context)
     {
-      var contentFileModel = new ContentFile(context.Project, context.TextDocument.Root);
+      var contentFileModel = new ContentFile(context.Project, context.Document);
       context.Project.AddOrMerge(contentFileModel);
     }
   }

@@ -7,6 +7,9 @@
 
   public interface IProjectItem
   {
+    [NotNull]
+    IDocument Document { get; }
+
     Guid Guid { get; }
 
     [CanBeNull]
@@ -26,9 +29,6 @@
 
     [NotNull]
     string ShortName { get; }
-
-    [NotNull]
-    ITextNode TextNode { get; }
 
     void Bind();
 

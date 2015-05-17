@@ -12,6 +12,7 @@
   using Sitecore.Pathfinder.Projects.Templates;
   using Sitecore.Pathfinder.TextDocuments;
 
+  [Export]
   [Export(typeof(IProject))]
   [PartCreationPolicy(CreationPolicy.NonShared)]
   public class Project : IProject
@@ -89,15 +90,6 @@
       return projectItem;
     }
 
-    [NotNull]
-    public virtual Project Load([NotNull] string projectDirectory, [NotNull] string databaseName)
-    {
-      this.ProjectDirectory = projectDirectory;
-      this.DatabaseName = databaseName;
-
-      return this;
-    }
-
     public virtual void Remove(IProjectItem projectItem)
     {
       this.items.Remove(projectItem);
@@ -114,17 +106,26 @@
     }
 
     [NotNull]
+    public virtual Project With([NotNull] string projectDirectory, [NotNull] string databaseName)
+    {
+      this.ProjectDirectory = projectDirectory;
+      this.DatabaseName = databaseName;
+
+      return this;
+    }
+
+    [NotNull]
     protected virtual IProjectItem MergeItem<T>([NotNull] T newItem) where T : Item
     {
       Item item = null;
       if (newItem.MergingMatch == MergingMatch.MatchUsingSourceFile)
       {
-        item = this.Items.OfType<Item>().FirstOrDefault(i => string.Compare(i.TextNode.TextDocument.SourceFile.SourceFileNameWithoutExtensions, newItem.TextNode.TextDocument.SourceFile.SourceFileNameWithoutExtensions, StringComparison.OrdinalIgnoreCase) == 0);
+        item = this.Items.OfType<Item>().FirstOrDefault(i => string.Compare(i.Document.SourceFile.SourceFileNameWithoutExtensions, newItem.Document.SourceFile.SourceFileNameWithoutExtensions, StringComparison.OrdinalIgnoreCase) == 0);
       }
 
       if (item == null)
       {
-        item = this.Items.OfType<Item>().FirstOrDefault(i => i.MergingMatch == MergingMatch.MatchUsingSourceFile && string.Compare(i.TextNode.TextDocument.SourceFile.SourceFileNameWithoutExtensions, newItem.TextNode.TextDocument.SourceFile.SourceFileNameWithoutExtensions, StringComparison.OrdinalIgnoreCase) == 0);
+        item = this.Items.OfType<Item>().FirstOrDefault(i => i.MergingMatch == MergingMatch.MatchUsingSourceFile && string.Compare(i.Document.SourceFile.SourceFileNameWithoutExtensions, newItem.Document.SourceFile.SourceFileNameWithoutExtensions, StringComparison.OrdinalIgnoreCase) == 0);
       }
 
       if (item == null)

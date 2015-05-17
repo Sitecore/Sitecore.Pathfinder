@@ -45,7 +45,9 @@
     public const int Text1020 = 1020;
 
     public const int Text1021 = 1021;
+
     public const int Text1022 = 1022;
+
     public const int Text1023 = 1023;
 
     public const int Text2000 = 2000;
@@ -157,13 +159,22 @@
     public const int Text3022 = 3022;
 
     public const int Text3023 = 3023;
+
     public const int Text3024 = 3024;
+
     public const int Text3025 = 3025;
+
     public const int Text3026 = 3026;
+
     public const int Text3027 = 3027;
+
     public const int Text3028 = 3028;
+
     public const int Text3029 = 3029;
+
     public const int Text3030 = 3030;
+
+    public const int Text3031 = 3031;
 
     public const int Text9998 = 9998;
 
@@ -172,95 +183,270 @@
     // todo: make text messages pluggable
     public static readonly Dictionary<int, string> Messages = new Dictionary<int, string>
     {
-      { Text1001, "Cleaning output directory..." }, 
-      { Text1002, "Incremental build started..." }, 
-      { Text1003, "Source files changed: {0}" }, 
-      { Text1004, "Creating Nuspec file..." }, 
-      { Text1005, "Creating Nupkg file..." }, 
-      { Text1006, "Creating 'layout' directory..." }, 
-      { Text1007, "Copying package to website..." }, 
-      { Text1008, "Installing package on website..." }, 
-      { Text1009, "Publishing..." }, 
-      { Text1010, "Linting..." }, 
-      { Text1011, "Loading project..." }, 
-      { Text1012, "Pipeline is empty. There are no tasks to execute." },
-      { Text1013, "Hi there." },
-      { Text1014, "Your project directory was missing, so I have created it. You must update the 'project-unique-id', 'wwwroot' and 'hostname' in the '{0}' configuration file before continuing." },
-      { Text1015, "Your configuration file and sample files were missing, so I have created them. You must update the 'project-unique-id', 'wwwroot' and 'hostname' in the '{0}' configuration file before continuing." },
-      { Text1016, "Hey - you haven't changed the the 'project-unique-id', 'wwwroot' or 'hostname' in the '{0}' configuration file." },
-      { Text1017, "Hey - there is no 'Data' directory under the 'wwwroot' directory - are you sure, you have set the 'wwwroot' correctly in the configuration file" },
-      { Text1018, "Hey - there is no 'Website' directory under the 'wwwroot' directory - are you sure, you have set the 'wwwroot' correctly in the configuration file" },
-      { Text1019, "Just so you know, I have copied the 'Sitecore.Pathfinder.Server.dll' and 'NuGet.Core.dll' assemblies to the '/bin' directory in the website and a number of '.aspx' files to the '/sitecore/shell/client/Applications/Pathfinder' directory" },
-      { Text1020, "Just so you know, I have updated the 'Sitecore.Pathfinder.Server.dll' and 'NuGet.Core.dll' assemblies in the '/bin' directory in the website and a number of '.aspx' files in the '/sitecore/shell/client/Applications/Pathfinder' directory to the latest version" },
-      { Text1021, "Linting items: {0}" },
-      { Text1022, "NuGet file size: {0}" },
-      { Text1023, "Project files: {0} / project items: {1}" },
-
-      { Text2000, "Item file is not valid: {0}" }, 
-      { Text2003, "Item not found" }, 
-      { Text2004, "Failed to create template." }, 
-      { Text2005, "'Path' element must have a 'Path' attribute" }, 
-      { Text2006, "'Template' element must have a 'Name' attribute" }, 
-      { Text2007, "'Section' element must have a 'Name' attribute" }, 
-      { Text2008, "'Field' element must have a 'Name' attribute" }, 
-      { Text2009, "'Item' element must have a 'Name' attribute" }, 
-      { Text2010, "'Item' element must have a 'Template' or 'Template.Create' attribute" }, 
-      { Text2011, "'Field' element must have a 'Name' attribute" }, 
-      { Text2012, "Field '{0}' is already defined" }, 
-      { Text2013, "Failed to upload media" }, 
-      { Text2014, "Layout file is not valid" }, 
-      { Text2015, "Unexpected element" }, 
-      { Text2016, "Template missing: {0}" }, 
-      { Text2017, "Template missing: {0}" }, 
-      { Text2018, "Database not found: {0}" }, 
-      { Text2019, "Failed to create item path: {0}" }, 
-      { Text2020, "Layout contains errors" }, 
-      { Text2021, "Media item not found: {0}" }, 
-      { Text2022, "Failed to upload media" }, 
-      { Text2023, "Failed to add new template" }, 
-      { Text2024, "Cannot apply a layout to a template. The template needs a Standard Values." }, 
-      { Text2025, "Installation started..." }, 
-      { Text2026, "{0}" }, 
-      { Text2027, "{0}" }, 
-      { Text2028, "Directory is empty" }, 
-      { Text2029, "Layout \"{0}\" not found." }, 
-      { Text2030, "Item not found: {0}" }, 
-      { Text2031, "Failed to add new template" }, 
-      { Text2032, "'Component' element expected" }, 
-      { Text2033, "'Component' attribute expected" }, 
-      { Text2034, "Component not found: {0}" }, 
-      { Text2035, "Field is not defined in the template" }, 
-      { Text2036, "Template missing: {0}" }, 
-      { Text2037, "Base Template missing: {0}" }, 
-      { Text3000, "Configuration failed spectacularly" }, 
-      { Text3001, "Task '{0}' not found. Skipping." }, 
-      { Text3002, "System configuration file not found: {0}" }, 
-      { Text3006, "The configuration element 'packaging:nuspec:filename' is missing" }, 
-      { Text3008, "The server returned an error: {0}" }, 
-      { Text3009, "An error occured: {0}" }, 
-      { Text3010, "Directory is empty" }, 
-      { Text3011, "Package contains errors and will not be deployed" }, 
-      { Text3012, "The file does not contain valid XML: {0}" }, 
-      { Text3013, "{0}" }, 
-      { Text3014, "{0}" }, 
-      { Text3016, "Directory is empty: {0}" }, 
-      { Text3017, "Cannot writer serialization item: Database is null" }, 
-      { Text3018, "Cannot writer serialization item: ID is null" }, 
-      { Text3019, "Cannot writer serialization item: Path is null" }, 
-      { Text3020, "Cannot writer serialization item: ParentID is null" }, 
-      { Text3021, "Cannot writer serialization item: ParentID is null" }, 
-      { Text3022, "Cannot writer serialization item: TemplateID is null" }, 
-      { Text3023, "Cannot writer serialization item: TemplateName is null" }, 
-      { Text3024, "Reference not found {0}" }, 
-      { Text3025, "Source file is empty" }, 
-      { Text3026, "Json file is not valid" }, 
-      { Text3027, "Value is specified in both 'Value' attribute and in element. Using value from attribute" }, 
-      { Text3028, "Could not create item: {0}" }, 
-      { Text3029, "Unique ID clash: {0} / {1}" }, 
-      { Text3030, "Item not found when updating layout: {0}" }, 
-
-      { Text9998, "{0}" }, 
-      { Text9999, "An error occured: {0}" }
+      {
+        Text1001, "Cleaning output directory..."
+      }, 
+      {
+        Text1002, "Incremental build started..."
+      }, 
+      {
+        Text1003, "Source files changed: {0}"
+      }, 
+      {
+        Text1004, "Creating Nuspec file..."
+      }, 
+      {
+        Text1005, "Creating Nupkg file..."
+      }, 
+      {
+        Text1006, "Creating 'layout' directory..."
+      }, 
+      {
+        Text1007, "Copying package to website..."
+      }, 
+      {
+        Text1008, "Installing package on website..."
+      }, 
+      {
+        Text1009, "Publishing..."
+      }, 
+      {
+        Text1010, "Linting..."
+      }, 
+      {
+        Text1011, "Loading project..."
+      }, 
+      {
+        Text1012, "Pipeline is empty. There are no tasks to execute."
+      }, 
+      {
+        Text1013, "Hi there."
+      }, 
+      {
+        Text1014, "Your project directory was missing, so I have created it. You must update the 'project-unique-id', 'wwwroot' and 'hostname' in the '{0}' configuration file before continuing."
+      }, 
+      {
+        Text1015, "Your configuration file and sample files were missing, so I have created them. You must update the 'project-unique-id', 'wwwroot' and 'hostname' in the '{0}' configuration file before continuing."
+      }, 
+      {
+        Text1016, "Hey - you haven't changed the the 'project-unique-id', 'wwwroot' or 'hostname' in the '{0}' configuration file."
+      }, 
+      {
+        Text1017, "Hey - there is no 'Data' directory under the 'wwwroot' directory - are you sure, you have set the 'wwwroot' correctly in the configuration file"
+      }, 
+      {
+        Text1018, "Hey - there is no 'Website' directory under the 'wwwroot' directory - are you sure, you have set the 'wwwroot' correctly in the configuration file"
+      }, 
+      {
+        Text1019, "Just so you know, I have copied the 'Sitecore.Pathfinder.Server.dll' and 'NuGet.Core.dll' assemblies to the '/bin' directory in the website and a number of '.aspx' files to the '/sitecore/shell/client/Applications/Pathfinder' directory"
+      }, 
+      {
+        Text1020, "Just so you know, I have updated the 'Sitecore.Pathfinder.Server.dll' and 'NuGet.Core.dll' assemblies in the '/bin' directory in the website and a number of '.aspx' files in the '/sitecore/shell/client/Applications/Pathfinder' directory to the latest version"
+      }, 
+      {
+        Text1021, "Linting items: {0}"
+      }, 
+      {
+        Text1022, "NuGet file size: {0}"
+      }, 
+      {
+        Text1023, "Project files: {0} / project items: {1}"
+      }, 
+      {
+        Text2000, "Item file is not valid: {0}"
+      }, 
+      {
+        Text2003, "Item not found"
+      }, 
+      {
+        Text2004, "Failed to create template."
+      }, 
+      {
+        Text2005, "'Path' element must have a 'Path' attribute"
+      }, 
+      {
+        Text2006, "'Template' element must have a 'Name' attribute"
+      }, 
+      {
+        Text2007, "'Section' element must have a 'Name' attribute"
+      }, 
+      {
+        Text2008, "'Field' element must have a 'Name' attribute"
+      }, 
+      {
+        Text2009, "'Item' element must have a 'Name' attribute"
+      }, 
+      {
+        Text2010, "'Item' element must have a 'Template' or 'Template.Create' attribute"
+      }, 
+      {
+        Text2011, "'Field' element must have a 'Name' attribute"
+      }, 
+      {
+        Text2012, "Field '{0}' is already defined"
+      }, 
+      {
+        Text2013, "Failed to upload media"
+      }, 
+      {
+        Text2014, "Layout file is not valid"
+      }, 
+      {
+        Text2015, "Unexpected element"
+      }, 
+      {
+        Text2016, "Template missing: {0}"
+      }, 
+      {
+        Text2017, "Template missing: {0}"
+      }, 
+      {
+        Text2018, "Database not found: {0}"
+      }, 
+      {
+        Text2019, "Failed to create item path: {0}"
+      }, 
+      {
+        Text2020, "Layout contains errors"
+      }, 
+      {
+        Text2021, "Media item not found: {0}"
+      }, 
+      {
+        Text2022, "Failed to upload media"
+      }, 
+      {
+        Text2023, "Failed to add new template"
+      }, 
+      {
+        Text2024, "Cannot apply a layout to a template. The template needs a Standard Values."
+      }, 
+      {
+        Text2025, "Installation started..."
+      }, 
+      {
+        Text2026, "{0}"
+      }, 
+      {
+        Text2027, "{0}"
+      }, 
+      {
+        Text2028, "Directory is empty"
+      }, 
+      {
+        Text2029, "Layout \"{0}\" not found."
+      }, 
+      {
+        Text2030, "Item not found: {0}"
+      }, 
+      {
+        Text2031, "Failed to add new template"
+      }, 
+      {
+        Text2032, "'Component' element expected"
+      }, 
+      {
+        Text2033, "'Component' attribute expected"
+      }, 
+      {
+        Text2034, "Component not found: {0}"
+      }, 
+      {
+        Text2035, "Field is not defined in the template"
+      }, 
+      {
+        Text2036, "Template missing: {0}"
+      }, 
+      {
+        Text2037, "Base Template missing: {0}"
+      }, 
+      {
+        Text3000, "Configuration failed spectacularly"
+      }, 
+      {
+        Text3001, "Task '{0}' not found. Skipping."
+      }, 
+      {
+        Text3002, "System configuration file not found: {0}"
+      }, 
+      {
+        Text3006, "The configuration element 'packaging:nuspec:filename' is missing"
+      }, 
+      {
+        Text3008, "The server returned an error: {0}"
+      }, 
+      {
+        Text3009, "An error occured: {0}"
+      }, 
+      {
+        Text3010, "Directory is empty"
+      }, 
+      {
+        Text3011, "Package contains errors and will not be deployed"
+      }, 
+      {
+        Text3012, "The file does not contain valid XML: {0}"
+      }, 
+      {
+        Text3013, "{0}"
+      }, 
+      {
+        Text3014, "{0}"
+      }, 
+      {
+        Text3016, "Directory is empty: {0}"
+      }, 
+      {
+        Text3017, "Cannot writer serialization item: Database is null"
+      }, 
+      {
+        Text3018, "Cannot writer serialization item: ID is null"
+      }, 
+      {
+        Text3019, "Cannot writer serialization item: Path is null"
+      }, 
+      {
+        Text3020, "Cannot writer serialization item: ParentID is null"
+      }, 
+      {
+        Text3021, "Cannot writer serialization item: ParentID is null"
+      }, 
+      {
+        Text3022, "Cannot writer serialization item: TemplateID is null"
+      }, 
+      {
+        Text3023, "Cannot writer serialization item: TemplateName is null"
+      }, 
+      {
+        Text3024, "Reference not found {0}"
+      }, 
+      {
+        Text3025, "Source file is empty"
+      }, 
+      {
+        Text3026, "Json file is not valid"
+      }, 
+      {
+        Text3027, "Value is specified in both 'Value' attribute and in element. Using value from attribute"
+      }, 
+      {
+        Text3028, "Could not create item: {0}"
+      }, 
+      {
+        Text3029, "Unique ID clash: {0} / {1}"
+      }, 
+      {
+        Text3030, "Item not found when updating layout: {0}"
+      }, 
+      {
+        Text3031, "Text document expected"
+      }, 
+      {
+        Text9998, "{0}"
+      }, 
+      {
+        Text9999, "An error occured: {0}"
+      }
     };
   }
 }

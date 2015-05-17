@@ -4,8 +4,8 @@
   using System.Collections.Generic;
   using System.ComponentModel.Composition;
   using System.Linq;
-  using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Extensions.CompositionServiceExtensions;
   using Sitecore.Pathfinder.Projects;
   using Sitecore.Pathfinder.TextDocuments;
 
@@ -13,12 +13,10 @@
   public class ParseService : IParseService
   {
     [ImportingConstructor]
-    public ParseService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ITextDocumentService textDocumentService, [NotNull] ITextTokenService textTokenService)
+    public ParseService([NotNull] ICompositionService compositionService, [NotNull] IDocumentService documentService)
     {
       this.CompositionService = compositionService;
-      this.Configuration = configuration;
-      this.TextDocumentService = textDocumentService;
-      this.TextTokenService = textTokenService;
+      this.DocumentService = documentService;
     }
 
     [NotNull]
@@ -26,32 +24,24 @@
     public IEnumerable<IParser> Parsers { get; private set; }
 
     [NotNull]
-    public ITraceService TraceService { get; set; }
-
-    [NotNull]
     protected ICompositionService CompositionService { get; }
 
     [NotNull]
-    protected IConfiguration Configuration { get; }
-
-    [NotNull]
-    protected ITextDocumentService TextDocumentService { get; }
-
-    [NotNull]
-    protected ITextTokenService TextTokenService { get; }
+    protected IDocumentService DocumentService { get; }
 
     public virtual void Parse(IProject project, ISourceFile sourceFile)
     {
-      // todo: change to abstract factory pattern
-      var context = new ParseContext(this.CompositionService, this.Configuration, this.TextDocumentService, this.TextTokenService).With(project, sourceFile);
+      var textDocument = this.DocumentService.LoadDocument(project, sourceFile);
+
+      var parseContext = this.CompositionService.Resolve<IParseContext>().With(project, textDocument);
 
       try
       {
         foreach (var parser in this.Parsers.OrderBy(c => c.Sortorder))
         {
-          if (parser.CanParse(context))
+          if (parser.CanParse(parseContext))
           {
-            parser.Parse(context);
+            parser.Parse(parseContext);
           }
         }
       }

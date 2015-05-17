@@ -9,7 +9,7 @@
   {
     public override bool CanParse(ItemParseContext context, ITextNode textNode)
     {
-      return textNode.Name == "Template" && textNode.TextDocument is XmlTextDocument;
+      return textNode.Name == "Template" && textNode.Document is XmlTextDocument;
     }
 
     protected override ITextNode GetFieldsTextNode(ITextNode textNode)

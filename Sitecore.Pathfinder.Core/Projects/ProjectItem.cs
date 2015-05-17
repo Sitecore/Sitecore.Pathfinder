@@ -9,10 +9,10 @@
 
   public abstract class ProjectItem : IProjectItem
   {
-    protected ProjectItem([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode)
+    protected ProjectItem([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] IDocument document)
     {
       this.Project = project;
-      this.TextNode = textNode;
+      this.Document = document;
       this.References = new ReferenceCollection(this);
 
       this.OverwriteProjectUniqueId(projectUniqueId);
@@ -32,7 +32,7 @@
 
     public abstract string ShortName { get; }
 
-    public ITextNode TextNode { get; }
+    public IDocument Document { get; }
 
     public abstract void Bind();
 
@@ -42,7 +42,7 @@
       {
         if (!reference.Resolve())
         {
-          this.Project.Trace.TraceWarning(Texts.Text3024, this.TextNode.TextDocument.SourceFile.SourceFileName, 0, 0, reference.ToString());
+          this.Project.Trace.TraceWarning(Texts.Text3024, this.Document.SourceFile.SourceFileName, 0, 0, reference.ToString());
         }
       }
     }

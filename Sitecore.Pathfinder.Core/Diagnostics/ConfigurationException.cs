@@ -6,13 +6,13 @@
   {
     private static readonly object[] EmptyArgs = new object[0];
 
-    public ConfigurationException(int text)
+    public ConfigurationException(int text) : base(Texts.Messages[text])
     {
       this.Text = text;
       this.Args = EmptyArgs;
     }
 
-    public ConfigurationException(int text, [NotNull] params object[] args)
+    public ConfigurationException(int text, [NotNull] params object[] args) : base(string.Format(Texts.Messages[text], args))
     {
       this.Text = text;
       this.Args = args;

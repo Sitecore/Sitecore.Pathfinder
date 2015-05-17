@@ -33,7 +33,7 @@
     T AddOrMerge<T>([NotNull] T projectItem) where T : IProjectItem;
 
     void Remove([NotNull] IProjectItem projectItem);
-                                               
+
     void Remove([NotNull] string sourceFileName);
   }
 }

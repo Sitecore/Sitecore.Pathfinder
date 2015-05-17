@@ -6,6 +6,7 @@
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Projects.Other;
   using Sitecore.Pathfinder.Projects.Templates;
+  using Sitecore.Pathfinder.TextDocuments;
 
   [Export(typeof(IParser))]
   public class PageTypeParser : ParserBase
@@ -18,12 +19,18 @@
 
     public override bool CanParse(IParseContext context)
     {
-      return context.TextDocument.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
+      return context.Document.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
-      var root = context.TextDocument.Root;
+      var textDocument = context.Document as ITextDocument;
+      if (textDocument == null)
+      {
+        throw new BuildException(Texts.Text3031, context.Document);
+      }
+
+      var root = textDocument.Root;
 
       var baseTemplates = new List<string>();
       foreach (var treeNode in root.ChildNodes)
@@ -44,15 +51,15 @@
 
       var template = new Template(context.Project, context.ItemPath, root)
       {
-        ItemName = context.ItemName,
-        ItemIdOrPath = context.ItemPath,
-        DatabaseName = context.DatabaseName,
+        ItemName = context.ItemName, 
+        ItemIdOrPath = context.ItemPath, 
+        DatabaseName = context.DatabaseName, 
         BaseTemplates = string.Join("|", baseTemplates)
       };
 
       context.Project.AddOrMerge(template);
 
-      var pageType = new PageType(context.Project, root);
+      var pageType = new PageType(context.Project, context.Document);
       context.Project.AddOrMerge(pageType);
     }
   }

@@ -6,6 +6,7 @@
   using System.Linq;
   using Sitecore.Pathfinder.Projects.Files;
   using Sitecore.Pathfinder.Projects.Items;
+  using Sitecore.Pathfinder.TextDocuments;
 
   [Export(typeof(IParser))]
   public class MediaFileParser : ParserBase
@@ -29,13 +30,13 @@
 
     public override bool CanParse(IParseContext context)
     {
-      var fileExtension = Path.GetExtension(context.TextDocument.SourceFile.SourceFileName);
+      var fileExtension = Path.GetExtension(context.Document.SourceFile.SourceFileName);
       return FileExtensions.Contains(fileExtension, StringComparer.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
-      var mediaItem = new Item(context.Project, context.ItemPath, context.TextDocument.Root)
+      var mediaItem = new Item(context.Project, context.ItemPath, context.Document)
       {
         ItemName = context.ItemName,
         ItemIdOrPath = context.ItemPath,
@@ -47,7 +48,7 @@
 
       mediaItem = context.Project.AddOrMerge(mediaItem);
 
-      var mediaFile = new MediaFile(context.Project, context.TextDocument.Root, mediaItem);
+      var mediaFile = new MediaFile(context.Project, context.Document, mediaItem);
       context.Project.AddOrMerge(mediaFile);
     }
   }

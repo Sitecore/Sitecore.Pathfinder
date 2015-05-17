@@ -16,7 +16,7 @@
 
       foreach (var projectItem in context.Project.Items)
       {
-        projectItem.TextNode.TextDocument.SourceFile.IsModified = true;
+        projectItem.Document.SourceFile.IsModified = true;
       }
     }
   }

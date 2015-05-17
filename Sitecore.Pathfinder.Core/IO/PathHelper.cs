@@ -5,6 +5,8 @@
   using System.Text.RegularExpressions;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Extensions.StringExtensions;
+  using Sitecore.Pathfinder.Projects;
+  using Sitecore.Pathfinder.TextDocuments;
 
   public static class PathHelper
   {
@@ -94,6 +96,25 @@
 
       var e = fileName.IndexOf('.', s);
       return fileName.Mid(s + 1, e - s - 1);
+    }
+
+    [NotNull]
+    public static string GetItemName([NotNull] ISourceFile sourceFile)
+    {
+      var s = sourceFile.SourceFileName.LastIndexOf('\\') + 1;
+      var e = sourceFile.SourceFileName.IndexOf('.', s);
+
+      return sourceFile.SourceFileName.Mid(s, e - s);
+    }
+
+    [NotNull]
+    public static string GetItemPath([NotNull] IProject project, [NotNull] ISourceFile sourceFile)
+    {
+      var itemPath = UnmapPath(project.ProjectDirectory, sourceFile.SourceFileName);
+
+      itemPath = GetDirectoryAndFileNameWithoutExtensions(itemPath);
+
+      return "/sitecore/" + NormalizeItemPath(itemPath);
     }
 
     [NotNull]

@@ -8,7 +8,11 @@
     {
     }
 
-    public RetryableBuildException(int text, [NotNull] string fileName, [NotNull] params object[] args) : base(text, fileName, args)
+    public RetryableBuildException(int text, [NotNull] ISourceFile sourceFile, [NotNull] params object[] args) : base(text, sourceFile, args)
+    {
+    }
+
+    public RetryableBuildException(int text, [NotNull] IDocument document, [NotNull] params object[] args) : base(text, document, args)
     {
     }
 

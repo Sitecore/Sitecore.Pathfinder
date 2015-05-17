@@ -6,9 +6,9 @@
   using System.Linq;
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Extensions.CompositionServiceExtensions;
   using Sitecore.Pathfinder.Extensions.ConfigurationExtensions;
   using Sitecore.Pathfinder.IO;
-  using Sitecore.Pathfinder.Parsing;
   using Sitecore.Pathfinder.Projects.Items;
   using Sitecore.Pathfinder.TextDocuments;
 
@@ -16,13 +16,10 @@
   public class ProjectService : IProjectService
   {
     [ImportingConstructor]
-    public ProjectService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService)
+    public ProjectService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration)
     {
       this.CompositionService = compositionService;
       this.Configuration = configuration;
-      this.Trace = trace;
-      this.FileSystem = fileSystem;
-      this.ParseService = parseService;
     }
 
     [NotNull]
@@ -31,16 +28,7 @@
     [NotNull]
     protected IConfiguration Configuration { get; }
 
-    [NotNull]
-    protected IFileSystemService FileSystem { get; }
-
-    [NotNull]
-    protected IParseService ParseService { get; }
-
-    [NotNull]
-    protected ITraceService Trace { get; set; }
-
-    public IProject LoadProject()
+    public IProject LoadProjectFromConfiguration()
     {
       // todo: refactor this
       var projectDirectory = PathHelper.Combine(this.Configuration.GetString(Pathfinder.Constants.SolutionDirectory), this.Configuration.GetString(Pathfinder.Constants.ProjectDirectory));
@@ -50,10 +38,10 @@
       var ignoreDirectories = this.Configuration.GetList(Pathfinder.Constants.IgnoreDirectories).ToList();
       ignoreDirectories.Add(Path.GetFileName(this.Configuration.GetString(Pathfinder.Constants.ToolsDirectory)));
 
-      // todo: consider caching project on disk
-      var project = new Project(this.CompositionService, this.Configuration, this.Trace, this.FileSystem, this.ParseService).Load(projectDirectory, databaseName);
+      var project = this.CompositionService.Resolve<Project>().With(projectDirectory, databaseName);
 
       this.LoadExternalReferences(project);
+
       this.LoadProjectItems(project, ignoreDirectories, ignoreFileNames);
 
       return project;
@@ -65,7 +53,7 @@
       {
         var external = new ExternalReferenceItem(project, pair.Key, TextNode.Empty)
         {
-          ItemIdOrPath = pair.Key,
+          ItemIdOrPath = pair.Key, 
           ItemName = Path.GetFileName(pair.Key) ?? string.Empty
         };
 
@@ -79,7 +67,7 @@
 
         external = new ExternalReferenceItem(project, value, TextNode.Empty)
         {
-          ItemIdOrPath = value,
+          ItemIdOrPath = value, 
           ItemName = Path.GetFileName(value)
         };
         project.AddOrMerge(external);
@@ -88,7 +76,7 @@
 
     protected virtual void LoadProjectItems([NotNull] Project project, [NotNull] IEnumerable<string> ignoreDirectories, [NotNull] IEnumerable<string> ignoreFileNames)
     {
-      var visitor = new ProjectDirectoryVisitor(this.FileSystem).Load(ignoreDirectories, ignoreFileNames);
+      var visitor = this.CompositionService.Resolve<ProjectDirectoryVisitor>().With(ignoreDirectories, ignoreFileNames);
       visitor.Visit(project);
     }
   }

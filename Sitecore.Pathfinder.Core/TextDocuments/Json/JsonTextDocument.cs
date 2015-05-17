@@ -1,18 +1,16 @@
 ﻿namespace Sitecore.Pathfinder.TextDocuments.Json
 {
+  using System;
   using System.Linq;
   using Newtonsoft.Json.Linq;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Parsing;
-  using Sitecore.Pathfinder.Projects;
 
   public class JsonTextDocument : TextDocument
   {
     private ITextNode root;
 
-    public JsonTextDocument([NotNull] IParseContext parseContext, [NotNull] ISourceFile sourceFile) : base(sourceFile)
+    public JsonTextDocument([NotNull] ISourceFile sourceFile, [NotNull] string contents) : base(sourceFile, contents)
     {
-      this.ParseContext = parseContext;
     }
 
     public override ITextNode Root
@@ -21,7 +19,15 @@
       {
         if (this.root == null)
         {
-          var json = this.SourceFile.ReadAsJson(this.ParseContext);
+          JObject json;
+          try
+          {
+            json = JObject.Parse(this.Contents);
+          }
+          catch (Exception ex)
+          {
+            throw new BuildException(Texts.Text2000, this.SourceFile, ex.Message);
+          }
 
           var r = json.Properties().FirstOrDefault(p => p.Name != "$schema");
           if (r == null)
@@ -32,21 +38,18 @@
           var value = r.Value as JObject;
           if (value == null)
           {
-            throw new BuildException(Texts.Text3026, this.ParseContext.TextDocument.SourceFile.SourceFileName, 0, 0);
+            throw new BuildException(Texts.Text3026, this.SourceFile);
           }
 
           this.root = this.Parse(r.Name, value, null);
-        }                                   
+        }
 
         return this.root;
       }
     }
 
     [NotNull]
-    protected IParseContext ParseContext { get; }
-
-    [NotNull]
-    private ITextNode Parse([NotNull] string name, [NotNull] JObject jobject, [CanBeNull] ITextNode parent)
+    protected virtual ITextNode Parse([NotNull] string name, [NotNull] JObject jobject, [CanBeNull] ITextNode parent)
     {
       var treeNode = new JsonTextNode(this, name, jobject, parent);
       parent?.ChildNodes.Add(treeNode);

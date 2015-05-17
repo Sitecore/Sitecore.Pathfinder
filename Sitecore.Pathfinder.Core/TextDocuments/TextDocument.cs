@@ -3,17 +3,20 @@
   using System;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Parsing;
-  using Sitecore.Pathfinder.Projects;
 
   public class TextDocument : ITextDocument
   {
-    public static readonly ITextDocument Empty = new TextDocument(TextDocuments.SourceFile.Empty);
+    public static readonly IDocument Empty = new TextDocument(TextDocuments.SourceFile.Empty, string.Empty);
 
-    public TextDocument([NotNull] ISourceFile sourceFile)
+    public TextDocument([NotNull] ISourceFile sourceFile, [NotNull] string contents)
     {
       this.SourceFile = sourceFile;
+      this.Contents = contents;
+
       this.Root = new TextNode(this, string.Empty);
     }
+
+    public string Contents { get; }
 
     public bool IsEditable { get; protected set; }
 

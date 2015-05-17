@@ -9,7 +9,10 @@
     IList<ITextNode> Attributes { get; }
 
     [NotNull]
-    ITextDocument TextDocument { get; }
+    IList<ITextNode> ChildNodes { get; }
+
+    [NotNull]
+    IDocument Document { get; }
 
     int LineNumber { get; }
 
@@ -20,9 +23,6 @@
 
     [CanBeNull]
     ITextNode Parent { get; }
-
-    [NotNull]
-    IList<ITextNode> ChildNodes { get; }
 
     [NotNull]
     string Value { get; }

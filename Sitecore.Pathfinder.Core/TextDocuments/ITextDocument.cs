@@ -2,10 +2,12 @@
 {
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Parsing;
-  using Sitecore.Pathfinder.Projects;
 
-  public interface ITextDocument
+  public interface ITextDocument : IDocument
   {
+    [NotNull]
+    string Contents { get; }
+
     bool IsEditable { get; }
 
     bool IsEditing { get; }
@@ -13,9 +15,6 @@
     [NotNull]
     ITextNode Root { get; }
 
-    [NotNull]
-    ISourceFile SourceFile { get; }
-                                             
     void BeginEdit();
 
     void EndEdit();
