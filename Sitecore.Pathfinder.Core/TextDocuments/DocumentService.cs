@@ -33,10 +33,7 @@
         }
       }
 
-      var contents = sourceFile.ReadAsText();
-      contents = this.ReplaceTokens(project, sourceFile, contents);
-
-      return new TextDocument(sourceFile, contents);
+      return new Document(sourceFile);
     }
 
     public virtual string ReplaceTokens(IProject project, ISourceFile sourceFile, string contents)

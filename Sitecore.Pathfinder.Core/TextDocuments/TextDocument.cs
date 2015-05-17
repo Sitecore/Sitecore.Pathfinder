@@ -4,13 +4,12 @@
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Parsing;
 
-  public class TextDocument : ITextDocument
+  public class TextDocument : Document, ITextDocument
   {
     public static readonly IDocument Empty = new TextDocument(TextDocuments.SourceFile.Empty, string.Empty);
 
-    public TextDocument([NotNull] ISourceFile sourceFile, [NotNull] string contents)
+    public TextDocument([NotNull] ISourceFile sourceFile, [NotNull] string contents) : base(sourceFile)
     {
-      this.SourceFile = sourceFile;
       this.Contents = contents;
 
       this.Root = new TextNode(this, string.Empty);
@@ -23,8 +22,6 @@
     public bool IsEditing { get; protected set; }
 
     public virtual ITextNode Root { get; }
-
-    public ISourceFile SourceFile { get; }
 
     public virtual void BeginEdit()
     {

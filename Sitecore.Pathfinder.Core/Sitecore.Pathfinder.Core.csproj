@@ -88,6 +88,7 @@
     <Compile Include="Parsing\Files\MediaFileParser.cs" />
     <Compile Include="Parsing\Files\SerializationFileParser.cs" />
     <Compile Include="Parsing\IParseService.cs" />
+    <Compile Include="TextDocuments\Document.cs" />
     <Compile Include="TextDocuments\EmptySourceFile.cs" />
     <Compile Include="Projects\IProjectItem.cs" />
     <Compile Include="Projects\IProjectService.cs" />

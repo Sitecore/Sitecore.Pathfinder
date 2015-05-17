@@ -19,7 +19,7 @@
     public ParseContext([NotNull] IConfiguration configuration)
     {
       this.Configuration = configuration;
-      this.Document = TextDocuments.TextDocument.Empty;
+      this.Document = TextDocument.Empty;
     }
 
     public IConfiguration Configuration { get; }
