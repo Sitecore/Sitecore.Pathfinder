@@ -31,7 +31,7 @@
     {
       var contents = context.Document.SourceFile.ReadAsText();
       var placeHolders = this.GetPlaceholders(contents);
-      var path = "/" + PathHelper.NormalizeItemPath(Path.Combine(context.Configuration.Get(Constants.ProjectDirectory), PathHelper.UnmapPath(context.Project.ProjectDirectory, context.Document.SourceFile.SourceFileName)));
+      var path = "/" + PathHelper.NormalizeItemPath(Path.Combine(context.Configuration.Get(Constants.Configuration.ProjectDirectory), PathHelper.UnmapPath(context.Project.ProjectDirectory, context.Document.SourceFile.SourceFileName)));
 
       var item = new Item(context.Project, context.ItemPath, context.Document)
       {

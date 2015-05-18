@@ -92,8 +92,8 @@
       configuration.Add(new MemoryConfigurationSource());
 
       var toolsDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "Website\\.sitecore.tools");
-      configuration.Set(Pathfinder.Constants.ToolsDirectory, toolsDirectory);
-      configuration.Set(Pathfinder.Constants.ConfigFileName, "sitecore.config.json");
+      configuration.Set(Pathfinder.Constants.Configuration.ToolsDirectory, toolsDirectory);
+      configuration.Set(Pathfinder.Constants.Configuration.ConfigFileName, "sitecore.config.json");
 
       return configuration;
     }

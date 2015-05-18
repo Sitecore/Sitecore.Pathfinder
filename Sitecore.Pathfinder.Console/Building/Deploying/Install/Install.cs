@@ -32,8 +32,8 @@ namespace Sitecore.Pathfinder.Building.Deploying.Install
         return;
       }
 
-      var hostName = context.Configuration.Get(Constants.HostName).TrimEnd('/');
-      var installUrl = context.Configuration.Get(Constants.InstallUrl).TrimStart('/');
+      var hostName = context.Configuration.Get(Constants.Configuration.HostName).TrimEnd('/');
+      var installUrl = context.Configuration.Get(Constants.Configuration.InstallUrl).TrimStart('/');
       var url = hostName + "/" + installUrl + HttpUtility.UrlEncode(packageId);
 
       try

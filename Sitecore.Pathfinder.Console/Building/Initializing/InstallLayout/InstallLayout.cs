@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.InstallLayout
     {
       context.Trace.TraceInformation(Texts.Text1006);
 
-      var sourceDirectory = Path.Combine(context.Configuration.Get(Constants.ToolsDirectory), "templates\\layout\\*");
+      var sourceDirectory = Path.Combine(context.Configuration.Get(Constants.Configuration.ToolsDirectory), "templates\\layout\\*");
       var destinationDirectory = Path.Combine(Path.Combine(context.SolutionDirectory, context.ProjectDirectory), "layout");
 
       context.FileSystem.XCopy(sourceDirectory, destinationDirectory);

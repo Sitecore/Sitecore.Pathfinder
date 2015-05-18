@@ -96,7 +96,7 @@
       message = string.Format(message, args);
       var fileInfo = !string.IsNullOrEmpty(fileName) ? fileName : "scc.exe";
 
-      var projectDirectory = this.Configuration.Get(Pathfinder.Constants.SolutionDirectory);
+      var projectDirectory = this.Configuration.Get(Pathfinder.Constants.Configuration.SolutionDirectory);
       if (!string.IsNullOrEmpty(projectDirectory))
       {
         if (fileInfo.StartsWith(projectDirectory, StringComparison.OrdinalIgnoreCase))

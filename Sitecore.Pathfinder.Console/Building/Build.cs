@@ -99,7 +99,7 @@
         context.Trace.TraceError(ex.Text, ex.FileName, ex.LineNumber, ex.LinePosition, ex.Message);
         context.IsAborted = true;
 
-        if (string.Compare(context.Configuration.Get(Constants.Debug), "true", StringComparison.OrdinalIgnoreCase) == 0)
+        if (string.Compare(context.Configuration.Get(Constants.Configuration.Debug), "true", StringComparison.OrdinalIgnoreCase) == 0)
         {
           throw;
         }                                                 
@@ -109,7 +109,7 @@
         context.Trace.TraceError(Texts.Text3009, ex.Message);
         context.IsAborted = true;
 
-        if (string.Compare(context.Configuration.Get(Constants.Debug), "true", StringComparison.OrdinalIgnoreCase) == 0)
+        if (string.Compare(context.Configuration.Get(Constants.Configuration.Debug), "true", StringComparison.OrdinalIgnoreCase) == 0)
         {
           throw;
         }

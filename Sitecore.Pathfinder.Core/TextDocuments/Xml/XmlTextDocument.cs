@@ -123,7 +123,7 @@
     [CanBeNull]
     protected virtual XmlSchemaSet GetSchema([NotNull] IParseContext context, [NotNull] string schemaFileName, [NotNull] string schemaNamespace)
     {
-      var fileName = Path.Combine(context.Configuration.Get(Constants.ToolsDirectory), "schemas\\" + schemaFileName);
+      var fileName = Path.Combine(context.Configuration.Get(Constants.Configuration.ToolsDirectory), "schemas\\" + schemaFileName);
       if (!context.Project.FileSystem.FileExists(fileName))
       {
         return null;

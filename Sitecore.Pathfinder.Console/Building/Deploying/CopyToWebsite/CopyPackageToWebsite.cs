@@ -23,10 +23,10 @@
 
       context.Trace.TraceInformation(Texts.Text1007);
 
-      var destinationDirectory = context.Configuration.Get(Constants.Wwwroot);
-      destinationDirectory = PathHelper.Combine(destinationDirectory, context.Configuration.Get(Constants.DataFolderName));
-      destinationDirectory = PathHelper.Combine(destinationDirectory, Constants.Pathfinder);
-      destinationDirectory = PathHelper.Combine(destinationDirectory, context.Configuration.Get(Constants.PackageDirectory));
+      var destinationDirectory = context.Configuration.Get(Constants.Configuration.Wwwroot);
+      destinationDirectory = PathHelper.Combine(destinationDirectory, context.Configuration.Get(Constants.Configuration.DataFolderName));
+      destinationDirectory = PathHelper.Combine(destinationDirectory, Constants.Configuration.Pathfinder);
+      destinationDirectory = PathHelper.Combine(destinationDirectory, context.Configuration.Get(Constants.Configuration.PackageDirectory));
 
       context.FileSystem.CreateDirectory(destinationDirectory);
 

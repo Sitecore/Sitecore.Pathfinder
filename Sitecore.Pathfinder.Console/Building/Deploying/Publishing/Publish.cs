@@ -24,9 +24,9 @@ namespace Sitecore.Pathfinder.Building.Deploying.Publishing
 
       context.Trace.TraceInformation(Texts.Text1009);
 
-      var hostName = context.Configuration.Get(Constants.HostName).TrimEnd('/');
-      var publishUrl = context.Configuration.Get(Constants.PublishUrl).TrimStart('/');
-      var url = hostName + "/" + publishUrl + HttpUtility.UrlEncode(context.Configuration.Get(Constants.Database));
+      var hostName = context.Configuration.Get(Constants.Configuration.HostName).TrimEnd('/');
+      var publishUrl = context.Configuration.Get(Constants.Configuration.PublishUrl).TrimStart('/');
+      var url = hostName + "/" + publishUrl + HttpUtility.UrlEncode(context.Configuration.Get(Constants.Configuration.Database));
 
       var webClient = new WebClient();
       try

@@ -33,8 +33,10 @@
   },
 
   // directories to ignore
-  "ignoredirectories": ".settings .filetemplates .sitecore.tools node_modules",
-  "ignorefilenames": "scc.cmd sitecore.nuspec sitecore.nupkg project.json",
+  "ignore-directories": ".settings .filetemplates .sitecore.tools node_modules",
+  "ignore-filenames": "scc.cmd sitecore.nuspec sitecore.nupkg project.json",
+
+  "content-files": ".js .css .config .html .htm .ashx",
 
   "external-references": {
     "{1930BBEB-7805-471A-A3BE-4858AC7CF696}": "/sitecore/templates/System/Templates/Standard template"

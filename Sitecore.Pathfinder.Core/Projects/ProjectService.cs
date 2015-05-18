@@ -31,12 +31,12 @@
     public IProject LoadProjectFromConfiguration()
     {
       // todo: refactor this
-      var projectDirectory = PathHelper.Combine(this.Configuration.GetString(Pathfinder.Constants.SolutionDirectory), this.Configuration.GetString(Pathfinder.Constants.ProjectDirectory));
-      var databaseName = this.Configuration.GetString(Pathfinder.Constants.Database);
+      var projectDirectory = PathHelper.Combine(this.Configuration.GetString(Pathfinder.Constants.Configuration.SolutionDirectory), this.Configuration.GetString(Pathfinder.Constants.Configuration.ProjectDirectory));
+      var databaseName = this.Configuration.GetString(Pathfinder.Constants.Configuration.Database);
 
-      var ignoreFileNames = this.Configuration.GetList(Pathfinder.Constants.IgnoreFileNames).ToList();
-      var ignoreDirectories = this.Configuration.GetList(Pathfinder.Constants.IgnoreDirectories).ToList();
-      ignoreDirectories.Add(Path.GetFileName(this.Configuration.GetString(Pathfinder.Constants.ToolsDirectory)));
+      var ignoreFileNames = this.Configuration.GetList(Pathfinder.Constants.Configuration.IgnoreFileNames).ToList();
+      var ignoreDirectories = this.Configuration.GetList(Pathfinder.Constants.Configuration.IgnoreDirectories).ToList();
+      ignoreDirectories.Add(Path.GetFileName(this.Configuration.GetString(Pathfinder.Constants.Configuration.ToolsDirectory)));
 
       var project = this.CompositionService.Resolve<Project>().With(projectDirectory, databaseName);
 

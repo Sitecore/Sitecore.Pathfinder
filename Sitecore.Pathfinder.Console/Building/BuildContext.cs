@@ -39,12 +39,12 @@
     {
       get
       {
-        return this.Configuration.Get(Pathfinder.Constants.ProjectDirectory);
+        return this.Configuration.Get(Pathfinder.Constants.Configuration.ProjectDirectory);
       }
 
       set
       {
-        this.Configuration.Set(Pathfinder.Constants.ProjectDirectory, value);
+        this.Configuration.Set(Pathfinder.Constants.Configuration.ProjectDirectory, value);
       }
     }
 
@@ -52,12 +52,12 @@
     {
       get
       {
-        return this.Configuration.Get(Pathfinder.Constants.SolutionDirectory);
+        return this.Configuration.Get(Pathfinder.Constants.Configuration.SolutionDirectory);
       }
 
       set
       {
-        this.Configuration.Set(Pathfinder.Constants.SolutionDirectory, value);
+        this.Configuration.Set(Pathfinder.Constants.Configuration.SolutionDirectory, value);
       }
     }
 

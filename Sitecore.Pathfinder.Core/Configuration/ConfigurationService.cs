@@ -29,10 +29,10 @@
         throw new ConfigurationException(Texts.Text3000);
       }
 
-      var toolsDirectory = configurationSourceRoot.Get(Pathfinder.Constants.ToolsDirectory);
+      var toolsDirectory = configurationSourceRoot.Get(Pathfinder.Constants.Configuration.ToolsDirectory);
 
       // add system config
-      var fileName = Path.Combine(toolsDirectory, configurationSourceRoot.Get(Pathfinder.Constants.ConfigFileName));
+      var fileName = Path.Combine(toolsDirectory, configurationSourceRoot.Get(Pathfinder.Constants.Configuration.ConfigFileName));
       if (!File.Exists(fileName))
       {
         throw new ConfigurationException(Texts.Text3002, fileName);
@@ -49,19 +49,19 @@
       }
 
       // set solution directory
-      var solutionDirectory = PathHelper.Combine(toolsDirectory, configurationSourceRoot.Get(Pathfinder.Constants.SolutionDirectory) ?? string.Empty);
-      configurationSourceRoot.Set(Pathfinder.Constants.SolutionDirectory, solutionDirectory);
+      var solutionDirectory = PathHelper.Combine(toolsDirectory, configurationSourceRoot.Get(Pathfinder.Constants.Configuration.SolutionDirectory) ?? string.Empty);
+      configurationSourceRoot.Set(Pathfinder.Constants.Configuration.SolutionDirectory, solutionDirectory);
 
       // add config
-      var websiteConfigFileName = PathHelper.Combine(solutionDirectory, configurationSourceRoot.Get(Pathfinder.Constants.ConfigFileName));
+      var websiteConfigFileName = PathHelper.Combine(solutionDirectory, configurationSourceRoot.Get(Pathfinder.Constants.Configuration.ConfigFileName));
       if (File.Exists(websiteConfigFileName))
       {
         configurationSourceRoot.AddFile(websiteConfigFileName);
       }
 
       // set project directory
-      var projectDirectory = PathHelper.NormalizeFilePath(configurationSourceRoot.Get(Pathfinder.Constants.ProjectDirectory) ?? string.Empty).TrimStart('\\');
-      configurationSourceRoot.Set(Pathfinder.Constants.ProjectDirectory, projectDirectory);
+      var projectDirectory = PathHelper.NormalizeFilePath(configurationSourceRoot.Get(Pathfinder.Constants.Configuration.ProjectDirectory) ?? string.Empty).TrimStart('\\');
+      configurationSourceRoot.Set(Pathfinder.Constants.Configuration.ProjectDirectory, projectDirectory);
     }
   }
 }
