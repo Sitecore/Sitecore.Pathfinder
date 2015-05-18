@@ -1,15 +1,12 @@
 namespace Sitecore.Pathfinder.Building.Deploying.Install
 {
-  using System;
   using System.ComponentModel.Composition;
   using System.IO;
-  using System.Net;
   using System.Web;
-  using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.IO;
+  using Sitecore.Pathfinder.Extensions.ConfigurationExtensions;
 
   [Export(typeof(ITask))]
-  public class Install : TaskBase
+  public class Install : RequestTaskBase
   {
     public Install() : base("install")
     {
@@ -32,53 +29,15 @@ namespace Sitecore.Pathfinder.Building.Deploying.Install
         return;
       }
 
-      var hostName = context.Configuration.Get(Constants.Configuration.HostName).TrimEnd('/');
-      var installUrl = context.Configuration.Get(Constants.Configuration.InstallUrl).TrimStart('/');
+      var hostName = context.Configuration.GetString(Constants.Configuration.HostName).TrimEnd('/');
+      var installUrl = context.Configuration.GetString(Constants.Configuration.InstallUrl).TrimStart('/');
       var url = hostName + "/" + installUrl + HttpUtility.UrlEncode(packageId);
 
-      try
-      {
-        this.InstallPackage(context, url);
-        this.MarkProjectItemsAsNotModified(context);
-      }
-      catch (WebException ex)
-      {
-        var message = ex.Message;
-
-        var stream = ex.Response?.GetResponseStream();
-        if (stream != null)
-        {
-          message = new StreamReader(stream).ReadToEnd();
-        }
-
-        context.Trace.TraceError(Texts.Text3008, message);
-      }
-      catch (Exception ex)
-      {
-        context.Trace.TraceError(Texts.Text3008, ex.Message);
-      }
-    }
-
-    public void InstallPackage([NotNull] IBuildContext context, [NotNull] string url)
-    {
-      var webClient = new WebClient();
-      var output = webClient.DownloadString(url);
-
-      if (!string.IsNullOrEmpty(output))
-      {
-        output = output.Trim();
-      }
-
-      if (string.IsNullOrEmpty(output))
+      if (!this.Request(context, url))
       {
         return;
       }
 
-      context.Trace.Writeline(output);
-    }
-
-    protected void MarkProjectItemsAsNotModified([NotNull] IBuildContext context)
-    {
       foreach (var projectItem in context.Project.Items)
       {
         projectItem.Document.SourceFile.IsModified = false;

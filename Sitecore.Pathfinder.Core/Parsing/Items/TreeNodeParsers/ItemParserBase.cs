@@ -75,7 +75,7 @@
       var field = item.Fields.FirstOrDefault(f => string.Compare(f.Name, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
       if (field != null)
       {
-        context.ParseContext.Project.Trace.TraceError(Texts.Text2012, fieldTextNode.Document.SourceFile.SourceFileName, fieldTextNode.LineNumber, fieldTextNode.LinePosition, fieldName);
+        context.ParseContext.Trace.TraceError(Texts.Text2012, fieldTextNode.Document.SourceFile.SourceFileName, fieldTextNode.LineNumber, fieldTextNode.LinePosition, fieldName);
         return;
       }
 
@@ -83,7 +83,7 @@
       var attributeValue = fieldTextNode.GetAttributeValue("Value");
       if (!string.IsNullOrEmpty(treeNodeValue) && !string.IsNullOrEmpty(attributeValue))
       {
-        context.ParseContext.Project.Trace.TraceWarning(Texts.Text3027, fieldTextNode.Document.SourceFile.SourceFileName, fieldTextNode.LineNumber, fieldTextNode.LinePosition, fieldName);
+        context.ParseContext.Trace.TraceWarning(Texts.Text3027, fieldTextNode.Document.SourceFile.SourceFileName, fieldTextNode.LineNumber, fieldTextNode.LinePosition, fieldName);
       }
 
       var value = !string.IsNullOrEmpty(attributeValue) ? attributeValue : treeNodeValue;

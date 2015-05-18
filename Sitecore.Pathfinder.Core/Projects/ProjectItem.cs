@@ -9,6 +9,8 @@
 
   public abstract class ProjectItem : IProjectItem
   {
+    private static readonly MD5 MD5Hash = MD5.Create();
+
     protected ProjectItem([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] IDocument document)
     {
       this.Project = project;
@@ -37,17 +39,6 @@
 
     public abstract void Bind();
 
-    public virtual void Lint()
-    {
-      foreach (var reference in this.References)
-      {
-        if (!reference.Resolve())
-        {
-          this.Project.Trace.TraceWarning(Texts.Text3024, this.Document.SourceFile.SourceFileName, 0, 0, reference.ToString());
-        }
-      }
-    }
-
     protected internal void OverwriteProjectUniqueId([NotNull] string newProjectUniqueId)
     {
       this.ProjectUniqueId = newProjectUniqueId;
@@ -62,7 +53,7 @@
         // calculate guid from project unique id and project id
         var text = this.Project.ProjectUniqueId + "/" + this.ProjectUniqueId;
         var bytes = Encoding.UTF8.GetBytes(text);
-        var hash = MD5.Create().ComputeHash(bytes);
+        var hash = MD5Hash.ComputeHash(bytes);
         guid = new Guid(hash);
       }
 

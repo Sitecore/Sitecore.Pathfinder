@@ -175,6 +175,7 @@
     public const int Text3030 = 3030;
 
     public const int Text3031 = 3031;
+    public const int Text3032 = 3032;
 
     public const int Text9998 = 9998;
 
@@ -211,7 +212,7 @@
         Text1009, "Publishing..."
       }, 
       {
-        Text1010, "Linting..."
+        Text1010, "Checking..."
       }, 
       {
         Text1011, "Loading project..."
@@ -313,7 +314,7 @@
         Text2021, "Media item not found: {0}"
       }, 
       {
-        Text2022, "Failed to upload media"
+        Text2022, "Failed to upload media: {0}"
       }, 
       {
         Text2023, "Failed to add new template"
@@ -440,6 +441,9 @@
       }, 
       {
         Text3031, "Text document expected"
+      }, 
+      {
+        Text3032, "Failed to create the Nupkg file: {0}"
       }, 
       {
         Text9998, "{0}"

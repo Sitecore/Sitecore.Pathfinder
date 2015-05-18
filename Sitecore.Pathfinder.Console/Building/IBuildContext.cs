@@ -23,6 +23,9 @@
     bool IsDeployable { get; set; }
 
     [NotNull]
+    IList<IProjectItem> ModifiedProjectItems { get; }
+
+    [NotNull]
     IList<string> OutputFiles { get; }
 
     [NotNull]
@@ -33,9 +36,6 @@
 
     [NotNull]
     string SolutionDirectory { get; }
-
-    [NotNull]
-    IList<IProjectItem> ModifiedProjectItems { get; }
 
     [NotNull]
     ITraceService Trace { get; }

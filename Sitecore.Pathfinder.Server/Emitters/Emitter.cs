@@ -102,8 +102,6 @@
         {
           retries.Add(new Tuple<IProjectItem, Exception>(projectItem, ex));
         }
-
-        break;
       }
     }
 

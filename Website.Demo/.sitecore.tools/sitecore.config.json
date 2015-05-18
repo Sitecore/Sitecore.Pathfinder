@@ -20,7 +20,7 @@
     "pipeline": "init"
   },
 
-  // NuGet
+  // NuGet settings
   "nuget": {
     "filename": "sitecore.nuspec"
   },
@@ -36,7 +36,8 @@
   "ignore-directories": ".settings .filetemplates .sitecore.tools node_modules",
   "ignore-filenames": "scc.cmd sitecore.nuspec sitecore.nupkg project.json",
 
-  "content-files": ".js .css .config .html .htm .ashx",
+  // files to copy to website
+  "content-files": ".js .css .config .html .htm .ashx .asmx",
 
   "external-references": {
     "{1930BBEB-7805-471A-A3BE-4858AC7CF696}": "/sitecore/templates/System/Templates/Standard template"

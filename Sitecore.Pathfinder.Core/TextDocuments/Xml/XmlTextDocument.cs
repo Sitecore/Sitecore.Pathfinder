@@ -102,10 +102,10 @@
         switch (args.Severity)
         {
           case XmlSeverityType.Error:
-            context.Project.Trace.TraceError(Texts.Text3013, context.Document.SourceFile.SourceFileName, args.Exception.LineNumber, args.Exception.LinePosition, args.Message);
+            context.Trace.TraceError(Texts.Text3013, context.Document.SourceFile.SourceFileName, args.Exception.LineNumber, args.Exception.LinePosition, args.Message);
             break;
           case XmlSeverityType.Warning:
-            context.Project.Trace.TraceWarning(Texts.Text3014, context.Document.SourceFile.SourceFileName, args.Exception.LineNumber, args.Exception.LinePosition, args.Message);
+            context.Trace.TraceWarning(Texts.Text3014, context.Document.SourceFile.SourceFileName, args.Exception.LineNumber, args.Exception.LinePosition, args.Message);
             break;
         }
       };
@@ -116,7 +116,7 @@
       }
       catch (Exception ex)
       {
-        context.Project.Trace.TraceError(Texts.Text3012, context.Document.SourceFile.SourceFileName, 0, 0, ex.Message);
+        context.Trace.TraceError(Texts.Text3012, context.Document.SourceFile.SourceFileName, 0, 0, ex.Message);
       }
     }
 

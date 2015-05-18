@@ -31,7 +31,5 @@
     string ShortName { get; }
 
     void Bind();
-
-    void Lint();
   }
 }

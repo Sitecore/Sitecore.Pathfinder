@@ -29,15 +29,8 @@
       destinationFileName = FileUtil.MapPath(destinationFileName);
 
       // todo: backup to uninstall folder
-      try
-      {
-        context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName) ?? string.Empty);
-        context.FileSystem.Copy(contentFile.Document.SourceFile.SourceFileName, destinationFileName);
-      }
-      catch (Exception ex)
-      {
-        Log.Error($"Failed to copy assembly: {contentFile.Document.SourceFile.SourceFileName} -> {destinationFileName}", ex);
-      }
+      context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName) ?? string.Empty);
+      context.FileSystem.Copy(contentFile.Document.SourceFile.SourceFileName, destinationFileName);
     }
   }
 }

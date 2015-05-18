@@ -2,7 +2,6 @@
 {
   using System;
   using System.ComponentModel.Composition;
-  using System.Diagnostics;
   using System.IO;
   using NuGet;
   using Sitecore.Pathfinder.Diagnostics;
@@ -45,14 +44,14 @@
         return;
       }
 
-      this.BuildNupkgFile(nuspecFileName, nupkgFileName);
-
-      context.Trace.TraceInformation(Texts.Text1022, new FileInfo(nupkgFileName).Length.ToString("#,##0"));
+      this.BuildNupkgFile(context, nuspecFileName, nupkgFileName);
 
       context.OutputFiles.Add(nupkgFileName);
+
+      context.Trace.TraceInformation(Texts.Text1022, new FileInfo(nupkgFileName).Length.ToString("#,##0"));
     }
 
-    private void BuildNupkgFile([NotNull] string nuspecFileName, [NotNull] string nupkgFileName)
+    private void BuildNupkgFile([NotNull] IBuildContext context, [NotNull] string nuspecFileName, [NotNull] string nupkgFileName)
     {
       try
       {
@@ -68,7 +67,7 @@
       }
       catch (Exception ex)
       {
-        Trace.TraceError("Failed to create the nupkg file: {0}", ex.Message);
+        context.Trace.TraceError(Texts.Text3032, ex.Message);
       }
     }
   }

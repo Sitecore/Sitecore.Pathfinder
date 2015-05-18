@@ -16,9 +16,10 @@
     private string itemPath;
 
     [ImportingConstructor]
-    public ParseContext([NotNull] IConfiguration configuration)
+    public ParseContext([NotNull] IConfiguration configuration, [NotNull] ITraceService trace)
     {
       this.Configuration = configuration;
+      this.Trace = trace;
       this.Document = TextDocument.Empty;
     }
 
@@ -26,13 +27,15 @@
 
     public virtual string DatabaseName => this.Project.DatabaseName;
 
+    public IDocument Document { get; private set; }
+
     public virtual string ItemName => this.itemName ?? (this.itemName = PathHelper.GetItemName(this.Document.SourceFile));
 
     public virtual string ItemPath => this.itemPath ?? (this.itemPath = PathHelper.GetItemPath(this.Project, this.Document.SourceFile));
 
     public IProject Project { get; private set; }
 
-    public IDocument Document { get; private set; }
+    public ITraceService Trace { get; }
 
     public IParseContext With(IProject project, IDocument document)
     {

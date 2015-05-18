@@ -2,6 +2,7 @@
 {
   using System.IO;
   using System.Linq;
+  using System.Net;
   using NUnit.Framework;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Projects.Items;
@@ -51,10 +52,7 @@
       Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", item.TemplateIdOrPath);
 
       var textDocument = projectItem.Document as ITextDocument;
-      if (textDocument == null)
-      {
-        throw new BuildException(Texts.Text3031, projectItem.Document);
-      }
+      Assert.IsNotNull(textDocument);
 
       var treeNode = textDocument.Root;
       Assert.AreEqual("Item", treeNode.Name);
@@ -127,10 +125,7 @@
       Assert.AreEqual("Hello", field.Value);
 
       var textDocument = projectItem.Document as ITextDocument;
-      if (textDocument == null)
-      {
-        throw new BuildException(Texts.Text3031, projectItem.Document);
-      }
+      Assert.IsNotNull(textDocument);
 
       var treeNode = textDocument.Root;
       Assert.AreEqual("Item", treeNode.Name);
@@ -157,6 +152,20 @@
       var field = item.Fields.FirstOrDefault(f => f.Name == "Description");
       Assert.IsNotNull(field);
       Assert.AreEqual("Mushrooms", field.Value);
+    }
+
+    [Test]
+    public void MergeByProjectUniqueIdTest()
+    {
+      var project = this.Resolve<IProject>();
+
+      var projectItem1 = new Item(project, "SameId", Document.Empty);
+      var projectItem2 = new Item(project, "SameId", Document.Empty);
+
+      project.AddOrMerge(projectItem1);
+      project.AddOrMerge(projectItem2);
+
+      Assert.AreEqual(1, project.Items.Count());
     }
   }
 }

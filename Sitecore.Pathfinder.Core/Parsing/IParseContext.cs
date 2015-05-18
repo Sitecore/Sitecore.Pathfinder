@@ -14,6 +14,9 @@
     string DatabaseName { get; }
 
     [NotNull]
+    IDocument Document { get; }
+
+    [NotNull]
     string ItemName { get; }
 
     [NotNull]
@@ -23,7 +26,7 @@
     IProject Project { get; }
 
     [NotNull]
-    IDocument Document { get; }
+    ITraceService Trace { get; }
 
     [NotNull]
     IParseContext With([NotNull] IProject project, [NotNull] IDocument document);

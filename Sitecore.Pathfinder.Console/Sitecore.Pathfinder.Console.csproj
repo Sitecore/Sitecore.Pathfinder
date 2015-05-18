@@ -103,6 +103,7 @@
     <Compile Include="Building\Preprocessing\Clean\Clean.cs" />
     <Compile Include="Building\Build.cs" />
     <Compile Include="Building\Preprocessing\IncrementalBuilds\IncrementalBuild.cs" />
+    <Compile Include="Building\RequestTaskBase.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Building\BuildContext.cs" />
     <Compile Include="Building\IBuildContext.cs" />
@@ -146,9 +147,6 @@
     <Content Include="wwwroot\website\bin\Microsoft.Framework.ConfigurationModel.Interfaces.dll" />
     <Content Include="wwwroot\website\bin\Microsoft.Framework.ConfigurationModel.Json.dll" />
     <Content Include="wwwroot\website\bin\Microsoft.Framework.ConfigurationModel.Xml.dll" />
-    <Content Include="schemas\item.schema.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="wwwroot\project\.settings\settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -159,6 +157,21 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="wwwroot\project\.filetemplates\Template.item.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\project\.schemas\item.schema.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\project\.schemas\item.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\project\.schemas\layout.core.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\project\.schemas\layout.master.xsd">
+      <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="wwwroot\project\scc.cmd">
@@ -184,22 +197,10 @@
       <Link>wwwroot\website\bin\Sitecore.Pathfinder.Server.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="schemas\item.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="schemas\layout.core.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="wwwroot\project\layout\layouts\MvcLayout.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="wwwroot\project\layout\web.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="schemas\layout.master.xsd">
-      <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="wwwroot\project\sitecore.config.json">

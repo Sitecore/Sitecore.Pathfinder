@@ -6,8 +6,6 @@
 
   public class TextDocument : Document, ITextDocument
   {
-    public static readonly IDocument Empty = new TextDocument(TextDocuments.SourceFile.Empty, string.Empty);
-
     public TextDocument([NotNull] ISourceFile sourceFile, [NotNull] string contents) : base(sourceFile)
     {
       this.Contents = contents;

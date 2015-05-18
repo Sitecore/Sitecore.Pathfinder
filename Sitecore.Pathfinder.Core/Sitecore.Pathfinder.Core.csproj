@@ -62,6 +62,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Checking\CheckerBase.cs" />
+    <Compile Include="Checking\CheckerContext.cs" />
+    <Compile Include="Checking\CheckerService.cs" />
+    <Compile Include="Checking\Checkers\GuidChecker.cs" />
+    <Compile Include="Checking\Checkers\ReferenceChecker.cs" />
+    <Compile Include="Checking\IChecker.cs" />
+    <Compile Include="Checking\ICheckerContext.cs" />
+    <Compile Include="Checking\ICheckerService.cs" />
     <Compile Include="Configuration\ConfigurationService.cs" />
     <Compile Include="Configuration\IConfigurationService.cs" />
     <Compile Include="Constants.cs" />
@@ -159,6 +167,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

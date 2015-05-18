@@ -4,17 +4,24 @@
   using System.ComponentModel.Composition;
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Extensions.ConfigurationExtensions;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects;
 
+  [Export(typeof(IBuildContext))]
+  [PartCreationPolicy(CreationPolicy.NonShared)]
   public class BuildContext : IBuildContext
   {
-    public BuildContext([NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [NotNull] ICompositionService compositionService, [NotNull] IFileSystemService fileSystem)
+    private IProject project;
+
+    [ImportingConstructor]
+    public BuildContext([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystem, [NotNull] IProjectService projectService)
     {
+      this.CompositionService = compositionService;
       this.Configuration = configuration;
       this.Trace = traceService;
-      this.CompositionService = compositionService;
       this.FileSystem = fileSystem;
+      this.ProjectService = projectService;
 
       this.ModifiedProjectItems = new List<IProjectItem>();
       this.OutputFiles = new List<string>();
@@ -31,45 +38,19 @@
 
     public bool IsDeployable { get; set; }
 
+    public IList<IProjectItem> ModifiedProjectItems { get; }
+
     public IList<string> OutputFiles { get; }
 
-    public IProject Project { get; private set; }
+    public IProject Project => this.project ?? (this.project = this.ProjectService.LoadProjectFromConfiguration());
 
-    public string ProjectDirectory
-    {
-      get
-      {
-        return this.Configuration.Get(Pathfinder.Constants.Configuration.ProjectDirectory);
-      }
+    public string ProjectDirectory => this.Configuration.GetString(Pathfinder.Constants.Configuration.ProjectDirectory);
 
-      set
-      {
-        this.Configuration.Set(Pathfinder.Constants.Configuration.ProjectDirectory, value);
-      }
-    }
-
-    public string SolutionDirectory
-    {
-      get
-      {
-        return this.Configuration.Get(Pathfinder.Constants.Configuration.SolutionDirectory);
-      }
-
-      set
-      {
-        this.Configuration.Set(Pathfinder.Constants.Configuration.SolutionDirectory, value);
-      }
-    }
-
-    public IList<IProjectItem> ModifiedProjectItems { get; }
+    public string SolutionDirectory => this.Configuration.GetString(Pathfinder.Constants.Configuration.SolutionDirectory);
 
     public ITraceService Trace { get; }
 
     [NotNull]
-    public IBuildContext With([NotNull] IProject project)
-    {
-      this.Project = project;
-      return this;
-    }
+    protected IProjectService ProjectService { get; }
   }
 }

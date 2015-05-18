@@ -6,6 +6,7 @@
   using System.IO;
   using System.Reflection;
   using Microsoft.Framework.ConfigurationModel;
+  using Sitecore.Pathfinder.Checking;
   using Sitecore.Pathfinder.Configuration;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Extensions.CompositionServiceExtensions;
@@ -17,6 +18,9 @@
   public class Services
   {
     [NotNull]
+    public ICheckerService CheckerService { get; set; }
+
+    [NotNull]
     public CompositionContainer CompositionService { get; private set; }
 
     [NotNull]
@@ -26,6 +30,9 @@
     public IConfigurationService ConfigurationService { get; private set; }
 
     [NotNull]
+    public IDocumentService DocumentService { get; set; }
+
+    [NotNull]
     public IFileSystemService FileSystem { get; private set; }
 
     [NotNull]
@@ -33,9 +40,6 @@
 
     [NotNull]
     public IProjectService ProjectService { get; private set; }
-
-    [NotNull]
-    public IDocumentService DocumentService { get; set; }
 
     [NotNull]
     public ITextTokenService TextTokenService { get; set; }
@@ -83,6 +87,7 @@
       this.ConfigurationService = this.CompositionService.Resolve<IConfigurationService>();
       this.DocumentService = this.CompositionService.Resolve<IDocumentService>();
       this.TextTokenService = this.CompositionService.Resolve<ITextTokenService>();
+      this.CheckerService = this.CompositionService.Resolve<ICheckerService>();
     }
 
     [NotNull]

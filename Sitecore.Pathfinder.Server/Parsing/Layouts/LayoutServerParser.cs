@@ -113,12 +113,12 @@
 
       foreach (var error in errors)
       {
-        context.Project.Trace.TraceError(Texts.Text2026, context.Document.SourceFile.SourceFileName, error.Line, error.Column, error.Text);
+        context.Trace.TraceError(Texts.Text2026, context.Document.SourceFile.SourceFileName, error.Line, error.Column, error.Text);
       }
 
       foreach (var warning in warnings)
       {
-        context.Project.Trace.TraceWarning(Texts.Text2027, context.Document.SourceFile.SourceFileName, warning.Line, warning.Column, warning.Text);
+        context.Trace.TraceWarning(Texts.Text2027, context.Document.SourceFile.SourceFileName, warning.Line, warning.Column, warning.Text);
       }
 
       if (errors.Any())

@@ -6,25 +6,17 @@
   using System.Linq;
   using Sitecore.Pathfinder.Configuration;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.IO;
-  using Sitecore.Pathfinder.Projects;
+  using Sitecore.Pathfinder.Extensions.CompositionServiceExtensions;
+  using Sitecore.Pathfinder.Extensions.ConfigurationExtensions;
 
   [Export]
   public class Build
   {
-    private static readonly char[] Space = 
-    {
-      ' '
-    };
-
     [ImportingConstructor]
-    public Build([NotNull] ICompositionService compositionService, [NotNull] IConfigurationService configurationService, [NotNull] ITraceService trace, [NotNull] IFileSystemService fileSystem, [NotNull] IProjectService projectService)
+    public Build([NotNull] ICompositionService compositionService, [NotNull] IConfigurationService configurationService)
     {
       this.CompositionService = compositionService;
       this.ConfigurationService = configurationService;
-      this.Trace = trace;
-      this.FileSystem = fileSystem;
-      this.ProjectService = projectService;
     }
 
     [NotNull]
@@ -37,28 +29,43 @@
     [NotNull]
     protected IConfigurationService ConfigurationService { get; }
 
-    [NotNull]
-    protected IFileSystemService FileSystem { get; }
-
-    [NotNull]
-    protected IProjectService ProjectService { get; }
-
-    [NotNull]
-    protected ITraceService Trace { get; }
-
     public virtual void Start()
     {
       this.ConfigurationService.Load(LoadConfigurationOptions.IncludeCommandLine);
 
-      this.Trace.TraceInformation(Texts.Text1011);
-      var project = this.ProjectService.LoadProjectFromConfiguration();
-      this.Trace.TraceInformation(Texts.Text1023, project.SourceFiles.Count, project.Items.Count());
-
-
-      // todo: use abstract factory pattern
-      var context = new BuildContext(this.ConfigurationService.Configuration, this.Trace, this.CompositionService, this.FileSystem).With(project);
-
+      var context = this.CompositionService.Resolve<IBuildContext>();
       this.Run(context);
+    }
+
+    [NotNull]
+    protected virtual IEnumerable<string> GetPipeline([NotNull] IBuildContext context)
+    {
+      string pipeline;
+
+      var run = context.Configuration.GetString("run");
+      if (!string.IsNullOrEmpty(run))
+      {
+        pipeline = context.Configuration.GetString(run + ":pipeline");
+
+        if (string.IsNullOrEmpty(pipeline))
+        {
+          pipeline = run;
+        }
+      }
+      else
+      {
+        pipeline = context.Configuration.GetString("pipeline");
+      }
+
+      var taskNames = pipeline.Split(Constants.Space, StringSplitOptions.RemoveEmptyEntries).Select(t => t.Trim()).ToList();
+
+      if (taskNames.Any())
+      {
+        // inject 'before-build' task as the first task
+        taskNames.Insert(0, "before-build");
+      }
+
+      return taskNames;
     }
 
     protected virtual void Run([NotNull] IBuildContext context)
@@ -99,52 +106,21 @@
         context.Trace.TraceError(ex.Text, ex.FileName, ex.LineNumber, ex.LinePosition, ex.Message);
         context.IsAborted = true;
 
-        if (string.Compare(context.Configuration.Get(Constants.Configuration.Debug), "true", StringComparison.OrdinalIgnoreCase) == 0)
+        if (context.Configuration.GetBool(Constants.Configuration.Debug))
         {
           throw;
-        }                                                 
+        }
       }
       catch (Exception ex)
       {
         context.Trace.TraceError(Texts.Text3009, ex.Message);
         context.IsAborted = true;
 
-        if (string.Compare(context.Configuration.Get(Constants.Configuration.Debug), "true", StringComparison.OrdinalIgnoreCase) == 0)
+        if (context.Configuration.GetBool(Constants.Configuration.Debug))
         {
           throw;
         }
       }
-    }
-
-    [NotNull]
-    protected virtual IEnumerable<string> GetPipeline([NotNull] IBuildContext context)
-    {
-      string pipeline;
-
-      var run = context.Configuration.Get("run") ?? string.Empty;
-      if (!string.IsNullOrEmpty(run))
-      {
-        pipeline = context.Configuration.Get(run + ":pipeline");
-
-        if (string.IsNullOrEmpty(pipeline))
-        {
-          pipeline = run;
-        }
-      }
-      else
-      {
-        pipeline = context.Configuration.Get("pipeline");
-      }
-
-      var taskNames = pipeline.Split(Space, StringSplitOptions.RemoveEmptyEntries).Select(t => t.Trim()).ToList();
-
-      if (taskNames.Any())
-      {
-        // inject 'before-build' task as the first task
-        taskNames.Insert(0, "before-build");
-      }
-
-      return taskNames;
     }
   }
 }
