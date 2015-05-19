@@ -29,7 +29,5 @@
 
     [NotNull]
     string ShortName { get; }
-
-    void Bind();
   }
 }

@@ -15,24 +15,24 @@
       this.FileName = string.Empty;
     }
 
-    public BuildException(int text, [NotNull] ISourceFile sourceFile, [NotNull] params object[] args) : base($"{sourceFile.SourceFileName} (0, 0): {string.Format(Texts.Messages[text], args)}")
+    public BuildException(int text, [NotNull] ISourceFile sourceFile, [NotNull] params object[] args) : base($"{sourceFile.FileName} (0, 0): {string.Format(Texts.Messages[text], args)}")
     {
       this.Text = text;
-      this.FileName = sourceFile.SourceFileName;
+      this.FileName = sourceFile.FileName;
       this.Args = args;
     }
 
-    public BuildException(int text, [NotNull] IDocument document, [NotNull] params object[] args) : base($"{document.SourceFile.SourceFileName} (0, 0): {string.Format(Texts.Messages[text], args)}")
+    public BuildException(int text, [NotNull] IDocument document, [NotNull] params object[] args) : base($"{document.SourceFile.FileName} (0, 0): {string.Format(Texts.Messages[text], args)}")
     {
       this.Text = text;
-      this.FileName = document.SourceFile.SourceFileName;
+      this.FileName = document.SourceFile.FileName;
       this.Args = args;
     }
 
-    public BuildException(int text, [NotNull] ITextNode textNode, [NotNull] params object[] args) : base($"{textNode.Document.SourceFile.SourceFileName} ({textNode.LineNumber}, {textNode.LinePosition}): {string.Format(Texts.Messages[text], args)}")
+    public BuildException(int text, [NotNull] ITextNode textNode, [NotNull] params object[] args) : base($"{textNode.Document.SourceFile.FileName} ({textNode.LineNumber}, {textNode.LinePosition}): {string.Format(Texts.Messages[text], args)}")
     {
       this.Text = text;
-      this.FileName = textNode.Document.SourceFile.SourceFileName;
+      this.FileName = textNode.Document.SourceFile.FileName;
       this.LineNumber = textNode.LineNumber;
       this.LinePosition = textNode.LinePosition;
       this.Args = args;

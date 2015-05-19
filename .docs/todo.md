@@ -30,7 +30,7 @@ Milestone 2
 * Code Generation
 * Rename
 * Delete
-*  Components/PageType Concepts/abstractions
+* Components/PageType Concepts/abstractions
 
 Missing
 -------

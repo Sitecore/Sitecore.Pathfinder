@@ -25,12 +25,12 @@
     {
       var contentFile = (ContentFile)projectItem;
 
-      var destinationFileName = "/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(context.Project.ProjectDirectory, contentFile.Document.SourceFile.SourceFileName));
+      var destinationFileName = "/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(context.Project.ProjectDirectory, contentFile.Document.SourceFile.FileName));
       destinationFileName = FileUtil.MapPath(destinationFileName);
 
       // todo: backup to uninstall folder
       context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName) ?? string.Empty);
-      context.FileSystem.Copy(contentFile.Document.SourceFile.SourceFileName, destinationFileName);
+      context.FileSystem.Copy(contentFile.Document.SourceFile.FileName, destinationFileName);
     }
   }
 }

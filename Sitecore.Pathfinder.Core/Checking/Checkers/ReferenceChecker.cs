@@ -11,9 +11,20 @@
       {
         foreach (var reference in projectItem.References)
         {
-          if (!reference.Resolve())
+          if (reference.IsValid)
           {
-            context.Trace.TraceWarning(Texts.Text3024, projectItem.Document.SourceFile.SourceFileName, 0, 0, reference.ToString());
+            continue;
+          }
+
+          var textNode = reference.SourceTextNode;
+
+          if (textNode != null)
+          {
+            context.Trace.TraceWarning(Texts.Text3024, projectItem.Document.SourceFile.FileName, textNode.LineNumber, textNode.LinePosition, reference.TargetQualifiedName);
+          }
+          else
+          {
+            context.Trace.TraceWarning(Texts.Text3024, projectItem.Document.SourceFile.FileName, 0, 0, reference.TargetQualifiedName);
           }
         }
       }

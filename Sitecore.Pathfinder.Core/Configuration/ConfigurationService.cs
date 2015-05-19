@@ -1,6 +1,7 @@
 ﻿namespace Sitecore.Pathfinder.Configuration
 {
   using System;
+  using System.Collections.Generic;
   using System.ComponentModel.Composition;
   using System.IO;
   using System.Linq;
@@ -18,7 +19,6 @@
       this.Configuration = configuration;
     }
 
-    [NotNull]
     public IConfiguration Configuration { get; }
 
     public virtual void Load(LoadConfigurationOptions options)
@@ -45,7 +45,13 @@
         // add command line
         // cut off executable name
         var commandLineArgs = Environment.GetCommandLineArgs().Skip(1).ToArray();
-        configurationSourceRoot.AddCommandLine(commandLineArgs);
+        var mapping = new Dictionary<string, string>()
+        {
+          ["-r"] = "run",
+          ["--r"] = "run"
+        };
+
+        configurationSourceRoot.AddCommandLine(commandLineArgs, mapping);
       }
 
       // set solution directory

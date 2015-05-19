@@ -31,7 +31,7 @@
 
       project.Add(fileName);
       Assert.AreEqual(1, project.SourceFiles.Count);
-      Assert.AreEqual(fileName, project.SourceFiles.First().SourceFileName);
+      Assert.AreEqual(fileName, project.SourceFiles.First().FileName);
 
       project.Remove(fileName);
       Assert.AreEqual(0, project.SourceFiles.Count);

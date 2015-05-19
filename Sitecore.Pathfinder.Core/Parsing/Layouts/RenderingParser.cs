@@ -24,14 +24,14 @@
 
     public override bool CanParse(IParseContext context)
     {
-      return context.Document.SourceFile.SourceFileName.EndsWith(this.FileExtension, StringComparison.OrdinalIgnoreCase);
+      return context.Document.SourceFile.FileName.EndsWith(this.FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
       var contents = context.Document.SourceFile.ReadAsText();
       var placeHolders = this.GetPlaceholders(contents);
-      var path = "/" + PathHelper.NormalizeItemPath(Path.Combine(context.Configuration.Get(Constants.Configuration.ProjectDirectory), PathHelper.UnmapPath(context.Project.ProjectDirectory, context.Document.SourceFile.SourceFileName)));
+      var path = "/" + PathHelper.NormalizeItemPath(Path.Combine(context.Configuration.Get(Constants.Configuration.ProjectDirectory), PathHelper.UnmapPath(context.Project.ProjectDirectory, context.Document.SourceFile.FileName)));
 
       var item = new Item(context.Project, context.ItemPath, context.Document)
       {

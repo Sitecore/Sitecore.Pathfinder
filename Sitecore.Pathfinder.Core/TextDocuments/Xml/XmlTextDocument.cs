@@ -74,7 +74,7 @@
       }
 
       this.IsEditing = false;
-      this.rootElement.Save(this.SourceFile.SourceFileName, SaveOptions.DisableFormatting);
+      this.rootElement.Save(this.SourceFile.FileName, SaveOptions.DisableFormatting);
     }
 
     public override void ValidateSchema(IParseContext context, string schemaNamespace, string schemaFileName)
@@ -102,10 +102,10 @@
         switch (args.Severity)
         {
           case XmlSeverityType.Error:
-            context.Trace.TraceError(Texts.Text3013, context.Document.SourceFile.SourceFileName, args.Exception.LineNumber, args.Exception.LinePosition, args.Message);
+            context.Trace.TraceError(Texts.Text3013, context.Document.SourceFile.FileName, args.Exception.LineNumber, args.Exception.LinePosition, args.Message);
             break;
           case XmlSeverityType.Warning:
-            context.Trace.TraceWarning(Texts.Text3014, context.Document.SourceFile.SourceFileName, args.Exception.LineNumber, args.Exception.LinePosition, args.Message);
+            context.Trace.TraceWarning(Texts.Text3014, context.Document.SourceFile.FileName, args.Exception.LineNumber, args.Exception.LinePosition, args.Message);
             break;
         }
       };
@@ -116,7 +116,7 @@
       }
       catch (Exception ex)
       {
-        context.Trace.TraceError(Texts.Text3012, context.Document.SourceFile.SourceFileName, 0, 0, ex.Message);
+        context.Trace.TraceError(Texts.Text3012, context.Document.SourceFile.FileName, 0, 0, ex.Message);
       }
     }
 

@@ -30,20 +30,6 @@ namespace Sitecore.Pathfinder.Projects.Items
 
     public bool OverwriteWhenMerging { get; set; }
 
-    public override void Bind()
-    {
-      base.Bind();
-
-      foreach (var field in this.Fields)
-      {
-        // todo: use regular expression to detect paths, guids, piped guids - possibly an field handler for Link, Images, Rich Text fields
-        if (field.Value.StartsWith("/sitecore", StringComparison.OrdinalIgnoreCase))
-        {
-          this.References.AddFieldReference(field.Value);
-        }
-      }
-    }
-
     public void Merge([NotNull] Item newItem)
     {
       if (this.OverwriteWhenMerging)

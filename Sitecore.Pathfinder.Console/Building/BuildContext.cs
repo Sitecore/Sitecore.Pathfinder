@@ -22,25 +22,23 @@
       this.Trace = traceService;
       this.FileSystem = fileSystem;
       this.ProjectService = projectService;
-
-      this.ModifiedProjectItems = new List<IProjectItem>();
-      this.OutputFiles = new List<string>();
-      this.IsDeployable = true;
     }
 
     public ICompositionService CompositionService { get; }
 
     public IConfiguration Configuration { get; }
 
+    public bool DisplayDoneMessage { get; set; } = true;
+
     public IFileSystemService FileSystem { get; }
 
     public bool IsAborted { get; set; }
 
-    public bool IsDeployable { get; set; }
+    public bool IsDeployable { get; set; } = true;
 
-    public IList<IProjectItem> ModifiedProjectItems { get; }
+    public IList<IProjectItem> ModifiedProjectItems { get; } = new List<IProjectItem>();
 
-    public IList<string> OutputFiles { get; }
+    public IList<string> OutputFiles { get; } = new List<string>();
 
     public IProject Project => this.project ?? (this.project = this.ProjectService.LoadProjectFromConfiguration());
 

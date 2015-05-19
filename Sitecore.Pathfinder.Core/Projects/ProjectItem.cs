@@ -1,12 +1,14 @@
 ﻿namespace Sitecore.Pathfinder.Projects
 {
   using System;
+  using System.Diagnostics;
   using System.Security.Cryptography;
   using System.Text;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Projects.References;
   using Sitecore.Pathfinder.TextDocuments;
 
+  [DebuggerDisplay("{GetType().Name,nq}: {QualifiedName}")]
   public abstract class ProjectItem : IProjectItem
   {
     private static readonly MD5 MD5Hash = MD5.Create();
@@ -36,8 +38,6 @@
     public abstract string ShortName { get; }
 
     public IDocument Document { get; }
-
-    public abstract void Bind();
 
     protected internal void OverwriteProjectUniqueId([NotNull] string newProjectUniqueId)
     {

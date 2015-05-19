@@ -101,16 +101,16 @@
     [NotNull]
     public static string GetItemName([NotNull] ISourceFile sourceFile)
     {
-      var s = sourceFile.SourceFileName.LastIndexOf('\\') + 1;
-      var e = sourceFile.SourceFileName.IndexOf('.', s);
+      var s = sourceFile.FileName.LastIndexOf('\\') + 1;
+      var e = sourceFile.FileName.IndexOf('.', s);
 
-      return sourceFile.SourceFileName.Mid(s, e - s);
+      return sourceFile.FileName.Mid(s, e - s);
     }
 
     [NotNull]
     public static string GetItemPath([NotNull] IProject project, [NotNull] ISourceFile sourceFile)
     {
-      var itemPath = UnmapPath(project.ProjectDirectory, sourceFile.SourceFileName);
+      var itemPath = UnmapPath(project.ProjectDirectory, sourceFile.FileName);
 
       itemPath = GetDirectoryAndFileNameWithoutExtensions(itemPath);
 

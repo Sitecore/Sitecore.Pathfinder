@@ -3,17 +3,27 @@
   using System;
   using System.Xml.Linq;
   using Newtonsoft.Json.Linq;
-  using Sitecore.Pathfinder.Parsing;
+  using Sitecore.Pathfinder.Projects;
 
   public class EmptySourceFile : ISourceFile
   {
+    private readonly string fileNameWithoutExtensions = string.Empty;
+
+    public string FileName { get; } = string.Empty;
+
     public bool IsModified { get; set; } = false;
 
     public DateTime LastWriteTimeUtc { get; } = DateTime.MinValue;
 
-    public string SourceFileName { get; } = string.Empty;
+    public string GetFileNameWithoutExtensions()
+    {
+      return this.fileNameWithoutExtensions;
+    }
 
-    public string SourceFileNameWithoutExtensions { get; } = string.Empty;
+    public string GetProjectPath(IProject project)
+    {
+      throw new InvalidOperationException("Cannot read from empty source file");
+    }
 
     public JObject ReadAsJson()
     {

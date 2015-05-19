@@ -148,7 +148,7 @@
         }
         else
         {
-          this.Trace.TraceError(Texts.Text9999, "An error occured in " + projectItem.Document.SourceFile.SourceFileName);
+          this.Trace.TraceError(Texts.Text9999, "An error occured in " + projectItem.Document.SourceFile.FileName);
         }
       }
     }

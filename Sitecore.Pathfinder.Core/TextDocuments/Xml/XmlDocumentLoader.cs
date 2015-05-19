@@ -10,7 +10,7 @@
   {
     public bool CanLoad(IDocumentService documentService, IProject project, ISourceFile sourceFile)
     {
-      return string.Compare(Path.GetExtension(sourceFile.SourceFileName), ".xml", StringComparison.OrdinalIgnoreCase) == 0;
+      return string.Compare(Path.GetExtension(sourceFile.FileName), ".xml", StringComparison.OrdinalIgnoreCase) == 0;
     }
 
     public IDocument Load(IDocumentService documentService, IProject project, ISourceFile sourceFile)

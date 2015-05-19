@@ -15,18 +15,14 @@
     {
     }
 
-    public override string QualifiedName => this.qualifiedName ?? (this.qualifiedName = this.Document.SourceFile.SourceFileName);
+    public override string QualifiedName => this.qualifiedName ?? (this.qualifiedName = this.Document.SourceFile.FileName);
 
-    public override string ShortName => this.shortName ?? (this.shortName = Path.GetFileName(this.Document.SourceFile.SourceFileName));
-
-    public override void Bind()
-    {
-    }
+    public override string ShortName => this.shortName ?? (this.shortName = Path.GetFileName(this.Document.SourceFile.FileName));
 
     [NotNull]
     private static string GetProjectUniqueId([NotNull] IProject project, [NotNull] IDocument document)
     {
-      return PathHelper.NormalizeItemPath(PathHelper.UnmapPath(project.ProjectDirectory, document.SourceFile.SourceFileName));
+      return PathHelper.NormalizeItemPath(PathHelper.UnmapPath(project.ProjectDirectory, document.SourceFile.FileName));
     }
   }
 }

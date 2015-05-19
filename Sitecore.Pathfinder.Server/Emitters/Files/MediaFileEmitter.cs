@@ -48,10 +48,10 @@ namespace Sitecore.Pathfinder.Emitters.Files
       var mediaFolderTemplate = new TemplateItem(database.GetItem(TemplateIDs.MediaFolder));
       database.CreateItemPath(parentPath, mediaFolderTemplate);
 
-      using (var stream = new FileStream(projectItem.Document.SourceFile.SourceFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+      using (var stream = new FileStream(projectItem.Document.SourceFile.FileName, FileMode.Open, FileAccess.Read, FileShare.Read))
       {
         // todo: figure out how to assign the correct item id to the new media item.
-        var item = MediaManager.Creator.CreateFromStream(stream, "/upload/" + Path.GetFileName(projectItem.Document.SourceFile.SourceFileName), options);
+        var item = MediaManager.Creator.CreateFromStream(stream, "/upload/" + Path.GetFileName(projectItem.Document.SourceFile.FileName), options);
         if (item == null)
         {
           throw new BuildException(Texts.Text2013, projectItem.Document);

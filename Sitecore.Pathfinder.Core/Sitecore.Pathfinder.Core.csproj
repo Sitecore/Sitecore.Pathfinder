@@ -54,6 +54,7 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -96,6 +97,9 @@
     <Compile Include="Parsing\Files\MediaFileParser.cs" />
     <Compile Include="Parsing\Files\SerializationFileParser.cs" />
     <Compile Include="Parsing\IParseService.cs" />
+    <Compile Include="Projects\References\IReference.cs" />
+    <Compile Include="Querying\IQueryService.cs" />
+    <Compile Include="Querying\QueryService.cs" />
     <Compile Include="TextDocuments\Document.cs" />
     <Compile Include="TextDocuments\EmptySourceFile.cs" />
     <Compile Include="Projects\IProjectItem.cs" />
@@ -109,7 +113,6 @@
     <Compile Include="Projects\IProject.cs" />
     <Compile Include="TextDocuments\ISourceFile.cs" />
     <Compile Include="Projects\Layouts\Layout.cs" />
-    <Compile Include="Projects\References\ProjectItemReference.cs" />
     <Compile Include="Projects\References\Reference.cs" />
     <Compile Include="Projects\Other\Component.cs" />
     <Compile Include="Projects\Project.cs" />
@@ -163,6 +166,7 @@
     <Compile Include="TextDocuments\Xml\XmlDocumentLoader.cs" />
     <Compile Include="TextDocuments\Xml\XmlTextNode.cs" />
     <Compile Include="TextDocuments\Xml\XmlTextDocument.cs" />
+    <Compile Include="Text\UrlString.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

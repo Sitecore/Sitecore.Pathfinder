@@ -39,7 +39,7 @@
     public virtual string ReplaceTokens(IProject project, ISourceFile sourceFile, string contents)
     {
       var itemName = PathHelper.GetItemName(sourceFile);
-      var relativeFileName = PathHelper.UnmapPath(project.ProjectDirectory, sourceFile.SourceFileName);
+      var relativeFileName = PathHelper.UnmapPath(project.ProjectDirectory, sourceFile.FileName);
 
       var filePath = "/" + PathHelper.NormalizeItemPath(relativeFileName);
       var filePathWithExtensions = PathHelper.NormalizeItemPath(PathHelper.GetDirectoryAndFileNameWithoutExtensions(filePath));

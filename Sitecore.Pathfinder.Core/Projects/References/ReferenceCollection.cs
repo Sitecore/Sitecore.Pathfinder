@@ -4,48 +4,30 @@
   using System.Collections.Generic;
   using Sitecore.Pathfinder.Diagnostics;
 
-  public class ReferenceCollection : ICollection<Reference>
+  public class ReferenceCollection : ICollection<IReference>
   {
-    private readonly List<Reference> references = new List<Reference>();
+    private readonly List<IReference> references = new List<IReference>();
 
     public ReferenceCollection([NotNull] ProjectItem projectItem)
     {
       this.ProjectItem = projectItem;
     }
 
-    public int Count
-    {
-      get
-      {
-        this.ProjectItem.Bind();
-        return this.references.Count;
-      }
-    }
+    public int Count => this.references.Count;
 
     public bool IsReadOnly => false;
 
     [NotNull]
     public ProjectItem ProjectItem { get; }
 
-    public void Add([NotNull] Reference item)
+    public void Add([NotNull] IReference item)
     {
       this.references.Add(item);
     }
 
-    [NotNull]
-    public ProjectItemReference AddFieldReference([NotNull] string fieldValue)
+    public void AddRange([NotNull] IEnumerable<IReference> items)
     {
-      var reference = new ProjectItemReference(this.ProjectItem.Project, "field reference", fieldValue);
-      this.Add(reference);
-      return reference;
-    }
-
-    [NotNull]
-    public Reference AddTemplateReference([NotNull] string templateIdOrPath)
-    {
-      var reference = new ProjectItemReference(this.ProjectItem.Project, "template", templateIdOrPath);
-      this.Add(reference);
-      return reference;
+      this.references.AddRange(items);
     }
 
     public void Clear()
@@ -53,28 +35,22 @@
       this.references.Clear();
     }
 
-    public bool Contains([NotNull] Reference item)
+    public bool Contains([NotNull] IReference item)
     {
-      this.ProjectItem.Bind();
-
       return this.references.Contains(item);
     }
 
-    public void CopyTo(Reference[] array, int arrayIndex)
+    public void CopyTo(IReference[] array, int arrayIndex)
     {
-      this.ProjectItem.Bind();
-
       this.references.CopyTo(array, arrayIndex);
     }
 
-    public IEnumerator<Reference> GetEnumerator()
+    public IEnumerator<IReference> GetEnumerator()
     {
-      this.ProjectItem.Bind();
-
       return this.references.GetEnumerator();
     }
 
-    public bool Remove([NotNull] Reference item)
+    public bool Remove([NotNull] IReference item)
     {
       return this.references.Remove(item);
     }

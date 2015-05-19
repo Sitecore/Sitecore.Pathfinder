@@ -1,8 +1,10 @@
 namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 {
   using System;
+  using System.Collections.Generic;
   using System.Linq;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Projects.References;
   using Sitecore.Pathfinder.Projects.Templates;
   using Sitecore.Pathfinder.TextDocuments;
 
@@ -25,6 +27,8 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         LongHelp = textNode.GetAttributeValue("LongHelp")
       };
 
+      template.References.AddRange(this.ParseReferences(template, textNode, template.BaseTemplates));
+
       var sectionsTextNode = this.GetSectionsTextNode(textNode);
       if (sectionsTextNode != null)
       {
@@ -43,7 +47,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
     [CanBeNull]
     protected abstract ITextNode GetSectionsTextNode([NotNull] ITextNode textNode);
 
-    protected virtual void ParseField([NotNull] ItemParseContext context, [NotNull] TemplateSection templateSection, [NotNull] ITextNode fieldTextNode)
+    protected virtual void ParseField([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] TemplateSection templateSection, [NotNull] ITextNode fieldTextNode)
     {
       var fieldName = fieldTextNode.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(fieldName))
@@ -66,6 +70,8 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
       templateField.ShortHelp = fieldTextNode.GetAttributeValue("ShortHelp");
       templateField.LongHelp = fieldTextNode.GetAttributeValue("LongHelp");
       templateField.StandardValue = fieldTextNode.GetAttributeValue("StandardValue");
+
+      template.References.AddRange(this.ParseReferences(template, fieldTextNode, templateField.Source));
     }
 
     protected virtual void ParseSection([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] ITextNode sectionTextNode)
@@ -94,7 +100,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
       foreach (var fieldTextNode in fieldsTextNode.ChildNodes)
       {
-        this.ParseField(context, templateSection, fieldTextNode);
+        this.ParseField(context, template, templateSection, fieldTextNode);
       }
     }
   }

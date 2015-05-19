@@ -13,10 +13,11 @@
   public class Build
   {
     [ImportingConstructor]
-    public Build([NotNull] ICompositionService compositionService, [NotNull] IConfigurationService configurationService)
+    public Build([NotNull] ICompositionService compositionService, [NotNull] IConfigurationService configurationService, [NotNull] ITraceService trace)
     {
       this.CompositionService = compositionService;
       this.ConfigurationService = configurationService;
+      this.Trace = trace;
     }
 
     [NotNull]
@@ -29,12 +30,29 @@
     [NotNull]
     protected IConfigurationService ConfigurationService { get; }
 
+    [NotNull]
+    protected ITraceService Trace { get; }
+
     public virtual void Start()
     {
-      this.ConfigurationService.Load(LoadConfigurationOptions.IncludeCommandLine);
+      try
+      {
+        this.ConfigurationService.Load(LoadConfigurationOptions.IncludeCommandLine);
+      }
+      catch (Exception ex)
+      {
+        this.Trace.Writeline(ex.Message);
+        this.DisplayHelp();
+        return;
+      }
 
       var context = this.CompositionService.Resolve<IBuildContext>();
       this.Run(context);
+
+      if (context.DisplayDoneMessage)
+      {
+        context.Trace.Writeline("Done");
+      }
     }
 
     [NotNull]
@@ -121,6 +139,11 @@
           throw;
         }
       }
+    }
+
+    private void DisplayHelp()
+    {
+      this.Trace.Writeline("Usage: scc.exe /run [task]");
     }
   }
 }

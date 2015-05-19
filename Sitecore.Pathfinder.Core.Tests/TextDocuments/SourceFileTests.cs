@@ -17,7 +17,7 @@
       var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "Website\\content\\Home\\HelloWorld.item.xml");
       var sourceFile = new SourceFile(fileSystem, fileName);
 
-      Assert.AreEqual(fileName, sourceFile.SourceFileName);
+      Assert.AreEqual(fileName, sourceFile.FileName);
       Assert.AreNotEqual(DateTime.MinValue, sourceFile.LastWriteTimeUtc);
     } 
   }

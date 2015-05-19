@@ -31,6 +31,8 @@
         item.TemplateIdOrPath = template.ItemIdOrPath;
       }
 
+      item.References.AddRange(this.ParseReferences(item, textNode, item.TemplateIdOrPath));
+
       this.ParseChildNodes(context, item, textNode);
 
       context.ParseContext.Project.AddOrMerge(item);
@@ -75,7 +77,7 @@
       var field = item.Fields.FirstOrDefault(f => string.Compare(f.Name, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
       if (field != null)
       {
-        context.ParseContext.Trace.TraceError(Texts.Text2012, fieldTextNode.Document.SourceFile.SourceFileName, fieldTextNode.LineNumber, fieldTextNode.LinePosition, fieldName);
+        context.ParseContext.Trace.TraceError(Texts.Text2012, fieldTextNode.Document.SourceFile.FileName, fieldTextNode.LineNumber, fieldTextNode.LinePosition, fieldName);
         return;
       }
 
@@ -83,7 +85,7 @@
       var attributeValue = fieldTextNode.GetAttributeValue("Value");
       if (!string.IsNullOrEmpty(treeNodeValue) && !string.IsNullOrEmpty(attributeValue))
       {
-        context.ParseContext.Trace.TraceWarning(Texts.Text3027, fieldTextNode.Document.SourceFile.SourceFileName, fieldTextNode.LineNumber, fieldTextNode.LinePosition, fieldName);
+        context.ParseContext.Trace.TraceWarning(Texts.Text3027, fieldTextNode.Document.SourceFile.FileName, fieldTextNode.LineNumber, fieldTextNode.LinePosition, fieldName);
       }
 
       var value = !string.IsNullOrEmpty(attributeValue) ? attributeValue : treeNodeValue;
@@ -93,6 +95,8 @@
 
       field.Name = fieldName;
       field.Value = value;
+
+      item.References.AddRange(this.ParseReferences(item, fieldTextNode, field.Value));
     }
 
     [NotNull]
@@ -119,6 +123,8 @@
         LongHelp = textNode.GetAttributeValue("Template.LongHelp")
       };
 
+      template.References.AddRange(this.ParseReferences(template, textNode, template.BaseTemplates));
+
       var templateSection = new TemplateSection();
       template.Sections.Add(templateSection);
       templateSection.Name = "Fields";
@@ -140,6 +146,8 @@
           templateField.Source = child.GetAttributeValue("Field.Source");
           templateField.ShortHelp = child.GetAttributeValue("Field.ShortHelp");
           templateField.LongHelp = child.GetAttributeValue("Field.LongHelp");
+
+          template.References.AddRange(this.ParseReferences(template, child, templateField.Source));
         }
       }
 

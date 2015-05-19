@@ -30,7 +30,7 @@
 
     public override bool CanParse(IParseContext context)
     {
-      var fileExtension = Path.GetExtension(context.Document.SourceFile.SourceFileName);
+      var fileExtension = Path.GetExtension(context.Document.SourceFile.FileName);
       return FileExtensions.Contains(fileExtension, StringComparer.OrdinalIgnoreCase);
     }
 

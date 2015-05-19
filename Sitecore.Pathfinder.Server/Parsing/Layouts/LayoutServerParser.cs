@@ -46,7 +46,7 @@
 
     public override bool CanParse(IParseContext context)
     {
-      return context.Document.SourceFile.SourceFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
+      return context.Document.SourceFile.FileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
@@ -113,12 +113,12 @@
 
       foreach (var error in errors)
       {
-        context.Trace.TraceError(Texts.Text2026, context.Document.SourceFile.SourceFileName, error.Line, error.Column, error.Text);
+        context.Trace.TraceError(Texts.Text2026, context.Document.SourceFile.FileName, error.Line, error.Column, error.Text);
       }
 
       foreach (var warning in warnings)
       {
-        context.Trace.TraceWarning(Texts.Text2027, context.Document.SourceFile.SourceFileName, warning.Line, warning.Column, warning.Text);
+        context.Trace.TraceWarning(Texts.Text2027, context.Document.SourceFile.FileName, warning.Line, warning.Column, warning.Text);
       }
 
       if (errors.Any())

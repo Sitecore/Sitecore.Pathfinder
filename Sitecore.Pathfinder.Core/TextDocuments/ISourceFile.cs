@@ -4,18 +4,22 @@
   using System.Xml.Linq;
   using Newtonsoft.Json.Linq;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Projects;
 
   public interface ISourceFile
   {
+    [NotNull]
+    string FileName { get; }
+
     bool IsModified { get; set; }
 
     DateTime LastWriteTimeUtc { get; }
 
     [NotNull]
-    string SourceFileName { get; }
+    string GetFileNameWithoutExtensions();
 
     [NotNull]
-    string SourceFileNameWithoutExtensions { get; }
+    string GetProjectPath([NotNull] IProject project);
 
     [NotNull]
     JObject ReadAsJson();

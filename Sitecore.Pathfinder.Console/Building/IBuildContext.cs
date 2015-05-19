@@ -15,6 +15,8 @@
     [NotNull]
     IConfiguration Configuration { get; }
 
+    bool DisplayDoneMessage { get; set; }
+
     [NotNull]
     IFileSystemService FileSystem { get; }
 

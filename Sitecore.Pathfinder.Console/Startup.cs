@@ -3,7 +3,6 @@
   using System;
   using System.ComponentModel.Composition;
   using System.ComponentModel.Composition.Hosting;
-  using System.Diagnostics;
   using System.IO;
   using System.Reflection;
   using Microsoft.Framework.ConfigurationModel;
@@ -20,8 +19,6 @@
 
       var build = compositionService.Resolve<Build>();
       build.Start();
-
-      Trace.Write("Done");
 
       if (string.Compare(configuration.Get("pause"), "true", StringComparison.OrdinalIgnoreCase) == 0)
       {

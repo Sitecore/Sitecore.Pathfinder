@@ -25,13 +25,13 @@
     {
       var binFile = (BinFile)projectItem;
 
-      var destinationFileName = "/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(context.Project.ProjectDirectory, binFile.Document.SourceFile.SourceFileName));
+      var destinationFileName = "/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(context.Project.ProjectDirectory, binFile.Document.SourceFile.FileName));
       destinationFileName = FileUtil.MapPath(destinationFileName);
 
       // todo: check for assembly version
       // todo: backup to uninstall folder
       context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName) ?? string.Empty);
-      context.FileSystem.Copy(binFile.Document.SourceFile.SourceFileName, destinationFileName);
+      context.FileSystem.Copy(binFile.Document.SourceFile.FileName, destinationFileName);
     }
   }
 }

@@ -39,15 +39,5 @@
 
     [NotNull]
     public ITextNode TextNode { get; }
-
-    public override void Bind()
-    {
-      this.References.Clear();
-
-      if (!string.IsNullOrEmpty(this.TemplateIdOrPath))
-      {
-        this.References.AddTemplateReference(this.TemplateIdOrPath);
-      }
-    }
   }
 }

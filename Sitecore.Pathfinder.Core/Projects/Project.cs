@@ -61,7 +61,7 @@
         throw new InvalidOperationException("Project has not been loaded. Call Load() first");
       }
 
-      if (this.SourceFiles.Any(s => string.Compare(s.SourceFileName, sourceFileName, StringComparison.OrdinalIgnoreCase) == 0))
+      if (this.SourceFiles.Any(s => string.Compare(s.FileName, sourceFileName, StringComparison.OrdinalIgnoreCase) == 0))
       {
         this.Remove(sourceFileName);
       }
@@ -102,7 +102,7 @@
         throw new InvalidOperationException("Project has not been loaded. Call Load() first");
       }
 
-      this.SourceFiles.Remove(this.SourceFiles.FirstOrDefault(s => string.Compare(s.SourceFileName, sourceFileName, StringComparison.OrdinalIgnoreCase) == 0));
+      this.SourceFiles.Remove(this.SourceFiles.FirstOrDefault(s => string.Compare(s.FileName, sourceFileName, StringComparison.OrdinalIgnoreCase) == 0));
     }
 
     [NotNull]
@@ -120,12 +120,12 @@
       Item item = null;
       if (newItem.MergingMatch == MergingMatch.MatchUsingSourceFile)
       {
-        item = this.Items.OfType<Item>().FirstOrDefault(i => string.Compare(i.Document.SourceFile.SourceFileNameWithoutExtensions, newItem.Document.SourceFile.SourceFileNameWithoutExtensions, StringComparison.OrdinalIgnoreCase) == 0);
+        item = this.Items.OfType<Item>().FirstOrDefault(i => string.Compare(i.Document.SourceFile.GetFileNameWithoutExtensions(), newItem.Document.SourceFile.GetFileNameWithoutExtensions(), StringComparison.OrdinalIgnoreCase) == 0);
       }
 
       if (item == null)
       {
-        item = this.Items.OfType<Item>().FirstOrDefault(i => i.MergingMatch == MergingMatch.MatchUsingSourceFile && string.Compare(i.Document.SourceFile.SourceFileNameWithoutExtensions, newItem.Document.SourceFile.SourceFileNameWithoutExtensions, StringComparison.OrdinalIgnoreCase) == 0);
+        item = this.Items.OfType<Item>().FirstOrDefault(i => i.MergingMatch == MergingMatch.MatchUsingSourceFile && string.Compare(i.Document.SourceFile.GetFileNameWithoutExtensions(), newItem.Document.SourceFile.GetFileNameWithoutExtensions(), StringComparison.OrdinalIgnoreCase) == 0);
       }
 
       if (item == null)

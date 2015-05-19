@@ -6,32 +6,40 @@
   using Newtonsoft.Json.Linq;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.IO;
+  using Sitecore.Pathfinder.Projects;
 
-  [DebuggerDisplay("SourceFile: Path={SourceFileName}")]
+  [DebuggerDisplay("{GetType().Name}: FileName={FileName}")]
   public class SourceFile : ISourceFile
   {
-    public SourceFile([NotNull] IFileSystemService fileSystem, [NotNull] string sourceFileName)
+    public SourceFile([NotNull] IFileSystemService fileSystem, [NotNull] string fileName)
     {
       this.FileSystem = fileSystem;
+      this.FileName = fileName;
 
-      this.SourceFileName = sourceFileName;
-      this.SourceFileNameWithoutExtensions = PathHelper.GetDirectoryAndFileNameWithoutExtensions(sourceFileName);
-      this.LastWriteTimeUtc = fileSystem.GetLastWriteTimeUtc(this.SourceFileName);
+      this.LastWriteTimeUtc = this.FileSystem.GetLastWriteTimeUtc(this.FileName);
     }
 
     [NotNull]
     public static ISourceFile Empty { get; } = new EmptySourceFile();
 
+    public string FileName { get; }
+
     public bool IsModified { get; set; }
 
     public DateTime LastWriteTimeUtc { get; }
 
-    public string SourceFileName { get; }
-
-    public string SourceFileNameWithoutExtensions { get; }
-
     [NotNull]
     protected IFileSystemService FileSystem { get; }
+
+    public string GetFileNameWithoutExtensions()
+    {
+      return PathHelper.GetDirectoryAndFileNameWithoutExtensions(this.FileName);
+    }
+
+    public string GetProjectPath(IProject project)
+    {
+      return PathHelper.UnmapPath(project.ProjectDirectory, this.FileName);
+    }
 
     public JObject ReadAsJson()
     {
@@ -48,12 +56,12 @@
 
     public string[] ReadAsLines()
     {
-      return this.FileSystem.ReadAllLines(this.SourceFileName);
+      return this.FileSystem.ReadAllLines(this.FileName);
     }
 
     public string ReadAsText()
     {
-      var contents = this.FileSystem.ReadAllText(this.SourceFileName);
+      var contents = this.FileSystem.ReadAllText(this.FileName);
       return contents;
     }
 

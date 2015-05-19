@@ -16,7 +16,7 @@
     public override bool CanParse(IParseContext context)
     {
       var fileExtensions = " " + context.Configuration.GetString(Constants.Configuration.ContentFiles) + " ";
-      var extension = " " + Path.GetExtension(context.Document.SourceFile.SourceFileName) + " ";
+      var extension = " " + Path.GetExtension(context.Document.SourceFile.FileName) + " ";
 
       return fileExtensions.IndexOf(extension, StringComparison.OrdinalIgnoreCase) >= 0;
     }

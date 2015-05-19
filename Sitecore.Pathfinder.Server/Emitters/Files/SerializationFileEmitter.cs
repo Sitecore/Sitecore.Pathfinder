@@ -32,7 +32,7 @@
 
       try
       {
-        var item = this.DoLoadItem(itemModel.Document.SourceFile.SourceFileName, LoadOptions);
+        var item = this.DoLoadItem(itemModel.Document.SourceFile.FileName, LoadOptions);
         if (item == null)
         {
           throw new RetryableBuildException(Texts.Text2022, itemModel.Document, "Item not created");

@@ -26,22 +26,6 @@ namespace Sitecore.Pathfinder.Projects.Templates
     [NotNull]
     public string ShortHelp { get; set; } = string.Empty;
 
-    public override void Bind()
-    {
-      base.Bind();
-
-      if (string.IsNullOrEmpty(this.BaseTemplates))
-      {
-        return;
-      }
-
-      var templates = this.BaseTemplates.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries);
-      foreach (var template in templates)
-      {
-        this.References.AddTemplateReference(template);
-      }
-    }
-
     public void Merge([NotNull] Template newTemplate)
     {
       // todo: throw exception if item and newItem value differ
