@@ -25,6 +25,8 @@
             "properties": {
               "Name": { "type": "string" },
               "Value": { "type": "string" },
+              "Language": { "type": "string" },
+              "Version": { "type": "integer" },
               "Field.Type": { "$ref": "#/definitions/FieldType" },
               "Field.ShortHelp": { "type": "string" },
               "Field.LongHelp": { "type": "string" }

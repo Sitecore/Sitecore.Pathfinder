@@ -83,8 +83,6 @@
       <xs:extension base="xs:string">
         <xs:attribute name="Name" type="xs:string" use="required" />
         <xs:attribute name="Value" type="xs:string" use="optional" />
-        <xs:attribute name="Language" type="xs:string" use="optional" />
-        <xs:attribute name="Version" type="xs:integer" use="optional" />
         <xs:attribute name="Field.Type" type="FieldType" use="optional" />
         <xs:attribute name="Field.Sharing" type="Sharing" use="optional" />
         <xs:attribute name="Field.Source" type="xs:string" use="optional" />

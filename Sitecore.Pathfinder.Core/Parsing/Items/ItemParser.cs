@@ -43,7 +43,7 @@
       var textNode = textDocument.Root;
       if (textNode == TextNode.Empty)
       {
-        context.Trace.TraceWarning(Texts.Text3025, textDocument.SourceFile.FileName, textNode.LineNumber, textNode.LinePosition);
+        context.Trace.TraceWarning(Texts.Text3025, textDocument.SourceFile.FileName, textNode.LineNumber, textNode.LinePosition, textNode.LineLength);
         return;
       }
 
@@ -78,11 +78,11 @@
       }
       catch (BuildException ex)
       {
-        context.ParseContext.Trace.TraceError(Texts.Text3013, context.ParseContext.Document.SourceFile.FileName, ex.LineNumber, ex.LinePosition, ex.Message);
+        context.ParseContext.Trace.TraceError(Texts.Text3013, context.ParseContext.Document.SourceFile.FileName, ex.LineNumber, ex.LinePosition, ex.LineLength, ex.Message);
       }
       catch (Exception ex)
       {
-        context.ParseContext.Trace.TraceError(Texts.Text3013, context.ParseContext.Document.SourceFile.FileName, 0, 0, ex.Message);
+        context.ParseContext.Trace.TraceError(Texts.Text3013, context.ParseContext.Document.SourceFile.FileName, 0, 0, 0, ex.Message);
       }
     }
   }

@@ -5,7 +5,7 @@
       "fileMatch": [
         "*.item.json"
       ],
-      "url": ".sitecore.tools/schemas/item.schema.json"
+      "url": ".schemas/item.schema.json"
     }
   ]
 }

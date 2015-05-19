@@ -176,6 +176,7 @@
 
     public const int Text3031 = 3031;
     public const int Text3032 = 3032;
+    public const int Text3033 = 3033;
 
     public const int Text9998 = 9998;
 
@@ -444,6 +445,9 @@
       }, 
       {
         Text3032, "Failed to create the Nupkg file: {0}"
+      }, 
+      {
+        Text3033, "'version' attribute must have an integer value"
       }, 
       {
         Text9998, "{0}"

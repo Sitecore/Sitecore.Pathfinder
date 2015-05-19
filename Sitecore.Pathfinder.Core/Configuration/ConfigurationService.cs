@@ -42,16 +42,7 @@
 
       if ((options & LoadConfigurationOptions.IncludeCommandLine) == LoadConfigurationOptions.IncludeCommandLine)
       {
-        // add command line
-        // cut off executable name
-        var commandLineArgs = Environment.GetCommandLineArgs().Skip(1).ToArray();
-        var mapping = new Dictionary<string, string>()
-        {
-          ["-r"] = "run",
-          ["--r"] = "run"
-        };
-
-        configurationSourceRoot.AddCommandLine(commandLineArgs, mapping);
+        this.AddCommandLine(configurationSourceRoot);
       }
 
       // set solution directory
@@ -68,6 +59,42 @@
       // set project directory
       var projectDirectory = PathHelper.NormalizeFilePath(configurationSourceRoot.Get(Pathfinder.Constants.Configuration.ProjectDirectory) ?? string.Empty).TrimStart('\\');
       configurationSourceRoot.Set(Pathfinder.Constants.Configuration.ProjectDirectory, projectDirectory);
+    }
+
+    private void AddCommandLine([NotNull] IConfigurationSourceRoot configurationSourceRoot)
+    {
+      // cut off executable name
+      var commandLineArgs = Environment.GetCommandLineArgs().Skip(1).ToList();
+      Console.WriteLine(string.Join(", ", commandLineArgs));
+
+      for (var n = 0; n < commandLineArgs.Count(); n++)
+      {
+        var arg = commandLineArgs[n];
+        if (arg.StartsWith("-") || arg.StartsWith("/"))
+        {
+          n++;
+          continue;
+        }
+
+        commandLineArgs = commandLineArgs.Take(n).Concat(commandLineArgs.Skip(n + 1)).ToList();
+        Console.WriteLine(string.Join(", ", commandLineArgs));
+
+        // ignore "build", it is default
+        if (string.Compare(arg, "Build", StringComparison.OrdinalIgnoreCase) != 0)
+        {
+          configurationSourceRoot.Set("run", arg);
+        }
+
+        break;
+      }
+
+      var switchMappings = new Dictionary<string, string>()
+      {
+        ["-r"] = "run",
+        ["--r"] = "run"
+      };
+
+      configurationSourceRoot.AddCommandLine(commandLineArgs.ToArray(), switchMappings);
     }
   }
 }

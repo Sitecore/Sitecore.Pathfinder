@@ -12,23 +12,34 @@
 	"windows": {
 		"command": "scc.cmd"
 	},
-	"args": [],
-	"problemMatcher": {
-		"owner": "sitecore",
-		"fileLocation": ["relative", "${cwd}"],
-		"pattern": {
-			// The regular expression. Matches HelloWorld.ts(2,10): error TS2339: Property 'logg' does not exist on type 'Console'.
-			"regexp": "^([^\\s].*)\\((\\d+|\\d+,\\d+|\\d+,\\d+,\\d+,\\d+)\\):\\s+(error|warning|info)\\s+(SCC\\d+)\\s*:\\s*(.*)$",
-			// The match group that denotes the file containing the problem.
-			"file": 1,
-			// The match group that denotes the problem location.
-			"location": 2,
-			// The match group that denotes the problem's severity. Can be omitted.
-			"severity": 3,
-			// The match group that denotes the problem code. Can be omitted.
-			"code": 4,
-			// The match group that denotes the problem's message.
-			"message": 5
-		}
-	}
+  "tasks": [
+    {
+      "taskName": "build",
+      "args": [],
+      "isBuildCommand": true,
+    	"problemMatcher": {
+    		"owner": "sitecore",
+    		"fileLocation": ["relative", "${workspaceRoot}"],
+    		"pattern": {
+    			// The regular expression. Matches HelloWorld.ts(2,10): error TS2339: Property 'logg' does not exist on type 'Console'.
+    			"regexp": "^([^\\s].*)\\((\\d+|\\d+,\\d+|\\d+,\\d+,\\d+,\\d+)\\):\\s+(error|warning|info)\\s+(SCC\\d+)\\s*:\\s*(.*)$",
+    			// The match group that denotes the file containing the problem.
+    			"file": 1,
+    			// The match group that denotes the problem location.
+    			"location": 2,
+    			// The match group that denotes the problem's severity. Can be omitted.
+    			"severity": 3,
+    			// The match group that denotes the problem code. Can be omitted.
+    			"code": 4,
+    			// The match group that denotes the problem's message.
+    			"message": 5
+     		 } 
+	     } 
+    },
+    {
+      "taskName": "usages",
+      "args": ["--name=/sitecore/media library/HelloWorld"],
+      "isBuildCommand": false
+    }
+  ]
 }

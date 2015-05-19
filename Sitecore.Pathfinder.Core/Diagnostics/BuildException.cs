@@ -35,6 +35,7 @@
       this.FileName = textNode.Document.SourceFile.FileName;
       this.LineNumber = textNode.LineNumber;
       this.LinePosition = textNode.LinePosition;
+      this.LineLength = textNode.LineLength;
       this.Args = args;
     }
 
@@ -43,6 +44,8 @@
 
     [NotNull]
     public string FileName { get; }
+
+    public int LineLength { get; }
 
     public int LineNumber { get; }
 

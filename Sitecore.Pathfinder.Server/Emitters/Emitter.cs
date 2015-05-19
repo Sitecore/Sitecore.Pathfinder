@@ -96,7 +96,7 @@
         }
         catch (BuildException ex)
         {
-          this.Trace.TraceError(ex.Text, ex.FileName, ex.LineNumber, ex.LinePosition, ex.Args);
+          this.Trace.TraceError(ex.Text, ex.FileName, ex.LineNumber, ex.LinePosition, ex.LineLength, ex.Args);
         }
         catch (Exception ex)
         {
@@ -140,7 +140,7 @@
         var buildException = exception as BuildException;
         if (buildException != null)
         {
-          this.Trace.TraceError(buildException.Text, buildException.FileName, buildException.LineNumber, buildException.LinePosition, buildException.Args);
+          this.Trace.TraceError(buildException.Text, buildException.FileName, buildException.LineNumber, buildException.LinePosition, buildException.LineLength, buildException.Args);
         }
         else if (exception != null)
         {

@@ -77,26 +77,48 @@
       var field = item.Fields.FirstOrDefault(f => string.Compare(f.Name, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
       if (field != null)
       {
-        context.ParseContext.Trace.TraceError(Texts.Text2012, fieldTextNode.Document.SourceFile.FileName, fieldTextNode.LineNumber, fieldTextNode.LinePosition, fieldName);
+        context.ParseContext.Trace.TraceError(Texts.Text2012, fieldTextNode.Document.SourceFile.FileName, fieldTextNode.LineNumber, fieldTextNode.LinePosition, fieldTextNode.LineLength, fieldName);
         return;
       }
 
-      var treeNodeValue = fieldTextNode.Value;
-      var attributeValue = fieldTextNode.GetAttributeValue("Value");
-      if (!string.IsNullOrEmpty(treeNodeValue) && !string.IsNullOrEmpty(attributeValue))
+      var language = fieldTextNode.GetAttributeValue("Language");
+
+      int version = 0;
+      var versionValue = fieldTextNode.GetAttributeValue("Version");
+      if (!string.IsNullOrEmpty(versionValue))
       {
-        context.ParseContext.Trace.TraceWarning(Texts.Text3027, fieldTextNode.Document.SourceFile.FileName, fieldTextNode.LineNumber, fieldTextNode.LinePosition, fieldName);
+        if (!int.TryParse(versionValue, out version))
+        {
+          context.ParseContext.Trace.TraceError(Texts.Text3033, fieldTextNode.Document.SourceFile.FileName, fieldTextNode.LineNumber, fieldTextNode.LinePosition, fieldTextNode.LineLength, fieldName);
+          version = 0;
+        }
       }
 
-      var value = !string.IsNullOrEmpty(attributeValue) ? attributeValue : treeNodeValue;
+      var valueTextNode = fieldTextNode.GetAttribute("[Value]");
 
-      field = new Field(fieldTextNode);
+      var valueAttributeTextNode = fieldTextNode.GetAttribute("Value");
+      if (valueAttributeTextNode != null)
+      {
+        if (valueTextNode != null)
+        {
+          context.ParseContext.Trace.TraceWarning(Texts.Text3027, fieldTextNode.Document.SourceFile.FileName, valueAttributeTextNode.LineNumber, valueAttributeTextNode.LinePosition, fieldTextNode.LineLength, fieldName);
+        }
+
+        valueTextNode = valueAttributeTextNode;
+      }
+
+      field = new Field(fieldTextNode, valueTextNode);
       item.Fields.Add(field);
 
       field.Name = fieldName;
-      field.Value = value;
+      field.Language = language;
+      field.Version = version;
 
-      item.References.AddRange(this.ParseReferences(item, fieldTextNode, field.Value));
+      if (valueTextNode != null)
+      {
+        field.Value = valueTextNode.Value;
+        item.References.AddRange(this.ParseReferences(item, valueTextNode, field.Value));
+      }
     }
 
     [NotNull]

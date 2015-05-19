@@ -85,7 +85,8 @@
 
     protected virtual int ParseField([NotNull] Item serializationFile, [NotNull] string[] lines, int startIndex, [NotNull] string language, int version)
     {
-      var field = new Field(serializationFile.TextNode);
+      // todo: set valueTextNode properly
+      var field = new Field(serializationFile.TextNode, serializationFile.TextNode);
       serializationFile.Fields.Add(field);
 
       field.Language = language;

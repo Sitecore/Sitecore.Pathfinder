@@ -14,6 +14,8 @@
     [NotNull]
     IDocument Document { get; }
 
+    int LineLength { get; }
+
     int LineNumber { get; }
 
     int LinePosition { get; }
@@ -26,6 +28,9 @@
 
     [NotNull]
     string Value { get; }
+
+    [CanBeNull]
+    ITextNode GetAttribute([NotNull] string attributeName);
 
     [NotNull]
     string GetAttributeValue([NotNull] string attributeName, [NotNull] string defaultValue = "");

@@ -20,11 +20,11 @@
 
           if (textNode != null)
           {
-            context.Trace.TraceWarning(Texts.Text3024, projectItem.Document.SourceFile.FileName, textNode.LineNumber, textNode.LinePosition, reference.TargetQualifiedName);
+            context.Trace.TraceWarning(Texts.Text3024, projectItem.Document.SourceFile.FileName, textNode.LineNumber, textNode.LinePosition, textNode.LineLength, reference.TargetQualifiedName);
           }
           else
           {
-            context.Trace.TraceWarning(Texts.Text3024, projectItem.Document.SourceFile.FileName, 0, 0, reference.TargetQualifiedName);
+            context.Trace.TraceWarning(Texts.Text3024, projectItem.Document.SourceFile.FileName, 0, 0, 0, reference.TargetQualifiedName);
           }
         }
       }

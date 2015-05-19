@@ -121,7 +121,7 @@
       }
       catch (BuildException ex)
       {
-        context.Trace.TraceError(ex.Text, ex.FileName, ex.LineNumber, ex.LinePosition, ex.Message);
+        context.Trace.TraceError(ex.Text, ex.FileName, ex.LineNumber, ex.LinePosition, ex.LineLength, ex.Message);
         context.IsAborted = true;
 
         if (context.Configuration.GetBool(Constants.Configuration.Debug))

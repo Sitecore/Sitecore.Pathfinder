@@ -3,6 +3,7 @@
   using System;
   using System.Collections.Generic;
   using System.IO;
+  using System.Linq;
   using System.Xml.Linq;
   using System.Xml.Schema;
   using Sitecore.Pathfinder.Diagnostics;
@@ -102,10 +103,10 @@
         switch (args.Severity)
         {
           case XmlSeverityType.Error:
-            context.Trace.TraceError(Texts.Text3013, context.Document.SourceFile.FileName, args.Exception.LineNumber, args.Exception.LinePosition, args.Message);
+            context.Trace.TraceError(Texts.Text3013, context.Document.SourceFile.FileName, args.Exception.LineNumber, args.Exception.LinePosition, 0, args.Message);
             break;
           case XmlSeverityType.Warning:
-            context.Trace.TraceWarning(Texts.Text3014, context.Document.SourceFile.FileName, args.Exception.LineNumber, args.Exception.LinePosition, args.Message);
+            context.Trace.TraceWarning(Texts.Text3014, context.Document.SourceFile.FileName, args.Exception.LineNumber, args.Exception.LinePosition, 0, args.Message);
             break;
         }
       };
@@ -116,7 +117,7 @@
       }
       catch (Exception ex)
       {
-        context.Trace.TraceError(Texts.Text3012, context.Document.SourceFile.FileName, 0, 0, ex.Message);
+        context.Trace.TraceError(Texts.Text3012, context.Document.SourceFile.FileName, 0, 0, 0, ex.Message);
       }
     }
 
@@ -150,6 +151,16 @@
 
         var attributeTreeNode = new XmlTextNode(this, attribute);
         treeNode.Attributes.Add(attributeTreeNode);
+      }
+
+      if (!element.HasElements)
+      {
+        var node = element.Nodes().FirstOrDefault();
+        if (node != null)
+        {
+          var attributeTreeNode = new XmlTextNode(this, node, "[Value]", element.Value);
+          treeNode.Attributes.Add(attributeTreeNode);
+        }
       }
 
       foreach (var child in element.Elements())

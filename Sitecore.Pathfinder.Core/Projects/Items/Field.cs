@@ -6,12 +6,10 @@ namespace Sitecore.Pathfinder.Projects.Items
   // todo: consider basing this on ProjectElement
   public class Field
   {
-    public Field([NotNull] ITextNode textNode)
+    public Field([NotNull] ITextNode textNode, [CanBeNull] ITextNode valueTextNode)
     {
       this.TextNode = textNode;
-      this.Name = string.Empty;
-      this.Value = string.Empty;
-      this.Language = string.Empty;
+      this.ValueTextNode = valueTextNode;
     }
 
     public Field([NotNull] ITextNode textNode, [NotNull] string name, [NotNull] string value)
@@ -23,16 +21,19 @@ namespace Sitecore.Pathfinder.Projects.Items
     }
 
     [NotNull]
-    public string Language { get; set; }
+    public string Language { get; set; } = string.Empty;
 
     [NotNull]
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
     [NotNull]
     public ITextNode TextNode { get; }
 
     [NotNull]
-    public string Value { get; set; }
+    public string Value { get; set; } = string.Empty;
+
+    [CanBeNull]
+    public ITextNode ValueTextNode { get; }
 
     public int Version { get; set; }
   }

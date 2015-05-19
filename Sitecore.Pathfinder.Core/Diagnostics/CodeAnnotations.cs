@@ -466,18 +466,11 @@ namespace Sitecore.Pathfinder.Diagnostics
     public string BasePath { get; private set; }
   }
 
-  /// <summary>
-  /// Specifies SourceTemplate
-  /// TODO: documentation
-  /// </summary>
   [AttributeUsage(AttributeTargets.Method)]
   public sealed class SourceTemplateAttribute : Attribute
   {
   }
 
-  /// <summary>
-  /// TODO: documentation
-  /// </summary>
   [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method)]
   public sealed class MacroAttribute : Attribute
   {

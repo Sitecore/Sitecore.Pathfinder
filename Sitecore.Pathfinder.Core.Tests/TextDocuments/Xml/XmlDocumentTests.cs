@@ -52,7 +52,8 @@
       var field = root.ChildNodes[0];
       Assert.AreEqual("Field", field.Name);
       Assert.AreEqual("Text", field.GetAttributeValue("Name"));
-      Assert.AreEqual("123", field.Value);
+      Assert.AreEqual("123", field.GetAttributeValue("[Value]"));
+      Assert.AreEqual(string.Empty, field.Value);
       Assert.AreEqual(0, field.ChildNodes.Count);
     }
   }
