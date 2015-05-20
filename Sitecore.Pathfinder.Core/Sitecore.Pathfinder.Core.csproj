@@ -97,6 +97,8 @@
     <Compile Include="Parsing\Files\MediaFileParser.cs" />
     <Compile Include="Parsing\Files\SerializationFileParser.cs" />
     <Compile Include="Parsing\IParseService.cs" />
+    <Compile Include="Projects\ProjectMessage.cs" />
+    <Compile Include="Projects\ProjectTraceService.cs" />
     <Compile Include="Projects\References\IReference.cs" />
     <Compile Include="Querying\IQueryService.cs" />
     <Compile Include="Querying\QueryService.cs" />

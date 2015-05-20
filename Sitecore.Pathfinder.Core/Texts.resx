@@ -147,4 +147,10 @@
   <data name="Cannot_apply_a_layout_to_a_template__The_template_needs_a_Standard_Values_" xml:space="preserve">
     <value>Cannot apply a layout to a template. The template needs a Standard Values.</value>
   </data>
+  <data name="Checking___" xml:space="preserve">
+    <value>Checking...</value>
+  </data>
+  <data name="Linting_items" xml:space="preserve">
+    <value>Linting items</value>
+  </data>
 </root>

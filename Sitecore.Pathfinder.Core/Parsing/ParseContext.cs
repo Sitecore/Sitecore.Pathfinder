@@ -16,11 +16,10 @@
     private string itemPath;
 
     [ImportingConstructor]
-    public ParseContext([NotNull] IConfiguration configuration, [NotNull] ITraceService trace)
+    public ParseContext([NotNull] IConfiguration configuration)
     {
       this.Configuration = configuration;
-      this.Trace = trace;
-      this.Document = TextDocument.Empty;
+      this.Document = TextDocuments.Document.Empty;
     }
 
     public IConfiguration Configuration { get; }
@@ -35,12 +34,13 @@
 
     public IProject Project { get; private set; }
 
-    public ITraceService Trace { get; }
+    public ITraceService Trace { get; private set; }
 
     public IParseContext With(IProject project, IDocument document)
     {
       this.Project = project;
       this.Document = document;
+      this.Trace = new ProjectTraceService(this.Configuration);
 
       return this;
     }

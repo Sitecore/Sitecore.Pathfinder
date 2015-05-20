@@ -25,6 +25,9 @@
     [NotNull]
     ICollection<ISourceFile> SourceFiles { get; }
 
+    [NotNull]
+    ICollection<ProjectMessage> Messages { get; }
+
     void Add([NotNull] string sourceFileName);
 
     T AddOrMerge<T>([NotNull] T projectItem) where T : IProjectItem;

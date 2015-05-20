@@ -88,6 +88,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Checking....
+        /// </summary>
+        public static string Checking___ {
+            get {
+                return ResourceManager.GetString("Checking___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Done.
         /// </summary>
         public static string Done {
@@ -120,6 +129,15 @@ namespace Sitecore.Pathfinder {
         public static string Layout_not_found_ {
             get {
                 return ResourceManager.GetString("Layout_not_found_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Linting items.
+        /// </summary>
+        public static string Linting_items {
+            get {
+                return ResourceManager.GetString("Linting_items", resourceCulture);
             }
         }
         

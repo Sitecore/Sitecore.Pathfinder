@@ -6,6 +6,13 @@
   using Sitecore.Pathfinder.Extensions.StringExtensions;
   using Sitecore.Pathfinder.TextDocuments;
 
+  public enum MessageType
+  {
+    Information,
+    Warning,
+    Error
+  }
+
   [Export(typeof(ITraceService))]
   public class TraceService : ITraceService
   {
@@ -20,32 +27,32 @@
 
     public void TraceError(string text, string details = "")
     {
-      this.Write(text, "error", string.Empty, TextPosition.Empty, details);
+      this.Write(text, MessageType.Error, string.Empty, TextPosition.Empty, details);
     }
 
     public void TraceError(string text, string fileName, TextPosition position, string details = "")
     {
-      this.Write(text, "error", fileName, position, details);
+      this.Write(text, MessageType.Error, fileName, position, details);
     }
 
     public void TraceInformation(string text, string details = "")
     {
-      this.Write(text, "information", string.Empty, TextPosition.Empty, details);
+      this.Write(text, MessageType.Information, string.Empty, TextPosition.Empty, details);
     }
 
     public void TraceInformation(string text, string fileName, TextPosition position, string details = "")
     {
-      this.Write(text, "information", fileName, position, details);
+      this.Write(text, MessageType.Information, fileName, position, details);
     }
 
     public void TraceWarning(string text, string details = "")
     {
-      this.Write(text, "warning", string.Empty, TextPosition.Empty, details);
+      this.Write(text, MessageType.Warning, string.Empty, TextPosition.Empty, details);
     }
 
     public void TraceWarning(string text, string fileName, TextPosition position, string details = "")
     {
-      this.Write(text, "warning", fileName, position, details);
+      this.Write(text, MessageType.Warning, fileName, position, details);
     }
 
     public void Writeline(string text, string details = "")
@@ -58,7 +65,7 @@
       Console.WriteLine(text);
     }
 
-    protected virtual void Write([NotNull] string text, [NotNull] string textType, [NotNull] string fileName, TextPosition position, [NotNull] string details)
+    protected virtual void Write([NotNull] string text, MessageType messageType, [NotNull] string fileName, TextPosition position, [NotNull] string details)
     {
       if (!string.IsNullOrEmpty(details))
       {
@@ -78,7 +85,7 @@
 
       var lineInfo = position.LineLength == 0 ? $"({position.LineNumber},{position.LinePosition})" : $"({position.LineNumber},{position.LinePosition},{position.LineNumber},{position.LinePosition + position.LineLength})";
 
-      Console.WriteLine($"{fileInfo}{lineInfo}: {textType} SCC0000: {text}");
+      Console.WriteLine($"{fileInfo}{lineInfo}: {messageType.ToString().ToLowerInvariant()} SCC0000: {text}");
     }
   }
 }

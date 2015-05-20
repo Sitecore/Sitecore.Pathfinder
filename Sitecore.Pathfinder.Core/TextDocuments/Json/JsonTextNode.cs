@@ -30,7 +30,7 @@
         lineLength = string.IsNullOrEmpty(value) ? 0 : value.Length + 2;
       }
 
-      return new TextPosition(lineInfo.LineNumber, lineInfo.LinePosition, lineLength);
+      return new TextPosition(lineInfo.LineNumber, lineInfo.LinePosition + 1, lineLength);
     }
   }
 }

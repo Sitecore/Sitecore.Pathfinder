@@ -22,11 +22,10 @@
     private string projectUniqueId;
 
     [ImportingConstructor]
-    public Project([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService)
+    public Project([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService)
     {
       this.CompositionService = compositionService;
       this.Configuration = configuration;
-      this.Trace = trace;
       this.FileSystem = fileSystem;
       this.ParseService = parseService;
     }
@@ -43,7 +42,7 @@
 
     public ICollection<ISourceFile> SourceFiles { get; } = new List<ISourceFile>();
 
-    public ITraceService Trace { get; set; }
+    public ICollection<ProjectMessage> Messages { get; } = new List<ProjectMessage>();
 
     [NotNull]
     protected ICompositionService CompositionService { get; }
