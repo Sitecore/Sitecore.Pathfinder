@@ -18,12 +18,12 @@
     {
       if (!context.IsDeployable)
       {
-        context.Trace.TraceInformation(Texts.Text3011);
+        context.Trace.TraceInformation("Package contains errors and will not be deployed");
         context.IsAborted = true;
         return;
       }
 
-      context.Trace.TraceInformation(Texts.Text1005);
+      context.Trace.TraceInformation("Creating Nupkg file...");
 
       var packageFileName = context.Configuration.Get("nuget:filename");
       var nuspecFileName = PathHelper.Combine(context.SolutionDirectory, packageFileName);
@@ -48,7 +48,7 @@
 
       context.OutputFiles.Add(nupkgFileName);
 
-      context.Trace.TraceInformation(Texts.Text1022, new FileInfo(nupkgFileName).Length.ToString("#,##0"));
+      context.Trace.TraceInformation("NuGet file size", new FileInfo(nupkgFileName).Length.ToString("#,##0"));
     }
 
     private void BuildNupkgFile([NotNull] IBuildContext context, [NotNull] string nuspecFileName, [NotNull] string nupkgFileName)
@@ -67,7 +67,7 @@
       }
       catch (Exception ex)
       {
-        context.Trace.TraceError(Texts.Text3032, ex.Message);
+        context.Trace.TraceError("Failed to create the Nupkg file", ex.Message);
       }
     }
   }

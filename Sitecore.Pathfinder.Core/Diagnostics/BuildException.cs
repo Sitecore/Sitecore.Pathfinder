@@ -1,56 +1,54 @@
 ﻿namespace Sitecore.Pathfinder.Diagnostics
 {
   using System;
+  using System.ComponentModel;
   using Sitecore.Pathfinder.TextDocuments;
 
   public class BuildException : Exception
   {
-    private static readonly object[] EmptyArgs = new object[0];
-
-    public BuildException(int text) : base(Texts.Messages[text])
+    public BuildException([Localizable(true)] [NotNull] string text) : base(text)
     {
       this.Text = text;
 
-      this.Args = EmptyArgs;
+      this.Details = string.Empty;
       this.FileName = string.Empty;
+      this.Position = TextPosition.Empty;
+      this.Details = string.Empty;
     }
 
-    public BuildException(int text, [NotNull] ISourceFile sourceFile, [NotNull] params object[] args) : base($"{sourceFile.FileName} (0, 0): {string.Format(Texts.Messages[text], args)}")
+    public BuildException([Localizable(true)] [NotNull] string text, [NotNull] ISourceFile sourceFile, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
     {
       this.Text = text;
       this.FileName = sourceFile.FileName;
-      this.Args = args;
+      this.Position = TextPosition.Empty;
+      this.Details = details;
     }
 
-    public BuildException(int text, [NotNull] IDocument document, [NotNull] params object[] args) : base($"{document.SourceFile.FileName} (0, 0): {string.Format(Texts.Messages[text], args)}")
+    public BuildException([Localizable(true)] [NotNull] string text, [NotNull] IDocument document, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
     {
       this.Text = text;
       this.FileName = document.SourceFile.FileName;
-      this.Args = args;
+      this.Position = TextPosition.Empty;
+      this.Details = details;
     }
 
-    public BuildException(int text, [NotNull] ITextNode textNode, [NotNull] params object[] args) : base($"{textNode.Document.SourceFile.FileName} ({textNode.LineNumber}, {textNode.LinePosition}): {string.Format(Texts.Messages[text], args)}")
+    public BuildException([Localizable(true)] [NotNull] string text, [NotNull] ITextNode textNode, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
     {
       this.Text = text;
       this.FileName = textNode.Document.SourceFile.FileName;
-      this.LineNumber = textNode.LineNumber;
-      this.LinePosition = textNode.LinePosition;
-      this.LineLength = textNode.LineLength;
-      this.Args = args;
+      this.Position = textNode.Position;
+      this.Details = details;
     }
 
     [NotNull]
-    public object[] Args { get; }
+    public string Details { get; }
 
     [NotNull]
     public string FileName { get; }
 
-    public int LineLength { get; }
+    public TextPosition Position { get; }
 
-    public int LineNumber { get; }
-
-    public int LinePosition { get; }
-
-    public int Text { get; }
+    [NotNull]
+    public string Text { get; }
   }
 }

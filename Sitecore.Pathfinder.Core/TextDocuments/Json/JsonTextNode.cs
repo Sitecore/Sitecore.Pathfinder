@@ -6,24 +6,31 @@
 
   public class JsonTextNode : TextNode
   {
-    public JsonTextNode([NotNull] ITextDocument document, [NotNull] string name, [NotNull] JObject jobject, [CanBeNull] ITextNode parent = null) : base(document, name, string.Empty, ((IJsonLineInfo)jobject).LineNumber, ((IJsonLineInfo)jobject).LinePosition + 1, 0, parent)
+    public JsonTextNode([NotNull] ITextDocument document, [NotNull] string name, [NotNull] JObject jobject, [CanBeNull] ITextNode parent = null) : base(document, GetPosition(jobject), name, string.Empty, parent)
     {
     }
 
-    public JsonTextNode([NotNull] ITextDocument document, [NotNull] string name, [NotNull] JArray jarray, [CanBeNull] ITextNode parent = null) : base(document, name, string.Empty, ((IJsonLineInfo)jarray).LineNumber, ((IJsonLineInfo)jarray).LinePosition + 1, 0, parent)
+    public JsonTextNode([NotNull] ITextDocument document, [NotNull] string name, [NotNull] JArray jarray, [CanBeNull] ITextNode parent = null) : base(document, GetPosition(jarray), name, string.Empty, parent)
     {
     }
 
-    public JsonTextNode([NotNull] ITextDocument document, [NotNull] string name, [NotNull] JProperty jproperty, [CanBeNull] ITextNode parent = null) : base(document, name, jproperty.Value?.ToString() ?? string.Empty, ((IJsonLineInfo)jproperty).LineNumber, ((IJsonLineInfo)jproperty).LinePosition + 1, GetLineLength(jproperty), parent)
+    public JsonTextNode([NotNull] ITextDocument document, [NotNull] string name, [NotNull] JProperty jproperty, [CanBeNull] ITextNode parent = null) : base(document, GetPosition(jproperty), name, jproperty.Value?.ToString() ?? string.Empty, parent)
     {
     }
 
-    private static int GetLineLength([NotNull] JProperty jproperty)
+    private static TextPosition GetPosition([NotNull] IJsonLineInfo lineInfo)
     {
-      var value = jproperty.Value?.ToString() ?? string.Empty;
+      var lineLength = 0;
 
-      // include quotes
-      return string.IsNullOrEmpty(value) ? 0 : value.Length + 2;
+      var jproperty = lineInfo as JProperty;
+      if (jproperty != null)
+      {
+        var value = jproperty.Value?.ToString() ?? string.Empty;
+        // include quotes
+        lineLength = string.IsNullOrEmpty(value) ? 0 : value.Length + 2;
+      }
+
+      return new TextPosition(lineInfo.LineNumber, lineInfo.LinePosition, lineLength);
     }
   }
 }

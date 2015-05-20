@@ -71,13 +71,13 @@
       var fieldName = fieldTextNode.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(fieldName))
       {
-        throw new BuildException(Texts.Text2011, fieldTextNode);
+        throw new BuildException(Texts._Field__element_must_have_a__Name__attribute, fieldTextNode);
       }
 
       var field = item.Fields.FirstOrDefault(f => string.Compare(f.Name, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
       if (field != null)
       {
-        context.ParseContext.Trace.TraceError(Texts.Text2012, fieldTextNode.Document.SourceFile.FileName, fieldTextNode.LineNumber, fieldTextNode.LinePosition, fieldTextNode.LineLength, fieldName);
+        context.ParseContext.Trace.TraceError("Field is already defined", fieldTextNode.Document.SourceFile.FileName, fieldTextNode.Position, fieldName);
         return;
       }
 
@@ -89,7 +89,7 @@
       {
         if (!int.TryParse(versionValue, out version))
         {
-          context.ParseContext.Trace.TraceError(Texts.Text3033, fieldTextNode.Document.SourceFile.FileName, fieldTextNode.LineNumber, fieldTextNode.LinePosition, fieldTextNode.LineLength, fieldName);
+          context.ParseContext.Trace.TraceError("'version' attribute must have an integer value", fieldTextNode.Document.SourceFile.FileName, fieldTextNode.Position, fieldName);
           version = 0;
         }
       }
@@ -101,7 +101,7 @@
       {
         if (valueTextNode != null)
         {
-          context.ParseContext.Trace.TraceWarning(Texts.Text3027, fieldTextNode.Document.SourceFile.FileName, valueAttributeTextNode.LineNumber, valueAttributeTextNode.LinePosition, fieldTextNode.LineLength, fieldName);
+          context.ParseContext.Trace.TraceWarning("Value is specified in both 'Value' attribute and in element. Using value from attribute", fieldTextNode.Document.SourceFile.FileName, valueAttributeTextNode.Position, fieldName);
         }
 
         valueTextNode = valueAttributeTextNode;
@@ -127,7 +127,7 @@
       var itemIdOrPath = this.GetTemplateIdOrPath(context, textNode);
       if (string.IsNullOrEmpty(itemIdOrPath))
       {
-        throw new BuildException(Texts.Text2010, textNode);
+        throw new BuildException("'Item' element must have a 'Template' or 'Template.Create' attribute", textNode);
       }
 
       var n = itemIdOrPath.LastIndexOf('/');

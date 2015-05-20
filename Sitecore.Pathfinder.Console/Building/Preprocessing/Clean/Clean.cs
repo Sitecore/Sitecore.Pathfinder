@@ -12,7 +12,7 @@
 
     public override void Run(IBuildContext context)
     {
-      context.Trace.TraceInformation(Texts.Text1001);
+      context.Trace.TraceInformation("Cleaning output directory...");
 
       foreach (var projectItem in context.Project.Items)
       {

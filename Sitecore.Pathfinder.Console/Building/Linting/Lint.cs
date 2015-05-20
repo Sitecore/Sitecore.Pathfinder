@@ -14,8 +14,8 @@ namespace Sitecore.Pathfinder.Building.Linting
 
     public override void Run(IBuildContext context)
     {
-      context.Trace.TraceInformation(Texts.Text1010);
-      context.Trace.TraceInformation(Texts.Text1021, context.Project.Items.Count());
+      context.Trace.TraceInformation("Checking...");
+      context.Trace.TraceInformation("Linting items", context.Project.Items.Count().ToString());
 
       var checkerService = context.CompositionService.Resolve<ICheckerService>();
 

@@ -52,7 +52,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
       var fieldName = fieldTextNode.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(fieldName))
       {
-        throw new BuildException(Texts.Text2008, fieldTextNode);
+        throw new BuildException("'Field' element must have a 'Name' attribute", fieldTextNode);
       }
 
       var templateField = templateSection.Fields.FirstOrDefault(f => string.Compare(f.Name, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
@@ -79,7 +79,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
       var sectionName = sectionTextNode.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(sectionName))
       {
-        throw new BuildException(Texts.Text2007, sectionTextNode);
+        throw new BuildException("'Section' element must have a 'Name' attribute", sectionTextNode);
       }
 
       var templateSection = template.Sections.FirstOrDefault(s => string.Compare(s.Name, sectionName, StringComparison.OrdinalIgnoreCase) == 0);

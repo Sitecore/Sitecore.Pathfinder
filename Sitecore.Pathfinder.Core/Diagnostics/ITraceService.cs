@@ -1,29 +1,22 @@
 namespace Sitecore.Pathfinder.Diagnostics
 {
+  using System.ComponentModel;
+  using Sitecore.Pathfinder.TextDocuments;
+
   public interface ITraceService
   {
-    void TraceError(int text);
+    void TraceError([Localizable(true)] [NotNull]string text, [NotNull] string details = "");
 
-    void TraceError(int text, [NotNull] params object[] args);
+    void TraceError([Localizable(true)] [NotNull] string text, [NotNull] string fileName, TextPosition position, [NotNull] string details = "");
 
-    void TraceError(int text, [NotNull] string fileName, int lineNumber, int linePosition, int lineLength, [NotNull] params object[] args);
+    void TraceInformation([Localizable(true)] [NotNull] string text, [NotNull] string details = "");
 
-    void TraceInformation(int text);
+    void TraceInformation([Localizable(true)] [NotNull] string text, [NotNull] string fileName, TextPosition position, [NotNull] string details = "");
 
-    void TraceInformation(int text, [NotNull] params object[] args);
+    void TraceWarning([Localizable(true)] [NotNull] string text, [NotNull] string details = "");
 
-    void TraceInformation(int text, [NotNull] string fileName, int lineNumber, int linePosition, int lineLength, [NotNull] params object[] args);
+    void TraceWarning([Localizable(true)] [NotNull] string text, [NotNull] string fileName, TextPosition position, [NotNull] string details = "");
 
-    void TraceWarning(int text);
-
-    void TraceWarning(int text, [NotNull] params object[] args);
-
-    void TraceWarning(int text, [NotNull] string fileName, int lineNumber, int linePosition, int lineLength, [NotNull] params object[] args);
-
-    void Writeline([NotNull] string message);
-
-    void Writeline(int text);
-
-    void Writeline(int text, [NotNull] params object[] args);
+    void Writeline([Localizable(true)] [NotNull] string text, [NotNull] string details = "");
   }
 }

@@ -26,7 +26,7 @@
           }
           catch (Exception ex)
           {
-            throw new BuildException(Texts.Text2000, this.SourceFile, ex.Message);
+            throw new BuildException("Item file is not valid", this.SourceFile, ex.Message);
           }
 
           var r = json.Properties().FirstOrDefault(p => p.Name != "$schema");
@@ -38,7 +38,7 @@
           var value = r.Value as JObject;
           if (value == null)
           {
-            throw new BuildException(Texts.Text3026, this.SourceFile);
+            throw new BuildException("Json file is not valid", this.SourceFile);
           }
 
           this.root = this.Parse(r.Name, value, null);

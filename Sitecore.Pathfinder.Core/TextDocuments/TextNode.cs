@@ -7,28 +7,24 @@
 
   public class TextNode : ITextNode
   {
-    public static readonly ITextNode Empty = new TextNode(TextDocuments.Document.Empty, string.Empty);
+    public static readonly ITextNode Empty = new TextNode(TextDocuments.Document.Empty, TextPosition.Empty, string.Empty);
 
     public TextNode([NotNull] IDocument document)
     {
       this.Document = document;
+      this.Position = TextPosition.Empty;
       this.Name = string.Empty;
       this.Value = string.Empty;
       this.Parent = null;
-      this.LineNumber = 0;
-      this.LinePosition = 0;
-      this.LineLength = 0;
     }
 
-    public TextNode([NotNull] IDocument document, [NotNull] string name, [NotNull] string value = "", int lineNumber = 0, int linePosition = 0, int lineLength = 0, [CanBeNull] ITextNode parent = null)
+    public TextNode([NotNull] IDocument document, TextPosition position, [NotNull] string name, [NotNull] string value = "", [CanBeNull] ITextNode parent = null)
     {
       this.Document = document;
       this.Name = name;
       this.Value = value;
       this.Parent = parent;
-      this.LineNumber = lineNumber;
-      this.LinePosition = linePosition;
-      this.LineLength = lineLength;
+      this.Position = position;
     }
 
     public IList<ITextNode> Attributes { get; } = new List<ITextNode>();
@@ -37,15 +33,11 @@
 
     public IDocument Document { get; }
 
-    public int LineLength { get; }
-
-    public int LineNumber { get; }
-
-    public int LinePosition { get; }
-
     public string Name { get; }
 
     public ITextNode Parent { get; }
+
+    public TextPosition Position { get; }
 
     public string Value { get; }
 

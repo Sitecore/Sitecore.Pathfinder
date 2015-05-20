@@ -14,11 +14,7 @@
     [NotNull]
     IDocument Document { get; }
 
-    int LineLength { get; }
-
-    int LineNumber { get; }
-
-    int LinePosition { get; }
+    TextPosition Position { get; }
 
     [NotNull]
     string Name { get; }

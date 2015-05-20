@@ -37,13 +37,13 @@
       var textDocument = context.Document as ITextDocument;
       if (textDocument == null)
       {
-        throw new BuildException(Texts.Text3031, context.Document);
+        throw new BuildException("public const string Text document expected", context.Document);
       }
 
       var textNode = textDocument.Root;
       if (textNode == TextNode.Empty)
       {
-        context.Trace.TraceWarning(Texts.Text3025, textDocument.SourceFile.FileName, textNode.LineNumber, textNode.LinePosition, textNode.LineLength);
+        context.Trace.TraceWarning("Source file is empty", textDocument.SourceFile.FileName, textNode.Position);
         return;
       }
 
@@ -78,11 +78,11 @@
       }
       catch (BuildException ex)
       {
-        context.ParseContext.Trace.TraceError(Texts.Text3013, context.ParseContext.Document.SourceFile.FileName, ex.LineNumber, ex.LinePosition, ex.LineLength, ex.Message);
+        context.ParseContext.Trace.TraceError("", context.ParseContext.Document.SourceFile.FileName, ex.Position, ex.Details);
       }
       catch (Exception ex)
       {
-        context.ParseContext.Trace.TraceError(Texts.Text3013, context.ParseContext.Document.SourceFile.FileName, 0, 0, 0, ex.Message);
+        context.ParseContext.Trace.TraceError("", context.ParseContext.Document.SourceFile.FileName, TextPosition.Empty, ex.Message);
       }
     }
   }

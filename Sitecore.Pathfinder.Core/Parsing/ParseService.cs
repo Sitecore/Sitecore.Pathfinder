@@ -47,11 +47,11 @@
       }
       catch (BuildException ex)
       {
-        parseContext.Trace.TraceError(Texts.Text3013, sourceFile.FileName, ex.LineNumber, ex.LinePosition, ex.LineLength, ex.Message);
+        parseContext.Trace.TraceError("", sourceFile.FileName, ex.Position, ex.Details);
       }
       catch (Exception ex)
       {
-        parseContext.Trace.TraceError(Texts.Text3013, sourceFile.FileName, 0, 0, 0, ex.Message);
+        parseContext.Trace.TraceError("", sourceFile.FileName, TextPosition.Empty, ex.Message);
       }
     }
   }

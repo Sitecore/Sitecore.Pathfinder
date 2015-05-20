@@ -16,12 +16,12 @@ namespace Sitecore.Pathfinder.Building.Deploying.Install
     {
       if (!context.IsDeployable)
       {
-        context.Trace.TraceInformation(Texts.Text3011);
+        context.Trace.TraceInformation("Package contains errors and will not be deployed");
         context.IsAborted = true;
         return;
       }
 
-      context.Trace.TraceInformation(Texts.Text1008);
+      context.Trace.TraceInformation("Installing...");
 
       var packageId = Path.GetFileNameWithoutExtension(context.Configuration.Get("nuget:filename"));
       if (string.IsNullOrEmpty(packageId))

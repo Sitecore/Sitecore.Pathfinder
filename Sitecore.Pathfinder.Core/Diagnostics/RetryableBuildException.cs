@@ -1,22 +1,23 @@
 ﻿namespace Sitecore.Pathfinder.Diagnostics
 {
+  using System.ComponentModel;
   using Sitecore.Pathfinder.TextDocuments;
 
   public class RetryableBuildException : BuildException
   {
-    public RetryableBuildException(int text) : base(text)
+    public RetryableBuildException([Localizable(true)] [NotNull] string text) : base(text)
     {
     }
 
-    public RetryableBuildException(int text, [NotNull] ISourceFile sourceFile, [NotNull] params object[] args) : base(text, sourceFile, args)
+    public RetryableBuildException([Localizable(true)] [NotNull] string text, [NotNull] ISourceFile sourceFile, [NotNull] string details = "") : base(text, sourceFile, details)
     {
     }
 
-    public RetryableBuildException(int text, [NotNull] IDocument document, [NotNull] params object[] args) : base(text, document, args)
+    public RetryableBuildException([Localizable(true)] [NotNull] string text, [NotNull] IDocument document, [NotNull] string details = "") : base(text, document, details)
     {
     }
 
-    public RetryableBuildException(int text, [NotNull] ITextNode textNode, [NotNull] params object[] args) : base(text, textNode, args)
+    public RetryableBuildException([Localizable(true)] [NotNull] string text, [NotNull] ITextNode textNode, [NotNull] string details = "") : base(text, textNode, details)
     {
     }
   }

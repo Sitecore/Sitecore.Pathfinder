@@ -1,6 +1,7 @@
 ﻿namespace Sitecore.Pathfinder.Checking.Checkers
 {
   using System.ComponentModel.Composition;
+  using Sitecore.Pathfinder.TextDocuments;
 
   [Export(typeof(IChecker))]
   public class ReferenceChecker : CheckerBase
@@ -20,11 +21,11 @@
 
           if (textNode != null)
           {
-            context.Trace.TraceWarning(Texts.Text3024, projectItem.Document.SourceFile.FileName, textNode.LineNumber, textNode.LinePosition, textNode.LineLength, reference.TargetQualifiedName);
+            context.Trace.TraceWarning("Reference not found", projectItem.Document.SourceFile.FileName, textNode.Position, reference.TargetQualifiedName);
           }
           else
           {
-            context.Trace.TraceWarning(Texts.Text3024, projectItem.Document.SourceFile.FileName, 0, 0, 0, reference.TargetQualifiedName);
+            context.Trace.TraceWarning("Reference not found", projectItem.Document.SourceFile.FileName, TextPosition.Empty, reference.TargetQualifiedName);
           }
         }
       }

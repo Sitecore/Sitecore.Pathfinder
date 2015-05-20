@@ -2,15 +2,12 @@
 {
   using System;
   using System.Collections.Generic;
-  using System.ComponentModel.Composition;
   using System.Linq;
   using Sitecore.Data;
   using Sitecore.Data.Items;
   using Sitecore.Data.Managers;
-  using Sitecore.Pathfinder.Builders.FieldResolvers;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Emitters;
-  using Sitecore.Pathfinder.Extensions.StringExtensions;
   using Sitecore.Pathfinder.IO;
 
   public class ItemBuilder
@@ -21,14 +18,10 @@
     }
 
     [CanBeNull]
-    public Item Item { get; set; }
+    public Item Item { get; protected set; }
 
     [NotNull]
     public Projects.Items.Item ProjectItem { get; }
-
-    [ImportMany]
-    [NotNull]
-    protected IEnumerable<IFieldResolver> FieldHandlers { get; set; }
 
     [CanBeNull]
     protected Item TemplateItem { get; set; }
@@ -38,7 +31,7 @@
       var database = context.DataService.GetDatabase(this.ProjectItem.DatabaseName);
       if (database == null)
       {
-        throw new BuildException(Texts.Text2018, this.ProjectItem.Document, this.ProjectItem.DatabaseName);
+        throw new BuildException("Database not found", this.ProjectItem.Document, this.ProjectItem.DatabaseName);
       }
 
       if (this.Item == null)
@@ -71,7 +64,7 @@
     {
       if (this.TemplateItem == null)
       {
-        throw new BuildException(Texts.Text2016, this.ProjectItem.Document, this.ProjectItem.TemplateIdOrPath);
+        throw new BuildException("Template missing", this.ProjectItem.Document, this.ProjectItem.TemplateIdOrPath);
       }
 
       var parentItemPath = PathHelper.GetItemParentPath(this.ProjectItem.ItemIdOrPath);
@@ -79,14 +72,14 @@
       var parentItem = database.CreateItemPath(parentItemPath);
       if (parentItem == null)
       {
-        throw new RetryableBuildException(Texts.Text2019, this.ProjectItem.Document, parentItemPath);
+        throw new RetryableBuildException("Failed to create item path", this.ProjectItem.Document, parentItemPath);
       }
 
       // item is created with correct ID
       var item = ItemManager.AddFromTemplate(this.ProjectItem.ItemName, this.TemplateItem.ID, parentItem, new ID(this.ProjectItem.Guid));
       if (item == null)
       {
-        throw new RetryableBuildException(Texts.Text2019, this.ProjectItem.Document, this.ProjectItem.ItemIdOrPath);
+        throw new RetryableBuildException("Failed to create item path", this.ProjectItem.Document, this.ProjectItem.ItemIdOrPath);
       }
 
       this.Item = item;
@@ -136,19 +129,17 @@
     {
       if (this.Item == null)
       {
-        throw new BuildException(Texts.Text2003, this.ProjectItem.Document);
+        throw new BuildException("Item not found", this.ProjectItem.Document);
       }
 
       foreach (var field in this.ProjectItem.Fields)
       {
-        foreach (var fieldHandler in context.FieldResolvers)
+        foreach (var fieldResolver in context.FieldResolvers)
         {
-          if (!fieldHandler.CanHandle(context, field, this.Item))
+          if (fieldResolver.CanResolve(context, field, this.Item))
           {
-            continue;
+            fieldResolver.Resolve(context, field, this.Item);
           }
-
-          fieldHandler.Handle(context, field, this.Item);
         }
       }
     }
@@ -157,12 +148,12 @@
     {
       if (this.Item == null)
       {
-        throw new BuildException(Texts.Text2003, this.ProjectItem.Document);
+        throw new BuildException("Item not found", this.ProjectItem.Document);
       }
 
       if (this.TemplateItem == null)
       {
-        throw new BuildException(Texts.Text2017, this.ProjectItem.Document);
+        throw new BuildException("Template missing", this.ProjectItem.Document);
       }
 
       // move
@@ -176,7 +167,7 @@
           parentItem = this.Item.Database.CreateItemPath(parentItemPath);
           if (parentItem == null)
           {
-            throw new RetryableBuildException(Texts.Text3028, this.ProjectItem.Document, parentItemPath);
+            throw new RetryableBuildException("Could not create item", this.ProjectItem.Document, parentItemPath);
           }
         }
 
@@ -197,10 +188,40 @@
           this.Item.ChangeTemplate(templateItem);
         }
 
-        foreach (var field in this.ProjectItem.Fields)
+        foreach (var field in this.ProjectItem.Fields.Where(i => string.IsNullOrEmpty(i.Language) && i.Version == 0))
         {
           this.Item[field.Name] = field.Value;
         }
+      }
+
+      var items = new List<Item>();
+
+      foreach (var field in this.ProjectItem.Fields.Where(i => !string.IsNullOrEmpty(i.Language) || i.Version != 0))
+      {
+        // language has already been validated
+        var language = LanguageManager.GetLanguage(field.Language, this.Item.Database);
+
+        var item = items.FirstOrDefault(i => i.Language == language && i.Version.Number == field.Version);
+        if (item == null)
+        {
+          item = this.Item.Database.GetItem(this.Item.ID, language, new Sitecore.Data.Version(field.Version));
+          if (item == null)
+          {
+            // todo: validate this before updating the item
+            context.Trace.TraceError("Item not found", field.TextNode.Document.SourceFile.FileName, field.TextNode.Position, $"language: {field.Language}, version; {field.Version}");
+            continue;
+          }
+
+          item.Editing.BeginEdit();
+          items.Add(item);
+        }
+
+        item[field.Name] = field.Value;
+      }
+
+      foreach (var item in items)
+      {
+        item.Editing.EndEdit();
       }
     }
 
@@ -223,7 +244,16 @@
       {
         if (templateFields.All(f => string.Compare(f.Name, field.Name, StringComparison.OrdinalIgnoreCase) != 0))
         {
-          throw new RetryableBuildException(Texts.Text2035, this.ProjectItem.Document);
+          throw new RetryableBuildException("Field is not defined in the template", this.ProjectItem.Document);
+        }
+
+        if (!string.IsNullOrEmpty(field.Language))
+        {
+          var language = LanguageManager.GetLanguage(field.Language, this.TemplateItem.Database);
+          if (language == null)
+          {
+            throw new RetryableBuildException("Language not found", field.TextNode, field.Language);
+          }
         }
       }
     }

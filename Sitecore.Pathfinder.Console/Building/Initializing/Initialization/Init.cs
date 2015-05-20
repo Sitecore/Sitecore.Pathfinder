@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.Initialization
     protected virtual void CreateConfigurationFile([NotNull] IBuildContext context, [NotNull] string projectDirectory)
     {
       this.CopyResourceFiles(context, projectDirectory);
-      context.Trace.Writeline(Texts.Text1015, context.Configuration.Get(Constants.Configuration.ConfigFileName));
+      context.Trace.Writeline("Your configuration file and sample files were missing = so I have created them. You must update the 'project-unique-id' = 'wwwroot' and 'hostname' in the '{0}' configuration file before continuing.", context.Configuration.Get(Constants.Configuration.ConfigFileName));
     }
 
     protected virtual void CreateProjectDirectory([NotNull] IBuildContext context, [NotNull] string projectDirectory)
@@ -45,8 +45,8 @@ namespace Sitecore.Pathfinder.Building.Initializing.Initialization
       context.FileSystem.CreateDirectory(projectDirectory);
       this.CopyResourceFiles(context, projectDirectory);
 
-      context.Trace.Writeline(Texts.Text1013);
-      context.Trace.Writeline(Texts.Text1014, context.Configuration.Get(Constants.Configuration.ConfigFileName));
+      context.Trace.Writeline("Hi there.");
+      context.Trace.Writeline("Your project directory was missing = so I have created it. You must update the 'project-unique-id' = 'wwwroot' and 'hostname' in the '{0}' configuration file before continuing.", context.Configuration.Get(Constants.Configuration.ConfigFileName));
     }
   }
 }

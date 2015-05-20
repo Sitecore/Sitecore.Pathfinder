@@ -4,6 +4,7 @@
   using System.ComponentModel.Composition;
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Extensions.StringExtensions;
+  using Sitecore.Pathfinder.TextDocuments;
 
   [Export(typeof(ITraceService))]
   public class TraceService : ITraceService
@@ -17,83 +18,53 @@
     [NotNull]
     protected IConfiguration Configuration { get; }
 
-    public void TraceError(int text)
+    public void TraceError(string text, string details = "")
     {
-      this.Write(text, "error", string.Empty, 0, 0, 0);
+      this.Write(text, "error", string.Empty, TextPosition.Empty, details);
     }
 
-    public void TraceError(int text, params object[] args)
+    public void TraceError(string text, string fileName, TextPosition position, string details = "")
     {
-      this.Write(text, "error", string.Empty, 0, 0, 0, args);
+      this.Write(text, "error", fileName, position, details);
     }
 
-    public void TraceError(int text, string fileName, int lineNumber = 0, int linePosition = 0, int lineLength = 0, params object[] args)
+    public void TraceInformation(string text, string details = "")
     {
-      this.Write(text, "error", fileName, lineNumber, linePosition, lineLength, args);
+      this.Write(text, "information", string.Empty, TextPosition.Empty, details);
     }
 
-    public void TraceInformation(int text)
+    public void TraceInformation(string text, string fileName, TextPosition position, string details = "")
     {
-      this.Write(text, "information", string.Empty, 0, 0, 0);
+      this.Write(text, "information", fileName, position, details);
     }
 
-    public void TraceInformation(int text, params object[] args)
+    public void TraceWarning(string text, string details = "")
     {
-      this.Write(text, "information", string.Empty, 0, 0, 0, args);
+      this.Write(text, "warning", string.Empty, TextPosition.Empty, details);
     }
 
-    public void TraceInformation(int text, string fileName, int lineNumber = 0, int linePosition = 0, int lineLength = 0, params object[] args)
+    public void TraceWarning(string text, string fileName, TextPosition position, string details = "")
     {
-      this.Write(text, "information", fileName, lineNumber, linePosition, lineLength, args);
+      this.Write(text, "warning", fileName, position, details);
     }
 
-    public void TraceWarning(int text)
+    public void Writeline(string text, string details = "")
     {
-      this.Write(text, "warning", string.Empty, 0, 0, 0);
-    }
-
-    public void TraceWarning(int text, params object[] args)
-    {
-      this.Write(text, "warning", string.Empty, 0, 0, 0, args);
-    }
-
-    public void TraceWarning(int text, string fileName, int lineNumber = 0, int linePosition = 0, int lineLength = 0, params object[] args)
-    {
-      this.Write(text, "warning", fileName, lineNumber, linePosition, lineLength, args);
-    }
-
-    public void Writeline(string message)
-    {
-      Console.WriteLine(message);
-    }
-
-    public void Writeline(int text)
-    {
-      var message = this.GetMessage(text);
-      Console.WriteLine(message);
-    }
-
-    public void Writeline(int text, params object[] args)
-    {
-      var message = this.GetMessage(text);
-      Console.WriteLine(message, args);
-    }
-
-    [NotNull]
-    protected virtual string GetMessage(int text)
-    {
-      return Texts.Messages[text];
-    }
-
-    protected virtual void Write(int text, [NotNull] string textType, [NotNull] string fileName, int lineNumber, int linePosition, int lineLength, [NotNull] params object[] args)
-    {
-      var message = this.GetMessage(text);
-      if (string.IsNullOrEmpty(message))
+      if (!string.IsNullOrEmpty(details))
       {
-        throw new TraceException($"Error message SCC'{text}' not found");
+        text += ": " + details;
       }
 
-      message = string.Format(message, args);
+      Console.WriteLine(text);
+    }
+
+    protected virtual void Write([NotNull] string text, [NotNull] string textType, [NotNull] string fileName, TextPosition position, [NotNull] string details)
+    {
+      if (!string.IsNullOrEmpty(details))
+      {
+        text += ": " + details;
+      }
+
       var fileInfo = !string.IsNullOrEmpty(fileName) ? fileName : "scc.cmd";
 
       var solutionDirectory = this.Configuration.Get(Pathfinder.Constants.Configuration.SolutionDirectory);
@@ -105,9 +76,9 @@
         }
       }
 
-      var lineInfo = lineLength == 0 ? $"({lineNumber},{linePosition})" : $"({lineNumber},{linePosition},{lineNumber},{linePosition + lineLength})";
+      var lineInfo = position.LineLength == 0 ? $"({position.LineNumber},{position.LinePosition})" : $"({position.LineNumber},{position.LinePosition},{position.LineNumber},{position.LinePosition + position.LineLength})";
 
-      Console.WriteLine($"{fileInfo}{lineInfo}: {textType} SCC{text}: {message}");
+      Console.WriteLine($"{fileInfo}{lineInfo}: {textType} SCC0000: {text}");
     }
   }
 }

@@ -6,8 +6,8 @@
 
   public abstract class FieldResolverBase : IFieldResolver
   {
-    public abstract bool CanHandle(IEmitContext context, Field field, Sitecore.Data.Items.Item item);
+    public abstract bool CanResolve(IEmitContext context, Field field, Sitecore.Data.Items.Item item);
 
-    public abstract void Handle(IEmitContext context, Field field, Sitecore.Data.Items.Item item);
+    public abstract void Resolve(IEmitContext context, Field field, Sitecore.Data.Items.Item item);
   }
 }

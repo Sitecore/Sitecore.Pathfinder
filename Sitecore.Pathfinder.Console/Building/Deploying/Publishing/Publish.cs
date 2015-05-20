@@ -15,12 +15,12 @@ namespace Sitecore.Pathfinder.Building.Deploying.Publishing
     {
       if (!context.IsDeployable)
       {
-        context.Trace.TraceInformation(Texts.Text3011);
+        context.Trace.TraceInformation("Package contains errors and will not be deployed");
         context.IsAborted = true;
         return;
       }
 
-      context.Trace.TraceInformation(Texts.Text1009);
+      context.Trace.TraceInformation("Publishing...");
 
       var hostName = context.Configuration.GetString(Constants.Configuration.HostName).TrimEnd('/');
       var publishUrl = context.Configuration.GetString(Constants.Configuration.PublishUrl).TrimStart('/');

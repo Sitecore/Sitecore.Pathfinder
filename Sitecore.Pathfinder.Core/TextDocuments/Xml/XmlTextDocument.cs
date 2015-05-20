@@ -41,13 +41,13 @@
         }
         catch (Exception ex)
         {
-          throw new BuildException(Texts.Text2000, this.SourceFile, ex.Message);
+          throw new BuildException("Item file is not valid", this.SourceFile, ex.Message);
         }
 
         this.rootElement = doc.Root;
         if (this.rootElement == null)
         {
-          throw new BuildException(Texts.Text2000, this.SourceFile);
+          throw new BuildException("Item file is not valid", this.SourceFile);
         }
 
         return this.rootElement;
@@ -103,10 +103,10 @@
         switch (args.Severity)
         {
           case XmlSeverityType.Error:
-            context.Trace.TraceError(Texts.Text3013, context.Document.SourceFile.FileName, args.Exception.LineNumber, args.Exception.LinePosition, 0, args.Message);
+            context.Trace.TraceError("", context.Document.SourceFile.FileName, new TextPosition(args.Exception.LineNumber, args.Exception.LinePosition, 0), args.Message);
             break;
           case XmlSeverityType.Warning:
-            context.Trace.TraceWarning(Texts.Text3014, context.Document.SourceFile.FileName, args.Exception.LineNumber, args.Exception.LinePosition, 0, args.Message);
+            context.Trace.TraceWarning("", context.Document.SourceFile.FileName, new TextPosition(args.Exception.LineNumber, args.Exception.LinePosition, 0), args.Message);
             break;
         }
       };
@@ -117,7 +117,7 @@
       }
       catch (Exception ex)
       {
-        context.Trace.TraceError(Texts.Text3012, context.Document.SourceFile.FileName, 0, 0, 0, ex.Message);
+        context.Trace.TraceError("The file does not contain valid XML", context.Document.SourceFile.FileName, TextPosition.Empty, ex.Message);
       }
     }
 

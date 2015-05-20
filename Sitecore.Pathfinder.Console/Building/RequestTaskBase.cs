@@ -40,11 +40,11 @@
           message = new StreamReader(stream).ReadToEnd();
         }
 
-        context.Trace.TraceError(Texts.Text3008, message);
+        context.Trace.TraceError("The server returned an error", message);
       }
       catch (Exception ex)
       {
-        context.Trace.TraceError(Texts.Text3008, ex.Message);
+        context.Trace.TraceError("The server returned an error", ex.Message);
       }
 
       return false;

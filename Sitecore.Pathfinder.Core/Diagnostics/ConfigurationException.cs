@@ -6,21 +6,16 @@
   {
     private static readonly object[] EmptyArgs = new object[0];
 
-    public ConfigurationException(int text) : base(Texts.Messages[text])
+    public ConfigurationException([NotNull] string text, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
     {
       this.Text = text;
-      this.Args = EmptyArgs;
-    }
-
-    public ConfigurationException(int text, [NotNull] params object[] args) : base(string.Format(Texts.Messages[text], args))
-    {
-      this.Text = text;
-      this.Args = args;
+      this.Details = details;
     }
 
     [NotNull]
-    public object[] Args { get; }
+    public string Details { get; }
 
-    public int Text { get; }
+    [NotNull]
+    public string Text { get; }
   }
 }

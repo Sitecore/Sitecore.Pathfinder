@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
       var projectUniqueId = context.Configuration.Get(Constants.Configuration.ProjectUniqueId);
       if (string.Compare(projectUniqueId, "{project-unique-id}", StringComparison.OrdinalIgnoreCase) == 0)
       {
-        context.Trace.Writeline(Texts.Text1016, context.Configuration.Get(Constants.Configuration.ConfigFileName));
+        context.Trace.Writeline("Hey - you haven't changed the the 'project-unique-id' = 'wwwroot' or 'hostname' in the '{0}' configuration file.", context.Configuration.Get(Constants.Configuration.ConfigFileName));
         context.IsAborted = true;
         return;
       }
@@ -38,7 +38,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
       var hostName = context.Configuration.Get(Constants.Configuration.HostName);
       if (string.Compare(hostName, "http://sitecore.default", StringComparison.OrdinalIgnoreCase) == 0)
       {
-        context.Trace.Writeline(Texts.Text1016, context.Configuration.Get(Constants.Configuration.ConfigFileName));
+        context.Trace.Writeline("Hey - you haven't changed the the 'project-unique-id' = 'wwwroot' or 'hostname' in the '{0}' configuration file.", context.Configuration.Get(Constants.Configuration.ConfigFileName));
         context.IsAborted = true;
         return;
       }
@@ -46,7 +46,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
       var wwwroot = context.Configuration.Get(Constants.Configuration.Wwwroot);
       if (string.Compare(wwwroot, "c:\\inetpub\\wwwroot\\Sitecore.Default", StringComparison.OrdinalIgnoreCase) == 0)
       {
-        context.Trace.Writeline(Texts.Text1016, context.Configuration.Get(Constants.Configuration.ConfigFileName));
+        context.Trace.Writeline("Hey - you haven't changed the the 'project-unique-id' = 'wwwroot' or 'hostname' in the '{0}' configuration file.", context.Configuration.Get(Constants.Configuration.ConfigFileName));
         context.IsAborted = true;
         return;
       }
@@ -54,7 +54,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
       var dataFolder = PathHelper.Combine(wwwroot, "Data");
       if (!context.FileSystem.DirectoryExists(dataFolder))
       {
-        context.Trace.Writeline(Texts.Text1017, context.Configuration.Get(Constants.Configuration.ConfigFileName));
+        context.Trace.Writeline("Hey - there is no 'Data' directory under the 'wwwroot' directory - are you sure = you have set the 'wwwroot' correctly in the configuration file", context.Configuration.Get(Constants.Configuration.ConfigFileName));
         context.IsAborted = true;
         return;
       }
@@ -62,7 +62,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
       var website = PathHelper.Combine(wwwroot, "Website");
       if (!context.FileSystem.DirectoryExists(website))
       {
-        context.Trace.Writeline(Texts.Text1018, context.Configuration.Get(Constants.Configuration.ConfigFileName));
+        context.Trace.Writeline("Hey - there is no 'Website' directory under the 'wwwroot' directory - are you sure = you have set the 'wwwroot' correctly in the configuration file", context.Configuration.Get(Constants.Configuration.ConfigFileName));
         context.IsAborted = true;
         return;
       }
@@ -72,7 +72,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
       if (!context.FileSystem.FileExists(serverAssemblyFileName))
       {
         context.FileSystem.XCopy(sourceDirectory, website);
-        context.Trace.Writeline(Texts.Text1019, context.Configuration.Get(Constants.Configuration.ConfigFileName));
+        context.Trace.Writeline("Just so you know = I have copied the 'Sitecore.Pathfinder.Server.dll' and 'NuGet.Core.dll' assemblies to the '/bin' directory in the website and a number of '.aspx' files to the '/sitecore/shell/client/Applications/Pathfinder' directory", context.Configuration.Get(Constants.Configuration.ConfigFileName));
       }
       else
       {
@@ -84,7 +84,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
         if (serverVersion < localVersion)
         {
           context.FileSystem.XCopy(sourceDirectory, website);
-          context.Trace.Writeline(Texts.Text1020, context.Configuration.Get(Constants.Configuration.ConfigFileName));
+          context.Trace.Writeline("Just so you know = I have updated the 'Sitecore.Pathfinder.Server.dll' and 'NuGet.Core.dll' assemblies in the '/bin' directory in the website and a number of '.aspx' files in the '/sitecore/shell/client/Applications/Pathfinder' directory to the latest version", context.Configuration.Get(Constants.Configuration.ConfigFileName));
         }
       }
     }

@@ -17,6 +17,7 @@
   using Sitecore.Pathfinder.Extensions.XElementExtensions;
   using Sitecore.Pathfinder.Projects.Items;
   using Sitecore.Pathfinder.Projects.Layouts;
+  using Sitecore.Pathfinder.TextDocuments;
   using Sitecore.Text;
 
   [Export(typeof(IParser))]
@@ -95,7 +96,7 @@
       var root = context.Document.SourceFile.ReadAsXml();
       if (root == null)
       {
-        throw new BuildException(Texts.Text2014, context.Document.SourceFile);
+        throw new BuildException(Texts.Layout_file_is_not_valid, context.Document.SourceFile);
       }
 
       var writer = new StringWriter();
@@ -113,17 +114,17 @@
 
       foreach (var error in errors)
       {
-        context.Trace.TraceError(Texts.Text2026, context.Document.SourceFile.FileName, error.Line, error.Column, error.Text);
+        context.Trace.TraceError("", context.Document.SourceFile.FileName, new TextPosition(error.Line, error.Column, 0), error.Text);
       }
 
       foreach (var warning in warnings)
       {
-        context.Trace.TraceWarning(Texts.Text2027, context.Document.SourceFile.FileName, warning.Line, warning.Column, warning.Text);
+        context.Trace.TraceWarning("", context.Document.SourceFile.FileName, new TextPosition(warning.Line, warning.Column, 0), warning.Text);
       }
 
       if (errors.Any())
       {
-        throw new BuildException(Texts.Text2020, context.Document.SourceFile);
+        throw new BuildException(Texts.Layout_contains_errors, context.Document.SourceFile);
       }
 
       return string.Empty;
@@ -156,7 +157,7 @@
 
       if (item == null)
       {
-        throw new BuildException(Texts.Text2024, layout.Document);
+        throw new BuildException(Texts.Cannot_apply_a_layout_to_a_template__The_template_needs_a_Standard_Values_, layout.Document);
       }
 
       return item;
@@ -291,7 +292,7 @@
         var l = database.GetItem(layoutPath);
         if (l == null)
         {
-          throw new RetryableBuildException(Texts.Text2029, context.Document.SourceFile, layoutPath);
+          throw new RetryableBuildException(Texts.Layout_not_found_, context.Document.SourceFile, layoutPath);
         }
 
         output.WriteAttributeString("l", l.ID.ToString());

@@ -8,7 +8,7 @@
   [Export(typeof(IFieldResolver))]
   public class CheckboxFieldResolver : FieldResolverBase
   {
-    public override bool CanHandle(IEmitContext context, Field field, Sitecore.Data.Items.Item item)
+    public override bool CanResolve(IEmitContext context, Field field, Sitecore.Data.Items.Item item)
     {
       var f = item.Fields[field.Name];
       if (f == null)
@@ -19,7 +19,7 @@
       return string.Compare(f.Type, "checkbox", StringComparison.OrdinalIgnoreCase) == 0;
     }
 
-    public override void Handle(IEmitContext context, Field field, Sitecore.Data.Items.Item item)
+    public override void Resolve(IEmitContext context, Field field, Sitecore.Data.Items.Item item)
     {
       if (string.Compare(field.Value, "true", StringComparison.OrdinalIgnoreCase) == 0)
       {

@@ -51,7 +51,7 @@
 
       if (context.DisplayDoneMessage)
       {
-        context.Trace.Writeline("Done");
+        context.Trace.Writeline(Texts.Done);
       }
     }
 
@@ -91,7 +91,7 @@
       var pipeline = this.GetPipeline(context);
       if (!pipeline.Any())
       {
-        context.Trace.TraceWarning(Texts.Text1012);
+        context.Trace.TraceWarning(Texts.Pipeline_is_empty__There_are_no_tasks_to_execute_);
         return;
       }
 
@@ -111,7 +111,7 @@
       var task = this.Tasks.FirstOrDefault(t => string.Compare(t.TaskName, taskName, StringComparison.OrdinalIgnoreCase) == 0);
       if (task == null)
       {
-        context.Trace.TraceError(Texts.Text3001, taskName);
+        context.Trace.TraceError(Texts.Task_not_found__Skipping, taskName);
         return;
       }
 
@@ -121,7 +121,7 @@
       }
       catch (BuildException ex)
       {
-        context.Trace.TraceError(ex.Text, ex.FileName, ex.LineNumber, ex.LinePosition, ex.LineLength, ex.Message);
+        context.Trace.TraceError(ex.Text, ex.FileName, ex.Position, ex.Message);
         context.IsAborted = true;
 
         if (context.Configuration.GetBool(Constants.Configuration.Debug))
@@ -131,7 +131,7 @@
       }
       catch (Exception ex)
       {
-        context.Trace.TraceError(Texts.Text3009, ex.Message);
+        context.Trace.TraceError(Texts.An_error_occured, ex.Message);
         context.IsAborted = true;
 
         if (context.Configuration.GetBool(Constants.Configuration.Debug))
@@ -143,7 +143,7 @@
 
     private void DisplayHelp()
     {
-      this.Trace.Writeline("Usage: scc.exe /run [task]");
+      this.Trace.Writeline(Texts.Usage__scc_exe__run__task_);
     }
   }
 }

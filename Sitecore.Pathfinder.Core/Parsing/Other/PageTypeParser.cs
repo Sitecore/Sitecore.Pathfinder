@@ -27,7 +27,7 @@
       var textDocument = context.Document as ITextDocument;
       if (textDocument == null)
       {
-        throw new BuildException(Texts.Text3031, context.Document);
+        throw new BuildException("public const string Text document expected", context.Document);
       }
 
       var root = textDocument.Root;
@@ -37,13 +37,13 @@
       {
         if (treeNode.Name != "Component")
         {
-          throw new BuildException(Texts.Text2032, treeNode);
+          throw new BuildException("'Component' element expected", treeNode);
         }
 
         var componentPath = treeNode.GetAttributeValue("Component");
         if (string.IsNullOrEmpty(componentPath))
         {
-          throw new BuildException(Texts.Text2033, treeNode);
+          throw new BuildException("'Component' attribute expected", treeNode);
         }
 
         baseTemplates.Add(componentPath);

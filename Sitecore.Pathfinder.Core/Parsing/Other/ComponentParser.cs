@@ -29,7 +29,7 @@
       var textDocument = context.Document as ITextDocument;
       if (textDocument == null)
       {
-        throw new BuildException(Texts.Text3031, context.Document);
+        throw new BuildException("public const string Text document expected", context.Document);
       }
 
       var textNode = textDocument.Root;
@@ -37,7 +37,7 @@
       var privateTemplate = this.Parse(context, textNode);
       if (privateTemplate == null)
       {
-        throw new BuildException(Texts.Text2031);
+        throw new BuildException("Failed to add new template");
       }
 
       var publicTemplate = this.CreatePublicTemplate(context, textNode, privateTemplate);
@@ -97,7 +97,7 @@
       var fieldName = fieldTextNode.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(fieldName))
       {
-        throw new BuildException(Texts.Text2008, fieldTextNode);
+        throw new BuildException("'Field' element must have a 'Name' attribute", fieldTextNode);
       }
 
       var templateField = section.Fields.FirstOrDefault(f => string.Compare(f.Name, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
@@ -122,7 +122,7 @@
       var sectionName = sectionTextNode.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(sectionName))
       {
-        throw new BuildException(Texts.Text2007, sectionTextNode);
+        throw new BuildException("'Section' element must have a 'Name' attribute", sectionTextNode);
       }
 
       var templateSection = template.Sections.FirstOrDefault(s => string.Compare(s.Name, sectionName, StringComparison.OrdinalIgnoreCase) == 0);

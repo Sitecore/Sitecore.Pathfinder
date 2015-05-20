@@ -50,7 +50,7 @@
       }
       catch (Exception ex)
       {
-        throw new BuildException(Texts.Text2000, this, ex.Message);
+        throw new BuildException("Item file is not valid", this, ex.Message);
       }
     }
 
@@ -76,13 +76,13 @@
       }
       catch (Exception ex)
       {
-        throw new BuildException(Texts.Text2000, this, ex.Message);
+        throw new BuildException("Item file is not valid", this, ex.Message);
       }
 
       var root = doc.Root;
       if (root == null)
       {
-        throw new BuildException(Texts.Text2000, this);
+        throw new BuildException("Item file is not valid", this);
       }
 
       return root;

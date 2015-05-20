@@ -54,7 +54,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
         var item = MediaManager.Creator.CreateFromStream(stream, "/upload/" + Path.GetFileName(projectItem.Document.SourceFile.FileName), options);
         if (item == null)
         {
-          throw new BuildException(Texts.Text2013, projectItem.Document);
+          throw new BuildException("Failed to upload media", projectItem.Document);
         }
 
         mediaFile.MediaItem.Guid = item.ID.ToGuid();

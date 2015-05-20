@@ -10,7 +10,7 @@
     {
       this.Contents = contents;
 
-      this.Root = new TextNode(this, string.Empty);
+      this.Root = new TextNode(this);
     }
 
     public string Contents { get; }

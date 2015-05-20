@@ -143,8 +143,8 @@
     <Compile Include="Diagnostics\ConfigurationException.cs" />
     <Compile Include="Diagnostics\ITraceService.cs" />
     <Compile Include="Diagnostics\RetryableBuildException.cs" />
+    <Compile Include="TextDocuments\TextPosition.cs" />
     <Compile Include="TextDocuments\TextTokenService.cs" />
-    <Compile Include="Texts.cs" />
     <Compile Include="Diagnostics\TraceException.cs" />
     <Compile Include="Diagnostics\TraceService.cs" />
     <Compile Include="Extensions\StringExtensions\StringExtensions.cs" />
@@ -166,12 +166,22 @@
     <Compile Include="TextDocuments\Xml\XmlDocumentLoader.cs" />
     <Compile Include="TextDocuments\Xml\XmlTextNode.cs" />
     <Compile Include="TextDocuments\Xml\XmlTextDocument.cs" />
+    <Compile Include="Texts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Texts.resx</DependentUpon>
+    </Compile>
     <Compile Include="Text\UrlString.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Texts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Texts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

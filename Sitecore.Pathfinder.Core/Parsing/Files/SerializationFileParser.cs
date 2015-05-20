@@ -28,7 +28,7 @@
       var textDocument = context.Document as ITextDocument;
       if (textDocument == null)
       {
-        throw new BuildException(Texts.Text3031, context.Document);
+        throw new BuildException("Text document expected", context.Document);
       }
 
       var projectUniqueId = context.ItemPath;

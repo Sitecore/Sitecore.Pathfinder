@@ -9,6 +9,7 @@
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects;
+  using Sitecore.Pathfinder.TextDocuments;
   using Sitecore.SecurityModel;
 
   [Export]
@@ -96,7 +97,7 @@
         }
         catch (BuildException ex)
         {
-          this.Trace.TraceError(ex.Text, ex.FileName, ex.LineNumber, ex.LinePosition, ex.LineLength, ex.Args);
+          this.Trace.TraceError(ex.Text, ex.FileName, ex.Position, ex.Details);
         }
         catch (Exception ex)
         {
@@ -140,15 +141,15 @@
         var buildException = exception as BuildException;
         if (buildException != null)
         {
-          this.Trace.TraceError(buildException.Text, buildException.FileName, buildException.LineNumber, buildException.LinePosition, buildException.LineLength, buildException.Args);
+          this.Trace.TraceError(buildException.Text, buildException.FileName, buildException.Position, buildException.Details);
         }
         else if (exception != null)
         {
-          this.Trace.TraceError(Texts.Text9998, projectItem.Document, exception.Message);
+          this.Trace.TraceError(exception.Message, projectItem.Document.SourceFile.FileName, TextPosition.Empty);
         }
         else
         {
-          this.Trace.TraceError(Texts.Text9999, "An error occured in " + projectItem.Document.SourceFile.FileName);
+          this.Trace.TraceError("An error occured", projectItem.Document.SourceFile.FileName, TextPosition.Empty);
         }
       }
     }

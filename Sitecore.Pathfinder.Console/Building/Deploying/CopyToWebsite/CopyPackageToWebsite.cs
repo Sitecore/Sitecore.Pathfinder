@@ -16,12 +16,12 @@
     {
       if (!context.IsDeployable)
       {
-        context.Trace.TraceInformation(Texts.Text3011);
+        context.Trace.TraceInformation("Package contains errors and will not be deployed");
         context.IsAborted = true;
         return;
       }
 
-      context.Trace.TraceInformation(Texts.Text1007);
+      context.Trace.TraceInformation("Copying package to website...");
 
       var destinationDirectory = context.Configuration.Get(Constants.Configuration.Wwwroot);
       destinationDirectory = PathHelper.Combine(destinationDirectory, context.Configuration.Get(Constants.Configuration.DataFolderName));

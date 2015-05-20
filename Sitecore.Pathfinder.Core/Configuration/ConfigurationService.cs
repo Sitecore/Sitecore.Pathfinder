@@ -26,7 +26,7 @@
       var configurationSourceRoot = this.Configuration as IConfigurationSourceRoot;
       if (configurationSourceRoot == null)
       {
-        throw new ConfigurationException(Texts.Text3000);
+        throw new ConfigurationException("Configuration failed spectacularly");
       }
 
       var toolsDirectory = configurationSourceRoot.Get(Pathfinder.Constants.Configuration.ToolsDirectory);
@@ -35,7 +35,7 @@
       var fileName = Path.Combine(toolsDirectory, configurationSourceRoot.Get(Pathfinder.Constants.Configuration.ConfigFileName));
       if (!File.Exists(fileName))
       {
-        throw new ConfigurationException(Texts.Text3002, fileName);
+        throw new ConfigurationException("System configuration file not found", fileName);
       }
 
       configurationSourceRoot.AddJsonFile(fileName);
@@ -64,28 +64,36 @@
     private void AddCommandLine([NotNull] IConfigurationSourceRoot configurationSourceRoot)
     {
       // cut off executable name
-      var commandLineArgs = Environment.GetCommandLineArgs().Skip(1).ToList();
-      Console.WriteLine(string.Join(", ", commandLineArgs));
+      var list = Environment.GetCommandLineArgs().Skip(1).ToList();
+      var args = new List<string>();
 
-      for (var n = 0; n < commandLineArgs.Count(); n++)
+      for (var n = 0; n < list.Count; n++)
       {
-        var arg = commandLineArgs[n];
-        if (arg.StartsWith("-") || arg.StartsWith("/"))
+        var arg = list[n];
+
+        // if the arg is a switch, add it to the list of args to pass to the commandline configuration
+        if (!arg.StartsWith("-") && !arg.StartsWith("/"))
         {
-          n++;
+          // ignore "build", it is default
+          if (string.Compare(arg, "Build", StringComparison.OrdinalIgnoreCase) != 0)
+          {
+            configurationSourceRoot.Set("run", arg);
+          }
+
           continue;
         }
 
-        commandLineArgs = commandLineArgs.Take(n).Concat(commandLineArgs.Skip(n + 1)).ToList();
-        Console.WriteLine(string.Join(", ", commandLineArgs));
-
-        // ignore "build", it is default
-        if (string.Compare(arg, "Build", StringComparison.OrdinalIgnoreCase) != 0)
+        args.Add(arg);
+        if (arg.IndexOf('=') >= 0)
         {
-          configurationSourceRoot.Set("run", arg);
+          continue;
         }
 
-        break;
+        n++;
+        if (n < list.Count)
+        {
+          args.Add(list[n]);
+        }
       }
 
       var switchMappings = new Dictionary<string, string>()
@@ -94,7 +102,7 @@
         ["--r"] = "run"
       };
 
-      configurationSourceRoot.AddCommandLine(commandLineArgs.ToArray(), switchMappings);
+      configurationSourceRoot.AddCommandLine(args.ToArray(), switchMappings);
     }
   }
 }
