@@ -13,8 +13,13 @@
     [NotNull]
     IFileSystemService FileSystem { get; }
 
+    bool HasErrors { get; }
+
     [NotNull]
     IEnumerable<IProjectItem> Items { get; }
+
+    [NotNull]
+    ICollection<ProjectMessage> Messages { get; }
 
     [NotNull]
     string ProjectDirectory { get; }
@@ -24,9 +29,6 @@
 
     [NotNull]
     ICollection<ISourceFile> SourceFiles { get; }
-
-    [NotNull]
-    ICollection<ProjectMessage> Messages { get; }
 
     void Add([NotNull] string sourceFileName);
 

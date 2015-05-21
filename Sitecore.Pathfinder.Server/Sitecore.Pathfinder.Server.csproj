@@ -101,6 +101,8 @@
     <Content Include="sitecore\shell\client\Applications\Pathfinder\InstallPackage.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Diagnostics\EmitException.cs" />
+    <Compile Include="Diagnostics\RetryableEmitException.cs" />
     <Compile Include="Emitters\Items\ItemEmitter.cs" />
     <Compile Include="Emitters\Files\ContentFileEmitter.cs" />
     <Compile Include="Emitters\Emitter.cs" />

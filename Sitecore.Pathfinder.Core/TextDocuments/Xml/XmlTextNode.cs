@@ -25,11 +25,7 @@
 
     public override void SetValue(string value)
     {
-      var textDocument = this.Document as ITextDocument;
-      if (textDocument == null)
-      {
-        throw new BuildException("public const string Text document expected", this.Document);
-      }
+      var textDocument = (ITextDocument)this.Document;
 
       textDocument.EnsureIsEditing();
 
@@ -50,6 +46,5 @@
     {
       return new TextPosition(lineInfo.LineNumber, lineInfo.LinePosition, lineLength);
     }
-
   }
 }

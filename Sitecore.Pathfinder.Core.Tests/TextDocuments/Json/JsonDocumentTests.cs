@@ -1,7 +1,6 @@
 ﻿namespace Sitecore.Pathfinder.TextDocuments.Json
 {
   using NUnit.Framework;
-  using Sitecore.Pathfinder.Diagnostics;
 
   [TestFixture]
   public class JsonDocumentTests : Tests
@@ -18,10 +17,10 @@
       var sourceFile = new SourceFile(this.Services.FileSystem, "test.txt");
 
       var doc = new JsonTextDocument(sourceFile, "\"Item\": { }");
-      Assert.Throws<BuildException>(() => { var r = doc.Root.ChildNodes[0]; });
+      Assert.AreEqual(TextNode.Empty, doc.Root);
 
       doc = new JsonTextDocument(sourceFile, string.Empty);
-      Assert.Throws<BuildException>(() => { var r = doc.Root.ChildNodes[0]; });
+      Assert.AreEqual(TextNode.Empty, doc.Root);
     }
 
     [Test]

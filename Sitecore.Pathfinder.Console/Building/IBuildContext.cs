@@ -22,8 +22,6 @@
 
     bool IsAborted { get; set; }
 
-    bool IsDeployable { get; set; }
-
     [NotNull]
     IList<IProjectItem> ModifiedProjectItems { get; }
 

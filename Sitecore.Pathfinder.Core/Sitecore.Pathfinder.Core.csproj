@@ -140,14 +140,11 @@
     <Compile Include="Projects\Templates\Template.cs" />
     <Compile Include="Projects\Templates\TemplateField.cs" />
     <Compile Include="Projects\Templates\TemplateSection.cs" />
-    <Compile Include="Diagnostics\BuildException.cs" />
     <Compile Include="Diagnostics\CodeAnnotations.cs" />
     <Compile Include="Diagnostics\ConfigurationException.cs" />
     <Compile Include="Diagnostics\ITraceService.cs" />
-    <Compile Include="Diagnostics\RetryableBuildException.cs" />
     <Compile Include="TextDocuments\TextPosition.cs" />
     <Compile Include="TextDocuments\TextTokenService.cs" />
-    <Compile Include="Diagnostics\TraceException.cs" />
     <Compile Include="Diagnostics\TraceService.cs" />
     <Compile Include="Extensions\StringExtensions\StringExtensions.cs" />
     <Compile Include="Extensions\XElementExtensions\XElementExtensions.cs" />

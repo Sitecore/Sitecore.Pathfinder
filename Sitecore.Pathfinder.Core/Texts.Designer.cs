@@ -61,11 +61,47 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Component&apos; element expected.
+        /// </summary>
+        public static string _Component__element_expected {
+            get {
+                return ResourceManager.GetString("_Component__element_expected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Field&apos; element must have a &apos;Name&apos; attribute.
         /// </summary>
         public static string _Field__element_must_have_a__Name__attribute {
             get {
                 return ResourceManager.GetString("_Field__element_must_have_a__Name__attribute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Item&apos; element must have a &apos;Template&apos; or &apos;Template.Create&apos; attribute.
+        /// </summary>
+        public static string _Item__element_must_have_a__Template__or__Template_Create__attribute {
+            get {
+                return ResourceManager.GetString("_Item__element_must_have_a__Template__or__Template_Create__attribute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Section&apos; element must have a &apos;Name&apos; attribute.
+        /// </summary>
+        public static string _Section__element_must_have_a__Name__attribute {
+            get {
+                return ResourceManager.GetString("_Section__element_must_have_a__Name__attribute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;version&apos; attribute must have an integer value.
+        /// </summary>
+        public static string _version__attribute_must_have_an_integer_value {
+            get {
+                return ResourceManager.GetString("_version__attribute_must_have_an_integer_value", resourceCulture);
             }
         }
         
@@ -97,11 +133,74 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Configuration failed spectacularly.
+        /// </summary>
+        public static string Configuration_failed_spectacularly {
+            get {
+                return ResourceManager.GetString("Configuration_failed_spectacularly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copying package to website....
+        /// </summary>
+        public static string Copying_package_to_website___ {
+            get {
+                return ResourceManager.GetString("Copying_package_to_website___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Creating Nupkg file....
+        /// </summary>
+        public static string Creating_Nupkg_file___ {
+            get {
+                return ResourceManager.GetString("Creating_Nupkg_file___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document is not valid.
+        /// </summary>
+        public static string Document_is_not_valid {
+            get {
+                return ResourceManager.GetString("Document_is_not_valid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Done.
         /// </summary>
         public static string Done {
             get {
                 return ResourceManager.GetString("Done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Field is already defined.
+        /// </summary>
+        public static string Field_is_already_defined {
+            get {
+                return ResourceManager.GetString("Field_is_already_defined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installing....
+        /// </summary>
+        public static string Installing___ {
+            get {
+                return ResourceManager.GetString("Installing___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Json file is not valid.
+        /// </summary>
+        public static string Json_file_is_not_valid {
+            get {
+                return ResourceManager.GetString("Json_file_is_not_valid", resourceCulture);
             }
         }
         
@@ -142,11 +241,56 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Media item not found.
+        /// </summary>
+        public static string Media_item_not_found {
+            get {
+                return ResourceManager.GetString("Media_item_not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Package contains errors and will not be deployed.
+        /// </summary>
+        public static string Package_contains_errors_and_will_not_be_deployed {
+            get {
+                return ResourceManager.GetString("Package_contains_errors_and_will_not_be_deployed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pipeline is empty. There are no tasks to execute..
         /// </summary>
         public static string Pipeline_is_empty__There_are_no_tasks_to_execute_ {
             get {
                 return ResourceManager.GetString("Pipeline_is_empty__There_are_no_tasks_to_execute_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Publishing....
+        /// </summary>
+        public static string Publishing___ {
+            get {
+                return ResourceManager.GetString("Publishing___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Source file is empty.
+        /// </summary>
+        public static string Source_file_is_empty {
+            get {
+                return ResourceManager.GetString("Source_file_is_empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System configuration file not found.
+        /// </summary>
+        public static string System_configuration_file_not_found {
+            get {
+                return ResourceManager.GetString("System_configuration_file_not_found", resourceCulture);
             }
         }
         
@@ -160,11 +304,48 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Text document expected.
+        /// </summary>
+        public static string Text_document_expected {
+            get {
+                return ResourceManager.GetString("Text_document_expected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The file does not contain valid XML.
+        /// </summary>
+        public static string The_file_does_not_contain_valid_XML {
+            get {
+                return ResourceManager.GetString("The_file_does_not_contain_valid_XML", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Usage: scc.exe /run [task].
         /// </summary>
         public static string Usage__scc_exe__run__task_ {
             get {
                 return ResourceManager.GetString("Usage__scc_exe__run__task_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value is specified in both &apos;Value&apos; attribute and in element. Using value from attribute.
+        /// </summary>
+        public static string Value_is_specified_in_both__Value__attribute_and_in_element__Using_value_from_attribute {
+            get {
+                return ResourceManager.GetString("Value_is_specified_in_both__Value__attribute_and_in_element__Using_value_from_att" +
+                        "ribute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to XML file is not valid.
+        /// </summary>
+        public static string XML_file_is_not_valid {
+            get {
+                return ResourceManager.GetString("XML_file_is_not_valid", resourceCulture);
             }
         }
     }

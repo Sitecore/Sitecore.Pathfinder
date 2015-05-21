@@ -14,14 +14,14 @@
 
     public override void Run(IBuildContext context)
     {
-      if (!context.IsDeployable)
+      if (context.Project.HasErrors)
       {
-        context.Trace.TraceInformation("Package contains errors and will not be deployed");
+        context.Trace.TraceInformation(Texts.Package_contains_errors_and_will_not_be_deployed);
         context.IsAborted = true;
         return;
       }
 
-      context.Trace.TraceInformation("Copying package to website...");
+      context.Trace.TraceInformation(Texts.Copying_package_to_website___);
 
       var destinationDirectory = context.Configuration.Get(Constants.Configuration.Wwwroot);
       destinationDirectory = PathHelper.Combine(destinationDirectory, context.Configuration.Get(Constants.Configuration.DataFolderName));

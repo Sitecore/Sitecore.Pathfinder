@@ -26,20 +26,15 @@
 
     public override void Parse(IParseContext context)
     {
-      var textDocument = context.Document as ITextDocument;
-      if (textDocument == null)
-      {
-        throw new BuildException("public const string Text document expected", context.Document);
-      }
-
+      var textDocument = (ITextDocument)context.Document;
       var textNode = textDocument.Root;
+      if (textNode == TextNode.Empty)
+      {
+        context.Trace.TraceError(Texts.Document_is_not_valid, textDocument.SourceFile.FileName, TextPosition.Empty);
+        return;
+      }
 
       var privateTemplate = this.Parse(context, textNode);
-      if (privateTemplate == null)
-      {
-        throw new BuildException("Failed to add new template");
-      }
-
       var publicTemplate = this.CreatePublicTemplate(context, textNode, privateTemplate);
 
       var component = new Component(context.Project, context.Document, privateTemplate, publicTemplate);
@@ -97,7 +92,7 @@
       var fieldName = fieldTextNode.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(fieldName))
       {
-        throw new BuildException("'Field' element must have a 'Name' attribute", fieldTextNode);
+        context.Trace.TraceError(Texts._Field__element_must_have_a__Name__attribute, fieldTextNode.Document.SourceFile.FileName, fieldTextNode.Position, fieldName);
       }
 
       var templateField = section.Fields.FirstOrDefault(f => string.Compare(f.Name, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
@@ -122,7 +117,7 @@
       var sectionName = sectionTextNode.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(sectionName))
       {
-        throw new BuildException("'Section' element must have a 'Name' attribute", sectionTextNode);
+        context.Trace.TraceError(Texts.Field_is_already_defined, sectionTextNode.Document.SourceFile.FileName, sectionTextNode.Position);
       }
 
       var templateSection = template.Sections.FirstOrDefault(s => string.Compare(s.Name, sectionName, StringComparison.OrdinalIgnoreCase) == 0);

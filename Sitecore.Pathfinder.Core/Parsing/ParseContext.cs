@@ -40,7 +40,7 @@
     {
       this.Project = project;
       this.Document = document;
-      this.Trace = new ProjectTraceService(this.Configuration);
+      this.Trace = new ProjectTraceService(this.Configuration).With(this.Project);
 
       return this;
     }

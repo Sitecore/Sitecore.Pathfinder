@@ -3,7 +3,6 @@
   using System;
   using System.Collections.Generic;
   using System.ComponentModel.Composition;
-  using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Projects.Other;
   using Sitecore.Pathfinder.Projects.Templates;
   using Sitecore.Pathfinder.TextDocuments;
@@ -24,26 +23,28 @@
 
     public override void Parse(IParseContext context)
     {
-      var textDocument = context.Document as ITextDocument;
-      if (textDocument == null)
-      {
-        throw new BuildException("public const string Text document expected", context.Document);
-      }
-
+      var textDocument = (ITextDocument)context.Document;
       var root = textDocument.Root;
+      if (root == TextNode.Empty)
+      {
+        context.Trace.TraceError(Texts.Document_is_not_valid, textDocument.SourceFile.FileName, TextPosition.Empty);
+        return;
+      }
 
       var baseTemplates = new List<string>();
       foreach (var treeNode in root.ChildNodes)
       {
         if (treeNode.Name != "Component")
         {
-          throw new BuildException("'Component' element expected", treeNode);
+          context.Trace.TraceError(Texts._Component__element_expected, treeNode.Document.SourceFile.FileName, treeNode.Position);
+          return;
         }
 
         var componentPath = treeNode.GetAttributeValue("Component");
         if (string.IsNullOrEmpty(componentPath))
         {
-          throw new BuildException("'Component' attribute expected", treeNode);
+          context.Trace.TraceError(Texts._Component__element_expected, treeNode.Document.SourceFile.FileName, treeNode.Position);
+          return;
         }
 
         baseTemplates.Add(componentPath);

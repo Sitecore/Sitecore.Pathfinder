@@ -25,19 +25,21 @@
 
     public override void Parse(IParseContext context)
     {
-      var textDocument = context.Document as ITextDocument;
-      if (textDocument == null)
+      var textDocument = (ITextDocument)context.Document;
+      var root = textDocument.Root;
+      if (root == TextNode.Empty)
       {
-        throw new BuildException("Text document expected", context.Document);
+        context.Trace.TraceError(Texts.Document_is_not_valid, textDocument.SourceFile.FileName, TextPosition.Empty);
+        return;
       }
 
       var projectUniqueId = context.ItemPath;
       var lines = context.Document.SourceFile.ReadAsLines();
 
-      var tempItem = new Item(context.Project, "TempItem", textDocument.Root);
+      var tempItem = new Item(context.Project, "TempItem", root);
       this.ParseLines(tempItem, lines, 0, ref projectUniqueId);
 
-      var item = new Item(context.Project, projectUniqueId, textDocument.Root)
+      var item = new Item(context.Project, projectUniqueId, root)
       {
         ItemName = tempItem.ItemName,
         ItemIdOrPath = tempItem.ItemIdOrPath,

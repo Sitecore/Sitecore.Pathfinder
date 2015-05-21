@@ -26,7 +26,7 @@
       var configurationSourceRoot = this.Configuration as IConfigurationSourceRoot;
       if (configurationSourceRoot == null)
       {
-        throw new ConfigurationException("Configuration failed spectacularly");
+        throw new ConfigurationException(Texts.Configuration_failed_spectacularly);
       }
 
       var toolsDirectory = configurationSourceRoot.Get(Pathfinder.Constants.Configuration.ToolsDirectory);
@@ -35,7 +35,7 @@
       var fileName = Path.Combine(toolsDirectory, configurationSourceRoot.Get(Pathfinder.Constants.Configuration.ConfigFileName));
       if (!File.Exists(fileName))
       {
-        throw new ConfigurationException("System configuration file not found", fileName);
+        throw new ConfigurationException(Texts.System_configuration_file_not_found, fileName);
       }
 
       configurationSourceRoot.AddJsonFile(fileName);

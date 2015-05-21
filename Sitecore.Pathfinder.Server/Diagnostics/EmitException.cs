@@ -4,9 +4,9 @@
   using System.ComponentModel;
   using Sitecore.Pathfinder.TextDocuments;
 
-  public class BuildException : Exception
+  public class EmitException : Exception
   {
-    public BuildException([Localizable(true)] [NotNull] string text) : base(text)
+    public EmitException([Localizable(true)] [NotNull] string text) : base(text)
     {
       this.Text = text;
 
@@ -16,7 +16,7 @@
       this.Details = string.Empty;
     }
 
-    public BuildException([Localizable(true)] [NotNull] string text, [NotNull] ISourceFile sourceFile, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
+    public EmitException([Localizable(true)] [NotNull] string text, [NotNull] ISourceFile sourceFile, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
     {
       this.Text = text;
       this.FileName = sourceFile.FileName;
@@ -24,7 +24,7 @@
       this.Details = details;
     }
 
-    public BuildException([Localizable(true)] [NotNull] string text, [NotNull] IDocument document, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
+    public EmitException([Localizable(true)] [NotNull] string text, [NotNull] IDocument document, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
     {
       this.Text = text;
       this.FileName = document.SourceFile.FileName;
@@ -32,7 +32,7 @@
       this.Details = details;
     }
 
-    public BuildException([Localizable(true)] [NotNull] string text, [NotNull] ITextNode textNode, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
+    public EmitException([Localizable(true)] [NotNull] string text, [NotNull] ITextNode textNode, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
     {
       this.Text = text;
       this.FileName = textNode.Document.SourceFile.FileName;

@@ -1,6 +1,5 @@
 ﻿namespace Sitecore.Pathfinder.TextDocuments.Json
 {
-  using System;
   using System.Linq;
   using Newtonsoft.Json.Linq;
   using Sitecore.Pathfinder.Diagnostics;
@@ -24,9 +23,9 @@
           {
             json = JObject.Parse(this.Contents);
           }
-          catch (Exception ex)
+          catch
           {
-            throw new BuildException("Item file is not valid", this.SourceFile, ex.Message);
+            return TextNode.Empty;
           }
 
           var r = json.Properties().FirstOrDefault(p => p.Name != "$schema");
@@ -38,7 +37,7 @@
           var value = r.Value as JObject;
           if (value == null)
           {
-            throw new BuildException("Json file is not valid", this.SourceFile);
+            return TextNode.Empty;
           }
 
           this.root = this.Parse(r.Name, value, null);

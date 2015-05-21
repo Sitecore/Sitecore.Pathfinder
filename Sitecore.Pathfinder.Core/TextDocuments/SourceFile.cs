@@ -41,19 +41,6 @@
       return PathHelper.UnmapPath(project.ProjectDirectory, this.FileName);
     }
 
-    public JObject ReadAsJson()
-    {
-      try
-      {
-        var contents = this.ReadAsText();
-        return JObject.Parse(contents);
-      }
-      catch (Exception ex)
-      {
-        throw new BuildException("Item file is not valid", this, ex.Message);
-      }
-    }
-
     public string[] ReadAsLines()
     {
       return this.FileSystem.ReadAllLines(this.FileName);
@@ -74,18 +61,12 @@
       {
         doc = XDocument.Parse(contents, LoadOptions.PreserveWhitespace | LoadOptions.SetLineInfo);
       }
-      catch (Exception ex)
+      catch
       {
-        throw new BuildException("Item file is not valid", this, ex.Message);
+        return null;
       }
 
-      var root = doc.Root;
-      if (root == null)
-      {
-        throw new BuildException("Item file is not valid", this);
-      }
-
-      return root;
+      return doc.Root;
     }
   }
 }

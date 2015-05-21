@@ -13,14 +13,14 @@ namespace Sitecore.Pathfinder.Building.Deploying.Publishing
 
     public override void Run(IBuildContext context)
     {
-      if (!context.IsDeployable)
+      if (context.Project.HasErrors)
       {
-        context.Trace.TraceInformation("Package contains errors and will not be deployed");
+        context.Trace.TraceInformation(Texts.Package_contains_errors_and_will_not_be_deployed);
         context.IsAborted = true;
         return;
       }
 
-      context.Trace.TraceInformation("Publishing...");
+      context.Trace.TraceInformation(Texts.Publishing___);
 
       var hostName = context.Configuration.GetString(Constants.Configuration.HostName).TrimEnd('/');
       var publishUrl = context.Configuration.GetString(Constants.Configuration.PublishUrl).TrimStart('/');

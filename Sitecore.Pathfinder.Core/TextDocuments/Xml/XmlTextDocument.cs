@@ -22,9 +22,9 @@
       this.IsEditable = true;
     }
 
-    public override ITextNode Root => this.root ?? (this.root = this.Parse(null, this.RootElement));
+    public override ITextNode Root => this.root ?? (this.root = this.RootElement == null ? TextNode.Empty : this.Parse(null, this.RootElement));
 
-    [NotNull]
+    [CanBeNull]
     protected XElement RootElement
     {
       get
@@ -39,15 +39,15 @@
         {
           doc = XDocument.Parse(this.Contents, LoadOptions.PreserveWhitespace | LoadOptions.SetLineInfo);
         }
-        catch (Exception ex)
+        catch
         {
-          throw new BuildException("Item file is not valid", this.SourceFile, ex.Message);
+          return null;
         }
 
         this.rootElement = doc.Root;
         if (this.rootElement == null)
         {
-          throw new BuildException("Item file is not valid", this.SourceFile);
+          return null;
         }
 
         return this.rootElement;
@@ -80,7 +80,7 @@
 
     public override void ValidateSchema(IParseContext context, string schemaNamespace, string schemaFileName)
     {
-      var doc = this.RootElement.Document;
+      var doc = this.RootElement?.Document;
       if (doc == null)
       {
         return;
@@ -117,7 +117,7 @@
       }
       catch (Exception ex)
       {
-        context.Trace.TraceError("The file does not contain valid XML", context.Document.SourceFile.FileName, TextPosition.Empty, ex.Message);
+        context.Trace.TraceError(Texts.The_file_does_not_contain_valid_XML, context.Document.SourceFile.FileName, TextPosition.Empty, ex.Message);
       }
     }
 

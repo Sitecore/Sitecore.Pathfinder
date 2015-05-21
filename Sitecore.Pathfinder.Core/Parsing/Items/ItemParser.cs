@@ -34,16 +34,12 @@
 
     public override void Parse(IParseContext context)
     {
-      var textDocument = context.Document as ITextDocument;
-      if (textDocument == null)
-      {
-        throw new BuildException("public const string Text document expected", context.Document);
-      }
+      var textDocument = (ITextDocument)context.Document;
 
       var textNode = textDocument.Root;
       if (textNode == TextNode.Empty)
       {
-        context.Trace.TraceWarning("Source file is empty", textDocument.SourceFile.FileName, textNode.Position);
+        context.Trace.TraceWarning(Texts.Source_file_is_empty, textDocument.SourceFile.FileName, textNode.Position);
         return;
       }
 
@@ -76,13 +72,9 @@
           }
         }
       }
-      catch (BuildException ex)
-      {
-        context.ParseContext.Trace.TraceError("", context.ParseContext.Document.SourceFile.FileName, ex.Position, ex.Details);
-      }
       catch (Exception ex)
       {
-        context.ParseContext.Trace.TraceError("", context.ParseContext.Document.SourceFile.FileName, TextPosition.Empty, ex.Message);
+        context.ParseContext.Trace.TraceError(string.Empty, context.ParseContext.Document.SourceFile.FileName, TextPosition.Empty, ex.Message);
       }
     }
   }

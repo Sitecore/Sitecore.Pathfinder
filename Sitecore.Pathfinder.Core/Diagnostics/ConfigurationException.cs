@@ -1,12 +1,11 @@
 ﻿namespace Sitecore.Pathfinder.Diagnostics
 {
   using System;
+  using System.ComponentModel;
 
   public class ConfigurationException : Exception
   {
-    private static readonly object[] EmptyArgs = new object[0];
-
-    public ConfigurationException([NotNull] string text, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
+    public ConfigurationException([Localizable(true)] [NotNull] string text, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
     {
       this.Text = text;
       this.Details = details;

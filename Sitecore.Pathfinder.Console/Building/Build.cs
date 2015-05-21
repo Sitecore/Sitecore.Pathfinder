@@ -119,16 +119,6 @@
       {
         task.Run(context);
       }
-      catch (BuildException ex)
-      {
-        context.Trace.TraceError(ex.Text, ex.FileName, ex.Position, ex.Message);
-        context.IsAborted = true;
-
-        if (context.Configuration.GetBool(Constants.Configuration.Debug))
-        {
-          throw;
-        }
-      }
       catch (Exception ex)
       {
         context.Trace.TraceError(Texts.An_error_occured, ex.Message);

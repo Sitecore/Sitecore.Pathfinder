@@ -30,7 +30,7 @@
       var targetItem = item.Database.GetItem(field.Value);
       if (targetItem == null)
       {
-        throw new RetryableBuildException("Item not found", field.TextNode, field.Value);
+        throw new RetryableEmitException("Item not found", field.TextNode, field.Value);
       }
 
       field.Value = $"<link text=\"\" linktype=\"internal\" url=\"\" anchor=\"\" title=\"\" class=\"\" target=\"\" querystring=\"\" id=\"{targetItem.ID}\" />";

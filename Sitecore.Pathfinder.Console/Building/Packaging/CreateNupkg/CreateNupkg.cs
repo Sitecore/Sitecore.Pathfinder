@@ -16,14 +16,14 @@
 
     public override void Run(IBuildContext context)
     {
-      if (!context.IsDeployable)
+      if (context.Project.HasErrors)
       {
-        context.Trace.TraceInformation("Package contains errors and will not be deployed");
+        context.Trace.TraceInformation(Texts.Package_contains_errors_and_will_not_be_deployed);
         context.IsAborted = true;
         return;
       }
 
-      context.Trace.TraceInformation("Creating Nupkg file...");
+      context.Trace.TraceInformation(Texts.Creating_Nupkg_file___);
 
       var packageFileName = context.Configuration.Get("nuget:filename");
       var nuspecFileName = PathHelper.Combine(context.SolutionDirectory, packageFileName);

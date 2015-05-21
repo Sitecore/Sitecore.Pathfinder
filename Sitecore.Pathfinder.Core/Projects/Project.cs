@@ -34,15 +34,17 @@
 
     public IFileSystemService FileSystem { get; }
 
+    public bool HasErrors => this.Messages.Any(m => m.MessageType == MessageType.Error);
+
     public IEnumerable<IProjectItem> Items => this.items;
+
+    public ICollection<ProjectMessage> Messages { get; } = new List<ProjectMessage>();
 
     public string ProjectDirectory { get; private set; } = string.Empty;
 
     public string ProjectUniqueId => this.projectUniqueId ?? (this.projectUniqueId = this.Configuration.Get(Pathfinder.Constants.Configuration.ProjectUniqueId));
 
     public ICollection<ISourceFile> SourceFiles { get; } = new List<ISourceFile>();
-
-    public ICollection<ProjectMessage> Messages { get; } = new List<ProjectMessage>();
 
     [NotNull]
     protected ICompositionService CompositionService { get; }

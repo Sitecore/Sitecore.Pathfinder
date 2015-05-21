@@ -30,7 +30,7 @@
       var mediaItem = item.Database.GetItem(field.Value);
       if (mediaItem == null)
       {
-        throw new RetryableBuildException("Media item not found", field.TextNode, field.Value);
+        throw new RetryableEmitException(Texts.Media_item_not_found, field.ValueTextNode ?? field.TextNode, field.Value);
       }
 
       field.Value = $"<image mediapath=\"\" alt=\"Vista15\" width=\"\" height=\"\" hspace=\"\" vspace=\"\" showineditor=\"\" usethumbnail=\"\" src=\"\" mediaid=\"{mediaItem.ID}\" />";

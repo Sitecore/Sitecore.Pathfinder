@@ -18,10 +18,10 @@
       var sourceFile = new SourceFile(this.Services.FileSystem, "test.txt");
 
       var doc = new XmlTextDocument(sourceFile, "<Item>");
-      Assert.Throws<BuildException>(() => { var r = doc.Root.ChildNodes[0]; });
+      Assert.AreEqual(TextNode.Empty, doc.Root);
 
       doc = new XmlTextDocument(sourceFile, string.Empty);
-      Assert.Throws<BuildException>(() => { var r = doc.Root.ChildNodes[0]; });
+      Assert.AreEqual(TextNode.Empty, doc.Root);
     }
 
     [Test]

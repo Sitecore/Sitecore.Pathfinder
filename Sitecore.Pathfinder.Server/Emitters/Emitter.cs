@@ -91,11 +91,11 @@
         {
           emitter.Emit(context, projectItem);
         }
-        catch (RetryableBuildException ex)
+        catch (RetryableEmitException ex)
         {
           retries.Add(new Tuple<IProjectItem, Exception>(projectItem, ex));
         }
-        catch (BuildException ex)
+        catch (EmitException ex)
         {
           this.Trace.TraceError(ex.Text, ex.FileName, ex.Position, ex.Details);
         }
@@ -138,7 +138,7 @@
         var projectItem = retry.Item1;
         var exception = retry.Item2;
 
-        var buildException = exception as BuildException;
+        var buildException = exception as EmitException;
         if (buildException != null)
         {
           this.Trace.TraceError(buildException.Text, buildException.FileName, buildException.Position, buildException.Details);

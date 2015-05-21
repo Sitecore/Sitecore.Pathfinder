@@ -13,9 +13,11 @@
     [NotNull]
     protected IProject Project { get; private set; }
 
-    public void With([NotNull] IProject project)
+    [NotNull]
+    public ITraceService With([NotNull] IProject project)
     {
       this.Project = project;
+      return this;
     }
 
     protected override void Write(string text, MessageType messageType, string fileName, TextPosition position, string details)

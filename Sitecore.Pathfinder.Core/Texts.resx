@@ -153,4 +153,64 @@
   <data name="Linting_items" xml:space="preserve">
     <value>Linting items</value>
   </data>
+  <data name="Field_is_already_defined" xml:space="preserve">
+    <value>Field is already defined</value>
+  </data>
+  <data name="_version__attribute_must_have_an_integer_value" xml:space="preserve">
+    <value>'version' attribute must have an integer value</value>
+  </data>
+  <data name="Value_is_specified_in_both__Value__attribute_and_in_element__Using_value_from_attribute" xml:space="preserve">
+    <value>Value is specified in both 'Value' attribute and in element. Using value from attribute</value>
+  </data>
+  <data name="_Item__element_must_have_a__Template__or__Template_Create__attribute" xml:space="preserve">
+    <value>'Item' element must have a 'Template' or 'Template.Create' attribute</value>
+  </data>
+  <data name="_Section__element_must_have_a__Name__attribute" xml:space="preserve">
+    <value>'Section' element must have a 'Name' attribute</value>
+  </data>
+  <data name="Package_contains_errors_and_will_not_be_deployed" xml:space="preserve">
+    <value>Package contains errors and will not be deployed</value>
+  </data>
+  <data name="Copying_package_to_website___" xml:space="preserve">
+    <value>Copying package to website...</value>
+  </data>
+  <data name="Creating_Nupkg_file___" xml:space="preserve">
+    <value>Creating Nupkg file...</value>
+  </data>
+  <data name="Publishing___" xml:space="preserve">
+    <value>Publishing...</value>
+  </data>
+  <data name="Installing___" xml:space="preserve">
+    <value>Installing...</value>
+  </data>
+  <data name="Text_document_expected" xml:space="preserve">
+    <value>Text document expected</value>
+  </data>
+  <data name="Source_file_is_empty" xml:space="preserve">
+    <value>Source file is empty</value>
+  </data>
+  <data name="_Component__element_expected" xml:space="preserve">
+    <value>'Component' element expected</value>
+  </data>
+  <data name="The_file_does_not_contain_valid_XML" xml:space="preserve">
+    <value>The file does not contain valid XML</value>
+  </data>
+  <data name="Document_is_not_valid" xml:space="preserve">
+    <value>Document is not valid</value>
+  </data>
+  <data name="Json_file_is_not_valid" xml:space="preserve">
+    <value>Json file is not valid</value>
+  </data>
+  <data name="XML_file_is_not_valid" xml:space="preserve">
+    <value>XML file is not valid</value>
+  </data>
+  <data name="Configuration_failed_spectacularly" xml:space="preserve">
+    <value>Configuration failed spectacularly</value>
+  </data>
+  <data name="System_configuration_file_not_found" xml:space="preserve">
+    <value>System configuration file not found</value>
+  </data>
+  <data name="Media_item_not_found" xml:space="preserve">
+    <value>Media item not found</value>
+  </data>
 </root>

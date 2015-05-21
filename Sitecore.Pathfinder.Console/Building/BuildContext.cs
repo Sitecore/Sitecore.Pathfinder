@@ -34,8 +34,6 @@
 
     public bool IsAborted { get; set; }
 
-    public bool IsDeployable { get; set; } = true;
-
     public IList<IProjectItem> ModifiedProjectItems { get; } = new List<IProjectItem>();
 
     public IList<string> OutputFiles { get; } = new List<string>();

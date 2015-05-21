@@ -96,7 +96,7 @@
       var root = context.Document.SourceFile.ReadAsXml();
       if (root == null)
       {
-        throw new BuildException(Texts.Layout_file_is_not_valid, context.Document.SourceFile);
+        throw new EmitException(Texts.Layout_file_is_not_valid, context.Document.SourceFile);
       }
 
       var writer = new StringWriter();
@@ -124,7 +124,7 @@
 
       if (errors.Any())
       {
-        throw new BuildException(Texts.Layout_contains_errors, context.Document.SourceFile);
+        throw new EmitException(Texts.Layout_contains_errors, context.Document.SourceFile);
       }
 
       return string.Empty;
@@ -157,7 +157,7 @@
 
       if (item == null)
       {
-        throw new BuildException(Texts.Cannot_apply_a_layout_to_a_template__The_template_needs_a_Standard_Values_, layout.Document);
+        throw new EmitException(Texts.Cannot_apply_a_layout_to_a_template__The_template_needs_a_Standard_Values_, layout.Document);
       }
 
       return item;
@@ -292,7 +292,7 @@
         var l = database.GetItem(layoutPath);
         if (l == null)
         {
-          throw new RetryableBuildException(Texts.Layout_not_found_, context.Document.SourceFile, layoutPath);
+          throw new RetryableEmitException(Texts.Layout_not_found_, context.Document.SourceFile, layoutPath);
         }
 
         output.WriteAttributeString("l", l.ID.ToString());

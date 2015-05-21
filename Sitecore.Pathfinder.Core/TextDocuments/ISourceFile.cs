@@ -22,15 +22,12 @@
     string GetProjectPath([NotNull] IProject project);
 
     [NotNull]
-    JObject ReadAsJson();
-
-    [NotNull]
     string[] ReadAsLines();
 
     [NotNull]
     string ReadAsText();
 
-    [NotNull]
+    [CanBeNull]
     XElement ReadAsXml();
   }
 }
