@@ -16,12 +16,12 @@
 
     public override bool CanParse(IParseContext context)
     {
-      return context.Document.SourceFile.FileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
+      return context.DocumentSnapshot.SourceFile.FileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
-      var item = new Item(context.Project, context.ItemPath, context.Document)
+      var item = new Item(context.Project, context.ItemPath, context.DocumentSnapshot)
       {
         ItemName = context.ItemName,
         DatabaseName = context.DatabaseName,
@@ -30,7 +30,7 @@
 
       context.Project.AddOrMerge(item);
 
-      var layout = new Layout(context.Project, context.Document);
+      var layout = new Layout(context.Project, context.DocumentSnapshot);
       context.Project.AddOrMerge(layout);
     }
   }

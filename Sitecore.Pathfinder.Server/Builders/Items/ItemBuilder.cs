@@ -31,7 +31,7 @@
       var database = context.DataService.GetDatabase(this.ProjectItem.DatabaseName);
       if (database == null)
       {
-        throw new EmitException("Database not found", this.ProjectItem.Document, this.ProjectItem.DatabaseName);
+        throw new EmitException("Database not found", this.ProjectItem.DocumentSnapshot, this.ProjectItem.DatabaseName);
       }
 
       if (this.Item == null)
@@ -64,7 +64,7 @@
     {
       if (this.TemplateItem == null)
       {
-        throw new EmitException("Template missing", this.ProjectItem.Document, this.ProjectItem.TemplateIdOrPath);
+        throw new EmitException("Template missing", this.ProjectItem.DocumentSnapshot, this.ProjectItem.TemplateIdOrPath);
       }
 
       var parentItemPath = PathHelper.GetItemParentPath(this.ProjectItem.ItemIdOrPath);
@@ -72,14 +72,14 @@
       var parentItem = database.CreateItemPath(parentItemPath);
       if (parentItem == null)
       {
-        throw new RetryableEmitException("Failed to create item path", this.ProjectItem.Document, parentItemPath);
+        throw new RetryableEmitException("Failed to create item path", this.ProjectItem.DocumentSnapshot, parentItemPath);
       }
 
       // item is created with correct ID
       var item = ItemManager.AddFromTemplate(this.ProjectItem.ItemName, this.TemplateItem.ID, parentItem, new ID(this.ProjectItem.Guid));
       if (item == null)
       {
-        throw new RetryableEmitException("Failed to create item path", this.ProjectItem.Document, this.ProjectItem.ItemIdOrPath);
+        throw new RetryableEmitException("Failed to create item path", this.ProjectItem.DocumentSnapshot, this.ProjectItem.ItemIdOrPath);
       }
 
       this.Item = item;
@@ -129,7 +129,7 @@
     {
       if (this.Item == null)
       {
-        throw new EmitException("Item not found", this.ProjectItem.Document);
+        throw new EmitException("Item not found", this.ProjectItem.DocumentSnapshot);
       }
 
       foreach (var field in this.ProjectItem.Fields)
@@ -148,12 +148,12 @@
     {
       if (this.Item == null)
       {
-        throw new EmitException("Item not found", this.ProjectItem.Document);
+        throw new EmitException("Item not found", this.ProjectItem.DocumentSnapshot);
       }
 
       if (this.TemplateItem == null)
       {
-        throw new EmitException("Template missing", this.ProjectItem.Document);
+        throw new EmitException("Template missing", this.ProjectItem.DocumentSnapshot);
       }
 
       // move
@@ -167,7 +167,7 @@
           parentItem = this.Item.Database.CreateItemPath(parentItemPath);
           if (parentItem == null)
           {
-            throw new RetryableEmitException("Could not create item", this.ProjectItem.Document, parentItemPath);
+            throw new RetryableEmitException("Could not create item", this.ProjectItem.DocumentSnapshot, parentItemPath);
           }
         }
 
@@ -208,7 +208,7 @@
           if (item == null)
           {
             // todo: validate this before updating the item
-            context.Trace.TraceError("Item not found", field.TextNode.Document.SourceFile.FileName, field.TextNode.Position, $"language: {field.Language}, version; {field.Version}");
+            context.Trace.TraceError("Item not found", field.TextNode.DocumentSnapshot.SourceFile.FileName, field.TextNode.Position, $"language: {field.Language}, version; {field.Version}");
             continue;
           }
 
@@ -244,7 +244,7 @@
       {
         if (templateFields.All(f => string.Compare(f.Name, field.Name, StringComparison.OrdinalIgnoreCase) != 0))
         {
-          throw new RetryableEmitException("Field is not defined in the template", this.ProjectItem.Document);
+          throw new RetryableEmitException("Field is not defined in the template", this.ProjectItem.DocumentSnapshot);
         }
 
         if (!string.IsNullOrEmpty(field.Language))

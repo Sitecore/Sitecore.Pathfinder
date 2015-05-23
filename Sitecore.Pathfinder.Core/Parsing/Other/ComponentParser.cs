@@ -21,12 +21,12 @@
 
     public override bool CanParse(IParseContext context)
     {
-      return context.Document.SourceFile.FileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
+      return context.DocumentSnapshot.SourceFile.FileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
-      var textDocument = (ITextDocument)context.Document;
+      var textDocument = (ITextDocumentSnapshot)context.DocumentSnapshot;
       var textNode = textDocument.Root;
       if (textNode == TextNode.Empty)
       {
@@ -37,7 +37,7 @@
       var privateTemplate = this.Parse(context, textNode);
       var publicTemplate = this.CreatePublicTemplate(context, textNode, privateTemplate);
 
-      var component = new Component(context.Project, context.Document, privateTemplate, publicTemplate);
+      var component = new Component(context.Project, context.DocumentSnapshot, privateTemplate, publicTemplate);
       context.Project.AddOrMerge(component);
     }
 
@@ -92,7 +92,7 @@
       var fieldName = fieldTextNode.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(fieldName))
       {
-        context.Trace.TraceError(Texts._Field__element_must_have_a__Name__attribute, fieldTextNode.Document.SourceFile.FileName, fieldTextNode.Position, fieldName);
+        context.Trace.TraceError(Texts._Field__element_must_have_a__Name__attribute, fieldTextNode.DocumentSnapshot.SourceFile.FileName, fieldTextNode.Position, fieldName);
       }
 
       var templateField = section.Fields.FirstOrDefault(f => string.Compare(f.Name, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
@@ -117,7 +117,7 @@
       var sectionName = sectionTextNode.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(sectionName))
       {
-        context.Trace.TraceError(Texts.Field_is_already_defined, sectionTextNode.Document.SourceFile.FileName, sectionTextNode.Position);
+        context.Trace.TraceError(Texts.Field_is_already_defined, sectionTextNode.DocumentSnapshot.SourceFile.FileName, sectionTextNode.Position);
       }
 
       var templateSection = template.Sections.FirstOrDefault(s => string.Compare(s.Name, sectionName, StringComparison.OrdinalIgnoreCase) == 0);

@@ -40,8 +40,6 @@
 
     public IProject Project => this.project ?? (this.project = this.ProjectService.LoadProjectFromConfiguration());
 
-    public string ProjectDirectory => this.Configuration.GetString(Pathfinder.Constants.Configuration.ProjectDirectory);
-
     public string SolutionDirectory => this.Configuration.GetString(Pathfinder.Constants.Configuration.SolutionDirectory);
 
     public ITraceService Trace { get; }

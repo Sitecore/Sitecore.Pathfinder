@@ -145,11 +145,11 @@
         }
         else if (exception != null)
         {
-          this.Trace.TraceError(exception.Message, projectItem.Document.SourceFile.FileName, TextPosition.Empty);
+          this.Trace.TraceError(exception.Message, projectItem.DocumentSnapshot.SourceFile.FileName, TextPosition.Empty);
         }
         else
         {
-          this.Trace.TraceError("An error occured", projectItem.Document.SourceFile.FileName, TextPosition.Empty);
+          this.Trace.TraceError("An error occured", projectItem.DocumentSnapshot.SourceFile.FileName, TextPosition.Empty);
         }
       }
     }

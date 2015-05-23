@@ -16,10 +16,10 @@
     {
       var sourceFile = new SourceFile(this.Services.FileSystem, "test.txt");
 
-      var doc = new JsonTextDocument(sourceFile, "\"Item\": { }");
+      var doc = new JsonTextDocumentSnapshot(sourceFile, "\"Item\": { }");
       Assert.AreEqual(TextNode.Empty, doc.Root);
 
-      doc = new JsonTextDocument(sourceFile, string.Empty);
+      doc = new JsonTextDocumentSnapshot(sourceFile, string.Empty);
       Assert.AreEqual(TextNode.Empty, doc.Root);
     }
 
@@ -28,7 +28,7 @@
     {
       var sourceFile = new SourceFile(this.Services.FileSystem, "test.txt");
 
-      var doc = new JsonTextDocument(sourceFile, "{ \"Item\": { \"Fields\": [ { \"Name\": \"Text\", \"Value\": \"123\" } ] } }");
+      var doc = new JsonTextDocumentSnapshot(sourceFile, "{ \"Item\": { \"Fields\": [ { \"Name\": \"Text\", \"Value\": \"123\" } ] } }");
       var root = doc.Root;
       Assert.IsNotNull(root);
       Assert.AreEqual("Item", root.Name);

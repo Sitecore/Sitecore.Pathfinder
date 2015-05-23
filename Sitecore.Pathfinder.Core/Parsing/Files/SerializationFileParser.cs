@@ -20,12 +20,12 @@
 
     public override bool CanParse(IParseContext context)
     {
-      return context.Document.SourceFile.FileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
+      return context.DocumentSnapshot.SourceFile.FileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
-      var textDocument = (ITextDocument)context.Document;
+      var textDocument = (ITextDocumentSnapshot)context.DocumentSnapshot;
       var root = textDocument.Root;
       if (root == TextNode.Empty)
       {
@@ -34,7 +34,7 @@
       }
 
       var projectUniqueId = context.ItemPath;
-      var lines = context.Document.SourceFile.ReadAsLines();
+      var lines = context.DocumentSnapshot.SourceFile.ReadAsLines();
 
       var tempItem = new Item(context.Project, "TempItem", root);
       this.ParseLines(tempItem, lines, 0, ref projectUniqueId);
@@ -55,7 +55,7 @@
 
       item = context.Project.AddOrMerge(item);
 
-      var serializationFile = new SerializationFile(context.Project, context.Document, item);
+      var serializationFile = new SerializationFile(context.Project, context.DocumentSnapshot, item);
       context.Project.AddOrMerge(serializationFile);
     }
 

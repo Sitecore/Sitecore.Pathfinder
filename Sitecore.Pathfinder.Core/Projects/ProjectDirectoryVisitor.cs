@@ -30,9 +30,9 @@
     [NotNull]
     protected IEnumerable<string> IgnoreFileNames { get; set; }
 
-    public virtual void Visit([NotNull] IProject project)
+    public virtual void Visit([NotNull] ProjectOptions projectOptions, [NotNull] ICollection<string> sourceFileNames)
     {
-      this.Visit(project, project.ProjectDirectory);
+      this.Visit(projectOptions, sourceFileNames, projectOptions.ProjectDirectory);
     }
 
     [NotNull]
@@ -57,14 +57,14 @@
       return this.IgnoreFileNames.Contains(name, StringComparer.OrdinalIgnoreCase);
     }
 
-    protected virtual void Visit([NotNull] IProject project, [NotNull] string directory)
+    protected virtual void Visit([NotNull] ProjectOptions projectOptions, [NotNull] ICollection<string> sourceFileNames, [NotNull] string directory)
     {
       var fileNames = this.FileSystem.GetFiles(directory);
       foreach (var fileName in fileNames)
       {
         if (!this.IgnoreFileName(fileName))
         {
-          project.Add(fileName);
+          sourceFileNames.Add(fileName);
         }
       }
 
@@ -73,7 +73,7 @@
       {
         if (!this.IgnoreDirectory(subdirectory))
         {
-          this.Visit(project, subdirectory);
+          this.Visit(projectOptions, sourceFileNames, subdirectory);
         }
       }
     }

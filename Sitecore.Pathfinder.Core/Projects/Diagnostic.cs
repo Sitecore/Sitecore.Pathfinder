@@ -3,13 +3,13 @@
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.TextDocuments;
 
-  public class ProjectMessage
+  public class Diagnostic
   {
-    public ProjectMessage([NotNull] string fileName, TextPosition position, [NotNull] MessageType messageType, [NotNull] string text)
+    public Diagnostic([NotNull] string fileName, TextPosition position, Severity severity, [NotNull] string text)
     {
       this.FileName = fileName;
       this.Position = position;
-      this.MessageType = messageType;
+      this.Severity = severity;
       this.Text = text;
     }
 
@@ -22,6 +22,6 @@
     public string Text { get; }
 
     [NotNull]
-    public MessageType MessageType { get; }
+    public Severity Severity { get; }
   }
 }

@@ -19,28 +19,28 @@
     public ParseContext([NotNull] IConfiguration configuration)
     {
       this.Configuration = configuration;
-      this.Document = TextDocuments.Document.Empty;
+      this.DocumentSnapshot = TextDocuments.DocumentSnapshot.Empty;
     }
 
     public IConfiguration Configuration { get; }
 
-    public virtual string DatabaseName => this.Project.DatabaseName;
+    public virtual string DatabaseName => this.Project.Options.DatabaseName;
 
-    public IDocument Document { get; private set; }
+    public IDocumentSnapshot DocumentSnapshot { get; private set; }
 
-    public virtual string ItemName => this.itemName ?? (this.itemName = PathHelper.GetItemName(this.Document.SourceFile));
+    public virtual string ItemName => this.itemName ?? (this.itemName = PathHelper.GetItemName(this.DocumentSnapshot.SourceFile));
 
-    public virtual string ItemPath => this.itemPath ?? (this.itemPath = PathHelper.GetItemPath(this.Project, this.Document.SourceFile));
+    public virtual string ItemPath => this.itemPath ?? (this.itemPath = PathHelper.GetItemPath(this.Project, this.DocumentSnapshot.SourceFile));
 
     public IProject Project { get; private set; }
 
     public ITraceService Trace { get; private set; }
 
-    public IParseContext With(IProject project, IDocument document)
+    public IParseContext With(IProject project, IDocumentSnapshot documentSnapshot)
     {
       this.Project = project;
-      this.Document = document;
-      this.Trace = new ProjectTraceService(this.Configuration).With(this.Project);
+      this.DocumentSnapshot = documentSnapshot;
+      this.Trace = new DiagnosticTraceService(this.Configuration).With(this.Project);
 
       return this;
     }

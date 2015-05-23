@@ -21,7 +21,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
             continue;
           }
 
-          context.Trace.TraceError("Unique ID clash", projectItem1.QualifiedName);
+          context.Trace.TraceError(Texts.Unique_ID_clash, projectItem1.QualifiedName);
           context.IsDeployable = false;
         }
       }

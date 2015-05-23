@@ -4,11 +4,11 @@
   using Newtonsoft.Json.Linq;
   using Sitecore.Pathfinder.Diagnostics;
 
-  public class JsonTextDocument : TextDocument
+  public class JsonTextDocumentSnapshot : TextDocumentSnapshot
   {
     private ITextNode root;
 
-    public JsonTextDocument([NotNull] ISourceFile sourceFile, [NotNull] string contents) : base(sourceFile, contents)
+    public JsonTextDocumentSnapshot([NotNull] ISourceFile sourceFile, [NotNull] string contents) : base(sourceFile, contents)
     {
     }
 

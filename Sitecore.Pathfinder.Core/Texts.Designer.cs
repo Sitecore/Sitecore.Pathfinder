@@ -151,6 +151,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Creating &apos;layout&apos; directory....
+        /// </summary>
+        public static string Creating__layout__directory___ {
+            get {
+                return ResourceManager.GetString("Creating__layout__directory___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Creating Nupkg file....
         /// </summary>
         public static string Creating_Nupkg_file___ {
@@ -268,11 +277,29 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Project has not been loaded. Call Load() first.
+        /// </summary>
+        public static string Project_has_not_been_loaded__Call_Load___first {
+            get {
+                return ResourceManager.GetString("Project_has_not_been_loaded__Call_Load___first", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Publishing....
         /// </summary>
         public static string Publishing___ {
             get {
                 return ResourceManager.GetString("Publishing___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reference not found.
+        /// </summary>
+        public static string Reference_not_found {
+            get {
+                return ResourceManager.GetString("Reference_not_found", resourceCulture);
             }
         }
         
@@ -318,6 +345,15 @@ namespace Sitecore.Pathfinder {
         public static string The_file_does_not_contain_valid_XML {
             get {
                 return ResourceManager.GetString("The_file_does_not_contain_valid_XML", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unique ID clash.
+        /// </summary>
+        public static string Unique_ID_clash {
+            get {
+                return ResourceManager.GetString("Unique_ID_clash", resourceCulture);
             }
         }
         

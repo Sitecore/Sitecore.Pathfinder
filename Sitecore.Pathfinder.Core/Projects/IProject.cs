@@ -8,7 +8,7 @@
   public interface IProject
   {
     [NotNull]
-    string DatabaseName { get; set; }
+    ICollection<Diagnostic> Diagnostics { get; }
 
     [NotNull]
     IFileSystemService FileSystem { get; }
@@ -19,10 +19,7 @@
     IEnumerable<IProjectItem> Items { get; }
 
     [NotNull]
-    ICollection<ProjectMessage> Messages { get; }
-
-    [NotNull]
-    string ProjectDirectory { get; }
+    ProjectOptions Options { get; }
 
     [NotNull]
     string ProjectUniqueId { get; }
@@ -33,6 +30,11 @@
     void Add([NotNull] string sourceFileName);
 
     T AddOrMerge<T>([NotNull] T projectItem) where T : IProjectItem;
+
+    void Compile();
+
+    [NotNull]
+    IProject Load([NotNull] ProjectOptions projectOptions, [NotNull] IEnumerable<string> sourceFileNames);
 
     void Remove([NotNull] IProjectItem projectItem);
 

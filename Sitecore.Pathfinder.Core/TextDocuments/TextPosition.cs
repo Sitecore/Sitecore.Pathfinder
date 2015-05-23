@@ -6,9 +6,9 @@
 
     public TextPosition(int lineNumber, int linePosition, int lineLength)
     {
-      this.LineLength = lineLength;
       this.LineNumber = lineNumber;
       this.LinePosition = linePosition;
+      this.LineLength = lineLength;
     }
 
     public int LineLength { get; }

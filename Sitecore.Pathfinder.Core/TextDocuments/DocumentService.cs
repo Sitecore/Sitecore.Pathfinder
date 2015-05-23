@@ -23,7 +23,7 @@
     [NotNull]
     protected ITextTokenService TextTokenService { get; }
 
-    public IDocument LoadDocument(IProject project, ISourceFile sourceFile)
+    public IDocumentSnapshot LoadDocument(IProject project, ISourceFile sourceFile)
     {
       foreach (var loader in this.Loaders)
       {
@@ -33,13 +33,13 @@
         }
       }
 
-      return new Document(sourceFile);
+      return new DocumentSnapshot(sourceFile);
     }
 
     public virtual string ReplaceTokens(IProject project, ISourceFile sourceFile, string contents)
     {
       var itemName = PathHelper.GetItemName(sourceFile);
-      var relativeFileName = PathHelper.UnmapPath(project.ProjectDirectory, sourceFile.FileName);
+      var relativeFileName = PathHelper.UnmapPath(project.Options.ProjectDirectory, sourceFile.FileName);
 
       var filePath = "/" + PathHelper.NormalizeItemPath(relativeFileName);
       var filePathWithExtensions = PathHelper.NormalizeItemPath(PathHelper.GetDirectoryAndFileNameWithoutExtensions(filePath));
@@ -52,7 +52,7 @@
         ["ItemPath"] = itemName, 
         ["FilePathWithoutExtensions"] = filePathWithExtensions, 
         ["FilePath"] = filePath, 
-        ["Database"] = project.DatabaseName, 
+        ["Database"] = project.Options.DatabaseName, 
         ["FileNameWithoutExtensions"] = fileNameWithoutExtensions, 
         ["FileName"] = fileName, 
         ["DirectoryName"] = directoryName, 

@@ -13,10 +13,10 @@ namespace Sitecore.Pathfinder.Building.Initializing.InstallLayout
 
     public override void Run(IBuildContext context)
     {
-      context.Trace.TraceInformation("Creating 'layout' directory...");
+      context.Trace.TraceInformation(Texts.Creating__layout__directory___);
 
       var sourceDirectory = Path.Combine(context.Configuration.Get(Constants.Configuration.ToolsDirectory), "templates\\layout\\*");
-      var destinationDirectory = Path.Combine(Path.Combine(context.SolutionDirectory, context.ProjectDirectory), "layout");
+      var destinationDirectory = Path.Combine(Path.Combine(context.SolutionDirectory, context.Project.Options.ProjectDirectory), "layout");
 
       context.FileSystem.XCopy(sourceDirectory, destinationDirectory);
     }

@@ -32,15 +32,15 @@
 
       try
       {
-        var item = this.DoLoadItem(itemModel.Document.SourceFile.FileName, LoadOptions);
+        var item = this.DoLoadItem(itemModel.DocumentSnapshot.SourceFile.FileName, LoadOptions);
         if (item == null)
         {
-          throw new RetryableEmitException("Failed to upload media", itemModel.Document, "Item not created");
+          throw new RetryableEmitException("Failed to upload media", itemModel.DocumentSnapshot, "Item not created");
         }
       }
       catch (Exception ex)
       {
-        throw new RetryableEmitException("Failed to upload media", itemModel.Document, ex.Message);
+        throw new RetryableEmitException("Failed to upload media", itemModel.DocumentSnapshot, ex.Message);
       }
     }
 

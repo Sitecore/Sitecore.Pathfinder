@@ -8,7 +8,7 @@
 
   public class Component : File
   {
-    public Component([NotNull] IProject project, [NotNull] IDocument document, [NotNull] Template privateTemplate, [NotNull] Template publicTemplate) : base(project, document)
+    public Component([NotNull] IProject project, [NotNull] IDocumentSnapshot documentSnapshot, [NotNull] Template privateTemplate, [NotNull] Template publicTemplate) : base(project, documentSnapshot)
     {
       this.PrivateTemplate = privateTemplate;
       this.PublicTemplate = publicTemplate;

@@ -13,13 +13,13 @@
       return string.Compare(Path.GetExtension(sourceFile.FileName), ".json", StringComparison.OrdinalIgnoreCase) == 0;
     }
 
-    public IDocument Load(IDocumentService documentService, IProject project, ISourceFile sourceFile)
+    public IDocumentSnapshot Load(IDocumentService documentService, IProject project, ISourceFile sourceFile)
     {
       var contents = sourceFile.ReadAsText();
 
       contents = documentService.ReplaceTokens(project, sourceFile, contents);
 
-      return new JsonTextDocument(sourceFile, contents);
+      return new JsonTextDocumentSnapshot(sourceFile, contents);
     }
   }
 }

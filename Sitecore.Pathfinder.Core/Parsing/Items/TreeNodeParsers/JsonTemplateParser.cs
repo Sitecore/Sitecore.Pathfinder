@@ -10,7 +10,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
   {
     public override bool CanParse(ItemParseContext context, ITextNode textNode)
     {
-      return textNode.Name == "Template" && textNode.Document is JsonTextDocument;
+      return textNode.Name == "Template" && textNode.DocumentSnapshot is JsonTextDocumentSnapshot;
     }
 
     protected override ITextNode GetFieldsTextNode(ITextNode textNode)

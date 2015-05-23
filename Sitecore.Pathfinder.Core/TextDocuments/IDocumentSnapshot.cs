@@ -2,7 +2,7 @@
 {
   using Sitecore.Pathfinder.Diagnostics;
 
-  public interface IDocument
+  public interface IDocumentSnapshot
   {
     [NotNull]
     ISourceFile SourceFile { get; }

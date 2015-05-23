@@ -11,18 +11,18 @@
 
     private string shortName;
 
-    public File([NotNull] IProject project, [NotNull] IDocument document) : base(project, GetProjectUniqueId(project, document), document)
+    public File([NotNull] IProject project, [NotNull] IDocumentSnapshot documentSnapshot) : base(project, GetProjectUniqueId(project, documentSnapshot), documentSnapshot)
     {
     }
 
-    public override string QualifiedName => this.qualifiedName ?? (this.qualifiedName = this.Document.SourceFile.FileName);
+    public override string QualifiedName => this.qualifiedName ?? (this.qualifiedName = this.DocumentSnapshot.SourceFile.FileName);
 
-    public override string ShortName => this.shortName ?? (this.shortName = Path.GetFileName(this.Document.SourceFile.FileName));
+    public override string ShortName => this.shortName ?? (this.shortName = Path.GetFileName(this.DocumentSnapshot.SourceFile.FileName));
 
     [NotNull]
-    private static string GetProjectUniqueId([NotNull] IProject project, [NotNull] IDocument document)
+    private static string GetProjectUniqueId([NotNull] IProject project, [NotNull] IDocumentSnapshot documentSnapshot)
     {
-      return PathHelper.NormalizeItemPath(PathHelper.UnmapPath(project.ProjectDirectory, document.SourceFile.FileName));
+      return PathHelper.NormalizeItemPath(PathHelper.UnmapPath(project.Options.ProjectDirectory, documentSnapshot.SourceFile.FileName));
     }
   }
 }

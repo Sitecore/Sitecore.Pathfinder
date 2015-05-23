@@ -73,7 +73,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
       var standardValuesItem = item.Add("__Standard Values", new TemplateID(item.TemplateID));
       if (standardValuesItem == null)
       {
-        throw new EmitException("Failed to add new template", this.Template.Document);
+        throw new EmitException("Failed to add new template", this.Template.DocumentSnapshot);
       }
 
       // update standard value link
@@ -109,13 +109,13 @@ namespace Sitecore.Pathfinder.Builders.Templates
       var parentItem = this.GetParentItem(context, database);
       if (parentItem == null)
       {
-        throw new EmitException("Failed to create template", this.Template.Document);
+        throw new EmitException("Failed to create template", this.Template.DocumentSnapshot);
       }
 
       var item = ItemManager.AddFromTemplate(this.Template.ItemName, new TemplateID(TemplateIDs.Template), parentItem, new ID(this.Template.Guid));
       if (item == null)
       {
-        throw new EmitException("Failed to add new template", this.Template.Document);
+        throw new EmitException("Failed to add new template", this.Template.DocumentSnapshot);
       }
 
       this.Item = item;
@@ -151,7 +151,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
       var standardValuesItem = item.Add("__Standard Values", new TemplateID(item.TemplateID));
       if (standardValuesItem == null)
       {
-        throw new EmitException("Failed to add new template", this.Template.Document);
+        throw new EmitException("Failed to add new template", this.Template.DocumentSnapshot);
       }
 
       using (new EditContext(item))
@@ -250,7 +250,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
         var baseTemplateItem = database.GetItem(templateId);
         if (baseTemplateItem == null)
         {
-          throw new RetryableEmitException("Base Template missing", template.Document, templateId);
+          throw new RetryableEmitException("Base Template missing", template.DocumentSnapshot, templateId);
         }
 
         baseTemplates.Add(baseTemplateItem);
@@ -258,7 +258,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
         var t = TemplateManager.GetTemplate(baseTemplateItem.ID, database);
         if (t == null)
         {
-          throw new RetryableEmitException("Template missing", template.Document, templateId);
+          throw new RetryableEmitException("Template missing", template.DocumentSnapshot, templateId);
         }
 
         var templateFields = t.GetFields(true);
@@ -524,7 +524,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
           parentItem = item.Database.CreateItemPath(parentItemPath);
           if (parentItem == null)
           {
-            throw new RetryableEmitException("Could not create item", this.Template.Document, parentItemPath);
+            throw new RetryableEmitException("Could not create item", this.Template.DocumentSnapshot, parentItemPath);
           }
         }
 

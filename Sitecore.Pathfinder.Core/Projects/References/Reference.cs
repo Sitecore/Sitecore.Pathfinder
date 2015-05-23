@@ -52,6 +52,13 @@
 
     public string TargetQualifiedName { get; }
 
+    public void Invalidate()
+    {
+      this.IsResolved = false;
+      this.IsValid = false;
+      this.targetProjectItemGuid = Guid.Empty;
+    }
+
     public virtual IProjectItem Resolve()
     {
       if (this.IsResolved)

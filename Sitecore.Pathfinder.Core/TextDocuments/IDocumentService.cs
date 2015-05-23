@@ -6,7 +6,7 @@
   public interface IDocumentService
   {
     [NotNull]
-    IDocument LoadDocument([NotNull] IProject project, [NotNull] ISourceFile sourceFile);
+    IDocumentSnapshot LoadDocument([NotNull] IProject project, [NotNull] ISourceFile sourceFile);
 
     [NotNull]
     string ReplaceTokens([NotNull] IProject project, [NotNull] ISourceFile sourceFile, [NotNull] string contents);

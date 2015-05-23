@@ -10,7 +10,7 @@
   {
     public override bool CanParse(ItemParseContext context, ITextNode textNode)
     {
-      return textNode.Name == "Item" && textNode.Document is XmlTextDocument;
+      return textNode.Name == "Item" && textNode.DocumentSnapshot is XmlTextDocumentSnapshot;
     }
 
     protected override ITextNode GetFieldTreeNode(ITextNode textNode)

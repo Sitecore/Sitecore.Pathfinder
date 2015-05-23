@@ -9,7 +9,7 @@
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Parsing;
 
-  public class XmlTextDocument : TextDocument
+  public class XmlTextDocumentSnapshot : TextDocumentSnapshot
   {
     protected static readonly Dictionary<string, XmlSchemaSet> Schemas = new Dictionary<string, XmlSchemaSet>();
 
@@ -17,7 +17,7 @@
 
     private XElement rootElement;
 
-    public XmlTextDocument([NotNull] ISourceFile sourceFile, [NotNull] string contents) : base(sourceFile, contents)
+    public XmlTextDocumentSnapshot([NotNull] ISourceFile sourceFile, [NotNull] string contents) : base(sourceFile, contents)
     {
       this.IsEditable = true;
     }
@@ -103,10 +103,10 @@
         switch (args.Severity)
         {
           case XmlSeverityType.Error:
-            context.Trace.TraceError("", context.Document.SourceFile.FileName, new TextPosition(args.Exception.LineNumber, args.Exception.LinePosition, 0), args.Message);
+            context.Trace.TraceError("", context.DocumentSnapshot.SourceFile.FileName, new TextPosition(args.Exception.LineNumber, args.Exception.LinePosition, 0), args.Message);
             break;
           case XmlSeverityType.Warning:
-            context.Trace.TraceWarning("", context.Document.SourceFile.FileName, new TextPosition(args.Exception.LineNumber, args.Exception.LinePosition, 0), args.Message);
+            context.Trace.TraceWarning("", context.DocumentSnapshot.SourceFile.FileName, new TextPosition(args.Exception.LineNumber, args.Exception.LinePosition, 0), args.Message);
             break;
         }
       };
@@ -117,7 +117,7 @@
       }
       catch (Exception ex)
       {
-        context.Trace.TraceError(Texts.The_file_does_not_contain_valid_XML, context.Document.SourceFile.FileName, TextPosition.Empty, ex.Message);
+        context.Trace.TraceError(Texts.The_file_does_not_contain_valid_XML, context.DocumentSnapshot.SourceFile.FileName, TextPosition.Empty, ex.Message);
       }
     }
 

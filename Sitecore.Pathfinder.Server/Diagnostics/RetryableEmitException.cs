@@ -13,7 +13,7 @@
     {
     }
 
-    public RetryableEmitException([Localizable(true)] [NotNull] string text, [NotNull] IDocument document, [NotNull] string details = "") : base(text, document, details)
+    public RetryableEmitException([Localizable(true)] [NotNull] string text, [NotNull] IDocumentSnapshot documentSnapshot, [NotNull] string details = "") : base(text, documentSnapshot, details)
     {
     }
 

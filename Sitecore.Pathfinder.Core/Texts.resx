@@ -213,4 +213,16 @@
   <data name="Media_item_not_found" xml:space="preserve">
     <value>Media item not found</value>
   </data>
+  <data name="Unique_ID_clash" xml:space="preserve">
+    <value>Unique ID clash</value>
+  </data>
+  <data name="Reference_not_found" xml:space="preserve">
+    <value>Reference not found</value>
+  </data>
+  <data name="Creating__layout__directory___" xml:space="preserve">
+    <value>Creating 'layout' directory...</value>
+  </data>
+  <data name="Project_has_not_been_loaded__Call_Load___first" xml:space="preserve">
+    <value>Project has not been loaded. Call Load() first</value>
+  </data>
 </root>

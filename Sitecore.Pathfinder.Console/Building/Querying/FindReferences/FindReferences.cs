@@ -35,7 +35,7 @@ namespace Sitecore.Pathfinder.Building.Querying.FindReferences
 
       foreach (var reference in projectItem.References)
       {
-        string line = $"{reference.Owner.Document.SourceFile.GetProjectPath(context.Project)}";
+        string line = $"{reference.Owner.DocumentSnapshot.SourceFile.GetProjectPath(context.Project)}";
 
         var textNode = reference.SourceTextNode;
         line += textNode != null ? $"({textNode.Position.LineNumber},{textNode.Position.LineNumber})" : "(0,0)";

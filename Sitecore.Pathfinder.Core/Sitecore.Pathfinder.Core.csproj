@@ -97,18 +97,19 @@
     <Compile Include="Parsing\Files\MediaFileParser.cs" />
     <Compile Include="Parsing\Files\SerializationFileParser.cs" />
     <Compile Include="Parsing\IParseService.cs" />
-    <Compile Include="Projects\ProjectMessage.cs" />
-    <Compile Include="Projects\ProjectTraceService.cs" />
+    <Compile Include="Projects\Diagnostic.cs" />
+    <Compile Include="Projects\DiagnosticTraceService.cs" />
+    <Compile Include="Projects\ProjectOptions.cs" />
     <Compile Include="Projects\References\IReference.cs" />
     <Compile Include="Querying\IQueryService.cs" />
     <Compile Include="Querying\QueryService.cs" />
-    <Compile Include="TextDocuments\Document.cs" />
+    <Compile Include="TextDocuments\DocumentSnapshot.cs" />
     <Compile Include="TextDocuments\EmptySourceFile.cs" />
     <Compile Include="Projects\IProjectItem.cs" />
     <Compile Include="Projects\IProjectService.cs" />
     <Compile Include="Projects\Items\ExternalReferenceItem.cs" />
     <Compile Include="Projects\Items\Item.cs" />
-    <Compile Include="TextDocuments\IDocument.cs" />
+    <Compile Include="TextDocuments\IDocumentSnapshot.cs" />
     <Compile Include="TextDocuments\ITextTokenService.cs" />
     <Compile Include="Projects\Layouts\Rendering.cs" />
     <Compile Include="Projects\Other\PageType.cs" />
@@ -152,19 +153,19 @@
     <Compile Include="IO\IFileSystemService.cs" />
     <Compile Include="IO\PathHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TextDocuments\TextDocument.cs" />
+    <Compile Include="TextDocuments\TextDocumentSnapshot.cs" />
     <Compile Include="TextDocuments\DocumentService.cs" />
-    <Compile Include="TextDocuments\ITextDocument.cs" />
+    <Compile Include="TextDocuments\ITextDocumentSnapshot.cs" />
     <Compile Include="TextDocuments\IDocumentLoader.cs" />
     <Compile Include="TextDocuments\IDocumentService.cs" />
     <Compile Include="TextDocuments\ITextNode.cs" />
-    <Compile Include="TextDocuments\Json\JsonTextDocument.cs" />
+    <Compile Include="TextDocuments\Json\JsonTextDocumentSnapshot.cs" />
     <Compile Include="TextDocuments\Json\JsonDocumentLoader.cs" />
     <Compile Include="TextDocuments\Json\JsonTextNode.cs" />
     <Compile Include="TextDocuments\TextNode.cs" />
     <Compile Include="TextDocuments\Xml\XmlDocumentLoader.cs" />
     <Compile Include="TextDocuments\Xml\XmlTextNode.cs" />
-    <Compile Include="TextDocuments\Xml\XmlTextDocument.cs" />
+    <Compile Include="TextDocuments\Xml\XmlTextDocumentSnapshot.cs" />
     <Compile Include="Texts.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

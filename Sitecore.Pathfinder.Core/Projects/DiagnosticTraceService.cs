@@ -4,9 +4,9 @@
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.TextDocuments;
 
-  public class ProjectTraceService : TraceService
+  public class DiagnosticTraceService : TraceService
   {
-    public ProjectTraceService([NotNull] IConfiguration configuration) : base(configuration)
+    public DiagnosticTraceService([NotNull] IConfiguration configuration) : base(configuration)
     {
     }
 
@@ -20,16 +20,16 @@
       return this;
     }
 
-    protected override void Write(string text, MessageType messageType, string fileName, TextPosition position, string details)
+    protected override void Write(string text, Severity severity, string fileName, TextPosition position, string details)
     {
       if (!string.IsNullOrEmpty(details))
       {
         text += ": " + details;
       }
 
-      var message = new ProjectMessage(fileName, position, messageType, text);
+      var message = new Diagnostic(fileName, position, severity, text);
 
-      this.Project.Messages.Add(message);
+      this.Project.Diagnostics.Add(message);
     }
   }
 }

@@ -50,7 +50,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
       var fieldName = fieldTextNode.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(fieldName))
       {
-        context.ParseContext.Trace.TraceError(Texts._Field__element_must_have_a__Name__attribute, fieldTextNode.Document.SourceFile.FileName, fieldTextNode.Position, fieldName);
+        context.ParseContext.Trace.TraceError(Texts._Field__element_must_have_a__Name__attribute, fieldTextNode.DocumentSnapshot.SourceFile.FileName, fieldTextNode.Position, fieldName);
       }
 
       var templateField = templateSection.Fields.FirstOrDefault(f => string.Compare(f.Name, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
@@ -77,7 +77,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
       var sectionName = sectionTextNode.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(sectionName))
       {
-        context.ParseContext.Trace.TraceError(Texts._Section__element_must_have_a__Name__attribute, sectionTextNode.Document.SourceFile.FileName, sectionTextNode.Position);
+        context.ParseContext.Trace.TraceError(Texts._Section__element_must_have_a__Name__attribute, sectionTextNode.DocumentSnapshot.SourceFile.FileName, sectionTextNode.Position);
       }
 
       var templateSection = template.Sections.FirstOrDefault(s => string.Compare(s.Name, sectionName, StringComparison.OrdinalIgnoreCase) == 0);

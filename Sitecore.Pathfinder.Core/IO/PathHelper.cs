@@ -110,7 +110,7 @@
     [NotNull]
     public static string GetItemPath([NotNull] IProject project, [NotNull] ISourceFile sourceFile)
     {
-      var itemPath = UnmapPath(project.ProjectDirectory, sourceFile.FileName);
+      var itemPath = UnmapPath(project.Options.ProjectDirectory, sourceFile.FileName);
 
       itemPath = GetDirectoryAndFileNameWithoutExtensions(itemPath);
 

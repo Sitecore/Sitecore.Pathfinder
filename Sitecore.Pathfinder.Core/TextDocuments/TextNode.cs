@@ -7,20 +7,20 @@
 
   public class TextNode : ITextNode
   {
-    public static readonly ITextNode Empty = new TextNode(TextDocuments.Document.Empty, TextPosition.Empty, string.Empty);
+    public static readonly ITextNode Empty = new TextNode(TextDocuments.DocumentSnapshot.Empty, TextPosition.Empty, string.Empty);
 
-    public TextNode([NotNull] IDocument document)
+    public TextNode([NotNull] IDocumentSnapshot documentSnapshot)
     {
-      this.Document = document;
+      this.DocumentSnapshot = documentSnapshot;
       this.Position = TextPosition.Empty;
       this.Name = string.Empty;
       this.Value = string.Empty;
       this.Parent = null;
     }
 
-    public TextNode([NotNull] IDocument document, TextPosition position, [NotNull] string name, [NotNull] string value = "", [CanBeNull] ITextNode parent = null)
+    public TextNode([NotNull] IDocumentSnapshot documentSnapshot, TextPosition position, [NotNull] string name, [NotNull] string value = "", [CanBeNull] ITextNode parent = null)
     {
-      this.Document = document;
+      this.DocumentSnapshot = documentSnapshot;
       this.Name = name;
       this.Value = value;
       this.Parent = parent;
@@ -31,7 +31,7 @@
 
     public IList<ITextNode> ChildNodes { get; } = new List<ITextNode>();
 
-    public IDocument Document { get; }
+    public IDocumentSnapshot DocumentSnapshot { get; }
 
     public string Name { get; }
 

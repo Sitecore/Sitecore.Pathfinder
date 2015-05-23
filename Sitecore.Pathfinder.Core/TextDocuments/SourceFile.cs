@@ -38,7 +38,7 @@
 
     public string GetProjectPath(IProject project)
     {
-      return PathHelper.UnmapPath(project.ProjectDirectory, this.FileName);
+      return PathHelper.UnmapPath(project.Options.ProjectDirectory, this.FileName);
     }
 
     public string[] ReadAsLines()

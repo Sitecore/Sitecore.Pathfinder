@@ -47,14 +47,14 @@
 
     public override bool CanParse(IParseContext context)
     {
-      return context.Document.SourceFile.FileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
+      return context.DocumentSnapshot.SourceFile.FileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
       var layout = this.ParseLayout(context);
 
-      var item = new Projects.Items.Item(context.Project, context.ItemPath, context.Document)
+      var item = new Projects.Items.Item(context.Project, context.ItemPath, context.DocumentSnapshot)
       {
         ItemName = context.ItemName, 
         DatabaseName = context.DatabaseName, 
@@ -93,10 +93,10 @@
       var errors = new List<Message>();
       var warnings = new List<Message>();
 
-      var root = context.Document.SourceFile.ReadAsXml();
+      var root = context.DocumentSnapshot.SourceFile.ReadAsXml();
       if (root == null)
       {
-        throw new EmitException(Texts.Layout_file_is_not_valid, context.Document.SourceFile);
+        throw new EmitException(Texts.Layout_file_is_not_valid, context.DocumentSnapshot.SourceFile);
       }
 
       var writer = new StringWriter();
@@ -114,17 +114,17 @@
 
       foreach (var error in errors)
       {
-        context.Trace.TraceError("", context.Document.SourceFile.FileName, new TextPosition(error.Line, error.Column, 0), error.Text);
+        context.Trace.TraceError("", context.DocumentSnapshot.SourceFile.FileName, new TextPosition(error.Line, error.Column, 0), error.Text);
       }
 
       foreach (var warning in warnings)
       {
-        context.Trace.TraceWarning("", context.Document.SourceFile.FileName, new TextPosition(warning.Line, warning.Column, 0), warning.Text);
+        context.Trace.TraceWarning("", context.DocumentSnapshot.SourceFile.FileName, new TextPosition(warning.Line, warning.Column, 0), warning.Text);
       }
 
       if (errors.Any())
       {
-        throw new EmitException(Texts.Layout_contains_errors, context.Document.SourceFile);
+        throw new EmitException(Texts.Layout_contains_errors, context.DocumentSnapshot.SourceFile);
       }
 
       return string.Empty;
@@ -157,7 +157,7 @@
 
       if (item == null)
       {
-        throw new EmitException(Texts.Cannot_apply_a_layout_to_a_template__The_template_needs_a_Standard_Values_, layout.Document);
+        throw new EmitException(Texts.Cannot_apply_a_layout_to_a_template__The_template_needs_a_Standard_Values_, layout.DocumentSnapshot);
       }
 
       return item;
@@ -292,7 +292,7 @@
         var l = database.GetItem(layoutPath);
         if (l == null)
         {
-          throw new RetryableEmitException(Texts.Layout_not_found_, context.Document.SourceFile, layoutPath);
+          throw new RetryableEmitException(Texts.Layout_not_found_, context.DocumentSnapshot.SourceFile, layoutPath);
         }
 
         output.WriteAttributeString("l", l.ID.ToString());

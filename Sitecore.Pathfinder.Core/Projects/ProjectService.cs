@@ -5,22 +5,25 @@
   using System.IO;
   using System.Linq;
   using Microsoft.Framework.ConfigurationModel;
+  using Sitecore.Pathfinder.Checking;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Extensions.CompositionServiceExtensions;
   using Sitecore.Pathfinder.Extensions.ConfigurationExtensions;
   using Sitecore.Pathfinder.IO;
-  using Sitecore.Pathfinder.Projects.Items;
-  using Sitecore.Pathfinder.TextDocuments;
 
   [Export(typeof(IProjectService))]
   public class ProjectService : IProjectService
   {
     [ImportingConstructor]
-    public ProjectService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration)
+    public ProjectService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ICheckerService checker)
     {
       this.CompositionService = compositionService;
       this.Configuration = configuration;
+      this.Checker = checker;
     }
+
+    [NotNull]
+    protected ICheckerService Checker { get; set; }
 
     [NotNull]
     protected ICompositionService CompositionService { get; }
@@ -30,54 +33,51 @@
 
     public IProject LoadProjectFromConfiguration()
     {
-      // todo: refactor this
-      var projectDirectory = PathHelper.Combine(this.Configuration.GetString(Pathfinder.Constants.Configuration.SolutionDirectory), this.Configuration.GetString(Pathfinder.Constants.Configuration.ProjectDirectory));
-      var databaseName = this.Configuration.GetString(Pathfinder.Constants.Configuration.Database);
+      var projectOptions = this.CreateProjectOptions();
 
-      var ignoreFileNames = this.Configuration.GetList(Pathfinder.Constants.Configuration.IgnoreFileNames).ToList();
-      var ignoreDirectories = this.Configuration.GetList(Pathfinder.Constants.Configuration.IgnoreDirectories).ToList();
-      ignoreDirectories.Add(Path.GetFileName(this.Configuration.GetString(Pathfinder.Constants.Configuration.ToolsDirectory)));
+      this.LoadExternalReferences(projectOptions);
 
-      var project = this.CompositionService.Resolve<Project>().With(projectDirectory, databaseName);
+      var sourceFileNames = new List<string>();
+      this.LoadSourceFileNames(projectOptions, sourceFileNames);
 
-      this.LoadExternalReferences(project);
-
-      this.LoadProjectItems(project, ignoreDirectories, ignoreFileNames);
+      var project = this.CompositionService.Resolve<IProject>().Load(projectOptions, sourceFileNames);
 
       return project;
     }
 
-    protected virtual void LoadExternalReferences([NotNull] IProject project)
+    [NotNull]
+    protected virtual ProjectOptions CreateProjectOptions()
     {
-      foreach (var pair in this.Configuration.GetSubKeys("external-references"))
+      var projectDirectory = PathHelper.Combine(this.Configuration.GetString(Pathfinder.Constants.Configuration.SolutionDirectory), this.Configuration.GetString(Pathfinder.Constants.Configuration.ProjectDirectory));
+      var databaseName = this.Configuration.GetString(Pathfinder.Constants.Configuration.Database);
+
+      var projectOptions = new ProjectOptions(projectDirectory, databaseName);
+
+      return projectOptions;
+    }
+
+    protected virtual void LoadExternalReferences([NotNull] ProjectOptions projectOptions)
+    {
+      foreach (var pair in this.Configuration.GetSubKeys(Pathfinder.Constants.Configuration.ExternalReferences))
       {
-        var external = new ExternalReferenceItem(project, pair.Key, Document.Empty)
-        {
-          ItemIdOrPath = pair.Key, 
-          ItemName = Path.GetFileName(pair.Key) ?? string.Empty
-        };
+        projectOptions.ExternalReferences.Add(pair.Key);
 
-        project.AddOrMerge(external);
-
-        var value = this.Configuration.Get("external-references:" + pair.Key);
-        if (string.IsNullOrEmpty(value))
+        var value = this.Configuration.Get(Pathfinder.Constants.Configuration.ExternalReferences + ":" + pair.Key);
+        if (!string.IsNullOrEmpty(value))
         {
-          continue;
+          projectOptions.ExternalReferences.Add(value);
         }
-
-        external = new ExternalReferenceItem(project, value, Document.Empty)
-        {
-          ItemIdOrPath = value, 
-          ItemName = Path.GetFileName(value)
-        };
-        project.AddOrMerge(external);
       }
     }
 
-    protected virtual void LoadProjectItems([NotNull] Project project, [NotNull] IEnumerable<string> ignoreDirectories, [NotNull] IEnumerable<string> ignoreFileNames)
+    protected virtual void LoadSourceFileNames([NotNull] ProjectOptions projectOptions, [NotNull] ICollection<string> sourceFileNames)
     {
+      var ignoreFileNames = this.Configuration.GetList(Pathfinder.Constants.Configuration.IgnoreFileNames).ToList();
+      var ignoreDirectories = this.Configuration.GetList(Pathfinder.Constants.Configuration.IgnoreDirectories).ToList();
+      ignoreDirectories.Add(Path.GetFileName(this.Configuration.GetString(Pathfinder.Constants.Configuration.ToolsDirectory)));
+
       var visitor = this.CompositionService.Resolve<ProjectDirectoryVisitor>().With(ignoreDirectories, ignoreFileNames);
-      visitor.Visit(project);
+      visitor.Visit(projectOptions, sourceFileNames);
     }
   }
 }

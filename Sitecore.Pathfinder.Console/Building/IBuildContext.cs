@@ -32,9 +32,6 @@
     IProject Project { get; }
 
     [NotNull]
-    string ProjectDirectory { get; }
-
-    [NotNull]
     string SolutionDirectory { get; }
 
     [NotNull]

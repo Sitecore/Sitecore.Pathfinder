@@ -21,11 +21,11 @@
 
           if (textNode != null)
           {
-            context.Trace.TraceWarning("Reference not found", projectItem.Document.SourceFile.FileName, textNode.Position, reference.TargetQualifiedName);
+            context.Trace.TraceWarning(Texts.Reference_not_found, projectItem.DocumentSnapshot.SourceFile.FileName, textNode.Position, reference.TargetQualifiedName);
           }
           else
           {
-            context.Trace.TraceWarning("Reference not found", projectItem.Document.SourceFile.FileName, TextPosition.Empty, reference.TargetQualifiedName);
+            context.Trace.TraceWarning(Texts.Reference_not_found, projectItem.DocumentSnapshot.SourceFile.FileName, TextPosition.Empty, reference.TargetQualifiedName);
           }
         }
       }

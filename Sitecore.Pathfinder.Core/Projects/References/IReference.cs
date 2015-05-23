@@ -16,6 +16,8 @@
     [NotNull]
     string TargetQualifiedName { get; }
 
+    void Invalidate();
+
     [CanBeNull]
     IProjectItem Resolve();
   }

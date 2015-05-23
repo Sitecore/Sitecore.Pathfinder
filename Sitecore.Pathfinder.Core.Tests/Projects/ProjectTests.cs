@@ -25,7 +25,7 @@
     [Test]
     public void AddRemoveTests()
     {
-      var project = new Project(this.Services.CompositionService, this.Services.Configuration, this.Services.FileSystem, this.Services.ParseService).With(this.ProjectDirectory, "master");
+      var project = this.Resolve<IProject>().Load(new ProjectOptions(this.ProjectDirectory, "master"), Enumerable.Empty<string>());
 
       var fileName = Path.Combine(this.ProjectDirectory, "content\\Home\\HelloWorld.item.xml");
 
@@ -51,7 +51,7 @@
       Assert.AreEqual("/sitecore/content/Home/Foo", item.ItemIdOrPath);
       Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", item.TemplateIdOrPath);
 
-      var textDocument = projectItem.Document as ITextDocument;
+      var textDocument = projectItem.DocumentSnapshot as ITextDocumentSnapshot;
       Assert.IsNotNull(textDocument);
 
       var treeNode = textDocument.Root;
@@ -124,7 +124,7 @@
       Assert.IsNotNull(field);
       Assert.AreEqual("Hello", field.Value);
 
-      var textDocument = projectItem.Document as ITextDocument;
+      var textDocument = projectItem.DocumentSnapshot as ITextDocumentSnapshot;
       Assert.IsNotNull(textDocument);
 
       var treeNode = textDocument.Root;
@@ -159,8 +159,8 @@
     {
       var project = this.Resolve<IProject>();
 
-      var projectItem1 = new Item(project, "SameId", Document.Empty);
-      var projectItem2 = new Item(project, "SameId", Document.Empty);
+      var projectItem1 = new Item(project, "SameId", DocumentSnapshot.Empty);
+      var projectItem2 = new Item(project, "SameId", DocumentSnapshot.Empty);
 
       project.AddOrMerge(projectItem1);
       project.AddOrMerge(projectItem2);

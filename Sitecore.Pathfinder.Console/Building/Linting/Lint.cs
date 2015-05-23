@@ -17,31 +17,23 @@ namespace Sitecore.Pathfinder.Building.Linting
     {
       context.Trace.TraceInformation(Texts.Checking___);
 
-      var project = context.Project;
-
-      this.TraceProjectMessages(context);
-
-      context.Trace.TraceInformation(Texts.Linting_items, context.Project.Items.Count().ToString());
-
-      var checkerService = context.CompositionService.Resolve<ICheckerService>();
-
-      checkerService.CheckProject(context.Project);
+      this.TraceDiagnostics(context);
     }
 
-    private void TraceProjectMessages([NotNull] IBuildContext context)
+    protected void TraceDiagnostics([NotNull] IBuildContext context)
     {
-      foreach (var message in context.Project.Messages)
+      foreach (var diagnostic in context.Project.Diagnostics)
       {
-        switch (message.MessageType)
+        switch (diagnostic.Severity)
         {
-          case MessageType.Error:
-            context.Trace.TraceError(message.Text, message.FileName, message.Position);
+          case Severity.Error:
+            context.Trace.TraceError(diagnostic.Text, diagnostic.FileName, diagnostic.Position);
             break;
-          case MessageType.Warning:
-            context.Trace.TraceWarning(message.Text, message.FileName, message.Position);
+          case Severity.Warning:
+            context.Trace.TraceWarning(diagnostic.Text, diagnostic.FileName, diagnostic.Position);
             break;
           default:
-            context.Trace.TraceInformation(message.Text, message.FileName, message.Position);
+            context.Trace.TraceInformation(diagnostic.Text, diagnostic.FileName, diagnostic.Position);
             break;
         }
       }

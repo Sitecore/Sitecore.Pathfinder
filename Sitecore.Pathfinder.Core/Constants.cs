@@ -24,6 +24,8 @@
 
       public const string Debug = "system:debug";
 
+      public const string ExternalReferences = "external-references";
+
       public const string HostName = "HostName";
 
       public const string IgnoreDirectories = "ignore-directories";

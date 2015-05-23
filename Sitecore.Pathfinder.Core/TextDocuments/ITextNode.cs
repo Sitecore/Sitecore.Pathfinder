@@ -12,7 +12,7 @@
     IList<ITextNode> ChildNodes { get; }
 
     [NotNull]
-    IDocument Document { get; }
+    IDocumentSnapshot DocumentSnapshot { get; }
 
     TextPosition Position { get; }
 

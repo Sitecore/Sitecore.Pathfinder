@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
   public class Item : ItemBase
   {
-    public Item([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] IDocument document) : base(project, projectUniqueId, document)
+    public Item([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] IDocumentSnapshot documentSnapshot) : base(project, projectUniqueId, documentSnapshot)
     {
     }
 

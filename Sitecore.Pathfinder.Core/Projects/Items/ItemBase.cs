@@ -5,12 +5,12 @@
 
   public abstract class ItemBase : ProjectItem
   {
-    protected ItemBase([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] IDocument document) : base(project, projectUniqueId, document)
+    protected ItemBase([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] IDocumentSnapshot documentSnapshot) : base(project, projectUniqueId, documentSnapshot)
     {
-      this.TextNode = new TextNode(document);
+      this.TextNode = new TextNode(documentSnapshot);
     }
 
-    protected ItemBase([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode) : base(project, projectUniqueId, textNode.Document)
+    protected ItemBase([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode) : base(project, projectUniqueId, textNode.DocumentSnapshot)
     {
       this.TextNode = textNode;
     }

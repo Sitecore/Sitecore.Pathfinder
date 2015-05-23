@@ -71,13 +71,13 @@
       var fieldName = fieldTextNode.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(fieldName))
       {
-        context.ParseContext.Trace.TraceError(Texts._Field__element_must_have_a__Name__attribute, fieldTextNode.Document.SourceFile.FileName, fieldTextNode.Position, fieldName);
+        context.ParseContext.Trace.TraceError(Texts._Field__element_must_have_a__Name__attribute, fieldTextNode.DocumentSnapshot.SourceFile.FileName, fieldTextNode.Position, fieldName);
       }
 
       var field = item.Fields.FirstOrDefault(f => string.Compare(f.Name, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
       if (field != null)
       {
-        context.ParseContext.Trace.TraceError(Texts.Field_is_already_defined, fieldTextNode.Document.SourceFile.FileName, fieldTextNode.Position, fieldName);
+        context.ParseContext.Trace.TraceError(Texts.Field_is_already_defined, fieldTextNode.DocumentSnapshot.SourceFile.FileName, fieldTextNode.Position, fieldName);
       }
 
       var language = fieldTextNode.GetAttributeValue("Language");
@@ -88,7 +88,7 @@
       {
         if (!int.TryParse(versionValue, out version))
         {
-          context.ParseContext.Trace.TraceError(Texts._version__attribute_must_have_an_integer_value, fieldTextNode.Document.SourceFile.FileName, fieldTextNode.Position, fieldName);
+          context.ParseContext.Trace.TraceError(Texts._version__attribute_must_have_an_integer_value, fieldTextNode.DocumentSnapshot.SourceFile.FileName, fieldTextNode.Position, fieldName);
           version = 0;
         }
       }
@@ -100,7 +100,7 @@
       {
         if (valueTextNode != null)
         {
-          context.ParseContext.Trace.TraceWarning(Texts.Value_is_specified_in_both__Value__attribute_and_in_element__Using_value_from_attribute, fieldTextNode.Document.SourceFile.FileName, valueAttributeTextNode.Position, fieldName);
+          context.ParseContext.Trace.TraceWarning(Texts.Value_is_specified_in_both__Value__attribute_and_in_element__Using_value_from_attribute, fieldTextNode.DocumentSnapshot.SourceFile.FileName, valueAttributeTextNode.Position, fieldName);
         }
 
         valueTextNode = valueAttributeTextNode;
@@ -126,7 +126,7 @@
       var itemIdOrPath = this.GetTemplateIdOrPath(context, textNode);
       if (string.IsNullOrEmpty(itemIdOrPath))
       {
-        context.ParseContext.Trace.TraceError(Texts._Item__element_must_have_a__Template__or__Template_Create__attribute, textNode.Document.SourceFile.FileName, textNode.Position);
+        context.ParseContext.Trace.TraceError(Texts._Item__element_must_have_a__Template__or__Template_Create__attribute, textNode.DocumentSnapshot.SourceFile.FileName, textNode.Position);
       }
 
       var n = itemIdOrPath.LastIndexOf('/');
