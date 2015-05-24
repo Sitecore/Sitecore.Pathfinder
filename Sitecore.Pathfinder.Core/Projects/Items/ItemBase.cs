@@ -1,7 +1,7 @@
 ﻿namespace Sitecore.Pathfinder.Projects.Items
 {
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.TextDocuments;
+  using Sitecore.Pathfinder.Documents;
 
   public abstract class ItemBase : ProjectItem
   {

@@ -2,7 +2,7 @@
 {
   using System.Diagnostics;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.TextDocuments;
+  using Sitecore.Pathfinder.Documents;
 
   public class ExternalReferenceItem : ItemBase
   {

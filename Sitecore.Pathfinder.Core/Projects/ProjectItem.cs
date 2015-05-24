@@ -5,8 +5,8 @@
   using System.Security.Cryptography;
   using System.Text;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects.References;
-  using Sitecore.Pathfinder.TextDocuments;
 
   [DebuggerDisplay("{GetType().Name,nq}: {QualifiedName}")]
   public abstract class ProjectItem : IProjectItem

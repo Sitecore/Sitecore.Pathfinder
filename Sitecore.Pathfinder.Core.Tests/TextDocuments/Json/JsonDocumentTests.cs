@@ -1,6 +1,8 @@
 ﻿namespace Sitecore.Pathfinder.TextDocuments.Json
 {
   using NUnit.Framework;
+  using Sitecore.Pathfinder.Documents;
+  using Sitecore.Pathfinder.Documents.Json;
 
   [TestFixture]
   public class JsonDocumentTests : Tests

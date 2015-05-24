@@ -7,9 +7,9 @@
   using Sitecore.Pathfinder.Configuration;
   using Sitecore.Pathfinder.Data;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects;
-  using Sitecore.Pathfinder.TextDocuments;
   using Sitecore.SecurityModel;
 
   [Export]

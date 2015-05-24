@@ -9,6 +9,7 @@
   using Sitecore.Pathfinder.Checking;
   using Sitecore.Pathfinder.Configuration;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Extensions.CompositionServiceExtensions;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Parsing;

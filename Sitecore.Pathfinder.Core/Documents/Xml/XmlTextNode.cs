@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.TextDocuments.Xml
+﻿namespace Sitecore.Pathfinder.Documents.Xml
 {
   using System.Xml;
   using System.Xml.Linq;

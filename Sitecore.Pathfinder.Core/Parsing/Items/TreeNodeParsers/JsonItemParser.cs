@@ -2,9 +2,9 @@
 {
   using System.ComponentModel.Composition;
   using System.Linq;
+  using Sitecore.Pathfinder.Documents;
+  using Sitecore.Pathfinder.Documents.Json;
   using Sitecore.Pathfinder.Projects.Items;
-  using Sitecore.Pathfinder.TextDocuments;
-  using Sitecore.Pathfinder.TextDocuments.Json;
 
   [Export(typeof(ITextNodeParser))]
   public class JsonItemParser : ItemParserBase

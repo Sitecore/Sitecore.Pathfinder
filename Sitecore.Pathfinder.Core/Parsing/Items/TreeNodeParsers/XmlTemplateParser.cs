@@ -1,8 +1,8 @@
 ﻿namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 {
   using System.ComponentModel.Composition;
-  using Sitecore.Pathfinder.TextDocuments;
-  using Sitecore.Pathfinder.TextDocuments.Xml;
+  using Sitecore.Pathfinder.Documents;
+  using Sitecore.Pathfinder.Documents.Xml;
 
   [Export(typeof(ITextNodeParser))]
   public class XmlTemplateParser : TemplateParserBase

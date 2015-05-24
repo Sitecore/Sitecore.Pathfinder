@@ -2,8 +2,8 @@
 {
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects;
-  using Sitecore.Pathfinder.TextDocuments;
 
   public interface IParseContext
   {

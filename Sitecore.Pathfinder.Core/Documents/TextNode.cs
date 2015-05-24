@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.TextDocuments
+﻿namespace Sitecore.Pathfinder.Documents
 {
   using System;
   using System.Collections.Generic;
@@ -7,7 +7,7 @@
 
   public class TextNode : ITextNode
   {
-    public static readonly ITextNode Empty = new TextNode(TextDocuments.DocumentSnapshot.Empty, TextPosition.Empty, string.Empty);
+    public static readonly ITextNode Empty = new TextNode(Documents.DocumentSnapshot.Empty, TextPosition.Empty, string.Empty);
 
     public TextNode([NotNull] IDocumentSnapshot documentSnapshot)
     {

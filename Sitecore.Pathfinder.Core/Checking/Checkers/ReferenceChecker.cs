@@ -1,7 +1,7 @@
 ﻿namespace Sitecore.Pathfinder.Checking.Checkers
 {
   using System.ComponentModel.Composition;
-  using Sitecore.Pathfinder.TextDocuments;
+  using Sitecore.Pathfinder.Documents;
 
   [Export(typeof(IChecker))]
   public class ReferenceChecker : CheckerBase

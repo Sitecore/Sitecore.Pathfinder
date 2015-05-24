@@ -23,14 +23,14 @@ Milestone 1
    
 Milestone 2
 -----------
-* Items with versions and languages
-* IDs
+* v Items with versions and languages
+* v IDs
 * Layout inside .item.xml
 * Assemblies
 * Code Generation
-* Rename
+* v Rename
 * Delete
-* Components/PageType Concepts/abstractions
+* Alias / Launch Pad item
 
 Missing
 -------

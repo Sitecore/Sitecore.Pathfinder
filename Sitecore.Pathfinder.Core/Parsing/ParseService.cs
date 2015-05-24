@@ -5,9 +5,9 @@
   using System.ComponentModel.Composition;
   using System.Linq;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Extensions.CompositionServiceExtensions;
   using Sitecore.Pathfinder.Projects;
-  using Sitecore.Pathfinder.TextDocuments;
 
   [Export(typeof(IParseService))]
   public class ParseService : IParseService

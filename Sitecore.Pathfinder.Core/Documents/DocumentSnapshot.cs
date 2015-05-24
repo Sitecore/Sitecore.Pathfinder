@@ -1,10 +1,10 @@
-﻿namespace Sitecore.Pathfinder.TextDocuments
+﻿namespace Sitecore.Pathfinder.Documents
 {
   using Sitecore.Pathfinder.Diagnostics;
 
   public class DocumentSnapshot : IDocumentSnapshot
   {
-    public static readonly IDocumentSnapshot Empty = new DocumentSnapshot(TextDocuments.SourceFile.Empty);
+    public static readonly IDocumentSnapshot Empty = new DocumentSnapshot(Documents.SourceFile.Empty);
 
     public DocumentSnapshot([NotNull] ISourceFile sourceFile)
     {

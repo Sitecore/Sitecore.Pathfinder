@@ -2,8 +2,8 @@
 {
   using System.IO;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.IO;
-  using Sitecore.Pathfinder.TextDocuments;
 
   public class File : ProjectItem
   {

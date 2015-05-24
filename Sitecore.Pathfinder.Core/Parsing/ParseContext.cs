@@ -3,9 +3,9 @@
   using System.ComponentModel.Composition;
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects;
-  using Sitecore.Pathfinder.TextDocuments;
 
   [Export(typeof(IParseContext))]
   [PartCreationPolicy(CreationPolicy.NonShared)]
@@ -19,7 +19,7 @@
     public ParseContext([NotNull] IConfiguration configuration)
     {
       this.Configuration = configuration;
-      this.DocumentSnapshot = TextDocuments.DocumentSnapshot.Empty;
+      this.DocumentSnapshot = Documents.DocumentSnapshot.Empty;
     }
 
     public IConfiguration Configuration { get; }

@@ -2,7 +2,7 @@
 {
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.TextDocuments;
+  using Sitecore.Pathfinder.Documents;
 
   public class DiagnosticTraceService : TraceService
   {

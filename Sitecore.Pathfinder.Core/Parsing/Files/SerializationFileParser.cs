@@ -4,10 +4,10 @@
   using System.ComponentModel.Composition;
   using System.Text;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Extensions.StringExtensions;
   using Sitecore.Pathfinder.Projects.Files;
   using Sitecore.Pathfinder.Projects.Items;
-  using Sitecore.Pathfinder.TextDocuments;
 
   [Export(typeof(IParser))]
   public class SerializationFileParser : ParserBase

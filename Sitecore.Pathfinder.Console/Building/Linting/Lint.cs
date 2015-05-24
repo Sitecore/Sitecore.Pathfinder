@@ -1,10 +1,7 @@
 namespace Sitecore.Pathfinder.Building.Linting
 {
   using System.ComponentModel.Composition;
-  using System.Linq;
-  using Sitecore.Pathfinder.Checking;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Extensions.CompositionServiceExtensions;
 
   [Export(typeof(ITask))]
   public class Lint : TaskBase

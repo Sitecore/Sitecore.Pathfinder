@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.TextDocuments
+﻿namespace Sitecore.Pathfinder.Documents
 {
   using System.Collections.Generic;
   using System.ComponentModel.Composition;

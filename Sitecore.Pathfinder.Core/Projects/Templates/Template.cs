@@ -4,8 +4,8 @@ namespace Sitecore.Pathfinder.Projects.Templates
   using System.Collections.Generic;
   using System.Linq;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects.Items;
-  using Sitecore.Pathfinder.TextDocuments;
 
   public class Template : ItemBase
   {

@@ -3,9 +3,9 @@
   using System;
   using System.Collections.Generic;
   using System.ComponentModel.Composition;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects.Other;
   using Sitecore.Pathfinder.Projects.Templates;
-  using Sitecore.Pathfinder.TextDocuments;
 
   [Export(typeof(IParser))]
   public class PageTypeParser : ParserBase

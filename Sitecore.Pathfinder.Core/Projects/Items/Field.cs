@@ -1,7 +1,7 @@
 namespace Sitecore.Pathfinder.Projects.Items
 {
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.TextDocuments;
+  using Sitecore.Pathfinder.Documents;
 
   // todo: consider basing this on ProjectElement
   public class Field

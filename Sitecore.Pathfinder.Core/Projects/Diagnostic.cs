@@ -1,7 +1,7 @@
 ﻿namespace Sitecore.Pathfinder.Projects
 {
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.TextDocuments;
+  using Sitecore.Pathfinder.Documents;
 
   public class Diagnostic
   {

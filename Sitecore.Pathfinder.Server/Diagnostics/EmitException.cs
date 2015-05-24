@@ -2,7 +2,7 @@
 {
   using System;
   using System.ComponentModel;
-  using Sitecore.Pathfinder.TextDocuments;
+  using Sitecore.Pathfinder.Documents;
 
   public class EmitException : Exception
   {

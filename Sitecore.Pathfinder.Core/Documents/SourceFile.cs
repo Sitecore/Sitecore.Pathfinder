@@ -1,9 +1,8 @@
-﻿namespace Sitecore.Pathfinder.TextDocuments
+﻿namespace Sitecore.Pathfinder.Documents
 {
   using System;
   using System.Diagnostics;
   using System.Xml.Linq;
-  using Newtonsoft.Json.Linq;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects;

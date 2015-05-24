@@ -3,11 +3,11 @@
   using System;
   using System.Linq;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Extensions.StringExtensions;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects.Items;
   using Sitecore.Pathfinder.Projects.Templates;
-  using Sitecore.Pathfinder.TextDocuments;
 
   public abstract class ItemParserBase : TextNodeParserBase
   {

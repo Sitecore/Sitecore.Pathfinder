@@ -3,10 +3,10 @@
   using System;
   using System.Collections.Generic;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects;
   using Sitecore.Pathfinder.Projects.References;
   using Sitecore.Pathfinder.Text;
-  using Sitecore.Pathfinder.TextDocuments;
 
   public abstract class TextNodeParserBase : ITextNodeParser
   {

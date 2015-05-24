@@ -2,8 +2,8 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 {
   using System.ComponentModel.Composition;
   using System.Linq;
-  using Sitecore.Pathfinder.TextDocuments;
-  using Sitecore.Pathfinder.TextDocuments.Json;
+  using Sitecore.Pathfinder.Documents;
+  using Sitecore.Pathfinder.Documents.Json;
 
   [Export(typeof(ITextNodeParser))]
   public class JsonTemplateParser : TemplateParserBase

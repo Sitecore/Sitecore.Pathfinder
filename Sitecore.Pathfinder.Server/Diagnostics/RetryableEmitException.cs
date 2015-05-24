@@ -1,7 +1,7 @@
 ﻿namespace Sitecore.Pathfinder.Diagnostics
 {
   using System.ComponentModel;
-  using Sitecore.Pathfinder.TextDocuments;
+  using Sitecore.Pathfinder.Documents;
 
   public class RetryableEmitException : EmitException
   {

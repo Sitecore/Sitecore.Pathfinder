@@ -12,12 +12,12 @@
   using Sitecore.Data.Items;
   using Sitecore.Data.Managers;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Emitters;
   using Sitecore.Pathfinder.Extensions.StringExtensions;
   using Sitecore.Pathfinder.Extensions.XElementExtensions;
   using Sitecore.Pathfinder.Projects.Items;
   using Sitecore.Pathfinder.Projects.Layouts;
-  using Sitecore.Pathfinder.TextDocuments;
   using Sitecore.Text;
 
   [Export(typeof(IParser))]

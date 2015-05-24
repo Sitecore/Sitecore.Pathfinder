@@ -5,9 +5,9 @@
   using System.ComponentModel.Composition;
   using System.Linq;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers;
-  using Sitecore.Pathfinder.TextDocuments;
 
   [Export(typeof(IParser))]
   public class ItemParser : ParserBase

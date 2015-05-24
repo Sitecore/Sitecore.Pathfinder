@@ -6,7 +6,6 @@
   using System.Linq;
   using Sitecore.Pathfinder.Projects.Files;
   using Sitecore.Pathfinder.Projects.Items;
-  using Sitecore.Pathfinder.TextDocuments;
 
   [Export(typeof(IParser))]
   public class MediaFileParser : ParserBase

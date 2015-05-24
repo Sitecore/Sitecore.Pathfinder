@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.TextDocuments.Xml
+﻿namespace Sitecore.Pathfinder.Documents.Xml
 {
   using System;
   using System.Collections.Generic;

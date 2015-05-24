@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.TextDocuments.Json
+﻿namespace Sitecore.Pathfinder.Documents.Json
 {
   using Newtonsoft.Json;
   using Newtonsoft.Json.Linq;

@@ -3,8 +3,8 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
   using System;
   using System.Linq;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects.Templates;
-  using Sitecore.Pathfinder.TextDocuments;
 
   public abstract class TemplateParserBase : TextNodeParserBase
   {

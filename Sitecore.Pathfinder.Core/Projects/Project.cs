@@ -8,11 +8,11 @@
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Checking;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Parsing;
   using Sitecore.Pathfinder.Projects.Items;
   using Sitecore.Pathfinder.Projects.Templates;
-  using Sitecore.Pathfinder.TextDocuments;
 
   [Export]
   [Export(typeof(IProject))]

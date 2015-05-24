@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.TextDocuments.Json
+﻿namespace Sitecore.Pathfinder.Documents.Json
 {
   using System;
   using System.ComponentModel.Composition;
