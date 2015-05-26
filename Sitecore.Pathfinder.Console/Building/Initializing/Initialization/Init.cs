@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.Initialization
         return;
       }
 
-      var configFileName = Path.Combine(projectDirectory, context.Configuration.Get(Constants.Configuration.ConfigFileName));
+      var configFileName = Path.Combine(projectDirectory, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
       if (!context.FileSystem.FileExists(configFileName))
       {
         this.CreateConfigurationFile(context, projectDirectory);
@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.Initialization
     protected virtual void CreateConfigurationFile([NotNull] IBuildContext context, [NotNull] string projectDirectory)
     {
       this.CopyResourceFiles(context, projectDirectory);
-      context.Trace.Writeline("Your configuration file and sample files were missing = so I have created them. You must update the 'project-unique-id' = 'wwwroot' and 'hostname' in the '{0}' configuration file before continuing.", context.Configuration.Get(Constants.Configuration.ConfigFileName));
+      context.Trace.Writeline("Your configuration file and sample files were missing = so I have created them. You must update the 'project-unique-id' = 'wwwroot' and 'hostname' in the '{0}' configuration file before continuing.", context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
     }
 
     protected virtual void CreateProjectDirectory([NotNull] IBuildContext context, [NotNull] string projectDirectory)
@@ -46,7 +46,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.Initialization
       this.CopyResourceFiles(context, projectDirectory);
 
       context.Trace.Writeline("Hi there.");
-      context.Trace.Writeline("Your project directory was missing = so I have created it. You must update the 'project-unique-id' = 'wwwroot' and 'hostname' in the '{0}' configuration file before continuing.", context.Configuration.Get(Constants.Configuration.ConfigFileName));
+      context.Trace.Writeline("Your project directory was missing = so I have created it. You must update the 'project-unique-id' = 'wwwroot' and 'hostname' in the '{0}' configuration file before continuing.", context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
     }
   }
 }

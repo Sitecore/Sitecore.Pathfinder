@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
+﻿namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers.Json
 {
   using System.ComponentModel.Composition;
   using System.Linq;

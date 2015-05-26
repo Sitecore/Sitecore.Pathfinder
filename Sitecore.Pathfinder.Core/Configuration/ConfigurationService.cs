@@ -32,7 +32,7 @@
       var toolsDirectory = configurationSourceRoot.Get(Pathfinder.Constants.Configuration.ToolsDirectory);
 
       // add system config
-      var fileName = Path.Combine(toolsDirectory, configurationSourceRoot.Get(Pathfinder.Constants.Configuration.ConfigFileName));
+      var fileName = Path.Combine(toolsDirectory, configurationSourceRoot.Get(Pathfinder.Constants.Configuration.SystemConfigFileName));
       if (!File.Exists(fileName))
       {
         throw new ConfigurationException(Texts.System_configuration_file_not_found, fileName);
@@ -40,6 +40,7 @@
 
       configurationSourceRoot.AddJsonFile(fileName);
 
+      // add command line
       if ((options & LoadConfigurationOptions.IncludeCommandLine) == LoadConfigurationOptions.IncludeCommandLine)
       {
         this.AddCommandLine(configurationSourceRoot);
@@ -49,11 +50,11 @@
       var solutionDirectory = PathHelper.Combine(toolsDirectory, configurationSourceRoot.Get(Pathfinder.Constants.Configuration.SolutionDirectory) ?? string.Empty);
       configurationSourceRoot.Set(Pathfinder.Constants.Configuration.SolutionDirectory, solutionDirectory);
 
-      // add config
-      var websiteConfigFileName = PathHelper.Combine(solutionDirectory, configurationSourceRoot.Get(Pathfinder.Constants.Configuration.ConfigFileName));
-      if (File.Exists(websiteConfigFileName))
+      // add solution config file
+      var projectConfigFileName = PathHelper.Combine(solutionDirectory, configurationSourceRoot.Get(Pathfinder.Constants.Configuration.ProjectConfigFileName));
+      if (File.Exists(projectConfigFileName))
       {
-        configurationSourceRoot.AddFile(websiteConfigFileName);
+        configurationSourceRoot.AddFile(projectConfigFileName);
       }
 
       // set project directory

@@ -23,6 +23,9 @@
     string ItemPath { get; }
 
     [NotNull]
+    string FilePath { get; }
+
+    [NotNull]
     IProject Project { get; }
 
     [NotNull]

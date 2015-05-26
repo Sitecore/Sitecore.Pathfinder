@@ -25,8 +25,7 @@
     {
       var binFile = (BinFile)projectItem;
 
-      var destinationFileName = "/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(context.Project.Options.ProjectDirectory, binFile.DocumentSnapshot.SourceFile.FileName));
-      destinationFileName = FileUtil.MapPath(destinationFileName);
+      var destinationFileName = FileUtil.MapPath(binFile.FilePath);
 
       // todo: check for assembly version
       // todo: backup to uninstall folder

@@ -88,8 +88,8 @@
     <Compile Include="Tests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Sitecore.Pathfinder.Console\sitecore.config.json">
-      <Link>Website\.sitecore.tools\sitecore.config.json</Link>
+    <None Include="..\Sitecore.Pathfinder.Console\scconfig.json">
+      <Link>Website\.sitecore.tools\scconfig.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />

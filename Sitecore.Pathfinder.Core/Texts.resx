@@ -225,4 +225,25 @@
   <data name="Project_has_not_been_loaded__Call_Load___first" xml:space="preserve">
     <value>Project has not been loaded. Call Load() first</value>
   </data>
+  <data name="Device_element_is_missing__Name__attribute_" xml:space="preserve">
+    <value>Device element is missing "Name" attribute.</value>
+  </data>
+  <data name="Devices_not_found_in_database_" xml:space="preserve">
+    <value>Devices not found in database.</value>
+  </data>
+  <data name="_1___Parameter___0___is_not_defined_in_the_parameters_template_" xml:space="preserve">
+    <value>{1}: Parameter "{0}" is not defined in the parameters template.</value>
+  </data>
+  <data name="_2___Placeholder___0___is_not_defined_in_the_parent_rendering__Parent_rendering_has_these_placeholders___1__" xml:space="preserve">
+    <value>{2}: Placeholder "{0}" is not defined in the parent rendering. Parent rendering has these placeholders: {1}.</value>
+  </data>
+  <data name="__Boolean_parameter_must_have_value__True__or__False_" xml:space="preserve">
+    <value>: Boolean parameter must have value "True" or "False"</value>
+  </data>
+  <data name="Failed_to_upload_media" xml:space="preserve">
+    <value>Failed to upload media</value>
+  </data>
+  <data name="Failed_to_deserialize_item" xml:space="preserve">
+    <value>Failed to deserialize item</value>
+  </data>
 </root>

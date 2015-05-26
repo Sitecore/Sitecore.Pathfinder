@@ -12,6 +12,9 @@
   // default database name (master, core or web)
   "database": "master",
 
+  // project configuration file
+  "project": "scconfig.json",
+
   // default pipeline
   "pipeline": "init",
 

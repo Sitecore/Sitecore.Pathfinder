@@ -59,7 +59,7 @@
       var toolsDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
 
       configuration.Set(Constants.Configuration.ToolsDirectory, toolsDirectory);
-      configuration.Set(Constants.Configuration.ConfigFileName, "sitecore.config.json");
+      configuration.Set(Constants.Configuration.SystemConfigFileName, "scconfig.json");
 
       return configuration;
     }

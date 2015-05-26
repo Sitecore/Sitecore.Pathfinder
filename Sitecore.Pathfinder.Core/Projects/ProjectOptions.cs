@@ -21,5 +21,8 @@
 
     [NotNull]
     public string ProjectDirectory { get; }
+
+    [NotNull]
+    public IDictionary<string, string> RemapFileDirectories { get; } = new Dictionary<string, string>();
   }
 }

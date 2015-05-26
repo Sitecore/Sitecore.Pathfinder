@@ -14,7 +14,9 @@
 
     public static class Configuration
     {
-      public const string ConfigFileName = "system:configfilename";
+      public const string SystemConfigFileName = "system:config";
+
+      public const string ProjectConfigFileName = "project";
 
       public const string ContentFiles = "content-files";
 

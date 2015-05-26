@@ -15,6 +15,8 @@
 
     private string itemPath;
 
+    private string filePath;
+
     [ImportingConstructor]
     public ParseContext([NotNull] IConfiguration configuration)
     {
@@ -31,6 +33,8 @@
     public virtual string ItemName => this.itemName ?? (this.itemName = PathHelper.GetItemName(this.DocumentSnapshot.SourceFile));
 
     public virtual string ItemPath => this.itemPath ?? (this.itemPath = PathHelper.GetItemPath(this.Project, this.DocumentSnapshot.SourceFile));
+
+    public virtual string FilePath => this.filePath ?? (this.filePath = PathHelper.GetFilePath(this.Project, this.DocumentSnapshot.SourceFile));
 
     public IProject Project { get; private set; }
 

@@ -114,7 +114,14 @@
 
       itemPath = GetDirectoryAndFileNameWithoutExtensions(itemPath);
 
-      return "/sitecore/" + NormalizeItemPath(itemPath);
+      itemPath = NormalizeItemPath(itemPath);
+
+      if (!itemPath.StartsWith("/sitecore", StringComparison.OrdinalIgnoreCase))
+      {
+        itemPath = "/sitecore/" + itemPath;
+      }
+
+      return itemPath;
     }
 
     [NotNull]
@@ -160,6 +167,20 @@
       }
 
       return fileName;
+    }
+
+    [NotNull]
+    public static string GetFilePath([NotNull] IProject project, [NotNull] ISourceFile sourceFile)
+    {
+      var filePath = "/" + NormalizeItemPath(UnmapPath(project.Options.ProjectDirectory, sourceFile.FileName));
+
+      foreach (var pair in project.Options.RemapFileDirectories)
+      {
+        // todo: hmm.. handle regex control chars
+        filePath = Regex.Replace(filePath, pair.Key, pair.Value, RegexOptions.IgnoreCase);
+      }
+
+      return filePath;
     }
   }
 }

@@ -61,6 +61,34 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to : Boolean parameter must have value &quot;True&quot; or &quot;False&quot;.
+        /// </summary>
+        public static string @__Boolean_parameter_must_have_value__True__or__False_ {
+            get {
+                return ResourceManager.GetString("__Boolean_parameter_must_have_value__True__or__False_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {1}: Parameter &quot;{0}&quot; is not defined in the parameters template..
+        /// </summary>
+        public static string _1___Parameter___0___is_not_defined_in_the_parameters_template_ {
+            get {
+                return ResourceManager.GetString("_1___Parameter___0___is_not_defined_in_the_parameters_template_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {2}: Placeholder &quot;{0}&quot; is not defined in the parent rendering. Parent rendering has these placeholders: {1}..
+        /// </summary>
+        public static string _2___Placeholder___0___is_not_defined_in_the_parent_rendering__Parent_rendering_has_these_placeholders___1__ {
+            get {
+                return ResourceManager.GetString("_2___Placeholder___0___is_not_defined_in_the_parent_rendering__Parent_rendering_h" +
+                        "as_these_placeholders___1__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Component&apos; element expected.
         /// </summary>
         public static string _Component__element_expected {
@@ -169,6 +197,24 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Device element is missing &quot;Name&quot; attribute..
+        /// </summary>
+        public static string Device_element_is_missing__Name__attribute_ {
+            get {
+                return ResourceManager.GetString("Device_element_is_missing__Name__attribute_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Devices not found in database..
+        /// </summary>
+        public static string Devices_not_found_in_database_ {
+            get {
+                return ResourceManager.GetString("Devices_not_found_in_database_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Document is not valid.
         /// </summary>
         public static string Document_is_not_valid {
@@ -183,6 +229,24 @@ namespace Sitecore.Pathfinder {
         public static string Done {
             get {
                 return ResourceManager.GetString("Done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to deserialize item.
+        /// </summary>
+        public static string Failed_to_deserialize_item {
+            get {
+                return ResourceManager.GetString("Failed_to_deserialize_item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to upload media.
+        /// </summary>
+        public static string Failed_to_upload_media {
+            get {
+                return ResourceManager.GetString("Failed_to_upload_media", resourceCulture);
             }
         }
         

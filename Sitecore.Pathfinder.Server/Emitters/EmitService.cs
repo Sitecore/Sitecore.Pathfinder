@@ -58,7 +58,7 @@
       configuration.Add(new MemoryConfigurationSource());
 
       configuration.Set(Pathfinder.Constants.Configuration.ToolsDirectory, Path.Combine(this.SolutionDirectory, "content\\.sitecore.tools"));
-      configuration.Set(Pathfinder.Constants.Configuration.ConfigFileName, "sitecore.config.json");
+      configuration.Set(Pathfinder.Constants.Configuration.SystemConfigFileName, "scconfig.json");
 
       return configuration;
     }

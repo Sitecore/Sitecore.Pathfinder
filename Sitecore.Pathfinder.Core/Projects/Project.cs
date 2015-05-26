@@ -151,7 +151,7 @@
 
       this.diagnostics.RemoveAll(d => string.Compare(d.FileName, sourceFileName, StringComparison.OrdinalIgnoreCase) == 0);
 
-      foreach (var projectItem in this.Items)
+      foreach (var projectItem in this.Items.ToList())
       {
         if (string.Compare(projectItem.DocumentSnapshot.SourceFile.FileName, sourceFileName, StringComparison.OrdinalIgnoreCase) != 0)
         {

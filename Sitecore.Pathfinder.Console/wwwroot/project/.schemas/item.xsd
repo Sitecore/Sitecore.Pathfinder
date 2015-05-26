@@ -138,11 +138,16 @@
     <xs:attribute name="LongHelp" type="xs:string" use="optional" />
   </xs:complexType>
 
+  <xs:complexType name="Layout">
+    <xs:sequence>
+      <xs:any minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:group name="ElementGroup">
     <xs:choice>
       <xs:element name="Item" type="Item" />
       <xs:element name="Template" type="Template" />
-      <xs:element name="ItemPath" type="ItemPath" />
     </xs:choice>
   </xs:group>
 
@@ -151,9 +156,11 @@
       <xs:element name="Field" type="Field" />
       <xs:element name="Item" type="Item" />
       <xs:element name="Template" type="Template" />
+      <xs:element name="LayoutField" type="Layout" minOccurs="0" maxOccurs="1"  />
     </xs:choice>
   </xs:group>
 
   <xs:element name="Item" type="Item" />
   <xs:element name="Template" type="Template" />
+  <xs:element name="LayoutField" type="Layout" />
 </xs:schema>

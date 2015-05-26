@@ -129,7 +129,8 @@
     <Compile Include="Packages\Packages\NugetPackage.cs" />
     <Compile Include="Packages\Packages\PackageBase.cs" />
     <Compile Include="Packages\PackageService.cs" />
-    <Compile Include="Parsing\Layouts\LayoutServerParser.cs" />
+    <Compile Include="Parsing\Items\TreeNodeParsers\ServerLayoutParserBase.cs" />
+    <Compile Include="Parsing\Items\TreeNodeParsers\Xml\ServerXmlLayoutParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

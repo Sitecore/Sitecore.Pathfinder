@@ -1,11 +1,8 @@
 ﻿namespace Sitecore.Pathfinder.Emitters.Files
 {
-  using System;
   using System.ComponentModel.Composition;
   using System.IO;
-  using Sitecore.Diagnostics;
   using Sitecore.IO;
-  using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects;
   using Sitecore.Pathfinder.Projects.Files;
 
@@ -25,8 +22,7 @@
     {
       var contentFile = (ContentFile)projectItem;
 
-      var destinationFileName = "/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(context.Project.Options.ProjectDirectory, contentFile.DocumentSnapshot.SourceFile.FileName));
-      destinationFileName = FileUtil.MapPath(destinationFileName);
+      var destinationFileName = FileUtil.MapPath(contentFile.FilePath);
 
       // todo: backup to uninstall folder
       context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName) ?? string.Empty);

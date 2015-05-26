@@ -7,6 +7,7 @@
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects.Items;
   using Sitecore.Pathfinder.Projects.Layouts;
+  using Sitecore.Pathfinder.Projects.References;
 
   public abstract class RenderingParser : ParserBase
   {
@@ -44,6 +45,8 @@
 
       item.Fields.Add(new Field(item.TextNode, "Path", path));
       item.Fields.Add(new Field(item.TextNode, "Place Holders", string.Join(",", placeHolders)));
+
+      item.References.Add(new Reference(item, item.TextNode, path));
 
       item = context.Project.AddOrMerge(item);
 
