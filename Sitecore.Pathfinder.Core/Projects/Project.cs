@@ -19,6 +19,8 @@
   [PartCreationPolicy(CreationPolicy.NonShared)]
   public class Project : IProject
   {
+    public static readonly IProject Empty = new Project();
+
     private readonly List<IProjectItem> items = new List<IProjectItem>();
 
     private string projectUniqueId;
@@ -34,6 +36,11 @@
       this.ParseService = parseService;
       this.Checker = checker;
 
+      this.Options = ProjectOptions.Empty;
+    }
+
+    private Project()
+    {
       this.Options = ProjectOptions.Empty;
     }
 

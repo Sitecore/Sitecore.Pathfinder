@@ -28,6 +28,8 @@
 
       public const string ExternalReferences = "external-references";
 
+      public const string RemapFileDirectories = "remap-file-directories";
+
       public const string HostName = "HostName";
 
       public const string IgnoreDirectories = "ignore-directories";

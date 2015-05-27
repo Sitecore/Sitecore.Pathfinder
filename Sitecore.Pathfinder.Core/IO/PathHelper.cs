@@ -27,7 +27,11 @@
       }
 
       var path = Path.Combine(f1, f2);
-      path = Path.GetFullPath(path);
+
+      if (path.IndexOf("..", StringComparison.OrdinalIgnoreCase) >= 0)
+      {
+        path = Path.GetFullPath(path);
+      }
 
       if (f1.IndexOf(Path.VolumeSeparatorChar) < 0 && f2.IndexOf(Path.VolumeSeparatorChar) < 0)
       {
@@ -112,10 +116,17 @@
     [NotNull]
     public static string GetItemName([NotNull] ISourceFile sourceFile)
     {
-      var s = sourceFile.FileName.LastIndexOf('\\') + 1;
-      var e = sourceFile.FileName.IndexOf('.', s);
+      var fileName = NormalizeItemPath(sourceFile.FileName);
 
-      return sourceFile.FileName.Mid(s, e - s);
+      var s = fileName.LastIndexOf('/') + 1;
+      var e = fileName.IndexOf('.', s);
+
+      if (e < 0)
+      {
+        return fileName.Mid(s);
+      }
+
+      return fileName.Mid(s, e - s);
     }
 
     [NotNull]
@@ -125,11 +136,11 @@
 
       itemPath = GetDirectoryAndFileNameWithoutExtensions(itemPath);
 
-      itemPath = NormalizeItemPath(itemPath);
+      itemPath = "/" + NormalizeItemPath(itemPath);
 
-      if (!itemPath.StartsWith("/sitecore", StringComparison.OrdinalIgnoreCase))
+      if (!itemPath.StartsWith("/sitecore/", StringComparison.OrdinalIgnoreCase))
       {
-        itemPath = "/sitecore/" + itemPath;
+        itemPath = "/sitecore" + itemPath;
       }
 
       return itemPath;
@@ -147,7 +158,7 @@
 
     public static bool MatchesPattern([NotNull] string fileName, [NotNull] string pattern)
     {
-      var s = Path.GetFileName(fileName) ?? string.Empty;
+      var s = Path.GetFileName(fileName);
 
       var regex = "^" + Regex.Escape(pattern).Replace(@"\*", ".*").Replace(@"\?", ".") + "$";
 
@@ -183,12 +194,16 @@
     [NotNull]
     public static string GetFilePath([NotNull] IProject project, [NotNull] ISourceFile sourceFile)
     {
-      var filePath = "/" + NormalizeItemPath(UnmapPath(project.Options.ProjectDirectory, sourceFile.FileName));
+      var filePath = NormalizeFilePath(UnmapPath(project.Options.ProjectDirectory, sourceFile.FileName));
 
       foreach (var pair in project.Options.RemapFileDirectories)
       {
-        // todo: hmm.. handle regex control chars
-        filePath = Regex.Replace(filePath, pair.Key, pair.Value, RegexOptions.IgnoreCase);
+        var n = filePath.IndexOf(pair.Key, StringComparison.OrdinalIgnoreCase);
+
+        if (n >= 0)
+        {
+          filePath = filePath.Left(n) + pair.Value + filePath.Mid(n + pair.Key.Length);
+        }
       }
 
       return filePath;

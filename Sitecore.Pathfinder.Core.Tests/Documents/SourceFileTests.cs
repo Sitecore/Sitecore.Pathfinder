@@ -1,10 +1,9 @@
-﻿namespace Sitecore.Pathfinder.TextDocuments
+﻿namespace Sitecore.Pathfinder.Documents
 {
   using System;
   using System.IO;
   using System.Reflection;
   using NUnit.Framework;
-  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.IO;
 
   [TestFixture]

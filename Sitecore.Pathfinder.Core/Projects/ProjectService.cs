@@ -36,6 +36,7 @@
       var projectOptions = this.CreateProjectOptions();
 
       this.LoadExternalReferences(projectOptions);
+      this.LoadRemapFileDirectories(projectOptions);
 
       var sourceFileNames = new List<string>();
       this.LoadSourceFileNames(projectOptions, sourceFileNames);
@@ -51,9 +52,7 @@
       var projectDirectory = PathHelper.Combine(this.Configuration.GetString(Pathfinder.Constants.Configuration.SolutionDirectory), this.Configuration.GetString(Pathfinder.Constants.Configuration.ProjectDirectory));
       var databaseName = this.Configuration.GetString(Pathfinder.Constants.Configuration.Database);
 
-      var projectOptions = new ProjectOptions(projectDirectory, databaseName);
-
-      return projectOptions;
+      return new ProjectOptions(projectDirectory, databaseName);
     }
 
     protected virtual void LoadExternalReferences([NotNull] ProjectOptions projectOptions)
@@ -67,6 +66,15 @@
         {
           projectOptions.ExternalReferences.Add(value);
         }
+      }
+    }
+
+    protected virtual void LoadRemapFileDirectories([NotNull] ProjectOptions projectOptions)
+    {
+      foreach (var pair in this.Configuration.GetSubKeys(Pathfinder.Constants.Configuration.RemapFileDirectories))
+      {
+        var value = this.Configuration.Get(Pathfinder.Constants.Configuration.RemapFileDirectories + ":" + pair.Key);
+        projectOptions.RemapFileDirectories[pair.Key] = value;
       }
     }
 

@@ -1,9 +1,7 @@
-﻿namespace Sitecore.Pathfinder.TextDocuments.Xml
+﻿namespace Sitecore.Pathfinder.Documents.Xml
 {
   using NUnit.Framework;
-  using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
-  using Sitecore.Pathfinder.Documents.Xml;
 
   [TestFixture]
   public class XmlDocumentTests : Tests

@@ -24,6 +24,20 @@
     }
 
     [Test]
+    public void RemapFileDirectoryTests()
+    {
+      Assert.AreEqual(1, this.Project.Options.RemapFileDirectories.Count);
+      Assert.AreEqual("sitecore\\shell\\client", this.Project.Options.RemapFileDirectories["sitecore\\client"]);
+    }
+
+    [Test]
+    public void ExternalReferencesTests()
+    {
+      Assert.AreEqual(6, this.Project.Options.ExternalReferences.Count);
+      Assert.AreEqual("/sitecore/templates/Sample/Sample Item", this.Project.Options.ExternalReferences.ElementAt(0));
+    }
+
+    [Test]
     public void AddRemoveTests()
     {
       var project = this.Resolve<IProject>().Load(new ProjectOptions(this.ProjectDirectory, "master"), Enumerable.Empty<string>());
