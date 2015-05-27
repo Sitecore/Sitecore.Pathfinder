@@ -16,8 +16,17 @@
       var f1 = NormalizeFilePath(path1);
       var f2 = NormalizeFilePath(path2);
 
-      var path = Path.Combine(f1, f2);
+      if (string.IsNullOrEmpty(f1) || f1 == ".")
+      {
+        return f2;
+      }
 
+      if (string.IsNullOrEmpty(f2) || f2 == ".")
+      {
+        return f1;
+      }
+
+      var path = Path.Combine(f1, f2);
       path = Path.GetFullPath(path);
 
       if (f1.IndexOf(Path.VolumeSeparatorChar) < 0 && f2.IndexOf(Path.VolumeSeparatorChar) < 0)

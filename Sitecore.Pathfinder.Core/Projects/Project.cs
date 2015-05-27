@@ -37,13 +37,7 @@
       this.Options = ProjectOptions.Empty;
     }
 
-    public ICollection<Diagnostic> Diagnostics
-    {
-      get
-      {
-        return this.diagnostics;
-      }
-    }
+    public ICollection<Diagnostic> Diagnostics => this.diagnostics;
 
     public IFileSystemService FileSystem { get; }
 

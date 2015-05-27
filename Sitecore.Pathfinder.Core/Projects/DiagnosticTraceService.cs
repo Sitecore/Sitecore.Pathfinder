@@ -27,9 +27,9 @@
         text += ": " + details;
       }
 
-      var message = new Diagnostic(fileName, position, severity, text);
+      var diagnostic = new Diagnostic(fileName, position, severity, text);
 
-      this.Project.Diagnostics.Add(message);
+      this.Project.Diagnostics.Add(diagnostic);
     }
   }
 }

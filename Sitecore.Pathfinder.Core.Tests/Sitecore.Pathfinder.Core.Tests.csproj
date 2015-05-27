@@ -80,10 +80,11 @@
   <ItemGroup>
     <Compile Include="Helpers\Services.cs" />
     <Compile Include="IO\MockedFileSystemService.cs" />
-    <Compile Include="TextDocuments\Json\JsonDocumentTests.cs" />
+    <Compile Include="Documents\Json\JsonDocumentTests.cs" />
+    <Compile Include="IO\PathHelperTests.cs" />
     <Compile Include="Projects\ProjectTests.cs" />
-    <Compile Include="TextDocuments\SourceFileTests.cs" />
-    <Compile Include="TextDocuments\Xml\XmlDocumentTests.cs" />
+    <Compile Include="Documents\SourceFileTests.cs" />
+    <Compile Include="Documents\Xml\XmlDocumentTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests.cs" />
   </ItemGroup>
