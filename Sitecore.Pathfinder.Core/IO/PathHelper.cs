@@ -79,7 +79,8 @@
     [NotNull]
     public static string GetDirectoryAndFileNameWithoutExtensions([NotNull] string fileName)
     {
-      var n = NormalizeFilePath(fileName).LastIndexOf('\\');
+      fileName = NormalizeFilePath(fileName);
+      var n = fileName.LastIndexOf('\\');
       if (n < 0)
       {
         n = 0;
@@ -100,11 +101,12 @@
       var s = NormalizeFilePath(fileName).LastIndexOf('\\');
       if (s < 0)
       {
-        s = 0;
+        var e0 = fileName.IndexOf('.');
+        return e0 < 0 ? fileName : fileName.Left(e0);
       }
 
-      var e = fileName.IndexOf('.', s);
-      return fileName.Mid(s + 1, e - s - 1);
+      var e1 = fileName.IndexOf('.', s);
+      return e1 < 0 ? fileName.Mid(s + 1) : fileName.Mid(s + 1, e1 - s - 1);
     }
 
     [NotNull]

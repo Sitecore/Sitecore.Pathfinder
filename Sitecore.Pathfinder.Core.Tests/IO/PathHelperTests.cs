@@ -19,5 +19,25 @@
       Assert.AreEqual("Home", PathHelper.Combine(".", "Home"));
       Assert.AreEqual(string.Empty, PathHelper.Combine(string.Empty, string.Empty));
     }
+
+    [Test]
+    public void GetDirectoryAndFileNameWithoutExtensionsTests()
+    {
+      Assert.AreEqual("\\sitecore\\client\\test", PathHelper.GetDirectoryAndFileNameWithoutExtensions("\\sitecore\\client\\test.txt"));
+      Assert.AreEqual("\\sitecore\\client\\test", PathHelper.GetDirectoryAndFileNameWithoutExtensions("/sitecore/client/test.txt"));
+      Assert.AreEqual("test", PathHelper.GetDirectoryAndFileNameWithoutExtensions("test.txt"));
+      Assert.AreEqual("test", PathHelper.GetDirectoryAndFileNameWithoutExtensions("test"));
+    }
+
+    [Test]
+    public void GetFileNameWithoutExtensionsTests()
+    {
+      Assert.AreEqual("test", PathHelper.GetFileNameWithoutExtensions("\\sitecore\\client\\test.txt"));
+      Assert.AreEqual("test", PathHelper.GetFileNameWithoutExtensions("/sitecore/client/test.txt"));
+      Assert.AreEqual("test", PathHelper.GetFileNameWithoutExtensions("/sitecore/client/test"));
+      Assert.AreEqual("test", PathHelper.GetFileNameWithoutExtensions("test.txt"));
+      Assert.AreEqual("test", PathHelper.GetFileNameWithoutExtensions("test"));
+      Assert.AreEqual(string.Empty, PathHelper.GetFileNameWithoutExtensions(string.Empty));
+    }
   }
 }
