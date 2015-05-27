@@ -47,7 +47,7 @@
       }
 
       // set solution directory
-      var solutionDirectory = PathHelper.Combine(toolsDirectory, configurationSourceRoot.Get(Pathfinder.Constants.Configuration.SolutionDirectory) ?? string.Empty);
+      var solutionDirectory = PathHelper.Combine(toolsDirectory, configurationSourceRoot.GetString(Pathfinder.Constants.Configuration.SolutionDirectory));
       configurationSourceRoot.Set(Pathfinder.Constants.Configuration.SolutionDirectory, solutionDirectory);
 
       // add solution config file
@@ -58,7 +58,7 @@
       }
 
       // set project directory
-      var projectDirectory = PathHelper.NormalizeFilePath(configurationSourceRoot.Get(Pathfinder.Constants.Configuration.ProjectDirectory) ?? string.Empty).TrimStart('\\');
+      var projectDirectory = PathHelper.NormalizeFilePath(configurationSourceRoot.GetString(Pathfinder.Constants.Configuration.ProjectDirectory)).TrimStart('\\');
       configurationSourceRoot.Set(Pathfinder.Constants.Configuration.ProjectDirectory, projectDirectory);
     }
 

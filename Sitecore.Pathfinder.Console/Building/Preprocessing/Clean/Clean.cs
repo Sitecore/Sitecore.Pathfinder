@@ -16,7 +16,7 @@
 
       foreach (var projectItem in context.Project.Items)
       {
-        projectItem.DocumentSnapshot.SourceFile.IsModified = true;
+        projectItem.Snapshot.SourceFile.IsModified = true;
       }
     }
   }

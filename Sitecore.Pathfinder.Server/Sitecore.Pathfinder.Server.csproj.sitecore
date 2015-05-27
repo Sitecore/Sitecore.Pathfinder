@@ -1,5 +1,5 @@
 ﻿<Project>
   <PropertyGroup>
-    <Site Server="Pathfinder" UserName="sitecore\admin" IsRemoteSitecore="False" />
+    <Site Server="AppCenter" UserName="sitecore\admin" IsRemoteSitecore="False" />
   </PropertyGroup>
 </Project>

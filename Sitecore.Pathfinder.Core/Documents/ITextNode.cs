@@ -12,7 +12,7 @@
     IList<ITextNode> ChildNodes { get; }
 
     [NotNull]
-    IDocumentSnapshot DocumentSnapshot { get; }
+    ISnapshot Snapshot { get; }
 
     TextPosition Position { get; }
 
@@ -23,7 +23,7 @@
     ITextNode Parent { get; }
 
     [NotNull]
-    string Value { get; }
+    string Value { get; set; }
 
     [CanBeNull]
     ITextNode GetAttribute([NotNull] string attributeName);

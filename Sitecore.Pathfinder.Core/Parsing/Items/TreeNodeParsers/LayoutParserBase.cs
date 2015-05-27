@@ -4,6 +4,7 @@
   using System.Linq;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
+  using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects;
   using Sitecore.Pathfinder.Projects.Items;
   using Sitecore.Pathfinder.Projects.References;
@@ -13,7 +14,7 @@
     public override void Parse(ItemParseContext context, ITextNode textNode)
     {
       var itemName = textNode.GetAttributeValue("Name", context.ParseContext.ItemName);
-      var itemIdOrPath = context.ParentItemPath + "/" + itemName;
+      var itemIdOrPath = PathHelper.GetItemParentPath(context.ParentItemPath) + "/" + itemName;
       var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
 
       var item = new Item(context.ParseContext.Project, projectUniqueId, textNode)
@@ -29,8 +30,6 @@
         item.Fields.Add(new Field(textNode, "__Renderings", value));
       }
 
-      item.References.AddRange(this.ParseReferences(item, textNode, item.TemplateIdOrPath));
-
       context.ParseContext.Project.AddOrMerge(item);
     }
 
@@ -43,12 +42,12 @@
     protected virtual void ParseDeviceReferences([NotNull] ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode deviceTextNode)
     {
       var deviceNameTextNode = deviceTextNode.GetAttribute("Name") ?? deviceTextNode;
-      references.Add(new Reference(projectItem, deviceNameTextNode, deviceTextNode.GetAttributeValue("Name")));
+      references.Add(new LayoutDeviceReference(projectItem, deviceNameTextNode, deviceTextNode.GetAttributeValue("Name")));
 
       var layoutTextNode = deviceTextNode.GetAttribute("Layout");
       if (layoutTextNode != null)
       {
-        references.Add(new Reference(projectItem, layoutTextNode, deviceTextNode.GetAttributeValue("Layout")));
+        references.Add(new LayoutReference(projectItem, layoutTextNode, deviceTextNode.GetAttributeValue("Layout")));
       }
 
       foreach (var renderingTextNode in deviceTextNode.ChildNodes)
@@ -77,7 +76,7 @@
 
     protected virtual void ParseRenderingReferences([NotNull] ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode renderingTextNode)
     {
-      references.Add(new Reference(projectItem, renderingTextNode, renderingTextNode.Name));
+      references.Add(new LayoutRenderingReference(projectItem, renderingTextNode, renderingTextNode.Name));
 
       foreach (var childTextNode in renderingTextNode.ChildNodes)
       {

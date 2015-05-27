@@ -17,10 +17,10 @@
     {
       var sourceFile = new SourceFile(this.Services.FileSystem, "test.txt");
 
-      var doc = new XmlTextDocumentSnapshot(sourceFile, "<Item>");
+      var doc = new XmlTextSnapshot(sourceFile, "<Item>");
       Assert.AreEqual(TextNode.Empty, doc.Root);
 
-      doc = new XmlTextDocumentSnapshot(sourceFile, string.Empty);
+      doc = new XmlTextSnapshot(sourceFile, string.Empty);
       Assert.AreEqual(TextNode.Empty, doc.Root);
     }
 
@@ -29,7 +29,7 @@
     {
       var sourceFile = new SourceFile(this.Services.FileSystem, "test.txt");
 
-      var doc = new XmlTextDocumentSnapshot(sourceFile, "<Item><Field Name=\"Text\" Value=\"123\" /></Item>");
+      var doc = new XmlTextSnapshot(sourceFile, "<Item><Field Name=\"Text\" Value=\"123\" /></Item>");
       var root = doc.Root;
       Assert.IsNotNull(root);
       Assert.AreEqual("Item", root.Name);
@@ -47,7 +47,7 @@
     {
       var sourceFile = new SourceFile(this.Services.FileSystem, "test.txt");
 
-      var doc = new XmlTextDocumentSnapshot(sourceFile, "<Item><Field Name=\"Text\">123</Field></Item>");
+      var doc = new XmlTextSnapshot(sourceFile, "<Item><Field Name=\"Text\">123</Field></Item>");
       var root = doc.Root;
       var field = root.ChildNodes[0];
       Assert.AreEqual("Field", field.Name);

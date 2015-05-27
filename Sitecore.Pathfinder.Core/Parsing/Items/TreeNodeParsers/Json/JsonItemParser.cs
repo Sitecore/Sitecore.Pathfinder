@@ -11,12 +11,7 @@
   {
     public override bool CanParse(ItemParseContext context, ITextNode textNode)
     {
-      return textNode.Name == "Item" && textNode.DocumentSnapshot is JsonTextDocumentSnapshot;
-    }
-
-    protected override ITextNode GetFieldTreeNode(ITextNode textNode)
-    {
-      return textNode.ChildNodes.FirstOrDefault(n => n.Name == "Fields");
+      return textNode.Name == "Item" && textNode.Snapshot is JsonTextSnapshot;
     }
 
     protected override void ParseChildNodes(ItemParseContext context, Item item, ITextNode textNode)

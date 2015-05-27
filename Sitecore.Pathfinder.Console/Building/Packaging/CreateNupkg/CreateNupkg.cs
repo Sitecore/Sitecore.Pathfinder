@@ -48,7 +48,7 @@
 
       context.OutputFiles.Add(nupkgFileName);
 
-      context.Trace.TraceInformation("NuGet file size", new FileInfo(nupkgFileName).Length.ToString("#,##0"));
+      context.Trace.TraceInformation(Texts.NuGet_file_size, new FileInfo(nupkgFileName).Length.ToString("#,##0 bytes"));
     }
 
     private void BuildNupkgFile([NotNull] IBuildContext context, [NotNull] string nuspecFileName, [NotNull] string nupkgFileName)
@@ -67,7 +67,7 @@
       }
       catch (Exception ex)
       {
-        context.Trace.TraceError("Failed to create the Nupkg file", ex.Message);
+        context.Trace.TraceError(Texts.Failed_to_create_the_Nupkg_file, ex.Message);
       }
     }
   }

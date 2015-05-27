@@ -15,12 +15,12 @@
 
     public override bool CanParse(IParseContext context)
     {
-      return context.DocumentSnapshot.SourceFile.FileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
+      return context.Snapshot.SourceFile.FileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
-      var binFile = new BinFile(context.Project, context.DocumentSnapshot);
+      var binFile = new BinFile(context.Project, context.Snapshot);
       context.Project.AddOrMerge(binFile);
     }
   }

@@ -5,7 +5,7 @@
 
   public class ContentFile : File
   {
-    public ContentFile([NotNull] IProject project, [NotNull] IDocumentSnapshot documentSnapshot) : base(project, documentSnapshot)
+    public ContentFile([NotNull] IProject project, [NotNull] ISnapshot snapshot) : base(project, snapshot)
     {
     }
   }

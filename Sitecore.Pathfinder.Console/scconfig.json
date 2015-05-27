@@ -42,8 +42,13 @@
   // files to copy to website
   "content-files": ".js .css .config .html .htm .ashx .asmx",
 
+  "remap-file-directories": {
+    "/sitecore/client":  "/sitecore/shell/client"
+  },
+
   "external-references": {
-    "{1930BBEB-7805-471A-A3BE-4858AC7CF696}": "/sitecore/templates/System/Templates/Standard template"
+    "{1930BBEB-7805-471A-A3BE-4858AC7CF696}": "/sitecore/templates/System/Templates/Standard template",
+    "{3A45A723-64EE-4919-9D41-02FD40FD1466}": "/sitecore/templates/System/Layout/Layout"
   },
 
   "websiteFolderName": "Website",

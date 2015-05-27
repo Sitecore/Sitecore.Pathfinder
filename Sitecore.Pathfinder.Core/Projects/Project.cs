@@ -112,7 +112,7 @@
 
       foreach (var externalReference in this.Options.ExternalReferences)
       {
-        var projectItem = new ExternalReferenceItem(this, externalReference, DocumentSnapshot.Empty)
+        var projectItem = new ExternalReferenceItem(this, externalReference, Snapshot.Empty)
         {
           ItemIdOrPath = externalReference, 
           ItemName = Path.GetFileName(externalReference) ?? string.Empty
@@ -154,7 +154,7 @@
 
       foreach (var projectItem in this.Items.ToList())
       {
-        if (string.Compare(projectItem.DocumentSnapshot.SourceFile.FileName, sourceFileName, StringComparison.OrdinalIgnoreCase) != 0)
+        if (string.Compare(projectItem.Snapshot.SourceFile.FileName, sourceFileName, StringComparison.OrdinalIgnoreCase) != 0)
         {
           continue;
         }
@@ -181,12 +181,12 @@
       Item item = null;
       if (newItem.MergingMatch == MergingMatch.MatchUsingSourceFile)
       {
-        item = this.Items.OfType<Item>().FirstOrDefault(i => string.Compare(i.DocumentSnapshot.SourceFile.GetFileNameWithoutExtensions(), newItem.DocumentSnapshot.SourceFile.GetFileNameWithoutExtensions(), StringComparison.OrdinalIgnoreCase) == 0);
+        item = this.Items.OfType<Item>().FirstOrDefault(i => string.Compare(i.Snapshot.SourceFile.GetFileNameWithoutExtensions(), newItem.Snapshot.SourceFile.GetFileNameWithoutExtensions(), StringComparison.OrdinalIgnoreCase) == 0);
       }
 
       if (item == null)
       {
-        item = this.Items.OfType<Item>().FirstOrDefault(i => i.MergingMatch == MergingMatch.MatchUsingSourceFile && string.Compare(i.DocumentSnapshot.SourceFile.GetFileNameWithoutExtensions(), newItem.DocumentSnapshot.SourceFile.GetFileNameWithoutExtensions(), StringComparison.OrdinalIgnoreCase) == 0);
+        item = this.Items.OfType<Item>().FirstOrDefault(i => i.MergingMatch == MergingMatch.MatchUsingSourceFile && string.Compare(i.Snapshot.SourceFile.GetFileNameWithoutExtensions(), newItem.Snapshot.SourceFile.GetFileNameWithoutExtensions(), StringComparison.OrdinalIgnoreCase) == 0);
       }
 
       if (item == null)

@@ -4,6 +4,7 @@
   using System.Collections.Generic;
   using System.IO;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects.Items;
   using Sitecore.Pathfinder.Projects.Layouts;
@@ -25,32 +26,37 @@
 
     public override bool CanParse(IParseContext context)
     {
-      return context.DocumentSnapshot.SourceFile.FileName.EndsWith(this.FileExtension, StringComparison.OrdinalIgnoreCase);
+      return context.Snapshot.SourceFile.FileName.EndsWith(this.FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
-      var contents = context.DocumentSnapshot.SourceFile.ReadAsText();
+      var contents = context.Snapshot.SourceFile.ReadAsText();
       var placeHolders = this.GetPlaceholders(contents);
-      var path = "/" + PathHelper.NormalizeItemPath(Path.Combine(context.Configuration.Get(Constants.Configuration.ProjectDirectory), PathHelper.UnmapPath(context.Project.Options.ProjectDirectory, context.DocumentSnapshot.SourceFile.FileName)));
+      var path = context.FilePath;
 
-      var item = new Item(context.Project, context.ItemPath, context.DocumentSnapshot)
+      var item = new Item(context.Project, context.ItemPath, context.Snapshot)
       {
-        ItemName = context.ItemName, 
-        ItemIdOrPath = context.ItemPath, 
-        DatabaseName = context.DatabaseName, 
-        TemplateIdOrPath = this.TemplateIdOrPath, 
+        ItemName = context.ItemName,
+        ItemIdOrPath = context.ItemPath,
+        TemplateIdOrPath = this.TemplateIdOrPath,
+        DatabaseName = context.DatabaseName,
         OverwriteWhenMerging = true
       };
 
-      item.Fields.Add(new Field(item.TextNode, "Path", path));
-      item.Fields.Add(new Field(item.TextNode, "Place Holders", string.Join(",", placeHolders)));
+      item.Fields.Add(new Field(item.ItemTextNode, "Path", path));
 
-      item.References.Add(new Reference(item, item.TextNode, path));
+      // todo: make this configurable
+      if (string.Compare(context.DatabaseName, "core", StringComparison.OrdinalIgnoreCase) == 0)
+      {
+        item.Fields.Add(new Field(item.ItemTextNode, "Place Holders", string.Join(",", placeHolders)));
+      }
+
+      item.References.Add(new FileReference(item, item.ItemTextNode, path));
 
       item = context.Project.AddOrMerge(item);
 
-      var rendering = new Rendering(context.Project, context.DocumentSnapshot, item);
+      var rendering = new Rendering(context.Project, context.Snapshot, item);
       context.Project.AddOrMerge(rendering);
     }
 

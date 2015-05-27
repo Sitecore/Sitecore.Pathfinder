@@ -40,7 +40,7 @@ namespace Sitecore.Pathfinder.Building.Deploying.Install
 
       foreach (var projectItem in context.Project.Items)
       {
-        projectItem.DocumentSnapshot.SourceFile.IsModified = false;
+        projectItem.Snapshot.SourceFile.IsModified = false;
       }
     }
   }

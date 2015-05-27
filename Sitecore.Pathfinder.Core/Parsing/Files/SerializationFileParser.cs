@@ -20,12 +20,12 @@
 
     public override bool CanParse(IParseContext context)
     {
-      return context.DocumentSnapshot.SourceFile.FileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
+      return context.Snapshot.SourceFile.FileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
-      var textDocument = (ITextDocumentSnapshot)context.DocumentSnapshot;
+      var textDocument = (ITextSnapshot)context.Snapshot;
       var root = textDocument.Root;
       if (root == TextNode.Empty)
       {
@@ -34,7 +34,7 @@
       }
 
       var projectUniqueId = context.ItemPath;
-      var lines = context.DocumentSnapshot.SourceFile.ReadAsLines();
+      var lines = context.Snapshot.SourceFile.ReadAsLines();
 
       var tempItem = new Item(context.Project, "TempItem", root);
       this.ParseLines(tempItem, lines, 0, ref projectUniqueId);
@@ -55,7 +55,7 @@
 
       item = context.Project.AddOrMerge(item);
 
-      var serializationFile = new SerializationFile(context.Project, context.DocumentSnapshot, item);
+      var serializationFile = new SerializationFile(context.Project, context.Snapshot, item);
       context.Project.AddOrMerge(serializationFile);
     }
 
@@ -88,7 +88,7 @@
     protected virtual int ParseField([NotNull] Item serializationFile, [NotNull] string[] lines, int startIndex, [NotNull] string language, int version)
     {
       // todo: set valueTextNode properly
-      var field = new Field(serializationFile.TextNode, serializationFile.TextNode);
+      var field = new Field(serializationFile.ItemTextNode, serializationFile.ItemTextNode);
       serializationFile.Fields.Add(field);
 
       field.Language = language;

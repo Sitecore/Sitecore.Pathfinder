@@ -4,11 +4,11 @@
   using Newtonsoft.Json.Linq;
   using Sitecore.Pathfinder.Diagnostics;
 
-  public class JsonTextDocumentSnapshot : TextDocumentSnapshot
+  public class JsonTextSnapshot : TextSnapshot
   {
     private ITextNode root;
 
-    public JsonTextDocumentSnapshot([NotNull] ISourceFile sourceFile, [NotNull] string contents) : base(sourceFile, contents)
+    public JsonTextSnapshot([NotNull] ISourceFile sourceFile, [NotNull] string contents) : base(sourceFile, contents)
     {
     }
 
@@ -45,6 +45,11 @@
 
         return this.root;
       }
+    }
+
+    public override ITextNode GetNestedTextNode(ITextNode textNode, string name)
+    {
+      return textNode.ChildNodes.FirstOrDefault(n => n.Name == name);
     }
 
     [NotNull]

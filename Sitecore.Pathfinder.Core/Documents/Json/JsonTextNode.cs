@@ -6,15 +6,15 @@
 
   public class JsonTextNode : TextNode
   {
-    public JsonTextNode([NotNull] ITextDocumentSnapshot documentSnapshot, [NotNull] string name, [NotNull] JObject jobject, [CanBeNull] ITextNode parent = null) : base(documentSnapshot, GetPosition(jobject), name, string.Empty, parent)
+    public JsonTextNode([NotNull] ITextSnapshot snapshot, [NotNull] string name, [NotNull] JObject jobject, [CanBeNull] ITextNode parent = null) : base(snapshot, GetPosition(jobject), name, string.Empty, parent)
     {
     }
 
-    public JsonTextNode([NotNull] ITextDocumentSnapshot documentSnapshot, [NotNull] string name, [NotNull] JArray jarray, [CanBeNull] ITextNode parent = null) : base(documentSnapshot, GetPosition(jarray), name, string.Empty, parent)
+    public JsonTextNode([NotNull] ITextSnapshot snapshot, [NotNull] string name, [NotNull] JArray jarray, [CanBeNull] ITextNode parent = null) : base(snapshot, GetPosition(jarray), name, string.Empty, parent)
     {
     }
 
-    public JsonTextNode([NotNull] ITextDocumentSnapshot documentSnapshot, [NotNull] string name, [NotNull] JProperty jproperty, [CanBeNull] ITextNode parent = null) : base(documentSnapshot, GetPosition(jproperty), name, jproperty.Value?.ToString() ?? string.Empty, parent)
+    public JsonTextNode([NotNull] ITextSnapshot snapshot, [NotNull] string name, [NotNull] JProperty jproperty, [CanBeNull] ITextNode parent = null) : base(snapshot, GetPosition(jproperty), name, jproperty.Value?.ToString() ?? string.Empty, parent)
     {
     }
 

@@ -13,20 +13,20 @@
 
     private string shortName;
 
-    public File([NotNull] IProject project, [NotNull] IDocumentSnapshot documentSnapshot) : base(project, GetProjectUniqueId(project, documentSnapshot), documentSnapshot)
+    public File([NotNull] IProject project, [NotNull] ISnapshot snapshot) : base(project, GetProjectUniqueId(project, snapshot), snapshot)
     {
     }
 
-    public string FilePath => this.filePath ?? (this.filePath = PathHelper.GetFilePath(this.Project, this.DocumentSnapshot.SourceFile));
+    public string FilePath => this.filePath ?? (this.filePath = PathHelper.GetFilePath(this.Project, this.Snapshot.SourceFile));
 
-    public override string QualifiedName => this.qualifiedName ?? (this.qualifiedName = this.DocumentSnapshot.SourceFile.FileName);
+    public override string QualifiedName => this.qualifiedName ?? (this.qualifiedName = this.Snapshot.SourceFile.FileName);
 
-    public override string ShortName => this.shortName ?? (this.shortName = Path.GetFileName(this.DocumentSnapshot.SourceFile.FileName));
+    public override string ShortName => this.shortName ?? (this.shortName = Path.GetFileName(this.Snapshot.SourceFile.FileName));
 
     [NotNull]
-    private static string GetProjectUniqueId([NotNull] IProject project, [NotNull] IDocumentSnapshot documentSnapshot)
+    private static string GetProjectUniqueId([NotNull] IProject project, [NotNull] ISnapshot snapshot)
     {
-      return PathHelper.NormalizeItemPath(PathHelper.UnmapPath(project.Options.ProjectDirectory, documentSnapshot.SourceFile.FileName));
+      return PathHelper.NormalizeItemPath(PathHelper.UnmapPath(project.Options.ProjectDirectory, snapshot.SourceFile.FileName));
     }
   }
 }

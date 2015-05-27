@@ -13,13 +13,13 @@
       return string.Compare(Path.GetExtension(sourceFile.FileName), ".xml", StringComparison.OrdinalIgnoreCase) == 0;
     }
 
-    public IDocumentSnapshot Load(IDocumentService documentService, IProject project, ISourceFile sourceFile)
+    public ISnapshot Load(IDocumentService documentService, IProject project, ISourceFile sourceFile)
     {
       var text = sourceFile.ReadAsText();
 
       text = documentService.ReplaceTokens(project, sourceFile, text);
 
-      return new XmlTextDocumentSnapshot(sourceFile, text);
+      return new XmlTextSnapshot(sourceFile, text);
     }
   }
 }

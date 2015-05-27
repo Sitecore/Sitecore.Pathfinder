@@ -114,6 +114,24 @@
     }
 
     [NotNull]
+    public static string GetFilePath([NotNull] IProject project, [NotNull] ISourceFile sourceFile)
+    {
+      var filePath = "/" + NormalizeItemPath(UnmapPath(project.Options.ProjectDirectory, sourceFile.FileName)).TrimStart('/');
+
+      foreach (var pair in project.Options.RemapFileDirectories)
+      {
+        var n = filePath.IndexOf(pair.Key, StringComparison.OrdinalIgnoreCase);
+
+        if (n >= 0)
+        {
+          filePath = filePath.Left(n) + pair.Value + filePath.Mid(n + pair.Key.Length);
+        }
+      }
+
+      return filePath;
+    }
+
+    [NotNull]
     public static string GetItemName([NotNull] ISourceFile sourceFile)
     {
       var fileName = NormalizeItemPath(sourceFile.FileName);
@@ -127,6 +145,16 @@
       }
 
       return fileName.Mid(s, e - s);
+    }
+
+    [NotNull]
+    public static string GetItemParentPath([NotNull] string itemPath)
+    {
+      itemPath = NormalizeItemPath(itemPath).TrimEnd('/');
+
+      var n = itemPath.LastIndexOf('/');
+
+      return n >= 0 ? itemPath.Left(n) : itemPath;
     }
 
     [NotNull]
@@ -144,16 +172,6 @@
       }
 
       return itemPath;
-    }
-
-    [NotNull]
-    public static string GetItemParentPath([NotNull] string itemPath)
-    {
-      itemPath = NormalizeItemPath(itemPath).TrimEnd('/');
-
-      var n = itemPath.LastIndexOf('/');
-
-      return n >= 0 ? itemPath.Left(n) : itemPath;
     }
 
     public static bool MatchesPattern([NotNull] string fileName, [NotNull] string pattern)
@@ -189,24 +207,6 @@
       }
 
       return fileName;
-    }
-
-    [NotNull]
-    public static string GetFilePath([NotNull] IProject project, [NotNull] ISourceFile sourceFile)
-    {
-      var filePath = NormalizeFilePath(UnmapPath(project.Options.ProjectDirectory, sourceFile.FileName));
-
-      foreach (var pair in project.Options.RemapFileDirectories)
-      {
-        var n = filePath.IndexOf(pair.Key, StringComparison.OrdinalIgnoreCase);
-
-        if (n >= 0)
-        {
-          filePath = filePath.Left(n) + pair.Value + filePath.Mid(n + pair.Key.Length);
-        }
-      }
-
-      return filePath;
     }
   }
 }

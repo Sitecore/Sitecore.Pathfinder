@@ -3,7 +3,7 @@
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Parsing;
 
-  public interface ITextDocumentSnapshot : IDocumentSnapshot
+  public interface ITextSnapshot : ISnapshot
   {
     [NotNull]
     string Contents { get; }

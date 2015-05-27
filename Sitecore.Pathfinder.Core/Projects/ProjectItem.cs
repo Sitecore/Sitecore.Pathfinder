@@ -13,10 +13,10 @@
   {
     private static readonly MD5 MD5Hash = MD5.Create();
 
-    protected ProjectItem([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] IDocumentSnapshot documentSnapshot)
+    protected ProjectItem([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ISnapshot snapshot)
     {
       this.Project = project;
-      this.DocumentSnapshot = documentSnapshot;
+      this.Snapshot = snapshot;
       this.References = new ReferenceCollection(this);
 
       this.OverwriteProjectUniqueId(projectUniqueId);
@@ -37,7 +37,7 @@
 
     public abstract string ShortName { get; }
 
-    public IDocumentSnapshot DocumentSnapshot { get; }
+    public ISnapshot Snapshot { get; }
 
     protected internal void OverwriteProjectUniqueId([NotNull] string newProjectUniqueId)
     {

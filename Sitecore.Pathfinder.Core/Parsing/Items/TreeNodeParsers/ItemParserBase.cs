@@ -25,21 +25,26 @@
         TemplateIdOrPath = this.GetTemplateIdOrPath(context, textNode)
       };
 
-      if (!string.IsNullOrEmpty(textNode.GetAttributeValue("Template.Create")))
+      var templateIdOrPath = textNode.GetAttributeValue("Template.Create");
+      if (!string.IsNullOrEmpty(templateIdOrPath))
       {
-        var template = this.ParseTemplate(context, textNode);
+        var template = this.ParseTemplate(context, textNode, templateIdOrPath);
         item.TemplateIdOrPath = template.ItemIdOrPath;
       }
 
-      item.References.AddRange(this.ParseReferences(item, textNode, item.TemplateIdOrPath));
+      if (item.TemplateIdOrPath != null)
+      {
+        var a = textNode.GetAttribute("Template") ?? textNode.GetAttribute("Template.Create");
+        if (a != null)
+        {
+          item.References.AddRange(this.ParseReferences(item, a, item.TemplateIdOrPath));
+        }
+      }
 
       this.ParseChildNodes(context, item, textNode);
 
       context.ParseContext.Project.AddOrMerge(item);
     }
-
-    [CanBeNull]
-    protected abstract ITextNode GetFieldTreeNode([NotNull] ITextNode textNode);
 
     [NotNull]
     protected virtual string GetTemplateIdOrPath([NotNull] ItemParseContext context, [NotNull] ITextNode textNode)
@@ -55,15 +60,15 @@
         return string.Empty;
       }
 
-      // return if absolute path or guid
       templateIdOrPath = templateIdOrPath.Trim();
-      if (templateIdOrPath.StartsWith("/") || templateIdOrPath.StartsWith("{"))
-      {
-        return templateIdOrPath;
-      }
 
       // resolve relative paths
-      return PathHelper.NormalizeItemPath(PathHelper.Combine(context.ParseContext.ItemPath, templateIdOrPath));
+      if (!templateIdOrPath.StartsWith("/") && !templateIdOrPath.StartsWith("{"))
+      {
+        templateIdOrPath = PathHelper.NormalizeItemPath(PathHelper.Combine(context.ParseContext.ItemPath, templateIdOrPath));
+      }
+
+      return templateIdOrPath;
     }
 
     protected virtual void ParseFieldTreeNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode fieldTextNode)
@@ -71,24 +76,25 @@
       var fieldName = fieldTextNode.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(fieldName))
       {
-        context.ParseContext.Trace.TraceError(Texts._Field__element_must_have_a__Name__attribute, fieldTextNode.DocumentSnapshot.SourceFile.FileName, fieldTextNode.Position, fieldName);
+        context.ParseContext.Trace.TraceError(Texts._Field__element_must_have_a__Name__attribute, fieldTextNode.Snapshot.SourceFile.FileName, fieldTextNode.Position, fieldName);
       }
 
       var field = item.Fields.FirstOrDefault(f => string.Compare(f.Name, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
       if (field != null)
       {
-        context.ParseContext.Trace.TraceError(Texts.Field_is_already_defined, fieldTextNode.DocumentSnapshot.SourceFile.FileName, fieldTextNode.Position, fieldName);
+        context.ParseContext.Trace.TraceError(Texts.Field_is_already_defined, fieldTextNode.Snapshot.SourceFile.FileName, fieldTextNode.Position, fieldName);
       }
 
+      var valueHint = fieldTextNode.GetAttributeValue("Value.Hint");
       var language = fieldTextNode.GetAttributeValue("Language");
 
-      int version = 0;
+      var version = 0;
       var versionValue = fieldTextNode.GetAttributeValue("Version");
       if (!string.IsNullOrEmpty(versionValue))
       {
         if (!int.TryParse(versionValue, out version))
         {
-          context.ParseContext.Trace.TraceError(Texts._version__attribute_must_have_an_integer_value, fieldTextNode.DocumentSnapshot.SourceFile.FileName, fieldTextNode.Position, fieldName);
+          context.ParseContext.Trace.TraceError(Texts._version__attribute_must_have_an_integer_value, fieldTextNode.Snapshot.SourceFile.FileName, fieldTextNode.Position, fieldName);
           version = 0;
         }
       }
@@ -100,7 +106,7 @@
       {
         if (valueTextNode != null)
         {
-          context.ParseContext.Trace.TraceWarning(Texts.Value_is_specified_in_both__Value__attribute_and_in_element__Using_value_from_attribute, fieldTextNode.DocumentSnapshot.SourceFile.FileName, valueAttributeTextNode.Position, fieldName);
+          context.ParseContext.Trace.TraceWarning(Texts.Value_is_specified_in_both__Value__attribute_and_in_element__Using_value_from_attribute, fieldTextNode.Snapshot.SourceFile.FileName, valueAttributeTextNode.Position, fieldName);
         }
 
         valueTextNode = valueAttributeTextNode;
@@ -112,46 +118,47 @@
       field.Name = fieldName;
       field.Language = language;
       field.Version = version;
+      field.ValueHint = valueHint;
 
-      if (valueTextNode != null)
+      if (valueTextNode == null)
       {
-        field.Value = valueTextNode.Value;
+        return;
+      }
+
+      field.Value = valueTextNode.Value;
+
+      if (field.ValueHint != "Text")
+      {
         item.References.AddRange(this.ParseReferences(item, valueTextNode, field.Value));
       }
     }
 
     [NotNull]
-    protected virtual Template ParseTemplate([NotNull] ItemParseContext context, [NotNull] ITextNode textNode)
+    protected virtual Template ParseTemplate([NotNull] ItemParseContext context, [NotNull] ITextNode itemTextNode, [NotNull] string itemIdOrPath)
     {
-      var itemIdOrPath = this.GetTemplateIdOrPath(context, textNode);
-      if (string.IsNullOrEmpty(itemIdOrPath))
-      {
-        context.ParseContext.Trace.TraceError(Texts._Item__element_must_have_a__Template__or__Template_Create__attribute, textNode.DocumentSnapshot.SourceFile.FileName, textNode.Position);
-      }
-
       var n = itemIdOrPath.LastIndexOf('/');
       var itemName = itemIdOrPath.Mid(n + 1);
-      var projectUniqueId = textNode.GetAttributeValue("Template.Id", itemIdOrPath);
+      var projectUniqueId = itemTextNode.GetAttributeValue("Template.Id", itemIdOrPath);
 
-      var template = new Template(context.ParseContext.Project, projectUniqueId, textNode)
+      var template = new Template(context.ParseContext.Project, projectUniqueId, itemTextNode)
       {
         ItemName = itemName,
         DatabaseName = context.ParseContext.DatabaseName,
         ItemIdOrPath = itemIdOrPath,
-        Icon = textNode.GetAttributeValue("Template.Icon"),
-        BaseTemplates = textNode.GetAttributeValue("Template.BaseTemplates", Constants.Templates.StandardTemplate),
-        ShortHelp = textNode.GetAttributeValue("Template.ShortHelp"),
-        LongHelp = textNode.GetAttributeValue("Template.LongHelp")
+        Icon = itemTextNode.GetAttributeValue("Template.Icon"),
+        BaseTemplates = itemTextNode.GetAttributeValue("Template.BaseTemplates", Constants.Templates.StandardTemplate),
+        ShortHelp = itemTextNode.GetAttributeValue("Template.ShortHelp"),
+        LongHelp = itemTextNode.GetAttributeValue("Template.LongHelp")
       };
 
-      template.References.AddRange(this.ParseReferences(template, textNode, template.BaseTemplates));
+      template.References.AddRange(this.ParseReferences(template, itemTextNode, template.BaseTemplates));
 
       var templateSection = new TemplateSection();
       template.Sections.Add(templateSection);
       templateSection.Name = "Fields";
       templateSection.Icon = "Applications/16x16/form_blue.png";
 
-      var fieldTreeNodes = this.GetFieldTreeNode(textNode);
+      var fieldTreeNodes = context.ParseContext.Snapshot.GetNestedTextNode(itemTextNode, "Fields");
       if (fieldTreeNodes != null)
       {
         foreach (var child in fieldTreeNodes.ChildNodes)

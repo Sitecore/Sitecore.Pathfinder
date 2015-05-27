@@ -27,13 +27,13 @@
     public void RemapFileDirectoryTests()
     {
       Assert.AreEqual(1, this.Project.Options.RemapFileDirectories.Count);
-      Assert.AreEqual("sitecore\\shell\\client", this.Project.Options.RemapFileDirectories["sitecore\\client"]);
+      Assert.AreEqual("/sitecore/shell/client", this.Project.Options.RemapFileDirectories["/sitecore/client"]);
     }
 
     [Test]
     public void ExternalReferencesTests()
     {
-      Assert.AreEqual(6, this.Project.Options.ExternalReferences.Count);
+      Assert.AreEqual(8, this.Project.Options.ExternalReferences.Count);
       Assert.AreEqual("/sitecore/templates/Sample/Sample Item", this.Project.Options.ExternalReferences.ElementAt(0));
     }
 
@@ -66,7 +66,7 @@
       Assert.AreEqual("/sitecore/content/Home/Foo", item.ItemIdOrPath);
       Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", item.TemplateIdOrPath);
 
-      var textDocument = projectItem.DocumentSnapshot as ITextDocumentSnapshot;
+      var textDocument = projectItem.Snapshot as ITextSnapshot;
       Assert.IsNotNull(textDocument);
 
       var treeNode = textDocument.Root;
@@ -139,7 +139,7 @@
       Assert.IsNotNull(field);
       Assert.AreEqual("Hello", field.Value);
 
-      var textDocument = projectItem.DocumentSnapshot as ITextDocumentSnapshot;
+      var textDocument = projectItem.Snapshot as ITextSnapshot;
       Assert.IsNotNull(textDocument);
 
       var treeNode = textDocument.Root;
@@ -174,8 +174,8 @@
     {
       var project = this.Resolve<IProject>();
 
-      var projectItem1 = new Item(project, "SameId", DocumentSnapshot.Empty);
-      var projectItem2 = new Item(project, "SameId", DocumentSnapshot.Empty);
+      var projectItem1 = new Item(project, "SameId", Snapshot.Empty);
+      var projectItem2 = new Item(project, "SameId", Snapshot.Empty);
 
       project.AddOrMerge(projectItem1);
       project.AddOrMerge(projectItem2);

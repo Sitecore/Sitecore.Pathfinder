@@ -37,7 +37,7 @@
 
     public void TraceError(string text, ITextNode textNode, string details = "")
     {
-      this.Write(text, Severity.Error, textNode.DocumentSnapshot.SourceFile.FileName, textNode.Position, details);
+      this.Write(text, Severity.Error, textNode.Snapshot.SourceFile.FileName, textNode.Position, details);
     }
 
     public void TraceInformation(string text, string details = "")
@@ -52,7 +52,7 @@
 
     public void TraceInformation(string text, ITextNode textNode, string details = "")
     {
-      this.Write(text, Severity.Information, textNode.DocumentSnapshot.SourceFile.FileName, textNode.Position, details);
+      this.Write(text, Severity.Information, textNode.Snapshot.SourceFile.FileName, textNode.Position, details);
     }
 
     public void TraceWarning(string text, string details = "")
@@ -67,7 +67,7 @@
 
     public void TraceWarning(string text, ITextNode textNode, string details = "")
     {
-      this.Write(text, Severity.Warning, textNode.DocumentSnapshot.SourceFile.FileName, textNode.Position, details);
+      this.Write(text, Severity.Warning, textNode.Snapshot.SourceFile.FileName, textNode.Position, details);
     }
 
     public void Writeline(string text, string details = "")

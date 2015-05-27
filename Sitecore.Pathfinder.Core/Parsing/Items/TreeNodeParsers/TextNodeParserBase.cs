@@ -2,6 +2,7 @@
 {
   using System;
   using System.Collections.Generic;
+  using System.Linq;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects;
@@ -13,6 +14,23 @@
     public abstract bool CanParse(ItemParseContext context, ITextNode textNode);
 
     public abstract void Parse(ItemParseContext context, ITextNode textNode);
+
+    [CanBeNull]
+    protected virtual IReference ParseReference([NotNull] IProjectItem projectItem, [NotNull] ITextNode source, [NotNull] string text)
+    {
+      if (text.StartsWith("/sitecore/", StringComparison.OrdinalIgnoreCase))
+      {
+        return new Reference(projectItem, source, text);
+      }
+
+      Guid guid;
+      if (Guid.TryParse(text, out guid))
+      {
+        return new Reference(projectItem, source, guid.ToString("B").ToUpperInvariant());
+      }
+
+      return null;
+    }
 
     [NotNull]
     protected virtual IEnumerable<IReference> ParseReferences([NotNull] IProjectItem projectItem, [NotNull] ITextNode source, [NotNull] string text)
@@ -61,23 +79,6 @@
           yield return reference;
         }
       }
-    }
-
-    [CanBeNull]
-    protected virtual IReference ParseReference([NotNull] IProjectItem projectItem, [NotNull] ITextNode source, [NotNull] string text)
-    {
-      if (text.StartsWith("/sitecore/", StringComparison.OrdinalIgnoreCase))
-      {
-        return new Reference(projectItem, source, text);
-      }
-
-      Guid guid;
-      if (Guid.TryParse(text, out guid))
-      {
-        return new Reference(projectItem, source, guid.ToString("B").ToUpperInvariant());
-      }
-
-      return null;
     }
   }
 }

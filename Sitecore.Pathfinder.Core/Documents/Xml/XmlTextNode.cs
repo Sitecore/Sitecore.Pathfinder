@@ -8,24 +8,24 @@
   {
     private readonly XObject node;
 
-    public XmlTextNode([NotNull] ITextDocumentSnapshot documentSnapshot, [NotNull] XElement element, [CanBeNull] ITextNode parent = null) : base(documentSnapshot, GetPosition(element, element.Name.LocalName.Length), element.Name.LocalName, string.Empty, parent)
+    public XmlTextNode([NotNull] ITextSnapshot snapshot, [NotNull] XElement element, [CanBeNull] ITextNode parent = null) : base(snapshot, GetPosition(element, element.Name.LocalName.Length), element.Name.LocalName, string.Empty, parent)
     {
       this.node = element;
     }
 
-    public XmlTextNode([NotNull] ITextDocumentSnapshot documentSnapshot, [NotNull] XAttribute attribute, [CanBeNull] ITextNode parent = null) : base(documentSnapshot, GetPosition(attribute, attribute.Name.LocalName.Length), attribute.Name.LocalName, attribute.Value, parent)
+    public XmlTextNode([NotNull] ITextSnapshot snapshot, [NotNull] XAttribute attribute, [CanBeNull] ITextNode parent = null) : base(snapshot, GetPosition(attribute, attribute.Name.LocalName.Length), attribute.Name.LocalName, attribute.Value, parent)
     {
       this.node = attribute;
     }
 
-    public XmlTextNode([NotNull] ITextDocumentSnapshot documentSnapshot, [NotNull] XNode node, [NotNull] string name, [NotNull] string value, [CanBeNull] ITextNode parent = null) : base(documentSnapshot, GetPosition(node, value.Length), name, value, parent)
+    public XmlTextNode([NotNull] ITextSnapshot snapshot, [NotNull] XNode node, [NotNull] string name, [NotNull] string value, [CanBeNull] ITextNode parent = null) : base(snapshot, GetPosition(node, value.Length), name, value, parent)
     {
       this.node = node;
     }
 
     public override void SetValue(string value)
     {
-      var textDocument = (ITextDocumentSnapshot)this.DocumentSnapshot;
+      var textDocument = (ITextSnapshot)this.Snapshot;
 
       textDocument.EnsureIsEditing();
 

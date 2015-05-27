@@ -32,6 +32,11 @@
 
     public virtual void Visit([NotNull] ProjectOptions projectOptions, [NotNull] ICollection<string> sourceFileNames)
     {
+      if (!this.FileSystem.DirectoryExists(projectOptions.ProjectDirectory))
+      {
+        return;
+      }
+
       this.Visit(projectOptions, sourceFileNames, projectOptions.ProjectDirectory);
     }
 

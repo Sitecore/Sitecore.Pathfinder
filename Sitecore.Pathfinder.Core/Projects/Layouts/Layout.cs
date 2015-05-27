@@ -7,7 +7,7 @@ namespace Sitecore.Pathfinder.Projects.Layouts
 
   public class Layout : ContentFile
   {
-    public Layout([NotNull] IProject project, [NotNull] IDocumentSnapshot documentSnapshot) : base(project, documentSnapshot)
+    public Layout([NotNull] IProject project, [NotNull] ISnapshot snapshot) : base(project, snapshot)
     {
     }
   }

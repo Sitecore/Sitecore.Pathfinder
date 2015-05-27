@@ -13,6 +13,7 @@
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Extensions.StringExtensions;
+  using Sitecore.SecurityModel;
   using Sitecore.Text;
 
   public abstract class ServerLayoutParserBase : LayoutParserBase
@@ -85,7 +86,10 @@
         Formatting = Formatting.Indented
       };
 
-      this.WriteLayout(context, output, database, layoutTextNode);
+      using (new SecurityDisabler())
+      {
+        this.WriteLayout(context, output, database, layoutTextNode);
+      }
 
       return writer.ToString();
     }
@@ -194,7 +198,7 @@
         var l = database.GetItem(layoutPath);
         if (l == null)
         {
-          throw new RetryableEmitException(Texts.Layout_not_found_, context.ParseContext.DocumentSnapshot.SourceFile, layoutPath);
+          throw new RetryableEmitException(Texts.Layout_not_found_, context.ParseContext.Snapshot.SourceFile, layoutPath);
         }
 
         output.WriteAttributeString("l", l.ID.ToString());

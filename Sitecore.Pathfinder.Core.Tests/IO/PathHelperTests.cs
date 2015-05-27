@@ -51,16 +51,16 @@
       this.Start();
 
       var projectOptions = new ProjectOptions(this.ProjectDirectory, "master");
-      projectOptions.RemapFileDirectories["sitecore\\client"] = "sitecore\\shell\\client";
+      projectOptions.RemapFileDirectories["/sitecore/client"] = "/sitecore/shell/client";
 
       var project = this.Resolve<IProject>().Load(projectOptions, Enumerable.Empty<string>());
 
-      Assert.AreEqual("sitecore\\apps\\test.txt", PathHelper.GetFilePath(project, new SourceFile(this.Services.FileSystem, this.ProjectDirectory + "\\sitecore\\apps\\test.txt")));
-      Assert.AreEqual("sitecore\\apps\\test.txt", PathHelper.GetFilePath(project, new SourceFile(this.Services.FileSystem, this.ProjectDirectory + "/sitecore/apps/test.txt")));
-      Assert.AreEqual("sitecore\\shell\\client\\test.txt", PathHelper.GetFilePath(project, new SourceFile(this.Services.FileSystem, this.ProjectDirectory + "\\sitecore\\client\\test.txt")));
-      Assert.AreEqual("sitecore\\shell\\client\\test.txt", PathHelper.GetFilePath(project, new SourceFile(this.Services.FileSystem, this.ProjectDirectory + "/sitecore/client/test.txt")));
-      Assert.AreEqual("test.txt", PathHelper.GetFilePath(project, new SourceFile(this.Services.FileSystem, this.ProjectDirectory + "/test.txt")));
-      Assert.AreEqual("test", PathHelper.GetFilePath(project, new SourceFile(this.Services.FileSystem, this.ProjectDirectory + "/test")));
+      Assert.AreEqual("/sitecore/apps/test.txt", PathHelper.GetFilePath(project, new SourceFile(this.Services.FileSystem, this.ProjectDirectory + "\\sitecore\\apps\\test.txt")));
+      Assert.AreEqual("/sitecore/apps/test.txt", PathHelper.GetFilePath(project, new SourceFile(this.Services.FileSystem, this.ProjectDirectory + "/sitecore/apps/test.txt")));
+      Assert.AreEqual("/sitecore/shell/client/test.txt", PathHelper.GetFilePath(project, new SourceFile(this.Services.FileSystem, this.ProjectDirectory + "\\sitecore\\client\\test.txt")));
+      Assert.AreEqual("/sitecore/shell/client/test.txt", PathHelper.GetFilePath(project, new SourceFile(this.Services.FileSystem, this.ProjectDirectory + "/sitecore/client/test.txt")));
+      Assert.AreEqual("/test.txt", PathHelper.GetFilePath(project, new SourceFile(this.Services.FileSystem, this.ProjectDirectory + "/test.txt")));
+      Assert.AreEqual("/test", PathHelper.GetFilePath(project, new SourceFile(this.Services.FileSystem, this.ProjectDirectory + "/test")));
     }
 
     [Test]

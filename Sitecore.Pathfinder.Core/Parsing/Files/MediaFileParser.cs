@@ -29,13 +29,13 @@
 
     public override bool CanParse(IParseContext context)
     {
-      var fileExtension = Path.GetExtension(context.DocumentSnapshot.SourceFile.FileName);
+      var fileExtension = Path.GetExtension(context.Snapshot.SourceFile.FileName);
       return FileExtensions.Contains(fileExtension, StringComparer.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
-      var mediaItem = new Item(context.Project, context.ItemPath, context.DocumentSnapshot)
+      var mediaItem = new Item(context.Project, context.ItemPath, context.Snapshot)
       {
         ItemName = context.ItemName,
         ItemIdOrPath = context.ItemPath,
@@ -47,7 +47,7 @@
 
       mediaItem = context.Project.AddOrMerge(mediaItem);
 
-      var mediaFile = new MediaFile(context.Project, context.DocumentSnapshot, mediaItem);
+      var mediaFile = new MediaFile(context.Project, context.Snapshot, mediaItem);
       context.Project.AddOrMerge(mediaFile);
     }
   }

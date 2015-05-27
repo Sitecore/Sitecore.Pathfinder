@@ -15,11 +15,11 @@ namespace Sitecore.Pathfinder.Projects.Items
 
   public class Item : ItemBase
   {
-    public Item([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] IDocumentSnapshot documentSnapshot) : base(project, projectUniqueId, documentSnapshot)
+    public Item([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ISnapshot snapshot) : base(project, projectUniqueId, snapshot)
     {
     }
 
-    public Item([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode) : base(project, projectUniqueId, textNode)
+    public Item([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode itemTextNode) : base(project, projectUniqueId, itemTextNode)
     {
     }
 
@@ -78,6 +78,8 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         field.Value = newField.Value;
       }
+
+      this.References.AddRange(newItem.References);
     }
   }
 }

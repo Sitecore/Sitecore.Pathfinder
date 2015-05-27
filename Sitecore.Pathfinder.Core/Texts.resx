@@ -246,4 +246,34 @@
   <data name="Failed_to_deserialize_item" xml:space="preserve">
     <value>Failed to deserialize item</value>
   </data>
+  <data name="Database_not_found" xml:space="preserve">
+    <value>Database not found</value>
+  </data>
+  <data name="Template_missing" xml:space="preserve">
+    <value>Template missing</value>
+  </data>
+  <data name="Failed_to_create_item_path" xml:space="preserve">
+    <value>Failed to create item path</value>
+  </data>
+  <data name="Item_not_found" xml:space="preserve">
+    <value>Item not found</value>
+  </data>
+  <data name="Could_not_create_item" xml:space="preserve">
+    <value>Could not create item</value>
+  </data>
+  <data name="Field_is_not_defined_in_the_template" xml:space="preserve">
+    <value>Field is not defined in the template</value>
+  </data>
+  <data name="Language_not_found" xml:space="preserve">
+    <value>Language not found</value>
+  </data>
+  <data name="Database_is__core___Skipping_" xml:space="preserve">
+    <value>Database is 'core'. Skipping.</value>
+  </data>
+  <data name="NuGet_file_size" xml:space="preserve">
+    <value>NuGet file size</value>
+  </data>
+  <data name="Failed_to_create_the_Nupkg_file" xml:space="preserve">
+    <value>Failed to create the Nupkg file</value>
+  </data>
 </root>

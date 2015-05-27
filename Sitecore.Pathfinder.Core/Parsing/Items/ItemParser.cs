@@ -28,13 +28,13 @@
 
     public override bool CanParse(IParseContext context)
     {
-      var fileName = context.DocumentSnapshot.SourceFile.FileName;
+      var fileName = context.Snapshot.SourceFile.FileName;
       return FileExtensions.Any(extension => fileName.EndsWith(extension, StringComparison.OrdinalIgnoreCase));
     }
 
     public override void Parse(IParseContext context)
     {
-      var textDocument = (ITextDocumentSnapshot)context.DocumentSnapshot;
+      var textDocument = (ITextSnapshot)context.Snapshot;
 
       var textNode = textDocument.Root;
       if (textNode == TextNode.Empty)
@@ -74,7 +74,7 @@
       }
       catch (Exception ex)
       {
-        context.ParseContext.Trace.TraceError(string.Empty, context.ParseContext.DocumentSnapshot.SourceFile.FileName, TextPosition.Empty, ex.Message);
+        context.ParseContext.Trace.TraceError(string.Empty, context.ParseContext.Snapshot.SourceFile.FileName, TextPosition.Empty, ex.Message);
       }
     }
   }

@@ -8,7 +8,7 @@
   public interface IProjectItem
   {
     [NotNull]
-    IDocumentSnapshot DocumentSnapshot { get; }
+    ISnapshot Snapshot { get; }
 
     Guid Guid { get; }
 

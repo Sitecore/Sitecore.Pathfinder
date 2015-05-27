@@ -1,5 +1,6 @@
 namespace Sitecore.Pathfinder.Building.Deploying.Publishing
 {
+  using System;
   using System.ComponentModel.Composition;
   using System.Web;
   using Sitecore.Pathfinder.Extensions.ConfigurationExtensions;
@@ -22,9 +23,15 @@ namespace Sitecore.Pathfinder.Building.Deploying.Publishing
 
       context.Trace.TraceInformation(Texts.Publishing___);
 
+      if (string.Compare(context.Project.Options.DatabaseName, "core", StringComparison.OrdinalIgnoreCase) == 0)
+      {
+        context.Trace.TraceInformation(Texts.Database_is__core___Skipping_);
+        return;
+      }
+
       var hostName = context.Configuration.GetString(Constants.Configuration.HostName).TrimEnd('/');
       var publishUrl = context.Configuration.GetString(Constants.Configuration.PublishUrl).TrimStart('/');
-      var url = hostName + "/" + publishUrl + HttpUtility.UrlEncode(context.Configuration.Get(Constants.Configuration.Database));
+      var url = hostName + "/" + publishUrl + HttpUtility.UrlEncode(context.Project.Options.DatabaseName);
 
       this.Request(context, url);
     }

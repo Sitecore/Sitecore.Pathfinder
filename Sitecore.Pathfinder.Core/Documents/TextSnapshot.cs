@@ -4,9 +4,9 @@
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Parsing;
 
-  public class TextDocumentSnapshot : DocumentSnapshot, ITextDocumentSnapshot
+  public class TextSnapshot : Snapshot, ITextSnapshot
   {
-    public TextDocumentSnapshot([NotNull] ISourceFile sourceFile, [NotNull] string contents) : base(sourceFile)
+    public TextSnapshot([NotNull] ISourceFile sourceFile, [NotNull] string contents) : base(sourceFile)
     {
       this.Contents = contents;
 

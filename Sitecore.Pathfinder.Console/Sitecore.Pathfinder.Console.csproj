@@ -143,10 +143,18 @@
     <Content Include="wwwroot\project\templates\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="wwwroot\website\bin\Microsoft.Framework.ConfigurationModel.dll" />
-    <Content Include="wwwroot\website\bin\Microsoft.Framework.ConfigurationModel.Interfaces.dll" />
-    <Content Include="wwwroot\website\bin\Microsoft.Framework.ConfigurationModel.Json.dll" />
-    <Content Include="wwwroot\website\bin\Microsoft.Framework.ConfigurationModel.Xml.dll" />
+    <Content Include="wwwroot\website\bin\Microsoft.Framework.ConfigurationModel.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\website\bin\Microsoft.Framework.ConfigurationModel.Interfaces.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\website\bin\Microsoft.Framework.ConfigurationModel.Json.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\website\bin\Microsoft.Framework.ConfigurationModel.Xml.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="wwwroot\project\.settings\settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -189,6 +197,7 @@
     </None>
     <Content Include="..\Sitecore.Pathfinder.Server\bin\Sitecore.Pathfinder.Core.dll">
       <Link>wwwroot\website\bin\Sitecore.Pathfinder.Core.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="wwwroot\project\layout\layouts\MvcLayout.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

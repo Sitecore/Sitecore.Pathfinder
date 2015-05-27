@@ -18,12 +18,12 @@
 
     public override bool CanParse(IParseContext context)
     {
-      return context.DocumentSnapshot.SourceFile.FileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
+      return context.Snapshot.SourceFile.FileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public override void Parse(IParseContext context)
     {
-      var textDocument = (ITextDocumentSnapshot)context.DocumentSnapshot;
+      var textDocument = (ITextSnapshot)context.Snapshot;
       var root = textDocument.Root;
       if (root == TextNode.Empty)
       {
@@ -36,14 +36,14 @@
       {
         if (treeNode.Name != "Component")
         {
-          context.Trace.TraceError(Texts._Component__element_expected, treeNode.DocumentSnapshot.SourceFile.FileName, treeNode.Position);
+          context.Trace.TraceError(Texts._Component__element_expected, treeNode.Snapshot.SourceFile.FileName, treeNode.Position);
           return;
         }
 
         var componentPath = treeNode.GetAttributeValue("Component");
         if (string.IsNullOrEmpty(componentPath))
         {
-          context.Trace.TraceError(Texts._Component__element_expected, treeNode.DocumentSnapshot.SourceFile.FileName, treeNode.Position);
+          context.Trace.TraceError(Texts._Component__element_expected, treeNode.Snapshot.SourceFile.FileName, treeNode.Position);
           return;
         }
 
@@ -60,7 +60,7 @@
 
       context.Project.AddOrMerge(template);
 
-      var pageType = new PageType(context.Project, context.DocumentSnapshot);
+      var pageType = new PageType(context.Project, context.Snapshot);
       context.Project.AddOrMerge(pageType);
     }
   }

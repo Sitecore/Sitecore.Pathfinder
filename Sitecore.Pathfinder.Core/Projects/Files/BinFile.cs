@@ -5,7 +5,7 @@
 
   public class BinFile : File
   {
-    public BinFile([NotNull] IProject project, [NotNull] IDocumentSnapshot documentSnapshot) : base(project, documentSnapshot)
+    public BinFile([NotNull] IProject project, [NotNull] ISnapshot snapshot) : base(project, snapshot)
     {
     }
   }

@@ -32,15 +32,15 @@
 
       try
       {
-        var item = this.DoLoadItem(itemModel.DocumentSnapshot.SourceFile.FileName, LoadOptions);
+        var item = this.DoLoadItem(itemModel.Snapshot.SourceFile.FileName, LoadOptions);
         if (item == null)
         {
-          throw new RetryableEmitException(Texts.Failed_to_deserialize_item, itemModel.DocumentSnapshot, "Item not created");
+          throw new RetryableEmitException(Texts.Failed_to_deserialize_item, itemModel.Snapshot, "Item not created");
         }
       }
       catch (Exception ex)
       {
-        throw new RetryableEmitException(Texts.Failed_to_deserialize_item, itemModel.DocumentSnapshot, ex.Message);
+        throw new RetryableEmitException(Texts.Failed_to_deserialize_item, itemModel.Snapshot, ex.Message);
       }
     }
 

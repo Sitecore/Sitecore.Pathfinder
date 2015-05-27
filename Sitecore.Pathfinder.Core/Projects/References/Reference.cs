@@ -11,8 +11,6 @@
   {
     private bool isValid;
 
-    private Guid targetProjectItemGuid = Guid.Empty;
-
     public Reference([NotNull] IProjectItem owner, [NotNull] string targetQualifiedName)
     {
       this.Owner = owner;
@@ -52,11 +50,13 @@
 
     public string TargetQualifiedName { get; }
 
+    protected Guid TargetProjectItemGuid { get; set; } = Guid.Empty;
+
     public void Invalidate()
     {
       this.IsResolved = false;
       this.IsValid = false;
-      this.targetProjectItemGuid = Guid.Empty;
+      this.TargetProjectItemGuid = Guid.Empty;
     }
 
     public virtual IProjectItem Resolve()
@@ -68,11 +68,11 @@
           return null;
         }
 
-        var result = this.Owner.Project.Items.FirstOrDefault(i => i.Guid == this.targetProjectItemGuid);
+        var result = this.Owner.Project.Items.FirstOrDefault(i => i.Guid == this.TargetProjectItemGuid);
         if (result == null)
         {
           this.IsValid = false;
-          this.targetProjectItemGuid = Guid.Empty;
+          this.TargetProjectItemGuid = Guid.Empty;
         }
 
         return result;
@@ -84,11 +84,11 @@
       if (projectItem == null)
       {
         this.IsValid = false;
-        this.targetProjectItemGuid = Guid.Empty;
+        this.TargetProjectItemGuid = Guid.Empty;
         return null;
       }
 
-      this.targetProjectItemGuid = projectItem.Guid;
+      this.TargetProjectItemGuid = projectItem.Guid;
       this.IsValid = true;
 
       return projectItem;

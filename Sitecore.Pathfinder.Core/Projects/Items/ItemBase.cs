@@ -5,14 +5,14 @@
 
   public abstract class ItemBase : ProjectItem
   {
-    protected ItemBase([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] IDocumentSnapshot documentSnapshot) : base(project, projectUniqueId, documentSnapshot)
+    protected ItemBase([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ISnapshot snapshot) : base(project, projectUniqueId, snapshot)
     {
-      this.TextNode = new TextNode(documentSnapshot);
+      this.ItemTextNode = new TextNode(snapshot);
     }
 
-    protected ItemBase([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode) : base(project, projectUniqueId, textNode.DocumentSnapshot)
+    protected ItemBase([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode itemTextNode) : base(project, projectUniqueId, itemTextNode.Snapshot)
     {
-      this.TextNode = textNode;
+      this.ItemTextNode = itemTextNode;
     }
 
     [NotNull]
@@ -38,6 +38,6 @@
     public string TemplateIdOrPath { get; set; } = string.Empty;
 
     [NotNull]
-    public ITextNode TextNode { get; }
+    public ITextNode ItemTextNode { get; }
   }
 }

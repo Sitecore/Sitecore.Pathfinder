@@ -24,10 +24,10 @@
       this.Details = details;
     }
 
-    public EmitException([Localizable(true)] [NotNull] string text, [NotNull] IDocumentSnapshot documentSnapshot, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
+    public EmitException([Localizable(true)] [NotNull] string text, [NotNull] ISnapshot snapshot, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
     {
       this.Text = text;
-      this.FileName = documentSnapshot.SourceFile.FileName;
+      this.FileName = snapshot.SourceFile.FileName;
       this.Position = TextPosition.Empty;
       this.Details = details;
     }
@@ -35,7 +35,7 @@
     public EmitException([Localizable(true)] [NotNull] string text, [NotNull] ITextNode textNode, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
     {
       this.Text = text;
-      this.FileName = textNode.DocumentSnapshot.SourceFile.FileName;
+      this.FileName = textNode.Snapshot.SourceFile.FileName;
       this.Position = textNode.Position;
       this.Details = details;
     }

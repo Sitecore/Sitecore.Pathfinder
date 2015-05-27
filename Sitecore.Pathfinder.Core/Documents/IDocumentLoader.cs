@@ -8,6 +8,6 @@
     bool CanLoad([NotNull] IDocumentService documentService, [NotNull] IProject project, [NotNull] ISourceFile sourceFile);
 
     [NotNull]
-    IDocumentSnapshot Load([NotNull] IDocumentService documentService, [NotNull] IProject project, [NotNull] ISourceFile sourceFile);
+    ISnapshot Load([NotNull] IDocumentService documentService, [NotNull] IProject project, [NotNull] ISourceFile sourceFile);
   }
 }

@@ -32,6 +32,9 @@ namespace Sitecore.Pathfinder.Projects.Items
     [NotNull]
     public string Value { get; set; } = string.Empty;
 
+    [NotNull]
+    public string ValueHint { get; set; } = string.Empty;
+
     [CanBeNull]
     public ITextNode ValueTextNode { get; }
 

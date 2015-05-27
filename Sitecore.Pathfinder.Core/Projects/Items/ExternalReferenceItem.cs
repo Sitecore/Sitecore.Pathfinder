@@ -6,7 +6,7 @@
 
   public class ExternalReferenceItem : ItemBase
   {
-    public ExternalReferenceItem([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] IDocumentSnapshot documentSnapshot) : base(project, projectUniqueId, documentSnapshot)
+    public ExternalReferenceItem([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ISnapshot snapshot) : base(project, projectUniqueId, snapshot)
     {
       this.IsEmittable = false;
     }

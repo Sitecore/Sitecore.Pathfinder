@@ -23,7 +23,7 @@
     [NotNull]
     protected ITextTokenService TextTokenService { get; }
 
-    public IDocumentSnapshot LoadDocument(IProject project, ISourceFile sourceFile)
+    public ISnapshot LoadDocument(IProject project, ISourceFile sourceFile)
     {
       foreach (var loader in this.Loaders)
       {
@@ -33,7 +33,7 @@
         }
       }
 
-      return new DocumentSnapshot(sourceFile);
+      return new Snapshot(sourceFile);
     }
 
     public virtual string ReplaceTokens(IProject project, ISourceFile sourceFile, string contents)

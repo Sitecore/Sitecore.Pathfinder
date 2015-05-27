@@ -9,7 +9,7 @@
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Parsing;
 
-  public class XmlTextDocumentSnapshot : TextDocumentSnapshot
+  public class XmlTextSnapshot : TextSnapshot
   {
     protected static readonly Dictionary<string, XmlSchemaSet> Schemas = new Dictionary<string, XmlSchemaSet>();
 
@@ -17,12 +17,15 @@
 
     private XElement rootElement;
 
-    public XmlTextDocumentSnapshot([NotNull] ISourceFile sourceFile, [NotNull] string contents) : base(sourceFile, contents)
+    public XmlTextSnapshot([NotNull] ISourceFile sourceFile, [NotNull] string contents) : base(sourceFile, contents)
     {
       this.IsEditable = true;
     }
 
     public override ITextNode Root => this.root ?? (this.root = this.RootElement == null ? TextNode.Empty : this.Parse(null, this.RootElement));
+
+    [NotNull]
+    protected IDocumentService DocumentService { get; }
 
     [CanBeNull]
     protected XElement RootElement
@@ -54,9 +57,6 @@
       }
     }
 
-    [NotNull]
-    protected IDocumentService DocumentService { get; }
-
     public override void BeginEdit()
     {
       this.IsEditing = true;
@@ -76,6 +76,11 @@
 
       this.IsEditing = false;
       this.rootElement.Save(this.SourceFile.FileName, SaveOptions.DisableFormatting);
+    }
+
+    public override ITextNode GetNestedTextNode(ITextNode textNode, string name)
+    {
+      return textNode;
     }
 
     public override void ValidateSchema(IParseContext context, string schemaNamespace, string schemaFileName)
@@ -103,10 +108,10 @@
         switch (args.Severity)
         {
           case XmlSeverityType.Error:
-            context.Trace.TraceError("", context.DocumentSnapshot.SourceFile.FileName, new TextPosition(args.Exception.LineNumber, args.Exception.LinePosition, 0), args.Message);
+            context.Trace.TraceError(string.Empty, context.Snapshot.SourceFile.FileName, new TextPosition(args.Exception.LineNumber, args.Exception.LinePosition, 0), args.Message);
             break;
           case XmlSeverityType.Warning:
-            context.Trace.TraceWarning("", context.DocumentSnapshot.SourceFile.FileName, new TextPosition(args.Exception.LineNumber, args.Exception.LinePosition, 0), args.Message);
+            context.Trace.TraceWarning(string.Empty, context.Snapshot.SourceFile.FileName, new TextPosition(args.Exception.LineNumber, args.Exception.LinePosition, 0), args.Message);
             break;
         }
       };
@@ -117,7 +122,7 @@
       }
       catch (Exception ex)
       {
-        context.Trace.TraceError(Texts.The_file_does_not_contain_valid_XML, context.DocumentSnapshot.SourceFile.FileName, TextPosition.Empty, ex.Message);
+        context.Trace.TraceError(Texts.The_file_does_not_contain_valid_XML, context.Snapshot.SourceFile.FileName, TextPosition.Empty, ex.Message);
       }
     }
 

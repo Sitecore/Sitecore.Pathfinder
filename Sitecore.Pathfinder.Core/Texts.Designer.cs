@@ -179,6 +179,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not create item.
+        /// </summary>
+        public static string Could_not_create_item {
+            get {
+                return ResourceManager.GetString("Could_not_create_item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Creating &apos;layout&apos; directory....
         /// </summary>
         public static string Creating__layout__directory___ {
@@ -193,6 +202,24 @@ namespace Sitecore.Pathfinder {
         public static string Creating_Nupkg_file___ {
             get {
                 return ResourceManager.GetString("Creating_Nupkg_file___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database is &apos;core&apos;. Skipping..
+        /// </summary>
+        public static string Database_is__core___Skipping_ {
+            get {
+                return ResourceManager.GetString("Database_is__core___Skipping_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database not found.
+        /// </summary>
+        public static string Database_not_found {
+            get {
+                return ResourceManager.GetString("Database_not_found", resourceCulture);
             }
         }
         
@@ -233,6 +260,24 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to create item path.
+        /// </summary>
+        public static string Failed_to_create_item_path {
+            get {
+                return ResourceManager.GetString("Failed_to_create_item_path", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to create the Nupkg file.
+        /// </summary>
+        public static string Failed_to_create_the_Nupkg_file {
+            get {
+                return ResourceManager.GetString("Failed_to_create_the_Nupkg_file", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to deserialize item.
         /// </summary>
         public static string Failed_to_deserialize_item {
@@ -260,6 +305,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Field is not defined in the template.
+        /// </summary>
+        public static string Field_is_not_defined_in_the_template {
+            get {
+                return ResourceManager.GetString("Field_is_not_defined_in_the_template", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Installing....
         /// </summary>
         public static string Installing___ {
@@ -269,11 +323,29 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item not found.
+        /// </summary>
+        public static string Item_not_found {
+            get {
+                return ResourceManager.GetString("Item_not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Json file is not valid.
         /// </summary>
         public static string Json_file_is_not_valid {
             get {
                 return ResourceManager.GetString("Json_file_is_not_valid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language not found.
+        /// </summary>
+        public static string Language_not_found {
+            get {
+                return ResourceManager.GetString("Language_not_found", resourceCulture);
             }
         }
         
@@ -319,6 +391,15 @@ namespace Sitecore.Pathfinder {
         public static string Media_item_not_found {
             get {
                 return ResourceManager.GetString("Media_item_not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NuGet file size.
+        /// </summary>
+        public static string NuGet_file_size {
+            get {
+                return ResourceManager.GetString("NuGet_file_size", resourceCulture);
             }
         }
         
@@ -391,6 +472,15 @@ namespace Sitecore.Pathfinder {
         public static string Task_not_found__Skipping {
             get {
                 return ResourceManager.GetString("Task_not_found__Skipping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template missing.
+        /// </summary>
+        public static string Template_missing {
+            get {
+                return ResourceManager.GetString("Template_missing", resourceCulture);
             }
         }
         

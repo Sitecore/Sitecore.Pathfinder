@@ -22,7 +22,7 @@
           continue;
         }
 
-        if (!projectItem.DocumentSnapshot.SourceFile.IsModified)
+        if (!projectItem.Snapshot.SourceFile.IsModified)
         {
           continue;
         }

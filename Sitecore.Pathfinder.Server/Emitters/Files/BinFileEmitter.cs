@@ -30,7 +30,7 @@
       // todo: check for assembly version
       // todo: backup to uninstall folder
       context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName) ?? string.Empty);
-      context.FileSystem.Copy(binFile.DocumentSnapshot.SourceFile.FileName, destinationFileName);
+      context.FileSystem.Copy(binFile.Snapshot.SourceFile.FileName, destinationFileName);
     }
   }
 }

@@ -26,7 +26,7 @@
 
       // todo: backup to uninstall folder
       context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName) ?? string.Empty);
-      context.FileSystem.Copy(contentFile.DocumentSnapshot.SourceFile.FileName, destinationFileName);
+      context.FileSystem.Copy(contentFile.Snapshot.SourceFile.FileName, destinationFileName);
     }
   }
 }

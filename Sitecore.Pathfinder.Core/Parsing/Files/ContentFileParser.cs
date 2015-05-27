@@ -16,14 +16,14 @@
     public override bool CanParse(IParseContext context)
     {
       var fileExtensions = " " + context.Configuration.GetString(Constants.Configuration.ContentFiles) + " ";
-      var extension = " " + Path.GetExtension(context.DocumentSnapshot.SourceFile.FileName) + " ";
+      var extension = " " + Path.GetExtension(context.Snapshot.SourceFile.FileName) + " ";
 
       return fileExtensions.IndexOf(extension, StringComparison.OrdinalIgnoreCase) >= 0;
     }
 
     public override void Parse(IParseContext context)
     {
-      var contentFile = new ContentFile(context.Project, context.DocumentSnapshot);
+      var contentFile = new ContentFile(context.Project, context.Snapshot);
       context.Project.AddOrMerge(contentFile);
     }
   }

@@ -9,7 +9,7 @@
   {
     public override bool CanParse(ItemParseContext context, ITextNode textNode)
     {
-      return textNode.Name == "LayoutField" && textNode.DocumentSnapshot is XmlTextDocumentSnapshot;
+      return textNode.Name == "LayoutField" && textNode.Snapshot is XmlTextSnapshot;
     }
   }
 }
