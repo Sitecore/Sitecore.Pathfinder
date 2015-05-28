@@ -15,7 +15,7 @@
   using Sitecore.SecurityModel;
   using Sitecore.Text;
 
-  public class SchemaGenerator
+  public class XsdSchemaGenerator
   {
     public const string Namespace = "http://www.w3.org/2001/XMLSchema";
 

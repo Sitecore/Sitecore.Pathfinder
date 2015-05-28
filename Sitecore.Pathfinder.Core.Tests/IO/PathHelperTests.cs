@@ -34,6 +34,8 @@
       Assert.AreEqual("test", PathHelper.GetDirectoryAndFileNameWithoutExtensions("test"));
     }
 
+
+
     [Test]
     public void GetFileNameWithoutExtensionsTests()
     {

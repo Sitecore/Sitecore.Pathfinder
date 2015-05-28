@@ -56,6 +56,7 @@
       <HintPath>..\packages\Microsoft.Framework.ConfigurationModel.Xml.1.0.0-beta4\lib\net45\Microsoft.Framework.ConfigurationModel.Xml.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Web.XmlTransform, Version=2.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Xdt.2.1.1\lib\net40\Microsoft.Web.XmlTransform.dll</HintPath>
       <Private>True</Private>
@@ -136,7 +137,7 @@
     <Compile Include="Parsing\Items\TreeNodeParsers\ServerLayoutParserBase.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\Xml\ServerXmlLayoutParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\SchemaGenerator.cs" />
+    <Compile Include="Resources\XsdSchemaGenerator.cs" />
     <Compile Include="Resources\ResourceManager.cs" />
     <Compile Include="sitecore\shell\client\Applications\Pathfinder\UpdateResources.ashx.cs">
       <DependentUpon>UpdateResources.ashx</DependentUpon>
