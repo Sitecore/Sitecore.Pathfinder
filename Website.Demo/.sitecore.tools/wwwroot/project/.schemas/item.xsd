@@ -18,6 +18,12 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:simpleType name="FieldValueHint">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Text" />
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:simpleType name="FieldType">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Single-Line Text" />
@@ -85,6 +91,7 @@
         <xs:attribute name="Value" type="xs:string" use="optional" />
         <xs:attribute name="Language" type="xs:string" use="optional" />
         <xs:attribute name="Version" type="xs:integer" use="optional" />
+        <xs:attribute name="Value.Hint" type="FieldValueHint" use="optional" />
         <xs:attribute name="Field.Type" type="FieldType" use="optional" />
         <xs:attribute name="Field.Sharing" type="Sharing" use="optional" />
         <xs:attribute name="Field.Source" type="xs:string" use="optional" />
@@ -138,11 +145,16 @@
     <xs:attribute name="LongHelp" type="xs:string" use="optional" />
   </xs:complexType>
 
+  <xs:complexType name="Layout">
+    <xs:sequence>
+      <xs:any minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:group name="ElementGroup">
     <xs:choice>
       <xs:element name="Item" type="Item" />
       <xs:element name="Template" type="Template" />
-      <xs:element name="ItemPath" type="ItemPath" />
     </xs:choice>
   </xs:group>
 
@@ -151,9 +163,11 @@
       <xs:element name="Field" type="Field" />
       <xs:element name="Item" type="Item" />
       <xs:element name="Template" type="Template" />
+      <xs:element name="LayoutField" type="Layout" minOccurs="0" maxOccurs="1"  />
     </xs:choice>
   </xs:group>
 
   <xs:element name="Item" type="Item" />
   <xs:element name="Template" type="Template" />
+  <xs:element name="LayoutField" type="Layout" />
 </xs:schema>

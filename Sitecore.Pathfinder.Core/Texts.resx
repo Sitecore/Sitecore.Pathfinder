@@ -276,4 +276,49 @@
   <data name="Failed_to_create_the_Nupkg_file" xml:space="preserve">
     <value>Failed to create the Nupkg file</value>
   </data>
+  <data name="Failed_to_create_template" xml:space="preserve">
+    <value>Failed to create template</value>
+  </data>
+  <data name="Failed_to_add_new_template" xml:space="preserve">
+    <value>Failed to add new template</value>
+  </data>
+  <data name="Base_Template_missing" xml:space="preserve">
+    <value>Base Template missing</value>
+  </data>
+  <data name="Could_not_create_section_item" xml:space="preserve">
+    <value>Could not create section item</value>
+  </data>
+  <data name="Could_not_create_template_field" xml:space="preserve">
+    <value>Could not create template field</value>
+  </data>
+  <data name="Your_configuration_file_and_sample_files_were_missing__so_I_have_created_them__You_must_update_the__project_unique_id____wwwroot__and__hostname__in_the___0___configuration_file_before_continuing_" xml:space="preserve">
+    <value>Your configuration file and sample files were missing, so I have created them. You must update the 'project-unique-id', 'wwwroot' and 'hostname' in the '{0}' configuration file before continuing.</value>
+  </data>
+  <data name="Your_project_directory_was_missing__so_I_have_created_it__You_must_update_the__project_unique_id____wwwroot__and__hostname__in_the___0___configuration_file_before_continuing_" xml:space="preserve">
+    <value>Your project directory was missing, so I have created it. You must update the 'project-unique-id', 'wwwroot' and 'hostname' in the '{0}' configuration file before continuing.</value>
+  </data>
+  <data name="Hi_there_" xml:space="preserve">
+    <value>Hi there.</value>
+  </data>
+  <data name="Just_so_you_know__I_have_updated_the__Sitecore_Pathfinder_Server_dll__and__NuGet_Core_dll__assemblies_in_the___bin__directory_in_the_website_and_a_number_of___aspx__files_in_the___sitecore_shell_client_Applications_Pathfinder__directory_to_the_latest_version" xml:space="preserve">
+    <value>Just so you know, I have updated the 'Sitecore.Pathfinder.Server.dll' and 'NuGet.Core.dll' assemblies in the '/bin' directory in the website and a number of '.aspx' files in the '/sitecore/shell/client/Applications/Pathfinder' directory to the latest version</value>
+  </data>
+  <data name="Just_so_you_know__I_have_copied_the__Sitecore_Pathfinder_Server_dll__and__NuGet_Core_dll__assemblies_to_the___bin__directory_in_the_website_and_a_number_of___aspx__files_to_the___sitecore_shell_client_Applications_Pathfinder__directory" xml:space="preserve">
+    <value>Just so you know, I have copied the 'Sitecore.Pathfinder.Server.dll' and 'NuGet.Core.dll' assemblies to the '/bin' directory in the website and a number of '.aspx' files to the '/sitecore/shell/client/Applications/Pathfinder' directory</value>
+  </data>
+  <data name="" xml:space="preserve">
+    <value>Hey - there is no 'Website' directory under the 'wwwroot' directory - are you sure = you have set the 'wwwroot' correctly in the configuration file</value>
+  </data>
+  <data name="There_Is_No_Website_Directory" xml:space="preserve">
+    <value>Hey - there is no 'Website' directory under the 'wwwroot' directory - are you sure = you have set the 'wwwroot' correctly in the configuration file</value>
+  </data>
+  <data name="There_Is_No_Data_Directory" xml:space="preserve">
+    <value>Hey - there is no 'Data' directory under the 'wwwroot' directory - are you sure = you have set the 'wwwroot' correctly in the configuration file</value>
+  </data>
+  <data name="Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in_the___0___configuration_file_" xml:space="preserve">
+    <value>Hey - you haven't changed the the 'project-unique-id', 'wwwroot' or 'hostname' in the '{0}' configuration file.</value>
+  </data>
+  <data name="The_server_returned_an_error" xml:space="preserve">
+    <value>The server returned an error</value>
+  </data>
 </root>

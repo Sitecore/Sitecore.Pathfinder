@@ -61,6 +61,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hey - there is no &apos;Website&apos; directory under the &apos;wwwroot&apos; directory - are you sure = you have set the &apos;wwwroot&apos; correctly in the configuration file.
+        /// </summary>
+        public static string _ {
+            get {
+                return ResourceManager.GetString("", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to : Boolean parameter must have value &quot;True&quot; or &quot;False&quot;.
         /// </summary>
         public static string @__Boolean_parameter_must_have_value__True__or__False_ {
@@ -143,6 +152,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Base Template missing.
+        /// </summary>
+        public static string Base_Template_missing {
+            get {
+                return ResourceManager.GetString("Base_Template_missing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot apply a layout to a template. The template needs a Standard Values..
         /// </summary>
         public static string Cannot_apply_a_layout_to_a_template__The_template_needs_a_Standard_Values_ {
@@ -184,6 +202,24 @@ namespace Sitecore.Pathfinder {
         public static string Could_not_create_item {
             get {
                 return ResourceManager.GetString("Could_not_create_item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not create section item.
+        /// </summary>
+        public static string Could_not_create_section_item {
+            get {
+                return ResourceManager.GetString("Could_not_create_section_item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not create template field.
+        /// </summary>
+        public static string Could_not_create_template_field {
+            get {
+                return ResourceManager.GetString("Could_not_create_template_field", resourceCulture);
             }
         }
         
@@ -260,11 +296,29 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to add new template.
+        /// </summary>
+        public static string Failed_to_add_new_template {
+            get {
+                return ResourceManager.GetString("Failed_to_add_new_template", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to create item path.
         /// </summary>
         public static string Failed_to_create_item_path {
             get {
                 return ResourceManager.GetString("Failed_to_create_item_path", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to create template.
+        /// </summary>
+        public static string Failed_to_create_template {
+            get {
+                return ResourceManager.GetString("Failed_to_create_template", resourceCulture);
             }
         }
         
@@ -314,6 +368,25 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hey - you haven&apos;t changed the the &apos;project-unique-id&apos;, &apos;wwwroot&apos; or &apos;hostname&apos; in the &apos;{0}&apos; configuration file..
+        /// </summary>
+        public static string Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in_the___0___configuration_file_ {
+            get {
+                return ResourceManager.GetString("Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in" +
+                        "_the___0___configuration_file_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hi there..
+        /// </summary>
+        public static string Hi_there_ {
+            get {
+                return ResourceManager.GetString("Hi_there_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Installing....
         /// </summary>
         public static string Installing___ {
@@ -337,6 +410,26 @@ namespace Sitecore.Pathfinder {
         public static string Json_file_is_not_valid {
             get {
                 return ResourceManager.GetString("Json_file_is_not_valid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Just so you know, I have copied the &apos;Sitecore.Pathfinder.Server.dll&apos; and &apos;NuGet.Core.dll&apos; assemblies to the &apos;/bin&apos; directory in the website and a number of &apos;.aspx&apos; files to the &apos;/sitecore/shell/client/Applications/Pathfinder&apos; directory.
+        /// </summary>
+        public static string Just_so_you_know__I_have_copied_the__Sitecore_Pathfinder_Server_dll__and__NuGet_Core_dll__assemblies_to_the___bin__directory_in_the_website_and_a_number_of___aspx__files_to_the___sitecore_shell_client_Applications_Pathfinder__directory {
+            get {
+                return ResourceManager.GetString("Just_so_you_know__I_have_copied_the__Sitecore_Pathfinder_Server_dll__and__NuGet_C" +
+                        "ore_dll__assemblies_to_the___bin__directory_in_the_website_and_a_number_of___asp" +
+                        "x__files_to_the___sitecore_shell_client_Applications_Pathfinder__directory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Just so you know, I have updated the &apos;Sitecore.Pathfinder.Server.dll&apos; and &apos;NuGet.Core.dll&apos; assemblies in the &apos;/bin&apos; directory in the website and a number of &apos;.aspx&apos; files in the &apos;/sitecore/shell/client/Applications/Pathfinder&apos; directory to the latest version.
+        /// </summary>
+        public static string Just_so_you_know__I_have_updated_the__Sitecore_Pathfinder_Server_dll__and__NuGet_Core_dll__assemblies_in_the___bin__directory_in_the_website_and_a_number_of___aspx__files_in_the___sitecore_shell_client_Applications_Pathfinder__directory_to_the_latest_version {
+            get {
+                return ResourceManager.GetString(@"Just_so_you_know__I_have_updated_the__Sitecore_Pathfinder_Server_dll__and__NuGet_Core_dll__assemblies_in_the___bin__directory_in_the_website_and_a_number_of___aspx__files_in_the___sitecore_shell_client_Applications_Pathfinder__directory_to_the_latest_version", resourceCulture);
             }
         }
         
@@ -503,6 +596,33 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The server returned an error.
+        /// </summary>
+        public static string The_server_returned_an_error {
+            get {
+                return ResourceManager.GetString("The_server_returned_an_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hey - there is no &apos;Data&apos; directory under the &apos;wwwroot&apos; directory - are you sure = you have set the &apos;wwwroot&apos; correctly in the configuration file.
+        /// </summary>
+        public static string There_Is_No_Data_Directory {
+            get {
+                return ResourceManager.GetString("There_Is_No_Data_Directory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hey - there is no &apos;Website&apos; directory under the &apos;wwwroot&apos; directory - are you sure = you have set the &apos;wwwroot&apos; correctly in the configuration file.
+        /// </summary>
+        public static string There_Is_No_Website_Directory {
+            get {
+                return ResourceManager.GetString("There_Is_No_Website_Directory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unique ID clash.
         /// </summary>
         public static string Unique_ID_clash {
@@ -536,6 +656,28 @@ namespace Sitecore.Pathfinder {
         public static string XML_file_is_not_valid {
             get {
                 return ResourceManager.GetString("XML_file_is_not_valid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your configuration file and sample files were missing, so I have created them. You must update the &apos;project-unique-id&apos;, &apos;wwwroot&apos; and &apos;hostname&apos; in the &apos;{0}&apos; configuration file before continuing..
+        /// </summary>
+        public static string Your_configuration_file_and_sample_files_were_missing__so_I_have_created_them__You_must_update_the__project_unique_id____wwwroot__and__hostname__in_the___0___configuration_file_before_continuing_ {
+            get {
+                return ResourceManager.GetString("Your_configuration_file_and_sample_files_were_missing__so_I_have_created_them__Yo" +
+                        "u_must_update_the__project_unique_id____wwwroot__and__hostname__in_the___0___con" +
+                        "figuration_file_before_continuing_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your project directory was missing, so I have created it. You must update the &apos;project-unique-id&apos;, &apos;wwwroot&apos; and &apos;hostname&apos; in the &apos;{0}&apos; configuration file before continuing..
+        /// </summary>
+        public static string Your_project_directory_was_missing__so_I_have_created_it__You_must_update_the__project_unique_id____wwwroot__and__hostname__in_the___0___configuration_file_before_continuing_ {
+            get {
+                return ResourceManager.GetString("Your_project_directory_was_missing__so_I_have_created_it__You_must_update_the__pr" +
+                        "oject_unique_id____wwwroot__and__hostname__in_the___0___configuration_file_befor" +
+                        "e_continuing_", resourceCulture);
             }
         }
     }

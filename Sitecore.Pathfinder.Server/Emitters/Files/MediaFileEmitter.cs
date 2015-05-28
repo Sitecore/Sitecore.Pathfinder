@@ -31,6 +31,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
       var database = Factory.GetDatabase(mediaFile.MediaItem.DatabaseName);
       var name = mediaFile.MediaItem.ItemName;
 
+      // todo: make backup of item
       var options = new MediaCreatorOptions
       {
         AlternateText = name, 

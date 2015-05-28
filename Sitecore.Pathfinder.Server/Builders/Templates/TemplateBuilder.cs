@@ -50,14 +50,20 @@ namespace Sitecore.Pathfinder.Builders.Templates
       if (this.Item == null)
       {
         this.CreateNewTemplate(context, inheritedFields);
+        if (this.Item == null)
+        {
+          return null;
+        }
+
+        context.RegisterNewItem(this.Item);
       }
       else
       {
-        this.UpdateTemplate(inheritedFields);
-        this.DeleteSections();
+        this.UpdateTemplate(context, inheritedFields);
+        this.DeleteSections(context);
       }
 
-      this.SortSections(this);
+      this.SortSections(context, this);
 
       return this.Item;
     }
@@ -67,13 +73,13 @@ namespace Sitecore.Pathfinder.Builders.Templates
       var item = this.Item;
       if (item == null)
       {
-        throw new EmitException("Template missing");
+        throw new EmitException(Texts.Template_missing);
       }
 
       var standardValuesItem = item.Add("__Standard Values", new TemplateID(item.TemplateID));
       if (standardValuesItem == null)
       {
-        throw new EmitException("Failed to add new template", this.Template.Snapshot);
+        throw new EmitException(Texts.Failed_to_add_new_template, this.Template.Snapshot);
       }
 
       // update standard value link
@@ -109,13 +115,13 @@ namespace Sitecore.Pathfinder.Builders.Templates
       var parentItem = this.GetParentItem(context, database);
       if (parentItem == null)
       {
-        throw new EmitException("Failed to create template", this.Template.Snapshot);
+        throw new EmitException(Texts.Failed_to_create_template, this.Template.Snapshot);
       }
 
       var item = ItemManager.AddFromTemplate(this.Template.ItemName, new TemplateID(TemplateIDs.Template), parentItem, new ID(this.Template.Guid));
       if (item == null)
       {
-        throw new EmitException("Failed to add new template", this.Template.Snapshot);
+        throw new EmitException(Texts.Failed_to_add_new_template, this.Template.Snapshot);
       }
 
       this.Item = item;
@@ -144,23 +150,25 @@ namespace Sitecore.Pathfinder.Builders.Templates
 
       foreach (var section in this.Sections)
       {
-        this.UpdateSection(section, inheritedFields);
+        this.UpdateSection(context, section, inheritedFields);
       }
 
       // create standard values
       var standardValuesItem = item.Add("__Standard Values", new TemplateID(item.TemplateID));
       if (standardValuesItem == null)
       {
-        throw new EmitException("Failed to add new template", this.Template.Snapshot);
+        throw new EmitException(Texts.Failed_to_add_new_template, this.Template.Snapshot);
       }
 
       using (new EditContext(item))
       {
         item[FieldIDs.StandardValueHolderId] = standardValuesItem.ID.ToString();
       }
+
+      context.RegisterNewItem(standardValuesItem);
     }
 
-    protected virtual void DeleteFields([NotNull] TemplateSectionBuilder templateSectionBuilder)
+    protected virtual void DeleteFields([NotNull] IEmitContext context, [NotNull] TemplateSectionBuilder templateSectionBuilder)
     {
       if (templateSectionBuilder.Item == null)
       {
@@ -192,12 +200,13 @@ namespace Sitecore.Pathfinder.Builders.Templates
 
         if (!found)
         {
+          context.RegisterDeletedItem(child);
           child.Recycle();
         }
       }
     }
 
-    protected virtual void DeleteSections()
+    protected virtual void DeleteSections([NotNull] IEmitContext context)
     {
       if (this.Item == null)
       {
@@ -222,7 +231,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
 
           if (section.Item.ID == child.ID)
           {
-            this.DeleteFields(section);
+            this.DeleteFields(context, section);
             found = true;
             break;
           }
@@ -230,6 +239,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
 
         if (!found)
         {
+          context.RegisterDeletedItem(child);
           child.Recycle();
         }
       }
@@ -250,7 +260,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
         var baseTemplateItem = database.GetItem(templateId);
         if (baseTemplateItem == null)
         {
-          throw new RetryableEmitException("Base Template missing", template.Snapshot, templateId);
+          throw new RetryableEmitException(Texts.Base_Template_missing, template.Snapshot, templateId);
         }
 
         baseTemplates.Add(baseTemplateItem);
@@ -258,7 +268,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
         var t = TemplateManager.GetTemplate(baseTemplateItem.ID, database);
         if (t == null)
         {
-          throw new RetryableEmitException("Template missing", template.Snapshot, templateId);
+          throw new RetryableEmitException(Texts.Template_missing, template.Snapshot, templateId);
         }
 
         var templateFields = t.GetFields(true);
@@ -322,7 +332,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
       }
     }
 
-    protected virtual void SortFields([NotNull] TemplateSectionBuilder templateSectionBuilder)
+    protected virtual void SortFields([NotNull] IEmitContext context, [NotNull] TemplateSectionBuilder templateSectionBuilder)
     {
       var lastSortorder = 0;
 
@@ -356,16 +366,19 @@ namespace Sitecore.Pathfinder.Builders.Templates
 
           sortorder = lastSortorder + ((nextSortorder - lastSortorder) / 2);
 
-          field.Item.Editing.BeginEdit();
-          field.Item.Appearance.Sortorder = sortorder;
+          context.RegisterUpdatedItem(field.Item);
+
+          using (new EditContext(field.Item))
+          {
           field.Item.Editing.EndEdit();
+          }
         }
 
         lastSortorder = sortorder;
       }
     }
 
-    protected virtual void SortSections([NotNull] TemplateBuilder templateBuilder)
+    protected virtual void SortSections([NotNull] IEmitContext context, [NotNull] TemplateBuilder templateBuilder)
     {
       var lastSortorder = 0;
 
@@ -399,19 +412,21 @@ namespace Sitecore.Pathfinder.Builders.Templates
 
           sortorder = lastSortorder + ((nextSortorder - lastSortorder) / 2);
 
+          context.RegisterUpdatedItem(section.Item);
+
           using (new EditContext(section.Item))
           {
             section.Item.Appearance.Sortorder = sortorder;
           }
         }
 
-        this.SortFields(section);
+        this.SortFields(context, section);
 
         lastSortorder = sortorder;
       }
     }
 
-    protected virtual void UpdateField([NotNull] TemplateSectionBuilder templateSectionBuilder, [NotNull] TemplateFieldBuilder templateFieldBuilder, [NotNull] IEnumerable<Sitecore.Data.Templates.TemplateField> inheritedFields)
+    protected virtual void UpdateField([NotNull] IEmitContext context, [NotNull] TemplateSectionBuilder templateSectionBuilder, [NotNull] TemplateFieldBuilder templateFieldBuilder, [NotNull] IEnumerable<Sitecore.Data.Templates.TemplateField> inheritedFields)
     {
       if (inheritedFields.Any(f => string.Compare(f.Name, templateFieldBuilder.TemplaterField.Name, StringComparison.OrdinalIgnoreCase) == 0))
       {
@@ -419,18 +434,24 @@ namespace Sitecore.Pathfinder.Builders.Templates
       }
 
       var item = templateFieldBuilder.Item;
-      if (item == null)
+
+      var isNew = item == null;
+      if (isNew)
       {
         item = ItemManager.AddFromTemplate(templateFieldBuilder.TemplaterField.Name, new TemplateID(TemplateIDs.TemplateField), templateSectionBuilder.Item);
         if (item == null)
         {
-          // todo: report error
-          return;
+          throw new EmitException(Texts.Could_not_create_template_field, this.Template.ItemTextNode, templateFieldBuilder.TemplaterField.Name);
         }
 
         templateFieldBuilder.Item = item;
       }
-      else if (templateSectionBuilder.Item != null && item.ParentID != templateSectionBuilder.Item.ID)
+      else
+      {
+        context.RegisterUpdatedItem(item);
+      }
+
+      if (templateSectionBuilder.Item != null && item.ParentID != templateSectionBuilder.Item.ID)
       {
         item.MoveTo(templateSectionBuilder.Item);
       }
@@ -465,53 +486,72 @@ namespace Sitecore.Pathfinder.Builders.Templates
           item["__Long description"] = templateFieldBuilder.TemplaterField.LongHelp;
         }
       }
+
+      if (isNew)
+      {
+        context.RegisterNewItem(item);
+      }
     }
 
-    protected virtual void UpdateSection([NotNull] TemplateSectionBuilder templateSectionBuilder, [NotNull] IEnumerable<Sitecore.Data.Templates.TemplateField> inheritedFields)
+    protected virtual void UpdateSection([NotNull] IEmitContext context, [NotNull] TemplateSectionBuilder templateSectionBuilder, [NotNull] IEnumerable<Sitecore.Data.Templates.TemplateField> inheritedFields)
     {
-      if (templateSectionBuilder.Item == null)
+      if (this.Item == null)
+      {
+        return;
+      }
+
+      var isNew = templateSectionBuilder.Item == null;
+      if (isNew)
       {
         templateSectionBuilder.Item = ItemManager.AddFromTemplate(templateSectionBuilder.TemplateSection.Name, new TemplateID(TemplateIDs.TemplateSection), this.Item);
         if (templateSectionBuilder.Item == null)
         {
-          // todo: report error 
-          return;
+          throw new EmitException(Texts.Could_not_create_section_item, this.Template.ItemTextNode);
         }
       }
       else
       {
-        if (this.Item != null && templateSectionBuilder.Item.ParentID != this.Item.ID)
+        context.RegisterUpdatedItem(templateSectionBuilder.Item);
+      }
+
+      if (this.Item != null && templateSectionBuilder.Item.ParentID != this.Item.ID)
+      {
+        templateSectionBuilder.Item.MoveTo(this.Item);
+      }
+
+      using (new EditContext(templateSectionBuilder.Item))
+      {
+        if (templateSectionBuilder.Item.Name != templateSectionBuilder.TemplateSection.Name)
         {
-          templateSectionBuilder.Item.MoveTo(this.Item);
+          templateSectionBuilder.Item.Name = templateSectionBuilder.TemplateSection.Name;
         }
 
-        using (new EditContext(templateSectionBuilder.Item))
+        if (!string.IsNullOrEmpty(templateSectionBuilder.TemplateSection.Icon))
         {
-          if (templateSectionBuilder.Item.Name != templateSectionBuilder.TemplateSection.Name)
-          {
-            templateSectionBuilder.Item.Name = templateSectionBuilder.TemplateSection.Name;
-          }
-
-          if (!string.IsNullOrEmpty(templateSectionBuilder.TemplateSection.Icon))
-          {
-            templateSectionBuilder.Item.Appearance.Icon = templateSectionBuilder.TemplateSection.Icon;
-          }
+          templateSectionBuilder.Item.Appearance.Icon = templateSectionBuilder.TemplateSection.Icon;
         }
       }
 
       foreach (var field in templateSectionBuilder.Fields)
       {
-        this.UpdateField(templateSectionBuilder, field, inheritedFields);
+        this.UpdateField(context, templateSectionBuilder, field, inheritedFields);
+      }
+
+      if (isNew)
+      {
+        context.RegisterNewItem(templateSectionBuilder.Item);
       }
     }
 
-    protected virtual void UpdateTemplate([NotNull] IEnumerable<Sitecore.Data.Templates.TemplateField> inheritedFields)
+    protected virtual void UpdateTemplate([NotNull] IEmitContext context, [NotNull] IEnumerable<Sitecore.Data.Templates.TemplateField> inheritedFields)
     {
       var item = this.Item;
       if (item == null)
       {
         return;
       }
+
+      context.RegisterUpdatedItem(item);
 
       // move
       if (string.Compare(item.Paths.Path, this.Template.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) != 0 && string.Compare(item.ID.ToString(), this.Template.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) != 0)
@@ -524,7 +564,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
           parentItem = item.Database.CreateItemPath(parentItemPath);
           if (parentItem == null)
           {
-            throw new RetryableEmitException("Could not create item", this.Template.Snapshot, parentItemPath);
+            throw new RetryableEmitException(Texts.Could_not_create_item, this.Template.Snapshot, parentItemPath);
           }
         }
 
@@ -562,7 +602,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
 
       foreach (var templateSectionBuilder in this.Sections)
       {
-        this.UpdateSection(templateSectionBuilder, inheritedFields);
+        this.UpdateSection(context, templateSectionBuilder, inheritedFields);
       }
     }
   }

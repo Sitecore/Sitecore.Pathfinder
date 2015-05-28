@@ -2,9 +2,12 @@
 {
   using System;
   using System.ComponentModel.Composition;
+  using System.Diagnostics;
   using System.IO;
   using Sitecore.Diagnostics;
   using Sitecore.IO;
+  using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Extensions.ConfigurationExtensions;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects;
   using Sitecore.Pathfinder.Projects.Files;
@@ -24,13 +27,42 @@
     public override void Emit(IEmitContext context, IProjectItem projectItem)
     {
       var binFile = (BinFile)projectItem;
-
       var destinationFileName = FileUtil.MapPath(binFile.FilePath);
 
-      // todo: check for assembly version
-      // todo: backup to uninstall folder
+      if (!this.CanCopyBinFile(context, binFile, destinationFileName))
+      {
+        return;
+      }
+
+      context.RegisterUpdatedFile(binFile, destinationFileName);
+
       context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName) ?? string.Empty);
-      context.FileSystem.Copy(binFile.Snapshot.SourceFile.FileName, destinationFileName);
+      context.FileSystem.Copy(projectItem.Snapshot.SourceFile.FileName, destinationFileName);
+    }
+
+    private bool CanCopyBinFile([NotNull] IEmitContext context, [NotNull] IProjectItem projectItem, [NotNull] string destinationFileName)
+    {
+      if (!context.FileSystem.FileExists(destinationFileName))
+      {
+        return true;
+      }
+
+      if (!context.Configuration.GetBool(Constants.Configuration.CheckBinFileVersion))
+      {
+        return true;
+      }
+
+      var destinationVersion = this.GetFileVersion(destinationFileName);
+      var sourceVersion = this.GetFileVersion(projectItem.Snapshot.SourceFile.FileName);
+
+      return sourceVersion > destinationVersion;
+    }
+
+    [NotNull]
+    private Version GetFileVersion([NotNull] string fileName)
+    {
+      var info = FileVersionInfo.GetVersionInfo(fileName);
+      return new Version(info.FileMajorPart, info.FileMinorPart, info.FileBuildPart, info.FilePrivatePart);
     }
   }
 }

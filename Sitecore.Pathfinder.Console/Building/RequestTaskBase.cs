@@ -3,6 +3,7 @@
   using System;
   using System.IO;
   using System.Net;
+  using System.Web;
   using Sitecore.Pathfinder.Diagnostics;
 
   public abstract class RequestTaskBase : TaskBase
@@ -20,7 +21,7 @@
 
         if (!string.IsNullOrEmpty(output))
         {
-          output = output.Trim();
+          output = HttpUtility.HtmlDecode(output).Trim();
         }
 
         if (!string.IsNullOrEmpty(output))
@@ -37,14 +38,14 @@
         var stream = ex.Response?.GetResponseStream();
         if (stream != null)
         {
-          message = new StreamReader(stream).ReadToEnd();
+          message = HttpUtility.HtmlDecode(new StreamReader(stream).ReadToEnd()) ?? string.Empty;
         }
 
-        context.Trace.TraceError("The server returned an error", message);
+        context.Trace.TraceError(Texts.The_server_returned_an_error, message);
       }
       catch (Exception ex)
       {
-        context.Trace.TraceError("The server returned an error", ex.Message);
+        context.Trace.TraceError(Texts.The_server_returned_an_error, ex.Message);
       }
 
       return false;

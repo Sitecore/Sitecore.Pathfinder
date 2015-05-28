@@ -49,12 +49,22 @@
         this.TemplateItem = this.Item.Template;
       }
 
+      this.Validate();
+
       if (this.Item == null)
       {
         this.CreateNewItem(context, database);
-      }
+        if (this.Item == null)
+        {
+          return;
+        }
 
-      this.Validate();
+        context.RegisterNewItem(this.Item);
+      }
+      else
+      {
+        context.RegisterUpdatedItem(this.Item);
+      }
 
       this.UpdateFields(context);
       this.UpdateItem(context);
@@ -75,7 +85,6 @@
         throw new RetryableEmitException(Texts.Failed_to_create_item_path, this.ProjectItem.Snapshot, parentItemPath);
       }
 
-      // item is created with correct ID
       var item = ItemManager.AddFromTemplate(this.ProjectItem.ItemName, this.TemplateItem.ID, parentItem, new ID(this.ProjectItem.Guid));
       if (item == null)
       {

@@ -6,6 +6,7 @@
   using System.Diagnostics;
   using System.IO;
   using System.Text;
+  using Sitecore.Pathfinder.Diagnostics;
 
   [Export(typeof(IFileSystemService))]
   public class FileSystemService : IFileSystemService
@@ -54,14 +55,14 @@
       return Directory.GetDirectories(directory);
     }
 
-    public virtual IEnumerable<string> GetFiles(string directory)
+    public virtual IEnumerable<string> GetFiles([NotNull] string directory, SearchOption searchOptions = SearchOption.TopDirectoryOnly)
     {
-      return Directory.GetFiles(directory);
+      return Directory.GetFiles(directory, "*", searchOptions);
     }
 
-    public virtual IEnumerable<string> GetFiles(string directory, string pattern)
+    public virtual IEnumerable<string> GetFiles(string directory, string pattern, SearchOption searchOptions = SearchOption.TopDirectoryOnly)
     {
-      return Directory.GetFiles(directory, pattern);
+      return Directory.GetFiles(directory, pattern, searchOptions);
     }
 
     public virtual DateTime GetLastWriteTimeUtc(string sourceFileName)

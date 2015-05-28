@@ -32,7 +32,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Sitecore.RemoteInjection\.sitecore.tools\</OutputPath>
+    <OutputPath>..\Website.Demo\.sitecore.tools\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -212,7 +212,7 @@
     <Content Include="wwwroot\project\layout\web.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="wwwroot\project\sitecore.config.json">
+    <None Include="wwwroot\project\scconfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="scconfig.json">

@@ -9,14 +9,12 @@
 
     public static readonly char[] Space =
     {
-      ' '
+      ' '              
     };
 
     public static class Configuration
     {
-      public const string SystemConfigFileName = "system:config";
-
-      public const string ProjectConfigFileName = "project";
+      public const string CheckBinFileVersion = "deploying:check-bin-file-version";
 
       public const string ContentFiles = "content-files";
 
@@ -27,8 +25,6 @@
       public const string Debug = "system:debug";
 
       public const string ExternalReferences = "external-references";
-
-      public const string RemapFileDirectories = "remap-file-directories";
 
       public const string HostName = "HostName";
 
@@ -42,15 +38,23 @@
 
       public const string Pathfinder = "Pathfinder";
 
+      public const string ProjectConfigFileName = "project";
+
       public const string ProjectDirectory = "projectdirectory";
 
       public const string ProjectUniqueId = "project-unique-id";
 
-      public const string PublishUrl = "deploying:publishurl";
+      public const string PublishUrl = "deploying:publishurl";                        
+
+      public const string RemapFileDirectories = "remap-file-directories";
 
       public const string SolutionDirectory = "solutiondirectory";
 
+      public const string SystemConfigFileName = "system:config";
+
       public const string ToolsDirectory = "system:toolspath";
+
+      public const string UninstallDirectory = "deploying:uninstall-directory";
 
       public const string Wwwroot = "wwwroot";
     }

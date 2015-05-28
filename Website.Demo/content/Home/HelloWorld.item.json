@@ -6,7 +6,7 @@
     "Fields": [
       { "Name": "Text", "Value": "Hello" }, 
       { "Name": "Title", "Value": "Hello World"},
-      { "Name": "Image", "Field.Type": "Image", "Value": "/sitecore/media library/HelloWorld2"},
+      { "Name": "Image", "Field.Type": "Image", "Value": "/sitecore/media library/HelloWorld"},
       {
         "Name": "__Workflow",
         "Value": ""

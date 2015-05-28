@@ -16,6 +16,10 @@
   var publishingTargets = PublishManager.GetPublishingTargets(database);
 
   var targetDatabases = publishingTargets.Select(target => Factory.GetDatabase(target["Target database"])).ToArray();
+  if (!targetDatabases.Any())
+  {
+    return;
+  }
 
   var languages = LanguageManager.GetLanguages(database).ToArray();
 

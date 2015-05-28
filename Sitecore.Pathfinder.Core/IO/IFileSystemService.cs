@@ -2,6 +2,7 @@
 {
   using System;
   using System.Collections.Generic;
+  using System.IO;
   using Sitecore.Pathfinder.Diagnostics;
 
   public interface IFileSystemService
@@ -22,10 +23,10 @@
     IEnumerable<string> GetDirectories([NotNull] string directory);
 
     [NotNull]
-    IEnumerable<string> GetFiles([NotNull] string directory);
+    IEnumerable<string> GetFiles([NotNull] string directory, SearchOption searchOptions = SearchOption.TopDirectoryOnly);
 
     [NotNull]
-    IEnumerable<string> GetFiles([NotNull] string directory, [NotNull] string pattern);
+    IEnumerable<string> GetFiles([NotNull] string directory, [NotNull] string pattern, SearchOption searchOptions = SearchOption.TopDirectoryOnly);
 
     DateTime GetLastWriteTimeUtc([NotNull] string sourceFileName);
 

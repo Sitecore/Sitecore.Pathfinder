@@ -38,7 +38,7 @@
     },
     {
       "taskName": "usages",
-      "args": ["--name=/sitecore/media library/HelloWorld"],
+      "args": ["--name", "/sitecore/media library/HelloWorld"],
       "isBuildCommand": false
     }
   ]

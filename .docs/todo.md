@@ -1,6 +1,6 @@
 TODO
 ====
-* References checking
+* v References checking
 * Anti-packages
 * Schema generation
 
@@ -25,7 +25,7 @@ Milestone 2
 -----------
 * v Items with versions and languages
 * v IDs
-* Layout inside .item.xml
+* v Layout inside .item.xml
 * Assemblies
 * Code Generation
 * v Rename

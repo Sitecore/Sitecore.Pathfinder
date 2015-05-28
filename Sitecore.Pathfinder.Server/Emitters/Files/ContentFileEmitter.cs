@@ -24,9 +24,10 @@
 
       var destinationFileName = FileUtil.MapPath(contentFile.FilePath);
 
-      // todo: backup to uninstall folder
+      context.RegisterUpdatedFile(contentFile, destinationFileName);
+
       context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName) ?? string.Empty);
-      context.FileSystem.Copy(contentFile.Snapshot.SourceFile.FileName, destinationFileName);
+      context.FileSystem.Copy(projectItem.Snapshot.SourceFile.FileName, destinationFileName);
     }
   }
 }

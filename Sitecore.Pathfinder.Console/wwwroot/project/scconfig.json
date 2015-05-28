@@ -8,9 +8,6 @@
   "wwwroot": "c:\\inetpub\\wwwroot\\Sitecore.Default",
   "hostname": "http://sitecore.default",
 
-  // relative project directory to solution directory
-  "projectdirectory": "",
-
   // Sitecore database name (master, core, or web)
   "database": "master",
 

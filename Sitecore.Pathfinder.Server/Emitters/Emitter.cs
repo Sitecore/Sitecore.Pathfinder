@@ -5,10 +5,9 @@
   using System.ComponentModel.Composition;
   using System.Linq;
   using Sitecore.Pathfinder.Configuration;
-  using Sitecore.Pathfinder.Data;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
-  using Sitecore.Pathfinder.IO;
+  using Sitecore.Pathfinder.Extensions.CompositionServiceExtensions;
   using Sitecore.Pathfinder.Projects;
   using Sitecore.SecurityModel;
 
@@ -16,13 +15,11 @@
   public class Emitter
   {
     [ImportingConstructor]
-    public Emitter([NotNull] ICompositionService compositionService, [NotNull] IConfigurationService configurationService, [NotNull] IDataService dataService, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystem, [Sitecore.NotNull] IProjectService projectService)
+    public Emitter([NotNull] ICompositionService compositionService, [NotNull] IConfigurationService configurationService, [NotNull] ITraceService traceService, [NotNull] IProjectService projectService)
     {
       this.CompositionService = compositionService;
       this.ConfigurationService = configurationService;
-      this.DataService = dataService;
       this.Trace = traceService;
-      this.FileSystem = fileSystem;
       this.ProjectService = projectService;
     }
 
@@ -33,14 +30,8 @@
     protected IConfigurationService ConfigurationService { get; set; }
 
     [NotNull]
-    protected IDataService DataService { get; }
-
-    [NotNull]
     [ImportMany]
     protected IEnumerable<IEmitter> Emitters { get; private set; }
-
-    [NotNull]
-    protected IFileSystemService FileSystem { get; }
 
     [NotNull]
     protected IProjectService ProjectService { get; }
@@ -59,8 +50,7 @@
 
     protected virtual void Emit([NotNull] IProject project)
     {
-      // todo: use abstract factory pattern
-      var context = new EmitContext(this.CompositionService, this.Trace, this.DataService, this.FileSystem).With(project);
+      var context = this.CompositionService.Resolve<IEmitContext>().With(project);
 
       var emitters = this.Emitters.OrderBy(e => e.Sortorder).ToList();
 
@@ -76,6 +66,8 @@
 
         this.RetryEmit(context, emitters, retries);
       }
+
+      context.BuildUninstallPackage();
     }
 
     protected virtual void EmitProjectItem([NotNull] IEmitContext context, [NotNull] IProjectItem projectItem, [NotNull] List<IEmitter> emitters, [NotNull] ICollection<Tuple<IProjectItem, Exception>> retries)

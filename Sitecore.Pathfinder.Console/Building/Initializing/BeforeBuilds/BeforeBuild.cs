@@ -4,6 +4,8 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
   using System.ComponentModel.Composition;
   using System.Diagnostics;
   using System.IO;
+  using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Extensions.StringExtensions;
   using Sitecore.Pathfinder.IO;
 
   [Export(typeof(ITask))]
@@ -30,7 +32,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
       var projectUniqueId = context.Configuration.Get(Constants.Configuration.ProjectUniqueId);
       if (string.Compare(projectUniqueId, "{project-unique-id}", StringComparison.OrdinalIgnoreCase) == 0)
       {
-        context.Trace.Writeline("Hey - you haven't changed the the 'project-unique-id' = 'wwwroot' or 'hostname' in the '{0}' configuration file.", context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
+        context.Trace.Writeline(Texts.Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in_the___0___configuration_file_, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
         context.IsAborted = true;
         return;
       }
@@ -38,7 +40,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
       var hostName = context.Configuration.Get(Constants.Configuration.HostName);
       if (string.Compare(hostName, "http://sitecore.default", StringComparison.OrdinalIgnoreCase) == 0)
       {
-        context.Trace.Writeline("Hey - you haven't changed the the 'project-unique-id' = 'wwwroot' or 'hostname' in the '{0}' configuration file.", context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
+        context.Trace.Writeline(Texts.Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in_the___0___configuration_file_, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
         context.IsAborted = true;
         return;
       }
@@ -46,7 +48,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
       var wwwroot = context.Configuration.Get(Constants.Configuration.Wwwroot);
       if (string.Compare(wwwroot, "c:\\inetpub\\wwwroot\\Sitecore.Default", StringComparison.OrdinalIgnoreCase) == 0)
       {
-        context.Trace.Writeline("Hey - you haven't changed the the 'project-unique-id' = 'wwwroot' or 'hostname' in the '{0}' configuration file.", context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
+        context.Trace.Writeline(Texts.Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in_the___0___configuration_file_, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
         context.IsAborted = true;
         return;
       }
@@ -54,38 +56,71 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
       var dataFolder = PathHelper.Combine(wwwroot, "Data");
       if (!context.FileSystem.DirectoryExists(dataFolder))
       {
-        context.Trace.Writeline("Hey - there is no 'Data' directory under the 'wwwroot' directory - are you sure = you have set the 'wwwroot' correctly in the configuration file", context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
+        context.Trace.Writeline(Texts.There_Is_No_Data_Directory, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
         context.IsAborted = true;
         return;
       }
 
-      var website = PathHelper.Combine(wwwroot, "Website");
-      if (!context.FileSystem.DirectoryExists(website))
+      var websiteDirectory = PathHelper.Combine(wwwroot, "Website");
+      if (!context.FileSystem.DirectoryExists(websiteDirectory))
       {
-        context.Trace.Writeline("Hey - there is no 'Website' directory under the 'wwwroot' directory - are you sure = you have set the 'wwwroot' correctly in the configuration file", context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
+        context.Trace.Writeline(Texts.There_Is_No_Website_Directory, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
         context.IsAborted = true;
         return;
       }
 
       var sourceDirectory = Path.Combine(context.Configuration.Get(Constants.Configuration.ToolsDirectory), "wwwroot\\website");
-      var serverAssemblyFileName = Path.Combine(website, "bin\\Sitecore.Pathfinder.Server.dll");
-      if (!context.FileSystem.FileExists(serverAssemblyFileName))
+      var coreServerAssemblyFileName = Path.Combine(websiteDirectory, "bin\\Sitecore.Pathfinder.Core.dll");
+      if (!context.FileSystem.FileExists(coreServerAssemblyFileName))
       {
-        context.FileSystem.XCopy(sourceDirectory, website);
-        context.Trace.Writeline("Just so you know = I have copied the 'Sitecore.Pathfinder.Server.dll' and 'NuGet.Core.dll' assemblies to the '/bin' directory in the website and a number of '.aspx' files to the '/sitecore/shell/client/Applications/Pathfinder' directory", context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
+        context.FileSystem.XCopy(sourceDirectory, websiteDirectory);
+        context.Trace.Writeline(Texts.Just_so_you_know__I_have_copied_the__Sitecore_Pathfinder_Server_dll__and__NuGet_Core_dll__assemblies_to_the___bin__directory_in_the_website_and_a_number_of___aspx__files_to_the___sitecore_shell_client_Applications_Pathfinder__directory);
       }
       else
       {
-        var localFileName = Path.Combine(context.Configuration.Get(Constants.Configuration.ToolsDirectory), "wwwroot\\website\\bin\\Sitecore.Pathfinder.Server.dll");
+        this.UpdateFiles(context, sourceDirectory, websiteDirectory);
+      }
+    }
 
-        var serverVersion = new Version(FileVersionInfo.GetVersionInfo(serverAssemblyFileName).FileVersion);
-        var localVersion = new Version(FileVersionInfo.GetVersionInfo(localFileName).FileVersion);
+    protected virtual void UpdateFiles([NotNull] IBuildContext context, [NotNull] string sourceDirectory, [NotNull] string websiteDirectory)
+    {
+      var writeMessage = false;
 
-        if (serverVersion < localVersion)
+      foreach (var sourceFileName in context.FileSystem.GetFiles(sourceDirectory, SearchOption.AllDirectories))
+      {
+        var targetFileName = Path.Combine(websiteDirectory, sourceFileName.Mid(sourceDirectory.Length + 1));
+        if (!context.FileSystem.FileExists(targetFileName))
         {
-          context.FileSystem.XCopy(sourceDirectory, website);
-          context.Trace.Writeline("Just so you know = I have updated the 'Sitecore.Pathfinder.Server.dll' and 'NuGet.Core.dll' assemblies in the '/bin' directory in the website and a number of '.aspx' files in the '/sitecore/shell/client/Applications/Pathfinder' directory to the latest version", context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
+          context.FileSystem.Copy(sourceFileName, targetFileName);
+          writeMessage = true;
+          continue;
         }
+
+        if (string.Compare(Path.GetExtension(sourceFileName), ".dll", StringComparison.OrdinalIgnoreCase) == 0)
+        {
+          var sourceVersion = new Version(FileVersionInfo.GetVersionInfo(sourceFileName).FileVersion);
+          var targetVersion = new Version(FileVersionInfo.GetVersionInfo(targetFileName).FileVersion);
+          if (targetVersion < sourceVersion)
+          {
+            context.FileSystem.Copy(sourceFileName, targetFileName);
+            writeMessage = true;
+          }
+
+          continue;
+        }
+
+        var sourceFileInfo = new FileInfo(sourceFileName);
+        var targetFileInfo = new FileInfo(targetFileName);
+        if (sourceFileInfo.Length != targetFileInfo.Length)
+        {
+          context.FileSystem.Copy(sourceFileName, targetFileName);
+          writeMessage = true;
+        }
+      }
+
+      if (writeMessage)
+      {
+        context.Trace.Writeline(Texts.Just_so_you_know__I_have_updated_the__Sitecore_Pathfinder_Server_dll__and__NuGet_Core_dll__assemblies_in_the___bin__directory_in_the_website_and_a_number_of___aspx__files_in_the___sitecore_shell_client_Applications_Pathfinder__directory_to_the_latest_version);
       }
     }
   }
