@@ -31,7 +31,7 @@
     public IConfigurationService ConfigurationService { get; private set; }
 
     [NotNull]
-    public IDocumentService DocumentService { get; set; }
+    public ISnapshotService SnapshotService { get; set; }
 
     [NotNull]
     public IFileSystemService FileSystem { get; private set; }
@@ -86,7 +86,7 @@
       this.ParseService = this.CompositionService.Resolve<IParseService>();
       this.ProjectService = this.CompositionService.Resolve<IProjectService>();
       this.ConfigurationService = this.CompositionService.Resolve<IConfigurationService>();
-      this.DocumentService = this.CompositionService.Resolve<IDocumentService>();
+      this.SnapshotService = this.CompositionService.Resolve<ISnapshotService>();
       this.TextTokenService = this.CompositionService.Resolve<ITextTokenService>();
       this.CheckerService = this.CompositionService.Resolve<ICheckerService>();
     }

@@ -12,10 +12,5 @@
     }
 
     public ISourceFile SourceFile { get; }
-
-    public virtual ITextNode GetNestedTextNode(ITextNode textNode, string name)
-    {
-      return null;
-    }
   }
 }

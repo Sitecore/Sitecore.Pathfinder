@@ -56,5 +56,21 @@
       Assert.AreEqual(string.Empty, field.Value);
       Assert.AreEqual(0, field.ChildNodes.Count);
     }
+
+    [Test]
+    public void GetNestedTextNodeTests()
+    {
+      var sourceFile = new SourceFile(this.Services.FileSystem, "test.txt");
+
+      var doc = new XmlTextSnapshot(sourceFile, "<Item><Field Name=\"Text\">123</Field></Item>");
+      var root = doc.Root;
+
+      var fields = doc.GetNestedTextNode(root, "Fields");
+      Assert.IsNotNull(fields);
+
+      var field = fields.ChildNodes[0];
+      Assert.IsNotNull(field);
+      Assert.AreEqual("Text", field.GetAttributeValue("Name"));
+    }
   }
 }

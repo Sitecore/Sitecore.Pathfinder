@@ -3,10 +3,10 @@
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Projects;
 
-  public interface IDocumentService
+  public interface ISnapshotService
   {
     [NotNull]
-    ISnapshot LoadDocument([NotNull] IProject project, [NotNull] ISourceFile sourceFile);
+    ISnapshot LoadSnapshot([NotNull] IProject project, [NotNull] ISourceFile sourceFile);
 
     [NotNull]
     string ReplaceTokens([NotNull] IProject project, [NotNull] ISourceFile sourceFile, [NotNull] string contents);

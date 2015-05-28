@@ -7,23 +7,23 @@
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects;
 
-  [Export(typeof(IDocumentService))]
-  public class DocumentService : IDocumentService
+  [Export(typeof(ISnapshotService))]
+  public class SnapshotService : ISnapshotService
   {
     [ImportingConstructor]
-    public DocumentService([NotNull] ITextTokenService textTokenService)
+    public SnapshotService([NotNull] ITextTokenService textTokenService)
     {
       this.TextTokenService = textTokenService;
     }
 
     [NotNull]
     [ImportMany]
-    protected IEnumerable<IDocumentLoader> Loaders { get; private set; }
+    protected IEnumerable<ISnapshotLoader> Loaders { get; private set; }
 
     [NotNull]
     protected ITextTokenService TextTokenService { get; }
 
-    public ISnapshot LoadDocument(IProject project, ISourceFile sourceFile)
+    public ISnapshot LoadSnapshot(IProject project, ISourceFile sourceFile)
     {
       foreach (var loader in this.Loaders)
       {

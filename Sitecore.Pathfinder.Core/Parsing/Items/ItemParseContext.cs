@@ -1,6 +1,7 @@
 ﻿namespace Sitecore.Pathfinder.Parsing.Items
 {
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
 
   public class ItemParseContext
   {
@@ -10,6 +11,8 @@
       this.Parser = parser;
       this.ParentItemPath = parentItemPath;
     }
+
+    public ITextSnapshot Snapshot => (ITextSnapshot)this.ParseContext.Snapshot;
 
     [NotNull]
     public string ParentItemPath { get; }

@@ -39,6 +39,11 @@
       }
     }
 
+    public virtual ITextNode GetNestedTextNode(ITextNode textNode, string name)
+    {
+      return null;
+    }
+
     public virtual void ValidateSchema(IParseContext context, string schemaNamespace, string schemaFileName)
     {
     }

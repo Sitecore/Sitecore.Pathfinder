@@ -34,7 +34,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
       template.References.AddRange(this.ParseReferences(template, textNode, template.BaseTemplates));
 
-      var sectionsTextNode = context.ParseContext.Snapshot.GetNestedTextNode(textNode, "Sections");
+      var sectionsTextNode = context.Snapshot.GetNestedTextNode(textNode, "Sections");
       if (sectionsTextNode != null)
       {
         foreach (var sectionTreeNode in sectionsTextNode.ChildNodes)
@@ -91,7 +91,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
       templateSection.Icon = sectionTextNode.GetAttributeValue("Icon");
 
-      var fieldsTextNode = sectionTextNode.Snapshot.GetNestedTextNode(sectionTextNode, "Fields");
+      var fieldsTextNode = context.Snapshot.GetNestedTextNode(sectionTextNode, "Fields");
       if (fieldsTextNode == null)
       {
         return;

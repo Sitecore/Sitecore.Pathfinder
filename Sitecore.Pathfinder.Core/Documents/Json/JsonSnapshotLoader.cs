@@ -5,19 +5,19 @@
   using System.IO;
   using Sitecore.Pathfinder.Projects;
 
-  [Export(typeof(IDocumentLoader))]
-  public class JsonDocumentLoader : IDocumentLoader
+  [Export(typeof(ISnapshotLoader))]
+  public class JsonSnapshotLoader : ISnapshotLoader
   {
-    public bool CanLoad(IDocumentService documentService, IProject project, ISourceFile sourceFile)
+    public bool CanLoad(ISnapshotService snapshotService, IProject project, ISourceFile sourceFile)
     {
       return string.Compare(Path.GetExtension(sourceFile.FileName), ".json", StringComparison.OrdinalIgnoreCase) == 0;
     }
 
-    public ISnapshot Load(IDocumentService documentService, IProject project, ISourceFile sourceFile)
+    public ISnapshot Load(ISnapshotService snapshotService, IProject project, ISourceFile sourceFile)
     {
       var contents = sourceFile.ReadAsText();
 
-      contents = documentService.ReplaceTokens(project, sourceFile, contents);
+      contents = snapshotService.ReplaceTokens(project, sourceFile, contents);
 
       return new JsonTextSnapshot(sourceFile, contents);
     }

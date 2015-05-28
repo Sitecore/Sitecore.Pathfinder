@@ -158,7 +158,7 @@
       templateSection.Name = "Fields";
       templateSection.Icon = "Applications/16x16/form_blue.png";
 
-      var fieldTreeNodes = context.ParseContext.Snapshot.GetNestedTextNode(itemTextNode, "Fields");
+      var fieldTreeNodes = context.Snapshot.GetNestedTextNode(itemTextNode, "Fields");
       if (fieldTreeNodes != null)
       {
         foreach (var child in fieldTreeNodes.ChildNodes)

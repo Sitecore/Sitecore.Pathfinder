@@ -7,15 +7,15 @@
   using Sitecore.Pathfinder.IO;
 
   [TestFixture]
-  public class SourceFileTests
+  public class SourceFileTests : Tests
   {
     [Test]
     public void ConstructorTest()
     {
-      var fileSystem = new FileSystemService();
+      this.Start();
 
-      var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "Website\\content\\Home\\HelloWorld.item.xml");
-      var sourceFile = new SourceFile(fileSystem, fileName);
+      var fileName = Path.Combine(this.ProjectDirectory, "content\\Home\\HelloWorld.item.xml");
+      var sourceFile = new SourceFile(this.Services.FileSystem, fileName);
 
       Assert.AreEqual(fileName, sourceFile.FileName);
       Assert.AreNotEqual(DateTime.MinValue, sourceFile.LastWriteTimeUtc);

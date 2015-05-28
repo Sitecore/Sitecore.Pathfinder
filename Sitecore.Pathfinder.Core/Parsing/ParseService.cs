@@ -13,10 +13,10 @@
   public class ParseService : IParseService
   {
     [ImportingConstructor]
-    public ParseService([NotNull] ICompositionService compositionService, [NotNull] IDocumentService documentService)
+    public ParseService([NotNull] ICompositionService compositionService, [NotNull] ISnapshotService snapshotService)
     {
       this.CompositionService = compositionService;
-      this.DocumentService = documentService;
+      this.SnapshotService = snapshotService;
     }
 
     [NotNull]
@@ -27,11 +27,11 @@
     protected ICompositionService CompositionService { get; }
 
     [NotNull]
-    protected IDocumentService DocumentService { get; }
+    protected ISnapshotService SnapshotService { get; }
 
     public virtual void Parse(IProject project, ISourceFile sourceFile)
     {
-      var textDocument = this.DocumentService.LoadDocument(project, sourceFile);
+      var textDocument = this.SnapshotService.LoadSnapshot(project, sourceFile);
 
       var parseContext = this.CompositionService.Resolve<IParseContext>().With(project, textDocument);
 

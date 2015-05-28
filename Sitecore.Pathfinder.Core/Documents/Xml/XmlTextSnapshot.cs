@@ -25,7 +25,7 @@
     public override ITextNode Root => this.root ?? (this.root = this.RootElement == null ? TextNode.Empty : this.Parse(null, this.RootElement));
 
     [NotNull]
-    protected IDocumentService DocumentService { get; }
+    protected ISnapshotService SnapshotService { get; }
 
     [CanBeNull]
     protected XElement RootElement

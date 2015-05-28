@@ -44,5 +44,21 @@
       Assert.AreEqual("123", field.GetAttributeValue("Value"));
       Assert.AreEqual(0, field.ChildNodes.Count);
     }
+
+    [Test]
+    public void GetNestedTextNodeTests()
+    {
+      var sourceFile = new SourceFile(this.Services.FileSystem, "test.txt");
+
+      var doc = new JsonTextSnapshot(sourceFile, "{ \"Item\": { \"Fields\": [ { \"Name\": \"Text\", \"Value\": \"123\" } ] } }");
+      var root = doc.Root;
+
+      var fields = doc.GetNestedTextNode(root, "Fields");
+      Assert.IsNotNull(fields);
+
+      var field = fields.ChildNodes[0];
+      Assert.IsNotNull(field);
+      Assert.AreEqual("Text", field.GetAttributeValue("Name"));
+    }
   }
 }
