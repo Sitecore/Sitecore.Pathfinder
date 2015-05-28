@@ -82,6 +82,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -97,6 +99,7 @@
     <Compile Include="Building\Initializing\BeforeBuilds\BeforeBuild.cs" />
     <Compile Include="Building\Initializing\InstallLayout\InstallLayout.cs" />
     <Compile Include="Building\Initializing\Initialization\Init.cs" />
+    <Compile Include="Building\Initializing\UpdateResources\UpdateResources.cs" />
     <Compile Include="Building\Querying\FindReferences\FindReferences.cs" />
     <Compile Include="Building\Querying\FindUsages\FindUsages.cs" />
     <Compile Include="Building\Packaging\CreateNupkg\CreateNupkg.cs" />
@@ -158,6 +161,10 @@
     <Content Include="wwwroot\project\.settings\settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\UpdateResources.ashx">
+      <Link>wwwroot\website\sitecore\shell\client\Applications\Pathfinder\UpdateResources.ashx</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="wwwroot\project\.filetemplates\Item.item.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -171,14 +178,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="wwwroot\project\.schemas\item.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\project\.schemas\layout.core.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\project\.schemas\layout.master.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

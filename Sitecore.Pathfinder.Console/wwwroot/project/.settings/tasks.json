@@ -37,8 +37,8 @@
 	     } 
     },
     {
-      "taskName": "usages",
-      "args": ["--name", "/sitecore/media library/HelloWorld"],
+      "taskName": "update-resources",
+      "args": [],
       "isBuildCommand": false
     }
   ]

@@ -1,8 +1,9 @@
 TODO
 ====
-* v References checking
-* Anti-packages
-* Schema generation
+* <del>References checking</del>
+* <del>Anti-packages</del>
+  * Uninstall package
+* <del>Schema generation</del>
 
 Milestone 1
 -----------
@@ -23,12 +24,12 @@ Milestone 1
    
 Milestone 2
 -----------
-* v Items with versions and languages
-* v IDs
-* v Layout inside .item.xml
+* <del>Items with versions and languages</del>
+* <del>IDs</del>
+* <del>ayout inside .item.xml</del>
 * Assemblies
 * Code Generation
-* v Rename
+* <del>Rename</del>
 * Delete
 * Alias / Launch Pad item
 
@@ -39,3 +40,5 @@ Missing
   * SerializationDocument
   * MarkDownDocument
   * OleDocument
+* Uninstall package
+* Serialization item

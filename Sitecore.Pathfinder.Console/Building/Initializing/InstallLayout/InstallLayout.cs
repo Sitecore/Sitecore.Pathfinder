@@ -2,7 +2,6 @@ namespace Sitecore.Pathfinder.Building.Initializing.InstallLayout
 {
   using System.ComponentModel.Composition;
   using System.IO;
-  using Sitecore.Pathfinder.Diagnostics;
 
   [Export(typeof(ITask))]
   public class InstallLayout : TaskBase

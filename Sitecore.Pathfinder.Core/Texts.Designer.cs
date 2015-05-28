@@ -296,6 +296,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Downloading resources....
+        /// </summary>
+        public static string Downloading_resources___ {
+            get {
+                return ResourceManager.GetString("Downloading_resources___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to add new template.
         /// </summary>
         public static string Failed_to_add_new_template {
@@ -628,6 +637,15 @@ namespace Sitecore.Pathfinder {
         public static string Unique_ID_clash {
             get {
                 return ResourceManager.GetString("Unique_ID_clash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updating resources....
+        /// </summary>
+        public static string Updating_resources___ {
+            get {
+                return ResourceManager.GetString("Updating_resources___", resourceCulture);
             }
         }
         

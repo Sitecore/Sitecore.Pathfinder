@@ -12,7 +12,7 @@
     {
     }
 
-    protected bool Request([NotNull] IBuildContext context, [NotNull] string url)
+    protected virtual bool Request([NotNull] IBuildContext context, [NotNull] string url)
     {
       var webClient = new WebClient();
       try

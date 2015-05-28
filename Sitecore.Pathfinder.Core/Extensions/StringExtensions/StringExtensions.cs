@@ -87,6 +87,37 @@ namespace Sitecore.Pathfinder.Extensions.StringExtensions
     }
 
     [NotNull]
+    public static string GetSafeCodeIdentifier([NotNull] this string text)
+    {
+      if (string.IsNullOrEmpty(text))
+      {
+        return string.Empty;
+      }
+
+      var chars = text.ToCharArray();
+
+      for (var n = 1; n < chars.Length; n++)
+      {
+        var p = chars[n - 1];
+
+        if (char.IsWhiteSpace(p))
+        {
+          chars[n] = char.ToUpper(chars[n]);
+        }
+      }
+
+      text = new string(chars);
+
+      var result = Regex.Replace(text, @"\W", string.Empty).Replace(@" ", string.Empty);
+      if (!char.IsLetter(result[0]))
+      {
+        result = @"_" + result;
+      }
+
+      return result;
+    }
+
+    [NotNull]
     public static string Left([NotNull] this string text, int length)
     {
       if (length <= 0)
@@ -131,52 +162,6 @@ namespace Sitecore.Pathfinder.Extensions.StringExtensions
       return text.Substring(start, length);
     }
 
-    /*
-    [NotNull]
-    public static string Left([NotNull] this string text, int length)
-    {
-      if (length <= 0)
-      {
-        return string.Empty;
-      }
-
-      return text.Length <= length ? text : text.Substring(0, length);
-    }
-
-    [NotNull]
-    public static string Mid([NotNull] this string text, int start)
-    {
-      if (start >= text.Length || start < 0)
-      {
-        return string.Empty;
-      }
-
-      return text.Substring(start);
-    }
-
-    [NotNull]
-    public static string Mid([NotNull] this string text, int start, int length)
-    {
-      if (length <= 0)
-      {
-        return string.Empty;
-      }
-
-      if (start >= text.Length || start < 0)
-      {
-        return string.Empty;
-      }
-
-      var max = text.Length - start;
-
-      if (length >= max)
-      {
-        return text.Substring(start);
-      }
-
-      return text.Substring(start, length);
-    }
-    */
     [NotNull]
     public static string RemoveControlChars([NotNull] this string text)
     {
@@ -186,18 +171,6 @@ namespace Sitecore.Pathfinder.Extensions.StringExtensions
       return text;
     }
 
-    /*
-    [NotNull]
-    public static string Right([NotNull] this string text, int length)
-    {
-      if (length >= text.Length)
-      {
-        return text;
-      }
-
-      return text.Substring(text.Length - length);
-    }
-    */
     [NotNull]
     public static string[] Split([NotNull] this string text, char separator, StringSplitOptions options)
     {
