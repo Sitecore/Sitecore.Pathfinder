@@ -42,7 +42,7 @@
       "isBuildCommand": false
     },
     {
-      "taskName": "codegen",
+      "taskName": "generate-code",
       "args": [],
       "isBuildCommand": false
     }

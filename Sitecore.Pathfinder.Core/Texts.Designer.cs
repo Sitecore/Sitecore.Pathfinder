@@ -569,6 +569,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to scc.cmd(0,0): information SCC0000: Compiling checkers....
+        /// </summary>
+        public static string scc_cmd_0_0___information_SCC0000__Compiling_checkers___ {
+            get {
+                return ResourceManager.GetString("scc_cmd_0_0___information_SCC0000__Compiling_checkers___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Source file is empty.
         /// </summary>
         public static string Source_file_is_empty {

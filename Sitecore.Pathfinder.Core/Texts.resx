@@ -336,4 +336,7 @@
   <data name="Type_not_found" xml:space="preserve">
     <value>Type not found</value>
   </data>
+  <data name="scc_cmd_0_0___information_SCC0000__Compiling_checkers___" xml:space="preserve">
+    <value>scc.cmd(0,0): information SCC0000: Compiling checkers...</value>
+  </data>
 </root>

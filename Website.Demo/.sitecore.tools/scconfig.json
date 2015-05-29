@@ -41,6 +41,7 @@
     "uninstall-directory": "..\\.uninstall"
   },
 
+  // maps a code generation template file to a project item type
   "codegen": {
     ".sitecore.tools\\wwwroot\\codegen\\Template.cshtml": "Sitecore.Pathfinder.Projects.Templates.Template, Sitecore.Pathfinder.Core"
   },

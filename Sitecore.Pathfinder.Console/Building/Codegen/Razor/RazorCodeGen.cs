@@ -7,7 +7,6 @@
   using RazorEngine.Configuration;
   using RazorEngine.Templating;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Extensions.StringExtensions;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects;
 
@@ -16,7 +15,7 @@
   {
     private IRazorEngineService razorEngine;
 
-    public RazorCodeGen() : base("codegen")
+    public RazorCodeGen() : base("generate-code")
     {
     }
 
@@ -47,7 +46,7 @@
             this.Compile(context, projectItem, pair.Key);
           }
         }
-      }
+      }                               
     }
 
     protected virtual void Compile([NotNull] IBuildContext context, [NotNull] IProjectItem projectItem, [NotNull] string fileName)
@@ -66,6 +65,8 @@
 
       context.FileSystem.CreateDirectory(Path.GetDirectoryName(targetFileName) ?? string.Empty);
       context.FileSystem.WriteAllText(targetFileName, result);
+
+      context.Trace.TraceInformation(PathHelper.UnmapPath(context.SolutionDirectory, targetFileName));
     }
 
     protected virtual void CreateRazorEngine()
@@ -77,7 +78,7 @@
 
       var config = new TemplateServiceConfiguration
       {
-        DisableTempFileLocking = true,
+        DisableTempFileLocking = true, 
         CachingProvider = new DefaultCachingProvider(t => { })
       };
 

@@ -124,7 +124,7 @@
 
         var packageBuilder = new PackageBuilder(nuspecFileName, Path.GetDirectoryName(nupkgFileName), NullPropertyProvider.Instance, false);
 
-        using (var nupkg = new FileStream(nupkgFileName, FileMode.CreateNew))
+        using (var nupkg = new FileStream(nupkgFileName, FileMode.Create))
         {
           packageBuilder.Save(nupkg);
         }

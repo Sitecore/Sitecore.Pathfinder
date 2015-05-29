@@ -100,7 +100,7 @@
       var switchMappings = new Dictionary<string, string>()
       {
         ["-r"] = "run",
-        ["--r"] = "run"
+        ["--r"] = "run",
       };
 
       configurationSourceRoot.AddCommandLine(args.ToArray(), switchMappings);

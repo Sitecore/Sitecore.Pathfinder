@@ -126,11 +126,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Building\ITask.cs" />
     <Compile Include="Building\TaskBase.cs" />
+    <Content Include="wwwroot\checkers\ReferenceChecker.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\codegen\Template.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Content Include="wwwroot\codegen\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="wwwroot\project\.filetemplates\Component.component.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
