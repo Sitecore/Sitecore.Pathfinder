@@ -339,4 +339,10 @@
   <data name="scc_cmd_0_0___information_SCC0000__Compiling_checkers___" xml:space="preserve">
     <value>scc.cmd(0,0): information SCC0000: Compiling checkers...</value>
   </data>
+  <data name="Usage__scc_cmd_command__switches_" xml:space="preserve">
+    <value>Usage: scc.cmd command [switches]</value>
+  </data>
+  <data name="Try__scc_cmd_list_tasks__for_a_list_of_available_tasks_" xml:space="preserve">
+    <value>Try "scc.cmd list-tasks" for a list of available tasks.</value>
+  </data>
 </root>

@@ -4,7 +4,7 @@
   using Sitecore.Pathfinder.Documents;
 
   [Export(typeof(IChecker))]
-  public class ReferenceChecker : CheckerBase
+  public class ReferenceChecker : CheckerBase 
   {
     public override void Check(ICheckerContext context)
     {

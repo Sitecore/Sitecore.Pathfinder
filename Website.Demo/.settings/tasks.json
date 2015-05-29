@@ -42,7 +42,12 @@
       "isBuildCommand": false
     },
     {
-      "taskName": "codegen",
+      "taskName": "lint",
+      "args": [],
+      "isBuildCommand": false
+    },
+    {
+      "taskName": "generate-code",
       "args": [],
       "isBuildCommand": false
     }

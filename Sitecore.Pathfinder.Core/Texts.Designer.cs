@@ -659,6 +659,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Try &quot;scc.cmd list-tasks&quot; for a list of available tasks..
+        /// </summary>
+        public static string Try__scc_cmd_list_tasks__for_a_list_of_available_tasks_ {
+            get {
+                return ResourceManager.GetString("Try__scc_cmd_list_tasks__for_a_list_of_available_tasks_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Type not found.
         /// </summary>
         public static string Type_not_found {
@@ -682,6 +691,15 @@ namespace Sitecore.Pathfinder {
         public static string Updating_resources___ {
             get {
                 return ResourceManager.GetString("Updating_resources___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usage: scc.cmd command [switches].
+        /// </summary>
+        public static string Usage__scc_cmd_command__switches_ {
+            get {
+                return ResourceManager.GetString("Usage__scc_cmd_command__switches_", resourceCulture);
             }
         }
         

@@ -19,6 +19,7 @@
   using Sitecore.Pathfinder.Projects;
 
   [Export(typeof(IEmitContext))]
+  [PartCreationPolicy(CreationPolicy.NonShared)]
   public class EmitContext : IEmitContext
   {
     [ImportingConstructor]

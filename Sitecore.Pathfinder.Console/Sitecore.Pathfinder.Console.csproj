@@ -102,10 +102,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Building\Codegen\Razor\RazorCodeGen.cs" />
+    <Compile Include="Building\Commands\ListItems.cs" />
+    <Compile Include="Building\Commands\ListProject.cs" />
     <Compile Include="Building\Deploying\CopyToWebsite\CopyPackageToWebsite.cs" />
     <Compile Include="Building\Deploying\Install\Install.cs" />
     <Compile Include="Building\Deploying\Publishing\Publish.cs" />
     <Compile Include="Building\Initializing\BeforeBuilds\BeforeBuild.cs" />
+    <Compile Include="Building\Initializing\Help\Help.cs" />
+    <Compile Include="Building\Commands\ListTasks.cs" />
     <Compile Include="Building\Initializing\InstallLayout\InstallLayout.cs" />
     <Compile Include="Building\Initializing\Initialization\Init.cs" />
     <Compile Include="Building\Initializing\UpdateResources\UpdateResources.cs" />
@@ -146,6 +150,9 @@
     <Content Include="wwwroot\project\.filetemplates\Page.page.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="wwwroot\project\.filetemplates\projects\gulpfile.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Content Include="wwwroot\project\.filetemplates\Template.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -164,6 +171,9 @@
     <Content Include="wwwroot\project\templates\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="wwwroot\project\.filetemplates\projects\project.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="wwwroot\website\bin\Microsoft.Framework.ConfigurationModel.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -279,6 +289,11 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties wwwroot_2project_2_1filetemplates_2Item_1item_1json__JSONSchema="..\.schemas\item.schema.json" />
+    </VisualStudio>
+  </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
