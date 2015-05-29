@@ -40,6 +40,11 @@
       "taskName": "update-resources",
       "args": [],
       "isBuildCommand": false
+    },
+    {
+      "taskName": "codegen",
+      "args": [],
+      "isBuildCommand": false
     }
   ]
 }

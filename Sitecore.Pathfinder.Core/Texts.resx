@@ -327,4 +327,13 @@
   <data name="Updating_resources___" xml:space="preserve">
     <value>Updating resources...</value>
   </data>
+  <data name="Cleaning_output_directory___" xml:space="preserve">
+    <value>Cleaning output directory...</value>
+  </data>
+  <data name="Generating_code___" xml:space="preserve">
+    <value>Generating code...</value>
+  </data>
+  <data name="Type_not_found" xml:space="preserve">
+    <value>Type not found</value>
+  </data>
 </root>

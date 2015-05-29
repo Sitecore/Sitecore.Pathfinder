@@ -179,6 +179,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cleaning output directory....
+        /// </summary>
+        public static string Cleaning_output_directory___ {
+            get {
+                return ResourceManager.GetString("Cleaning_output_directory___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configuration failed spectacularly.
         /// </summary>
         public static string Configuration_failed_spectacularly {
@@ -373,6 +382,15 @@ namespace Sitecore.Pathfinder {
         public static string Field_is_not_defined_in_the_template {
             get {
                 return ResourceManager.GetString("Field_is_not_defined_in_the_template", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generating code....
+        /// </summary>
+        public static string Generating_code___ {
+            get {
+                return ResourceManager.GetString("Generating_code___", resourceCulture);
             }
         }
         
@@ -628,6 +646,15 @@ namespace Sitecore.Pathfinder {
         public static string There_Is_No_Website_Directory {
             get {
                 return ResourceManager.GetString("There_Is_No_Website_Directory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type not found.
+        /// </summary>
+        public static string Type_not_found {
+            get {
+                return ResourceManager.GetString("Type_not_found", resourceCulture);
             }
         }
         

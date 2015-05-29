@@ -26,9 +26,9 @@ Milestone 2
 -----------
 * <del>Items with versions and languages</del>
 * <del>IDs</del>
-* <del>ayout inside .item.xml</del>
+* <del>Layout inside .item.xml</del>
 * Assemblies
-* Code Generation
+* <del>Code Generation</del>
 * <del>Rename</del>
 * Delete
 * Alias / Launch Pad item
@@ -41,4 +41,8 @@ Missing
   * MarkDownDocument
   * OleDocument
 * Uninstall package
-* Serialization item
+* Serialization item?
+* Validate schema?
+* Test Rename / ID?
+* Layout inside Json
+

@@ -41,6 +41,10 @@
     "uninstall-directory": "..\\.uninstall"
   },
 
+  "codegen": {
+    ".sitecore.tools\\wwwroot\\codegen\\Template.cshtml": "Sitecore.Pathfinder.Projects.Templates.Template, Sitecore.Pathfinder.Core"
+  },
+
   "update-resources-url": "/sitecore/shell/client/Applications/Pathfinder/UpdateResources.ashx",
 
   // directories to ignore
@@ -51,7 +55,7 @@
   "content-files": ".js .css .config .html .htm .ashx .asmx",
 
   "remap-file-directories": {
-    "/sitecore/client":  "/sitecore/shell/client"
+    "/sitecore/client": "/sitecore/shell/client"
   },
 
   "external-references": {

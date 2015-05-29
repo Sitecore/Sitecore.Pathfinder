@@ -7,6 +7,11 @@
       '|'
     };
 
+    public static readonly char[] Slash =
+    {
+      '/'
+    };
+
     public static readonly char[] Space =
     {
       ' '
@@ -15,6 +20,8 @@
     public static class Configuration
     {
       public const string CheckBinFileVersion = "deploying:check-bin-file-version";
+
+      public const string CodeGen = "codegen";
 
       public const string ContentFiles = "content-files";
 
