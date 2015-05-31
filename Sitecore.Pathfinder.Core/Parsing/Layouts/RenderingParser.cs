@@ -44,12 +44,12 @@
         OverwriteWhenMerging = true
       };
 
-      item.Fields.Add(new Field(item.ItemTextNode, "Path", path));
+      item.Fields.Add(new Field("Path", new Property(new TextNode(item.Snapshot, "Path", path, null))));
 
       // todo: make this configurable
       if (string.Compare(context.DatabaseName, "core", StringComparison.OrdinalIgnoreCase) == 0)
       {
-        item.Fields.Add(new Field(item.ItemTextNode, "Place Holders", string.Join(",", placeHolders)));
+        item.Fields.Add(new Field("Place Holders", new Property(new TextNode(item.Snapshot, "Place Holders", string.Join(",", placeHolders), null))));
       }
 
       item.References.Add(new FileReference(item, item.ItemTextNode, path));

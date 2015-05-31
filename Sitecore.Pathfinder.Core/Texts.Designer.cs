@@ -560,15 +560,6 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reference not found.
-        /// </summary>
-        public static string Reference_not_found {
-            get {
-                return ResourceManager.GetString("Reference_not_found", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to scc.cmd(0,0): information SCC0000: Compiling checkers....
         /// </summary>
         public static string scc_cmd_0_0___information_SCC0000__Compiling_checkers___ {

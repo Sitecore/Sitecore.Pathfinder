@@ -10,7 +10,7 @@
   {
     public override bool CanResolve(IEmitContext context, Field field, Sitecore.Data.Items.Item item)
     {
-      var f = item.Fields[field.Name];
+      var f = item.Fields[field.FieldName];
       if (f == null)
       {
         return false;

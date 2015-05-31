@@ -98,6 +98,7 @@
     <Compile Include="Configuration\ConfigurationService.cs" />
     <Compile Include="Configuration\IConfigurationService.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Documents\Property.cs" />
     <Compile Include="Extensions\CompositionServiceExtensions\CompositionServiceExtensions.cs" />
     <Compile Include="Extensions\ConfigurationExtensions\ConfigurationExtensions.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\ItemParserBase.cs" />

@@ -12,23 +12,25 @@
     IList<ITextNode> ChildNodes { get; }
 
     [NotNull]
-    ISnapshot Snapshot { get; }
-
-    TextPosition Position { get; }
-
-    [NotNull]
     string Name { get; }
 
     [CanBeNull]
     ITextNode Parent { get; }
 
+    TextPosition Position { get; }
+
     [NotNull]
-    string Value { get; set; }
+    ISnapshot Snapshot { get; }
+
+    [NotNull]
+    string Value { get; }
 
     [CanBeNull]
     ITextNode GetAttribute([NotNull] string attributeName);
 
     [NotNull]
     string GetAttributeValue([NotNull] string attributeName, [NotNull] string defaultValue = "");
+
+    void SetValue([NotNull] string value);
   }
 }

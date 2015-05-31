@@ -11,7 +11,7 @@
   {
     public override bool CanResolve(IEmitContext context, Field field, Sitecore.Data.Items.Item item)
     {
-      var f = item.Fields[field.Name];
+      var f = item.Fields[field.FieldName];
       if (f == null)
       {
         return false;
@@ -30,7 +30,7 @@
       var mediaItem = item.Database.GetItem(field.Value);
       if (mediaItem == null)
       {
-        throw new RetryableEmitException(Texts.Media_item_not_found, field.ValueTextNode ?? field.TextNode, field.Value);
+        throw new RetryableEmitException(Texts.Media_item_not_found, field.ValueProperty.TextNode, field.Value);
       }
 
       field.Value = $"<image mediapath=\"\" alt=\"Vista15\" width=\"\" height=\"\" hspace=\"\" vspace=\"\" showineditor=\"\" usethumbnail=\"\" src=\"\" mediaid=\"{mediaItem.ID}\" />";

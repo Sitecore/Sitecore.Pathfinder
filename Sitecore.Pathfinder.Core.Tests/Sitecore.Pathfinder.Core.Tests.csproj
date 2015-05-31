@@ -93,18 +93,34 @@
       <Link>Website\.sitecore.tools\scconfig.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
-    <Content Include="Website\.sitecore.tools\schemas\item.schema.json">
+    <None Include="..\Sitecore.Pathfinder.Console\wwwroot\project\.schemas\item.schema.json">
+      <Link>Website\.sitecore.tools\schemas\item.schema.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Website\.sitecore.tools\schemas\item.xsd">
+    </None>
+    <None Include="..\Sitecore.Pathfinder.Console\wwwroot\project\.schemas\item.xsd">
+      <Link>Website\.sitecore.tools\schemas\item.xsd</Link>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Website\.sitecore.tools\schemas\layout.core.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Website\.sitecore.tools\schemas\layout.master.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Website\content\Home\Foo.item.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Website\content\Home\FooTemplate.item.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Website\content\Home\layout.master.schema.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Website\content\Home\item.schema.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Website\layout\layouts\MvcLayout.cshtml">
@@ -165,6 +181,11 @@
   </Choose>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties Website_2content_2Home_2Foo_1item_1json__JSONSchema="item.schema.json" />
+    </VisualStudio>
+  </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

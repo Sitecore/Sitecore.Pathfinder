@@ -5,6 +5,7 @@
 
   public abstract class ItemBase : ProjectItem
   {
+
     protected ItemBase([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ISnapshot snapshot) : base(project, projectUniqueId, snapshot)
     {
       this.ItemTextNode = new TextNode(snapshot);
@@ -27,7 +28,7 @@
     public string ItemIdOrPath { get; set; } = string.Empty;
 
     [NotNull]
-    public string ItemName { get; set; }
+    public string ItemName { get; set; } = string.Empty;
 
     public override string QualifiedName => this.ItemIdOrPath;
 

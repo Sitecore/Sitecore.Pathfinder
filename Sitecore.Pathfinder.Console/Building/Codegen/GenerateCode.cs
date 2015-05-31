@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.Building.Codegen.Razor
+﻿namespace Sitecore.Pathfinder.Building.Codegen
 {
   using System;
   using System.Collections.Generic;
@@ -11,11 +11,11 @@
   using Sitecore.Pathfinder.Projects;
 
   [Export(typeof(ITask))]
-  public class RazorCodeGen : TaskBase
+  public class GenerateCode : TaskBase
   {
     private IRazorEngineService razorEngine;
 
-    public RazorCodeGen() : base("generate-code")
+    public GenerateCode() : base("generate-code")
     {
     }
 
@@ -92,6 +92,7 @@
       foreach (var pair in context.Configuration.GetSubKeys(Constants.Configuration.CodeGen))
       {
         var typeName = context.Configuration.Get(Constants.Configuration.CodeGen + ":" + pair.Key);
+
         var type = Type.GetType(typeName);
         if (type == null)
         {

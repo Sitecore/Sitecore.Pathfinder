@@ -79,7 +79,7 @@
         context.ParseContext.Trace.TraceError(Texts._Field__element_must_have_a__Name__attribute, fieldTextNode.Snapshot.SourceFile.FileName, fieldTextNode.Position, fieldName);
       }
 
-      var field = item.Fields.FirstOrDefault(f => string.Compare(f.Name, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
+      var field = item.Fields.FirstOrDefault(f => string.Compare(f.FieldName, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
       if (field != null)
       {
         context.ParseContext.Trace.TraceError(Texts.Field_is_already_defined, fieldTextNode.Snapshot.SourceFile.FileName, fieldTextNode.Position, fieldName);
@@ -112,20 +112,17 @@
         valueTextNode = valueAttributeTextNode;
       }
 
-      field = new Field(fieldTextNode, valueTextNode);
+      if (valueTextNode == null)
+      {
+        valueTextNode = new TextNode(fieldTextNode.Snapshot, "Value", string.Empty, null);
+      }
+
+      field = new Field(fieldName, new Property(valueTextNode));
       item.Fields.Add(field);
 
-      field.Name = fieldName;
       field.Language = language;
       field.Version = version;
       field.ValueHint = valueHint;
-
-      if (valueTextNode == null)
-      {
-        return;
-      }
-
-      field.Value = valueTextNode.Value;
 
       if (field.ValueHint != "Text")
       {

@@ -101,7 +101,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Building\Codegen\Razor\RazorCodeGen.cs" />
+    <Compile Include="Building\Codegen\GenerateCode.cs" />
     <Compile Include="Building\Commands\ListItems.cs" />
     <Compile Include="Building\Commands\ListProject.cs" />
     <Compile Include="Building\Deploying\CopyToWebsite\CopyPackageToWebsite.cs" />

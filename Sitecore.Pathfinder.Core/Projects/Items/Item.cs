@@ -5,6 +5,7 @@ namespace Sitecore.Pathfinder.Projects.Items
   using System.Linq;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
+  using Sitecore.Pathfinder.Projects.Templates;
 
   public enum MergingMatch
   {
@@ -15,6 +16,8 @@ namespace Sitecore.Pathfinder.Projects.Items
 
   public class Item : ItemBase
   {
+    public static readonly Item Empty = new Item(Projects.Project.Empty, "{935B8D6C-D25A-48B8-8167-2C0443D77027}", TextNode.Empty);
+
     public Item([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ISnapshot snapshot) : base(project, projectUniqueId, snapshot)
     {
     }
@@ -29,6 +32,9 @@ namespace Sitecore.Pathfinder.Projects.Items
     public MergingMatch MergingMatch { get; set; }
 
     public bool OverwriteWhenMerging { get; set; }
+
+    [NotNull]
+    public Template Template => this.Project.Items.OfType<Template>().FirstOrDefault(i => string.Compare(i.QualifiedName, this.TemplateIdOrPath, StringComparison.OrdinalIgnoreCase) == 0) ?? Template.Empty;
 
     public void Merge([NotNull] Item newItem)
     {
@@ -69,7 +75,7 @@ namespace Sitecore.Pathfinder.Projects.Items
       // todo: add SourceFile
       foreach (var newField in newItem.Fields)
       {
-        var field = this.Fields.FirstOrDefault(f => string.Compare(f.Name, newField.Name, StringComparison.OrdinalIgnoreCase) == 0 && string.Compare(f.Language, newField.Language, StringComparison.OrdinalIgnoreCase) == 0 && f.Version == newField.Version);
+        var field = this.Fields.FirstOrDefault(f => string.Compare(f.FieldName, newField.FieldName, StringComparison.OrdinalIgnoreCase) == 0 && string.Compare(f.Language, newField.Language, StringComparison.OrdinalIgnoreCase) == 0 && f.Version == newField.Version);
         if (field == null)
         {
           this.Fields.Add(newField);

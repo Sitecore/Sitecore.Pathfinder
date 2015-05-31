@@ -4,7 +4,7 @@
   using Sitecore.Pathfinder.Documents;
 
   [Export(typeof(IChecker))]
-  public class ReferenceChecker : CheckerBase 
+  public class ReferenceChecker : CheckerBase
   {
     public override void Check(ICheckerContext context)
     {
@@ -14,7 +14,7 @@
         {
           if (!reference.IsValid)
           {
-            context.Trace.TraceWarning(Texts.Reference_not_found, projectItem.Snapshot.SourceFile.FileName, reference.SourceTextNode?.Position ?? TextPosition.Empty, reference.TargetQualifiedName);
+            context.Trace.TraceWarning("Reference not found", projectItem.Snapshot.SourceFile.FileName, reference.SourceTextNode?.Position ?? TextPosition.Empty, reference.TargetQualifiedName);
           }
         }
       }

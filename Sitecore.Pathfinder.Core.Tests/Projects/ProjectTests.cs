@@ -77,7 +77,7 @@
       Assert.AreEqual("Template.Create", attr.Name);
       Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", attr.Value);
 
-      var field = item.Fields.FirstOrDefault(f => f.Name == "Title");
+      var field = item.Fields.FirstOrDefault(f => f.FieldName == "Title");
       Assert.IsNotNull(field);
       Assert.AreEqual("Hello", field.Value);
     }
@@ -135,7 +135,7 @@
       Assert.AreEqual("/sitecore/content/Home/HelloWorld", item.ItemIdOrPath);
       Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", item.TemplateIdOrPath);
 
-      var field = item.Fields.FirstOrDefault(f => f.Name == "Title");
+      var field = item.Fields.FirstOrDefault(f => f.FieldName == "Title");
       Assert.IsNotNull(field);
       Assert.AreEqual("Hello", field.Value);
 
@@ -164,7 +164,7 @@
       Assert.AreEqual("Mushrooms", item.ItemName);
       Assert.AreEqual("/sitecore/media library/Mushrooms", item.ItemIdOrPath);
 
-      var field = item.Fields.FirstOrDefault(f => f.Name == "Description");
+      var field = item.Fields.FirstOrDefault(f => f.FieldName == "Description");
       Assert.IsNotNull(field);
       Assert.AreEqual("Mushrooms", field.Value);
     }

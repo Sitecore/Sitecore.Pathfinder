@@ -11,7 +11,7 @@
   {
     public override bool CanResolve(IEmitContext context, Field field, Sitecore.Data.Items.Item item)
     {
-      var f = item.Fields[field.Name];
+      var f = item.Fields[field.FieldName];
       if (f == null)
       {
         return false;
@@ -30,7 +30,7 @@
       var targetItem = item.Database.GetItem(field.Value);
       if (targetItem == null)
       {
-        throw new RetryableEmitException("Item not found", field.TextNode, field.Value);
+        throw new RetryableEmitException(Texts.Item_not_found, field.ValueProperty.TextNode, field.Value);
       }
 
       field.Value = $"<link text=\"\" linktype=\"internal\" url=\"\" anchor=\"\" title=\"\" class=\"\" target=\"\" querystring=\"\" id=\"{targetItem.ID}\" />";

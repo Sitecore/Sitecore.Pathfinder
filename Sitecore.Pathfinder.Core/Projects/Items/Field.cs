@@ -6,37 +6,37 @@ namespace Sitecore.Pathfinder.Projects.Items
   // todo: consider basing this on ProjectElement
   public class Field
   {
-    public Field([NotNull] ITextNode textNode, [CanBeNull] ITextNode valueTextNode)
+    public Field([NotNull] string fieldName, [NotNull] Property valueProperty)
     {
-      this.TextNode = textNode;
-      this.ValueTextNode = valueTextNode;
-    }
-
-    public Field([NotNull] ITextNode textNode, [NotNull] string name, [NotNull] string value)
-    {
-      this.TextNode = textNode;
-      this.Name = name;
-      this.Value = value;
-      this.Language = string.Empty;
+      this.FieldName = fieldName;
+      this.ValueProperty = valueProperty;
     }
 
     [NotNull]
     public string Language { get; set; } = string.Empty;
 
     [NotNull]
-    public string Name { get; set; } = string.Empty;
+    public string FieldName { get; }
 
     [NotNull]
-    public ITextNode TextNode { get; }
+    public Property ValueProperty { get; }
 
     [NotNull]
-    public string Value { get; set; } = string.Empty;
+    public string Value
+    {
+      get
+      {
+        return this.ValueProperty.Value;
+      }
+
+      set
+      {
+        this.ValueProperty.Value = value;
+      }
+    }
 
     [NotNull]
     public string ValueHint { get; set; } = string.Empty;
-
-    [CanBeNull]
-    public ITextNode ValueTextNode { get; }
 
     public int Version { get; set; }
   }

@@ -199,7 +199,7 @@
 
         foreach (var field in this.ProjectItem.Fields.Where(i => string.IsNullOrEmpty(i.Language) && i.Version == 0))
         {
-          this.Item[field.Name] = field.Value;
+          this.Item[field.FieldName] = field.Value;
         }
       }
 
@@ -217,7 +217,7 @@
           if (item == null)
           {
             // todo: validate this before updating the item
-            context.Trace.TraceError(Texts.Item_not_found, field.TextNode.Snapshot.SourceFile.FileName, field.TextNode.Position, $"language: {field.Language}, version; {field.Version}");
+            context.Trace.TraceError(Texts.Item_not_found, field.ValueProperty.TextNode.Snapshot.SourceFile.FileName, field.ValueProperty.TextNode.Position, $"language: {field.Language}, version; {field.Version}");
             continue;
           }
 
@@ -225,7 +225,7 @@
           items.Add(item);
         }
 
-        item[field.Name] = field.Value;
+        item[field.FieldName] = field.Value;
       }
 
       foreach (var item in items)
@@ -251,9 +251,9 @@
 
       foreach (var field in this.ProjectItem.Fields)
       {
-        if (templateFields.All(f => string.Compare(f.Name, field.Name, StringComparison.OrdinalIgnoreCase) != 0))
+        if (templateFields.All(f => string.Compare(f.Name, field.FieldName, StringComparison.OrdinalIgnoreCase) != 0))
         {
-          throw new RetryableEmitException(Texts.Field_is_not_defined_in_the_template, this.ProjectItem.Snapshot, field.Name);
+          throw new RetryableEmitException(Texts.Field_is_not_defined_in_the_template, this.ProjectItem.Snapshot, field.FieldName);
         }
 
         if (!string.IsNullOrEmpty(field.Language))
@@ -261,7 +261,7 @@
           var language = LanguageManager.GetLanguage(field.Language, this.TemplateItem.Database);
           if (language == null)
           {
-            throw new RetryableEmitException(Texts.Language_not_found, field.TextNode, field.Language);
+            throw new RetryableEmitException(Texts.Language_not_found, field.ValueProperty.TextNode, field.Language);
           }
         }
       }

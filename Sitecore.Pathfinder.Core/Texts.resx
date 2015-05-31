@@ -216,9 +216,6 @@
   <data name="Unique_ID_clash" xml:space="preserve">
     <value>Unique ID clash</value>
   </data>
-  <data name="Reference_not_found" xml:space="preserve">
-    <value>Reference not found</value>
-  </data>
   <data name="Creating__layout__directory___" xml:space="preserve">
     <value>Creating 'layout' directory...</value>
   </data>

@@ -9,9 +9,10 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
   public class Template : ItemBase
   {
+    public static readonly Template Empty = new Template(Projects.Project.Empty, "{7A3E077F-D985-453F-8773-348ADFEAF2FD}", TextNode.Empty);
+
     public Template([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode document) : base(project, projectUniqueId, document)
     {
-      this.Sections = new List<TemplateSection>();
     }
 
     [NotNull]
@@ -21,7 +22,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
     public string LongHelp { get; set; } = string.Empty;
 
     [NotNull]
-    public IList<TemplateSection> Sections { get; }
+    public IList<TemplateSection> Sections { get; } = new List<TemplateSection>();
 
     [NotNull]
     public string ShortHelp { get; set; } = string.Empty;
