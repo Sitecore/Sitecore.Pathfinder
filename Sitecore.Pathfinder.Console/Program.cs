@@ -10,6 +10,6 @@
       Trace.Listeners.Add(new ConsoleTraceListener());
 
       new Startup().Start();
-    }
-  }                      
-}
+    }                                      
+  }                                 
+}                                     

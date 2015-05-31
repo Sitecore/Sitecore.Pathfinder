@@ -171,8 +171,13 @@
     <Content Include="wwwroot\project\templates\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="wwwroot\project\.filetemplates\projects\project.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="wwwroot\project\.schemas\core.layout.schema.json" />
+    <None Include="wwwroot\project\.schemas\core.layout.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="wwwroot\project\.schemas\master.layout.schema.json" />
+    <None Include="wwwroot\project\.schemas\master.layout.xsd">
+      <SubType>Designer</SubType>
     </None>
     <None Include="wwwroot\website\bin\Microsoft.Framework.ConfigurationModel.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

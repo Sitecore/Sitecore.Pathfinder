@@ -101,6 +101,7 @@
     <Compile Include="Documents\Property.cs" />
     <Compile Include="Extensions\CompositionServiceExtensions\CompositionServiceExtensions.cs" />
     <Compile Include="Extensions\ConfigurationExtensions\ConfigurationExtensions.cs" />
+    <Compile Include="Extensions\JsonTextWriterExtensions\JsonTextWriter.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\ItemParserBase.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\Json\JsonItemParser.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\LayoutParserBase.cs" />

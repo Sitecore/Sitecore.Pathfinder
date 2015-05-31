@@ -6,6 +6,12 @@
         "*.item.json"
       ],
       "url": "/.schemas/item.schema.json"
+    },
+    {
+      "fileMatch": [
+        "*.layout.json"
+      ],
+      "url": "/.schemas/layout.master.schema.json"
     }
   ]
 }

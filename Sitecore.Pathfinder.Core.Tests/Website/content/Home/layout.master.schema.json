@@ -49,6 +49,12 @@
           "description": "Hello World",
           "properties": {
             "Text": { "type": "string" },
+            "DropLine": {
+              "enum": [
+                "21323",
+                "34234"
+              ]
+            },
             "Renderings": { "$ref": "#/definitions/Renderings" }
           }
         }
