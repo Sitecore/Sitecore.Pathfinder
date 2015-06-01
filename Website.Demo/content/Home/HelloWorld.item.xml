@@ -1,0 +1,14 @@
+﻿<Item xmlns="http://www.sitecore.net/pathfinder/item" Template.Create="/sitecore/templates/Sample/HelloWorld">
+  <Field Name="Title">Pathfinder</Field>
+  <Field Name="Text">Welcome to Sitecore Pathfinder</Field>
+  <Field Name="Image" Field.Type="Image">/sitecore/media library/HelloWorld</Field>  
+  <Field Name="__Workflow"></Field>
+  <Field Name="__Workflow State"></Field>
+  <LayoutField>
+    <Layout>
+      <Device Name="Default" Layout="/sitecore/layout/layouts/MvcLayout">
+        <Pipper />
+      </Device>
+    </Layout>
+  </LayoutField>
+</Item>

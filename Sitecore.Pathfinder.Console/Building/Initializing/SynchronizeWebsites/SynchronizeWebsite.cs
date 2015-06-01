@@ -1,4 +1,4 @@
-namespace Sitecore.Pathfinder.Building.Initializing.UpdateResources
+namespace Sitecore.Pathfinder.Building.Initializing.SynchronizeWebsites
 {
   using System;
   using System.ComponentModel.Composition;
@@ -9,9 +9,9 @@ namespace Sitecore.Pathfinder.Building.Initializing.UpdateResources
   using Sitecore.Pathfinder.Extensions.ConfigurationExtensions;
 
   [Export(typeof(ITask))]
-  public class UpdateResources : TaskBase
+  public class SynchronizeWebsite : TaskBase
   {
-    public UpdateResources() : base("update-resources")
+    public SynchronizeWebsite() : base("sync-website")
     {
     }
 

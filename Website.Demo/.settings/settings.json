@@ -9,9 +9,15 @@
     },
     {
       "fileMatch": [
-        "*.layout.json"
+        "*.master.layout.json"
       ],
-      "url": "/.schemas/layout.master.schema.json"
+      "url": "/.schemas/master.layout.schema.json"
+    },
+    {
+      "fileMatch": [
+        "*.core.layout.json"
+      ],
+      "url": "/.schemas/core.layout.schema.json"
     }
   ]
 }

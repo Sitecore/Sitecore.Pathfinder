@@ -1,5 +1,4 @@
 {
-  "$schema": "/.schemas/item.schema.json",
   "Template": {
     "Sections": [
       {

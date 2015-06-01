@@ -3,9 +3,4 @@
   <Field Name="Text">Welcome to Sitecore Pathfinder</Field>
   <Field Name="__Workflow"></Field>
   <Field Name="__Workflow State"></Field>
-  <LayoutField>
-    <Layout xmlns="http://www.sitecore.net/pathfinder/layouts/master">
-      <HelloWorld />
-    </Layout>  
-  </LayoutField>
 </Item>

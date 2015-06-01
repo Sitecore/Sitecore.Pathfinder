@@ -1,8 +1,0 @@
-﻿{
-  "Item": {
-    "Name": "HelloWorld",
-    "Fields": [
-      { "Name": "Description", "Value": "Hello World" } 
-    ]
-  }
-}

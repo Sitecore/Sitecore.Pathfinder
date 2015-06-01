@@ -112,7 +112,7 @@
     <Compile Include="Building\Commands\ListTasks.cs" />
     <Compile Include="Building\Initializing\InstallLayout\InstallLayout.cs" />
     <Compile Include="Building\Initializing\Initialization\Init.cs" />
-    <Compile Include="Building\Initializing\UpdateResources\UpdateResources.cs" />
+    <Compile Include="Building\Initializing\SynchronizeWebsites\SynchronizeWebsite.cs" />
     <Compile Include="Building\Querying\FindReferences.cs" />
     <Compile Include="Building\Querying\FindUsages.cs" />
     <Compile Include="Building\Packaging\CreateNupkg\CreateNupkg.cs" />
@@ -142,13 +142,7 @@
     <Content Include="wwwroot\codegen\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="wwwroot\project\.filetemplates\Component.component.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="wwwroot\project\.filetemplates\Item.item.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="wwwroot\project\.filetemplates\Page.page.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="wwwroot\project\.filetemplates\projects\gulpfile.js">
@@ -172,13 +166,19 @@
     <Content Include="wwwroot\project\templates\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="wwwroot\project\.schemas\core.layout.schema.json" />
+    <None Include="wwwroot\project\.schemas\core.layout.schema.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="wwwroot\project\.schemas\core.layout.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="wwwroot\project\.schemas\master.layout.schema.json" />
+    <None Include="wwwroot\project\.schemas\master.layout.schema.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="wwwroot\project\.schemas\master.layout.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="wwwroot\website\bin\Microsoft.Framework.ConfigurationModel.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -156,6 +156,11 @@
       {
         foreach (var child in fieldTreeNodes.ChildNodes)
         {
+          if (child.Name != "Field")
+          {
+            continue;
+          }
+
           var name = child.GetAttributeValue("Name");
 
           var templateField = new TemplateField();

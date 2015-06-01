@@ -37,12 +37,7 @@
 	     } 
     },
     {
-      "taskName": "update-resources",
-      "args": [],
-      "isBuildCommand": false
-    },
-    {
-      "taskName": "lint",
+      "taskName": "sync-website",
       "args": [],
       "isBuildCommand": false
     },

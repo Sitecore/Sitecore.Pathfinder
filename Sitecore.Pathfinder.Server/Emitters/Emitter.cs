@@ -67,6 +67,22 @@
         this.RetryEmit(context, emitters, retries);
       }
 
+      foreach (var diagnostic in context.Project.Diagnostics)
+      {
+        switch (diagnostic.Severity)
+        {
+          case Severity.Error:
+            context.Trace.TraceError(diagnostic.Text, diagnostic.FileName, diagnostic.Position);
+            break;
+          case Severity.Warning:
+            context.Trace.TraceWarning(diagnostic.Text, diagnostic.FileName, diagnostic.Position);
+            break;
+          default:
+            context.Trace.TraceInformation(diagnostic.Text, diagnostic.FileName, diagnostic.Position);
+            break;
+        }
+      }
+
       context.BuildUninstallPackage();
     }
 

@@ -25,6 +25,7 @@
 
     public override void SetValue(string value)
     {
+      /*
       var textDocument = (ITextSnapshot)this.Snapshot;
 
       textDocument.EnsureIsEditing();
@@ -40,6 +41,9 @@
       {
         attribute.SetValue(value);
       }
+      */
+
+      this.Value = value;
     }
 
     private static TextPosition GetPosition([NotNull] IXmlLineInfo lineInfo, int lineLength)

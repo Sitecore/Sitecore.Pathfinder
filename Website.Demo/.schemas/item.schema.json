@@ -35,7 +35,6 @@
             "required": [ "Name", "Value" ]
           }
         },
-        "LayoutField": { "type": "object" },
         "Item": { "$ref": "#/definitions/Item" },
         "template": { "$ref": "#/definitions/Template" }
       }
