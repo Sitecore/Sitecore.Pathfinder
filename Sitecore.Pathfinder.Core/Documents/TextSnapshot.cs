@@ -13,13 +13,14 @@
       this.Root = new TextNode(this);
     }
 
-    public string Contents { get; }
-
     public bool IsEditable { get; protected set; }
 
     public bool IsEditing { get; protected set; }
 
     public virtual ITextNode Root { get; }
+
+    [NotNull]
+    protected string Contents { get; }
 
     public virtual void BeginEdit()
     {

@@ -9,8 +9,6 @@
   {
     private string filePath;
 
-    private string qualifiedName;
-
     private string shortName;
 
     public File([NotNull] IProject project, [NotNull] ISnapshot snapshot) : base(project, GetProjectUniqueId(project, snapshot), snapshot)
@@ -19,7 +17,7 @@
 
     public string FilePath => this.filePath ?? (this.filePath = PathHelper.GetFilePath(this.Project, this.Snapshot.SourceFile));
 
-    public override string QualifiedName => this.qualifiedName ?? (this.qualifiedName = this.Snapshot.SourceFile.FileName);
+    public override string QualifiedName => this.Snapshot.SourceFile.FileName;
 
     public override string ShortName => this.shortName ?? (this.shortName = Path.GetFileName(this.Snapshot.SourceFile.FileName));
 

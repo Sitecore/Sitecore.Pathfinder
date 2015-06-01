@@ -2,13 +2,11 @@
 {
   using System.IO;
   using System.Linq;
-  using System.Net;
   using NUnit.Framework;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects.Items;
   using Sitecore.Pathfinder.Projects.Templates;
-  using Sitecore.Pathfinder.TextDocuments;
 
   [TestFixture]
   public class ProjectTests : Tests

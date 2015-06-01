@@ -1,4 +1,4 @@
-namespace Sitecore.Pathfinder.Building.Querying.FindReferences
+namespace Sitecore.Pathfinder.Building.Querying
 {
   using System.ComponentModel.Composition;
   using System.Linq;
@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Building.Querying.FindReferences
       var qualifiedName = context.Configuration.GetString("name");
       if (string.IsNullOrEmpty(qualifiedName))
       {
-        context.Trace.Writeline("You must specific the --name argument");
+        context.Trace.Writeline(Texts.You_must_specific_the___name_argument);
         return;
       }
 
@@ -29,7 +29,7 @@ namespace Sitecore.Pathfinder.Building.Querying.FindReferences
       var projectItem = queryService.FindProjectItem(context.Project, qualifiedName);
       if (projectItem == null)
       {
-        context.Trace.Writeline("Project item not found: " + qualifiedName);
+        context.Trace.Writeline(Texts.Project_item_not_found__ + qualifiedName);
         return;
       }
 
@@ -50,7 +50,7 @@ namespace Sitecore.Pathfinder.Building.Querying.FindReferences
         context.Trace.Writeline(line);
       }
 
-      context.Trace.Writeline("Found: " + projectItem.References.Count());
+      context.Trace.Writeline(Texts.Found__ + projectItem.References.Count());
     }
   }
 }

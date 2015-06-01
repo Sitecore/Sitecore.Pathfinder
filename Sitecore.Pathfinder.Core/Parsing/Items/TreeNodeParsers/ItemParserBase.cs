@@ -117,12 +117,8 @@
         valueTextNode = new TextNode(fieldTextNode.Snapshot, "Value", string.Empty, null);
       }
 
-      field = new Field(fieldName, new Property(valueTextNode));
+      field = new Field(fieldName, language, version, valueTextNode, valueHint);
       item.Fields.Add(field);
-
-      field.Language = language;
-      field.Version = version;
-      field.ValueHint = valueHint;
 
       if (field.ValueHint != "Text")
       {

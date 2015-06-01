@@ -27,7 +27,7 @@
       var value = this.GetValue(context, textNode);
       if (!string.IsNullOrEmpty(value))
       {
-        item.Fields.Add(new Field("__Renderings", new Property(new TextNode(textNode.Snapshot, "__Renderings", value, null))));
+        item.Fields.Add(new Field("__Renderings", string.Empty, 0, new TextNode(textNode.Snapshot, string.Empty, value, null)));
       }
 
       context.ParseContext.Project.AddOrMerge(item);

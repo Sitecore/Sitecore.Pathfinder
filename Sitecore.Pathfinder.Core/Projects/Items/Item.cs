@@ -16,13 +16,13 @@ namespace Sitecore.Pathfinder.Projects.Items
 
   public class Item : ItemBase
   {
-    public static readonly Item Empty = new Item(Projects.Project.Empty, "{935B8D6C-D25A-48B8-8167-2C0443D77027}", TextNode.Empty);
+    public static readonly Item Empty = new Item(Projects.Project.Empty, "{935B8D6C-D25A-48B8-8167-2C0443D77027}", Documents.TextNode.Empty);
 
     public Item([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ISnapshot snapshot) : base(project, projectUniqueId, snapshot)
     {
     }
 
-    public Item([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode itemTextNode) : base(project, projectUniqueId, itemTextNode)
+    public Item([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode) : base(project, projectUniqueId, textNode)
     {
     }
 
@@ -35,6 +35,9 @@ namespace Sitecore.Pathfinder.Projects.Items
 
     [NotNull]
     public Template Template => this.Project.Items.OfType<Template>().FirstOrDefault(i => string.Compare(i.QualifiedName, this.TemplateIdOrPath, StringComparison.OrdinalIgnoreCase) == 0) ?? Template.Empty;
+
+    [NotNull]
+    public string TemplateIdOrPath { get; set; } = string.Empty;
 
     public void Merge([NotNull] Item newItem)
     {

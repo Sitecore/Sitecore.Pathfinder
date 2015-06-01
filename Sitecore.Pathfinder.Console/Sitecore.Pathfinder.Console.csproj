@@ -113,8 +113,8 @@
     <Compile Include="Building\Initializing\InstallLayout\InstallLayout.cs" />
     <Compile Include="Building\Initializing\Initialization\Init.cs" />
     <Compile Include="Building\Initializing\UpdateResources\UpdateResources.cs" />
-    <Compile Include="Building\Querying\FindReferences\FindReferences.cs" />
-    <Compile Include="Building\Querying\FindUsages\FindUsages.cs" />
+    <Compile Include="Building\Querying\FindReferences.cs" />
+    <Compile Include="Building\Querying\FindUsages.cs" />
     <Compile Include="Building\Packaging\CreateNupkg\CreateNupkg.cs" />
     <Compile Include="Building\Linting\Lint.cs" />
     <Compile Include="Building\Preprocessing\Rebuild\Rebuild.cs" />
@@ -122,6 +122,7 @@
     <Compile Include="Building\Build.cs" />
     <Compile Include="Building\Preprocessing\IncrementalBuilds\IncrementalBuild.cs" />
     <Compile Include="Building\Querying\QueryTaskBase.cs" />
+    <Compile Include="Building\Refactoring\Rename.cs" />
     <Compile Include="Building\RequestTaskBase.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Building\BuildContext.cs" />

@@ -1,4 +1,4 @@
-namespace Sitecore.Pathfinder.Building.Querying.FindUsages
+namespace Sitecore.Pathfinder.Building.Querying
 {
   using System.ComponentModel.Composition;
   using System.Linq;
@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Building.Querying.FindUsages
       var qualifiedName = context.Configuration.GetString("name");
       if (string.IsNullOrEmpty(qualifiedName))
       {
-        context.Trace.Writeline("You must specific the --name argument");
+        context.Trace.Writeline(Texts.You_must_specific_the___name_argument);
         return;
       }
 
@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Building.Querying.FindUsages
 
       this.Display(context, references);
 
-      context.Trace.Writeline("Found: " + references.Count());
+      context.Trace.Writeline(Texts.Found__ + references.Count());
     }
   }
 }

@@ -5,9 +5,6 @@
 
   public interface ITextSnapshot : ISnapshot
   {
-    [NotNull]
-    string Contents { get; }
-
     bool IsEditable { get; }
 
     bool IsEditing { get; }

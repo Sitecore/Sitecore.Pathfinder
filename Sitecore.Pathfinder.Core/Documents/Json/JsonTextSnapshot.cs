@@ -83,7 +83,7 @@
           case JTokenType.Float:
           case JTokenType.Integer:
           case JTokenType.String:
-            var propertyTreeNode = new JsonTextNode(this, property.Name, property);
+            var propertyTreeNode = new JsonTextNode(this, property.Name, property, treeNode);
             treeNode.Attributes.Add(propertyTreeNode);
             break;
         }

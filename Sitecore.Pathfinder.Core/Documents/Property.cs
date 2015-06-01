@@ -10,9 +10,6 @@
     }
 
     [NotNull]
-    public string Name => this.TextNode.Name;
-
-    [NotNull]
     public ITextNode TextNode { get; }
 
     [NotNull]

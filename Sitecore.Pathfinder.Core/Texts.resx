@@ -342,4 +342,16 @@
   <data name="Try__scc_cmd_list_tasks__for_a_list_of_available_tasks_" xml:space="preserve">
     <value>Try "scc.cmd list-tasks" for a list of available tasks.</value>
   </data>
+  <data name="You_must_specific_the___name_argument" xml:space="preserve">
+    <value>You must specific the --name argument</value>
+  </data>
+  <data name="Project_item_not_found__" xml:space="preserve">
+    <value>Project item not found: </value>
+  </data>
+  <data name="Found__" xml:space="preserve">
+    <value>Found: </value>
+  </data>
+  <data name="You_must_specific_the___to_argument" xml:space="preserve">
+    <value>You must specific the --to_argument</value>
+  </data>
 </root>

@@ -49,7 +49,7 @@
       var itemIdOrPath = parentItemPath + "/" + itemName;
       var projectUniqueId = textNode.GetAttributeValue("PublicTemplate.Id", itemIdOrPath);
 
-      var publicTemplate = new Template(context.Project, projectUniqueId, privateTemplate.ItemTextNode)
+      var publicTemplate = new Template(context.Project, projectUniqueId, privateTemplate.TextNode)
       {
         ItemName = itemName,
         DatabaseName = privateTemplate.DatabaseName,

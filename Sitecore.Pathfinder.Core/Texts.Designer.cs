@@ -386,6 +386,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Found: .
+        /// </summary>
+        public static string Found__ {
+            get {
+                return ResourceManager.GetString("Found__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Generating code....
         /// </summary>
         public static string Generating_code___ {
@@ -547,6 +556,15 @@ namespace Sitecore.Pathfinder {
         public static string Project_has_not_been_loaded__Call_Load___first {
             get {
                 return ResourceManager.GetString("Project_has_not_been_loaded__Call_Load___first", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project item not found: .
+        /// </summary>
+        public static string Project_item_not_found__ {
+            get {
+                return ResourceManager.GetString("Project_item_not_found__", resourceCulture);
             }
         }
         
@@ -719,6 +737,24 @@ namespace Sitecore.Pathfinder {
         public static string XML_file_is_not_valid {
             get {
                 return ResourceManager.GetString("XML_file_is_not_valid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must specific the --name argument.
+        /// </summary>
+        public static string You_must_specific_the___name_argument {
+            get {
+                return ResourceManager.GetString("You_must_specific_the___name_argument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must specific the --to_argument.
+        /// </summary>
+        public static string You_must_specific_the___to_argument {
+            get {
+                return ResourceManager.GetString("You_must_specific_the___to_argument", resourceCulture);
             }
         }
         

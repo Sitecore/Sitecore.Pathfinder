@@ -40,6 +40,15 @@
       Assert.AreEqual("Text", field.GetAttributeValue("Name"));
       Assert.AreEqual("123", field.GetAttributeValue("Value"));
       Assert.AreEqual(0, field.ChildNodes.Count);
+
+      var attribute = field.GetAttribute("Name");
+      Assert.IsNotNull(attribute);
+      Assert.AreEqual("Text", attribute.Value);
+      Assert.AreEqual(0, attribute.Attributes.Count);
+      Assert.AreEqual(0, attribute.ChildNodes.Count);
+      Assert.AreEqual(field, attribute.Parent);
+      Assert.AreEqual(field.Snapshot, attribute.Snapshot);
+      Assert.AreEqual(doc, attribute.Snapshot);
     }
 
     [Test]

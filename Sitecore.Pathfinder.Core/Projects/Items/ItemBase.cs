@@ -8,12 +8,12 @@
 
     protected ItemBase([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ISnapshot snapshot) : base(project, projectUniqueId, snapshot)
     {
-      this.ItemTextNode = new TextNode(snapshot);
+      this.TextNode = new TextNode(snapshot);
     }
 
-    protected ItemBase([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode itemTextNode) : base(project, projectUniqueId, itemTextNode.Snapshot)
+    protected ItemBase([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode) : base(project, projectUniqueId, textNode.Snapshot)
     {
-      this.ItemTextNode = itemTextNode;
+      this.TextNode = textNode;
     }
 
     [NotNull]
@@ -34,11 +34,7 @@
 
     public override string ShortName => this.ItemName;
 
-    // todo: move to Item
     [NotNull]
-    public string TemplateIdOrPath { get; set; } = string.Empty;
-
-    [NotNull]
-    public ITextNode ItemTextNode { get; }
+    public ITextNode TextNode { get; }
   }
 }

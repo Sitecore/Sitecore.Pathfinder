@@ -1,6 +1,5 @@
 ﻿namespace Sitecore.Pathfinder.Projects.Items
 {
-  using System.Diagnostics;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
 

@@ -154,7 +154,7 @@
           continue;
         }
 
-        var attributeTreeNode = new XmlTextNode(this, attribute);
+        var attributeTreeNode = new XmlTextNode(this, attribute, treeNode);
         treeNode.Attributes.Add(attributeTreeNode);
       }
 
