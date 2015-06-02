@@ -23,14 +23,13 @@
 
     [NotNull]
     IFileSystemService FileSystem { get; }
+    string uninstallDirectory { get; }
 
     [NotNull]
     IProject Project { get; }
 
     [NotNull]
     ITraceService Trace { get; }
-
-    void BuildUninstallPackage();
 
     void RegisterDeletedItem([NotNull] Item deletedItem);
 

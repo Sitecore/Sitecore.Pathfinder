@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.Emitters.Templates
+﻿namespace Sitecore.Pathfinder.Emitters.Items
 {
   using System.ComponentModel.Composition;
   using Sitecore.Pathfinder.Builders.Templates;

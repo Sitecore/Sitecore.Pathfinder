@@ -1,13 +1,9 @@
 ﻿namespace Sitecore.Pathfinder.Emitters
 {
-  using System;
   using System.Collections.Generic;
   using System.ComponentModel.Composition;
   using System.IO;
-  using System.Text;
-  using System.Xml;
   using Microsoft.Framework.ConfigurationModel;
-  using NuGet;
   using Sitecore.Data.Items;
   using Sitecore.Data.Serialization;
   using Sitecore.Pathfinder.Builders.FieldResolvers;
@@ -62,13 +58,6 @@
     [NotNull]
     protected ICollection<string> UpdatedItems { get; } = new List<string>();
 
-    public virtual void BuildUninstallPackage()
-    {
-      var nuspecFileName = Path.Combine(this.UninstallDirectory, "Uninstall.nuspec");
-      this.BuildNuspecFile(nuspecFileName);
-      this.BuildNupkgFile(nuspecFileName);
-    }
-
     public void RegisterDeletedItem(Item deletedItem)
     {
       this.DeletedItems.Add(deletedItem.Database.Name + "|" + deletedItem.ID);
@@ -113,62 +102,6 @@
       this.Project = project;
 
       return this;
-    }
-
-    protected virtual void BuildNupkgFile([NotNull] string nuspecFileName)
-    {
-      var nupkgFileName = Path.ChangeExtension(nuspecFileName, "nupkg");
-
-      try
-      {
-        this.FileSystem.DeleteFile(nupkgFileName);
-
-        var packageBuilder = new PackageBuilder(nuspecFileName, Path.GetDirectoryName(nupkgFileName), NullPropertyProvider.Instance, false);
-
-        using (var nupkg = new FileStream(nupkgFileName, FileMode.Create))
-        {
-          packageBuilder.Save(nupkg);
-        }
-      }
-      catch (Exception ex)
-      {
-        this.Trace.TraceError(ex.Message);
-      }
-    }
-
-    protected virtual void BuildNuspecFile([NotNull] string nuspecFileName)
-    {
-      using (var output = new XmlTextWriter(nuspecFileName, Encoding.UTF8))
-      {
-        output.Formatting = Formatting.Indented;
-
-        output.WriteStartElement("package");
-
-        output.WriteStartElement("metadata");
-        output.WriteElementString("id", "Uninstall");
-        output.WriteElementString("version", "1.0.0");
-        output.WriteElementString("title", "Uninstall");
-        output.WriteElementString("authors", "Sitecore Pathfinder");
-        output.WriteElementString("owners", "Sitecore Pathfinder");
-        output.WriteElementString("description", "Uninstall Package");
-        output.WriteElementString("summary", "Uninstall Package");
-        output.WriteElementString("tags", string.Empty);
-
-        output.WriteEndElement();
-
-        output.WriteStartElement("files");
-
-        output.WriteStartElement("file");
-
-        output.WriteAttributeString("src", "**/*");
-        output.WriteAttributeString("target", string.Empty);
-
-        output.WriteEndElement();
-
-        output.WriteEndElement();
-
-        output.WriteEndElement();
-      }
     }
   }
 }
