@@ -15,7 +15,8 @@
     private static readonly string[] FileExtensions =
     {
       ".item.xml", 
-      ".item.json"
+      ".item.json",
+      ".layout.json"
     };
 
     public ItemParser() : base(Constants.Parsers.Items)

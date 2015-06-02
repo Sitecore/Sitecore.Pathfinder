@@ -71,12 +71,6 @@
 
     protected override string GetValue(ItemParseContext context, ITextNode textNode)
     {
-      var layoutTextNode = textNode.ChildNodes.FirstOrDefault();
-      if (layoutTextNode == null)
-      {
-        return string.Empty;
-      }
-
       var database = Factory.GetDatabase(context.ParseContext.DatabaseName);
 
       var writer = new StringWriter();
@@ -87,7 +81,7 @@
 
       using (new SecurityDisabler())
       {
-        this.WriteLayout(context, output, database, layoutTextNode);
+        this.WriteLayout(context, output, database, textNode);
       }
 
       return writer.ToString();
@@ -204,7 +198,14 @@
         layoutPlaceholders = this.GetPlaceholders(deviceTextNode, l);
       }
 
-      foreach (var renderingTextNode in deviceTextNode.ChildNodes)
+      var renderings = context.Snapshot.GetNestedTextNode(deviceTextNode, "Renderings");
+      if (renderings == null)
+      {
+        // silent
+        return;
+      }
+
+      foreach (var renderingTextNode in renderings.ChildNodes)
       {
         this.WriteRendering(context, output, renderingItems, database, renderingTextNode, layoutPlaceholders);
       }
@@ -220,7 +221,14 @@
 
       output.WriteStartElement("r");
 
-      foreach (var deviceTextNode in layoutTextNode.ChildNodes)
+      var devices = context.Snapshot.GetNestedTextNode(layoutTextNode, "Devices");
+      if (devices == null)
+      {
+        // silent
+        return;
+      }
+ 
+      foreach (var deviceTextNode in devices.ChildNodes)
       {
         this.WriteDevice(context, output, renderingItems, database, deviceTextNode);
       }

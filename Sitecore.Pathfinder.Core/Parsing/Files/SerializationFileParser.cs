@@ -129,7 +129,8 @@
         }
       }
 
-      var field = new Field(fieldName, language, version, new TextNode(serializationFile.Snapshot, new TextPosition(lineNumber, 0, lineLength), string.Empty, fieldValue, serializationFile.TextNode));
+      var valueTextNode = new TextNode(serializationFile.Snapshot, new TextPosition(lineNumber, 0, lineLength), string.Empty, fieldValue, serializationFile.TextNode);
+      var field = new Field(fieldName, language, version, valueTextNode, valueTextNode);
       serializationFile.Fields.Add(field);
 
       return n;

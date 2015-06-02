@@ -4,7 +4,6 @@
   using System.Linq;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
-  using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects;
   using Sitecore.Pathfinder.Projects.Items;
   using Sitecore.Pathfinder.Projects.References;
@@ -14,7 +13,7 @@
     public override void Parse(ItemParseContext context, ITextNode textNode)
     {
       var itemName = textNode.GetAttributeValue("Name", context.ParseContext.ItemName);
-      var itemIdOrPath = PathHelper.GetItemParentPath(context.ParentItemPath) + "/" + itemName;
+      var itemIdOrPath = context.ParentItemPath + "/" + itemName;
       var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
 
       var item = new Item(context.ParseContext.Project, projectUniqueId, textNode)
@@ -27,7 +26,8 @@
       var value = this.GetValue(context, textNode);
       if (!string.IsNullOrEmpty(value))
       {
-        item.Fields.Add(new Field("__Renderings", string.Empty, 0, new TextNode(textNode.Snapshot, string.Empty, value, null)));
+        var valueTextNode = new TextNode(textNode.Snapshot, string.Empty, value, null);
+        item.Fields.Add(new Field("__Renderings", string.Empty, 0, valueTextNode, valueTextNode));
       }
 
       context.ParseContext.Project.AddOrMerge(item);

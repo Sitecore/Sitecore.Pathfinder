@@ -45,7 +45,7 @@
             </div>
           </div>
         </div>
-      </header>
+      </header>             
 
       <section class="sc-applicationContent">
         <div class="sc-navigation-wrapper">

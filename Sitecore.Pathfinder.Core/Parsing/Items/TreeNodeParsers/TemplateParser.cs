@@ -46,7 +46,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
       context.ParseContext.Project.AddOrMerge(template);
     }
 
-    protected virtual void ParseField([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] TemplateSection templateSection, [NotNull] ITextNode fieldTextNode)
+    protected virtual void ParseField([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] TemplateSection templateSection, [NotNull] ITextNode fieldTextNode, ref int nextSortOrder)
     {
       var fieldName = fieldTextNode.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(fieldName))
@@ -62,12 +62,21 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         templateField.Name = fieldName;
       }
 
+      int sortOrder;
+      if (!int.TryParse(fieldTextNode.GetAttributeValue("SortOrder"), out sortOrder))
+      {
+        sortOrder = nextSortOrder;
+      }
+
+      nextSortOrder = sortOrder + 100;
+
       templateField.Type = fieldTextNode.GetAttributeValue("Type", "Single-Line Text");
       templateField.Shared = string.Compare(fieldTextNode.GetAttributeValue("Sharing"), "Shared", StringComparison.OrdinalIgnoreCase) == 0;
       templateField.Unversioned = string.Compare(fieldTextNode.GetAttributeValue("Sharing"), "Unversioned", StringComparison.OrdinalIgnoreCase) == 0;
       templateField.Source = fieldTextNode.GetAttributeValue("Source");
       templateField.ShortHelp = fieldTextNode.GetAttributeValue("ShortHelp");
       templateField.LongHelp = fieldTextNode.GetAttributeValue("LongHelp");
+      templateField.SortOrder = sortOrder;
       templateField.StandardValue = fieldTextNode.GetAttributeValue("StandardValue");
 
       template.References.AddRange(this.ParseReferences(template, fieldTextNode, templateField.Source));
@@ -97,9 +106,10 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         return;
       }
 
+      var nextSortOrder = 0;
       foreach (var fieldTextNode in fieldsTextNode.ChildNodes)
       {
-        this.ParseField(context, template, templateSection, fieldTextNode);
+        this.ParseField(context, template, templateSection, fieldTextNode, ref nextSortOrder);
       }
     }
   }

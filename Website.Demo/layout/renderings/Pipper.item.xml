@@ -1,3 +1,0 @@
-﻿<Item xmlns="http://www.sitecore.net/pathfinder/item" Id="/sitecore/layout/renderings/HelloWorld">
-  <Field Name="Place Holders">$Id.Content</Field>
-</Item>

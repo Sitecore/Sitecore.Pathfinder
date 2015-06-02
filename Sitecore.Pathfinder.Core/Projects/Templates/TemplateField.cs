@@ -26,6 +26,8 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
     public bool Unversioned { get; set; }
 
+    public int SortOrder { get; set; }
+
     public void Merge([NotNull] TemplateField newField)
     {
       if (!string.IsNullOrEmpty(newField.Type))
@@ -61,6 +63,11 @@ namespace Sitecore.Pathfinder.Projects.Templates
       if (!string.IsNullOrEmpty(newField.LongHelp))
       {
         this.LongHelp = newField.LongHelp;
+      }
+
+      if (newField.SortOrder != 0)
+      {
+        this.SortOrder = newField.SortOrder;
       }
     }
   }

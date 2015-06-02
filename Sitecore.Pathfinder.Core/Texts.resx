@@ -289,16 +289,16 @@
     <value>Could not create template field</value>
   </data>
   <data name="Your_configuration_file_and_sample_files_were_missing__so_I_have_created_them__You_must_update_the__project_unique_id____wwwroot__and__hostname__in_the___0___configuration_file_before_continuing_" xml:space="preserve">
-    <value>Your configuration file and sample files were missing, so I have created them. You must update the 'project-unique-id', 'wwwroot' and 'hostname' in the '{0}' configuration file before continuing.</value>
+    <value>Your configuration file and sample files were missing, so I have created them. You must update the 'project-unique-id', 'wwwroot' and 'hostname' in the 'scconfig.json' configuration file before continuing.</value>
   </data>
   <data name="Your_project_directory_was_missing__so_I_have_created_it__You_must_update_the__project_unique_id____wwwroot__and__hostname__in_the___0___configuration_file_before_continuing_" xml:space="preserve">
-    <value>Your project directory was missing, so I have created it. You must update the 'project-unique-id', 'wwwroot' and 'hostname' in the '{0}' configuration file before continuing.</value>
+    <value>Your project directory was missing, so I have created it. You must update the 'project-unique-id', 'wwwroot' and 'hostname' in the 'scconfig.json' configuration file before continuing.</value>
   </data>
   <data name="Hi_there_" xml:space="preserve">
     <value>Hi there.</value>
   </data>
   <data name="Just_so_you_know__I_have_updated_the__Sitecore_Pathfinder_Server_dll__and__NuGet_Core_dll__assemblies_in_the___bin__directory_in_the_website_and_a_number_of___aspx__files_in_the___sitecore_shell_client_Applications_Pathfinder__directory_to_the_latest_version" xml:space="preserve">
-    <value>Just so you know, I have updated the 'Sitecore.Pathfinder.Server.dll' and 'NuGet.Core.dll' assemblies in the '/bin' directory in the website and a number of '.aspx' files in the '/sitecore/shell/client/Applications/Pathfinder' directory to the latest version</value>
+    <value>Just so you know, I have updated the Pathfinder assemblies in the '/bin' directory in the website and the Pathfinder '.aspx' files in the '/sitecore/shell/client/Applications/Pathfinder' directory to the latest version.</value>
   </data>
   <data name="Just_so_you_know__I_have_copied_the__Sitecore_Pathfinder_Server_dll__and__NuGet_Core_dll__assemblies_to_the___bin__directory_in_the_website_and_a_number_of___aspx__files_to_the___sitecore_shell_client_Applications_Pathfinder__directory" xml:space="preserve">
     <value>Just so you know, I have copied the 'Sitecore.Pathfinder.Server.dll' and 'NuGet.Core.dll' assemblies to the '/bin' directory in the website and a number of '.aspx' files to the '/sitecore/shell/client/Applications/Pathfinder' directory</value>

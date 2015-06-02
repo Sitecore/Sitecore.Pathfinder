@@ -131,11 +131,31 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Building\ITask.cs" />
     <Compile Include="Building\TaskBase.cs" />
+    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\AvailablePackages.aspx">
+      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\AvailablePackages.aspx</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\InstalledPackages.aspx">
+      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\InstalledPackages.aspx</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\InstallPackage.aspx">
+      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\InstallPackage.aspx</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\Publish.aspx">
+      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\Publish.aspx</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="files\checkers\ReferenceChecker.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\UpdateResources.ashx">
+      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\UpdateResources.ashx</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="files\codegen\Template.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -177,10 +197,6 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="files\project\.schemas\publishingtargets.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="files\project\.schemas\master.layout.schema.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -201,10 +217,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="files\project\.settings\settings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\UpdateResources.ashx">
-      <Link>wwwroot\website\sitecore\shell\client\Applications\Pathfinder\UpdateResources.ashx</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="files\project\.filetemplates\Item.item.json">
@@ -232,19 +244,15 @@
     <None Include="files\website\bin\NuGet.Core.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\Publish.aspx">
-      <Link>wwwroot\website\sitecore\shell\client\Applications\Pathfinder\Publish.aspx</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="..\Sitecore.Pathfinder.Server\bin\Sitecore.Pathfinder.Core.dll">
-      <Link>wwwroot\website\bin\Sitecore.Pathfinder.Core.dll</Link>
+      <Link>files\website\bin\Sitecore.Pathfinder.Core.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="files\project\layout\layouts\MvcLayout.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="..\Sitecore.Pathfinder.Server\bin\Sitecore.Pathfinder.Server.dll">
-      <Link>wwwroot\website\bin\Sitecore.Pathfinder.Server.dll</Link>
+      <Link>files\website\bin\Sitecore.Pathfinder.Server.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="files\project\layout\layouts\MvcLayout.cshtml">
@@ -261,21 +269,6 @@
     </None>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\AvailablePackages.aspx">
-      <Link>wwwroot\website\sitecore\shell\client\Applications\Pathfinder\AvailablePackages.aspx</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\InstalledPackages.aspx">
-      <Link>wwwroot\website\sitecore\shell\client\Applications\Pathfinder\InstalledPackages.aspx</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\InstallPackage.aspx">
-      <Link>wwwroot\website\sitecore\shell\client\Applications\Pathfinder\InstallPackage.aspx</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>aspxcodebehind</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

@@ -108,6 +108,7 @@
     <Compile Include="Parsing\Items\TreeNodeParsers\TemplateParser.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\TextNodeParserBase.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\ITextNodeParser.cs" />
+    <Compile Include="Parsing\Items\TreeNodeParsers\Json\JsonLayoutParser.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\Xml\XmlItemParser.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\Xml\XmlLayoutParser.cs" />
     <Compile Include="Parsing\Items\ItemParseContext.cs" />

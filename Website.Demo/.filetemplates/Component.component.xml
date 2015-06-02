@@ -1,7 +1,0 @@
-<Component Name="SideSpot">
-  <Template>
-    <Field Name="Title" Type="Single-Line Text" />
-    <Field Name="Text" Type="Rich Text" />
-    <Field Name="Link" Type="General Link" />
-  </Template>
-</Component>

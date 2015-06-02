@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Resources
     {
       var generator = new XsdSchemaGenerator();
       var schema = generator.Generate(schemaNamespace, databaseName);
-      zip.AddEntry(".schemas\\" + databaseName + "layout.xsd", Encoding.UTF8.GetBytes(schema));
+      zip.AddEntry(".schemas\\" + databaseName + ".layout.xsd", Encoding.UTF8.GetBytes(schema));
     }
   }
 }

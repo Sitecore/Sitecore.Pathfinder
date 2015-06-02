@@ -27,7 +27,7 @@
 
       var templateIdOrPath = textNode.GetAttributeValue("Template.Create");
       if (!string.IsNullOrEmpty(templateIdOrPath))
-      {
+      {                                                 
         var template = this.ParseTemplate(context, textNode, templateIdOrPath);
         item.TemplateIdOrPath = template.ItemIdOrPath;
       }
@@ -99,6 +99,7 @@
         }
       }
 
+      var nameTextNode = fieldTextNode.GetAttribute("Name") ?? fieldTextNode;
       var valueTextNode = fieldTextNode.GetAttribute("[Value]");
 
       var valueAttributeTextNode = fieldTextNode.GetAttribute("Value");
@@ -117,7 +118,7 @@
         valueTextNode = new TextNode(fieldTextNode.Snapshot, "Value", string.Empty, null);
       }
 
-      field = new Field(fieldName, language, version, valueTextNode, valueHint);
+      field = new Field(fieldName, language, version, nameTextNode, valueTextNode, valueHint);
       item.Fields.Add(field);
 
       if (field.ValueHint != "Text")
@@ -154,24 +155,32 @@
       var fieldTreeNodes = context.Snapshot.GetNestedTextNode(itemTextNode, "Fields");
       if (fieldTreeNodes != null)
       {
+        int nextSortOrder = 0;
         foreach (var child in fieldTreeNodes.ChildNodes)
         {
-          if (child.Name != "Field")
+          if (child.Name != string.Empty && child.Name != "Field")
           {
             continue;
           }
 
-          var name = child.GetAttributeValue("Name");
+          int sortOrder;
+          if (!int.TryParse(child.GetAttributeValue("Field.SortOrder"), out sortOrder))
+          {
+            sortOrder = nextSortOrder;
+          }
+
+          nextSortOrder = sortOrder + 100;
 
           var templateField = new TemplateField();
           templateSection.Fields.Add(templateField);
-          templateField.Name = name;
+          templateField.Name = child.GetAttributeValue("Name");
           templateField.Type = child.GetAttributeValue("Field.Type", "Single-Line Text");
           templateField.Shared = string.Compare(child.GetAttributeValue("Field.Sharing"), "Shared", StringComparison.OrdinalIgnoreCase) == 0;
           templateField.Unversioned = string.Compare(child.GetAttributeValue("Field.Sharing"), "Unversioned", StringComparison.OrdinalIgnoreCase) == 0;
           templateField.Source = child.GetAttributeValue("Field.Source");
           templateField.ShortHelp = child.GetAttributeValue("Field.ShortHelp");
           templateField.LongHelp = child.GetAttributeValue("Field.LongHelp");
+          templateField.SortOrder = sortOrder;
 
           template.References.AddRange(this.ParseReferences(template, child, templateField.Source));
         }

@@ -478,13 +478,15 @@ namespace Sitecore.Pathfinder.Builders.Templates
 
         if (!string.IsNullOrEmpty(templateFieldBuilder.TemplaterField.ShortHelp))
         {
-          item["__Short description"] = templateFieldBuilder.TemplaterField.ShortHelp;
+          item.Help.ToolTip = templateFieldBuilder.TemplaterField.ShortHelp;
         }
 
         if (!string.IsNullOrEmpty(templateFieldBuilder.TemplaterField.LongHelp))
         {
-          item["__Long description"] = templateFieldBuilder.TemplaterField.LongHelp;
+          item.Help.Text = templateFieldBuilder.TemplaterField.LongHelp;
         }
+
+        item.Appearance.Sortorder = templateFieldBuilder.TemplaterField.SortOrder;
       }
 
       if (isNew)

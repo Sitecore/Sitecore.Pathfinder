@@ -1,0 +1,12 @@
+{
+  "Item": {
+    "Template.Create": "/sitecore/templates/Samples/HelloWorld",
+    "Fields": [
+      { "Name": "Title", "Value": "Hello" },
+      { "Name": "Text", "Value": "Hello World" },
+      { "Name" : "Image", "Field.Type": "Image", "Value": "/sitecore/media library/Vista21"},
+      { "Name" : "__Workflow", "Value": "" },
+      { "Name" : "__Workflow state", "Value": "" }
+    ]
+  }
+}

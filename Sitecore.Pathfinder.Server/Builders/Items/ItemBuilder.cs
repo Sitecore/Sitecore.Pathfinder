@@ -253,7 +253,7 @@
       {
         if (templateFields.All(f => string.Compare(f.Name, field.FieldName, StringComparison.OrdinalIgnoreCase) != 0))
         {
-          throw new RetryableEmitException(Texts.Field_is_not_defined_in_the_template, this.ProjectItem.Snapshot, field.FieldName);
+          throw new RetryableEmitException(Texts.Field_is_not_defined_in_the_template, field.NameProperty.TextNode, field.FieldName);
         }
 
         if (!string.IsNullOrEmpty(field.Language))
