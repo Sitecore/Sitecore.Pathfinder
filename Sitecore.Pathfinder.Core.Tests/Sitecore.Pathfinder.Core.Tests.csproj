@@ -121,6 +121,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="Website\content\Home\Pipper.item">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Website\content\Home\Foo.item.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

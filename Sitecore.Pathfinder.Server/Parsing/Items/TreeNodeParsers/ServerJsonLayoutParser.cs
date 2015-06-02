@@ -1,4 +1,4 @@
-namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers.Json
+namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 {
   using System.Collections.Generic;
   using System.ComponentModel.Composition;
@@ -7,7 +7,6 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers.Json
   using Sitecore.Data.Items;
   using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Documents.Json;
-  using Sitecore.Pathfinder.Documents.Xml;
 
   [Export(typeof(ITextNodeParser))]
   public class ServerJsonLayoutParser : ServerLayoutParserBase

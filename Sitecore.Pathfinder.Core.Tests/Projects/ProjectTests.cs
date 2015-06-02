@@ -81,6 +81,33 @@
     }
 
     [Test]
+    public void SerializationItemTest()
+    {
+      var projectItem = this.Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/Pipper");
+      Assert.IsNotNull(projectItem);
+      Assert.AreEqual("Pipper", projectItem.ShortName);
+      Assert.AreEqual("/sitecore/content/Home/Pipper", projectItem.QualifiedName);
+
+      var item = projectItem as Item;
+      Assert.IsNotNull(item);
+      Assert.AreEqual("Pipper", item.ItemName);
+      Assert.AreEqual("/sitecore/content/Home/Pipper", item.ItemIdOrPath);
+      Assert.AreEqual("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}", item.TemplateIdOrPath);
+
+      var field = item.Fields.FirstOrDefault();
+      Assert.IsNotNull(field);
+      Assert.AreEqual("__Workflow", field.FieldName);
+      Assert.AreEqual("{A5BC37E7-ED96-4C1E-8590-A26E64DB55EA}", field.Value);
+
+      field = item.Fields.ElementAt(1);
+      Assert.IsNotNull(field);
+      Assert.AreEqual("Title", field.FieldName);
+      Assert.AreEqual("Pip 1", field.Value);
+      Assert.AreEqual("en", field.Language);
+      Assert.AreEqual(1, field.Version);
+    }
+
+    [Test]
     public void JsonTemplateTest()
     {
       var projectItem = this.Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/FooTemplate");

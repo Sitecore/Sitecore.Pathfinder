@@ -12,6 +12,8 @@
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Extensions.CompositionServiceExtensions;
+  using Sitecore.Pathfinder.Extensions.ConfigurationExtensions;
+  using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects;
   using Sitecore.SecurityModel;
 
@@ -52,46 +54,6 @@
       this.Emit(project);
     }
 
-    protected virtual void Emit([NotNull] IProject project)
-    {
-      var context = this.CompositionService.Resolve<IEmitContext>().With(project);
-
-      var emitters = this.Emitters.OrderBy(e => e.Sortorder).ToList();
-
-      var retries = new List<Tuple<IProjectItem, Exception>>();
-
-      // todo: use proper user
-      using (new SecurityDisabler())
-      {
-        foreach (var projectItem in project.Items)
-        {
-          this.EmitProjectItem(context, projectItem, emitters, retries);
-        }
-
-        this.RetryEmit(context, emitters, retries);
-      }
-
-      foreach (var diagnostic in context.Project.Diagnostics)
-      {
-        switch (diagnostic.Severity)
-        {
-          case Severity.Error:
-            context.Trace.TraceError(diagnostic.Text, diagnostic.FileName, diagnostic.Position);
-            break;
-          case Severity.Warning:
-            context.Trace.TraceWarning(diagnostic.Text, diagnostic.FileName, diagnostic.Position);
-            break;
-          default:
-            context.Trace.TraceInformation(diagnostic.Text, diagnostic.FileName, diagnostic.Position);
-            break;
-        }
-      }
-
-      var nuspecFileName = Path.Combine(context.UninstallDirectory, "Uninstall.nuspec");
-      this.BuildNuspecFile(nuspecFileName);
-      this.BuildNupkgFile(context, nuspecFileName);
-    }
-
     protected virtual void BuildNupkgFile([NotNull] IEmitContext context, [NotNull] string nuspecFileName)
     {
       var nupkgFileName = Path.ChangeExtension(nuspecFileName, "nupkg");
@@ -121,6 +83,7 @@
 
         output.WriteStartElement("package");
 
+        // todo: provide better package info
         output.WriteStartElement("metadata");
         output.WriteElementString("id", "Uninstall");
         output.WriteElementString("version", "1.0.0");
@@ -145,6 +108,38 @@
         output.WriteEndElement();
 
         output.WriteEndElement();
+      }
+    }
+
+    protected virtual void Emit([NotNull] IProject project)
+    {
+      var context = this.CompositionService.Resolve<IEmitContext>().With(project);
+
+      this.TraceProjectDiagnostics(context);
+
+      if (context.FileSystem.DirectoryExists(context.UninstallDirectory))
+      {
+        context.FileSystem.DeleteDirectory(context.UninstallDirectory);
+      }
+
+      var emitters = this.Emitters.OrderBy(e => e.Sortorder).ToList();
+      var retries = new List<Tuple<IProjectItem, Exception>>();
+
+      // todo: use proper user
+      using (new SecurityDisabler())
+      {
+        this.Emit(context, project, emitters, retries);
+        this.EmitRetry(context, emitters, retries);
+      }
+
+      this.EmitUninstallPackage(context);
+    }
+
+    protected virtual void Emit([NotNull] IEmitContext context, [NotNull] IProject project, [NotNull] List<IEmitter> emitters, [NotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
+    {
+      foreach (var projectItem in project.Items)
+      {
+        this.EmitProjectItem(context, projectItem, emitters, retries);
       }
     }
 
@@ -176,7 +171,7 @@
       }
     }
 
-    protected virtual void RetryEmit([NotNull] IEmitContext context, [NotNull] List<IEmitter> emitters, [NotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
+    protected virtual void EmitRetry([NotNull] IEmitContext context, [NotNull] List<IEmitter> emitters, [NotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
     {
       while (true)
       {
@@ -220,6 +215,77 @@
         else
         {
           this.Trace.TraceError(Texts.An_error_occured, projectItem.Snapshot.SourceFile.FileName, TextPosition.Empty);
+        }
+      }
+    }
+
+    protected virtual void EmitUninstallPackage([NotNull] IEmitContext context)
+    {
+      var systemConfigFileName = Path.Combine(context.Configuration.GetString(Pathfinder.Constants.Configuration.ToolsDirectory), context.Configuration.GetString(Pathfinder.Constants.Configuration.SystemConfigFileName));
+      var projectConfigFileName = PathHelper.Combine(context.Project.Options.ProjectDirectory, context.Configuration.Get(Pathfinder.Constants.Configuration.ProjectConfigFileName));
+
+      context.FileSystem.CreateDirectory(Path.Combine(context.UninstallDirectory, "content\\.sitecore.tools"));
+      context.FileSystem.Copy(systemConfigFileName, Path.Combine(context.UninstallDirectory, "content\\.sitecore.tools\\" + context.Configuration.GetString(Pathfinder.Constants.Configuration.SystemConfigFileName)));
+      context.FileSystem.Copy(projectConfigFileName, Path.Combine(context.UninstallDirectory, "content\\" + context.Configuration.Get(Pathfinder.Constants.Configuration.ProjectConfigFileName)));
+
+      var postInstallScript = Path.Combine(context.UninstallDirectory, "content\\postinstall.xml");
+
+      using (var streamWriter = new StreamWriter(postInstallScript, false, Encoding.UTF8))
+      {
+        var output = new XmlTextWriter(streamWriter)
+        {
+          Formatting = Formatting.Indented
+        };
+
+        output.WriteStartElement("actions");
+
+        if (context.AddedItems.Any())
+        {
+          output.WriteStartElement("deleteItems");
+
+          foreach (var item in context.AddedItems)
+          {
+            output.WriteElementString("item", item);
+          }
+
+          output.WriteEndElement();
+        }
+
+        if (context.AddedFiles.Any())
+        {
+          output.WriteStartElement("deleteFiles");
+
+          foreach (var item in context.AddedFiles)
+          {
+            output.WriteElementString("item", item);
+          }
+
+          output.WriteEndElement();
+        }
+
+        output.WriteEndElement();
+      }
+
+      var nuspecFileName = Path.Combine(context.UninstallDirectory, "Uninstall.nuspec");
+      this.BuildNuspecFile(nuspecFileName);
+      this.BuildNupkgFile(context, nuspecFileName);
+    }
+
+    protected virtual void TraceProjectDiagnostics([NotNull] IEmitContext context)
+    {
+      foreach (var diagnostic in context.Project.Diagnostics)
+      {
+        switch (diagnostic.Severity)
+        {
+          case Severity.Error:
+            context.Trace.TraceError(diagnostic.Text, diagnostic.FileName, diagnostic.Position);
+            break;
+          case Severity.Warning:
+            context.Trace.TraceWarning(diagnostic.Text, diagnostic.FileName, diagnostic.Position);
+            break;
+          default:
+            context.Trace.TraceInformation(diagnostic.Text, diagnostic.FileName, diagnostic.Position);
+            break;
         }
       }
     }

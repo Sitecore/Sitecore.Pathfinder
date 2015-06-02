@@ -55,7 +55,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
           return null;
         }
 
-        context.RegisterNewItem(this.Item);
+        context.RegisterAddedItem(this.Item);
       }
       else
       {
@@ -165,7 +165,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
         item[FieldIDs.StandardValueHolderId] = standardValuesItem.ID.ToString();
       }
 
-      context.RegisterNewItem(standardValuesItem);
+      context.RegisterAddedItem(standardValuesItem);
     }
 
     protected virtual void DeleteFields([NotNull] IEmitContext context, [NotNull] TemplateSectionBuilder templateSectionBuilder)
@@ -491,7 +491,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
 
       if (isNew)
       {
-        context.RegisterNewItem(item);
+        context.RegisterAddedItem(item);
       }
     }
 
@@ -541,7 +541,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
 
       if (isNew)
       {
-        context.RegisterNewItem(templateSectionBuilder.Item);
+        context.RegisterAddedItem(templateSectionBuilder.Item);
       }
     }
 

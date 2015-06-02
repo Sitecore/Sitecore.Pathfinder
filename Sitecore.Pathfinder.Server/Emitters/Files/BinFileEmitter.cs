@@ -34,7 +34,14 @@
         return;
       }
 
-      context.RegisterUpdatedFile(binFile, destinationFileName);
+      if (context.FileSystem.FileExists(destinationFileName))
+      {
+        context.RegisterUpdatedFile(binFile, destinationFileName);
+      }
+      else
+      {
+        context.RegisterAddedFile(binFile, destinationFileName);
+      }
 
       context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName) ?? string.Empty);
       context.FileSystem.Copy(projectItem.Snapshot.SourceFile.FileName, destinationFileName);

@@ -134,9 +134,9 @@
     <Compile Include="Packages\Packages\NugetPackage.cs" />
     <Compile Include="Packages\Packages\PackageBase.cs" />
     <Compile Include="Packages\PackageService.cs" />
+    <Compile Include="Parsing\Items\TreeNodeParsers\ServerJsonLayoutParser.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\ServerLayoutParserBase.cs" />
-    <Compile Include="Parsing\Items\TreeNodeParsers\Json\ServerJsonLayoutParser.cs" />
-    <Compile Include="Parsing\Items\TreeNodeParsers\Xml\ServerXmlLayoutParser.cs" />
+    <Compile Include="Parsing\Items\TreeNodeParsers\ServerXmlLayoutParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\IResourceExporter.cs" />
     <Compile Include="Resources\XsdSchemaExporter.cs" />

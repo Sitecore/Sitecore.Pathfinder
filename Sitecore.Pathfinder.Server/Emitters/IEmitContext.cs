@@ -13,10 +13,22 @@
   public interface IEmitContext
   {
     [NotNull]
+    ICollection<string> AddedFiles { get; }
+
+    [NotNull]
+    ICollection<string> AddedItems { get; }
+
+    [NotNull]
     IConfiguration Configuration { get; }
 
     [NotNull]
     IDataService DataService { get; }
+
+    [NotNull]
+    ICollection<string> DeletedFiles { get; }
+
+    [NotNull]
+    ICollection<string> DeletedItems { get; }
 
     [NotNull]
     IEnumerable<IFieldResolver> FieldResolvers { get; }
@@ -33,9 +45,19 @@
     [NotNull]
     string UninstallDirectory { get; }
 
-    void RegisterDeletedItem([NotNull] Item deletedItem);
+    [NotNull]
+    ICollection<string> UpdatedFiles { get; }
 
-    void RegisterNewItem([NotNull] Item newItem);
+    [NotNull]
+    ICollection<string> UpdatedItems { get; }
+
+    void RegisterAddedFile([NotNull] File projectItem, [NotNull] string destinationFileName);
+
+    void RegisterAddedItem([NotNull] Item newItem);
+
+    void RegisterDeletedFile([NotNull] File projectItem, [NotNull] string destinationFileName);
+
+    void RegisterDeletedItem([NotNull] Item deletedItem);
 
     void RegisterUpdatedFile([NotNull] File projectItem, [NotNull] string destinationFileName);
 

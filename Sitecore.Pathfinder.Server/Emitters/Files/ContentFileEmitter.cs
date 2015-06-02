@@ -24,7 +24,14 @@
 
       var destinationFileName = FileUtil.MapPath(contentFile.FilePath);
 
-      context.RegisterUpdatedFile(contentFile, destinationFileName);
+      if (context.FileSystem.FileExists(destinationFileName))
+      {
+        context.RegisterUpdatedFile(contentFile, destinationFileName);
+      }
+      else
+      {
+        context.RegisterAddedFile(contentFile, destinationFileName);
+      }
 
       context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName) ?? string.Empty);
       context.FileSystem.Copy(projectItem.Snapshot.SourceFile.FileName, destinationFileName);

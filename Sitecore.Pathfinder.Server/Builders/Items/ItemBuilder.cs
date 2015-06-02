@@ -59,7 +59,7 @@
           return;
         }
 
-        context.RegisterNewItem(this.Item);
+        context.RegisterAddedItem(this.Item);
       }
       else
       {
