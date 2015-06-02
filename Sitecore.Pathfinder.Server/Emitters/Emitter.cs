@@ -8,6 +8,7 @@
   using System.Text;
   using System.Xml;
   using NuGet;
+  using Sitecore.Data.Serialization;
   using Sitecore.Pathfinder.Configuration;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
@@ -73,6 +74,8 @@
       {
         this.Trace.TraceError(ex.Message);
       }
+
+      Manager.DumpTree();
     }
 
     protected virtual void BuildNuspecFile([NotNull] string nuspecFileName)
