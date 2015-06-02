@@ -89,16 +89,16 @@
 
       var nuspecFileName = Path.Combine(context.UninstallDirectory, "Uninstall.nuspec");
       this.BuildNuspecFile(nuspecFileName);
-      this.BuildNupkgFile(nuspecFileName);
+      this.BuildNupkgFile(context, nuspecFileName);
     }
 
-    protected virtual void BuildNupkgFile([NotNull] string nuspecFileName)
+    protected virtual void BuildNupkgFile([NotNull] IEmitContext context, [NotNull] string nuspecFileName)
     {
       var nupkgFileName = Path.ChangeExtension(nuspecFileName, "nupkg");
 
       try
       {
-        this.FileSystem.DeleteFile(nupkgFileName);
+        context.FileSystem.DeleteFile(nupkgFileName);
 
         var packageBuilder = new PackageBuilder(nuspecFileName, Path.GetDirectoryName(nupkgFileName), NullPropertyProvider.Instance, false);
 
@@ -147,7 +147,6 @@
         output.WriteEndElement();
       }
     }
-
 
     protected virtual void EmitProjectItem([NotNull] IEmitContext context, [NotNull] IProjectItem projectItem, [NotNull] List<IEmitter> emitters, [NotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
     {

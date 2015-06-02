@@ -43,7 +43,7 @@
 
   // maps a code generation template file to a project item type
   "codegen": {
-    ".sitecore.tools\\wwwroot\\codegen\\Template.cshtml": "Sitecore.Pathfinder.Projects.Templates.Template, Sitecore.Pathfinder.Core"
+    ".sitecore.tools\\files\\codegen\\Template.cshtml": "Sitecore.Pathfinder.Projects.Templates.Template, Sitecore.Pathfinder.Core"
   },
 
   "update-resources-url": "/sitecore/shell/client/Applications/Pathfinder/UpdateResources.ashx",

@@ -40,7 +40,7 @@
 
       var checkerCompiler = new CheckerCompiler();
 
-      var checkersDirectory = Path.Combine(configuration.Get(Constants.Configuration.ToolsDirectory), "wwwroot\\checkers");
+      var checkersDirectory = Path.Combine(configuration.Get(Constants.Configuration.ToolsDirectory), "files\\checkers");
       var checkerAssembly = checkerCompiler.GetAssembly(checkersDirectory);
       if (checkerAssembly == null)
       {

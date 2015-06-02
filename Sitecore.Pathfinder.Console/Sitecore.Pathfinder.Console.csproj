@@ -131,97 +131,105 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Building\ITask.cs" />
     <Compile Include="Building\TaskBase.cs" />
-    <Content Include="wwwroot\checkers\ReferenceChecker.cs">
+    <Content Include="files\checkers\ReferenceChecker.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="wwwroot\codegen\Template.cshtml">
+    <None Include="files\codegen\Template.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="wwwroot\codegen\readme.txt">
+    <Content Include="files\codegen\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="wwwroot\project\.filetemplates\Item.item.xml">
+    <Content Include="files\project\.filetemplates\Item.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="wwwroot\project\.filetemplates\projects\gulpfile.js">
+    <None Include="files\project\.filetemplates\projects\gulpfile.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="wwwroot\project\.filetemplates\Template.item.xml">
+    <Content Include="files\project\.filetemplates\Template.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="wwwroot\project\.settings\tasks.json">
+    <Content Include="files\project\.settings\tasks.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="wwwroot\project\layout\renderings\readme.txt">
+    <Content Include="files\project\layout\renderings\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="wwwroot\project\media library\readme.txt">
+    <Content Include="files\project\media library\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="wwwroot\project\system\readme.txt">
+    <Content Include="files\project\system\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="wwwroot\project\templates\readme.txt">
+    <Content Include="files\project\templates\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="wwwroot\project\.schemas\core.layout.schema.json">
+    <None Include="files\project\.schemas\core.layout.schema.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="wwwroot\project\.schemas\core.layout.xsd">
+    <None Include="files\project\.schemas\core.layout.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="wwwroot\project\.schemas\master.layout.schema.json">
+    <Content Include="files\project\.schemas\publishingtargets.xml">
+      <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\project\.schemas\master.layout.xsd">
+    </Content>
+    <None Include="files\project\.schemas\publishingtargets.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="wwwroot\website\bin\Microsoft.Framework.ConfigurationModel.dll">
+    <None Include="files\project\.schemas\master.layout.schema.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="wwwroot\website\bin\Microsoft.Framework.ConfigurationModel.Interfaces.dll">
+    <None Include="files\project\.schemas\master.layout.xsd">
+      <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="wwwroot\website\bin\Microsoft.Framework.ConfigurationModel.Json.dll">
+    <None Include="files\website\bin\Microsoft.Framework.ConfigurationModel.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="wwwroot\website\bin\Microsoft.Framework.ConfigurationModel.Xml.dll">
+    <None Include="files\website\bin\Microsoft.Framework.ConfigurationModel.Interfaces.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="wwwroot\project\.settings\settings.json">
+    <None Include="files\website\bin\Microsoft.Framework.ConfigurationModel.Json.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\website\bin\Microsoft.Framework.ConfigurationModel.Xml.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="files\project\.settings\settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\UpdateResources.ashx">
       <Link>wwwroot\website\sitecore\shell\client\Applications\Pathfinder\UpdateResources.ashx</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="wwwroot\project\.filetemplates\Item.item.json">
+    <None Include="files\project\.filetemplates\Item.item.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="wwwroot\project\.filetemplates\Rendering.cshtml">
+    <None Include="files\project\.filetemplates\Rendering.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="wwwroot\project\.filetemplates\Template.item.json">
+    <None Include="files\project\.filetemplates\Template.item.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="wwwroot\project\.schemas\item.schema.json">
+    <None Include="files\project\.schemas\item.schema.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="wwwroot\project\.schemas\item.xsd">
+    <None Include="files\project\.schemas\item.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="wwwroot\project\scc.cmd">
+    <None Include="files\project\scc.cmd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="wwwroot\project\sitecore.nuspec">
+    <Content Include="files\project\sitecore.nuspec">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="wwwroot\website\bin\NuGet.Core.dll">
+    <None Include="files\website\bin\NuGet.Core.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\Publish.aspx">
@@ -232,20 +240,20 @@
       <Link>wwwroot\website\bin\Sitecore.Pathfinder.Core.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="wwwroot\project\layout\layouts\MvcLayout.item.xml">
+    <Content Include="files\project\layout\layouts\MvcLayout.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="..\Sitecore.Pathfinder.Server\bin\Sitecore.Pathfinder.Server.dll">
       <Link>wwwroot\website\bin\Sitecore.Pathfinder.Server.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="wwwroot\project\layout\layouts\MvcLayout.cshtml">
+    <Content Include="files\project\layout\layouts\MvcLayout.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="wwwroot\project\layout\web.config">
+    <Content Include="files\project\layout\web.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="wwwroot\project\scconfig.json">
+    <None Include="files\project\scconfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="scconfig.json">
@@ -283,7 +291,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="wwwroot\project\content\Home\Welcome.item.xml">
+    <Content Include="files\project\content\Home\Welcome.item.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

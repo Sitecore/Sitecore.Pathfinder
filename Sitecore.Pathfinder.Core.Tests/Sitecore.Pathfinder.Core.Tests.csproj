@@ -89,28 +89,38 @@
     <Compile Include="Tests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Sitecore.Pathfinder.Console\scconfig.json">
-      <Link>Website\.sitecore.tools\scconfig.json</Link>
+    <None Include="..\Sitecore.Pathfinder.Console\files\project\.schemas\core.layout.schema.json">
+      <Link>Website\.sitecore.tools\schemas\core.layout.schema.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="..\Sitecore.Pathfinder.Console\wwwroot\project\.schemas\item.schema.json">
+    <None Include="..\Sitecore.Pathfinder.Console\files\project\.schemas\core.layout.xsd">
+      <Link>Website\.sitecore.tools\schemas\core.layout.xsd</Link>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Sitecore.Pathfinder.Console\files\project\.schemas\item.schema.json">
       <Link>Website\.sitecore.tools\schemas\item.schema.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="..\Sitecore.Pathfinder.Console\wwwroot\project\.schemas\item.xsd">
+    <None Include="..\Sitecore.Pathfinder.Console\files\project\.schemas\item.xsd">
       <Link>Website\.sitecore.tools\schemas\item.xsd</Link>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="..\Sitecore.Pathfinder.Console\files\project\.schemas\master.layout.schema.json">
+      <Link>Website\.sitecore.tools\schemas\master.layout.schema.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Sitecore.Pathfinder.Console\files\project\.schemas\master.layout.xsd">
+      <Link>Website\.sitecore.tools\schemas\master.layout.xsd</Link>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Sitecore.Pathfinder.Console\scconfig.json">
+      <Link>Website\.sitecore.tools\scconfig.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
-    <None Include="Website\.sitecore.tools\schemas\layout.core.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Website\.sitecore.tools\schemas\layout.master.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Website\content\Home\Foo.item.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -69,7 +69,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
         return;
       }
 
-      var sourceDirectory = Path.Combine(context.Configuration.Get(Constants.Configuration.ToolsDirectory), "wwwroot\\website");
+      var sourceDirectory = Path.Combine(context.Configuration.Get(Constants.Configuration.ToolsDirectory), "files\\website");
       var coreServerAssemblyFileName = Path.Combine(websiteDirectory, "bin\\Sitecore.Pathfinder.Core.dll");
       if (!context.FileSystem.FileExists(coreServerAssemblyFileName))
       {

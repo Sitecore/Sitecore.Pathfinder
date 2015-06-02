@@ -29,7 +29,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.Initialization
 
     protected virtual void CopyResourceFiles([NotNull] IBuildContext context, [NotNull] string projectDirectory)
     {
-      var sourceDirectory = Path.Combine(context.Configuration.Get(Constants.Configuration.ToolsDirectory), "wwwroot\\project\\*");
+      var sourceDirectory = Path.Combine(context.Configuration.Get(Constants.Configuration.ToolsDirectory), "files\\project\\*");
 
       context.FileSystem.XCopy(sourceDirectory, projectDirectory);
     }

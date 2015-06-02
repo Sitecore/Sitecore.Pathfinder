@@ -1,12 +1,41 @@
 ﻿namespace Sitecore.Pathfinder.Resources
 {
-  using System.Text;
+  using System.Collections.Generic;
+  using System.ComponentModel.Composition;
+  using System.ComponentModel.Composition.Hosting;
+  using System.IO;
+  using System.Reflection;
   using Sitecore.IO;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Parsing;
   using Sitecore.Zip;
 
   public class ResourceManager
   {
+    public ResourceManager()
+    {
+      var assembly = Assembly.GetExecutingAssembly();
+      var directory = Path.GetDirectoryName(assembly.Location) ?? string.Empty;
+
+      var applicationExportProvider = new CatalogExportProvider(new AssemblyCatalog(assembly));
+      var coreExportProvider = new CatalogExportProvider(new AssemblyCatalog(typeof(ParseService).Assembly));
+      var directoryExportProvider = new CatalogExportProvider(new DirectoryCatalog(directory, "Sitecore.Pathfinder.Server.*.dll"));
+
+      // directory exports takes precedence over application exports
+      var compositionContainer = new CompositionContainer(directoryExportProvider, applicationExportProvider, coreExportProvider);
+
+      applicationExportProvider.SourceProvider = compositionContainer;
+      coreExportProvider.SourceProvider = compositionContainer;
+      directoryExportProvider.SourceProvider = compositionContainer;
+
+      compositionContainer.SatisfyImportsOnce(this);
+    }
+
+    [NotNull]
+    [UsedImplicitly]
+    [ImportMany(typeof(IResourceExporter))]
+    public IEnumerable<IResourceExporter> Exporters { get; protected set; }
+
     [NotNull]
     public string BuildResourceFile()
     {
@@ -15,27 +44,13 @@
       var fileName = FileUtil.MapPath(TempFolder.GetFilename("Pathfinder.Resources.zip"));
       using (var zip = new ZipWriter(fileName))
       {
-        this.GenerateRenderingXsdSchema(zip, "http://www.sitecore.net/pathfinder/layouts/master", "master");
-        this.GenerateRenderingXsdSchema(zip, "http://www.sitecore.net/pathfinder/layouts/core", "core");
-        this.GenerateRenderingJsonSchema(zip, "master");
-        this.GenerateRenderingJsonSchema(zip, "core");
+        foreach (var exporter in this.Exporters)
+        {
+          exporter.Export(zip);
+        }
       }
 
       return fileName;
-    }
-
-    protected void GenerateRenderingJsonSchema([NotNull] ZipWriter zip, [NotNull] string databaseName)
-    {
-      var generator = new JsonSchemaGenerator();
-      var schema = generator.Generate(databaseName);
-      zip.AddEntry(".schemas\\" + databaseName + ".layout.schema.json", Encoding.UTF8.GetBytes(schema));
-    }
-
-    protected void GenerateRenderingXsdSchema([NotNull] ZipWriter zip, [NotNull] string schemaNamespace, [NotNull] string databaseName)
-    {
-      var generator = new XsdSchemaGenerator();
-      var schema = generator.Generate(schemaNamespace, databaseName);
-      zip.AddEntry(".schemas\\" + databaseName + "layout.xsd", Encoding.UTF8.GetBytes(schema));
     }
   }
 }
