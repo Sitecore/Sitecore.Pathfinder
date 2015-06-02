@@ -45,7 +45,8 @@
         ItemIdOrPath = tempItem.ItemIdOrPath,
         DatabaseName = tempItem.DatabaseName,
         TemplateIdOrPath = tempItem.TemplateIdOrPath,
-        Icon = tempItem.Icon
+        Icon = tempItem.Icon,
+        IsEmittable = false
       };
 
       foreach (var field in tempItem.Fields)
@@ -53,9 +54,9 @@
         item.Fields.Add(field);
       }
 
-      item = context.Project.AddOrMerge(item);
+      context.Project.AddOrMerge(item);
 
-      var serializationFile = new SerializationFile(context.Project, context.Snapshot, item);
+      var serializationFile = new SerializationFile(context.Project, context.Snapshot);
       context.Project.AddOrMerge(serializationFile);
     }
 
@@ -122,10 +123,13 @@
             break;
           case "key":
             break;
-          case "content-length":
-            var contentLength = int.Parse(value);
-            n = this.ParseContent(lines, n + 2, contentLength, out fieldValue, ref lineLength);
-            break;
+        }
+
+        if (name == "content-length")
+        {
+          var contentLength = int.Parse(value);
+          n = this.ParseContent(lines, n + 2, contentLength, out fieldValue, ref lineLength);
+          break;
         }
       }
 
@@ -161,6 +165,11 @@
           continue;
         }
 
+        if (line == "----item----")
+        {
+          continue;
+        }
+
         var i = line.IndexOf(':');
         if (i < 0)
         {
@@ -192,6 +201,8 @@
             item.TemplateIdOrPath = value;
             break;
           case "templatekey":
+            break;
+          case "version":
             break;
         }
       }

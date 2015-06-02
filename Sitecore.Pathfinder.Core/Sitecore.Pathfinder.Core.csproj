@@ -99,6 +99,7 @@
     <Compile Include="Configuration\IConfigurationService.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Documents\Property.cs" />
+    <Compile Include="Documents\Serialization\SerializationSnapshotLoader.cs" />
     <Compile Include="Extensions\CompositionServiceExtensions\CompositionServiceExtensions.cs" />
     <Compile Include="Extensions\ConfigurationExtensions\ConfigurationExtensions.cs" />
     <Compile Include="Extensions\JsonTextWriterExtensions\JsonTextWriter.cs" />
