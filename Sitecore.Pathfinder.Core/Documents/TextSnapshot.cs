@@ -45,7 +45,7 @@
       return null;
     }
 
-    public virtual void ValidateSchema(IParseContext context, string schemaNamespace, string schemaFileName)
+    public virtual void ValidateSchema(IParseContext context)
     {
     }
   }

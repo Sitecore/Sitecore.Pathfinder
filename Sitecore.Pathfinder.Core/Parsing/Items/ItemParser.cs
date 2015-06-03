@@ -44,8 +44,7 @@
         return;
       }
 
-      // todo: should be dependent on the document, e.g. also validate json documents
-      textDocument.ValidateSchema(context, "http://www.sitecore.net/pathfinder/item", "item.xsd");
+      textDocument.ValidateSchema(context);
 
       var parentItemPath = PathHelper.GetItemParentPath(context.ItemPath);
       var itemParseContext = new ItemParseContext(context, this, parentItemPath);

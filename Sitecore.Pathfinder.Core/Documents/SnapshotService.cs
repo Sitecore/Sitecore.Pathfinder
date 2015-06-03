@@ -3,6 +3,7 @@
   using System.Collections.Generic;
   using System.ComponentModel.Composition;
   using System.IO;
+  using System.Linq;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects;
@@ -25,7 +26,7 @@
 
     public ISnapshot LoadSnapshot(IProject project, ISourceFile sourceFile)
     {
-      foreach (var loader in this.Loaders)
+      foreach (var loader in this.Loaders.OrderBy(l => l.Priority))
       {
         if (loader.CanLoad(this, project, sourceFile))
         {

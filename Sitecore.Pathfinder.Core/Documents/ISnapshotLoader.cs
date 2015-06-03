@@ -5,6 +5,8 @@
 
   public interface ISnapshotLoader
   {
+    double Priority { get; }
+
     bool CanLoad([NotNull] ISnapshotService snapshotService, [NotNull] IProject project, [NotNull] ISourceFile sourceFile);
 
     [NotNull]

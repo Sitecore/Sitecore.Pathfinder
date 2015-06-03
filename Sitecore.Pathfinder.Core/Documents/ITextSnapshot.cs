@@ -21,6 +21,6 @@
     [CanBeNull]
     ITextNode GetNestedTextNode([NotNull] ITextNode textNode, [NotNull] string name);
 
-    void ValidateSchema([NotNull] IParseContext context, [NotNull] string schemaNamespace, [NotNull] string schemaFileName);
+    void ValidateSchema([NotNull] IParseContext context);
   }
 }

@@ -17,15 +17,20 @@
 
     private XElement rootElement;
 
-    public XmlTextSnapshot([NotNull] ISourceFile sourceFile, [NotNull] string contents) : base(sourceFile, contents)
+    public XmlTextSnapshot([NotNull] ISourceFile sourceFile, [NotNull] string contents, [NotNull] string schemaNamespace, [NotNull] string schemaFileName) : base(sourceFile, contents)
     {
+      this.SchemaNamespace = schemaNamespace;
+      this.SchemaFileName = schemaFileName;
       this.IsEditable = true;
     }
 
     public override ITextNode Root => this.root ?? (this.root = this.RootElement == null ? TextNode.Empty : this.Parse(null, this.RootElement));
 
     [NotNull]
-    protected ISnapshotService SnapshotService { get; }
+    public string SchemaFileName { get; }
+
+    [NotNull]
+    public string SchemaNamespace { get; }
 
     [CanBeNull]
     protected XElement RootElement
@@ -57,6 +62,9 @@
       }
     }
 
+    [NotNull]
+    protected ISnapshotService SnapshotService { get; }
+
     public override void BeginEdit()
     {
       this.IsEditing = true;
@@ -83,8 +91,13 @@
       return textNode;
     }
 
-    public override void ValidateSchema(IParseContext context, string schemaNamespace, string schemaFileName)
+    public override void ValidateSchema(IParseContext context)
     {
+      if (string.IsNullOrEmpty(this.SchemaFileName) || string.IsNullOrEmpty(this.SchemaNamespace))
+      {
+        return;
+      }
+
       var doc = this.RootElement?.Document;
       if (doc == null)
       {
@@ -92,10 +105,10 @@
       }
 
       XmlSchemaSet schema;
-      if (!Schemas.TryGetValue(schemaNamespace, out schema))
+      if (!Schemas.TryGetValue(this.SchemaNamespace, out schema))
       {
-        schema = this.GetSchema(context, schemaFileName, schemaNamespace);
-        Schemas[schemaNamespace] = schema;
+        schema = this.GetSchema(context, this.SchemaFileName, this.SchemaNamespace);
+        Schemas[this.SchemaNamespace] = schema;
       }
 
       if (schema == null)

@@ -1,5 +1,5 @@
 {
-  "$schema": "/.schemas/item.schema.json",
+  "$schema": "local:///.settings/pathfinder.json",
   
   "Item": {
     "Template": "/sitecore/templates/Sample/Sample Item",

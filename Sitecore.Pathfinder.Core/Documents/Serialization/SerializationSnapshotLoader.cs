@@ -8,12 +8,19 @@
   [Export(typeof(ISnapshotLoader))]
   public class SerializationSnapshotLoader : ISnapshotLoader
   {
-    public bool CanLoad(ISnapshotService snapshotService, IProject project, ISourceFile sourceFile)
+    public SerializationSnapshotLoader()
+    {
+      this.Priority = 1000;
+    }
+
+    public double Priority { get; }
+
+    public virtual bool CanLoad(ISnapshotService snapshotService, IProject project, ISourceFile sourceFile)
     {
       return string.Compare(Path.GetExtension(sourceFile.FileName), ".item", StringComparison.OrdinalIgnoreCase) == 0;
     }
 
-    public ISnapshot Load(ISnapshotService snapshotService, IProject project, ISourceFile sourceFile)
+    public virtual ISnapshot Load(ISnapshotService snapshotService, IProject project, ISourceFile sourceFile)
     {
       var text = sourceFile.ReadAsText();
 

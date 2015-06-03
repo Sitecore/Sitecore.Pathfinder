@@ -8,12 +8,19 @@
   [Export(typeof(ISnapshotLoader))]
   public class JsonSnapshotLoader : ISnapshotLoader
   {
-    public bool CanLoad(ISnapshotService snapshotService, IProject project, ISourceFile sourceFile)
+    public JsonSnapshotLoader()
+    {
+      this.Priority = 1000;
+    }
+
+    public double Priority { get; }
+
+    public virtual bool CanLoad(ISnapshotService snapshotService, IProject project, ISourceFile sourceFile)
     {
       return string.Compare(Path.GetExtension(sourceFile.FileName), ".json", StringComparison.OrdinalIgnoreCase) == 0;
     }
 
-    public ISnapshot Load(ISnapshotService snapshotService, IProject project, ISourceFile sourceFile)
+    public virtual ISnapshot Load(ISnapshotService snapshotService, IProject project, ISourceFile sourceFile)
     {
       var contents = sourceFile.ReadAsText();
 
