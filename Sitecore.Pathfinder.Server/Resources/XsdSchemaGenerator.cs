@@ -11,7 +11,7 @@
   using Sitecore.Data.Items;
   using Sitecore.Data.Managers;
   using Sitecore.Data.Templates;
-  using Sitecore.Pathfinder.Extensions.StringExtensions;
+  using Sitecore.Pathfinder.Extensions;
   using Sitecore.SecurityModel;
   using Sitecore.Text;
 

@@ -5,7 +5,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
   using System.Diagnostics;
   using System.IO;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Extensions.StringExtensions;
+  using Sitecore.Pathfinder.Extensions;
   using Sitecore.Pathfinder.IO;
 
   [Export(typeof(ITask))]

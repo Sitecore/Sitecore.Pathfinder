@@ -64,6 +64,21 @@
     "{3A45A723-64EE-4919-9D41-02FD40FD1466}": "/sitecore/templates/System/Layout/Layout"
   },
 
+  "snapshots": {
+    "default": {
+      "files": {
+        "include": "",
+        "exclude": ""
+      },
+      "master": {
+        "include": "/sitecore/content,/sitecore/media library,/sitecore/templates/User Defined"
+      },
+      "core": {
+        "include": ""
+      }
+    }
+  },
+
   "websiteFolderName": "Website",
   "dataFolderName": "Data",
 

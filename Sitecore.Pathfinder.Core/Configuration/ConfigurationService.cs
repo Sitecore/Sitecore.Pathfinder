@@ -7,7 +7,7 @@
   using System.Linq;
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Extensions.ConfigurationExtensions;
+  using Sitecore.Pathfinder.Extensions;
   using Sitecore.Pathfinder.IO;
 
   [Export(typeof(IConfigurationService))]

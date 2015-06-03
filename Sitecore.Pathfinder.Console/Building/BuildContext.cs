@@ -4,7 +4,7 @@
   using System.ComponentModel.Composition;
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Extensions.ConfigurationExtensions;
+  using Sitecore.Pathfinder.Extensions;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects;
 

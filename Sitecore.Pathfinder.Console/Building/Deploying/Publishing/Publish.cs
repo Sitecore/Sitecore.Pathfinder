@@ -3,7 +3,7 @@ namespace Sitecore.Pathfinder.Building.Deploying.Publishing
   using System;
   using System.ComponentModel.Composition;
   using System.Web;
-  using Sitecore.Pathfinder.Extensions.ConfigurationExtensions;
+  using Sitecore.Pathfinder.Extensions;
 
   [Export(typeof(ITask))]
   public class Publish : RequestTaskBase

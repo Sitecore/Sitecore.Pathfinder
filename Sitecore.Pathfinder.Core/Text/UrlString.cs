@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Text
   using System.Text;
   using System.Web;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Extensions.StringExtensions;
+  using Sitecore.Pathfinder.Extensions;
 
   /// <summary>Creates and builds a string Url.</summary>
   public class UrlString

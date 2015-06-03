@@ -100,9 +100,10 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Documents\Property.cs" />
     <Compile Include="Documents\Serialization\SerializationSnapshotLoader.cs" />
-    <Compile Include="Extensions\CompositionServiceExtensions\CompositionServiceExtensions.cs" />
-    <Compile Include="Extensions\ConfigurationExtensions\ConfigurationExtensions.cs" />
-    <Compile Include="Extensions\JsonTextWriterExtensions\JsonTextWriter.cs" />
+    <Compile Include="Extensions\CompositionServiceExtensions.cs" />
+    <Compile Include="Extensions\ConfigurationExtensions.cs" />
+    <Compile Include="Extensions\JsonTextWriter.cs" />
+    <Compile Include="IO\PathMatcher.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\ItemParserBase.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\Json\JsonItemParser.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\LayoutParserBase.cs" />
@@ -119,8 +120,6 @@
     <Compile Include="Parsing\Layouts\SublayoutRenderingParser.cs" />
     <Compile Include="Parsing\Layouts\ViewRenderingParser.cs" />
     <Compile Include="Parsing\Layouts\WebFormsRenderingParser.cs" />
-    <Compile Include="Parsing\Other\ComponentParser.cs" />
-    <Compile Include="Parsing\Other\PageTypeParser.cs" />
     <Compile Include="Parsing\Files\MediaFileParser.cs" />
     <Compile Include="Parsing\Files\SerializationFileParser.cs" />
     <Compile Include="Parsing\IParseService.cs" />
@@ -143,12 +142,10 @@
     <Compile Include="Documents\ISnapshot.cs" />
     <Compile Include="Documents\ITextTokenService.cs" />
     <Compile Include="Projects\Layouts\Rendering.cs" />
-    <Compile Include="Projects\Other\PageType.cs" />
     <Compile Include="Projects\IProject.cs" />
     <Compile Include="Documents\ISourceFile.cs" />
     <Compile Include="Projects\Layouts\Layout.cs" />
     <Compile Include="Projects\References\Reference.cs" />
-    <Compile Include="Projects\Other\Component.cs" />
     <Compile Include="Projects\Project.cs" />
     <Compile Include="Projects\ProjectDirectoryVisitor.cs" />
     <Compile Include="Projects\ProjectService.cs" />
@@ -178,8 +175,8 @@
     <Compile Include="Documents\TextPosition.cs" />
     <Compile Include="Documents\TextTokenService.cs" />
     <Compile Include="Diagnostics\TraceService.cs" />
-    <Compile Include="Extensions\StringExtensions\StringExtensions.cs" />
-    <Compile Include="Extensions\XElementExtensions\XElementExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\XElementExtensions.cs" />
     <Compile Include="IO\FileSystemService.cs" />
     <Compile Include="IO\IFileSystemService.cs" />
     <Compile Include="IO\PathHelper.cs" />

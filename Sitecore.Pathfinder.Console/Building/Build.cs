@@ -6,8 +6,7 @@
   using System.Linq;
   using Sitecore.Pathfinder.Configuration;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Extensions.CompositionServiceExtensions;
-  using Sitecore.Pathfinder.Extensions.ConfigurationExtensions;
+  using Sitecore.Pathfinder.Extensions;
 
   [Export]
   public class Build

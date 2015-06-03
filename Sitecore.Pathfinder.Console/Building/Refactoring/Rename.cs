@@ -3,9 +3,7 @@ namespace Sitecore.Pathfinder.Building.Refactoring
   using System.ComponentModel.Composition;
   using System.Linq;
   using Sitecore.Pathfinder.Building.Querying;
-  using Sitecore.Pathfinder.Extensions.CompositionServiceExtensions;
-  using Sitecore.Pathfinder.Extensions.ConfigurationExtensions;
-  using Sitecore.Pathfinder.Extensions.StringExtensions;
+  using Sitecore.Pathfinder.Extensions;
   using Sitecore.Pathfinder.Querying;
 
   [Export(typeof(ITask))]

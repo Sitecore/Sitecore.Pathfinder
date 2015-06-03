@@ -9,8 +9,7 @@
   using Sitecore.Pathfinder.Builders.FieldResolvers;
   using Sitecore.Pathfinder.Data;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Extensions.ConfigurationExtensions;
-  using Sitecore.Pathfinder.Extensions.StringExtensions;
+  using Sitecore.Pathfinder.Extensions;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects;
 

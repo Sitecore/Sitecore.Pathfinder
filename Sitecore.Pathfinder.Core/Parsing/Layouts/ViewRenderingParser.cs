@@ -4,7 +4,7 @@ namespace Sitecore.Pathfinder.Parsing.Layouts
   using System.ComponentModel.Composition;
   using System.Linq;
   using System.Text.RegularExpressions;
-  using Sitecore.Pathfinder.Extensions.StringExtensions;
+  using Sitecore.Pathfinder.Extensions;
 
   [Export(typeof(IParser))]
   public class ViewRenderingParser : RenderingParser

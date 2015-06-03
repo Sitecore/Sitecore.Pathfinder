@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.Extensions.JsonTextWriterExtensions
+﻿namespace Sitecore.Pathfinder.Extensions
 {
   using Newtonsoft.Json;
   using Sitecore.Pathfinder.Diagnostics;

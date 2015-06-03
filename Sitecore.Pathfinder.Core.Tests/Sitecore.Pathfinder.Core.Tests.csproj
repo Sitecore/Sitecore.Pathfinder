@@ -82,6 +82,7 @@
     <Compile Include="IO\MockedFileSystemService.cs" />
     <Compile Include="Documents\Json\JsonDocumentTests.cs" />
     <Compile Include="IO\PathHelperTests.cs" />
+    <Compile Include="IO\PathMatcherTests.cs" />
     <Compile Include="Projects\ProjectTests.cs" />
     <Compile Include="Documents\SourceFileTests.cs" />
     <Compile Include="Documents\Xml\XmlDocumentTests.cs" />

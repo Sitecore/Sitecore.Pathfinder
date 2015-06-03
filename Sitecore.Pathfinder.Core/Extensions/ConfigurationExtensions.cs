@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.Extensions.ConfigurationExtensions
+﻿namespace Sitecore.Pathfinder.Extensions
 {
   using System;
   using System.Collections.Generic;

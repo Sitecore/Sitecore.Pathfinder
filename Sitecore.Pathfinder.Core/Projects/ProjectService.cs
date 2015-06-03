@@ -7,8 +7,7 @@
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Checking;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Extensions.CompositionServiceExtensions;
-  using Sitecore.Pathfinder.Extensions.ConfigurationExtensions;
+  using Sitecore.Pathfinder.Extensions;
   using Sitecore.Pathfinder.IO;
 
   [Export(typeof(IProjectService))]

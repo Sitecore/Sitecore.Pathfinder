@@ -17,6 +17,11 @@
       ' '
     };
 
+    public static readonly char[] Comma =
+    {
+      ','
+    };
+
     public static class Configuration
     {
       public const string CheckBinFileVersion = "deploying:check-bin-file-version";

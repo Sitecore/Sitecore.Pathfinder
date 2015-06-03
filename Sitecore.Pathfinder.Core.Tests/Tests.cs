@@ -5,7 +5,7 @@
   using System.Reflection;
   using Sitecore.Pathfinder.Configuration;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Extensions.CompositionServiceExtensions;
+  using Sitecore.Pathfinder.Extensions;
   using Sitecore.Pathfinder.Helpers;
 
   public abstract class Tests

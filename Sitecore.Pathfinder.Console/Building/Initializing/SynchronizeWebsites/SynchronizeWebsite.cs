@@ -6,7 +6,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.SynchronizeWebsites
   using System.IO.Compression;
   using System.Net;
   using System.Web;
-  using Sitecore.Pathfinder.Extensions.ConfigurationExtensions;
+  using Sitecore.Pathfinder.Extensions;
 
   [Export(typeof(ITask))]
   public class SynchronizeWebsite : TaskBase

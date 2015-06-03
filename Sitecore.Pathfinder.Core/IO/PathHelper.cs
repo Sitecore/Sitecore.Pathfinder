@@ -5,7 +5,7 @@
   using System.Text.RegularExpressions;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
-  using Sitecore.Pathfinder.Extensions.StringExtensions;
+  using Sitecore.Pathfinder.Extensions;
   using Sitecore.Pathfinder.Projects;
 
   public static class PathHelper

@@ -2,7 +2,7 @@ namespace Sitecore.Pathfinder.Building.Commands
 {
   using System.ComponentModel.Composition;
   using System.Linq;
-  using Sitecore.Pathfinder.Extensions.CompositionServiceExtensions;
+  using Sitecore.Pathfinder.Extensions;
 
   [Export(typeof(ITask))]
   public class ListTasks : TaskBase

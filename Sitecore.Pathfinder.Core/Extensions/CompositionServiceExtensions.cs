@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.Extensions.CompositionServiceExtensions
+﻿namespace Sitecore.Pathfinder.Extensions
 {
   using System.ComponentModel.Composition;
   using System.ComponentModel.Composition.Hosting;

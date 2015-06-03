@@ -3,7 +3,7 @@
   using System.Collections.Generic;
   using System.ComponentModel.Composition;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Extensions.CompositionServiceExtensions;
+  using Sitecore.Pathfinder.Extensions;
   using Sitecore.Pathfinder.Projects;
 
   [Export(typeof(ICheckerService))]

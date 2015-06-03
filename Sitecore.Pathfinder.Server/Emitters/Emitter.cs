@@ -5,16 +5,11 @@
   using System.ComponentModel.Composition;
   using System.IO;
   using System.Linq;
-  using System.Text;
-  using System.Xml;
   using NuGet;
-  using Sitecore.Data.Serialization;
   using Sitecore.Pathfinder.Configuration;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
-  using Sitecore.Pathfinder.Extensions.CompositionServiceExtensions;
-  using Sitecore.Pathfinder.Extensions.ConfigurationExtensions;
-  using Sitecore.Pathfinder.IO;
+  using Sitecore.Pathfinder.Extensions;
   using Sitecore.Pathfinder.Projects;
   using Sitecore.SecurityModel;
 
@@ -74,44 +69,6 @@
       {
         this.Trace.TraceError(ex.Message);
       }
-
-      Manager.DumpTree();
-    }
-
-    protected virtual void BuildNuspecFile([NotNull] string nuspecFileName)
-    {
-      using (var output = new XmlTextWriter(nuspecFileName, Encoding.UTF8))
-      {
-        output.Formatting = Formatting.Indented;
-
-        output.WriteStartElement("package");
-
-        // todo: provide better package info
-        output.WriteStartElement("metadata");
-        output.WriteElementString("id", "Uninstall");
-        output.WriteElementString("version", "1.0.0");
-        output.WriteElementString("title", "Uninstall");
-        output.WriteElementString("authors", "Sitecore Pathfinder");
-        output.WriteElementString("owners", "Sitecore Pathfinder");
-        output.WriteElementString("description", "Uninstall Package");
-        output.WriteElementString("summary", "Uninstall Package");
-        output.WriteElementString("tags", string.Empty);
-
-        output.WriteEndElement();
-
-        output.WriteStartElement("files");
-
-        output.WriteStartElement("file");
-
-        output.WriteAttributeString("src", "**/*");
-        output.WriteAttributeString("target", string.Empty);
-
-        output.WriteEndElement();
-
-        output.WriteEndElement();
-
-        output.WriteEndElement();
-      }
     }
 
     protected virtual void Emit([NotNull] IProject project)
@@ -119,11 +76,6 @@
       var context = this.CompositionService.Resolve<IEmitContext>().With(project);
 
       this.TraceProjectDiagnostics(context);
-
-      if (context.FileSystem.DirectoryExists(context.UninstallDirectory))
-      {
-        context.FileSystem.DeleteDirectory(context.UninstallDirectory);
-      }
 
       var emitters = this.Emitters.OrderBy(e => e.Sortorder).ToList();
       var retries = new List<Tuple<IProjectItem, Exception>>();
@@ -134,8 +86,6 @@
         this.Emit(context, project, emitters, retries);
         this.EmitRetry(context, emitters, retries);
       }
-
-      this.EmitUninstallPackage(context);
     }
 
     protected virtual void Emit([NotNull] IEmitContext context, [NotNull] IProject project, [NotNull] List<IEmitter> emitters, [NotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
@@ -220,58 +170,6 @@
           this.Trace.TraceError(Texts.An_error_occured, projectItem.Snapshot.SourceFile.FileName, TextPosition.Empty);
         }
       }
-    }
-
-    protected virtual void EmitUninstallPackage([NotNull] IEmitContext context)
-    {
-      var systemConfigFileName = Path.Combine(context.Configuration.GetString(Pathfinder.Constants.Configuration.ToolsDirectory), context.Configuration.GetString(Pathfinder.Constants.Configuration.SystemConfigFileName));
-      var projectConfigFileName = PathHelper.Combine(context.Project.Options.ProjectDirectory, context.Configuration.Get(Pathfinder.Constants.Configuration.ProjectConfigFileName));
-
-      context.FileSystem.CreateDirectory(Path.Combine(context.UninstallDirectory, "content\\.sitecore.tools"));
-      context.FileSystem.Copy(systemConfigFileName, Path.Combine(context.UninstallDirectory, "content\\.sitecore.tools\\" + context.Configuration.GetString(Pathfinder.Constants.Configuration.SystemConfigFileName)));
-      context.FileSystem.Copy(projectConfigFileName, Path.Combine(context.UninstallDirectory, "content\\" + context.Configuration.Get(Pathfinder.Constants.Configuration.ProjectConfigFileName)));
-
-      var postInstallScript = Path.Combine(context.UninstallDirectory, "content\\postinstall.xml");
-
-      using (var streamWriter = new StreamWriter(postInstallScript, false, Encoding.UTF8))
-      {
-        var output = new XmlTextWriter(streamWriter)
-        {
-          Formatting = Formatting.Indented
-        };
-
-        output.WriteStartElement("actions");
-
-        if (context.AddedItems.Any())
-        {
-          output.WriteStartElement("deleteItems");
-
-          foreach (var item in context.AddedItems)
-          {
-            output.WriteElementString("item", item);
-          }
-
-          output.WriteEndElement();
-        }
-
-        if (context.AddedFiles.Any())
-        {
-          output.WriteStartElement("deleteFiles");
-
-          foreach (var item in context.AddedFiles)
-          {
-            output.WriteElementString("item", item);
-          }
-
-          output.WriteEndElement();
-        }
-
-        output.WriteEndElement();
-      }
-
-      var nuspecFileName = Path.Combine(context.UninstallDirectory, "Uninstall.nuspec");
-      this.BuildNuspecFile(nuspecFileName);
-      this.BuildNupkgFile(context, nuspecFileName);
     }
 
     protected virtual void TraceProjectDiagnostics([NotNull] IEmitContext context)

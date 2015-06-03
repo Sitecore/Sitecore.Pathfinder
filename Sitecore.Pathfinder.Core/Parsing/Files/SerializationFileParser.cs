@@ -5,7 +5,7 @@
   using System.Text;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
-  using Sitecore.Pathfinder.Extensions.StringExtensions;
+  using Sitecore.Pathfinder.Extensions;
   using Sitecore.Pathfinder.Projects.Files;
   using Sitecore.Pathfinder.Projects.Items;
 

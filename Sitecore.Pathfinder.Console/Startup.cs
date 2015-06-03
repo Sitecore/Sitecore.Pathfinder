@@ -9,7 +9,7 @@
   using Sitecore.Pathfinder.Building;
   using Sitecore.Pathfinder.Checking;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Extensions.CompositionServiceExtensions;
+  using Sitecore.Pathfinder.Extensions;
 
   public class Startup
   {

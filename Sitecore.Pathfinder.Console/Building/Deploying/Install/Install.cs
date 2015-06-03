@@ -3,7 +3,7 @@ namespace Sitecore.Pathfinder.Building.Deploying.Install
   using System.ComponentModel.Composition;
   using System.IO;
   using System.Web;
-  using Sitecore.Pathfinder.Extensions.ConfigurationExtensions;
+  using Sitecore.Pathfinder.Extensions;
 
   [Export(typeof(ITask))]
   public class Install : RequestTaskBase

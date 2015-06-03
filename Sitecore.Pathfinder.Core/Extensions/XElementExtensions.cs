@@ -1,4 +1,4 @@
-namespace Sitecore.Pathfinder.Extensions.XElementExtensions
+namespace Sitecore.Pathfinder.Extensions
 {
   using System.ComponentModel;
   using System.Linq;

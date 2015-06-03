@@ -4,7 +4,7 @@
   using System.ComponentModel.Composition;
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Documents;
-  using Sitecore.Pathfinder.Extensions.StringExtensions;
+  using Sitecore.Pathfinder.Extensions;
 
   public enum Severity
   {

@@ -11,7 +11,7 @@
   using Sitecore.Data.Managers;
   using Sitecore.Data.Templates;
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Extensions.JsonTextWriterExtensions;
+  using Sitecore.Pathfinder.Extensions;
   using Sitecore.SecurityModel;
   using Sitecore.Text;
 
