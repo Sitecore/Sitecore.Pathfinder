@@ -139,10 +139,12 @@
     <Compile Include="Parsing\Items\TreeNodeParsers\ServerXmlLayoutParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\IResourceExporter.cs" />
-    <Compile Include="Resources\XsdSchemaExporter.cs" />
-    <Compile Include="Resources\JsonSchemaGenerator.cs" />
-    <Compile Include="Resources\JsonSchemaExporter.cs" />
-    <Compile Include="Resources\XsdSchemaGenerator.cs" />
+    <Compile Include="Resources\JsonTemplateSchemaExporter.cs" />
+    <Compile Include="Resources\JsonTemplateSchemaGenerator.cs" />
+    <Compile Include="Resources\XsdLayoutSchemaExporter.cs" />
+    <Compile Include="Resources\JsonLayoutSchemaGenerator.cs" />
+    <Compile Include="Resources\JsonLayoutSchemaExporter.cs" />
+    <Compile Include="Resources\XsdLayoutSchemaGenerator.cs" />
     <Compile Include="Resources\ResourceManager.cs" />
     <Compile Include="sitecore\shell\client\Applications\Pathfinder\UpdateResources.ashx.cs">
       <DependentUpon>UpdateResources.ashx</DependentUpon>

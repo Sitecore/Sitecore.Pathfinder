@@ -15,23 +15,11 @@
   using Sitecore.SecurityModel;
   using Sitecore.Text;
 
-  public class XsdSchemaGenerator
+  public class XsdLayoutSchemaGenerator
   {
     public const string Namespace = "http://www.w3.org/2001/XMLSchema";
 
     public const string RenderingIdsFastQuery = "@@templateid='{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}' or " + "@@templateid='{2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}' or " + "@@templateid='{86776923-ECA5-4310-8DC0-AE65FE88D078}' or " + "@@templateid='{39587D7D-F06D-4CB4-A25E-AA7D847EDDD0}' or " + "@@templateid='{0A98E368-CDB9-4E1E-927C-8E0C24A003FB}' or " + "@@templateid='{83E993C5-C0FC-4472-86A9-2F6CFED694E4}' or " + "@@templateid='{1DDE3F02-0BD7-4779-867A-DC578ADF91EA}' or " + "@@templateid='{F1F1D639-4F54-40C2-8BE0-81266B392CEB}'";
-
-    public static readonly List<string> RenderingIds = new List<string>
-    {
-      "{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}", 
-      "{2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}", 
-      "{86776923-ECA5-4310-8DC0-AE65FE88D078}", 
-      "{39587D7D-F06D-4CB4-A25E-AA7D847EDDD0}", 
-      "{0A98E368-CDB9-4E1E-927C-8E0C24A003FB}",                                        
-      "{83E993C5-C0FC-4472-86A9-2F6CFED694E4}", 
-      "{1DDE3F02-0BD7-4779-867A-DC578ADF91EA}", 
-      "{F1F1D639-4F54-40C2-8BE0-81266B392CEB}"
-    };
 
     [NotNull]
     public string Generate([NotNull] string schemaNamespace, [NotNull] string databaseName)

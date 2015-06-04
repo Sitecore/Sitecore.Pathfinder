@@ -5,7 +5,7 @@ namespace Sitecore.Pathfinder.Resources
   using Sitecore.Zip;
 
   [Export(typeof(IResourceExporter))]
-  public class JsonSchemaExporter : IResourceExporter
+  public class JsonLayoutSchemaExporter : IResourceExporter
   {
     public void Export(ZipWriter zip)
     {
@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Resources
 
     protected void GenerateRenderingJsonSchema([NotNull] ZipWriter zip, [NotNull] string databaseName)
     {
-      var generator = new JsonSchemaGenerator();
+      var generator = new JsonLayoutSchemaGenerator();
       var schema = generator.Generate(databaseName);
       zip.AddEntry(".schemas\\" + databaseName + ".layout.schema.json", Encoding.UTF8.GetBytes(schema));
     }

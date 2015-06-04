@@ -5,7 +5,7 @@ namespace Sitecore.Pathfinder.Resources
   using Sitecore.Zip;
 
   [Export(typeof(IResourceExporter))]
-  public class XsdSchemaExporter : IResourceExporter
+  public class XsdLayoutSchemaExporter : IResourceExporter
   {
     public void Export(ZipWriter zip)
     {
@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Resources
 
     protected void GenerateRenderingXsdSchema([NotNull] ZipWriter zip, [NotNull] string schemaNamespace, [NotNull] string databaseName)
     {
-      var generator = new XsdSchemaGenerator();
+      var generator = new XsdLayoutSchemaGenerator();
       var schema = generator.Generate(schemaNamespace, databaseName);
       zip.AddEntry(".schemas\\" + databaseName + ".layout.xsd", Encoding.UTF8.GetBytes(schema));
     }
