@@ -61,8 +61,8 @@ namespace Sitecore.Pathfinder.Emitters.Files
         mediaFile.MediaItem.Guid = item.ID.ToGuid();
       }
 
-      var itemBuilder = new ItemBuilder(mediaFile.MediaItem);
-      itemBuilder.Build(context);
+      var itemBuilder = new ItemBuilder();
+      itemBuilder.Build(context, mediaFile.MediaItem);
     }
   }
 }

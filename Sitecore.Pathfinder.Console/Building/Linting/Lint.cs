@@ -1,6 +1,7 @@
 namespace Sitecore.Pathfinder.Building.Linting
 {
   using System.ComponentModel.Composition;
+  using System.Linq;
   using Sitecore.Pathfinder.Diagnostics;
 
   [Export(typeof(ITask))]
@@ -34,6 +35,12 @@ namespace Sitecore.Pathfinder.Building.Linting
             break;
         }
       }
+
+      var errors = context.Project.Diagnostics.Count(d => d.Severity == Severity.Error);
+      var warnings = context.Project.Diagnostics.Count(d => d.Severity == Severity.Warning);
+      var messages = context.Project.Diagnostics.Count(d => d.Severity == Severity.Information);
+
+      context.Trace.TraceInformation($"Errors: {errors}, warnings: {warnings}, messages: {messages}");
     }
   }
 }

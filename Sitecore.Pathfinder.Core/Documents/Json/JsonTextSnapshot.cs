@@ -18,32 +18,47 @@
       {
         if (this.root == null)
         {
-          JObject json;
+          JToken token;
           try
           {
-            json = JObject.Parse(this.Contents);
+            token = JToken.Parse(this.Contents);
           }
           catch
           {
             return TextNode.Empty;
           }
 
-          var r = json.Properties().FirstOrDefault(p => p.Name != "$schema");
-          if (r == null)
+          var jobject = token as JObject;
+          if (jobject != null)
           {
-            return TextNode.Empty;
+            var r = jobject.Properties().FirstOrDefault(p => p.Name != "$schema");
+            if (r == null)
+            {
+              return TextNode.Empty;
+            }
+
+            var value = r.Value as JObject;
+            if (value == null)
+            {
+              return TextNode.Empty;
+            }
+
+            this.root = this.Parse(r.Name, value, null);
           }
 
-          var value = r.Value as JObject;
-          if (value == null)
+          var jarray = token as JArray;
+          if (jarray != null)
           {
-            return TextNode.Empty;
-          }
+            this.root = new JsonTextNode(this, string.Empty, jarray);
 
-          this.root = this.Parse(r.Name, value, null);
+            foreach (var o in jarray.OfType<JObject>())
+            {
+              this.Parse(string.Empty, o, this.root);
+            }
+          }
         }
 
-        return this.root;
+        return this.root ?? TextNode.Empty;
       }
     }
 

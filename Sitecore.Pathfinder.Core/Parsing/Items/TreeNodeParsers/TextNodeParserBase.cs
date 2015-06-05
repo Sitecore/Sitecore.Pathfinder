@@ -2,7 +2,6 @@
 {
   using System;
   using System.Collections.Generic;
-  using System.Linq;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects;
@@ -11,6 +10,13 @@
 
   public abstract class TextNodeParserBase : ITextNodeParser
   {
+    protected TextNodeParserBase(double priority)
+    {
+      this.Priority = priority;
+    }
+
+    public double Priority { get; }
+
     public abstract bool CanParse(ItemParseContext context, ITextNode textNode);
 
     public abstract void Parse(ItemParseContext context, ITextNode textNode);

@@ -10,6 +10,10 @@
 
   public abstract class LayoutParserBase : TextNodeParserBase
   {
+    protected LayoutParserBase(double priority) : base(priority)
+    {
+    }
+
     public override void Parse(ItemParseContext context, ITextNode textNode)
     {
       var itemName = textNode.GetAttributeValue("Name", context.ParseContext.ItemName);

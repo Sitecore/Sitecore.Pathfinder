@@ -2,6 +2,13 @@
 {
   public static class Constants
   {
+    public const string RenderingIdsFastQuery = "@@templateid='{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}' or @@templateid='{2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}' or @@templateid='{86776923-ECA5-4310-8DC0-AE65FE88D078}' or @@templateid='{39587D7D-F06D-4CB4-A25E-AA7D847EDDD0}' or @@templateid='{0A98E368-CDB9-4E1E-927C-8E0C24A003FB}' or @@templateid='{83E993C5-C0FC-4472-86A9-2F6CFED694E4}' or @@templateid='{1DDE3F02-0BD7-4779-867A-DC578ADF91EA}' or @@templateid='{F1F1D639-4F54-40C2-8BE0-81266B392CEB}'";
+
+    public static readonly char[] Comma =
+    {
+      ','
+    };
+
     public static readonly char[] Pipe =
     {
       '|'
@@ -15,11 +22,6 @@
     public static readonly char[] Space =
     {
       ' '
-    };
-
-    public static readonly char[] Comma =
-    {
-      ','
     };
 
     public static class Configuration
@@ -88,6 +90,11 @@
       public const double Templates = 1000;
     }
 
+    public static class Fields
+    {
+      public const string InsertOptionsFieldId = "{1172F251-DAD4-4EFB-A329-0C63500E4F1E}";
+    }
+
     public static class Parsers
     {
       public const double BinFiles = 9999;
@@ -114,6 +121,17 @@
       public const string Sublayout = "{0A98E368-CDB9-4E1E-927C-8E0C24A003FB}";
 
       public const string ViewRendering = "{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}";
+    }
+
+    public static class TextNodeParsers
+    {
+      public const double Content = 9999;
+
+      public const double Items = 1000;
+
+      public const double Layouts = 1000;
+
+      public const double Templates = 1000;
     }
   }
 }

@@ -12,36 +12,28 @@
 
   public class ItemBuilder
   {
-    public ItemBuilder([NotNull] Projects.Items.Item projectItem)
-    {
-      this.ProjectItem = projectItem;
-    }
-
     [CanBeNull]
     public Item Item { get; protected set; }
-
-    [NotNull]
-    public Projects.Items.Item ProjectItem { get; }
 
     [CanBeNull]
     protected Item TemplateItem { get; set; }
 
-    public void Build([NotNull] IEmitContext context)
+    public void Build([NotNull] IEmitContext context, [NotNull] Projects.Items.Item projectItem)
     {
-      var database = context.DataService.GetDatabase(this.ProjectItem.DatabaseName);
+      var database = context.DataService.GetDatabase(projectItem.DatabaseName);
       if (database == null)
       {
-        throw new EmitException(Texts.Database_not_found, this.ProjectItem.Snapshot, this.ProjectItem.DatabaseName);
+        throw new EmitException(Texts.Database_not_found, projectItem.Snapshot, projectItem.DatabaseName);
       }
 
       if (this.Item == null)
       {
-        this.ResolveItem(context);
+        this.ResolveItem(context, projectItem);
       }
 
       if (this.TemplateItem == null)
       {
-        this.ResolveTemplateItem(context);
+        this.ResolveTemplateItem(context, projectItem);
       }
 
       if (this.TemplateItem == null && this.Item != null)
@@ -49,11 +41,11 @@
         this.TemplateItem = this.Item.Template;
       }
 
-      this.Validate();
+      this.Validate(projectItem);
 
       if (this.Item == null)
       {
-        this.CreateNewItem(context, database);
+        this.CreateNewItem(context, database, projectItem);
         if (this.Item == null)
         {
           return;
@@ -66,82 +58,82 @@
         context.RegisterUpdatedItem(this.Item);
       }
 
-      this.UpdateFields(context);
-      this.UpdateItem(context);
+      this.UpdateFields(context, projectItem);
+      this.UpdateItem(context, projectItem);
     }
 
-    protected void CreateNewItem([NotNull] IEmitContext context, [NotNull] Database database)
+    protected void CreateNewItem([NotNull] IEmitContext context, [NotNull] Database database, [NotNull] Projects.Items.Item projectItem)
     {
       if (this.TemplateItem == null)
       {
-        throw new RetryableEmitException(Texts.Template_missing, this.ProjectItem.Snapshot, this.ProjectItem.TemplateIdOrPath);
+        throw new RetryableEmitException(Texts.Template_missing, projectItem.Snapshot, projectItem.TemplateIdOrPath);
       }
 
-      var parentItemPath = PathHelper.GetItemParentPath(this.ProjectItem.ItemIdOrPath);
+      var parentItemPath = PathHelper.GetItemParentPath(projectItem.ItemIdOrPath);
 
       var parentItem = database.CreateItemPath(parentItemPath);
       if (parentItem == null)
       {
-        throw new RetryableEmitException(Texts.Failed_to_create_item_path, this.ProjectItem.Snapshot, parentItemPath);
+        throw new RetryableEmitException(Texts.Failed_to_create_item_path, projectItem.Snapshot, parentItemPath);
       }
 
-      var item = ItemManager.AddFromTemplate(this.ProjectItem.ItemName, this.TemplateItem.ID, parentItem, new ID(this.ProjectItem.Guid));
+      var item = ItemManager.AddFromTemplate(projectItem.ItemName, this.TemplateItem.ID, parentItem, new ID(projectItem.Guid));
       if (item == null)
       {
-        throw new RetryableEmitException(Texts.Failed_to_create_item_path, this.ProjectItem.Snapshot, this.ProjectItem.ItemIdOrPath);
+        throw new RetryableEmitException(Texts.Failed_to_create_item_path, projectItem.Snapshot, projectItem.ItemIdOrPath);
       }
 
       this.Item = item;
-      this.ProjectItem.ItemIdOrPath = item.ID.ToString();
+      projectItem.ItemIdOrPath = item.ID.ToString();
     }
 
-    protected virtual void ResolveItem([NotNull] IEmitContext context)
+    protected virtual void ResolveItem([NotNull] IEmitContext context, [NotNull] Projects.Items.Item projectItem)
     {
-      var database = context.DataService.GetDatabase(this.ProjectItem.DatabaseName);
+      var database = context.DataService.GetDatabase(projectItem.DatabaseName);
       if (database == null)
       {
         return;
       }
 
-      this.Item = database.GetItem(new ID(this.ProjectItem.Guid));
+      this.Item = database.GetItem(new ID(projectItem.Guid));
       if (this.Item != null)
       {
-        this.ProjectItem.ItemIdOrPath = this.Item.ID.ToString();
+        projectItem.ItemIdOrPath = this.Item.ID.ToString();
       }
     }
 
-    protected void ResolveTemplateItem([NotNull] IEmitContext context)
+    protected void ResolveTemplateItem([NotNull] IEmitContext context, [NotNull] Projects.Items.Item projectItem)
     {
-      var database = context.DataService.GetDatabase(this.ProjectItem.DatabaseName);
+      var database = context.DataService.GetDatabase(projectItem.DatabaseName);
       if (database == null)
       {
         return;
       }
 
-      if (ID.IsID(this.ProjectItem.TemplateIdOrPath))
+      if (ID.IsID(projectItem.TemplateIdOrPath))
       {
-        this.TemplateItem = database.GetItem(this.ProjectItem.TemplateIdOrPath);
+        this.TemplateItem = database.GetItem(projectItem.TemplateIdOrPath);
       }
 
-      if (this.TemplateItem == null && this.ProjectItem.TemplateIdOrPath.Contains("/"))
+      if (this.TemplateItem == null && projectItem.TemplateIdOrPath.Contains("/"))
       {
-        this.TemplateItem = database.GetItem(this.ProjectItem.TemplateIdOrPath);
+        this.TemplateItem = database.GetItem(projectItem.TemplateIdOrPath);
       }
 
       if (this.TemplateItem != null)
       {
-        this.ProjectItem.TemplateIdOrPath = this.TemplateItem.ID.ToString();
+        projectItem.TemplateIdOrPath = this.TemplateItem.ID.ToString();
       }
     }
 
-    protected void UpdateFields([NotNull] IEmitContext context)
+    protected void UpdateFields([NotNull] IEmitContext context, [NotNull] Projects.Items.Item projectItem)
     {
       if (this.Item == null)
       {
-        throw new EmitException(Texts.Item_not_found, this.ProjectItem.Snapshot);
+        throw new EmitException(Texts.Item_not_found, projectItem.Snapshot);
       }
 
-      foreach (var field in this.ProjectItem.Fields)
+      foreach (var field in projectItem.Fields)
       {
         foreach (var fieldResolver in context.FieldResolvers)
         {
@@ -153,22 +145,22 @@
       }
     }
 
-    protected void UpdateItem([NotNull] IEmitContext context)
+    protected void UpdateItem([NotNull] IEmitContext context, [NotNull] Projects.Items.Item projectItem)
     {
       if (this.Item == null)
       {
-        throw new EmitException(Texts.Item_not_found, this.ProjectItem.Snapshot, this.ProjectItem.ItemIdOrPath);
+        throw new EmitException(Texts.Item_not_found, projectItem.Snapshot, projectItem.ItemIdOrPath);
       }
 
       if (this.TemplateItem == null)
       {
-        throw new RetryableEmitException(Texts.Template_missing, this.ProjectItem.Snapshot, this.ProjectItem.TemplateIdOrPath);
+        throw new RetryableEmitException(Texts.Template_missing, projectItem.Snapshot, projectItem.TemplateIdOrPath);
       }
 
       // move
-      if (string.Compare(this.Item.Paths.Path, this.ProjectItem.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) != 0 && string.Compare(this.Item.ID.ToString(), this.ProjectItem.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) != 0)
+      if (string.Compare(this.Item.Paths.Path, projectItem.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) != 0 && string.Compare(this.Item.ID.ToString(), projectItem.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) != 0)
       {
-        var parentItemPath = PathHelper.GetItemParentPath(this.ProjectItem.ItemIdOrPath);
+        var parentItemPath = PathHelper.GetItemParentPath(projectItem.ItemIdOrPath);
 
         var parentItem = this.Item.Database.GetItem(parentItemPath);
         if (parentItem == null)
@@ -176,7 +168,7 @@
           parentItem = this.Item.Database.CreateItemPath(parentItemPath);
           if (parentItem == null)
           {
-            throw new RetryableEmitException(Texts.Could_not_create_item, this.ProjectItem.Snapshot, parentItemPath);
+            throw new RetryableEmitException(Texts.Could_not_create_item, projectItem.Snapshot, parentItemPath);
           }
         }
 
@@ -186,9 +178,9 @@
       // rename and update fields
       using (new EditContext(this.Item))
       {
-        if (this.Item.Name != this.ProjectItem.ItemName)
+        if (this.Item.Name != projectItem.ItemName)
         {
-          this.Item.Name = this.ProjectItem.ItemName;
+          this.Item.Name = projectItem.ItemName;
         }
 
         if (this.Item.TemplateID != this.TemplateItem.ID)
@@ -197,7 +189,7 @@
           this.Item.ChangeTemplate(templateItem);
         }
 
-        foreach (var field in this.ProjectItem.Fields.Where(i => string.IsNullOrEmpty(i.Language) && i.Version == 0))
+        foreach (var field in projectItem.Fields.Where(i => string.IsNullOrEmpty(i.Language) && i.Version == 0))
         {
           this.Item[field.FieldName] = field.Value;
         }
@@ -205,7 +197,7 @@
 
       var items = new List<Item>();
 
-      foreach (var field in this.ProjectItem.Fields.Where(i => !string.IsNullOrEmpty(i.Language) || i.Version != 0))
+      foreach (var field in projectItem.Fields.Where(i => !string.IsNullOrEmpty(i.Language) || i.Version != 0))
       {
         // language has already been validated
         var language = LanguageManager.GetLanguage(field.Language, this.Item.Database);
@@ -234,7 +226,7 @@
       }
     }
 
-    private void Validate()
+    private void Validate([NotNull] Projects.Items.Item projectItem)
     {
       if (this.TemplateItem == null)
       {
@@ -249,7 +241,7 @@
 
       var templateFields = template.GetFields(true);
 
-      foreach (var field in this.ProjectItem.Fields)
+      foreach (var field in projectItem.Fields)
       {
         if (templateFields.All(f => string.Compare(f.Name, field.FieldName, StringComparison.OrdinalIgnoreCase) != 0))
         {

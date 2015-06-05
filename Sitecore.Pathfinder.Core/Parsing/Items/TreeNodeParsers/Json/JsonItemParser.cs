@@ -9,6 +9,10 @@
   [Export(typeof(ITextNodeParser))]
   public class JsonItemParser : ItemParserBase
   {
+    public JsonItemParser() : base(Constants.TextNodeParsers.Items)
+    {
+    }
+
     public override bool CanParse(ItemParseContext context, ITextNode textNode)
     {
       return textNode.Name == "Item" && textNode.Snapshot is JsonTextSnapshot;

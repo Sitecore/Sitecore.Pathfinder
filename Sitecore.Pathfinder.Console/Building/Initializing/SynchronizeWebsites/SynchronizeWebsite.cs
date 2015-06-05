@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.SynchronizeWebsites
 
     public override void Run(IBuildContext context)
     {
-      context.Trace.TraceInformation(Texts.Downloading_resources___);
+      context.Trace.TraceInformation(Texts.SynchronizingWebsite);
 
       var hostName = context.Configuration.GetString(Constants.Configuration.HostName).TrimEnd('/');
       var installUrl = context.Configuration.GetString(Constants.Configuration.UpdateResourcesUrl).TrimStart('/');

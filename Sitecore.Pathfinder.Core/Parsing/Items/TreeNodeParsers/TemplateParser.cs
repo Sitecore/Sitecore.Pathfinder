@@ -10,6 +10,10 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
   [Export(typeof(ITextNodeParser))]
   public class TemplateParser : TextNodeParserBase
   {
+    public TemplateParser() : base(Constants.TextNodeParsers.Templates)
+    {
+    }
+
     public override bool CanParse(ItemParseContext context, ITextNode textNode)
     {
       return textNode.Name == "Template";

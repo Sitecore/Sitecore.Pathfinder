@@ -318,8 +318,8 @@
   <data name="The_server_returned_an_error" xml:space="preserve">
     <value>The server returned an error</value>
   </data>
-  <data name="Downloading_resources___" xml:space="preserve">
-    <value>Downloading resources...</value>
+  <data name="SynchronizingWebsite" xml:space="preserve">
+    <value>Synchronizing project and website...</value>
   </data>
   <data name="Updating_resources___" xml:space="preserve">
     <value>Updating resources...</value>

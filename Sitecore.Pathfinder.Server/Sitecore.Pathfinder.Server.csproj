@@ -71,6 +71,7 @@
     </Reference>
     <Reference Include="Sitecore.ContentSearch">
       <HintPath>..\Components\Sitecore.ContentSearch.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Kernel">
       <HintPath>..\Components\Sitecore.Kernel.dll</HintPath>
@@ -140,12 +141,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\IResourceExporter.cs" />
     <Compile Include="Resources\JsonTemplateSchemaExporter.cs" />
-    <Compile Include="Resources\JsonTemplateSchemaGenerator.cs" />
-    <Compile Include="Resources\XsdLayoutSchemaExporter.cs" />
-    <Compile Include="Resources\JsonLayoutSchemaGenerator.cs" />
     <Compile Include="Resources\JsonLayoutSchemaExporter.cs" />
-    <Compile Include="Resources\XsdLayoutSchemaGenerator.cs" />
+    <Compile Include="Resources\XsdLayoutSchemaExporter.cs" />
     <Compile Include="Resources\ResourceManager.cs" />
+    <Compile Include="Resources\XsdTemplateSchemaExporter.cs" />
     <Compile Include="sitecore\shell\client\Applications\Pathfinder\UpdateResources.ashx.cs">
       <DependentUpon>UpdateResources.ashx</DependentUpon>
     </Compile>

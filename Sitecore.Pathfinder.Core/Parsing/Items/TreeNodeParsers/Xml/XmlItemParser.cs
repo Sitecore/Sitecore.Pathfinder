@@ -8,6 +8,10 @@
   [Export(typeof(ITextNodeParser))]
   public class XmlItemParser : ItemParserBase
   {
+    public XmlItemParser() : base(Constants.TextNodeParsers.Items)
+    {
+    }
+
     public override bool CanParse(ItemParseContext context, ITextNode textNode)
     {
       return textNode.Name == "Item" && textNode.Snapshot is XmlTextSnapshot;

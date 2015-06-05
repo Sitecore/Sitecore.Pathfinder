@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema targetNamespace="http://www.sitecore.net/pathfinder/layouts/core" xmlns="http://www.sitecore.net/pathfinder/layouts/core" xmlns:vs="http://schemas.microsoft.com/Visual-Studio-Intellisense" vs:friendlyname="Sitecore SPEAK Intellisense" vs:ishtmlschema="false" vs:iscasesensitive="true" vs:requireattributequotes="true" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema targetNamespace="http://www.sitecore.net/pathfinder/layouts/core" xmlns="http://www.sitecore.net/pathfinder/layouts/core" xmlns:vs="http://schemas.microsoft.com/Visual-Studio-Intellisense" vs:friendlyname="Sitecore Pathfinder Layout Schema" vs:ishtmlschema="false" vs:iscasesensitive="true" vs:requireattributequotes="true" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:simpleType name="bool">
     <xs:restriction base="xs:string">
       <xs:enumeration value="False" />

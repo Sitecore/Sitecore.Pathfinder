@@ -177,6 +177,54 @@
     }
 
     [Test]
+    public void XmlContentItemTest()
+    {
+      var projectItem = this.Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/XmlContentItem");
+      Assert.IsNotNull(projectItem);
+      Assert.AreEqual("XmlContentItem", projectItem.ShortName);
+      Assert.AreEqual("/sitecore/content/XmlContentItem", projectItem.QualifiedName);
+
+      var item = projectItem as Item;
+      Assert.IsNotNull(item);
+      Assert.AreEqual("XmlContentItem", item.ItemName);
+      Assert.AreEqual("/sitecore/content/XmlContentItem", item.ItemIdOrPath);
+      Assert.AreEqual("Sample-Item", item.TemplateIdOrPath);
+
+      var field = item.Fields.FirstOrDefault(f => f.FieldName == "Text");
+      Assert.IsNotNull(field);
+      Assert.AreEqual("Hello World", field.Value);
+
+      var textDocument = projectItem.Snapshot as ITextSnapshot;
+      Assert.IsNotNull(textDocument);
+
+      var treeNode = textDocument.Root;
+      Assert.AreEqual("Sample-Item", treeNode.Name);
+      Assert.AreEqual(2, treeNode.Attributes.Count);
+    }
+
+    [Test]
+    public void JsonContentItemTest()
+    {
+      var projectItem = this.Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/JsonContentItem");
+      Assert.IsNotNull(projectItem);
+      Assert.AreEqual("JsonContentItem", projectItem.ShortName);
+      Assert.AreEqual("/sitecore/content/Home/JsonContentItem", projectItem.QualifiedName);
+
+      var item = projectItem as Item;
+      Assert.IsNotNull(item);
+      Assert.AreEqual("JsonContentItem", item.ItemName);
+      Assert.AreEqual("/sitecore/content/Home/JsonContentItem", item.ItemIdOrPath);
+      Assert.AreEqual("Sample Item", item.TemplateIdOrPath);
+
+      var field = item.Fields.FirstOrDefault(f => f.FieldName == "Text");
+      Assert.IsNotNull(field);
+      Assert.AreEqual("Hello World", field.Value);
+
+      var textDocument = projectItem.Snapshot as ITextSnapshot;
+      Assert.IsNotNull(textDocument);
+    }
+
+    [Test]
     public void MergeTest()
     {
       var projectItem = this.Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/media library/Mushrooms");

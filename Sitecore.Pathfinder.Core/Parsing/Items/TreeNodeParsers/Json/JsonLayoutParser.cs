@@ -8,6 +8,10 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers.Json
   [Export(typeof(ITextNodeParser))]
   public class JsonLayoutParser : LayoutParserBase
   {
+    public JsonLayoutParser() : base(Constants.TextNodeParsers.Layouts)
+    {
+    }
+
     public override bool CanParse(ItemParseContext context, ITextNode textNode)
     {
       return textNode.Name == "Layout" && textNode.Snapshot is JsonTextSnapshot;

@@ -118,6 +118,37 @@ namespace Sitecore.Pathfinder.Extensions
     }
 
     [NotNull]
+    public static string GetSafeXmlIdentifier([NotNull] this string text)
+    {
+      if (string.IsNullOrEmpty(text))
+      {
+        return string.Empty;
+      }
+
+      var chars = text.ToCharArray();
+
+      for (var n = 1; n < chars.Length; n++)
+      {
+        var p = chars[n - 1];
+
+        if (char.IsWhiteSpace(p))
+        {
+          chars[n] = char.ToUpper(chars[n]);
+        }
+      }
+
+      text = new string(chars);
+
+      var result = Regex.Replace(text, @"\W", "-").Replace(@" ", "-");
+      if (!char.IsLetter(result[0]))
+      {
+        result = @"-" + result;
+      }
+
+      return result;
+    }
+
+    [NotNull]
     public static string Left([NotNull] this string text, int length)
     {
       if (length <= 0)

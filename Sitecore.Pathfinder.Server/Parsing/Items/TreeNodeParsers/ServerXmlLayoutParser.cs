@@ -8,6 +8,10 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
   [Export(typeof(ITextNodeParser))]
   public class ServerXmlLayoutParser : ServerLayoutParserBase
   {
+    public ServerXmlLayoutParser() : base(Constants.TextNodeParsers.Layouts)
+    {
+    }
+
     public override bool CanParse(ItemParseContext context, ITextNode textNode)
     {
       return textNode.Name == "LayoutField" && textNode.Snapshot is XmlTextSnapshot;

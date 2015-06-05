@@ -15,7 +15,9 @@
     private static readonly string[] FileExtensions =
     {
       ".item.xml", 
+      ".content.xml", 
       ".item.json",
+      ".content.json",
       ".layout.json"
     };
 
@@ -64,11 +66,12 @@
     {
       try
       {
-        foreach (var textNodeParser in this.TextNodeParsers)
+        foreach (var textNodeParser in this.TextNodeParsers.OrderBy(p => p.Priority))
         {
           if (textNodeParser.CanParse(context, textNode))
           {
             textNodeParser.Parse(context, textNode);
+            break;
           }
         }
       }

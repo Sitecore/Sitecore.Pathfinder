@@ -305,15 +305,6 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Downloading resources....
-        /// </summary>
-        public static string Downloading_resources___ {
-            get {
-                return ResourceManager.GetString("Downloading_resources___", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Failed to add new template.
         /// </summary>
         public static string Failed_to_add_new_template {
@@ -461,7 +452,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Just so you know, I have updated the &apos;Sitecore.Pathfinder.Server.dll&apos; and &apos;NuGet.Core.dll&apos; assemblies in the &apos;/bin&apos; directory in the website and a number of &apos;.aspx&apos; files in the &apos;/sitecore/shell/client/Applications/Pathfinder&apos; directory to the latest version.
+        ///   Looks up a localized string similar to Just so you know, I have updated the Pathfinder assemblies in the &apos;/bin&apos; directory in the website and the Pathfinder &apos;.aspx&apos; files in the &apos;/sitecore/shell/client/Applications/Pathfinder&apos; directory to the latest version..
         /// </summary>
         public static string Just_so_you_know__I_have_updated_the__Sitecore_Pathfinder_Server_dll__and__NuGet_Core_dll__assemblies_in_the___bin__directory_in_the_website_and_a_number_of___aspx__files_in_the___sitecore_shell_client_Applications_Pathfinder__directory_to_the_latest_version {
             get {
@@ -592,6 +583,15 @@ namespace Sitecore.Pathfinder {
         public static string Source_file_is_empty {
             get {
                 return ResourceManager.GetString("Source_file_is_empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloading resources....
+        /// </summary>
+        public static string SynchronizingWebsite {
+            get {
+                return ResourceManager.GetString("SynchronizingWebsite", resourceCulture);
             }
         }
         
@@ -759,7 +759,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your configuration file and sample files were missing, so I have created them. You must update the &apos;project-unique-id&apos;, &apos;wwwroot&apos; and &apos;hostname&apos; in the &apos;{0}&apos; configuration file before continuing..
+        ///   Looks up a localized string similar to Your configuration file and sample files were missing, so I have created them. You must update the &apos;project-unique-id&apos;, &apos;wwwroot&apos; and &apos;hostname&apos; in the &apos;scconfig.json&apos; configuration file before continuing..
         /// </summary>
         public static string Your_configuration_file_and_sample_files_were_missing__so_I_have_created_them__You_must_update_the__project_unique_id____wwwroot__and__hostname__in_the___0___configuration_file_before_continuing_ {
             get {
@@ -770,7 +770,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your project directory was missing, so I have created it. You must update the &apos;project-unique-id&apos;, &apos;wwwroot&apos; and &apos;hostname&apos; in the &apos;{0}&apos; configuration file before continuing..
+        ///   Looks up a localized string similar to Your project directory was missing, so I have created it. You must update the &apos;project-unique-id&apos;, &apos;wwwroot&apos; and &apos;hostname&apos; in the &apos;scconfig.json&apos; configuration file before continuing..
         /// </summary>
         public static string Your_project_directory_was_missing__so_I_have_created_it__You_must_update_the__project_unique_id____wwwroot__and__hostname__in_the___0___configuration_file_before_continuing_ {
             get {

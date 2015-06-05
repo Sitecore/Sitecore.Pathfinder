@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.sitecore.net/pathfinder/content/master" xmlns="http://www.sitecore.net/pathfinder/content/master" 
+           xmlns:vs="http://schemas.microsoft.com/Visual-Studio-Intellisense" vs:friendlyname="Sitecore SPEAK Intellisense" vs:ishtmlschema="false" 
+           vs:iscasesensitive="true" vs:requireattributequotes="true" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="bool">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="False" />
+      <xs:enumeration value="True" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:attributeGroup name="stdattr">
+    <xs:attribute name="Placeholder" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>The place holder where this rendering will be rendered.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:attributeGroup>
+
+  <xs:group name="Templates">
+    <xs:choice>
+      <xs:element ref="HelloWorld" />
+    </xs:choice>
+  </xs:group>
+
+  <xs:element name="HelloWorld">
+    <xs:complexType>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:group ref="Templates" />
+      </xs:sequence>
+      <xs:attribute name="Text" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The full name of the rendering.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attributeGroup ref="stdattr" />
+      <xs:anyAttribute processContents="lax" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="HelloWorld2">
+    <xs:complexType>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:group ref="Templates" />
+      </xs:sequence>
+      <xs:attribute name="Text" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The full name of the rendering.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attributeGroup ref="stdattr" />
+      <xs:anyAttribute processContents="lax" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

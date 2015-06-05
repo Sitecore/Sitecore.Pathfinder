@@ -105,6 +105,7 @@
     <Compile Include="Extensions\ConfigurationExtensions.cs" />
     <Compile Include="Extensions\JsonTextWriter.cs" />
     <Compile Include="IO\PathMatcher.cs" />
+    <Compile Include="Parsing\Items\TreeNodeParsers\ContentParserBase.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\ItemParserBase.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\Json\JsonItemParser.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\LayoutParserBase.cs" />
@@ -112,6 +113,8 @@
     <Compile Include="Parsing\Items\TreeNodeParsers\TextNodeParserBase.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\ITextNodeParser.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\Json\JsonLayoutParser.cs" />
+    <Compile Include="Parsing\Items\TreeNodeParsers\Json\JsonContentParser.cs" />
+    <Compile Include="Parsing\Items\TreeNodeParsers\Xml\XmContentParser.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\Xml\XmlItemParser.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\Xml\XmlLayoutParser.cs" />
     <Compile Include="Parsing\Items\ItemParseContext.cs" />
