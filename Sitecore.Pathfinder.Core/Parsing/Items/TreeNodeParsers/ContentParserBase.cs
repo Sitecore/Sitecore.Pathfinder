@@ -14,8 +14,8 @@
 
     public override void Parse(ItemParseContext context, ITextNode textNode)
     {
-      var itemName = textNode.GetAttributeValue("Name", context.ParseContext.ItemName);
-      var parentItemPath = textNode.GetAttributeValue("ParentItemPath", context.ParentItemPath);
+      var itemName = textNode.GetAttributeValue("Item-Name", context.ParseContext.ItemName);
+      var parentItemPath = textNode.GetAttributeValue("Parent-Item-Path", context.ParentItemPath);
       var itemIdOrPath = parentItemPath + "/" + itemName;
       var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
 
@@ -42,12 +42,12 @@
     {
       var fieldName = fieldTextNode.Name;
 
-      if (fieldName == "Name")
+      if (fieldName == "Item-Name")
       {
         return;
       }
 
-      if (fieldName == "ParentItemPath")
+      if (fieldName == "Parent-Item-Path")
       {
         return;
       }

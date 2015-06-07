@@ -182,7 +182,7 @@
       }
 
       output.WriteStartElement(Xs, "attribute", Namespace);
-      output.WriteAttributeString("name", "ParentItemPath");
+      output.WriteAttributeString("name", "Parent-Item-Path");
 
       output.WriteStartElement(Xs, "annotation", Namespace);
       output.WriteStartElement(Xs, "documentation", Namespace);
@@ -237,7 +237,7 @@
       output.WriteStartElement(Xs, "attributeGroup", Namespace);
       output.WriteAttributeString("name", "stdattr");
 
-      this.WriteAttributeString(output, "Name", "xs:string", "The name of the item.");
+      this.WriteAttributeString(output, "Item-Name", "xs:string", "The name of the item.");
       this.WriteAttributeString(output, "Id", "xs:string", "The ID of the item.");
       this.WriteAttributeString(output, "__Icon", "xs:string", "The icon that represents this template.");
 
@@ -247,9 +247,9 @@
     protected virtual void WriteTemplateFields([NotNull] XmlTextWriter output, [NotNull] Database database, [NotNull] Template template)
     {
       var fieldNames = new List<string>();
-      fieldNames.Add("Name");
+      fieldNames.Add("Item-Name");
       fieldNames.Add("Id");
-      fieldNames.Add("ParentItemPath");
+      fieldNames.Add("Parent-Item-Path");
       fieldNames.Add("__Icon");
 
       foreach (var field in template.GetFields(true).OrderBy(f => f.Name))

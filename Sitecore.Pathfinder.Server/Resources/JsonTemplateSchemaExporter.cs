@@ -181,7 +181,7 @@
         return;
       }
 
-      output.WriteStartObject("ParentItemPath");
+      output.WriteStartObject("Parent-Item-Path");
       output.WritePropertyString("description", "The path of the parent item.");
 
       output.WriteStartArray("enum");
@@ -244,7 +244,7 @@
 
     protected virtual void WriteStandardAttributes([Sitecore.NotNull] JsonTextWriter output, [NotNull] Database database, [NotNull] Template template)
     {
-      this.WriteAttributeString(output, "Name", "string", "The name of the item.");
+      this.WriteAttributeString(output, "Item-Name", "string", "The name of the item.");
       this.WriteAttributeString(output, "Id", "string", "The ID of the item.");
 
       this.WriteItemPath(output, database, template);
@@ -255,9 +255,9 @@
     protected virtual void WriteTemplateFields([NotNull] JsonTextWriter output, [NotNull] Database database, [NotNull] Template template)
     {
       var fieldNames = new List<string>();
-      fieldNames.Add("Name");
+      fieldNames.Add("Item-Name");
       fieldNames.Add("Id");
-      fieldNames.Add("ParentItemPath");
+      fieldNames.Add("Parent-Item-Path");
       fieldNames.Add("__Icon");
       fieldNames.Add("Children");
 
