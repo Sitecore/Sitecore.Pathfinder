@@ -26,6 +26,8 @@ namespace Sitecore.Pathfinder.Projects.Items
     {
     }
 
+    public bool ContentItemHack { get; set; }
+
     [NotNull]
     public IList<Field> Fields { get; } = new List<Field>();
 
@@ -81,6 +83,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         var field = this.Fields.FirstOrDefault(f => string.Compare(f.FieldName, newField.FieldName, StringComparison.OrdinalIgnoreCase) == 0 && string.Compare(f.Language, newField.Language, StringComparison.OrdinalIgnoreCase) == 0 && f.Version == newField.Version);
         if (field == null)
         {
+          newField.Item = this;
           this.Fields.Add(newField);
           continue;
         }

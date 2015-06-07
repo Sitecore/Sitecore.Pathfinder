@@ -27,20 +27,9 @@
         ItemIdOrPath = itemIdOrPath, 
       };
 
-      var value = this.GetValue(context, textNode);
-      if (!string.IsNullOrEmpty(value))
-      {
-        var valueTextNode = new TextNode(textNode.Snapshot, string.Empty, value, null);
-        item.Fields.Add(new Field("__Renderings", string.Empty, 0, valueTextNode, valueTextNode));
-      }
+      item.Fields.Add(new Field(item, "__Renderings", string.Empty, 0, textNode, textNode));
 
       context.ParseContext.Project.AddOrMerge(item);
-    }
-
-    [NotNull]
-    protected virtual string GetValue([NotNull] ItemParseContext context, [NotNull] ITextNode textNode)
-    {
-      return string.Empty;
     }
 
     protected virtual void ParseDeviceReferences([NotNull] ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode deviceTextNode)

@@ -45,13 +45,13 @@
       };
 
       var valueTextNode = new TextNode(item.Snapshot, string.Empty, path, null);
-      item.Fields.Add(new Field("Path", string.Empty, 0, valueTextNode, valueTextNode));
+      item.Fields.Add(new Field(item, "Path", string.Empty, 0, valueTextNode, valueTextNode));
 
       // todo: make this configurable
       if (string.Compare(context.DatabaseName, "core", StringComparison.OrdinalIgnoreCase) == 0)
       {
         var valueTextNode2 = new TextNode(item.Snapshot, string.Empty, string.Join(",", placeHolders), null);
-        item.Fields.Add(new Field("Place Holders", string.Empty, 0, valueTextNode2, valueTextNode2));
+        item.Fields.Add(new Field(item, "Place Holders", string.Empty, 0, valueTextNode2, valueTextNode2));
       }
 
       item.References.Add(new FileReference(item, item.TextNode, path));

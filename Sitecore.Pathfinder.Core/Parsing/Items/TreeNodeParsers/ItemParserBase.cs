@@ -122,7 +122,7 @@
         valueTextNode = new TextNode(fieldTextNode.Snapshot, "Value", string.Empty, null);
       }
 
-      field = new Field(fieldName, language, version, nameTextNode, valueTextNode, valueHint);
+      field = new Field(item, fieldName, language, version, nameTextNode, valueTextNode, valueHint);
       item.Fields.Add(field);
 
       if (field.ValueHint != "Text")
@@ -175,7 +175,7 @@
 
           nextSortOrder = sortOrder + 100;
 
-          var templateField = new TemplateField();
+          var templateField = new TemplateField(template);
           templateSection.Fields.Add(templateField);
           templateField.Name = child.GetAttributeValue("Name");
           templateField.Type = child.GetAttributeValue("Field.Type", "Single-Line Text");

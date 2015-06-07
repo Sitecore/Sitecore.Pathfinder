@@ -27,6 +27,8 @@
         TemplateIdOrPath = textNode.Name
       };
 
+      item.ContentItemHack = true;
+
       item.References.AddRange(this.ParseReferences(item, textNode, item.TemplateIdOrPath));
 
       this.ParseAttributes(context, item, textNode);
@@ -40,6 +42,16 @@
     {
       var fieldName = fieldTextNode.Name;
 
+      if (fieldName == "Name")
+      {
+        return;
+      }
+
+      if (fieldName == "ParentItemPath")
+      {
+        return;
+      }
+
       var field = item.Fields.FirstOrDefault(f => string.Compare(f.FieldName, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
       if (field != null)
       {
@@ -47,7 +59,7 @@
       }
 
       // todo: support for language, version and value.hing
-      field = new Field(fieldName, string.Empty, 0, fieldTextNode, fieldTextNode, string.Empty);
+      field = new Field(item, fieldName, string.Empty, 0, fieldTextNode, fieldTextNode, string.Empty);
       item.Fields.Add(field);
 
       item.References.AddRange(this.ParseReferences(item, fieldTextNode, field.Value));

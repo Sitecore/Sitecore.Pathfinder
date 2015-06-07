@@ -61,7 +61,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
       var templateField = templateSection.Fields.FirstOrDefault(f => string.Compare(f.Name, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
       if (templateField == null)
       {
-        templateField = new TemplateField();
+        templateField = new TemplateField(template);
         templateSection.Fields.Add(templateField);
         templateField.Name = fieldName;
       }

@@ -12,9 +12,6 @@
 
     Guid Guid { get; }
 
-    [CanBeNull]
-    IProjectItem Owner { get; set; }
-
     [NotNull]
     IProject Project { get; }
 

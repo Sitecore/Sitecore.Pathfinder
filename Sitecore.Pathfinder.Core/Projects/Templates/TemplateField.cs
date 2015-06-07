@@ -4,6 +4,13 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
   public class TemplateField
   {
+    public static readonly TemplateField Empty = new TemplateField(Template.Empty);
+
+    public TemplateField([NotNull] Template template)
+    {
+      this.Template = template;
+    }
+
     [NotNull]
     public string LongHelp { get; set; } = string.Empty;
 
@@ -15,6 +22,8 @@ namespace Sitecore.Pathfinder.Projects.Templates
     [NotNull]
     public string ShortHelp { get; set; } = string.Empty;
 
+    public int SortOrder { get; set; }
+
     [NotNull]
     public string Source { get; set; } = string.Empty;
 
@@ -22,11 +31,12 @@ namespace Sitecore.Pathfinder.Projects.Templates
     public string StandardValue { get; set; } = string.Empty;
 
     [NotNull]
+    public Template Template { get; }
+
+    [NotNull]
     public string Type { get; set; } = string.Empty;
 
     public bool Unversioned { get; set; }
-
-    public int SortOrder { get; set; }
 
     public void Merge([NotNull] TemplateField newField)
     {

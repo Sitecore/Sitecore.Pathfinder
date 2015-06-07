@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
+﻿namespace Sitecore.Pathfinder.Builders.FieldResolvers.Layouts
 {
   using System;
   using System.Collections.Generic;
@@ -15,14 +15,8 @@
   using Sitecore.SecurityModel;
   using Sitecore.Text;
 
-  public abstract class ServerLayoutParserBase : LayoutParserBase
+  public abstract class LayoutResolverBase
   {
-    protected ServerLayoutParserBase(double priority) : base(priority)
-    {
-    }
-
-    private const string RenderingIdsFastQuery = "@@templateid='{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}' or @@templateid='{2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}' or @@templateid='{86776923-ECA5-4310-8DC0-AE65FE88D078}' or @@templateid='{39587D7D-F06D-4CB4-A25E-AA7D847EDDD0}' or @@templateid='{0A98E368-CDB9-4E1E-927C-8E0C24A003FB}' or @@templateid='{83E993C5-C0FC-4472-86A9-2F6CFED694E4}' or @@templateid='{1DDE3F02-0BD7-4779-867A-DC578ADF91EA}' or @@templateid='{F1F1D639-4F54-40C2-8BE0-81266B392CEB}'";
-
     private static readonly List<string> IgnoreAttributes = new List<string>
     {
       "Cacheable", 
@@ -36,6 +30,25 @@
       "VaryByQueryString", 
       "VaryByUser", 
     };
+
+    [NotNull]
+    public virtual string Resolve([NotNull] LayoutResolveContext context, [NotNull] ITextNode textNode)
+    {
+      var database = Factory.GetDatabase(context.DatabaseName);
+
+      var writer = new StringWriter();
+      var output = new XmlTextWriter(writer)
+      {
+        Formatting = Formatting.Indented
+      };
+
+      using (new SecurityDisabler())
+      {
+        this.WriteLayout(context, output, database, textNode);
+      }
+
+      return writer.ToString();
+    }
 
     [NotNull]
     protected virtual Item[] FindRenderingItems([NotNull] IEnumerable<Item> renderingItems, [NotNull] string renderingItemId)
@@ -73,24 +86,6 @@
       return result;
     }
 
-    protected override string GetValue(ItemParseContext context, ITextNode textNode)
-    {
-      var database = Factory.GetDatabase(context.ParseContext.DatabaseName);
-
-      var writer = new StringWriter();
-      var output = new XmlTextWriter(writer)
-      {
-        Formatting = Formatting.Indented
-      };
-
-      using (new SecurityDisabler())
-      {
-        this.WriteLayout(context, output, database, textNode);
-      }
-
-      return writer.ToString();
-    }
-
     protected virtual bool IsContentProperty([NotNull] ITextNode renderingTextNode, [NotNull] ITextNode childTextNode)
     {
       return childTextNode.Name.StartsWith(renderingTextNode.Name + ".");
@@ -122,7 +117,7 @@
       return matches;
     }
 
-    protected virtual void WriteBool([NotNull] ItemParseContext context, [NotNull] XmlTextWriter output, [NotNull] ITextNode renderingTextNode, [NotNull] string id, [NotNull] string attributeName, [NotNull] string name, bool ignoreValue = false)
+    protected virtual void WriteBool([NotNull] LayoutResolveContext context, [NotNull] XmlTextWriter output, [NotNull] ITextNode renderingTextNode, [NotNull] string id, [NotNull] string attributeName, [NotNull] string name, bool ignoreValue = false)
     {
       var value = renderingTextNode.GetAttributeValue(attributeName);
       if (string.IsNullOrEmpty(value))
@@ -132,7 +127,7 @@
 
       if (value != "True" && value != "False")
       {
-        context.ParseContext.Trace.TraceError(id + Texts.__Boolean_parameter_must_have_value__True__or__False_, renderingTextNode, attributeName);
+        context.EmitContext.Trace.TraceError(id + Texts.__Boolean_parameter_must_have_value__True__or__False_, renderingTextNode, attributeName);
         value = "False";
       }
 
@@ -157,21 +152,22 @@
       output.WriteAttributeString("ds", item?.ID.ToString() ?? dataSource);
     }
 
-    protected virtual void WriteDevice([NotNull] ItemParseContext context, [NotNull] XmlTextWriter output, [NotNull] IEnumerable<Item> renderingItems, [NotNull] Database database, [NotNull] ITextNode deviceTextNode)
+    protected virtual void WriteDevice([NotNull] LayoutResolveContext context, [NotNull] XmlTextWriter output, [NotNull] IEnumerable<Item> renderingItems, [NotNull] Database database, [NotNull] ITextNode deviceTextNode)
     {
       output.WriteStartElement("d");
 
       var deviceName = deviceTextNode.GetAttributeValue("Name");
       if (string.IsNullOrEmpty(deviceName))
       {
-        context.ParseContext.Trace.TraceError(Texts.Device_element_is_missing__Name__attribute_, deviceTextNode);
+        context.EmitContext.Trace.TraceError(Texts.Device_element_is_missing__Name__attribute_, deviceTextNode);
       }
       else
       {
+        // todo: get device from project
         var devices = database.GetItem(ItemIDs.DevicesRoot);
         if (devices == null)
         {
-          context.ParseContext.Trace.TraceError(Texts.Devices_not_found_in_database_, deviceTextNode, context.ParseContext.DatabaseName);
+          context.EmitContext.Trace.TraceError(Texts.Devices_not_found_in_database_, deviceTextNode, context.DatabaseName);
         }
         else
         {
@@ -179,7 +175,7 @@
           if (device == null)
           {
             // todo: put into resources
-            context.ParseContext.Trace.TraceError($"Device \"{deviceName}\" not found.", deviceTextNode);
+            context.EmitContext.Trace.TraceError($"Device \"{deviceName}\" not found.", deviceTextNode);
           }
           else
           {
@@ -195,7 +191,7 @@
         var l = database.GetItem(layoutPath);
         if (l == null)
         {
-          throw new RetryableEmitException(Texts.Layout_not_found_, context.ParseContext.Snapshot.SourceFile, layoutPath);
+          throw new RetryableEmitException(Texts.Layout_not_found_, context.Snapshot.SourceFile, layoutPath);
         }
 
         output.WriteAttributeString("l", l.ID.ToString());
@@ -217,12 +213,12 @@
       output.WriteEndElement();
     }
 
-    protected virtual void WriteLayout([NotNull] ItemParseContext context, [NotNull] XmlTextWriter output, [NotNull] Database database, [NotNull] ITextNode layoutTextNode)
+    protected virtual void WriteLayout([NotNull] LayoutResolveContext context, [NotNull] XmlTextWriter output, [NotNull] Database database, [NotNull] ITextNode layoutTextNode)
     {
       // todo: cache this in the build context
       // todo: use better search
       // todo: add renderings from project
-      var renderingItems = database.SelectItems("fast://*[" + RenderingIdsFastQuery + "]").ToList();
+      var renderingItems = database.SelectItems("fast://*[" + Constants.RenderingIdsFastQuery + "]").ToList();
 
       output.WriteStartElement("r");
 
@@ -232,7 +228,7 @@
         // silent
         return;
       }
- 
+
       foreach (var deviceTextNode in devices.ChildNodes)
       {
         this.WriteDevice(context, output, renderingItems, database, deviceTextNode);
@@ -241,7 +237,7 @@
       output.WriteEndElement();
     }
 
-    protected virtual void WritePlaceholder([NotNull] ItemParseContext context, [NotNull] XmlTextWriter output, [NotNull] ITextNode renderingTextNode, [NotNull] string id, [NotNull] string placeholders)
+    protected virtual void WritePlaceholder([NotNull] LayoutResolveContext context, [NotNull] XmlTextWriter output, [NotNull] ITextNode renderingTextNode, [NotNull] string id, [NotNull] string placeholders)
     {
       var placeholder = renderingTextNode.GetAttributeValue("Placeholder");
 
@@ -263,14 +259,14 @@
       {
         if (placeholders.IndexOf("," + placeholder + ",", StringComparison.InvariantCultureIgnoreCase) < 0)
         {
-          context.ParseContext.Trace.TraceWarning(string.Format(Texts._2___Placeholder___0___is_not_defined_in_the_parent_rendering__Parent_rendering_has_these_placeholders___1__, placeholder, placeholders.Mid(1, placeholders.Length - 2), id), renderingTextNode, "Placeholder");
+          context.EmitContext.Trace.TraceWarning(string.Format(Texts._2___Placeholder___0___is_not_defined_in_the_parent_rendering__Parent_rendering_has_these_placeholders___1__, placeholder, placeholders.Mid(1, placeholders.Length - 2), id), renderingTextNode, "Placeholder");
         }
       }
 
       output.WriteAttributeString("ph", placeholder);
     }
 
-    protected virtual void WriteRendering([NotNull] ItemParseContext context, [NotNull] XmlTextWriter output, [NotNull] IEnumerable<Item> renderingItems, [NotNull] Database database, [NotNull] ITextNode renderingTextNode, [NotNull] string placeholders)
+    protected virtual void WriteRendering([NotNull] LayoutResolveContext context, [NotNull] XmlTextWriter output, [NotNull] IEnumerable<Item> renderingItems, [NotNull] Database database, [NotNull] ITextNode renderingTextNode, [NotNull] string placeholders)
     {
       string renderingItemId;
 
@@ -295,7 +291,7 @@
 
       if (string.IsNullOrEmpty(renderingItemId))
       {
-        context.ParseContext.Trace.TraceError($"Unknown element \"{id}\".", renderingTextNode);
+        context.EmitContext.Trace.TraceError($"Unknown element \"{id}\".", renderingTextNode);
         return;
       }
 
@@ -310,13 +306,13 @@
 
         if (matches.Length == 0)
         {
-          context.ParseContext.Trace.TraceError($"Rendering \"{renderingItemId}\" not found.", renderingTextNode);
+          context.EmitContext.Trace.TraceError($"Rendering \"{renderingItemId}\" not found.", renderingTextNode);
           return;
         }
 
         if (matches.Length > 1)
         {
-          context.ParseContext.Trace.TraceError($"Ambiguous rendering match. {matches.Length} renderings match \"{renderingItemId}\".", renderingTextNode);
+          context.EmitContext.Trace.TraceError($"Ambiguous rendering match. {matches.Length} renderings match \"{renderingItemId}\".", renderingTextNode);
           return;
         }
 
@@ -325,7 +321,7 @@
 
       if (renderingItem == null)
       {
-        context.ParseContext.Trace.TraceError($"Rendering \"{renderingItemId}\" not found.", renderingTextNode);
+        context.EmitContext.Trace.TraceError($"Rendering \"{renderingItemId}\" not found.", renderingTextNode);
         return;
       }
 
@@ -353,11 +349,11 @@
 
         if (string.IsNullOrEmpty(placeHolders))
         {
-          context.ParseContext.Trace.TraceError($"The \"{renderingTextNode.Name}\" element cannot have any child elements as it does not define any placeholders in its 'Place Holders' field.", renderingTextNode);
+          context.EmitContext.Trace.TraceError($"The \"{renderingTextNode.Name}\" element cannot have any child elements as it does not define any placeholders in its 'Place Holders' field.", renderingTextNode);
         }
         else if (placeHolders.IndexOf("$Id", StringComparison.InvariantCulture) >= 0 && string.IsNullOrEmpty(renderingTextNode.GetAttributeValue("Id")))
         {
-          context.ParseContext.Trace.TraceError($"The \"{renderingTextNode.Name}\" element must have an ID as it has child elements.", renderingTextNode);
+          context.EmitContext.Trace.TraceError($"The \"{renderingTextNode.Name}\" element must have an ID as it has child elements.", renderingTextNode);
         }
       }
 
@@ -372,7 +368,7 @@
       }
     }
 
-    private void WriteParameters([NotNull] ItemParseContext context, [NotNull] XmlTextWriter output, [NotNull] ITextNode renderingTextNode, [NotNull] Item renderingItem, [NotNull] string id)
+    private void WriteParameters([NotNull] LayoutResolveContext context, [NotNull] XmlTextWriter output, [NotNull] ITextNode renderingTextNode, [NotNull] Item renderingItem, [NotNull] string id)
     {
       var fields = new Dictionary<string, string>();
 
@@ -429,7 +425,7 @@
               {
                 if (value != "True" && value != "False")
                 {
-                  context.ParseContext.Trace.TraceError($"{id}: Boolean parameter must have value \"True\", \"False\", \"{{Binding ... }}\" or \"{{@ ... }}\".", renderingTextNode, attributeName);
+                  context.EmitContext.Trace.TraceError($"{id}: Boolean parameter must have value \"True\", \"False\", \"{{Binding ... }}\" or \"{{@ ... }}\".", renderingTextNode, attributeName);
                 }
 
                 value = MainUtil.GetBool(value, false) ? "1" : "0";
@@ -440,7 +436,7 @@
         }
         else
         {
-          context.ParseContext.Trace.TraceWarning(string.Format(Texts._1___Parameter___0___is_not_defined_in_the_parameters_template_, attributeName, id), renderingTextNode, attributeName);
+          context.EmitContext.Trace.TraceWarning(string.Format(Texts._1___Parameter___0___is_not_defined_in_the_parameters_template_, attributeName, id), renderingTextNode, attributeName);
         }
 
         if (value.StartsWith("/sitecore", StringComparison.InvariantCultureIgnoreCase))

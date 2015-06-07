@@ -2,35 +2,31 @@
 {
   using System;
   using System.ComponentModel.Composition;
+  using Sitecore.Data.Templates;
   using Sitecore.Pathfinder.Emitters;
   using Sitecore.Pathfinder.Projects.Items;
 
   [Export(typeof(IFieldResolver))]
   public class CheckboxFieldResolver : FieldResolverBase
   {
-    public override bool CanResolve(IEmitContext context, Field field, Sitecore.Data.Items.Item item)
+    public override bool CanResolve(IEmitContext context, TemplateField templateField, Field field)
     {
-      var f = item.Fields[field.FieldName];
-      if (f == null)
-      {
-        return false;
-      }
-
-      return string.Compare(f.Type, "checkbox", StringComparison.OrdinalIgnoreCase) == 0;
+      return string.Compare(templateField.Type, "checkbox", StringComparison.OrdinalIgnoreCase) == 0;
     }
 
-    public override void Resolve(IEmitContext context, Field field, Sitecore.Data.Items.Item item)
+    public override string Resolve(IEmitContext context, TemplateField templateField, Field field)
     {
       if (string.Compare(field.Value, "true", StringComparison.OrdinalIgnoreCase) == 0)
       {
-        field.Value = "1";
-        return;
+        return "1";
       }
 
-      if (string.Compare(field.Value, "false", StringComparison.OrdinalIgnoreCase) == 0)
+      if (string.Compare(field.Value, "1", StringComparison.OrdinalIgnoreCase) == 0)
       {
-        field.Value = string.Empty;
+        return "1";
       }
+
+      return string.Empty;
     }
   }
 }

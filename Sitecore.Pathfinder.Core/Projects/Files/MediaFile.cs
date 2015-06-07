@@ -10,9 +10,6 @@
     public MediaFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] Item mediaItem) : base(project, snapshot)
     {
       this.MediaItem = mediaItem;
-
-      Debug.Assert(this.MediaItem.Owner == null, "Owner is already set");
-      this.MediaItem.Owner = this;
     }
 
     [NotNull]

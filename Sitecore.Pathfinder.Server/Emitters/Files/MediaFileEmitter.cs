@@ -5,8 +5,8 @@ namespace Sitecore.Pathfinder.Emitters.Files
   using Sitecore.Configuration;
   using Sitecore.Data.Items;
   using Sitecore.Data.Managers;
-  using Sitecore.Pathfinder.Builders.Items;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Emitters.Items;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects;
   using Sitecore.Pathfinder.Projects.Files;
@@ -41,7 +41,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
         KeepExisting = false, 
         Language = LanguageManager.DefaultLanguage, 
         Versioned = false, 
-        Destination = mediaFile.MediaItem.ItemIdOrPath,
+        Destination = mediaFile.MediaItem.ItemIdOrPath, 
       };
 
       // create parent path of media folders before uploading
@@ -61,8 +61,8 @@ namespace Sitecore.Pathfinder.Emitters.Files
         mediaFile.MediaItem.Guid = item.ID.ToGuid();
       }
 
-      var itemBuilder = new ItemBuilder();
-      itemBuilder.Build(context, mediaFile.MediaItem);
+      var itemEmitter = new ItemEmitter();
+      itemEmitter.Emit(context, mediaFile.MediaItem);
     }
   }
 }

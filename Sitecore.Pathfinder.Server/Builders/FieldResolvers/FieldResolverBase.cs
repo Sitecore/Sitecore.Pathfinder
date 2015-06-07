@@ -1,13 +1,13 @@
 ﻿namespace Sitecore.Pathfinder.Builders.FieldResolvers
 {
-  using Sitecore.Data.Items;
+  using Sitecore.Data.Templates;
   using Sitecore.Pathfinder.Emitters;
   using Sitecore.Pathfinder.Projects.Items;
 
   public abstract class FieldResolverBase : IFieldResolver
   {
-    public abstract bool CanResolve(IEmitContext context, Field field, Sitecore.Data.Items.Item item);
+    public abstract bool CanResolve(IEmitContext context, TemplateField templateField, Field field);
 
-    public abstract void Resolve(IEmitContext context, Field field, Sitecore.Data.Items.Item item);
+    public abstract string Resolve(IEmitContext context, TemplateField templateField, Field field);
   }
 }

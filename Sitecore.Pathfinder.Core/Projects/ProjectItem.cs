@@ -11,7 +11,7 @@
   [DebuggerDisplay("{GetType().Name,nq}: {QualifiedName}")]
   public abstract class ProjectItem : IProjectItem
   {
-    private static readonly MD5 MD5Hash = MD5.Create();
+    private static readonly MD5 Md5Hash = MD5.Create();
 
     protected ProjectItem([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ISnapshot snapshot)
     {
@@ -24,8 +24,6 @@
 
     // todo: !!!must be read only!!!
     public Guid Guid { get; set; }
-
-    public IProjectItem Owner { get; set; }
 
     public IProject Project { get; }
 
@@ -53,7 +51,7 @@
         // calculate guid from project unique id and project id
         var text = this.Project.ProjectUniqueId + "/" + this.ProjectUniqueId;
         var bytes = Encoding.UTF8.GetBytes(text);
-        var hash = MD5Hash.ComputeHash(bytes);
+        var hash = Md5Hash.ComputeHash(bytes);
         guid = new Guid(hash);
       }
 

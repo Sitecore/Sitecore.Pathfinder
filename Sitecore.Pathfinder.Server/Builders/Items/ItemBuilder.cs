@@ -7,255 +7,159 @@
   using Sitecore.Data.Items;
   using Sitecore.Data.Managers;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Emitters;
   using Sitecore.Pathfinder.IO;
 
   public class ItemBuilder
   {
-    [CanBeNull]
-    public Item Item { get; protected set; }
+    [NotNull]
+    public string DatabaseName { get; set; } = string.Empty;
 
-    [CanBeNull]
-    protected Item TemplateItem { get; set; }
+    [NotNull]
+    public ICollection<FieldBuilder> Fields { get; } = new List<FieldBuilder>();
 
-    public void Build([NotNull] IEmitContext context, [NotNull] Projects.Items.Item projectItem)
+    public Guid Guid { get; set; } = Guid.Empty;
+
+    [NotNull]
+    public string ItemIdOrPath { get; set; } = string.Empty;
+
+    [NotNull]
+    public string ItemName { get; set; } = string.Empty;
+
+    [NotNull]
+    public ISnapshot Snapshot { get; set; }
+
+    [NotNull]
+    public string TemplateIdOrPath { get; set; } = string.Empty;
+
+    public void Build([NotNull] IEmitContext context)
     {
-      var database = context.DataService.GetDatabase(projectItem.DatabaseName);
+      var database = context.DataService.GetDatabase(this.DatabaseName);
       if (database == null)
       {
-        throw new EmitException(Texts.Database_not_found, projectItem.Snapshot, projectItem.DatabaseName);
+        throw new EmitException(Texts.Database_not_found, this.Snapshot, this.DatabaseName);
       }
 
-      if (this.Item == null)
+      var item = database.GetItem(new ID(this.Guid));
+      if (item != null)
       {
-        this.ResolveItem(context, projectItem);
+        this.ItemIdOrPath = item.Paths.Path;
       }
 
-      if (this.TemplateItem == null)
+      var templateItem = database.GetItem(this.TemplateIdOrPath);
+      if (templateItem == null && item != null)
       {
-        this.ResolveTemplateItem(context, projectItem);
+        templateItem = item.Template;
       }
 
-      if (this.TemplateItem == null && this.Item != null)
+      if (templateItem == null)
       {
-        this.TemplateItem = this.Item.Template;
+        throw new RetryableEmitException(Texts.Template_missing, this.Snapshot, this.TemplateIdOrPath);
       }
 
-      this.Validate(projectItem);
-
-      if (this.Item == null)
+      if (item == null)
       {
-        this.CreateNewItem(context, database, projectItem);
-        if (this.Item == null)
-        {
-          return;
-        }
-
-        context.RegisterAddedItem(this.Item);
+        item = this.CreateNewItem(context, database, templateItem);
+        context.RegisterAddedItem(item);
       }
       else
       {
-        context.RegisterUpdatedItem(this.Item);
+        context.RegisterUpdatedItem(item);
       }
 
-      this.UpdateFields(context, projectItem);
-      this.UpdateItem(context, projectItem);
+      this.UpdateItem(context, item, templateItem);
     }
 
-    protected void CreateNewItem([NotNull] IEmitContext context, [NotNull] Database database, [NotNull] Projects.Items.Item projectItem)
+    [NotNull]
+    protected Item CreateNewItem([NotNull] IEmitContext context, [NotNull] Database database, [NotNull] Item templateItem)
     {
-      if (this.TemplateItem == null)
-      {
-        throw new RetryableEmitException(Texts.Template_missing, projectItem.Snapshot, projectItem.TemplateIdOrPath);
-      }
-
-      var parentItemPath = PathHelper.GetItemParentPath(projectItem.ItemIdOrPath);
+      var parentItemPath = PathHelper.GetItemParentPath(this.ItemIdOrPath);
 
       var parentItem = database.CreateItemPath(parentItemPath);
       if (parentItem == null)
       {
-        throw new RetryableEmitException(Texts.Failed_to_create_item_path, projectItem.Snapshot, parentItemPath);
+        throw new RetryableEmitException(Texts.Failed_to_create_item_path, this.Snapshot, parentItemPath);
       }
 
-      var item = ItemManager.AddFromTemplate(projectItem.ItemName, this.TemplateItem.ID, parentItem, new ID(projectItem.Guid));
+      var item = ItemManager.AddFromTemplate(this.ItemName, templateItem.ID, parentItem, new ID(this.Guid));
       if (item == null)
       {
-        throw new RetryableEmitException(Texts.Failed_to_create_item_path, projectItem.Snapshot, projectItem.ItemIdOrPath);
+        throw new RetryableEmitException(Texts.Failed_to_create_item_path, this.Snapshot, this.ItemIdOrPath);
       }
 
-      this.Item = item;
-      projectItem.ItemIdOrPath = item.ID.ToString();
+      this.ItemIdOrPath = item.ID.ToString();
+
+      return item;
     }
 
-    protected virtual void ResolveItem([NotNull] IEmitContext context, [NotNull] Projects.Items.Item projectItem)
+    protected void UpdateItem([NotNull] IEmitContext context, [NotNull] Item item, [NotNull] Item templateItem)
     {
-      var database = context.DataService.GetDatabase(projectItem.DatabaseName);
-      if (database == null)
-      {
-        return;
-      }
-
-      this.Item = database.GetItem(new ID(projectItem.Guid));
-      if (this.Item != null)
-      {
-        projectItem.ItemIdOrPath = this.Item.ID.ToString();
-      }
-    }
-
-    protected void ResolveTemplateItem([NotNull] IEmitContext context, [NotNull] Projects.Items.Item projectItem)
-    {
-      var database = context.DataService.GetDatabase(projectItem.DatabaseName);
-      if (database == null)
-      {
-        return;
-      }
-
-      if (ID.IsID(projectItem.TemplateIdOrPath))
-      {
-        this.TemplateItem = database.GetItem(projectItem.TemplateIdOrPath);
-      }
-
-      if (this.TemplateItem == null && projectItem.TemplateIdOrPath.Contains("/"))
-      {
-        this.TemplateItem = database.GetItem(projectItem.TemplateIdOrPath);
-      }
-
-      if (this.TemplateItem != null)
-      {
-        projectItem.TemplateIdOrPath = this.TemplateItem.ID.ToString();
-      }
-    }
-
-    protected void UpdateFields([NotNull] IEmitContext context, [NotNull] Projects.Items.Item projectItem)
-    {
-      if (this.Item == null)
-      {
-        throw new EmitException(Texts.Item_not_found, projectItem.Snapshot);
-      }
-
-      foreach (var field in projectItem.Fields)
-      {
-        foreach (var fieldResolver in context.FieldResolvers)
-        {
-          if (fieldResolver.CanResolve(context, field, this.Item))
-          {
-            fieldResolver.Resolve(context, field, this.Item);
-          }
-        }
-      }
-    }
-
-    protected void UpdateItem([NotNull] IEmitContext context, [NotNull] Projects.Items.Item projectItem)
-    {
-      if (this.Item == null)
-      {
-        throw new EmitException(Texts.Item_not_found, projectItem.Snapshot, projectItem.ItemIdOrPath);
-      }
-
-      if (this.TemplateItem == null)
-      {
-        throw new RetryableEmitException(Texts.Template_missing, projectItem.Snapshot, projectItem.TemplateIdOrPath);
-      }
-
       // move
-      if (string.Compare(this.Item.Paths.Path, projectItem.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) != 0 && string.Compare(this.Item.ID.ToString(), projectItem.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) != 0)
+      if (string.Compare(item.Paths.Path, this.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) != 0 && string.Compare(item.ID.ToString(), this.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) != 0)
       {
-        var parentItemPath = PathHelper.GetItemParentPath(projectItem.ItemIdOrPath);
+        var parentItemPath = PathHelper.GetItemParentPath(this.ItemIdOrPath);
 
-        var parentItem = this.Item.Database.GetItem(parentItemPath);
+        var parentItem = item.Database.GetItem(parentItemPath);
         if (parentItem == null)
         {
-          parentItem = this.Item.Database.CreateItemPath(parentItemPath);
+          parentItem = item.Database.CreateItemPath(parentItemPath);
           if (parentItem == null)
           {
-            throw new RetryableEmitException(Texts.Could_not_create_item, projectItem.Snapshot, parentItemPath);
+            throw new RetryableEmitException(Texts.Could_not_create_item, this.Snapshot, parentItemPath);
           }
         }
 
-        this.Item.MoveTo(parentItem);
+        item.MoveTo(parentItem);
       }
 
       // rename and update fields
-      using (new EditContext(this.Item))
+      using (new EditContext(item))
       {
-        if (this.Item.Name != projectItem.ItemName)
+        if (item.Name != this.ItemName)
         {
-          this.Item.Name = projectItem.ItemName;
+          item.Name = this.ItemName;
         }
 
-        if (this.Item.TemplateID != this.TemplateItem.ID)
+        if (item.TemplateID != templateItem.ID)
         {
-          var templateItem = new TemplateItem(this.TemplateItem);
-          this.Item.ChangeTemplate(templateItem);
+          item.ChangeTemplate(new TemplateItem(templateItem));
         }
 
-        foreach (var field in projectItem.Fields.Where(i => string.IsNullOrEmpty(i.Language) && i.Version == 0))
+        foreach (var field in this.Fields.Where(i => string.IsNullOrEmpty(i.Language) && i.Version == 0))
         {
-          this.Item[field.FieldName] = field.Value;
+          item[field.FieldName] = field.Value;
         }
       }
 
-      var items = new List<Item>();
+      var versionedItems = new List<Item>();
 
-      foreach (var field in projectItem.Fields.Where(i => !string.IsNullOrEmpty(i.Language) || i.Version != 0))
+      foreach (var field in this.Fields.Where(i => !string.IsNullOrEmpty(i.Language) || i.Version != 0))
       {
         // language has already been validated
-        var language = LanguageManager.GetLanguage(field.Language, this.Item.Database);
+        var language = LanguageManager.GetLanguage(field.Language, item.Database);
 
-        var item = items.FirstOrDefault(i => i.Language == language && i.Version.Number == field.Version);
-        if (item == null)
+        var versionedItem = versionedItems.FirstOrDefault(i => i.Language == language && i.Version.Number == field.Version);
+        if (versionedItem == null)
         {
-          item = this.Item.Database.GetItem(this.Item.ID, language, new Sitecore.Data.Version(field.Version));
-          if (item == null)
+          versionedItem = item.Database.GetItem(item.ID, language, new Sitecore.Data.Version(field.Version));
+          if (versionedItem == null)
           {
             // todo: validate this before updating the item
-            context.Trace.TraceError(Texts.Item_not_found, field.ValueProperty.TextNode.Snapshot.SourceFile.FileName, field.ValueProperty.TextNode.Position, $"language: {field.Language}, version; {field.Version}");
+            // context.Trace.TraceError(Texts.Item_not_found, field.ValueProperty.TextNode.Snapshot.SourceFile.FileName, field.ValueProperty.TextNode.Position, $"language: {field.Language}, version; {field.Version}");
             continue;
           }
 
-          item.Editing.BeginEdit();
-          items.Add(item);
+          versionedItem.Editing.BeginEdit();
+          versionedItems.Add(versionedItem);
         }
 
-        item[field.FieldName] = field.Value;
+        versionedItem[field.FieldName] = field.Value;
       }
 
-      foreach (var item in items)
+      foreach (var i in versionedItems)
       {
-        item.Editing.EndEdit();
-      }
-    }
-
-    private void Validate([NotNull] Projects.Items.Item projectItem)
-    {
-      if (this.TemplateItem == null)
-      {
-        return;
-      }
-
-      var template = TemplateManager.GetTemplate(this.TemplateItem.ID, this.TemplateItem.Database);
-      if (template == null)
-      {
-        return;
-      }
-
-      var templateFields = template.GetFields(true);
-
-      foreach (var field in projectItem.Fields)
-      {
-        if (templateFields.All(f => string.Compare(f.Name, field.FieldName, StringComparison.OrdinalIgnoreCase) != 0))
-        {
-          throw new RetryableEmitException(Texts.Field_is_not_defined_in_the_template, field.NameProperty.TextNode, field.FieldName);
-        }
-
-        if (!string.IsNullOrEmpty(field.Language))
-        {
-          var language = LanguageManager.GetLanguage(field.Language, this.TemplateItem.Database);
-          if (language == null)
-          {
-            throw new RetryableEmitException(Texts.Language_not_found, field.ValueProperty.TextNode, field.Language);
-          }
-        }
+        i.Editing.EndEdit();
       }
     }
   }
