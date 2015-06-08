@@ -45,6 +45,7 @@
       var extensionsAssembly = extensionCompiler.GetAssembly(extensionsDirectory);
       if (extensionsAssembly == null)
       {
+        // todo: not nice
         return null;
       }
 

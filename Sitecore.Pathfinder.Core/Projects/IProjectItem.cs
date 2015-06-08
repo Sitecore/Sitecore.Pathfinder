@@ -26,5 +26,7 @@
 
     [NotNull]
     string ShortName { get; }
+
+    void Rename([NotNull] string newQualifiedName);
   }
 }

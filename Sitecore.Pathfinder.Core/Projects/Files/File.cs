@@ -21,6 +21,11 @@
 
     public override string ShortName => this.shortName ?? (this.shortName = Path.GetFileName(this.Snapshot.SourceFile.FileName));
 
+    public override void Rename(string newQualifiedName)
+    {
+      // this.Project.FileSystem.Rename();
+    }
+
     [NotNull]
     private static string GetProjectUniqueId([NotNull] IProject project, [NotNull] ISnapshot snapshot)
     {

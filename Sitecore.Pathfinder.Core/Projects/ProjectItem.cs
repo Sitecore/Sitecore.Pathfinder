@@ -38,6 +38,8 @@
 
     public ISnapshot Snapshot { get; }
 
+    public abstract void Rename(string newQualifiedName);
+
     protected virtual void Merge([NotNull] IProjectItem newProjectItem, bool overwrite)
     {
       if (!overwrite)

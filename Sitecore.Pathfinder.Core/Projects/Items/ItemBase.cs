@@ -3,6 +3,7 @@
   using System;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
+  using Sitecore.Pathfinder.IO;
 
   public abstract class ItemBase : ProjectItem
   {
@@ -31,6 +32,17 @@
     public override string QualifiedName => this.ItemIdOrPath;
 
     public override string ShortName => this.ItemName.Value;
+
+    public override void Rename(string newQualifiedName)
+    {
+      this.ItemIdOrPath = newQualifiedName;
+      this.ItemName.SetValue(PathHelper.GetFileNameWithoutExtensions(newQualifiedName));
+
+      if (this.ItemName.Source != null)
+      {
+        this.ItemName.Source.SetValue(this.ItemName.Value);
+      }
+    }
 
     protected override void Merge(IProjectItem newProjectItem, bool overwrite)
     {
