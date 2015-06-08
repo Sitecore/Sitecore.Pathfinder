@@ -1,5 +1,6 @@
 ﻿namespace Sitecore.Pathfinder.Documents.Json
 {
+  using System.Collections.Generic;
   using System.Linq;
   using Newtonsoft.Json.Linq;
   using Sitecore.Pathfinder.Diagnostics;
@@ -49,11 +50,12 @@
           var jarray = token as JArray;
           if (jarray != null)
           {
-            this.root = new JsonTextNode(this, string.Empty, jarray);
+            var r = new JsonTextNode(this, string.Empty, jarray);
+            this.root = r;
 
             foreach (var o in jarray.OfType<JObject>())
             {
-              this.Parse(string.Empty, o, this.root);
+              this.Parse(string.Empty, o, r);
             }
           }
         }
@@ -62,16 +64,19 @@
       }
     }
 
-    public override ITextNode GetNestedTextNode(ITextNode textNode, string name)
+    public override ITextNode GetJsonChildTextNode(ITextNode textNode, string name)
     {
       return textNode.ChildNodes.FirstOrDefault(n => n.Name == name);
     }
 
     [NotNull]
-    protected virtual ITextNode Parse([NotNull] string name, [NotNull] JObject jobject, [CanBeNull] ITextNode parent)
+    protected virtual ITextNode Parse([NotNull] string name, [NotNull] JObject jobject, [CanBeNull] JsonTextNode parent)
     {
       var treeNode = new JsonTextNode(this, name, jobject, parent);
-      parent?.ChildNodes.Add(treeNode);
+      (parent?.ChildNodes as ICollection<ITextNode>)?.Add(treeNode);
+
+      var childNodes = (ICollection<ITextNode>)treeNode.ChildNodes;
+      var attributes = (ICollection<ITextNode>)treeNode.Attributes;
 
       foreach (var property in jobject.Properties())
       {
@@ -90,7 +95,7 @@
               this.Parse(string.Empty, o, arrayTreeNode);
             }
 
-            treeNode.ChildNodes.Add(arrayTreeNode);
+            childNodes.Add(arrayTreeNode);
             break;
 
           case JTokenType.Boolean:
@@ -99,7 +104,7 @@
           case JTokenType.Integer:
           case JTokenType.String:
             var propertyTreeNode = new JsonTextNode(this, property.Name, property, treeNode);
-            treeNode.Attributes.Add(propertyTreeNode);
+            attributes.Add(propertyTreeNode);
             break;
         }
       }

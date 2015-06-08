@@ -9,9 +9,9 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
   public class Template : ItemBase
   {
-    public static readonly Template Empty = new Template(Projects.Project.Empty, "{7A3E077F-D985-453F-8773-348ADFEAF2FD}", Documents.TextNode.Empty);
+    public static readonly Template Empty = new Template(Projects.Project.Empty, "{7A3E077F-D985-453F-8773-348ADFEAF2FD}", TextNode.Empty, string.Empty, string.Empty, string.Empty);
 
-    public Template([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode document) : base(project, projectUniqueId, document)
+    public Template([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode document, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, projectUniqueId, document, databaseName, itemName, itemIdOrPath)
     {
     }
 
@@ -30,9 +30,9 @@ namespace Sitecore.Pathfinder.Projects.Templates
     public void Merge([NotNull] Template newTemplate)
     {
       // todo: throw exception if item and newItem value differ
-      if (!string.IsNullOrEmpty(newTemplate.ItemName))
+      if (!string.IsNullOrEmpty(newTemplate.ItemName.Value))
       {
-        this.ItemName = newTemplate.ItemName;
+        this.ItemName.SetValue(newTemplate.ItemName.Value, newTemplate.ItemName.Source);
       }
 
       if (!string.IsNullOrEmpty(newTemplate.DatabaseName))
@@ -77,6 +77,8 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
         section.Merge(newSection);
       }
+
+      this.References.AddRange(newTemplate.References);
     }
   }
 }

@@ -6,10 +6,10 @@
   public interface ITextNode
   {
     [NotNull]
-    IList<ITextNode> Attributes { get; }
+    IEnumerable<ITextNode> Attributes { get; }
 
     [NotNull]
-    IList<ITextNode> ChildNodes { get; }
+    IEnumerable<ITextNode> ChildNodes { get; }
 
     [NotNull]
     string Name { get; }
@@ -26,11 +26,11 @@
     string Value { get; }
 
     [CanBeNull]
-    ITextNode GetAttribute([NotNull] string attributeName);
+    ITextNode GetTextNodeAttribute([NotNull] string attributeName);
 
     [NotNull]
     string GetAttributeValue([NotNull] string attributeName, [NotNull] string defaultValue = "");
 
-    void SetValue([NotNull] string value);
+    bool SetValue([NotNull] string value);
   }
 }

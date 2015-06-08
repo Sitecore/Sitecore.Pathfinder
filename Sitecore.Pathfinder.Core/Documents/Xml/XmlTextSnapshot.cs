@@ -24,7 +24,7 @@
       this.IsEditable = true;
     }
 
-    public override ITextNode Root => this.root ?? (this.root = this.RootElement == null ? TextNode.Empty : this.Parse(null, this.RootElement));
+    public override ITextNode Root => this.root ?? (this.root = (this.RootElement != null ? this.Parse(null, this.RootElement) : TextNode.Empty));
 
     [NotNull]
     public string SchemaFileName { get; }
@@ -53,17 +53,9 @@
         }
 
         this.rootElement = doc.Root;
-        if (this.rootElement == null)
-        {
-          return null;
-        }
-
         return this.rootElement;
       }
     }
-
-    [NotNull]
-    protected ISnapshotService SnapshotService { get; }
 
     public override void BeginEdit()
     {
@@ -84,11 +76,6 @@
 
       this.IsEditing = false;
       this.rootElement.Save(this.SourceFile.FileName, SaveOptions.DisableFormatting);
-    }
-
-    public override ITextNode GetNestedTextNode(ITextNode textNode, string name)
-    {
-      return textNode;
     }
 
     public override void ValidateSchema(IParseContext context)
@@ -158,7 +145,9 @@
     protected virtual ITextNode Parse([CanBeNull] ITextNode parent, [NotNull] XElement element)
     {
       var treeNode = new XmlTextNode(this, element, parent);
-      parent?.ChildNodes.Add(treeNode);
+      (parent?.ChildNodes as ICollection<ITextNode>)?.Add(treeNode);
+
+      var attributes = (ICollection<ITextNode>)treeNode.Attributes;
 
       foreach (var attribute in element.Attributes())
       {
@@ -168,7 +157,7 @@
         }
 
         var attributeTreeNode = new XmlTextNode(this, attribute, treeNode);
-        treeNode.Attributes.Add(attributeTreeNode);
+        attributes.Add(attributeTreeNode);
       }
 
       if (!element.HasElements)
@@ -177,7 +166,7 @@
         if (node != null)
         {
           var attributeTreeNode = new XmlTextNode(this, node, "[Value]", element.Value);
-          treeNode.Attributes.Add(attributeTreeNode);
+          attributes.Add(attributeTreeNode);
         }
       }
 

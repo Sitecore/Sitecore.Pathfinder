@@ -185,20 +185,20 @@
       }
 
       var layoutPlaceholders = string.Empty;
-      var layoutPath = deviceTextNode.GetAttributeValue("Layout");
-      if (!string.IsNullOrEmpty(layoutPath))
+      var layoutPath = deviceTextNode.GetTextNodeAttribute("Layout");
+      if (layoutPath != null && !string.IsNullOrEmpty(layoutPath.Value))
       {
-        var l = database.GetItem(layoutPath);
+        var l = database.GetItem(layoutPath.Value);
         if (l == null)
         {
-          throw new RetryableEmitException(Texts.Layout_not_found_, context.Snapshot.SourceFile, layoutPath);
+          throw new RetryableEmitException(Texts.Layout_not_found_, layoutPath, layoutPath.Value);
         }
 
         output.WriteAttributeString("l", l.ID.ToString());
         layoutPlaceholders = this.GetPlaceholders(deviceTextNode, l);
       }
 
-      var renderings = context.Snapshot.GetNestedTextNode(deviceTextNode, "Renderings");
+      var renderings = context.Snapshot.GetJsonChildTextNode(deviceTextNode, "Renderings");
       if (renderings == null)
       {
         // silent
@@ -222,7 +222,7 @@
 
       output.WriteStartElement("r");
 
-      var devices = context.Snapshot.GetNestedTextNode(layoutTextNode, "Devices");
+      var devices = context.Snapshot.GetJsonChildTextNode(layoutTextNode, "Devices");
       if (devices == null)
       {
         // silent

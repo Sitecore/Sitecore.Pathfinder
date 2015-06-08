@@ -19,9 +19,20 @@
 
     public override string Resolve(IEmitContext context, TemplateField templateField, Field field)
     {
-      var layoutResolveContext = new LayoutResolveContext(context, (ITextSnapshot)field.NameProperty.TextNode.Snapshot, field.Item.DatabaseName);
+      var textNode = field.FieldName.Source ?? TextNode.Empty;
+      if (textNode == TextNode.Empty)
+      {
+        return field.Value.Value;
+      }
 
-      var textNode = field.NameProperty.TextNode;
+      var textSnapshot = textNode.Snapshot as ITextSnapshot;
+      if (textSnapshot == null)
+      {
+        return field.Value.Value;
+      }
+
+      var layoutResolveContext = new LayoutResolveContext(context, textSnapshot, field.Item.DatabaseName);
+
       var resolver = textNode is XmlTextNode ? (LayoutResolverBase)new XmlLayoutResolver() : new JsonLayoutResolver();
 
       return resolver.Resolve(layoutResolveContext, textNode);

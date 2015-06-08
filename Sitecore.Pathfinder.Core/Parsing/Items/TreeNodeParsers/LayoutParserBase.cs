@@ -15,26 +15,28 @@
 
     public override void Parse(ItemParseContext context, ITextNode textNode)
     {
-      var itemName = textNode.GetAttributeValue("Name", context.ParseContext.ItemName);
+      var itemNameTextNode = textNode.GetTextNodeAttribute("Name");
+      var itemName = itemNameTextNode?.Value ?? context.ParseContext.ItemName;
       var itemIdOrPath = context.ParentItemPath + "/" + itemName;
       var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
 
-      var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode);
-      item.ItemName = itemName;
-      item.DatabaseName = context.ParseContext.DatabaseName;
-      item.ItemIdOrPath = itemIdOrPath;
+      var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemName, itemIdOrPath, string.Empty);
+      item.ItemName.Source = itemNameTextNode;
 
-      item.Fields.Add(context.ParseContext.Factory.Field(item, "__Renderings", string.Empty, 0, textNode, textNode));
+      var field = context.ParseContext.Factory.Field(item, "__Renderings", string.Empty, 0, textNode.Value);
+      field.Value.Source = textNode;
+
+      item.Fields.Add(field);
 
       context.ParseContext.Project.AddOrMerge(item);
     }
 
     protected virtual void ParseDeviceReferences([NotNull] ItemParseContext context, [NotNull] ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode deviceTextNode)
     {
-      var deviceNameTextNode = deviceTextNode.GetAttribute("Name") ?? deviceTextNode;
+      var deviceNameTextNode = deviceTextNode.GetTextNodeAttribute("Name") ?? deviceTextNode;
       references.Add(context.ParseContext.Factory.DeviceReference(projectItem, deviceNameTextNode, deviceTextNode.GetAttributeValue("Name")));
 
-      var layoutTextNode = deviceTextNode.GetAttribute("Layout");
+      var layoutTextNode = deviceTextNode.GetTextNodeAttribute("Layout");
       if (layoutTextNode != null)
       {
         references.Add(context.ParseContext.Factory.LayoutReference(projectItem, layoutTextNode, deviceTextNode.GetAttributeValue("Layout")));

@@ -354,4 +354,10 @@
   <data name="You_must_specific_the___to_argument" xml:space="preserve">
     <value>You must specific the --to_argument</value>
   </data>
+  <data name="Template_field_missing" xml:space="preserve">
+    <value>Template field missing</value>
+  </data>
+  <data name="Media_item_created_with_wrong_ID" xml:space="preserve">
+    <value>Media item created with wrong ID</value>
+  </data>
 </root>

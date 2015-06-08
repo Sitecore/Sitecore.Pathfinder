@@ -22,8 +22,7 @@
       this.OverwriteProjectUniqueId(projectUniqueId);
     }
 
-    // todo: !!!must be read only!!!
-    public Guid Guid { get; set; }
+    public Guid Guid { get; private set; }
 
     public IProject Project { get; }
 

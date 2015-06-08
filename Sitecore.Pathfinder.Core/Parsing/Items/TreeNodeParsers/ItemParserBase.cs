@@ -17,29 +17,30 @@
 
     public override void Parse(ItemParseContext context, ITextNode textNode)
     {
-      var itemName = textNode.GetAttributeValue("Name", context.ParseContext.ItemName);
+      var itemNameTextNode = textNode.GetTextNodeAttribute("Name");
+      var itemName = itemNameTextNode?.Value ?? context.ParseContext.ItemName;
       var itemIdOrPath = context.ParentItemPath + "/" + itemName;
       var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
 
-      var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode);
-      item.ItemName = itemName;
-      item.DatabaseName = context.ParseContext.DatabaseName;
-      item.ItemIdOrPath = itemIdOrPath;
-      item.TemplateIdOrPath = this.GetTemplateIdOrPath(context, textNode);
-
-      var templateIdOrPath = textNode.GetAttributeValue("Template.Create");
-      if (!string.IsNullOrEmpty(templateIdOrPath))
-      {                                                 
-        var template = this.ParseTemplate(context, textNode, templateIdOrPath);
-        item.TemplateIdOrPath = template.ItemIdOrPath;
+      var templateIdOrPathTextNode = textNode.GetTextNodeAttribute("Template");
+      if (templateIdOrPathTextNode == null)
+      {
+        templateIdOrPathTextNode = textNode.GetTextNodeAttribute("Template.Create");
+        if (templateIdOrPathTextNode != null)
+        {
+          this.ParseTemplate(context, textNode, templateIdOrPathTextNode);
+        }
       }
 
-      if (item.TemplateIdOrPath != null)
+      var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemName, itemIdOrPath, templateIdOrPathTextNode?.Value ?? string.Empty);
+      item.ItemName.Source = itemNameTextNode;
+
+      if (!string.IsNullOrEmpty(item.TemplateIdOrPath.Value))
       {
-        var a = textNode.GetAttribute("Template") ?? textNode.GetAttribute("Template.Create");
+        var a = textNode.GetTextNodeAttribute("Template") ?? textNode.GetTextNodeAttribute("Template.Create");
         if (a != null)
         {
-          item.References.AddRange(this.ParseReferences(context, item, a, item.TemplateIdOrPath));
+          item.References.AddRange(this.ParseReferences(context, item, a, item.TemplateIdOrPath.Value));
         }
       }
 
@@ -81,7 +82,7 @@
         context.ParseContext.Trace.TraceError(Texts._Field__element_must_have_a__Name__attribute, fieldTextNode.Snapshot.SourceFile.FileName, fieldTextNode.Position, fieldName);
       }
 
-      var field = item.Fields.FirstOrDefault(f => string.Compare(f.FieldName, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
+      var field = item.Fields.FirstOrDefault(f => string.Compare(f.FieldName.Value, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
       if (field != null)
       {
         context.ParseContext.Trace.TraceError(Texts.Field_is_already_defined, fieldTextNode.Snapshot.SourceFile.FileName, fieldTextNode.Position, fieldName);
@@ -101,10 +102,10 @@
         }
       }
 
-      var nameTextNode = fieldTextNode.GetAttribute("Name") ?? fieldTextNode;
-      var valueTextNode = fieldTextNode.GetAttribute("[Value]");
+      var nameTextNode = fieldTextNode.GetTextNodeAttribute("Name") ?? fieldTextNode;
+      var valueTextNode = fieldTextNode.GetTextNodeAttribute("[Value]");
 
-      var valueAttributeTextNode = fieldTextNode.GetAttribute("Value");
+      var valueAttributeTextNode = fieldTextNode.GetTextNodeAttribute("Value");
       if (valueAttributeTextNode != null)
       {
         if (valueTextNode != null)
@@ -117,29 +118,31 @@
 
       if (valueTextNode == null)
       {
-        valueTextNode = context.ParseContext.Factory.TextNode(fieldTextNode.Snapshot, "Value", string.Empty, null);
+        valueTextNode = context.ParseContext.Factory.TextNode(fieldTextNode.Snapshot, TextPosition.Empty, "Value", string.Empty, null);
       }
 
-      field = context.ParseContext.Factory.Field(item, fieldName, language, version, nameTextNode, valueTextNode, valueHint);
+      field = context.ParseContext.Factory.Field(item, fieldName, language, version, valueTextNode.Value, valueHint);
+      field.FieldName.Source = nameTextNode;
+      field.Value.Source = valueTextNode;
       item.Fields.Add(field);
 
       if (field.ValueHint != "Text")
       {
-        item.References.AddRange(this.ParseReferences(context, item, valueTextNode, field.Value));
+        item.References.AddRange(this.ParseReferences(context, item, valueTextNode, field.Value.Value));
       }
     }
 
     [NotNull]
-    protected virtual Template ParseTemplate([NotNull] ItemParseContext context, [NotNull] ITextNode itemTextNode, [NotNull] string itemIdOrPath)
+    protected virtual Template ParseTemplate([NotNull] ItemParseContext context, [NotNull] ITextNode itemTextNode, [NotNull] ITextNode templateIdOrPathTextNode)
     {
+      var itemIdOrPath = templateIdOrPathTextNode.Value;
+
       var n = itemIdOrPath.LastIndexOf('/');
       var itemName = itemIdOrPath.Mid(n + 1);
       var projectUniqueId = itemTextNode.GetAttributeValue("Template.Id", itemIdOrPath);
 
-      var template = context.ParseContext.Factory.Template(context.ParseContext.Project, projectUniqueId, itemTextNode);
-      template.ItemName = itemName;
-      template.DatabaseName = context.ParseContext.DatabaseName;
-      template.ItemIdOrPath = itemIdOrPath;
+      var template = context.ParseContext.Factory.Template(context.ParseContext.Project, projectUniqueId, itemTextNode, context.ParseContext.DatabaseName, itemName, itemIdOrPath);
+      template.ItemName.Source = templateIdOrPathTextNode;
       template.Icon = itemTextNode.GetAttributeValue("Template.Icon");
       template.BaseTemplates = itemTextNode.GetAttributeValue("Template.BaseTemplates", Constants.Templates.StandardTemplate);
       template.ShortHelp = itemTextNode.GetAttributeValue("Template.ShortHelp");
@@ -152,7 +155,7 @@
       templateSection.Name = "Fields";
       templateSection.Icon = "Applications/16x16/form_blue.png";
 
-      var fieldTreeNodes = context.Snapshot.GetNestedTextNode(itemTextNode, "Fields");
+      var fieldTreeNodes = context.Snapshot.GetJsonChildTextNode(itemTextNode, "Fields");
       if (fieldTreeNodes != null)
       {
         int nextSortOrder = 0;

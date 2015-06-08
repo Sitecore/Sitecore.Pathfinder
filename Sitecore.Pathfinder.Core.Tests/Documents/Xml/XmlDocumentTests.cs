@@ -1,5 +1,6 @@
 ﻿namespace Sitecore.Pathfinder.Documents.Xml
 {
+  using System.Linq;
   using NUnit.Framework;
   using Sitecore.Pathfinder.Documents;
 
@@ -33,19 +34,19 @@
       var root = doc.Root;
       Assert.IsNotNull(root);
       Assert.AreEqual("Item", root.Name);
-      Assert.AreEqual(1, root.ChildNodes.Count);
+      Assert.AreEqual(1, root.ChildNodes.Count());
 
-      var field = root.ChildNodes[0];
+      var field = root.ChildNodes.First();
       Assert.AreEqual("Field", field.Name);
       Assert.AreEqual("Text", field.GetAttributeValue("Name"));
       Assert.AreEqual("123", field.GetAttributeValue("Value"));
-      Assert.AreEqual(0, field.ChildNodes.Count);
+      Assert.AreEqual(0, field.ChildNodes.Count());
 
-      var attribute = field.GetAttribute("Name");
+      var attribute = field.GetTextNodeAttribute("Name");
       Assert.IsNotNull(attribute);
       Assert.AreEqual("Text", attribute.Value);
-      Assert.AreEqual(0, attribute.Attributes.Count);
-      Assert.AreEqual(0, attribute.ChildNodes.Count);
+      Assert.AreEqual(0, attribute.Attributes.Count());
+      Assert.AreEqual(0, attribute.ChildNodes.Count());
       Assert.AreEqual(field, attribute.Parent);
       Assert.AreEqual(field.Snapshot, attribute.Snapshot);
       Assert.AreEqual(doc, attribute.Snapshot);
@@ -58,12 +59,12 @@
 
       var doc = new XmlTextSnapshot(sourceFile, "<Item><Field Name=\"Text\">123</Field></Item>", string.Empty, string.Empty);
       var root = doc.Root;
-      var field = root.ChildNodes[0];
+      var field = root.ChildNodes.First();
       Assert.AreEqual("Field", field.Name);
       Assert.AreEqual("Text", field.GetAttributeValue("Name"));
       Assert.AreEqual("123", field.GetAttributeValue("[Value]"));
       Assert.AreEqual(string.Empty, field.Value);
-      Assert.AreEqual(0, field.ChildNodes.Count);
+      Assert.AreEqual(0, field.ChildNodes.Count());
     }
 
     [Test]
@@ -74,10 +75,10 @@
       var doc = new XmlTextSnapshot(sourceFile, "<Item><Field Name=\"Text\">123</Field></Item>", string.Empty, string.Empty);
       var root = doc.Root;
 
-      var fields = doc.GetNestedTextNode(root, "Fields");
+      var fields = doc.GetJsonChildTextNode(root, "Fields");
       Assert.IsNotNull(fields);
 
-      var field = fields.ChildNodes[0];
+      var field = fields.ChildNodes.First();
       Assert.IsNotNull(field);
       Assert.AreEqual("Text", field.GetAttributeValue("Name"));
     }

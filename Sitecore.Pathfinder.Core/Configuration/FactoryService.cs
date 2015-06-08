@@ -47,14 +47,14 @@
       return new Diagnostic(fileName, position, severity, text);
     }
 
-    public ExternalReferenceItem ExternalReferenceItem(IProject project, string externalReference, ISnapshot snapshot)
+    public ExternalReferenceItem ExternalReferenceItem(IProject project, string externalReference, ISnapshot snapshot, string databaseName, string itemName, string itemIdOrPath)
     {
-      return new ExternalReferenceItem(project, externalReference, snapshot);
+      return new ExternalReferenceItem(project, externalReference, snapshot, databaseName, itemName, itemIdOrPath);
     }
 
-    public Field Field(Item item, string fieldName, string language, int version, ITextNode nameTextNode, ITextNode valueTextNode, string valueHint = "")
+    public Field Field(Item item, string fieldName, string language, int version, string value, string valueHint = "")
     {
-      return new Field(item, fieldName, language, version, nameTextNode, valueTextNode, valueHint);
+      return new Field(item, fieldName, language, version, value, valueHint);
     }
 
     public FileReference FileReference(IProjectItem owner, ITextNode sourceTextNode, string targetQualifiedName)
@@ -62,14 +62,9 @@
       return new FileReference(owner, sourceTextNode, targetQualifiedName);
     }
 
-    public Item Item(IProject project, string itemPath, ISnapshot snapshot)
+    public Item Item(IProject project, string itemPath, ITextNode textNode, string databaseName, string itemName, string itemIdOrPath, string templateIdOrPath)
     {
-      return new Item(project, itemPath, snapshot);
-    }
-
-    public Item Item(IProject project, string itemPath, ITextNode textNode)
-    {
-      return new Item(project, itemPath, textNode);
+      return new Item(project, itemPath, textNode, databaseName, itemName, itemIdOrPath, templateIdOrPath);
     }
 
     public ItemParseContext ItemParseContext(IParseContext context, ItemParser itemParser, string parentItemPath)
@@ -122,9 +117,9 @@
       return new SourceFile(fileSystem, sourceFileName);
     }
 
-    public Template Template(IProject project, string projectUniqueId, ITextNode textNode)
+    public Template Template(IProject project, string projectUniqueId, ITextNode textNode, string databaseName, string itemName, string itemIdOrPath)
     {
-      return new Template(project, projectUniqueId, textNode);
+      return new Template(project, projectUniqueId, textNode, databaseName, itemName, itemIdOrPath);
     }
 
     public TemplateField TemplateField(Template template)
@@ -137,14 +132,14 @@
       return new TemplateSection();
     }
 
-    public ITextNode TextNode(ISnapshot snapshot, string name, string value, ITextNode parent)
-    {
-      return new TextNode(snapshot, name, value, parent);
-    }
-
-    public ITextNode TextNode(ISnapshot snapshot, TextPosition position, string name, string value, ITextNode parent)
+    public TextNode TextNode(ISnapshot snapshot, TextPosition position, string name, string value, ITextNode parent)
     {
       return new TextNode(snapshot, position, name, value, parent);
+    }
+
+    public ISnapshot Snapshot(ISourceFile sourceFile)
+    {
+      return new Snapshot(sourceFile);
     }
   }
 }

@@ -6,7 +6,6 @@
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Extensions;
-  using Sitecore.Pathfinder.Projects.Files;
   using Sitecore.Pathfinder.Projects.Items;
 
   [Export(typeof(IParser))]
@@ -36,14 +35,12 @@
       var projectUniqueId = context.ItemPath;
       var lines = context.Snapshot.SourceFile.ReadAsLines();
 
-      var tempItem = context.Factory.Item(context.Project, "TempItem", root);
+      var tempItem = context.Factory.Item(context.Project, "TempItem", root, string.Empty, string.Empty, string.Empty, string.Empty);
       this.ParseLines(context, tempItem, lines, 0, ref projectUniqueId);
 
-      var item = context.Factory.Item(context.Project, projectUniqueId, root);
-      item.ItemName = tempItem.ItemName;
-      item.ItemIdOrPath = tempItem.ItemIdOrPath;
-      item.DatabaseName = tempItem.DatabaseName;
-      item.TemplateIdOrPath = tempItem.TemplateIdOrPath;
+      var item = context.Factory.Item(context.Project, projectUniqueId, root, tempItem.DatabaseName, tempItem.ItemName.Value, tempItem.ItemIdOrPath, tempItem.TemplateIdOrPath.Value);
+      item.ItemName.Source = tempItem.ItemName.Source;
+      item.TemplateIdOrPath.Source = tempItem.TemplateIdOrPath.Source;
       item.Icon = tempItem.Icon;
       item.IsEmittable = false;
 
@@ -131,8 +128,9 @@
         }
       }
 
-      var valueTextNode = context.Factory.TextNode(serializationFile.Snapshot, new TextPosition(lineNumber, 0, lineLength), string.Empty, fieldValue, serializationFile.TextNode);
-      var field = context.Factory.Field(serializationFile, fieldName, language, version, valueTextNode, valueTextNode);
+      var field = context.Factory.Field(serializationFile, fieldName, language, version, fieldValue);
+      field.Value.Source = context.Factory.TextNode(serializationFile.Snapshot, new TextPosition(lineNumber, 0, lineLength), fieldName, fieldValue, serializationFile.ItemName.Source);
+
       serializationFile.Fields.Add(field);
 
       return n;
@@ -191,12 +189,14 @@
           case "parent":
             break;
           case "name":
-            item.ItemName = value;
+            item.ItemName.SetValue(value);
+            item.ItemName.Source = context.Factory.TextNode(context.Snapshot, new TextPosition(n, 0, line.Length), "name", value, null);
             break;
           case "master":
             break;
           case "template":
-            item.TemplateIdOrPath = value;
+            item.TemplateIdOrPath.SetValue(value);
+            item.TemplateIdOrPath.Source = context.Factory.TextNode(context.Snapshot, new TextPosition(n, 0, line.Length), "template", value, null);
             break;
           case "templatekey":
             break;

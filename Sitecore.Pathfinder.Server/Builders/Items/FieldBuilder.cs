@@ -2,10 +2,11 @@ namespace Sitecore.Pathfinder.Builders.Items
 {
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
+  using Sitecore.Pathfinder.Projects;
 
   public class FieldBuilder
   {
-    public FieldBuilder([NotNull] string fieldName, [NotNull] string language, int version, [NotNull] string value)
+    public FieldBuilder([NotNull] Attribute<string> fieldName, [NotNull] string language, int version, [NotNull] string value)
     {
       this.FieldName = fieldName;
       this.Language = language;
@@ -14,13 +15,10 @@ namespace Sitecore.Pathfinder.Builders.Items
     }
 
     [NotNull]
-    public string FieldName { get; }
+    public Attribute<string> FieldName { get; }
 
     [NotNull]
     public string Language { get; }
-
-    [NotNull]
-    public Property NameProperty { get; }
 
     [NotNull]
     public string Value { get; set; }

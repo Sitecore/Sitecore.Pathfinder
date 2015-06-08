@@ -100,7 +100,9 @@
     <Compile Include="Configuration\IConfigurationService.cs" />
     <Compile Include="Configuration\IFactoryService.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Documents\Property.cs" />
+    <Compile Include="Documents\FileNameTextNode.cs" />
+    <Compile Include="Documents\SnapshotTextNode.cs" />
+    <Compile Include="Projects\Attribute.cs" />
     <Compile Include="Documents\Serialization\SerializationSnapshotLoader.cs" />
     <Compile Include="Documents\Xml\ItemXmlSnapshotLoader.cs" />
     <Compile Include="Extensions\CompositionServiceExtensions.cs" />

@@ -14,7 +14,6 @@
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Parsing;
   using Sitecore.Pathfinder.Projects;
-  using Sitecore.Pathfinder.TextDocuments;
 
   public class Services
   {

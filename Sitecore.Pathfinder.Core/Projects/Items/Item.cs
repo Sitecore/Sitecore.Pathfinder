@@ -16,14 +16,11 @@ namespace Sitecore.Pathfinder.Projects.Items
 
   public class Item : ItemBase
   {
-    public static readonly Item Empty = new Item(Projects.Project.Empty, "{935B8D6C-D25A-48B8-8167-2C0443D77027}", Documents.TextNode.Empty);
+    public static readonly Item Empty = new Item(Projects.Project.Empty, "{935B8D6C-D25A-48B8-8167-2C0443D77027}", TextNode.Empty, string.Empty, string.Empty, string.Empty, string.Empty);
 
-    public Item([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ISnapshot snapshot) : base(project, projectUniqueId, snapshot)
+    public Item([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath) : base(project, projectUniqueId, textNode, databaseName, itemName, itemIdOrPath)
     {
-    }
-
-    public Item([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode) : base(project, projectUniqueId, textNode)
-    {
+      this.TemplateIdOrPath = new Attribute<string>("Template", templateIdOrPath);
     }
 
     [NotNull]
@@ -34,17 +31,18 @@ namespace Sitecore.Pathfinder.Projects.Items
     public bool OverwriteWhenMerging { get; set; }
 
     [NotNull]
-    public Template Template => this.Project.Items.OfType<Template>().FirstOrDefault(i => string.Compare(i.QualifiedName, this.TemplateIdOrPath, StringComparison.OrdinalIgnoreCase) == 0) ?? Template.Empty;
+    public Template Template => this.Project.Items.OfType<Template>().FirstOrDefault(i => string.Compare(i.QualifiedName, this.TemplateIdOrPath.Value, StringComparison.OrdinalIgnoreCase) == 0) ?? Template.Empty;
 
     [NotNull]
-    public string TemplateIdOrPath { get; set; } = string.Empty;
+    public Attribute<string> TemplateIdOrPath { get; }
 
     public void Merge([NotNull] Item newItem)
     {
       if (this.OverwriteWhenMerging)
       {
         this.OverwriteProjectUniqueId(newItem.ProjectUniqueId);
-        this.ItemName = newItem.ItemName;
+        this.ItemName.SetValue(newItem.ItemName.Value, newItem.ItemName.Source);
+
         this.ItemIdOrPath = newItem.ItemIdOrPath;
         this.DatabaseName = newItem.DatabaseName;
         this.IsEmittable = this.IsEmittable && newItem.IsEmittable;
@@ -57,9 +55,9 @@ namespace Sitecore.Pathfinder.Projects.Items
         this.DatabaseName = newItem.DatabaseName;
       }
 
-      if (!string.IsNullOrEmpty(newItem.TemplateIdOrPath))
+      if (!string.IsNullOrEmpty(newItem.TemplateIdOrPath.Value))
       {
-        this.TemplateIdOrPath = newItem.TemplateIdOrPath;
+        this.TemplateIdOrPath.SetValue(newItem.TemplateIdOrPath.Value, newItem.TemplateIdOrPath.Source);
       }
 
       if (!string.IsNullOrEmpty(newItem.Icon))
@@ -72,13 +70,13 @@ namespace Sitecore.Pathfinder.Projects.Items
         this.IsEmittable = false;
       }
 
+      this.OverwriteWhenMerging = this.OverwriteWhenMerging && newItem.OverwriteWhenMerging;
       this.MergingMatch = this.MergingMatch == MergingMatch.MatchUsingSourceFile && newItem.MergingMatch == MergingMatch.MatchUsingSourceFile ? MergingMatch.MatchUsingSourceFile : MergingMatch.MatchUsingItemPath;
 
-      // todo: add TextNode
       // todo: add SourceFile
       foreach (var newField in newItem.Fields)
       {
-        var field = this.Fields.FirstOrDefault(f => string.Compare(f.FieldName, newField.FieldName, StringComparison.OrdinalIgnoreCase) == 0 && string.Compare(f.Language, newField.Language, StringComparison.OrdinalIgnoreCase) == 0 && f.Version == newField.Version);
+        var field = this.Fields.FirstOrDefault(f => string.Compare(f.FieldName.Value, newField.FieldName.Value, StringComparison.OrdinalIgnoreCase) == 0 && string.Compare(f.Language.Value, newField.Language.Value, StringComparison.OrdinalIgnoreCase) == 0 && f.Version.Value == newField.Version.Value);
         if (field == null)
         {
           newField.Item = this;
@@ -86,7 +84,8 @@ namespace Sitecore.Pathfinder.Projects.Items
           continue;
         }
 
-        field.Value = newField.Value;
+        // todo: trace that field is being overwritten
+        field.Value.SetValue(newField.Value.Value, newField.Value.Source);
       }
 
       this.References.AddRange(newItem.References);

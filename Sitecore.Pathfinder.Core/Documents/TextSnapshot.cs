@@ -10,7 +10,7 @@
     {
       this.Contents = contents;
 
-      this.Root = new TextNode(this);
+      this.Root = new SnapshotTextNode(this);
     }
 
     public bool IsEditable { get; protected set; }
@@ -40,9 +40,10 @@
       }
     }
 
-    public virtual ITextNode GetNestedTextNode(ITextNode textNode, string name)
+    public virtual ITextNode GetJsonChildTextNode(ITextNode textNode, string name)
     {
-      return null;
+      // overwritten in JsonTextSnapshot to find the appropriate text node
+      return textNode;
     }
 
     public virtual void ValidateSchema(IParseContext context)

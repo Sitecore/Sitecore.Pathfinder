@@ -16,14 +16,6 @@
       this.Details = string.Empty;
     }
 
-    public EmitException([Localizable(true)] [NotNull] string text, [NotNull] ISourceFile sourceFile, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
-    {
-      this.Text = text;
-      this.FileName = sourceFile.FileName;
-      this.Position = TextPosition.Empty;
-      this.Details = details;
-    }
-
     public EmitException([Localizable(true)] [NotNull] string text, [NotNull] ISnapshot snapshot, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
     {
       this.Text = text;

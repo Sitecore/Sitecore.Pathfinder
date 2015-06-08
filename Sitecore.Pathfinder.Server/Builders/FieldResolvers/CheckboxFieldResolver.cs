@@ -16,12 +16,12 @@
 
     public override string Resolve(IEmitContext context, TemplateField templateField, Field field)
     {
-      if (string.Compare(field.Value, "true", StringComparison.OrdinalIgnoreCase) == 0)
+      if (string.Compare(field.Value.Value, "true", StringComparison.OrdinalIgnoreCase) == 0)
       {
         return "1";
       }
 
-      if (string.Compare(field.Value, "1", StringComparison.OrdinalIgnoreCase) == 0)
+      if (string.Compare(field.Value.Value, "1", StringComparison.OrdinalIgnoreCase) == 0)
       {
         return "1";
       }

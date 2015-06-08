@@ -1,8 +1,8 @@
-﻿namespace Sitecore.Pathfinder.TextDocuments.Json
+﻿namespace Sitecore.Pathfinder.Documents.Json
 {
+  using System.Linq;
   using NUnit.Framework;
   using Sitecore.Pathfinder.Documents;
-  using Sitecore.Pathfinder.Documents.Json;
 
   [TestFixture]
   public class JsonDocumentTests : Tests
@@ -34,21 +34,21 @@
       var root = doc.Root;
       Assert.IsNotNull(root);
       Assert.AreEqual("Item", root.Name);
-      Assert.AreEqual(1, root.ChildNodes.Count);
+      Assert.AreEqual(1, root.ChildNodes.Count());
 
-      var fields = root.ChildNodes[0];
-      Assert.AreEqual(1, fields.ChildNodes.Count);
+      var fields = root.ChildNodes.First();
+      Assert.AreEqual(1, fields.ChildNodes.Count());
 
-      var field = fields.ChildNodes[0];
+      var field = fields.ChildNodes.First();
       Assert.AreEqual("Text", field.GetAttributeValue("Name"));
       Assert.AreEqual("123", field.GetAttributeValue("Value"));
-      Assert.AreEqual(0, field.ChildNodes.Count);
+      Assert.AreEqual(0, field.ChildNodes.Count());
 
-      var attribute = field.GetAttribute("Name");
+      var attribute = field.GetTextNodeAttribute("Name");
       Assert.IsNotNull(attribute);
       Assert.AreEqual("Text", attribute.Value);
-      Assert.AreEqual(0, attribute.Attributes.Count);
-      Assert.AreEqual(0, attribute.ChildNodes.Count);
+      Assert.AreEqual(0, attribute.Attributes.Count());
+      Assert.AreEqual(0, attribute.ChildNodes.Count());
       Assert.AreEqual(field, attribute.Parent);
       Assert.AreEqual(field.Snapshot, attribute.Snapshot);
       Assert.AreEqual(doc, attribute.Snapshot);
@@ -62,10 +62,10 @@
       var doc = new JsonTextSnapshot(sourceFile, "{ \"Item\": { \"Fields\": [ { \"Name\": \"Text\", \"Value\": \"123\" } ] } }");
       var root = doc.Root;
 
-      var fields = doc.GetNestedTextNode(root, "Fields");
+      var fields = doc.GetJsonChildTextNode(root, "Fields");
       Assert.IsNotNull(fields);
 
-      var field = fields.ChildNodes[0];
+      var field = fields.ChildNodes.FirstOrDefault();
       Assert.IsNotNull(field);
       Assert.AreEqual("Text", field.GetAttributeValue("Name"));
     }

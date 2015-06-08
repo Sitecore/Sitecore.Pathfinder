@@ -19,7 +19,7 @@
     void EnsureIsEditing();
 
     [CanBeNull]
-    ITextNode GetNestedTextNode([NotNull] ITextNode textNode, [NotNull] string name);
+    ITextNode GetJsonChildTextNode([NotNull] ITextNode textNode, [NotNull] string name);
 
     void ValidateSchema([NotNull] IParseContext context);
   }

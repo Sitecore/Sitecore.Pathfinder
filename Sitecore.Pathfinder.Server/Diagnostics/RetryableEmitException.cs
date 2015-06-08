@@ -5,14 +5,6 @@
 
   public class RetryableEmitException : EmitException
   {
-    public RetryableEmitException([Localizable(true)] [NotNull] string text) : base(text)
-    {
-    }
-
-    public RetryableEmitException([Localizable(true)] [NotNull] string text, [NotNull] ISourceFile sourceFile, [NotNull] string details = "") : base(text, sourceFile, details)
-    {
-    }
-
     public RetryableEmitException([Localizable(true)] [NotNull] string text, [NotNull] ISnapshot snapshot, [NotNull] string details = "") : base(text, snapshot, details)
     {
     }

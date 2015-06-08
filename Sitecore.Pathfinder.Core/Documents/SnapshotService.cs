@@ -4,6 +4,7 @@
   using System.ComponentModel.Composition;
   using System.IO;
   using System.Linq;
+  using Sitecore.Pathfinder.Configuration;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects;
@@ -12,8 +13,9 @@
   public class SnapshotService : ISnapshotService
   {
     [ImportingConstructor]
-    public SnapshotService([NotNull] ITextTokenService textTokenService)
+    public SnapshotService([NotNull] IFactoryService factory, [NotNull] ITextTokenService textTokenService)
     {
+      this.Factory = factory;
       this.TextTokenService = textTokenService;
     }
 
@@ -23,6 +25,9 @@
 
     [NotNull]
     protected ITextTokenService TextTokenService { get; }
+
+    [NotNull]
+    protected IFactoryService Factory { get; }
 
     public ISnapshot LoadSnapshot(IProject project, ISourceFile sourceFile)
     {
@@ -34,7 +39,7 @@
         }
       }
 
-      return new Snapshot(sourceFile);
+      return this.Factory.Snapshot(sourceFile);
     }
 
     public virtual string ReplaceTokens(IProject project, ISourceFile sourceFile, string contents)

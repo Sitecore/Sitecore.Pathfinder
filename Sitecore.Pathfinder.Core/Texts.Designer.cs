@@ -506,6 +506,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Media item created with wrong ID.
+        /// </summary>
+        public static string Media_item_created_with_wrong_ID {
+            get {
+                return ResourceManager.GetString("Media_item_created_with_wrong_ID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Media item not found.
         /// </summary>
         public static string Media_item_not_found {
@@ -587,7 +596,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Downloading resources....
+        ///   Looks up a localized string similar to Synchronizing project and website....
         /// </summary>
         public static string SynchronizingWebsite {
             get {
@@ -610,6 +619,15 @@ namespace Sitecore.Pathfinder {
         public static string Task_not_found__Skipping {
             get {
                 return ResourceManager.GetString("Task_not_found__Skipping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template field missing.
+        /// </summary>
+        public static string Template_field_missing {
+            get {
+                return ResourceManager.GetString("Template_field_missing", resourceCulture);
             }
         }
         

@@ -5,36 +5,32 @@
 
   public abstract class ItemBase : ProjectItem
   {
-
-    protected ItemBase([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ISnapshot snapshot) : base(project, projectUniqueId, snapshot)
+    protected ItemBase([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, projectUniqueId, textNode.Snapshot)
     {
-      this.TextNode = new TextNode(snapshot);
+      this.DatabaseName = databaseName;
+      this.ItemIdOrPath = itemIdOrPath;
+
+      this.ItemName = new Attribute<string>("ItemName", itemName);
     }
 
-    protected ItemBase([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode) : base(project, projectUniqueId, textNode.Snapshot)
-    {
-      this.TextNode = textNode;
-    }
-
+    // todo: make read only
     [NotNull]
-    public string DatabaseName { get; set; } = string.Empty;
+    public string DatabaseName { get; set; }
 
-    [NotNull]
+    [NotNull]                                        
     public string Icon { get; set; } = string.Empty;
 
     public bool IsEmittable { get; set; } = true;
 
+    // todo: make read only
     [NotNull]
-    public string ItemIdOrPath { get; set; } = string.Empty;
+    public string ItemIdOrPath { get; set; }
 
     [NotNull]
-    public string ItemName { get; set; } = string.Empty;
+    public Attribute<string> ItemName { get; }
 
     public override string QualifiedName => this.ItemIdOrPath;
 
-    public override string ShortName => this.ItemName;
-
-    [NotNull]
-    public ITextNode TextNode { get; }
+    public override string ShortName => this.ItemName.Value;
   }
 }

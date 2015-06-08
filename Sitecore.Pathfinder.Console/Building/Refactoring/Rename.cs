@@ -49,7 +49,6 @@ namespace Sitecore.Pathfinder.Building.Refactoring
       }
 
       // projectItem.Rename(newQualifiedName);
-
       var queryService = context.CompositionService.Resolve<IQueryService>();
       var references = queryService.FindUsages(context.Project, qualifiedName);
 
@@ -57,7 +56,7 @@ namespace Sitecore.Pathfinder.Building.Refactoring
       {
         if (reference.SourceTextNode != null)
         {
-          reference.SourceTextNode.SetValue(newQualifiedName);
+          // reference.SourceTextNode.SetValue(newQualifiedName);
         }
       }
     }

@@ -23,29 +23,6 @@
       this.node = node;
     }
 
-    public override void SetValue(string value)
-    {
-      /*
-      var textDocument = (ITextSnapshot)this.Snapshot;
-
-      textDocument.EnsureIsEditing();
-
-      var element = this.node as XElement;
-      if (element != null)
-      {
-        element.Value = value;
-      }
-
-      var attribute = this.node as XAttribute;
-      if (attribute != null)
-      {
-        attribute.SetValue(value);
-      }
-      */
-
-      this.Value = value;
-    }
-
     private static TextPosition GetPosition([NotNull] IXmlLineInfo lineInfo, int lineLength)
     {
       return new TextPosition(lineInfo.LineNumber, lineInfo.LinePosition, lineLength);

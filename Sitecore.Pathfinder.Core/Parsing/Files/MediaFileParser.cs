@@ -4,6 +4,7 @@
   using System.ComponentModel.Composition;
   using System.IO;
   using System.Linq;
+  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects.Files;
   using Sitecore.Pathfinder.Projects.Items;
 
@@ -35,10 +36,8 @@
 
     public override void Parse(IParseContext context)
     {
-      var mediaItem = context.Factory.Item(context.Project, context.ItemPath, context.Snapshot);
-      mediaItem.ItemName = context.ItemName;
-      mediaItem.ItemIdOrPath = context.ItemPath;
-      mediaItem.DatabaseName = context.DatabaseName;
+      var mediaItem = context.Factory.Item(context.Project, context.ItemPath, new SnapshotTextNode(context.Snapshot), context.DatabaseName, context.ItemName, context.ItemPath, string.Empty);
+      mediaItem.ItemName.Source = new FileNameTextNode(context.ItemName, context.Snapshot);
       mediaItem.IsEmittable = false;
       mediaItem.OverwriteWhenMerging = true;
       mediaItem.MergingMatch = MergingMatch.MatchUsingSourceFile;

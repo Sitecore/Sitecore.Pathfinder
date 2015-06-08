@@ -28,19 +28,16 @@
     Diagnostic Diagnostic([NotNull] string fileName, TextPosition position, Severity severity, [NotNull] string text);
 
     [NotNull]
-    ExternalReferenceItem ExternalReferenceItem([NotNull] IProject project, [NotNull] string externalReference, [NotNull] ISnapshot snapshot);
+    ExternalReferenceItem ExternalReferenceItem([NotNull] IProject project, [NotNull] string externalReference, [NotNull] ISnapshot snapshot, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath);
 
     [NotNull]
-    Field Field([NotNull] Item item, [NotNull] string fieldName, [NotNull] string language, int version, [NotNull] ITextNode nameTextNode, [NotNull] ITextNode valueTextNode, [NotNull] string valueHint = "");
+    Field Field([NotNull] Item item, [NotNull] string fieldName, [NotNull] string language, int version, [NotNull] string value, [NotNull] string valueHint = "");
 
     [NotNull]
     FileReference FileReference([NotNull] IProjectItem owner, [NotNull] ITextNode sourceTextNode, [NotNull] string targetQualifiedName);
 
     [NotNull]
-    Item Item([NotNull] IProject project, [NotNull] string itemPath, [NotNull] ISnapshot snapshot);
-
-    [NotNull]
-    Item Item([NotNull] IProject project, [NotNull] string itemPath, [NotNull] ITextNode textNode);
+    Item Item([NotNull] IProject project, [NotNull] string itemPath, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath);
 
     [NotNull]
     ItemParseContext ItemParseContext([NotNull] IParseContext context, [NotNull] ItemParser itemParser, [NotNull] string parentItemPath);
@@ -73,7 +70,7 @@
     ISourceFile SourceFile([NotNull] IFileSystemService fileSystem, [NotNull] string sourceFileName);
 
     [NotNull]
-    Template Template([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode);
+    Template Template([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath);
 
     [NotNull]
     TemplateField TemplateField([NotNull] Template template);
@@ -82,9 +79,9 @@
     TemplateSection TemplateSection();
 
     [NotNull]
-    ITextNode TextNode([NotNull] ISnapshot snapshot, [NotNull] string name, [NotNull] string value, [CanBeNull] ITextNode parent);
+    TextNode TextNode([NotNull] ISnapshot snapshot, TextPosition position, [NotNull] string name, [NotNull] string value, [CanBeNull] ITextNode parent);
 
     [NotNull]
-    ITextNode TextNode([NotNull] ISnapshot snapshot, TextPosition position, [NotNull] string name, [NotNull] string value, [CanBeNull] ITextNode parent);
+    ISnapshot Snapshot([NotNull] ISourceFile sourceFile);
   }
 }

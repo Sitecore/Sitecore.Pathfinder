@@ -117,10 +117,7 @@
 
       foreach (var externalReference in this.Options.ExternalReferences)
       {
-        var projectItem = this.Factory.ExternalReferenceItem(this, externalReference, Snapshot.Empty);
-        projectItem.ItemIdOrPath = externalReference;
-        projectItem.ItemName = Path.GetFileName(externalReference) ?? string.Empty;
-
+        var projectItem = this.Factory.ExternalReferenceItem(this, externalReference, Snapshot.Empty, this.Options.DatabaseName, Path.GetFileName(externalReference) ?? string.Empty, externalReference);
         this.AddOrMerge(projectItem);
       }
 

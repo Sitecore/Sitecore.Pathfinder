@@ -25,10 +25,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
       var itemIdOrPath = context.ParentItemPath + "/" + itemName;
       var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
 
-      var template = context.ParseContext.Factory.Template(context.ParseContext.Project, projectUniqueId, textNode);
-      template.ItemName = itemName;
-      template.DatabaseName = context.ParseContext.DatabaseName;
-      template.ItemIdOrPath = itemIdOrPath;
+      var template = context.ParseContext.Factory.Template(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemName, itemIdOrPath);
       template.BaseTemplates = textNode.GetAttributeValue("BaseTemplates", Constants.Templates.StandardTemplate);
       template.Icon = textNode.GetAttributeValue("Icon");
       template.ShortHelp = textNode.GetAttributeValue("ShortHelp");
@@ -36,7 +33,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
       template.References.AddRange(this.ParseReferences(context, template, textNode, template.BaseTemplates));
 
-      var sectionsTextNode = context.Snapshot.GetNestedTextNode(textNode, "Sections");
+      var sectionsTextNode = context.Snapshot.GetJsonChildTextNode(textNode, "Sections");
       if (sectionsTextNode != null)
       {
         foreach (var sectionTreeNode in sectionsTextNode.ChildNodes)
@@ -102,7 +99,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
       templateSection.Icon = sectionTextNode.GetAttributeValue("Icon");
 
-      var fieldsTextNode = context.Snapshot.GetNestedTextNode(sectionTextNode, "Fields");
+      var fieldsTextNode = context.Snapshot.GetJsonChildTextNode(sectionTextNode, "Fields");
       if (fieldsTextNode == null)
       {
         return;
