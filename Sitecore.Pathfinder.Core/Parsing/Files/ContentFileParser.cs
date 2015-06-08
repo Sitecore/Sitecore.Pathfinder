@@ -23,7 +23,7 @@
 
     public override void Parse(IParseContext context)
     {
-      var contentFile = new ContentFile(context.Project, context.Snapshot);
+      var contentFile = context.Factory.ContentFile(context.Project, context.Snapshot);
       context.Project.AddOrMerge(contentFile);
     }
   }

@@ -3,6 +3,7 @@
   using System;
   using System.Collections.Generic;
   using System.ComponentModel.Composition;
+  using System.Diagnostics;
   using System.Linq;
   using Sitecore.Pathfinder.Configuration;
   using Sitecore.Pathfinder.Diagnostics;
@@ -125,7 +126,7 @@
 
         if (context.Configuration.GetBool(Constants.Configuration.Debug))
         {
-          throw;
+          Debugger.Launch();
         }
       }
     }

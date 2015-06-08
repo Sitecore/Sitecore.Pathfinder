@@ -36,18 +36,16 @@
       var projectUniqueId = context.ItemPath;
       var lines = context.Snapshot.SourceFile.ReadAsLines();
 
-      var tempItem = new Item(context.Project, "TempItem", root);
-      this.ParseLines(tempItem, lines, 0, ref projectUniqueId);
+      var tempItem = context.Factory.Item(context.Project, "TempItem", root);
+      this.ParseLines(context, tempItem, lines, 0, ref projectUniqueId);
 
-      var item = new Item(context.Project, projectUniqueId, root)
-      {
-        ItemName = tempItem.ItemName,
-        ItemIdOrPath = tempItem.ItemIdOrPath,
-        DatabaseName = tempItem.DatabaseName,
-        TemplateIdOrPath = tempItem.TemplateIdOrPath,
-        Icon = tempItem.Icon,
-        IsEmittable = false
-      };
+      var item = context.Factory.Item(context.Project, projectUniqueId, root);
+      item.ItemName = tempItem.ItemName;
+      item.ItemIdOrPath = tempItem.ItemIdOrPath;
+      item.DatabaseName = tempItem.DatabaseName;
+      item.TemplateIdOrPath = tempItem.TemplateIdOrPath;
+      item.Icon = tempItem.Icon;
+      item.IsEmittable = false;
 
       foreach (var field in tempItem.Fields)
       {
@@ -57,13 +55,12 @@
 
       context.Project.AddOrMerge(item);
 
-      var serializationFile = new SerializationFile(context.Project, context.Snapshot);
+      var serializationFile = context.Factory.SerializationFile(context.Project, context.Snapshot);
       context.Project.AddOrMerge(serializationFile);
     }
 
     protected virtual int ParseContent([NotNull] string[] lines, int startIndex, int contentLength, out string value, ref int lineLength)
     {
-      value = string.Empty;
       var sb = new StringBuilder();
 
       for (var n = startIndex; n < lines.Length; n++)
@@ -89,7 +86,7 @@
       return lines.Length;
     }
 
-    protected virtual int ParseField([NotNull] Item serializationFile, [NotNull] string[] lines, int lineNumber, [NotNull] string language, int version)
+    protected virtual int ParseField([NotNull] IParseContext context, [NotNull] Item serializationFile, [NotNull] string[] lines, int lineNumber, [NotNull] string language, int version)
     {
       var fieldName = string.Empty;
       var fieldValue = string.Empty;
@@ -134,14 +131,14 @@
         }
       }
 
-      var valueTextNode = new TextNode(serializationFile.Snapshot, new TextPosition(lineNumber, 0, lineLength), string.Empty, fieldValue, serializationFile.TextNode);
-      var field = new Field(serializationFile, fieldName, language, version, valueTextNode, valueTextNode);
+      var valueTextNode = context.Factory.TextNode(serializationFile.Snapshot, new TextPosition(lineNumber, 0, lineLength), string.Empty, fieldValue, serializationFile.TextNode);
+      var field = context.Factory.Field(serializationFile, fieldName, language, version, valueTextNode, valueTextNode);
       serializationFile.Fields.Add(field);
 
       return n;
     }
 
-    protected virtual int ParseLines([NotNull] Item item, [NotNull] string[] lines, int lineNumber, [NotNull] ref string projectUniqueId)
+    protected virtual int ParseLines([NotNull] IParseContext context, [NotNull] Item item, [NotNull] string[] lines, int lineNumber, [NotNull] ref string projectUniqueId)
     {
       var language = string.Empty;
       var version = 0;
@@ -156,7 +153,7 @@
 
         if (line == "----field----")
         {
-          n = this.ParseField(item, lines, n + 1, language, version);
+          n = this.ParseField(context, item, lines, n + 1, language, version);
           continue;
         }
 

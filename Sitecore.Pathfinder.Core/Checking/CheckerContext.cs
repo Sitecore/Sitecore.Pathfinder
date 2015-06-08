@@ -2,6 +2,7 @@
 {
   using System.ComponentModel.Composition;
   using Microsoft.Framework.ConfigurationModel;
+  using Sitecore.Pathfinder.Configuration;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Projects;
 
@@ -9,9 +10,10 @@
   public class CheckerContext : ICheckerContext
   {
     [ImportingConstructor]
-    public CheckerContext([NotNull] IConfiguration configuration)
+    public CheckerContext([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory)
     {
       this.Configuration = configuration;
+      this.Factory = factory;
 
       this.IsDeployable = true;
     }
@@ -25,10 +27,13 @@
     [NotNull]
     protected IConfiguration Configuration { get; }
 
+    [NotNull]
+    protected IFactoryService Factory { get; }
+
     public ICheckerContext With(IProject project)
     {
       this.Project = project;
-      this.Trace = new DiagnosticTraceService(this.Configuration).With(this.Project);
+      this.Trace = new DiagnosticTraceService(this.Configuration, this.Factory).With(this.Project);
 
       return this;
     }

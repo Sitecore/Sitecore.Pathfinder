@@ -21,13 +21,11 @@
       var itemIdOrPath = context.ParentItemPath + "/" + itemName;
       var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
 
-      var item = new Item(context.ParseContext.Project, projectUniqueId, textNode)
-      {
-        ItemName = itemName,
-        DatabaseName = context.ParseContext.DatabaseName,
-        ItemIdOrPath = itemIdOrPath,
-        TemplateIdOrPath = this.GetTemplateIdOrPath(context, textNode)
-      };
+      var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode);
+      item.ItemName = itemName;
+      item.DatabaseName = context.ParseContext.DatabaseName;
+      item.ItemIdOrPath = itemIdOrPath;
+      item.TemplateIdOrPath = this.GetTemplateIdOrPath(context, textNode);
 
       var templateIdOrPath = textNode.GetAttributeValue("Template.Create");
       if (!string.IsNullOrEmpty(templateIdOrPath))
@@ -41,7 +39,7 @@
         var a = textNode.GetAttribute("Template") ?? textNode.GetAttribute("Template.Create");
         if (a != null)
         {
-          item.References.AddRange(this.ParseReferences(item, a, item.TemplateIdOrPath));
+          item.References.AddRange(this.ParseReferences(context, item, a, item.TemplateIdOrPath));
         }
       }
 
@@ -119,15 +117,15 @@
 
       if (valueTextNode == null)
       {
-        valueTextNode = new TextNode(fieldTextNode.Snapshot, "Value", string.Empty, null);
+        valueTextNode = context.ParseContext.Factory.TextNode(fieldTextNode.Snapshot, "Value", string.Empty, null);
       }
 
-      field = new Field(item, fieldName, language, version, nameTextNode, valueTextNode, valueHint);
+      field = context.ParseContext.Factory.Field(item, fieldName, language, version, nameTextNode, valueTextNode, valueHint);
       item.Fields.Add(field);
 
       if (field.ValueHint != "Text")
       {
-        item.References.AddRange(this.ParseReferences(item, valueTextNode, field.Value));
+        item.References.AddRange(this.ParseReferences(context, item, valueTextNode, field.Value));
       }
     }
 
@@ -138,20 +136,18 @@
       var itemName = itemIdOrPath.Mid(n + 1);
       var projectUniqueId = itemTextNode.GetAttributeValue("Template.Id", itemIdOrPath);
 
-      var template = new Template(context.ParseContext.Project, projectUniqueId, itemTextNode)
-      {
-        ItemName = itemName,
-        DatabaseName = context.ParseContext.DatabaseName,
-        ItemIdOrPath = itemIdOrPath,
-        Icon = itemTextNode.GetAttributeValue("Template.Icon"),
-        BaseTemplates = itemTextNode.GetAttributeValue("Template.BaseTemplates", Constants.Templates.StandardTemplate),
-        ShortHelp = itemTextNode.GetAttributeValue("Template.ShortHelp"),
-        LongHelp = itemTextNode.GetAttributeValue("Template.LongHelp")
-      };
+      var template = context.ParseContext.Factory.Template(context.ParseContext.Project, projectUniqueId, itemTextNode);
+      template.ItemName = itemName;
+      template.DatabaseName = context.ParseContext.DatabaseName;
+      template.ItemIdOrPath = itemIdOrPath;
+      template.Icon = itemTextNode.GetAttributeValue("Template.Icon");
+      template.BaseTemplates = itemTextNode.GetAttributeValue("Template.BaseTemplates", Constants.Templates.StandardTemplate);
+      template.ShortHelp = itemTextNode.GetAttributeValue("Template.ShortHelp");
+      template.LongHelp = itemTextNode.GetAttributeValue("Template.LongHelp");
 
-      template.References.AddRange(this.ParseReferences(template, itemTextNode, template.BaseTemplates));
+      template.References.AddRange(this.ParseReferences(context, template, itemTextNode, template.BaseTemplates));
 
-      var templateSection = new TemplateSection();
+      var templateSection = context.ParseContext.Factory.TemplateSection();
       template.Sections.Add(templateSection);
       templateSection.Name = "Fields";
       templateSection.Icon = "Applications/16x16/form_blue.png";
@@ -175,7 +171,7 @@
 
           nextSortOrder = sortOrder + 100;
 
-          var templateField = new TemplateField(template);
+          var templateField = context.ParseContext.Factory.TemplateField(template);
           templateSection.Fields.Add(templateField);
           templateField.Name = child.GetAttributeValue("Name");
           templateField.Type = child.GetAttributeValue("Field.Type", "Single-Line Text");
@@ -186,7 +182,7 @@
           templateField.LongHelp = child.GetAttributeValue("Field.LongHelp");
           templateField.SortOrder = sortOrder;
 
-          template.References.AddRange(this.ParseReferences(template, child, templateField.Source));
+          template.References.AddRange(this.ParseReferences(context, template, child, templateField.Source));
         }
       }
 

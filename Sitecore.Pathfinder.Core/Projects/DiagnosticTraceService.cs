@@ -1,14 +1,19 @@
 ﻿namespace Sitecore.Pathfinder.Projects
 {
   using Microsoft.Framework.ConfigurationModel;
+  using Sitecore.Pathfinder.Configuration;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
 
   public class DiagnosticTraceService : TraceService
   {
-    public DiagnosticTraceService([NotNull] IConfiguration configuration) : base(configuration)
+    public DiagnosticTraceService([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory) : base(configuration)
     {
+      this.Factory = factory;
     }
+
+    [NotNull]
+    protected IFactoryService Factory { get; }
 
     [NotNull]
     protected IProject Project { get; private set; }
@@ -27,7 +32,7 @@
         text += ": " + details;
       }
 
-      var diagnostic = new Diagnostic(fileName, position, severity, text);
+      var diagnostic = this.Factory.Diagnostic(fileName, position, severity, text);
 
       this.Project.Diagnostics.Add(diagnostic);
     }

@@ -26,8 +26,6 @@ namespace Sitecore.Pathfinder.Projects.Items
     {
     }
 
-    public bool ContentItemHack { get; set; }
-
     [NotNull]
     public IList<Field> Fields { get; } = new List<Field>();
 

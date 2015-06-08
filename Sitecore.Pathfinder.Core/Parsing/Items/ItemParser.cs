@@ -16,8 +16,8 @@
     {
       ".item.xml", 
       ".content.xml", 
-      ".item.json",
-      ".content.json",
+      ".item.json", 
+      ".content.json", 
       ".layout.json"
     };
 
@@ -49,7 +49,7 @@
       textDocument.ValidateSchema(context);
 
       var parentItemPath = PathHelper.GetItemParentPath(context.ItemPath);
-      var itemParseContext = new ItemParseContext(context, this, parentItemPath);
+      var itemParseContext = context.Factory.ItemParseContext(context, this, parentItemPath);
 
       this.ParseTextNode(itemParseContext, textNode);
     }

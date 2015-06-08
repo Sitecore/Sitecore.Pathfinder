@@ -6,13 +6,13 @@
   using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects.Files;
 
-  public class LayoutDeviceReference : Reference
+  public class DeviceReference : Reference
   {
-    public LayoutDeviceReference([NotNull] IProjectItem owner, [NotNull] string targetQualifiedName) : base(owner, targetQualifiedName)
+    public DeviceReference([NotNull] IProjectItem owner, [NotNull] string targetQualifiedName) : base(owner, targetQualifiedName)
     {
     }
 
-    public LayoutDeviceReference([NotNull] IProjectItem owner, [NotNull] ITextNode sourceTextNode, [NotNull] string targetQualifiedName) : base(owner, sourceTextNode, targetQualifiedName)
+    public DeviceReference([NotNull] IProjectItem owner, [NotNull] ITextNode sourceTextNode, [NotNull] string targetQualifiedName) : base(owner, sourceTextNode, targetQualifiedName)
     {
     }
 

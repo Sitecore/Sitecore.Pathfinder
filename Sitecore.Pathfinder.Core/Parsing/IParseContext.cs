@@ -1,6 +1,7 @@
 ﻿namespace Sitecore.Pathfinder.Parsing
 {
   using Microsoft.Framework.ConfigurationModel;
+  using Sitecore.Pathfinder.Configuration;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects;
@@ -14,7 +15,10 @@
     string DatabaseName { get; }
 
     [NotNull]
-    ISnapshot Snapshot { get; }
+    IFactoryService Factory { get; }
+
+    [NotNull]
+    string FilePath { get; }
 
     [NotNull]
     string ItemName { get; }
@@ -23,10 +27,10 @@
     string ItemPath { get; }
 
     [NotNull]
-    string FilePath { get; }
+    IProject Project { get; }
 
     [NotNull]
-    IProject Project { get; }
+    ISnapshot Snapshot { get; }
 
     [NotNull]
     ITraceService Trace { get; }

@@ -7,6 +7,7 @@
   using System.Linq;
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Checking;
+  using Sitecore.Pathfinder.Configuration;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.IO;
@@ -28,10 +29,11 @@
     private readonly List<Diagnostic> diagnostics = new List<Diagnostic>();
 
     [ImportingConstructor]
-    public Project([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService, [NotNull] ICheckerService checker)
+    public Project([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService, [NotNull] ICheckerService checker)
     {
       this.CompositionService = compositionService;
       this.Configuration = configuration;
+      this.Factory = factory;
       this.FileSystem = fileSystem;
       this.ParseService = parseService;
       this.Checker = checker;
@@ -68,6 +70,9 @@
     protected IConfiguration Configuration { get; }
 
     [NotNull]
+    public IFactoryService Factory { get; }
+
+    [NotNull]
     protected IParseService ParseService { get; }
 
     public virtual void Add(string sourceFileName)
@@ -82,7 +87,7 @@
         this.Remove(sourceFileName);
       }
 
-      var sourceFile = new SourceFile(this.FileSystem, sourceFileName);
+      var sourceFile = this.Factory.SourceFile(this.FileSystem, sourceFileName);
       this.SourceFiles.Add(sourceFile);
 
       this.ParseService.Parse(this, sourceFile);
@@ -112,11 +117,9 @@
 
       foreach (var externalReference in this.Options.ExternalReferences)
       {
-        var projectItem = new ExternalReferenceItem(this, externalReference, Snapshot.Empty)
-        {
-          ItemIdOrPath = externalReference, 
-          ItemName = Path.GetFileName(externalReference) ?? string.Empty
-        };
+        var projectItem = this.Factory.ExternalReferenceItem(this, externalReference, Snapshot.Empty);
+        projectItem.ItemIdOrPath = externalReference;
+        projectItem.ItemName = Path.GetFileName(externalReference) ?? string.Empty;
 
         this.AddOrMerge(projectItem);
       }

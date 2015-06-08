@@ -27,7 +27,7 @@
         }
         else
         {
-          var newContext = new ItemParseContext(context.ParseContext, context.Parser, context.ParentItemPath + "/" + childTreeNode.Name);
+          var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, context.ParentItemPath + "/" + childTreeNode.Name);
           context.Parser.ParseTextNode(newContext, childTreeNode);
         }
       }

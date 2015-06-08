@@ -6,6 +6,7 @@
   using System.Linq;
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Checking;
+  using Sitecore.Pathfinder.Configuration;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Extensions;
   using Sitecore.Pathfinder.IO;
@@ -14,10 +15,11 @@
   public class ProjectService : IProjectService
   {
     [ImportingConstructor]
-    public ProjectService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ICheckerService checker)
+    public ProjectService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, IFactoryService factory, [NotNull] ICheckerService checker)
     {
       this.CompositionService = compositionService;
       this.Configuration = configuration;
+      this.Factory = factory;
       this.Checker = checker;
     }
 
@@ -30,6 +32,9 @@
     [NotNull]
     protected IConfiguration Configuration { get; }
 
+    [NotNull]
+    protected IFactoryService Factory { get; }
+
     public IProject LoadProjectFromConfiguration()
     {
       var projectOptions = this.CreateProjectOptions();
@@ -40,7 +45,7 @@
       var sourceFileNames = new List<string>();
       this.LoadSourceFileNames(projectOptions, sourceFileNames);
 
-      var project = this.CompositionService.Resolve<IProject>().Load(projectOptions, sourceFileNames);
+      var project = this.Factory.Project(projectOptions, sourceFileNames);
 
       return project;
     }
@@ -51,7 +56,7 @@
       var projectDirectory = PathHelper.Combine(this.Configuration.GetString(Pathfinder.Constants.Configuration.SolutionDirectory), this.Configuration.GetString(Pathfinder.Constants.Configuration.ProjectDirectory));
       var databaseName = this.Configuration.GetString(Pathfinder.Constants.Configuration.Database);
 
-      return new ProjectOptions(projectDirectory, databaseName);
+      return this.Factory.ProjectOptions(projectDirectory, databaseName);
     }
 
     protected virtual void LoadExternalReferences([NotNull] ProjectOptions projectOptions)

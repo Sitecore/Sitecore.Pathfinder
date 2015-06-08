@@ -96,7 +96,9 @@
     <Compile Include="Checking\ICheckerService.cs" />
     <Compile Include="Checking\CheckerCompiler.cs" />
     <Compile Include="Configuration\ConfigurationService.cs" />
+    <Compile Include="Configuration\FactoryService.cs" />
     <Compile Include="Configuration\IConfigurationService.cs" />
+    <Compile Include="Configuration\IFactoryService.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Documents\Property.cs" />
     <Compile Include="Documents\Serialization\SerializationSnapshotLoader.cs" />
@@ -132,7 +134,7 @@
     <Compile Include="Projects\ProjectOptions.cs" />
     <Compile Include="Projects\References\FileReference.cs" />
     <Compile Include="Projects\References\IReference.cs" />
-    <Compile Include="Projects\References\LayoutDeviceReference.cs" />
+    <Compile Include="Projects\References\DeviceReference.cs" />
     <Compile Include="Projects\References\LayoutReference.cs" />
     <Compile Include="Projects\References\LayoutRenderingReference.cs" />
     <Compile Include="Querying\IQueryService.cs" />

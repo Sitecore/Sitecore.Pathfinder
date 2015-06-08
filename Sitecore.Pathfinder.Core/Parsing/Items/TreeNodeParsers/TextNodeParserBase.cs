@@ -22,26 +22,26 @@
     public abstract void Parse(ItemParseContext context, ITextNode textNode);
 
     [CanBeNull]
-    protected virtual IReference ParseReference([NotNull] IProjectItem projectItem, [NotNull] ITextNode source, [NotNull] string text)
+    protected virtual IReference ParseReference([NotNull] ItemParseContext context, [NotNull] IProjectItem projectItem, [NotNull] ITextNode source, [NotNull] string text)
     {
       if (text.StartsWith("/sitecore/", StringComparison.OrdinalIgnoreCase))
       {
-        return new Reference(projectItem, source, text);
+        return context.ParseContext.Factory.Reference(projectItem, source, text);
       }
 
       Guid guid;
       if (Guid.TryParse(text, out guid))
       {
-        return new Reference(projectItem, source, guid.ToString("B").ToUpperInvariant());
+        return context.ParseContext.Factory.Reference(projectItem, source, guid.ToString("B").ToUpperInvariant());
       }
 
       return null;
     }
 
     [NotNull]
-    protected virtual IEnumerable<IReference> ParseReferences([NotNull] IProjectItem projectItem, [NotNull] ITextNode source, [NotNull] string text)
+    protected virtual IEnumerable<IReference> ParseReferences([NotNull] ItemParseContext context, [NotNull] IProjectItem projectItem, [NotNull] ITextNode source, [NotNull] string text)
     {
-      var reference = this.ParseReference(projectItem, source, text);
+      var reference = this.ParseReference(context, projectItem, source, text);
       if (reference != null)
       {
         yield return reference;
@@ -53,7 +53,7 @@
         var parts = text.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries);
         foreach (var part in parts)
         {
-          reference = this.ParseReference(projectItem, source, part);
+          reference = this.ParseReference(context, projectItem, source, part);
           if (reference != null)
           {
             yield return reference;
@@ -79,7 +79,7 @@
 
         var value = urlString.Parameters[key];
 
-        reference = this.ParseReference(projectItem, source, value);
+        reference = this.ParseReference(context, projectItem, source, value);
         if (reference != null)
         {
           yield return reference;

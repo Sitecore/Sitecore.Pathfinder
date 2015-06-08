@@ -5,7 +5,6 @@
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects;
-  using Sitecore.Pathfinder.Projects.Items;
   using Sitecore.Pathfinder.Projects.References;
 
   public abstract class LayoutParserBase : TextNodeParserBase
@@ -20,38 +19,36 @@
       var itemIdOrPath = context.ParentItemPath + "/" + itemName;
       var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
 
-      var item = new Item(context.ParseContext.Project, projectUniqueId, textNode)
-      {
-        ItemName = itemName, 
-        DatabaseName = context.ParseContext.DatabaseName, 
-        ItemIdOrPath = itemIdOrPath, 
-      };
+      var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode);
+      item.ItemName = itemName;
+      item.DatabaseName = context.ParseContext.DatabaseName;
+      item.ItemIdOrPath = itemIdOrPath;
 
-      item.Fields.Add(new Field(item, "__Renderings", string.Empty, 0, textNode, textNode));
+      item.Fields.Add(context.ParseContext.Factory.Field(item, "__Renderings", string.Empty, 0, textNode, textNode));
 
       context.ParseContext.Project.AddOrMerge(item);
     }
 
-    protected virtual void ParseDeviceReferences([NotNull] ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode deviceTextNode)
+    protected virtual void ParseDeviceReferences([NotNull] ItemParseContext context, [NotNull] ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode deviceTextNode)
     {
       var deviceNameTextNode = deviceTextNode.GetAttribute("Name") ?? deviceTextNode;
-      references.Add(new LayoutDeviceReference(projectItem, deviceNameTextNode, deviceTextNode.GetAttributeValue("Name")));
+      references.Add(context.ParseContext.Factory.DeviceReference(projectItem, deviceNameTextNode, deviceTextNode.GetAttributeValue("Name")));
 
       var layoutTextNode = deviceTextNode.GetAttribute("Layout");
       if (layoutTextNode != null)
       {
-        references.Add(new LayoutReference(projectItem, layoutTextNode, deviceTextNode.GetAttributeValue("Layout")));
+        references.Add(context.ParseContext.Factory.LayoutReference(projectItem, layoutTextNode, deviceTextNode.GetAttributeValue("Layout")));
       }
 
       foreach (var renderingTextNode in deviceTextNode.ChildNodes)
       {
-        this.ParseRenderingReferences(references, projectItem, renderingTextNode);
+        this.ParseRenderingReferences(context, references, projectItem, renderingTextNode);
       }
     }
 
-    protected override IEnumerable<IReference> ParseReferences(IProjectItem projectItem, ITextNode source, string text)
+    protected override IEnumerable<IReference> ParseReferences(ItemParseContext context, IProjectItem projectItem, ITextNode source, string text)
     {
-      var result = base.ParseReferences(projectItem, source, text).ToList();
+      var result = base.ParseReferences(context, projectItem, source, text).ToList();
 
       var layoutTextNode = source.ChildNodes.FirstOrDefault();
       if (layoutTextNode == null)
@@ -61,19 +58,19 @@
 
       foreach (var deviceTextNode in layoutTextNode.ChildNodes)
       {
-        this.ParseDeviceReferences(result, projectItem, deviceTextNode);
+        this.ParseDeviceReferences(context, result, projectItem, deviceTextNode);
       }
 
       return result;
     }
 
-    protected virtual void ParseRenderingReferences([NotNull] ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode renderingTextNode)
+    protected virtual void ParseRenderingReferences([NotNull] ItemParseContext context, [NotNull] ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode renderingTextNode)
     {
-      references.Add(new LayoutRenderingReference(projectItem, renderingTextNode, renderingTextNode.Name));
+      references.Add(context.ParseContext.Factory.LayoutRenderingReference(projectItem, renderingTextNode, renderingTextNode.Name));
 
       foreach (var childTextNode in renderingTextNode.ChildNodes)
       {
-        this.ParseRenderingReferences(references, projectItem, childTextNode);
+        this.ParseRenderingReferences(context, references, projectItem, childTextNode);
       }
     }
   }

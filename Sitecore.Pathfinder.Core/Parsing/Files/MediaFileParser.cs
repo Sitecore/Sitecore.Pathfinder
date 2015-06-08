@@ -35,19 +35,17 @@
 
     public override void Parse(IParseContext context)
     {
-      var mediaItem = new Item(context.Project, context.ItemPath, context.Snapshot)
-      {
-        ItemName = context.ItemName,
-        ItemIdOrPath = context.ItemPath,
-        DatabaseName = context.DatabaseName,
-        IsEmittable = false,
-        OverwriteWhenMerging = true,
-        MergingMatch = MergingMatch.MatchUsingSourceFile
-      };
+      var mediaItem = context.Factory.Item(context.Project, context.ItemPath, context.Snapshot);
+      mediaItem.ItemName = context.ItemName;
+      mediaItem.ItemIdOrPath = context.ItemPath;
+      mediaItem.DatabaseName = context.DatabaseName;
+      mediaItem.IsEmittable = false;
+      mediaItem.OverwriteWhenMerging = true;
+      mediaItem.MergingMatch = MergingMatch.MatchUsingSourceFile;
 
       mediaItem = context.Project.AddOrMerge(mediaItem);
 
-      var mediaFile = new MediaFile(context.Project, context.Snapshot, mediaItem);
+      var mediaFile = context.Factory.MediaFile(context.Project, context.Snapshot, mediaItem);
       context.Project.AddOrMerge(mediaFile);
     }
   }

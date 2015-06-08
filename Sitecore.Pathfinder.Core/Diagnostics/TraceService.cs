@@ -2,6 +2,7 @@
 {
   using System;
   using System.ComponentModel.Composition;
+  using System.Diagnostics;
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Extensions;
@@ -33,16 +34,31 @@
     public void TraceError(string text, string fileName, TextPosition position, string details = "")
     {
       this.Write(text, Severity.Error, fileName, position, details);
+
+      if (this.Configuration.GetBool(Pathfinder.Constants.Configuration.Debug))
+      {
+        Debugger.Launch();
+      }
     }
 
     public void TraceError(string text, ITextNode textNode, string details = "")
     {
       this.Write(text, Severity.Error, textNode.Snapshot.SourceFile.FileName, textNode.Position, details);
+
+      if (this.Configuration.GetBool(Pathfinder.Constants.Configuration.Debug))
+      {
+        Debugger.Launch();
+      }
     }
 
     public void TraceInformation(string text, string details = "")
     {
       this.Write(text, Severity.Information, string.Empty, TextPosition.Empty, details);
+
+      if (this.Configuration.GetBool(Pathfinder.Constants.Configuration.Debug))
+      {
+        Debugger.Launch();
+      }
     }
 
     public void TraceInformation(string text, string fileName, TextPosition position, string details = "")

@@ -19,17 +19,13 @@
       var itemIdOrPath = parentItemPath + "/" + itemName;
       var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
 
-      var item = new Item(context.ParseContext.Project, projectUniqueId, textNode)
-      {
-        ItemName = itemName, 
-        DatabaseName = context.ParseContext.DatabaseName, 
-        ItemIdOrPath = itemIdOrPath, 
-        TemplateIdOrPath = textNode.Name
-      };
+      var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode);
+      item.ItemName = itemName;
+      item.DatabaseName = context.ParseContext.DatabaseName;
+      item.ItemIdOrPath = itemIdOrPath;
+      item.TemplateIdOrPath = textNode.Name;
 
-      item.ContentItemHack = true;
-
-      item.References.AddRange(this.ParseReferences(item, textNode, item.TemplateIdOrPath));
+      item.References.AddRange(this.ParseReferences(context, item, textNode, item.TemplateIdOrPath));
 
       this.ParseAttributes(context, item, textNode);
 
@@ -59,10 +55,10 @@
       }
 
       // todo: support for language, version and value.hing
-      field = new Field(item, fieldName, string.Empty, 0, fieldTextNode, fieldTextNode, string.Empty);
+      field = context.ParseContext.Factory.Field(item, fieldName, string.Empty, 0, fieldTextNode, fieldTextNode, string.Empty);
       item.Fields.Add(field);
 
-      item.References.AddRange(this.ParseReferences(item, fieldTextNode, field.Value));
+      item.References.AddRange(this.ParseReferences(context, item, fieldTextNode, field.Value));
     }
   }
 }
