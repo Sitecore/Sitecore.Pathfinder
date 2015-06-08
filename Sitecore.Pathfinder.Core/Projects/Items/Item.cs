@@ -36,38 +36,24 @@ namespace Sitecore.Pathfinder.Projects.Items
     [NotNull]
     public Attribute<string> TemplateIdOrPath { get; }
 
-    public void Merge([NotNull] Item newItem)
+    public void Merge([NotNull] Item newProjectItem)
     {
-      if (this.OverwriteWhenMerging)
-      {
-        this.OverwriteProjectUniqueId(newItem.ProjectUniqueId);
-        this.ItemName.SetValue(newItem.ItemName.Value, newItem.ItemName.Source);
+      this.Merge(newProjectItem, this.OverwriteWhenMerging);
+    }
 
-        this.ItemIdOrPath = newItem.ItemIdOrPath;
-        this.DatabaseName = newItem.DatabaseName;
-        this.IsEmittable = this.IsEmittable && newItem.IsEmittable;
-        this.OverwriteWhenMerging = newItem.OverwriteWhenMerging;
-      }
+    protected override void Merge(IProjectItem newProjectItem, bool overwrite)
+    {
+      base.Merge(newProjectItem, overwrite);
 
-      // todo: throw exception if item and newItem value differ
-      if (!string.IsNullOrEmpty(newItem.DatabaseName))
+      var newItem = newProjectItem as Item;
+      if (newItem == null)
       {
-        this.DatabaseName = newItem.DatabaseName;
+        return;
       }
 
       if (!string.IsNullOrEmpty(newItem.TemplateIdOrPath.Value))
       {
         this.TemplateIdOrPath.SetValue(newItem.TemplateIdOrPath.Value, newItem.TemplateIdOrPath.Source);
-      }
-
-      if (!string.IsNullOrEmpty(newItem.Icon))
-      {
-        this.Icon = newItem.Icon;
-      }
-
-      if (!newItem.IsEmittable)
-      {
-        this.IsEmittable = false;
       }
 
       this.OverwriteWhenMerging = this.OverwriteWhenMerging && newItem.OverwriteWhenMerging;
@@ -87,8 +73,6 @@ namespace Sitecore.Pathfinder.Projects.Items
         // todo: trace that field is being overwritten
         field.Value.SetValue(newField.Value.Value, newField.Value.Source);
       }
-
-      this.References.AddRange(newItem.References);
     }
   }
 }

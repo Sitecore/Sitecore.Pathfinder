@@ -29,15 +29,17 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
     public void Merge([NotNull] Template newTemplate)
     {
-      // todo: throw exception if item and newItem value differ
-      if (!string.IsNullOrEmpty(newTemplate.ItemName.Value))
-      {
-        this.ItemName.SetValue(newTemplate.ItemName.Value, newTemplate.ItemName.Source);
-      }
+      this.Merge(newTemplate, true);
+    }
 
-      if (!string.IsNullOrEmpty(newTemplate.DatabaseName))
+    protected override void Merge(IProjectItem projectItem, bool overwrite)
+    {
+      base.Merge(projectItem, overwrite);
+
+      var newTemplate = projectItem as Template;
+      if (newTemplate == null)
       {
-        this.DatabaseName = newTemplate.DatabaseName;
+        return;
       }
 
       if (!string.IsNullOrEmpty(newTemplate.BaseTemplates))
@@ -61,11 +63,6 @@ namespace Sitecore.Pathfinder.Projects.Templates
         this.LongHelp = newTemplate.LongHelp;
       }
 
-      if (!newTemplate.IsEmittable)
-      {
-        this.IsEmittable = false;
-      }
-
       foreach (var newSection in newTemplate.Sections)
       {
         var section = this.Sections.FirstOrDefault(s => string.Compare(s.Name, newSection.Name, StringComparison.OrdinalIgnoreCase) == 0);
@@ -75,10 +72,8 @@ namespace Sitecore.Pathfinder.Projects.Templates
           continue;
         }
 
-        section.Merge(newSection);
+        section.Merge(newSection, overwrite);
       }
-
-      this.References.AddRange(newTemplate.References);
     }
   }
 }

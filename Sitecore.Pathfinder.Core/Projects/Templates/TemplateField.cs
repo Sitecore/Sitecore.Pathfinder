@@ -38,7 +38,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
     public bool Unversioned { get; set; }
 
-    public void Merge([NotNull] TemplateField newField)
+    public void Merge([NotNull] TemplateField newField, bool overwrite)
     {
       if (!string.IsNullOrEmpty(newField.Type))
       {

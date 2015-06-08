@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
     [NotNull]
     public string Name { get; set; }
 
-    public void Merge([NotNull] TemplateSection newSection)
+    public void Merge([NotNull] TemplateSection newSection, bool overwrite)
     {
       if (!string.IsNullOrEmpty(newSection.Icon))
       {
@@ -39,7 +39,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
           continue;
         }
 
-        field.Merge(newField);
+        field.Merge(newField, overwrite);
       }
     }
   }

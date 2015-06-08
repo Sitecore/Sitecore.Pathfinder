@@ -16,10 +16,12 @@
     protected ProjectItem([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ISnapshot snapshot)
     {
       this.Project = project;
+      this.ProjectUniqueId = projectUniqueId;
       this.Snapshot = snapshot;
+
       this.References = new ReferenceCollection(this);
 
-      this.OverwriteProjectUniqueId(projectUniqueId);
+      this.SetGuid();
     }
 
     public Guid Guid { get; private set; }
@@ -36,9 +38,14 @@
 
     public ISnapshot Snapshot { get; }
 
-    protected internal void OverwriteProjectUniqueId([NotNull] string newProjectUniqueId)
+    protected virtual void Merge([NotNull] IProjectItem newProjectItem, bool overwrite)
     {
-      this.ProjectUniqueId = newProjectUniqueId;
+      if (!overwrite)
+      {
+        return;
+      }
+
+      this.ProjectUniqueId = newProjectItem.ProjectUniqueId;
       this.SetGuid();
     }
 
