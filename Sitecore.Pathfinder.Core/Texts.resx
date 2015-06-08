@@ -334,7 +334,7 @@
     <value>Type not found</value>
   </data>
   <data name="scc_cmd_0_0___information_SCC0000__Compiling_checkers___" xml:space="preserve">
-    <value>scc.cmd(0,0): information SCC0000: Compiling checkers...</value>
+    <value>scc.cmd(0,0): information SCC0000: Compiling extensions...</value>
   </data>
   <data name="Usage__scc_cmd_command__switches_" xml:space="preserve">
     <value>Usage: scc.cmd command [switches]</value>
@@ -359,5 +359,8 @@
   </data>
   <data name="Media_item_created_with_wrong_ID" xml:space="preserve">
     <value>Media item created with wrong ID</value>
+  </data>
+  <data name="Device_not_found" xml:space="preserve">
+    <value>Device not found</value>
   </data>
 </root>

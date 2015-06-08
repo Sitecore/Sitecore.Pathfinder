@@ -94,7 +94,7 @@
     <Compile Include="Checking\IChecker.cs" />
     <Compile Include="Checking\ICheckerContext.cs" />
     <Compile Include="Checking\ICheckerService.cs" />
-    <Compile Include="Checking\CheckerCompiler.cs" />
+    <Compile Include="Extensibility\ExtensionsCompiler.cs" />
     <Compile Include="Configuration\ConfigurationService.cs" />
     <Compile Include="Configuration\FactoryService.cs" />
     <Compile Include="Configuration\IConfigurationService.cs" />

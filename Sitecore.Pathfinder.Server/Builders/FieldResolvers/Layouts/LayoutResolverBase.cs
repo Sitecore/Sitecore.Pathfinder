@@ -174,8 +174,7 @@
           var device = devices.Children[deviceName];
           if (device == null)
           {
-            // todo: put into resources
-            context.EmitContext.Trace.TraceError($"Device \"{deviceName}\" not found.", deviceTextNode);
+            context.EmitContext.Trace.TraceError(Texts.Device_not_found, deviceTextNode, deviceName);
           }
           else
           {

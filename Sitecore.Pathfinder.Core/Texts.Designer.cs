@@ -278,6 +278,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Device not found.
+        /// </summary>
+        public static string Device_not_found {
+            get {
+                return ResourceManager.GetString("Device_not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Devices not found in database..
         /// </summary>
         public static string Devices_not_found_in_database_ {

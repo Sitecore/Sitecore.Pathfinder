@@ -147,7 +147,7 @@
       <Link>files\website\sitecore\shell\client\Applications\Pathfinder\Publish.aspx</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="files\checkers\ReferenceChecker.cs">
+    <Content Include="files\extensions\ReferenceChecker.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

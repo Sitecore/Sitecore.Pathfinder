@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Pathfinder.Checking
+﻿namespace Sitecore.Pathfinder.Extensibility
 {
   using System;
   using System.IO;
@@ -9,42 +9,42 @@
   using Microsoft.CodeAnalysis.Emit;
   using Sitecore.Pathfinder.Diagnostics;
 
-  public class CheckerCompiler
+  public class ExtensionsCompiler
   {
     [CanBeNull]
-    public Assembly GetAssembly([NotNull] string checkersDirectory)
+    public Assembly GetAssembly([NotNull] string extensionsDirectory)
     {
-      var fileNames = Directory.GetFiles(checkersDirectory, "*.cs", SearchOption.AllDirectories);
+      var fileNames = Directory.GetFiles(extensionsDirectory, "*.cs", SearchOption.AllDirectories);
 
       // check if assembly is newer than all checkers
-      var checkerAssemblyFileName = Path.Combine(checkersDirectory, "Sitecore.Pathfinder.Checker.dll");
-      if (File.Exists(checkerAssemblyFileName))
+      var extensionsAssemblyFileName = Path.Combine(extensionsDirectory, Constants.ExtensionsAssemblyFileName);
+      if (File.Exists(extensionsAssemblyFileName))
       {
-        var checkerWriteTime = File.GetLastWriteTimeUtc(checkerAssemblyFileName);
-        if (fileNames.All(f => File.GetLastWriteTimeUtc(f) < checkerWriteTime))
+        var writeTime = File.GetLastWriteTimeUtc(extensionsAssemblyFileName);
+        if (fileNames.All(f => File.GetLastWriteTimeUtc(f) < writeTime))
         {
-          return Assembly.LoadFrom(checkerAssemblyFileName);
+          return Assembly.LoadFrom(extensionsAssemblyFileName);
         }
       }
 
-      // compile all checkers
+      // compile extensions
       Console.WriteLine(Texts.scc_cmd_0_0___information_SCC0000__Compiling_checkers___);
 
       var syntaxTrees = fileNames.Select(File.ReadAllText).Select(code => CSharpSyntaxTree.ParseText(code)).ToList();
       var references = AppDomain.CurrentDomain.GetAssemblies().Select(MetadataReference.CreateFromAssembly).ToList();
       var options = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary);
 
-      var compilation = CSharpCompilation.Create("Sitecore.Pathfinder.Checker", syntaxTrees, references, options);
+      var compilation = CSharpCompilation.Create("Sitecore.Pathfinder.Extensions", syntaxTrees, references, options);
 
       EmitResult result;
-      using (var stream = new FileStream(checkerAssemblyFileName, FileMode.Create))
+      using (var stream = new FileStream(extensionsAssemblyFileName, FileMode.Create))
       {
         result = compilation.Emit(stream);
       }
 
       if (result.Success)
       {
-        return Assembly.LoadFrom(checkerAssemblyFileName);
+        return Assembly.LoadFrom(extensionsAssemblyFileName);
       }
 
       var failures = result.Diagnostics.Where(diagnostic => diagnostic.IsWarningAsError || diagnostic.Severity == DiagnosticSeverity.Error);

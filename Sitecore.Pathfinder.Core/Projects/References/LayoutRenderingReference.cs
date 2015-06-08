@@ -11,7 +11,7 @@
 
     public override IProjectItem Resolve()
     {
-      // todo: actually resolve the device
+      // todo: actually resolve the rendering
       this.IsResolved = true;
       this.IsValid = true;
 

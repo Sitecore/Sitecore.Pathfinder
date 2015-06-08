@@ -1,0 +1,7 @@
+[
+  { "Alias": {
+    "Parent-Item-Path": "/sitecore/system/Aliases",
+    "Item-Name": "Helloworld",
+    "Linked item": "/sitecore/content/Home/HelloWorld"
+  }}
+]

@@ -9,6 +9,7 @@
   using Sitecore.Pathfinder.Building;
   using Sitecore.Pathfinder.Checking;
   using Sitecore.Pathfinder.Diagnostics;
+  using Sitecore.Pathfinder.Extensibility;
   using Sitecore.Pathfinder.Extensions;
 
   public class Startup
@@ -38,24 +39,24 @@
       var pluginDirectory = Path.Combine(toolspath, "plugins");
       Directory.CreateDirectory(pluginDirectory);
 
-      var checkerCompiler = new CheckerCompiler();
+      var extensionCompiler = new ExtensionsCompiler();
 
-      var checkersDirectory = Path.Combine(configuration.Get(Constants.Configuration.ToolsDirectory), "files\\checkers");
-      var checkerAssembly = checkerCompiler.GetAssembly(checkersDirectory);
-      if (checkerAssembly == null)
+      var extensionsDirectory = Path.Combine(configuration.Get(Constants.Configuration.ToolsDirectory), "files\\extensions");
+      var extensionsAssembly = extensionCompiler.GetAssembly(extensionsDirectory);
+      if (extensionsAssembly == null)
       {
         return null;
       }
 
       var applicationExportProvider = new CatalogExportProvider(new ApplicationCatalog());
-      var checkerExportProvider = new CatalogExportProvider(new AssemblyCatalog(checkerAssembly));
+      var extensionsExportProvider = new CatalogExportProvider(new AssemblyCatalog(extensionsAssembly));
       var pluginExportProvider = new CatalogExportProvider(new DirectoryCatalog(pluginDirectory));
 
       // plugin directory exports takes precedence over application exports
-      var compositionContainer = new CompositionContainer(pluginExportProvider, checkerExportProvider, applicationExportProvider);
+      var compositionContainer = new CompositionContainer(pluginExportProvider, extensionsExportProvider, applicationExportProvider);
 
       applicationExportProvider.SourceProvider = compositionContainer;
-      checkerExportProvider.SourceProvider = compositionContainer;
+      extensionsExportProvider.SourceProvider = compositionContainer;
       pluginExportProvider.SourceProvider = compositionContainer;
 
       // register the composition service itself for DI

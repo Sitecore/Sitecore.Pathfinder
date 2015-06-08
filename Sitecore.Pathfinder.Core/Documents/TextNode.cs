@@ -1,9 +1,11 @@
 ﻿namespace Sitecore.Pathfinder.Documents
 {
   using System.Collections.Generic;
+  using System.Diagnostics;
   using System.Linq;
   using Sitecore.Pathfinder.Diagnostics;
 
+  [DebuggerDisplay("{GetType().Name,nq}: {Name,nq} = {Value}")]
   public class TextNode : ITextNode
   {
     public static readonly ITextNode Empty = new SnapshotTextNode(Documents.Snapshot.Empty);

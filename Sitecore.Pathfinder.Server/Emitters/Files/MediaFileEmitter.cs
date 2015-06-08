@@ -39,7 +39,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
         Database = database, 
         FileBased = false, 
         IncludeExtensionInItemName = false, 
-        // keep existing item - but the KeepExisting flag is flipped - must be a bug
+        // keep existing item - but the KeepExisting flag is flipped - must be an issue in the CMS
         KeepExisting = false, 
         Language = LanguageManager.DefaultLanguage, 
         Versioned = false, 
@@ -68,7 +68,6 @@ namespace Sitecore.Pathfinder.Emitters.Files
 
       using (var stream = new FileStream(projectItem.Snapshot.SourceFile.FileName, FileMode.Open, FileAccess.Read, FileShare.Read))
       {
-        // todo: figure out how to assign the correct item id to the new media item.
         var item = MediaManager.Creator.CreateFromStream(stream, "/upload/" + Path.GetFileName(projectItem.Snapshot.SourceFile.FileName), options);
         if (item == null)
         {

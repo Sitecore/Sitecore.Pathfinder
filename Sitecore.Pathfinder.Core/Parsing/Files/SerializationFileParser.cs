@@ -1,6 +1,7 @@
 ﻿namespace Sitecore.Pathfinder.Parsing.Files
 {
   using System;
+  using System.Collections.Generic;
   using System.ComponentModel.Composition;
   using System.Text;
   using Sitecore.Pathfinder.Diagnostics;
@@ -32,19 +33,18 @@
         return;
       }
 
-      var projectUniqueId = context.ItemPath;
       var lines = context.Snapshot.SourceFile.ReadAsLines();
 
-      var tempItem = context.Factory.Item(context.Project, "TempItem", root, string.Empty, string.Empty, string.Empty, string.Empty);
-      this.ParseLines(context, tempItem, lines, 0, ref projectUniqueId);
+      var serializationItemBuilder = new SerializationItemBuilder();
+      this.ParseLines(context, serializationItemBuilder, lines, 0);
 
-      var item = context.Factory.Item(context.Project, projectUniqueId, root, tempItem.DatabaseName, tempItem.ItemName.Value, tempItem.ItemIdOrPath, tempItem.TemplateIdOrPath.Value);
-      item.ItemName.Source = tempItem.ItemName.Source;
-      item.TemplateIdOrPath.Source = tempItem.TemplateIdOrPath.Source;
-      item.Icon = tempItem.Icon;
+      var item = context.Factory.Item(context.Project, serializationItemBuilder.ProjectUniqueId, root, serializationItemBuilder.DatabaseName, serializationItemBuilder.ItemName, serializationItemBuilder.ItemIdOrPath, serializationItemBuilder.TemplateIdOrPath);
+      item.ItemName.Source = serializationItemBuilder.ItemNameSource;
+      item.TemplateIdOrPath.Source = serializationItemBuilder.TemplateIdOrPathSource;
+      item.Icon = serializationItemBuilder.Icon;
       item.IsEmittable = false;
 
-      foreach (var field in tempItem.Fields)
+      foreach (var field in serializationItemBuilder.Fields)
       {
         field.Item = item;
         item.Fields.Add(field);
@@ -83,7 +83,7 @@
       return lines.Length;
     }
 
-    protected virtual int ParseField([NotNull] IParseContext context, [NotNull] Item serializationFile, [NotNull] string[] lines, int lineNumber, [NotNull] string language, int version)
+    protected virtual int ParseField([NotNull] IParseContext context, [NotNull] SerializationItemBuilder serializationItemBuilder, [NotNull] string[] lines, int lineNumber, [NotNull] string language, int version)
     {
       var fieldName = string.Empty;
       var fieldValue = string.Empty;
@@ -128,15 +128,15 @@
         }
       }
 
-      var field = context.Factory.Field(serializationFile, fieldName, language, version, fieldValue);
-      field.Value.Source = context.Factory.TextNode(serializationFile.Snapshot, new TextPosition(lineNumber, 0, lineLength), fieldName, fieldValue, serializationFile.ItemName.Source);
+      var field = context.Factory.Field(Item.Empty, fieldName, language, version, fieldValue);
+      field.Value.Source = context.Factory.TextNode(serializationItemBuilder.ItemNameSource.Snapshot, new TextPosition(lineNumber, 0, lineLength), fieldName, fieldValue, serializationItemBuilder.ItemNameSource);
 
-      serializationFile.Fields.Add(field);
+      serializationItemBuilder.Fields.Add(field);
 
       return n;
     }
 
-    protected virtual int ParseLines([NotNull] IParseContext context, [NotNull] Item item, [NotNull] string[] lines, int lineNumber, [NotNull] ref string projectUniqueId)
+    protected virtual int ParseLines([NotNull] IParseContext context, [NotNull] SerializationItemBuilder serializationItemBuilder, [NotNull] string[] lines, int lineNumber)
     {
       var language = string.Empty;
       var version = 0;
@@ -151,7 +151,7 @@
 
         if (line == "----field----")
         {
-          n = this.ParseField(context, item, lines, n + 1, language, version);
+          n = this.ParseField(context, serializationItemBuilder, lines, n + 1, language, version);
           continue;
         }
 
@@ -178,25 +178,25 @@
         switch (name)
         {
           case "id":
-            projectUniqueId = value;
+            serializationItemBuilder.ProjectUniqueId = value;
             break;
           case "database":
-            item.DatabaseName = value;
+            serializationItemBuilder.DatabaseName = value;
             break;
           case "path":
-            item.ItemIdOrPath = value;
+            serializationItemBuilder.ItemIdOrPath = value;
             break;
           case "parent":
             break;
           case "name":
-            item.ItemName.SetValue(value);
-            item.ItemName.Source = context.Factory.TextNode(context.Snapshot, new TextPosition(n, 0, line.Length), "name", value, null);
+            serializationItemBuilder.ItemName = value;
+            serializationItemBuilder.ItemNameSource = context.Factory.TextNode(context.Snapshot, new TextPosition(n, 0, line.Length), "name", value, null);
             break;
           case "master":
             break;
           case "template":
-            item.TemplateIdOrPath.SetValue(value);
-            item.TemplateIdOrPath.Source = context.Factory.TextNode(context.Snapshot, new TextPosition(n, 0, line.Length), "template", value, null);
+            serializationItemBuilder.TemplateIdOrPath = value;
+            serializationItemBuilder.TemplateIdOrPathSource = context.Factory.TextNode(context.Snapshot, new TextPosition(n, 0, line.Length), "template", value, null);
             break;
           case "templatekey":
             break;
@@ -241,6 +241,36 @@
       }
 
       return lines.Length;
+    }
+
+    protected class SerializationItemBuilder
+    {
+      [NotNull]
+      public string DatabaseName { get; set; } = string.Empty;
+
+      [NotNull]
+      public List<Field> Fields { get; } = new List<Field>();
+
+      [NotNull]
+      public string Icon { get; set; } = string.Empty;
+
+      [NotNull]
+      public string ItemIdOrPath { get; set; } = string.Empty;
+
+      [NotNull]
+      public string ItemName { get; set; } = string.Empty;
+
+      [NotNull]
+      public ITextNode ItemNameSource { get; set; } = TextNode.Empty;
+
+      [NotNull]
+      public string ProjectUniqueId { get; set; } = string.Empty;
+
+      [NotNull]
+      public string TemplateIdOrPath { get; set; } = string.Empty;
+
+      [NotNull]
+      public ITextNode TemplateIdOrPathSource { get; set; } = TextNode.Empty;
     }
   }
 }

@@ -14,18 +14,16 @@
       this.ItemName = new Attribute<string>("ItemName", itemName);
     }
 
-    // todo: make read only
     [NotNull]
-    public string DatabaseName { get; set; }
+    public string DatabaseName { get; private set; }
 
     [NotNull]                                        
     public string Icon { get; set; } = string.Empty;
 
     public bool IsEmittable { get; set; } = true;
 
-    // todo: make read only
     [NotNull]
-    public string ItemIdOrPath { get; set; }
+    public string ItemIdOrPath { get; private set; }
 
     [NotNull]
     public Attribute<string> ItemName { get; }
