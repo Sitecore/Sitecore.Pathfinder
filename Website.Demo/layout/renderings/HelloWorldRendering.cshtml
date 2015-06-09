@@ -1,8 +1,10 @@
-﻿@using System.IO
+﻿@model Sitecore.Mvc.Presentation.RenderingModel
+@using System.IO
 @using Sitecore.Mvc
-@model Sitecore.Mvc.Presentation.RenderingModel
 @{
 }
 <h1>@Model.Item["Title"]</h1>
 <p>@Model.Item["Text"]</p>
+Flipper
+
 @Html.Sitecore().Field("Image")

@@ -1,4 +1,4 @@
 ﻿<Item xmlns="http://www.sitecore.net/pathfinder/publishing target" ItemPath="/sitecore/system/Publishing targets">
-  <Field Name="Target Database">core</Field>
-  <PreviewPublishingTarget>true</PreviewPublishingTarget>
+    <Target-Database Value="core" />
+    <Preview-Publishing-Target Value="True" />
 </Item>

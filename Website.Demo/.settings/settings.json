@@ -18,18 +18,6 @@
         "*.core.layout.json"
       ],
       "url": "/.schemas/core.layout.schema.json"
-    },
-    {
-      "fileMatch": [
-        "*.master.content.json"
-      ],
-      "url": "/.schemas/master.content.schema.json"
-    },
-    {
-      "fileMatch": [
-        "*.core.content.json"
-      ],
-      "url": "/.schemas/core.content.schema.json"
     }
   ]
 }

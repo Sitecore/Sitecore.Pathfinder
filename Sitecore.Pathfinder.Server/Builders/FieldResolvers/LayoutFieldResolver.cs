@@ -21,7 +21,7 @@ namespace Sitecore.Pathfinder.Builders.FieldResolvers
 
         public override string Resolve(IEmitContext context, TemplateField templateField, Field field)
         {
-            var textNode = field.FieldName.Source ?? TextNode.Empty;
+            var textNode = field.Value.Source ?? TextNode.Empty;
             if (textNode == TextNode.Empty)
             {
                 return field.Value.Value;

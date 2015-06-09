@@ -7,7 +7,7 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:attributeGroup name="stdattr">
-    <xs:attribute name="Name" type="xs:string">
+    <xs:attribute name="Item-Name" type="xs:string">
       <xs:annotation>
         <xs:documentation>The name of the item.</xs:documentation>
       </xs:annotation>
@@ -898,7 +898,7 @@
           <xs:documentation>Specifies the Html Title attribute. The Title attribute is shown as a tool tip popup.</xs:documentation>
         </xs:annotation>
       </xs:attribute>
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -1473,6 +1473,11 @@
           <xs:documentation>Specifies additional behaviors for this rendering.</xs:documentation>
         </xs:annotation>
       </xs:attribute>
+      <xs:attribute name="Name" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The name of the behaviour.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
       <xs:attribute name="PageScriptFileName" type="xs:string">
         <xs:annotation>
           <xs:documentation>The JavaScript file that implements the behaviour.</xs:documentation>
@@ -1525,8 +1530,9 @@
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:group ref="Templates" />
       </xs:sequence>
+      <xs:attribute name="Name" type="xs:string" />
       <xs:attribute name="Rule" type="xs:string" />
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -2437,7 +2443,8 @@
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:group ref="Templates" />
       </xs:sequence>
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Name" type="xs:string" />
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -2816,6 +2823,7 @@
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:group ref="Templates" />
       </xs:sequence>
+      <xs:attribute name="Name" type="xs:string" />
       <xs:attribute name="Rule" type="xs:string" />
       <xs:attributeGroup ref="stdattr" />
       <xs:anyAttribute processContents="lax" />
@@ -3018,6 +3026,7 @@
           <xs:documentation>Determines if the control is visible or hidden.</xs:documentation>
         </xs:annotation>
       </xs:attribute>
+      <xs:attribute name="Name" type="xs:string" />
       <xs:attribute name="Selected" type="bool" />
       <xs:attribute name="Tooltip" type="xs:string">
         <xs:annotation>
@@ -3184,6 +3193,7 @@
       <xs:attribute name="Click" type="xs:string" />
       <xs:attribute name="Description" type="xs:string" />
       <xs:attribute name="IconUrl" type="xs:string" />
+      <xs:attribute name="Name" type="xs:string" />
       <xs:attribute name="Parameters" type="xs:string" />
       <xs:attribute name="Url" type="xs:string" />
       <xs:attributeGroup ref="stdattr" />
@@ -3773,7 +3783,7 @@
       </xs:sequence>
       <xs:attribute name="Key" type="xs:string" />
       <xs:attribute name="Phrase" type="xs:string" />
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -3792,7 +3802,7 @@
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:group ref="Templates" />
       </xs:sequence>
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -3947,7 +3957,7 @@
       <xs:attribute name="Icon" type="xs:string" />
       <xs:attribute name="ListName" type="xs:string" />
       <xs:attribute name="Type" type="xs:string" />
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -4063,7 +4073,7 @@
       </xs:sequence>
       <xs:attribute name="DefaultTitle" type="xs:string" />
       <xs:attribute name="DefaultTooltip" type="xs:string" />
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -4087,7 +4097,7 @@
       <xs:attribute name="Icon" type="xs:string" />
       <xs:attribute name="Parameters" type="xs:string" />
       <xs:attribute name="Tooltip" type="xs:string" />
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -4577,7 +4587,7 @@
           <xs:documentation>Specifies the Html Title attribute. The Title attribute is shown as a tool tip popup.</xs:documentation>
         </xs:annotation>
       </xs:attribute>
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -4795,7 +4805,7 @@
           <xs:documentation>Specifies the Html Title attribute. The Title attribute is shown as a tool tip popup.</xs:documentation>
         </xs:annotation>
       </xs:attribute>
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -4932,6 +4942,11 @@
       <xs:attribute name="LegendItems" type="xs:string" />
       <xs:attribute name="MaximumScaleValue" type="xs:string" />
       <xs:attribute name="MinimumScaleValue" type="xs:string" />
+      <xs:attribute name="Name" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The name of the behaviour.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
       <xs:attribute name="NoDataText" type="xs:string" />
       <xs:attribute name="PageScriptFileName" type="xs:string">
         <xs:annotation>
@@ -4992,6 +5007,7 @@
           <xs:documentation>The minimum number of items that the facet must appear in before it is shown in the search results</xs:documentation>
         </xs:annotation>
       </xs:attribute>
+      <xs:attribute name="Name" type="xs:string" />
       <xs:attribute name="Parameters" type="xs:string">
         <xs:annotation>
           <xs:documentation>The lower case name of the field that is used in the index and that the facet is based on. You can enter multiple field names in a comma separated list (title,author)</xs:documentation>
@@ -5002,7 +5018,7 @@
           <xs:documentation>A class that implements ISimpleFacet</xs:documentation>
         </xs:annotation>
       </xs:attribute>
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -5034,7 +5050,7 @@
       </xs:sequence>
       <xs:attribute name="Sections" type="xs:string" />
       <xs:attribute name="Type" type="xs:string" />
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -5061,7 +5077,7 @@
       <xs:attribute name="Header" type="xs:string" />
       <xs:attribute name="Icon" type="xs:string" />
       <xs:attribute name="Tooltip" type="xs:string" />
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -5109,8 +5125,13 @@
       <xs:attribute name="DisplayText" type="xs:string" />
       <xs:attribute name="Field" type="xs:string" />
       <xs:attribute name="Icon" type="xs:string" />
+      <xs:attribute name="Name" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Do not change</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
       <xs:attribute name="WebMethod" type="xs:string" />
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -5134,7 +5155,7 @@
       <xs:attribute name="ValidateButton" type="xs:string" />
       <xs:attribute name="ValidatorBar" type="xs:string" />
       <xs:attribute name="Workflow" type="xs:string" />
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -5225,6 +5246,11 @@
       <xs:attribute name="Items" type="xs:string" />
       <xs:attribute name="ItemsTop" type="xs:string" />
       <xs:attribute name="MaxItemsAmountVisible" type="xs:int" />
+      <xs:attribute name="Name" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The name of the behaviour.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
       <xs:attribute name="Page" type="xs:string" />
       <xs:attribute name="PageScriptFileName" type="xs:string">
         <xs:annotation>
@@ -5397,7 +5423,7 @@
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:group ref="Templates" />
       </xs:sequence>
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -5713,6 +5739,7 @@
       </xs:sequence>
       <xs:attribute name="Click" type="xs:string" />
       <xs:attribute name="Icon" type="xs:string" />
+      <xs:attribute name="Name" type="xs:string" />
       <xs:attribute name="Tooltip" type="xs:string" />
       <xs:attributeGroup ref="stdattr" />
       <xs:anyAttribute processContents="lax" />
@@ -6361,6 +6388,7 @@
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:group ref="Templates" />
       </xs:sequence>
+      <xs:attribute name="Name" type="xs:string" />
       <xs:attribute name="Rule" type="xs:string" />
       <xs:attributeGroup ref="stdattr" />
       <xs:anyAttribute processContents="lax" />
@@ -6372,7 +6400,7 @@
         <xs:group ref="Templates" />
       </xs:sequence>
       <xs:attribute name="Type" type="xs:string" />
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -6607,6 +6635,7 @@
       <xs:attribute name="LastTestBy" type="xs:string" />
       <xs:attribute name="LastTestShort" type="xs:string" />
       <xs:attribute name="LastTestVersion" type="xs:int" />
+      <xs:attribute name="Name" type="xs:string" />
       <xs:attribute name="Revision" type="xs:string" />
       <xs:attribute name="Status" type="xs:string" />
       <xs:attribute name="TestCreated" type="xs:string" />
@@ -6946,7 +6975,7 @@
       <xs:attribute name="Click" type="xs:string" />
       <xs:attribute name="Group" type="xs:string" />
       <xs:attribute name="KeyCode" type="xs:string" />
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -7032,7 +7061,7 @@
           <xs:documentation>Specifies the Html Title attribute. The Title attribute is shown as a tool tip popup.</xs:documentation>
         </xs:annotation>
       </xs:attribute>
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -7298,7 +7327,7 @@
       <xs:attribute name="OpenIframe" type="bool" />
       <xs:attribute name="OpenNewTab" type="bool" />
       <xs:attribute name="Text" type="xs:string" />
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -7317,7 +7346,7 @@
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:group ref="Templates" />
       </xs:sequence>
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -8542,6 +8571,11 @@
           <xs:documentation>Specifies additional behaviors for this rendering.</xs:documentation>
         </xs:annotation>
       </xs:attribute>
+      <xs:attribute name="Name" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The name of the behaviour.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
       <xs:attribute name="PageScriptFileName" type="xs:string">
         <xs:annotation>
           <xs:documentation>The JavaScript file that implements the behaviour.</xs:documentation>
@@ -8833,6 +8867,11 @@
         </xs:annotation>
       </xs:attribute>
       <xs:attribute name="ConfidenceLevel" type="xs:string" />
+      <xs:attribute name="Name" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The name of the behaviour.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
       <xs:attribute name="PageScriptFileName" type="xs:string">
         <xs:annotation>
           <xs:documentation>The JavaScript file that implements the behaviour.</xs:documentation>
@@ -9196,7 +9235,7 @@
         <xs:group ref="Templates" />
       </xs:sequence>
       <xs:attribute name="PipelineName" type="xs:string" />
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -9246,7 +9285,7 @@
       </xs:sequence>
       <xs:attribute name="ProcessorFile" type="xs:string" />
       <xs:attribute name="ProcessorName" type="xs:string" />
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -9367,6 +9406,11 @@
       <xs:attribute name="HeaderBar" type="xs:string" />
       <xs:attribute name="Maximum" type="xs:int" />
       <xs:attribute name="Minimum" type="xs:int" />
+      <xs:attribute name="Name" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The name of the behaviour.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
       <xs:attribute name="PageScriptFileName" type="xs:string">
         <xs:annotation>
           <xs:documentation>The JavaScript file that implements the behaviour.</xs:documentation>
@@ -9730,7 +9774,7 @@
         <xs:group ref="Templates" />
       </xs:sequence>
       <xs:attribute name="Command" type="xs:string" />
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -10172,6 +10216,11 @@
           <xs:documentation>Specifies additional behaviors for this rendering.</xs:documentation>
         </xs:annotation>
       </xs:attribute>
+      <xs:attribute name="Name" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The name of the behaviour.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
       <xs:attribute name="PageScriptFileName" type="xs:string">
         <xs:annotation>
           <xs:documentation>The JavaScript file that implements the behaviour.</xs:documentation>
@@ -10254,6 +10303,7 @@
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:group ref="Templates" />
       </xs:sequence>
+      <xs:attribute name="Name" type="xs:string" />
       <xs:attribute name="Rule" type="xs:string" />
       <xs:attributeGroup ref="stdattr" />
       <xs:anyAttribute processContents="lax" />
@@ -10264,6 +10314,7 @@
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:group ref="Templates" />
       </xs:sequence>
+      <xs:attribute name="Name" type="xs:string" />
       <xs:attribute name="Rule" type="xs:string" />
       <xs:attributeGroup ref="stdattr" />
       <xs:anyAttribute processContents="lax" />
@@ -10548,6 +10599,11 @@
           <xs:documentation>Specifies additional behaviors for this rendering.</xs:documentation>
         </xs:annotation>
       </xs:attribute>
+      <xs:attribute name="Name" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The name of the behaviour.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
       <xs:attribute name="PageScriptFileName" type="xs:string">
         <xs:annotation>
           <xs:documentation>The JavaScript file that implements the behaviour.</xs:documentation>
@@ -10627,7 +10683,7 @@
         <xs:group ref="Templates" />
       </xs:sequence>
       <xs:attribute name="ControlType" type="xs:string" />
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -10787,7 +10843,7 @@
       <xs:attribute name="UpdatedByCurrentUser" type="bool" />
       <xs:attribute name="UpdatedBySpecificUser" type="xs:string" />
       <xs:attribute name="UpdatedWithin7Days" type="bool" />
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -10836,7 +10892,7 @@
         <xs:group ref="Templates" />
       </xs:sequence>
       <xs:attribute name="Type" type="xs:string" />
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -11409,6 +11465,7 @@
       </xs:sequence>
       <xs:attribute name="Description" type="xs:string" />
       <xs:attribute name="ImageUrl" type="xs:string" />
+      <xs:attribute name="Name" type="xs:string" />
       <xs:attribute name="Value" type="xs:string" />
       <xs:attributeGroup ref="stdattr" />
       <xs:anyAttribute processContents="lax" />
@@ -12027,6 +12084,11 @@
       <xs:attribute name="EnabledIconPath" type="xs:string" />
       <xs:attribute name="EnabledTooltip" type="xs:string" />
       <xs:attribute name="HeaderTitle" type="xs:string" />
+      <xs:attribute name="Name" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The name of the behaviour.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
       <xs:attribute name="NotAllowDisableIconpath" type="xs:string" />
       <xs:attribute name="NotAllowDisableTooltip" type="xs:string" />
       <xs:attribute name="PageScriptFileName" type="xs:string">
@@ -12465,7 +12527,7 @@
           <xs:documentation>Tooltip text for the tab.</xs:documentation>
         </xs:annotation>
       </xs:attribute>
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -12484,7 +12546,7 @@
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:group ref="Templates" />
       </xs:sequence>
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -12551,7 +12613,7 @@
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:group ref="Templates" />
       </xs:sequence>
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -12572,7 +12634,7 @@
       </xs:sequence>
       <xs:attribute name="Enabled" type="bool" />
       <xs:attribute name="Type" type="xs:string" />
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -12675,7 +12737,7 @@
         <xs:group ref="Templates" />
       </xs:sequence>
       <xs:attribute name="___BaseTemplate" type="xs:string" />
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -12742,7 +12804,7 @@
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:group ref="Templates" />
       </xs:sequence>
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -12833,6 +12895,7 @@
       <xs:attribute name="IsStopTestEnabled" type="bool" />
       <xs:attribute name="ItemId" type="xs:string" />
       <xs:attribute name="LanguageName" type="xs:string" />
+      <xs:attribute name="Name" type="xs:string" />
       <xs:attribute name="TestType" type="xs:string" />
       <xs:attribute name="Version" type="xs:int" />
       <xs:attributeGroup ref="stdattr" />
@@ -12923,6 +12986,11 @@
       <xs:attribute name="Behaviors" type="xs:string">
         <xs:annotation>
           <xs:documentation>Specifies additional behaviors for this rendering.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Name" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The name of the behaviour.</xs:documentation>
         </xs:annotation>
       </xs:attribute>
       <xs:attribute name="PageScriptFileName" type="xs:string">
@@ -13120,7 +13188,7 @@
         <xs:group ref="Templates" />
       </xs:sequence>
       <xs:attribute name="Text" type="xs:string" />
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -13187,7 +13255,7 @@
           <xs:documentation>Specifies the Html Title attribute. The Title attribute is shown as a tool tip popup.</xs:documentation>
         </xs:annotation>
       </xs:attribute>
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>
@@ -13910,6 +13978,7 @@
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:group ref="Templates" />
       </xs:sequence>
+      <xs:attribute name="Name" type="xs:string" />
       <xs:attribute name="Title" type="xs:string" />
       <xs:attribute name="Type" type="xs:string" />
       <xs:attributeGroup ref="stdattr" />
@@ -14075,6 +14144,7 @@
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:group ref="Templates" />
       </xs:sequence>
+      <xs:attribute name="Name" type="xs:string" />
       <xs:attribute name="Rule" type="xs:string" />
       <xs:attributeGroup ref="stdattr" />
       <xs:anyAttribute processContents="lax" />
@@ -14247,7 +14317,8 @@
       </xs:attribute>
       <xs:attribute name="Icon" type="xs:string" />
       <xs:attribute name="ItemTemplate" type="xs:string" />
-      <xs:attribute name="ParentItemPath">
+      <xs:attribute name="Name" type="xs:string" />
+      <xs:attribute name="Parent-Item-Path">
         <xs:annotation>
           <xs:documentation>The path of the parent item.</xs:documentation>
         </xs:annotation>

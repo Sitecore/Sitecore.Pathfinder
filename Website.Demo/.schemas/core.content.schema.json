@@ -1564,7 +1564,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -1609,7 +1609,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -1653,7 +1653,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -1682,7 +1682,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -1711,7 +1711,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -1779,7 +1779,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -1811,7 +1811,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -1846,7 +1846,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -1891,7 +1891,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -1957,7 +1957,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -1994,7 +1994,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -2023,7 +2023,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -2104,7 +2104,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -2112,7 +2112,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/client/Applications/ExperienceProfile/Contact/PageSettings/Tabs/Social/Common/Containers"
@@ -2187,7 +2187,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -2219,7 +2219,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -2285,7 +2285,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -2317,7 +2317,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -2346,7 +2346,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -2434,7 +2434,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -2463,7 +2463,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -2507,7 +2507,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -2539,7 +2539,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -2589,7 +2589,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -2685,7 +2685,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -2783,7 +2783,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -2851,7 +2851,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -2935,7 +2935,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -2992,7 +2992,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -3030,7 +3030,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -3123,7 +3123,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -3189,7 +3189,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -3237,7 +3237,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -3266,7 +3266,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -3281,6 +3281,10 @@
             "Behaviors": {
               "type": "string",
               "description": "Specifies additional behaviors for this rendering."
+            },
+            "Name": {
+              "type": "string",
+              "description": "The name of the behaviour."
             },
             "PageScriptFileName": {
               "type": "string",
@@ -3303,7 +3307,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -3332,7 +3336,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -3377,7 +3381,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -3385,7 +3389,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/system/Settings/Indexing and Search/Boosting Rules/Field Rules",
@@ -3396,6 +3400,9 @@
             "__Icon": {
               "type": "string",
               "description": "The icon that represents this template."
+            },
+            "Name": {
+              "type": "string"
             },
             "Rule": {
               "type": "string"
@@ -3417,7 +3424,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -3503,7 +3510,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -3535,7 +3542,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -3587,7 +3594,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -3635,7 +3642,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -3664,7 +3671,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -3693,7 +3700,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -3779,7 +3786,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -3832,7 +3839,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -3880,7 +3887,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -3990,7 +3997,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -4043,7 +4050,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -4122,7 +4129,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -4160,7 +4167,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -4223,7 +4230,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -4252,7 +4259,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -4333,7 +4340,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -4422,7 +4429,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -4508,7 +4515,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -4579,7 +4586,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -4640,7 +4647,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -4673,7 +4680,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -4714,7 +4721,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -4758,7 +4765,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -4796,7 +4803,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -4804,7 +4811,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/system/Settings/Buckets/Settings/Client Side Hooks"
@@ -4813,6 +4820,9 @@
             "__Icon": {
               "type": "string",
               "description": "The icon that represents this template."
+            },
+            "Name": {
+              "type": "string"
             },
             "Children": {
               "$ref": "#/definitions/Items"
@@ -4831,7 +4841,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -4927,7 +4937,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -4996,7 +5006,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -5075,7 +5085,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -5152,7 +5162,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -5187,7 +5197,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -5238,7 +5248,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -5289,7 +5299,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -5349,7 +5359,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -5382,7 +5392,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -5426,7 +5436,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -5437,6 +5447,9 @@
             "__Icon": {
               "type": "string",
               "description": "The icon that represents this template."
+            },
+            "Name": {
+              "type": "string"
             },
             "Rule": {
               "type": "string"
@@ -5458,7 +5471,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -5582,7 +5595,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -5617,7 +5630,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -5649,7 +5662,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -5703,7 +5716,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -5735,6 +5748,9 @@
               "type": "boolean",
               "description": "Determines if the control is visible or hidden."
             },
+            "Name": {
+              "type": "string"
+            },
             "Selected": {
               "type": "boolean"
             },
@@ -5759,7 +5775,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -5820,7 +5836,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -5865,7 +5881,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -5900,7 +5916,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -6002,7 +6018,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -6065,7 +6081,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -6084,6 +6100,9 @@
               "type": "string"
             },
             "IconUrl": {
+              "type": "string"
+            },
+            "Name": {
               "type": "string"
             },
             "Parameters": {
@@ -6109,7 +6128,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -6138,7 +6157,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -6170,7 +6189,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -6254,7 +6273,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -6286,7 +6305,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -6340,7 +6359,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -6425,7 +6444,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -6479,7 +6498,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -6584,7 +6603,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -6629,7 +6648,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -6677,7 +6696,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -6706,7 +6725,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -6756,7 +6775,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -6823,7 +6842,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -6855,7 +6874,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -6887,7 +6906,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -6944,7 +6963,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -7027,7 +7046,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -7059,7 +7078,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -7095,7 +7114,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -7103,7 +7122,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/system/Dictionary"
@@ -7136,7 +7155,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -7144,7 +7163,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/system/Dictionary"
@@ -7171,7 +7190,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -7206,7 +7225,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -7274,7 +7293,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -7342,7 +7361,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -7410,7 +7429,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -7491,7 +7510,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -7499,7 +7518,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/system/Settings/Buckets/Settings/Search Box Dropdown",
@@ -7545,7 +7564,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -7631,7 +7650,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -7673,7 +7692,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -7681,7 +7700,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/content/Applications/WebEdit/Edit Frame Buttons"
@@ -7714,7 +7733,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -7722,7 +7741,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/content/Applications/WebEdit/Edit Frame Buttons",
@@ -7765,7 +7784,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -7828,7 +7847,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -7882,7 +7901,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -7923,7 +7942,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -8001,7 +8020,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -8035,7 +8054,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -8082,7 +8101,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -8136,7 +8155,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -8178,7 +8197,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -8231,7 +8250,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -8273,7 +8292,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -8408,7 +8427,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -8416,7 +8435,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/client/Applications/ExperienceAnalytics/Dashboard/Audience/Languages/PageSettings",
@@ -8544,7 +8563,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -8626,7 +8645,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -8671,7 +8690,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -8716,7 +8735,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -8724,7 +8743,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/client/Applications/ExperienceAnalytics/Dashboard/Audience/Languages/PageSettings",
@@ -8843,7 +8862,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -8947,7 +8966,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -9001,7 +9020,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -9032,6 +9051,10 @@
             "MinimumScaleValue": {
               "type": "string"
             },
+            "Name": {
+              "type": "string",
+              "description": "The name of the behaviour."
+            },
             "NoDataText": {
               "type": "string"
             },
@@ -9059,7 +9082,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -9119,7 +9142,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -9127,7 +9150,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/system/Settings/Buckets/Facets"
@@ -9156,6 +9179,9 @@
               "type": "string",
               "description": "The minimum number of items that the facet must appear in before it is shown in the search results"
             },
+            "Name": {
+              "type": "string"
+            },
             "Parameters": {
               "type": "string",
               "description": "The lower case name of the field that is used in the index and that the facet is based on. You can enter multiple field names in a comma separated list (title,author)"
@@ -9181,7 +9207,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -9216,7 +9242,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -9224,7 +9250,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/content/Applications/Syndication/Feeds"
@@ -9257,7 +9283,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -9265,7 +9291,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/content/Applications/WebEdit/Edit Frame Buttons",
@@ -9306,7 +9332,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -9314,7 +9340,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/system/Settings/Buckets/Search Types",
@@ -9361,6 +9387,10 @@
             "Icon": {
               "type": "string"
             },
+            "Name": {
+              "type": "string",
+              "description": "Do not change"
+            },
             "WebMethod": {
               "type": "string"
             },
@@ -9381,7 +9411,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -9389,7 +9419,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/system/Settings/Validation Rules/Field Types"
@@ -9428,7 +9458,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -9496,7 +9526,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -9549,7 +9579,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -9582,6 +9612,10 @@
             },
             "MaxItemsAmountVisible": {
               "type": "integer"
+            },
+            "Name": {
+              "type": "string",
+              "description": "The name of the behaviour."
             },
             "Page": {
               "type": "string"
@@ -9626,7 +9660,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -9724,7 +9758,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -9769,7 +9803,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -9855,7 +9889,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -9863,7 +9897,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/layout/Controllers",
@@ -9898,7 +9932,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -9958,7 +9992,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -10018,7 +10052,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -10105,7 +10139,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -10146,7 +10180,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -10207,7 +10241,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -10236,7 +10270,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -10299,7 +10333,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -10337,7 +10371,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -10366,7 +10400,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -10410,7 +10444,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -10446,7 +10480,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -10481,7 +10515,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -10497,6 +10531,9 @@
               "type": "string"
             },
             "Icon": {
+              "type": "string"
+            },
+            "Name": {
               "type": "string"
             },
             "Tooltip": {
@@ -10519,7 +10556,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -10554,7 +10591,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -10589,7 +10626,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -10621,7 +10658,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -10665,7 +10702,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -10700,7 +10737,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -10729,7 +10766,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -10773,7 +10810,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -10808,7 +10845,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -10843,7 +10880,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -10878,7 +10915,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -10913,7 +10950,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -10957,7 +10994,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -10986,7 +11023,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -11021,7 +11058,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -11056,7 +11093,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -11124,7 +11161,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -11156,7 +11193,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -11200,7 +11237,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -11269,7 +11306,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -11322,7 +11359,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -11395,7 +11432,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -11468,7 +11505,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -11548,7 +11585,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -11609,7 +11646,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -11660,7 +11697,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -11705,7 +11742,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -11743,7 +11780,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -11772,7 +11809,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -11801,7 +11838,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -11850,7 +11887,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -11861,6 +11898,9 @@
             "__Icon": {
               "type": "string",
               "description": "The icon that represents this template."
+            },
+            "Name": {
+              "type": "string"
             },
             "Rule": {
               "type": "string"
@@ -11882,7 +11922,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -11890,7 +11930,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/system/Settings/Insert Rules"
@@ -11920,7 +11960,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -11961,7 +12001,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -11990,7 +12030,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -12019,7 +12059,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -12060,7 +12100,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -12156,7 +12196,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -12191,7 +12231,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -12239,7 +12279,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -12292,7 +12332,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -12346,7 +12386,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -12415,6 +12455,9 @@
             "LastTestVersion": {
               "type": "integer"
             },
+            "Name": {
+              "type": "string"
+            },
             "Revision": {
               "type": "string"
             },
@@ -12457,7 +12500,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -12490,7 +12533,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -12531,7 +12574,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -12627,7 +12670,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -12739,7 +12782,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -12853,7 +12896,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -12954,7 +12997,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -12986,7 +13029,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -12994,7 +13037,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/system/Settings/Key Map"
@@ -13030,7 +13073,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -13078,7 +13121,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -13123,7 +13166,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -13131,7 +13174,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/client/Applications/ExperienceProfile/Contact/PageSettings/Tabs/Social/Common/Labels"
@@ -13182,7 +13225,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -13232,7 +13275,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -13282,7 +13325,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -13344,7 +13387,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -13403,7 +13446,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -13456,7 +13499,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -13517,7 +13560,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -13594,7 +13637,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -13661,7 +13704,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -13706,7 +13749,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -13714,7 +13757,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/client/Applications/Launchpad/PageSettings/Buttons"
@@ -13756,7 +13799,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -13764,7 +13807,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/client/Applications/Launchpad/PageSettings/Buttons"
@@ -13791,7 +13834,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -13826,7 +13869,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -13871,7 +13914,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -13900,7 +13943,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -13929,7 +13972,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -13958,7 +14001,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -13990,7 +14033,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -14025,7 +14068,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -14066,7 +14109,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -14095,7 +14138,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -14188,7 +14231,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -14223,7 +14266,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -14255,7 +14298,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -14344,7 +14387,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -14379,7 +14422,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -14502,7 +14545,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -14588,7 +14631,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -14657,7 +14700,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -14703,7 +14746,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -14751,7 +14794,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -14899,7 +14942,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -14928,7 +14971,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -14974,7 +15017,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -15021,7 +15064,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -15056,7 +15099,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -15097,7 +15140,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -15126,7 +15169,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -15212,7 +15255,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -15244,7 +15287,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -15315,7 +15358,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -15353,7 +15396,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -15382,7 +15425,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -15411,7 +15454,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -15448,7 +15491,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -15477,7 +15520,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -15509,7 +15552,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -15565,7 +15608,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -15624,7 +15667,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -15666,7 +15709,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -15726,7 +15769,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -15802,7 +15845,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -15831,7 +15874,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -15860,7 +15903,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -15892,7 +15935,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -15960,7 +16003,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -16046,7 +16089,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -16078,7 +16121,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -16119,7 +16162,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -16134,6 +16177,10 @@
             "Behaviors": {
               "type": "string",
               "description": "Specifies additional behaviors for this rendering."
+            },
+            "Name": {
+              "type": "string",
+              "description": "The name of the behaviour."
             },
             "PageScriptFileName": {
               "type": "string",
@@ -16156,7 +16203,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -16246,7 +16293,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -16278,7 +16325,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -16351,7 +16398,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -16380,7 +16427,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -16418,7 +16465,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -16463,7 +16510,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -16498,7 +16545,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -16527,7 +16574,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -16581,7 +16628,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -16671,7 +16718,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -16700,7 +16747,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -16718,6 +16765,10 @@
             },
             "ConfidenceLevel": {
               "type": "string"
+            },
+            "Name": {
+              "type": "string",
+              "description": "The name of the behaviour."
             },
             "PageScriptFileName": {
               "type": "string",
@@ -16743,7 +16794,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -16815,7 +16866,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -16865,7 +16916,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -16906,7 +16957,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -16961,7 +17012,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -16997,7 +17048,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -17029,7 +17080,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -17058,7 +17109,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -17090,7 +17141,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -17122,7 +17173,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -17188,7 +17239,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -17220,7 +17271,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -17272,7 +17323,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -17304,7 +17355,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -17345,7 +17396,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -17413,7 +17464,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -17470,7 +17521,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -17551,7 +17602,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -17559,7 +17610,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/client/Applications/ExperienceEditor/Pipelines",
@@ -17590,7 +17641,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -17647,7 +17698,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -17655,7 +17706,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/client/Applications/ExperienceEditor/Pipelines",
@@ -17689,7 +17740,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -17753,7 +17804,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -17786,7 +17837,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -17837,7 +17888,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -17866,7 +17917,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -17897,6 +17948,10 @@
             "Minimum": {
               "type": "integer"
             },
+            "Name": {
+              "type": "string",
+              "description": "The name of the behaviour."
+            },
             "PageScriptFileName": {
               "type": "string",
               "description": "The JavaScript file that implements the behaviour."
@@ -17924,7 +17979,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -17985,7 +18040,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -18058,7 +18113,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -18090,7 +18145,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -18184,7 +18239,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -18229,7 +18284,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -18258,7 +18313,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -18290,7 +18345,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -18371,7 +18426,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -18407,7 +18462,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -18415,7 +18470,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/system/Settings/Buckets/Settings/Quick Actions"
@@ -18445,7 +18500,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -18482,7 +18537,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -18540,7 +18595,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -18630,7 +18685,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -18695,7 +18750,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -18746,7 +18801,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -18778,7 +18833,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -18815,7 +18870,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -18844,7 +18899,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -18873,7 +18928,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -18921,7 +18976,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -18969,7 +19024,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -19022,7 +19077,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -19057,7 +19112,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -19086,7 +19141,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -19138,7 +19193,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -19204,7 +19259,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -19219,6 +19274,10 @@
             "Behaviors": {
               "type": "string",
               "description": "Specifies additional behaviors for this rendering."
+            },
+            "Name": {
+              "type": "string",
+              "description": "The name of the behaviour."
             },
             "PageScriptFileName": {
               "type": "string",
@@ -19241,7 +19300,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -19273,7 +19332,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -19302,7 +19361,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -19365,7 +19424,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -19376,6 +19435,9 @@
             "__Icon": {
               "type": "string",
               "description": "The icon that represents this template."
+            },
+            "Name": {
+              "type": "string"
             },
             "Rule": {
               "type": "string"
@@ -19397,7 +19459,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -19408,6 +19470,9 @@
             "__Icon": {
               "type": "string",
               "description": "The icon that represents this template."
+            },
+            "Name": {
+              "type": "string"
             },
             "Rule": {
               "type": "string"
@@ -19429,7 +19494,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -19490,7 +19555,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -19519,7 +19584,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -19554,7 +19619,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -19629,7 +19694,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -19658,7 +19723,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -19687,7 +19752,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -19744,7 +19809,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -19816,7 +19881,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -19853,7 +19918,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -19882,7 +19947,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -19929,7 +19994,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -19965,7 +20030,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -20006,7 +20071,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -20021,6 +20086,10 @@
             "Behaviors": {
               "type": "string",
               "description": "Specifies additional behaviors for this rendering."
+            },
+            "Name": {
+              "type": "string",
+              "description": "The name of the behaviour."
             },
             "PageScriptFileName": {
               "type": "string",
@@ -20043,7 +20112,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -20130,7 +20199,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -20162,7 +20231,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -20170,7 +20239,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/system/Settings/Buckets/Settings/Search Filter Control Types"
@@ -20200,7 +20269,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -20271,7 +20340,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -20379,7 +20448,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -20387,7 +20456,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/client/Business Component Library/System/Search/Search Types"
@@ -20453,7 +20522,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -20498,7 +20567,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -20506,7 +20575,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/content/Applications/Syndication/Sections"
@@ -20536,7 +20605,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -20581,7 +20650,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -20610,7 +20679,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -20639,7 +20708,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -20681,7 +20750,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -20726,7 +20795,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -20771,7 +20840,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -20800,7 +20869,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -20845,7 +20914,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -20877,7 +20946,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -20914,7 +20983,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -20949,7 +21018,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -20994,7 +21063,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -21079,7 +21148,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -21129,7 +21198,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -21192,7 +21261,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -21255,7 +21324,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -21370,7 +21439,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -21408,7 +21477,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -21495,7 +21564,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -21511,6 +21580,9 @@
               "type": "string"
             },
             "ImageUrl": {
+              "type": "string"
+            },
+            "Name": {
               "type": "string"
             },
             "Value": {
@@ -21533,7 +21605,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -21562,7 +21634,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -21612,7 +21684,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -21659,7 +21731,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -21721,7 +21793,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -21774,7 +21846,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -21836,7 +21908,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -21886,7 +21958,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -21939,7 +22011,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -21997,7 +22069,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -22061,7 +22133,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -22141,7 +22213,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -22179,7 +22251,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -22208,7 +22280,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -22237,7 +22309,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -22281,7 +22353,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -22325,7 +22397,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -22371,7 +22443,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -22417,7 +22489,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -22463,7 +22535,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -22509,7 +22581,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -22538,7 +22610,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -22584,7 +22656,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -22630,7 +22702,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -22676,7 +22748,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -22708,7 +22780,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -22795,7 +22867,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -22824,7 +22896,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -22865,7 +22937,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -22894,7 +22966,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -22929,7 +23001,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -22961,7 +23033,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -22992,6 +23064,10 @@
             "HeaderTitle": {
               "type": "string"
             },
+            "Name": {
+              "type": "string",
+              "description": "The name of the behaviour."
+            },
             "NotAllowDisableIconpath": {
               "type": "string"
             },
@@ -23019,7 +23095,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -23052,7 +23128,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -23178,7 +23254,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -23207,7 +23283,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -23274,7 +23350,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -23315,7 +23391,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -23356,7 +23432,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -23406,7 +23482,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -23454,7 +23530,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -23487,7 +23563,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -23524,7 +23600,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -23567,7 +23643,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -23599,7 +23675,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -23636,7 +23712,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -23681,7 +23757,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -23713,7 +23789,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -23721,7 +23797,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/client/Applications/ExperienceProfile/Contact/PageSettings/Tabs/Social/Social Subtabs"
@@ -23765,7 +23841,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -23773,7 +23849,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/system/Settings/Buckets/Tab Options"
@@ -23800,7 +23876,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -23862,7 +23938,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -23870,7 +23946,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/system/Settings/Buckets/TagRepository"
@@ -23897,7 +23973,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -23905,7 +23981,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/system/Settings/Buckets/Tag Repositories"
@@ -23938,7 +24014,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -23967,7 +24043,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -23999,7 +24075,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -24028,7 +24104,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -24066,7 +24142,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -24107,7 +24183,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -24142,7 +24218,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -24174,7 +24250,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -24203,7 +24279,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -24211,7 +24287,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/client/Speak/Templates",
@@ -24242,7 +24318,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -24324,7 +24400,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -24365,7 +24441,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -24373,7 +24449,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/client/Speak/Templates"
@@ -24400,7 +24476,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -24432,7 +24508,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -24477,7 +24553,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -24537,7 +24613,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -24568,6 +24644,9 @@
             "LanguageName": {
               "type": "string"
             },
+            "Name": {
+              "type": "string"
+            },
             "TestType": {
               "type": "string"
             },
@@ -24591,7 +24670,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -24663,7 +24742,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -24702,7 +24781,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -24759,7 +24838,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -24774,6 +24853,10 @@
             "Behaviors": {
               "type": "string",
               "description": "Specifies additional behaviors for this rendering."
+            },
+            "Name": {
+              "type": "string",
+              "description": "The name of the behaviour."
             },
             "PageScriptFileName": {
               "type": "string",
@@ -24796,7 +24879,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -24899,7 +24982,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -24981,7 +25064,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -25071,7 +25154,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -25110,7 +25193,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -25152,7 +25235,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -25160,7 +25243,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/client/Applications/ExperienceProfile/Contact/PageSettings/Tabs/Social/Social Subtabs/GooglePlus/GooglePlusPanel/Texts",
@@ -25192,7 +25275,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -25200,7 +25283,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/client/Applications/ExperienceProfile/Contact/PageSettings/Tabs/Social/Common/Values"
@@ -25267,7 +25350,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -25350,7 +25433,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -25437,7 +25520,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -25473,7 +25556,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -25554,7 +25637,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -25592,7 +25675,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -25627,7 +25710,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -25721,7 +25804,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -25774,7 +25857,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -25821,7 +25904,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -25850,7 +25933,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -25879,7 +25962,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -25917,7 +26000,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -25946,7 +26029,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -25975,7 +26058,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -26046,7 +26129,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -26117,7 +26200,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -26188,7 +26271,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -26275,7 +26358,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -26316,7 +26399,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -26385,7 +26468,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -26442,7 +26525,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -26487,7 +26570,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -26498,6 +26581,9 @@
             "__Icon": {
               "type": "string",
               "description": "The icon that represents this template."
+            },
+            "Name": {
+              "type": "string"
             },
             "Title": {
               "type": "string"
@@ -26522,7 +26608,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -26564,7 +26650,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -26624,7 +26710,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -26681,7 +26767,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -26742,7 +26828,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -26792,7 +26878,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -26821,7 +26907,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -26832,6 +26918,9 @@
             "__Icon": {
               "type": "string",
               "description": "The icon that represents this template."
+            },
+            "Name": {
+              "type": "string"
             },
             "Rule": {
               "type": "string"
@@ -26853,7 +26942,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -26882,7 +26971,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -26936,7 +27025,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -27042,7 +27131,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -27099,7 +27188,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -27107,7 +27196,7 @@
               "type": "string",
               "description": "The ID of the item."
             },
-            "ParentItemPath": {
+            "Parent-Item-Path": {
               "description": "The path of the parent item.",
               "enum": [
                 "/sitecore/system/Settings/Buckets/Views"
@@ -27136,6 +27225,9 @@
             "Item Template": {
               "type": "string"
             },
+            "Name": {
+              "type": "string"
+            },
             "Children": {
               "$ref": "#/definitions/Items"
             }
@@ -27153,7 +27245,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -27267,7 +27359,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -27305,7 +27397,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -27334,7 +27426,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -27363,7 +27455,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -27405,7 +27497,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -27478,7 +27570,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -27531,7 +27623,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -27566,7 +27658,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -27635,7 +27727,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -27667,7 +27759,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -27735,7 +27827,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -27770,7 +27862,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -27837,7 +27929,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -27886,7 +27978,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },
@@ -27957,7 +28049,7 @@
           "additionalProperties": false,
           "additionalItems": false,
           "properties": {
-            "Name": {
+            "Item-Name": {
               "type": "string",
               "description": "The name of the item."
             },

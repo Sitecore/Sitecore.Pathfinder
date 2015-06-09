@@ -1,15 +1,14 @@
 {
   "Layout": {
     "Devices": [
-      {
-        "Name": "Default",
-        "Layout": "/sitecore/layout/layouts/MvcLayout",
+      { "Name": "Default",
+        "Layout": "/sitecore/layout/layouts/MvcLayout", 
         "Renderings": [
-          {
-            "HelloWorld": { }
-          }
-        ]
-      }
+          { "HelloWorldRendering": {
+            
+          }}
+        ]}
     ]
   }
+
 }

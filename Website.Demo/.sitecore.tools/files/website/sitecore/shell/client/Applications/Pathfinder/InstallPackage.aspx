@@ -1,5 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" %>
 <%@ Import Namespace="System.IO" %>
+<%@ Import Namespace="Sitecore.Pathfinder.Packages" %>
+<%@ Import Namespace="Sitecore.Web" %>
 <%
     var output = new StringWriter();
     Console.SetOut(output);

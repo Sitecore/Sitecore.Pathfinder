@@ -30,7 +30,8 @@
               "Version": { "type": "integer" },
               "Field.Type": { "$ref": "#/definitions/FieldType" },
               "Field.ShortHelp": { "type": "string" },
-              "Field.LongHelp": { "type": "string" }
+              "Field.LongHelp": { "type": "string" },
+              "Field.SortOrder": { "type": "integer" }
             },
             "required": [ "Name", "Value" ]
           }
@@ -68,6 +69,7 @@
                     "Sharing": { "$ref": "#/definitions/Sharing" },
                     "ShortHelp": { "type": "string" },
                     "LongHelp": { "type": "string" },
+                    "SortOrder": { "type": "integer" },
                     "StandardValue": { "type": "string" }
                   },
                   "required": [ "Name" ]

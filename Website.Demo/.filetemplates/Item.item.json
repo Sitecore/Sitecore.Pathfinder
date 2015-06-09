@@ -1,6 +1,4 @@
 {
-  "$schema": "/.schemas/item.schema.json",
-    
   "Item": {
     "Template": "/sitecore/templates/Sample/Sample Item",
     "Fields": [
