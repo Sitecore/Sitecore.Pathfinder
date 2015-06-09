@@ -2,9 +2,9 @@
 
 using Sitecore.Zip;
 
-namespace Sitecore.Pathfinder.Resources
+namespace Sitecore.Pathfinder.Synchronizing
 {
-    public interface IResourceExporter
+    public interface ISynchronizationExporter
     {
         void Export([NotNull] ZipWriter zip);
     }

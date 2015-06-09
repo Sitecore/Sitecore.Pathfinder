@@ -5387,14 +5387,20 @@
             <xs:sequence minOccurs="0" maxOccurs="unbounded">
               <xs:group ref="rendering" />
             </xs:sequence>
-            <xs:attribute name="Name" type="xs:string">
+            <xs:attribute name="Name">
               <xs:annotation>
                 <xs:documentation>The name of the device</xs:documentation>
               </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:enumeration value="Internet Explorer" />
+                  <xs:enumeration value="Firefox" />
+                </xs:restriction>
+              </xs:simpleType>
             </xs:attribute>
             <xs:attribute name="Layout" type="xs:string">
               <xs:annotation>
-                <xs:documentation>The path to the layout.</xs:documentation>
+                <xs:documentation>The name of the layout</xs:documentation>
               </xs:annotation>
             </xs:attribute>
           </xs:complexType>

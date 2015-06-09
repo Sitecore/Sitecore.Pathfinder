@@ -16,10 +16,10 @@ using Sitecore.SecurityModel;
 using Sitecore.Web.UI.HtmlControls.Data;
 using Sitecore.Zip;
 
-namespace Sitecore.Pathfinder.Resources
+namespace Sitecore.Pathfinder.Synchronizing
 {
-    [Export(typeof(IResourceExporter))]
-    public class XsdTemplateSchemaExporter : IResourceExporter
+    [Export(typeof(ISynchronizationExporter))]
+    public class XsdTemplateSchemaExporter : ISynchronizationExporter
     {
         public const string Namespace = "http://www.w3.org/2001/XMLSchema";
 

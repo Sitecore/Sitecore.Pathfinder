@@ -17,10 +17,10 @@ using Sitecore.SecurityModel;
 using Sitecore.Web.UI.HtmlControls.Data;
 using Sitecore.Zip;
 
-namespace Sitecore.Pathfinder.Resources
+namespace Sitecore.Pathfinder.Synchronizing
 {
-    [Export(typeof(IResourceExporter))]
-    public class JsonTemplateSchemaExporter : IResourceExporter
+    [Export(typeof(ISynchronizationExporter))]
+    public class JsonTemplateSchemaExporter : ISynchronizationExporter
     {
         protected static readonly ID InsertOptionsFieldId = new ID(Constants.Fields.InsertOptionsFieldId);
 

@@ -1,7 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Web;
-using Sitecore.Pathfinder.Resources;
+using Sitecore.Pathfinder.Synchronizing;
 
 namespace Sitecore.Pathfinder.Shell.Client.Applications.Pathfinder
 {
@@ -11,7 +11,7 @@ namespace Sitecore.Pathfinder.Shell.Client.Applications.Pathfinder
 
         public void ProcessRequest(HttpContext context)
         {
-            var resourceManager = new ResourceManager();
+            var resourceManager = new SynchronizationManager();
 
             var fileName = resourceManager.BuildResourceFile();
 

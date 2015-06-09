@@ -135,7 +135,7 @@
           <xs:anyAttribute processContents="lax" />
         </xs:complexType>
       </xs:element>
-      <xs:element name="HelloWorld">
+      <xs:element name="HelloWorldRendering">
         <xs:complexType>
           <xs:sequence minOccurs="0" maxOccurs="unbounded">
             <xs:group ref="rendering" />
@@ -180,16 +180,7 @@
           <xs:anyAttribute processContents="lax" />
         </xs:complexType>
       </xs:element>
-      <xs:element name=".sitecore.layout.Layouts.MvcLayout">
-        <xs:complexType>
-          <xs:sequence minOccurs="0" maxOccurs="unbounded">
-            <xs:group ref="rendering" />
-          </xs:sequence>
-          <xs:attributeGroup ref="stdattr" />
-          <xs:anyAttribute processContents="lax" />
-        </xs:complexType>
-      </xs:element>
-      <xs:element name=".sitecore.layout.Layouts.MvcLayout">
+      <xs:element name="MvcLayout">
         <xs:complexType>
           <xs:sequence minOccurs="0" maxOccurs="unbounded">
             <xs:group ref="rendering" />
@@ -231,14 +222,22 @@
             <xs:sequence minOccurs="0" maxOccurs="unbounded">
               <xs:group ref="rendering" />
             </xs:sequence>
-            <xs:attribute name="Name" type="xs:string">
+            <xs:attribute name="Name">
               <xs:annotation>
                 <xs:documentation>The name of the device</xs:documentation>
               </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:enumeration value="Default" />
+                  <xs:enumeration value="Print" />
+                  <xs:enumeration value="App Center Placeholder" />
+                  <xs:enumeration value="Feed" />
+                </xs:restriction>
+              </xs:simpleType>
             </xs:attribute>
             <xs:attribute name="Layout" type="xs:string">
               <xs:annotation>
-                <xs:documentation>The path to the layout.</xs:documentation>
+                <xs:documentation>The name of the layout</xs:documentation>
               </xs:annotation>
             </xs:attribute>
           </xs:complexType>

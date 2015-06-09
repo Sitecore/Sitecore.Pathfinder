@@ -35,7 +35,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             }
 
             var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemName, itemIdOrPath, templateIdOrPathTextNode?.Value ?? string.Empty);
-            item.ItemName.Source = itemNameTextNode;
+            item.ItemName.Source = itemNameTextNode ?? new FileNameTextNode(item.ItemName.Value, textNode.Snapshot);
 
             if (!string.IsNullOrEmpty(item.TemplateIdOrPath.Value))
             {

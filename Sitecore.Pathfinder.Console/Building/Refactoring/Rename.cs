@@ -5,6 +5,7 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Building.Querying;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Querying;
 
 namespace Sitecore.Pathfinder.Building.Refactoring
@@ -20,15 +21,15 @@ namespace Sitecore.Pathfinder.Building.Refactoring
         {
             context.DisplayDoneMessage = false;
 
-            var qualifiedName = context.Configuration.GetString("name");
+            var qualifiedName = context.Configuration.GetString("name").Trim();
             if (string.IsNullOrEmpty(qualifiedName))
             {
                 context.Trace.Writeline(Texts.You_must_specific_the___name_argument);
                 return;
             }
 
-            var newShortName = context.Configuration.GetString("to");
-            if (string.IsNullOrEmpty(qualifiedName))
+            var newShortName = context.Configuration.GetString("to").Trim();
+            if (string.IsNullOrEmpty(newShortName))
             {
                 context.Trace.Writeline(Texts.You_must_specific_the___to_argument);
                 return;
@@ -48,10 +49,23 @@ namespace Sitecore.Pathfinder.Building.Refactoring
 
             foreach (var reference in references)
             {
-                if (reference.SourceTextNode != null)
+                if (reference.SourceTextNode == null)
                 {
-                    // reference.SourceTextNode.SetValue(newQualifiedName);
+                    continue;
                 }
+
+                var value = reference.SourceTextNode.Value;
+                if (PathHelper.IsQualifiedName(value))
+                {
+                    var n = value.LastIndexOf('/');
+                    value = n < 0 ? newShortName : value.Left(n + 1) + newShortName;
+                }
+                else
+                {
+                    value = newShortName;
+                }
+
+                reference.SourceTextNode.SetValue(value);
             }
 
             context.Project.SaveChanges();

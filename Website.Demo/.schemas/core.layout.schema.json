@@ -9394,7 +9394,11 @@
             "additionalProperties": false,
             "properties": {
               "Name": {
-                "type": "string"
+                "description": "The name of the device.",
+                "enum": [
+                  "Internet Explorer",
+                  "Firefox"
+                ]
               },
               "Layout": {
                 "type": "string"

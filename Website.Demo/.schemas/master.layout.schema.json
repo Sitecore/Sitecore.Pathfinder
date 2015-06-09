@@ -37,7 +37,7 @@
             "$ref": "#/definitions/Google Plus One Button"
           },
           {
-            "$ref": "#/definitions/HelloWorld"
+            "$ref": "#/definitions/HelloWorldRendering"
           },
           {
             "$ref": "#/definitions/Hidden Rendering"
@@ -511,12 +511,12 @@
         }
       }
     },
-    "HelloWorld": {
+    "HelloWorldRendering": {
       "type": "object",
       "additionalProperties": false,
       "additionalItems": false,
       "properties": {
-        "HelloWorld": {
+        "HelloWorldRendering": {
           "type": "object",
           "additionalProperties": false,
           "additionalItems": false,
@@ -1794,7 +1794,13 @@
             "additionalProperties": false,
             "properties": {
               "Name": {
-                "type": "string"
+                "description": "The name of the device.",
+                "enum": [
+                  "Default",
+                  "Print",
+                  "App Center Placeholder",
+                  "Feed"
+                ]
               },
               "Layout": {
                 "type": "string"

@@ -33,7 +33,7 @@ namespace Sitecore.Pathfinder.Projects.Files
 
             var newFileName = Path.Combine(Path.GetDirectoryName(fileName) ?? string.Empty, newShortName + extension);
 
-            Project.FileSystem.Rename(_filePath, newFileName);
+            Project.FileSystem.Rename(fileName, newFileName);
 
             // todo: update Project Unique ID
         }

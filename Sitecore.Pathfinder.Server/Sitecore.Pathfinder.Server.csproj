@@ -142,15 +142,15 @@
     <Compile Include="Builders\FieldResolvers\Layouts\JsonLayoutResolver.cs" />
     <Compile Include="Builders\FieldResolvers\Layouts\XmlLayoutResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\IResourceExporter.cs" />
-    <Compile Include="Resources\JsonTemplateSchemaExporter.cs" />
-    <Compile Include="Resources\JsonLayoutSchemaExporter.cs" />
-    <Compile Include="Resources\XsdLayoutSchemaExporter.cs" />
-    <Compile Include="Resources\ResourceManager.cs" />
-    <Compile Include="Resources\XsdTemplateSchemaExporter.cs" />
     <Compile Include="sitecore\shell\client\Applications\Pathfinder\UpdateResources.ashx.cs">
       <DependentUpon>UpdateResources.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Synchronizing\ISynchronizationExporter.cs" />
+    <Compile Include="Synchronizing\JsonLayoutSchemaExporter.cs" />
+    <Compile Include="Synchronizing\JsonTemplateSchemaExporter.cs" />
+    <Compile Include="Synchronizing\SynchronizationManager.cs" />
+    <Compile Include="Synchronizing\XsdLayoutSchemaExporter.cs" />
+    <Compile Include="Synchronizing\XsdTemplateSchemaExporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -9,11 +9,11 @@ using Sitecore.IO;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Zip;
 
-namespace Sitecore.Pathfinder.Resources
+namespace Sitecore.Pathfinder.Synchronizing
 {
-    public class ResourceManager
+    public class SynchronizationManager
     {
-        public ResourceManager()
+        public SynchronizationManager()
         {
             var assembly = Assembly.GetExecutingAssembly();
             var directory = Path.GetDirectoryName(assembly.Location) ?? string.Empty;
@@ -34,8 +34,8 @@ namespace Sitecore.Pathfinder.Resources
 
         [Diagnostics.NotNull]
         [Diagnostics.UsedImplicitly]
-        [ImportMany(typeof(IResourceExporter))]
-        public IEnumerable<IResourceExporter> Exporters { get; protected set; }
+        [ImportMany(typeof(ISynchronizationExporter))]
+        public IEnumerable<ISynchronizationExporter> Exporters { get; protected set; }
 
         [Diagnostics.NotNull]
         public string BuildResourceFile()

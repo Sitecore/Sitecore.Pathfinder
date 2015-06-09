@@ -24,10 +24,9 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         public T Value { get; private set; }
 
-        public bool SetValue([NotNull] T value)
+        public void SetValue([NotNull] T value)
         {
             Value = value;
-            return Source?.SetValue(value.ToString()) ?? false;
         }
 
         public bool SetValue([NotNull] T value, [CanBeNull] ITextNode source)

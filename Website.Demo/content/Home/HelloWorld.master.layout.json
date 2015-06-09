@@ -1,12 +1,11 @@
 {
   "Layout": {
     "Devices": [
-      { "Name": "Default",
+      { 
+        "Name": "Default",
         "Layout": "/sitecore/layout/layouts/MvcLayout", 
         "Renderings": [
-          { "HelloWorldRendering": {
-            
-          }}
+          { }
         ]}
     ]
   }

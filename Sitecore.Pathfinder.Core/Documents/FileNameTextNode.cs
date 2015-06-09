@@ -1,7 +1,11 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
+using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Documents
 {
@@ -39,8 +43,16 @@ namespace Sitecore.Pathfinder.Documents
 
         public bool SetValue(string value)
         {
-            // todo: rename file
-            return false;
+            var fileName = Snapshot.SourceFile.FileName;
+            var extension = PathHelper.GetExtension(Snapshot.SourceFile.FileName);
+
+            var newFileName = Path.Combine(Path.GetDirectoryName(fileName) ?? string.Empty, value + extension);
+
+            // todo: use FileSystemService
+            File.Move(fileName, newFileName);
+
+            // todo: update Project Unique ID
+            return true;
         }
     }
 }

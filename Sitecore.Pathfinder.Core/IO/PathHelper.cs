@@ -102,6 +102,20 @@ namespace Sitecore.Pathfinder.IO
         }
 
         [NotNull]
+        public static string GetExtension([NotNull] string fileName)
+        {
+            var s = NormalizeFilePath(fileName).LastIndexOf('\\');
+            if (s < 0)
+            {
+                var e0 = fileName.IndexOf('.');
+                return e0 < 0 ? string.Empty : fileName.Mid(e0);
+            }
+
+            var e1 = fileName.IndexOf('.', s);
+            return e1 < 0 ? string.Empty : fileName.Mid(e1);
+        }
+
+        [NotNull]
         public static string GetFileNameWithoutExtensions([NotNull] string fileName)
         {
             var s = NormalizeFilePath(fileName).LastIndexOf('\\');
@@ -178,7 +192,7 @@ namespace Sitecore.Pathfinder.IO
 
         public static bool IsQualifiedName([NotNull] string name)
         {
-            return name.IndexOf('/') > 0;
+            return name.IndexOf('/') >= 0;
         }
 
         public static bool MatchesPattern([NotNull] string fileName, [NotNull] string pattern)

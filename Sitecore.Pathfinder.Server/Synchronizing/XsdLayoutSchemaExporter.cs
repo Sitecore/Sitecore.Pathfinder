@@ -18,10 +18,10 @@ using Sitecore.SecurityModel;
 using Sitecore.Text;
 using Sitecore.Zip;
 
-namespace Sitecore.Pathfinder.Resources
+namespace Sitecore.Pathfinder.Synchronizing
 {
-    [Export(typeof(IResourceExporter))]
-    public class XsdLayoutSchemaExporter : IResourceExporter
+    [Export(typeof(ISynchronizationExporter))]
+    public class XsdLayoutSchemaExporter : ISynchronizationExporter
     {
         public const string Namespace = "http://www.w3.org/2001/XMLSchema";
 
@@ -51,6 +51,7 @@ namespace Sitecore.Pathfinder.Resources
             using (new SecurityDisabler())
             {
                 var renderingItems = database.SelectItems("//*[" + Constants.RenderingIdsFastQuery + "]").OrderBy(r => r.Name).ToList();
+                var deviceNames = database.GetItem(ItemIDs.DevicesRoot)?.Children.Select(i => i.Name).ToList() ?? new List<string>();
 
                 var writer = new StringWriter();
                 var output = new XmlTextWriter(writer)
@@ -58,7 +59,7 @@ namespace Sitecore.Pathfinder.Resources
                     Formatting = Formatting.Indented
                 };
 
-                WriteSchema(output, schemaNamespace, renderingItems);
+                WriteSchema(output, schemaNamespace, deviceNames, renderingItems);
 
                 return writer.ToString();
             }
@@ -178,7 +179,7 @@ namespace Sitecore.Pathfinder.Resources
             output.WriteEndElement(); // simpletype
         }
 
-        protected virtual void WriteDevices([NotNull] XmlTextWriter output)
+        protected virtual void WriteDevices([NotNull] XmlTextWriter output, [Diagnostics.NotNull] List<string> deviceNames)
         {
             output.WriteStartElement(Xs, "element", Namespace);
             output.WriteAttributeString("name", "Device");
@@ -187,8 +188,8 @@ namespace Sitecore.Pathfinder.Resources
 
             WriterRenderingSequence(output);
 
-            WriteAttributeString(output, "Name", "xs:string", "The name of the device");
-            WriteAttributeString(output, "Layout", "xs:string", "The path to the layout.");
+            WriteEnumeration(output, "Name", "The name of the device", deviceNames);
+            WriteAttributeString(output, "Layout", "xs:string", "The name of the layout");
 
             output.WriteEndElement();
 
@@ -204,6 +205,41 @@ namespace Sitecore.Pathfinder.Resources
             output.WriteEndElement();
 
             output.WriteEndElement();
+
+            output.WriteEndElement();
+        }
+
+        private void WriteEnumeration([Diagnostics.NotNull] XmlTextWriter output, [Diagnostics.NotNull] string attributeName, [Diagnostics.NotNull] string help, [Diagnostics.NotNull] IEnumerable<string> items)
+        {
+            if (!items.Any())
+            {
+                WriteAttributeString(output, attributeName, "xs:string", help);
+                return;
+            }
+
+            output.WriteStartElement(Xs, "attribute", Namespace);
+            output.WriteAttributeString("name", attributeName);
+
+            output.WriteStartElement(Xs, "annotation", Namespace);
+            output.WriteStartElement(Xs, "documentation", Namespace);
+            output.WriteValue(help);
+            output.WriteEndElement();
+            output.WriteEndElement();
+
+            output.WriteStartElement(Xs, "simpleType", Namespace);
+
+            output.WriteStartElement(Xs, "restriction", Namespace);
+            output.WriteAttributeString("base", "xs:string");
+
+            foreach (var item in items)
+            {
+                output.WriteStartElement(Xs, "enumeration", Namespace);
+                output.WriteAttributeString("value", item);
+                output.WriteEndElement();
+            }
+
+            output.WriteEndElement(); // restriction
+            output.WriteEndElement(); // simpletype
 
             output.WriteEndElement();
         }
@@ -324,7 +360,7 @@ namespace Sitecore.Pathfinder.Resources
             output.WriteEndElement(); // simpletype
         }
 
-        protected virtual void WriteLayout([NotNull] XmlTextWriter output)
+        protected virtual void WriteLayout([NotNull] XmlTextWriter output, [Diagnostics.NotNull] List<string> deviceNames)
         {
             output.WriteStartElement(Xs, "element", Namespace);
             output.WriteAttributeString("name", "Layout");
@@ -335,7 +371,7 @@ namespace Sitecore.Pathfinder.Resources
             output.WriteAttributeString("minOccurs", "1");
             output.WriteAttributeString("maxOccurs", "unbounded");
 
-            WriteDevices(output);
+            WriteDevices(output, deviceNames);
 
             output.WriteEndElement();
 
@@ -489,7 +525,7 @@ namespace Sitecore.Pathfinder.Resources
             output.WriteEndElement();
         }
 
-        protected virtual void WriteSchema([NotNull] XmlTextWriter output, [NotNull] string nameSpace, [NotNull] IEnumerable<Item> renderingItems)
+        protected virtual void WriteSchema([NotNull] XmlTextWriter output, [NotNull] string nameSpace, [Diagnostics.NotNull] List<string> deviceNames, [NotNull] IEnumerable<Item> renderingItems)
         {
             output.WriteProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\"");
             output.WriteStartElement(Xs, "schema", Namespace);
@@ -510,7 +546,7 @@ namespace Sitecore.Pathfinder.Resources
 
             WriteRenderings(output, renderingItems);
 
-            WriteLayout(output);
+            WriteLayout(output, deviceNames);
 
             output.WriteEndElement();
         }

@@ -17,10 +17,10 @@ using Sitecore.SecurityModel;
 using Sitecore.Text;
 using Sitecore.Zip;
 
-namespace Sitecore.Pathfinder.Resources
+namespace Sitecore.Pathfinder.Synchronizing
 {
-    [Export(typeof(IResourceExporter))]
-    public class JsonLayoutSchemaExporter : IResourceExporter
+    [Export(typeof(ISynchronizationExporter))]
+    public class JsonLayoutSchemaExporter : ISynchronizationExporter
     {
         public void Export(ZipWriter zip)
         {
@@ -47,6 +47,7 @@ namespace Sitecore.Pathfinder.Resources
             {
                 var renderingItems = database.SelectItems("//*[" + Constants.RenderingIdsFastQuery + "]").GroupBy(r => r.Name).Select(group => group.First()).OrderBy(r => r.Name).ToList();
                 renderingItems.RemoveAll(r => StandardValuesManager.IsStandardValuesHolder(r) || r.Name == "$name");
+                var deviceNames = database.GetItem(ItemIDs.DevicesRoot)?.Children.Select(i => i.Name).ToList() ?? new List<string>();
 
                 var writer = new StringWriter();
                 var output = new JsonTextWriter(writer)
@@ -54,7 +55,7 @@ namespace Sitecore.Pathfinder.Resources
                     Formatting = Formatting.Indented
                 };
 
-                WriteSchema(output, renderingItems);
+                WriteSchema(output, deviceNames, renderingItems);
 
                 return writer.ToString();
             }
@@ -110,7 +111,7 @@ namespace Sitecore.Pathfinder.Resources
             return true;
         }
 
-        protected virtual void WriteLayout([NotNull] JsonTextWriter output)
+        protected virtual void WriteLayout([NotNull] JsonTextWriter output, List<string> deviceNames)
         {
             output.WriteStartObject("Layout");
             output.WritePropertyString("type", "object");
@@ -125,7 +126,20 @@ namespace Sitecore.Pathfinder.Resources
             output.WritePropertyString("additionalProperties", false);
 
             output.WriteStartObject("properties");
-            output.WriteObjectString("Name", "type", "string");
+
+            output.WriteStartObject("Name");
+            output.WritePropertyString("description", "The name of the device.");
+            output.WriteStartArray("enum");
+
+            foreach (var deviceName in deviceNames)
+            {
+                output.WriteValue(deviceName);
+            }
+
+            output.WriteEndArray();
+            output.WriteEndObject();
+
+
             output.WriteObjectString("Layout", "type", "string");
             output.WriteObjectString("Renderings", "$ref", "#/definitions/Renderings");
             output.WriteEndObject(); // properties
@@ -273,7 +287,7 @@ namespace Sitecore.Pathfinder.Resources
             output.WriteEndObject(); // Renderings
         }
 
-        protected virtual void WriteSchema([NotNull] JsonTextWriter output, [NotNull] IEnumerable<Item> renderingItems)
+        protected virtual void WriteSchema([NotNull] JsonTextWriter output, List<string> deviceNames, [NotNull] IEnumerable<Item> renderingItems)
         {
             output.WriteStartObject();
 
@@ -290,7 +304,7 @@ namespace Sitecore.Pathfinder.Resources
             output.WriteStartObject("definitions");
             WriteRenderingsDefinition(output, renderingItems);
             WriteRenderings(output, renderingItems);
-            WriteLayout(output);
+            WriteLayout(output, deviceNames);
             output.WriteEndObject();
 
             output.WriteEndObject();
