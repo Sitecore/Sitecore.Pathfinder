@@ -1,7 +1,9 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 
@@ -11,64 +13,76 @@ namespace Sitecore.Pathfinder.Documents.Json
     {
         private ITextNode _root;
 
-        public JsonTextSnapshot([NotNull] ISourceFile sourceFile, [NotNull] string contents) : base(sourceFile, contents)
+        public JsonTextSnapshot([NotNull] ISourceFile sourceFile, [NotNull] string contents) : base(sourceFile)
         {
-        }
-
-        public override ITextNode Root
-        {
-            get
+            try
             {
-                if (_root == null)
-                {
-                    JToken token;
-                    try
-                    {
-                        token = JToken.Parse(Contents);
-                    }
-                    catch
-                    {
-                        return TextNode.Empty;
-                    }
-
-                    var jobject = token as JObject;
-                    if (jobject != null)
-                    {
-                        var r = jobject.Properties().FirstOrDefault(p => p.Name != "$schema");
-                        if (r == null)
-                        {
-                            return TextNode.Empty;
-                        }
-
-                        var value = r.Value as JObject;
-                        if (value == null)
-                        {
-                            return TextNode.Empty;
-                        }
-
-                        _root = Parse(r.Name, value, null);
-                    }
-
-                    var jarray = token as JArray;
-                    if (jarray != null)
-                    {
-                        var r = new JsonTextNode(this, string.Empty, jarray);
-                        _root = r;
-
-                        foreach (var o in jarray.OfType<JObject>())
-                        {
-                            Parse(string.Empty, o, r);
-                        }
-                    }
-                }
-
-                return _root ?? TextNode.Empty;
+                RootToken = JToken.Parse(contents);
+            }
+            catch
+            {
+                RootToken = null;
             }
         }
+
+        public override ITextNode Root => _root ?? (_root = (RootToken != null ? Parse() : TextNode.Empty));
+
+        [CanBeNull]
+        protected JToken RootToken { get; }
 
         public override ITextNode GetJsonChildTextNode(ITextNode textNode, string name)
         {
             return textNode.ChildNodes.FirstOrDefault(n => n.Name == name);
+        }
+
+        public override void SaveChanges()
+        {
+            using (var writer = new StreamWriter(SourceFile.FileName))
+            {
+                using (JsonWriter output = new JsonTextWriter(writer))
+                {
+                    output.Formatting = Formatting.Indented;
+
+                    var serializer = new JsonSerializer();
+                    serializer.Serialize(output, _root);
+                }
+            }
+        }
+
+        [NotNull]
+        protected ITextNode Parse()
+        {
+            var jobject = RootToken as JObject;
+            if (jobject != null)
+            {
+                var property = jobject.Properties().FirstOrDefault(p => p.Name != "$schema");
+                if (property == null)
+                {
+                    return TextNode.Empty;
+                }
+
+                var value = property.Value as JObject;
+                if (value == null)
+                {
+                    return TextNode.Empty;
+                }
+
+                _root = Parse(property.Name, value, null);
+            }
+
+            var jarray = RootToken as JArray;
+            if (jarray != null)
+            {
+                var jsonTextNode = new JsonTextNode(this, string.Empty, jarray);
+                _root = jsonTextNode;
+
+                foreach (var jobj in jarray.OfType<JObject>())
+                {
+                    Parse(string.Empty, jobj, jsonTextNode);
+                }
+            }
+
+            return _root;
         }
 
         [NotNull]

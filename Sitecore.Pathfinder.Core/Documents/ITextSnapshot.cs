@@ -7,18 +7,8 @@ namespace Sitecore.Pathfinder.Documents
 {
     public interface ITextSnapshot : ISnapshot
     {
-        bool IsEditable { get; }
-
-        bool IsEditing { get; }
-
         [NotNull]
         ITextNode Root { get; }
-
-        void BeginEdit();
-
-        void EndEdit();
-
-        void EnsureIsEditing();
 
         [CanBeNull]
         ITextNode GetJsonChildTextNode([NotNull] ITextNode textNode, [NotNull] string name);

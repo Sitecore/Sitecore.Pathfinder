@@ -22,12 +22,33 @@ namespace Sitecore.Pathfinder.Documents.Xml
 
         public XmlTextNode([NotNull] ITextSnapshot snapshot, [NotNull] XNode node, [NotNull] string name, [NotNull] string value, [CanBeNull] ITextNode parent = null) : base(snapshot, GetPosition(node, value.Length), name, value, parent)
         {
-            this._node = node;
+            _node = node;
         }
 
         private static TextPosition GetPosition([NotNull] IXmlLineInfo lineInfo, int lineLength)
         {
             return new TextPosition(lineInfo.LineNumber, lineInfo.LinePosition, lineLength);
+        }
+
+        public override bool SetValue(string value)
+        {
+            var element = _node as XElement;
+            if (element != null)
+            {
+                element.Name = value;
+                Snapshot.IsModified = true;
+                return true;
+            }
+
+            var attribute = _node as XAttribute;
+            if (attribute != null)
+            {
+                attribute.Value = value;
+                Snapshot.IsModified = true;
+                return true;
+            }
+
+            return false;
         }
     }
 }

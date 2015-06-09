@@ -40,7 +40,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public ISnapshot Snapshot { get; }
 
-        public abstract void Rename(string newQualifiedName);
+        public abstract void Rename(string newShortName);
 
         protected virtual void Merge([NotNull] IProjectItem newProjectItem, bool overwrite)
         {

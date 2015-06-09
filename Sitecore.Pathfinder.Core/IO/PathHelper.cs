@@ -176,6 +176,11 @@ namespace Sitecore.Pathfinder.IO
             return itemPath;
         }
 
+        public static bool IsQualifiedName([NotNull] string name)
+        {
+            return name.IndexOf('/') > 0;
+        }
+
         public static bool MatchesPattern([NotNull] string fileName, [NotNull] string pattern)
         {
             var s = Path.GetFileName(fileName);

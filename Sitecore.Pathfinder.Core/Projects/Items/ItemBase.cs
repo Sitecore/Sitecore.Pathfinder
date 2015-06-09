@@ -2,6 +2,7 @@
 
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Documents;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Projects.Items
@@ -34,14 +35,16 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         public override string ShortName => ItemName.Value;
 
-        public override void Rename(string newQualifiedName)
+        public override void Rename(string newShortName)
         {
-            ItemIdOrPath = newQualifiedName;
-            ItemName.SetValue(PathHelper.GetFileNameWithoutExtensions(newQualifiedName));
+            var n = ItemIdOrPath.LastIndexOf('/');
+            ItemIdOrPath = (n >= 0 ? ItemIdOrPath.Left(n + 1) : string.Empty) + newShortName;
+
+            ItemName.SetValue(PathHelper.GetFileNameWithoutExtensions(newShortName));
 
             if (ItemName.Source != null)
             {
-                ItemName.Source.SetValue(ItemName.Value);
+                ItemName.Source.SetValue(PathHelper.IsQualifiedName(ItemName.Source.Value) ? ItemIdOrPath : newShortName);
             }
         }
 

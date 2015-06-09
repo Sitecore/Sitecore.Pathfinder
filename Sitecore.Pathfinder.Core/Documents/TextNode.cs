@@ -46,7 +46,7 @@ namespace Sitecore.Pathfinder.Documents
             return Attributes.FirstOrDefault(a => a.Name == attributeName);
         }
 
-        bool ITextNode.SetValue(string value)
+        public virtual bool SetValue(string value)
         {
             return false;
         }

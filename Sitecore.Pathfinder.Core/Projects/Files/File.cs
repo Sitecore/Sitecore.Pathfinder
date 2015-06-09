@@ -3,6 +3,7 @@
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Documents;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Projects.Files
@@ -23,9 +24,18 @@ namespace Sitecore.Pathfinder.Projects.Files
 
         public override string ShortName => _shortName ?? (_shortName = Path.GetFileName(Snapshot.SourceFile.FileName));
 
-        public override void Rename(string newQualifiedName)
+        public override void Rename(string newShortName)
         {
-            // this.Project.FileSystem.Rename();
+            var fileName = Snapshot.SourceFile.FileName;
+
+            var n = fileName.LastIndexOf('.');
+            var extension = n >= 0 ? fileName.Mid(n) : string.Empty;
+
+            var newFileName = Path.Combine(Path.GetDirectoryName(fileName) ?? string.Empty, newShortName + extension);
+
+            Project.FileSystem.Rename(_filePath, newFileName);
+
+            // todo: update Project Unique ID
         }
 
         [NotNull]

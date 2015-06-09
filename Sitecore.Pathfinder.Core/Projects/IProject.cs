@@ -41,5 +41,7 @@ namespace Sitecore.Pathfinder.Projects
         void Remove([NotNull] IProjectItem projectItem);
 
         void Remove([NotNull] string sourceFileName);
+
+        void SaveChanges();
     }
 }

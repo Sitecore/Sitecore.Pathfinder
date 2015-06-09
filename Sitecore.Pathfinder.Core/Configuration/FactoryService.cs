@@ -29,117 +29,117 @@ namespace Sitecore.Pathfinder.Configuration
         [NotNull]
         protected ICompositionService CompositionService { get; }
 
-        public BinFile BinFile(IProject project, ISnapshot snapshot)
+        public virtual BinFile BinFile(IProject project, ISnapshot snapshot)
         {
             return new BinFile(project, snapshot);
         }
 
-        public IProjectItem ContentFile(IProject project, ISnapshot snapshot)
+        public virtual IProjectItem ContentFile(IProject project, ISnapshot snapshot)
         {
             return new ContentFile(project, snapshot);
         }
 
-        public DeviceReference DeviceReference(IProjectItem projectItem, ITextNode deviceNameTextNode, string targetQualifiedName)
+        public virtual DeviceReference DeviceReference(IProjectItem projectItem, ITextNode deviceNameTextNode, string targetQualifiedName)
         {
             return new DeviceReference(projectItem, deviceNameTextNode, targetQualifiedName);
         }
 
-        public Diagnostic Diagnostic(string fileName, TextPosition position, Severity severity, string text)
+        public virtual Diagnostic Diagnostic(string fileName, TextPosition position, Severity severity, string text)
         {
             return new Diagnostic(fileName, position, severity, text);
         }
 
-        public ExternalReferenceItem ExternalReferenceItem(IProject project, string externalReference, ISnapshot snapshot, string databaseName, string itemName, string itemIdOrPath)
+        public virtual ExternalReferenceItem ExternalReferenceItem(IProject project, string externalReference, ISnapshot snapshot, string databaseName, string itemName, string itemIdOrPath)
         {
             return new ExternalReferenceItem(project, externalReference, snapshot, databaseName, itemName, itemIdOrPath);
         }
 
-        public Field Field(Item item, string fieldName, string language, int version, string value, string valueHint = "")
+        public virtual Field Field(Item item, string fieldName, string language, int version, string value, string valueHint = "")
         {
             return new Field(item, fieldName, language, version, value, valueHint);
         }
 
-        public FileReference FileReference(IProjectItem owner, ITextNode sourceTextNode, string targetQualifiedName)
+        public virtual FileReference FileReference(IProjectItem owner, ITextNode sourceTextNode, string targetQualifiedName)
         {
             return new FileReference(owner, sourceTextNode, targetQualifiedName);
         }
 
-        public Item Item(IProject project, string itemPath, ITextNode textNode, string databaseName, string itemName, string itemIdOrPath, string templateIdOrPath)
+        public virtual Item Item(IProject project, string itemPath, ITextNode textNode, string databaseName, string itemName, string itemIdOrPath, string templateIdOrPath)
         {
             return new Item(project, itemPath, textNode, databaseName, itemName, itemIdOrPath, templateIdOrPath);
         }
 
-        public ItemParseContext ItemParseContext(IParseContext context, ItemParser itemParser, string parentItemPath)
+        public virtual ItemParseContext ItemParseContext(IParseContext context, ItemParser itemParser, string parentItemPath)
         {
             return new ItemParseContext(context, itemParser, parentItemPath);
         }
 
-        public LayoutReference LayoutReference(IProjectItem projectItem, ITextNode layoutTextNode, string targetQualifiedName)
+        public virtual LayoutReference LayoutReference(IProjectItem projectItem, ITextNode layoutTextNode, string targetQualifiedName)
         {
             return new LayoutReference(projectItem, layoutTextNode, targetQualifiedName);
         }
 
-        public LayoutRenderingReference LayoutRenderingReference(IProjectItem projectItem, ITextNode renderingTextNode, string targetQualifiedName)
+        public virtual LayoutRenderingReference LayoutRenderingReference(IProjectItem projectItem, ITextNode renderingTextNode, string targetQualifiedName)
         {
             return new LayoutRenderingReference(projectItem, renderingTextNode, targetQualifiedName);
         }
 
-        public MediaFile MediaFile(IProject project, ISnapshot snapshot, Item mediaItem)
+        public virtual MediaFile MediaFile(IProject project, ISnapshot snapshot, Item mediaItem)
         {
             return new MediaFile(project, snapshot, mediaItem);
         }
 
-        public IProject Project(ProjectOptions projectOptions, List<string> sourceFileNames)
+        public virtual IProject Project(ProjectOptions projectOptions, List<string> sourceFileNames)
         {
             return CompositionService.Resolve<IProject>().Load(projectOptions, sourceFileNames);
         }
 
-        public ProjectOptions ProjectOptions(string projectDirectory, string databaseName)
+        public virtual ProjectOptions ProjectOptions(string projectDirectory, string databaseName)
         {
             return new ProjectOptions(projectDirectory, databaseName);
         }
 
-        public IReference Reference(IProjectItem projectItem, ITextNode sourceTextNode, string targetQualifiedName)
+        public virtual IReference Reference(IProjectItem projectItem, ITextNode sourceTextNode, string targetQualifiedName)
         {
             return new Reference(projectItem, sourceTextNode, targetQualifiedName);
         }
 
-        public Rendering Rendering(IProject project, ISnapshot snapshot, Item item)
+        public virtual Rendering Rendering(IProject project, ISnapshot snapshot, Item item)
         {
             return new Rendering(project, snapshot, item);
         }
 
-        public SerializationFile SerializationFile(IProject project, ISnapshot snapshot)
+        public virtual SerializationFile SerializationFile(IProject project, ISnapshot snapshot)
         {
             return new SerializationFile(project, snapshot);
         }
 
-        public ISnapshot Snapshot(ISourceFile sourceFile)
+        public virtual ISnapshot Snapshot(ISourceFile sourceFile)
         {
             return new Snapshot(sourceFile);
         }
 
-        public ISourceFile SourceFile(IFileSystemService fileSystem, string sourceFileName)
+        public virtual ISourceFile SourceFile(IFileSystemService fileSystem, string sourceFileName)
         {
             return new SourceFile(fileSystem, sourceFileName);
         }
 
-        public Template Template(IProject project, string projectUniqueId, ITextNode textNode, string databaseName, string itemName, string itemIdOrPath)
+        public virtual Template Template(IProject project, string projectUniqueId, ITextNode textNode, string databaseName, string itemName, string itemIdOrPath)
         {
             return new Template(project, projectUniqueId, textNode, databaseName, itemName, itemIdOrPath);
         }
 
-        public TemplateField TemplateField(Template template)
+        public virtual TemplateField TemplateField(Template template)
         {
             return new TemplateField(template);
         }
 
-        public TemplateSection TemplateSection()
+        public virtual TemplateSection TemplateSection()
         {
             return new TemplateSection();
         }
 
-        public TextNode TextNode(ISnapshot snapshot, TextPosition position, string name, string value, ITextNode parent)
+        public virtual TextNode TextNode(ISnapshot snapshot, TextPosition position, string name, string value, ITextNode parent)
         {
             return new TextNode(snapshot, position, name, value, parent);
         }

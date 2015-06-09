@@ -177,6 +177,17 @@ namespace Sitecore.Pathfinder.Projects
             }
         }
 
+        public virtual void SaveChanges()
+        {
+            foreach (var projectItem in Items)
+            {
+                if (projectItem.Snapshot.IsModified)
+                {
+                    projectItem.Snapshot.SaveChanges();
+                }
+            }
+        }
+
         [NotNull]
         protected virtual IProjectItem MergeItem<T>([NotNull] T newItem) where T : Item
         {

@@ -28,7 +28,7 @@ namespace Sitecore.Pathfinder.Documents.Serialization
 
             text = snapshotService.ReplaceTokens(project, sourceFile, text);
 
-            return new TextSnapshot(sourceFile, text);
+            return new TextSnapshot(sourceFile);
         }
     }
 }

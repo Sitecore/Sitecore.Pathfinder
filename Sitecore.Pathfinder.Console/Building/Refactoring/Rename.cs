@@ -27,7 +27,7 @@ namespace Sitecore.Pathfinder.Building.Refactoring
                 return;
             }
 
-            var newQualifiedName = context.Configuration.GetString("to");
+            var newShortName = context.Configuration.GetString("to");
             if (string.IsNullOrEmpty(qualifiedName))
             {
                 context.Trace.Writeline(Texts.You_must_specific_the___to_argument);
@@ -41,25 +41,8 @@ namespace Sitecore.Pathfinder.Building.Refactoring
                 return;
             }
 
-            var n = newQualifiedName.LastIndexOfAny(new[]
-            {
-                '/',
-                '\\'
-            });
-            if (n < 0)
-            {
-                n = qualifiedName.LastIndexOfAny(new[]
-                {
-                    '/',
-                    '\\'
-                });
-                if (n >= 0)
-                {
-                    newQualifiedName = qualifiedName.Left(n + 1) + newQualifiedName;
-                }
-            }
+            projectItem.Rename(newShortName);
 
-            projectItem.Rename(newQualifiedName);
             var queryService = context.CompositionService.Resolve<IQueryService>();
             var references = queryService.FindUsages(context.Project, qualifiedName);
 
@@ -70,6 +53,8 @@ namespace Sitecore.Pathfinder.Building.Refactoring
                     // reference.SourceTextNode.SetValue(newQualifiedName);
                 }
             }
+
+            context.Project.SaveChanges();
         }
     }
 }

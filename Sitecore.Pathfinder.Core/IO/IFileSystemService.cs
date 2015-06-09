@@ -41,5 +41,7 @@ namespace Sitecore.Pathfinder.IO
         void WriteAllText([NotNull] string fileName, [NotNull] string contents);
 
         void XCopy([NotNull] string sourceDirectory, [NotNull] string destinationDirectory);
+
+        void Rename([NotNull] string oldFileName, [NotNull] string newFileName);
     }
 }

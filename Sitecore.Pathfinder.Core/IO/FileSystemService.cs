@@ -81,6 +81,11 @@ namespace Sitecore.Pathfinder.IO
             return File.ReadAllText(fileName);
         }
 
+        public void Rename(string oldFileName, string newFileName)
+        {
+            File.Move(oldFileName, newFileName);
+        }
+
         public virtual void WriteAllText(string fileName, string contents)
         {
             File.WriteAllText(fileName, contents, Encoding.UTF8);

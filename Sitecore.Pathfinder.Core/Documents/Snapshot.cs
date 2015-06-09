@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Documents
@@ -13,6 +14,13 @@ namespace Sitecore.Pathfinder.Documents
             SourceFile = sourceFile;
         }
 
+        public bool IsModified { get; set; }
+
         public ISourceFile SourceFile { get; }
+
+        public virtual void SaveChanges()
+        {
+            throw new InvalidOperationException("Cannot save file: " + SourceFile.FileName);
+        }
     }
 }

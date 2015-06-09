@@ -17,13 +17,20 @@ namespace Sitecore.Pathfinder.Documents.Xml
 
         private ITextNode _root;
 
-        private XElement _rootElement;
-
-        public XmlTextSnapshot([NotNull] ISourceFile sourceFile, [NotNull] string contents, [NotNull] string schemaNamespace, [NotNull] string schemaFileName) : base(sourceFile, contents)
+        public XmlTextSnapshot([NotNull] ISourceFile sourceFile, [NotNull] string contents, [NotNull] string schemaNamespace, [NotNull] string schemaFileName) : base(sourceFile)
         {
             SchemaNamespace = schemaNamespace;
             SchemaFileName = schemaFileName;
-            IsEditable = true;
+
+            try
+            {
+                var doc = XDocument.Parse(contents, LoadOptions.PreserveWhitespace | LoadOptions.SetLineInfo);
+                RootElement = doc.Root;
+            }
+            catch
+            {
+                RootElement = null;
+            }
         }
 
         public override ITextNode Root => _root ?? (_root = (RootElement != null ? Parse(null, RootElement) : TextNode.Empty));
@@ -35,49 +42,19 @@ namespace Sitecore.Pathfinder.Documents.Xml
         public string SchemaNamespace { get; }
 
         [CanBeNull]
-        protected XElement RootElement
+        protected XElement RootElement { get; }
+
+        public override void SaveChanges()
         {
-            get
-            {
-                if (_rootElement != null)
-                {
-                    return _rootElement;
-                }
-
-                XDocument doc;
-                try
-                {
-                    doc = XDocument.Parse(Contents, LoadOptions.PreserveWhitespace | LoadOptions.SetLineInfo);
-                }
-                catch
-                {
-                    return null;
-                }
-
-                _rootElement = doc.Root;
-                return _rootElement;
-            }
-        }
-
-        public override void BeginEdit()
-        {
-            IsEditing = true;
-        }
-
-        public override void EndEdit()
-        {
-            if (!IsEditing)
-            {
-                throw new InvalidOperationException("Document is not in edit mode");
-            }
-
-            if (_root == null)
+            if (RootElement == null)
             {
                 return;
             }
 
-            IsEditing = false;
-            _rootElement.Save(SourceFile.FileName, SaveOptions.DisableFormatting);
+            using (var writer = new StreamWriter(SourceFile.FileName))
+            {
+                RootElement.Save(writer, SaveOptions.DisableFormatting);
+            }
         }
 
         public override void ValidateSchema(IParseContext context)

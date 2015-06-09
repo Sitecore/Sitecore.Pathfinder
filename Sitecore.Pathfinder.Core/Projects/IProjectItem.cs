@@ -29,6 +29,6 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         ISnapshot Snapshot { get; }
 
-        void Rename([NotNull] string newQualifiedName);
+        void Rename([NotNull] string newShortName);
     }
 }
