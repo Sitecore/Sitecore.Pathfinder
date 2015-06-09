@@ -131,7 +131,7 @@
         value = "False";
       }
 
-      var b = value == "True";
+      var b = string.Compare(value, "True", StringComparison.OrdinalIgnoreCase) == 0;
       if (b == ignoreValue)
       {
         return;

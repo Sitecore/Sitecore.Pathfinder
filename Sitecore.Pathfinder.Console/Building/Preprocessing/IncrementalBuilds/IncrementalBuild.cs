@@ -12,7 +12,7 @@
 
     public override void Run(IBuildContext context)
     {
-      context.Trace.TraceInformation("Incremental build started...");
+      context.Trace.TraceInformation(Texts.Incremental_build_started___);
 
       foreach (var projectItem in context.Project.Items)
       {
@@ -30,7 +30,7 @@
         context.ModifiedProjectItems.Add(projectItem);
       }
 
-      context.Trace.TraceInformation("Source files changed", context.ModifiedProjectItems.Count.ToString());
+      context.Trace.TraceInformation(Texts.Source_files_changed, context.ModifiedProjectItems.Count.ToString());
     }                                                                                         
   }
 }

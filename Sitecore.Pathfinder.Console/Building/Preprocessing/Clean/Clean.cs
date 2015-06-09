@@ -1,7 +1,6 @@
 ﻿namespace Sitecore.Pathfinder.Building.Preprocessing.Clean
 {
   using System.ComponentModel.Composition;
-  using Sitecore.Pathfinder.Diagnostics;
 
   [Export(typeof(ITask))]
   public class Clean : TaskBase
@@ -12,7 +11,7 @@
 
     public override void Run(IBuildContext context)
     {
-      context.Trace.TraceInformation("Cleaning output directory...");
+      context.Trace.TraceInformation(Texts.Cleaning_output_directory___);
 
       foreach (var projectItem in context.Project.Items)
       {

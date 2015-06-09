@@ -1,7 +1,6 @@
 namespace Sitecore.Pathfinder.Builders.Items
 {
   using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Projects;
 
   public class FieldBuilder

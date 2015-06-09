@@ -1,5 +1,6 @@
 namespace Sitecore.Pathfinder.Building.Refactoring
 {
+  using System;
   using System.ComponentModel.Composition;
   using System.Linq;
   using Sitecore.Pathfinder.Building.Querying;
@@ -31,7 +32,7 @@ namespace Sitecore.Pathfinder.Building.Refactoring
         return;
       }
 
-      var projectItem = context.Project.Items.FirstOrDefault(i => i.QualifiedName == qualifiedName);
+      var projectItem = context.Project.Items.FirstOrDefault(i => string.Compare(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase) == 0);
       if (projectItem == null)
       {
         context.Trace.Writeline(Texts.Item_not_found, qualifiedName);

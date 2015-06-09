@@ -363,4 +363,10 @@
   <data name="Device_not_found" xml:space="preserve">
     <value>Device not found</value>
   </data>
+  <data name="Incremental_build_started___" xml:space="preserve">
+    <value>Incremental build started...</value>
+  </data>
+  <data name="Source_files_changed" xml:space="preserve">
+    <value>Source files changed</value>
+  </data>
 </root>

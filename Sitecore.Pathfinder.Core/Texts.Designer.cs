@@ -423,6 +423,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Incremental build started....
+        /// </summary>
+        public static string Incremental_build_started___ {
+            get {
+                return ResourceManager.GetString("Incremental_build_started___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Installing....
         /// </summary>
         public static string Installing___ {
@@ -587,7 +596,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to scc.cmd(0,0): information SCC0000: Compiling checkers....
+        ///   Looks up a localized string similar to scc.cmd(0,0): information SCC0000: Compiling extensions....
         /// </summary>
         public static string scc_cmd_0_0___information_SCC0000__Compiling_checkers___ {
             get {
@@ -601,6 +610,15 @@ namespace Sitecore.Pathfinder {
         public static string Source_file_is_empty {
             get {
                 return ResourceManager.GetString("Source_file_is_empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Source files changed.
+        /// </summary>
+        public static string Source_files_changed {
+            get {
+                return ResourceManager.GetString("Source_files_changed", resourceCulture);
             }
         }
         

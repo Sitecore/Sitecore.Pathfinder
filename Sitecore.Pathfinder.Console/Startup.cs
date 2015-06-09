@@ -7,7 +7,6 @@
   using System.Reflection;
   using Microsoft.Framework.ConfigurationModel;
   using Sitecore.Pathfinder.Building;
-  using Sitecore.Pathfinder.Checking;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Extensibility;
   using Sitecore.Pathfinder.Extensions;

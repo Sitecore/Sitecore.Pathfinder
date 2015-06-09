@@ -6,7 +6,6 @@
   using System.Diagnostics;
   using System.IO;
   using System.Text;
-  using Sitecore.Pathfinder.Diagnostics;
 
   [Export(typeof(IFileSystemService))]
   public class FileSystemService : IFileSystemService

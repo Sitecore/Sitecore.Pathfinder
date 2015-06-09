@@ -4,11 +4,9 @@
   using System.ComponentModel.Composition;
   using System.Diagnostics;
   using System.IO;
-  using Sitecore.Diagnostics;
   using Sitecore.IO;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Extensions;
-  using Sitecore.Pathfinder.IO;
   using Sitecore.Pathfinder.Projects;
   using Sitecore.Pathfinder.Projects.Files;
 

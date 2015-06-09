@@ -2,7 +2,6 @@
 {
   using System.ComponentModel.Composition;
   using System.IO;
-  using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.IO;
 
   [Export(typeof(ITask))]

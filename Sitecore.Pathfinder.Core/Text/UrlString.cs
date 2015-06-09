@@ -268,14 +268,9 @@ namespace Sitecore.Pathfinder.Text
       {
         var parameterNameValueArray = parameterNameValue.Split('=');
 
-        if (parameterNameValueArray.Length == 1)
-        {
-          this.parameters.Add(parameterNameValueArray[0], string.Empty);
-        }
-        else
-        {
-          this.parameters.Add(parameterNameValueArray[0], parameterNameValueArray[1]);
-        }
+        var value = parameterNameValueArray.Length == 1 ? string.Empty : parameterNameValueArray[1];
+
+        this.parameters.Add(parameterNameValueArray[0], value);
       }
     }
   }
