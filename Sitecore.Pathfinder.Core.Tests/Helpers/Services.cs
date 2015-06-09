@@ -1,106 +1,108 @@
-﻿namespace Sitecore.Pathfinder.Helpers
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using System;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
+using System.IO;
+using System.Reflection;
+using Microsoft.Framework.ConfigurationModel;
+using Sitecore.Pathfinder.Checking;
+using Sitecore.Pathfinder.Configuration;
+using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Documents;
+using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Parsing;
+using Sitecore.Pathfinder.Projects;
+
+namespace Sitecore.Pathfinder.Helpers
 {
-  using System;
-  using System.ComponentModel.Composition;
-  using System.ComponentModel.Composition.Hosting;
-  using System.IO;
-  using System.Reflection;
-  using Microsoft.Framework.ConfigurationModel;
-  using Sitecore.Pathfinder.Checking;
-  using Sitecore.Pathfinder.Configuration;
-  using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Documents;
-  using Sitecore.Pathfinder.Extensions;
-  using Sitecore.Pathfinder.IO;
-  using Sitecore.Pathfinder.Parsing;
-  using Sitecore.Pathfinder.Projects;
-
-  public class Services
-  {
-    [NotNull]
-    public ICheckerService CheckerService { get; set; }
-
-    [NotNull]
-    public CompositionContainer CompositionService { get; private set; }
-
-    [NotNull]
-    public IConfigurationSourceRoot Configuration { get; private set; }
-
-    [NotNull]
-    public IConfigurationService ConfigurationService { get; private set; }
-
-    [NotNull]
-    public ISnapshotService SnapshotService { get; set; }
-
-    [NotNull]
-    public IFileSystemService FileSystem { get; private set; }
-
-    [NotNull]
-    public IParseService ParseService { get; private set; }
-
-    [NotNull]
-    public IProjectService ProjectService { get; private set; }
-
-    [NotNull]
-    public ITextTokenService TextTokenService { get; set; }
-
-    [NotNull]
-    public ITraceService Trace { get; private set; }
-
-    [NotNull]
-    public CompositionContainer RegisterCompositionService([NotNull] IConfiguration configuration)
+    public class Services
     {
-      var toolspath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
+        [NotNull]
+        public ICheckerService CheckerService { get; set; }
 
-      var pluginDirectory = Path.Combine(toolspath, "plugins");
-      Directory.CreateDirectory(pluginDirectory);
+        [NotNull]
+        public CompositionContainer CompositionService { get; private set; }
 
-      var coreExportProvider = new CatalogExportProvider(new AssemblyCatalog(typeof(Pathfinder.Constants).Assembly));
-      var applicationExportProvider = new CatalogExportProvider(new AssemblyCatalog(typeof(Services).Assembly));
-      var pluginExportProvider = new CatalogExportProvider(new DirectoryCatalog(pluginDirectory));
+        [NotNull]
+        public IConfigurationSourceRoot Configuration { get; private set; }
 
-      // plugin directory exports takes precedence over application exports
-      var compositionContainer = new CompositionContainer(pluginExportProvider, applicationExportProvider, coreExportProvider);
+        [NotNull]
+        public IConfigurationService ConfigurationService { get; private set; }
 
-      coreExportProvider.SourceProvider = compositionContainer;
-      applicationExportProvider.SourceProvider = compositionContainer;
-      pluginExportProvider.SourceProvider = compositionContainer;
+        [NotNull]
+        public IFileSystemService FileSystem { get; private set; }
 
-      // register the composition service itself for DI
-      compositionContainer.ComposeExportedValue<ICompositionService>(compositionContainer);
-      compositionContainer.ComposeExportedValue(configuration);
+        [NotNull]
+        public IParseService ParseService { get; private set; }
 
-      return compositionContainer;
+        [NotNull]
+        public IProjectService ProjectService { get; private set; }
+
+        [NotNull]
+        public ISnapshotService SnapshotService { get; set; }
+
+        [NotNull]
+        public ITextTokenService TextTokenService { get; set; }
+
+        [NotNull]
+        public ITraceService Trace { get; private set; }
+
+        [NotNull]
+        public CompositionContainer RegisterCompositionService([NotNull] IConfiguration configuration)
+        {
+            var toolspath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
+
+            var pluginDirectory = Path.Combine(toolspath, "plugins");
+            Directory.CreateDirectory(pluginDirectory);
+
+            var coreExportProvider = new CatalogExportProvider(new AssemblyCatalog(typeof(Constants).Assembly));
+            var applicationExportProvider = new CatalogExportProvider(new AssemblyCatalog(typeof(Services).Assembly));
+            var pluginExportProvider = new CatalogExportProvider(new DirectoryCatalog(pluginDirectory));
+
+            // plugin directory exports takes precedence over application exports
+            var compositionContainer = new CompositionContainer(pluginExportProvider, applicationExportProvider, coreExportProvider);
+
+            coreExportProvider.SourceProvider = compositionContainer;
+            applicationExportProvider.SourceProvider = compositionContainer;
+            pluginExportProvider.SourceProvider = compositionContainer;
+
+            // register the composition service itself for DI
+            compositionContainer.ComposeExportedValue<ICompositionService>(compositionContainer);
+            compositionContainer.ComposeExportedValue(configuration);
+
+            return compositionContainer;
+        }
+
+        public void Start([CanBeNull] Action mock = null)
+        {
+            Configuration = RegisterConfiguration();
+            CompositionService = RegisterCompositionService(Configuration);
+
+            mock?.Invoke();
+
+            Trace = CompositionService.Resolve<ITraceService>();
+            FileSystem = CompositionService.Resolve<IFileSystemService>();
+            ParseService = CompositionService.Resolve<IParseService>();
+            ProjectService = CompositionService.Resolve<IProjectService>();
+            ConfigurationService = CompositionService.Resolve<IConfigurationService>();
+            SnapshotService = CompositionService.Resolve<ISnapshotService>();
+            TextTokenService = CompositionService.Resolve<ITextTokenService>();
+            CheckerService = CompositionService.Resolve<ICheckerService>();
+        }
+
+        [NotNull]
+        protected IConfigurationSourceRoot RegisterConfiguration()
+        {
+            var configuration = new Microsoft.Framework.ConfigurationModel.Configuration();
+            configuration.Add(new MemoryConfigurationSource());
+
+            var toolsDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "Website\\.sitecore.tools");
+            configuration.Set(Constants.Configuration.ToolsDirectory, toolsDirectory);
+            configuration.Set(Constants.Configuration.SystemConfigFileName, "scconfig.json");
+
+            return configuration;
+        }
     }
-
-    public void Start([CanBeNull] Action mock = null)
-    {
-      this.Configuration = this.RegisterConfiguration();
-      this.CompositionService = this.RegisterCompositionService(this.Configuration);
-
-      mock?.Invoke();
-
-      this.Trace = this.CompositionService.Resolve<ITraceService>();
-      this.FileSystem = this.CompositionService.Resolve<IFileSystemService>();
-      this.ParseService = this.CompositionService.Resolve<IParseService>();
-      this.ProjectService = this.CompositionService.Resolve<IProjectService>();
-      this.ConfigurationService = this.CompositionService.Resolve<IConfigurationService>();
-      this.SnapshotService = this.CompositionService.Resolve<ISnapshotService>();
-      this.TextTokenService = this.CompositionService.Resolve<ITextTokenService>();
-      this.CheckerService = this.CompositionService.Resolve<ICheckerService>();
-    }
-
-    [NotNull]
-    protected IConfigurationSourceRoot RegisterConfiguration()
-    {
-      var configuration = new Configuration();
-      configuration.Add(new MemoryConfigurationSource());
-
-      var toolsDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "Website\\.sitecore.tools");
-      configuration.Set(Pathfinder.Constants.Configuration.ToolsDirectory, toolsDirectory);
-      configuration.Set(Pathfinder.Constants.Configuration.SystemConfigFileName, "scconfig.json");
-
-      return configuration;
-    }
-  }
 }

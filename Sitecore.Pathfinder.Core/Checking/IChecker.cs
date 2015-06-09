@@ -1,9 +1,11 @@
-﻿namespace Sitecore.Pathfinder.Checking
-{
-  using Sitecore.Pathfinder.Diagnostics;
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-  public interface IChecker
-  {
-    void Check([NotNull] ICheckerContext context);
-  }
+using Sitecore.Pathfinder.Diagnostics;
+
+namespace Sitecore.Pathfinder.Checking
+{
+    public interface IChecker
+    {
+        void Check([NotNull] ICheckerContext context);
+    }
 }

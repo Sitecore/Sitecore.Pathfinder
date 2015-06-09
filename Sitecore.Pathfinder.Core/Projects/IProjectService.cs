@@ -1,10 +1,12 @@
-﻿namespace Sitecore.Pathfinder.Projects
-{
-  using Sitecore.Pathfinder.Diagnostics;
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-  public interface IProjectService
-  {
-    [NotNull]
-    IProject LoadProjectFromConfiguration();
-  }
+using Sitecore.Pathfinder.Diagnostics;
+
+namespace Sitecore.Pathfinder.Projects
+{
+    public interface IProjectService
+    {
+        [NotNull]
+        IProject LoadProjectFromConfiguration();
+    }
 }

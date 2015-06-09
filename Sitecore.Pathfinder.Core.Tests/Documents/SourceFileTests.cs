@@ -1,24 +1,24 @@
-﻿namespace Sitecore.Pathfinder.Documents
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using System;
+using System.IO;
+using NUnit.Framework;
+
+namespace Sitecore.Pathfinder.Documents
 {
-  using System;
-  using System.IO;
-  using System.Reflection;
-  using NUnit.Framework;
-  using Sitecore.Pathfinder.IO;
-
-  [TestFixture]
-  public class SourceFileTests : Tests
-  {
-    [Test]
-    public void ConstructorTest()
+    [TestFixture]
+    public class SourceFileTests : Tests
     {
-      this.Start();
+        [Test]
+        public void ConstructorTest()
+        {
+            Start();
 
-      var fileName = Path.Combine(this.ProjectDirectory, "content\\Home\\HelloWorld.item.xml");
-      var sourceFile = new SourceFile(this.Services.FileSystem, fileName);
+            var fileName = Path.Combine(ProjectDirectory, "content\\Home\\HelloWorld.item.xml");
+            var sourceFile = new SourceFile(Services.FileSystem, fileName);
 
-      Assert.AreEqual(fileName, sourceFile.FileName);
-      Assert.AreNotEqual(DateTime.MinValue, sourceFile.LastWriteTimeUtc);
-    } 
-  }
+            Assert.AreEqual(fileName, sourceFile.FileName);
+            Assert.AreNotEqual(DateTime.MinValue, sourceFile.LastWriteTimeUtc);
+        }
+    }
 }

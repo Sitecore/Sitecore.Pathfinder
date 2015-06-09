@@ -1,32 +1,34 @@
-﻿namespace Sitecore.Pathfinder.Projects
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using System;
+using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Documents;
+using Sitecore.Pathfinder.Projects.References;
+
+namespace Sitecore.Pathfinder.Projects
 {
-  using System;
-  using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Documents;
-  using Sitecore.Pathfinder.Projects.References;
+    public interface IProjectItem
+    {
+        Guid Guid { get; }
 
-  public interface IProjectItem
-  {
-    [NotNull]
-    ISnapshot Snapshot { get; }
+        [NotNull]
+        IProject Project { get; }
 
-    Guid Guid { get; }
+        [NotNull]
+        string ProjectUniqueId { get; }
 
-    [NotNull]
-    IProject Project { get; }
+        [NotNull]
+        string QualifiedName { get; }
 
-    [NotNull]
-    string ProjectUniqueId { get; }
+        [NotNull]
+        ReferenceCollection References { get; }
 
-    [NotNull]
-    string QualifiedName { get; }
+        [NotNull]
+        string ShortName { get; }
 
-    [NotNull]
-    ReferenceCollection References { get; }
+        [NotNull]
+        ISnapshot Snapshot { get; }
 
-    [NotNull]
-    string ShortName { get; }
-
-    void Rename([NotNull] string newQualifiedName);
-  }
+        void Rename([NotNull] string newQualifiedName);
+    }
 }

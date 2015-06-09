@@ -1,30 +1,32 @@
+// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using System.ComponentModel.Composition;
+
 namespace Sitecore.Pathfinder.Checking.Checkers
 {
-  using System.ComponentModel.Composition;
-
-  [Export(typeof(IChecker))]
-  public class GuidChecker : CheckerBase
-  {
-    public override void Check(ICheckerContext context)
+    [Export(typeof(IChecker))]
+    public class GuidChecker : CheckerBase
     {
-      foreach (var projectItem1 in context.Project.Items)
-      {
-        foreach (var projectItem2 in context.Project.Items)
+        public override void Check(ICheckerContext context)
         {
-          if (projectItem1 == projectItem2)
-          {
-            continue;
-          }
+            foreach (var projectItem1 in context.Project.Items)
+            {
+                foreach (var projectItem2 in context.Project.Items)
+                {
+                    if (projectItem1 == projectItem2)
+                    {
+                        continue;
+                    }
 
-          if (projectItem1.Guid != projectItem2.Guid)
-          {
-            continue;
-          }
+                    if (projectItem1.Guid != projectItem2.Guid)
+                    {
+                        continue;
+                    }
 
-          context.Trace.TraceError(Texts.Unique_ID_clash, projectItem1.QualifiedName);
-          context.IsDeployable = false;
+                    context.Trace.TraceError(Texts.Unique_ID_clash, projectItem1.QualifiedName);
+                    context.IsDeployable = false;
+                }
+            }
         }
-      }
     }
-  }
 }

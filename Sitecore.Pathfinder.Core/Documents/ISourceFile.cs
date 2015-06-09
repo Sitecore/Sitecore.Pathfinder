@@ -1,32 +1,34 @@
-﻿namespace Sitecore.Pathfinder.Documents
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using System;
+using System.Xml.Linq;
+using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Projects;
+
+namespace Sitecore.Pathfinder.Documents
 {
-  using System;
-  using System.Xml.Linq;
-  using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Projects;
+    public interface ISourceFile
+    {
+        [NotNull]
+        string FileName { get; }
 
-  public interface ISourceFile
-  {
-    [NotNull]
-    string FileName { get; }
+        bool IsModified { get; set; }
 
-    bool IsModified { get; set; }
+        DateTime LastWriteTimeUtc { get; }
 
-    DateTime LastWriteTimeUtc { get; }
+        [NotNull]
+        string GetFileNameWithoutExtensions();
 
-    [NotNull]
-    string GetFileNameWithoutExtensions();
+        [NotNull]
+        string GetProjectPath([NotNull] IProject project);
 
-    [NotNull]
-    string GetProjectPath([NotNull] IProject project);
+        [NotNull]
+        string[] ReadAsLines();
 
-    [NotNull]
-    string[] ReadAsLines();
+        [NotNull]
+        string ReadAsText();
 
-    [NotNull]
-    string ReadAsText();
-
-    [CanBeNull]
-    XElement ReadAsXml();
-  }
+        [CanBeNull]
+        XElement ReadAsXml();
+    }
 }

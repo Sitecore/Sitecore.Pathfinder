@@ -1,27 +1,28 @@
+// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using Sitecore.Pathfinder.Projects;
+
 namespace Sitecore.Pathfinder.Builders.Items
 {
-  using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Projects;
-
-  public class FieldBuilder
-  {
-    public FieldBuilder([NotNull] Attribute<string> fieldName, [NotNull] string language, int version, [NotNull] string value)
+    public class FieldBuilder
     {
-      this.FieldName = fieldName;
-      this.Language = language;
-      this.Version = version;
-      this.Value = value;
+        public FieldBuilder([Diagnostics.NotNull] Attribute<string> fieldName, [Diagnostics.NotNull] string language, int version, [Diagnostics.NotNull] string value)
+        {
+            FieldName = fieldName;
+            Language = language;
+            Version = version;
+            Value = value;
+        }
+
+        [Diagnostics.NotNull]
+        public Attribute<string> FieldName { get; }
+
+        [Diagnostics.NotNull]
+        public string Language { get; }
+
+        [Diagnostics.NotNull]
+        public string Value { get; set; }
+
+        public int Version { get; }
     }
-
-    [NotNull]
-    public Attribute<string> FieldName { get; }
-
-    [NotNull]
-    public string Language { get; }
-
-    [NotNull]
-    public string Value { get; set; }
-
-    public int Version { get; }
-  }
 }

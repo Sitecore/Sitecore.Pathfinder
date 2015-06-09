@@ -1,19 +1,21 @@
-﻿namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers.Xml
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using System.ComponentModel.Composition;
+using Sitecore.Pathfinder.Documents;
+using Sitecore.Pathfinder.Documents.Xml;
+
+namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers.Xml
 {
-  using System.ComponentModel.Composition;
-  using Sitecore.Pathfinder.Documents;
-  using Sitecore.Pathfinder.Documents.Xml;
-
-  [Export(typeof(ITextNodeParser))]
-  public class XmlLayoutParser : LayoutParserBase
-  {
-    public XmlLayoutParser() : base(Constants.TextNodeParsers.Layouts)
+    [Export(typeof(ITextNodeParser))]
+    public class XmlLayoutParser : LayoutParserBase
     {
-    }
+        public XmlLayoutParser() : base(Constants.TextNodeParsers.Layouts)
+        {
+        }
 
-    public override bool CanParse(ItemParseContext context, ITextNode textNode)
-    {
-      return textNode.Name == "LayoutField" && textNode.Snapshot is XmlTextSnapshot;
+        public override bool CanParse(ItemParseContext context, ITextNode textNode)
+        {
+            return textNode.Name == "LayoutField" && textNode.Snapshot is XmlTextSnapshot;
+        }
     }
-  }
 }

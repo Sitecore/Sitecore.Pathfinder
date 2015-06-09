@@ -1,16 +1,18 @@
-﻿namespace Sitecore.Pathfinder.Building
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using Sitecore.Pathfinder.Diagnostics;
+
+namespace Sitecore.Pathfinder.Building
 {
-  using Sitecore.Pathfinder.Diagnostics;
-
-  public abstract class TaskBase : ITask
-  {
-    protected TaskBase([NotNull] string taskName)
+    public abstract class TaskBase : ITask
     {
-      this.TaskName = taskName;
+        protected TaskBase([NotNull] string taskName)
+        {
+            TaskName = taskName;
+        }
+
+        public string TaskName { get; }
+
+        public abstract void Run(IBuildContext context);
     }
-
-    public string TaskName { get; }
-
-    public abstract void Run(IBuildContext context);
-  }
 }

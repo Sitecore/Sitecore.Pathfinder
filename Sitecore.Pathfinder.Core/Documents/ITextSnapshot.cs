@@ -1,26 +1,28 @@
-﻿namespace Sitecore.Pathfinder.Documents
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Parsing;
+
+namespace Sitecore.Pathfinder.Documents
 {
-  using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Parsing;
+    public interface ITextSnapshot : ISnapshot
+    {
+        bool IsEditable { get; }
 
-  public interface ITextSnapshot : ISnapshot
-  {
-    bool IsEditable { get; }
+        bool IsEditing { get; }
 
-    bool IsEditing { get; }
+        [NotNull]
+        ITextNode Root { get; }
 
-    [NotNull]
-    ITextNode Root { get; }
+        void BeginEdit();
 
-    void BeginEdit();
+        void EndEdit();
 
-    void EndEdit();
+        void EnsureIsEditing();
 
-    void EnsureIsEditing();
+        [CanBeNull]
+        ITextNode GetJsonChildTextNode([NotNull] ITextNode textNode, [NotNull] string name);
 
-    [CanBeNull]
-    ITextNode GetJsonChildTextNode([NotNull] ITextNode textNode, [NotNull] string name);
-
-    void ValidateSchema([NotNull] IParseContext context);
-  }
+        void ValidateSchema([NotNull] IParseContext context);
+    }
 }

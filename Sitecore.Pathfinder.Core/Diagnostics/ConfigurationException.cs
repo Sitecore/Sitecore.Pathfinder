@@ -1,20 +1,22 @@
-﻿namespace Sitecore.Pathfinder.Diagnostics
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using System;
+using System.ComponentModel;
+
+namespace Sitecore.Pathfinder.Diagnostics
 {
-  using System;
-  using System.ComponentModel;
-
-  public class ConfigurationException : Exception
-  {
-    public ConfigurationException([Localizable(true)] [NotNull] string text, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
+    public class ConfigurationException : Exception
     {
-      this.Text = text;
-      this.Details = details;
+        public ConfigurationException([Localizable(true)] [NotNull] string text, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
+        {
+            Text = text;
+            Details = details;
+        }
+
+        [NotNull]
+        public string Details { get; }
+
+        [NotNull]
+        public string Text { get; }
     }
-
-    [NotNull]
-    public string Details { get; }
-
-    [NotNull]
-    public string Text { get; }
-  }
 }

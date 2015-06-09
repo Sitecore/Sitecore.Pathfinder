@@ -1,12 +1,14 @@
-﻿namespace Sitecore.Pathfinder.Projects.Files
-{
-  using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Documents;
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-  public class BinFile : File
-  {
-    public BinFile([NotNull] IProject project, [NotNull] ISnapshot snapshot) : base(project, snapshot)
+using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Documents;
+
+namespace Sitecore.Pathfinder.Projects.Files
+{
+    public class BinFile : File
     {
+        public BinFile([NotNull] IProject project, [NotNull] ISnapshot snapshot) : base(project, snapshot)
+        {
+        }
     }
-  }
 }

@@ -1,33 +1,35 @@
+// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using System.ComponentModel.Composition;
+using System.Linq;
+using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Projects.Files;
+
 namespace Sitecore.Pathfinder.Building.Commands
 {
-  using System.ComponentModel.Composition;
-  using System.Linq;
-  using Sitecore.Pathfinder.IO;
-  using Sitecore.Pathfinder.Projects.Files;
-
-  [Export(typeof(ITask))]
-  public class ListProject : TaskBase
-  {
-    public ListProject() : base("list-project")
+    [Export(typeof(ITask))]
+    public class ListProject : TaskBase
     {
-    }
-
-    public override void Run(IBuildContext context)
-    {
-      foreach (var projectItem in context.Project.Items.OrderBy(i => i.GetType().Name))
-      {
-        var qualifiedName = projectItem.QualifiedName;
-
-        var file = projectItem as File;
-        if (file != null)
+        public ListProject() : base("list-project")
         {
-          qualifiedName = "\\" + PathHelper.UnmapPath(context.SolutionDirectory, qualifiedName);
         }
 
-        context.Trace.Writeline($"{qualifiedName} ({projectItem.GetType().Name})");
-      }
+        public override void Run(IBuildContext context)
+        {
+            foreach (var projectItem in context.Project.Items.OrderBy(i => i.GetType().Name))
+            {
+                var qualifiedName = projectItem.QualifiedName;
 
-      context.DisplayDoneMessage = false;
+                var file = projectItem as File;
+                if (file != null)
+                {
+                    qualifiedName = "\\" + PathHelper.UnmapPath(context.SolutionDirectory, qualifiedName);
+                }
+
+                context.Trace.Writeline($"{qualifiedName} ({projectItem.GetType().Name})");
+            }
+
+            context.DisplayDoneMessage = false;
+        }
     }
-  }
 }

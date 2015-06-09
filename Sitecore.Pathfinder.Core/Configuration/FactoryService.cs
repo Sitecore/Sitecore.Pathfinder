@@ -1,145 +1,147 @@
-﻿namespace Sitecore.Pathfinder.Configuration
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Documents;
+using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Parsing;
+using Sitecore.Pathfinder.Parsing.Items;
+using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Projects.Files;
+using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Projects.Layouts;
+using Sitecore.Pathfinder.Projects.References;
+using Sitecore.Pathfinder.Projects.Templates;
+
+namespace Sitecore.Pathfinder.Configuration
 {
-  using System.Collections.Generic;
-  using System.ComponentModel.Composition;
-  using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Documents;
-  using Sitecore.Pathfinder.Extensions;
-  using Sitecore.Pathfinder.IO;
-  using Sitecore.Pathfinder.Parsing;
-  using Sitecore.Pathfinder.Parsing.Items;
-  using Sitecore.Pathfinder.Projects;
-  using Sitecore.Pathfinder.Projects.Files;
-  using Sitecore.Pathfinder.Projects.Items;
-  using Sitecore.Pathfinder.Projects.Layouts;
-  using Sitecore.Pathfinder.Projects.References;
-  using Sitecore.Pathfinder.Projects.Templates;
-
-  [Export(typeof(IFactoryService))]
-  public class FactoryService : IFactoryService
-  {
-    [ImportingConstructor]
-    public FactoryService([NotNull] ICompositionService compositionService)
+    [Export(typeof(IFactoryService))]
+    public class FactoryService : IFactoryService
     {
-      this.CompositionService = compositionService;
-    }
+        [ImportingConstructor]
+        public FactoryService([NotNull] ICompositionService compositionService)
+        {
+            CompositionService = compositionService;
+        }
 
-    [NotNull]
-    protected ICompositionService CompositionService { get; }
+        [NotNull]
+        protected ICompositionService CompositionService { get; }
 
-    public BinFile BinFile(IProject project, ISnapshot snapshot)
-    {
-      return new BinFile(project, snapshot);
-    }
+        public BinFile BinFile(IProject project, ISnapshot snapshot)
+        {
+            return new BinFile(project, snapshot);
+        }
 
-    public IProjectItem ContentFile(IProject project, ISnapshot snapshot)
-    {
-      return new ContentFile(project, snapshot);
-    }
+        public IProjectItem ContentFile(IProject project, ISnapshot snapshot)
+        {
+            return new ContentFile(project, snapshot);
+        }
 
-    public DeviceReference DeviceReference(IProjectItem projectItem, ITextNode deviceNameTextNode, string targetQualifiedName)
-    {
-      return new DeviceReference(projectItem, deviceNameTextNode, targetQualifiedName);
-    }
+        public DeviceReference DeviceReference(IProjectItem projectItem, ITextNode deviceNameTextNode, string targetQualifiedName)
+        {
+            return new DeviceReference(projectItem, deviceNameTextNode, targetQualifiedName);
+        }
 
-    public Diagnostic Diagnostic(string fileName, TextPosition position, Severity severity, string text)
-    {
-      return new Diagnostic(fileName, position, severity, text);
-    }
+        public Diagnostic Diagnostic(string fileName, TextPosition position, Severity severity, string text)
+        {
+            return new Diagnostic(fileName, position, severity, text);
+        }
 
-    public ExternalReferenceItem ExternalReferenceItem(IProject project, string externalReference, ISnapshot snapshot, string databaseName, string itemName, string itemIdOrPath)
-    {
-      return new ExternalReferenceItem(project, externalReference, snapshot, databaseName, itemName, itemIdOrPath);
-    }
+        public ExternalReferenceItem ExternalReferenceItem(IProject project, string externalReference, ISnapshot snapshot, string databaseName, string itemName, string itemIdOrPath)
+        {
+            return new ExternalReferenceItem(project, externalReference, snapshot, databaseName, itemName, itemIdOrPath);
+        }
 
-    public Field Field(Item item, string fieldName, string language, int version, string value, string valueHint = "")
-    {
-      return new Field(item, fieldName, language, version, value, valueHint);
-    }
+        public Field Field(Item item, string fieldName, string language, int version, string value, string valueHint = "")
+        {
+            return new Field(item, fieldName, language, version, value, valueHint);
+        }
 
-    public FileReference FileReference(IProjectItem owner, ITextNode sourceTextNode, string targetQualifiedName)
-    {
-      return new FileReference(owner, sourceTextNode, targetQualifiedName);
-    }
+        public FileReference FileReference(IProjectItem owner, ITextNode sourceTextNode, string targetQualifiedName)
+        {
+            return new FileReference(owner, sourceTextNode, targetQualifiedName);
+        }
 
-    public Item Item(IProject project, string itemPath, ITextNode textNode, string databaseName, string itemName, string itemIdOrPath, string templateIdOrPath)
-    {
-      return new Item(project, itemPath, textNode, databaseName, itemName, itemIdOrPath, templateIdOrPath);
-    }
+        public Item Item(IProject project, string itemPath, ITextNode textNode, string databaseName, string itemName, string itemIdOrPath, string templateIdOrPath)
+        {
+            return new Item(project, itemPath, textNode, databaseName, itemName, itemIdOrPath, templateIdOrPath);
+        }
 
-    public ItemParseContext ItemParseContext(IParseContext context, ItemParser itemParser, string parentItemPath)
-    {
-      return new ItemParseContext(context, itemParser, parentItemPath);
-    }
+        public ItemParseContext ItemParseContext(IParseContext context, ItemParser itemParser, string parentItemPath)
+        {
+            return new ItemParseContext(context, itemParser, parentItemPath);
+        }
 
-    public LayoutReference LayoutReference(IProjectItem projectItem, ITextNode layoutTextNode, string targetQualifiedName)
-    {
-      return new LayoutReference(projectItem, layoutTextNode, targetQualifiedName);
-    }
+        public LayoutReference LayoutReference(IProjectItem projectItem, ITextNode layoutTextNode, string targetQualifiedName)
+        {
+            return new LayoutReference(projectItem, layoutTextNode, targetQualifiedName);
+        }
 
-    public LayoutRenderingReference LayoutRenderingReference(IProjectItem projectItem, ITextNode renderingTextNode, string targetQualifiedName)
-    {
-      return new LayoutRenderingReference(projectItem, renderingTextNode, targetQualifiedName);
-    }
+        public LayoutRenderingReference LayoutRenderingReference(IProjectItem projectItem, ITextNode renderingTextNode, string targetQualifiedName)
+        {
+            return new LayoutRenderingReference(projectItem, renderingTextNode, targetQualifiedName);
+        }
 
-    public MediaFile MediaFile(IProject project, ISnapshot snapshot, Item mediaItem)
-    {
-      return new MediaFile(project, snapshot, mediaItem);
-    }
+        public MediaFile MediaFile(IProject project, ISnapshot snapshot, Item mediaItem)
+        {
+            return new MediaFile(project, snapshot, mediaItem);
+        }
 
-    public IProject Project(ProjectOptions projectOptions, List<string> sourceFileNames)
-    {
-      return this.CompositionService.Resolve<IProject>().Load(projectOptions, sourceFileNames);
-    }
+        public IProject Project(ProjectOptions projectOptions, List<string> sourceFileNames)
+        {
+            return CompositionService.Resolve<IProject>().Load(projectOptions, sourceFileNames);
+        }
 
-    public ProjectOptions ProjectOptions(string projectDirectory, string databaseName)
-    {
-      return new ProjectOptions(projectDirectory, databaseName);
-    }
+        public ProjectOptions ProjectOptions(string projectDirectory, string databaseName)
+        {
+            return new ProjectOptions(projectDirectory, databaseName);
+        }
 
-    public IReference Reference(IProjectItem projectItem, ITextNode sourceTextNode, string targetQualifiedName)
-    {
-      return new Reference(projectItem, sourceTextNode, targetQualifiedName);
-    }
+        public IReference Reference(IProjectItem projectItem, ITextNode sourceTextNode, string targetQualifiedName)
+        {
+            return new Reference(projectItem, sourceTextNode, targetQualifiedName);
+        }
 
-    public Rendering Rendering(IProject project, ISnapshot snapshot, Item item)
-    {
-      return new Rendering(project, snapshot, item);
-    }
+        public Rendering Rendering(IProject project, ISnapshot snapshot, Item item)
+        {
+            return new Rendering(project, snapshot, item);
+        }
 
-    public SerializationFile SerializationFile(IProject project, ISnapshot snapshot)
-    {
-      return new SerializationFile(project, snapshot);
-    }
+        public SerializationFile SerializationFile(IProject project, ISnapshot snapshot)
+        {
+            return new SerializationFile(project, snapshot);
+        }
 
-    public ISourceFile SourceFile(IFileSystemService fileSystem, string sourceFileName)
-    {
-      return new SourceFile(fileSystem, sourceFileName);
-    }
+        public ISnapshot Snapshot(ISourceFile sourceFile)
+        {
+            return new Snapshot(sourceFile);
+        }
 
-    public Template Template(IProject project, string projectUniqueId, ITextNode textNode, string databaseName, string itemName, string itemIdOrPath)
-    {
-      return new Template(project, projectUniqueId, textNode, databaseName, itemName, itemIdOrPath);
-    }
+        public ISourceFile SourceFile(IFileSystemService fileSystem, string sourceFileName)
+        {
+            return new SourceFile(fileSystem, sourceFileName);
+        }
 
-    public TemplateField TemplateField(Template template)
-    {
-      return new TemplateField(template);
-    }
+        public Template Template(IProject project, string projectUniqueId, ITextNode textNode, string databaseName, string itemName, string itemIdOrPath)
+        {
+            return new Template(project, projectUniqueId, textNode, databaseName, itemName, itemIdOrPath);
+        }
 
-    public TemplateSection TemplateSection()
-    {
-      return new TemplateSection();
-    }
+        public TemplateField TemplateField(Template template)
+        {
+            return new TemplateField(template);
+        }
 
-    public TextNode TextNode(ISnapshot snapshot, TextPosition position, string name, string value, ITextNode parent)
-    {
-      return new TextNode(snapshot, position, name, value, parent);
-    }
+        public TemplateSection TemplateSection()
+        {
+            return new TemplateSection();
+        }
 
-    public ISnapshot Snapshot(ISourceFile sourceFile)
-    {
-      return new Snapshot(sourceFile);
+        public TextNode TextNode(ISnapshot snapshot, TextPosition position, string name, string value, ITextNode parent)
+        {
+            return new TextNode(snapshot, position, name, value, parent);
+        }
     }
-  }
 }

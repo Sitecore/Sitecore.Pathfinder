@@ -1,23 +1,25 @@
-﻿namespace Sitecore.Pathfinder.Packages.Packages
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using NuGet;
+
+namespace Sitecore.Pathfinder.Packages.Packages
 {
-  using NuGet;
-
-  public class NugetPackage : PackageBase
-  {
-    public NugetPackage([NotNull] IPackage package)
+    public class NugetPackage : PackageBase
     {
-      this.Package = package;
+        public NugetPackage([NotNull] IPackage package)
+        {
+            Package = package;
+        }
+
+        public override string Name => Package.Title;
+
+        [NotNull]
+        public IPackage Package { get; }
+
+        public override string PackageId => Package.Id;
+
+        public override string Status => "Available";
+
+        public override SemanticVersion Version => Package.Version;
     }
-
-    public override string Name => this.Package.Title;
-
-    [NotNull]
-    public IPackage Package { get; }
-
-    public override string PackageId => this.Package.Id;
-
-    public override string Status => "Available";
-
-    public override SemanticVersion Version => this.Package.Version;
-  }
 }

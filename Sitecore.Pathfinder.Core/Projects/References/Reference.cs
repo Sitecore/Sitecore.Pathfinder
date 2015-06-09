@@ -1,97 +1,99 @@
-﻿namespace Sitecore.Pathfinder.Projects.References
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using System;
+using System.Diagnostics;
+using System.Linq;
+using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Documents;
+
+namespace Sitecore.Pathfinder.Projects.References
 {
-  using System;
-  using System.Diagnostics;
-  using System.Linq;
-  using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Documents;
-
-  [DebuggerDisplay("{GetType().Name,nq}: {TargetQualifiedName}")]
-  public class Reference : IReference
-  {
-    private bool isValid;
-
-    public Reference([NotNull] IProjectItem owner, [NotNull] string targetQualifiedName)
+    [DebuggerDisplay("{GetType().Name,nq}: {TargetQualifiedName}")]
+    public class Reference : IReference
     {
-      this.Owner = owner;
-      this.TargetQualifiedName = targetQualifiedName;
-    }
+        private bool _isValid;
 
-    public Reference([NotNull] IProjectItem owner, [NotNull] ITextNode sourceTextNode, [NotNull] string targetQualifiedName)
-    {
-      this.Owner = owner;
-      this.SourceTextNode = sourceTextNode;
-      this.TargetQualifiedName = targetQualifiedName;
-    }
-
-    public bool IsResolved { get; set; }
-
-    public bool IsValid
-    {
-      get
-      {
-        if (!this.IsResolved)
+        public Reference([NotNull] IProjectItem owner, [NotNull] string targetQualifiedName)
         {
-          this.Resolve();
+            Owner = owner;
+            TargetQualifiedName = targetQualifiedName;
         }
 
-        return this.isValid;
-      }
-
-      protected set
-      {
-        this.isValid = value;
-      }
-    }
-
-    public IProjectItem Owner { get; }
-
-    public ITextNode SourceTextNode { get; set; }
-
-    public string TargetQualifiedName { get; }
-
-    protected Guid TargetProjectItemGuid { get; set; } = Guid.Empty;
-
-    public void Invalidate()
-    {
-      this.IsResolved = false;
-      this.IsValid = false;
-      this.TargetProjectItemGuid = Guid.Empty;
-    }
-
-    public virtual IProjectItem Resolve()
-    {
-      if (this.IsResolved)
-      {
-        if (!this.IsValid)
+        public Reference([NotNull] IProjectItem owner, [NotNull] ITextNode sourceTextNode, [NotNull] string targetQualifiedName)
         {
-          return null;
+            Owner = owner;
+            SourceTextNode = sourceTextNode;
+            TargetQualifiedName = targetQualifiedName;
         }
 
-        var result = this.Owner.Project.Items.FirstOrDefault(i => i.Guid == this.TargetProjectItemGuid);
-        if (result == null)
+        public bool IsResolved { get; set; }
+
+        public bool IsValid
         {
-          this.IsValid = false;
-          this.TargetProjectItemGuid = Guid.Empty;
+            get
+            {
+                if (!IsResolved)
+                {
+                    Resolve();
+                }
+
+                return _isValid;
+            }
+
+            protected set
+            {
+                _isValid = value;
+            }
         }
 
-        return result;
-      }
+        public IProjectItem Owner { get; }
 
-      this.IsResolved = true;
+        public ITextNode SourceTextNode { get; set; }
 
-      var projectItem = this.Owner.Project.Items.FirstOrDefault(i => string.Compare(i.QualifiedName, this.TargetQualifiedName, StringComparison.OrdinalIgnoreCase) == 0);
-      if (projectItem == null)
-      {
-        this.IsValid = false;
-        this.TargetProjectItemGuid = Guid.Empty;
-        return null;
-      }
+        public string TargetQualifiedName { get; }
 
-      this.TargetProjectItemGuid = projectItem.Guid;
-      this.IsValid = true;
+        protected Guid TargetProjectItemGuid { get; set; } = Guid.Empty;
 
-      return projectItem;
+        public void Invalidate()
+        {
+            IsResolved = false;
+            IsValid = false;
+            TargetProjectItemGuid = Guid.Empty;
+        }
+
+        public virtual IProjectItem Resolve()
+        {
+            if (IsResolved)
+            {
+                if (!IsValid)
+                {
+                    return null;
+                }
+
+                var result = Owner.Project.Items.FirstOrDefault(i => i.Guid == TargetProjectItemGuid);
+                if (result == null)
+                {
+                    IsValid = false;
+                    TargetProjectItemGuid = Guid.Empty;
+                }
+
+                return result;
+            }
+
+            IsResolved = true;
+
+            var projectItem = Owner.Project.Items.FirstOrDefault(i => string.Compare(i.QualifiedName, TargetQualifiedName, StringComparison.OrdinalIgnoreCase) == 0);
+            if (projectItem == null)
+            {
+                IsValid = false;
+                TargetProjectItemGuid = Guid.Empty;
+                return null;
+            }
+
+            TargetProjectItemGuid = projectItem.Guid;
+            IsValid = true;
+
+            return projectItem;
+        }
     }
-  }
 }

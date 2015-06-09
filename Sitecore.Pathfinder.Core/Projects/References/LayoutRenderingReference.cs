@@ -1,21 +1,23 @@
-﻿namespace Sitecore.Pathfinder.Projects.References
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Documents;
+
+namespace Sitecore.Pathfinder.Projects.References
 {
-  using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Documents;
-
-  public class LayoutRenderingReference : Reference
-  {
-    public LayoutRenderingReference([NotNull] IProjectItem owner, [NotNull] ITextNode sourceTextNode, [NotNull] string targetQualifiedName) : base(owner, sourceTextNode, targetQualifiedName)
+    public class LayoutRenderingReference : Reference
     {
-    }
+        public LayoutRenderingReference([NotNull] IProjectItem owner, [NotNull] ITextNode sourceTextNode, [NotNull] string targetQualifiedName) : base(owner, sourceTextNode, targetQualifiedName)
+        {
+        }
 
-    public override IProjectItem Resolve()
-    {
-      // todo: actually resolve the rendering
-      this.IsResolved = true;
-      this.IsValid = true;
+        public override IProjectItem Resolve()
+        {
+            // todo: actually resolve the rendering
+            IsResolved = true;
+            IsValid = true;
 
-      return this.Owner;
+            return Owner;
+        }
     }
-  }
 }

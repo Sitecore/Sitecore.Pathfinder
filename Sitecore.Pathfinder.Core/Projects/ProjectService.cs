@@ -1,95 +1,97 @@
-﻿namespace Sitecore.Pathfinder.Projects
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using System.IO;
+using System.Linq;
+using Microsoft.Framework.ConfigurationModel;
+using Sitecore.Pathfinder.Checking;
+using Sitecore.Pathfinder.Configuration;
+using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
+
+namespace Sitecore.Pathfinder.Projects
 {
-  using System.Collections.Generic;
-  using System.ComponentModel.Composition;
-  using System.IO;
-  using System.Linq;
-  using Microsoft.Framework.ConfigurationModel;
-  using Sitecore.Pathfinder.Checking;
-  using Sitecore.Pathfinder.Configuration;
-  using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Extensions;
-  using Sitecore.Pathfinder.IO;
-
-  [Export(typeof(IProjectService))]
-  public class ProjectService : IProjectService
-  {
-    [ImportingConstructor]
-    public ProjectService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] ICheckerService checker)
+    [Export(typeof(IProjectService))]
+    public class ProjectService : IProjectService
     {
-      this.CompositionService = compositionService;
-      this.Configuration = configuration;
-      this.Factory = factory;
-      this.Checker = checker;
-    }
-
-    [NotNull]
-    protected ICheckerService Checker { get; set; }
-
-    [NotNull]
-    protected ICompositionService CompositionService { get; }
-
-    [NotNull]
-    protected IConfiguration Configuration { get; }
-
-    [NotNull]
-    protected IFactoryService Factory { get; }
-
-    public IProject LoadProjectFromConfiguration()
-    {
-      var projectOptions = this.CreateProjectOptions();
-
-      this.LoadExternalReferences(projectOptions);
-      this.LoadRemapFileDirectories(projectOptions);
-
-      var sourceFileNames = new List<string>();
-      this.LoadSourceFileNames(projectOptions, sourceFileNames);
-
-      var project = this.Factory.Project(projectOptions, sourceFileNames);
-
-      return project;
-    }
-
-    [NotNull]
-    protected virtual ProjectOptions CreateProjectOptions()
-    {
-      var projectDirectory = PathHelper.Combine(this.Configuration.GetString(Pathfinder.Constants.Configuration.SolutionDirectory), this.Configuration.GetString(Pathfinder.Constants.Configuration.ProjectDirectory));
-      var databaseName = this.Configuration.GetString(Pathfinder.Constants.Configuration.Database);
-
-      return this.Factory.ProjectOptions(projectDirectory, databaseName);
-    }
-
-    protected virtual void LoadExternalReferences([NotNull] ProjectOptions projectOptions)
-    {
-      foreach (var pair in this.Configuration.GetSubKeys(Pathfinder.Constants.Configuration.ExternalReferences))
-      {
-        projectOptions.ExternalReferences.Add(pair.Key);
-
-        var value = this.Configuration.Get(Pathfinder.Constants.Configuration.ExternalReferences + ":" + pair.Key);
-        if (!string.IsNullOrEmpty(value))
+        [ImportingConstructor]
+        public ProjectService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] ICheckerService checker)
         {
-          projectOptions.ExternalReferences.Add(value);
+            CompositionService = compositionService;
+            Configuration = configuration;
+            Factory = factory;
+            Checker = checker;
         }
-      }
-    }
 
-    protected virtual void LoadRemapFileDirectories([NotNull] ProjectOptions projectOptions)
-    {
-      foreach (var pair in this.Configuration.GetSubKeys(Pathfinder.Constants.Configuration.RemapFileDirectories))
-      {
-        var value = this.Configuration.Get(Pathfinder.Constants.Configuration.RemapFileDirectories + ":" + pair.Key);
-        projectOptions.RemapFileDirectories[pair.Key] = value;
-      }
-    }
+        [NotNull]
+        protected ICheckerService Checker { get; set; }
 
-    protected virtual void LoadSourceFileNames([NotNull] ProjectOptions projectOptions, [NotNull] ICollection<string> sourceFileNames)
-    {
-      var ignoreFileNames = this.Configuration.GetList(Pathfinder.Constants.Configuration.IgnoreFileNames).ToList();
-      var ignoreDirectories = this.Configuration.GetList(Pathfinder.Constants.Configuration.IgnoreDirectories).ToList();
-      ignoreDirectories.Add(Path.GetFileName(this.Configuration.GetString(Pathfinder.Constants.Configuration.ToolsDirectory)));
+        [NotNull]
+        protected ICompositionService CompositionService { get; }
 
-      var visitor = this.CompositionService.Resolve<ProjectDirectoryVisitor>().With(ignoreDirectories, ignoreFileNames);
-      visitor.Visit(projectOptions, sourceFileNames);
+        [NotNull]
+        protected IConfiguration Configuration { get; }
+
+        [NotNull]
+        protected IFactoryService Factory { get; }
+
+        public IProject LoadProjectFromConfiguration()
+        {
+            var projectOptions = CreateProjectOptions();
+
+            LoadExternalReferences(projectOptions);
+            LoadRemapFileDirectories(projectOptions);
+
+            var sourceFileNames = new List<string>();
+            LoadSourceFileNames(projectOptions, sourceFileNames);
+
+            var project = Factory.Project(projectOptions, sourceFileNames);
+
+            return project;
+        }
+
+        [NotNull]
+        protected virtual ProjectOptions CreateProjectOptions()
+        {
+            var projectDirectory = PathHelper.Combine(Configuration.GetString(Constants.Configuration.SolutionDirectory), Configuration.GetString(Constants.Configuration.ProjectDirectory));
+            var databaseName = Configuration.GetString(Constants.Configuration.Database);
+
+            return Factory.ProjectOptions(projectDirectory, databaseName);
+        }
+
+        protected virtual void LoadExternalReferences([NotNull] ProjectOptions projectOptions)
+        {
+            foreach (var pair in Configuration.GetSubKeys(Constants.Configuration.ExternalReferences))
+            {
+                projectOptions.ExternalReferences.Add(pair.Key);
+
+                var value = Configuration.Get(Constants.Configuration.ExternalReferences + ":" + pair.Key);
+                if (!string.IsNullOrEmpty(value))
+                {
+                    projectOptions.ExternalReferences.Add(value);
+                }
+            }
+        }
+
+        protected virtual void LoadRemapFileDirectories([NotNull] ProjectOptions projectOptions)
+        {
+            foreach (var pair in Configuration.GetSubKeys(Constants.Configuration.RemapFileDirectories))
+            {
+                var value = Configuration.Get(Constants.Configuration.RemapFileDirectories + ":" + pair.Key);
+                projectOptions.RemapFileDirectories[pair.Key] = value;
+            }
+        }
+
+        protected virtual void LoadSourceFileNames([NotNull] ProjectOptions projectOptions, [NotNull] ICollection<string> sourceFileNames)
+        {
+            var ignoreFileNames = Configuration.GetList(Constants.Configuration.IgnoreFileNames).ToList();
+            var ignoreDirectories = Configuration.GetList(Constants.Configuration.IgnoreDirectories).ToList();
+            ignoreDirectories.Add(Path.GetFileName(Configuration.GetString(Constants.Configuration.ToolsDirectory)));
+
+            var visitor = CompositionService.Resolve<ProjectDirectoryVisitor>().With(ignoreDirectories, ignoreFileNames);
+            visitor.Visit(projectOptions, sourceFileNames);
+        }
     }
-  }
 }

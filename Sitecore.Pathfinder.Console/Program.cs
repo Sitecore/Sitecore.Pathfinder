@@ -1,15 +1,17 @@
-﻿namespace Sitecore.Pathfinder
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using System.Diagnostics;
+using Sitecore.Pathfinder.Diagnostics;
+
+namespace Sitecore.Pathfinder
 {
-  using System.Diagnostics;
-  using Sitecore.Pathfinder.Diagnostics;
-
-  internal class Program
-  {
-    private static void Main([NotNull] string[] args)
+    internal class Program
     {
-      Trace.Listeners.Add(new ConsoleTraceListener());
+        private static void Main([NotNull] string[] args)
+        {
+            Trace.Listeners.Add(new ConsoleTraceListener());
 
-      new Startup().Start();
-    }                                      
-  }                                 
-}                                     
+            new Startup().Start();
+        }
+    }
+}

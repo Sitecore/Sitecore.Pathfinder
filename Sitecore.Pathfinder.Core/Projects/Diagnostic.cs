@@ -1,26 +1,28 @@
-﻿namespace Sitecore.Pathfinder.Projects
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Documents;
+
+namespace Sitecore.Pathfinder.Projects
 {
-  using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Documents;
-
-  public class Diagnostic
-  {
-    public Diagnostic([NotNull] string fileName, TextPosition position, Severity severity, [NotNull] string text)
+    public class Diagnostic
     {
-      this.FileName = fileName;
-      this.Position = position;
-      this.Severity = severity;
-      this.Text = text;
+        public Diagnostic([NotNull] string fileName, TextPosition position, Severity severity, [NotNull] string text)
+        {
+            FileName = fileName;
+            Position = position;
+            Severity = severity;
+            Text = text;
+        }
+
+        [NotNull]
+        public string FileName { get; }
+
+        public TextPosition Position { get; }
+
+        public Severity Severity { get; }
+
+        [NotNull]
+        public string Text { get; }
     }
-
-    [NotNull]
-    public string FileName { get; }
-
-    public TextPosition Position { get; }
-
-    [NotNull]
-    public string Text { get; }
-
-    public Severity Severity { get; }
-  }
 }

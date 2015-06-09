@@ -1,9 +1,8 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true"  %>
-<%@ Import Namespace="Sitecore.Pathfinder.Packages" %>
 <!DOCTYPE html>      
 <%
-  var packageService = new PackageService();
-  var packages = packageService.CheckForInstalledUpdates(packageService.GetInstalledPackages()).ToList();
+    var packageService = new PackageService();
+    var packages = packageService.CheckForInstalledUpdates(packageService.GetInstalledPackages()).ToList();
 %>
 <html class="fuelux">
 <head>
@@ -122,10 +121,10 @@
           
           <% foreach (var package in packages.OrderBy(p => p.Name).ThenByDescending(p => p.Version))
              {
-               var packageName = package.Name;
-               var version = package.Version;
-               var updateHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx?u=" + HttpUtility.UrlEncode(package.PackageId);
-               var uninstallHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx?r=" + HttpUtility.UrlEncode(package.PackageId);
+                 var packageName = package.Name;
+                 var version = package.Version;
+                 var updateHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx?u=" + HttpUtility.UrlEncode(package.PackageId);
+                 var uninstallHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx?r=" + HttpUtility.UrlEncode(package.PackageId);
           %>
             <tr>
               <td>

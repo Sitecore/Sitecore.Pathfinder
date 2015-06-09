@@ -1,42 +1,44 @@
-﻿namespace Sitecore.Pathfinder.Extensions
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using Newtonsoft.Json;
+using Sitecore.Pathfinder.Diagnostics;
+
+namespace Sitecore.Pathfinder.Extensions
 {
-  using Newtonsoft.Json;
-  using Sitecore.Pathfinder.Diagnostics;
-
-  public static class JsonTextWriterExtensions
-  {
-    public static void WriteObjectString([NotNull] this JsonTextWriter jsonTextWriter, [NotNull] string propertyName, [NotNull] string propertyName2, [NotNull] string value)
+    public static class JsonTextWriterExtensions
     {
-      jsonTextWriter.WritePropertyName(propertyName);
-      jsonTextWriter.WriteStartObject();
+        public static void WriteObjectString([NotNull] this JsonTextWriter jsonTextWriter, [NotNull] string propertyName, [NotNull] string propertyName2, [NotNull] string value)
+        {
+            jsonTextWriter.WritePropertyName(propertyName);
+            jsonTextWriter.WriteStartObject();
 
-      jsonTextWriter.WritePropertyString(propertyName2, value);
+            jsonTextWriter.WritePropertyString(propertyName2, value);
 
-      jsonTextWriter.WriteEndObject();
+            jsonTextWriter.WriteEndObject();
+        }
+
+        public static void WritePropertyString([NotNull] this JsonTextWriter jsonTextWriter, [NotNull] string propertyName, [NotNull] string value)
+        {
+            jsonTextWriter.WritePropertyName(propertyName);
+            jsonTextWriter.WriteValue(value);
+        }
+
+        public static void WritePropertyString([NotNull] this JsonTextWriter jsonTextWriter, [NotNull] string propertyName, bool value)
+        {
+            jsonTextWriter.WritePropertyName(propertyName);
+            jsonTextWriter.WriteValue(value);
+        }
+
+        public static void WriteStartArray([NotNull] this JsonTextWriter jsonTextWriter, [NotNull] string propertyName)
+        {
+            jsonTextWriter.WritePropertyName(propertyName);
+            jsonTextWriter.WriteStartArray();
+        }
+
+        public static void WriteStartObject([NotNull] this JsonTextWriter jsonTextWriter, [NotNull] string propertyName)
+        {
+            jsonTextWriter.WritePropertyName(propertyName);
+            jsonTextWriter.WriteStartObject();
+        }
     }
-
-    public static void WritePropertyString([NotNull] this JsonTextWriter jsonTextWriter, [NotNull] string propertyName, [NotNull] string value)
-    {
-      jsonTextWriter.WritePropertyName(propertyName);
-      jsonTextWriter.WriteValue(value);
-    }
-
-    public static void WritePropertyString([NotNull] this JsonTextWriter jsonTextWriter, [NotNull] string propertyName, bool value)
-    {
-      jsonTextWriter.WritePropertyName(propertyName);
-      jsonTextWriter.WriteValue(value);
-    }
-
-    public static void WriteStartArray([NotNull] this JsonTextWriter jsonTextWriter, [NotNull] string propertyName)
-    {
-      jsonTextWriter.WritePropertyName(propertyName);
-      jsonTextWriter.WriteStartArray();
-    }
-
-    public static void WriteStartObject([NotNull] this JsonTextWriter jsonTextWriter, [NotNull] string propertyName)
-    {
-      jsonTextWriter.WritePropertyName(propertyName);
-      jsonTextWriter.WriteStartObject();
-    }
-  }
 }

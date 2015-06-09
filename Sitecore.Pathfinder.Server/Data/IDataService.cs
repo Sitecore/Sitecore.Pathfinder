@@ -1,11 +1,12 @@
-﻿namespace Sitecore.Pathfinder.Data
-{
-  using Sitecore.Data;
-  using Sitecore.Pathfinder.Diagnostics;
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-  public interface IDataService
-  {
-    [CanBeNull]
-    Database GetDatabase([NotNull] string databaseName);
-  }
+using Sitecore.Data;
+
+namespace Sitecore.Pathfinder.Data
+{
+    public interface IDataService
+    {
+        [Diagnostics.CanBeNull]
+        Database GetDatabase([Diagnostics.NotNull] string databaseName);
+    }
 }

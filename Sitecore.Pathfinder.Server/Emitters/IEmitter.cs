@@ -1,13 +1,15 @@
-﻿namespace Sitecore.Pathfinder.Emitters
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using Sitecore.Pathfinder.Projects;
+
+namespace Sitecore.Pathfinder.Emitters
 {
-  using Sitecore.Pathfinder.Projects;
+    public interface IEmitter
+    {
+        double Sortorder { get; }
 
-  public interface IEmitter
-  {
-    double Sortorder { get; }
+        bool CanEmit([NotNull] IEmitContext context, [NotNull] IProjectItem projectItem);
 
-    bool CanEmit([NotNull] IEmitContext context, [NotNull] IProjectItem projectItem);
-
-    void Emit([NotNull] IEmitContext context, [NotNull] IProjectItem projectItem);
-  }
+        void Emit([NotNull] IEmitContext context, [NotNull] IProjectItem projectItem);
+    }
 }

@@ -1,23 +1,24 @@
-﻿namespace Sitecore.Pathfinder.Building.Preprocessing.Rebuild
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using System.ComponentModel.Composition;
+using Sitecore.Pathfinder.Building.Preprocessing.IncrementalBuilds;
+
+namespace Sitecore.Pathfinder.Building.Preprocessing.Rebuild
 {
-  using System.ComponentModel.Composition;
-  using Sitecore.Pathfinder.Building.Preprocessing.Clean;
-  using Sitecore.Pathfinder.Building.Preprocessing.IncrementalBuilds;
-
-  [Export(typeof(ITask))]
-  public class Rebuild : TaskBase
-  {
-    public Rebuild() : base("rebuild")
+    [Export(typeof(ITask))]
+    public class Rebuild : TaskBase
     {
-    }
+        public Rebuild() : base("rebuild")
+        {
+        }
 
-    public override void Run(IBuildContext context)
-    {
-      var clean = new Clean();
-      clean.Run(context);
+        public override void Run(IBuildContext context)
+        {
+            var clean = new Clean.Clean();
+            clean.Run(context);
 
-      var incrementalBuild = new IncrementalBuild();
-      incrementalBuild.Run(context);
+            var incrementalBuild = new IncrementalBuild();
+            incrementalBuild.Run(context);
+        }
     }
-  }
 }

@@ -1,26 +1,28 @@
-﻿namespace Sitecore.Pathfinder.Parsing.Items
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Documents;
+
+namespace Sitecore.Pathfinder.Parsing.Items
 {
-  using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Documents;
-
-  public class ItemParseContext
-  {
-    public ItemParseContext([NotNull] IParseContext parseContext, [NotNull] ItemParser parser, [NotNull] string parentItemPath)
+    public class ItemParseContext
     {
-      this.ParseContext = parseContext;
-      this.Parser = parser;
-      this.ParentItemPath = parentItemPath;
+        public ItemParseContext([NotNull] IParseContext parseContext, [NotNull] ItemParser parser, [NotNull] string parentItemPath)
+        {
+            ParseContext = parseContext;
+            Parser = parser;
+            ParentItemPath = parentItemPath;
+        }
+
+        [NotNull]
+        public string ParentItemPath { get; }
+
+        [NotNull]
+        public IParseContext ParseContext { get; }
+
+        [NotNull]
+        public ItemParser Parser { get; }
+
+        public ITextSnapshot Snapshot => (ITextSnapshot)ParseContext.Snapshot;
     }
-
-    public ITextSnapshot Snapshot => (ITextSnapshot)this.ParseContext.Snapshot;
-
-    [NotNull]
-    public string ParentItemPath { get; }
-
-    [NotNull]
-    public IParseContext ParseContext { get; }
-
-    [NotNull]
-    public ItemParser Parser { get; }
-  }
 }

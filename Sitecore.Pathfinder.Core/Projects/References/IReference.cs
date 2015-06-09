@@ -1,24 +1,26 @@
-﻿namespace Sitecore.Pathfinder.Projects.References
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Documents;
+
+namespace Sitecore.Pathfinder.Projects.References
 {
-  using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Documents;
+    public interface IReference
+    {
+        bool IsValid { get; }
 
-  public interface IReference
-  {
-    bool IsValid { get; }
+        [NotNull]
+        IProjectItem Owner { get; }
 
-    [NotNull]
-    IProjectItem Owner { get; }
+        [CanBeNull]
+        ITextNode SourceTextNode { get; }
 
-    [CanBeNull]
-    ITextNode SourceTextNode { get; }
+        [NotNull]
+        string TargetQualifiedName { get; }
 
-    [NotNull]
-    string TargetQualifiedName { get; }
+        void Invalidate();
 
-    void Invalidate();
-
-    [CanBeNull]
-    IProjectItem Resolve();
-  }
+        [CanBeNull]
+        IProjectItem Resolve();
+    }
 }

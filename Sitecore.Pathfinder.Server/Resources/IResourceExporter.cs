@@ -1,9 +1,11 @@
-﻿namespace Sitecore.Pathfinder.Resources
-{
-  using Sitecore.Zip;
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-  public interface IResourceExporter
-  {
-    void Export([NotNull] ZipWriter zip);
-  }
+using Sitecore.Zip;
+
+namespace Sitecore.Pathfinder.Resources
+{
+    public interface IResourceExporter
+    {
+        void Export([NotNull] ZipWriter zip);
+    }
 }

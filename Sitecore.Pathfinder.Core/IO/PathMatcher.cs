@@ -1,39 +1,41 @@
-﻿namespace Sitecore.Pathfinder.IO
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using Sitecore.Pathfinder.Diagnostics;
+
+namespace Sitecore.Pathfinder.IO
 {
-  using System;
-  using System.Collections.Generic;
-  using System.Linq;
-  using System.Text.RegularExpressions;
-  using Sitecore.Pathfinder.Diagnostics;
-
-  public class PathMatcher
-  {
-    public PathMatcher([NotNull] string include, [NotNull] string exclude)
+    public class PathMatcher
     {
-      this.Includes = include.Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(this.GetRegex).ToList();
-      this.Excludes = exclude.Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(this.GetRegex).ToList();
+        public PathMatcher([NotNull] string include, [NotNull] string exclude)
+        {
+            Includes = include.Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(GetRegex).ToList();
+            Excludes = exclude.Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(GetRegex).ToList();
+        }
+
+        [NotNull]
+        protected List<Regex> Excludes { get; }
+
+        [NotNull]
+        protected List<Regex> Includes { get; }
+
+        public bool IsMatch([NotNull] string fileName)
+        {
+            fileName = PathHelper.NormalizeFilePath(fileName);
+
+            return Includes.Any(include => include.IsMatch(fileName) && Excludes.All(exclude => !exclude.IsMatch(fileName)));
+        }
+
+        [NotNull]
+        protected Regex GetRegex([NotNull] string wildcard)
+        {
+            var pattern = '^' + Regex.Escape(wildcard).Replace("/", @"\\").Replace(@"\*\*\\", ".*").Replace(@"\*\*", ".*").Replace(@"\*", @"[^\\]*(\\)?").Replace(@"\?", ".") + '$';
+            var options = RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase;
+
+            return new Regex(pattern, options);
+        }
     }
-
-    [NotNull]
-    protected List<Regex> Excludes { get; }
-
-    [NotNull]
-    protected List<Regex> Includes { get; }
-
-    public bool IsMatch([NotNull] string fileName)
-    {
-      fileName = PathHelper.NormalizeFilePath(fileName);
-
-      return this.Includes.Any(include => include.IsMatch(fileName) && this.Excludes.All(exclude => !exclude.IsMatch(fileName)));
-    }
-
-    [NotNull]
-    protected Regex GetRegex([NotNull] string wildcard)
-    {
-      var pattern = '^' + Regex.Escape(wildcard).Replace("/", @"\\").Replace(@"\*\*\\", ".*").Replace(@"\*\*", ".*").Replace(@"\*", @"[^\\]*(\\)?").Replace(@"\?", ".") + '$';
-      var options = RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase;
-
-      return new Regex(pattern, options);
-    }
-  }
 }

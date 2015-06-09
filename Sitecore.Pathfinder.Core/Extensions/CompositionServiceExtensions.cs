@@ -1,23 +1,25 @@
-﻿namespace Sitecore.Pathfinder.Extensions
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
+using Sitecore.Pathfinder.Diagnostics;
+
+namespace Sitecore.Pathfinder.Extensions
 {
-  using System.ComponentModel.Composition;
-  using System.ComponentModel.Composition.Hosting;
-  using Sitecore.Pathfinder.Diagnostics;
-
-  public static class CompositionServiceExtensions
-  {
-    public static T Resolve<T>([NotNull] this ICompositionService compositionService)
+    public static class CompositionServiceExtensions
     {
-      var compositionContainer = (CompositionContainer)compositionService;
+        public static T Resolve<T>([NotNull] this ICompositionService compositionService)
+        {
+            var compositionContainer = (CompositionContainer)compositionService;
 
-      return compositionContainer.GetExportedValue<T>();
+            return compositionContainer.GetExportedValue<T>();
+        }
+
+        public static void Set<T>([NotNull] this ICompositionService compositionService, T value)
+        {
+            var compositionContainer = (CompositionContainer)compositionService;
+
+            compositionContainer.ComposeExportedValue(value);
+        }
     }
-
-    public static void Set<T>([NotNull] this ICompositionService compositionService, T value)
-    {
-      var compositionContainer = (CompositionContainer)compositionService;
-
-      compositionContainer.ComposeExportedValue(value);
-    }
-  }
 }

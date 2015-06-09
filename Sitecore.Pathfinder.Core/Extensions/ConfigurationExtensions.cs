@@ -1,58 +1,60 @@
-﻿namespace Sitecore.Pathfinder.Extensions
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using Microsoft.Framework.ConfigurationModel;
+using Sitecore.Pathfinder.Diagnostics;
+
+namespace Sitecore.Pathfinder.Extensions
 {
-  using System;
-  using System.Collections.Generic;
-  using System.IO;
-  using Microsoft.Framework.ConfigurationModel;
-  using Sitecore.Pathfinder.Diagnostics;
-
-  public static class ConfigurationExtensions
-  {
-    [NotNull]
-    public static IConfigurationSourceRoot AddFile([NotNull] this IConfigurationSourceRoot configuration, [NotNull] string path)
+    public static class ConfigurationExtensions
     {
-      if (!File.Exists(path))
-      {
-        return configuration;
-      }
+        [NotNull]
+        public static IConfigurationSourceRoot AddFile([NotNull] this IConfigurationSourceRoot configuration, [NotNull] string path)
+        {
+            if (!File.Exists(path))
+            {
+                return configuration;
+            }
 
-      var extension = Path.GetExtension(path).ToLowerInvariant();
-      switch (extension)
-      {
-        case ".ini":
-          configuration.AddIniFile(path);
-          break;
-        case ".json":
-        case ".js":
-          configuration.AddJsonFile(path);
-          break;
+            var extension = Path.GetExtension(path).ToLowerInvariant();
+            switch (extension)
+            {
+                case ".ini":
+                    configuration.AddIniFile(path);
+                    break;
+                case ".json":
+                case ".js":
+                    configuration.AddJsonFile(path);
+                    break;
 
-        // case ".xml":
-        // configuration.AddXmlFile(path);
-        // break;
-      }
+                // case ".xml":
+                // configuration.AddXmlFile(path);
+                // break;
+            }
 
-      return configuration;
+            return configuration;
+        }
+
+        public static bool GetBool([NotNull] this IConfiguration configuration, [NotNull] string key, bool defaultValue = false)
+        {
+            string value;
+            return configuration.TryGet(key, out value) ? string.Compare(value, "true", StringComparison.OrdinalIgnoreCase) == 0 : defaultValue;
+        }
+
+        [NotNull]
+        public static IEnumerable<string> GetList([NotNull] this IConfiguration configuration, [NotNull] string key)
+        {
+            var value = configuration.Get(key) ?? string.Empty;
+            var parts = value.Split(Constants.Space, StringSplitOptions.RemoveEmptyEntries);
+            return parts;
+        }
+
+        [NotNull]
+        public static string GetString([NotNull] this IConfiguration configuration, [NotNull] string key, [NotNull] string defaultValue = "")
+        {
+            return configuration.Get(key) ?? defaultValue;
+        }
     }
-
-    public static bool GetBool([NotNull] this IConfiguration configuration, [NotNull] string key, bool defaultValue = false)
-    {
-      string value;
-      return configuration.TryGet(key, out value) ? string.Compare(value, "true", StringComparison.OrdinalIgnoreCase) == 0 : defaultValue;
-    }
-
-    [NotNull]
-    public static IEnumerable<string> GetList([NotNull] this IConfiguration configuration, [NotNull] string key)
-    {
-      var value = configuration.Get(key) ?? string.Empty;
-      var parts = value.Split(Pathfinder.Constants.Space, StringSplitOptions.RemoveEmptyEntries);
-      return parts;
-    }
-
-    [NotNull]
-    public static string GetString([NotNull] this IConfiguration configuration, [NotNull] string key, [NotNull] string defaultValue = "")
-    {
-      return configuration.Get(key) ?? defaultValue;
-    }
-  }
 }

@@ -1,46 +1,48 @@
-﻿namespace Sitecore.Pathfinder.Diagnostics
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using System;
+using System.ComponentModel;
+using Sitecore.Pathfinder.Documents;
+
+namespace Sitecore.Pathfinder.Diagnostics
 {
-  using System;
-  using System.ComponentModel;
-  using Sitecore.Pathfinder.Documents;
-
-  public class EmitException : Exception
-  {
-    public EmitException([Localizable(true)] [NotNull] string text) : base(text)
+    public class EmitException : Exception
     {
-      this.Text = text;
+        public EmitException([Localizable(true)] [NotNull] string text) : base(text)
+        {
+            Text = text;
 
-      this.Details = string.Empty;
-      this.FileName = string.Empty;
-      this.Position = TextPosition.Empty;
-      this.Details = string.Empty;
+            Details = string.Empty;
+            FileName = string.Empty;
+            Position = TextPosition.Empty;
+            Details = string.Empty;
+        }
+
+        public EmitException([Localizable(true)] [NotNull] string text, [NotNull] ISnapshot snapshot, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
+        {
+            Text = text;
+            FileName = snapshot.SourceFile.FileName;
+            Position = TextPosition.Empty;
+            Details = details;
+        }
+
+        public EmitException([Localizable(true)] [NotNull] string text, [NotNull] ITextNode textNode, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
+        {
+            Text = text;
+            FileName = textNode.Snapshot.SourceFile.FileName;
+            Position = textNode.Position;
+            Details = details;
+        }
+
+        [NotNull]
+        public string Details { get; }
+
+        [NotNull]
+        public string FileName { get; }
+
+        public TextPosition Position { get; }
+
+        [NotNull]
+        public string Text { get; }
     }
-
-    public EmitException([Localizable(true)] [NotNull] string text, [NotNull] ISnapshot snapshot, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
-    {
-      this.Text = text;
-      this.FileName = snapshot.SourceFile.FileName;
-      this.Position = TextPosition.Empty;
-      this.Details = details;
-    }
-
-    public EmitException([Localizable(true)] [NotNull] string text, [NotNull] ITextNode textNode, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
-    {
-      this.Text = text;
-      this.FileName = textNode.Snapshot.SourceFile.FileName;
-      this.Position = textNode.Position;
-      this.Details = details;
-    }
-
-    [NotNull]
-    public string Details { get; }
-
-    [NotNull]
-    public string FileName { get; }
-
-    public TextPosition Position { get; }
-
-    [NotNull]
-    public string Text { get; }
-  }
 }

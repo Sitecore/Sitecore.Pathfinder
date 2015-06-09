@@ -1,18 +1,20 @@
+// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Documents;
+using Sitecore.Pathfinder.Projects.Files;
+using Sitecore.Pathfinder.Projects.Items;
+
 namespace Sitecore.Pathfinder.Projects.Layouts
 {
-  using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Documents;
-  using Sitecore.Pathfinder.Projects.Files;
-  using Sitecore.Pathfinder.Projects.Items;
-
-  public class Rendering : ContentFile
-  {
-    public Rendering([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] Item item) : base(project, snapshot)
+    public class Rendering : ContentFile
     {
-      this.Item = item;
-    }
+        public Rendering([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] Item item) : base(project, snapshot)
+        {
+            Item = item;
+        }
 
-    [NotNull]
-    public Item Item { get; }
-  }
+        [NotNull]
+        public Item Item { get; }
+    }
 }

@@ -1,13 +1,15 @@
-﻿namespace Sitecore.Pathfinder.Parsing
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using Sitecore.Pathfinder.Diagnostics;
+
+namespace Sitecore.Pathfinder.Parsing
 {
-  using Sitecore.Pathfinder.Diagnostics;
+    public interface IParser
+    {
+        double Sortorder { get; }
 
-  public interface IParser
-  {
-    double Sortorder { get; }
+        bool CanParse([NotNull] IParseContext context);
 
-    bool CanParse([NotNull] IParseContext context);
-
-    void Parse([NotNull] IParseContext context);
-  }
+        void Parse([NotNull] IParseContext context);
+    }
 }

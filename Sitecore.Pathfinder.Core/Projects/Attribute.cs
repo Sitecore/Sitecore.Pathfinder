@@ -1,43 +1,45 @@
-﻿namespace Sitecore.Pathfinder.Projects
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using System.Diagnostics;
+using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Documents;
+
+namespace Sitecore.Pathfinder.Projects
 {
-  using System.Diagnostics;
-  using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Documents;
-
-  [DebuggerDisplay("{GetType().Name,nq}: {Name,nq} = {Value}")]
-  public class Attribute<T>
-  {
-    public Attribute([NotNull] string name, [NotNull] T value)
+    [DebuggerDisplay("{GetType().Name,nq}: {Name,nq} = {Value}")]
+    public class Attribute<T>
     {
-      this.Name = name;
-      this.Value = value;
+        public Attribute([NotNull] string name, [NotNull] T value)
+        {
+            Name = name;
+            Value = value;
+        }
+
+        [NotNull]
+        public string Name { get; }
+
+        [CanBeNull]
+        public ITextNode Source { get; set; }
+
+        [NotNull]
+        public T Value { get; private set; }
+
+        public bool SetValue([NotNull] T value)
+        {
+            Value = value;
+            return Source?.SetValue(value.ToString()) ?? false;
+        }
+
+        public bool SetValue([NotNull] T value, [CanBeNull] ITextNode source)
+        {
+            Value = value;
+            Source = source;
+            return true;
+        }
+
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
     }
-
-    [NotNull]
-    public string Name { get; }
-
-    [CanBeNull]
-    public ITextNode Source { get; set; }
-
-    [NotNull]
-    public T Value { get; private set; }
-
-    public bool SetValue([NotNull] T value)
-    {
-      this.Value = value;
-      return this.Source?.SetValue(value.ToString()) ?? false;
-    }
-
-    public bool SetValue([NotNull] T value, [CanBeNull] ITextNode source)
-    {
-      this.Value = value;
-      this.Source = source;
-      return true;
-    }
-
-    public override string ToString()
-    {
-      return this.Value.ToString();
-    }
-  }
 }

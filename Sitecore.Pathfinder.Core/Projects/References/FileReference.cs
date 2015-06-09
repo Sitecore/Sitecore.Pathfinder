@@ -1,54 +1,56 @@
-﻿namespace Sitecore.Pathfinder.Projects.References
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using System;
+using System.Linq;
+using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Documents;
+using Sitecore.Pathfinder.Projects.Files;
+
+namespace Sitecore.Pathfinder.Projects.References
 {
-  using System;
-  using System.Linq;
-  using Sitecore.Pathfinder.Diagnostics;
-  using Sitecore.Pathfinder.Documents;
-  using Sitecore.Pathfinder.Projects.Files;
-
-  public class FileReference : Reference
-  {
-    public FileReference([NotNull] IProjectItem owner, [NotNull] string targetQualifiedName) : base(owner, targetQualifiedName)
+    public class FileReference : Reference
     {
-    }
-
-    public FileReference([NotNull] IProjectItem owner, [NotNull] ITextNode sourceTextNode, [NotNull] string targetQualifiedName) : base(owner, sourceTextNode, targetQualifiedName)
-    {
-    }
-
-    public override IProjectItem Resolve()
-    {
-      if (this.IsResolved)
-      {
-        if (!this.IsValid)
+        public FileReference([NotNull] IProjectItem owner, [NotNull] string targetQualifiedName) : base(owner, targetQualifiedName)
         {
-          return null;
         }
 
-        var result = this.Owner.Project.Items.FirstOrDefault(i => i.Guid == this.TargetProjectItemGuid);
-        if (result == null)
+        public FileReference([NotNull] IProjectItem owner, [NotNull] ITextNode sourceTextNode, [NotNull] string targetQualifiedName) : base(owner, sourceTextNode, targetQualifiedName)
         {
-          this.IsValid = false;
-          this.TargetProjectItemGuid = Guid.Empty;
         }
 
-        return result;
-      }
+        public override IProjectItem Resolve()
+        {
+            if (IsResolved)
+            {
+                if (!IsValid)
+                {
+                    return null;
+                }
 
-      this.IsResolved = true;
+                var result = Owner.Project.Items.FirstOrDefault(i => i.Guid == TargetProjectItemGuid);
+                if (result == null)
+                {
+                    IsValid = false;
+                    TargetProjectItemGuid = Guid.Empty;
+                }
 
-      var projectItem = this.Owner.Project.Items.OfType<File>().FirstOrDefault(i => string.Compare(i.FilePath, this.TargetQualifiedName, StringComparison.OrdinalIgnoreCase) == 0);
-      if (projectItem == null)
-      {
-        this.IsValid = false;
-        this.TargetProjectItemGuid = Guid.Empty;
-        return null;
-      }
+                return result;
+            }
 
-      this.TargetProjectItemGuid = projectItem.Guid;
-      this.IsValid = true;
+            IsResolved = true;
 
-      return projectItem;
+            var projectItem = Owner.Project.Items.OfType<File>().FirstOrDefault(i => string.Compare(i.FilePath, TargetQualifiedName, StringComparison.OrdinalIgnoreCase) == 0);
+            if (projectItem == null)
+            {
+                IsValid = false;
+                TargetProjectItemGuid = Guid.Empty;
+                return null;
+            }
+
+            TargetProjectItemGuid = projectItem.Guid;
+            IsValid = true;
+
+            return projectItem;
+        }
     }
-  }
 }

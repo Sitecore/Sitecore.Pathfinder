@@ -1,20 +1,22 @@
-﻿namespace Sitecore.Pathfinder.Shell.Client.Applications.Pathfinder
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using System.Web;
+using Sitecore.Pathfinder.Resources;
+
+namespace Sitecore.Pathfinder.Shell.Client.Applications.Pathfinder
 {
-  using System.Web;
-  using Sitecore.Pathfinder.Resources;
-
-  public class UpdateResources : IHttpHandler
-  {
-    public bool IsReusable => true;
-
-    public void ProcessRequest(HttpContext context)
+    public class UpdateResources : IHttpHandler
     {
-      var resourceManager = new ResourceManager();
+        public bool IsReusable => true;
 
-      var fileName = resourceManager.BuildResourceFile();
+        public void ProcessRequest(HttpContext context)
+        {
+            var resourceManager = new ResourceManager();
 
-      context.Response.ContentType = "application/zip";
-      context.Response.WriteFile(fileName);
+            var fileName = resourceManager.BuildResourceFile();
+
+            context.Response.ContentType = "application/zip";
+            context.Response.WriteFile(fileName);
+        }
     }
-  }
 }
