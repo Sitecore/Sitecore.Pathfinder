@@ -15,7 +15,7 @@
   public class ProjectService : IProjectService
   {
     [ImportingConstructor]
-    public ProjectService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, IFactoryService factory, [NotNull] ICheckerService checker)
+    public ProjectService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] ICheckerService checker)
     {
       this.CompositionService = compositionService;
       this.Configuration = configuration;

@@ -3,7 +3,6 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers.Json
   using System.ComponentModel.Composition;
   using Sitecore.Pathfinder.Documents;
   using Sitecore.Pathfinder.Documents.Json;
-  using Sitecore.Pathfinder.Documents.Xml;
 
   [Export(typeof(ITextNodeParser))]
   public class JsonLayoutParser : LayoutParserBase

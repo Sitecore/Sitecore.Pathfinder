@@ -1,10 +1,7 @@
 ﻿namespace Sitecore.Pathfinder.Projects.References
 {
-  using System;
-  using System.Linq;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
-  using Sitecore.Pathfinder.Projects.Files;
 
   public class DeviceReference : Reference
   {

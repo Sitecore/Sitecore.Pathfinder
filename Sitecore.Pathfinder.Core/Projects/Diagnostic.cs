@@ -21,7 +21,6 @@
     [NotNull]
     public string Text { get; }
 
-    [NotNull]
     public Severity Severity { get; }
   }
 }

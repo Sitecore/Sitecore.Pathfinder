@@ -5,7 +5,6 @@
   using System.IO;
   using System.Linq;
   using Sitecore.Pathfinder.Documents;
-  using Sitecore.Pathfinder.Projects.Files;
   using Sitecore.Pathfinder.Projects.Items;
 
   [Export(typeof(IParser))]

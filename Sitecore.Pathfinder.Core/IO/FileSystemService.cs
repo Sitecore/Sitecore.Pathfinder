@@ -55,7 +55,7 @@
       return Directory.GetDirectories(directory);
     }
 
-    public virtual IEnumerable<string> GetFiles([NotNull] string directory, SearchOption searchOptions = SearchOption.TopDirectoryOnly)
+    public virtual IEnumerable<string> GetFiles(string directory, SearchOption searchOptions = SearchOption.TopDirectoryOnly)
     {
       return Directory.GetFiles(directory, "*", searchOptions);
     }

@@ -3,6 +3,7 @@
   using System;
   using System.Xml.Linq;
   using Newtonsoft.Json.Linq;
+  using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Projects;
 
   public class EmptySourceFile : ISourceFile
@@ -25,6 +26,7 @@
       throw new InvalidOperationException("Cannot read from empty source file");
     }
 
+    [NotNull]
     public JObject ReadAsJson()
     {
       throw new InvalidOperationException("Cannot read from empty source file");

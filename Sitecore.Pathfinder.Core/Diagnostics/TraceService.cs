@@ -90,7 +90,7 @@
     {
       if (!string.IsNullOrEmpty(details))
       {
-        text += ": " + details;
+        text += @": " + details;
       }
 
       Console.WriteLine(text);

@@ -4,7 +4,6 @@
   using System.Collections.Generic;
   using Sitecore.Pathfinder.Diagnostics;
   using Sitecore.Pathfinder.Documents;
-  using Sitecore.Pathfinder.Projects.Items;
 
   public abstract class RenderingParser : ParserBase
   {

@@ -35,7 +35,7 @@
       return configuration;
     }
 
-    public static bool GetBool([NotNull] this IConfiguration configuration, [NotNull] string key, [NotNull] bool defaultValue = false)
+    public static bool GetBool([NotNull] this IConfiguration configuration, [NotNull] string key, bool defaultValue = false)
     {
       string value;
       return configuration.TryGet(key, out value) ? string.Compare(value, "true", StringComparison.OrdinalIgnoreCase) == 0 : defaultValue;

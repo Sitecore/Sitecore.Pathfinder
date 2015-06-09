@@ -2,7 +2,6 @@
 {
   using System;
   using System.ComponentModel.Composition;
-  using Sitecore.Pathfinder.Projects.Files;
 
   [Export(typeof(IParser))]
   public class BinFileParser : ParserBase

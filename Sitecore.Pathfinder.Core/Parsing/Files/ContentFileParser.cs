@@ -4,7 +4,6 @@
   using System.ComponentModel.Composition;
   using System.IO;
   using Sitecore.Pathfinder.Extensions;
-  using Sitecore.Pathfinder.Projects.Files;
 
   [Export(typeof(IParser))]
   public class ContentFileParser : ParserBase

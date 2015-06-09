@@ -1,4 +1,6 @@
 ﻿
+// ReSharper disable CodeAnnotationAnalyzer
+
 #pragma warning disable 1591
 
 // ReSharper disable UnusedMember.Global
