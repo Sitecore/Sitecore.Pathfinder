@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><Item xmlns="http://www.sitecore.net/pathfinder/item">
-    <Field Name="Title" Value="/sitecore/content/Home/Hola" />
+    <Field Name="Title">/sitecore/content/Home/Flips</Field>
     <Field Name="Text">
       Welcome to Sitecore Pathfinder</Field>
     <Field Name="__Workflow"></Field>

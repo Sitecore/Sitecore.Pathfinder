@@ -48,7 +48,13 @@ namespace Sitecore.Pathfinder.Documents.Xml
                 return true;
             }
 
-
+            var node = _node as XNode;
+            if (node?.Parent != null)
+            {
+                node.Parent.Value = value;
+                Snapshot.IsModified = true;
+                return true;
+            }
 
             return false;
         }

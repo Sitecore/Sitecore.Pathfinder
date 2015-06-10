@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
 
             var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemName, itemIdOrPath, textNode.Name);
-            item.ItemName.Source = itemNameTextNode;
+            item.ItemName.Source = itemNameTextNode ?? new FileNameTextNode(itemName, textNode.Snapshot);
             item.TemplateIdOrPath.Source = textNode;
 
             item.References.AddRange(ParseReferences(context, item, textNode, item.TemplateIdOrPath.Value));

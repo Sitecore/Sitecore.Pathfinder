@@ -10,6 +10,9 @@ using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.Projects
 {
+    using Sitecore.Pathfinder.Documents.Json;
+    using Sitecore.Pathfinder.Documents.Xml;
+
     [TestFixture]
     public class ProjectTests : Tests
     {
@@ -58,6 +61,11 @@ namespace Sitecore.Pathfinder.Projects
             Assert.AreEqual("JsonContentItem", item.ItemName.Value);
             Assert.AreEqual("/sitecore/content/Home/JsonContentItem", item.ItemIdOrPath);
             Assert.AreEqual("Sample Item", item.TemplateIdOrPath.Value);
+            Assert.IsNotNull(item.ItemName.Source);
+            Assert.AreEqual(typeof(FileNameTextNode), item.ItemName.Source.GetType());
+            Assert.IsNotNull(item.TemplateIdOrPath.Source);
+            Assert.AreEqual(typeof(JsonTextNode), item.TemplateIdOrPath.Source.GetType());
+            Assert.AreEqual("Sample Item", item.TemplateIdOrPath.Source.Value);
 
             var field = item.Fields.FirstOrDefault(f => f.FieldName.Value == "Text");
             Assert.IsNotNull(field);
@@ -80,6 +88,8 @@ namespace Sitecore.Pathfinder.Projects
             Assert.AreEqual("Foo", item.ItemName.Value);
             Assert.AreEqual("/sitecore/content/Home/Foo", item.ItemIdOrPath);
             Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", item.TemplateIdOrPath.Value);
+            Assert.IsNotNull(item.ItemName.Source);
+            Assert.AreEqual(typeof(FileNameTextNode), item.ItemName.Source.GetType());
 
             var textDocument = projectItem.Snapshot as ITextSnapshot;
             Assert.IsNotNull(textDocument);
@@ -113,6 +123,8 @@ namespace Sitecore.Pathfinder.Projects
             Assert.AreEqual("LongHelp", template.LongHelp);
             Assert.AreEqual("/sitecore/content/Home/FooTemplate", template.ItemIdOrPath);
             Assert.AreEqual(1, template.Sections.Count);
+            Assert.IsNotNull(template.ItemName.Source);
+            Assert.AreEqual(typeof(FileNameTextNode), template.ItemName.Source.GetType());
 
             var section = template.Sections[0];
             Assert.AreEqual("Fields", section.Name);
@@ -215,10 +227,17 @@ namespace Sitecore.Pathfinder.Projects
             Assert.AreEqual("XmlContentItem", item.ItemName.Value);
             Assert.AreEqual("/sitecore/content/XmlContentItem", item.ItemIdOrPath);
             Assert.AreEqual("Sample-Item", item.TemplateIdOrPath.Value);
+            Assert.IsNotNull(item.ItemName.Source);
+            Assert.AreEqual(typeof(FileNameTextNode), item.ItemName.Source.GetType());
+            Assert.AreEqual(typeof(XmlTextNode), item.TemplateIdOrPath.Source?.GetType());
+            Assert.AreEqual("Sample-Item", item.TemplateIdOrPath.Source?.Value);
 
             var field = item.Fields.FirstOrDefault(f => f.FieldName.Value == "Text");
             Assert.IsNotNull(field);
             Assert.AreEqual("Hello World", field.Value.Value);
+            Assert.AreEqual(typeof(XmlTextNode), field.Value.Source?.GetType());
+            Assert.AreEqual("Hello World", field.Value.Source?.Value);
+            Assert.AreEqual("Text", field.Value.Source?.Name);
 
             var textDocument = projectItem.Snapshot as ITextSnapshot;
             Assert.IsNotNull(textDocument);
@@ -241,6 +260,11 @@ namespace Sitecore.Pathfinder.Projects
             Assert.AreEqual("HelloWorld", item.ItemName.Value);
             Assert.AreEqual("/sitecore/content/Home/HelloWorld", item.ItemIdOrPath);
             Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", item.TemplateIdOrPath.Value);
+            Assert.IsNotNull(item.ItemName.Source);
+            Assert.AreEqual(typeof(FileNameTextNode), item.ItemName.Source.GetType());
+            Assert.AreEqual(typeof(XmlTextNode), item.TemplateIdOrPath.Source?.GetType());
+            Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", item.TemplateIdOrPath.Source?.Value);
+            Assert.AreEqual("Template.Create", item.TemplateIdOrPath.Source?.Name);
 
             var field = item.Fields.FirstOrDefault(f => f.FieldName.Value == "Title");
             Assert.IsNotNull(field);

@@ -23,11 +23,13 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
         public override void Parse(ItemParseContext context, ITextNode textNode)
         {
-            var itemName = textNode.GetAttributeValue("Name", context.ParseContext.ItemName);
+            var itemNameTextNode = textNode.GetTextNodeAttribute("Item-Name");
+            var itemName = itemNameTextNode?.Value ?? context.ParseContext.ItemName;
             var itemIdOrPath = context.ParentItemPath + "/" + itemName;
             var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
 
             var template = context.ParseContext.Factory.Template(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemName, itemIdOrPath);
+            template.ItemName.Source = itemNameTextNode ?? new FileNameTextNode(itemName, textNode.Snapshot);
             template.BaseTemplates = textNode.GetAttributeValue("BaseTemplates", Constants.Templates.StandardTemplate);
             template.Icon = textNode.GetAttributeValue("Icon");
             template.ShortHelp = textNode.GetAttributeValue("ShortHelp");

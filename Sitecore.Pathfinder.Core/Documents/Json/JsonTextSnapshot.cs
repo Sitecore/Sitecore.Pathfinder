@@ -37,14 +37,18 @@ namespace Sitecore.Pathfinder.Documents.Json
 
         public override void SaveChanges()
         {
-            using (var writer = new StreamWriter(SourceFile.FileName))
+            if (RootToken == null)
             {
-                using (JsonWriter output = new JsonTextWriter(writer))
-                {
-                    output.Formatting = Formatting.Indented;
+                return;
+            }
 
-                    var serializer = new JsonSerializer();
-                    serializer.Serialize(output, _root);
+            using (var stream = new StreamWriter(SourceFile.FileName))
+            {
+                using (var writer = new JsonTextWriter(stream))
+                {
+                    writer.Formatting = Formatting.Indented;
+
+                    RootToken.WriteTo(writer);
                 }
             }
         }
