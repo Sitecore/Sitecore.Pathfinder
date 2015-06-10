@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
         public override void Parse(ItemParseContext context, ITextNode textNode)
         {
-            var itemNameTextNode = textNode.GetTextNodeAttribute("Name");
+            var itemNameTextNode = textNode.GetAttribute("Name");
             var itemName = itemNameTextNode?.Value ?? context.ParseContext.ItemName;
             var itemIdOrPath = context.ParentItemPath + "/" + itemName;
             var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
@@ -30,23 +30,28 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
             item.Fields.Add(field);
 
+            item.References.AddRange(ParseReferences(context, item, textNode, string.Empty));
+
             context.ParseContext.Project.AddOrMerge(item);
         }
 
         protected virtual void ParseDeviceReferences([NotNull] ItemParseContext context, [NotNull] ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode deviceTextNode)
         {
-            var deviceNameTextNode = deviceTextNode.GetTextNodeAttribute("Name") ?? deviceTextNode;
-            references.Add(context.ParseContext.Factory.DeviceReference(projectItem, deviceNameTextNode, deviceTextNode.GetAttributeValue("Name")));
+            var deviceNameTextNode = deviceTextNode.GetAttribute("Name") ?? deviceTextNode;
+            references.Add(context.ParseContext.Factory.DeviceReference(projectItem, new Attribute<string>(deviceNameTextNode, SourceFlags.IsShort), deviceTextNode.GetAttributeValue("Name")));
 
-            var layoutTextNode = deviceTextNode.GetTextNodeAttribute("Layout");
+            var layoutTextNode = deviceTextNode.GetAttribute("Layout");
             if (layoutTextNode != null)
             {
-                references.Add(context.ParseContext.Factory.LayoutReference(projectItem, layoutTextNode, deviceTextNode.GetAttributeValue("Layout")));
+                references.Add(context.ParseContext.Factory.LayoutReference(projectItem, new Attribute<string>(layoutTextNode, SourceFlags.IsShort), deviceTextNode.GetAttributeValue("Layout")));
             }
 
-            foreach (var renderingTextNode in deviceTextNode.ChildNodes)
+            foreach (var renderingsTextNode in deviceTextNode.ChildNodes)
             {
-                ParseRenderingReferences(context, references, projectItem, renderingTextNode);
+                foreach (var renderingTextNode in renderingsTextNode.ChildNodes)
+                {
+                  ParseRenderingReferences(context, references, projectItem, renderingTextNode);
+                }
             }
         }
 
@@ -70,7 +75,10 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
         protected virtual void ParseRenderingReferences([NotNull] ItemParseContext context, [NotNull] ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode renderingTextNode)
         {
-            references.Add(context.ParseContext.Factory.LayoutRenderingReference(projectItem, renderingTextNode, renderingTextNode.Name));
+            if (!string.IsNullOrEmpty(renderingTextNode.Name))
+            {
+                references.Add(context.ParseContext.Factory.LayoutRenderingReference(projectItem, new Attribute<string>(new AttributeNameTextNode(renderingTextNode), SourceFlags.IsShort), renderingTextNode.Name));
+            }
 
             foreach (var childTextNode in renderingTextNode.ChildNodes)
             {

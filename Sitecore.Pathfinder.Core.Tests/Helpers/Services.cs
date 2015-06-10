@@ -14,6 +14,7 @@ using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Querying;
 
 namespace Sitecore.Pathfinder.Helpers
 {
@@ -45,6 +46,9 @@ namespace Sitecore.Pathfinder.Helpers
 
         [NotNull]
         public ITextTokenService TextTokenService { get; set; }
+
+        [NotNull]
+        public IQueryService QueryService { get; set; }
 
         [NotNull]
         public ITraceService Trace { get; private set; }
@@ -90,6 +94,7 @@ namespace Sitecore.Pathfinder.Helpers
             SnapshotService = CompositionService.Resolve<ISnapshotService>();
             TextTokenService = CompositionService.Resolve<ITextTokenService>();
             CheckerService = CompositionService.Resolve<ICheckerService>();
+            QueryService = CompositionService.Resolve<IQueryService>();
         }
 
         [NotNull]

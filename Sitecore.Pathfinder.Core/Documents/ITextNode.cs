@@ -27,11 +27,13 @@ namespace Sitecore.Pathfinder.Documents
         [NotNull]
         string Value { get; }
 
+        [CanBeNull]
+        ITextNode GetAttribute([NotNull] string attributeName);
+
         [NotNull]
         string GetAttributeValue([NotNull] string attributeName, [NotNull] string defaultValue = "");
 
-        [CanBeNull]
-        ITextNode GetTextNodeAttribute([NotNull] string attributeName);
+        bool SetName([NotNull] string newName);
 
         bool SetValue([NotNull] string value);
     }

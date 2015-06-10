@@ -1,6 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Projects.References;
@@ -27,7 +28,7 @@ namespace Sitecore.Pathfinder.Projects
         string ShortName { get; }
 
         [NotNull]
-        ISnapshot Snapshot { get; }
+        ICollection<ISnapshot> Snapshots { get; }
 
         void Rename([NotNull] string newShortName);
     }

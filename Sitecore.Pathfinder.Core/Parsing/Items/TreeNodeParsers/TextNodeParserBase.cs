@@ -28,13 +28,13 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         {
             if (text.StartsWith("/sitecore/", StringComparison.OrdinalIgnoreCase))
             {
-                return context.ParseContext.Factory.Reference(projectItem, source, text);
+                return context.ParseContext.Factory.Reference(projectItem, new Attribute<string>(source, SourceFlags.IsQualified), text);
             }
 
             Guid guid;
             if (Guid.TryParse(text, out guid))
             {
-                return context.ParseContext.Factory.Reference(projectItem, source, guid.ToString("B").ToUpperInvariant());
+                return context.ParseContext.Factory.Reference(projectItem, new Attribute<string>(source, SourceFlags.IsGuid), guid.ToString("B").ToUpperInvariant());
             }
 
             return null;

@@ -35,13 +35,18 @@ namespace Sitecore.Pathfinder.Documents
 
         public string Value { get; protected set; }
 
-        public string GetAttributeValue(string attributeName, string defaultValue = "")
+        public virtual string GetAttributeValue(string attributeName, string defaultValue = "")
         {
-            var value = GetTextNodeAttribute(attributeName)?.Value;
+            var value = GetAttribute(attributeName)?.Value;
             return !string.IsNullOrEmpty(value) ? value : defaultValue;
         }
 
-        public ITextNode GetTextNodeAttribute(string attributeName)
+        public virtual bool SetName(string newName)
+        {
+            return false;
+        }
+
+        public virtual ITextNode GetAttribute(string attributeName)
         {
             return Attributes.FirstOrDefault(a => a.Name == attributeName);
         }

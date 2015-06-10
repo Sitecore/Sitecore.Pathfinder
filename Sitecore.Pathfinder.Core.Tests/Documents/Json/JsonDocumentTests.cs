@@ -61,7 +61,7 @@ namespace Sitecore.Pathfinder.Documents.Json
             Assert.AreEqual("123", field.GetAttributeValue("Value"));
             Assert.AreEqual(0, field.ChildNodes.Count());
 
-            var attribute = field.GetTextNodeAttribute("Name");
+            var attribute = field.GetAttribute("Name");
             Assert.IsNotNull(attribute);
             Assert.AreEqual("Text", attribute.Value);
             Assert.AreEqual(0, attribute.Attributes.Count());

@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Projects.References
         IProjectItem Owner { get; }
 
         [CanBeNull]
-        ITextNode SourceTextNode { get; }
+        Attribute<string> SourceAttribute { get; }
 
         [NotNull]
         string TargetQualifiedName { get; }

@@ -59,7 +59,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
 
             var itemBuilder = new ItemBuilder
             {
-                Snapshot = item.Snapshot,
+                Snapshot = item.Snapshots.First(),
                 DatabaseName = item.DatabaseName,
                 Guid = projectItem.Guid,
                 ItemName = item.ItemName.Value,
@@ -73,7 +73,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
                 var templateField = template.GetField(field.FieldName.Value);
                 if (templateField == null)
                 {
-                    throw new RetryableEmitException(Texts.Template_field_missing, item.Snapshot, field.FieldName.Value);
+                    throw new RetryableEmitException(Texts.Template_field_missing, item.Snapshots.First(), field.FieldName.Value);
                 }
 
                 foreach (var fieldResolver in context.FieldResolvers)

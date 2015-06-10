@@ -1,6 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.IO;
+using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Extensions;
@@ -18,15 +19,15 @@ namespace Sitecore.Pathfinder.Projects.Files
         {
         }
 
-        public string FilePath => _filePath ?? (_filePath = PathHelper.GetFilePath(Project, Snapshot.SourceFile));
+        public string FilePath => _filePath ?? (_filePath = PathHelper.GetFilePath(Project, Snapshots.First().SourceFile));
 
-        public override string QualifiedName => Snapshot.SourceFile.FileName;
+        public override string QualifiedName => Snapshots.First().SourceFile.FileName;
 
-        public override string ShortName => _shortName ?? (_shortName = Path.GetFileName(Snapshot.SourceFile.FileName));
+        public override string ShortName => _shortName ?? (_shortName = Path.GetFileName(Snapshots.First().SourceFile.FileName));
 
         public override void Rename(string newShortName)
         {
-            var fileName = Snapshot.SourceFile.FileName;
+            var fileName = Snapshots.First().SourceFile.FileName;
 
             var n = fileName.LastIndexOf('.');
             var extension = n >= 0 ? fileName.Mid(n) : string.Empty;

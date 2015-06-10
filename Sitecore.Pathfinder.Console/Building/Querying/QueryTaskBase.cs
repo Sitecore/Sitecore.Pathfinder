@@ -1,6 +1,7 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
+using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.References;
 
@@ -16,9 +17,9 @@ namespace Sitecore.Pathfinder.Building.Querying
         {
             foreach (var reference in references)
             {
-                string line = $"{reference.Owner.Snapshot.SourceFile.GetProjectPath(context.Project)}";
+                string line = $"{reference.Owner.Snapshots.First().SourceFile.GetProjectPath(context.Project)}";
 
-                var textNode = reference.SourceTextNode;
+                var textNode = reference.SourceAttribute?.Source;
                 line += textNode != null ? $"({textNode.Position.LineNumber},{textNode.Position.LineNumber})" : "(0,0)";
 
                 context.Trace.Writeline(line);

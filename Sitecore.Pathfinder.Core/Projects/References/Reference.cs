@@ -4,7 +4,6 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Documents;
 
 namespace Sitecore.Pathfinder.Projects.References
 {
@@ -19,10 +18,10 @@ namespace Sitecore.Pathfinder.Projects.References
             TargetQualifiedName = targetQualifiedName;
         }
 
-        public Reference([NotNull] IProjectItem owner, [NotNull] ITextNode sourceTextNode, [NotNull] string targetQualifiedName)
+        public Reference([NotNull] IProjectItem owner, [NotNull] Attribute<string> sourceAttribute, [NotNull] string targetQualifiedName)
         {
             Owner = owner;
-            SourceTextNode = sourceTextNode;
+            SourceAttribute = sourceAttribute;
             TargetQualifiedName = targetQualifiedName;
         }
 
@@ -48,7 +47,7 @@ namespace Sitecore.Pathfinder.Projects.References
 
         public IProjectItem Owner { get; }
 
-        public ITextNode SourceTextNode { get; set; }
+        public Attribute<string> SourceAttribute { get; set; }
 
         public string TargetQualifiedName { get; }
 

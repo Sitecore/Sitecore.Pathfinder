@@ -1,13 +1,17 @@
 {
   "Layout": {
     "Devices": [
-      { 
+      {
         "Name": "Default",
-        "Layout": "/sitecore/layout/layouts/MvcLayout", 
+        "Layout": "/sitecore/layout/layouts/MvcLayout",
         "Renderings": [
-          { }
-        ]}
+          {
+            "Pipper": {
+              "Text": "Flips"
+            }
+          }
+        ]
+      }
     ]
   }
-
 }

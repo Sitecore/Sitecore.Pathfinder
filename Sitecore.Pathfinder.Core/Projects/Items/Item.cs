@@ -23,6 +23,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         public Item([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath) : base(project, projectUniqueId, textNode, databaseName, itemName, itemIdOrPath)
         {
             TemplateIdOrPath = new Attribute<string>("Template", templateIdOrPath);
+            TemplateIdOrPath.SourceFlags = SourceFlags.IsQualified;
         }
 
         [NotNull]
@@ -55,7 +56,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
             if (!string.IsNullOrEmpty(newItem.TemplateIdOrPath.Value))
             {
-                TemplateIdOrPath.SetValue(newItem.TemplateIdOrPath.Value, newItem.TemplateIdOrPath.Source);
+                TemplateIdOrPath.SetValue(newItem.TemplateIdOrPath.Source);
             }
 
             OverwriteWhenMerging = OverwriteWhenMerging && newItem.OverwriteWhenMerging;
@@ -73,7 +74,7 @@ namespace Sitecore.Pathfinder.Projects.Items
                 }
 
                 // todo: trace that field is being overwritten
-                field.Value.SetValue(newField.Value.Value, newField.Value.Source);
+                field.Value.SetValue(newField.Value.Source);
             }
         }
     }

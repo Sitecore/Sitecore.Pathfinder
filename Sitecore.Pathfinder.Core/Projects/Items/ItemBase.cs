@@ -15,6 +15,7 @@ namespace Sitecore.Pathfinder.Projects.Items
             ItemIdOrPath = itemIdOrPath;
 
             ItemName = new Attribute<string>("ItemName", itemName);
+            ItemName.SourceFlags = SourceFlags.IsShort;
         }
 
         [NotNull]
@@ -38,14 +39,10 @@ namespace Sitecore.Pathfinder.Projects.Items
         public override void Rename(string newShortName)
         {
             var n = ItemIdOrPath.LastIndexOf('/');
-            ItemIdOrPath = (n >= 0 ? ItemIdOrPath.Left(n + 1) : string.Empty) + newShortName;
+            var itemIdOrPath = (n >= 0 ? ItemIdOrPath.Left(n + 1) : string.Empty) + newShortName;
 
-            ItemName.SetValue(PathHelper.GetFileNameWithoutExtensions(newShortName));
-
-            if (ItemName.Source != null)
-            {
-                ItemName.Source.SetValue(PathHelper.IsQualifiedName(ItemName.Source.Value) ? ItemIdOrPath : newShortName);
-            }
+            ItemIdOrPath = itemIdOrPath;
+            ItemName.SetValue(itemIdOrPath);
         }
 
         protected override void Merge(IProjectItem newProjectItem, bool overwrite)
@@ -60,7 +57,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
             if (overwrite)
             {
-                ItemName.SetValue(newItemBase.ItemName.Value, newItemBase.ItemName.Source);
+                ItemName.SetValue(newItemBase.ItemName.Source);
 
                 ItemIdOrPath = newItemBase.ItemIdOrPath;
                 DatabaseName = newItemBase.DatabaseName;

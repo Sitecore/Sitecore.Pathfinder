@@ -165,11 +165,11 @@ namespace Sitecore.Pathfinder.Emitters
                 }
                 else if (exception != null)
                 {
-                    Trace.TraceError(exception.Message, projectItem.Snapshot.SourceFile.FileName, TextPosition.Empty);
+                    Trace.TraceError(exception.Message, projectItem.Snapshots.First().SourceFile.FileName, TextPosition.Empty);
                 }
                 else
                 {
-                    Trace.TraceError(Texts.An_error_occured, projectItem.Snapshot.SourceFile.FileName, TextPosition.Empty);
+                    Trace.TraceError(Texts.An_error_occured, projectItem.Snapshots.First().SourceFile.FileName, TextPosition.Empty);
                 }
             }
         }

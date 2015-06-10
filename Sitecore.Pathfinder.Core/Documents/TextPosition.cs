@@ -1,7 +1,10 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System.Diagnostics;
+
 namespace Sitecore.Pathfinder.Documents
 {
+    [DebuggerDisplay("{GetType().Name,nq}: ({LineNumber,nq}, {LinePosition,nq}, {LineLength,nq}, )")]
     public struct TextPosition
     {
         public static readonly TextPosition Empty = new TextPosition(0, 0, 0);

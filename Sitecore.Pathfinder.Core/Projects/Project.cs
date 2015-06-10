@@ -156,7 +156,8 @@ namespace Sitecore.Pathfinder.Projects
 
             foreach (var projectItem in Items.ToList())
             {
-                if (string.Compare(projectItem.Snapshot.SourceFile.FileName, sourceFileName, StringComparison.OrdinalIgnoreCase) != 0)
+                // todo: not working
+                if (string.Compare(projectItem.Snapshots.First().SourceFile.FileName, sourceFileName, StringComparison.OrdinalIgnoreCase) != 0)
                 {
                     continue;
                 }
@@ -179,11 +180,11 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual void SaveChanges()
         {
-            foreach (var projectItem in Items)
+            foreach (var snapshot in Items.SelectMany(i => i.Snapshots))
             {
-                if (projectItem.Snapshot.IsModified)
+                if (snapshot.IsModified)
                 {
-                    projectItem.Snapshot.SaveChanges();
+                    snapshot.SaveChanges();
                 }
             }
         }
@@ -194,12 +195,12 @@ namespace Sitecore.Pathfinder.Projects
             Item item = null;
             if (newItem.MergingMatch == MergingMatch.MatchUsingSourceFile)
             {
-                item = Items.OfType<Item>().FirstOrDefault(i => string.Compare(i.Snapshot.SourceFile.GetFileNameWithoutExtensions(), newItem.Snapshot.SourceFile.GetFileNameWithoutExtensions(), StringComparison.OrdinalIgnoreCase) == 0);
+                item = Items.OfType<Item>().FirstOrDefault(i => string.Compare(i.Snapshots.First().SourceFile.GetFileNameWithoutExtensions(), newItem.Snapshots.First().SourceFile.GetFileNameWithoutExtensions(), StringComparison.OrdinalIgnoreCase) == 0);
             }
 
             if (item == null)
             {
-                item = Items.OfType<Item>().FirstOrDefault(i => i.MergingMatch == MergingMatch.MatchUsingSourceFile && string.Compare(i.Snapshot.SourceFile.GetFileNameWithoutExtensions(), newItem.Snapshot.SourceFile.GetFileNameWithoutExtensions(), StringComparison.OrdinalIgnoreCase) == 0);
+                item = Items.OfType<Item>().FirstOrDefault(i => i.MergingMatch == MergingMatch.MatchUsingSourceFile && string.Compare(i.Snapshots.First().SourceFile.GetFileNameWithoutExtensions(), newItem.Snapshots.First().SourceFile.GetFileNameWithoutExtensions(), StringComparison.OrdinalIgnoreCase) == 0);
             }
 
             if (item == null)

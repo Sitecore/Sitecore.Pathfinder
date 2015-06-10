@@ -3,6 +3,7 @@
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
+using System.Linq;
 using Sitecore.Data.Items;
 using Sitecore.Data.Serialization;
 using Sitecore.Pathfinder.Diagnostics;
@@ -34,15 +35,15 @@ namespace Sitecore.Pathfinder.Emitters.Files
 
             try
             {
-                var item = DoLoadItem(itemModel.Snapshot.SourceFile.FileName, LoadOptions);
+                var item = DoLoadItem(itemModel.Snapshots.First().SourceFile.FileName, LoadOptions);
                 if (item == null)
                 {
-                    throw new RetryableEmitException(Texts.Failed_to_deserialize_item, itemModel.Snapshot, "Item not created");
+                    throw new RetryableEmitException(Texts.Failed_to_deserialize_item, itemModel.Snapshots.First(), "Item not created");
                 }
             }
             catch (Exception ex)
             {
-                throw new RetryableEmitException(Texts.Failed_to_deserialize_item, itemModel.Snapshot, ex.Message);
+                throw new RetryableEmitException(Texts.Failed_to_deserialize_item, itemModel.Snapshots.First(), ex.Message);
             }
         }
 

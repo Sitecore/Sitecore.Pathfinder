@@ -1,23 +1,41 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System;
+using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Documents;
+using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Projects.References
 {
     public class LayoutRenderingReference : Reference
     {
-        public LayoutRenderingReference([NotNull] IProjectItem owner, [NotNull] ITextNode sourceTextNode, [NotNull] string targetQualifiedName) : base(owner, sourceTextNode, targetQualifiedName)
+        public LayoutRenderingReference([NotNull] IProjectItem owner, [NotNull] Attribute<string> sourceAttribute, [NotNull] string targetQualifiedName) : base(owner, sourceAttribute, targetQualifiedName)
         {
         }
 
         public override IProjectItem Resolve()
         {
-            // todo: actually resolve the rendering
-            IsResolved = true;
-            IsValid = true;
+            foreach (var projectItem in Owner.Project.Items.Where(i => string.Compare(i.ShortName, TargetQualifiedName, StringComparison.OrdinalIgnoreCase) == 0))
+            {
+                var item = projectItem as Item;
+                if (item == null)
+                {
+                    continue;
+                }
 
-            return Owner;
+                var templateIdOrPath = item.TemplateIdOrPath.Value;
+                //if (templateIdOrPath != Constants.Templates.ViewRendering && templateIdOrPath != Constants.Templates.Sublayout)
+                //{
+                //    continue;
+                //}
+
+                IsResolved = true;
+                IsValid = true;
+                return projectItem;
+            }
+
+            return null;
         }
     }
 }

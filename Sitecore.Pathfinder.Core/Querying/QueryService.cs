@@ -19,11 +19,18 @@ namespace Sitecore.Pathfinder.Querying
 
         public IEnumerable<IReference> FindUsages(IProject project, string qualifiedName)
         {
+            var target = FindProjectItem(project, qualifiedName);
+            if (target == null)
+            {
+                yield break;
+            }
+
             foreach (var projectItem in project.Items)
             {
                 foreach (var reference in projectItem.References)
                 {
-                    if (string.Compare(reference.TargetQualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase) == 0)
+                    var i = reference.Resolve();
+                    if (i == target)
                     {
                         yield return reference;
                     }

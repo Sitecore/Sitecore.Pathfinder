@@ -2,6 +2,7 @@
 
 using System.ComponentModel.Composition;
 using System.IO;
+using System.Linq;
 using Sitecore.IO;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Files;
@@ -36,7 +37,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
             }
 
             context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName) ?? string.Empty);
-            context.FileSystem.Copy(projectItem.Snapshot.SourceFile.FileName, destinationFileName);
+            context.FileSystem.Copy(projectItem.Snapshots.First().SourceFile.FileName, destinationFileName);
         }
     }
 }

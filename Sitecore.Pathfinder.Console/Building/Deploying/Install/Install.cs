@@ -2,6 +2,7 @@
 
 using System.ComponentModel.Composition;
 using System.IO;
+using System.Linq;
 using System.Web;
 using Sitecore.Pathfinder.Extensions;
 
@@ -40,9 +41,9 @@ namespace Sitecore.Pathfinder.Building.Deploying.Install
                 return;
             }
 
-            foreach (var projectItem in context.Project.Items)
+            foreach (var snapshot in context.Project.Items.SelectMany(i => i.Snapshots))
             {
-                projectItem.Snapshot.SourceFile.IsModified = false;
+                snapshot.SourceFile.IsModified = false;
             }
         }
     }

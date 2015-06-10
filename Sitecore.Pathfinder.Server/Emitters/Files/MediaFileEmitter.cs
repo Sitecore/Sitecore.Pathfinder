@@ -2,6 +2,7 @@
 
 using System.ComponentModel.Composition;
 using System.IO;
+using System.Linq;
 using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
@@ -69,17 +70,17 @@ namespace Sitecore.Pathfinder.Emitters.Files
                 ItemManager.AddFromTemplate(name, TemplateIDs.Folder, parent, new ID(mediaFile.MediaItem.Guid));
             }
 
-            using (var stream = new FileStream(projectItem.Snapshot.SourceFile.FileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (var stream = new FileStream(projectItem.Snapshots.First().SourceFile.FileName, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                var item = MediaManager.Creator.CreateFromStream(stream, "/upload/" + Path.GetFileName(projectItem.Snapshot.SourceFile.FileName), options);
+                var item = MediaManager.Creator.CreateFromStream(stream, "/upload/" + Path.GetFileName(projectItem.Snapshots.First().SourceFile.FileName), options);
                 if (item == null)
                 {
-                    throw new EmitException(Texts.Failed_to_upload_media, projectItem.Snapshot);
+                    throw new EmitException(Texts.Failed_to_upload_media, projectItem.Snapshots.First());
                 }
 
                 if (mediaFile.MediaItem.Guid != item.ID.ToGuid())
                 {
-                    context.Trace.TraceError(Texts.Media_item_created_with_wrong_ID, new SnapshotTextNode(mediaFile.Snapshot), $"{item.ID} != {mediaFile.MediaItem.Guid.ToString("B").ToUpperInvariant()}");
+                    context.Trace.TraceError(Texts.Media_item_created_with_wrong_ID, new SnapshotTextNode(mediaFile.Snapshots.First()), $"{item.ID} != {mediaFile.MediaItem.Guid.ToString("B").ToUpperInvariant()}");
                 }
             }
 

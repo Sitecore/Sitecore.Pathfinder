@@ -11,6 +11,9 @@ namespace Sitecore.Pathfinder.Documents
         [NotNull]
         ISourceFile SourceFile { get; }
 
+        [CanBeNull]
+        ITextNode GetJsonChildTextNode([NotNull] ITextNode textNode, [NotNull] string name);
+
         void SaveChanges();
     }
 }

@@ -1,6 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
@@ -19,7 +20,7 @@ namespace Sitecore.Pathfinder.Projects
         {
             Project = project;
             ProjectUniqueId = projectUniqueId;
-            Snapshot = snapshot;
+            Snapshots.Add(snapshot);
 
             References = new ReferenceCollection(this);
 
@@ -38,12 +39,17 @@ namespace Sitecore.Pathfinder.Projects
 
         public abstract string ShortName { get; }
 
-        public ISnapshot Snapshot { get; }
+        public ICollection<ISnapshot> Snapshots { get; } = new List<ISnapshot>();
 
         public abstract void Rename(string newShortName);
 
         protected virtual void Merge([NotNull] IProjectItem newProjectItem, bool overwrite)
         {
+            foreach (var snapshot in newProjectItem.Snapshots)
+            {
+                Snapshots.Add(snapshot);
+            }
+
             if (!overwrite)
             {
                 return;

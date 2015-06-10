@@ -369,4 +369,7 @@
   <data name="Source_files_changed" xml:space="preserve">
     <value>Source files changed</value>
   </data>
+    <data name="Ducats___0_" xml:space="preserve">
+    <value>Ducats: {0}</value>
+  </data>
 </root>

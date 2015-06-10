@@ -32,6 +32,8 @@ namespace Sitecore.Pathfinder.Building
 
         public bool DisplayDoneMessage { get; set; } = true;
 
+        public long Ducats { get; set; }
+
         public IFileSystemService FileSystem { get; }
 
         public bool IsAborted { get; set; }

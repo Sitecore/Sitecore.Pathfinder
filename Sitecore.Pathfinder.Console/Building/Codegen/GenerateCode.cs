@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
+using System.Linq;
 using RazorEngine.Configuration;
 using RazorEngine.Templating;
 using Sitecore.Pathfinder.Diagnostics;
@@ -62,7 +63,7 @@ namespace Sitecore.Pathfinder.Building.Codegen
 
             var result = _razorEngine.RunCompile(template, fileName, projectItem.GetType(), projectItem, viewBag);
 
-            var targetFileName = Path.GetDirectoryName(projectItem.Snapshot.SourceFile.FileName) ?? string.Empty;
+            var targetFileName = Path.GetDirectoryName(projectItem.Snapshots.First().SourceFile.FileName) ?? string.Empty;
             targetFileName = Path.Combine(targetFileName, projectItem.ShortName) + ".g.cs";
 
             context.FileSystem.CreateDirectory(Path.GetDirectoryName(targetFileName) ?? string.Empty);

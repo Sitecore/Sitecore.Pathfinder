@@ -9,6 +9,18 @@
     },
     {
       "fileMatch": [
+        "*.master.content.json"
+      ],
+      "url": "/.schemas/master.content.schema.json"
+    },
+    {
+      "fileMatch": [
+        "*.core.content.json"
+      ],
+      "url": "/.schemas/core.content.schema.json"
+    },
+    {
+      "fileMatch": [
         "*.master.layout.json"
       ],
       "url": "/.schemas/master.layout.schema.json"

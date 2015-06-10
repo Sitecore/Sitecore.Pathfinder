@@ -1,6 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.ComponentModel.Composition;
+using System.Linq;
 using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Building.Preprocessing.IncrementalBuilds
@@ -24,7 +25,7 @@ namespace Sitecore.Pathfinder.Building.Preprocessing.IncrementalBuilds
                     continue;
                 }
 
-                if (!projectItem.Snapshot.SourceFile.IsModified)
+                if (!projectItem.Snapshots.Any(s => s.SourceFile.IsModified))
                 {
                     continue;
                 }

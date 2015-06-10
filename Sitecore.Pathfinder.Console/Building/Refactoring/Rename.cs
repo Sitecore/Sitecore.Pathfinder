@@ -42,33 +42,32 @@ namespace Sitecore.Pathfinder.Building.Refactoring
                 return;
             }
 
-            projectItem.Rename(newShortName);
+            var value = projectItem.QualifiedName;
+            var n = value.LastIndexOf('/');
+            value = n < 0 ? newShortName : value.Left(n + 1) + newShortName;
 
             var queryService = context.CompositionService.Resolve<IQueryService>();
-            var references = queryService.FindUsages(context.Project, qualifiedName);
+            var references = queryService.FindUsages(context.Project, qualifiedName).ToList();
 
             foreach (var reference in references)
             {
-                if (reference.SourceTextNode == null)
+                if (reference.SourceAttribute != null)
                 {
-                    continue;
+                    reference.SourceAttribute.SetValue(value);
                 }
-
-                var value = reference.SourceTextNode.Value;
-                if (PathHelper.IsQualifiedName(value))
-                {
-                    var n = value.LastIndexOf('/');
-                    value = n < 0 ? newShortName : value.Left(n + 1) + newShortName;
-                }
-                else
-                {
-                    value = newShortName;
-                }
-
-                reference.SourceTextNode.SetValue(value);
             }
 
+            var changedFileNames = context.Project.Items.SelectMany(i => i.Snapshots).Where(s => s.IsModified).Select(s => s.SourceFile.FileName).ToList();
+
+            projectItem.Rename(newShortName);
             context.Project.SaveChanges();
+
+            foreach (var fileName in changedFileNames)
+            {
+                context.Trace.TraceInformation(PathHelper.UnmapPath(context.SolutionDirectory, fileName));
+            }
+
+            context.Trace.TraceInformation($"Changed files: {changedFileNames.Count}");
         }
     }
 }

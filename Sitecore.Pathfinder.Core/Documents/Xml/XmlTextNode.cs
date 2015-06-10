@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 using Sitecore.Pathfinder.Diagnostics;
@@ -30,12 +31,48 @@ namespace Sitecore.Pathfinder.Documents.Xml
             return new TextPosition(lineInfo.LineNumber, lineInfo.LinePosition, lineLength);
         }
 
+        public override bool SetName(string newName)
+        {
+            var element = _node as XElement;
+            if (element != null)
+            {
+                element.Name = newName;
+                Snapshot.IsModified = true;
+                return true;
+            }
+
+            var attribute = _node as XAttribute;
+            if (attribute != null)
+            {
+                var parent = attribute.Parent;
+                if (parent == null)
+                {
+                    return false;
+                }
+
+                var newAttribute = new XAttribute(newName, attribute.Value);
+
+                var attributes = parent.Attributes().ToList();
+                var n = attributes.IndexOf(attribute);
+
+                attributes.RemoveAt(n);
+                attributes.Insert(n, newAttribute);
+
+                parent.ReplaceAttributes(attributes);
+
+                Snapshot.IsModified = true;
+                return true;
+            }
+
+            return false;
+        }
+
         public override bool SetValue(string value)
         {
             var element = _node as XElement;
             if (element != null)
             {
-                element.Name = value;
+                element.Value = value;
                 Snapshot.IsModified = true;
                 return true;
             }

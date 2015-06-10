@@ -1,6 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.ComponentModel.Composition;
+using System.Linq;
 
 namespace Sitecore.Pathfinder.Building.Preprocessing.Clean
 {
@@ -15,9 +16,9 @@ namespace Sitecore.Pathfinder.Building.Preprocessing.Clean
         {
             context.Trace.TraceInformation(Texts.Cleaning_output_directory___);
 
-            foreach (var projectItem in context.Project.Items)
+            foreach (var snapshot in context.Project.Items.SelectMany(i => i.Snapshots))
             {
-                projectItem.Snapshot.SourceFile.IsModified = true;
+                snapshot.SourceFile.IsModified = true;
             }
         }
     }

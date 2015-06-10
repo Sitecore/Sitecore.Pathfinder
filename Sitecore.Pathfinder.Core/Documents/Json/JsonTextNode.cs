@@ -8,7 +8,7 @@ namespace Sitecore.Pathfinder.Documents.Json
 {
     public class JsonTextNode : TextNode
     {
-        private readonly JToken _jtoken;
+        private JToken _jtoken;
 
         public JsonTextNode([NotNull] ITextSnapshot snapshot, [NotNull] string name, [NotNull] JObject jobject, [CanBeNull] ITextNode parent = null) : base(snapshot, GetPosition(jobject), name, string.Empty, parent)
         {
@@ -39,6 +39,37 @@ namespace Sitecore.Pathfinder.Documents.Json
             }
 
             return new TextPosition(lineInfo.LineNumber, lineInfo.LinePosition + 1, lineLength);
+        }
+
+        public override bool SetName(string newName)
+        {
+            var property = _jtoken as JProperty;
+            if (property != null)
+            {
+                var newProperty = new JProperty(newName, property.Value);
+                property.Replace(newProperty);
+                _jtoken = newProperty;
+
+                Snapshot.IsModified = true;
+                return true;
+            }
+
+            var jobject = _jtoken as JObject;
+            if (jobject != null)
+            {
+                var prop = jobject.Parent as JProperty;
+                if (prop != null)
+                {
+                    var newProperty = new JProperty(newName, jobject);
+                    prop.Replace(newProperty);
+                    _jtoken = newProperty;
+
+                    Snapshot.IsModified = true;
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public override bool SetValue(string value)

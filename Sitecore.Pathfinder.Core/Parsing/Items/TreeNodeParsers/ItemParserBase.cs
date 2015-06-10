@@ -19,15 +19,15 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
         public override void Parse(ItemParseContext context, ITextNode textNode)
         {
-            var itemNameTextNode = textNode.GetTextNodeAttribute("Name");
+            var itemNameTextNode = textNode.GetAttribute("Name");
             var itemName = itemNameTextNode?.Value ?? context.ParseContext.ItemName;
             var itemIdOrPath = context.ParentItemPath + "/" + itemName;
             var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
 
-            var templateIdOrPathTextNode = textNode.GetTextNodeAttribute("Template");
+            var templateIdOrPathTextNode = textNode.GetAttribute("Template");
             if (templateIdOrPathTextNode == null)
             {
-                templateIdOrPathTextNode = textNode.GetTextNodeAttribute("Template.Create");
+                templateIdOrPathTextNode = textNode.GetAttribute("Template.Create");
                 if (templateIdOrPathTextNode != null)
                 {
                     ParseTemplate(context, textNode, templateIdOrPathTextNode);
@@ -36,10 +36,11 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
             var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemName, itemIdOrPath, templateIdOrPathTextNode?.Value ?? string.Empty);
             item.ItemName.Source = itemNameTextNode ?? new FileNameTextNode(item.ItemName.Value, textNode.Snapshot);
+            item.TemplateIdOrPath.Source = templateIdOrPathTextNode;
 
             if (!string.IsNullOrEmpty(item.TemplateIdOrPath.Value))
             {
-                var a = textNode.GetTextNodeAttribute("Template") ?? textNode.GetTextNodeAttribute("Template.Create");
+                var a = textNode.GetAttribute("Template") ?? textNode.GetAttribute("Template.Create");
                 if (a != null)
                 {
                     item.References.AddRange(ParseReferences(context, item, a, item.TemplateIdOrPath.Value));
@@ -106,10 +107,10 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
                 }
             }
 
-            var nameTextNode = fieldTextNode.GetTextNodeAttribute("Name") ?? fieldTextNode;
-            var valueTextNode = fieldTextNode.GetTextNodeAttribute("[Value]");
+            var nameTextNode = fieldTextNode.GetAttribute("Name") ?? fieldTextNode;
+            var valueTextNode = fieldTextNode.GetAttribute("[Value]");
 
-            var valueAttributeTextNode = fieldTextNode.GetTextNodeAttribute("Value");
+            var valueAttributeTextNode = fieldTextNode.GetAttribute("Value");
             if (valueAttributeTextNode != null)
             {
                 if (valueTextNode != null)

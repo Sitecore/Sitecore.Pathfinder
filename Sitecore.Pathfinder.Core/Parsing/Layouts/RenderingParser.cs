@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Documents;
+using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Parsing.Layouts
 {
@@ -47,7 +48,7 @@ namespace Sitecore.Pathfinder.Parsing.Layouts
                 item.Fields.Add(field);
             }
 
-            item.References.Add(context.Factory.FileReference(item, snapshotTextNode, path));
+            item.References.Add(context.Factory.FileReference(item, new Attribute<string>(snapshotTextNode, SourceFlags.IsFileName), path));
 
             item = context.Project.AddOrMerge(item);
 

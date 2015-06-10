@@ -10,9 +10,6 @@ namespace Sitecore.Pathfinder.Documents
         [NotNull]
         ITextNode Root { get; }
 
-        [CanBeNull]
-        ITextNode GetJsonChildTextNode([NotNull] ITextNode textNode, [NotNull] string name);
-
         void ValidateSchema([NotNull] IParseContext context);
     }
 }

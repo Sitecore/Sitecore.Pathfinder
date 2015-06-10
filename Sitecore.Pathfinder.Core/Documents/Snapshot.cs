@@ -18,6 +18,12 @@ namespace Sitecore.Pathfinder.Documents
 
         public ISourceFile SourceFile { get; }
 
+        public virtual ITextNode GetJsonChildTextNode(ITextNode textNode, string name)
+        {
+            // overwritten in JsonTextSnapshot to find the appropriate text node
+            return textNode;
+        }
+
         public virtual void SaveChanges()
         {
             throw new InvalidOperationException("Cannot save file: " + SourceFile.FileName);

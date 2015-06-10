@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Documents;
+using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
@@ -16,7 +17,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
         public override void Parse(ItemParseContext context, ITextNode textNode)
         {
-            var itemNameTextNode = textNode.GetTextNodeAttribute("Item-Name");
+            var itemNameTextNode = textNode.GetAttribute("Item-Name");
             var itemName = itemNameTextNode?.Value ?? context.ParseContext.ItemName;
             var parentItemPath = textNode.GetAttributeValue("Parent-Item-Path", context.ParentItemPath);
             var itemIdOrPath = parentItemPath + "/" + itemName;
@@ -24,7 +25,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
             var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemName, itemIdOrPath, textNode.Name);
             item.ItemName.Source = itemNameTextNode ?? new FileNameTextNode(itemName, textNode.Snapshot);
-            item.TemplateIdOrPath.Source = textNode;
+            item.TemplateIdOrPath.Source = new AttributeNameTextNode(textNode);
 
             item.References.AddRange(ParseReferences(context, item, textNode, item.TemplateIdOrPath.Value));
 
@@ -57,7 +58,9 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
             // todo: support for language, version and value.hint
             field = context.ParseContext.Factory.Field(item, fieldName, string.Empty, 0, fieldTextNode.Value, string.Empty);
+            field.FieldName.Source = new AttributeNameTextNode(fieldTextNode);
             field.Value.Source = fieldTextNode;
+
             item.Fields.Add(field);
 
             item.References.AddRange(ParseReferences(context, item, fieldTextNode, field.Value.Value));

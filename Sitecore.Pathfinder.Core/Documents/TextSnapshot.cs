@@ -14,12 +14,6 @@ namespace Sitecore.Pathfinder.Documents
 
         public virtual ITextNode Root { get; }
 
-        public virtual ITextNode GetJsonChildTextNode(ITextNode textNode, string name)
-        {
-            // overwritten in JsonTextSnapshot to find the appropriate text node
-            return textNode;
-        }
-
         public virtual void ValidateSchema(IParseContext context)
         {
         }

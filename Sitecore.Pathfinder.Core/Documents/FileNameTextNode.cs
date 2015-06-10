@@ -3,9 +3,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
-using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Documents
 {
@@ -31,14 +29,19 @@ namespace Sitecore.Pathfinder.Documents
 
         public string Value { get; }
 
+        public ITextNode GetAttribute(string attributeName)
+        {
+            return null;
+        }
+
         public string GetAttributeValue(string attributeName, string defaultValue = "")
         {
             return string.Empty;
         }
 
-        public ITextNode GetTextNodeAttribute(string attributeName)
+        public bool SetName(string newName)
         {
-            return null;
+            return SetValue(newName);
         }
 
         public bool SetValue(string value)

@@ -314,6 +314,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ducats: {0}.
+        /// </summary>
+        public static string Ducats___0_ {
+            get {
+                return ResourceManager.GetString("Ducats___0_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to add new template.
         /// </summary>
         public static string Failed_to_add_new_template {
