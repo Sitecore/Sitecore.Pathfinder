@@ -44,6 +44,7 @@ namespace Sitecore.Pathfinder.Builders.FieldResolvers.Layouts
                 Formatting = Formatting.Indented
             };
 
+
             using (new SecurityDisabler())
             {
                 WriteLayout(context, output, database, textNode);
