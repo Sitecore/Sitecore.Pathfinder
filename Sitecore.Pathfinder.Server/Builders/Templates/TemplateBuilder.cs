@@ -105,6 +105,8 @@ namespace Sitecore.Pathfinder.Builders.Templates
                     }
                 }
             }
+
+            context.Project.Ducats += 100;
         }
 
         protected virtual void CreateNewTemplate([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] IEnumerable<Sitecore.Data.Templates.TemplateField> inheritedFields)

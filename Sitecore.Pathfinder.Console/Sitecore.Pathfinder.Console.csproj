@@ -104,19 +104,19 @@
     <Compile Include="Building\Codegen\GenerateCode.cs" />
     <Compile Include="Building\Commands\ListItems.cs" />
     <Compile Include="Building\Commands\ListProject.cs" />
-    <Compile Include="Building\Deploying\CopyToWebsite\CopyPackageToWebsite.cs" />
-    <Compile Include="Building\Deploying\Install\Install.cs" />
-    <Compile Include="Building\Deploying\Publishing\Publish.cs" />
+    <Compile Include="Building\Deploying\CopyPackage\CopyPackage.cs" />
+    <Compile Include="Building\Deploying\Installpackage\InstallPackage.cs" />
+    <Compile Include="Building\Deploying\PublishDatabase\PublishDatabase.cs" />
     <Compile Include="Building\Initializing\BeforeBuilds\BeforeBuild.cs" />
     <Compile Include="Building\Initializing\Help\Help.cs" />
     <Compile Include="Building\Commands\ListTasks.cs" />
-    <Compile Include="Building\Initializing\InstallLayout\InstallLayout.cs" />
+    <Compile Include="Building\Deploying\CopyDependencies\CopyDependencies.cs" />
     <Compile Include="Building\Initializing\Initialization\Init.cs" />
     <Compile Include="Building\Initializing\SynchronizeWebsites\SynchronizeWebsite.cs" />
     <Compile Include="Building\Querying\FindReferences.cs" />
     <Compile Include="Building\Querying\FindUsages.cs" />
     <Compile Include="Building\Packaging\CreateNupkg\CreateNupkg.cs" />
-    <Compile Include="Building\Linting\Lint.cs" />
+    <Compile Include="Building\Checking\CheckProject.cs" />
     <Compile Include="Building\Preprocessing\Rebuild\Rebuild.cs" />
     <Compile Include="Building\Preprocessing\Clean\Clean.cs" />
     <Compile Include="Building\Build.cs" />
@@ -180,6 +180,9 @@
     <Content Include="files\project\.settings\tasks.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="files\project\layout\layouts\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="files\project\layout\renderings\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -192,6 +195,9 @@
     <Content Include="files\project\templates\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="files\project\.packages\SitecorePathfinderCore.nupkg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="files\project\.schemas\core.layout.schema.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -254,16 +260,10 @@
       <Link>files\website\bin\Sitecore.Pathfinder.Core.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="files\project\layout\layouts\MvcLayout.item.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="..\Sitecore.Pathfinder.Server\bin\Sitecore.Pathfinder.Server.dll">
       <Link>files\website\bin\Sitecore.Pathfinder.Server.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="files\project\layout\layouts\MvcLayout.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="files\project\layout\web.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

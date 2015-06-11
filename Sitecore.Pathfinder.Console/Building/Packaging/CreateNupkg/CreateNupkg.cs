@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Building.Packaging.CreateNupkg
     [Export(typeof(ITask))]
     public class CreateNupkg : TaskBase
     {
-        public CreateNupkg() : base("nuget-pack")
+        public CreateNupkg() : base("pack-nuget")
         {
         }
 

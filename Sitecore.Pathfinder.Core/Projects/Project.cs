@@ -65,6 +65,8 @@ namespace Sitecore.Pathfinder.Projects
 
         public ICollection<ISourceFile> SourceFiles { get; } = new List<ISourceFile>();
 
+        public long Ducats { get; set; }
+
         [NotNull]
         protected ICheckerService Checker { get; }
 

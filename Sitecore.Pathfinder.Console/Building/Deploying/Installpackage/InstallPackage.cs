@@ -6,12 +6,12 @@ using System.Linq;
 using System.Web;
 using Sitecore.Pathfinder.Extensions;
 
-namespace Sitecore.Pathfinder.Building.Deploying.Install
+namespace Sitecore.Pathfinder.Building.Deploying.Installpackage
 {
     [Export(typeof(ITask))]
-    public class Install : RequestTaskBase
+    public class InstallPackage : RequestTaskBase
     {
-        public Install() : base("install")
+        public InstallPackage() : base("install-package")
         {
         }
 

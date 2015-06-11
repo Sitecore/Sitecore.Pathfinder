@@ -213,6 +213,8 @@ namespace Sitecore.Pathfinder.Packages
             return PackageRepositoryFactory.Default.CreateRepository(AvailableRepository);
         }
 
+
+
         [NotNull]
         protected virtual IPackageRepository GetInstalledRepository()
         {
@@ -221,8 +223,8 @@ namespace Sitecore.Pathfinder.Packages
 
         protected virtual void InstallPackage([CanBeNull] object sender, [NotNull] PackageOperationEventArgs e)
         {
-            var buildService = new EmitService(e.InstallPath);
-            buildService.Start();
+            var emitService = new EmitService(e.InstallPath);
+            emitService.Start();
         }
     }
 }

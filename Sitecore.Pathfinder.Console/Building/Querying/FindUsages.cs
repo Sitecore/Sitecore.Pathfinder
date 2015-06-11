@@ -10,7 +10,7 @@ namespace Sitecore.Pathfinder.Building.Querying
     [Export(typeof(ITask))]
     public class FindUsages : QueryTaskBase
     {
-        public FindUsages() : base("usages")
+        public FindUsages() : base("find-usages")
         {
         }
 

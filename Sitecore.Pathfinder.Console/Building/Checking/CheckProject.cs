@@ -4,12 +4,12 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 
-namespace Sitecore.Pathfinder.Building.Linting
+namespace Sitecore.Pathfinder.Building.Checking
 {
     [Export(typeof(ITask))]
-    public class Lint : TaskBase
+    public class CheckProject : TaskBase
     {
-        public Lint() : base("lint")
+        public CheckProject() : base("check-project")
         {
         }
 

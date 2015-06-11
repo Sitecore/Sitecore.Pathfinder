@@ -4,12 +4,12 @@ using System.ComponentModel.Composition;
 using System.IO;
 using Sitecore.Pathfinder.IO;
 
-namespace Sitecore.Pathfinder.Building.Deploying.CopyToWebsite
+namespace Sitecore.Pathfinder.Building.Deploying.CopyPackage
 {
     [Export(typeof(ITask))]
-    public class CopyPackageToWebsite : TaskBase
+    public class CopyPackage : TaskBase
     {
-        public CopyPackageToWebsite() : base("copy-to-website")
+        public CopyPackage() : base("copy-package")
         {
         }
 

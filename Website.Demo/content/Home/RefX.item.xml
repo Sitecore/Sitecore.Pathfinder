@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?><Item xmlns="http://www.sitecore.net/pathfinder/item">
-    <Field Name="Title">/sitecore/content/Home/Pipper</Field>
-    <Field Name="Text">
-      Welcome to Sitecore Pathfinder</Field>
-    <Field Name="__Workflow"></Field>
-    <Field Name="__Workflow State"></Field>
-</Item>

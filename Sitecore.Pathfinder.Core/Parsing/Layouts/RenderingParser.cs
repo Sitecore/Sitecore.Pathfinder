@@ -54,6 +54,8 @@ namespace Sitecore.Pathfinder.Parsing.Layouts
 
             var rendering = context.Factory.Rendering(context.Project, context.Snapshot, item);
             context.Project.AddOrMerge(rendering);
+
+            context.Project.Ducats += 100;
         }
 
         [NotNull]

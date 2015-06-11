@@ -53,11 +53,9 @@ namespace Sitecore.Pathfinder.Building
             var context = CompositionService.Resolve<IBuildContext>();
             Run(context);
 
-            AddProjectDucats(context);
-
             if (context.DisplayDoneMessage)
             {
-                context.Trace.Writeline(string.Format(Texts.Ducats___0_, context.Ducats.ToString("#,##0")));
+                context.Trace.Writeline(string.Format(Texts.Ducats___0_, context.Project.Ducats.ToString("#,##0")));
                 context.Trace.Writeline(Texts.Done);
             }
         }
@@ -136,14 +134,6 @@ namespace Sitecore.Pathfinder.Building
                     Debugger.Launch();
                 }
             }
-        }
-
-        private void AddProjectDucats([NotNull] IBuildContext context)
-        {
-            context.Ducats += context.Project.Items.Count(i => i is Item) * 100;
-            context.Ducats += context.Project.Items.Count(i => i is MediaFile) * 250;
-            context.Ducats += context.Project.Items.SelectMany(i => i.References).Count() * 10;
-            context.Ducats -= context.Project.Diagnostics.Count(d => d.Severity == Severity.Warning) * 500;
         }
 
         private void DisplayHelp()

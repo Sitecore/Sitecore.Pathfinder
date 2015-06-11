@@ -33,8 +33,6 @@ namespace Sitecore.Pathfinder.Building
         [NotNull]
         IProject Project { get; }
 
-        long Ducats { get; set; }
-
         [NotNull]
         string SolutionDirectory { get; }
 

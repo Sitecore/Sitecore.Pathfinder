@@ -70,25 +70,25 @@ namespace Sitecore.Pathfinder.Emitters
 
         public virtual void RegisterDeletedFile(Projects.Files.File projectItem, string destinationFileName)
         {
-            BackupFile(projectItem, destinationFileName);
+            // BackupFile(projectItem, destinationFileName);
             DeletedFiles.Add(projectItem.FilePath);
         }
 
         public void RegisterDeletedItem(Item deletedItem)
         {
-            BackupItem(deletedItem);
+            // BackupItem(deletedItem);
             DeletedItems.Add(deletedItem.Database.Name + "|" + deletedItem.ID);
         }
 
         public virtual void RegisterUpdatedFile(Projects.Files.File projectItem, string destinationFileName)
         {
-            BackupFile(projectItem, destinationFileName);
+            // BackupFile(projectItem, destinationFileName);
             UpdatedFiles.Add(projectItem.FilePath);
         }
 
         public virtual void RegisterUpdatedItem(Item item)
         {
-            BackupItem(item);
+            // BackupItem(item);
             UpdatedItems.Add(item.Database.Name + "|" + item.ID);
         }
 

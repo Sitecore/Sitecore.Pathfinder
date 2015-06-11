@@ -29,6 +29,8 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         ICollection<ISourceFile> SourceFiles { get; }
 
+        long Ducats { get; set; }
+
         void Add([NotNull] string sourceFileName);
 
         T AddOrMerge<T>([NotNull] T projectItem) where T : IProjectItem;

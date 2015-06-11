@@ -148,7 +148,7 @@
     <value>Cannot apply a layout to a template. The template needs a Standard Values.</value>
   </data>
   <data name="Checking___" xml:space="preserve">
-    <value>Checking...</value>
+    <value>Checking project...</value>
   </data>
   <data name="Linting_items" xml:space="preserve">
     <value>Linting items</value>
@@ -178,10 +178,10 @@
     <value>Creating Nupkg file...</value>
   </data>
   <data name="Publishing___" xml:space="preserve">
-    <value>Publishing...</value>
+    <value>Publishing database...</value>
   </data>
   <data name="Installing___" xml:space="preserve">
-    <value>Installing...</value>
+    <value>Installing package...</value>
   </data>
   <data name="Text_document_expected" xml:space="preserve">
     <value>Text document expected</value>
@@ -216,10 +216,7 @@
   <data name="Unique_ID_clash" xml:space="preserve">
     <value>Unique ID clash</value>
   </data>
-  <data name="Creating__layout__directory___" xml:space="preserve">
-    <value>Creating 'layout' directory...</value>
-  </data>
-  <data name="Project_has_not_been_loaded__Call_Load___first" xml:space="preserve">
+    <data name="Project_has_not_been_loaded__Call_Load___first" xml:space="preserve">
     <value>Project has not been loaded. Call Load() first</value>
   </data>
   <data name="Device_element_is_missing__Name__attribute_" xml:space="preserve">
@@ -370,6 +367,15 @@
     <value>Source files changed</value>
   </data>
     <data name="Ducats___0_" xml:space="preserve">
-    <value>Ducats: {0}</value>
+    <value>Ducats saved: {0}</value>
+  </data>
+    <data name="Copying_dependencies___" xml:space="preserve">
+    <value>Copying dependencies...</value>
+  </data>
+    <data name="Database" xml:space="preserve">
+    <value>Database</value>
+  </data>
+    <data name="Copying_dependency" xml:space="preserve">
+    <value>Copying dependency</value>
   </data>
 </root>

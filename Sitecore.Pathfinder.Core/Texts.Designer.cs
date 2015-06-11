@@ -170,7 +170,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Checking....
+        ///   Looks up a localized string similar to Checking project....
         /// </summary>
         public static string Checking___ {
             get {
@@ -193,6 +193,24 @@ namespace Sitecore.Pathfinder {
         public static string Configuration_failed_spectacularly {
             get {
                 return ResourceManager.GetString("Configuration_failed_spectacularly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copying dependencies....
+        /// </summary>
+        public static string Copying_dependencies___ {
+            get {
+                return ResourceManager.GetString("Copying_dependencies___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copying dependency.
+        /// </summary>
+        public static string Copying_dependency {
+            get {
+                return ResourceManager.GetString("Copying_dependency", resourceCulture);
             }
         }
         
@@ -233,20 +251,20 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Creating &apos;layout&apos; directory....
-        /// </summary>
-        public static string Creating__layout__directory___ {
-            get {
-                return ResourceManager.GetString("Creating__layout__directory___", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Creating Nupkg file....
         /// </summary>
         public static string Creating_Nupkg_file___ {
             get {
                 return ResourceManager.GetString("Creating_Nupkg_file___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database.
+        /// </summary>
+        public static string Database {
+            get {
+                return ResourceManager.GetString("Database", resourceCulture);
             }
         }
         
@@ -314,7 +332,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ducats: {0}.
+        ///   Looks up a localized string similar to Ducats saved: {0}.
         /// </summary>
         public static string Ducats___0_ {
             get {
@@ -441,7 +459,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Installing....
+        ///   Looks up a localized string similar to Installing package....
         /// </summary>
         public static string Installing___ {
             get {
@@ -596,7 +614,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Publishing....
+        ///   Looks up a localized string similar to Publishing database....
         /// </summary>
         public static string Publishing___ {
             get {

@@ -8,7 +8,7 @@ namespace Sitecore.Pathfinder.Building.Preprocessing.Rebuild
     [Export(typeof(ITask))]
     public class Rebuild : TaskBase
     {
-        public Rebuild() : base("rebuild")
+        public Rebuild() : base("rebuild-project")
         {
         }
 

@@ -10,7 +10,7 @@ namespace Sitecore.Pathfinder.Building.Querying
     [Export(typeof(ITask))]
     public class FindReferences : QueryTaskBase
     {
-        public FindReferences() : base("references")
+        public FindReferences() : base("find-references")
         {
         }
 

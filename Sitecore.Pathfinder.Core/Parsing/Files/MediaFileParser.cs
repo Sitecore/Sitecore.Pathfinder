@@ -47,6 +47,8 @@ namespace Sitecore.Pathfinder.Parsing.Files
 
             var mediaFile = context.Factory.MediaFile(context.Project, context.Snapshot, mediaItem);
             context.Project.AddOrMerge(mediaFile);
+
+            context.Project.Ducats += 100;
         }
     }
 }

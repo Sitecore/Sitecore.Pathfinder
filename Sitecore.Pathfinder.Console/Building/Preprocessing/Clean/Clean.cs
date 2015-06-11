@@ -8,7 +8,7 @@ namespace Sitecore.Pathfinder.Building.Preprocessing.Clean
     [Export(typeof(ITask))]
     public class Clean : TaskBase
     {
-        public Clean() : base("clean")
+        public Clean() : base("clean-project")
         {
         }
 

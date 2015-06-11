@@ -5,12 +5,12 @@ using System.ComponentModel.Composition;
 using System.Web;
 using Sitecore.Pathfinder.Extensions;
 
-namespace Sitecore.Pathfinder.Building.Deploying.Publishing
+namespace Sitecore.Pathfinder.Building.Deploying.PublishDatabase
 {
     [Export(typeof(ITask))]
-    public class Publish : RequestTaskBase
+    public class PublishDatabase : RequestTaskBase
     {
-        public Publish() : base("publish")
+        public PublishDatabase() : base("publish-database")
         {
         }
 
@@ -30,6 +30,8 @@ namespace Sitecore.Pathfinder.Building.Deploying.Publishing
                 context.Trace.TraceInformation(Texts.Database_is__core___Skipping_);
                 return;
             }
+
+            context.Trace.TraceInformation(Texts.Database, context.Project.Options.DatabaseName);
 
             var hostName = context.Configuration.GetString(Constants.Configuration.HostName).TrimEnd('/');
             var publishUrl = context.Configuration.GetString(Constants.Configuration.PublishUrl).TrimStart('/');
