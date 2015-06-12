@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "$type": "object",
+  "type": "object",
   "additionalProperties": false,
   "properties": {
     "$schema": {
@@ -9394,7 +9394,11 @@
             "additionalProperties": false,
             "properties": {
               "Name": {
-                "type": "string"
+                "description": "The name of the device.",
+                "enum": [
+                  "Internet Explorer",
+                  "Firefox"
+                ]
               },
               "Layout": {
                 "type": "string"

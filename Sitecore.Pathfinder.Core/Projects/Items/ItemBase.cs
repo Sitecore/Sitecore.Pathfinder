@@ -61,7 +61,6 @@ namespace Sitecore.Pathfinder.Projects.Items
 
                 ItemIdOrPath = newItemBase.ItemIdOrPath;
                 DatabaseName = newItemBase.DatabaseName;
-                IsEmittable = IsEmittable && newItemBase.IsEmittable;
             }
 
             if (!string.IsNullOrEmpty(newItemBase.DatabaseName))
@@ -74,10 +73,7 @@ namespace Sitecore.Pathfinder.Projects.Items
                 Icon = newItemBase.Icon;
             }
 
-            if (!newItemBase.IsEmittable)
-            {
-                IsEmittable = false;
-            }
+            IsEmittable = IsEmittable || newItemBase.IsEmittable;
 
             References.AddRange(newItemBase.References);
         }

@@ -1,0 +1,8 @@
+﻿@model Sitecore.Mvc.Presentation.RenderingModel
+@using System.IO
+@using Sitecore.Mvc
+@{
+}
+<h1>@Model.Item["Title"]</h1>
+<p>@Model.Item["Text"]</p>
+@Html.Sitecore().Field("Image")

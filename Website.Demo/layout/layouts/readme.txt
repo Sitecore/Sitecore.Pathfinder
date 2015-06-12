@@ -1,5 +1,5 @@
-﻿Place any rendering files in this directory.
+﻿Place any layout files in this directory.
 
-Supported formats: .cshtml, .aspx, .ascx
+Supported formats: .cshtml, .aspx
 
 This file can safely be removed.

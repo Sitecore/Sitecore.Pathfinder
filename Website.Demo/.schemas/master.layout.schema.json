@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "$type": "object",
+  "type": "object",
   "additionalProperties": false,
   "properties": {
     "$schema": {
@@ -35,6 +35,9 @@
           },
           {
             "$ref": "#/definitions/Google Plus One Button"
+          },
+          {
+            "$ref": "#/definitions/HelloWorld"
           },
           {
             "$ref": "#/definitions/Hidden Rendering"
@@ -465,6 +468,59 @@
               "type": "string",
               "description": "Points to a test variable"
             },
+            "Placeholder": {
+              "type": "string",
+              "description": "The place holder where this rendering will be rendered."
+            },
+            "DataSource": {
+              "type": "string",
+              "description": "The data source."
+            },
+            "Cacheable": {
+              "type": "boolean",
+              "description": "Indicates if the output will be cached."
+            },
+            "VaryByData": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the data source."
+            },
+            "VaryByDevice": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the current device."
+            },
+            "VaryByLogin": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the login."
+            },
+            "VaryByParameters": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the parameters."
+            },
+            "VaryByQueryString": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the query string."
+            },
+            "VaryByUser": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the user."
+            },
+            "Renderings": {
+              "$ref": "#/definitions/Renderings"
+            }
+          }
+        }
+      }
+    },
+    "HelloWorld": {
+      "type": "object",
+      "additionalProperties": false,
+      "additionalItems": false,
+      "properties": {
+        "HelloWorld": {
+          "type": "object",
+          "additionalProperties": false,
+          "additionalItems": false,
+          "properties": {
             "Placeholder": {
               "type": "string",
               "description": "The place holder where this rendering will be rendered."
@@ -1738,7 +1794,13 @@
             "additionalProperties": false,
             "properties": {
               "Name": {
-                "type": "string"
+                "description": "The name of the device.",
+                "enum": [
+                  "Default",
+                  "Print",
+                  "App Center Placeholder",
+                  "Feed"
+                ]
               },
               "Layout": {
                 "type": "string"

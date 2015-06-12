@@ -39,7 +39,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
             var templateIdOrPath = ResolveTemplateIdOrPath(item);
             if (string.IsNullOrEmpty(templateIdOrPath))
             {
-                throw new RetryableEmitException(Texts.Template_missing, item.TemplateIdOrPath.Source ?? TextNode.Empty, item.TemplateIdOrPath.Value);
+                throw new RetryableEmitException(Texts.Template_missing, item.TemplateIdOrPath.Source ?? item.ItemName.Source ?? TextNode.Empty, item.TemplateIdOrPath.Value);
             }
 
             var database = Factory.GetDatabase(item.DatabaseName);
@@ -115,6 +115,13 @@ namespace Sitecore.Pathfinder.Emitters.Items
             if (template != null)
             {
                 return database.GetItem(template.ID)?.Paths.Path;
+            }
+
+            // try to see if the item already exists - may have been created elsewhere
+            var i = database.GetItem(item.ItemIdOrPath);
+            if (i != null)
+            {
+                return database.GetItem(i.Template.ID)?.Paths.Path;
             }
 
             return null;

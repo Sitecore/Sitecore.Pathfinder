@@ -1,0 +1,30 @@
+{
+  "Item": {
+    "Template.Create": "/sitecore/templates/Sample/HelloWorld",
+    "Fields": [
+      {
+        "Name": "Title",
+        "Value": "Welcome"
+      },
+      {
+        "Name": "Text",
+        "Value": "Welcome to Sitecore"
+      },
+      {
+        "Name": "Image",
+        "Field.Type": "Image",
+        "Value": "/sitecore/media library/lighthouse"
+      },
+
+      // Sets the workflow fields to empty, so that the item can be published immediately
+      {
+        "Name": "__Workflow",
+        "Value": ""
+      },
+      {
+        "Name": "__Workflow State",
+        "Value": ""
+      }
+    ]
+  }
+}
