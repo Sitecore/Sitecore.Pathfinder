@@ -3,8 +3,12 @@
 Get started, get far, get happy!
 
 Watch the videos:
+
 [01 - Idea and concepts](.videos/01 - Pathfinder - Idea and concepts.mp4)
+
 [02 - HelloWorld](.videos/02 - Pathfinder - HelloWorld.mp4)
+
+<video src=".videos/01 - Pathfinder - Idea and concepts.mp4" controls preload></video>
 
 Introduction
 ============
