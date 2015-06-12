@@ -5,6 +5,11 @@
 *.suo
 *.user
 *.sln.docstates
+*.GhostDoc.xml
+.vs/
+*.ncrunchsolution
+*.ncrunchsolution.user
+*.DotSettings.user
 
 # Build results
 Components/
