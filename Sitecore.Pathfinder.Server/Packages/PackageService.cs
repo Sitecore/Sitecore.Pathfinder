@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using NuGet;
+using Sitecore.IO;
 using Sitecore.Pathfinder.Emitters;
 using Sitecore.Pathfinder.Packages.Packages;
 
@@ -71,7 +72,7 @@ namespace Sitecore.Pathfinder.Packages
         [NotNull]
         public virtual IEnumerable<PackageBase> CheckForInstalledUpdates([NotNull] IEnumerable<PackageBase> installedPackages)
         {
-            var availablePackages = GetAvailablePackages(string.Empty, string.Empty);
+            var availablePackages = GetAvailablePackages(string.Empty, string.Empty, string.Empty);
 
             foreach (var installedPackage in installedPackages)
             {
@@ -93,12 +94,31 @@ namespace Sitecore.Pathfinder.Packages
             return installedPackages;
         }
 
+        [Diagnostics.NotNull]
+        public virtual IEnumerable<NugetPackage> FindPackagesById([NotNull] string packageId)
+        {
+            var availableRepository = GetAvailableRepository();
+
+            var packages = availableRepository.FindPackagesById(packageId);
+            if (packages == null)
+            {
+                throw new InvalidOperationException("Package not found: " + packageId);
+            }
+
+            return packages.Select(p => new NugetPackage(p)).ToList();
+        }
+
         [NotNull]
-        public virtual IEnumerable<PackageBase> GetAvailablePackages(string author, string tags)
+        public virtual IEnumerable<PackageBase> GetAvailablePackages([Diagnostics.NotNull] string queryText, [Diagnostics.NotNull] string author, [Diagnostics.NotNull] string tags)
         {
             var availableRepository = GetAvailableRepository();
 
             var query = availableRepository.GetPackages();
+
+            if (!string.IsNullOrEmpty(queryText))
+            {
+                query = query.Where(p => p.Id.IndexOf(queryText, StringComparison.InvariantCultureIgnoreCase) >= 0 || (p.Title != null && p.Title.IndexOf(queryText, StringComparison.InvariantCultureIgnoreCase) >= 0));
+            }
 
             if (!string.IsNullOrEmpty(author))
             {
@@ -110,9 +130,9 @@ namespace Sitecore.Pathfinder.Packages
                 query = query.Where(p => p.Tags != null && p.Tags.Contains(tags));
             }
 
-            query = query.OrderByDescending(p => p.DownloadCount).ThenBy(p => p.Title);
+            var tempQuery = query.ToList();
 
-            return query.GroupBy(p => p.Id).Select(y => y.OrderByDescending(p => p.Version).First()).Select(p => new NugetPackage(p)).ToList();
+            return tempQuery.GroupBy(p => p.Id).Select(y => y.OrderByDescending(p => p.Version).First()).OrderBy(p => p.Title).Select(p => new NugetPackage(p)).ToList();
         }
 
         [NotNull]
@@ -220,10 +240,29 @@ namespace Sitecore.Pathfinder.Packages
         [NotNull]
         protected virtual IPackageRepository GetAvailableRepository()
         {
-            return PackageRepositoryFactory.Default.CreateRepository(AvailableRepository);
+            var repositories = new List<IPackageRepository>
+            {
+                PackageRepositoryFactory.Default.CreateRepository(AvailableRepository),
+            };
+
+            var packageSources = FileUtil.MapPath("/sitecore/shell/client/Applications/Pathfinder/PackageSources.txt");
+            if (File.Exists(packageSources))
+            {
+                var sources = File.ReadAllLines(packageSources);
+                foreach (var source in sources)
+                {
+                    if (string.IsNullOrEmpty(source.Trim()))
+                    {
+                        continue;
+                    }
+
+                    repositories.Add(PackageRepositoryFactory.Default.CreateRepository(source));
+                }
+            }
+
+            var aggregateRepository = new AggregateRepository(repositories);
+            return aggregateRepository;
         }
-
-
 
         [NotNull]
         protected virtual IPackageRepository GetInstalledRepository()

@@ -131,10 +131,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Building\ITask.cs" />
     <Compile Include="Building\TaskBase.cs" />
-    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\AvailablePackages.aspx">
-      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\AvailablePackages.aspx</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\InstalledPackages.aspx">
       <Link>files\website\sitecore\shell\client\Applications\Pathfinder\InstalledPackages.aspx</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -143,11 +139,28 @@
       <Link>files\website\sitecore\shell\client\Applications\Pathfinder\InstallPackage.aspx</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\Package.aspx">
+      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\Package.aspx</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\Packages.aspx">
+      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\Packages.aspx</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\Publish.aspx">
       <Link>files\website\sitecore\shell\client\Applications\Pathfinder\Publish.aspx</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="files\extensions\ReferenceChecker.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\website\sitecore\shell\client\Applications\Pathfinder\packageDefaultIcon-50x50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\website\sitecore\shell\client\Applications\Pathfinder\Packages.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\website\sitecore\shell\client\Applications\Pathfinder\PackageSources.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

@@ -25,7 +25,7 @@
             <div class="sc-globalHeader-navigationToggler">
               <div class="sc-navigationPanelToggleButton">
                 <button class="btn sc-togglebutton btn-default noText" type="button">
-                  <div class="sc-icon" style="background-image: url(http://sitecore.admin/sitecore/shell/client/Speak/Assets/img/Speak/NavigationPanelToggleButton/navigationPanelToggleIcon.png); background-position: 50% 50%;">
+                  <div class="sc-icon" style="background-image: url(/sitecore/shell/client/Speak/Assets/img/Speak/NavigationPanelToggleButton/navigationPanelToggleIcon.png); background-position: 50% 50%;">
                   </div>
                   <span class="sc-togglebutton-text"></span>
                 </button>

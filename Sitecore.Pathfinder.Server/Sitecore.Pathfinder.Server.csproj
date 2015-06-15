@@ -101,8 +101,12 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="sitecore\shell\client\Applications\Pathfinder\AvailablePackages.aspx" />
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\packageDefaultIcon-50x50.png" />
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\Package.aspx" />
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\Packages.aspx" />
     <Content Include="sitecore\shell\client\Applications\Pathfinder\InstalledPackages.aspx" />
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\Packages.css" />
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\PackageSources.txt" />
     <Content Include="sitecore\shell\client\Applications\Pathfinder\Publish.aspx" />
     <Content Include="sitecore\shell\client\Applications\Pathfinder\InstallPackage.aspx" />
   </ItemGroup>
