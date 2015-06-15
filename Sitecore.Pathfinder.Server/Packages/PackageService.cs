@@ -71,7 +71,7 @@ namespace Sitecore.Pathfinder.Packages
         [NotNull]
         public virtual IEnumerable<PackageBase> CheckForInstalledUpdates([NotNull] IEnumerable<PackageBase> installedPackages)
         {
-            var availablePackages = GetAvailablePackages();
+            var availablePackages = GetAvailablePackages(string.Empty, string.Empty);
 
             foreach (var installedPackage in installedPackages)
             {
@@ -94,11 +94,21 @@ namespace Sitecore.Pathfinder.Packages
         }
 
         [NotNull]
-        public virtual IEnumerable<PackageBase> GetAvailablePackages()
+        public virtual IEnumerable<PackageBase> GetAvailablePackages(string author, string tags)
         {
             var availableRepository = GetAvailableRepository();
 
             var query = availableRepository.GetPackages();
+
+            if (!string.IsNullOrEmpty(author))
+            {
+                query = query.Where(p => p.Authors.Any(a => string.Compare(a, author, StringComparison.OrdinalIgnoreCase) == 0));
+            }
+
+            if (!string.IsNullOrEmpty(tags))
+            {
+                query = query.Where(p => p.Tags != null && p.Tags.Contains(tags));
+            }
 
             query = query.OrderByDescending(p => p.DownloadCount).ThenBy(p => p.Title);
 

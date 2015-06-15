@@ -1,3 +1,5 @@
 ﻿<Project>
-  <FolderSync SynchronizeProjectOutputFolderOnBuild="False" />
+  <FolderSync SynchronizeProjectOutputFolderOnBuild="True">
+    <Folder SourceFolder="E:\Sitecore\Sitecore.Pathfinder\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder" DestinationFolder="sitecore\shell\client\Applications\Pathfinder\" Mode="Mirror" Pattern="" />
+  </FolderSync>
 </Project>

@@ -2,16 +2,26 @@
 <%@ Import Namespace="Sitecore.Pathfinder.Packages" %>
 <!DOCTYPE html>      
 <%
+    var author = Request.QueryString["author"] ?? string.Empty;
+    var tags = Request.QueryString["tags"] ?? string.Empty;
+
     var packageService = new PackageService();
-    var packages = packageService.CheckForAvailableUpdates(packageService.GetAvailablePackages()).ToList();
+    var packages = packageService.CheckForAvailableUpdates(packageService.GetAvailablePackages(author, tags)).ToList();
 %>
 <html class="fuelux">
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <title>Sitecore Pathfinder</title>
-
-  <link href="/sitecore/shell/client/Speak/Assets/css/speak-default-theme.css" rel="stylesheet" type="text/css" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Sitecore Pathfinder</title> 
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+    <link href="/sitecore/shell/client/Speak/Assets/css/speak-default-theme.css" rel="stylesheet" type="text/css" />
+    <style>
+        body {
+            font-family: 'Open Sans';
+            font-size: 14px;
+        }  
+    </style>
+}
 </head>
 <body class="sc sc-fullWidth">
   <div class="sc-list">                                          
@@ -105,7 +115,6 @@
         <table class="table">
           <tr>
             <th>Package</th>
-            <th>Version</th>
             <th>Action</th>
           </tr>
 
@@ -122,6 +131,7 @@
           
           <% foreach (var package in packages.OrderBy(p => p.Name).ThenByDescending(p => p.Version))
              {
+                 var nuget = (Sitecore.Pathfinder.Packages.Packages.NugetPackage)package;
                  var packageName = package.Name;
                  var version = package.Version;
                  var installHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx?i=" + HttpUtility.UrlEncode(package.PackageId);
@@ -129,15 +139,37 @@
                  var uninstallHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx?r=" + HttpUtility.UrlEncode(package.PackageId);
           %>
             <tr>
-              <td>
-                <% = packageName %>
-              </td>
-              <td>
-                <% = version %>
+              <td>   
+                  <div>
+                      <a href="#" style="font-size:24px">
+                      <% = packageName %>
+                      </a>             
+                      <span> by </span>
+                      <% foreach (var a in nuget.Package.Authors)
+                         { 
+                            var authorUrl = "/sitecore/shell/client/Applications/Pathfinder/AvailablePackages.aspx?author=" + a; %>
+                        <a href="<%=authorUrl %>"><% =a %></a>
+                      <% } %>
+                  </div>  
+                  <p>
+                      <% =nuget.Package.Description %>
+                  </p>     
+
+                  <div>
+                  <strong style="font-size: 17px">Version <% = version %></strong>
                 <% if (package.HasUpdate)
                    { %>
                   <span class="text-muted"> - Version <% = package.UpdateVersion %> is installed</span>
                 <% } %>
+                  <% if (nuget.Package.Tags != null) { %>
+                      <span style="font-size:17px"> | Tags</span>
+                      <% foreach (var tag in nuget.Package.Tags.Split(' '))
+                         {
+                             var tagUrl = "/sitecore/shell/client/Applications/Pathfinder/AvailablePackages.aspx?tags=" + tag; %>
+                             <a href="<% =tagUrl %>"><% =tag %></a>
+                      <% } %>
+                  <% } %>
+                  </div>  
               </td>
               <td>               
                 <% if (package.IsInstalled)
