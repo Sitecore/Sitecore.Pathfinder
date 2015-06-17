@@ -129,6 +129,7 @@
     <Compile Include="Building\Deploying\CopyDependencies\CopyDependencies.cs" />
     <Compile Include="Building\Initializing\Initialization\Init.cs" />
     <Compile Include="Building\Initializing\SynchronizeWebsites\SynchronizeWebsite.cs" />
+    <Compile Include="Building\Testing\GenerateUnitTests.cs" />
     <Compile Include="Building\Querying\FindReferences.cs" />
     <Compile Include="Building\Querying\FindUsages.cs" />
     <Compile Include="Building\Packaging\CreateNupkg\CreateNupkg.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="Building\Querying\QueryTaskBase.cs" />
     <Compile Include="Building\Refactoring\Rename.cs" />
     <Compile Include="Building\RequestTaskBase.cs" />
+    <Compile Include="Building\Testing\RunUnitTests.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Building\BuildContext.cs" />
     <Compile Include="Building\IBuildContext.cs" />
@@ -174,6 +176,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="files\website\sitecore\shell\client\Applications\Pathfinder\PackageSources.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="nunit.framework.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

@@ -76,6 +76,8 @@ namespace Sitecore.Pathfinder
 
             public const string UpdateResourcesUrl = "update-resources-url";
 
+            public const string WebsiteFolderName = "websiteFolderName";
+
             public const string Wwwroot = "wwwroot";
         }
 

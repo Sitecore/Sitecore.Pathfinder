@@ -43,7 +43,7 @@ namespace Sitecore.Pathfinder
             var extensionCompiler = new ExtensionsCompiler();
 
             var extensionsDirectory = Path.Combine(configuration.Get(Constants.Configuration.ToolsDirectory), "files\\extensions");
-            var extensionsAssembly = extensionCompiler.GetAssembly(extensionsDirectory);
+            var extensionsAssembly = extensionCompiler.GetExtensionsAssembly(extensionsDirectory);
             if (extensionsAssembly == null)
             {
                 // todo: not nice

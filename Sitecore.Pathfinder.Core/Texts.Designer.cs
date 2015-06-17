@@ -431,6 +431,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Generating unit tests....
+        /// </summary>
+        public static string Generating_unit_tests___ {
+            get {
+                return ResourceManager.GetString("Generating_unit_tests___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hey - you haven&apos;t changed the the &apos;project-unique-id&apos;, &apos;wwwroot&apos; or &apos;hostname&apos; in the &apos;{0}&apos; configuration file..
         /// </summary>
         public static string Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in_the___0___configuration_file_ {
@@ -619,6 +628,15 @@ namespace Sitecore.Pathfinder {
         public static string Publishing___ {
             get {
                 return ResourceManager.GetString("Publishing___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Running unit tests....
+        /// </summary>
+        public static string Running_unit_tests___ {
+            get {
+                return ResourceManager.GetString("Running_unit_tests___", resourceCulture);
             }
         }
         

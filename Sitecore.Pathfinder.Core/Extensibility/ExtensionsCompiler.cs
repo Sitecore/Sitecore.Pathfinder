@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Web;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
@@ -14,7 +15,7 @@ namespace Sitecore.Pathfinder.Extensibility
     public class ExtensionsCompiler
     {
         [CanBeNull]
-        public Assembly GetAssembly([NotNull] string extensionsDirectory)
+        public Assembly GetExtensionsAssembly([NotNull] string extensionsDirectory)
         {
             var fileNames = Directory.GetFiles(extensionsDirectory, "*.cs", SearchOption.AllDirectories);
 
@@ -47,6 +48,47 @@ namespace Sitecore.Pathfinder.Extensibility
             if (result.Success)
             {
                 return Assembly.LoadFrom(extensionsAssemblyFileName);
+            }
+
+            var failures = result.Diagnostics.Where(diagnostic => diagnostic.IsWarningAsError || diagnostic.Severity == DiagnosticSeverity.Error);
+            foreach (var diagnostic in failures)
+            {
+                Console.WriteLine(@"scc.cmd(0,0): {0} {1}: {2}", diagnostic.Severity, diagnostic.Id, diagnostic.GetMessage());
+            }
+
+            return null;
+        }
+
+        [CanBeNull]
+        public Assembly GetUnitTestAssembly([NotNull] string fileName)
+        {
+            var code = File.ReadAllText(fileName);
+
+            var syntaxTrees = new[]
+            {
+                CSharpSyntaxTree.ParseText(code)
+            };
+
+            var nunitFileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "nunit.framework.dll");
+
+            var references = AppDomain.CurrentDomain.GetAssemblies().Select(MetadataReference.CreateFromAssembly).ToList();
+            references.Add(MetadataReference.CreateFromFile(nunitFileName));
+            references.Add(MetadataReference.CreateFromAssembly(typeof(HttpUtility).Assembly));
+            var options = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary);
+
+            var compilation = CSharpCompilation.Create("Sitecore.Pathfinder.Tests", syntaxTrees, references, options);
+
+            EmitResult result;
+            using (var stream = new MemoryStream())
+            {
+                result = compilation.Emit(stream);
+
+                if (result.Success)
+                {
+                    // todo: load in AppDomain
+                    stream.Seek(0, SeekOrigin.Begin);
+                    return Assembly.Load(stream.ToArray());
+                }
             }
 
             var failures = result.Diagnostics.Where(diagnostic => diagnostic.IsWarningAsError || diagnostic.Severity == DiagnosticSeverity.Error);

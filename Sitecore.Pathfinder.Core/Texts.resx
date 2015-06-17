@@ -378,4 +378,10 @@
     <data name="Copying_dependency" xml:space="preserve">
     <value>Copying dependency</value>
   </data>
+    <data name="Running_unit_tests___" xml:space="preserve">
+    <value>Running unit tests...</value>
+  </data>
+    <data name="Generating_unit_tests___" xml:space="preserve">
+    <value>Generating unit tests...</value>
+  </data>
 </root>

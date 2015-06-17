@@ -1,20 +1,16 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using NUnit.Framework;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Documents;
+using Sitecore.Pathfinder.Documents.Xml;
 using Sitecore.Pathfinder.Projects.Items;
-using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.Projects
 {
-    using Sitecore.Pathfinder.Documents.Json;
-    using Sitecore.Pathfinder.Documents.Xml;
-
     [TestFixture]
     public class ProjectTests : Tests
     {
@@ -48,6 +44,13 @@ namespace Sitecore.Pathfinder.Projects
         {
             Assert.AreEqual(8, Project.Options.ExternalReferences.Count);
             Assert.AreEqual("/sitecore/templates/Sample/Sample Item", Project.Options.ExternalReferences.ElementAt(0));
+        }
+
+        [Test]
+        public void FindUsagesTest()
+        {
+            var references = Services.QueryService.FindUsages(Project, "/sitecore/media library/mushrooms");
+            Assert.AreEqual(2, references.Count());
         }
 
         [Test]
@@ -282,13 +285,6 @@ namespace Sitecore.Pathfinder.Projects
             var attr = treeNode.Attributes.First();
             Assert.AreEqual("Template.Create", attr.Name);
             Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", attr.Value);
-        }
-
-        [Test]
-        public void FindUsagesTest()
-        {
-            var references = Services.QueryService.FindUsages(Project, "/sitecore/media library/mushrooms");
-            Assert.AreEqual(2, references.Count());
         }
     }
 }
