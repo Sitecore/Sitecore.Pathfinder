@@ -134,9 +134,9 @@ namespace Sitecore.Pathfinder.Configuration
             return new TemplateField(template);
         }
 
-        public virtual TemplateSection TemplateSection()
+        public virtual TemplateSection TemplateSection(ITextNode templateSectionTextNode)
         {
-            return new TemplateSection();
+            return new TemplateSection(templateSectionTextNode);
         }
 
         public virtual TextNode TextNode(ISnapshot snapshot, TextPosition position, string name, string value, ITextNode parent)

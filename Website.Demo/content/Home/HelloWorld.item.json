@@ -4,6 +4,8 @@
     "Fields": [
       {
         "Name": "Title",
+        "Field.ShortHelp": "Pipper 123.",
+        "Field.LongHelp": "Pipper 123.",
         "Value": "Welcome"
       },
       {
@@ -14,16 +16,6 @@
         "Name": "Image",
         "Field.Type": "Image",
         "Value": "/sitecore/media library/lighthouse"
-      },
-
-      // Sets the workflow fields to empty, so that the item can be published immediately
-      {
-        "Name": "__Workflow",
-        "Value": ""
-      },
-      {
-        "Name": "__Workflow State",
-        "Value": ""
       }
     ]
   }

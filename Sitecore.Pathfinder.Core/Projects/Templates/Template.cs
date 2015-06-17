@@ -50,9 +50,9 @@ namespace Sitecore.Pathfinder.Projects.Templates
                 BaseTemplates = newTemplate.BaseTemplates;
             }
 
-            if (!string.IsNullOrEmpty(newTemplate.Icon))
+            if (!string.IsNullOrEmpty(newTemplate.Icon.Value))
             {
-                Icon = newTemplate.Icon;
+                Icon.SetValue(newTemplate.Icon);
             }
 
             if (!string.IsNullOrEmpty(newTemplate.ShortHelp))
@@ -67,7 +67,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
             foreach (var newSection in newTemplate.Sections)
             {
-                var section = Sections.FirstOrDefault(s => string.Compare(s.Name, newSection.Name, StringComparison.OrdinalIgnoreCase) == 0);
+                var section = Sections.FirstOrDefault(s => string.Compare(s.SectionName.Value, newSection.SectionName.Value, StringComparison.OrdinalIgnoreCase) == 0);
                 if (section == null)
                 {
                     Sections.Add(newSection);

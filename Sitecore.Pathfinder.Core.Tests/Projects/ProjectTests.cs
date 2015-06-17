@@ -120,7 +120,7 @@ namespace Sitecore.Pathfinder.Projects
             var template = projectItem as Template;
             Assert.IsNotNull(template);
             Assert.AreEqual("FooTemplate", template.ItemName.Value);
-            Assert.AreEqual("Applications/16x16/About.png", template.Icon);
+            Assert.AreEqual("Applications/16x16/About.png", template.Icon.Value);
             Assert.AreEqual("ShortHelp", template.ShortHelp);
             Assert.AreEqual("LongHelp", template.LongHelp);
             Assert.AreEqual("/sitecore/content/Home/FooTemplate", template.ItemIdOrPath);
@@ -129,12 +129,12 @@ namespace Sitecore.Pathfinder.Projects
             Assert.IsInstanceOf<FileNameTextNode>(template.ItemName.Source);
 
             var section = template.Sections[0];
-            Assert.AreEqual("Fields", section.Name);
+            Assert.AreEqual("Fields", section.SectionName.Value);
             Assert.AreEqual("Applications/16x16/About.png", section.Icon);
             Assert.AreEqual(2, section.Fields.Count);
 
             var field = section.Fields[0];
-            Assert.AreEqual("Title", field.Name);
+            Assert.AreEqual("Title", field.FieldName.Value);
             Assert.AreEqual("Single-Line Text", field.Type);
             Assert.AreEqual("ShortHelp", field.ShortHelp);
             Assert.AreEqual("LongHelp", field.LongHelp);

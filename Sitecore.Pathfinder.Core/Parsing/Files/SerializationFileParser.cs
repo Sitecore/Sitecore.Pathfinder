@@ -43,7 +43,7 @@ namespace Sitecore.Pathfinder.Parsing.Files
             var item = context.Factory.Item(context.Project, serializationItemBuilder.ProjectUniqueId, root, serializationItemBuilder.DatabaseName, serializationItemBuilder.ItemName, serializationItemBuilder.ItemIdOrPath, serializationItemBuilder.TemplateIdOrPath);
             item.ItemName.Source = serializationItemBuilder.ItemNameSource;
             item.TemplateIdOrPath.Source = serializationItemBuilder.TemplateIdOrPathSource;
-            item.Icon = serializationItemBuilder.Icon;
+            item.Icon.SetValue(serializationItemBuilder.Icon);
             item.IsEmittable = false;
 
             foreach (var field in serializationItemBuilder.Fields)

@@ -9,16 +9,6 @@
       {
         "Name": "Text",
         "Value": "Welcome to Sitecore"
-      },
-
-      // Sets the workflow fields to empty, so that the item can be published immediately
-      {
-        "Name": "__Workflow",
-        "Value": ""
-      },
-      {
-        "Name": "__Workflow State",
-        "Value": ""
       }
     ]
   }

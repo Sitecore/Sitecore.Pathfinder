@@ -100,7 +100,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
                     {
                         if (!string.IsNullOrEmpty(field.TemplaterField.StandardValue))
                         {
-                            standardValuesItem[field.TemplaterField.Name] = field.TemplaterField.StandardValue;
+                            standardValuesItem[field.TemplaterField.FieldName.Value] = field.TemplaterField.StandardValue;
                         }
                     }
                 }
@@ -137,9 +137,9 @@ namespace Sitecore.Pathfinder.Builders.Templates
                     item[FieldIDs.BaseTemplate] = Template.BaseTemplates;
                 }
 
-                if (!string.IsNullOrEmpty(Template.Icon))
+                if (!string.IsNullOrEmpty(Template.Icon.Value))
                 {
-                    item.Appearance.Icon = Template.Icon;
+                    item.Appearance.Icon = Template.Icon.Value;
                 }
 
                 if (!string.IsNullOrEmpty(Template.ShortHelp))
@@ -431,7 +431,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
 
         protected virtual void UpdateField([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] TemplateSectionBuilder templateSectionBuilder, [Diagnostics.NotNull] TemplateFieldBuilder templateFieldBuilder, [Diagnostics.NotNull] IEnumerable<Sitecore.Data.Templates.TemplateField> inheritedFields)
         {
-            if (inheritedFields.Any(f => string.Compare(f.Name, templateFieldBuilder.TemplaterField.Name, StringComparison.OrdinalIgnoreCase) == 0))
+            if (inheritedFields.Any(f => string.Compare(f.Name, templateFieldBuilder.TemplaterField.FieldName.Value, StringComparison.OrdinalIgnoreCase) == 0))
             {
                 return;
             }
@@ -441,10 +441,10 @@ namespace Sitecore.Pathfinder.Builders.Templates
             var isNew = item == null;
             if (isNew)
             {
-                item = ItemManager.AddFromTemplate(templateFieldBuilder.TemplaterField.Name, new TemplateID(TemplateIDs.TemplateField), templateSectionBuilder.Item);
+                item = ItemManager.AddFromTemplate(templateFieldBuilder.TemplaterField.FieldName.Value, new TemplateID(TemplateIDs.TemplateField), templateSectionBuilder.Item);
                 if (item == null)
                 {
-                    throw new EmitException(Texts.Could_not_create_template_field, Template.ItemName.Source ?? TextNode.Empty, templateFieldBuilder.TemplaterField.Name);
+                    throw new EmitException(Texts.Could_not_create_template_field, templateFieldBuilder.TemplaterField.FieldName.Source ?? TextNode.Empty, templateFieldBuilder.TemplaterField.FieldName.Value);
                 }
 
                 templateFieldBuilder.Item = item;
@@ -461,9 +461,9 @@ namespace Sitecore.Pathfinder.Builders.Templates
 
             using (new EditContext(item))
             {
-                if (!string.IsNullOrEmpty(templateFieldBuilder.TemplaterField.Name))
+                if (!string.IsNullOrEmpty(templateFieldBuilder.TemplaterField.FieldName.Value))
                 {
-                    item.Name = templateFieldBuilder.TemplaterField.Name;
+                    item.Name = templateFieldBuilder.TemplaterField.FieldName.Value;
                 }
 
                 if (!string.IsNullOrEmpty(templateFieldBuilder.TemplaterField.Type))
@@ -508,7 +508,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
             var isNew = templateSectionBuilder.Item == null;
             if (isNew)
             {
-                templateSectionBuilder.Item = ItemManager.AddFromTemplate(templateSectionBuilder.TemplateSection.Name, new TemplateID(TemplateIDs.TemplateSection), Item);
+                templateSectionBuilder.Item = ItemManager.AddFromTemplate(templateSectionBuilder.TemplateSection.SectionName.Value, new TemplateID(TemplateIDs.TemplateSection), Item);
                 if (templateSectionBuilder.Item == null)
                 {
                     throw new EmitException(Texts.Could_not_create_section_item, Template.ItemName.Source ?? TextNode.Empty);
@@ -526,9 +526,9 @@ namespace Sitecore.Pathfinder.Builders.Templates
 
             using (new EditContext(templateSectionBuilder.Item))
             {
-                if (templateSectionBuilder.Item.Name != templateSectionBuilder.TemplateSection.Name)
+                if (templateSectionBuilder.Item.Name != templateSectionBuilder.TemplateSection.SectionName.Value)
                 {
-                    templateSectionBuilder.Item.Name = templateSectionBuilder.TemplateSection.Name;
+                    templateSectionBuilder.Item.Name = templateSectionBuilder.TemplateSection.SectionName.Value;
                 }
 
                 if (!string.IsNullOrEmpty(templateSectionBuilder.TemplateSection.Icon))
@@ -589,9 +589,9 @@ namespace Sitecore.Pathfinder.Builders.Templates
                     item[FieldIDs.BaseTemplate] = Template.BaseTemplates;
                 }
 
-                if (!string.IsNullOrEmpty(Template.Icon))
+                if (!string.IsNullOrEmpty(Template.Icon.Value))
                 {
-                    item.Appearance.Icon = Template.Icon;
+                    item.Appearance.Icon = Template.Icon.Value;
                 }
 
                 if (!string.IsNullOrEmpty(Template.ShortHelp))

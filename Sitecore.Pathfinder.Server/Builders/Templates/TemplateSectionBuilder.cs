@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
         {
             if (Item == null && templateItem != null)
             {
-                Item = templateItem.Children[TemplateSection.Name];
+                Item = templateItem.Children[TemplateSection.SectionName.Value];
             }
 
             if (Item == null)

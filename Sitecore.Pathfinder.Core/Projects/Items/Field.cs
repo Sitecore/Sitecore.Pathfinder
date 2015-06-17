@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public Attribute<string> Language { get; }
 
-        public TemplateField TemplateField => Item.Template.Sections.SelectMany(s => s.Fields).FirstOrDefault(f => string.Compare(f.Name, FieldName.Value, StringComparison.OrdinalIgnoreCase) == 0) ?? TemplateField.Empty;
+        public TemplateField TemplateField => Item.Template.Sections.SelectMany(s => s.Fields).FirstOrDefault(f => string.Compare(f.FieldName.Value, FieldName.Value, StringComparison.OrdinalIgnoreCase) == 0) ?? TemplateField.Empty;
 
         [NotNull]
         public Attribute<string> Value { get; }

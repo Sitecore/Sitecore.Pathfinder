@@ -81,7 +81,7 @@ namespace Sitecore.Pathfinder.Configuration
         TemplateField TemplateField([NotNull] Template template);
 
         [NotNull]
-        TemplateSection TemplateSection();
+        TemplateSection TemplateSection([NotNull] ITextNode templateSectionTextNode);
 
         [NotNull]
         TextNode TextNode([NotNull] ISnapshot snapshot, TextPosition position, [NotNull] string name, [NotNull] string value, [CanBeNull] ITextNode parent);

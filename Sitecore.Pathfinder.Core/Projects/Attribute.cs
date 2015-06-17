@@ -82,6 +82,15 @@ namespace Sitecore.Pathfinder.Projects
             return true;
         }
 
+        public virtual bool SetValue([NotNull] Attribute<T> newValue)
+        {
+            Value = newValue.Value;
+
+            // todo: add source to sources
+            Source = newValue.Source;
+            return true;
+        }
+
         public override string ToString()
         {
             return Value.ToString();

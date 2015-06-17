@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B7438B20-F2F2-4FDD-83BD-F4953EE8CD52}</ProjectGuid>
+    <ProjectGuid>{0DAB8EEC-C4A6-4B27-9C21-6D2F4E32CB76}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sitecore.Pathfinder</RootNamespace>
-    <AssemblyName>Sitecore.Pathfinder.LayeredDataProvider</AssemblyName>
+    <AssemblyName>Sitecore.Pathfinder.Checkers</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,11 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Sitecore.Kernel">
-      <HintPath>..\Components\Sitecore.Kernel.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -44,10 +41,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\LayeredDataProvider.cs" />
-    <Compile Include="Data\LayeredItem.cs" />
+    <Compile Include="Checking\Checkers\Items\ItemChecker.cs" />
+    <Compile Include="Checking\Checkers\Files\MediaFileChecker.cs" />
+    <Compile Include="Checking\Checkers\Items\TemplateChecker.cs" />
+    <Compile Include="Checking\Checkers\ReferenceChecker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sitecore.Pathfinder.Core\Sitecore.Pathfinder.Core.csproj">
+      <Project>{c674eebf-bbf6-4eda-af5b-a4d58d0be986}</Project>
+      <Name>Sitecore.Pathfinder.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Readme.txt" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

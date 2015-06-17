@@ -29,7 +29,7 @@ namespace Sitecore.Pathfinder.Documents
 
         public string Value { get; }
 
-        public ITextNode GetAttribute(string attributeName)
+        public ITextNode GetAttributeTextNode(string attributeName)
         {
             return null;
         }

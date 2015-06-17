@@ -29,9 +29,9 @@ namespace Sitecore.Pathfinder.Documents
         [NotNull]
         protected ITextNode TextNode { get; }
 
-        public ITextNode GetAttribute(string attributeName)
+        public ITextNode GetAttributeTextNode(string attributeName)
         {
-            return TextNode.GetAttribute(attributeName);
+            return TextNode.GetAttributeTextNode(attributeName);
         }
 
         public string GetAttributeValue(string attributeName, string defaultValue = "")

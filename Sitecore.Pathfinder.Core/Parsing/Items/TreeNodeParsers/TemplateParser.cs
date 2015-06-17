@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
         public override void Parse(ItemParseContext context, ITextNode textNode)
         {
-            var itemNameTextNode = textNode.GetAttribute("Item-Name");
+            var itemNameTextNode = textNode.GetAttributeTextNode("Item-Name");
             var itemName = itemNameTextNode?.Value ?? context.ParseContext.ItemName;
             var itemIdOrPath = context.ParentItemPath + "/" + itemName;
             var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             var template = context.ParseContext.Factory.Template(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemName, itemIdOrPath);
             template.ItemName.Source = itemNameTextNode ?? new FileNameTextNode(itemName, textNode.Snapshot);
             template.BaseTemplates = textNode.GetAttributeValue("BaseTemplates", Constants.Templates.StandardTemplate);
-            template.Icon = textNode.GetAttributeValue("Icon");
+            template.Icon.SetValue(textNode.GetAttributeTextNode("Icon"));
             template.ShortHelp = textNode.GetAttributeValue("ShortHelp");
             template.LongHelp = textNode.GetAttributeValue("LongHelp");
 
@@ -51,18 +51,19 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
         protected virtual void ParseField([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] TemplateSection templateSection, [NotNull] ITextNode fieldTextNode, ref int nextSortOrder)
         {
-            var fieldName = fieldTextNode.GetAttributeValue("Name");
-            if (string.IsNullOrEmpty(fieldName))
+            var fieldName = fieldTextNode.GetAttributeTextNode("Name");
+            if (fieldName == null)
             {
-                context.ParseContext.Trace.TraceError(Texts._Field__element_must_have_a__Name__attribute, fieldTextNode.Snapshot.SourceFile.FileName, fieldTextNode.Position, fieldName);
+                context.ParseContext.Trace.TraceError(Texts._Field__element_must_have_a__Name__attribute, fieldTextNode.Snapshot.SourceFile.FileName, fieldTextNode.Position);
+                return;
             }
 
-            var templateField = templateSection.Fields.FirstOrDefault(f => string.Compare(f.Name, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
+            var templateField = templateSection.Fields.FirstOrDefault(f => string.Compare(f.FieldName.Value, fieldName.Value, StringComparison.OrdinalIgnoreCase) == 0);
             if (templateField == null)
             {
                 templateField = context.ParseContext.Factory.TemplateField(template);
                 templateSection.Fields.Add(templateField);
-                templateField.Name = fieldName;
+                templateField.FieldName.SetValue(fieldName);
             }
 
             int sortOrder;
@@ -85,25 +86,26 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             template.References.AddRange(ParseReferences(context, template, fieldTextNode, templateField.Source));
         }
 
-        protected virtual void ParseSection([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] ITextNode sectionTextNode)
+        protected virtual void ParseSection([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] ITextNode templateSectionTextNode)
         {
-            var sectionName = sectionTextNode.GetAttributeValue("Name");
-            if (string.IsNullOrEmpty(sectionName))
+            var sectionName = templateSectionTextNode.GetAttributeTextNode("Name");
+            if (sectionName == null)
             {
-                context.ParseContext.Trace.TraceError(Texts._Section__element_must_have_a__Name__attribute, sectionTextNode.Snapshot.SourceFile.FileName, sectionTextNode.Position);
+                context.ParseContext.Trace.TraceError(Texts._Section__element_must_have_a__Name__attribute, templateSectionTextNode);
+                return;
             }
 
-            var templateSection = template.Sections.FirstOrDefault(s => string.Compare(s.Name, sectionName, StringComparison.OrdinalIgnoreCase) == 0);
+            var templateSection = template.Sections.FirstOrDefault(s => string.Compare(s.SectionName.Value, sectionName.Value, StringComparison.OrdinalIgnoreCase) == 0);
             if (templateSection == null)
             {
-                templateSection = context.ParseContext.Factory.TemplateSection();
+                templateSection = context.ParseContext.Factory.TemplateSection(templateSectionTextNode);
                 template.Sections.Add(templateSection);
-                templateSection.Name = sectionName;
+                templateSection.SectionName.SetValue(sectionName);
             }
 
-            templateSection.Icon = sectionTextNode.GetAttributeValue("Icon");
+            templateSection.Icon = templateSectionTextNode.GetAttributeValue("Icon");
 
-            var fieldsTextNode = context.Snapshot.GetJsonChildTextNode(sectionTextNode, "Fields");
+            var fieldsTextNode = context.Snapshot.GetJsonChildTextNode(templateSectionTextNode, "Fields");
             if (fieldsTextNode == null)
             {
                 return;

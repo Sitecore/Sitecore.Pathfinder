@@ -15,7 +15,7 @@
         {
           if (!reference.IsValid)
           {
-            context.Trace.TraceWarning("Reference not found", projectItem.Snapshots.First().SourceFile.FileName, reference.SourceAttribute?.Source.Position ?? TextPosition.Empty, reference.TargetQualifiedName);
+            context.Trace.TraceWarning("Reference not found", projectItem.Snapshots.First().SourceFile.FileName, reference.SourceAttribute?.Source?.Position ?? TextPosition.Empty, reference.TargetQualifiedName);
           }
         }
       }

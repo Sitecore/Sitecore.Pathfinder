@@ -1,6 +1,4 @@
 ﻿<Item xmlns="http://www.sitecore.net/pathfinder/item" Template="/sitecore/templates/Sample/Sample Item">
     <Field Name="Title">Pathfinder demo</Field>
     <Field Name="Text">Welcome to Sitecore Pathfinder Demo</Field>
-    <Field Name="__Workflow"></Field>
-    <Field Name="__Workflow State"></Field>
 </Item>

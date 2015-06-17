@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
         public override void Parse(ItemParseContext context, ITextNode textNode)
         {
-            var itemNameTextNode = textNode.GetAttribute("Item-Name");
+            var itemNameTextNode = textNode.GetAttributeTextNode("Item-Name");
             var itemName = itemNameTextNode?.Value ?? context.ParseContext.ItemName;
             var parentItemPath = textNode.GetAttributeValue("Parent-Item-Path", context.ParentItemPath);
             var itemIdOrPath = parentItemPath + "/" + itemName;

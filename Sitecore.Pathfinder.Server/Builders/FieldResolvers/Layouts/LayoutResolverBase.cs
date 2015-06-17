@@ -187,7 +187,7 @@ namespace Sitecore.Pathfinder.Builders.FieldResolvers.Layouts
             }
 
             var layoutPlaceholders = string.Empty;
-            var layoutPath = deviceTextNode.GetAttribute("Layout");
+            var layoutPath = deviceTextNode.GetAttributeTextNode("Layout");
             if (layoutPath != null && !string.IsNullOrEmpty(layoutPath.Value))
             {
                 var l = database.GetItem(layoutPath.Value);

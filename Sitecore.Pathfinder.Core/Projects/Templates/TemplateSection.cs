@@ -4,26 +4,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Documents;
 
 namespace Sitecore.Pathfinder.Projects.Templates
 {
     public class TemplateSection
     {
-        public TemplateSection()
+        public TemplateSection([NotNull] ITextNode templateSectionTextNode)
         {
-            Name = string.Empty;
-
-            Fields = new List<TemplateField>();
+            TemplateSectionTextNode = templateSectionTextNode;
         }
 
         [NotNull]
-        public IList<TemplateField> Fields { get; }
+        public IList<TemplateField> Fields { get; } = new List<TemplateField>();
 
         [NotNull]
-        public string Icon { get; set; }
+        public string Icon { get; set; } = string.Empty;
 
         [NotNull]
-        public string Name { get; set; }
+        public Attribute<string> SectionName { get; } = new Attribute<string>("Name", string.Empty);
+
+        [NotNull]
+        public ITextNode TemplateSectionTextNode { get; }
 
         public void Merge([NotNull] TemplateSection newSection, bool overwrite)
         {
@@ -34,7 +36,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
             foreach (var newField in newSection.Fields)
             {
-                var field = Fields.FirstOrDefault(f => string.Compare(f.Name, newField.Name, StringComparison.OrdinalIgnoreCase) == 0);
+                var field = Fields.FirstOrDefault(f => string.Compare(f.FieldName.Value, newField.FieldName.Value, StringComparison.OrdinalIgnoreCase) == 0);
                 if (field == null)
                 {
                     Fields.Add(newField);

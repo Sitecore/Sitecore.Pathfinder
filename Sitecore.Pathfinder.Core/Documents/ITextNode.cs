@@ -28,7 +28,7 @@ namespace Sitecore.Pathfinder.Documents
         string Value { get; }
 
         [CanBeNull]
-        ITextNode GetAttribute([NotNull] string attributeName);
+        ITextNode GetAttributeTextNode([NotNull] string attributeName);
 
         [NotNull]
         string GetAttributeValue([NotNull] string attributeName, [NotNull] string defaultValue = "");

@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Documents
 
         public virtual string GetAttributeValue(string attributeName, string defaultValue = "")
         {
-            var value = GetAttribute(attributeName)?.Value;
+            var value = GetAttributeTextNode(attributeName)?.Value;
             return !string.IsNullOrEmpty(value) ? value : defaultValue;
         }
 
@@ -46,7 +46,7 @@ namespace Sitecore.Pathfinder.Documents
             return false;
         }
 
-        public virtual ITextNode GetAttribute(string attributeName)
+        public virtual ITextNode GetAttributeTextNode(string attributeName)
         {
             return Attributes.FirstOrDefault(a => a.Name == attributeName);
         }

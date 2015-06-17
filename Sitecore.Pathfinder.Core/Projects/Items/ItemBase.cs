@@ -16,13 +16,15 @@ namespace Sitecore.Pathfinder.Projects.Items
 
             ItemName = new Attribute<string>("ItemName", itemName);
             ItemName.SourceFlags = SourceFlags.IsShort;
+
+            Icon = new Attribute<string>("Icon", string.Empty);
         }
 
         [NotNull]
         public string DatabaseName { get; private set; }
 
         [NotNull]
-        public string Icon { get; set; } = string.Empty;
+        public Attribute<string> Icon { get; }
 
         public bool IsEmittable { get; set; } = true;
 
@@ -68,9 +70,9 @@ namespace Sitecore.Pathfinder.Projects.Items
                 DatabaseName = newItemBase.DatabaseName;
             }
 
-            if (!string.IsNullOrEmpty(newItemBase.Icon))
+            if (!string.IsNullOrEmpty(newItemBase.Icon.Value))
             {
-                Icon = newItemBase.Icon;
+                Icon.SetValue(newItemBase.Icon.Source);
             }
 
             IsEmittable = IsEmittable || newItemBase.IsEmittable;

@@ -1,5 +1,3 @@
 ﻿<Item xmlns="http://www.sitecore.net/pathfinder/item" Template="/sitecore/templates/Sample/Sample Item">
-    <!-- Sets the workflow fields to empty, so that the item can be published immediately  -->
-    <Field Name="__Workflow"></Field>
-    <Field Name="__Workflow State"></Field>
+    
 </Item>

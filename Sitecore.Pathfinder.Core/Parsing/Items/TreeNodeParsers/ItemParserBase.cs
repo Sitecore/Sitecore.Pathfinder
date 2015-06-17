@@ -6,6 +6,7 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
 
@@ -19,15 +20,15 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
         public override void Parse(ItemParseContext context, ITextNode textNode)
         {
-            var itemNameTextNode = textNode.GetAttribute("Name");
+            var itemNameTextNode = textNode.GetAttributeTextNode("Name");
             var itemName = itemNameTextNode?.Value ?? context.ParseContext.ItemName;
             var itemIdOrPath = context.ParentItemPath + "/" + itemName;
             var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
 
-            var templateIdOrPathTextNode = textNode.GetAttribute("Template");
+            var templateIdOrPathTextNode = textNode.GetAttributeTextNode("Template");
             if (templateIdOrPathTextNode == null)
             {
-                templateIdOrPathTextNode = textNode.GetAttribute("Template.Create");
+                templateIdOrPathTextNode = textNode.GetAttributeTextNode("Template.Create");
                 if (templateIdOrPathTextNode != null)
                 {
                     ParseTemplate(context, textNode, templateIdOrPathTextNode);
@@ -40,7 +41,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
             if (!string.IsNullOrEmpty(item.TemplateIdOrPath.Value))
             {
-                var a = textNode.GetAttribute("Template") ?? textNode.GetAttribute("Template.Create");
+                var a = textNode.GetAttributeTextNode("Template") ?? textNode.GetAttributeTextNode("Template.Create");
                 if (a != null)
                 {
                     item.References.AddRange(ParseReferences(context, item, a, item.TemplateIdOrPath.Value));
@@ -107,10 +108,10 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
                 }
             }
 
-            var nameTextNode = fieldTextNode.GetAttribute("Name") ?? fieldTextNode;
-            var valueTextNode = fieldTextNode.GetAttribute("[Value]");
+            var nameTextNode = fieldTextNode.GetAttributeTextNode("Name") ?? fieldTextNode;
+            var valueTextNode = fieldTextNode.GetAttributeTextNode("[Value]");
 
-            var valueAttributeTextNode = fieldTextNode.GetAttribute("Value");
+            var valueAttributeTextNode = fieldTextNode.GetAttributeTextNode("Value");
             if (valueAttributeTextNode != null)
             {
                 if (valueTextNode != null)
@@ -148,16 +149,17 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
             var template = context.ParseContext.Factory.Template(context.ParseContext.Project, projectUniqueId, itemTextNode, context.ParseContext.DatabaseName, itemName, itemIdOrPath);
             template.ItemName.Source = templateIdOrPathTextNode;
-            template.Icon = itemTextNode.GetAttributeValue("Template.Icon");
+            var icon = itemTextNode.GetAttributeTextNode("Template.Icon");
+            template.Icon.SetValue(icon != null ? new Attribute<string>(icon) : new Attribute<string>("Template.Icon", string.Empty)); 
             template.BaseTemplates = itemTextNode.GetAttributeValue("Template.BaseTemplates", Constants.Templates.StandardTemplate);
             template.ShortHelp = itemTextNode.GetAttributeValue("Template.ShortHelp");
             template.LongHelp = itemTextNode.GetAttributeValue("Template.LongHelp");
 
             template.References.AddRange(ParseReferences(context, template, itemTextNode, template.BaseTemplates));
 
-            var templateSection = context.ParseContext.Factory.TemplateSection();
+            var templateSection = context.ParseContext.Factory.TemplateSection(TextNode.Empty);
             template.Sections.Add(templateSection);
-            templateSection.Name = "Fields";
+            templateSection.SectionName.SetValue("Fields");
             templateSection.Icon = "Applications/16x16/form_blue.png";
 
             var fieldTreeNodes = context.Snapshot.GetJsonChildTextNode(itemTextNode, "Fields");
@@ -181,7 +183,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
                     var templateField = context.ParseContext.Factory.TemplateField(template);
                     templateSection.Fields.Add(templateField);
-                    templateField.Name = child.GetAttributeValue("Name");
+                    templateField.FieldName.SetValue(child.GetAttributeTextNode("Name"));
                     templateField.Type = child.GetAttributeValue("Field.Type", "Single-Line Text");
                     templateField.Shared = string.Compare(child.GetAttributeValue("Field.Sharing"), "Shared", StringComparison.OrdinalIgnoreCase) == 0;
                     templateField.Unversioned = string.Compare(child.GetAttributeValue("Field.Sharing"), "Unversioned", StringComparison.OrdinalIgnoreCase) == 0;

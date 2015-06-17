@@ -101,6 +101,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\ReferenceChecker.cs">
+      <Link>files\extensions\checkers\ReferenceChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\TemplateChecker.cs">
+      <Link>files\extensions\items\TemplateChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\ItemChecker.cs">
+      <Link>files\extensions\Items\ItemChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Files\MediaFileChecker.cs">
+      <Link>files\extensions\checkers\files\MediaFileChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Compile Include="Building\Codegen\GenerateCode.cs" />
     <Compile Include="Building\Commands\ListItems.cs" />
     <Compile Include="Building\Commands\ListProject.cs" />
@@ -149,9 +165,6 @@
     </Content>
     <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\Publish.aspx">
       <Link>files\website\sitecore\shell\client\Applications\Pathfinder\Publish.aspx</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\extensions\ReferenceChecker.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="files\website\sitecore\shell\client\Applications\Pathfinder\packageDefaultIcon-50x50.png">

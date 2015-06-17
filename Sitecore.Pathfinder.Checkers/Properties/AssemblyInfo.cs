@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Sitecore.Pathfinder.LayeredDataProvider")]
+[assembly: AssemblyTitle("Sitecore.Pathfinder.Checkers")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Sitecore.Pathfinder.LayeredDataProvider")]
+[assembly: AssemblyProduct("Sitecore.Pathfinder.Checkers")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("b7438b20-f2f2-4fdd-83bd-f4953ee8cd52")]
+[assembly: Guid("0dab8eec-c4a6-4b27-9c21-6d2f4e32cb76")]
 
 // Version information for an assembly consists of the following four values:
 //

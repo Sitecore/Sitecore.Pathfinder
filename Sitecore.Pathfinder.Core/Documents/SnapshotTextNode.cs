@@ -26,7 +26,7 @@ namespace Sitecore.Pathfinder.Documents
 
         public string Value => Snapshot.SourceFile.GetFileNameWithoutExtensions();
 
-        public ITextNode GetAttribute(string attributeName)
+        public ITextNode GetAttributeTextNode(string attributeName)
         {
             return null;
         }

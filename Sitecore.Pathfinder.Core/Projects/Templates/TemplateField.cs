@@ -11,13 +11,14 @@ namespace Sitecore.Pathfinder.Projects.Templates
         public TemplateField([NotNull] Template template)
         {
             Template = template;
+            FieldName = new Attribute<string>("Name", string.Empty);
         }
 
         [NotNull]
         public string LongHelp { get; set; } = string.Empty;
 
         [NotNull]
-        public string Name { get; set; } = string.Empty;
+        public Attribute<string> FieldName { get; }
 
         public bool Shared { get; set; }
 

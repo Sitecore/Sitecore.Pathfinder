@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
         public override void Parse(ItemParseContext context, ITextNode textNode)
         {
-            var itemNameTextNode = textNode.GetAttribute("Name");
+            var itemNameTextNode = textNode.GetAttributeTextNode("Name");
             var itemName = itemNameTextNode?.Value ?? context.ParseContext.ItemName;
             var itemIdOrPath = context.ParentItemPath + "/" + itemName;
             var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
@@ -37,10 +37,10 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
         protected virtual void ParseDeviceReferences([NotNull] ItemParseContext context, [NotNull] ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode deviceTextNode)
         {
-            var deviceNameTextNode = deviceTextNode.GetAttribute("Name") ?? deviceTextNode;
+            var deviceNameTextNode = deviceTextNode.GetAttributeTextNode("Name") ?? deviceTextNode;
             references.Add(context.ParseContext.Factory.DeviceReference(projectItem, new Attribute<string>(deviceNameTextNode, SourceFlags.IsShort), deviceTextNode.GetAttributeValue("Name")));
 
-            var layoutTextNode = deviceTextNode.GetAttribute("Layout");
+            var layoutTextNode = deviceTextNode.GetAttributeTextNode("Layout");
             if (layoutTextNode != null)
             {
                 references.Add(context.ParseContext.Factory.LayoutReference(projectItem, new Attribute<string>(layoutTextNode, SourceFlags.IsShort), deviceTextNode.GetAttributeValue("Layout")));
