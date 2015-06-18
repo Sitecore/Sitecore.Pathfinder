@@ -69,6 +69,12 @@
       <HintPath>..\packages\NuGet.Core.2.8.3\lib\net40-Client\NuGet.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="nunit.core">
+      <HintPath>..\Components\nunit.core.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.core.interfaces">
+      <HintPath>..\Components\nunit.core.interfaces.dll</HintPath>
+    </Reference>
     <Reference Include="Sitecore.ContentSearch">
       <HintPath>..\Components\Sitecore.ContentSearch.dll</HintPath>
       <Private>False</Private>
@@ -155,6 +161,8 @@
     <Compile Include="Synchronizing\SynchronizationManager.cs" />
     <Compile Include="Synchronizing\XsdLayoutSchemaExporter.cs" />
     <Compile Include="Synchronizing\XsdTemplateSchemaExporter.cs" />
+    <Compile Include="Testing\NUnitTestRunner.cs" />
+    <Compile Include="Testing\TestManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
