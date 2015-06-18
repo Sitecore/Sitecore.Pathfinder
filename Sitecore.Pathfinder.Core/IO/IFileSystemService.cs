@@ -32,16 +32,18 @@ namespace Sitecore.Pathfinder.IO
 
         DateTime GetLastWriteTimeUtc([NotNull] string sourceFileName);
 
+        void Mirror([NotNull] string sourceDirectory, [NotNull] string destinationDirectory);
+
         [NotNull]
         string[] ReadAllLines([NotNull] string fileName);
 
         [NotNull]
         string ReadAllText([NotNull] string fileName);
 
+        void Rename([NotNull] string oldFileName, [NotNull] string newFileName);
+
         void WriteAllText([NotNull] string fileName, [NotNull] string contents);
 
         void XCopy([NotNull] string sourceDirectory, [NotNull] string destinationDirectory);
-
-        void Rename([NotNull] string oldFileName, [NotNull] string newFileName);
     }
 }

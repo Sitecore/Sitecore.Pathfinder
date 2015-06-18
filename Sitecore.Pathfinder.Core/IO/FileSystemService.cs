@@ -71,6 +71,24 @@ namespace Sitecore.Pathfinder.IO
             return File.GetLastWriteTimeUtc(sourceFileName);
         }
 
+        public virtual void Mirror(string sourceDirectory, string destinationDirectory)
+        {
+            var proc = new Process
+            {
+                StartInfo =
+                {
+                    Arguments = string.Format("\"{0}\" \"{1}\" /mir /njh /njs /ndl /nc /ns /np", sourceDirectory.TrimEnd('\\'), destinationDirectory.TrimEnd('\\')),
+                    CreateNoWindow = true,
+                    UseShellExecute = false,
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    FileName = "robocopy", 
+                }
+            };
+
+            proc.Start();
+            proc.WaitForExit();
+        }
+
         public virtual string[] ReadAllLines(string fileName)
         {
             return File.ReadAllLines(fileName);

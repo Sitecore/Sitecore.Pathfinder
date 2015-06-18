@@ -22,28 +22,34 @@ namespace Sitecore.Pathfinder.Tests
         }
 
         [Test]
-        public void Test1_sitecorecontentHomeWelcome()
+        public void Test1_sitecorecontentHomeHola()
         {
-            DoTest("Test1_sitecorecontentHomeWelcome");
+            DoTest("Test1_sitecorecontentHomeHola");
         }
 
         [Test]
-        public void Test2_sitecorelayoutrenderingsHelloWorld()
+        public void Test2_sitecorecontentHomeWelcome()
         {
-            DoTest("Test2_sitecorelayoutrenderingsHelloWorld");
+            DoTest("Test2_sitecorecontentHomeWelcome");
         }
 
         [Test]
-        public void Test3_sitecoremediaLibrarylighthouse()
+        public void Test3_sitecorelayoutrenderingsHelloWorld()
         {
-            DoTest("Test3_sitecoremediaLibrarylighthouse");
+            DoTest("Test3_sitecorelayoutrenderingsHelloWorld");
+        }
+
+        [Test]
+        public void Test4_sitecoremediaLibrarydemo()
+        {
+            DoTest("Test4_sitecoremediaLibrarydemo");
         }
 
         private void DoTest(string testName)
         {
             try
             {
-                var output = new WebClient().DownloadString("http://pathfinder/sitecore/shell/client/Applications/Pathfinder/Tests/PathfinderTests.ashx?test=" + HttpUtility.UrlEncode(testName));
+                var output = new WebClient().DownloadString("http://Pathfinder/sitecore/shell/client/Applications/Pathfinder/Tests/WebTestRunner.ashx?test=" + HttpUtility.UrlEncode(testName));
                 if (!string.IsNullOrEmpty(output))
                 {
                     output = HttpUtility.HtmlDecode(output).Trim();

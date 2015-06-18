@@ -16,23 +16,33 @@ namespace Sitecore.Pathfinder.Tests
         }
 
         [Test]
-        public void Test1_sitecorecontentHomeWelcome()
+        public void Test1_sitecorecontentHomeHola()
+        {
+            var item = Factory.GetDatabase("master").GetItem("/sitecore/content/Home/Hola");
+            Assert.IsNotNull(item);
+        }
+
+        [Test]
+        public void Test2_sitecorecontentHomeWelcome()
         {
             var item = Factory.GetDatabase("master").GetItem("/sitecore/content/Home/Welcome");
             Assert.IsNotNull(item);
         }
 
         [Test]
-        public void Test2_sitecorelayoutrenderingsHelloWorld()
+        public void Test3_sitecorelayoutrenderingsHelloWorld()
         {
             var item = Factory.GetDatabase("master").GetItem("/sitecore/layout/renderings/HelloWorld");
             Assert.IsNotNull(item);
         }
 
         [Test]
-        public void Test3_sitecoremediaLibrarylighthouse()
+        public void Test4_sitecoremediaLibrarydemo()
         {
-            var item = Factory.GetDatabase("master").GetItem("/sitecore/media library/lighthouse");
+            var item = Factory.GetDatabase("master").GetItem("/sitecore/media library/demo");
+            
+            
+            
             Assert.IsNotNull(item);
         }
 

@@ -384,4 +384,7 @@
     <data name="Generating_unit_tests___" xml:space="preserve">
     <value>Generating unit tests...</value>
   </data>
+    <data name="Copying_test_files_to_website___" xml:space="preserve">
+    <value>Copying test files to website...</value>
+  </data>
 </root>

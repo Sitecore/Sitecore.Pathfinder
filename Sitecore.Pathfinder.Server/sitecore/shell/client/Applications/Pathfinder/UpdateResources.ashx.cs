@@ -11,9 +11,9 @@ namespace Sitecore.Pathfinder.Shell.Client.Applications.Pathfinder
 
         public void ProcessRequest(HttpContext context)
         {
-            var resourceManager = new SynchronizationManager();
+            var synchronizationManager = new SynchronizationManager();
 
-            var fileName = resourceManager.BuildResourceFile();
+            var fileName = synchronizationManager.BuildResourceFile();
 
             context.Response.ContentType = "application/zip";
             context.Response.WriteFile(fileName);

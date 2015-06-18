@@ -21,16 +21,17 @@ namespace Sitecore.Pathfinder.Building.Testing
             var directory = Path.Combine(context.SolutionDirectory, ".tests");
             context.FileSystem.CreateDirectory(directory);
 
-            var baseFileName = Path.Combine(directory, "PathfinderTests");
-
-            GenerateUnitTestFile(context, baseFileName);
-            GenerateWebTestRunnerFile(context, baseFileName);
-            GenerateLocalTestRunnerFile(context, baseFileName);
+            GenerateUnitTestFile(context, directory);
+            // GenerateWebTestRunnerFile(context, baseFileName);
+            GenerateLocalTestRunnerFile(context, directory);
         }
 
-        private void GenerateLocalTestRunnerFile([NotNull] IBuildContext context, [NotNull] string baseFileName)
+        private void GenerateLocalTestRunnerFile([NotNull] IBuildContext context, [NotNull] string directory)
         {
-            var fileName = baseFileName + ".test.cs";
+            var localDirectory = Path.Combine(directory, "local");
+            context.FileSystem.CreateDirectory(localDirectory);
+
+            var fileName = Path.Combine(localDirectory, "PathfinderTest.Local.g.cs");
 
             using (var stream = new StreamWriter(fileName))
             {
@@ -68,7 +69,7 @@ namespace Sitecore.Pathfinder.Building.Testing
                     index++;
                 }
 
-                var url = context.Configuration.Get(Constants.Configuration.HostName) + "/sitecore/shell/client/Applications/Pathfinder/Tests/" + Path.GetFileName(baseFileName) + ".ashx?test=";
+                var url = context.Configuration.Get(Constants.Configuration.HostName) + "/sitecore/shell/client/Applications/Pathfinder/Tests/WebTestRunner.ashx?test=";
 
                 stream.WriteLine("        private void DoTest(string testName)");
                 stream.WriteLine("        {");
@@ -111,7 +112,7 @@ namespace Sitecore.Pathfinder.Building.Testing
             }
         }
 
-        private void GenerateWebTestRunnerFile([NotNull] IBuildContext context, [NotNull] string baseFileName)
+        protected void GenerateWebTestRunnerFile([NotNull] IBuildContext context, [NotNull] string baseFileName)
         {
             var fileName = baseFileName + ".ashx";
 
@@ -212,9 +213,12 @@ namespace Sitecore.Pathfinder.Building.Testing
             }
         }
 
-        private void GenerateUnitTestFile([NotNull] IBuildContext context, [NotNull] string baseFileName)
+        private void GenerateUnitTestFile([NotNull] IBuildContext context, [NotNull] string directory)
         {
-            var fileName = baseFileName + ".cs";
+            var serverDirectory = Path.Combine(directory, "server");
+            context.FileSystem.CreateDirectory(serverDirectory);
+
+            var fileName = Path.Combine(serverDirectory, "PathfinderTest.Server.g.cs");
 
             using (var stream = new StreamWriter(fileName))
             {

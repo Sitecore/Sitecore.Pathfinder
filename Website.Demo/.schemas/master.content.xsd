@@ -2555,7 +2555,11 @@
       </xs:sequence>
       <xs:attribute name="Image" type="xs:string" />
       <xs:attribute name="Text" type="xs:string" />
-      <xs:attribute name="Title" type="xs:string" />
+      <xs:attribute name="Title" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>A123.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
       <xs:attributeGroup ref="stdattr" />
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
@@ -4965,7 +4969,7 @@
             <xs:enumeration value="{7A8DA29B-36BD-4F87-BC4B-0BAB138509A5}" />
             <xs:enumeration value="{1936B96E-DA1F-4A3A-8AAF-8C46268E2D84}" />
             <xs:enumeration value="{F4008F10-BBB2-4565-B652-467491361D5A}" />
-            <xs:enumeration value="{34D30050-454B-0506-874C-4C40FC605E3E}" />
+            <xs:enumeration value="{E27EC5F9-03BC-01C4-E68D-C0423C97B809}" />
             <xs:enumeration value="{0EC72EEF-4363-4D73-9B88-01ADDBC932B4}" />
             <xs:enumeration value="{6E81ADDC-1FEE-4062-BE5A-227E0142189D}" />
             <xs:enumeration value="{9EB73C4C-1AF7-47C7-85B8-93E08176D4D2}" />

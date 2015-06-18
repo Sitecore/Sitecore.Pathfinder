@@ -11889,6 +11889,14 @@
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:group ref="Templates" />
       </xs:sequence>
+      <xs:attribute name="SpeakCoreVersion">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="{C1B05B3A-689F-474A-918B-5FD50F12849C}" />
+            <xs:enumeration value="{3F937240-C16E-4229-9641-4CE5B4CB4ABA}" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
       <xs:attributeGroup ref="stdattr" />
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>

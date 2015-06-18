@@ -22593,6 +22593,14 @@
               "type": "string",
               "description": "The icon that represents this template."
             },
+            "SpeakCoreVersion": {
+              "SpeakCoreVersion": {
+                "enum": [
+                  "{C1B05B3A-689F-474A-918B-5FD50F12849C}",
+                  "{3F937240-C16E-4229-9641-4CE5B4CB4ABA}"
+                ]
+              }
+            },
             "Children": {
               "$ref": "#/definitions/Items"
             }

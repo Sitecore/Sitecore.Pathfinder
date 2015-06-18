@@ -23,7 +23,7 @@
         {
             fieldsBuilder.AppendLine("    [NotNull]");
             fieldsBuilder.AppendLine("    [System.CodeDom.Compiler.GeneratedCodeAttribute(\"Sitecore.Pathfinder\", \"1.0.0.0\")]");
-            fieldsBuilder.AppendLine("    public string " + field.FieldName.GetSafeCodeIdentifier() + " { get { return this.InnerItem[\"" + field.FieldName + "\"]; } }");
+            fieldsBuilder.AppendLine("    public string " + field.FieldName.Value.GetSafeCodeIdentifier() + " { get { return this.InnerItem[\"" + field.FieldName.Value + "\"]; } }");
             fieldsBuilder.AppendLine();
         }
     }

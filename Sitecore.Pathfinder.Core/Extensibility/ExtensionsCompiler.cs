@@ -1,10 +1,10 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Web;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
@@ -60,35 +60,28 @@ namespace Sitecore.Pathfinder.Extensibility
         }
 
         [CanBeNull]
-        public Assembly GetUnitTestAssembly([NotNull] string fileName)
+        public Assembly GetUnitTestAssembly([NotNull] IEnumerable<string> references, [NotNull] IEnumerable<string> fileNames)
         {
-            var code = File.ReadAllText(fileName);
+            var assemblyFileName = Path.ChangeExtension(Path.GetTempFileName(), ".dll");
 
-            var syntaxTrees = new[]
-            {
-                CSharpSyntaxTree.ParseText(code)
-            };
+            var syntaxTrees = fileNames.Select(File.ReadAllText).Select(code => CSharpSyntaxTree.ParseText(code)).ToList();
 
-            var nunitFileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "nunit.framework.dll");
+            var refs = AppDomain.CurrentDomain.GetAssemblies().Where(a => !a.IsDynamic).Select(MetadataReference.CreateFromAssembly).ToList();
+            refs.AddRange(references.Select(r => MetadataReference.CreateFromFile(r)));
 
-            var references = AppDomain.CurrentDomain.GetAssemblies().Select(MetadataReference.CreateFromAssembly).ToList();
-            references.Add(MetadataReference.CreateFromFile(nunitFileName));
-            references.Add(MetadataReference.CreateFromAssembly(typeof(HttpUtility).Assembly));
             var options = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary);
 
-            var compilation = CSharpCompilation.Create("Sitecore.Pathfinder.Tests", syntaxTrees, references, options);
+            var compilation = CSharpCompilation.Create("Sitecore.Pathfinder.Tests", syntaxTrees, refs, options);
 
             EmitResult result;
-            using (var stream = new MemoryStream())
+            using (var stream = new FileStream(assemblyFileName, FileMode.Create))
             {
                 result = compilation.Emit(stream);
+            }
 
-                if (result.Success)
-                {
-                    // todo: load in AppDomain
-                    stream.Seek(0, SeekOrigin.Begin);
-                    return Assembly.Load(stream.ToArray());
-                }
+            if (result.Success)
+            {
+                return Assembly.LoadFrom(assemblyFileName);
             }
 
             var failures = result.Diagnostics.Where(diagnostic => diagnostic.IsWarningAsError || diagnostic.Severity == DiagnosticSeverity.Error);

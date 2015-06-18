@@ -224,6 +224,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copying test files to website....
+        /// </summary>
+        public static string Copying_test_files_to_website___ {
+            get {
+                return ResourceManager.GetString("Copying_test_files_to_website___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not create item.
         /// </summary>
         public static string Could_not_create_item {

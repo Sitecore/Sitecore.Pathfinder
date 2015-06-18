@@ -1,16 +1,20 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Web;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensibility;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Testing;
 
 namespace Sitecore.Pathfinder.Building.Testing
 {
     [Export(typeof(ITask))]
-    public class RunUnitTests : TaskBase
+    public class RunUnitTests : RequestTaskBase
     {
         public RunUnitTests() : base("run-unittests")
         {
@@ -23,73 +27,71 @@ namespace Sitecore.Pathfinder.Building.Testing
             var directory = Path.Combine(context.SolutionDirectory, ".tests");
             context.FileSystem.CreateDirectory(directory);
 
-            var baseFileName = Path.Combine(directory, "PathfinderTests");
+            CopyTestFilesToWebsite(context, directory);
 
-            var fileName = GenerateTestFiles(context, baseFileName);
-
-            CopyTestFilesToWebsite(context, baseFileName);
-
-            RunTests(fileName);
+            RunTests(context, directory);
         }
 
-        private void CopyTestFilesToWebsite([NotNull] IBuildContext context, [NotNull] string baseFileName)
+        private void CopyTestFilesToWebsite([NotNull] IBuildContext context, [NotNull] string directory)
         {
-            context.Trace.TraceInformation("Copying test files to website...");
+            var targetDirectory = context.Configuration.Get(Constants.Configuration.Wwwroot);
+            targetDirectory = PathHelper.Combine(targetDirectory, context.Configuration.Get(Constants.Configuration.WebsiteFolderName));
+            targetDirectory = PathHelper.Combine(targetDirectory, "sitecore\\shell\\client\\Applications\\Pathfinder\\Tests");
+            context.FileSystem.CreateDirectory(targetDirectory);
 
-            var testDirectory = context.Configuration.Get(Constants.Configuration.Wwwroot);
-            testDirectory = PathHelper.Combine(testDirectory, context.Configuration.Get(Constants.Configuration.WebsiteFolderName));
-            testDirectory = PathHelper.Combine(testDirectory, "sitecore\\shell\\client\\Applications\\Pathfinder\\Tests");
+            var sourceDirectory = Path.Combine(directory, "server");
+            context.FileSystem.CreateDirectory(sourceDirectory);
 
-            context.FileSystem.CreateDirectory(testDirectory);
-            var targetBaseFileName = Path.Combine(testDirectory, Path.GetFileName(baseFileName));
+            var targetFileNames = context.FileSystem.GetFiles(targetDirectory, SearchOption.AllDirectories).ToList();
+            var sourceFileNames = context.FileSystem.GetFiles(sourceDirectory, SearchOption.AllDirectories).ToList();
 
-            context.FileSystem.Copy(baseFileName + ".ashx", targetBaseFileName + ".ashx");
-            context.FileSystem.Copy(baseFileName + ".cs", targetBaseFileName + ".cs");
-        }
+            var targets = targetFileNames.Select(f => new FileInfo(f)).ToList();
+            var sources = sourceFileNames.Select(f => new FileInfo(f)).ToList();
 
-        [NotNull]
-        private string GenerateTestFiles([NotNull] IBuildContext context, [NotNull] string baseFileName)
-        {
-            var fileName = baseFileName + ".test.cs";
+            var targetNames = targets.Select(f => f.FullName.Mid(targetDirectory.Length)).ToList();
+            var sourceNames = sources.Select(f => f.FullName.Mid(sourceDirectory.Length)).ToList();
 
-            if (!context.FileSystem.FileExists(fileName))
-            {
-                var generateUnitTests = new GenerateUnitTests();
-                generateUnitTests.Run(context);
+            var hasNewerFiles = sources.Any(s => targets.Any(t => s.LastWriteTimeUtc > t.LastWriteTimeUtc));
+            var hasNewFiles = sourceNames.Any(s => !targetNames.Contains(s));
+            var hasOldFiles = targetNames.Any(t => !sourceNames.Contains(t));
 
-                if (!context.FileSystem.FileExists(fileName))
-                {
-                    return string.Empty;
-                }
-
-                return fileName;
-            }
-
-               
-            return fileName;
-        }
-
-        private void RunTests([NotNull] string fileName)
-        {
-            var compiler = new ExtensionsCompiler();
-            var assembly = compiler.GetUnitTestAssembly(fileName);
-            if (assembly == null)
+            if (!hasNewerFiles && !hasNewFiles && !hasOldFiles)
             {
                 return;
             }
 
-            var type = assembly.GetType("Sitecore.Pathfinder.Tests.PathfinderLocalTests");
-            var instance = Activator.CreateInstance(type);
+            context.Trace.TraceInformation(Texts.Copying_test_files_to_website___);
+            context.FileSystem.Mirror(sourceDirectory, targetDirectory);
+        }
 
-            foreach (var methodInfo in type.GetMethods())
+        private void RunTests([NotNull] IBuildContext context, [NotNull] string directory)
+        {
+            /*
+            var sourceDirectory = Path.Combine(directory, "local");
+            context.FileSystem.CreateDirectory(sourceDirectory);
+
+            var sourceFileNames = context.FileSystem.GetFiles(sourceDirectory, SearchOption.AllDirectories).ToList();
+
+            var references = new List<string>
             {
-                if (!methodInfo.Name.StartsWith("Test"))
-                {
-                    continue;
-                }
+                Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "files\\website\\bin\\nunit.framework.dll")
+            };
 
-                methodInfo.Invoke(instance, null);
+            var testRunner = new NUnitTestRunner();
+            var testAssembly = testRunner.CompileAssembly(references, sourceFileNames);
+            if (testAssembly == null)
+            {
+                return;
             }
+
+            testRunner.RunTests(testAssembly);
+            */
+
+            var hostName = context.Configuration.GetString(Constants.Configuration.HostName).TrimEnd('/');
+            var webTestRunnerUrl = "/sitecore/shell/client/Applications/Pathfinder/WebTestRunner.ashx";
+            var url = hostName + "/" + webTestRunnerUrl;
+
+            Request(context, url);
         }
     }
 }

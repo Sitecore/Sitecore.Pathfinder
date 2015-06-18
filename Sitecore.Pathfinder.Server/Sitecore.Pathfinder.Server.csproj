@@ -69,10 +69,8 @@
       <HintPath>..\packages\NuGet.Core.2.8.3\lib\net40-Client\NuGet.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nunit.core">
-      <HintPath>..\Components\nunit.core.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.core.interfaces">
+    <Reference Include="nunit.core.interfaces, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Components\nunit.core.interfaces.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.ContentSearch">
@@ -155,14 +153,16 @@
     <Compile Include="sitecore\shell\client\Applications\Pathfinder\UpdateResources.ashx.cs">
       <DependentUpon>UpdateResources.ashx</DependentUpon>
     </Compile>
+    <Compile Include="sitecore\shell\client\Applications\Pathfinder\WebTestRunner.ashx.cs">
+      <DependentUpon>WebTestRunner.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Synchronizing\ISynchronizationExporter.cs" />
     <Compile Include="Synchronizing\JsonLayoutSchemaExporter.cs" />
     <Compile Include="Synchronizing\JsonTemplateSchemaExporter.cs" />
     <Compile Include="Synchronizing\SynchronizationManager.cs" />
     <Compile Include="Synchronizing\XsdLayoutSchemaExporter.cs" />
     <Compile Include="Synchronizing\XsdTemplateSchemaExporter.cs" />
-    <Compile Include="Testing\NUnitTestRunner.cs" />
-    <Compile Include="Testing\TestManager.cs" />
+    <Compile Include="Testing\UnitTestRunner.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -177,6 +177,7 @@
   <ItemGroup>
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <Content Include="sitecore\shell\client\Applications\Pathfinder\UpdateResources.ashx" />
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\WebTestRunner.ashx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

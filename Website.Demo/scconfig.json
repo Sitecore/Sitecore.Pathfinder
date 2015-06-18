@@ -1,12 +1,12 @@
 {
   // every project must have a unique id, since the project-unique-id is used to
   // calculate item ids.
-  "project-unique-id": "Demo",
+  "project-unique-id": "Oledemo",
 
   // wwwroot points to the base directory of the website
   // The wwwroot directory must contain a 'Data' and a 'Website' folder
   "wwwroot": "e:\\inetpub\\wwwroot\\Pathfinder",
-  "hostname": "http://pathfinder",
+  "hostname": "http://Pathfinder",
 
   // Sitecore database name (master, core, or web)
   "database": "master",
