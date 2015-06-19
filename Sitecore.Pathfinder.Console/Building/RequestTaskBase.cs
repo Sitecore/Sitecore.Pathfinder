@@ -3,8 +3,10 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Building
 {
@@ -41,6 +43,20 @@ namespace Sitecore.Pathfinder.Building
                 if (stream != null)
                 {
                     message = HttpUtility.HtmlDecode(new StreamReader(stream).ReadToEnd()) ?? string.Empty;
+                }
+
+                var bodyStart = message.IndexOf("<body", StringComparison.OrdinalIgnoreCase);
+                if (bodyStart >= 0)
+                {
+                    bodyStart = message.IndexOf(">", bodyStart, StringComparison.OrdinalIgnoreCase);
+                    var bodyEnd = message.IndexOf("</body", StringComparison.OrdinalIgnoreCase);
+
+                    message = message.Mid(bodyStart + 1, bodyEnd - bodyStart - 1).Trim();
+
+                    message = Regex.Replace(message, "<[^>]*>", string.Empty);
+                    message = Regex.Replace(message, @"[\r\n]+", "\r\n");
+                    message = Regex.Replace(message, @"^\s+$[\r\n]*", string.Empty, RegexOptions.Multiline);
+                    message = Regex.Replace(message, @"^\s+", "    ", RegexOptions.Multiline);
                 }
 
                 context.Trace.TraceError(Texts.The_server_returned_an_error, message);

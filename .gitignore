@@ -10,9 +10,12 @@
 *.ncrunchsolution
 *.ncrunchsolution.user
 *.DotSettings.user
+Components/Sitecore.Kernel.dll
+Components/Sitecore.Zip.dll
+Components/Sitecore.ContentSearch.dll
+Components/Sitecore.ContentSearch.Linq.dll
 
 # Build results
-Components/
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/

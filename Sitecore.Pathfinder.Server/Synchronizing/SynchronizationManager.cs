@@ -2,11 +2,7 @@
 
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
-using System.IO;
-using System.Reflection;
 using Sitecore.IO;
-using Sitecore.Pathfinder.Parsing;
 using Sitecore.Zip;
 
 namespace Sitecore.Pathfinder.Synchronizing
@@ -15,19 +11,8 @@ namespace Sitecore.Pathfinder.Synchronizing
     {
         public SynchronizationManager()
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            var directory = Path.GetDirectoryName(assembly.Location) ?? string.Empty;
-
-            var applicationExportProvider = new CatalogExportProvider(new AssemblyCatalog(assembly));
-            var coreExportProvider = new CatalogExportProvider(new AssemblyCatalog(typeof(ParseService).Assembly));
-            var directoryExportProvider = new CatalogExportProvider(new DirectoryCatalog(directory, "Sitecore.Pathfinder.Server.*.dll"));
-
-            // directory exports takes precedence over application exports
-            var compositionContainer = new CompositionContainer(directoryExportProvider, applicationExportProvider, coreExportProvider);
-
-            applicationExportProvider.SourceProvider = compositionContainer;
-            coreExportProvider.SourceProvider = compositionContainer;
-            directoryExportProvider.SourceProvider = compositionContainer;
+            var startup = new Startup();
+            var compositionContainer = startup.RegisterCompositionService();
 
             compositionContainer.SatisfyImportsOnce(this);
         }

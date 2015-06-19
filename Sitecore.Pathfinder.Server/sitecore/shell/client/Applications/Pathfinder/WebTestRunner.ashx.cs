@@ -13,16 +13,17 @@ namespace Sitecore.Pathfinder.Shell.Client.Applications.Pathfinder
 
         public void ProcessRequest(HttpContext context)
         {
+            var testRunnerName = context.Request["n"] ?? "NUnit";
+
             context.Response.ContentType = "text/plain";
 
             var output = new StringWriter();
             Console.SetOut(output);
-            // Console.SetOut(new StreamWriter(context.Response.OutputStream));
 
             var unitTestRunner = new UnitTestRunner();
+            unitTestRunner.RunTests(testRunnerName);
 
-            unitTestRunner.RunTests();
-
+            output.Flush();
             context.Response.Write(output.ToString());
         }
     }

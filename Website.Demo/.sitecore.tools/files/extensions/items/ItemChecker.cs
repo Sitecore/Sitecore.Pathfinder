@@ -18,7 +18,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
             {
                 CheckTemplate(context, item);
             }
-        }
+        } 
 
         private void CheckGoodName([NotNull] ICheckerContext context, [NotNull] Attribute<string> itemName)
         {

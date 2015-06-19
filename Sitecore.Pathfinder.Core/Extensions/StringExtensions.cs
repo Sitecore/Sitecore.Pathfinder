@@ -102,7 +102,7 @@ namespace Sitecore.Pathfinder.Extensions
             {
                 var p = chars[n - 1];
 
-                if (char.IsWhiteSpace(p))
+                if (char.IsWhiteSpace(p) || p == '_')
                 {
                     chars[n] = char.ToUpper(chars[n]);
                 }
@@ -111,7 +111,7 @@ namespace Sitecore.Pathfinder.Extensions
             text = new string(chars);
 
             var result = Regex.Replace(text, @"\W", string.Empty).Replace(@" ", string.Empty);
-            if (!char.IsLetter(result[0]))
+            if (!char.IsLetter(result[0]) && result[0] != '_')
             {
                 result = @"_" + result;
             }

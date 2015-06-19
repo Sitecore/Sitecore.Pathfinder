@@ -40,7 +40,7 @@ namespace Sitecore.Pathfinder
             var pluginDirectory = Path.Combine(toolspath, "plugins");
             Directory.CreateDirectory(pluginDirectory);
 
-            var extensionCompiler = new ExtensionsCompiler();
+            var extensionCompiler = new CsharpCompiler();
 
             var extensionsDirectory = Path.Combine(configuration.Get(Constants.Configuration.ToolsDirectory), "files\\extensions");
             var extensionsAssembly = extensionCompiler.GetExtensionsAssembly(extensionsDirectory);

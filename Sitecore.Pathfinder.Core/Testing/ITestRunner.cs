@@ -8,6 +8,9 @@ namespace Sitecore.Pathfinder.Testing
 {
     public interface ITestRunner
     {
+        [NotNull]
+        string Name { get; }
+
         [CanBeNull]
         Assembly CompileAssembly([NotNull] ICollection<string> references, [NotNull] IEnumerable<string> fileNames);
 

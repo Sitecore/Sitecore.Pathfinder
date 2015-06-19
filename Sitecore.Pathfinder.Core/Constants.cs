@@ -38,7 +38,7 @@ namespace Sitecore.Pathfinder
 
             public const string Database = "database";
 
-            public const string DataFolderName = "dataFolderName";
+            public const string DataDirectoryName = "data-directory-name";
 
             public const string Debug = "system:debug";
 
@@ -51,6 +51,8 @@ namespace Sitecore.Pathfinder
             public const string IgnoreFileNames = "ignore-filenames";
 
             public const string InstallUrl = "deploying:installurl";
+
+            public const string LocalTestDirectory = "local-test-directory";
 
             public const string PackageDirectory = "deploying:packagedirectory";
 
@@ -76,7 +78,11 @@ namespace Sitecore.Pathfinder
 
             public const string UpdateResourcesUrl = "update-resources-url";
 
-            public const string WebsiteFolderName = "websiteFolderName";
+            public const string WebsiteDirectoryName = "website-directory-name";
+
+            public const string WebTestRunnerName = "web-test-runner-name";
+
+            public const string WebTestRunnerUrl = "web-test-runner-url";
 
             public const string Wwwroot = "wwwroot";
         }
