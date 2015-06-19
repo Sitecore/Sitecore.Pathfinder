@@ -25,6 +25,8 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public Attribute<string> FieldName { get; }
 
+        public bool IsTestable { get; set; } = true;
+
         [NotNull]
         public Item Item { get; set; }
 

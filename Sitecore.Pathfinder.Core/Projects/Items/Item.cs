@@ -75,6 +75,9 @@ namespace Sitecore.Pathfinder.Projects.Items
 
                 // todo: trace that field is being overwritten
                 field.Value.SetValue(newField.Value.Source);
+
+                field.IsTestable = field.IsTestable || newField.IsTestable;
+
             }
         }
     }

@@ -367,7 +367,7 @@
     <value>Source files changed</value>
   </data>
     <data name="Ducats___0_" xml:space="preserve">
-    <value>Ducats saved: {0}</value>
+    <value>Ducats earned: {0}</value>
   </data>
     <data name="Copying_dependencies___" xml:space="preserve">
     <value>Copying dependencies...</value>
