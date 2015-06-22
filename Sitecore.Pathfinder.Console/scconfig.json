@@ -23,7 +23,7 @@
         "pipeline": "init"
     },
 
-    // NuGet settings
+    // NuGet settings     
     "nuget": {
         "filename": "sitecore.nuspec"
     },
