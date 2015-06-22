@@ -81,6 +81,10 @@
       <HintPath>..\Components\Sitecore.Kernel.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Sitecore.Mvc">
+      <HintPath>..\Components\Sitecore.Mvc.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Sitecore.Rocks.Server.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Components\Sitecore.Rocks.Server.Core.dll</HintPath>
@@ -103,6 +107,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -151,6 +156,8 @@
     <Compile Include="Emitters\Files\MediaFileEmitter.cs" />
     <Compile Include="Emitters\Files\SerializationFileEmitter.cs" />
     <Compile Include="Emitters\Items\TemplateEmitter.cs" />
+    <Compile Include="Mvc\Presentation\MustacheHtmlRenderer.cs" />
+    <Compile Include="Mvc\Response\GetRenderer\GetMustacheHtmlRenderer.cs" />
     <Compile Include="Packages\Packages\NugetPackage.cs" />
     <Compile Include="Packages\Packages\PackageBase.cs" />
     <Compile Include="Packages\PackageService.cs" />
@@ -195,6 +202,7 @@
     <Content Include="sitecore\shell\client\Applications\Pathfinder\UpdateResources.ashx" />
     <Content Include="sitecore\shell\client\Applications\Pathfinder\WebTestRunner.ashx" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
