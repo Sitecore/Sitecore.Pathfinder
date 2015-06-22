@@ -142,6 +142,7 @@
     <Compile Include="Building\Refactoring\Rename.cs" />
     <Compile Include="Building\RequestTaskBase.cs" />
     <Compile Include="Building\Testing\RunUnitTests.cs" />
+    <Compile Include="Building\Testing\ValidateWebsite.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Building\BuildContext.cs" />
     <Compile Include="Building\IBuildContext.cs" />
@@ -173,6 +174,10 @@
       <Link>files\website\sitecore\shell\client\Applications\Pathfinder\Publish.aspx</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\SitecoreRocksValidation.ashx">
+      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\SitecoreRocksValidation.ashx</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="files\website\bin\nunit.core.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -182,6 +187,12 @@
     <None Include="files\website\bin\nunit.framework.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Content Include="files\website\bin\Sitecore.Rocks.Server.Core.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\website\bin\Sitecore.Rocks.Server.Validation.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="files\website\sitecore\shell\client\Applications\Pathfinder\packageDefaultIcon-50x50.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -44,7 +44,7 @@ namespace Sitecore.Pathfinder
 
             public const string ExternalReferences = "external-references";
 
-            public const string HostName = "HostName";
+            public const string HostName = "host-name";
 
             public const string IgnoreDirectories = "ignore-directories";
 
@@ -55,6 +55,8 @@ namespace Sitecore.Pathfinder
             public const string LocalTestDirectory = "local-test-directory";
 
             public const string PackageDirectory = "deploying:packagedirectory";
+
+            public const string Password = "password";
 
             public const string Pathfinder = "Pathfinder";
 
@@ -78,6 +80,8 @@ namespace Sitecore.Pathfinder
 
             public const string UpdateResourcesUrl = "update-resources-url";
 
+            public const string UserName = "user-name";
+
             public const string WebsiteDirectoryName = "website-directory-name";
 
             public const string WebTestRunnerName = "web-test-runner-name";
@@ -85,6 +89,23 @@ namespace Sitecore.Pathfinder
             public const string WebTestRunnerUrl = "web-test-runner-url";
 
             public const string Wwwroot = "wwwroot";
+
+            public static class ValidateWebsite
+            {
+                public const string InactiveValidations = "validate-website:inactive-validations";
+
+                public const string Languages = "validate-website:languages";
+
+                public const string ProcessSiteValidation = "validate-website:process-site-validations";
+
+                public const string RootItemPath = "validate-website:root-item-path";
+
+                public const string Site = "validate-website:site";
+
+                public const string Timeout = "validate-website:timeout";
+
+                public const string Url = "validate-website:url";
+            }
         }
 
         public static class Emitters

@@ -387,4 +387,10 @@
     <data name="Copying_test_files_to_website___" xml:space="preserve">
     <value>Copying test files to website...</value>
   </data>
+    <data name="Validating_website___" xml:space="preserve">
+    <value>Validating website...</value>
+  </data>
+    <data name="Go_get_a_cup_of_coffee_or_read_some_emails___this_may_take_a_while___" xml:space="preserve">
+    <value>Go get a cup of coffee or read some emails - this may take a while...</value>
+  </data>
 </root>

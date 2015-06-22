@@ -9,6 +9,8 @@ using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Building.Testing
 {
+    using System.Collections.Generic;
+
     [Export(typeof(ITask))]
     public class RunUnitTests : RequestTaskBase
     {
@@ -64,10 +66,12 @@ namespace Sitecore.Pathfinder.Building.Testing
         {
             var testRunnerName = context.Configuration.GetString(Constants.Configuration.WebTestRunnerName);
 
-            var hostName = context.Configuration.GetString(Constants.Configuration.HostName).TrimEnd('/');
-            var webTestRunnerUrl = context.Configuration.GetString(Constants.Configuration.WebTestRunnerUrl);
-            var url = hostName + "/" + webTestRunnerUrl + "?n=" + testRunnerName;
+            var queryStringParameters = new Dictionary<string, string>
+            {
+                ["n"] = testRunnerName
+            };
 
+            var url = MakeUrl(context, context.Configuration.GetString(Constants.Configuration.WebTestRunnerUrl), queryStringParameters);
             Request(context, url);
         }
     }

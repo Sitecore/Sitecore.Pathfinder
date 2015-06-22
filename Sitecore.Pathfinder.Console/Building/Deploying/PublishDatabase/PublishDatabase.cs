@@ -7,6 +7,8 @@ using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Building.Deploying.PublishDatabase
 {
+    using System.Collections.Generic;
+
     [Export(typeof(ITask))]
     public class PublishDatabase : RequestTaskBase
     {
@@ -33,10 +35,13 @@ namespace Sitecore.Pathfinder.Building.Deploying.PublishDatabase
 
             context.Trace.TraceInformation(Texts.Database, context.Project.Options.DatabaseName);
 
-            var hostName = context.Configuration.GetString(Constants.Configuration.HostName).TrimEnd('/');
-            var publishUrl = context.Configuration.GetString(Constants.Configuration.PublishUrl).TrimStart('/');
-            var url = hostName + "/" + publishUrl + HttpUtility.UrlEncode(context.Project.Options.DatabaseName);
+            var queryStringParameters = new Dictionary<string, string>
+            {
+                ["m"] = "i",
+                ["db"] = context.Project.Options.DatabaseName
+            };
 
+            var url = MakeUrl(context, context.Configuration.GetString(Constants.Configuration.PublishUrl), queryStringParameters);
             Request(context, url);
         }
     }

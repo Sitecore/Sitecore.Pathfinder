@@ -6,10 +6,13 @@
   // wwwroot points to the base directory of the website
   // The wwwroot directory must contain a 'Data' and a 'Website' folder
   "wwwroot": "e:\\inetpub\\wwwroot\\Pathfinder",
-  "hostname": "http://Pathfinder",
+  "host-name": "http://Pathfinder",
 
   // Sitecore database name (master, core, or web)
   "database": "master",
+
+  "user-name": "sitecore\\admin",
+  "password": "b",
 
   // build pipeline
   "pipeline": "check-project pack-nuget copy-dependencies copy-package install-package publish-database",

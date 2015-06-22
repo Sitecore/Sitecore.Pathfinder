@@ -81,6 +81,13 @@
       <HintPath>..\Components\Sitecore.Kernel.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Sitecore.Rocks.Server.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Components\Sitecore.Rocks.Server.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.Rocks.Server.Validation">
+      <HintPath>..\Components\Sitecore.Rocks.Server.Validation.dll</HintPath>
+    </Reference>
     <Reference Include="Sitecore.Zip">
       <HintPath>..\Components\Sitecore.Zip.dll</HintPath>
       <Private>False</Private>
@@ -150,6 +157,9 @@
     <Compile Include="Builders\FieldResolvers\Layouts\JsonLayoutResolver.cs" />
     <Compile Include="Builders\FieldResolvers\Layouts\XmlLayoutResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="sitecore\shell\client\Applications\Pathfinder\SitecoreRocksValidation.ashx.cs">
+      <DependentUpon>SitecoreRocksValidation.ashx</DependentUpon>
+    </Compile>
     <Compile Include="sitecore\shell\client\Applications\Pathfinder\UpdateResources.ashx.cs">
       <DependentUpon>UpdateResources.ashx</DependentUpon>
     </Compile>
@@ -178,7 +188,9 @@
       <Name>Sitecore.Pathfinder.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\SitecoreRocksValidation.ashx" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="sitecore\shell\client\Applications\Pathfinder\UpdateResources.ashx" />
     <Content Include="sitecore\shell\client\Applications\Pathfinder\WebTestRunner.ashx" />

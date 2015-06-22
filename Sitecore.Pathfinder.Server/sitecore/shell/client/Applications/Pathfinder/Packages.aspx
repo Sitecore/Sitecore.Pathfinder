@@ -147,9 +147,9 @@
                             var nuget = (NugetPackage)package;
                             var packageName = nuget.Package.Title ?? nuget.Package.Id;
                             var version = package.Version;
-                            var installHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx?i=" + HttpUtility.UrlEncode(package.PackageId);
-                            var updateHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx?u=" + HttpUtility.UrlEncode(package.PackageId);
-                            var uninstallHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx?r=" + HttpUtility.UrlEncode(package.PackageId);
+                            var installHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx?ins=" + HttpUtility.UrlEncode(package.PackageId);
+                            var updateHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx?upd=" + HttpUtility.UrlEncode(package.PackageId);
+                            var uninstallHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx?rem=" + HttpUtility.UrlEncode(package.PackageId);
                             var iconUrl = nuget.Package.IconUrl != null ? nuget.Package.IconUrl.ToString() : "packageDefaultIcon-50x50.png";
                             var packageUrl = "/sitecore/shell/client/Applications/Pathfinder/Package.aspx?id=" + package.PackageId;
                     %>

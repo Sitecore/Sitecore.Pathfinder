@@ -8,6 +8,8 @@ using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Building.Deploying.Installpackage
 {
+    using System.Collections.Generic;
+
     [Export(typeof(ITask))]
     public class InstallPackage : RequestTaskBase
     {
@@ -32,10 +34,13 @@ namespace Sitecore.Pathfinder.Building.Deploying.Installpackage
                 return;
             }
 
-            var hostName = context.Configuration.GetString(Constants.Configuration.HostName).TrimEnd('/');
-            var installUrl = context.Configuration.GetString(Constants.Configuration.InstallUrl).TrimStart('/');
-            var url = hostName + "/" + installUrl + HttpUtility.UrlEncode(packageId);
+            var queryStringParameters = new Dictionary<string, string>
+            {
+                ["w"] = "0",
+                ["rep"] = packageId
+            };
 
+            var url = MakeUrl(context, context.Configuration.GetString(Constants.Configuration.InstallUrl), queryStringParameters);
             if (!Request(context, url))
             {
                 return;

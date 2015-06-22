@@ -341,7 +341,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ducats saved: {0}.
+        ///   Looks up a localized string similar to Ducats earned: {0}.
         /// </summary>
         public static string Ducats___0_ {
             get {
@@ -445,6 +445,15 @@ namespace Sitecore.Pathfinder {
         public static string Generating_unit_tests___ {
             get {
                 return ResourceManager.GetString("Generating_unit_tests___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go get a cup of coffee or read some emails - this may take a while....
+        /// </summary>
+        public static string Go_get_a_cup_of_coffee_or_read_some_emails___this_may_take_a_while___ {
+            get {
+                return ResourceManager.GetString("Go_get_a_cup_of_coffee_or_read_some_emails___this_may_take_a_while___", resourceCulture);
             }
         }
         
@@ -817,6 +826,15 @@ namespace Sitecore.Pathfinder {
         public static string Usage__scc_exe__run__task_ {
             get {
                 return ResourceManager.GetString("Usage__scc_exe__run__task_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validating website....
+        /// </summary>
+        public static string Validating_website___ {
+            get {
+                return ResourceManager.GetString("Validating_website___", resourceCulture);
             }
         }
         

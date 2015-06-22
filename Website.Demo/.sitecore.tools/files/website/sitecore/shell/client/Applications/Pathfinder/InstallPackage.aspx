@@ -8,25 +8,29 @@
 
     var packageService = new PackageService();
 
-    var packageId = WebUtil.GetQueryString("iu");
+    // replace
+    var packageId = WebUtil.GetQueryString("rep");
     if (!string.IsNullOrEmpty(packageId))
     {
         packageService.InstallOrUpdatePackage(packageId);
     }
 
-    packageId = WebUtil.GetQueryString("i");
+    // install
+    packageId = WebUtil.GetQueryString("ins");
     if (!string.IsNullOrEmpty(packageId))
     {
         packageService.InstallPackage(packageId);
     }
 
-    packageId = WebUtil.GetQueryString("u");
+    // update
+    packageId = WebUtil.GetQueryString("upd");
     if (!string.IsNullOrEmpty(packageId))
     {
         packageService.UpdatePackage(packageId);
     }
 
-    packageId = WebUtil.GetQueryString("r");
+    // remove
+    packageId = WebUtil.GetQueryString("rem");
     if (!string.IsNullOrEmpty(packageId))
     {
         packageService.UninstallPackage(packageId);
