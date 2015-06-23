@@ -15,7 +15,7 @@ in a familiar fashion to develop Sitecore websites.
 The toolchain creates a deliverable package from the source files in a project directory and deploys 
 the package to a website where an installer installs the new files and Sitecore items into the website.
 
-The developer process is familiar; edit sourcefiles, build and install the package, review the changes on website.
+The developer process is familiar; edit source files, build and install the package, review the changes on website, repeat.
 
 ## Getting started
 
@@ -37,7 +37,7 @@ Unit testing in Sitecore can be tricky for a number of reasons. One reason is th
 unit test to be executed within the Sitecore web context. Unless you have advanced mocking capabilities, this
 requires you to make a request to a Sitecore website and run the tests.
 
-Pathfinder installs a Web Test Runner in your Sitecore website. When you run the `run-unitests` task, Pathfinder
+Pathfinder installs a Web Test Runner in your Sitecore website. When you run the `run-unittests` task, Pathfinder
 copies the unit test C# files to the server, compiles them and runs the tests.
 
 This makes it easy to write server-side unit tests in you project and execute the in a Sitecore web context.
@@ -81,7 +81,6 @@ On an item, you specify the file name of the Html Template, you want to use, in 
 {
   "Item": {
     "HtmlTemplate": "/layout/renderings/HtmlTemplate.html",
-    ]
   }
 }
 ```
@@ -101,7 +100,7 @@ The Html Template is a Html file that also supports Mustache like tags.
 
 The `{{Title}}` tags will be replace with the Title field in the current context item.
 
-Please notice that Mustache lists and partials are supported (as shown in the last line). Pathfinder extends the 
+Please notice that Mustache lists and partials are supported (see the Footer tag in the last line). Pathfinder extends the 
 Mustache syntax to support Sitecore placeholders - the tag `{{% placeholder-name}}` will be rendered as a Sitecore
 placeholder.
 
