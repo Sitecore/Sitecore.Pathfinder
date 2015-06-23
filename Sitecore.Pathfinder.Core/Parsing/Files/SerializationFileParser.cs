@@ -52,10 +52,10 @@ namespace Sitecore.Pathfinder.Parsing.Files
                 item.Fields.Add(field);
             }
 
-            context.Project.AddOrMerge(item);
+            context.Project.AddOrMerge(context, item);
 
             var serializationFile = context.Factory.SerializationFile(context.Project, context.Snapshot);
-            context.Project.AddOrMerge(serializationFile);
+            context.Project.AddOrMerge(context, serializationFile);
         }
 
         protected virtual int ParseContent([NotNull] string[] lines, int startIndex, int contentLength, out string value, ref int lineLength)

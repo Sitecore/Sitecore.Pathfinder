@@ -127,10 +127,12 @@
     <Content Include="sitecore\shell\client\Applications\Pathfinder\InstallPackage.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\FieldResolvers\HtmlTemplateFieldResolver.cs" />
     <Compile Include="Builders\FieldResolvers\LayoutFieldResolver.cs" />
     <Compile Include="Builders\FieldResolvers\Layouts\LayoutResolveContext.cs" />
     <Compile Include="Builders\FieldResolvers\Layouts\LayoutResolverBase.cs" />
     <Compile Include="Builders\Items\FieldBuilder.cs" />
+    <Compile Include="Configuration\PathfinderSettings.cs" />
     <Compile Include="Diagnostics\EmitException.cs" />
     <Compile Include="Diagnostics\RetryableEmitException.cs" />
     <Compile Include="Emitters\Items\ItemEmitter.cs" />
@@ -156,8 +158,8 @@
     <Compile Include="Emitters\Files\MediaFileEmitter.cs" />
     <Compile Include="Emitters\Files\SerializationFileEmitter.cs" />
     <Compile Include="Emitters\Items\TemplateEmitter.cs" />
-    <Compile Include="Mvc\Presentation\MustacheHtmlRenderer.cs" />
-    <Compile Include="Mvc\Response\GetRenderer\GetMustacheHtmlRenderer.cs" />
+    <Compile Include="Mvc\Presentation\HtmlTemplateRenderer.cs" />
+    <Compile Include="Mvc\Response\GetRenderer\GetHtmlTemplateRenderer.cs" />
     <Compile Include="Packages\Packages\NugetPackage.cs" />
     <Compile Include="Packages\Packages\PackageBase.cs" />
     <Compile Include="Packages\PackageService.cs" />

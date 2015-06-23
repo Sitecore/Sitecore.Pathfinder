@@ -7,11 +7,12 @@ using Sitecore.Mvc.Extensions;
 using Sitecore.Mvc.Names;
 using Sitecore.Mvc.Pipelines.Response.GetRenderer;
 using Sitecore.Mvc.Presentation;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Mvc.Presentation;
 
 namespace Sitecore.Pathfinder.Mvc.Response.GetRenderer
 {
-    public class GetMustacheHtmlRenderer : GetRendererProcessor
+    public class GetHtmlTemplateRenderer : GetRendererProcessor
     {
         public override void Process([Diagnostics.NotNull] GetRendererArgs args)
         {
@@ -32,12 +33,12 @@ namespace Sitecore.Pathfinder.Mvc.Response.GetRenderer
                 return null;
             }
 
-            if (!filePath.EndsWith(".mustache.html", StringComparison.OrdinalIgnoreCase))
+            if (!filePath.EndsWith(PathfinderSettings.HtmlTemplateExtension, StringComparison.OrdinalIgnoreCase))
             {
                 return null;
             }
 
-            return new MustacheHtmlRenderer
+            return new HtmlTemplateRenderer
             {
                 FilePath = filePath,
                 Rendering = rendering
@@ -54,25 +55,13 @@ namespace Sitecore.Pathfinder.Mvc.Response.GetRenderer
         private string GetViewPathFromLayoutItem([Diagnostics.NotNull] GetRendererArgs args)
         {
             var filePath = args.LayoutItem.ValueOrDefault(item => item.FilePath);
-
-            if (string.IsNullOrWhiteSpace(filePath))
-            {
-                return null;
-            }
-
-            if (!MvcSettings.IsViewExtension(Path.GetExtension(filePath)))
-            {
-                return null;
-            }
-
-            return filePath;
+            return string.IsNullOrWhiteSpace(filePath) ? null : filePath;
         }
 
         [Diagnostics.CanBeNull]
         private string GetViewPathFromPathProperty([Diagnostics.NotNull] Rendering rendering)
         {
             var filePath = rendering["Path"];
-
             return string.IsNullOrWhiteSpace(filePath) ? null : filePath;
         }
 
@@ -85,7 +74,7 @@ namespace Sitecore.Pathfinder.Mvc.Response.GetRenderer
                 return null;
             }
 
-            var filePath = renderingItem.InnerItem["path"];
+            var filePath = renderingItem.InnerItem["Path"];
             return string.IsNullOrWhiteSpace(filePath) ? null : filePath;
         }
 

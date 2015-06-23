@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Documents;
+using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects.References;
 
 namespace Sitecore.Pathfinder.Projects
@@ -43,7 +44,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public abstract void Rename(string newShortName);
 
-        protected virtual void Merge([NotNull] IProjectItem newProjectItem, bool overwrite)
+        protected virtual void Merge([NotNull] IParseContext context, [NotNull] IProjectItem newProjectItem, bool overwrite)
         {
             foreach (var snapshot in newProjectItem.Snapshots)
             {

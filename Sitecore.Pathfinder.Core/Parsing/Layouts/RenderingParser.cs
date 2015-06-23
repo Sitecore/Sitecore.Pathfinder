@@ -50,10 +50,10 @@ namespace Sitecore.Pathfinder.Parsing.Layouts
 
             item.References.Add(context.Factory.FileReference(item, new Attribute<string>(snapshotTextNode, SourceFlags.IsFileName), path));
 
-            item = context.Project.AddOrMerge(item);
+            item = context.Project.AddOrMerge(context, item);
 
             var rendering = context.Factory.Rendering(context.Project, context.Snapshot, item);
-            context.Project.AddOrMerge(rendering);
+            context.Project.AddOrMerge(context, rendering);
 
             context.Project.Ducats += 100;
         }

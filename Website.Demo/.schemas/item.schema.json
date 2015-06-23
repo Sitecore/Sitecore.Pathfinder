@@ -19,6 +19,7 @@
         "Template": { "type": "string" },
         "Template.Create": { "type": "string" },
         "Template.Id": { "type": "string" },
+        "HtmlTemplate": { "type": "string" },
         "Fields": {
           "type": "array",
           "items": {

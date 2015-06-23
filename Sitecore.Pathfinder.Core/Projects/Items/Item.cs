@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Documents;
+using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.Projects.Items
@@ -29,6 +30,9 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public IList<Field> Fields { get; } = new List<Field>();
 
+        [CanBeNull]
+        public Attribute<string> HtmlTemplate { get; set; }
+
         public MergingMatch MergingMatch { get; set; }
 
         public bool OverwriteWhenMerging { get; set; }
@@ -39,14 +43,14 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public Attribute<string> TemplateIdOrPath { get; }
 
-        public void Merge([NotNull] Item newProjectItem)
+        public void Merge([NotNull] IParseContext context, [NotNull] Item newProjectItem)
         {
-            Merge(newProjectItem, OverwriteWhenMerging);
+            Merge(context, newProjectItem, OverwriteWhenMerging);
         }
 
-        protected override void Merge(IProjectItem newProjectItem, bool overwrite)
+        protected override void Merge(IParseContext context, IProjectItem newProjectItem, bool overwrite)
         {
-            base.Merge(newProjectItem, overwrite);
+            base.Merge(context, newProjectItem, overwrite);
 
             var newItem = newProjectItem as Item;
             if (newItem == null)
@@ -73,11 +77,13 @@ namespace Sitecore.Pathfinder.Projects.Items
                     continue;
                 }
 
-                // todo: trace that field is being overwritten
+                if (field.Value.Value != newField.Value.Value)
+                {
+                    context.Trace.TraceError("Field is being assigned two different values", field.FieldName.Value);
+                }
+
                 field.Value.SetValue(newField.Value.Source);
-
                 field.IsTestable = field.IsTestable || newField.IsTestable;
-
             }
         }
     }

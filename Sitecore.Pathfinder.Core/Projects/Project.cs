@@ -10,6 +10,8 @@ using Sitecore.Pathfinder.Checking;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Documents;
+using Sitecore.Pathfinder.Documents.Json;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects.Items;
@@ -97,18 +99,18 @@ namespace Sitecore.Pathfinder.Projects
             ParseService.Parse(this, sourceFile);
         }
 
-        public virtual T AddOrMerge<T>(T projectItem) where T : IProjectItem
+        public virtual T AddOrMerge<T>(IParseContext context, T projectItem) where T : IProjectItem
         {
             var newItem = projectItem as Item;
             if (newItem != null)
             {
-                return (T)MergeItem(newItem);
+                return (T)MergeItem(context, newItem);
             }
 
             var newTemplate = projectItem as Template;
             if (newTemplate != null)
             {
-                return (T)MergeTemplate(newTemplate);
+                return (T)MergeTemplate(context, newTemplate);
             }
 
             _items.Add(projectItem);
@@ -124,10 +126,12 @@ namespace Sitecore.Pathfinder.Projects
         {
             Options = projectOptions;
 
+            var context = CompositionService.Resolve<IParseContext>().With(this, Snapshot.Empty);
+
             foreach (var externalReference in Options.ExternalReferences)
             {
                 var projectItem = Factory.ExternalReferenceItem(this, externalReference, Snapshot.Empty, Options.DatabaseName, Path.GetFileName(externalReference) ?? string.Empty, externalReference);
-                AddOrMerge(projectItem);
+                AddOrMerge(context, projectItem);
             }
 
             foreach (var sourceFileName in sourceFileNames)
@@ -192,7 +196,7 @@ namespace Sitecore.Pathfinder.Projects
         }
 
         [NotNull]
-        protected virtual IProjectItem MergeItem<T>([NotNull] T newItem) where T : Item
+        protected virtual IProjectItem MergeItem<T>(IParseContext context, [NotNull] T newItem) where T : Item
         {
             Item item = null;
             if (newItem.MergingMatch == MergingMatch.MatchUsingSourceFile)
@@ -216,12 +220,12 @@ namespace Sitecore.Pathfinder.Projects
                 return newItem;
             }
 
-            item.Merge(newItem);
+            item.Merge(context, newItem);
             return item;
         }
 
         [NotNull]
-        protected virtual IProjectItem MergeTemplate<T>([NotNull] T newTemplate) where T : Template
+        protected virtual IProjectItem MergeTemplate<T>([NotNull] IParseContext context, [NotNull] T newTemplate) where T : Template
         {
             var template = Items.OfType<Template>().FirstOrDefault(i => string.Compare(i.ItemIdOrPath, newTemplate.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) == 0);
             if (template == null)
@@ -230,7 +234,7 @@ namespace Sitecore.Pathfinder.Projects
                 return newTemplate;
             }
 
-            template.Merge(newTemplate);
+            template.Merge(context, newTemplate);
             return template;
         }
     }

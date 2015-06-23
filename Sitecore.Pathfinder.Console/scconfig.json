@@ -66,7 +66,7 @@
     "ignore-filenames": "scc.cmd sitecore.nuspec sitecore.nupkg project.json readme.txt",
 
     // files to copy to website
-    "content-files": ".js .css .config .html .htm .ashx .asmx",
+    "content-files": ".js .css .config .htm .ashx .asmx",
 
     "remap-file-directories": {
         "/sitecore/client": "/sitecore/shell/client"

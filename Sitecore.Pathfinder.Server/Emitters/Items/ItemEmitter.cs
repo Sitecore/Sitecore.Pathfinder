@@ -73,10 +73,10 @@ namespace Sitecore.Pathfinder.Emitters.Items
                 var templateField = template.GetField(field.FieldName.Value);
                 if (templateField == null)
                 {
-                    throw new RetryableEmitException(Texts.Template_field_missing, item.Snapshots.First(), field.FieldName.Value);
+                    throw new RetryableEmitException(Texts.Template_field_missing, field.FieldName.Source ?? item.ItemName.Source ?? TextNode.Empty, field.FieldName.Value);
                 }
 
-                foreach (var fieldResolver in context.FieldResolvers)
+                foreach (var fieldResolver in context.FieldResolvers.OrderBy(r => r.Priority))
                 {
                     if (fieldResolver.CanResolve(context, templateField, field))
                     {

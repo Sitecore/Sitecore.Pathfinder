@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Documents
 {
@@ -28,6 +29,11 @@ namespace Sitecore.Pathfinder.Documents
         public ISnapshot Snapshot { get; }
 
         public string Value { get; }
+
+        public Attribute<T> GetAttribute<T>(string attributeName, SourceFlags sourceFlags = SourceFlags.None)
+        {
+            return new Attribute<T>(attributeName, default(T));
+        }
 
         public ITextNode GetAttributeTextNode(string attributeName)
         {

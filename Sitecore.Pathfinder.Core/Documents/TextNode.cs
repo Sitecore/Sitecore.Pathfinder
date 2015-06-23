@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Documents
 {
@@ -44,6 +45,31 @@ namespace Sitecore.Pathfinder.Documents
         public virtual bool SetName(string newName)
         {
             return false;
+        }
+
+        [NotNull]
+        public Attribute<T> GetAttribute<T>(string attributeName, SourceFlags sourceFlags = SourceFlags.None)
+        {
+            var attributeTextNode = GetAttributeTextNode(attributeName);
+
+            Attribute<T> attribute;
+
+            if (attributeTextNode != null)
+            {
+                attribute = new Attribute<T>(attributeTextNode, sourceFlags);
+            }
+            else if (typeof(T) == typeof(string))
+            {
+                // hacky, hacky, hacky - but to set the default of value to not null
+                attribute = (Attribute<T>)((object)new Attribute<string>(attributeName, string.Empty));
+            }
+            else
+            {
+              return new Attribute<T>(attributeName, default(T));
+            }
+
+            attribute.SourceFlags = sourceFlags;
+            return attribute;
         }
 
         public virtual ITextNode GetAttributeTextNode(string attributeName)

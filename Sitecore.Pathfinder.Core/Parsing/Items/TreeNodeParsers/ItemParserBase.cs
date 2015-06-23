@@ -39,6 +39,13 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             item.ItemName.Source = itemNameTextNode ?? new FileNameTextNode(item.ItemName.Value, textNode.Snapshot);
             item.TemplateIdOrPath.Source = templateIdOrPathTextNode;
 
+            // todo: refactor to pipeline service
+            item.HtmlTemplate = textNode.GetAttribute<string>("HtmlTemplate");
+            if (!string.IsNullOrEmpty(item.HtmlTemplate.Value))
+            {
+                ParseHtmlTemplate(context, item);
+            }
+
             if (!string.IsNullOrEmpty(item.TemplateIdOrPath.Value))
             {
                 var a = textNode.GetAttributeTextNode("Template") ?? textNode.GetAttributeTextNode("Template.Create");
@@ -50,7 +57,13 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
             ParseChildNodes(context, item, textNode);
 
-            context.ParseContext.Project.AddOrMerge(item);
+            context.ParseContext.Project.AddOrMerge(context.ParseContext, item);
+        }
+
+        private void ParseHtmlTemplate([NotNull] ItemParseContext context, [NotNull] Item item)
+        {
+            var field = context.ParseContext.Factory.Field(item, "__Renderings", string.Empty, 0, "HtmlTemplate: " + item.HtmlTemplate?.Value);
+            item.Fields.Add(field);
         }
 
         [NotNull]
@@ -196,7 +209,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
                 }
             }
 
-            return context.ParseContext.Project.AddOrMerge(template);
+            return context.ParseContext.Project.AddOrMerge(context.ParseContext, template);
         }
     }
 }

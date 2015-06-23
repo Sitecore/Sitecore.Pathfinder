@@ -14,6 +14,10 @@ namespace Sitecore.Pathfinder.Builders.FieldResolvers
     [Export(typeof(IFieldResolver))]
     public class ImageFieldResolver : FieldResolverBase
     {
+        public ImageFieldResolver() : base(Constants.FieldResolvers.Normal)
+        {
+        }
+
         public override bool CanResolve(IEmitContext context, TemplateField templateField, Field field)
         {
             return string.Compare(templateField.Type, "image", StringComparison.OrdinalIgnoreCase) == 0;

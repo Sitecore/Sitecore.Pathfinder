@@ -8,6 +8,8 @@ namespace Sitecore.Pathfinder.Builders.FieldResolvers
 {
     public interface IFieldResolver
     {
+        double Priority { get; }
+
         bool CanResolve([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] TemplateField templateField, [Diagnostics.NotNull] Field field);
 
         [Diagnostics.NotNull]

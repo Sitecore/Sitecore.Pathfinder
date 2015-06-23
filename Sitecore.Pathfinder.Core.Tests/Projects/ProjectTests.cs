@@ -1,11 +1,14 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Linq;
 using NUnit.Framework;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Documents.Xml;
+using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
 
@@ -157,12 +160,13 @@ namespace Sitecore.Pathfinder.Projects
         public void MergeByProjectUniqueIdTest()
         {
             var project = Resolve<IProject>();
+            var context = Services.CompositionService.Resolve<IParseContext>().With(project, Snapshot.Empty);
 
             var projectItem1 = new Item(project, "SameId", TextNode.Empty, string.Empty, "SameId", string.Empty, string.Empty);
             var projectItem2 = new Item(project, "SameId", TextNode.Empty, string.Empty, "SameId", string.Empty, string.Empty);
 
-            project.AddOrMerge(projectItem1);
-            project.AddOrMerge(projectItem2);
+            project.AddOrMerge(context, projectItem1);
+            project.AddOrMerge(context, projectItem2);
 
             Assert.AreEqual(1, project.Items.Count());
         }

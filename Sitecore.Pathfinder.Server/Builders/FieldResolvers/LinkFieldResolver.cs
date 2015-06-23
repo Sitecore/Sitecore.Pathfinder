@@ -14,6 +14,10 @@ namespace Sitecore.Pathfinder.Builders.FieldResolvers
     [Export(typeof(IFieldResolver))]
     public class LinkFieldResolver : FieldResolverBase
     {
+        public LinkFieldResolver() : base(Constants.FieldResolvers.Normal)
+        {
+        }
+
         public override bool CanResolve(IEmitContext context, TemplateField templateField, Field field)
         {
             return string.Compare(templateField.Type, "general link", StringComparison.OrdinalIgnoreCase) == 0 || string.Compare(templateField.Type, "link", StringComparison.OrdinalIgnoreCase) == 0;

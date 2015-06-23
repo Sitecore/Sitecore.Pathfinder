@@ -123,6 +123,15 @@ namespace Sitecore.Pathfinder
             public const double Templates = 1000;
         }
 
+        public static class FieldResolvers
+        {
+            public const double High = 500;
+
+            public const double Low = 2000;
+
+            public const double Normal = 1000;
+        }
+
         public static class Fields
         {
             public const string InsertOptionsFieldId = "{1172F251-DAD4-4EFB-A329-0C63500E4F1E}";

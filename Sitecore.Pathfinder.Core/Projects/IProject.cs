@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Parsing;
 
 namespace Sitecore.Pathfinder.Projects
 {
@@ -33,7 +34,7 @@ namespace Sitecore.Pathfinder.Projects
 
         void Add([NotNull] string sourceFileName);
 
-        T AddOrMerge<T>([NotNull] T projectItem) where T : IProjectItem;
+        T AddOrMerge<T>([NotNull] IParseContext context, [NotNull] T projectItem) where T : IProjectItem;
 
         void Compile();
 

@@ -46,7 +46,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
                 }
             }
 
-            context.ParseContext.Project.AddOrMerge(template);
+            context.ParseContext.Project.AddOrMerge(context.ParseContext, template);
         }
 
         protected virtual void ParseField([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] TemplateSection templateSection, [NotNull] ITextNode fieldTextNode, ref int nextSortOrder)

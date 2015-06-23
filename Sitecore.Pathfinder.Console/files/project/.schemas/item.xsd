@@ -38,6 +38,7 @@
         <xs:attribute name="Template.Icon" type="xs:string" use="optional" />
         <xs:attribute name="Template.ShortHelp" type="xs:string" use="optional" />
         <xs:attribute name="Template.LongHelp" type="xs:string" use="optional" />
+        <xs:attribute name="HtmlTemplate" type="xs:string" use="optional" />
     </xs:complexType>
 
     <xs:complexType name="Template">

@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
             ParseAttributes(context, item, textNode);
 
-            context.ParseContext.Project.AddOrMerge(item);
+            context.ParseContext.Project.AddOrMerge(context.ParseContext, item);
         }
 
         protected abstract void ParseAttributes([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode textNode);

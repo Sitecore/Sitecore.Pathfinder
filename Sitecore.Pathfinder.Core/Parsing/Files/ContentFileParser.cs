@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Parsing.Files
         public override void Parse(IParseContext context)
         {
             var contentFile = context.Factory.ContentFile(context.Project, context.Snapshot);
-            context.Project.AddOrMerge(contentFile);
+            context.Project.AddOrMerge(context, contentFile);
         }
     }
 }

@@ -1,0 +1,20 @@
+{
+  "Item": {
+    "Template": "/sitecore/templates/Sample/HelloWorld",
+    "HtmlTemplate": "/layout/renderings/HtmlTemplate.html",
+    "Fields": [
+      {
+        "Name": "Title",
+        "Value": "HtmlTemplate"
+      },
+      {
+        "Name": "Text",
+        "Value": "HtmlTemplate"
+      },
+      {
+        "Name": "Image",
+        "Value": "/sitecore/media library/demo"
+      }
+    ]
+  }
+}

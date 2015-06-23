@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemName, itemIdOrPath, string.Empty);
             item.ItemName.Source = itemNameTextNode;
 
-            var field = context.ParseContext.Factory.Field(item, "__Renderings", string.Empty, 0, textNode.Value);
+            var field = context.ParseContext.Factory.Field(item, "__Renderings", string.Empty, 0, "Layout: " + textNode.Value);
             field.IsTestable = false;
             field.Value.Source = textNode;
 
@@ -33,7 +33,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
             item.References.AddRange(ParseReferences(context, item, textNode, string.Empty));
 
-            context.ParseContext.Project.AddOrMerge(item);
+            context.ParseContext.Project.AddOrMerge(context.ParseContext, item);
         }
 
         protected virtual void ParseDeviceReferences([NotNull] ItemParseContext context, [NotNull] ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode deviceTextNode)

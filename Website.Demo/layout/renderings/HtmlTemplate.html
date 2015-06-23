@@ -1,0 +1,40 @@
+﻿<h1>Variables</h1>
+<p>
+    {{Title}}
+</p>
+<p>
+    {{Text}}
+</p>
+
+
+<h1>Sections</h1>
+{{# Title}}
+<p>
+  Shown
+</p>
+{{/ Title}}
+
+{{# Invisible}}
+<p>
+  Hidden
+</p>
+{{/ Invisible}}
+
+
+<h1>Lists</h1>
+{{# ..}}
+<p>
+    {{@icon16x16}}
+    {{@name}}
+</p>
+{{/ ..}}
+
+
+<h1>Partial</h1>
+{{> partial.html}}
+
+
+<h1>Placeholder</h1>
+{{% content}}
+
+{{> Footer.html}}

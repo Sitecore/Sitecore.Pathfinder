@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Documents;
+using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Projects.Templates
@@ -29,14 +30,14 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull]
         public string ShortHelp { get; set; } = string.Empty;
 
-        public void Merge([NotNull] Template newTemplate)
+        public void Merge([NotNull] IParseContext context, [NotNull] Template newTemplate)
         {
-            Merge(newTemplate, true);
+            Merge(context, newTemplate, true);
         }
 
-        protected override void Merge(IProjectItem projectItem, bool overwrite)
+        protected override void Merge(IParseContext context, IProjectItem projectItem, bool overwrite)
         {
-            base.Merge(projectItem, overwrite);
+            base.Merge(context, projectItem, overwrite);
 
             var newTemplate = projectItem as Template;
             if (newTemplate == null)

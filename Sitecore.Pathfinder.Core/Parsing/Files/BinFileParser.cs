@@ -22,7 +22,7 @@ namespace Sitecore.Pathfinder.Parsing.Files
         public override void Parse(IParseContext context)
         {
             var binFile = context.Factory.BinFile(context.Project, context.Snapshot);
-            context.Project.AddOrMerge(binFile);
+            context.Project.AddOrMerge(context, binFile);
         }
     }
 }

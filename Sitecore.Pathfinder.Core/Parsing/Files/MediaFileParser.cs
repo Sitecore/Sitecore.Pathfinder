@@ -43,10 +43,10 @@ namespace Sitecore.Pathfinder.Parsing.Files
             mediaItem.OverwriteWhenMerging = true;
             mediaItem.MergingMatch = MergingMatch.MatchUsingSourceFile;
 
-            mediaItem = context.Project.AddOrMerge(mediaItem);
+            mediaItem = context.Project.AddOrMerge(context, mediaItem);
 
             var mediaFile = context.Factory.MediaFile(context.Project, context.Snapshot, mediaItem);
-            context.Project.AddOrMerge(mediaFile);
+            context.Project.AddOrMerge(context, mediaFile);
 
             context.Project.Ducats += 100;
         }
