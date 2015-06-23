@@ -110,7 +110,15 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Documents\FileNameTextNode.cs" />
     <Compile Include="Documents\SnapshotTextNode.cs" />
+    <Compile Include="Extensibility\Pipelines\IPipeline.cs" />
+    <Compile Include="Extensibility\Pipelines\IPipelineService.cs" />
+    <Compile Include="Extensibility\Pipelines\IPipelineProcessor.cs" />
+    <Compile Include="Extensibility\Pipelines\PipelineBase.cs" />
+    <Compile Include="Extensibility\Pipelines\PipelineService.cs" />
+    <Compile Include="Extensibility\Pipelines\PipelineProcessorBase.cs" />
     <Compile Include="Parsing\Layouts\HtmlTemplateRenderingParser.cs" />
+    <Compile Include="Parsing\Pipelines\ItemParserPipelines\HtmlTemplateItemParser.cs" />
+    <Compile Include="Parsing\Pipelines\ItemParserPipelines\ItemParserPipeline.cs" />
     <Compile Include="Projects\Attribute.cs" />
     <Compile Include="Documents\Serialization\SerializationSnapshotLoader.cs" />
     <Compile Include="Documents\Xml\ItemXmlSnapshotLoader.cs" />

@@ -5,6 +5,7 @@ using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Documents;
+using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 
@@ -21,10 +22,11 @@ namespace Sitecore.Pathfinder.Parsing
         private string _itemPath;
 
         [ImportingConstructor]
-        public ParseContext([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory)
+        public ParseContext([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IPipelineService pipelineService)
         {
             Configuration = configuration;
             Factory = factory;
+            PipelineService = pipelineService;
             Snapshot = Documents.Snapshot.Empty;
         }
 
@@ -39,6 +41,8 @@ namespace Sitecore.Pathfinder.Parsing
         public virtual string ItemName => _itemName ?? (_itemName = PathHelper.GetItemName(Snapshot.SourceFile));
 
         public virtual string ItemPath => _itemPath ?? (_itemPath = PathHelper.GetItemPath(Project, Snapshot.SourceFile));
+
+        public IPipelineService PipelineService { get; }
 
         public IProject Project { get; private set; }
 

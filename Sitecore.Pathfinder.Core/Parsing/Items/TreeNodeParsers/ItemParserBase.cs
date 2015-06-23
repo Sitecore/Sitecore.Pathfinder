@@ -6,6 +6,7 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Parsing.Pipelines.ItemParserPipelines;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
@@ -25,6 +26,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             var itemIdOrPath = context.ParentItemPath + "/" + itemName;
             var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
 
+            // todo: consider moving template into the ItemParserPipeline
             var templateIdOrPathTextNode = textNode.GetAttributeTextNode("Template");
             if (templateIdOrPathTextNode == null)
             {
@@ -39,13 +41,6 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             item.ItemName.Source = itemNameTextNode ?? new FileNameTextNode(item.ItemName.Value, textNode.Snapshot);
             item.TemplateIdOrPath.Source = templateIdOrPathTextNode;
 
-            // todo: refactor to pipeline service
-            item.HtmlTemplate = textNode.GetAttribute<string>("HtmlTemplate");
-            if (!string.IsNullOrEmpty(item.HtmlTemplate.Value))
-            {
-                ParseHtmlTemplate(context, item);
-            }
-
             if (!string.IsNullOrEmpty(item.TemplateIdOrPath.Value))
             {
                 var a = textNode.GetAttributeTextNode("Template") ?? textNode.GetAttributeTextNode("Template.Create");
@@ -55,15 +50,11 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
                 }
             }
 
+            context.ParseContext.PipelineService.Resolve<ItemParserPipeline>().Execute(context, item, textNode);
+
             ParseChildNodes(context, item, textNode);
 
             context.ParseContext.Project.AddOrMerge(context.ParseContext, item);
-        }
-
-        private void ParseHtmlTemplate([NotNull] ItemParseContext context, [NotNull] Item item)
-        {
-            var field = context.ParseContext.Factory.Field(item, "__Renderings", string.Empty, 0, "HtmlTemplate: " + item.HtmlTemplate?.Value);
-            item.Fields.Add(field);
         }
 
         [NotNull]
@@ -163,7 +154,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             var template = context.ParseContext.Factory.Template(context.ParseContext.Project, projectUniqueId, itemTextNode, context.ParseContext.DatabaseName, itemName, itemIdOrPath);
             template.ItemName.Source = templateIdOrPathTextNode;
             var icon = itemTextNode.GetAttributeTextNode("Template.Icon");
-            template.Icon.SetValue(icon != null ? new Attribute<string>(icon) : new Attribute<string>("Template.Icon", string.Empty)); 
+            template.Icon.SetValue(icon != null ? new Attribute<string>(icon) : new Attribute<string>("Template.Icon", string.Empty));
             template.BaseTemplates = itemTextNode.GetAttributeValue("Template.BaseTemplates", Constants.Templates.StandardTemplate);
             template.ShortHelp = itemTextNode.GetAttributeValue("Template.ShortHelp");
             template.LongHelp = itemTextNode.GetAttributeValue("Template.LongHelp");
