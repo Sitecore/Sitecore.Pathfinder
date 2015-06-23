@@ -1,8 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.IO;
-using Sitecore.Mvc.Configuration;
 using Sitecore.Mvc.Extensions;
 using Sitecore.Mvc.Names;
 using Sitecore.Mvc.Pipelines.Response.GetRenderer;
