@@ -22,5 +22,8 @@ The developer process is familiar; edit source files, build and install the pack
         <file src="..\bin\Release\**" target="Tools\.sitecore.tools" exclude="**/*.pdb;**/*.vshost.exe;**/*.vshost.exe.config;**/*.vshost.exe.manifest;..\bin\Release\*.xml" />
         <file src="install.ps1" target="tools" />
         <file src="uninstall.ps1" target="tools" />
+        <file src="installgrunt.cmd" target="content\installgrunt.cmd" />
+        <file src="..\bin\Release\files\project\scc.cmd" target="content\scc.cmd" />
+        <file src="..\bin\Release\files\project\.filetemplates\gruntfile.js" target="content\gruntfile.js" />
     </files>
 </package>

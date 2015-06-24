@@ -149,7 +149,7 @@ to execute the build pipeline in Pathfinder. In Code the build task can be execu
 ## Visual Studio
 
 1. Create a web project in Visual Studio
-1. Xcopy the Pathfinder files to the .sitecore.tools folder in the project root
+1. Install the Sitecore Pathfinder Nuget package
 1. Run .sitecore.tools\scc.exe to create an empty Pathfinder project, files and folders
 1. Install GruntJS in the project: npm install grunt --save-dev
 1. Install grunt-shell: npm install --save-dev grunt-shell

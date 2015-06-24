@@ -11,7 +11,7 @@
     var parts = PathHelper.GetItemParentPath(Model.QualifiedName).Split(Constants.Slash, StringSplitOptions.RemoveEmptyEntries);
     for (var index = 0; index < parts.Length; index++)
     {
-        parts[index] = parts[index].GetSafeCodeIdentifier();
+        parts[index] = parts[index].GetSafeCodeIdentifier().Capitalize();
     }
 
     var safeNamespace = string.Join(".", parts);
@@ -21,9 +21,9 @@
     {
         foreach (var field in section.Fields)
         {
-            fieldsBuilder.AppendLine("    [NotNull]");
-            fieldsBuilder.AppendLine("    [System.CodeDom.Compiler.GeneratedCodeAttribute(\"Sitecore.Pathfinder\", \"1.0.0.0\")]");
-            fieldsBuilder.AppendLine("    public string " + field.FieldName.Value.GetSafeCodeIdentifier() + " { get { return this.InnerItem[\"" + field.FieldName.Value + "\"]; } }");
+            fieldsBuilder.AppendLine("        [NotNull]");
+            fieldsBuilder.AppendLine("        [System.CodeDom.Compiler.GeneratedCode(\"Sitecore.Pathfinder\", \"1.0.0.0\")]");
+            fieldsBuilder.AppendLine("        public string " + field.FieldName.Value.GetSafeCodeIdentifier() + " { get { return InnerItem[\"" + field.FieldName.Value + "\"]; } }");
             fieldsBuilder.AppendLine();
         }
     }
@@ -37,35 +37,36 @@
     // Changes to this file may cause incorrect behavior and will be lost if
     // the code is regenerated.
     //
+    //
 </auto-generated>
 //------------------------------------------------------------------------------
 
 #pragma warning disable 1591
 
+using Sitecore;
 using Sitecore.Data.Items;
-using Sitecore.Diagnostics;
 
 namespace @safeNamespace
 {
-#region Designer generated code
+    #region Designer generated code
 
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.CodeDom.Compiler.GeneratedCodeAttribute("Sitecore.Pathfinder", "1.0.0.0")]
-public partial class @className
-{
-public @(className)(Item innerItem)
-{
-this.InnerItem = innerItem;
-}
+    [System.Diagnostics.DebuggerStepThrough()]
+    [System.CodeDom.Compiler.GeneratedCode("Sitecore.Pathfinder", "1.0.0.0")]
+    public partial class @className
+    {
+        public @(className)(Item innerItem)
+        {
+        InnerItem = innerItem;
+        }
 
-[NotNull]
-[System.CodeDom.Compiler.GeneratedCodeAttribute("Sitecore.Pathfinder", "1.0.0.0")]
-public Item InnerItem { get; private set; }
+        [NotNull]
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("Sitecore.Pathfinder", "1.0.0.0")]
+        public Item InnerItem { get; private set; }
 
-@fields
-}
+    @fields
+    }
 
-#endregion
+    #endregion
 }
 
 #pragma warning restore 1591
