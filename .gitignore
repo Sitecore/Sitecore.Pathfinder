@@ -200,3 +200,4 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 /Components/Sitecore.Mvc.dll
+/Sitecore.Pathfinder.Console/Nuget/SitecorePathfinder.0.2.0-Developing.nupkg

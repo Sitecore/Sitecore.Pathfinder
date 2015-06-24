@@ -13,5 +13,6 @@ namespace Sitecore.Pathfinder
 
             new Startup().Start();
         }
-    }
+    }                      
 }
+                

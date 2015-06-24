@@ -3,8 +3,7 @@
 Get started, get far, get happy!
 
 ![Sitecore Pathfinder](.docs/img/SitecorePathfinder.PNG)
-
-
+ 
 Watch the videos on YouTube:
 * [01 - Idea and concepts](https://www.youtube.com/watch?v=TcJ0IoI7sVM)
 * [02 - HelloWorld](https://www.youtube.com/watch?v=jQz5hAVOTzU)
@@ -146,6 +145,57 @@ Everything in Pathfinder is a file, so you can use Notepad to edit any file.
 [Visual Studio Code](https://code.visualstudio.com/) is a nice code editor and Pathfinder contains default
 configuration files for Code in the .settings directory. The default build task in Code has been configured
 to execute the build pipeline in Pathfinder. In Code the build task can be executed by pressing Ctrl+Shift+B.
+
+## Visual Studio
+
+1. Create a web project in Visual Studio
+1. Xcopy the Pathfinder files to the .sitecore.tools folder in the project root
+1. Run .sitecore.tools\scc.exe to create an empty Pathfinder project, files and folders
+1. Install GruntJS in the project: npm install grunt --save-dev
+1. Install grunt-shell: npm install --save-dev grunt-shell
+1. In Solution Explorer, open the project context menu and select Add | Grunt and Bower to Project
+1. Right-click gruntfile.js and select Task Runner Explorer
+1. Add the following lines to gruntfile.js
+
+```js
+module.exports = function (grunt) {
+    grunt.initConfig({
+        shell: {
+            "build-project": {
+                command: "scc.cmd"
+            },
+            "run-unittests": {
+                command: "scc.cmd run-unittests"
+            },
+            "generate-unittests": {
+                command: "scc.cmd generate-unittests"
+            },
+            "generate-code": {
+                command: "scc.cmd generate-code"
+            },
+            "sync-website": {
+                command: "scc.cmd sync-website"
+            },
+            "validate-website": {
+                command: "scc.cmd validate-website"
+            }
+        }
+    });
+
+    grunt.registerTask("build-project", ["shell:build-project"]);
+    grunt.registerTask("run-unittests", ["shell:run-unittests"]);
+    grunt.registerTask("generate-unittests", ["shell:generate-unittests"]);
+    grunt.registerTask("generate-code", ["shell:generate-code"]);
+    grunt.registerTask("sync-website", ["shell:sync-website"]);
+    grunt.registerTask("validate-website", ["shell:validate-website"]);
+
+    grunt.loadNpmTasks("grunt-shell");
+};
+```
+
+10. In Task Runner Explorer, right-click 'build-project' and select Bindings | After Build. This will run Pathfinder after each build.
+10. If you want to use code generate, right-click 'generate-code' and select Binding | Before Build.
+
 
 ## Sitecore toolbox
 As a Sitecore developer, what should be in your development toolbox? 
