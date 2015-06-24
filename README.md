@@ -15,7 +15,6 @@ Sitecore Pathfinder is a toolchain for Sitecore, that allows developers to use t
 in a familiar fashion to develop Sitecore websites.
 
 The toolchain creates a deliverable package from the source files in a project directory and deploys 
-The toolchain creates a deliverable package from the source files in a project directory and deploys 
 the package to a website where an installer installs the new files and Sitecore items into the website.
 
 The developer process is familiar; edit source files, build and install the package, review the changes on website, repeat.
@@ -48,6 +47,184 @@ including an scc.cmd file which is a shortcut to the .sitecore.tools\scc.exe fil
 * Validate a Sitecore website against 70 rules using Sitecore Rocks SitecoreCop
 
 # Features
+
+## Sitecore items as files
+In Pathfinder everything is a file, including Sitecore items. This is so that your project directory can contain the whole and single truth
+about your project. Your project is no longer spread across development projects, databases and websites.
+
+This is also how classic development projects work. In a Visual Studio application project every asset, that is needed by the application, is
+included or referenced from the project.
+
+Items are stored as file but can have a number of formats. Currently Json and Xml formats are supported, but plain file ansd Markdown will hopefully
+be supported at some point. Json and Xml are good formats, since code editors can support schema validation and Intellisense.
+
+Xml format (extension .item.xml) - please notice the namespace, which indicates the Xml schema to use.
+```xml
+<Item xmlns="http://www.sitecore.net/pathfinder/item" 
+    Template="/sitecore/templates/Sample/Sample Item">
+    <Field Name="Title">Pathfinder</Field>
+    <Field Name="Text">Welcome to Sitecore Pathfinder</Field>
+</Item>
+```
+
+Json format (extension .item.json): 
+```js
+{
+  "Item": {
+    "Template": "/sitecore/templates/Sample/Sample Item",
+    "Fields": [
+      {
+        "Name": "Title",
+        "Value": "Welcome"
+      },
+      {
+        "Name": "Text",
+        "Value": "Welcome to Sitecore"
+      }
+    ]
+  }
+}
+```
+
+You will notice that the examples above do not specify the name of the item. By default the name of the file (without extensions) is used
+as item name.
+
+Likewise the directory path is used as item path. The root of the project corresponds to /sitecore, so having the item file
+"[Project]\content\Home\HelloWorld.item.xml" will create the item "/sitecore/content/Home/HelloWorld".
+
+#### Nested items
+An item file can contain multiple nested items. Below is an example:
+
+```xml
+<Item xmlns="http://www.sitecore.net/pathfinder/item" Template="/sitecore/templates/Sample/Sample Item">
+  <Field Name="Title" Value="Hello" />
+
+  <Item Name="Hi" Template="/sitecore/templates/Sample/Sample Item">
+    <Field Name="Title" Value="Hi" />
+  </Item>
+
+  <Item Name="Hey" Template="/sitecore/templates/Sample/Sample Item">
+    <Field Name="Title" Value="Hey" />
+  </Item>
+</Item>
+```
+This create an item with two children; Hi and Hey:
+
+* HelloWorld
+  * Hi
+  * Hey
+
+
+### Templates
+Template can be defined in items files using a special schema. Below is an example:
+
+```xml
+<Template xmlns="http://www.sitecore.net/pathfinder/item" Name="HelloWorld">
+    <Section Name="Data">
+        <Field Name="Title" Type="Single-Line Text"/>
+        <Field Name="Text" Type="Rich Text"/>
+        <Field Name="Always Render" Type="Checkbox" Sharing="Shared"/>
+    </Section>
+</Template>
+```
+
+Templates can be nested in the same way that multiple items can be nested inside an item file.
+
+#### Infered templates
+If you have a template that is used by a single item, you can have Pathfinder automatically create the template from the fields in the
+item - Pathfinder will infer the template fields from the fields you specify in the item.
+
+To infer and create the template use the "Template.Create" attribute instead of the "Template" attribute in item files.
+
+```xml
+<Item xmlns="http://www.sitecore.net/pathfinder/item" Template.Create="/sitecore/templates/Sample/InferredTemplate">
+  <Field Name="Text" Value="Hello" Field.Type="Rich Text" />
+</Item>
+```
+The example above creates the template "InferredTemplate" with a single template field "Text". The type of the field is "Rich Text".
+
+
+### Item IDs
+Normally you do not need to specify the ID of an item, but in some case, it may be necessary. Pathfinder supports soft IDs meaning that the
+item ID does not have to be a Guid (but it can be).
+
+By default Pathfinder calculates the ID of an item hashing the project unique ID and the file path (without file extensions), like this 
+`item.Guid = MD5(Project_Unique_ID + item.FilePath)`. This means that the item ID is always the same, as long as the file path remains the same.
+
+You can explicitly set the ID by specifying the ID in item file as either a Guid or as a soft ID.
+
+* If no ID is specified, the item ID is calculated as `item.Guid = MD5(Project_Unique_ID + item.ItemPath)`.
+* If the ID is specified as a Guid, the item ID uses Guid as is.
+* If the ID is specified (but not a Guid), the item ID is calculated as `item.Guid = MD5(Project_Unique_ID + item.ID)`.
+
+If you rename an item, but want to keep the original item ID, specify the ID as the original file path (without extensions), e.g.:
+```xml
+<Item xmlns="http://www.sitecore.net/pathfinder/item" 
+    Id="/sitecore/content/Home/HelloWorld" 
+    Template="/sitecore/templates/Sample/Sample Item">
+    <Field Name="Title">Pathfinder</Field>
+    <Field Name="Text">Welcome to Sitecore Pathfinder</Field>
+</Item>
+```
+
+### Content item format
+Content item files also contain items, but the schema is different. When you synchronize the website, Pathfinder generates and downloads a
+schema, that contains all templates in the database (master and core database). If you change a template, you will have to synchronize the
+website again.
+
+The schema of content files ensures, that you can only specify fields that appear in the template, and provide some nice Intellisense in most 
+code editors. The format of content item files is also more compact than other types of item files.
+
+So the advantages of content item files are validation against the template and a more compact format, but you have to synchronize the 
+website, if you change a template.
+                                                                                         
+
+### Media files
+If you drop a media file (.gif, .png, .jpg, .bmp, .pdf, .docx) into your project folder, Pathfinder will upload the file to the Media Library.
+The Sitecore item will be implicit created. 
+
+### Layouts and renderings
+Layout and rendering files (.aspx, .ascx, .cshtml, .html) are copied to the website directory and the Sitecore items are automatically created.
+You no longer have to explicitly create and configure a Sitecore Rendering or Layout item. The relevate fields (including the Path field) are
+populated automatically.
+
+### Json layout format
+TBD
+
+### Populating additional fields for implicitly created items
+Supposed you have an MVC View rendering HelloWorld.cshtml and want to set the Parameters field. Simply create a HelloWorld.item.xml (or 
+HelloWorld.item.json) next to the HelloWorld.cshtml file.
+
+* HelloWorld.cshtml
+* HelloWorld.item.json
+
+When determining the item name, Pathfinder uses the field up until the first dot - in this case "HelloWorld". When two or more files have the
+same item name (and item path), they are merged into a single item. Pathfinder will report an error if a field is set more than once with different
+values.
+
+### Supported file formats
+
+Extension            | Description 
+-------------------- | ------------
+.item.xml            | Item in Xml format
+.item.json           | Item in Json format
+.master.content.xml  | Item in Xml content format (master database)
+.core.content.xml    | Item in Xml content format (core database)
+.master.content.json | Item in Json content format (master database)
+.core.content.json   | Item in Json content format (core database)
+.master.layout.xml   | Layout definition in Xml format (master database)
+.core.layout.xml     | Layout definition in Xml format (core database)
+.master.layout.json  | Layout definition in Json format (master database)
+.core.layout.json    | Layout definition in Json format (core database)
+.dll                 | Binary file - copied to /bin folder
+.aspx                | Layout file
+.ascx                | SubLayout
+.cshtml              | MVC View Rendering
+.html                | Html file (MVC View Rendering) with Mustache syntax support
+.htm                 | Html file
+.js                  | JavaScript content file
+.css                 | Stylesheet content file
+.config              | Config content file
 
 ## Unit testing
 [Watch the video](https://www.youtube.com/watch?v=DWU6D7L8ykg)
