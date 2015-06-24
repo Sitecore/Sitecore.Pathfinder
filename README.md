@@ -119,7 +119,7 @@ This create an item with two children; Hi and Hey:
 Template can be defined in items files using a special schema. Below is an example:
 
 ```xml
-<Template xmlns="http://www.sitecore.net/pathfinder/item" Name="HelloWorld">
+<Template xmlns="http://www.sitecore.net/pathfinder/item">
     <Section Name="Data">
         <Field Name="Title" Type="Single-Line Text"/>
         <Field Name="Text" Type="Rich Text"/>
@@ -130,7 +130,7 @@ Template can be defined in items files using a special schema. Below is an examp
 
 Templates can be nested in the same way that multiple items can be nested inside an item file.
 
-#### Infered templates
+#### Inferred templates
 If you have a template that is used by a single item, you can have Pathfinder automatically create the template from the fields in the
 item - Pathfinder will infer the template fields from the fields you specify in the item.
 
