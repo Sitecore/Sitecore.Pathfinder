@@ -9,6 +9,7 @@ Watch the videos on YouTube:
 * [01 - Idea and concepts](https://www.youtube.com/watch?v=TcJ0IoI7sVM)
 * [02 - HelloWorld](https://www.youtube.com/watch?v=jQz5hAVOTzU)
 * [03 - Unit Testing](https://www.youtube.com/watch?v=DWU6D7L8ykg)
+* [04 - Html Templates](https://www.youtube.com/watch?v=9aTGhW6ErYM)
 
 # Introduction
 Sitecore Pathfinder is a toolchain for Sitecore, that allows developers to use their favorite tools 
@@ -50,6 +51,8 @@ including an scc.cmd file which is a shortcut to the .sitecore.tools\scc.exe fil
 # Features
 
 ## Unit testing
+[Watch the video](https://www.youtube.com/watch?v=DWU6D7L8ykg)
+
 Unit testing in Sitecore can be tricky for a number of reasons. One reason is that sometimes you want your 
 unit test to be executed within the Sitecore web context. Unless you have advanced mocking capabilities, this
 requires you to make a request to a Sitecore website and run the tests.
@@ -58,9 +61,6 @@ Pathfinder installs a Web Test Runner in your Sitecore website. When you run the
 copies the unit test C# files to the server, compiles them and runs the tests.
 
 This makes it easy to write server-side unit tests in you project and execute the in a Sitecore web context.
-
-[Watch the video](https://www.youtube.com/watch?v=DWU6D7L8ykg)
-
 
 ## Website validation
 Pathfinder integrates with the Sitecore Rocks SitecoreCop feature. SitecoreCop examines the website and can identify
@@ -97,6 +97,8 @@ Here is an example of the format in Json.
 ```
 
 ### Html Templates
+[Watch the video](https://www.youtube.com/watch?v=9aTGhW6ErYM)
+
 Pathfinder also supports Html Templating which is simpler way of working with layouts. It resembles working with Mustache
 Html Templates in JavaScript. However the Html Templates are resolved on the server and adapted to the Sitecore 
 rendering engine.
