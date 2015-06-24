@@ -1,19 +1,15 @@
 {
   "Item": {
-    "Template": "/sitecore/templates/Sample/HelloWorld",
-    "HtmlTemplate": "/layout/renderings/HtmlTemplate.html",
+    "Template": "/sitecore/templates/Sample/Sample Item",
+    "HtmlTemplate": "/layout/renderings/htmltemplate.html",
     "Fields": [
       {
         "Name": "Title",
-        "Value": "HtmlTemplate"
+        "Value": "Welcome"
       },
       {
         "Name": "Text",
-        "Value": "HtmlTemplate"
-      },
-      {
-        "Name": "Image",
-        "Value": "/sitecore/media library/demo"
+        "Value": "Welcome to Sitecore"
       }
     ]
   }

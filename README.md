@@ -42,8 +42,8 @@ including an scc.cmd file which is a shortcut to the .sitecore.tools\scc.exe fil
 * Project is packaged into a NuGet package and deployed to the website
   * Dependency tracking through NuGet dependencies
   * NuGet package installer on Sitecore website
-  * Sitecore.Pathfinder.Core NuGet package tweaks Sitecore defaults to be easier to wotk with (e.g. remove initial workflow)
-* Web Test Runner for running unit tests inside Sitecore website (support dynamic compilation of C# source files)
+  * Sitecore.Pathfinder.Core NuGet package tweaks Sitecore defaults to be easier to work with (e.g. removes initial workflow)
+* Web Test Runner for running unit tests inside Sitecore website (supports dynamic compilation of C# source files)
 * Support for Html Templates (with [Mustache](https://mustache.github.io/mustache.5.html) tags) makes getting started with the Sitecore Rendering Engine easier
 * Validate a Sitecore website against 70 rules using Sitecore Rocks SitecoreCop
 
@@ -146,13 +146,13 @@ configuration files for Code in the .settings directory. The default build task 
 to execute the build pipeline in Pathfinder. In Code the build task can be executed by pressing Ctrl+Shift+B.
 
 ## Sitecore toolbox
-As a Sitecore, what should be in your development toolbox? 
+As a Sitecore developer, what should be in your development toolbox? 
 
 Application   | Description | Difficulty
 ------------- | ------------| ----------
 [SIM (Sitecore Instance Manager](https://marketplace.sitecore.net/modules/sitecore_instance_manager.aspx) | Sitecore website installer and more | Low to medium
 [Sitecore Powershell Extensions](https://marketplace.sitecore.net/en/Modules/Sitecore_PowerShell_console.aspx) | Run Powershell scripts in a Sitecore website | High
 [Sitecore Rocks Visual Studio](https://visualstudiogallery.msdn.microsoft.com/44a26c88-83a7-46f6-903c-5c59bcd3d35b/) | Visual Studio plugin for working with Sitecore | Low to high
-[Sitecore Rocks Windows](https://github.com/JakobChristensen/Sitecore.Rocks.Docs) | Sitecore Rocks version that do not require Visual Studio | Low to high
+[Sitecore Rocks Windows](https://github.com/JakobChristensen/Sitecore.Rocks.Docs) | Sitecore Rocks version that does not require Visual Studio | Low to high
 [Sitecore Pathfinder](https://github.com/JakobChristensen/Sitecore.Pathfinder) | Sitecore build toolchain | Low
 

@@ -16,7 +16,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
         {
             foreach (var item in context.Project.Items.OfType<Item>())
             {
-                CheckTemplate(context, item);
+                CheckTemplate(context, item); 
             }
         } 
 
