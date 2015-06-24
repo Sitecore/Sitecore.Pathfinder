@@ -2,7 +2,7 @@
 
 Get started, get far, get happy!
 
-![Sitecore Pathfinder](.docs/img/SitecorePathfinder.png)
+![Sitecore Pathfinder](.docs/img/SitecorePathfinder.PNG)
 
 
 Watch the videos on YouTube:
