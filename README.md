@@ -9,6 +9,7 @@ Watch the videos on YouTube:
 * [02 - HelloWorld](https://www.youtube.com/watch?v=jQz5hAVOTzU)
 * [03 - Unit Testing](https://www.youtube.com/watch?v=DWU6D7L8ykg)
 * [04 - Html Templates](https://www.youtube.com/watch?v=9aTGhW6ErYM)
+* [05 - Code Generation, Visual Studio and Grunt](http://youtu.be/ZM3ve1WhwwQ)
 
 # Introduction
 Sitecore Pathfinder is a toolchain for Sitecore, that allows developers to use their favorite tools 
@@ -312,6 +313,28 @@ placeholder.
 
 Pathfinder creates .html as View renderings and these renderings can used as any other Sitecore rendering.
 
+## Code Generation
+[Watch the video](http://youtu.be/ZM3ve1WhwwQ)
+
+Pathfinder can generate code based on your project. The most obvious thing is to generate a C# class for each template in
+the project.
+
+To generate code, execute the task `generate-code`. This wil iterate through the elements in the project and check if
+a code generator is available for that item. If so, the code generator is executed.
+
+In the system scconfig.json, you can map a code generator (a Razor view) to a C# type. 
+
+```js
+"codegen": {
+    ".sitecore.tools\\files\\codegen\\Template.cshtml": "Sitecore.Pathfinder.Projects.Templates.Template, Sitecore.Pathfinder.Core"
+}
+```
+
+In this case the code generator is a Razor file. The Razor file receives the instance of the template as a model.
+
+Normally you want to run the `generate-code` task before building an assembly, so the C# source files are up-to-date.
+
+
 # Environment
 
 ## Notepad
@@ -326,11 +349,11 @@ to execute the build pipeline in Pathfinder. In Code the build task can be execu
 ## Visual Studio
 
 1. Create a web project in Visual Studio
+1. Add a reference to Sitecore.Kernel
 1. Install the Sitecore Pathfinder Nuget package
-1. Run .sitecore.tools\scc.exe to create an empty Pathfinder project, files and folders
-1. Install GruntJS in the project: npm install grunt --save-dev
-1. Install grunt-shell: npm install --save-dev grunt-shell
-1. In Solution Explorer, open the project context menu and select Add | Grunt and Bower to Project
+1. Install GruntJS. Run installgrunt.cmd or
+   1. Install GruntJS in the project: npm install grunt --save-dev
+   1. Install grunt-shell: npm install --save-dev grunt-shell
 1. Right-click gruntfile.js and select Task Runner Explorer
 1. Add the following lines to gruntfile.js
 

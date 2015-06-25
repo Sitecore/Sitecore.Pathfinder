@@ -18,6 +18,11 @@ namespace Sitecore.Pathfinder.Building.Deploying.CopyDependencies
             context.Trace.TraceInformation(Texts.Copying_dependencies___);
 
             var sourceDirectory = Path.Combine(context.Configuration.Get(Constants.Configuration.SolutionDirectory), ".packages");
+            if (!context.FileSystem.DirectoryExists(sourceDirectory))
+            {
+                context.Trace.TraceInformation("'.packages' directory not found. Skipping");
+                return;
+            }
 
             var destinationDirectory = context.Configuration.Get(Constants.Configuration.Wwwroot);
             destinationDirectory = PathHelper.Combine(destinationDirectory, context.Configuration.Get(Constants.Configuration.DataDirectoryName));
