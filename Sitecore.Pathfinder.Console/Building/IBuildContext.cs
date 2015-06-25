@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 
@@ -29,6 +30,9 @@ namespace Sitecore.Pathfinder.Building
 
         [NotNull]
         IList<string> OutputFiles { get; }
+
+        [NotNull]
+        IPipelineService PipelineService { get; }
 
         [NotNull]
         IProject Project { get; }

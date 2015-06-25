@@ -167,7 +167,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
 
             using (new EditContext(item))
             {
-                item[FieldIDs.StandardValueHolderId] = standardValuesItem.ID.ToString();
+                item[FieldIDs.StandardValues] = standardValuesItem.ID.ToString();
             }
 
             context.RegisterAddedItem(standardValuesItem);

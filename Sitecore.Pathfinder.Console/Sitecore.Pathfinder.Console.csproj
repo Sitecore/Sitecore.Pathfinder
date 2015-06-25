@@ -159,7 +159,7 @@
     <Compile Include="Building\Deploying\CopyDependencies\CopyDependencies.cs" />
     <Compile Include="Building\Initializing\Initialization\Init.cs" />
     <Compile Include="Building\Initializing\SynchronizeWebsites\SynchronizeWebsite.cs" />
-    <Compile Include="Building\Testing\GenerateUnitTests.cs" />
+    <Compile Include="Building\Testing\UnitTests\GenerateUnitTest.cs" />
     <Compile Include="Building\Querying\FindReferences.cs" />
     <Compile Include="Building\Querying\FindUsages.cs" />
     <Compile Include="Building\Packaging\CreateNupkg\CreateNupkg.cs" />
@@ -171,6 +171,11 @@
     <Compile Include="Building\Querying\QueryTaskBase.cs" />
     <Compile Include="Building\Refactoring\Rename.cs" />
     <Compile Include="Building\RequestTaskBase.cs" />
+    <Compile Include="Building\Testing\UnitTests\Pipelines\1000 - GenerateBinFileUnitTests.cs" />
+    <Compile Include="Building\Testing\UnitTests\Pipelines\2000 - GenerateContentFileUnitTests.cs" />
+    <Compile Include="Building\Testing\UnitTests\Pipelines\3000 - GenerateTemplateUnitTests.cs" />
+    <Compile Include="Building\Testing\UnitTests\Pipelines\4000 - GenerateItemUnitTests.cs" />
+    <Compile Include="Building\Testing\UnitTests\Pipelines\GenerateUnitTestsPipeline.cs" />
     <Compile Include="Building\Testing\RunUnitTests.cs" />
     <Compile Include="Building\Testing\ValidateWebsite.cs" />
     <Compile Include="Startup.cs" />
