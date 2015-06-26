@@ -93,6 +93,17 @@ as item name.
 Likewise the directory path is used as item path. The root of the project corresponds to /sitecore, so having the item file
 "[Project]\content\Home\HelloWorld.item.xml" will create the item "/sitecore/content/Home/HelloWorld".
 
+### Path calculation
+
+Files:
+* Local directory: $SolutionDirectory/$ProjectDirectory/[FilePath]
+* Website directory: /$WebsiteProjectDirectory/$ProjectName/[FilePath]
+
+Items: 
+* Local directory: $SolutionDirectory/$ProjectDirectory/[ItemPath]
+* Website directory: /"sitecore"/$WebsiteItemPath/[ItemPath]
+
+
 #### Nested items
 An item file can contain multiple nested items. Below is an example:
 

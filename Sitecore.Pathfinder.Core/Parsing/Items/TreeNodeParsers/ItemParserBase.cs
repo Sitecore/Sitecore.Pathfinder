@@ -23,6 +23,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         {
             var itemNameTextNode = textNode.GetAttributeTextNode("Name");
             var itemName = itemNameTextNode?.Value ?? context.ParseContext.ItemName;
+
             var itemIdOrPath = context.ParentItemPath + "/" + itemName;
             var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
 
