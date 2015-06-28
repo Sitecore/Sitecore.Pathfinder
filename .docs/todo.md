@@ -46,3 +46,19 @@ Missing
 * Test Rename / ID?
 * Layout inside Json
 
+
+CleanBlog
+---------
+Set HtmlTemplate on template standard values
+Reference Templates/items by Soft IDs
+Implement types of references
+    Item path: /sitecore
+    File path: ~/layout/
+    Guid     : {4703E64D-6046-4B9F-A3A4-ED586D201480}
+    Soft Id  : {PostTemplate}
+Rename
+    .sitecore.tools -> sitecore.tools
+    .schema, .packages -> sitecore.project
+    HtmlTemplate -> Layout.HtmlFile
+Images in /img folder
+.html files in root /

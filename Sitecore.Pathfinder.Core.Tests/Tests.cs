@@ -3,6 +3,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -28,13 +29,19 @@ namespace Sitecore.Pathfinder
             return Services.CompositionService.Resolve<T>();
         }
 
-        protected void Start([CanBeNull] Action mock = null)
+        protected void Start([CanBeNull] Action mock = null, [CanBeNull] Action reconfigure = null)
         {
+            ProjectDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "Website");
             Services = new Services();
             Services.Start(mock);
-            Services.ConfigurationService.Load(LoadConfigurationOptions.None);
 
-            ProjectDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "Website");
+            if (reconfigure != null)
+            {
+                Services.Configuration.Add(new MemoryConfigurationSource());
+                reconfigure();
+            }
+
+            Services.ConfigurationService.Load(LoadConfigurationOptions.None);
         }
     }
 }

@@ -1,0 +1,35 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "*.item.json"
+      ],
+      "url": "/.schemas/item.schema.json"
+    },
+    {
+      "fileMatch": [
+        "*.master.content.json"
+      ],
+      "url": "/.schemas/master.content.schema.json"
+    },
+    {
+      "fileMatch": [
+        "*.core.content.json"
+      ],
+      "url": "/.schemas/core.content.schema.json"
+    },
+    {
+      "fileMatch": [
+        "*.master.layout.json"
+      ],
+      "url": "/.schemas/master.layout.schema.json"
+    },
+    {
+      "fileMatch": [
+        "*.core.layout.json"
+      ],
+      "url": "/.schemas/core.layout.schema.json"
+    }
+  ]
+}

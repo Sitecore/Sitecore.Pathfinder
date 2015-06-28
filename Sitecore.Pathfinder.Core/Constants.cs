@@ -28,6 +28,11 @@ namespace Sitecore.Pathfinder
             ' '
         };
 
+        public static readonly char[] Semicolon =
+        {
+            ';'
+        };
+
         public static class Configuration
         {
             public const string CheckBinFileVersion = "deploying:check-bin-file-version";

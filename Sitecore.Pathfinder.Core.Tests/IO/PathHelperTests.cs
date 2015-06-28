@@ -3,6 +3,7 @@
 using System;
 using System.Linq;
 using NUnit.Framework;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Projects;
 
@@ -93,12 +94,12 @@ namespace Sitecore.Pathfinder.IO
         {
             Start();
 
-            Assert.AreEqual("/sitecore/client/test", PathHelper.GetItemPath(Project.Empty, new SourceFile(Services.FileSystem, "\\sitecore\\client\\test.txt")));
-            Assert.AreEqual("/sitecore/client/test", PathHelper.GetItemPath(Project.Empty, new SourceFile(Services.FileSystem, "/sitecore/client/test.txt")));
-            Assert.AreEqual("/sitecore/client/test", PathHelper.GetItemPath(Project.Empty, new SourceFile(Services.FileSystem, "/sitecore/client/test")));
-            Assert.AreEqual("/sitecore/test", PathHelper.GetItemPath(Project.Empty, new SourceFile(Services.FileSystem, "test.txt")));
-            Assert.AreEqual("/sitecore/test", PathHelper.GetItemPath(Project.Empty, new SourceFile(Services.FileSystem, "test")));
-            Assert.Throws<ArgumentException>(() => PathHelper.GetItemPath(Project.Empty, new SourceFile(Services.FileSystem, string.Empty)));
+            Assert.AreEqual("/sitecore/client/test", PathHelper.GetItemPath(Project.Empty, FileContext.Empty, new SourceFile(Services.FileSystem, "\\sitecore\\client\\test.txt")));
+            Assert.AreEqual("/sitecore/client/test", PathHelper.GetItemPath(Project.Empty, FileContext.Empty, new SourceFile(Services.FileSystem, "/sitecore/client/test.txt")));
+            Assert.AreEqual("/sitecore/client/test", PathHelper.GetItemPath(Project.Empty, FileContext.Empty, new SourceFile(Services.FileSystem, "/sitecore/client/test")));
+            Assert.AreEqual("/sitecore/test", PathHelper.GetItemPath(Project.Empty, FileContext.Empty, new SourceFile(Services.FileSystem, "test.txt")));
+            Assert.AreEqual("/sitecore/test", PathHelper.GetItemPath(Project.Empty, FileContext.Empty, new SourceFile(Services.FileSystem, "test")));
+            Assert.Throws<ArgumentException>(() => PathHelper.GetItemPath(Project.Empty, FileContext.Empty, new SourceFile(Services.FileSystem, string.Empty)));
         }
 
         [Test]

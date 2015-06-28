@@ -1,0 +1,5 @@
+﻿<Item Template.Create="/sitecore/Templates/CleanBlog" HtmlTemplate="/layout/renderings/index.html" 
+    Template.ShortHelp="CleanBlog." Template.LongHelp="CleanBlog." Template.Icon="Applications/16x16/about.png">
+    <Field Name="Header" Value="Clean Blog" Field.ShortHelp="Subtitle." Field.LongHelp="Subtitle." />
+    <Field Name="Subheader" Value="A Clean Blog Theme by Start Bootstrap" Field.ShortHelp="Subtitle." Field.LongHelp="Subtitle." />
+</Item>

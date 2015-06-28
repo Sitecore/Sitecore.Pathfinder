@@ -83,6 +83,7 @@
     <Compile Include="Documents\Json\JsonDocumentTests.cs" />
     <Compile Include="IO\PathHelperTests.cs" />
     <Compile Include="IO\PathMatcherTests.cs" />
+    <Compile Include="Projects\FileContexts\FileContextTests.cs" />
     <Compile Include="Projects\ProjectTests.cs" />
     <Compile Include="Documents\SourceFileTests.cs" />
     <Compile Include="Documents\Xml\XmlDocumentTests.cs" />
@@ -122,6 +123,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="Projects\FileContexts\scconfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Website\.schemas\item.schema.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -176,6 +180,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Projects\FileContexts\img\mushrooms.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Projects\FileContexts\index.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Projects\FileContexts\js\jquery.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Website\content\Home\HelloWorld.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -221,7 +234,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Website_2content_2Home_2JsonContentItem_1master_1content_1json__JSONSchema="..\..\.schemas\master.content.schema.json" Website_2content_2Home_2Foo_1item_1json__JSONSchema="item.schema.json" />
+      <UserProperties Website_2content_2Home_2Foo_1item_1json__JSONSchema="item.schema.json" Website_2content_2Home_2JsonContentItem_1master_1content_1json__JSONSchema="..\..\.schemas\master.content.schema.json" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

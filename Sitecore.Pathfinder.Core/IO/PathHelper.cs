@@ -3,6 +3,7 @@
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Extensions;
@@ -174,13 +175,13 @@ namespace Sitecore.Pathfinder.IO
         }
 
         [NotNull]
-        public static string GetItemPath([NotNull] IProject project, [NotNull] ISourceFile sourceFile)
+        public static string GetItemPath([NotNull] IProject project, FileContext fileContext, [NotNull] ISourceFile sourceFile)
         {
             var itemPath = UnmapPath(project.Options.ProjectDirectory, sourceFile.FileName);
 
             itemPath = GetDirectoryAndFileNameWithoutExtensions(itemPath);
 
-            itemPath = "/" + NormalizeItemPath(itemPath);
+            itemPath = fileContext.ItemPath.TrimEnd('/') + "/" + NormalizeItemPath(itemPath);
 
             if (!itemPath.StartsWith("/sitecore/", StringComparison.OrdinalIgnoreCase))
             {

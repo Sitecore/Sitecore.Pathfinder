@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Documents
 
         public string GetProjectPath(IProject project)
         {
-            throw new InvalidOperationException("Cannot read from empty source file");
+            return string.Empty;
         }
 
         [NotNull]

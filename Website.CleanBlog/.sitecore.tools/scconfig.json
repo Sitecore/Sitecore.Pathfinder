@@ -1,0 +1,86 @@
+{
+    // "$schema": ".schemas/config.json",
+    "wwwroot": "",
+    "hostname": "",
+
+    // solution directory relative to tools path
+    "solutiondirectory": "..",
+
+    // project directory relative to solution directory
+    "projectdirectory": "",
+
+    // default database name (master, core or web)
+    "database": "master",
+
+    // project configuration file
+    "project": "scconfig.json",
+
+    // default pipeline
+    "pipeline": "init",
+
+    // init pipeline
+    "init": {
+        "pipeline": "init"
+    },
+
+    // NuGet settings     
+    "nuget": {
+        "filename": "sitecore.nuspec"
+    },
+
+    // deploying URLs
+    "deploying": {
+        "packagedirectory": "packages",
+        "installurl": "/sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx",
+        "publishurl": "/sitecore/shell/client/Applications/Pathfinder/Publish.aspx",
+
+        // checks that the version of the source bin file is larger than the destination before copying.
+        // when developing this should probably be combined with auto-incrementing the file version of the assembly.
+        // see http://stackoverflow.com/questions/356543/can-i-automatically-increment-the-file-build-version-when-using-visual-studio
+        "check-bin-file-version": false,
+        "uninstall-directory": "..\\.uninstall"
+    },
+
+    "validate-website": {
+        "url": "/sitecore/shell/client/Applications/Pathfinder/SitecoreRocksValidation.ashx",
+        "inactive-validations": "",
+        "languages": "en",
+        "process-site-validations": "True",
+        "root-item-path": "",
+        "site": "Site",
+        "timeout": "600"
+    },
+
+    // maps a code generation template file to a project item type
+    "codegen": {
+        ".sitecore.tools\\files\\codegen\\Template.cshtml": "Sitecore.Pathfinder.Projects.Templates.Template, Sitecore.Pathfinder.Core"
+    },
+
+    "update-resources-url": "/sitecore/shell/client/Applications/Pathfinder/UpdateResources.ashx",
+
+    "web-test-runner-url": "/sitecore/shell/client/Applications/Pathfinder/WebTestRunner.ashx",
+    "web-test-runner-name": "NUnit",
+
+    // files and directories to ignore
+    "ignore-directories": ".settings .filetemplates .schemas .sitecore.tools node_modules",
+    "ignore-filenames": "scc.cmd sitecore.nuspec sitecore.nupkg project.json readme.txt",
+
+    // files to copy to website
+    "content-files": ".js .css .config .htm .ashx .asmx",
+
+    "remap-file-directories": {
+        "/sitecore/client": "/sitecore/shell/client"
+    },
+
+    "external-references": {
+        "{1930BBEB-7805-471A-A3BE-4858AC7CF696}": "/sitecore/templates/System/Templates/Standard template",
+        "{3A45A723-64EE-4919-9D41-02FD40FD1466}": "/sitecore/templates/System/Layout/Layout"
+    },
+
+    "local-test-directory": "Tests",
+    "website-directory-name": "Website",
+    "data-directory-name": "Data",
+
+    "error-messages-language": "en-US",
+    "ignore-blank-error-messages": false
+}

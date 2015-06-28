@@ -6,6 +6,7 @@ using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 
@@ -15,12 +16,6 @@ namespace Sitecore.Pathfinder.Parsing
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class ParseContext : IParseContext
     {
-        private string _filePath;
-
-        private string _itemName;
-
-        private string _itemPath;
-
         [ImportingConstructor]
         public ParseContext([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IPipelineService pipelineService)
         {
@@ -32,15 +27,17 @@ namespace Sitecore.Pathfinder.Parsing
 
         public IConfiguration Configuration { get; }
 
-        public virtual string DatabaseName => Project.Options.DatabaseName;
+        public virtual string DatabaseName { get; private set; }
 
         public IFactoryService Factory { get; }
 
-        public virtual string FilePath => _filePath ?? (_filePath = PathHelper.GetFilePath(Project, Snapshot.SourceFile));
+        public virtual string FilePath { get; private set; }
 
-        public virtual string ItemName => _itemName ?? (_itemName = PathHelper.GetItemName(Snapshot.SourceFile));
+        public virtual string ItemName { get; private set; }
 
-        public virtual string ItemPath => _itemPath ?? (_itemPath = PathHelper.GetItemPath(Project, Snapshot.SourceFile));
+        public virtual string ItemPath { get; private set; }
+
+        public virtual string ProjectPath { get; private set; }
 
         public IPipelineService PipelineService { get; }
 
@@ -55,6 +52,15 @@ namespace Sitecore.Pathfinder.Parsing
             Project = project;
             Snapshot = snapshot;
             Trace = new DiagnosticTraceService(Configuration, Factory).With(Project);
+
+            var fileName = snapshot.SourceFile.GetProjectPath(Project);
+            var fileContext = FileContext.GetFileContext(Configuration, fileName);
+
+            ProjectPath = "/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(project.Options.ProjectDirectory, Snapshot.SourceFile.FileName)).TrimStart('/');
+            FilePath = fileContext.FilePath + PathHelper.GetFilePath(Project, Snapshot.SourceFile);
+            ItemName = PathHelper.GetItemName(Snapshot.SourceFile);
+            ItemPath = PathHelper.GetItemPath(Project, fileContext, Snapshot.SourceFile);
+            DatabaseName = !string.IsNullOrEmpty(fileContext.DatabaseName) ? fileContext.DatabaseName : Project.Options.DatabaseName;
 
             return this;
         }

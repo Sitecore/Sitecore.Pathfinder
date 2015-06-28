@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.Framework.ConfigurationModel;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Extensions
 {

@@ -1,0 +1,7 @@
+﻿<Item Template="/sitecore/Templates/Post" HtmlTemplate="/layout/renderings/post.html">
+  <Field Name="Title" Value="Science has not yet mastered prophecy" />
+  <Field Name="Subtitle" Value="We predict too much for the next year and yet far too little for the next ten." />
+  <Field Name="Posted">
+    Posted by <a href="#">Start Bootstrap</a> on September 24, 2014
+  </Field>
+</Item>

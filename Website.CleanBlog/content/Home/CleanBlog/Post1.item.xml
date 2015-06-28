@@ -1,0 +1,7 @@
+﻿<Item Template="/sitecore/Templates/Post" HtmlTemplate="/layout/renderings/post.html">
+  <Field Name="Title" Value="Man must explore, and this is exploration at its greatest" />
+  <Field Name="Subtitle" Value="Problems look mighty small from 150 miles up" />
+  <Field Name="Posted">
+    Posted by <a href="#">Start Bootstrap</a> on September 24, 2014
+  </Field>
+</Item>
