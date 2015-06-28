@@ -12,13 +12,13 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.ItemParserPipelines
 
         protected override void Process(ItemParserPipeline pipeline)
         {
-            pipeline.Item.HtmlTemplate = pipeline.TextNode.GetAttribute<string>("HtmlTemplate");
-            if (string.IsNullOrEmpty(pipeline.Item.HtmlTemplate.Value))
+            pipeline.Item.LayoutHtmlFile = pipeline.TextNode.GetAttribute<string>("Layout.HtmlFile");
+            if (string.IsNullOrEmpty(pipeline.Item.LayoutHtmlFile.Value))
             {
                 return;
             }
 
-            var field = pipeline.Context.ParseContext.Factory.Field(pipeline.Item, "__Renderings", string.Empty, 0, "HtmlTemplate: " + pipeline.Item.HtmlTemplate?.Value);
+            var field = pipeline.Context.ParseContext.Factory.Field(pipeline.Item, "__Renderings", string.Empty, 0, "HtmlTemplate: " + pipeline.Item.LayoutHtmlFile?.Value);
             pipeline.Item.Fields.Add(field);
         }
     }

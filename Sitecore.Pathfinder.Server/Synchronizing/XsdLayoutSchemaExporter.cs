@@ -36,7 +36,7 @@ namespace Sitecore.Pathfinder.Synchronizing
         protected void Generate([NotNull] ZipWriter zip, [NotNull] string schemaNamespace, [NotNull] string databaseName)
         {
             var schema = Generate(schemaNamespace, databaseName);
-            zip.AddEntry(".schemas\\" + databaseName + ".layout.xsd", Encoding.UTF8.GetBytes(schema));
+            zip.AddEntry("sitecore.project\\schemas\\" + databaseName + ".layout.xsd", Encoding.UTF8.GetBytes(schema));
         }
 
         [NotNull]

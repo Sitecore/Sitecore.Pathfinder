@@ -30,6 +30,9 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull]
         public string ShortHelp { get; set; } = string.Empty;
 
+        [CanBeNull]
+        public Item StandardValuesItem { get; set; }
+
         public void Merge([NotNull] IParseContext context, [NotNull] Template newTemplate)
         {
             Merge(context, newTemplate, true);

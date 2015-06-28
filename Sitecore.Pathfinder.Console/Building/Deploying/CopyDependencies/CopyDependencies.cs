@@ -17,10 +17,11 @@ namespace Sitecore.Pathfinder.Building.Deploying.CopyDependencies
         {
             context.Trace.TraceInformation(Texts.Copying_dependencies___);
 
-            var sourceDirectory = Path.Combine(context.Configuration.Get(Constants.Configuration.SolutionDirectory), ".packages");
+            var dependenciesDirectory = context.Configuration.Get(Constants.Configuration.DependenciesDirectory);
+            var sourceDirectory = Path.Combine(context.SolutionDirectory, dependenciesDirectory);
             if (!context.FileSystem.DirectoryExists(sourceDirectory))
             {
-                context.Trace.TraceInformation("'.packages' directory not found. Skipping");
+                context.Trace.TraceInformation(Texts.Dependencies_directory_not_found__Skipping, dependenciesDirectory);
                 return;
             }
 
@@ -31,7 +32,7 @@ namespace Sitecore.Pathfinder.Building.Deploying.CopyDependencies
 
             context.FileSystem.CreateDirectory(destinationDirectory);
 
-            foreach (var sourceFileName in context.FileSystem.GetFiles(sourceDirectory, "*nupkg", SearchOption.AllDirectories))
+            foreach (var sourceFileName in context.FileSystem.GetFiles(sourceDirectory, "*.nupkg", SearchOption.AllDirectories))
             {
                 var destinationFileName = Path.Combine(destinationDirectory, Path.GetFileName(sourceFileName) ?? string.Empty);
                 if (!context.FileSystem.FileExists(destinationFileName) || context.FileSystem.GetLastWriteTimeUtc(sourceFileName) > context.FileSystem.GetLastWriteTimeUtc(destinationFileName))

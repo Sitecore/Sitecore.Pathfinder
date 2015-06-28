@@ -1,0 +1,19 @@
+{
+  "Template": {
+    "Sections": [
+      {
+        "Name": "Fields",
+        "Fields": [
+          {
+            "Name": "Title",
+            "Type": "Single-Line Text"
+          },
+          {
+            "Name": "Text",
+            "Type": "Rich Text"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -16,7 +16,6 @@ namespace Sitecore.Pathfinder.Emitters.Items
 
         public override bool CanEmit(IEmitContext context, IProjectItem projectItem)
         {
-            // do not apply to inheriting classes
             return projectItem is Template;
         }
 

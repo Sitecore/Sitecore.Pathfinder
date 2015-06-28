@@ -109,11 +109,6 @@ namespace Sitecore.Pathfinder.Building.Testing.UnitTests.Pipelines
                         {
                             pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + templateField.Type + "\", fieldItem[TemplateFieldIDs.Type]);");
                         }
-
-                        if (!string.IsNullOrEmpty(templateField.StandardValue))
-                        {
-                            pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + templateField.StandardValue + "\", standardValuesItem[fieldItem.Name]);");
-                        }
                     }
                 }
 

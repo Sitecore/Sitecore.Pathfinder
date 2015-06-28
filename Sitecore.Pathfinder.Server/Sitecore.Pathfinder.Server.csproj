@@ -127,7 +127,7 @@
     <Content Include="sitecore\shell\client\Applications\Pathfinder\InstallPackage.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Builders\FieldResolvers\HtmlTemplateFieldResolver.cs" />
+    <Compile Include="Builders\FieldResolvers\LayoutHtmlFileFieldResolver.cs" />
     <Compile Include="Builders\FieldResolvers\LayoutFieldResolver.cs" />
     <Compile Include="Builders\FieldResolvers\Layouts\LayoutResolveContext.cs" />
     <Compile Include="Builders\FieldResolvers\Layouts\LayoutResolverBase.cs" />

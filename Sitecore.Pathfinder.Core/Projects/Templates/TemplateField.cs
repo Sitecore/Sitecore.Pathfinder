@@ -31,9 +31,6 @@ namespace Sitecore.Pathfinder.Projects.Templates
         public string Source { get; set; } = string.Empty;
 
         [NotNull]
-        public string StandardValue { get; set; } = string.Empty;
-
-        [NotNull]
         public Template Template { get; }
 
         [NotNull]
@@ -61,11 +58,6 @@ namespace Sitecore.Pathfinder.Projects.Templates
             if (newField.Unversioned)
             {
                 Unversioned = true;
-            }
-
-            if (!string.IsNullOrEmpty(newField.StandardValue))
-            {
-                StandardValue = newField.StandardValue;
             }
 
             if (!string.IsNullOrEmpty(newField.ShortHelp))

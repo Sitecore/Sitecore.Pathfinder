@@ -71,44 +71,6 @@ namespace Sitecore.Pathfinder.Builders.Templates
             return Item;
         }
 
-        public void CreateStandardValuesItem([Diagnostics.NotNull] IEmitContext context)
-        {
-            var item = Item;
-            if (item == null)
-            {
-                throw new EmitException(Texts.Template_missing);
-            }
-
-            var standardValuesItem = item.Add("__Standard Values", new TemplateID(item.TemplateID));
-            if (standardValuesItem == null)
-            {
-                throw new EmitException(Texts.Failed_to_add_new_template, Template.Snapshots.First());
-            }
-
-            // update standard value link
-            using (new EditContext(item))
-            {
-                item[FieldIDs.StandardValueHolderId] = standardValuesItem.ID.ToString();
-            }
-
-            // update field values
-            using (new EditContext(standardValuesItem))
-            {
-                foreach (var section in Sections)
-                {
-                    foreach (var field in section.Fields)
-                    {
-                        if (!string.IsNullOrEmpty(field.TemplaterField.StandardValue))
-                        {
-                            standardValuesItem[field.TemplaterField.FieldName.Value] = field.TemplaterField.StandardValue;
-                        }
-                    }
-                }
-            }
-
-            context.Project.Ducats += 100;
-        }
-
         protected virtual void CreateNewTemplate([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] IEnumerable<Sitecore.Data.Templates.TemplateField> inheritedFields)
         {
             var database = context.DataService.GetDatabase(Template.DatabaseName);
@@ -157,20 +119,6 @@ namespace Sitecore.Pathfinder.Builders.Templates
             {
                 UpdateSection(context, section, inheritedFields);
             }
-
-            // create standard values
-            var standardValuesItem = item.Add("__Standard Values", new TemplateID(item.TemplateID));
-            if (standardValuesItem == null)
-            {
-                throw new EmitException(Texts.Failed_to_add_new_template, Template.Snapshots.First());
-            }
-
-            using (new EditContext(item))
-            {
-                item[FieldIDs.StandardValues] = standardValuesItem.ID.ToString();
-            }
-
-            context.RegisterAddedItem(standardValuesItem);
         }
 
         protected virtual void DeleteFields([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] TemplateSectionBuilder templateSectionBuilder)
@@ -431,7 +379,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
 
         protected virtual void UpdateField([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] TemplateSectionBuilder templateSectionBuilder, [Diagnostics.NotNull] TemplateFieldBuilder templateFieldBuilder, [Diagnostics.NotNull] IEnumerable<Sitecore.Data.Templates.TemplateField> inheritedFields)
         {
-            if (inheritedFields.Any(f => string.Compare(f.Name, templateFieldBuilder.TemplaterField.FieldName.Value, StringComparison.OrdinalIgnoreCase) == 0))
+            if (inheritedFields.Any(f => string.Compare(f.Name, templateFieldBuilder.TemplateField.FieldName.Value, StringComparison.OrdinalIgnoreCase) == 0))
             {
                 return;
             }
@@ -441,10 +389,10 @@ namespace Sitecore.Pathfinder.Builders.Templates
             var isNew = item == null;
             if (isNew)
             {
-                item = ItemManager.AddFromTemplate(templateFieldBuilder.TemplaterField.FieldName.Value, new TemplateID(TemplateIDs.TemplateField), templateSectionBuilder.Item);
+                item = ItemManager.AddFromTemplate(templateFieldBuilder.TemplateField.FieldName.Value, new TemplateID(TemplateIDs.TemplateField), templateSectionBuilder.Item);
                 if (item == null)
                 {
-                    throw new EmitException(Texts.Could_not_create_template_field, templateFieldBuilder.TemplaterField.FieldName.Source ?? TextNode.Empty, templateFieldBuilder.TemplaterField.FieldName.Value);
+                    throw new EmitException(Texts.Could_not_create_template_field, templateFieldBuilder.TemplateField.FieldName.Source ?? TextNode.Empty, templateFieldBuilder.TemplateField.FieldName.Value);
                 }
 
                 templateFieldBuilder.Item = item;
@@ -461,35 +409,35 @@ namespace Sitecore.Pathfinder.Builders.Templates
 
             using (new EditContext(item))
             {
-                if (!string.IsNullOrEmpty(templateFieldBuilder.TemplaterField.FieldName.Value))
+                if (!string.IsNullOrEmpty(templateFieldBuilder.TemplateField.FieldName.Value))
                 {
-                    item.Name = templateFieldBuilder.TemplaterField.FieldName.Value;
+                    item.Name = templateFieldBuilder.TemplateField.FieldName.Value;
                 }
 
-                if (!string.IsNullOrEmpty(templateFieldBuilder.TemplaterField.Type))
+                if (!string.IsNullOrEmpty(templateFieldBuilder.TemplateField.Type))
                 {
-                    item["Type"] = templateFieldBuilder.TemplaterField.Type;
+                    item["Type"] = templateFieldBuilder.TemplateField.Type;
                 }
 
-                item["Shared"] = templateFieldBuilder.TemplaterField.Shared ? "1" : string.Empty;
-                item["Unversioned"] = templateFieldBuilder.TemplaterField.Unversioned ? "1" : string.Empty;
+                item["Shared"] = templateFieldBuilder.TemplateField.Shared ? "1" : string.Empty;
+                item["Unversioned"] = templateFieldBuilder.TemplateField.Unversioned ? "1" : string.Empty;
 
-                if (!string.IsNullOrEmpty(templateFieldBuilder.TemplaterField.Source))
+                if (!string.IsNullOrEmpty(templateFieldBuilder.TemplateField.Source))
                 {
-                    item["Source"] = templateFieldBuilder.TemplaterField.Source;
+                    item["Source"] = templateFieldBuilder.TemplateField.Source;
                 }
 
-                if (!string.IsNullOrEmpty(templateFieldBuilder.TemplaterField.ShortHelp))
+                if (!string.IsNullOrEmpty(templateFieldBuilder.TemplateField.ShortHelp))
                 {
-                    item.Help.ToolTip = templateFieldBuilder.TemplaterField.ShortHelp;
+                    item.Help.ToolTip = templateFieldBuilder.TemplateField.ShortHelp;
                 }
 
-                if (!string.IsNullOrEmpty(templateFieldBuilder.TemplaterField.LongHelp))
+                if (!string.IsNullOrEmpty(templateFieldBuilder.TemplateField.LongHelp))
                 {
-                    item.Help.Text = templateFieldBuilder.TemplaterField.LongHelp;
+                    item.Help.Text = templateFieldBuilder.TemplateField.LongHelp;
                 }
 
-                item.Appearance.Sortorder = templateFieldBuilder.TemplaterField.SortOrder;
+                item.Appearance.Sortorder = templateFieldBuilder.TemplateField.SortOrder;
             }
 
             if (isNew)
@@ -576,33 +524,15 @@ namespace Sitecore.Pathfinder.Builders.Templates
                 item.MoveTo(parentItem);
             }
 
-            // rename and update fields
+            // rename item and update fields
             using (new EditContext(item))
             {
-                if (item.Name != Template.ItemName.Value)
-                {
-                    item.Name = Template.ItemName.Value;
-                }
-
-                if (!string.IsNullOrEmpty(Template.BaseTemplates))
-                {
-                    item[FieldIDs.BaseTemplate] = Template.BaseTemplates;
-                }
-
-                if (!string.IsNullOrEmpty(Template.Icon.Value))
-                {
-                    item.Appearance.Icon = Template.Icon.Value;
-                }
-
-                if (!string.IsNullOrEmpty(Template.ShortHelp))
-                {
-                    item.Help.ToolTip = Template.ShortHelp;
-                }
-
-                if (!string.IsNullOrEmpty(Template.LongHelp))
-                {
-                    item.Help.Text = Template.LongHelp;
-                }
+                item.Name = Template.ItemName.Value;
+                item[FieldIDs.BaseTemplate] = Template.BaseTemplates;
+                item.Appearance.Icon = Template.Icon.Value;
+                item.Help.ToolTip = Template.ShortHelp;
+                item.Help.Text = Template.LongHelp;
+                item[FieldIDs.StandardFieldsID] = Template.StandardValuesItem?.Guid.ToString("B").ToUpperInvariant() ?? string.Empty;
             }
 
             foreach (var templateSectionBuilder in Sections)

@@ -5,6 +5,7 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Documents;
+using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
@@ -23,7 +24,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
         public override void Parse(ItemParseContext context, ITextNode textNode)
         {
-            var itemNameTextNode = textNode.GetAttributeTextNode("Item-Name");
+            var itemNameTextNode = textNode.GetAttributeTextNode("Name");
             var itemName = itemNameTextNode?.Value ?? context.ParseContext.ItemName;
             var itemIdOrPath = context.ParentItemPath + "/" + itemName;
             var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
@@ -37,6 +38,13 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
             template.References.AddRange(ParseReferences(context, template, textNode, template.BaseTemplates));
 
+            // create standard values item
+            var standardValuesItemIdOrPath = itemIdOrPath + "/__Standard Values";
+            var standardValuesItem = context.ParseContext.Factory.Item(context.ParseContext.Project, standardValuesItemIdOrPath, textNode, context.ParseContext.DatabaseName, "__Standard Values", standardValuesItemIdOrPath, itemIdOrPath);
+
+            template.StandardValuesItem = standardValuesItem;
+
+            // parse fields and sections
             var sectionsTextNode = context.Snapshot.GetJsonChildTextNode(textNode, "Sections");
             if (sectionsTextNode != null)
             {
@@ -46,7 +54,16 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
                 }
             }
 
+            // setup HtmlTemplate
+            var htmlTemplate = textNode.GetAttribute<string>("Layout.HtmlFile");
+            if (!string.IsNullOrEmpty(htmlTemplate.Value))
+            {
+                var field = context.ParseContext.Factory.Field(template.StandardValuesItem, "__Renderings", string.Empty, 0, "HtmlTemplate: " + htmlTemplate.Value);
+                template.StandardValuesItem.Fields.Add(field);
+            }
+
             context.ParseContext.Project.AddOrMerge(context.ParseContext, template);
+            context.ParseContext.Project.AddOrMerge(context.ParseContext, standardValuesItem);
         }
 
         protected virtual void ParseField([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] TemplateSection templateSection, [NotNull] ITextNode fieldTextNode, ref int nextSortOrder)
@@ -81,7 +98,21 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             templateField.ShortHelp = fieldTextNode.GetAttributeValue("ShortHelp");
             templateField.LongHelp = fieldTextNode.GetAttributeValue("LongHelp");
             templateField.SortOrder = sortOrder;
-            templateField.StandardValue = fieldTextNode.GetAttributeValue("StandardValue");
+
+            var standardValue = fieldTextNode.GetAttributeValue("StandardValue");
+            if (!string.IsNullOrEmpty(standardValue))
+            {
+                if (template.StandardValuesItem == null)
+                {
+                    context.ParseContext.Trace.TraceError(Texts.Template_does_not_a_standard_values_item, templateField.FieldName.Source ?? TextNode.Empty);
+                }
+                else
+                {
+                    // todo: support language and version
+                    var field = context.ParseContext.Factory.Field(template.StandardValuesItem, templateField.FieldName.Value, string.Empty, 0, standardValue);
+                    template.StandardValuesItem.Fields.Add(field);
+                }
+            }
 
             template.References.AddRange(ParseReferences(context, template, fieldTextNode, templateField.Source));
         }

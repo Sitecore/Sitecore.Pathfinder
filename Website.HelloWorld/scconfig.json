@@ -1,0 +1,24 @@
+{
+  // every project must have a unique id, since the project-unique-id is used to
+  // calculate item ids.
+  "project-unique-id": "Oledemo",
+
+  // wwwroot points to the base directory of the website
+  // The wwwroot directory must contain a 'Data' and a 'Website' folder
+  "wwwroot": "e:\\inetpub\\wwwroot\\Pathfinder",
+  "host-name": "http://Pathfinder",
+
+  // Sitecore database name (master, core, or web)
+  "database": "master",
+
+  "user-name": "sitecore\\admin",
+  "password": "b",
+
+  // build pipeline
+  "pipeline": "check-project pack-nuget copy-dependencies copy-package install-package publish-database",
+
+  "external-references": {
+    "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}": "/sitecore/templates/Sample/Sample Item",
+    "{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}": "/sitecore/templates/System/Layout/Renderings/View rendering"
+  }
+}

@@ -296,6 +296,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dependencies directory not found. Skipping.
+        /// </summary>
+        public static string Dependencies_directory_not_found__Skipping {
+            get {
+                return ResourceManager.GetString("Dependencies_directory_not_found__Skipping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Device element is missing &quot;Name&quot; attribute..
         /// </summary>
         public static string Device_element_is_missing__Name__attribute_ {
@@ -458,7 +467,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hey - you haven&apos;t changed the the &apos;project-unique-id&apos;, &apos;wwwroot&apos; or &apos;hostname&apos; in the &apos;{0}&apos; configuration file..
+        ///   Looks up a localized string similar to Hey - you haven&apos;t changed the the &apos;project-unique-id&apos;, &apos;wwwroot&apos; or &apos;hostname&apos; in the configuration file..
         /// </summary>
         public static string Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in_the___0___configuration_file_ {
             get {
@@ -709,6 +718,15 @@ namespace Sitecore.Pathfinder {
         public static string Task_not_found__Skipping {
             get {
                 return ResourceManager.GetString("Task_not_found__Skipping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template does not a standard values item.
+        /// </summary>
+        public static string Template_does_not_a_standard_values_item {
+            get {
+                return ResourceManager.GetString("Template_does_not_a_standard_values_item", resourceCulture);
             }
         }
         
