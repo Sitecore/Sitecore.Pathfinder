@@ -32,6 +32,9 @@ namespace Sitecore.Pathfinder.Projects
 
         public IProject Project { get; }
 
+        // item format: /sitecore/content/Home/Welcome
+        // guid format: {25FCB32E-4D31-40C9-A409-4D936345F0DB}
+        // file format: /sitecore/content/Home/Welcome.jpg (includes extensions)
         public string ProjectUniqueId { get; private set; }
 
         public abstract string QualifiedName { get; }

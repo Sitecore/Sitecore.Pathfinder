@@ -32,7 +32,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Website.Demo\.sitecore.tools\</OutputPath>
+    <OutputPath>..\Website.Demo\sitecore.tools\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -213,7 +213,7 @@
       <Link>files\website\sitecore\shell\client\Applications\Pathfinder\SitecoreRocksValidation.ashx</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="files\project\.filetemplates\gruntfile.js">
+    <None Include="files\project\sitecore.filetemplates\gruntfile.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="files\website\sitecore\shell\client\Applications\Pathfinder\packageDefaultIcon-50x50.png">
@@ -241,19 +241,19 @@
     <Content Include="files\codegen\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="files\project\.filetemplates\Item.master.content.xml">
+    <Content Include="files\project\sitecore.filetemplates\Item.master.content.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="files\project\.filetemplates\Item.item.xml">
+    <Content Include="files\project\sitecore.filetemplates\Item.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="files\project\.filetemplates\Layout.master.layout.json">
+    <None Include="files\project\sitecore.filetemplates\Layout.master.layout.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\project\.filetemplates\gulpfile.js">
+    <None Include="files\project\sitecore.filetemplates\gulpfile.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="files\project\.filetemplates\Template.item.xml">
+    <Content Include="files\project\sitecore.filetemplates\Template.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="files\project\.settings\tasks.json">
@@ -274,53 +274,53 @@
     <Content Include="files\project\templates\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="files\project\.filetemplates\htmltemplate.html">
+    <Content Include="files\project\sitecore.filetemplates\htmltemplate.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="files\project\.packages\SitecorePathfinderCore.nupkg">
+    <None Include="files\project\sitecore.project\dependencies\SitecorePathfinderCore.nupkg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="files\project\.schemas\core.layout.schema.json">
+    <Content Include="files\project\sitecore.project\schemas\core.layout.schema.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="files\project\.schemas\core.layout.xsd">
+    <Content Include="files\project\sitecore.project\schemas\core.layout.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="files\project\.schemas\master.content.xsd">
+    <Content Include="files\project\sitecore.project\schemas\master.content.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="files\project\.schemas\master.layout.schema.json">
+    <Content Include="files\project\sitecore.project\schemas\master.layout.schema.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="files\project\.schemas\master.layout.xsd">
+    <Content Include="files\project\sitecore.project\schemas\master.layout.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="files\project\.settings\settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="files\project\.filetemplates\Item.item.json">
+    <None Include="files\project\sitecore.filetemplates\Item.item.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\project\.filetemplates\Rendering.cshtml">
+    <None Include="files\project\sitecore.filetemplates\Rendering.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\project\.filetemplates\Template.item.json">
+    <None Include="files\project\sitecore.filetemplates\Template.item.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="files\project\.schemas\item.schema.json">
+    <Content Include="files\project\sitecore.project\schemas\item.schema.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="files\project\.schemas\item.xsd">
+    <Content Include="files\project\sitecore.project\schemas\item.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="files\project\scc.cmd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="files\project\sitecore.nuspec">
+    <Content Include="files\project\sitecore.project\sitecore.nuspec">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="..\Sitecore.Pathfinder.Server\bin\Sitecore.Pathfinder.Core.dll">

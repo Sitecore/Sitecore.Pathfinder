@@ -15,7 +15,7 @@ using Sitecore.Pathfinder.Projects.Templates;
 namespace Sitecore.Pathfinder.Projects
 {
     [TestFixture]
-    public class ProjectTests : Tests
+    public partial class ProjectTests : Tests
     {
         [NotNull]
         public IProject Project { get; set; }
@@ -113,40 +113,6 @@ namespace Sitecore.Pathfinder.Projects
             var field = item.Fields.FirstOrDefault(f => f.FieldName.Value == "Title");
             Assert.IsNotNull(field);
             Assert.AreEqual("Hello", field.Value.Value);
-        }
-
-        [Test]
-        public void JsonTemplateTest()
-        {
-            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/FooTemplate");
-            Assert.IsNotNull(projectItem);
-            Assert.AreEqual("FooTemplate", projectItem.ShortName);
-            Assert.AreEqual("/sitecore/content/Home/FooTemplate", projectItem.QualifiedName);
-
-            var template = projectItem as Template;
-            Assert.IsNotNull(template);
-            Assert.AreEqual("FooTemplate", template.ItemName.Value);
-            Assert.AreEqual("Applications/16x16/About.png", template.Icon.Value);
-            Assert.AreEqual("ShortHelp", template.ShortHelp);
-            Assert.AreEqual("LongHelp", template.LongHelp);
-            Assert.AreEqual("/sitecore/content/Home/FooTemplate", template.ItemIdOrPath);
-            Assert.AreEqual(1, template.Sections.Count);
-            Assert.IsNotNull(template.ItemName.Source);
-            Assert.IsInstanceOf<FileNameTextNode>(template.ItemName.Source);
-
-            var section = template.Sections[0];
-            Assert.AreEqual("Fields", section.SectionName.Value);
-            Assert.AreEqual("Applications/16x16/About.png", section.Icon);
-            Assert.AreEqual(2, section.Fields.Count);
-
-            var field = section.Fields[0];
-            Assert.AreEqual("Title", field.FieldName.Value);
-            Assert.AreEqual("Single-Line Text", field.Type);
-            Assert.AreEqual("ShortHelp", field.ShortHelp);
-            Assert.AreEqual("LongHelp", field.LongHelp);
-            Assert.AreEqual("StandardValue", field.StandardValue);
-
-            Assert.AreEqual("Rich Text", section.Fields[1].Type);
         }
 
         [Test]

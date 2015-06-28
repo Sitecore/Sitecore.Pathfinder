@@ -33,7 +33,7 @@ namespace Sitecore.Pathfinder.Synchronizing
         protected virtual void Generate([Diagnostics.NotNull] ZipWriter zip, [Diagnostics.NotNull] string databaseName)
         {
             var schema = Generate(databaseName);
-            zip.AddEntry(".schemas\\" + databaseName + ".content.schema.json", Encoding.UTF8.GetBytes(schema));
+            zip.AddEntry("sitecore.project\\schemas\\" + databaseName + ".content.schema.json", Encoding.UTF8.GetBytes(schema));
         }
 
         [NotNull]

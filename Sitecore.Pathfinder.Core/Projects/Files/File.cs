@@ -42,6 +42,7 @@ namespace Sitecore.Pathfinder.Projects.Files
         [NotNull]
         private static string GetProjectUniqueId([NotNull] IProject project, [NotNull] ISnapshot snapshot)
         {
+            // include file extensions in project unique ID for file, so they don't clash with items
             return PathHelper.NormalizeItemPath(PathHelper.UnmapPath(project.Options.ProjectDirectory, snapshot.SourceFile.FileName));
         }
     }

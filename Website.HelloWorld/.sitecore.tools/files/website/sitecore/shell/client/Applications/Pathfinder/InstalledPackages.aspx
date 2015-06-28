@@ -1,0 +1,160 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true"  %>
+<%@ Import Namespace="Sitecore.Pathfinder.Packages" %>
+<!DOCTYPE html>      
+<%
+    var packageService = new PackageService();
+    var packages = packageService.CheckForInstalledUpdates(packageService.GetInstalledPackages()).ToList();
+%>
+<html class="fuelux">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>Sitecore Pathfinder</title>
+
+  <link href="/sitecore/shell/client/Speak/Assets/css/speak-default-theme.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="sc sc-fullWidth">
+  <div class="sc-list">
+    <div class="container-narrow">
+      <header class="sc-globalHeader">                       
+        <div class="row sc-globalHeader-content">
+          <div class="col-md-6">
+            <div class="sc-globalHeader-startButton">
+              <a class="sc-global-logo medium" href="/sitecore/shell/sitecore/client/Applications/Launchpad"></a>
+            </div>
+            <div class="sc-globalHeader-navigationToggler">
+              <div class="sc-navigationPanelToggleButton">
+                <button class="btn sc-togglebutton btn-default noText" type="button">
+                  <div class="sc-icon" style="background-image: url(/sitecore/shell/client/Speak/Assets/img/Speak/NavigationPanelToggleButton/navigationPanelToggleIcon.png); background-position: 50% 50%;">
+                  </div>
+                  <span class="sc-togglebutton-text"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="sc-globalHeader-loginInfo">
+              <ul class="sc-accountInformation">
+                <li>
+                  <a class="logout" href="/api/sitecore/Authentication/Logout?sc_database=master">Logout</a>
+                </li>
+                <li>               
+                  <%= Sitecore.Context.User.Profile.FullName %>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </header>             
+
+      <section class="sc-applicationContent">
+        <div class="sc-navigation-wrapper">
+          <nav class="sc-applicationContent-navigation sc-navigation-menu">
+             
+            <div class="sc-menu">
+              <div class="menuroot">
+                <div class="header menuItem open">
+                  <a href="#">
+                    <img class="menuicon" src="/~/icon/OfficeWhite/24x24/checkbox_selected.png" alt="Navigation"><span class="toplevel">Pathfinder</span>
+                  </a>
+                  <img class="menuchevron">
+                </div>
+                <div class="toplevelcontainer itemsContainer" style="display: block;">
+                  <div>
+                    <div class="itemRow menuItem depth2">
+                      <div class="leftcolumn">&nbsp;</div>
+                      <div class="rightcolumn">
+                        <a href="/sitecore/shell/client/Applications/Pathfinder/AvailablePackages.aspx" class="sc-hyperlinkbutton">Available Packages</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>            
+
+          </nav>
+        </div>
+      </section>
+    </div>
+  </div>
+  <div class="sc-navigation-content">
+    <header class="sc-applicationHeader">
+      <div class="sc-applicationHeader-row1">
+        <div class="sc-applicationHeader-content">
+          <div class="sc-applicationHeader-title">
+            <span class="sc-text">Installed Packages</span>
+          </div>
+        </div>
+
+        <div class="sc-applicationHeader-content breadcrumb">
+          <div class="sc-applicationHeader-breadCrumb">
+            <div class="sc-breadcrumb">
+              <ul>
+                <li>
+                  <a href="/sitecore/shell/client/Applications/Pathfinder/AvailablePackages.aspx">Pathfinder</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="sc-applicationContent-main">
+      <div class="sc-border">  
+        <table class="table">
+          <tr>
+            <th>Package</th>
+            <th>Version</th>
+            <th>Action</th>
+          </tr>
+
+          <% if (!packages.Any())
+             { %>
+            <tr>
+              <td colspan="3">
+                <i>There is nothing to show.</i>
+              </td>
+            </tr>
+          <% }
+             else
+             { %>
+          
+          <% foreach (var package in packages.OrderBy(p => p.Name).ThenByDescending(p => p.Version))
+             {
+                 var packageName = package.Name;
+                 var version = package.Version;
+                 var updateHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx?u=" + HttpUtility.UrlEncode(package.PackageId);
+                 var uninstallHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx?r=" + HttpUtility.UrlEncode(package.PackageId);
+          %>
+            <tr>
+              <td>
+                <% = packageName %>
+              </td>
+              <td>
+                <% = version %>
+                <% if (package.HasUpdate)
+                   { %>
+                  <span class="text-muted"> - Version <% = package.UpdateVersion %> is available</span>
+                <% } %>
+              </td>
+              <td>                       
+                <% if (!package.HasUpdate)
+                   { %> 
+                <a href="<% = uninstallHref %>">Uninstall</a>
+                <% }
+                   else
+                   { %>
+                <a href="<% = updateHref %>">Update</a>
+                <% } %>
+              </td>
+            </tr>
+          <% } %>
+
+          <% } %>
+        </table>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

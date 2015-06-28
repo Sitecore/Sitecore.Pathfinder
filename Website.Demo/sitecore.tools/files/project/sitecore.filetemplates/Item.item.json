@@ -1,0 +1,15 @@
+{
+  "Item": {
+    "Template": "/sitecore/templates/Sample/Sample Item",
+    "Fields": [
+      {
+        "Name": "Title",
+        "Value": "Welcome"
+      },
+      {
+        "Name": "Text",
+        "Value": "Welcome to Sitecore"
+      }
+    ]
+  }
+}

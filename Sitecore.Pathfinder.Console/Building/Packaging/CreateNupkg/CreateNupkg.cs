@@ -59,7 +59,7 @@ namespace Sitecore.Pathfinder.Building.Packaging.CreateNupkg
             {
                 using (var nuspec = new FileStream(nuspecFileName, FileMode.Open, FileAccess.Read))
                 {
-                    var packageBuilder = new PackageBuilder(nuspec, Path.GetDirectoryName(nupkgFileName));
+                    var packageBuilder = new PackageBuilder(nuspec, context.SolutionDirectory);
 
                     using (var nupkg = new FileStream(nupkgFileName, FileMode.Create))
                     {

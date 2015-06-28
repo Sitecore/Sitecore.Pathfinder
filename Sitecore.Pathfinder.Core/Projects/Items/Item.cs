@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         public IList<Field> Fields { get; } = new List<Field>();
 
         [CanBeNull]
-        public Attribute<string> HtmlTemplate { get; set; }
+        public Attribute<string> LayoutHtmlFile { get; set; }
 
         public MergingMatch MergingMatch { get; set; }
 

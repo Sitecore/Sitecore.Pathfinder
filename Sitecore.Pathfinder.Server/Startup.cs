@@ -52,7 +52,7 @@ namespace Sitecore.Pathfinder
             var configuration = new Microsoft.Framework.ConfigurationModel.Configuration();
             configuration.Add(new MemoryConfigurationSource());
 
-            configuration.Set(Constants.Configuration.ToolsDirectory, Path.Combine(solutionDirectory, "content\\.sitecore.tools"));
+            configuration.Set(Constants.Configuration.ToolsDirectory, Path.Combine(solutionDirectory, "content\\sitecore.tools"));
             configuration.Set(Constants.Configuration.SystemConfigFileName, "scconfig.json");
 
             return configuration;

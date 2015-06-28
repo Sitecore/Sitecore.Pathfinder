@@ -25,13 +25,13 @@ The developer process is familiar; edit source files, build and install the pack
 Pathfinder makes it easy to start working with Sitecore.
 
 1. Install a clean Sitecore (e.g. using [SIM (Sitecore Instance Manager](https://marketplace.sitecore.net/modules/sitecore_instance_manager.aspx))
-2. Create an empty folder and xcopy the Pathfinder files to the .sitecore.tools subfolder
-3. Execute the scc.exe in the .sitecore.tools folder
+2. Create an empty folder and xcopy the Pathfinder files to the sitecore.tools subfolder
+3. Execute the scc.exe in the sitecore.tools folder
 4. Edit the scconfig.json file to setup 'project-unique-id', 'wwwroot' and 'host-name'
 5. Done - you are now ready
 
 In step 3 Pathfinder creates a blank project for you. It consists of a number of directories and files, 
-including an scc.cmd file which is a shortcut to the .sitecore.tools\scc.exe file.
+including an scc.cmd file which is a shortcut to the sitecore.tools\scc.exe file.
 
 ## How does Pathfinder make Sitecore easier
 * Familiar developer experience: Edit source files, build project, test website, repeat.
@@ -294,11 +294,12 @@ rendering engine.
 When using Html Template, you do not have to specify a layout definition or use MVC views. Html Templates are not as 
 powerful as the full Sitecore Rendering Engine, placeholders or using MVC views.
 
-On an item, you specify the file name of the Html Template, you want to use, in the HtmlTemplate property.
+On an item, you specify the file name of the Html Template, you want to use, in the "Layout.HtmlFile" property (please notice 
+that this property has been renamed from the video where it was called "HtmlTemplate").
 ```js
 {
   "Item": {
-    "HtmlTemplate": "/layout/renderings/HtmlTemplate.html",
+    "Layout.HtmlFile": "/layout/renderings/HtmlTemplate.html",
   }
 }
 ```
@@ -337,7 +338,7 @@ In the system scconfig.json, you can map a code generator (a Razor view) to a C#
 
 ```js
 "codegen": {
-    ".sitecore.tools\\files\\codegen\\Template.cshtml": "Sitecore.Pathfinder.Projects.Templates.Template, Sitecore.Pathfinder.Core"
+    "sitecore.tools\\files\\codegen\\Template.cshtml": "Sitecore.Pathfinder.Projects.Templates.Template, Sitecore.Pathfinder.Core"
 }
 ```
 

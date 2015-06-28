@@ -8,22 +8,22 @@ namespace Sitecore.Pathfinder.Builders.Templates
 {
     public class TemplateFieldBuilder
     {
-        public TemplateFieldBuilder([NotNull] TemplateField templaterField)
+        public TemplateFieldBuilder([NotNull] TemplateField templateField)
         {
-            TemplaterField = templaterField;
+            TemplateField = templateField;
         }
 
         [CanBeNull]
         public Item Item { get; set; }
 
         [NotNull]
-        public TemplateField TemplaterField { get; }
+        public TemplateField TemplateField { get; }
 
         public void ResolveItem([NotNull] IEmitContext context, [CanBeNull] Item sectionItem)
         {
             if (Item == null && sectionItem != null)
             {
-                Item = sectionItem.Children[TemplaterField.FieldName.Value];
+                Item = sectionItem.Children[TemplateField.FieldName.Value];
             }
         }
     }

@@ -71,6 +71,7 @@ namespace Sitecore.Pathfinder
             public const string RemapFileDirectories = "remap-file-directories";
 
             public const string SolutionDirectory = "solutiondirectory";
+            public const string DependenciesDirectory = "dependencies-directory";
 
             public const string SystemConfigFileName = "system:config";
 

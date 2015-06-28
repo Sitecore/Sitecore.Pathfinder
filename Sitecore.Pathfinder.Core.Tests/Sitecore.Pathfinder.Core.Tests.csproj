@@ -83,6 +83,8 @@
     <Compile Include="Documents\Json\JsonDocumentTests.cs" />
     <Compile Include="IO\PathHelperTests.cs" />
     <Compile Include="IO\PathMatcherTests.cs" />
+    <Compile Include="Projects\Templates\ProjectTests.JsonTemplates.cs" />
+    <Compile Include="Projects\Templates\ProjectTests.XmlTemplates.cs" />
     <Compile Include="Projects\ProjectTests.cs" />
     <Compile Include="Documents\SourceFileTests.cs" />
     <Compile Include="Documents\Xml\XmlDocumentTests.cs" />
@@ -90,62 +92,42 @@
     <Compile Include="Tests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Sitecore.Pathfinder.Console\files\project\.schemas\core.layout.schema.json">
-      <Link>Website\.sitecore.tools\schemas\core.layout.schema.json</Link>
+    <Content Include="..\Sitecore.Pathfinder.Console\files\project\sitecore.project\schemas\core.layout.schema.json">
+      <Link>Website\sitecore.tools\schemas\core.layout.schema.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\Sitecore.Pathfinder.Console\files\project\.schemas\core.layout.xsd">
-      <Link>Website\.sitecore.tools\schemas\core.layout.xsd</Link>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Console\files\project\sitecore.project\schemas\core.layout.xsd">
+      <Link>Website\sitecore.tools\schemas\core.layout.xsd</Link>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\Sitecore.Pathfinder.Console\files\project\.schemas\item.schema.json">
-      <Link>Website\.sitecore.tools\schemas\item.schema.json</Link>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Console\files\project\sitecore.project\schemas\item.schema.json">
+      <Link>Website\sitecore.tools\schemas\item.schema.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\Sitecore.Pathfinder.Console\files\project\.schemas\item.xsd">
-      <Link>Website\.sitecore.tools\schemas\item.xsd</Link>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Console\files\project\sitecore.project\schemas\item.xsd">
+      <Link>Website\sitecore.tools\schemas\item.xsd</Link>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\Sitecore.Pathfinder.Console\files\project\.schemas\master.layout.schema.json">
-      <Link>Website\.sitecore.tools\schemas\master.layout.schema.json</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\Sitecore.Pathfinder.Console\files\project\.schemas\master.layout.xsd">
-      <Link>Website\.sitecore.tools\schemas\master.layout.xsd</Link>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Console\files\project\sitecore.project\schemas\master.content.xsd">
+      <Link>Website\sitecore.tools\schemas\master.content.xsd</Link>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\Sitecore.Pathfinder.Console\scconfig.json">
-      <Link>Website\.sitecore.tools\scconfig.json</Link>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Console\files\project\sitecore.project\schemas\master.layout.schema.json">
+      <Link>Website\sitecore.tools\schemas\master.layout.schema.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Console\files\project\sitecore.project\schemas\master.layout.xsd">
+      <Link>Website\sitecore.tools\schemas\master.layout.xsd</Link>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Website\templates\XmlTemplate.item.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
-    <None Include="Website\.schemas\item.schema.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Website\.schemas\item.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Website\.schemas\master.content.schema.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Website\.schemas\master.content.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Website\.schemas\master.layout.schema.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Website\.schemas\master.layout.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Website\.schemas\sitecore.config.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Website\content\Home\JsonContentItem.master.content.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -153,9 +135,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Website\content\Home\Foo.item.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Website\content\Home\FooTemplate.item.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Website\layout\layouts\MvcLayout.cshtml">
@@ -166,6 +145,12 @@
     </None>
     <None Include="Website\layout\web.config" />
     <None Include="Website\scconfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Website\sitecore.tools\scconfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Website\templates\JsonTemplate.item.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -221,7 +206,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Website_2content_2Home_2JsonContentItem_1master_1content_1json__JSONSchema="..\..\.schemas\master.content.schema.json" Website_2content_2Home_2Foo_1item_1json__JSONSchema="item.schema.json" />
+      <UserProperties Website_2content_2Home_2Foo_1item_1json__JSONSchema="item.schema.json" Website_2content_2Home_2JsonContentItem_1master_1content_1json__JSONSchema="..\..\.schemas\master.content.schema.json" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
