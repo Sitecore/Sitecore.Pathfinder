@@ -54,7 +54,7 @@ namespace Sitecore.Pathfinder.Parsing.Files
 
             context.Project.AddOrMerge(context, item);
 
-            var serializationFile = context.Factory.SerializationFile(context.Project, context.Snapshot);
+            var serializationFile = context.Factory.SerializationFile(context.Project, context.Snapshot, context.FilePath);
             context.Project.AddOrMerge(context, serializationFile);
         }
 

@@ -11,15 +11,15 @@ namespace Sitecore.Pathfinder.Projects.Files
 {
     public class File : ProjectItem
     {
-        private string _filePath;
-
         private string _shortName;
 
-        public File([NotNull] IProject project, [NotNull] ISnapshot snapshot) : base(project, GetProjectUniqueId(project, snapshot), snapshot)
+        public File([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath) : base(project, GetProjectUniqueId(project, snapshot), snapshot)
         {
+            FilePath = filePath;
         }
 
-        public string FilePath => _filePath ?? (_filePath = PathHelper.GetFilePath(Project, Snapshots.First().SourceFile));
+        [NotNull]
+        public string FilePath { get; }
 
         public override string QualifiedName => Snapshots.First().SourceFile.FileName;
 

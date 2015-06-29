@@ -7,7 +7,7 @@ namespace Sitecore.Pathfinder.Projects.Files
 {
     public class BinFile : File
     {
-        public BinFile([NotNull] IProject project, [NotNull] ISnapshot snapshot) : base(project, snapshot)
+        public BinFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath) : base(project, snapshot, filePath)
         {
         }
     }

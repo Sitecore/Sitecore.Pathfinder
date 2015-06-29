@@ -9,7 +9,7 @@ namespace Sitecore.Pathfinder.Projects.Layouts
 {
     public class Rendering : ContentFile
     {
-        public Rendering([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] Item item) : base(project, snapshot)
+        public Rendering([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath, [NotNull] Item item) : base(project, snapshot, filePath)
         {
             Item = item;
         }

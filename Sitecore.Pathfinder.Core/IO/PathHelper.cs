@@ -131,18 +131,16 @@ namespace Sitecore.Pathfinder.IO
         }
 
         [NotNull]
-        public static string GetFilePath([NotNull] IProject project, [NotNull] ISourceFile sourceFile)
+        public static string GetFilePath([NotNull] IProject project, [NotNull] ISourceFile sourceFile, [NotNull] string localFileDirectory, [NotNull] string serverFileDirectory)
         {
             var filePath = "/" + NormalizeItemPath(UnmapPath(project.Options.ProjectDirectory, sourceFile.FileName)).TrimStart('/');
 
-            foreach (var pair in project.Options.RemapFileDirectories)
-            {
-                var n = filePath.IndexOf(pair.Key, StringComparison.OrdinalIgnoreCase);
+            localFileDirectory = "/" + NormalizeItemPath(localFileDirectory).Trim('/');
+            serverFileDirectory = "/" + NormalizeItemPath(serverFileDirectory).Trim('/');
 
-                if (n >= 0)
-                {
-                    filePath = filePath.Left(n) + pair.Value + filePath.Mid(n + pair.Key.Length);
-                }
+            if (filePath.StartsWith(localFileDirectory, StringComparison.OrdinalIgnoreCase))
+            {
+                filePath = serverFileDirectory.TrimEnd('/') + "/" + filePath.Mid(localFileDirectory.Length);
             }
 
             return filePath;
@@ -175,20 +173,25 @@ namespace Sitecore.Pathfinder.IO
         }
 
         [NotNull]
-        public static string GetItemPath([NotNull] IProject project, FileContext fileContext, [NotNull] ISourceFile sourceFile)
+        public static string GetItemPath([NotNull] IProject project, [NotNull] ISourceFile sourceFile, [NotNull] string localFileDirectory, [NotNull] string itemPath)
         {
-            var itemPath = UnmapPath(project.Options.ProjectDirectory, sourceFile.FileName);
+            var result = "/" + NormalizeItemPath(UnmapPath(project.Options.ProjectDirectory, sourceFile.FileName)).TrimStart('/');
 
-            itemPath = GetDirectoryAndFileNameWithoutExtensions(itemPath);
+            result = NormalizeItemPath(GetDirectoryAndFileNameWithoutExtensions(result));
 
-            itemPath = fileContext.ItemPath.TrimEnd('/') + "/" + NormalizeItemPath(itemPath);
+            localFileDirectory = "/" + NormalizeItemPath(localFileDirectory).Trim('/');
 
-            if (!itemPath.StartsWith("/sitecore/", StringComparison.OrdinalIgnoreCase))
+            if (result.StartsWith(localFileDirectory, StringComparison.OrdinalIgnoreCase))
             {
-                itemPath = "/sitecore" + itemPath;
+                result = itemPath.TrimEnd('/') + "/" + result.Mid(localFileDirectory.Length);
             }
 
-            return itemPath;
+            if (!result.StartsWith("/sitecore/", StringComparison.OrdinalIgnoreCase))
+            {
+                result = "/sitecore" + result;
+            }
+
+            return result;
         }
 
         public static bool IsQualifiedName([NotNull] string name)

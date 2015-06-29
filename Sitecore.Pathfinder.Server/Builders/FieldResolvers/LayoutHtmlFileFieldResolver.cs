@@ -39,7 +39,7 @@ namespace Sitecore.Pathfinder.Builders.FieldResolvers
             var rendering = context.Project.Items.OfType<Rendering>().FirstOrDefault(i => string.Compare(i.FilePath, value, StringComparison.OrdinalIgnoreCase) == 0);
             if (rendering == null)
             {
-                context.Trace.TraceError("HtmlTemplate rendering not found", value);
+                context.Trace.TraceError("Rendering not found", value);
                 return string.Empty;
             }
 

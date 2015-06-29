@@ -49,24 +49,6 @@ namespace Sitecore.Pathfinder.IO
         }
 
         [Test]
-        public void GetFilePathTests()
-        {
-            Start();
-
-            var projectOptions = new ProjectOptions(ProjectDirectory, "master");
-            projectOptions.RemapFileDirectories["/sitecore/client"] = "/sitecore/shell/client";
-
-            var project = Resolve<IProject>().Load(projectOptions, Enumerable.Empty<string>());
-
-            Assert.AreEqual("/sitecore/apps/test.txt", PathHelper.GetFilePath(project, new SourceFile(Services.FileSystem, ProjectDirectory + "\\sitecore\\apps\\test.txt")));
-            Assert.AreEqual("/sitecore/apps/test.txt", PathHelper.GetFilePath(project, new SourceFile(Services.FileSystem, ProjectDirectory + "/sitecore/apps/test.txt")));
-            Assert.AreEqual("/sitecore/shell/client/test.txt", PathHelper.GetFilePath(project, new SourceFile(Services.FileSystem, ProjectDirectory + "\\sitecore\\client\\test.txt")));
-            Assert.AreEqual("/sitecore/shell/client/test.txt", PathHelper.GetFilePath(project, new SourceFile(Services.FileSystem, ProjectDirectory + "/sitecore/client/test.txt")));
-            Assert.AreEqual("/test.txt", PathHelper.GetFilePath(project, new SourceFile(Services.FileSystem, ProjectDirectory + "/test.txt")));
-            Assert.AreEqual("/test", PathHelper.GetFilePath(project, new SourceFile(Services.FileSystem, ProjectDirectory + "/test")));
-        }
-
-        [Test]
         public void GetItemNameTests()
         {
             Start();
@@ -94,12 +76,12 @@ namespace Sitecore.Pathfinder.IO
         {
             Start();
 
-            Assert.AreEqual("/sitecore/client/test", PathHelper.GetItemPath(Project.Empty, FileContext.Empty, new SourceFile(Services.FileSystem, "\\sitecore\\client\\test.txt")));
-            Assert.AreEqual("/sitecore/client/test", PathHelper.GetItemPath(Project.Empty, FileContext.Empty, new SourceFile(Services.FileSystem, "/sitecore/client/test.txt")));
-            Assert.AreEqual("/sitecore/client/test", PathHelper.GetItemPath(Project.Empty, FileContext.Empty, new SourceFile(Services.FileSystem, "/sitecore/client/test")));
-            Assert.AreEqual("/sitecore/test", PathHelper.GetItemPath(Project.Empty, FileContext.Empty, new SourceFile(Services.FileSystem, "test.txt")));
-            Assert.AreEqual("/sitecore/test", PathHelper.GetItemPath(Project.Empty, FileContext.Empty, new SourceFile(Services.FileSystem, "test")));
-            Assert.Throws<ArgumentException>(() => PathHelper.GetItemPath(Project.Empty, FileContext.Empty, new SourceFile(Services.FileSystem, string.Empty)));
+            Assert.AreEqual("/sitecore/client/test", PathHelper.GetItemPath(Project.Empty, new SourceFile(Services.FileSystem, "\\sitecore\\client\\test.txt"), string.Empty, string.Empty));
+            Assert.AreEqual("/sitecore/client/test", PathHelper.GetItemPath(Project.Empty, new SourceFile(Services.FileSystem, "/sitecore/client/test.txt"), string.Empty, string.Empty));
+            Assert.AreEqual("/sitecore/client/test", PathHelper.GetItemPath(Project.Empty, new SourceFile(Services.FileSystem, "/sitecore/client/test"), string.Empty, string.Empty));
+            Assert.AreEqual("/sitecore/test", PathHelper.GetItemPath(Project.Empty, new SourceFile(Services.FileSystem, "test.txt"), string.Empty, string.Empty));
+            Assert.AreEqual("/sitecore/test", PathHelper.GetItemPath(Project.Empty, new SourceFile(Services.FileSystem, "test"), string.Empty, string.Empty));
+            Assert.Throws<ArgumentException>(() => PathHelper.GetItemPath(Project.Empty, new SourceFile(Services.FileSystem, string.Empty), string.Empty, string.Empty));
         }
 
         [Test]

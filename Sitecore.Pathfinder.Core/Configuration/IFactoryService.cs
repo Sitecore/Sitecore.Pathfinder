@@ -18,10 +18,10 @@ namespace Sitecore.Pathfinder.Configuration
     public interface IFactoryService
     {
         [NotNull]
-        BinFile BinFile([NotNull] IProject project, [NotNull] ISnapshot snapshot);
+        BinFile BinFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath);
 
         [NotNull]
-        IProjectItem ContentFile([NotNull] IProject project, [NotNull] ISnapshot snapshot);
+        IProjectItem ContentFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath);
 
         [NotNull]
         DeviceReference DeviceReference([NotNull] IProjectItem projectItem, [NotNull] Attribute<string> deviceNameAttribute, [NotNull] string targetQualifiedName);
@@ -51,7 +51,7 @@ namespace Sitecore.Pathfinder.Configuration
         LayoutRenderingReference LayoutRenderingReference([NotNull] IProjectItem projectItem, [NotNull] Attribute<string> renderingTextNode, [NotNull] string targetQualifiedName);
 
         [NotNull]
-        MediaFile MediaFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] Item mediaItem);
+        MediaFile MediaFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath, [NotNull] Item mediaItem);
 
         [NotNull]
         IProject Project([NotNull] ProjectOptions projectOptions, [NotNull] List<string> sourceFileNames);
@@ -63,10 +63,10 @@ namespace Sitecore.Pathfinder.Configuration
         IReference Reference([NotNull] IProjectItem projectItem, [NotNull] Attribute<string> sourceAttribute, [NotNull] string targetQualifiedName);
 
         [NotNull]
-        Rendering Rendering([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] Item item);
+        Rendering Rendering([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath, [NotNull] Item item);
 
         [NotNull]
-        SerializationFile SerializationFile([NotNull] IProject project, [NotNull] ISnapshot snapshot);
+        SerializationFile SerializationFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath);
 
         [NotNull]
         ISnapshot Snapshot([NotNull] ISourceFile sourceFile);

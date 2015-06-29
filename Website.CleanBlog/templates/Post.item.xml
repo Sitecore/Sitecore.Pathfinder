@@ -1,7 +1,0 @@
-﻿<Template Name="Post" ShortHelp="Blog Post." LongHelp="Blog Post." Icon="Applications/16x16/about.png">
-  <Section Name="Fields">
-    <Field Name="Title" Type="Single-Line Text" ShortHelp="Title." LongHelp="Title."/>
-    <Field Name="Subtitle" Type="Single-Line Text" ShortHelp="Subtitle." LongHelp="Subtitle." />
-    <Field Name="Posted" Type="Rich Text" ShortHelp="Posted." LongHelp="Posted." />
-  </Section>
-</Template>

@@ -1,10 +1,12 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Diagnostics;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Documents
 {
+    [DebuggerDisplay("\\{{GetType().FullName,nq}\\}: FileName: {SourceFile.FileName}")]
     public class Snapshot : ISnapshot
     {
         public static readonly ISnapshot Empty = new Snapshot(Documents.SourceFile.Empty);

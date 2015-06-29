@@ -1,0 +1,4 @@
+﻿<Item xmlns="http://www.sitecore.net/pathfinder/item" Template="/sitecore/templates/CleanBlog/Post"> 
+  <Field Name="Title">Failure is not an option</Field>
+  <Field Name="SubTitle">Many say exploration is part of our destiny, but it’s actually our duty to future generations.</Field>
+</Item>

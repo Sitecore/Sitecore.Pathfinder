@@ -42,7 +42,6 @@ namespace Sitecore.Pathfinder.Projects
             var projectOptions = CreateProjectOptions();
 
             LoadExternalReferences(projectOptions);
-            LoadRemapFileDirectories(projectOptions);
 
             var sourceFileNames = new List<string>();
             LoadSourceFileNames(projectOptions, sourceFileNames);
@@ -72,15 +71,6 @@ namespace Sitecore.Pathfinder.Projects
                 {
                     projectOptions.ExternalReferences.Add(value);
                 }
-            }
-        }
-
-        protected virtual void LoadRemapFileDirectories([NotNull] ProjectOptions projectOptions)
-        {
-            foreach (var pair in Configuration.GetSubKeys(Constants.Configuration.RemapFileDirectories))
-            {
-                var value = Configuration.Get(Constants.Configuration.RemapFileDirectories + ":" + pair.Key);
-                projectOptions.RemapFileDirectories[pair.Key] = value;
             }
         }
 

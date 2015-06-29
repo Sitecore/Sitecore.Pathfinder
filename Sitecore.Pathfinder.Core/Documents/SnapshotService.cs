@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
+using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
@@ -15,11 +16,15 @@ namespace Sitecore.Pathfinder.Documents
     public class SnapshotService : ISnapshotService
     {
         [ImportingConstructor]
-        public SnapshotService([NotNull] IFactoryService factory, [NotNull] ITextTokenService textTokenService)
+        public SnapshotService([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] ITextTokenService textTokenService)
         {
+            Configuration = configuration;
             Factory = factory;
             TextTokenService = textTokenService;
         }
+
+        [NotNull]
+        protected IConfiguration Configuration { get;  }
 
         [NotNull]
         protected IFactoryService Factory { get; }
@@ -48,11 +53,13 @@ namespace Sitecore.Pathfinder.Documents
         {
             var itemName = PathHelper.GetItemName(sourceFile);
 
-            var filePath = PathHelper.GetFilePath(project, sourceFile);
+            var fileContext = FileContext.GetFileContext(project, Configuration, sourceFile);
+
+            var filePath = fileContext.FilePath;
             var filePathWithExtensions = PathHelper.NormalizeItemPath(PathHelper.GetDirectoryAndFileNameWithoutExtensions(filePath));
             var fileName = Path.GetFileName(filePath);
             var fileNameWithoutExtensions = PathHelper.GetFileNameWithoutExtensions(fileName);
-            var directoryName = PathHelper.NormalizeFilePath(Path.GetDirectoryName(filePath) ?? string.Empty);
+            var directoryName = string.IsNullOrEmpty(filePath) ? string.Empty : PathHelper.NormalizeFilePath(Path.GetDirectoryName(filePath) ?? string.Empty);
 
             var contextTokens = new Dictionary<string, string>
             {

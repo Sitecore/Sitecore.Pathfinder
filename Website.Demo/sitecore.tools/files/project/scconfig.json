@@ -18,6 +18,24 @@
     // build pipeline
     "pipeline": "check-project pack-nuget copy-dependencies copy-package install-package publish-database",
 
+    
+    // mapping of files between local path and server path and item path
+    "files": {
+    //     "html": {
+    //         "local-file-directory": "",
+    //         "include": "**/*.html",
+    //         "server-file-directory": "/layout/renderings",
+    //         "item-path": "/sitecore/layout/renderings",
+    //         "database": "master"
+    //     },
+    //     "img": {
+    //         "local-file-directory": "/img",
+    //         "include": "**",
+    //         "server-file-directory": "",
+    //         "item-path": "/sitecore/media library"
+    //     }
+    },
+    
     "external-references": {
         "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}": "/sitecore/templates/Sample/Sample Item",
         "{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}": "/sitecore/templates/System/Layout/Renderings/View rendering"

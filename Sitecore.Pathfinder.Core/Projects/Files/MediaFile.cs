@@ -8,7 +8,7 @@ namespace Sitecore.Pathfinder.Projects.Files
 {
     public class MediaFile : File
     {
-        public MediaFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] Item mediaItem) : base(project, snapshot)
+        public MediaFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath, [NotNull] Item mediaItem) : base(project, snapshot, filePath)
         {
             MediaItem = mediaItem;
         }

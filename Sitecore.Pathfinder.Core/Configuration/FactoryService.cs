@@ -29,14 +29,15 @@ namespace Sitecore.Pathfinder.Configuration
         [NotNull]
         protected ICompositionService CompositionService { get; }
 
-        public virtual BinFile BinFile(IProject project, ISnapshot snapshot)
+        [NotNull]
+        public virtual BinFile BinFile(IProject project, ISnapshot snapshot, string filePath)
         {
-            return new BinFile(project, snapshot);
+            return new BinFile(project, snapshot, filePath);
         }
 
-        public virtual IProjectItem ContentFile(IProject project, ISnapshot snapshot)
+        public virtual IProjectItem ContentFile(IProject project, ISnapshot snapshot, string filePath)
         {
-            return new ContentFile(project, snapshot);
+            return new ContentFile(project, snapshot, filePath);
         }
 
         public virtual DeviceReference DeviceReference(IProjectItem projectItem, Attribute<string> deviceNameAttribute, string targetQualifiedName)
@@ -84,9 +85,9 @@ namespace Sitecore.Pathfinder.Configuration
             return new LayoutRenderingReference(projectItem, renderingTextNode, targetQualifiedName);
         }
 
-        public virtual MediaFile MediaFile(IProject project, ISnapshot snapshot, Item mediaItem)
+        public virtual MediaFile MediaFile(IProject project, ISnapshot snapshot, string filePath, Item mediaItem)
         {
-            return new MediaFile(project, snapshot, mediaItem);
+            return new MediaFile(project, snapshot, filePath, mediaItem);
         }
 
         public virtual IProject Project(ProjectOptions projectOptions, List<string> sourceFileNames)
@@ -104,14 +105,14 @@ namespace Sitecore.Pathfinder.Configuration
             return new Reference(projectItem, sourceAttribute, targetQualifiedName);
         }
 
-        public virtual Rendering Rendering(IProject project, ISnapshot snapshot, Item item)
+        public virtual Rendering Rendering(IProject project, ISnapshot snapshot, string filePath, Item item)
         {
-            return new Rendering(project, snapshot, item);
+            return new Rendering(project, snapshot, filePath, item);
         }
 
-        public virtual SerializationFile SerializationFile(IProject project, ISnapshot snapshot)
+        public virtual SerializationFile SerializationFile(IProject project, ISnapshot snapshot, string filePath)
         {
-            return new SerializationFile(project, snapshot);
+            return new SerializationFile(project, snapshot, filePath);
         }
 
         public virtual ISnapshot Snapshot(ISourceFile sourceFile)

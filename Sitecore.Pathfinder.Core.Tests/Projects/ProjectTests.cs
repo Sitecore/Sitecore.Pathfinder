@@ -156,13 +156,6 @@ namespace Sitecore.Pathfinder.Projects
         }
 
         [Test]
-        public void RemapFileDirectoryTests()
-        {
-            Assert.AreEqual(1, Project.Options.RemapFileDirectories.Count);
-            Assert.AreEqual("/sitecore/shell/client", Project.Options.RemapFileDirectories["/sitecore/client"]);
-        }
-
-        [Test]
         public void SerializationItemTest()
         {
             var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/Pipper");

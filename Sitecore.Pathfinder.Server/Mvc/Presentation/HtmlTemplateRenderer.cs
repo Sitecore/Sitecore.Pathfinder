@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using Sitecore.Data.Items;
 using Sitecore.Extensions.StringExtensions;
 using Sitecore.IO;
+using Sitecore.Links;
 using Sitecore.Mvc;
 using Sitecore.Mvc.Helpers;
 using Sitecore.Mvc.Presentation;
@@ -112,6 +113,8 @@ namespace Sitecore.Pathfinder.Mvc.Presentation
                         return contextItem.Paths.Path;
                     case "@templatename":
                         return contextItem.TemplateName;
+                    case "@url":
+                        return LinkManager.GetItemUrl(contextItem);
                     case "@icon16x16":
                         return Images.GetImage(contextItem.Appearance.Icon, ImageDimension.id16x16, "center");
                     case "@icon24x24":

@@ -7,7 +7,7 @@ namespace Sitecore.Pathfinder.Projects.Files
 {
     public class ContentFile : File
     {
-        public ContentFile([NotNull] IProject project, [NotNull] ISnapshot snapshot) : base(project, snapshot)
+        public ContentFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath) : base(project, snapshot, filePath)
         {
         }
     }

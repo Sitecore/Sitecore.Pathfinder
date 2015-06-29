@@ -45,7 +45,7 @@ namespace Sitecore.Pathfinder.Parsing.Files
 
             mediaItem = context.Project.AddOrMerge(context, mediaItem);
 
-            var mediaFile = context.Factory.MediaFile(context.Project, context.Snapshot, mediaItem);
+            var mediaFile = context.Factory.MediaFile(context.Project, context.Snapshot, context.FilePath, mediaItem);
             context.Project.AddOrMerge(context, mediaFile);
 
             context.Project.Ducats += 100;

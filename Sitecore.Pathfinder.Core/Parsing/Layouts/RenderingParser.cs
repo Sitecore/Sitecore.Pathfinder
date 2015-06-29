@@ -52,7 +52,7 @@ namespace Sitecore.Pathfinder.Parsing.Layouts
 
             item = context.Project.AddOrMerge(context, item);
 
-            var rendering = context.Factory.Rendering(context.Project, context.Snapshot, item);
+            var rendering = context.Factory.Rendering(context.Project, context.Snapshot, context.FilePath, item);
             context.Project.AddOrMerge(context, rendering);
 
             context.Project.Ducats += 100;

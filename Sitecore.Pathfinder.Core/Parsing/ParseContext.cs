@@ -37,8 +37,6 @@ namespace Sitecore.Pathfinder.Parsing
 
         public virtual string ItemPath { get; private set; }
 
-        public virtual string ProjectPath { get; private set; }
-
         public IPipelineService PipelineService { get; }
 
         public IProject Project { get; private set; }
@@ -53,14 +51,11 @@ namespace Sitecore.Pathfinder.Parsing
             Snapshot = snapshot;
             Trace = new DiagnosticTraceService(Configuration, Factory).With(Project);
 
-            var fileName = snapshot.SourceFile.GetProjectPath(Project);
-            var fileContext = FileContext.GetFileContext(Configuration, fileName);
-
-            ProjectPath = "/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(project.Options.ProjectDirectory, Snapshot.SourceFile.FileName)).TrimStart('/');
-            FilePath = fileContext.FilePath + PathHelper.GetFilePath(Project, Snapshot.SourceFile);
-            ItemName = PathHelper.GetItemName(Snapshot.SourceFile);
-            ItemPath = PathHelper.GetItemPath(Project, fileContext, Snapshot.SourceFile);
-            DatabaseName = !string.IsNullOrEmpty(fileContext.DatabaseName) ? fileContext.DatabaseName : Project.Options.DatabaseName;
+            var fileContext = FileContext.GetFileContext(Project, Configuration, snapshot.SourceFile);
+            FilePath = fileContext.FilePath;
+            ItemName = fileContext.ItemName;
+            ItemPath = fileContext.ItemPath;
+            DatabaseName = fileContext.DatabaseName;
 
             return this;
         }
