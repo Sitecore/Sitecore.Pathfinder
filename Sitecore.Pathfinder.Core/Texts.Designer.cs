@@ -440,6 +440,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File path must start with &apos;~&apos;.
+        /// </summary>
+        public static string File_path_must_start_with____ {
+            get {
+                return ResourceManager.GetString("File_path_must_start_with____", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Found: .
         /// </summary>
         public static string Found__ {

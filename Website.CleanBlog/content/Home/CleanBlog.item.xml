@@ -4,7 +4,24 @@
   Template.LongHelp="Clean blog from StartBootstrap."
   Template.Icon="Applications/16x16/about.png"
   Layout.HtmlFile="/CleanBlog/layout/renderings/index.html">
-  <Field Name="Header" Field.ShortHelp="Header." Field.LongHelp="Blog Header.">Clean Blog</Field>
-  <Field Name="Subheader" Field.ShortHelp="Subheader." Field.LongHelp="Subheader.">A Clean Blog Theme by Start Bootstrap</Field>
-  <Field Name="__Masters">/sitecore/Templates/CleanBlog/Post</Field>
+  
+  <Field Name="PageTitle" Field.Type="Single-Line Text" Field.ShortHelp="Name of the page." Field.LongHelp="Displayed in the browser window caption.">
+    Clean Blog
+  </Field>
+  
+  <Field Name="Header" Field.ShortHelp="Header." Field.LongHelp="Blog Header.">
+    Clean Blog
+  </Field>
+  
+  <Field Name="Subheader" Field.ShortHelp="Subheader." Field.LongHelp="Subheader.">
+    A Clean Blog Theme by Start Bootstrap
+  </Field>
+
+  <Field Name="ToggleNavigation" Field.ShortHelp="Toggle Navigation text." Field.LongHelp="Toggle Navigation text.">
+    Toggle Navigation
+  </Field>
+  
+  <Field Name="StartBootstrap" Field.ShortHelp="Start Bootstrap text." Field.LongHelp="Start Bootstrap text.">
+    Start Bootstrap
+  </Field>
 </Item>

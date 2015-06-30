@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using Sitecore.Data.Items;
+using Sitecore.Data.Managers;
 using Sitecore.Extensions.StringExtensions;
 using Sitecore.IO;
 using Sitecore.Links;
@@ -125,7 +126,20 @@ namespace Sitecore.Pathfinder.Mvc.Presentation
                         return Images.GetImage(contextItem.Appearance.Icon, ImageDimension.id48x48, "center");
                 }
 
-                return sitecoreHelper.Field(text, contextItem).ToString();
+                // search up the tree for the field - this is specified by Mustache
+                var item = contextItem;
+                while (item != null)
+                {
+                    var template = TemplateManager.GetTemplate(item);
+                    if (template?.GetField(text) != null)
+                    {
+                        break;
+                    }
+
+                    item = item.Parent;
+                }
+
+                return item == null ? string.Empty : sitecoreHelper.Field(text, item).ToString();
             };
 
             return Regex.Replace(output, "\\{\\{([^\\}]*)\\}\\}", evaluator);

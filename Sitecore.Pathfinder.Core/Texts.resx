@@ -405,4 +405,7 @@
     <data name="Rendering_not_found" xml:space="preserve">
     <value>Rendering not found</value>
   </data>
+    <data name="File_path_must_start_with____" xml:space="preserve">
+    <value>File path must start with '~'</value>
+  </data>
 </root>
