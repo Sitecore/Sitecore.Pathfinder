@@ -11,43 +11,45 @@ namespace Sitecore.Pathfinder.Projects.Templates
         public TemplateField([NotNull] Template template)
         {
             Template = template;
-            FieldName = new Attribute<string>("Name", string.Empty);
         }
 
         [NotNull]
-        public string LongHelp { get; set; } = string.Empty;
+        public Attribute<string> FieldName { get; } = new Attribute<string>("Name", string.Empty);
 
         [NotNull]
-        public Attribute<string> FieldName { get; }
+        public Attribute<string> LongHelp { get; } = new Attribute<string>("LongHelp", string.Empty);
 
+        // todo: make shared and unversioned into attributes
         public bool Shared { get; set; }
 
         [NotNull]
-        public string ShortHelp { get; set; } = string.Empty;
-
-        public int SortOrder { get; set; }
+        public Attribute<string> ShortHelp { get; } = new Attribute<string>("ShortHelp", string.Empty);
 
         [NotNull]
-        public string Source { get; set; } = string.Empty;
+        public Attribute<int> SortOrder { get; } = new Attribute<int>("SortOrder", 0);
+
+        [NotNull]
+        public Attribute<string> Source { get; } = new Attribute<string>("Source", string.Empty);
 
         [NotNull]
         public Template Template { get; }
 
         [NotNull]
-        public string Type { get; set; } = string.Empty;
+        public Attribute<string> Type { get; } = new Attribute<string>("Type", string.Empty);
 
         public bool Unversioned { get; set; }
 
         public void Merge([NotNull] TemplateField newField, bool overwrite)
         {
-            if (!string.IsNullOrEmpty(newField.Type))
+            // todo: consider making a strict and loose mode
+            if (!string.IsNullOrEmpty(newField.Type.Value))
             {
-                Type = newField.Type;
+                Type.Merge(newField.Type);
             }
 
-            if (!string.IsNullOrEmpty(newField.Source))
+            if (!string.IsNullOrEmpty(newField.Source.Value))
             {
-                Source = newField.Source;
+                Source.Merge(newField.Source);
             }
 
             if (newField.Shared)
@@ -60,19 +62,19 @@ namespace Sitecore.Pathfinder.Projects.Templates
                 Unversioned = true;
             }
 
-            if (!string.IsNullOrEmpty(newField.ShortHelp))
+            if (!string.IsNullOrEmpty(newField.ShortHelp.Value))
             {
-                ShortHelp = newField.ShortHelp;
+                ShortHelp.Merge(newField.ShortHelp);
             }
 
-            if (!string.IsNullOrEmpty(newField.LongHelp))
+            if (!string.IsNullOrEmpty(newField.LongHelp.Value))
             {
-                LongHelp = newField.LongHelp;
+                LongHelp.Merge(newField.LongHelp);
             }
 
-            if (newField.SortOrder != 0)
+            if (newField.SortOrder.Value != 0)
             {
-                SortOrder = newField.SortOrder;
+                SortOrder.Merge(newField.SortOrder);
             }
         }
     }

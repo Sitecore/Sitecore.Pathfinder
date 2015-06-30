@@ -23,18 +23,47 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
         public abstract void Parse(ItemParseContext context, ITextNode textNode);
 
+        [NotNull]
+        protected virtual Attribute<string> GetItemName([NotNull] IParseContext context, [NotNull] ITextNode textNode, [NotNull] string attributeName = "Name")
+        {
+            var itemNameTextNode = textNode.GetAttributeTextNode(attributeName);
+
+            string value;
+            ITextNode source;
+
+            if (itemNameTextNode != null)
+            {
+                value = itemNameTextNode.Value;
+                source = itemNameTextNode;
+            }
+            else
+            {
+                value = context.ItemName;
+                source = new FileNameTextNode(value, textNode.Snapshot);
+            }
+
+            var attribute = new Attribute<string>(attributeName, value);
+            attribute.AddSource(source);
+
+            return attribute;
+        }
+
         [CanBeNull]
         protected virtual IReference ParseReference([NotNull] ItemParseContext context, [NotNull] IProjectItem projectItem, [NotNull] ITextNode source, [NotNull] string text)
         {
             if (text.StartsWith("/sitecore/", StringComparison.OrdinalIgnoreCase))
             {
-                return context.ParseContext.Factory.Reference(projectItem, new Attribute<string>(source, SourceFlags.IsQualified), text);
+                var sourceAttribute = new Attribute<string>(source.Name, string.Empty);
+                sourceAttribute.SourceFlags = SourceFlags.IsQualified;
+                return context.ParseContext.Factory.Reference(projectItem, sourceAttribute, text);
             }
 
             Guid guid;
             if (Guid.TryParse(text, out guid))
             {
-                return context.ParseContext.Factory.Reference(projectItem, new Attribute<string>(source, SourceFlags.IsGuid), guid.ToString("B").ToUpperInvariant());
+                var sourceAttribute = new Attribute<string>(source.Name, string.Empty);
+                sourceAttribute.SourceFlags = SourceFlags.IsGuid;
+                return context.ParseContext.Factory.Reference(projectItem, sourceAttribute, guid.ToString("B").ToUpperInvariant());
             }
 
             return null;

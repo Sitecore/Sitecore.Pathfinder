@@ -17,17 +17,16 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
         public override void Parse(ItemParseContext context, ITextNode textNode)
         {
-            var itemNameTextNode = textNode.GetAttributeTextNode("Name");
-            var itemName = itemNameTextNode?.Value ?? context.ParseContext.ItemName;
-            var itemIdOrPath = context.ParentItemPath + "/" + itemName;
+            var itemName = GetItemName(context.ParseContext, textNode);
+            var itemIdOrPath = context.ParentItemPath + "/" + itemName.Value;
             var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
 
-            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemName, itemIdOrPath, string.Empty);
-            item.ItemName.Source = itemNameTextNode;
+            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemName.Value, itemIdOrPath, string.Empty);
+            item.ItemName.Merge(itemName);
 
-            var field = context.ParseContext.Factory.Field(item, "__Renderings", string.Empty, 0, textNode.Value, "Layout");
-            field.IsTestable = false;
-            field.Value.Source = textNode;
+            var field = context.ParseContext.Factory.Field(item, "__Renderings", string.Empty);
+            field.Value.AddSource(textNode.GetInnerTextNode());
+            field.ValueHint.SetValue("Layout");
 
             item.Fields.Add(field);
 
@@ -38,14 +37,17 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
         protected virtual void ParseDeviceReferences([NotNull] ItemParseContext context, [NotNull] ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode deviceTextNode)
         {
-            var deviceNameTextNode = deviceTextNode.GetAttributeTextNode("Name") ?? deviceTextNode;
-            references.Add(context.ParseContext.Factory.DeviceReference(projectItem, new Attribute<string>(deviceNameTextNode, SourceFlags.IsShort), deviceTextNode.GetAttributeValue("Name")));
+            var deviceNameAttribute = new Attribute<string>("Name", string.Empty);
+            deviceNameAttribute.SourceFlags = SourceFlags.IsShort;
+            deviceNameAttribute.Parse(deviceTextNode);
 
-            var layoutTextNode = deviceTextNode.GetAttributeTextNode("Layout");
-            if (layoutTextNode != null)
-            {
-                references.Add(context.ParseContext.Factory.LayoutReference(projectItem, new Attribute<string>(layoutTextNode, SourceFlags.IsShort), deviceTextNode.GetAttributeValue("Layout")));
-            }
+            references.Add(context.ParseContext.Factory.DeviceReference(projectItem, deviceNameAttribute, deviceNameAttribute.Value));
+
+            var layoutAttribute = new Attribute<string>("Layout", string.Empty);
+            layoutAttribute.SourceFlags = SourceFlags.IsShort;
+            layoutAttribute.Parse(deviceTextNode);
+
+            references.Add(context.ParseContext.Factory.LayoutReference(projectItem, layoutAttribute, layoutAttribute.Value));
 
             foreach (var renderingsTextNode in deviceTextNode.ChildNodes)
             {
@@ -78,7 +80,11 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         {
             if (!string.IsNullOrEmpty(renderingTextNode.Name))
             {
-                references.Add(context.ParseContext.Factory.LayoutRenderingReference(projectItem, new Attribute<string>(new AttributeNameTextNode(renderingTextNode), SourceFlags.IsShort), renderingTextNode.Name));
+                var textNode = new Attribute<string>(renderingTextNode.Name, string.Empty);
+                textNode.AddSource(new AttributeNameTextNode(renderingTextNode));
+                textNode.SourceFlags = SourceFlags.IsShort;
+
+                references.Add(context.ParseContext.Factory.LayoutRenderingReference(projectItem, textNode, renderingTextNode.Name));
             }
 
             foreach (var childTextNode in renderingTextNode.ChildNodes)
@@ -88,3 +94,4 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         }
     }
 }
+

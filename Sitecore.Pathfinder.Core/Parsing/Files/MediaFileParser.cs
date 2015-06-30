@@ -38,7 +38,7 @@ namespace Sitecore.Pathfinder.Parsing.Files
         public override void Parse(IParseContext context)
         {
             var mediaItem = context.Factory.Item(context.Project, context.ItemPath, new SnapshotTextNode(context.Snapshot), context.DatabaseName, context.ItemName, context.ItemPath, string.Empty);
-            mediaItem.ItemName.Source = new FileNameTextNode(context.ItemName, context.Snapshot);
+            mediaItem.ItemName.AddSource(new FileNameTextNode(context.ItemName, context.Snapshot));
             mediaItem.IsEmittable = false;
             mediaItem.OverwriteWhenMerging = true;
             mediaItem.MergingMatch = MergingMatch.MatchUsingSourceFile;

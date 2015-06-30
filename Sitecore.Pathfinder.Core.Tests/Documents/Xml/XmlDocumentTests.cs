@@ -79,7 +79,7 @@ namespace Sitecore.Pathfinder.Documents.Xml
             var field = root.ChildNodes.First();
             Assert.AreEqual("Field", field.Name);
             Assert.AreEqual("Text", field.GetAttributeValue("Name"));
-            Assert.AreEqual("123", field.GetAttributeValue("[Value]"));
+            Assert.AreEqual("123", field.GetInnerTextNode()?.Value);
             Assert.AreEqual(string.Empty, field.Value);
             Assert.AreEqual(0, field.ChildNodes.Count());
         }

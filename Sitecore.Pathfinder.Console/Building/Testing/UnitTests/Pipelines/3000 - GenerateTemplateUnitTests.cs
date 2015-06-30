@@ -34,19 +34,19 @@ namespace Sitecore.Pathfinder.Building.Testing.UnitTests.Pipelines
                     pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + template.Icon.Value + "\", template.Icon);");
                 }
 
-                if (!string.IsNullOrEmpty(template.BaseTemplates))
+                if (!string.IsNullOrEmpty(template.BaseTemplates.Value))
                 {
-                    pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + template.BaseTemplates + "\", item[FieldIDs.BaseTemplate]);");
+                    pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + template.BaseTemplates.Value + "\", item[FieldIDs.BaseTemplate]);");
                 }
 
-                if (!string.IsNullOrEmpty(template.ShortHelp))
+                if (!string.IsNullOrEmpty(template.ShortHelp.Value))
                 {
-                    pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + template.ShortHelp + "\", item.Help.ToolTip);");
+                    pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + template.ShortHelp.Value + "\", item.Help.ToolTip);");
                 }
 
-                if (!string.IsNullOrEmpty(template.LongHelp))
+                if (!string.IsNullOrEmpty(template.LongHelp.Value))
                 {
-                    pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + template.LongHelp + "\", item.Help.Text);");
+                    pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + template.LongHelp.Value + "\", item.Help.Text);");
                 }
 
                 pipeline.Stream.WriteLine();
@@ -63,9 +63,9 @@ namespace Sitecore.Pathfinder.Building.Testing.UnitTests.Pipelines
                     pipeline.Stream.WriteLine("            Assert.IsNotNull(sectionItem);");
                     pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + templateSection.SectionName.Value + "\", sectionItem.Name);");
 
-                    if (!string.IsNullOrEmpty(templateSection.Icon))
+                    if (!string.IsNullOrEmpty(templateSection.Icon.Value))
                     {
-                        pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + templateSection.Icon + "\", sectionItem.Appearance.Icon);");
+                        pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + templateSection.Icon.Value + "\", sectionItem.Appearance.Icon);");
                     }
 
                     foreach (var templateField in templateSection.Fields)
@@ -75,14 +75,14 @@ namespace Sitecore.Pathfinder.Building.Testing.UnitTests.Pipelines
                         pipeline.Stream.WriteLine("            Assert.IsNotNull(fieldItem);");
                         pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + templateField.FieldName.Value + "\", fieldItem.Name);");
 
-                        if (!string.IsNullOrEmpty(templateField.ShortHelp))
+                        if (!string.IsNullOrEmpty(templateField.ShortHelp.Value))
                         {
-                            pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + templateField.ShortHelp + "\", fieldItem.Help.ToolTip);");
+                            pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + templateField.ShortHelp.Value + "\", fieldItem.Help.ToolTip);");
                         }
 
-                        if (!string.IsNullOrEmpty(templateField.LongHelp))
+                        if (!string.IsNullOrEmpty(templateField.LongHelp.Value))
                         {
-                            pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + templateField.LongHelp + "\", fieldItem.Help.Text);");
+                            pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + templateField.LongHelp.Value + "\", fieldItem.Help.Text);");
                         }
 
                         if (templateField.Shared)
@@ -95,19 +95,19 @@ namespace Sitecore.Pathfinder.Building.Testing.UnitTests.Pipelines
                             pipeline.Stream.WriteLine("            Assert.AreEqual(\"1\", fieldItem[TemplateFieldIDs.Unversioned]);");
                         }
 
-                        if (templateField.SortOrder != 0)
+                        if (templateField.SortOrder.Value != 0)
                         {
-                            pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + templateField.SortOrder + "\", fieldItem[FieldIDs.Sortorder]);");
+                            pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + templateField.SortOrder.Value + "\", fieldItem[FieldIDs.Sortorder]);");
                         }
 
-                        if (!string.IsNullOrEmpty(templateField.Source))
+                        if (!string.IsNullOrEmpty(templateField.Source.Value))
                         {
-                            pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + templateField.Source + "\", fieldItem[TemplateFieldIDs.Source]);");
+                            pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + templateField.Source.Value + "\", fieldItem[TemplateFieldIDs.Source]);");
                         }
 
-                        if (!string.IsNullOrEmpty(templateField.Type))
+                        if (!string.IsNullOrEmpty(templateField.Type.Value))
                         {
-                            pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + templateField.Type + "\", fieldItem[TemplateFieldIDs.Type]);");
+                            pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + templateField.Type.Value + "\", fieldItem[TemplateFieldIDs.Type]);");
                         }
                     }
                 }

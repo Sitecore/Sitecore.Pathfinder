@@ -17,15 +17,14 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
         public override void Parse(ItemParseContext context, ITextNode textNode)
         {
-            var itemNameTextNode = textNode.GetAttributeTextNode("Item-Name");
-            var itemName = itemNameTextNode?.Value ?? context.ParseContext.ItemName;
+            var itemName = GetItemName(context.ParseContext, textNode);
             var parentItemPath = textNode.GetAttributeValue("Parent-Item-Path", context.ParentItemPath);
-            var itemIdOrPath = parentItemPath + "/" + itemName;
+            var itemIdOrPath = parentItemPath + "/" + itemName.Value;
             var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
 
-            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemName, itemIdOrPath, textNode.Name);
-            item.ItemName.Source = itemNameTextNode ?? new FileNameTextNode(itemName, textNode.Snapshot);
-            item.TemplateIdOrPath.Source = new AttributeNameTextNode(textNode);
+            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemName.Value, itemIdOrPath, textNode.Name);
+            item.ItemName.Merge(itemName);
+            item.TemplateIdOrPath.AddSource(new AttributeNameTextNode(textNode));
 
             item.References.AddRange(ParseReferences(context, item, textNode, item.TemplateIdOrPath.Value));
 
@@ -40,26 +39,22 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         {
             var fieldName = fieldTextNode.Name;
 
-            if (fieldName == "Item-Name")
+            if (fieldName == "Name" || fieldName == "Id" || fieldName == "Parent-Item-Path")
             {
                 return;
             }
-
-            if (fieldName == "Parent-Item-Path")
-            {
-                return;
-            }
-
+            
+            // check if field is already defined
             var field = item.Fields.FirstOrDefault(f => string.Compare(f.FieldName.Value, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
             if (field != null)
             {
                 context.ParseContext.Trace.TraceError(Texts.Field_is_already_defined, fieldTextNode.Snapshot.SourceFile.FileName, fieldTextNode.Position, fieldName);
             }
 
-            // todo: support for language, version and value.hint
-            field = context.ParseContext.Factory.Field(item, fieldName, string.Empty, 0, fieldTextNode.Value, string.Empty);
-            field.FieldName.Source = new AttributeNameTextNode(fieldTextNode);
-            field.Value.Source = fieldTextNode;
+            // todo: support language and version
+            field = context.ParseContext.Factory.Field(item);
+            field.FieldName.AddSource(new AttributeNameTextNode(fieldTextNode));
+            field.Value.AddSource(fieldTextNode);
 
             item.Fields.Add(field);
 

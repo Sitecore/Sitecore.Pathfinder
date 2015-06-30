@@ -12,18 +12,13 @@ namespace Sitecore.Pathfinder.Projects.Items
     [DebuggerDisplay("{GetType().Name,nq}: {FieldName,nq} = {Value}")]
     public class Field
     {
-        public Field([NotNull] Item item, [NotNull] string fieldName, [NotNull] string language, int version, [NotNull] string value, [NotNull] string valueHint = "")
+        public Field([NotNull] Item item)
         {
             Item = item;
-            FieldName = new Attribute<string>("Name", fieldName);
-            Language = new Attribute<string>("Language", language);
-            Version = new Attribute<int>("Version", version);
-            Value = new Attribute<string>("Value", value);
-            ValueHint = valueHint;
         }
 
         [NotNull]
-        public Attribute<string> FieldName { get; }
+        public Attribute<string> FieldName { get; } = new Attribute<string>("Name", string.Empty);
 
         public bool IsTestable { get; set; } = true;
 
@@ -31,17 +26,17 @@ namespace Sitecore.Pathfinder.Projects.Items
         public Item Item { get; set; }
 
         [NotNull]
-        public Attribute<string> Language { get; }
+        public Attribute<string> Language { get; } = new Attribute<string>("Language", string.Empty);
 
         public TemplateField TemplateField => Item.Template.Sections.SelectMany(s => s.Fields).FirstOrDefault(f => string.Compare(f.FieldName.Value, FieldName.Value, StringComparison.OrdinalIgnoreCase) == 0) ?? TemplateField.Empty;
 
         [NotNull]
-        public Attribute<string> Value { get; }
+        public Attribute<string> Value { get; } = new Attribute<string>("Value", string.Empty);
 
         [NotNull]
-        public string ValueHint { get; }
+        public Attribute<string> ValueHint { get; } = new Attribute<string>("Value.Hint", string.Empty);
 
         [NotNull]
-        public Attribute<int> Version { get; }
+        public Attribute<int> Version { get; } = new Attribute<int>("Version", 0);
     }
 }

@@ -422,6 +422,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Field is being assigned two different values.
+        /// </summary>
+        public static string Field_is_being_assigned_two_different_values {
+            get {
+                return ResourceManager.GetString("Field_is_being_assigned_two_different_values", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Field is not defined in the template.
         /// </summary>
         public static string Field_is_not_defined_in_the_template {
@@ -655,6 +664,15 @@ namespace Sitecore.Pathfinder {
         public static string Publishing___ {
             get {
                 return ResourceManager.GetString("Publishing___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rendering not found.
+        /// </summary>
+        public static string Rendering_not_found {
+            get {
+                return ResourceManager.GetString("Rendering_not_found", resourceCulture);
             }
         }
         

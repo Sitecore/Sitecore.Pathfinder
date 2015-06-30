@@ -35,20 +35,23 @@ namespace Sitecore.Pathfinder.Parsing.Layouts
             var snapshotTextNode = new SnapshotTextNode(context.Snapshot);
 
             var item = context.Factory.Item(context.Project, context.ItemPath, snapshotTextNode, context.DatabaseName, context.ItemName, context.ItemPath, TemplateIdOrPath);
-            item.ItemName.Source = new FileNameTextNode(context.ItemName, context.Snapshot);
+            item.ItemName.AddSource(new FileNameTextNode(context.ItemName, context.Snapshot));
             item.OverwriteWhenMerging = true;
 
-            var field = context.Factory.Field(item, "Path", string.Empty, 0, path);
+            var field = context.Factory.Field(item, "Path", path);
             item.Fields.Add(field);
 
             // todo: make this configurable
             if (string.Compare(context.DatabaseName, "core", StringComparison.OrdinalIgnoreCase) == 0)
             {
-                field = context.Factory.Field(item, "Place Holders", string.Empty, 0, string.Join(",", placeHolders));
+                field = context.Factory.Field(item, "Place Holders", string.Join(",", placeHolders));
                 item.Fields.Add(field);
             }
 
-            item.References.Add(context.Factory.FileReference(item, new Attribute<string>(snapshotTextNode, SourceFlags.IsFileName), path));
+            var sourceAttribute = new Attribute<string>(snapshotTextNode.Name, string.Empty);
+            sourceAttribute.AddSource(snapshotTextNode);
+            sourceAttribute.SourceFlags = SourceFlags.IsFileName;
+            item.References.Add(context.Factory.FileReference(item, sourceAttribute, path));
 
             item = context.Project.AddOrMerge(context, item);
 

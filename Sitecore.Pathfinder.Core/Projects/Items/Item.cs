@@ -23,15 +23,15 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         public Item([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath) : base(project, projectUniqueId, textNode, databaseName, itemName, itemIdOrPath)
         {
-            TemplateIdOrPath = new Attribute<string>("Template", templateIdOrPath);
+            TemplateIdOrPath.SetValue(templateIdOrPath);
             TemplateIdOrPath.SourceFlags = SourceFlags.IsQualified;
         }
 
         [NotNull]
         public IList<Field> Fields { get; } = new List<Field>();
 
-        [CanBeNull]
-        public Attribute<string> LayoutHtmlFile { get; set; }
+        [NotNull]
+        public Attribute<string> LayoutHtmlFile { get; } = new Attribute<string>("Layout.HtmlFile", string.Empty);
 
         public MergingMatch MergingMatch { get; set; }
 
@@ -41,7 +41,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         public Template Template => Project.Items.OfType<Template>().FirstOrDefault(i => string.Compare(i.QualifiedName, TemplateIdOrPath.Value, StringComparison.OrdinalIgnoreCase) == 0) ?? Template.Empty;
 
         [NotNull]
-        public Attribute<string> TemplateIdOrPath { get; }
+        public Attribute<string> TemplateIdOrPath { get; } = new Attribute<string>("Template", string.Empty);
 
         public void Merge([NotNull] IParseContext context, [NotNull] Item newProjectItem)
         {
@@ -60,7 +60,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
             if (!string.IsNullOrEmpty(newItem.TemplateIdOrPath.Value))
             {
-                TemplateIdOrPath.SetValue(newItem.TemplateIdOrPath.Source);
+                TemplateIdOrPath.AddSource(newItem.TemplateIdOrPath.Source);
             }
 
             OverwriteWhenMerging = OverwriteWhenMerging && newItem.OverwriteWhenMerging;
@@ -79,10 +79,10 @@ namespace Sitecore.Pathfinder.Projects.Items
 
                 if (field.Value.Value != newField.Value.Value)
                 {
-                    context.Trace.TraceError("Field is being assigned two different values", field.FieldName.Value);
+                    context.Trace.TraceError(Texts.Field_is_being_assigned_two_different_values, field.FieldName.Value);
                 }
 
-                field.Value.SetValue(newField.Value.Source);
+                field.Value.AddSource(newField.Value.Source);
                 field.IsTestable = field.IsTestable || newField.IsTestable;
             }
         }

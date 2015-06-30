@@ -399,4 +399,10 @@
     <data name="Template_does_not_a_standard_values_item" xml:space="preserve">
     <value>Template does not a standard values item</value>
   </data>
+    <data name="Field_is_being_assigned_two_different_values" xml:space="preserve">
+    <value>Field is being assigned two different values</value>
+  </data>
+    <data name="Rendering_not_found" xml:space="preserve">
+    <value>Rendering not found</value>
+  </data>
 </root>

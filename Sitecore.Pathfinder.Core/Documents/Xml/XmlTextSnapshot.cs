@@ -139,16 +139,6 @@ namespace Sitecore.Pathfinder.Documents.Xml
                 attributes.Add(attributeTreeNode);
             }
 
-            if (!element.HasElements)
-            {
-                var node = element.Nodes().FirstOrDefault();
-                if (node != null)
-                {
-                    var attributeTreeNode = new XmlTextNode(this, node, "[Value]", element.Value);
-                    attributes.Add(attributeTreeNode);
-                }
-            }
-
             foreach (var child in element.Elements())
             {
                 Parse(treeNode, child);

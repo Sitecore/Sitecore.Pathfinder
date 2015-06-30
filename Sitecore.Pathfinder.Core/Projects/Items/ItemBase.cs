@@ -3,7 +3,6 @@
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing;
 
 namespace Sitecore.Pathfinder.Projects.Items
@@ -15,17 +14,15 @@ namespace Sitecore.Pathfinder.Projects.Items
             DatabaseName = databaseName;
             ItemIdOrPath = itemIdOrPath;
 
-            ItemName = new Attribute<string>("ItemName", itemName);
+            ItemName.SetValue(itemName);
             ItemName.SourceFlags = SourceFlags.IsShort;
-
-            Icon = new Attribute<string>("Icon", string.Empty);
         }
 
         [NotNull]
         public string DatabaseName { get; private set; }
 
         [NotNull]
-        public Attribute<string> Icon { get; }
+        public Attribute<string> Icon { get; } = new Attribute<string>("Icon", string.Empty);
 
         public bool IsEmittable { get; set; } = true;
 
@@ -33,7 +30,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         public string ItemIdOrPath { get; private set; }
 
         [NotNull]
-        public Attribute<string> ItemName { get; }
+        public Attribute<string> ItemName { get; } = new Attribute<string>("ItemName", string.Empty);
 
         public override string QualifiedName => ItemIdOrPath;
 
@@ -60,7 +57,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
             if (overwrite)
             {
-                ItemName.SetValue(newItemBase.ItemName.Source);
+                ItemName.AddSource(newItemBase.ItemName.Source);
 
                 ItemIdOrPath = newItemBase.ItemIdOrPath;
                 DatabaseName = newItemBase.DatabaseName;
@@ -73,7 +70,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
             if (!string.IsNullOrEmpty(newItemBase.Icon.Value))
             {
-                Icon.SetValue(newItemBase.Icon.Source);
+                Icon.AddSource(newItemBase.Icon.Source);
             }
 
             IsEmittable = IsEmittable || newItemBase.IsEmittable;

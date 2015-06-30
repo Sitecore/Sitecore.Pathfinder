@@ -19,7 +19,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         public IList<TemplateField> Fields { get; } = new List<TemplateField>();
 
         [NotNull]
-        public string Icon { get; set; } = string.Empty;
+        public Attribute<string> Icon { get; } = new Attribute<string>("Icon", string.Empty);
 
         [NotNull]
         public Attribute<string> SectionName { get; } = new Attribute<string>("Name", string.Empty);
@@ -29,9 +29,9 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
         public void Merge([NotNull] TemplateSection newSection, bool overwrite)
         {
-            if (!string.IsNullOrEmpty(newSection.Icon))
+            if (!string.IsNullOrEmpty(newSection.Icon.Value))
             {
-                Icon = newSection.Icon;
+                Icon.Merge(newSection.Icon);
             }
 
             foreach (var newField in newSection.Fields)

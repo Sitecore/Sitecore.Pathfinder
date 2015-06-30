@@ -238,7 +238,7 @@ namespace Sitecore.Pathfinder.Synchronizing
             output.WriteStartElement(Xs, "attributeGroup", Namespace);
             output.WriteAttributeString("name", "stdattr");
 
-            WriteAttributeString(output, "Item-Name", "xs:string", "The name of the item.");
+            WriteAttributeString(output, "Name", "xs:string", "The name of the item.");
             WriteAttributeString(output, "Id", "xs:string", "The ID of the item.");
             WriteAttributeString(output, "__Icon", "xs:string", "The icon that represents this template.");
 
@@ -248,7 +248,7 @@ namespace Sitecore.Pathfinder.Synchronizing
         protected virtual void WriteTemplateFields([Diagnostics.NotNull] XmlTextWriter output, [Diagnostics.NotNull] Database database, [Diagnostics.NotNull] Template template)
         {
             var fieldNames = new List<string>();
-            fieldNames.Add("Item-Name");
+            fieldNames.Add("Name");
             fieldNames.Add("Id");
             fieldNames.Add("Parent-Item-Path");
             fieldNames.Add("__Icon");

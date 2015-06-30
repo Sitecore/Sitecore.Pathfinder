@@ -11,6 +11,8 @@ namespace Sitecore.Pathfinder.Documents.Xml
     {
         private readonly XObject _node;
 
+        private ITextNode _innerText;
+
         public XmlTextNode([NotNull] ITextSnapshot snapshot, [NotNull] XElement element, [CanBeNull] ITextNode parent = null) : base(snapshot, GetPosition(element, element.Name.LocalName.Length), element.Name.LocalName, string.Empty, parent)
         {
             _node = element;
@@ -29,6 +31,17 @@ namespace Sitecore.Pathfinder.Documents.Xml
         private static TextPosition GetPosition([NotNull] IXmlLineInfo lineInfo, int lineLength)
         {
             return new TextPosition(lineInfo.LineNumber, lineInfo.LinePosition, lineLength);
+        }
+
+        public override ITextNode GetInnerTextNode()
+        {
+            var element = _node as XElement;
+            if (element != null)
+            {
+                return _innerText ?? (_innerText = new InnerTextNode(this, element));
+            }
+
+            return null;
         }
 
         public override bool SetName(string newName)

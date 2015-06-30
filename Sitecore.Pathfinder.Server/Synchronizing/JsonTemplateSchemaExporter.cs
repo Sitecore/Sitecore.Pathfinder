@@ -245,7 +245,7 @@ namespace Sitecore.Pathfinder.Synchronizing
 
         protected virtual void WriteStandardAttributes([NotNull] JsonTextWriter output, [Diagnostics.NotNull] Database database, [Diagnostics.NotNull] Template template)
         {
-            WriteAttributeString(output, "Item-Name", "string", "The name of the item.");
+            WriteAttributeString(output, "Name", "string", "The name of the item.");
             WriteAttributeString(output, "Id", "string", "The ID of the item.");
 
             WriteItemPath(output, database, template);
@@ -256,7 +256,7 @@ namespace Sitecore.Pathfinder.Synchronizing
         protected virtual void WriteTemplateFields([Diagnostics.NotNull] JsonTextWriter output, [Diagnostics.NotNull] Database database, [Diagnostics.NotNull] Template template)
         {
             var fieldNames = new List<string>();
-            fieldNames.Add("Item-Name");
+            fieldNames.Add("Name");
             fieldNames.Add("Id");
             fieldNames.Add("Parent-Item-Path");
             fieldNames.Add("__Icon");

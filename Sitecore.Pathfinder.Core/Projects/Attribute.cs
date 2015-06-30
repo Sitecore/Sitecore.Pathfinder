@@ -29,12 +29,17 @@ namespace Sitecore.Pathfinder.Projects
     [DebuggerDisplay("\\{{GetType().FullName,nq}\\}: {Name,nq} = {Value}")]
     public class Attribute<T>
     {
-        public Attribute([NotNull] string name, [NotNull] T value)
+        [NotNull]
+        private readonly T _defaultValue;
+
+        public Attribute([NotNull] string name, [NotNull] T defaultValue)
         {
             Name = name;
-            Value = value;
+            Value = defaultValue;
+            _defaultValue = defaultValue;
         }
 
+        /*
         public Attribute([NotNull] ITextNode sourceTextNode, SourceFlags sourceFlags = SourceFlags.None)
         {
             Name = sourceTextNode.Name;
@@ -42,17 +47,65 @@ namespace Sitecore.Pathfinder.Projects
             Source = sourceTextNode;
             SourceFlags = sourceFlags;
         }
+        */
 
         [NotNull]
-        public string Name { get; }
+        public string Name { get; private set; }
 
         [CanBeNull]
-        public ITextNode Source { get; set; }
+        public ITextNode Source { get; private set; }
 
         public SourceFlags SourceFlags { get; set; }
 
         [NotNull]
         public T Value { get; private set; }
+
+        public virtual bool AddSource([CanBeNull] ITextNode source)
+        {
+            if (source == null)
+            {
+                Value = _defaultValue;
+            }
+            else
+            {
+                Value = (T)Convert.ChangeType(source.Value, typeof(T));
+            }
+
+            Source = source;
+            return true;
+        }
+
+        public virtual bool Merge([NotNull] Attribute<T> newAttribute)
+        {
+            Value = newAttribute.Value;
+
+            // todo: add source to sources
+            Source = newAttribute.Source;
+            return true;
+        }
+
+        public void Parse([NotNull] ITextNode textNode, T defaultValue = default(T))
+        {
+            var source = textNode.GetAttributeTextNode(Name);
+            if (source == null)
+            {
+                if (defaultValue == null)
+                {
+                    defaultValue = _defaultValue;
+                }
+
+                SetValue(defaultValue);
+                return;
+            }
+
+            AddSource(source);
+        }
+
+        public void Parse([NotNull] string newName, [NotNull] ITextNode textNode, T defaultValue = default(T))
+        {
+            Name = newName;
+            Parse(textNode, defaultValue);
+        }
 
         public virtual void SetValue([NotNull] T value)
         {
@@ -65,30 +118,6 @@ namespace Sitecore.Pathfinder.Projects
 
             var s = ConvertValue(value.ToString());
             Source.SetValue(s);
-        }
-
-        public virtual bool SetValue([CanBeNull] ITextNode source)
-        {
-            if (source == null)
-            {
-                Value = default(T);
-            }
-            else
-            {
-                Value = (T)Convert.ChangeType(source.Value, typeof(T));
-            }
-
-            Source = source;
-            return true;
-        }
-
-        public virtual bool SetValue([NotNull] Attribute<T> newValue)
-        {
-            Value = newValue.Value;
-
-            // todo: add source to sources
-            Source = newValue.Source;
-            return true;
         }
 
         public override string ToString()

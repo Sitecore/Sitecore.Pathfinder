@@ -19,16 +19,16 @@ namespace Sitecore.Pathfinder.Projects.Templates
         }
 
         [NotNull]
-        public string BaseTemplates { get; set; } = string.Empty;
+        public Attribute<string> BaseTemplates { get; } = new Attribute<string>("BaseTemplates", string.Empty);
 
         [NotNull]
-        public string LongHelp { get; set; } = string.Empty;
+        public Attribute<string> LongHelp { get; } = new Attribute<string>("LongHelp", string.Empty);
 
         [NotNull]
         public IList<TemplateSection> Sections { get; } = new List<TemplateSection>();
 
         [NotNull]
-        public string ShortHelp { get; set; } = string.Empty;
+        public Attribute<string> ShortHelp { get; } = new Attribute<string>("ShortHelp", string.Empty);
 
         [CanBeNull]
         public Item StandardValuesItem { get; set; }
@@ -48,25 +48,25 @@ namespace Sitecore.Pathfinder.Projects.Templates
                 return;
             }
 
-            if (!string.IsNullOrEmpty(newTemplate.BaseTemplates))
+            if (!string.IsNullOrEmpty(newTemplate.BaseTemplates.Value))
             {
                 // todo: join base templates
-                BaseTemplates = newTemplate.BaseTemplates;
+                BaseTemplates.Merge(newTemplate.BaseTemplates);
             }
 
             if (!string.IsNullOrEmpty(newTemplate.Icon.Value))
             {
-                Icon.SetValue(newTemplate.Icon);
+                Icon.Merge(newTemplate.Icon);
             }
 
-            if (!string.IsNullOrEmpty(newTemplate.ShortHelp))
+            if (!string.IsNullOrEmpty(newTemplate.ShortHelp.Value))
             {
-                ShortHelp = newTemplate.ShortHelp;
+                ShortHelp.Merge(newTemplate.ShortHelp);
             }
 
-            if (!string.IsNullOrEmpty(newTemplate.LongHelp))
+            if (!string.IsNullOrEmpty(newTemplate.LongHelp.Value))
             {
-                LongHelp = newTemplate.LongHelp;
+                LongHelp.Merge(newTemplate.LongHelp);
             }
 
             foreach (var newSection in newTemplate.Sections)

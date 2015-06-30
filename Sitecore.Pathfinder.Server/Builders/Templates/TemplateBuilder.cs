@@ -94,9 +94,9 @@ namespace Sitecore.Pathfinder.Builders.Templates
             Item = item;
             using (new EditContext(item))
             {
-                if (!string.IsNullOrEmpty(Template.BaseTemplates))
+                if (!string.IsNullOrEmpty(Template.BaseTemplates.Value))
                 {
-                    item[FieldIDs.BaseTemplate] = Template.BaseTemplates;
+                    item[FieldIDs.BaseTemplate] = Template.BaseTemplates.Value;
                 }
 
                 if (!string.IsNullOrEmpty(Template.Icon.Value))
@@ -104,14 +104,14 @@ namespace Sitecore.Pathfinder.Builders.Templates
                     item.Appearance.Icon = Template.Icon.Value;
                 }
 
-                if (!string.IsNullOrEmpty(Template.ShortHelp))
+                if (!string.IsNullOrEmpty(Template.ShortHelp.Value))
                 {
-                    item.Help.ToolTip = Template.ShortHelp;
+                    item.Help.ToolTip = Template.ShortHelp.Value;
                 }
 
-                if (!string.IsNullOrEmpty(Template.LongHelp))
+                if (!string.IsNullOrEmpty(Template.LongHelp.Value))
                 {
-                    item.Help.Text = Template.LongHelp;
+                    item.Help.Text = Template.LongHelp.Value;
                 }
 
                 item[FieldIDs.StandardValues] = Template.StandardValuesItem?.Guid.ToString("B").ToUpperInvariant() ?? string.Empty;
@@ -208,7 +208,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
             var database = Factory.GetDatabase(template.DatabaseName);
             var baseTemplates = new List<Item>();
 
-            var templates = template.BaseTemplates.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries);
+            var templates = template.BaseTemplates.Value.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries);
             foreach (var templateId in templates)
             {
                 // resolve possible item paths
@@ -237,7 +237,8 @@ namespace Sitecore.Pathfinder.Builders.Templates
                 }
             }
 
-            template.BaseTemplates = string.Join("|", baseTemplates.Select(t => t.ID.ToString()));
+            // todo: hmm
+            template.BaseTemplates.SetValue(string.Join("|", baseTemplates.Select(t => t.ID.ToString())));
 
             return fields;
         }
@@ -416,30 +417,30 @@ namespace Sitecore.Pathfinder.Builders.Templates
                     item.Name = templateFieldBuilder.TemplateField.FieldName.Value;
                 }
 
-                if (!string.IsNullOrEmpty(templateFieldBuilder.TemplateField.Type))
+                if (!string.IsNullOrEmpty(templateFieldBuilder.TemplateField.Type.Value))
                 {
-                    item["Type"] = templateFieldBuilder.TemplateField.Type;
+                    item["Type"] = templateFieldBuilder.TemplateField.Type.Value;
                 }
 
                 item["Shared"] = templateFieldBuilder.TemplateField.Shared ? "1" : string.Empty;
                 item["Unversioned"] = templateFieldBuilder.TemplateField.Unversioned ? "1" : string.Empty;
 
-                if (!string.IsNullOrEmpty(templateFieldBuilder.TemplateField.Source))
+                if (!string.IsNullOrEmpty(templateFieldBuilder.TemplateField.Source.Value))
                 {
-                    item["Source"] = templateFieldBuilder.TemplateField.Source;
+                    item["Source"] = templateFieldBuilder.TemplateField.Source.Value;
                 }
 
-                if (!string.IsNullOrEmpty(templateFieldBuilder.TemplateField.ShortHelp))
+                if (!string.IsNullOrEmpty(templateFieldBuilder.TemplateField.ShortHelp.Value))
                 {
-                    item.Help.ToolTip = templateFieldBuilder.TemplateField.ShortHelp;
+                    item.Help.ToolTip = templateFieldBuilder.TemplateField.ShortHelp.Value;
                 }
 
-                if (!string.IsNullOrEmpty(templateFieldBuilder.TemplateField.LongHelp))
+                if (!string.IsNullOrEmpty(templateFieldBuilder.TemplateField.LongHelp.Value))
                 {
-                    item.Help.Text = templateFieldBuilder.TemplateField.LongHelp;
+                    item.Help.Text = templateFieldBuilder.TemplateField.LongHelp.Value;
                 }
 
-                item.Appearance.Sortorder = templateFieldBuilder.TemplateField.SortOrder;
+                item.Appearance.Sortorder = templateFieldBuilder.TemplateField.SortOrder.Value;
             }
 
             if (isNew)
@@ -481,9 +482,9 @@ namespace Sitecore.Pathfinder.Builders.Templates
                     templateSectionBuilder.Item.Name = templateSectionBuilder.TemplateSection.SectionName.Value;
                 }
 
-                if (!string.IsNullOrEmpty(templateSectionBuilder.TemplateSection.Icon))
+                if (!string.IsNullOrEmpty(templateSectionBuilder.TemplateSection.Icon.Value))
                 {
-                    templateSectionBuilder.Item.Appearance.Icon = templateSectionBuilder.TemplateSection.Icon;
+                    templateSectionBuilder.Item.Appearance.Icon = templateSectionBuilder.TemplateSection.Icon.Value;
                 }
             }
 
@@ -530,10 +531,10 @@ namespace Sitecore.Pathfinder.Builders.Templates
             using (new EditContext(item))
             {
                 item.Name = Template.ItemName.Value;
-                item[FieldIDs.BaseTemplate] = Template.BaseTemplates;
+                item[FieldIDs.BaseTemplate] = Template.BaseTemplates.Value;
                 item.Appearance.Icon = Template.Icon.Value;
-                item.Help.ToolTip = Template.ShortHelp;
-                item.Help.Text = Template.LongHelp;
+                item.Help.ToolTip = Template.ShortHelp.Value;
+                item.Help.Text = Template.LongHelp.Value;
                 item[FieldIDs.StandardValues] = Template.StandardValuesItem?.Guid.ToString("B").ToUpperInvariant() ?? string.Empty;
             }
 

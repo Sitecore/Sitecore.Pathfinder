@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Documents
 {
@@ -28,14 +27,14 @@ namespace Sitecore.Pathfinder.Documents
         [NotNull]
         string Value { get; }
 
-        [NotNull]
-        Attribute<T> GetAttribute<T>([NotNull] string attributeName, SourceFlags sourceFlags = SourceFlags.None);
-
         [CanBeNull]
         ITextNode GetAttributeTextNode([NotNull] string attributeName);
 
         [NotNull]
         string GetAttributeValue([NotNull] string attributeName, [NotNull] string defaultValue = "");
+
+        [CanBeNull]
+        ITextNode GetInnerTextNode();
 
         bool SetName([NotNull] string newName);
 

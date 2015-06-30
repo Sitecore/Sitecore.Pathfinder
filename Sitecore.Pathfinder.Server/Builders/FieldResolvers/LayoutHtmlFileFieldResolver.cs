@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Builders.FieldResolvers
 
         public override bool CanResolve(IEmitContext context, TemplateField templateField, Field field)
         {
-            return field.ValueHint.Contains("HtmlTemplate");
+            return field.ValueHint.Value.Contains("HtmlTemplate");
         }
 
         public override string Resolve(IEmitContext context, TemplateField templateField, Field field)
@@ -39,7 +39,7 @@ namespace Sitecore.Pathfinder.Builders.FieldResolvers
             var rendering = context.Project.Items.OfType<Rendering>().FirstOrDefault(i => string.Compare(i.FilePath, value, StringComparison.OrdinalIgnoreCase) == 0);
             if (rendering == null)
             {
-                context.Trace.TraceError("Rendering not found", value);
+                context.Trace.TraceError(Texts.Rendering_not_found, value);
                 return string.Empty;
             }
 

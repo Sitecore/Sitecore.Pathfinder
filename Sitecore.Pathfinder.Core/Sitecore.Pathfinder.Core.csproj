@@ -103,6 +103,7 @@
     <Compile Include="Configuration\FileContext.cs" />
     <Compile Include="Diagnostics\SourceTemplates.cs" />
     <Compile Include="Documents\AttributeNameTextNode.cs" />
+    <Compile Include="Documents\InnerTextNode.cs" />
     <Compile Include="Extensibility\CsharpCompiler.cs" />
     <Compile Include="Configuration\ConfigurationService.cs" />
     <Compile Include="Configuration\FactoryService.cs" />

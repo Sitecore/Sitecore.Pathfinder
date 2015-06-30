@@ -1,8 +1,8 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
+using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Documents
 {
@@ -13,9 +13,9 @@ namespace Sitecore.Pathfinder.Documents
             Snapshot = snapshot;
         }
 
-        public IEnumerable<ITextNode> Attributes { get; } = new TextNode[0];
+        public IEnumerable<ITextNode> Attributes => Enumerable.Empty<ITextNode>();
 
-        public IEnumerable<ITextNode> ChildNodes { get; } = new TextNode[0];
+        public IEnumerable<ITextNode> ChildNodes => Enumerable.Empty<ITextNode>();
 
         public string Name { get; } = string.Empty;
 
@@ -27,11 +27,6 @@ namespace Sitecore.Pathfinder.Documents
 
         public string Value => Snapshot.SourceFile.GetFileNameWithoutExtensions();
 
-        public Attribute<T> GetAttribute<T>(string attributeName, SourceFlags sourceFlags = SourceFlags.None)
-        {
-            return new Attribute<T>(attributeName, default(T));
-        }
-
         public ITextNode GetAttributeTextNode(string attributeName)
         {
             return null;
@@ -40,6 +35,11 @@ namespace Sitecore.Pathfinder.Documents
         public string GetAttributeValue(string attributeName, string defaultValue = "")
         {
             return string.Empty;
+        }
+
+        public ITextNode GetInnerTextNode()
+        {
+            return null;
         }
 
         public bool SetName(string newName)

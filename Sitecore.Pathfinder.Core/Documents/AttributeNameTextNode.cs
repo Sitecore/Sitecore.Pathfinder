@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Documents
 {
@@ -30,11 +29,6 @@ namespace Sitecore.Pathfinder.Documents
         [NotNull]
         protected ITextNode TextNode { get; }
 
-        public Attribute<T> GetAttribute<T>(string attributeName, SourceFlags sourceFlags = SourceFlags.None)
-        {
-            return new Attribute<T>(attributeName, default(T));
-        }
-
         public ITextNode GetAttributeTextNode(string attributeName)
         {
             return TextNode.GetAttributeTextNode(attributeName);
@@ -43,6 +37,11 @@ namespace Sitecore.Pathfinder.Documents
         public string GetAttributeValue(string attributeName, string defaultValue = "")
         {
             return TextNode.GetAttributeValue(attributeName, defaultValue);
+        }
+
+        public ITextNode GetInnerTextNode()
+        {
+            return null;
         }
 
         public bool SetName(string newName)

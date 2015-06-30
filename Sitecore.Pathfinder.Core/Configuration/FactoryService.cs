@@ -55,9 +55,18 @@ namespace Sitecore.Pathfinder.Configuration
             return new ExternalReferenceItem(project, externalReference, snapshot, databaseName, itemName, itemIdOrPath);
         }
 
-        public virtual Field Field(Item item, string fieldName, string language, int version, string value, string valueHint = "")
+        public virtual Field Field(Item item)
         {
-            return new Field(item, fieldName, language, version, value, valueHint);
+            return new Field(item);
+        }
+
+        [NotNull]
+        public Field Field(Item item, string fieldName, string fieldValue)
+        {
+            var field = new Field(item);
+            field.FieldName.SetValue(fieldName);
+            field.Value.SetValue(fieldValue);
+            return field;
         }
 
         public virtual FileReference FileReference(IProjectItem owner, Attribute<string> sourceAttribute, string targetQualifiedName)
