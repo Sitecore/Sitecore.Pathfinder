@@ -39,16 +39,6 @@ namespace Sitecore.Pathfinder.Projects
             _defaultValue = defaultValue;
         }
 
-        /*
-        public Attribute([NotNull] ITextNode sourceTextNode, SourceFlags sourceFlags = SourceFlags.None)
-        {
-            Name = sourceTextNode.Name;
-            Value = (T)Convert.ChangeType(sourceTextNode.Value, typeof(T));
-            Source = sourceTextNode;
-            SourceFlags = sourceFlags;
-        }
-        */
-
         [NotNull]
         public string Name { get; private set; }
 
@@ -82,6 +72,11 @@ namespace Sitecore.Pathfinder.Projects
             // todo: add source to sources
             Source = newAttribute.Source;
             return true;
+        }
+
+        public static implicit operator string(Attribute<T> attribute)
+        {
+            return attribute.Value.ToString();
         }
 
         public void Parse([NotNull] ITextNode textNode, T defaultValue = default(T))

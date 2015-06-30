@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Building.Testing.UnitTests.Pipelines
                 pipeline.Stream.WriteLine("            var database = Factory.GetDatabase(\"" + item.DatabaseName + "\");");
                 pipeline.Stream.WriteLine("            var item = database.GetItem(\"" + item.ItemIdOrPath + "\");");
                 pipeline.Stream.WriteLine("            Assert.IsNotNull(item);");
-                pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + item.ItemName.Value + "\", item.Name);");
+                pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + item.ItemName + "\", item.Name);");
 
                 if (!string.IsNullOrEmpty(item.TemplateIdOrPath.Value))
                 {

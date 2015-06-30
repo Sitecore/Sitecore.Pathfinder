@@ -4,7 +4,6 @@ using System;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Documents;
-using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
@@ -19,14 +18,14 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         {
             var itemName = GetItemName(context.ParseContext, textNode);
             var parentItemPath = textNode.GetAttributeValue("Parent-Item-Path", context.ParentItemPath);
-            var itemIdOrPath = parentItemPath + "/" + itemName.Value;
+            var itemIdOrPath = parentItemPath + "/" + itemName;
             var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
 
-            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemName.Value, itemIdOrPath, textNode.Name);
+            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemName, itemIdOrPath, textNode.Name);
             item.ItemName.Merge(itemName);
             item.TemplateIdOrPath.AddSource(new AttributeNameTextNode(textNode));
 
-            item.References.AddRange(ParseReferences(context, item, textNode, item.TemplateIdOrPath.Value));
+            item.References.AddRange(ParseReferences(context, item, textNode, item.TemplateIdOrPath));
 
             ParseAttributes(context, item, textNode);
 
@@ -58,7 +57,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
             item.Fields.Add(field);
 
-            item.References.AddRange(ParseReferences(context, item, fieldTextNode, field.Value.Value));
+            item.References.AddRange(ParseReferences(context, item, fieldTextNode, field.Value));
         }
     }
 }

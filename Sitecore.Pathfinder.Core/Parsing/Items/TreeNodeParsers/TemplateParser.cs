@@ -5,7 +5,6 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Documents;
-using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
@@ -28,7 +27,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             var itemIdOrPath = context.ParentItemPath + "/" + itemName.Value;
             var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
 
-            var template = context.ParseContext.Factory.Template(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemName.Value, itemIdOrPath);
+            var template = context.ParseContext.Factory.Template(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemName, itemIdOrPath);
             template.ItemName.Merge(itemName);
             template.BaseTemplates.Parse(textNode, Constants.Templates.StandardTemplate);
             template.Icon.Parse(textNode);

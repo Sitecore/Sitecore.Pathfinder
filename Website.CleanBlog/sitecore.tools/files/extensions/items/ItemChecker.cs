@@ -24,9 +24,9 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
 
         protected virtual void CheckGoodName([NotNull] ICheckerContext context, [NotNull] Attribute<string> itemName)
         {
-            if (itemName.Value.IndexOf(' ') >= 0 && itemName.Value != "__Standard Values")
+            if (itemName.Value.IndexOf(' ') >= 0 && itemName != "__Standard Values")
             {
-                context.Trace.TraceWarning("Name should not contain spaces", itemName.Source ?? TextNode.Empty, itemName.Value);
+                context.Trace.TraceWarning("Name should not contain spaces", itemName.Source ?? TextNode.Empty, itemName);
             }
         }
 
@@ -46,16 +46,16 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
 
             foreach (var field in item.Fields)
             {
-                var standardField = context.Project.Options.StandardTemplateFields.FirstOrDefault(f => string.Compare(f, field.FieldName.Value, StringComparison.OrdinalIgnoreCase) == 0);
+                var standardField = context.Project.Options.StandardTemplateFields.FirstOrDefault(f => string.Compare(f, field.FieldName, StringComparison.OrdinalIgnoreCase) == 0);
                 if (standardField != null)
                 {
                     continue;
                 }
 
-                var templateField = template.Sections.SelectMany(i => i.Fields).FirstOrDefault(f => string.Compare(f.FieldName.Value, field.FieldName.Value, StringComparison.OrdinalIgnoreCase) == 0);
+                var templateField = template.Sections.SelectMany(i => i.Fields).FirstOrDefault(f => string.Compare(f.FieldName, field.FieldName, StringComparison.OrdinalIgnoreCase) == 0);
                 if (templateField == null)
                 {
-                    context.Trace.TraceWarning("Field is not defined in the template", field.FieldName.Source ?? TextNode.Empty, field.FieldName.Value);
+                    context.Trace.TraceWarning("Field is not defined in the template", field.FieldName.Source ?? TextNode.Empty, field.FieldName);
                 }
             }
         }
