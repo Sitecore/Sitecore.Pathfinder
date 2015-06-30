@@ -113,6 +113,8 @@ namespace Sitecore.Pathfinder.Builders.Templates
                 {
                     item.Help.Text = Template.LongHelp;
                 }
+
+                item[FieldIDs.StandardValues] = Template.StandardValuesItem?.Guid.ToString("B").ToUpperInvariant() ?? string.Empty;
             }
 
             foreach (var section in Sections)
@@ -532,7 +534,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
                 item.Appearance.Icon = Template.Icon.Value;
                 item.Help.ToolTip = Template.ShortHelp;
                 item.Help.Text = Template.LongHelp;
-                item[FieldIDs.StandardFieldsID] = Template.StandardValuesItem?.Guid.ToString("B").ToUpperInvariant() ?? string.Empty;
+                item[FieldIDs.StandardValues] = Template.StandardValuesItem?.Guid.ToString("B").ToUpperInvariant() ?? string.Empty;
             }
 
             foreach (var templateSectionBuilder in Sections)

@@ -58,7 +58,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             var htmlTemplate = textNode.GetAttribute<string>("Layout.HtmlFile");
             if (!string.IsNullOrEmpty(htmlTemplate.Value))
             {
-                var field = context.ParseContext.Factory.Field(template.StandardValuesItem, "__Renderings", string.Empty, 0, "HtmlTemplate: " + htmlTemplate.Value);
+                var field = context.ParseContext.Factory.Field(template.StandardValuesItem, "__Renderings", string.Empty, 0, htmlTemplate.Value, "HtmlTemplate");
                 template.StandardValuesItem.Fields.Add(field);
             }
 

@@ -23,18 +23,18 @@ namespace Sitecore.Pathfinder.Builders.FieldResolvers
 
         public override bool CanResolve(IEmitContext context, TemplateField templateField, Field field)
         {
-            return string.Compare(templateField.Type, "layout", StringComparison.OrdinalIgnoreCase) == 0 && field.Value.Value.StartsWith("HtmlTemplate: ");
+            return field.ValueHint.Contains("HtmlTemplate");
         }
 
         public override string Resolve(IEmitContext context, TemplateField templateField, Field field)
         {
-            var htmlTemplate = field.Item.LayoutHtmlFile;
-            if (htmlTemplate == null)
+            var htmlTemplate = field.Value.Value;
+            if (string.IsNullOrEmpty(htmlTemplate))
             {
                 return string.Empty;
             }
 
-            var value = htmlTemplate.Value;
+            var value = htmlTemplate;
 
             var rendering = context.Project.Items.OfType<Rendering>().FirstOrDefault(i => string.Compare(i.FilePath, value, StringComparison.OrdinalIgnoreCase) == 0);
             if (rendering == null)

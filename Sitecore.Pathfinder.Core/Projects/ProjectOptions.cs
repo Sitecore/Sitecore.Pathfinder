@@ -23,5 +23,8 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull]
         public string ProjectDirectory { get; }
+
+        [NotNull]
+        public ICollection<string> StandardTemplateFields { get; } = new List<string>();
     }
 }

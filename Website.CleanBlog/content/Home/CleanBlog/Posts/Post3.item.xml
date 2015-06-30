@@ -1,4 +1,5 @@
 ﻿<Item xmlns="http://www.sitecore.net/pathfinder/item" Template="/sitecore/templates/CleanBlog/Post"> 
   <Field Name="Title">Science has not yet mastered prophecy</Field>
   <Field Name="SubTitle">We predict too much for the next year and yet far too little for the next ten.</Field>
+  <Field Name="Posted">Posted by Start Bootstrap on September 24, 2014</Field>
 </Item>

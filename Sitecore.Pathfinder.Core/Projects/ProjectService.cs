@@ -42,6 +42,7 @@ namespace Sitecore.Pathfinder.Projects
             var projectOptions = CreateProjectOptions();
 
             LoadExternalReferences(projectOptions);
+            LoadStandardTemplateFields(projectOptions);
 
             var sourceFileNames = new List<string>();
             LoadSourceFileNames(projectOptions, sourceFileNames);
@@ -70,6 +71,20 @@ namespace Sitecore.Pathfinder.Projects
                 if (!string.IsNullOrEmpty(value))
                 {
                     projectOptions.ExternalReferences.Add(value);
+                }
+            }
+        }
+
+        protected virtual void LoadStandardTemplateFields([NotNull] ProjectOptions projectOptions)
+        {
+            foreach (var pair in Configuration.GetSubKeys(Constants.Configuration.StandardTemplateFields))
+            {
+                projectOptions.StandardTemplateFields.Add(pair.Key);
+
+                var value = Configuration.Get(Constants.Configuration.StandardTemplateFields + ":" + pair.Key);
+                if (!string.IsNullOrEmpty(value))
+                {
+                    projectOptions.StandardTemplateFields.Add(value);
                 }
             }
         }

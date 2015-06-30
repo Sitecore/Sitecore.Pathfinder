@@ -8,7 +8,7 @@ using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Documents
 {
-    [DebuggerDisplay("{GetType().Name,nq}: {Name,nq} = {Value}")]
+    [DebuggerDisplay("\\{{GetType().FullName,nq}\\}: {Name,nq} = {Value}")]
     public class TextNode : ITextNode
     {
         public static readonly ITextNode Empty = new SnapshotTextNode(Documents.Snapshot.Empty);

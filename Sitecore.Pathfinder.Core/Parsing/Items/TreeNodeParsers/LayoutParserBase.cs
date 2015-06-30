@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemName, itemIdOrPath, string.Empty);
             item.ItemName.Source = itemNameTextNode;
 
-            var field = context.ParseContext.Factory.Field(item, "__Renderings", string.Empty, 0, "Layout: " + textNode.Value);
+            var field = context.ParseContext.Factory.Field(item, "__Renderings", string.Empty, 0, textNode.Value, "Layout");
             field.IsTestable = false;
             field.Value.Source = textNode;
 

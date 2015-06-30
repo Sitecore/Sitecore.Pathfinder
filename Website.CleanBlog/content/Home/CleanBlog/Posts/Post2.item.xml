@@ -1,3 +1,4 @@
 ﻿<Item xmlns="http://www.sitecore.net/pathfinder/item" Template="/sitecore/templates/CleanBlog/Post"> 
   <Field Name="Title">I believe every human has a finite number of heartbeats. I don't intend to waste any of mine.</Field>
+  <Field Name="Posted">Posted by Start Bootstrap on September 24, 2014</Field>
 </Item>

@@ -49,6 +49,8 @@ namespace Sitecore.Pathfinder
 
             public const string ExternalReferences = "external-references";
 
+            public const string StandardTemplateFields = "standard-template-fields";
+
             public const string HostName = "host-name";
 
             public const string IgnoreDirectories = "ignore-directories";

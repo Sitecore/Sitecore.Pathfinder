@@ -18,7 +18,7 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.ItemParserPipelines
                 return;
             }
 
-            var field = pipeline.Context.ParseContext.Factory.Field(pipeline.Item, "__Renderings", string.Empty, 0, "HtmlTemplate: " + pipeline.Item.LayoutHtmlFile?.Value);
+            var field = pipeline.Context.ParseContext.Factory.Field(pipeline.Item, "__Renderings", string.Empty, 0, pipeline.Item.LayoutHtmlFile?.Value, "HtmlTemplate");
             pipeline.Item.Fields.Add(field);
         }
     }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Data;
+using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Pathfinder.Diagnostics;
@@ -35,7 +36,7 @@ namespace Sitecore.Pathfinder.Builders.Items
         [Diagnostics.NotNull]
         public string TemplateIdOrPath { get; set; } = string.Empty;
 
-        public void Build([Diagnostics.NotNull] IEmitContext context)
+        public virtual void Build([Diagnostics.NotNull] IEmitContext context)
         {
             var database = context.DataService.GetDatabase(DatabaseName);
             if (database == null)
@@ -74,7 +75,7 @@ namespace Sitecore.Pathfinder.Builders.Items
         }
 
         [Diagnostics.NotNull]
-        protected Item CreateNewItem([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] Database database, [Diagnostics.NotNull] Item templateItem)
+        protected virtual Item CreateNewItem([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] Database database, [Diagnostics.NotNull] Item templateItem)
         {
             var parentItemPath = PathHelper.GetItemParentPath(ItemIdOrPath);
 
@@ -95,7 +96,35 @@ namespace Sitecore.Pathfinder.Builders.Items
             return item;
         }
 
-        protected void UpdateItem([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] Item templateItem)
+        protected virtual void SetFieldValue([Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string fieldName, [Diagnostics.NotNull] string fieldValue)
+        {
+            var field = item.Fields[fieldName];
+
+            if (string.Compare(field.Type, "layout", StringComparison.OrdinalIgnoreCase) != 0)
+            {
+                field.Value = fieldValue;
+                return;
+            }
+
+            // support layout deltas - may throw a MissingMethod exception on older Sitecore systems
+            try
+            {
+                SetLayoutFieldValue(field, fieldValue);
+            }
+            catch
+            {
+                field.Value = fieldValue;
+            }
+        }
+
+        protected virtual void SetLayoutFieldValue([Diagnostics.NotNull] Field field, [Diagnostics.NotNull] string value)
+        {
+            // handle layout deltas
+            var layoutField = new LayoutField(field);
+            layoutField.Value = value;
+        }
+
+        protected virtual void UpdateItem([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] Item templateItem)
         {
             // move
             if (string.Compare(item.Paths.Path, ItemIdOrPath, StringComparison.OrdinalIgnoreCase) != 0 && string.Compare(item.ID.ToString(), ItemIdOrPath, StringComparison.OrdinalIgnoreCase) != 0)
@@ -118,6 +147,8 @@ namespace Sitecore.Pathfinder.Builders.Items
             // rename and update fields
             using (new EditContext(item))
             {
+                item.Fields.ReadAll();
+
                 if (item.Name != ItemName)
                 {
                     item.Name = ItemName;
@@ -130,7 +161,7 @@ namespace Sitecore.Pathfinder.Builders.Items
 
                 foreach (var field in Fields.Where(i => string.IsNullOrEmpty(i.Language) && i.Version == 0))
                 {
-                    item[field.FieldName.Value] = field.Value;
+                    SetFieldValue(item, field.FieldName.Value, field.Value);
                 }
             }
 
@@ -154,9 +185,10 @@ namespace Sitecore.Pathfinder.Builders.Items
 
                     versionedItem.Editing.BeginEdit();
                     versionedItems.Add(versionedItem);
+                    versionedItem.Fields.ReadAll();
                 }
 
-                versionedItem[field.FieldName.Value] = field.Value;
+                SetFieldValue(versionedItem, field.FieldName.Value, field.Value);
             }
 
             foreach (var i in versionedItems)

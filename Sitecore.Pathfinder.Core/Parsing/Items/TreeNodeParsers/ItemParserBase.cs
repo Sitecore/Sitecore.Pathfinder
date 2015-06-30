@@ -113,9 +113,19 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
                 }
             }
 
+            /*
+            var inner = fieldTextNode.GetInnerText();
+            var attr = fieldTextNode.GetAttributeTextNode("Value");
+            var v = attr != null ? attr : inner;
+            if (inner != null && attr != null)
+            {
+                context.ParseContext.Trace.TraceWarning(Texts.Value_is_specified_in_both__Value__attribute_and_in_element__Using_value_from_attribute, fieldTextNode.Snapshot.SourceFile.FileName, valueAttributeTextNode.Position, fieldName);
+            }
+            */
+              
             var nameTextNode = fieldTextNode.GetAttributeTextNode("Name") ?? fieldTextNode;
-            var valueTextNode = fieldTextNode.GetAttributeTextNode("[Value]");
 
+            var valueTextNode = fieldTextNode.GetAttributeTextNode("[Value]");
             var valueAttributeTextNode = fieldTextNode.GetAttributeTextNode("Value");
             if (valueAttributeTextNode != null)
             {

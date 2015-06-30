@@ -26,7 +26,7 @@ namespace Sitecore.Pathfinder.Projects
         ConvertToCodelIdentifier = 0x11
     }
 
-    [DebuggerDisplay("{GetType().Name,nq}: {Name,nq} = {Value}")]
+    [DebuggerDisplay("\\{{GetType().FullName,nq}\\}: {Name,nq} = {Value}")]
     public class Attribute<T>
     {
         public Attribute([NotNull] string name, [NotNull] T value)
