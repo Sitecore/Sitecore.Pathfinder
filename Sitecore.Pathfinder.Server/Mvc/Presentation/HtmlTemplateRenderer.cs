@@ -20,6 +20,10 @@ namespace Sitecore.Pathfinder.Mvc.Presentation
 {
     public class HtmlTemplateRenderer : Renderer
     {
+        private static readonly Regex Contexts = new Regex("\\{\\{=([^\\}]*)\\}\\}([\\S\\W]*)\\{\\{/\\1\\}\\}", RegexOptions.Compiled);
+
+        private static readonly Regex Inverted = new Regex("\\{\\{\\^([^\\}]*)\\}\\}([\\S\\W]*)\\{\\{/\\1\\}\\}", RegexOptions.Compiled);
+
         private static readonly Regex Lists = new Regex("\\{\\{#([^\\}]*)\\}\\}([\\S\\W]*)\\{\\{/\\1\\}\\}", RegexOptions.Compiled);
 
         private static readonly Regex Mustaches = new Regex("\\{\\{([^\\}]*)\\}\\}", RegexOptions.Compiled);
@@ -40,7 +44,49 @@ namespace Sitecore.Pathfinder.Mvc.Presentation
         }
 
         [Diagnostics.NotNull]
-        private string ProcessLists([Diagnostics.NotNull] SitecoreHelper sitecoreHelper, [Diagnostics.NotNull] string output, [Diagnostics.NotNull] Item contextItem)
+        private string Process([Diagnostics.NotNull] SitecoreHelper sitecoreHelper, [Diagnostics.NotNull] Item contextItem, [Diagnostics.NotNull] string output)
+        {
+            output = ProcessLists(sitecoreHelper, contextItem, output);
+            output = ProcessContexts(sitecoreHelper, contextItem, output);
+            output = ProcessInverted(sitecoreHelper, contextItem, output);
+            output = ProcessValues(sitecoreHelper, contextItem, output);
+
+            return output;
+        }
+
+        [Diagnostics.NotNull]
+        private string ProcessContexts([Diagnostics.NotNull] SitecoreHelper sitecoreHelper, [Diagnostics.NotNull] Item contextItem, [Diagnostics.NotNull] string output)
+        {
+            MatchEvaluator evaluator = delegate(Match match)
+            {
+                var expression = match.Groups[1].Value.Trim();
+                var text = match.Groups[2].Value.Trim();
+
+                var item = contextItem.Database.GetItem(expression);
+                return item == null ? string.Empty : Process(sitecoreHelper, item, text);
+            };
+
+            return Contexts.Replace(output, evaluator);
+        }
+
+        [Diagnostics.NotNull]
+        private string ProcessInverted([Diagnostics.NotNull] SitecoreHelper sitecoreHelper, [Diagnostics.NotNull] Item contextItem, [Diagnostics.NotNull] string output)
+        {
+            MatchEvaluator evaluator = delegate(Match match)
+            {
+                var expression = match.Groups[1].Value.Trim();
+                var text = match.Groups[2].Value.Trim();
+
+                var value = contextItem[expression];
+                var isVisible = !string.IsNullOrEmpty(value) && value != "0" && string.Compare(value, "false", StringComparison.OrdinalIgnoreCase) != 0;
+                return !isVisible ? Process(sitecoreHelper, contextItem, text) : string.Empty;
+            };
+
+            return Inverted.Replace(output, evaluator);
+        }
+
+        [Diagnostics.NotNull]
+        private string ProcessLists([Diagnostics.NotNull] SitecoreHelper sitecoreHelper, [Diagnostics.NotNull] Item contextItem, [Diagnostics.NotNull] string output)
         {
             MatchEvaluator evaluator = delegate(Match match)
             {
@@ -54,50 +100,43 @@ namespace Sitecore.Pathfinder.Mvc.Presentation
 
                     foreach (var newContextitem in items)
                     {
-                        var section = ProcessLists(sitecoreHelper, text, newContextitem);
-                        section = ProcessValues(sitecoreHelper, section, newContextitem);
-
-                        list += section;
+                        list += Process(sitecoreHelper, newContextitem, text);
                     }
 
-                    text = list;
-                }
-                else
-                {
-                    var value = contextItem[expression];
-                    var isVisible = !string.IsNullOrEmpty(value) && value != "0" && string.Compare(value, "false", StringComparison.OrdinalIgnoreCase) != 0;
-                    if (isVisible)
-                    {
-                        text = ProcessLists(sitecoreHelper, text, contextItem);
-                        text = ProcessValues(sitecoreHelper, text, contextItem);
-                    }
-                    else
-                    {
-                        text = string.Empty;
-                    }
+                    return list;
                 }
 
-                return text;
+                var value = contextItem[expression];
+                var isVisible = !string.IsNullOrEmpty(value) && value != "0" && string.Compare(value, "false", StringComparison.OrdinalIgnoreCase) != 0;
+                return isVisible ? Process(sitecoreHelper, contextItem, text) : string.Empty;
             };
 
             return Lists.Replace(output, evaluator);
         }
 
         [Diagnostics.NotNull]
-        private string ProcessValues([Diagnostics.NotNull] SitecoreHelper sitecoreHelper, [Diagnostics.NotNull] string output, [Diagnostics.NotNull] Item contextItem)
+        private string ProcessValues([Diagnostics.NotNull] SitecoreHelper sitecoreHelper, [Diagnostics.NotNull] Item contextItem, [Diagnostics.NotNull] string output)
         {
             MatchEvaluator evaluator = delegate(Match match)
             {
                 var text = match.Groups[1].Value.Trim();
 
-                if (text.StartsWith("%", StringComparison.InvariantCultureIgnoreCase))
+                if (text.StartsWith("!", StringComparison.Ordinal))
                 {
+                    // comments are ignored
+                    return string.Empty;
+                }
+
+                if (text.StartsWith("%", StringComparison.Ordinal))
+                {
+                    // placeholders - extension to Mustache
                     var placeHolderName = text.Mid(1).Trim();
                     return sitecoreHelper.Placeholder(placeHolderName).ToString();
                 }
 
-                if (text.StartsWith(">", StringComparison.InvariantCultureIgnoreCase))
+                if (text.StartsWith(">", StringComparison.Ordinal))
                 {
+                    // partials
                     var filePath = text.Mid(1).Trim();
 
                     var directory = Path.GetDirectoryName(FileUtil.MapPath(FilePath)) ?? string.Empty;
@@ -145,6 +184,7 @@ namespace Sitecore.Pathfinder.Mvc.Presentation
                     item = item.Parent;
                 }
 
+                // todo: Html escaping is not working
                 return item == null ? string.Empty : sitecoreHelper.Field(text, item).ToString();
             };
 
@@ -161,8 +201,7 @@ namespace Sitecore.Pathfinder.Mvc.Presentation
 
             var output = FileUtil.ReadFromFile(filePath);
 
-            output = ProcessLists(sitecoreHelper, output, contextItem);
-            output = ProcessValues(sitecoreHelper, output, contextItem);
+            output = Process(sitecoreHelper, contextItem, output);
 
             return output;
         }

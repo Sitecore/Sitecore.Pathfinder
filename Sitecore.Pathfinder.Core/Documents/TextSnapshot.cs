@@ -12,6 +12,10 @@ namespace Sitecore.Pathfinder.Documents
             Root = new SnapshotTextNode(this);
         }
 
+        public string ParseError { get; protected set; } = string.Empty;
+
+        public TextPosition ParseErrorTextPosition { get; protected set; } = TextPosition.Empty;
+
         public virtual ITextNode Root { get; }
 
         public virtual void ValidateSchema(IParseContext context)

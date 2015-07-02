@@ -102,7 +102,7 @@ namespace Sitecore.Pathfinder.Builders.Items
 
             if (string.Compare(field.Type, "layout", StringComparison.OrdinalIgnoreCase) != 0)
             {
-                field.Value = fieldValue;
+                field.Value = fieldValue.Trim();
                 return;
             }
 
@@ -113,7 +113,7 @@ namespace Sitecore.Pathfinder.Builders.Items
             }
             catch
             {
-                field.Value = fieldValue;
+                field.Value = fieldValue.Trim();
             }
         }
 

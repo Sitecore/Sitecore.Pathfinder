@@ -8,6 +8,11 @@ namespace Sitecore.Pathfinder.Documents
     public interface ITextSnapshot : ISnapshot
     {
         [NotNull]
+        string ParseError { get; }
+
+        TextPosition ParseErrorTextPosition { get; }
+
+        [NotNull]
         ITextNode Root { get; }
 
         void ValidateSchema([NotNull] IParseContext context);

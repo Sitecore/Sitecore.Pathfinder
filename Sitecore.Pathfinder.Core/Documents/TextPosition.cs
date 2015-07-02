@@ -1,6 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Diagnostics;
+using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Documents
 {
@@ -21,5 +22,41 @@ namespace Sitecore.Pathfinder.Documents
         public int LineNumber { get; }
 
         public int LinePosition { get; }
+
+        public bool Equals(TextPosition other)
+        {
+            return LineLength == other.LineLength && LineNumber == other.LineNumber && LinePosition == other.LinePosition;
+        }
+
+        public override bool Equals([CanBeNull] object obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            return obj is TextPosition && Equals((TextPosition)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = LineLength;
+                hashCode = (hashCode * 397) ^ LineNumber;
+                hashCode = (hashCode * 397) ^ LinePosition;
+                return hashCode;
+            }
+        }
+
+        public static bool operator ==(TextPosition c1, TextPosition c2)
+        {
+            return c1.Equals(c2);
+        }
+
+        public static bool operator !=(TextPosition c1, TextPosition c2)
+        {
+            return !c1.Equals(c2);
+        }
     }
 }

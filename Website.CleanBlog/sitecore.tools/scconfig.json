@@ -25,7 +25,7 @@
 
     // NuGet settings
     "nuget": {
-        "filename": "sitecore.project\\sitecore.nuspec"
+        "filename": "sitecore.project\\SitecorePathfinderCleanBlog.nuspec"
     },
 
     "dependencies-directory": "sitecore.project\\dependencies",

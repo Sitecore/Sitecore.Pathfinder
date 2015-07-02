@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,8 +20,14 @@ namespace Sitecore.Pathfinder.Documents.Json
             {
                 RootToken = JToken.Parse(contents);
             }
-            catch
+            catch (JsonException ex)
             {
+                ParseError = ex.Message;
+                RootToken = null;
+            }
+            catch (Exception ex)
+            {
+                ParseError = ex.Message;
                 RootToken = null;
             }
         }

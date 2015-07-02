@@ -187,7 +187,7 @@
     <value>Text document expected</value>
   </data>
   <data name="Source_file_is_empty" xml:space="preserve">
-    <value>Source file is empty</value>
+    <value>Failed to parse document</value>
   </data>
   <data name="_Component__element_expected" xml:space="preserve">
     <value>'Component' element expected</value>

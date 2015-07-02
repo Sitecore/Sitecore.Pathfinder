@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
 using Sitecore.Pathfinder.Diagnostics;
@@ -27,8 +28,15 @@ namespace Sitecore.Pathfinder.Documents.Xml
                 var doc = XDocument.Parse(contents, LoadOptions.PreserveWhitespace | LoadOptions.SetLineInfo);
                 RootElement = doc.Root;
             }
-            catch
+            catch (XmlException ex)
             {
+                ParseError = ex.Message;
+                ParseErrorTextPosition = new TextPosition(ex.LineNumber, ex.LinePosition, 0);
+                RootElement = null;
+            }
+            catch (Exception ex)
+            {
+                ParseError = ex.Message;
                 RootElement = null;
             }
         }

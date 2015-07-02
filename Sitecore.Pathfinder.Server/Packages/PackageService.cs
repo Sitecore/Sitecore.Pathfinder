@@ -306,7 +306,7 @@ namespace Sitecore.Pathfinder.Packages
         protected virtual void InstallPackage([CanBeNull] object sender, [NotNull] PackageOperationEventArgs e)
         {
             // check if this is a Pathfinder NuGet package
-            var configFileName = Path.Combine(e.InstallPath, "sitecore.tools\\scconfig.json");
+            var configFileName = Path.Combine(e.InstallPath, "content\\sitecore.tools\\scconfig.json");
             if (!File.Exists(configFileName))
             {
                 return;

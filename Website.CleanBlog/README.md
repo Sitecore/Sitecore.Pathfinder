@@ -24,3 +24,9 @@ Start Bootstrap is based on the [Bootstrap](http://getbootstrap.com/) framework 
 ## Copyright and License
 
 Copyright 2013-2015 Iron Summit Media Strategies, LLC. Code released under the [Apache 2.0](https://github.com/IronSummitMedia/startbootstrap-clean-blog/blob/gh-pages/LICENSE) license.
+
+# Added: Sitecore Pathfinder
+This Html template has been modified to be used with Sitecore Pathfinder. 
+
+Specifically the about.html, contact.html, index.html and post.html files have been modified to support the Sitecore Pathfinder
+Html template engine.  
