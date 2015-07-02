@@ -11,6 +11,8 @@
     var packages = packageService.FindPackagesById(packageId);
     var nuget = packages.First();
 
+    var installedPackage = packageService.FindInstalledPackageById(packageId);
+
     var packageName = nuget.Package.Title ?? nuget.Package.Id;
     var iconUrl = nuget.Package.IconUrl != null ? nuget.Package.IconUrl.ToString() : "packageDefaultIcon-50x50.png";
     var published = nuget.Package.Published != null ? nuget.Package.Published.Value.ToString("d") ?? string.Empty : string.Empty;
@@ -212,10 +214,9 @@
                          <span><% = VersionUtility.PrettyPrint(dependency.VersionSpec) %></span>
                      </p>
                      <%
-
                         }
-                       }
-                       }
+                        }
+                        }
                      %>
 
                     <h3>Version History</h3>  
@@ -223,15 +224,44 @@
                         <tr>
                             <th>Version</th>
                             <th>Last update</th>
+                            <th>Action</th>
                         </tr>
                     <% foreach (var package in packages.OrderByDescending(p => p.Package.Version))
-                       { %>
+                       {
+                           var isInstalled = installedPackage != null && package.Version == installedPackage.Version;
+                            var installHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx?ins=" + System.Web.HttpUtility.UrlEncode(package.PackageId) + "&v=" + System.Web.HttpUtility.UrlEncode(package.Version.ToString());
+                            var updateHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx?upd=" + System.Web.HttpUtility.UrlEncode(package.PackageId) + "&v=" + System.Web.HttpUtility.UrlEncode(package.Version.ToString());
+                            var uninstallHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx?rem=" + System.Web.HttpUtility.UrlEncode(package.PackageId);
+
+                            %>
                        <tr>
                            <td>       
                                <% =package.Package.Version.ToString() %>
                            </td>
                            <td>       
                                <% =package.Package.Published != null ? package.Package.Published.Value.ToString("d") ?? string.Empty : string.Empty %>
+                           </td>
+                           <td>
+                            <% if (isInstalled)
+                                { %> 
+                                <span>Installed</span>
+                            <% } %>
+
+                            <% if (isInstalled)
+                                { %> 
+                                | <a href="<% =uninstallHref %>">Uninstall</a>
+                            <% } %>
+
+                            <% if (!isInstalled && installedPackage != null)
+                                { %> 
+                                <a href="<% =updateHref %>">Install</a>
+                            <% } %>
+
+                            <% if (!isInstalled && installedPackage == null)
+                                { %>
+                                 <a href="<% =installHref %>">Install</a>
+                            <% } %>
+                               
                            </td>
                        </tr>
                     <% } %>

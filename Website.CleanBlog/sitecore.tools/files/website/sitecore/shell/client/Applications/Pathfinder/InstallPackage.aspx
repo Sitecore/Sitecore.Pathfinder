@@ -8,6 +8,13 @@
 
     var packageService = new PackageService();
 
+    var versionString = WebUtil.GetQueryString("v", string.Empty);
+    NuGet.SemanticVersion version;
+    if (!NuGet.SemanticVersion.TryParse(versionString, out version))
+    {
+        version = null;
+    }
+
     // replace
     var packageId = WebUtil.GetQueryString("rep");
     if (!string.IsNullOrEmpty(packageId))
@@ -19,14 +26,14 @@
     packageId = WebUtil.GetQueryString("ins");
     if (!string.IsNullOrEmpty(packageId))
     {
-        packageService.InstallPackage(packageId);
+        packageService.InstallPackage(packageId, version);
     }
 
     // update
     packageId = WebUtil.GetQueryString("upd");
     if (!string.IsNullOrEmpty(packageId))
     {
-        packageService.UpdatePackage(packageId);
+        packageService.UpdatePackage(packageId, version);
     }
 
     // remove

@@ -20,6 +20,10 @@ namespace Sitecore.Pathfinder.Mvc.Presentation
 {
     public class HtmlTemplateRenderer : Renderer
     {
+        private static readonly Regex Lists = new Regex("\\{\\{#([^\\}]*)\\}\\}([\\S\\W]*)\\{\\{/\\1\\}\\}", RegexOptions.Compiled);
+
+        private static readonly Regex Mustaches = new Regex("\\{\\{([^\\}]*)\\}\\}", RegexOptions.Compiled);
+
         [Diagnostics.NotNull]
         public string FilePath { get; set; } = string.Empty;
 
@@ -50,7 +54,7 @@ namespace Sitecore.Pathfinder.Mvc.Presentation
 
                     foreach (var newContextitem in items)
                     {
-                        var section  = ProcessLists(sitecoreHelper, text, newContextitem);
+                        var section = ProcessLists(sitecoreHelper, text, newContextitem);
                         section = ProcessValues(sitecoreHelper, section, newContextitem);
 
                         list += section;
@@ -76,7 +80,7 @@ namespace Sitecore.Pathfinder.Mvc.Presentation
                 return text;
             };
 
-            return Regex.Replace(output, "\\{\\{#([^\\}]*)\\}\\}([\\S\\W]*)\\{\\{/\\1\\}\\}", evaluator);
+            return Lists.Replace(output, evaluator);
         }
 
         [Diagnostics.NotNull]
@@ -114,6 +118,8 @@ namespace Sitecore.Pathfinder.Mvc.Presentation
                         return contextItem.Paths.Path;
                     case "@templatename":
                         return contextItem.TemplateName;
+                    case "@templateid":
+                        return contextItem.TemplateID.ToString();
                     case "@url":
                         return LinkManager.GetItemUrl(contextItem);
                     case "@icon16x16":
@@ -142,7 +148,7 @@ namespace Sitecore.Pathfinder.Mvc.Presentation
                 return item == null ? string.Empty : sitecoreHelper.Field(text, item).ToString();
             };
 
-            return Regex.Replace(output, "\\{\\{([^\\}]*)\\}\\}", evaluator);
+            return Mustaches.Replace(output, evaluator);
         }
 
         [Diagnostics.NotNull]

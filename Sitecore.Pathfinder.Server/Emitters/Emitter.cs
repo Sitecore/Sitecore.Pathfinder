@@ -45,6 +45,7 @@ namespace Sitecore.Pathfinder.Emitters
 
         public virtual void Start()
         {
+            // todo: support installation without configuration files
             ConfigurationService.Load(LoadConfigurationOptions.None);
 
             var project = ProjectService.LoadProjectFromConfiguration();

@@ -18,8 +18,6 @@ namespace Sitecore.Pathfinder.Packages.Packages
 
         public override string PackageId => Package.Id;
 
-        public override string Status => "Available";
-
         public override SemanticVersion Version => Package.Version;
     }
 }

@@ -17,9 +17,6 @@ namespace Sitecore.Pathfinder.Packages.Packages
         public abstract string PackageId { get; }
 
         [Diagnostics.NotNull]
-        public abstract string Status { get; }
-
-        [Diagnostics.NotNull]
         public SemanticVersion UpdateVersion { get; set; }
 
         [Diagnostics.NotNull]

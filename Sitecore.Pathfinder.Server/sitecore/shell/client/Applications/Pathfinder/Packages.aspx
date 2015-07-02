@@ -1,15 +1,38 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" %>
-
 <%@ Import Namespace="Sitecore.Pathfinder.Packages" %>
 <%@ Import Namespace="Sitecore.Pathfinder.Packages.Packages" %>
+<%@ Import Namespace="Sitecore.Pathfinder.Text" %>
 <!DOCTYPE html>
 <%
     var queryText = Request.QueryString["q"] ?? string.Empty;
     var author = Request.QueryString["author"] ?? string.Empty;
     var tags = Request.QueryString["tags"] ?? string.Empty;
+    int skip;
+    if (!int.TryParse(Request.QueryString["i"], out skip))
+    {
+        skip = 0;
+    }
 
     var packageService = new PackageService();
-    var packages = packageService.CheckForAvailableUpdates(packageService.GetAvailablePackages(queryText, author, tags)).ToList();
+    var packages = packageService.CheckForAvailableUpdates(packageService.GetAvailablePackages(queryText, author, tags, skip)).ToList();
+    var totalPackageCount = packageService.GetTotalPackageCount(queryText, author, tags);
+
+    var previousButton = skip > 0 ? string.Empty : "disabled=\"disabled\"";
+    var nextButton = skip + 10 < totalPackageCount ? string.Empty : "disabled=\"disabled\"";
+
+    var nextUrl = new UrlString(Request.RawUrl);
+    nextUrl.Remove("i");
+    var previousUrl = new UrlString(Request.RawUrl);
+    previousUrl.Remove("i");
+    if (skip > 10)
+    {
+        previousUrl["i"] = (skip - 10).ToString();
+    }
+
+    if (skip < totalPackageCount - 10)
+    {
+        nextUrl["i"] = (skip + 10).ToString();
+    }
 %>
 <html class="fuelux">
 <head>
@@ -64,14 +87,14 @@
                                     <a href="#">
                                         <img class="menuicon" src="/~/icon/OfficeWhite/24x24/checkbox_selected.png" alt="Navigation"><span class="toplevel">Pathfinder</span>
                                     </a>
-                                    <img class="menuchevron">
+                                    <img class="menuchevron" alt="">
                                 </div>
                                 <div class="toplevelcontainer itemsContainer" style="display: block;">
                                     <div>
                                         <div class="itemRow menuItem depth2">
                                             <div class="leftcolumn">&nbsp;</div>
                                             <div class="rightcolumn">
-                                                <a href="/sitecore/shell/client/Applications/Pathfinder/InstalledPackages.aspx" class="sc-hyperlinkbutton">Installed Packages</a>
+                                                <!-- <a href="/sitecore/shell/client/Applications/Pathfinder/InstalledPackages.aspx" class="sc-hyperlinkbutton">Installed Packages</a> -->
                                             </div>
                                         </div>
                                     </div>
@@ -108,11 +131,13 @@
 
             <div class="sc-applicationHeader-row2">
                 <div class="sc-applicationHeader-back">
-                    <p style="font-size: 24px">There are <% =packages.Count().ToString("#,##0") %> packages</p>
+                    <p style="font-size: 24px">There are <% =totalPackageCount.ToString("#,##0") %> packages</p>
                 </div>
                 <div class="sc-applicationHeader-contextSwitcher">
                 </div>
                 <div class="sc-applicationHeader-actions">
+                    <a href="<% =previousUrl.ToString() %>" class="btn btn-default" <% =previousButton %>>Previous</a>
+                    <a href="<% =nextUrl.ToString() %>" class="btn btn-default" <% =@nextButton %>>Next</a>
                 </div>
             </div>
         </header>
@@ -216,7 +241,13 @@
 
                     <% } %>
                 </table>
+            </div>  
+
+            <div>
+                <a href="<% =previousUrl.ToString() %>" class="btn btn-default" <% =previousButton %>>Previous</a>
+                <a href="<% =nextUrl.ToString() %>" class="btn btn-default" <% =@nextButton %>>Next</a>
             </div>
+                   
         </section>
     </div>
 </body>

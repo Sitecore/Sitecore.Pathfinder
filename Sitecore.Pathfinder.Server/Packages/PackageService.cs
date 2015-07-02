@@ -108,31 +108,36 @@ namespace Sitecore.Pathfinder.Packages
             return packages.Select(p => new NugetPackage(p)).ToList();
         }
 
-        [NotNull]
-        public virtual IEnumerable<PackageBase> GetAvailablePackages([Diagnostics.NotNull] string queryText, [Diagnostics.NotNull] string author, [Diagnostics.NotNull] string tags)
+        [Diagnostics.CanBeNull]
+        public virtual NugetPackage FindInstalledPackageById([NotNull] string packageId)
         {
-            var availableRepository = GetAvailableRepository();
+            var installedRepository = GetInstalledRepository();
 
-            var query = availableRepository.GetPackages();
-
-            if (!string.IsNullOrEmpty(queryText))
+            var packages = installedRepository.FindPackagesById(packageId);
+            if (packages == null || !packages.Any())
             {
-                query = query.Where(p => p.Id.IndexOf(queryText, StringComparison.InvariantCultureIgnoreCase) >= 0 || (p.Title != null && p.Title.IndexOf(queryText, StringComparison.InvariantCultureIgnoreCase) >= 0));
+                return null;
             }
 
-            if (!string.IsNullOrEmpty(author))
+            return new NugetPackage(packages.First());
+        }
+
+        [NotNull]
+        public virtual IEnumerable<PackageBase> GetAvailablePackages([Diagnostics.NotNull] string queryText, [Diagnostics.NotNull] string author, [Diagnostics.NotNull] string tags, int skip = -1)
+        {
+            var query = GetAvailablePackagesQuery(queryText, author, tags);
+
+            if (skip >= 0)
             {
-                query = query.Where(p => p.Authors.Any(a => string.Compare(a, author, StringComparison.OrdinalIgnoreCase) == 0));
+                query = query.Skip(skip).Take(10);
             }
 
-            if (!string.IsNullOrEmpty(tags))
-            {
-                query = query.Where(p => p.Tags != null && p.Tags.Contains(tags));
-            }
-
-            var tempQuery = query.ToList();
-
-            return tempQuery.GroupBy(p => p.Id).Select(y => y.OrderByDescending(p => p.Version).First()).OrderBy(p => p.Title).Select(p => new NugetPackage(p)).ToList();
+            return query.Select(p => new NugetPackage(p)).ToList();
+        }
+        public virtual int GetTotalPackageCount([Diagnostics.NotNull] string queryText, [Diagnostics.NotNull] string author, [Diagnostics.NotNull] string tags)
+        {
+            var query = GetAvailablePackagesQuery(queryText, author, tags);
+            return query.Count();
         }
 
         [NotNull]
@@ -190,11 +195,11 @@ namespace Sitecore.Pathfinder.Packages
             }
         }
 
-        public virtual void InstallPackage([NotNull] string packageId)
+        public virtual void InstallPackage([NotNull] string packageId, [CanBeNull] SemanticVersion version)
         {
             var availableRepository = GetAvailableRepository();
 
-            var package = availableRepository.FindPackage(packageId);
+            var package = version == null ? availableRepository.FindPackage(packageId) : availableRepository.FindPackage(packageId, version);
             if (package == null)
             {
                 throw new InvalidOperationException("Package not found: " + packageId);
@@ -221,20 +226,48 @@ namespace Sitecore.Pathfinder.Packages
             packageManager.UninstallPackage(package, true);
         }
 
-        public virtual void UpdatePackage([NotNull] string packageId)
+        public virtual void UpdatePackage([NotNull] string packageId, [CanBeNull] SemanticVersion version)
         {
             var availableRepository = GetAvailableRepository();
-
-            var package = availableRepository.FindPackage(packageId);
-            if (package == null)
-            {
-                throw new InvalidOperationException("Package not found: " + packageId);
-            }
 
             var packageManager = new PackageManager(availableRepository, InstalledRepository);
             packageManager.PackageInstalled += InstallPackage;
 
-            packageManager.UpdatePackage(package, false, true);
+            if (version != null)
+            {
+                packageManager.UpdatePackage(packageId, version, false, true);
+            }
+            else
+            {
+                packageManager.UpdatePackage(packageId, false, true);
+            }
+        }
+
+        [NotNull]
+        protected virtual IEnumerable<IPackage> GetAvailablePackagesQuery([Diagnostics.NotNull] string queryText, [Diagnostics.NotNull] string author, [Diagnostics.NotNull] string tags)
+        {
+            var availableRepository = GetAvailableRepository();
+
+            var query = availableRepository.GetPackages();
+
+            if (!string.IsNullOrEmpty(queryText))
+            {
+                query = query.Where(p => p.Id.IndexOf(queryText, StringComparison.InvariantCultureIgnoreCase) >= 0 || (p.Title != null && p.Title.IndexOf(queryText, StringComparison.InvariantCultureIgnoreCase) >= 0));
+            }
+
+            if (!string.IsNullOrEmpty(author))
+            {
+                query = query.Where(p => p.Authors.Any(a => string.Compare(a, author, StringComparison.OrdinalIgnoreCase) == 0));
+            }
+
+            if (!string.IsNullOrEmpty(tags))
+            {
+                query = query.Where(p => p.Tags != null && p.Tags.Contains(tags));
+            }
+
+            var tempQuery = query.ToList();
+
+            return tempQuery.GroupBy(p => p.Id).Select(y => y.OrderByDescending(p => p.Version).First()).OrderBy(p => p.Title);
         }
 
         [NotNull]
@@ -242,7 +275,7 @@ namespace Sitecore.Pathfinder.Packages
         {
             var repositories = new List<IPackageRepository>
             {
-                PackageRepositoryFactory.Default.CreateRepository(AvailableRepository),
+                PackageRepositoryFactory.Default.CreateRepository(AvailableRepository)
             };
 
             var packageSources = FileUtil.MapPath("/sitecore/shell/client/Applications/Pathfinder/PackageSources.txt");
@@ -272,6 +305,13 @@ namespace Sitecore.Pathfinder.Packages
 
         protected virtual void InstallPackage([CanBeNull] object sender, [NotNull] PackageOperationEventArgs e)
         {
+            // check if this is a Pathfinder NuGet package
+            var configFileName = Path.Combine(e.InstallPath, "sitecore.tools\\scconfig.json");
+            if (!File.Exists(configFileName))
+            {
+                return;
+            }
+
             var emitService = new EmitService(e.InstallPath);
             emitService.Start();
         }

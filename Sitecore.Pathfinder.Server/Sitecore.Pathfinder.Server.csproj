@@ -161,11 +161,11 @@
     <Compile Include="Emitters\Items\TemplateEmitter.cs" />
     <Compile Include="Mvc\Presentation\HtmlTemplateRenderer.cs" />
     <Compile Include="Mvc\Response\GetRenderer\GetHtmlTemplateRenderer.cs" />
-    <Compile Include="Packages\Packages\NugetPackage.cs" />
-    <Compile Include="Packages\Packages\PackageBase.cs" />
     <Compile Include="Packages\PackageService.cs" />
     <Compile Include="Builders\FieldResolvers\Layouts\JsonLayoutResolver.cs" />
     <Compile Include="Builders\FieldResolvers\Layouts\XmlLayoutResolver.cs" />
+    <Compile Include="Packages\Packages\NugetPackage.cs" />
+    <Compile Include="Packages\Packages\PackageBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="sitecore\shell\client\Applications\Pathfinder\SitecoreRocksValidation.ashx.cs">
       <DependentUpon>SitecoreRocksValidation.ashx</DependentUpon>
