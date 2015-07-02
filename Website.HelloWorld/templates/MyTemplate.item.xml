@@ -1,5 +1,0 @@
-﻿<Template xmlns="http://www.sitecore.net/pathfinder/item">
-  <Section Name="Data">
-    <Field Name="Title" Type="Rich Text" />
-  </Section>
-</Template>

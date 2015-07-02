@@ -29,6 +29,7 @@ Pathfinder makes it easy to start working with Sitecore.
 3. Execute the scc.exe in the sitecore.tools folder
 4. Edit the scconfig.json file to setup 'project-unique-id', 'wwwroot' and 'host-name'
 5. Done - you are now ready
+6. Copy a starter kit to your project directory. Starter kits are located in sitecore.tools/files/kits/.
 
 In step 3 Pathfinder creates a blank project for you. It consists of a number of directories and files, 
 including an scc.cmd file which is a shortcut to the sitecore.tools\scc.exe file.
