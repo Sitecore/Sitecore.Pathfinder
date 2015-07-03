@@ -4,9 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.Framework.ConfigurationModel;
-using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Extensions
 {
@@ -43,6 +41,12 @@ namespace Sitecore.Pathfinder.Extensions
         {
             string value;
             return configuration.TryGet(key, out value) ? string.Compare(value, "true", StringComparison.OrdinalIgnoreCase) == 0 : defaultValue;
+        }
+
+        [NotNull]
+        public static string GetCommandLineArg([NotNull] this IConfiguration configuration, int position)
+        {
+            return configuration.GetString("arg" + position);
         }
 
         [NotNull]

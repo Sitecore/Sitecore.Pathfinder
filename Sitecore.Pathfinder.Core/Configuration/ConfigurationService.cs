@@ -23,6 +23,50 @@ namespace Sitecore.Pathfinder.Configuration
 
         public IConfiguration Configuration { get; }
 
+        public virtual void AddCommandLine([NotNull] IConfigurationSourceRoot configurationSourceRoot)
+        {
+            // cut off executable name
+            var commandLineArgs = Environment.GetCommandLineArgs().Skip(1).ToList();
+            AddCommandLine(configurationSourceRoot, commandLineArgs);
+        }
+
+        public virtual void AddCommandLine([NotNull] IConfigurationSourceRoot configurationSourceRoot, [NotNull] IEnumerable<string> commandLineArgs)
+        {
+            var args = new List<string>();
+
+            var positionalArg = 0;
+            for (var n = 0; n < commandLineArgs.Count(); n++)
+            {
+                var arg = commandLineArgs.ElementAt(n);
+
+                // if the arg is not a switch, add it to the list of position args
+                if (!arg.StartsWith("-") && !arg.StartsWith("/"))
+                {
+                    args.Add("/arg" + positionalArg);
+                    args.Add(arg);
+
+                    positionalArg++;
+
+                    continue;
+                }
+
+                // if the arg is a switch, add it to the list of args to pass to the commandline configuration
+                args.Add(arg);
+                if (arg.IndexOf('=') >= 0)
+                {
+                    continue;
+                }
+
+                n++;
+                if (n < commandLineArgs.Count())
+                {
+                    args.Add(commandLineArgs.ElementAt(n));
+                }
+            }
+
+            configurationSourceRoot.AddCommandLine(args.ToArray());
+        }
+
         public virtual void Load(LoadConfigurationOptions options)
         {
             var configurationSourceRoot = Configuration as IConfigurationSourceRoot;
@@ -62,50 +106,6 @@ namespace Sitecore.Pathfinder.Configuration
             // set project directory
             var projectDirectory = PathHelper.NormalizeFilePath(configurationSourceRoot.GetString(Constants.Configuration.ProjectDirectory)).TrimStart('\\');
             configurationSourceRoot.Set(Constants.Configuration.ProjectDirectory, projectDirectory);
-        }
-
-        private void AddCommandLine([NotNull] IConfigurationSourceRoot configurationSourceRoot)
-        {
-            // cut off executable name
-            var list = Environment.GetCommandLineArgs().Skip(1).ToList();
-            var args = new List<string>();
-
-            for (var n = 0; n < list.Count; n++)
-            {
-                var arg = list[n];
-
-                // if the arg is a switch, add it to the list of args to pass to the commandline configuration
-                if (!arg.StartsWith("-") && !arg.StartsWith("/"))
-                {
-                    // ignore "build", it is default
-                    if (string.Compare(arg, "Build", StringComparison.OrdinalIgnoreCase) != 0)
-                    {
-                        configurationSourceRoot.Set("run", arg);
-                    }
-
-                    continue;
-                }
-
-                args.Add(arg);
-                if (arg.IndexOf('=') >= 0)
-                {
-                    continue;
-                }
-
-                n++;
-                if (n < list.Count)
-                {
-                    args.Add(list[n]);
-                }
-            }
-
-            var switchMappings = new Dictionary<string, string>()
-            {
-                ["-r"] = "run",
-                ["--r"] = "run",
-            };
-
-            configurationSourceRoot.AddCommandLine(args.ToArray(), switchMappings);
         }
     }
 }

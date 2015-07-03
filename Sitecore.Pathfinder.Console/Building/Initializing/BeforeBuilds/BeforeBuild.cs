@@ -5,6 +5,7 @@ using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 
@@ -13,9 +14,14 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
     [Export(typeof(ITask))]
     public class BeforeBuild : TaskBase
     {
-        public BeforeBuild() : base("before-build")
+        [ImportingConstructor]
+        public BeforeBuild([NotNull] IPipelineService pipelineService) : base("before-build")
         {
+            PipelineService = pipelineService;
         }
+
+        [NotNull]
+        protected IPipelineService PipelineService { get; }
 
         public override void Run(IBuildContext context)
         {
@@ -82,6 +88,8 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
             {
                 UpdateFiles(context, sourceDirectory, websiteDirectory);
             }
+
+            PipelineService.Resolve<BeforeBuildPipeline>().Execute(context);
         }
 
         protected virtual void UpdateFiles([NotNull] IBuildContext context, [NotNull] string sourceDirectory, [NotNull] string websiteDirectory)

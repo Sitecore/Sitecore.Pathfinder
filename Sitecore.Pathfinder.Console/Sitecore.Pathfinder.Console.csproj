@@ -150,6 +150,7 @@
     <Compile Include="Building\Deploying\Installpackage\InstallPackage.cs" />
     <Compile Include="Building\Deploying\PublishDatabase\PublishDatabase.cs" />
     <Compile Include="Building\Initializing\BeforeBuilds\BeforeBuild.cs" />
+    <Compile Include="Building\Initializing\BeforeBuilds\BeforeBuildPipeline.cs" />
     <Compile Include="Building\Initializing\Help\Help.cs" />
     <Compile Include="Building\Commands\ListTasks.cs" />
     <Compile Include="Building\Deploying\CopyDependencies\CopyDependencies.cs" />

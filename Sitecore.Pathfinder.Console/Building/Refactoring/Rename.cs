@@ -21,14 +21,24 @@ namespace Sitecore.Pathfinder.Building.Refactoring
         {
             context.DisplayDoneMessage = false;
 
-            var qualifiedName = context.Configuration.GetString("name").Trim();
+            var qualifiedName = context.Configuration.GetCommandLineArg(1).Trim();
+            if (string.IsNullOrEmpty(qualifiedName))
+            {
+                qualifiedName = context.Configuration.GetString("name").Trim();
+            }
+
             if (string.IsNullOrEmpty(qualifiedName))
             {
                 context.Trace.Writeline(Texts.You_must_specific_the___name_argument);
                 return;
             }
 
-            var newShortName = context.Configuration.GetString("to").Trim();
+            var newShortName = context.Configuration.GetCommandLineArg(2).Trim();
+            if (string.IsNullOrEmpty(newShortName))
+            {
+                newShortName = context.Configuration.GetString("to").Trim();
+            }
+
             if (string.IsNullOrEmpty(newShortName))
             {
                 context.Trace.Writeline(Texts.You_must_specific_the___to_argument);

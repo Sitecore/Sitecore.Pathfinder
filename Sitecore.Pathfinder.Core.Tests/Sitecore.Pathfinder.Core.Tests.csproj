@@ -78,6 +78,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Configuration\ConfigurationServicesTests.cs" />
     <Compile Include="Helpers\Services.cs" />
     <Compile Include="IO\MockedFileSystemService.cs" />
     <Compile Include="Documents\Json\JsonDocumentTests.cs" />
@@ -216,7 +217,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Website_2content_2Home_2Foo_1item_1json__JSONSchema="item.schema.json" Website_2content_2Home_2JsonContentItem_1master_1content_1json__JSONSchema="..\..\.schemas\master.content.schema.json" />
+      <UserProperties Website_2content_2Home_2JsonContentItem_1master_1content_1json__JSONSchema="..\..\.schemas\master.content.schema.json" Website_2content_2Home_2Foo_1item_1json__JSONSchema="item.schema.json" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

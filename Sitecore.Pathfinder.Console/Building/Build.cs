@@ -49,6 +49,7 @@ namespace Sitecore.Pathfinder.Building
             }
 
             var context = CompositionService.Resolve<IBuildContext>();
+
             Run(context);
 
             if (context.DisplayDoneMessage)
@@ -63,15 +64,26 @@ namespace Sitecore.Pathfinder.Building
         {
             string pipeline;
 
-            var run = context.Configuration.GetString("run");
-            if (!string.IsNullOrEmpty(run))
+            // get first positional command line argument or the run parameter
+            var pipelineName = context.Configuration.GetCommandLineArg(0);
+            if (string.IsNullOrEmpty(pipelineName))
             {
-                pipeline = context.Configuration.GetString(run + ":pipeline");
+                pipelineName = context.Configuration.GetString("run");
+            }
 
-                if (string.IsNullOrEmpty(pipeline))
+            if (!string.IsNullOrEmpty(pipelineName) && pipelineName != "build")
+            {
+                // look for named task
+                var task = Tasks.FirstOrDefault(t => string.Compare(t.TaskName, pipelineName, StringComparison.OrdinalIgnoreCase) == 0);
+                if (task != null)
                 {
-                    pipeline = run;
+                    return new[]
+                    {
+                        pipelineName
+                    };
                 }
+
+                pipeline = context.Configuration.GetString(pipelineName + ":pipeline");
             }
             else
             {
@@ -79,13 +91,6 @@ namespace Sitecore.Pathfinder.Building
             }
 
             var taskNames = pipeline.Split(Constants.Space, StringSplitOptions.RemoveEmptyEntries).Select(t => t.Trim()).ToList();
-
-            if (taskNames.Any())
-            {
-                // inject 'before-build' task as the first task
-                taskNames.Insert(0, "before-build");
-            }
-
             return taskNames;
         }
 
@@ -97,6 +102,9 @@ namespace Sitecore.Pathfinder.Building
                 context.Trace.TraceWarning(Texts.Pipeline_is_empty__There_are_no_tasks_to_execute_);
                 return;
             }
+
+            // always run the before-build task
+            RunTask(context, "before-build");
 
             foreach (var taskName in pipeline)
             {
