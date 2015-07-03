@@ -53,11 +53,6 @@
         "timeout": "600"
     },
 
-    // maps a code generation template file to a project item type
-    "codegen": {
-        "sitecore.tools\\files\\codegen\\Template.cshtml": "Sitecore.Pathfinder.Projects.Templates.Template, Sitecore.Pathfinder.Core"
-    },
-
     "update-resources-url": "/sitecore/shell/client/Applications/Pathfinder/UpdateResources.ashx",
 
     "web-test-runner-url": "/sitecore/shell/client/Applications/Pathfinder/WebTestRunner.ashx",
