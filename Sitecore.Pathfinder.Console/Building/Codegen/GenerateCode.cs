@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Sitecore.Pathfinder.CodeGeneration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
@@ -41,17 +40,14 @@ namespace Sitecore.Pathfinder.Building.Codegen
 
         protected virtual void Generate([NotNull] IBuildContext context, [NotNull] ICodeGenerator codeGenerator, [NotNull] IProjectItem projectItem)
         {
-            var targetFileName = Path.GetDirectoryName(projectItem.Snapshots.First().SourceFile.FileName) ?? string.Empty;
-            targetFileName = Path.Combine(targetFileName, projectItem.ShortName) + ".g.cs";
+            var baseFileName = Path.GetDirectoryName(projectItem.Snapshots.First().SourceFile.FileName) ?? string.Empty;
+            baseFileName = Path.Combine(baseFileName, projectItem.ShortName);
 
-            context.FileSystem.CreateDirectory(Path.GetDirectoryName(targetFileName) ?? string.Empty);
+            context.FileSystem.CreateDirectory(Path.GetDirectoryName(baseFileName) ?? string.Empty);
 
-            using (var output = new StreamWriter(targetFileName, false, Encoding.UTF8))
-            {
-                codeGenerator.Generate(output, targetFileName, projectItem);
-            }
+            codeGenerator.Generate(baseFileName, projectItem);
 
-            context.Trace.TraceInformation(PathHelper.UnmapPath(context.SolutionDirectory, targetFileName));
+            context.Trace.TraceInformation(PathHelper.UnmapPath(context.SolutionDirectory, baseFileName));
         }
     }
 }

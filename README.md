@@ -1,5 +1,9 @@
 # Sitecore Pathfinder
 
+### Disclaimer
+Sitecore Pathfinder is a personal side project. It is not endorsed or supported by Sitecore in any way.
+
+## Get Started
 Get started, get far, get happy!
 
 ![Sitecore Pathfinder](.docs/img/SitecorePathfinder.PNG)
@@ -29,7 +33,7 @@ Pathfinder makes it easy to start working with Sitecore.
 3. Execute the scc.exe in the sitecore.tools folder
 4. Edit the scconfig.json file to setup 'project-unique-id', 'wwwroot' and 'host-name'
 5. Done - you are now ready
-6. Copy a starter kit to your project directory. Starter kits are located in sitecore.tools/files/kits/.
+6. Copy a starter kit to your project directory. Starter kits are located in sitecore.tools/files/starterkits/.
 
 In step 3 Pathfinder creates a blank project for you. It consists of a number of directories and files, 
 including an scc.cmd file which is a shortcut to the sitecore.tools\scc.exe file.
@@ -50,7 +54,7 @@ including an scc.cmd file which is a shortcut to the sitecore.tools\scc.exe file
 
 # Features
 
-## Sitecore items as files
+## Sitecore items and templates as files
 In Pathfinder everything is a file, including Sitecore items. This is so that your project directory can contain the whole and single truth
 about your project. Your project is no longer spread across development projects, databases and websites.
 
@@ -94,15 +98,28 @@ as item name.
 Likewise the directory path is used as item path. The root of the project corresponds to /sitecore, so having the item file
 "[Project]\content\Home\HelloWorld.item.xml" will create the item "/sitecore/content/Home/HelloWorld".
 
-### Path calculation
+### File system mapping
+The filesystem structure of the project does not necessary corresponds to the desired structure on the website.
 
-Files:
-* Local directory: $SolutionDirectory/$ProjectDirectory/[FilePath]
-* Website directory: /$WebsiteProjectDirectory/$ProjectName/[FilePath]
+In the scconfig.json file, you can map files and items to different locations on the website.
 
-Items: 
-* Local directory: $SolutionDirectory/$ProjectDirectory/[ItemPath]
-* Website directory: /"sitecore"/$WebsiteItemPath/[ItemPath]
+```js
+"files": {
+    "html": {
+        "project-directory": "",
+        "include": "/*.html",
+        "website-directory": "/MyProject/layout/renderings",
+        "item-path": "/sitecore/layout/renderings/MyProject",
+        "database": "master"
+    },
+    "img": {
+        "project-directory": "/img",
+        "include": "**",
+        "website-directory": "",
+        "item-path": "/sitecore/media library/MyProject"
+    }
+}
+```
 
 
 #### Nested items
@@ -239,6 +256,17 @@ Extension            | Description
 .css                 | Stylesheet content file
 .config              | Config content file
 
+## Extensions
+Pathfinder includes the Roslyn compiler to compile extensions on the fly. Extensions are C# files that are compiled and loaded dynamically through 
+(MEF)[https://msdn.microsoft.com/en-us/library/dd460648(v=vs.110).aspx]. This allows you to extend Pathfinder with new tasks, checkers, code 
+generation handler and much more. 
+
+When Pathfinder starts it looks through the /sitecore.tools/files/extensions directory to find any extension files, and if any file is newer than the
+Sitecore.Pathfinder.Extensions.dll assembly, it recompiles the files and saves the output as Sitecore.Pathfinder.Extensions.dll.
+
+For instance to make a new checker, duplicate a file in /sitecore.tools/files/extensions/checkers and start Pathfinder. Pathfinder will detect the
+new file and recompile the assembly.
+
 ## Unit testing
 [Watch the video](https://www.youtube.com/watch?v=DWU6D7L8ykg)
 
@@ -327,6 +355,8 @@ placeholder.
 Pathfinder creates .html as View renderings and these renderings can used as any other Sitecore rendering.
 
 ## Code Generation
+*Please notice that the video is out-of-date. Code Generation now uses extensions and not Razor files.*
+
 [Watch the video](http://youtu.be/ZM3ve1WhwwQ)
 
 Pathfinder can generate code based on your project. The most obvious thing is to generate a C# class for each template in
@@ -335,15 +365,7 @@ the project.
 To generate code, execute the task `generate-code`. This wil iterate through the elements in the project and check if
 a code generator is available for that item. If so, the code generator is executed.
 
-In the system scconfig.json, you can map a code generator (a Razor view) to a C# type. 
-
-```js
-"codegen": {
-    "sitecore.tools\\files\\codegen\\Template.cshtml": "Sitecore.Pathfinder.Projects.Templates.Template, Sitecore.Pathfinder.Core"
-}
-```
-
-In this case the code generator is a Razor file. The Razor file receives the instance of the template as a model.
+Code generators are simply extensions that are located in the /sitecore.tools/extensions/codegen directory.
 
 Normally you want to run the `generate-code` task before building an assembly, so the C# source files are up-to-date.
 

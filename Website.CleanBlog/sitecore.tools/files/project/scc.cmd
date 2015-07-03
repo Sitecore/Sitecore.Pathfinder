@@ -1,0 +1,1 @@
+@sitecore.tools\scc.exe %*

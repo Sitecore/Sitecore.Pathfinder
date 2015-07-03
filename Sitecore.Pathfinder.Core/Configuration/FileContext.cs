@@ -47,7 +47,7 @@ namespace Sitecore.Pathfinder.Configuration
             foreach (var pair in configuration.GetSubKeys("files"))
             {
                 var key = "files:" + pair.Key;
-                var localDirectory = PathHelper.NormalizeItemPath(configuration.GetString(key + ":local-file-directory")).TrimStart('\\');
+                var localDirectory = PathHelper.NormalizeItemPath(configuration.GetString(key + ":project-directory")).TrimStart('\\');
 
                 if (!localFileName.StartsWith(localDirectory, StringComparison.OrdinalIgnoreCase))
                 {
@@ -66,7 +66,7 @@ namespace Sitecore.Pathfinder.Configuration
                 }
 
                 localFileDirectory = localDirectory;
-                serverFileDirectory = configuration.GetString(key + ":server-file-directory");
+                serverFileDirectory = configuration.GetString(key + ":website-directory");
                 itemPathConfig = configuration.GetString(key + ":item-path");
                 database = configuration.Get(key + ":database");
 

@@ -21,16 +21,16 @@
     // mapping of files between local path and server path and item path
     "files": {
          "html": {
-             "local-file-directory": "",
+             "project-directory": "",
              "include": "/*.html",
-             "server-file-directory": "/CleanBlog/layout/renderings",
+             "website-directory": "/CleanBlog/layout/renderings",
              "item-path": "/sitecore/layout/renderings/CleanBlog",
              "database": "master"
          },
          "img": {
-             "local-file-directory": "/img",
+             "project-directory": "/img",
              "include": "**",
-             "server-file-directory": "",
+             "website-directory": "",
              "item-path": "/sitecore/media library/CleanBlog"
          }
     },

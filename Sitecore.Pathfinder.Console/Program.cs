@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder
             Trace.Listeners.Add(new ConsoleTraceListener());
 
             new Startup().Start();
-        }
+        }        
     }                      
 }
                 

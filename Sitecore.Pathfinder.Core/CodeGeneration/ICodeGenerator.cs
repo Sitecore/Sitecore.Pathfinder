@@ -1,13 +1,13 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.IO;
+using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.CodeGeneration
 {
     public interface ICodeGenerator
     {
-        bool CanGenerate(object instance);
+        bool CanGenerate([NotNull] object instance);
 
-        void Generate(TextWriter output, string fileName, object instance);
+        void Generate([NotNull] string baseFileName, [NotNull] object instance);
     }
 }
