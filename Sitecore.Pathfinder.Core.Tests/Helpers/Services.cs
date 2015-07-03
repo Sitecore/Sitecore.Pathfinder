@@ -58,19 +58,14 @@ namespace Sitecore.Pathfinder.Helpers
         {
             var toolspath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
 
-            var pluginDirectory = Path.Combine(toolspath, "plugins");
-            Directory.CreateDirectory(pluginDirectory);
-
             var coreExportProvider = new CatalogExportProvider(new AssemblyCatalog(typeof(Constants).Assembly));
             var applicationExportProvider = new CatalogExportProvider(new AssemblyCatalog(typeof(Services).Assembly));
-            var pluginExportProvider = new CatalogExportProvider(new DirectoryCatalog(pluginDirectory));
 
             // plugin directory exports takes precedence over application exports
-            var compositionContainer = new CompositionContainer(pluginExportProvider, applicationExportProvider, coreExportProvider);
+            var compositionContainer = new CompositionContainer(applicationExportProvider, coreExportProvider);
 
             coreExportProvider.SourceProvider = compositionContainer;
             applicationExportProvider.SourceProvider = compositionContainer;
-            pluginExportProvider.SourceProvider = compositionContainer;
 
             // register the composition service itself for DI
             compositionContainer.ComposeExportedValue<ICompositionService>(compositionContainer);

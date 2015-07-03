@@ -15,9 +15,16 @@ namespace Sitecore.Pathfinder.Extensibility
     public class CsharpCompiler
     {
         [CanBeNull]
-        public Assembly GetExtensionsAssembly([NotNull] string extensionsDirectory)
+        public Assembly GetExtensionsAssembly([NotNull] string extensionsDirectory, [NotNull] IEnumerable<string> directories)
         {
-            var fileNames = Directory.GetFiles(extensionsDirectory, "*.cs", SearchOption.AllDirectories);
+            var fileNames = new List<string>();
+            foreach (var directory in directories)
+            {
+                if (Directory.Exists(directory))
+                {
+                    fileNames.AddRange(Directory.GetFiles(directory, "*.cs", SearchOption.AllDirectories));
+                }
+            }
 
             // check if assembly is newer than all checkers
             var extensionsAssemblyFileName = Path.Combine(extensionsDirectory, Constants.ExtensionsAssemblyFileName);

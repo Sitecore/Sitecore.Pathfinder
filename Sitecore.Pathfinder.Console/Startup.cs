@@ -10,6 +10,7 @@ using Sitecore.Pathfinder.Building;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder
 {
@@ -35,15 +36,17 @@ namespace Sitecore.Pathfinder
         [CanBeNull]
         protected virtual CompositionContainer RegisterCompositionService([NotNull] IConfiguration configuration)
         {
-            var toolspath = configuration.Get(Constants.Configuration.ToolsDirectory);
-
-            var pluginDirectory = Path.Combine(toolspath, "plugins");
-            Directory.CreateDirectory(pluginDirectory);
-
             var extensionCompiler = new CsharpCompiler();
 
             var extensionsDirectory = Path.Combine(configuration.Get(Constants.Configuration.ToolsDirectory), "files\\extensions");
-            var extensionsAssembly = extensionCompiler.GetExtensionsAssembly(extensionsDirectory);
+            var projectExtensionsDirectory = PathHelper.Combine(configuration.Get(Constants.Configuration.ToolsDirectory), "..\\sitecore.project\\extensions");
+            var directories = new[]
+            {
+               extensionsDirectory,
+               projectExtensionsDirectory
+            };
+
+            var extensionsAssembly = extensionCompiler.GetExtensionsAssembly(extensionsDirectory, directories);
             if (extensionsAssembly == null)
             {
                 // todo: not nice
@@ -52,14 +55,12 @@ namespace Sitecore.Pathfinder
 
             var applicationExportProvider = new CatalogExportProvider(new ApplicationCatalog());
             var extensionsExportProvider = new CatalogExportProvider(new AssemblyCatalog(extensionsAssembly));
-            var pluginExportProvider = new CatalogExportProvider(new DirectoryCatalog(pluginDirectory));
 
             // plugin directory exports takes precedence over application exports
-            var compositionContainer = new CompositionContainer(pluginExportProvider, extensionsExportProvider, applicationExportProvider);
+            var compositionContainer = new CompositionContainer(extensionsExportProvider, applicationExportProvider);
 
             applicationExportProvider.SourceProvider = compositionContainer;
             extensionsExportProvider.SourceProvider = compositionContainer;
-            pluginExportProvider.SourceProvider = compositionContainer;
 
             // register the composition service itself for DI
             compositionContainer.ComposeExportedValue<ICompositionService>(compositionContainer);
