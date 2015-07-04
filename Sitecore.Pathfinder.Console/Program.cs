@@ -4,15 +4,15 @@ using System.Diagnostics;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder
-{
-    internal class Program
+{                   
+    internal class Program                   
     {
         private static void Main([NotNull] string[] args)
         {
             Trace.Listeners.Add(new ConsoleTraceListener());
 
-            new Startup().Start();
-        }        
-    }                      
-}
+            new Startup().Start();        
+        }                
+    }                         
+}               
                 

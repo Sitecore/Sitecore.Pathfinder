@@ -380,6 +380,6 @@
   </Target>
   -->
   <Target Name="AfterBuild" Condition=" '$(Configuration)' == 'Release' ">
-    <Exec Command="Nuget\build.cmd" />
+    <Exec Command="build.cmd" />
   </Target>
 </Project>

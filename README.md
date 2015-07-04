@@ -15,6 +15,8 @@ Watch the videos on YouTube:
 * [04 - Html Templates](https://www.youtube.com/watch?v=9aTGhW6ErYM)
 * [05 - Code Generation, Visual Studio and Grunt](http://youtu.be/ZM3ve1WhwwQ)
 
+Then download [Sitecore Pathfinder](Sitecore.Pathfinder.zip) to try it out.
+
 # Introduction
 Sitecore Pathfinder is a toolchain for Sitecore, that allows developers to use their favorite tools 
 in a familiar fashion to develop Sitecore websites.
