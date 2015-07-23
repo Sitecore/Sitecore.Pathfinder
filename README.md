@@ -17,6 +17,14 @@ Watch the videos on YouTube:
 
 Then download [Sitecore Pathfinder](Sitecore.Pathfinder.zip) to try it out.
 
+# Status
+
+After giving Pathfinder some serious thought over the summer, I have come to this conclusion:
+
+![Standard](http://imgs.xkcd.com/comics/standards.png)
+
+I am pausing development for the time being.
+
 # Introduction
 Sitecore Pathfinder is a toolchain for Sitecore, that allows developers to use their favorite tools 
 in a familiar fashion to develop Sitecore websites.
