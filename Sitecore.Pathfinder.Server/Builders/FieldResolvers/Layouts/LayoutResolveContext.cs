@@ -1,7 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Emitters;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Builders.FieldResolvers.Layouts
 {

@@ -9,10 +9,10 @@ using Sitecore.Data.Managers;
 using Sitecore.Data.Templates;
 using Sitecore.Pathfinder.Builders.Items;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Emitters.Items
 {

@@ -4,11 +4,11 @@ using System;
 using System.ComponentModel.Composition;
 using Sitecore.Data.Templates;
 using Sitecore.Pathfinder.Builders.FieldResolvers.Layouts;
-using Sitecore.Pathfinder.Documents;
-using Sitecore.Pathfinder.Documents.Xml;
 using Sitecore.Pathfinder.Emitters;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Snapshots;
+using Sitecore.Pathfinder.Snapshots.Xml;
 
 namespace Sitecore.Pathfinder.Builders.FieldResolvers
 {

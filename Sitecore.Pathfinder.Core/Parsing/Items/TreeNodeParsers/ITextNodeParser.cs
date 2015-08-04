@@ -1,7 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Documents;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 {

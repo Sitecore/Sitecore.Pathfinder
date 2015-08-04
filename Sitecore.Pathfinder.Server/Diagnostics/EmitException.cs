@@ -2,7 +2,7 @@
 
 using System;
 using System.ComponentModel;
-using Sitecore.Pathfinder.Documents;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Diagnostics
 {

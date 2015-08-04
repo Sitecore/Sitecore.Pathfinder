@@ -1,10 +1,10 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Parsing.Items;
 using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Parsing.Pipelines.ItemParserPipelines
 {

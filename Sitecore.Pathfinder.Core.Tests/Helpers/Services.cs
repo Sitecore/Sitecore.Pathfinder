@@ -15,6 +15,7 @@ using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Querying;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Helpers
 {

@@ -6,6 +6,7 @@ using NUnit.Framework;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.IO
 {

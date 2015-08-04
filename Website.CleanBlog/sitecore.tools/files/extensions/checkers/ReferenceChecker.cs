@@ -1,7 +1,8 @@
-﻿namespace Sitecore.Pathfinder.Checking.Checkers
+﻿using Sitecore.Pathfinder.Snapshots;
+
+namespace Sitecore.Pathfinder.Checking.Checkers
 {
   using System.ComponentModel.Composition;
-  using Sitecore.Pathfinder.Documents;
   using System.Linq;
 
   [Export(typeof(IChecker))]

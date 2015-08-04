@@ -3,9 +3,9 @@
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Parsing
 {

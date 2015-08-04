@@ -1,7 +1,7 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.ComponentModel;
-using Sitecore.Pathfinder.Documents;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Diagnostics
 {

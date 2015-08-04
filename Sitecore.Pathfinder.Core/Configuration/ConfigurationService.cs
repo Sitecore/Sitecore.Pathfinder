@@ -67,7 +67,7 @@ namespace Sitecore.Pathfinder.Configuration
             configurationSourceRoot.AddCommandLine(args.ToArray());
         }
 
-        public virtual void Load(LoadConfigurationOptions options)
+        public virtual void Load(LoadConfigurationOptions options, string solutionDirectory = null)
         {
             var configurationSourceRoot = Configuration as IConfigurationSourceRoot;
             if (configurationSourceRoot == null)
@@ -93,7 +93,11 @@ namespace Sitecore.Pathfinder.Configuration
             }
 
             // set solution directory
-            var solutionDirectory = PathHelper.Combine(toolsDirectory, configurationSourceRoot.GetString(Constants.Configuration.SolutionDirectory));
+            if (solutionDirectory == null)
+            {
+                solutionDirectory = PathHelper.Combine(toolsDirectory, configurationSourceRoot.GetString(Constants.Configuration.SolutionDirectory));
+            }
+
             configurationSourceRoot.Set(Constants.Configuration.SolutionDirectory, solutionDirectory);
 
             // add solution config file

@@ -3,7 +3,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing;
@@ -14,6 +13,7 @@ using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Layouts;
 using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Projects.Templates;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Configuration
 {

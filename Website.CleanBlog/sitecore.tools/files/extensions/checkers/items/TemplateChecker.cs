@@ -3,9 +3,9 @@
 using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Templates;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checking.Checkers.Items
 {

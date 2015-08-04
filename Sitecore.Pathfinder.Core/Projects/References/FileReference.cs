@@ -3,7 +3,6 @@
 using System;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Projects.Files;
 
 namespace Sitecore.Pathfinder.Projects.References

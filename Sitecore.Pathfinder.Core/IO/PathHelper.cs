@@ -5,9 +5,9 @@ using System.IO;
 using System.Text.RegularExpressions;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.IO
 {
@@ -223,7 +223,7 @@ namespace Sitecore.Pathfinder.IO
         [NotNull]
         public static string UnmapPath([NotNull] string rootPath, [NotNull] string fileName)
         {
-            rootPath = NormalizeFilePath(rootPath).TrimEnd('\\');
+            rootPath = NormalizeFilePath(rootPath);
             fileName = NormalizeFilePath(fileName);
 
             if (fileName.StartsWith(rootPath, StringComparison.OrdinalIgnoreCase))

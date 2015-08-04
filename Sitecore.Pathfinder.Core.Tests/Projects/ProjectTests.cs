@@ -1,6 +1,5 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Linq;
 using NUnit.Framework;
@@ -10,7 +9,8 @@ using Sitecore.Pathfinder.Documents.Xml;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects.Items;
-using Sitecore.Pathfinder.Projects.Templates;
+using Sitecore.Pathfinder.Snapshots;
+using Sitecore.Pathfinder.Snapshots.Xml;
 
 namespace Sitecore.Pathfinder.Projects
 {

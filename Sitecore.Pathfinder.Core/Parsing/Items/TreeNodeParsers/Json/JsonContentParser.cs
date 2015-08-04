@@ -2,9 +2,9 @@
 
 using System.ComponentModel.Composition;
 using System.Linq;
-using Sitecore.Pathfinder.Documents;
-using Sitecore.Pathfinder.Documents.Json;
 using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Snapshots;
+using Sitecore.Pathfinder.Snapshots.Json;
 
 namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers.Json
 {

@@ -9,8 +9,6 @@ namespace Sitecore.Pathfinder.Extensions
 {
     public static class XElementExtensions
     {
-        #region Public Methods and Operators
-
         [CanBeNull]
         public static XElement Element([NotNull] this XElement element, int index)
         {
@@ -118,7 +116,5 @@ namespace Sitecore.Pathfinder.Extensions
 
             return doc.Root;
         }
-
-        #endregion
     }
 }

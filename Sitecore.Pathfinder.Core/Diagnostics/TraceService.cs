@@ -4,8 +4,8 @@ using System;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
 using Microsoft.Framework.ConfigurationModel;
-using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Diagnostics
 {

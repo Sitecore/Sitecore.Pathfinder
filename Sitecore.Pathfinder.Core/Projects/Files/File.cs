@@ -3,9 +3,9 @@
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects.Files
 {

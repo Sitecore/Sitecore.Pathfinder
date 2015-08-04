@@ -22,7 +22,7 @@ Then download [Sitecore Pathfinder](Sitecore.Pathfinder.zip) to try it out.
 After giving Pathfinder some serious thought over the summer, I have come to this conclusion:
 
 ![Standard](http://imgs.xkcd.com/comics/standards.png)
-
+                   
 I am pausing development for the time being.
 
 # Introduction

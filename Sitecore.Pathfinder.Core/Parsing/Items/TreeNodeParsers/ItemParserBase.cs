@@ -3,12 +3,12 @@
 using System;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Parsing.Pipelines.ItemParserPipelines;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 {

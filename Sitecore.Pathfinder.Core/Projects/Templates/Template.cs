@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects.Templates
 {

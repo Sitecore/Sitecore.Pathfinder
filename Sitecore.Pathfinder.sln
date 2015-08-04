@@ -1,12 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.22823.1
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3FD15219-6CAE-4865-A054-8E9E2A5EDF4E}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
-		.docs\todo.md = .docs\todo.md
+		todo.md = todo.md
+		.docs\todo2.md = .docs\todo2.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.Server", "Sitecore.Pathfinder.Server\Sitecore.Pathfinder.Server.csproj", "{42808013-7A25-4C07-91FA-BE4F7AA8E0B1}"

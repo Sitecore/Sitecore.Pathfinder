@@ -3,8 +3,8 @@
 using System;
 using System.Diagnostics;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects
 {
@@ -41,7 +41,8 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull]
         public string Name { get; private set; }
-
+                 
+        // todo: attributes can be set in multiple sources - must be a list
         [CanBeNull]
         public ITextNode Source { get; private set; }
 

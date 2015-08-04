@@ -5,7 +5,7 @@ using System.Linq;
 using System.Xml;
 using Sitecore.Data;
 using Sitecore.Data.Items;
-using Sitecore.Pathfinder.Documents;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Builders.FieldResolvers.Layouts
 {

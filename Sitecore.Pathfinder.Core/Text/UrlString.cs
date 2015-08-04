@@ -10,7 +10,6 @@ using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Text
 {
-    /// <summary>Creates and builds a string Url.</summary>
     public class UrlString
     {
         private readonly NameValueCollection _parameters = new NameValueCollection();
@@ -28,7 +27,7 @@ namespace Sitecore.Pathfinder.Text
 
         public UrlString([NotNull] NameValueCollection parameters)
         {
-            this._parameters.Add(parameters);
+            _parameters.Add(parameters);
         }
 
         public string Extension

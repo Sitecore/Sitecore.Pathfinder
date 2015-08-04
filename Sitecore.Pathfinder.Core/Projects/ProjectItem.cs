@@ -6,9 +6,9 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects.References;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects
 {

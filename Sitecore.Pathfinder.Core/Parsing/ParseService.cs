@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Parsing
 {

@@ -3,9 +3,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.References;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 {

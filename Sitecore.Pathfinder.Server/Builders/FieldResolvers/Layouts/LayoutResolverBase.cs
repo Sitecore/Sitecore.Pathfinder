@@ -10,8 +10,8 @@ using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Snapshots;
 using Sitecore.SecurityModel;
 using Sitecore.Text;
 

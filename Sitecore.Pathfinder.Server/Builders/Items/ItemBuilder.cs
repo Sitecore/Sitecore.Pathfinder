@@ -8,9 +8,9 @@ using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Emitters;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Builders.Items
 {

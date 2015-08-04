@@ -8,9 +8,9 @@ using System.Linq;
 using NuGet;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Snapshots;
 using Sitecore.SecurityModel;
 
 namespace Sitecore.Pathfinder.Emitters

@@ -9,13 +9,12 @@ using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Checking;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Documents;
-using Sitecore.Pathfinder.Documents.Json;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects
 {

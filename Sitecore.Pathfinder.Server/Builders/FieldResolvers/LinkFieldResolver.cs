@@ -5,9 +5,9 @@ using System.ComponentModel.Composition;
 using Sitecore.Configuration;
 using Sitecore.Data.Templates;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Emitters;
 using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Builders.FieldResolvers
 {

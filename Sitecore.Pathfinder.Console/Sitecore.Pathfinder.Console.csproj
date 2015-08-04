@@ -87,9 +87,7 @@
     <Reference Include="System.Security" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -146,25 +144,22 @@
     <Compile Include="Building\Codegen\GenerateCode.cs" />
     <Compile Include="Building\Commands\ListItems.cs" />
     <Compile Include="Building\Commands\ListProject.cs" />
-    <Compile Include="Building\Deploying\CopyPackage\CopyPackage.cs" />
-    <Compile Include="Building\Deploying\Installpackage\InstallPackage.cs" />
-    <Compile Include="Building\Deploying\PublishDatabase\PublishDatabase.cs" />
+    <Compile Include="Building\Deploying\CopyPackage.cs" />
+    <Compile Include="Building\Deploying\InstallPackage.cs" />
+    <Compile Include="Building\Deploying\PublishDatabase.cs" />
     <Compile Include="Building\Initializing\BeforeBuilds\BeforeBuild.cs" />
     <Compile Include="Building\Initializing\BeforeBuilds\BeforeBuildPipeline.cs" />
-    <Compile Include="Building\Initializing\Help\Help.cs" />
+    <Compile Include="Building\Initializing\Help.cs" />
     <Compile Include="Building\Commands\ListTasks.cs" />
-    <Compile Include="Building\Deploying\CopyDependencies\CopyDependencies.cs" />
-    <Compile Include="Building\Initializing\Initialization\Init.cs" />
-    <Compile Include="Building\Initializing\SynchronizeWebsites\SynchronizeWebsite.cs" />
+    <Compile Include="Building\Deploying\CopyDependencies.cs" />
+    <Compile Include="Building\Initializing\Init.cs" />
+    <Compile Include="Building\Initializing\SynchronizeWebsite.cs" />
     <Compile Include="Building\Testing\UnitTests\GenerateUnitTest.cs" />
     <Compile Include="Building\Querying\FindReferences.cs" />
     <Compile Include="Building\Querying\FindUsages.cs" />
-    <Compile Include="Building\Packaging\CreateNupkg\CreateNupkg.cs" />
+    <Compile Include="Building\Packaging\CreateNupkg.cs" />
     <Compile Include="Building\Checking\CheckProject.cs" />
-    <Compile Include="Building\Preprocessing\Rebuild\Rebuild.cs" />
-    <Compile Include="Building\Preprocessing\Clean\Clean.cs" />
     <Compile Include="Building\Build.cs" />
-    <Compile Include="Building\Preprocessing\IncrementalBuilds\IncrementalBuild.cs" />
     <Compile Include="Building\Querying\QueryTaskBase.cs" />
     <Compile Include="Building\Refactoring\Rename.cs" />
     <Compile Include="Building\RequestTaskBase.cs" />
@@ -363,11 +358,7 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties wwwroot_2project_2_1filetemplates_2Item_1item_1json__JSONSchema="..\.schemas\item.schema.json" />
-    </VisualStudio>
-  </ProjectExtensions>
+  <ProjectExtensions />
   <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>

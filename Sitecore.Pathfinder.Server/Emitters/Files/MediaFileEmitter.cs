@@ -8,11 +8,11 @@ using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Emitters.Items;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Files;
+using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Resources.Media;
 
 namespace Sitecore.Pathfinder.Emitters.Files

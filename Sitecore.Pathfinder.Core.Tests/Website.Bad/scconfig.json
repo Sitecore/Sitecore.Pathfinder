@@ -1,0 +1,21 @@
+{
+  // wwwroot points to the base directory of the website
+  // The wwwroot directory must contain a 'Data' and a 'Website' folder
+  "wwwroot": "c:\\inetpub\\wwwroot\\Sitecore.Default",
+  "hostname": "http://sitecore.default",
+
+  // relative project directory to solution directory
+  "projectdirectory": "",
+
+  // Sitecore database name (master, core, or web)
+  "database": "master",
+
+  // build pipeline
+  "pipeline": "lint nuget-pack",
+
+  "external-references": {
+    "/sitecore/templates/Sample/Sample Item": "template",
+    "/sitecore/templates/System/Layout/Renderings/View rendering": "template"
+  }
+}
+                                       
