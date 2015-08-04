@@ -3,7 +3,6 @@
 using System;
 using System.IO;
 using System.Reflection;
-using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -14,7 +13,7 @@ namespace Sitecore.Pathfinder
     public abstract class Tests
     {
         [NotNull]
-        public string ProjectDirectory { get; private set; }
+        public string ProjectDirectory { get; private set; } = string.Empty;
 
         [NotNull]
         public Services Services { get; private set; }
@@ -22,7 +21,7 @@ namespace Sitecore.Pathfinder
         protected void Mock<T>(T value)
         {
             Services.CompositionService.Set<T>(value);
-        }
+        }                                   
 
         protected T Resolve<T>()
         {
@@ -32,6 +31,7 @@ namespace Sitecore.Pathfinder
         protected void Start([NotNull] string website = "Website", [CanBeNull] Action mock = null)
         {
             ProjectDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, website);
+
             Services = new Services();
             Services.Start(mock);
 

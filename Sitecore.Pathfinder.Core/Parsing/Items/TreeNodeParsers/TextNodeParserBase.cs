@@ -54,6 +54,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             if (text.StartsWith("/sitecore/", StringComparison.OrdinalIgnoreCase))
             {
                 var sourceAttribute = new Attribute<string>(source.Name, string.Empty);
+                sourceAttribute.AddSource(source);
                 sourceAttribute.SourceFlags = SourceFlags.IsQualified;
                 return context.ParseContext.Factory.Reference(projectItem, sourceAttribute, text);
             }
@@ -62,6 +63,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             if (Guid.TryParse(text, out guid))
             {
                 var sourceAttribute = new Attribute<string>(source.Name, string.Empty);
+                sourceAttribute.AddSource(source);
                 sourceAttribute.SourceFlags = SourceFlags.IsGuid;
                 return context.ParseContext.Factory.Reference(projectItem, sourceAttribute, guid.ToString("B").ToUpperInvariant());
             }

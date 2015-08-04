@@ -18,7 +18,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Files
             {
                 CheckTemplate(context, mediaFile);
             }
-        }
+        }            
 
         private void CheckTemplate([NotNull] ICheckerContext context, [NotNull] MediaFile mediaFile)
         {

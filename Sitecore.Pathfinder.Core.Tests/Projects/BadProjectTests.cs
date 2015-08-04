@@ -20,9 +20,17 @@ namespace Sitecore.Pathfinder.Projects
         }
 
         [Test]
-        public void JsonContentItemTest()
+        public void BadLinkTest()
         {
-            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/JsonContentItem");
+            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/BadLink");
+            Assert.IsNotNull(projectItem);
+
+            var diagnostic = Project.Diagnostics.FirstOrDefault(d => d.Text == "Reference not found: /sitecore/media library/badlink");
+            Assert.IsNotNull(diagnostic);
+            Assert.AreEqual(Severity.Warning, diagnostic.Severity);
+            Assert.AreEqual(2, diagnostic.Position.LineNumber);
+            Assert.AreEqual(6, diagnostic.Position.LinePosition);
+            Assert.AreEqual(5, diagnostic.Position.LineLength);
         }
     }
 }

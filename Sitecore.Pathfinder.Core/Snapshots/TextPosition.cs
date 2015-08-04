@@ -5,7 +5,7 @@ using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
-    [DebuggerDisplay("{GetType().Name,nq}: ({LineNumber,nq}, {LinePosition,nq}, {LineLength,nq}, )")]
+    [DebuggerDisplay("{GetType().Name,nq}: ({LineNumber,nq}, {LinePosition,nq}, {LineLength,nq})")]
     public struct TextPosition
     {
         public static readonly TextPosition Empty = new TextPosition(0, 0, 0);

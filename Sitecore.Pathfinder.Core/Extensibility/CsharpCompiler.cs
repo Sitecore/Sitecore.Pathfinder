@@ -46,6 +46,8 @@ namespace Sitecore.Pathfinder.Extensibility
 
             var compilation = CSharpCompilation.Create("Sitecore.Pathfinder.Extensions", syntaxTrees, references, options);
 
+            Directory.CreateDirectory(Path.GetDirectoryName(extensionsAssemblyFileName) ?? string.Empty);
+
             EmitResult result;
             using (var stream = new FileStream(extensionsAssemblyFileName, FileMode.Create))
             {
@@ -84,6 +86,8 @@ namespace Sitecore.Pathfinder.Extensibility
             var options = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary);
 
             var compilation = CSharpCompilation.Create(assemblyName, syntaxTrees, refs, options);
+
+            Directory.CreateDirectory(Path.GetDirectoryName(assemblyFileName) ?? string.Empty);
 
             EmitResult result;
             using (var stream = new FileStream(assemblyFileName, FileMode.Create))
