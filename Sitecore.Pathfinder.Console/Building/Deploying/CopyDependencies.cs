@@ -2,6 +2,7 @@
 
 using System.ComponentModel.Composition;
 using System.IO;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Building.Deploying
@@ -32,7 +33,32 @@ namespace Sitecore.Pathfinder.Building.Deploying
 
             context.FileSystem.CreateDirectory(destinationDirectory);
 
+            CopySitecorePackages(context, sourceDirectory, destinationDirectory);
+            CopyNuGetPackages(context, sourceDirectory, destinationDirectory);
+        }
+
+        public override void WriteHelp(HelpWriter helpWriter)
+        {
+            helpWriter.Summary.Write("Copies the dependencies to the website.");
+            helpWriter.Remarks.Write("The dependencies can be Nuget packages and Sitecore packages. The packages are located in the sitecore.project/dependencies directory.");
+        }
+
+        private void CopyNuGetPackages([NotNull] IBuildContext context, [NotNull] string sourceDirectory, [NotNull] string destinationDirectory)
+        {
             foreach (var sourceFileName in context.FileSystem.GetFiles(sourceDirectory, "*.nupkg", SearchOption.AllDirectories))
+            {
+                var destinationFileName = Path.Combine(destinationDirectory, Path.GetFileName(sourceFileName) ?? string.Empty);
+                if (!context.FileSystem.FileExists(destinationFileName) || context.FileSystem.GetLastWriteTimeUtc(sourceFileName) > context.FileSystem.GetLastWriteTimeUtc(destinationFileName))
+                {
+                    context.Trace.TraceInformation(Texts.Copying_dependency, Path.GetFileName(sourceFileName) ?? string.Empty);
+                    context.FileSystem.Copy(sourceFileName, destinationFileName);
+                }
+            }
+        }
+
+        private void CopySitecorePackages([NotNull] IBuildContext context, [NotNull] string sourceDirectory, [NotNull] string destinationDirectory)
+        {
+            foreach (var sourceFileName in context.FileSystem.GetFiles(sourceDirectory, "*.zip", SearchOption.AllDirectories))
             {
                 var destinationFileName = Path.Combine(destinationDirectory, Path.GetFileName(sourceFileName) ?? string.Empty);
                 if (!context.FileSystem.FileExists(destinationFileName) || context.FileSystem.GetLastWriteTimeUtc(sourceFileName) > context.FileSystem.GetLastWriteTimeUtc(destinationFileName))

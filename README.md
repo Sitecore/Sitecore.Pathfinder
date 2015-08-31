@@ -19,12 +19,13 @@ Then download [Sitecore Pathfinder](Sitecore.Pathfinder.zip) to try it out.
 
 # Status
 
-After giving Pathfinder some serious thought over the summer, I have come to this conclusion:
+After giving Pathfinder some serious thought, I have come to this conclusion:
 
 ![Standard](http://imgs.xkcd.com/comics/standards.png)
                    
-I am pausing development for the time being.
-
+As such Pathfinder will continue as mostly an academic execise. The emphasis will be on bringing the many Sitecore tools 
+developed by the Sitecore community together in a cohesive manner.
+                                                               
 # Introduction
 Sitecore Pathfinder is a toolchain for Sitecore, that allows developers to use their favorite tools 
 in a familiar fashion to develop Sitecore websites.
@@ -61,6 +62,13 @@ including an scc.cmd file which is a shortcut to the sitecore.tools\scc.exe file
 * Web Test Runner for running unit tests inside Sitecore website (supports dynamic compilation of C# source files)
 * Support for Html Templates (with [Mustache](https://mustache.github.io/mustache.5.html) tags) makes getting started with the Sitecore Rendering Engine easier
 * Validate a Sitecore website against 70 rules using Sitecore Rocks SitecoreCop
+
+## Command line help
+To get help, you can execute the Help task by entering `scc help`.
+
+To get help about a specific task, execute the Help task with the name of the task as a parameter: `scc help [task name]`
+
+![Command Line Help](.docs/img/CommandLineHelp.PNG)
 
 # Features
 

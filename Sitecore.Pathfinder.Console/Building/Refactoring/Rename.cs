@@ -79,5 +79,14 @@ namespace Sitecore.Pathfinder.Building.Refactoring
 
             context.Trace.TraceInformation($"Changed files: {changedFileNames.Count}");
         }
+
+        public override void WriteHelp(HelpWriter helpWriter)
+        {
+            helpWriter.Summary.Write("Finds all project items that references the specified project item.");
+            helpWriter.Remarks.Write("The project item must be fully qualified.");
+            helpWriter.Parameters.WriteLine("name - The fully qualified project item to rename.");
+            helpWriter.Parameters.WriteLine("to - The new name of the project item.");
+            helpWriter.Examples.Write("scc rename /sitecore/content/Home Welcome");
+        }
     }
 }

@@ -22,5 +22,10 @@ namespace Sitecore.Pathfinder.Building.Commands
 
             context.DisplayDoneMessage = false;
         }
+
+        public override void WriteHelp(HelpWriter helpWriter)
+        {
+            helpWriter.Summary.Write("Lists the Sitecore items in the project.");
+        }
     }
 }

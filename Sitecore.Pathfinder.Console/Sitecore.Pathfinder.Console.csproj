@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sitecore.Pathfinder</RootNamespace>
     <AssemblyName>scc</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -26,6 +26,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -147,10 +148,10 @@
     <Compile Include="Building\Deploying\CopyPackage.cs" />
     <Compile Include="Building\Deploying\InstallPackage.cs" />
     <Compile Include="Building\Deploying\PublishDatabase.cs" />
+    <Compile Include="Building\HelpWriter.cs" />
     <Compile Include="Building\Initializing\BeforeBuilds\BeforeBuild.cs" />
     <Compile Include="Building\Initializing\BeforeBuilds\BeforeBuildPipeline.cs" />
     <Compile Include="Building\Initializing\Help.cs" />
-    <Compile Include="Building\Commands\ListTasks.cs" />
     <Compile Include="Building\Deploying\CopyDependencies.cs" />
     <Compile Include="Building\Initializing\Init.cs" />
     <Compile Include="Building\Initializing\SynchronizeWebsite.cs" />
@@ -344,7 +345,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="files\project\content\Home\Welcome.item.xml">
       <SubType>Designer</SubType>

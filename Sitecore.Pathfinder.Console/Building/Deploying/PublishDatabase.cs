@@ -42,5 +42,13 @@ namespace Sitecore.Pathfinder.Building.Deploying
             var url = MakeUrl(context, context.Configuration.GetString(Constants.Configuration.PublishUrl), queryStringParameters);
             Request(context, url);
         }
+
+        public override void WriteHelp(HelpWriter helpWriter)
+        {
+            helpWriter.Summary.Write("Publishes a Sitecore database (usually the master database).");
+            helpWriter.Parameters.Write("database - name of the database (master, core)");
+            helpWriter.Examples.WriteLine($"scc {TaskName}");
+            helpWriter.Examples.WriteLine($"scc {TaskName} --database master");
+        }
     }
 }

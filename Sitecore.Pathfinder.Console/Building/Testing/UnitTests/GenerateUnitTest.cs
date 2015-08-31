@@ -28,6 +28,11 @@ namespace Sitecore.Pathfinder.Building.Testing.UnitTests
             GenerateLocalTestRunnerFile(context, directory, tests);
         }
 
+        public override void WriteHelp(HelpWriter helpWriter)
+        {
+            helpWriter.Summary.Write("Generates basic unit tests for the project.");
+        }
+
         private void GenerateLocalTestRunnerFile([NotNull] IBuildContext context, [NotNull] string directory, [NotNull] List<string> tests)
         {
             var localDirectory = Path.Combine(directory, "local");

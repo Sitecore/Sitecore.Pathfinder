@@ -1,6 +1,12 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.ComponentModel.Composition;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
+using System.Web.UI.WebControls;
+using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Building.Initializing
 {
@@ -13,10 +19,110 @@ namespace Sitecore.Pathfinder.Building.Initializing
 
         public override void Run(IBuildContext context)
         {
-            context.Trace.Writeline(Texts.Usage__scc_cmd_command__switches_);
-            context.Trace.Writeline(string.Empty);
-            context.Trace.Writeline(Texts.Try__scc_cmd_list_tasks__for_a_list_of_available_tasks_);
+            var taskName = context.Configuration.GetCommandLineArg(1);
+            if (!string.IsNullOrEmpty(taskName))
+            {
+                WriteCommandHelp(context, taskName);
+            }
+            else
+            {
+                WriteGeneralHelp(context);
+            }
+
             context.DisplayDoneMessage = false;
+        }
+
+        public override void WriteHelp(HelpWriter helpWriter)
+        {
+            helpWriter.Summary.Write("Displays version information and a list of commands.");
+            helpWriter.Remarks.WriteLine("Displays version information and a list of commands.");
+        }
+
+        private void WriteCommandHelp(IBuildContext context, string taskName)
+        {
+            var build = context.CompositionService.Resolve<Build>();
+            var task = build.Tasks.FirstOrDefault(t => string.Compare(t.TaskName, taskName, StringComparison.OrdinalIgnoreCase) == 0);
+            if (task == null)
+            {
+                context.Trace.Writeline($"Task not found: {taskName}");
+                context.Trace.Writeline(string.Empty);
+                WriteListOfTasks(context);
+                return;
+            }
+
+            var helpWriter = new HelpWriter();
+            task.WriteHelp(helpWriter);
+
+            context.Trace.Writeline("TASK:");
+            context.Trace.Writeline($"  {task.TaskName}");
+            context.Trace.Writeline(string.Empty);
+
+            context.Trace.Writeline("SUMMARY:");
+            context.Trace.Writeline($"{helpWriter.GetSummary()}");
+            context.Trace.Writeline(string.Empty);
+
+            context.Trace.Writeline("PARAMETERS:");
+            context.Trace.Writeline($"{helpWriter.GetParameters()}");
+            context.Trace.Writeline(string.Empty);
+
+            context.Trace.Writeline("REMARKS:");
+            context.Trace.Writeline($"{helpWriter.GetRemarks()}");
+            context.Trace.Writeline(string.Empty);
+
+            context.Trace.Writeline("EXAMPLES:");
+            var examples = helpWriter.GetExamples();
+            if (!string.IsNullOrEmpty(examples))
+            {
+                context.Trace.Writeline(examples);
+            }
+            else
+            {
+                context.Trace.Writeline($"  scc {task.TaskName}");
+            }
+        }
+
+        private void WriteGeneralHelp(IBuildContext context)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            var version = fvi.FileVersion;
+
+            context.Trace.Writeline("Runs the Sitecore Pathfinder compiler.");
+            context.Trace.Writeline($"Version: {version}");
+            context.Trace.Writeline(string.Empty);
+            context.Trace.Writeline("SYNTAX: scc [task] [parameters...] [files...]");
+            context.Trace.Writeline(string.Empty);
+            context.Trace.Writeline("EXAMPLES: scc");
+            context.Trace.Writeline("          scc check-project");
+            context.Trace.Writeline("          scc --project myproject");
+            context.Trace.Writeline(string.Empty);
+
+            context.Trace.Writeline("REMARKS:");
+            context.Trace.Writeline("To get additional help for each task, use: ");
+            context.Trace.Writeline("  scc help [task]");
+
+            context.Trace.Writeline(string.Empty);
+            context.Trace.Writeline("TASKS:");
+            WriteListOfTasks(context);
+        }
+
+        private void WriteListOfTasks(IBuildContext context)
+        {
+            var build = context.CompositionService.Resolve<Build>();
+
+            foreach (var task in build.Tasks.OrderBy(t => t.TaskName))
+            {
+                var helpWriter = new HelpWriter();
+                task.WriteHelp(helpWriter);
+
+                var summary = helpWriter.GetSummary();
+                if (string.IsNullOrEmpty(summary))
+                {
+                    continue;
+                }
+
+                context.Trace.Writeline($"{task.TaskName} - {summary}");
+            }
         }
     }
 }

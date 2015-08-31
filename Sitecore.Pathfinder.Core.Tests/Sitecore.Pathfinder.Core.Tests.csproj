@@ -221,6 +221,9 @@
     <Folder Include="Website.Bad\layout\renderings\" />
     <Folder Include="Website.Bad\media library\" />
   </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\NotNullAttributes.1.0.0.0\tools\analyzers\NotNullAttributes.dll" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
@@ -243,7 +246,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Website_2content_2Home_2JsonContentItem_1master_1content_1json__JSONSchema="..\..\.schemas\master.content.schema.json" Website_2content_2Home_2Foo_1item_1json__JSONSchema="item.schema.json" />
+      <UserProperties Website_2content_2Home_2Foo_1item_1json__JSONSchema="item.schema.json" Website_2content_2Home_2JsonContentItem_1master_1content_1json__JSONSchema="..\..\.schemas\master.content.schema.json" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -6,7 +6,7 @@ namespace Sitecore.Pathfinder.Data
 {
     public interface IDataService
     {
-        [Diagnostics.CanBeNull]
+        [Diagnostics.CanBeNull]        
         Database GetDatabase([Diagnostics.NotNull] string databaseName);
     }
 }

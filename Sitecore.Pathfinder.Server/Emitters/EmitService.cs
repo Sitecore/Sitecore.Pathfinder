@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Emitters
             var compositionService = startup.RegisterCompositionService(configuration);
 
             var emitter = compositionService.GetExportedValue<Emitter>();
-            emitter.Start();
+            emitter.Start();                    
         }
     }
 }

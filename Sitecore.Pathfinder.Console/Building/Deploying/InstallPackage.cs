@@ -49,5 +49,10 @@ namespace Sitecore.Pathfinder.Building.Deploying
                 snapshot.SourceFile.IsModified = false;
             }
         }
+
+        public override void WriteHelp(HelpWriter helpWriter)
+        {
+            helpWriter.Summary.Write("Unpacks and installs the project package (including dependencies) in the website.");
+        }
     }
 }

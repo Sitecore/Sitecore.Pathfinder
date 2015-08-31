@@ -20,6 +20,11 @@ namespace Sitecore.Pathfinder.Building.Checking
             TraceDiagnostics(context);
         }
 
+        public override void WriteHelp(HelpWriter helpWriter)
+        {
+            helpWriter.Summary.Write("Checks the project for warnings and errors.");
+        }
+
         protected void TraceDiagnostics([NotNull] IBuildContext context)
         {
             foreach (var diagnostic in context.Project.Diagnostics)

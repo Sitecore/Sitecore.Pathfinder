@@ -53,6 +53,12 @@ namespace Sitecore.Pathfinder.Building.Packaging
             context.Trace.TraceInformation(Texts.NuGet_file_size, new FileInfo(nupkgFileName).Length.ToString("#,##0 bytes"));
         }
 
+        public override void WriteHelp(HelpWriter helpWriter)
+        {
+            helpWriter.Summary.Write("Creates a Nuget package from the project.");
+            helpWriter.Remarks.Write("The Nuget specification and Nuget package are located in the /sitecore.project folder.");
+        }
+
         private void BuildNupkgFile([NotNull] IBuildContext context, [NotNull] string nuspecFileName, [NotNull] string nupkgFileName)
         {
             try

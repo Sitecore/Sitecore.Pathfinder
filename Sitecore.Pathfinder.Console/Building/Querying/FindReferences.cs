@@ -18,7 +18,7 @@ namespace Sitecore.Pathfinder.Building.Querying
         {
             context.DisplayDoneMessage = false;
 
-            var qualifiedName = context.Configuration.GetString("name");
+            var qualifiedName = context.Configuration.GetCommandLineArg(0);
             if (string.IsNullOrEmpty(qualifiedName))
             {
                 context.Trace.Writeline(Texts.You_must_specific_the___name_argument);
@@ -52,6 +52,13 @@ namespace Sitecore.Pathfinder.Building.Querying
             }
 
             context.Trace.Writeline(Texts.Found__ + projectItem.References.Count());
+        }
+
+        public override void WriteHelp(HelpWriter helpWriter)
+        {
+            helpWriter.Summary.Write("Finds all project items that the specified project item references.");
+            helpWriter.Remarks.Write("The project item must be fully qualified.");
+            helpWriter.Examples.Write("scc find-references /sitecore/content/Home");
         }
     }
 }

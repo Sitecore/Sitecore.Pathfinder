@@ -29,6 +29,11 @@ namespace Sitecore.Pathfinder.Building.Initializing
             }
         }
 
+        public override void WriteHelp(HelpWriter helpWriter)
+        {
+            helpWriter.Summary.Write("Initializes the project.");
+        }
+
         protected virtual void CopyResourceFiles([NotNull] IBuildContext context, [NotNull] string projectDirectory)
         {
             var sourceDirectory = Path.Combine(context.Configuration.Get(Constants.Configuration.ToolsDirectory), "files\\project\\*");

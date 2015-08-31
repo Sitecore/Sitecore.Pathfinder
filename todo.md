@@ -17,12 +17,17 @@
   * Sitecore Powershell extensions
   * Sitecore Rocks
   * Sitecore Courier
+  * FakeDB
   * Create VS project
   * Create Pathfinder project
   * CleanBlog
 * Visual Studio Online
 * Azure
-* Contineous integration
+* Continuous integration
+
+## Acceptance criteria
+Move CleanBlog to Visual Studio Online (Visual Studio Online / Azure)
+Deploy to local server (if possible) (Sitecore Courier / FakeDB)
 
 # Backlog
 * Editable

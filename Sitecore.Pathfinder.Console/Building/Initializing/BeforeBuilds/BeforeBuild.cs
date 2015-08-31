@@ -92,6 +92,10 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
             PipelineService.Resolve<BeforeBuildPipeline>().Execute(context);
         }
 
+        public override void WriteHelp(HelpWriter helpWriter)
+        {
+        }
+
         protected virtual void UpdateFiles([NotNull] IBuildContext context, [NotNull] string sourceDirectory, [NotNull] string websiteDirectory)
         {
             var writeMessage = false;

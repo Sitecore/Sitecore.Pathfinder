@@ -30,6 +30,11 @@ namespace Sitecore.Pathfinder.Building.Testing
             RunTests(context);
         }
 
+        public override void WriteHelp(HelpWriter helpWriter)
+        {
+            helpWriter.Summary.Write("Runs the Unit Test Runner on the website.");
+        }
+
         private void CopyTestFilesToWebsite([NotNull] IBuildContext context, [NotNull] string directory)
         {
             var targetDirectory = context.Configuration.Get(Constants.Configuration.Wwwroot);

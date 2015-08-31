@@ -38,5 +38,10 @@ namespace Sitecore.Pathfinder.Building.Deploying
                 context.FileSystem.Copy(fileName, destinationFileName);
             }
         }
+
+        public override void WriteHelp(HelpWriter helpWriter)
+        {
+            helpWriter.Summary.Write("Copies the project output to the website.");
+        }
     }
 }

@@ -64,7 +64,8 @@ namespace Sitecore.Pathfinder.Building
             context.Trace.TraceError(Texts.The_server_returned_an_error, message);
         }
 
-        protected virtual string MakeUrl([NotNull] IBuildContext context, string path, [NotNull] Dictionary<string, string> queryStringParameters, bool includeUserNameAndPassword = true)
+        [NotNull]
+        protected virtual string MakeUrl([NotNull] IBuildContext context, [NotNull] string path, [NotNull] Dictionary<string, string> queryStringParameters, bool includeUserNameAndPassword = true)
         {
             var result = context.Configuration.GetString(Constants.Configuration.HostName).TrimEnd('/') + "/" + path.TrimStart('/');
             var parameters = string.Empty;

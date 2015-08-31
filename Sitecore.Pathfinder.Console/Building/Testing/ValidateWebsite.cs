@@ -71,13 +71,19 @@ namespace Sitecore.Pathfinder.Building.Testing
                 {
                     context.Trace.TraceError(problem + @" " + solution, itemPath);
                 }
-                else 
+                else
                 {
                     context.Trace.TraceWarning(problem + @" " + solution, itemPath);
                 }
             }
 
             context.FileSystem.DeleteFile(targetFileName);
+        }
+
+        public override void WriteHelp(HelpWriter helpWriter)
+        {
+            helpWriter.Summary.Write("Runs the Sitecore Rocks SitecoreCop on the website.");
+            helpWriter.Remarks.Write("This may take a while.");
         }
     }
 }
