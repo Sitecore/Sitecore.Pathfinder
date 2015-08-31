@@ -3,14 +3,10 @@
 using System;
 using System.ComponentModel.Composition;
 using System.Text;
-using Sitecore.Configuration;
-using Sitecore.Data.Templates;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Emitters;
-using Sitecore.Pathfinder.Projects.Items;
-using Sitecore.Pathfinder.Snapshots;
+using Sitecore.Pathfinder.Extensions;
 
-namespace Sitecore.Pathfinder.Builders.FieldResolvers
+namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
 {
     [Export(typeof(IFieldResolver))]
     public class ItemPathResolver : FieldResolverBase
@@ -19,34 +15,32 @@ namespace Sitecore.Pathfinder.Builders.FieldResolvers
         {
         }
 
-        public override bool CanResolve(IEmitContext context, TemplateField templateField, Field field)
+        public override bool CanResolve(ITraceService trace, IProject project, Field field)
         {
             return field.Value.Value.IndexOf("/sitecore", StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
-        public override string Resolve(IEmitContext context, TemplateField templateField, Field field)
+        public override string Resolve(ITraceService trace, IProject project, Field field)
         {
-            var database = Factory.GetDatabase(field.Item.DatabaseName);
-
             var value = field.Value.Value;
             if (value.IndexOf('|') < 0)
             {
-                var item = database.GetItem(value);
+                var item = project.FindQualifiedItem(value);
                 if (item == null)
                 {
-                    throw new RetryableEmitException(Texts.Item_not_found, field.Value.Source ?? TextNode.Empty, value);
+                    trace.Writeline("Reference not found", value);
                 }
 
-                return item.ID.ToString();
+                return item.Guid.Format();
             }
 
             var sb = new StringBuilder();
             foreach (var itemPath in value.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries))
             {
-                var item = database.GetItem(itemPath);
+                var item = project.FindQualifiedItem(itemPath);
                 if (item == null)
                 {
-                    throw new RetryableEmitException(Texts.Item_not_found, field.Value.Source ?? TextNode.Empty, itemPath);
+                    trace.Writeline("Reference not found", itemPath);
                 }
 
                 if (sb.Length > 0)
@@ -54,7 +48,7 @@ namespace Sitecore.Pathfinder.Builders.FieldResolvers
                     sb.Append('|');
                 }
 
-                sb.Append(item.ID);
+                sb.Append(item.Guid.Format());
             }
 
             return sb.ToString();

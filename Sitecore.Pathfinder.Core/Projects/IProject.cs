@@ -1,9 +1,11 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing;
+using Sitecore.Pathfinder.Projects.Items.FieldResolvers;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects
@@ -39,6 +41,9 @@ namespace Sitecore.Pathfinder.Projects
         void Compile();
 
         [NotNull]
+        IEnumerable<IFieldResolver> FieldResolvers { get; }
+
+        [NotNull]
         IProject Load([NotNull] ProjectOptions projectOptions, [NotNull] IEnumerable<string> sourceFileNames);
 
         void Remove([NotNull] IProjectItem projectItem);
@@ -46,5 +51,8 @@ namespace Sitecore.Pathfinder.Projects
         void Remove([NotNull] string sourceFileName);
 
         void SaveChanges();
+
+        [CanBeNull]
+        IProjectItem FindQualifiedItem([NotNull] string qualifiedName);
     }
 }

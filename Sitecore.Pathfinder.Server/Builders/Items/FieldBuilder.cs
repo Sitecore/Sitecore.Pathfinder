@@ -6,12 +6,12 @@ namespace Sitecore.Pathfinder.Builders.Items
 {
     public class FieldBuilder
     {
-        public FieldBuilder([Diagnostics.NotNull] Attribute<string> fieldName, [Diagnostics.NotNull] string language, int version, [Diagnostics.NotNull] string value)
+        public FieldBuilder([Diagnostics.NotNull] Attribute<string> fieldName, [Diagnostics.NotNull] string language, int version, [Diagnostics.NotNull] string databaseValue)
         {
             FieldName = fieldName;
             Language = language;
             Version = version;
-            Value = value;
+            DatabaseValue = databaseValue;
         }
 
         [Diagnostics.NotNull]
@@ -21,7 +21,7 @@ namespace Sitecore.Pathfinder.Builders.Items
         public string Language { get; }
 
         [Diagnostics.NotNull]
-        public string Value { get; set; }
+        public string DatabaseValue { get; set; }
 
         public int Version { get; }
     }

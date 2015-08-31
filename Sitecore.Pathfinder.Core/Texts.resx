@@ -408,4 +408,10 @@
     <data name="File_path_must_start_with____" xml:space="preserve">
     <value>File path must start with '~'</value>
   </data>
+    <data name="Datasource_not_found" xml:space="preserve">
+    <value>Datasource not found</value>
+  </data>
+    <data name="Device_item_not_found" xml:space="preserve">
+    <value>Device item not found</value>
+  </data>
 </root>

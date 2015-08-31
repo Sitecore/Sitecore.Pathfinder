@@ -1,13 +1,11 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel.Composition;
 using System.IO;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Data.Items;
 using Sitecore.Data.Serialization;
-using Sitecore.Pathfinder.Builders.FieldResolvers;
 using Sitecore.Pathfinder.Data;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -43,9 +41,6 @@ namespace Sitecore.Pathfinder.Emitters
         public ICollection<string> DeletedFiles { get; } = new List<string>();
 
         public ICollection<string> DeletedItems { get; } = new List<string>();
-
-        [ImportMany]
-        public IEnumerable<IFieldResolver> FieldResolvers { get; private set; }
 
         public IFileSystemService FileSystem { get; }
 

@@ -161,7 +161,7 @@ namespace Sitecore.Pathfinder.Builders.Items
 
                 foreach (var field in Fields.Where(i => string.IsNullOrEmpty(i.Language) && i.Version == 0))
                 {
-                    SetFieldValue(item, field.FieldName.Value, field.Value);
+                    SetFieldValue(item, field.FieldName.Value, field.DatabaseValue);
                 }
             }
 
@@ -188,7 +188,7 @@ namespace Sitecore.Pathfinder.Builders.Items
                     versionedItem.Fields.ReadAll();
                 }
 
-                SetFieldValue(versionedItem, field.FieldName.Value, field.Value);
+                SetFieldValue(versionedItem, field.FieldName.Value, field.DatabaseValue);
             }
 
             foreach (var i in versionedItems)

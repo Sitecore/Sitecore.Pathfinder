@@ -69,22 +69,15 @@ namespace Sitecore.Pathfinder.Emitters.Items
 
             foreach (var field in item.Fields)
             {
-                var value = field.Value.Value;
                 var templateField = template.GetField(field.FieldName.Value);
                 if (templateField == null)
                 {
                     throw new RetryableEmitException(Texts.Template_field_missing, field.FieldName.Source ?? item.ItemName.Source ?? TextNode.Empty, field.FieldName.Value);
                 }
 
-                foreach (var fieldResolver in context.FieldResolvers.OrderBy(r => r.Priority))
-                {
-                    if (fieldResolver.CanResolve(context, templateField, field))
-                    {
-                        value = fieldResolver.Resolve(context, templateField, field);
-                    }
-                }
+                var databaseValue = field.GetDatabaseValue(context.Trace);
 
-                var fieldBuilder = new FieldBuilder(field.FieldName, field.Language.Value, field.Version.Value, value);
+                var fieldBuilder = new FieldBuilder(field.FieldName, field.Language.Value, field.Version.Value, databaseValue);
                 itemBuilder.Fields.Add(fieldBuilder);
             }
 

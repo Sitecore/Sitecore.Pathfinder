@@ -154,15 +154,15 @@
     <Content Include="sitecore\shell\client\Applications\Pathfinder\InstallPackage.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Builders\FieldResolvers\ItemPathResolver.cs" />
-    <Compile Include="Builders\FieldResolvers\LayoutHtmlFileFieldResolver.cs" />
-    <Compile Include="Builders\FieldResolvers\LayoutFieldResolver.cs" />
-    <Compile Include="Builders\FieldResolvers\Layouts\LayoutResolveContext.cs" />
-    <Compile Include="Builders\FieldResolvers\Layouts\LayoutResolverBase.cs" />
     <Compile Include="Builders\Items\FieldBuilder.cs" />
     <Compile Include="Configuration\PathfinderSettings.cs" />
     <Compile Include="Diagnostics\EmitException.cs" />
     <Compile Include="Diagnostics\RetryableEmitException.cs" />
+    <Compile Include="Emitters\FieldResolvers\Layouts\JsonLayoutResolver.cs" />
+    <Compile Include="Emitters\FieldResolvers\LayoutFieldResolver.cs" />
+    <Compile Include="Emitters\FieldResolvers\Layouts\LayoutResolveContext.cs" />
+    <Compile Include="Emitters\FieldResolvers\Layouts\LayoutResolverBase.cs" />
+    <Compile Include="Emitters\FieldResolvers\Layouts\XmlLayoutResolver.cs" />
     <Compile Include="Emitters\Items\ItemEmitter.cs" />
     <Compile Include="Emitters\Files\ContentFileEmitter.cs" />
     <Compile Include="Emitters\Emitter.cs" />
@@ -170,11 +170,6 @@
     <Compile Include="Emitters\Files\BinFileEmitter.cs" />
     <Compile Include="Emitters\IEmitContext.cs" />
     <Compile Include="Data\DataService.cs" />
-    <Compile Include="Builders\FieldResolvers\CheckboxFieldResolver.cs" />
-    <Compile Include="Builders\FieldResolvers\FieldResolverBase.cs" />
-    <Compile Include="Builders\FieldResolvers\IFieldResolver.cs" />
-    <Compile Include="Builders\FieldResolvers\ImageFieldResolver.cs" />
-    <Compile Include="Builders\FieldResolvers\LinkFieldResolver.cs" />
     <Compile Include="Data\IDataService.cs" />
     <Compile Include="Builders\Items\ItemBuilder.cs" />
     <Compile Include="Builders\Templates\TemplateBuilder.cs" />
@@ -189,8 +184,6 @@
     <Compile Include="Mvc\Presentation\HtmlTemplateRenderer.cs" />
     <Compile Include="Mvc\Response\GetRenderer\GetHtmlTemplateRenderer.cs" />
     <Compile Include="Packages\PackageService.cs" />
-    <Compile Include="Builders\FieldResolvers\Layouts\JsonLayoutResolver.cs" />
-    <Compile Include="Builders\FieldResolvers\Layouts\XmlLayoutResolver.cs" />
     <Compile Include="Packages\Packages\NugetPackage.cs" />
     <Compile Include="Packages\Packages\PackageBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -241,6 +234,7 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

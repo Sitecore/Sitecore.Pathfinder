@@ -3,6 +3,7 @@
 using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Building.Checking
 {
@@ -27,6 +28,15 @@ namespace Sitecore.Pathfinder.Building.Checking
 
         protected void TraceDiagnostics([NotNull] IBuildContext context)
         {
+            // todo: move to OnProjectItemLoaded
+            foreach (var item in context.Project.Items.OfType<Item>())
+            {
+                foreach (var field in item.Fields)
+                {
+                    field.GetDatabaseValue(context.Trace);
+                }  
+            }
+
             foreach (var diagnostic in context.Project.Diagnostics)
             {
                 switch (diagnostic.Severity)

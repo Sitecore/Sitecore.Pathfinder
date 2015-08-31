@@ -2,15 +2,11 @@
 
 using System;
 using System.ComponentModel.Composition;
-using Sitecore.Data.Templates;
-using Sitecore.Pathfinder.Builders.FieldResolvers.Layouts;
-using Sitecore.Pathfinder.Emitters;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
-using Sitecore.Pathfinder.Snapshots.Xml;
 
-namespace Sitecore.Pathfinder.Builders.FieldResolvers
+namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
 {
     [Export(typeof(IFieldResolver))]
     public class LayoutFieldResolver : FieldResolverBase
@@ -19,12 +15,12 @@ namespace Sitecore.Pathfinder.Builders.FieldResolvers
         {
         }
 
-        public override bool CanResolve(IEmitContext context, TemplateField templateField, Field field)
+        public override bool CanResolve(ITraceService trace, IProject project, Field field)
         {
-            return string.Compare(templateField.Type, "layout", StringComparison.OrdinalIgnoreCase) == 0 && field.ValueHint.Value.Contains("Layout");
+            return string.Compare(field.TemplateField.Type, "layout", StringComparison.OrdinalIgnoreCase) == 0 && field.ValueHint.Value.Contains("Layout");
         }
 
-        public override string Resolve(IEmitContext context, TemplateField templateField, Field field)
+        public override string Resolve(ITraceService trace, IProject project, Field field)
         {
             var textNode = field.Value.Source ?? TextNode.Empty;
             if (textNode == TextNode.Empty)
@@ -38,11 +34,15 @@ namespace Sitecore.Pathfinder.Builders.FieldResolvers
                 return field.Value.Value.Mid(8);
             }
 
-            var layoutResolveContext = new LayoutResolveContext(context, textSnapshot, field.Item.DatabaseName);
+            /*
+            var layoutResolveContext = new LayoutResolveContext(project, textSnapshot);
 
             var resolver = textNode is XmlTextNode ? (LayoutResolverBase)new XmlLayoutResolver() : new JsonLayoutResolver();
 
             return resolver.Resolve(layoutResolveContext, textNode);
+            */
+
+            return field.Value.Value.Mid(8);
         }
     }
 }

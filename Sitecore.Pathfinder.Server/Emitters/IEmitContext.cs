@@ -3,7 +3,6 @@
 using System.Collections.Generic;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Data.Items;
-using Sitecore.Pathfinder.Builders.FieldResolvers;
 using Sitecore.Pathfinder.Data;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
@@ -31,9 +30,6 @@ namespace Sitecore.Pathfinder.Emitters
 
         [Diagnostics.NotNull]
         ICollection<string> DeletedItems { get; }
-
-        [Diagnostics.NotNull]
-        IEnumerable<IFieldResolver> FieldResolvers { get; }
 
         [Diagnostics.NotNull]
         IFileSystemService FileSystem { get; }

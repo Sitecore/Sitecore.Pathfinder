@@ -7,7 +7,7 @@ using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Pathfinder.Snapshots;
 
-namespace Sitecore.Pathfinder.Builders.FieldResolvers.Layouts
+namespace Sitecore.Pathfinder.Emitters.FieldResolvers.Layouts
 {
     public class JsonLayoutResolver : LayoutResolverBase
     {

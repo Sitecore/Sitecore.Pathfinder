@@ -3,7 +3,7 @@
 using System.Linq;
 using Sitecore.Pathfinder.Snapshots;
 
-namespace Sitecore.Pathfinder.Builders.FieldResolvers.Layouts
+namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
 {
     public class XmlLayoutResolver : LayoutResolverBase
     {

@@ -13,6 +13,7 @@ using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Projects.Items.FieldResolvers;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -121,12 +122,16 @@ namespace Sitecore.Pathfinder.Projects
             Checker.CheckProject(this);
         }
 
+        [ImportMany]
+        public IEnumerable<IFieldResolver> FieldResolvers { get; private set; }
+
         public virtual IProject Load(ProjectOptions projectOptions, IEnumerable<string> sourceFileNames)
         {
             Options = projectOptions;
 
             var context = CompositionService.Resolve<IParseContext>().With(this, Snapshot.Empty);
 
+            // todo: external references must have correct id!
             foreach (var externalReference in Options.ExternalReferences)
             {
                 var projectItem = Factory.ExternalReferenceItem(this, externalReference, Snapshot.Empty, Options.DatabaseName, Path.GetFileName(externalReference) ?? string.Empty, externalReference);
@@ -192,6 +197,11 @@ namespace Sitecore.Pathfinder.Projects
                     snapshot.SaveChanges();
                 }
             }
+        }
+
+        public IProjectItem FindQualifiedItem(string qualifiedName)
+        {
+            return Items.FirstOrDefault(i => string.Compare(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase) == 0);
         }
 
         [NotNull]

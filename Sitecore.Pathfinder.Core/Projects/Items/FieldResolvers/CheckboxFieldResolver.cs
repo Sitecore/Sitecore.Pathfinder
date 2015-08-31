@@ -2,11 +2,9 @@
 
 using System;
 using System.ComponentModel.Composition;
-using Sitecore.Data.Templates;
-using Sitecore.Pathfinder.Emitters;
-using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Diagnostics;
 
-namespace Sitecore.Pathfinder.Builders.FieldResolvers
+namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
 {
     [Export(typeof(IFieldResolver))]
     public class CheckboxFieldResolver : FieldResolverBase
@@ -15,12 +13,12 @@ namespace Sitecore.Pathfinder.Builders.FieldResolvers
         {
         }
 
-        public override bool CanResolve(IEmitContext context, TemplateField templateField, Field field)
+        public override bool CanResolve(ITraceService trace, IProject project, Field field)
         {
-            return string.Compare(templateField.Type, "checkbox", StringComparison.OrdinalIgnoreCase) == 0;
+            return string.Compare(field.TemplateField.Type, "checkbox", StringComparison.OrdinalIgnoreCase) == 0;
         }
 
-        public override string Resolve(IEmitContext context, TemplateField templateField, Field field)
+        public override string Resolve(ITraceService trace, IProject project, Field field)
         {
             if (string.Compare(field.Value.Value, "true", StringComparison.OrdinalIgnoreCase) == 0)
             {
