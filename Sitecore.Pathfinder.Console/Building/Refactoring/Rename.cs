@@ -45,7 +45,7 @@ namespace Sitecore.Pathfinder.Building.Refactoring
                 return;
             }
 
-            var projectItem = context.Project.Items.FirstOrDefault(i => string.Compare(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase) == 0);
+            var projectItem = context.Project.FindQualifiedItem(qualifiedName);
             if (projectItem == null)
             {
                 context.Trace.Writeline(Texts.Item_not_found, qualifiedName);

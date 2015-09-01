@@ -40,7 +40,8 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
 
             WriteLayout(context, output, textNode);
 
-            return writer.ToString();
+            var result = writer.ToString();
+            return result;
         }
 
         [Diagnostics.NotNull]

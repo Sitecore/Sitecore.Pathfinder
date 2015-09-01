@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
             var item = project.FindQualifiedItem(qualifiedName);
             if (item == null)
             {
-                trace.Writeline("Reference not found", qualifiedName);
+                trace.Writeline("Link field reference not found", qualifiedName);
             }
 
             return $"<link text=\"\" linktype=\"internal\" url=\"\" anchor=\"\" title=\"\" class=\"\" target=\"\" querystring=\"\" id=\"{item.Guid.Format()}\" />";

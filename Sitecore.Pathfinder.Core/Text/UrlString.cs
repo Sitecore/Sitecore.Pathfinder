@@ -30,6 +30,7 @@ namespace Sitecore.Pathfinder.Text
             _parameters.Add(parameters);
         }
 
+        [NotNull]
         public string Extension
         {
             set

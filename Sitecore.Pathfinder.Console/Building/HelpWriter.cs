@@ -27,11 +27,13 @@ namespace Sitecore.Pathfinder.Building
         [NotNull]
         public TextWriter Summary { get; }
 
+        [NotNull]
         public string GetExamples()
         {
             return Examples.ToString();
         }
 
+        [NotNull]
         public string GetParameters()
         {
             var result = Parameters.ToString();
@@ -43,6 +45,7 @@ namespace Sitecore.Pathfinder.Building
             return result;
         }
 
+        [NotNull]
         public string GetRemarks()
         {
             var result = Remarks.ToString();
@@ -54,6 +57,7 @@ namespace Sitecore.Pathfinder.Building
             return result;
         }
 
+        [NotNull]
         public string GetSummary()
         {
             return Summary.ToString();

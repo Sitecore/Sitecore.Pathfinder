@@ -9,6 +9,7 @@ using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitters.Items;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Files;
@@ -80,7 +81,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
 
                 if (mediaFile.MediaItem.Guid != item.ID.ToGuid())
                 {
-                    context.Trace.TraceError(Texts.Media_item_created_with_wrong_ID, new SnapshotTextNode(mediaFile.Snapshots.First()), $"{item.ID} != {mediaFile.MediaItem.Guid.ToString("B").ToUpperInvariant()}");
+                    context.Trace.TraceError(Texts.Media_item_created_with_wrong_ID, new SnapshotTextNode(mediaFile.Snapshots.First()), $"{item.ID} != {mediaFile.MediaItem.Guid.Format()}");
                 }
             }
 

@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Snapshots;
@@ -65,7 +66,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
                 var sourceAttribute = new Attribute<string>(source.Name, string.Empty);
                 sourceAttribute.AddSource(source);
                 sourceAttribute.SourceFlags = SourceFlags.IsGuid;
-                return context.ParseContext.Factory.Reference(projectItem, sourceAttribute, guid.ToString("B").ToUpperInvariant());
+                return context.ParseContext.Factory.Reference(projectItem, sourceAttribute, guid.Format());
             }
 
             return null;

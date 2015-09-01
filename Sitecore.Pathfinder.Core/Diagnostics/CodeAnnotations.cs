@@ -3,6 +3,7 @@
 using System;
 
 #pragma warning disable 1591
+#pragma warning disable PropertyAttribute // The property should be marked with either [NotNull] or [CanBeNull]
 
 // ReSharper disable UnusedMember.Global
 // ReSharper disable MemberCanBePrivate.Global

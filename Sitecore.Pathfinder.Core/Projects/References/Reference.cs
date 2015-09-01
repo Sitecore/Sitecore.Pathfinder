@@ -81,7 +81,7 @@ namespace Sitecore.Pathfinder.Projects.References
 
             IsResolved = true;
 
-            var projectItem = Owner.Project.Items.FirstOrDefault(i => string.Compare(i.QualifiedName, TargetQualifiedName, StringComparison.OrdinalIgnoreCase) == 0);
+            var projectItem = Owner.Project.FindQualifiedItem(TargetQualifiedName);
             if (projectItem == null)
             {
                 IsValid = false;

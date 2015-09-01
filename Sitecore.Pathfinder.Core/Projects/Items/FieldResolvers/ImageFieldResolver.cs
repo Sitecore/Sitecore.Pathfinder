@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
             var item = project.FindQualifiedItem(qualifiedName);
             if (item == null)
             {
-                trace.Writeline("Reference not found", qualifiedName);
+                trace.Writeline("Image reference not found", qualifiedName);
             }
 
             return $"<image mediapath=\"\" alt=\"Vista15\" width=\"\" height=\"\" hspace=\"\" vspace=\"\" showineditor=\"\" usethumbnail=\"\" src=\"\" mediaid=\"{item.Guid.Format()}\" />";

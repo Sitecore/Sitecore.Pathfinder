@@ -28,7 +28,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
                 var item = project.FindQualifiedItem(value);
                 if (item == null)
                 {
-                    trace.Writeline("Reference not found", value);
+                    trace.Writeline("Item path reference not found", value);
                 }
 
                 return item.Guid.Format();
@@ -40,7 +40,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
                 var item = project.FindQualifiedItem(itemPath);
                 if (item == null)
                 {
-                    trace.Writeline("Reference not found", itemPath);
+                    trace.Writeline("Item path reference not found", itemPath);
                 }
 
                 if (sb.Length > 0)

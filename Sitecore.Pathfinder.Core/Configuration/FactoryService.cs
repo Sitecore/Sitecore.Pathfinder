@@ -50,9 +50,9 @@ namespace Sitecore.Pathfinder.Configuration
             return new Diagnostic(fileName, position, severity, text);
         }
 
-        public virtual ExternalReferenceItem ExternalReferenceItem(IProject project, string externalReference, ISnapshot snapshot, string databaseName, string itemName, string itemIdOrPath)
+        public virtual ExternalReferenceItem ExternalReferenceItem(IProject project, string projectUniqueId, ISnapshot snapshot, string databaseName, string itemName, string itemIdOrPath)
         {
-            return new ExternalReferenceItem(project, externalReference, snapshot, databaseName, itemName, itemIdOrPath);
+            return new ExternalReferenceItem(project, projectUniqueId, snapshot, databaseName, itemName, itemIdOrPath);
         }
 
         public virtual Field Field(Item item)

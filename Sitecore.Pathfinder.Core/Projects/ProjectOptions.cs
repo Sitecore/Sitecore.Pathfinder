@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
 
@@ -19,7 +20,7 @@ namespace Sitecore.Pathfinder.Projects
         public string DatabaseName { get; }
 
         [NotNull]
-        public ICollection<string> ExternalReferences { get; } = new List<string>();
+        public ICollection<Tuple<Guid, string>> ExternalReferences { get; } = new List<Tuple<Guid, string>>();
 
         [NotNull]
         public string ProjectDirectory { get; }

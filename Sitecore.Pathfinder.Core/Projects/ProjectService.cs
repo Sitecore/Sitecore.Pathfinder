@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
@@ -65,13 +66,19 @@ namespace Sitecore.Pathfinder.Projects
         {
             foreach (var pair in Configuration.GetSubKeys(Constants.Configuration.ExternalReferences))
             {
-                projectOptions.ExternalReferences.Add(pair.Key);
+                Guid guid;
+                if (!Guid.TryParse(pair.Key, out guid))
+                {
+                    throw new InvalidOperationException($"External reference Guid is not valid: {pair.Key}");
+                }
 
                 var value = Configuration.Get(Constants.Configuration.ExternalReferences + ":" + pair.Key);
-                if (!string.IsNullOrEmpty(value))
+                if (string.IsNullOrEmpty(value))
                 {
-                    projectOptions.ExternalReferences.Add(value);
+                    throw new InvalidOperationException($"External reference path is not valid: {pair.Key}");
                 }
+
+                projectOptions.ExternalReferences.Add(new Tuple<Guid, string>(guid, value));
             }
         }
 

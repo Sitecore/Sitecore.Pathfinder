@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Configuration
         Diagnostic Diagnostic([NotNull] string fileName, TextPosition position, Severity severity, [NotNull] string text);
 
         [NotNull]
-        ExternalReferenceItem ExternalReferenceItem([NotNull] IProject project, [NotNull] string externalReference, [NotNull] ISnapshot snapshot, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath);
+        ExternalReferenceItem ExternalReferenceItem([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ISnapshot snapshot, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath);
 
         [NotNull]
         Field Field([NotNull] Item item);

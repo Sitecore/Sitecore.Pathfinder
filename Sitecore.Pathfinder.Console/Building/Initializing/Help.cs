@@ -5,7 +5,7 @@ using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Web.UI.WebControls;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Building.Initializing
@@ -38,7 +38,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
             helpWriter.Remarks.WriteLine("Displays version information and a list of commands.");
         }
 
-        private void WriteCommandHelp(IBuildContext context, string taskName)
+        private void WriteCommandHelp([NotNull] IBuildContext context, [NotNull] string taskName)
         {
             var build = context.CompositionService.Resolve<Build>();
             var task = build.Tasks.FirstOrDefault(t => string.Compare(t.TaskName, taskName, StringComparison.OrdinalIgnoreCase) == 0);
@@ -81,7 +81,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
             }
         }
 
-        private void WriteGeneralHelp(IBuildContext context)
+        private void WriteGeneralHelp([NotNull] IBuildContext context)
         {
             var assembly = Assembly.GetExecutingAssembly();
             var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
@@ -106,7 +106,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
             WriteListOfTasks(context);
         }
 
-        private void WriteListOfTasks(IBuildContext context)
+        private void WriteListOfTasks([NotNull] IBuildContext context)
         {
             var build = context.CompositionService.Resolve<Build>();
 

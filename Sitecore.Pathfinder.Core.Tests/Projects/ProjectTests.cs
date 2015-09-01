@@ -45,8 +45,8 @@ namespace Sitecore.Pathfinder.Projects
         [Test]
         public void ExternalReferencesTests()
         {
-            Assert.AreEqual(8, Project.Options.ExternalReferences.Count);
-            Assert.AreEqual("/sitecore/templates/Sample/Sample Item", Project.Options.ExternalReferences.ElementAt(0));
+            Assert.AreEqual(4, Project.Options.ExternalReferences.Count);
+            Assert.AreEqual("/sitecore/templates/Sample/Sample Item", Project.Options.ExternalReferences.ElementAt(0).Item2);
         }
 
         [Test]

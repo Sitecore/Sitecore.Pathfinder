@@ -306,9 +306,7 @@
         </member>
         <member name="M:Microsoft.CodeAnalysis.CSharp.Binder.ReportBadAwaitContext(Microsoft.CodeAnalysis.CSharp.CSharpSyntaxNode,Microsoft.CodeAnalysis.DiagnosticBag)">
             <summary>
-            Report diagnostics if the await expression occurs in an unsafe context.
-            Errors for await in lock statement, finally block, or catch clause are detected
-            and reported in the warnings pass.
+            Report diagnostics if the await expression occurs in a context where it is not allowed.
             </summary>
             <returns>True if errors were found.</returns>
         </member>
@@ -794,13 +792,13 @@
             without adding two links to the binder chain.
             </remarks>
         </member>
-        <member name="M:Microsoft.CodeAnalysis.CSharp.Binder.BindRegularCSharpFieldInitializers(Microsoft.CodeAnalysis.CSharp.CSharpCompilation,System.Collections.Immutable.ImmutableArray{System.Collections.Immutable.ImmutableArray{Microsoft.CodeAnalysis.CSharp.Symbols.FieldOrPropertyInitializer}},Microsoft.CodeAnalysis.ArrayBuilder{Microsoft.CodeAnalysis.CSharp.BoundInitializer},Microsoft.CodeAnalysis.DiagnosticBag,System.Boolean,Microsoft.CodeAnalysis.CSharp.ImportChain@)">
+        <member name="M:Microsoft.CodeAnalysis.CSharp.Binder.BindRegularCSharpFieldInitializers(Microsoft.CodeAnalysis.CSharp.CSharpCompilation,System.Collections.Immutable.ImmutableArray{System.Collections.Immutable.ImmutableArray{Microsoft.CodeAnalysis.CSharp.Symbols.FieldOrPropertyInitializer}},Microsoft.CodeAnalysis.ArrayBuilder{Microsoft.CodeAnalysis.CSharp.BoundInitializer},Microsoft.CodeAnalysis.DiagnosticBag,Microsoft.CodeAnalysis.CSharp.ImportChain@)">
             <summary>
             In regular C#, all field initializers are assignments to fields and the assigned expressions
             may not reference instance members.
             </summary>
         </member>
-        <member name="M:Microsoft.CodeAnalysis.CSharp.Binder.BindScriptFieldInitializers(Microsoft.CodeAnalysis.CSharp.CSharpCompilation,Microsoft.CodeAnalysis.CSharp.Symbols.MethodSymbol,System.Collections.Immutable.ImmutableArray{System.Collections.Immutable.ImmutableArray{Microsoft.CodeAnalysis.CSharp.Symbols.FieldOrPropertyInitializer}},Microsoft.CodeAnalysis.ArrayBuilder{Microsoft.CodeAnalysis.CSharp.BoundInitializer},Microsoft.CodeAnalysis.DiagnosticBag,System.Boolean,Microsoft.CodeAnalysis.CSharp.ImportChain@)">
+        <member name="M:Microsoft.CodeAnalysis.CSharp.Binder.BindScriptFieldInitializers(Microsoft.CodeAnalysis.CSharp.CSharpCompilation,Microsoft.CodeAnalysis.CSharp.Symbols.MethodSymbol,System.Collections.Immutable.ImmutableArray{System.Collections.Immutable.ImmutableArray{Microsoft.CodeAnalysis.CSharp.Symbols.FieldOrPropertyInitializer}},Microsoft.CodeAnalysis.ArrayBuilder{Microsoft.CodeAnalysis.CSharp.BoundInitializer},Microsoft.CodeAnalysis.DiagnosticBag,Microsoft.CodeAnalysis.CSharp.ImportChain@)">
             <summary>
             In script C#, some field initializers are assignments to fields and others are global
             statements.  There are no restrictions on accessing instance members.
@@ -986,6 +984,12 @@
             <remarks>
             Does not consider <see cref="P:Microsoft.CodeAnalysis.CSharp.Symbol.CanBeReferencedByName"/> - that is left to the caller.
             </remarks>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.CSharp.Binder.IsCrefAccessible(Microsoft.CodeAnalysis.CSharp.Symbol)">
+            <summary>
+            A symbol is accessible for referencing in a cref if it is in the same assembly as the reference
+            or the symbols's effective visibility is not private.
+            </summary>
         </member>
         <member name="M:Microsoft.CodeAnalysis.CSharp.Binder.IsAccessible(Microsoft.CodeAnalysis.CSharp.Symbol,System.Collections.Generic.HashSet{Microsoft.CodeAnalysis.DiagnosticInfo}@,Microsoft.CodeAnalysis.CSharp.Symbols.TypeSymbol,Roslyn.Utilities.ConsList{Microsoft.CodeAnalysis.CSharp.Symbol})">
             <summary>
@@ -1250,7 +1254,7 @@
             namespace if containing symbol is neither a namespace or named type.
             </summary>
         </member>
-        <member name="M:Microsoft.CodeAnalysis.CSharp.Binder.BindSimpleName(Microsoft.CodeAnalysis.CSharp.Syntax.SimpleNameSyntax,Microsoft.CodeAnalysis.DiagnosticBag,Roslyn.Utilities.ConsList{Microsoft.CodeAnalysis.CSharp.Symbol},System.Boolean,Microsoft.CodeAnalysis.CSharp.Symbols.NamespaceOrTypeSymbol)">
+        <member name="M:Microsoft.CodeAnalysis.CSharp.Binder.BindSimpleNamespaceOrTypeOrAliasSymbol(Microsoft.CodeAnalysis.CSharp.Syntax.SimpleNameSyntax,Microsoft.CodeAnalysis.DiagnosticBag,Roslyn.Utilities.ConsList{Microsoft.CodeAnalysis.CSharp.Symbol},System.Boolean,Microsoft.CodeAnalysis.CSharp.Symbols.NamespaceOrTypeSymbol)">
             <summary>
             Binds a simple name or the simple name portion of a qualified name. 
             </summary>
@@ -1314,6 +1318,11 @@
             <summary>
             Prefers symbols from source module, then from added modules, then from referenced assemblies.
             Returns true if values were swapped.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.CSharp.Binder.BestSymbolInfo.IsSecondLocationBetter(Microsoft.CodeAnalysis.CSharp.Binder.BestSymbolLocation,Microsoft.CodeAnalysis.CSharp.Binder.BestSymbolLocation)">
+            <summary>
+            Returns true if the second is a better location than the first.
             </summary>
         </member>
         <member name="M:Microsoft.CodeAnalysis.CSharp.Binder.GetBestSymbolInfo(Microsoft.CodeAnalysis.ArrayBuilder{Microsoft.CodeAnalysis.CSharp.Symbol},Microsoft.CodeAnalysis.CSharp.Binder.BestSymbolInfo@)">
@@ -1500,6 +1509,11 @@
         <member name="F:Microsoft.CodeAnalysis.CSharp.BinderFlags.AllowAwaitInUnsafeContext">
             <summary>
             In the debugger, the context is always unsafe, but one can still await.
+            </summary>
+        </member>
+        <member name="F:Microsoft.CodeAnalysis.CSharp.BinderFlags.IgnoreCorLibraryDuplicatedTypes">
+            <summary>
+            Ignore duplicate types from the cor library.
             </summary>
         </member>
         <member name="T:Microsoft.CodeAnalysis.CSharp.BinderFlagsExtensions">
@@ -2611,8 +2625,8 @@
         </member>
         <member name="M:Microsoft.CodeAnalysis.CSharp.MethodTypeInferrer.GetInferredTypeArguments">
             <summary>
-            Return the inferred type arguments using the original type
-            parameters for any type arguments that were not inferred.
+            Return the inferred type arguments using null
+            for any type arguments that were not inferred.
             </summary>
         </member>
         <member name="T:Microsoft.CodeAnalysis.CSharp.OverloadResolutionResult`1">
@@ -3374,6 +3388,13 @@
             was unable to choose a best method.
             </summary>
         </member>
+        <member name="M:Microsoft.CodeAnalysis.CSharp.BoundConversion.ConversionHasSideEffects">
+            <summary>
+            Returns true when conversion itself (not the operand) may have sideeffects
+            A typical sideeffect of a conversion is an exception when conversion is unsuccessful.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Microsoft.CodeAnalysis.CSharp.BoundConversion.SynthesizedNonUserDefined(Microsoft.CodeAnalysis.CSharp.CSharpSyntaxNode,Microsoft.CodeAnalysis.CSharp.BoundExpression,Microsoft.CodeAnalysis.CSharp.ConversionKind,Microsoft.CodeAnalysis.CSharp.Symbols.TypeSymbol,Microsoft.CodeAnalysis.ConstantValue)">
             <remarks>
             This method is intended for passes other than the LocalRewriter.
@@ -3400,11 +3421,11 @@
         </member>
         <member name="P:Microsoft.CodeAnalysis.CSharp.BoundNode.HasAnyErrors">
             <summary>
-            Determines if a bound node, or associated syntax or type has an error (not a waring) 
+            Determines if a bound node, or associated syntax or type has an error (not a warning) 
             diagnostic associated with it.
             
             Typically used in the binder as a way to prevent cascading errors. 
-            In most other cases a more lightweigth HasErrors should be used.
+            In most other cases a more lightweight HasErrors should be used.
             </summary>
         </member>
         <member name="P:Microsoft.CodeAnalysis.CSharp.BoundNode.HasErrors">
@@ -3700,7 +3721,7 @@
             Releases a local.
             </summary>
         </member>
-        <member name="M:Microsoft.CodeAnalysis.CSharp.CodeGen.CodeGenerator.AllocateTemp(Microsoft.CodeAnalysis.CSharp.Symbols.TypeSymbol,Microsoft.CodeAnalysis.CSharp.CSharpSyntaxNode)">
+        <member name="M:Microsoft.CodeAnalysis.CSharp.CodeGen.CodeGenerator.AllocateTemp(Microsoft.CodeAnalysis.CSharp.Symbols.TypeSymbol,Microsoft.CodeAnalysis.SyntaxNode)">
             <summary>
             Allocates a temp without identity.
             </summary>
@@ -3754,6 +3775,77 @@
             Recursively rewrites the node or simply replaces it with a dup node
             if we have just seen exactly same node.
             </summary>
+        </member>
+        <member name="T:Microsoft.CodeAnalysis.CSharp.CSharpCommandLineArguments">
+            <summary>
+            The command line arguments to a C# <see cref="T:Microsoft.CodeAnalysis.CSharp.CSharpCompiler"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.CSharp.CSharpCommandLineArguments.CompilationOptions">
+            <summary>
+            Gets the compilation options for the C# <see cref="T:Microsoft.CodeAnalysis.Compilation"/>
+            created from the <see cref="T:Microsoft.CodeAnalysis.CSharp.CSharpCompiler"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.CSharp.CSharpCommandLineArguments.ParseOptions">
+            <summary>
+            Gets the parse options for the C# <see cref="T:Microsoft.CodeAnalysis.Compilation"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.CSharp.CSharpCommandLineArguments.ShouldIncludeErrorEndLocation">
+            <value>
+            Should the format of error messages include the line and column of
+            the end of the offending text.
+            </value>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.CSharp.CommandLineDiagnosticFormatter.RelativizeNormalizedPath(System.String)">
+            <summary>
+            Get the path name starting from the <see cref="F:Microsoft.CodeAnalysis.CSharp.CommandLineDiagnosticFormatter._baseDirectory"/>
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.CSharp.CSharpCommandLineParser.Parse(System.Collections.Generic.IEnumerable{System.String},System.String,System.String,System.String)">
+            <summary>
+            Parses a command line.
+            </summary>
+            <param name="args">A collection of strings representing the command line arguments.</param>
+            <param name="baseDirectory">The base directory used for qualifying file locations.</param>
+            <param name="sdkDirectory">The directory to search for mscorlib.</param>
+            <param name="additionalReferenceDirectories">A string representing additional reference paths.</param>
+            <returns>a commandlinearguments object representing the parsed command line.</returns>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.CSharp.CSharpCommandLineParser.AddDiagnostic(System.Collections.Generic.IList{Microsoft.CodeAnalysis.Diagnostic},System.Collections.Generic.Dictionary{System.String,Microsoft.CodeAnalysis.ReportDiagnostic},Microsoft.CodeAnalysis.CSharp.ErrorCode,System.Object[])">
+            <summary>
+            Diagnostic for the errorCode added if the warningOptions does not mention suppressed for the errorCode.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.CSharp.CSharpCompiler.GetOutputFileName(Microsoft.CodeAnalysis.Compilation,System.Threading.CancellationToken)">
+            <summary>
+            Given a compilation and a destination directory, determine three names:
+              1) The name with which the assembly should be output.
+              2) The path of the assembly/module file.
+              3) The path of the pdb file.
+            
+            When csc produces an executable, but the name of the resulting assembly
+            is not specified using the "/out" switch, the name is taken from the name
+            of the file (note: file, not class) containing the assembly entrypoint
+            (as determined by binding and the "/main" switch).
+            
+            For example, if the command is "csc /target:exe a.cs b.cs" and b.cs contains the
+            entrypoint, then csc will produce "b.exe" and "b.pdb" in the output directory,
+            with assembly name "b" and module name "b.exe" embedded in the file.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.CSharp.CSharpCompiler.PrintLogo(System.IO.TextWriter)">
+            <summary>
+            Print compiler logo
+            </summary>
+            <param name="consoleOutput"></param>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.CSharp.CSharpCompiler.PrintHelp(System.IO.TextWriter)">
+            <summary>
+            Print Commandline help message (up to 80 English characters per line)
+            </summary>
+            <param name="consoleOutput"></param>
         </member>
         <member name="T:Microsoft.CodeAnalysis.CSharp.AttributeSemanticModel">
             <summary>
@@ -5512,46 +5604,46 @@
             Structure containing all semantic information about a for each statement.
             </summary>
         </member>
-        <member name="F:Microsoft.CodeAnalysis.CSharp.ForEachStatementInfo.GetEnumeratorMethod">
+        <member name="P:Microsoft.CodeAnalysis.CSharp.ForEachStatementInfo.GetEnumeratorMethod">
             <summary>
             Gets the &quot;GetEnumerator&quot; method.
             </summary>
         </member>
-        <member name="F:Microsoft.CodeAnalysis.CSharp.ForEachStatementInfo.MoveNextMethod">
+        <member name="P:Microsoft.CodeAnalysis.CSharp.ForEachStatementInfo.MoveNextMethod">
             <summary>
             Gets the &quot;MoveNext&quot; method.
             </summary>
         </member>
-        <member name="F:Microsoft.CodeAnalysis.CSharp.ForEachStatementInfo.CurrentProperty">
+        <member name="P:Microsoft.CodeAnalysis.CSharp.ForEachStatementInfo.CurrentProperty">
             <summary>
             Gets the &quot;Current&quot; property.
             </summary>
         </member>
-        <member name="F:Microsoft.CodeAnalysis.CSharp.ForEachStatementInfo.DisposeMethod">
+        <member name="P:Microsoft.CodeAnalysis.CSharp.ForEachStatementInfo.DisposeMethod">
             <summary>
             Gets the &quot;Dispose&quot; method.
             </summary>
         </member>
-        <member name="F:Microsoft.CodeAnalysis.CSharp.ForEachStatementInfo.ElementType">
+        <member name="P:Microsoft.CodeAnalysis.CSharp.ForEachStatementInfo.ElementType">
             <summary>
-            The intermediate type to which the output of the <see cref="F:Microsoft.CodeAnalysis.CSharp.ForEachStatementInfo.CurrentProperty"/> is converted
+            The intermediate type to which the output of the <see cref="P:Microsoft.CodeAnalysis.CSharp.ForEachStatementInfo.CurrentProperty"/> is converted
             before being converted to the iteration variable type.
             </summary>
             <remarks>
             As you might hope, for an array, it is the element type of the array.
             </remarks>
         </member>
-        <member name="F:Microsoft.CodeAnalysis.CSharp.ForEachStatementInfo.ElementConversion">
+        <member name="P:Microsoft.CodeAnalysis.CSharp.ForEachStatementInfo.ElementConversion">
             <summary>
-            The conversion from the <see cref="F:Microsoft.CodeAnalysis.CSharp.ForEachStatementInfo.ElementType"/> to the iteration variable type.
+            The conversion from the <see cref="P:Microsoft.CodeAnalysis.CSharp.ForEachStatementInfo.ElementType"/> to the iteration variable type.
             </summary>
             <remarks>
             May be user-defined.
             </remarks>
         </member>
-        <member name="F:Microsoft.CodeAnalysis.CSharp.ForEachStatementInfo.CurrentConversion">
+        <member name="P:Microsoft.CodeAnalysis.CSharp.ForEachStatementInfo.CurrentConversion">
             <summary>
-            The conversion from the type of the <see cref="F:Microsoft.CodeAnalysis.CSharp.ForEachStatementInfo.CurrentProperty"/> to the <see cref="F:Microsoft.CodeAnalysis.CSharp.ForEachStatementInfo.ElementType"/>.
+            The conversion from the type of the <see cref="P:Microsoft.CodeAnalysis.CSharp.ForEachStatementInfo.CurrentProperty"/> to the <see cref="P:Microsoft.CodeAnalysis.CSharp.ForEachStatementInfo.ElementType"/>.
             </summary>
         </member>
         <member name="M:Microsoft.CodeAnalysis.CSharp.ForEachStatementInfo.#ctor(Microsoft.CodeAnalysis.IMethodSymbol,Microsoft.CodeAnalysis.IMethodSymbol,Microsoft.CodeAnalysis.IPropertySymbol,Microsoft.CodeAnalysis.IMethodSymbol,Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.CSharp.Conversion,Microsoft.CodeAnalysis.CSharp.Conversion)">
@@ -6108,6 +6200,18 @@
             <summary>
             Resets numbering in anonymous type names and compiles the
             anonymous type methods. Also seals the collection of templates.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.CSharp.Symbols.AnonymousTypeManager.GetCreatedAnonymousTypeTemplates(Microsoft.CodeAnalysis.ArrayBuilder{Microsoft.CodeAnalysis.CSharp.Symbols.AnonymousTypeManager.AnonymousTypeTemplateSymbol})">
+            <summary>
+            The set of anonymous type templates created by
+            this AnonymousTypeManager, in fixed order.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.CSharp.Symbols.AnonymousTypeManager.GetCreatedSynthesizedDelegates(Microsoft.CodeAnalysis.ArrayBuilder{Microsoft.CodeAnalysis.CSharp.Symbols.SynthesizedDelegateSymbol})">
+            <summary>
+            The set of synthesized delegates created by
+            this AnonymousTypeManager.
             </summary>
         </member>
         <member name="M:Microsoft.CodeAnalysis.CSharp.Symbols.AnonymousTypeManager.GetAllCreatedTemplates">
@@ -8640,7 +8744,12 @@
             SPEC:   When dynamic occurs as part of the base type of a type, the applicable [DynamicAttribute] is applied to the type itself.
             </remarks>
         </member>
-        <member name="M:Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.DynamicTypeDecoder.TransformType(Microsoft.CodeAnalysis.CSharp.Symbols.TypeSymbol,System.Int32,System.Reflection.Metadata.Handle,Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.PEModuleSymbol,Microsoft.CodeAnalysis.RefKind)">
+        <member name="F:Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.DynamicTypeDecoder._index">
+            <remarks>
+            Should be accessed through <see cref="P:Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.DynamicTypeDecoder.HasFlag"/>, <see cref="M:Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.DynamicTypeDecoder.PeekFlag"/>, and <see cref="M:Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.DynamicTypeDecoder.ConsumeFlag"/>.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.DynamicTypeDecoder.TransformType(Microsoft.CodeAnalysis.CSharp.Symbols.TypeSymbol,System.Int32,System.Reflection.Metadata.EntityHandle,Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.PEModuleSymbol,Microsoft.CodeAnalysis.RefKind)">
             <summary>
             Decodes the attributes applied to the given <see paramref="targetSymbol"/> from metadata and checks if <see cref="T:System.Runtime.CompilerServices.DynamicAttribute"/> is applied.
             If so, it transforms the given <see paramref="metadataType"/>, using the decoded dynamic transforms attribute argument,
@@ -8792,11 +8901,6 @@
             Assembly's custom attributes
             </summary>
         </member>
-        <member name="F:Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.PEAssemblySymbol._lazyContainsExtensionMethods">
-            <summary>
-            Lazily initialized by MightContainExtensionMethods property.
-            </summary>
-        </member>
         <member name="M:Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.PEAssemblySymbol.LookupAssemblyForForwardedMetadataType(Microsoft.CodeAnalysis.MetadataTypeName@)">
             <summary>
             Look up the assembly to which the given metadata type is forwarded.
@@ -8851,6 +8955,21 @@
         <member name="T:Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.PEMethodSymbol">
             <summary>
             The class to represent all methods imported from a PE/module.
+            </summary>
+        </member>
+        <member name="T:Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.PEMethodSymbol.UncommonFields">
+            <summary>
+            Holds infrequently accessed fields. See <seealso cref="F:Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.PEMethodSymbol._uncommonFields"/> for an explanation.
+            </summary>
+        </member>
+        <member name="F:Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.PEMethodSymbol._uncommonFields">
+            <summary>
+            A single field to hold optional auxiliary data.
+            In many scenarios it is possible to avoid allocating this, thus saving total space in <see cref="T:Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.PEModuleSymbol"/>.
+            Even for lazily-computed values, it may be possible to avoid allocating <see cref="F:Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.PEMethodSymbol._uncommonFields"/> if
+            the computed value is a well-known "empty" value. In this case, bits in <see cref="F:Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.PEMethodSymbol._packedFlags"/> are used
+            to indicate that the lazy values have been computed and, if <see cref="F:Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.PEMethodSymbol._uncommonFields"/> is null, then
+            the "empty" value should be inferred.
             </summary>
         </member>
         <member name="M:Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.PEMethodSymbol.SetAssociatedProperty(Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.PEPropertySymbol,Microsoft.CodeAnalysis.MethodKind)">
@@ -8922,7 +9041,7 @@
             Module's assembly attributes
             </summary>
         </member>
-        <member name="M:Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.PEModuleSymbol.GetCustomAttributesForToken(System.Reflection.Metadata.Handle,System.Reflection.Metadata.CustomAttributeHandle@,Microsoft.CodeAnalysis.AttributeDescription,System.Reflection.Metadata.CustomAttributeHandle@,Microsoft.CodeAnalysis.AttributeDescription)">
+        <member name="M:Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.PEModuleSymbol.GetCustomAttributesForToken(System.Reflection.Metadata.EntityHandle,System.Reflection.Metadata.CustomAttributeHandle@,Microsoft.CodeAnalysis.AttributeDescription,System.Reflection.Metadata.CustomAttributeHandle@,Microsoft.CodeAnalysis.AttributeDescription)">
             <summary>
             Returns a possibly ExtensionAttribute filtered roArray of attributes. If
             filterExtensionAttributes is set to true, the method will remove all ExtensionAttributes
@@ -8935,7 +9054,7 @@
             the attribute out for the symbol but still cache it separately for emit.
             </summary>
         </member>
-        <member name="M:Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.PEModuleSymbol.GetCustomAttributesForToken(System.Reflection.Metadata.Handle,System.Reflection.Metadata.CustomAttributeHandle@)">
+        <member name="M:Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.PEModuleSymbol.GetCustomAttributesForToken(System.Reflection.Metadata.EntityHandle,System.Reflection.Metadata.CustomAttributeHandle@)">
             <summary>
             Get the custom attributes, but filter out any ParamArrayAttributes.
             </summary>
@@ -8943,7 +9062,7 @@
             <param name="paramArrayAttribute">Set to a ParamArrayAttribute</param>
             CustomAttributeHandle if any are found. Nil token otherwise.
         </member>
-        <member name="M:Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.PEModuleSymbol.GetCustomAttributesFilterExtensions(System.Reflection.Metadata.Handle,System.Boolean@)">
+        <member name="M:Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.PEModuleSymbol.GetCustomAttributesFilterExtensions(System.Reflection.Metadata.EntityHandle,System.Boolean@)">
             <summary>
             Filters extension attributes from the attribute results.
             </summary>
@@ -9174,7 +9293,7 @@
             <param name="isBad" />
             <param name="parameter"></param>
         </member>
-        <member name="M:Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.PEParameterSymbol.ImportConstantValue">
+        <member name="M:Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.PEParameterSymbol.ImportConstantValue(System.Boolean)">
             <remarks>
             Internal for testing.  Non-test code should use <see cref="P:Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.PEParameterSymbol.ExplicitDefaultConstantValue"/>.
             </remarks>
@@ -9283,7 +9402,12 @@
             The array and its content is provided by ReferenceManager and must not be modified.
             </summary>
         </member>
-        <member name="F:Microsoft.CodeAnalysis.CSharp.Symbols.Retargeting.RetargetingAssemblySymbol.NoPiaUnificationMap">
+        <member name="F:Microsoft.CodeAnalysis.CSharp.Symbols.Retargeting.RetargetingAssemblySymbol._noPiaUnificationMap">
+            <summary>
+            Backing field for the map from a local NoPia type to corresponding canonical type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.CSharp.Symbols.Retargeting.RetargetingAssemblySymbol.NoPiaUnificationMap">
             <summary>
             A map from a local NoPia type to corresponding canonical type.
             </summary>
@@ -11241,9 +11365,15 @@
             canonocal type couldn't be found.
             </summary>
         </member>
-        <member name="M:Microsoft.CodeAnalysis.CSharp.Symbols.ObsoleteAttributeHelpers.InitializeObsoleteDataFromMetadata(Microsoft.CodeAnalysis.ObsoleteAttributeData@,System.Reflection.Metadata.Handle,Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.PEModuleSymbol)">
+        <member name="M:Microsoft.CodeAnalysis.CSharp.Symbols.ObsoleteAttributeHelpers.InitializeObsoleteDataFromMetadata(Microsoft.CodeAnalysis.ObsoleteAttributeData@,System.Reflection.Metadata.EntityHandle,Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.PEModuleSymbol)">
             <summary>
             Initialize the ObsoleteAttributeData by fetching attributes and decoding ObsoleteAttributeData. This can be 
+            done for Metadata symbol easily whereas trying to do this for source symbols could result in cycles.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.CSharp.Symbols.ObsoleteAttributeHelpers.GetObsoleteDataFromMetadata(System.Reflection.Metadata.EntityHandle,Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE.PEModuleSymbol)">
+            <summary>
+            Get the ObsoleteAttributeData by fetching attributes and decoding ObsoleteAttributeData. This can be 
             done for Metadata symbol easily whereas trying to do this for source symbols could result in cycles.
             </summary>
         </member>
@@ -11938,7 +12068,7 @@
         </member>
         <member name="M:Microsoft.CodeAnalysis.CSharp.Symbols.SourceComplexParameterSymbol.GetAttributeDeclarations">
             <summary>
-            Gets the syntax list of custom attributes that declares atributes for this parameter symbol.
+            Gets the syntax list of custom attributes that declares attributes for this parameter symbol.
             </summary>
         </member>
         <member name="M:Microsoft.CodeAnalysis.CSharp.Symbols.SourceComplexParameterSymbol.GetDecodedWellKnownAttributeData">
@@ -12491,12 +12621,12 @@
         </member>
         <member name="M:Microsoft.CodeAnalysis.CSharp.Symbols.SourceMethodSymbol.GetAttributeDeclarations">
             <summary>
-            Gets the syntax list of custom attributes that declares atributes for this method symbol.
+            Gets the syntax list of custom attributes that declares attributes for this method symbol.
             </summary>
         </member>
         <member name="M:Microsoft.CodeAnalysis.CSharp.Symbols.SourceMethodSymbol.GetReturnTypeAttributeDeclarations">
             <summary>
-            Gets the syntax list of custom attributes that declares atributes for return type of this method.
+            Gets the syntax list of custom attributes that declares attributes for return type of this method.
             </summary>
         </member>
         <member name="M:Microsoft.CodeAnalysis.CSharp.Symbols.SourceMethodSymbol.GetEarlyDecodedWellKnownAttributeData">
@@ -13920,7 +14050,7 @@
         </member>
         <member name="M:Microsoft.CodeAnalysis.CSharp.MethodCompiler.ChainImplicitStructConstructor(Microsoft.CodeAnalysis.CSharp.Symbols.MethodSymbol,Microsoft.CodeAnalysis.CSharp.Symbols.SourceMemberContainerTypeSymbol)">
             <summary>
-            Synthesised parameterlesss constructors in structs chain to the "default" constructor
+            Synthesized parameterlesss constructors in structs chain to the "default" constructor
             </summary>
         </member>
         <member name="M:Microsoft.CodeAnalysis.CSharp.MethodCompiler.BindConstructorInitializer(Microsoft.CodeAnalysis.CSharp.Symbols.MethodSymbol,Microsoft.CodeAnalysis.DiagnosticBag,Microsoft.CodeAnalysis.CSharp.CSharpCompilation)">
@@ -14069,6 +14199,11 @@
         <member name="P:Microsoft.CodeAnalysis.CSharp.TypeCompilationState.Type">
             <summary>
             The type for which this compilation state is being used.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.CSharp.TypeCompilationState.DynamicOperationContextType">
+            <summary>
+            The type passed to the runtime binder as context.
             </summary>
         </member>
         <member name="P:Microsoft.CodeAnalysis.CSharp.TypeCompilationState.HasSynthesizedMethods">
@@ -14513,12 +14648,30 @@
             Get the query range variable declared in a query continuation clause.
             </summary>
         </member>
+        <member name="M:Microsoft.CodeAnalysis.CSharp.CSharpFileSystemExtensions.Emit(Microsoft.CodeAnalysis.CSharp.CSharpCompilation,System.String,System.String,System.String,System.String,System.Collections.Generic.IEnumerable{Microsoft.CodeAnalysis.ResourceDescription},System.Threading.CancellationToken)">
+            <summary>
+            Emit the IL for the compilation into the specified stream.
+            </summary>
+            <param name="compilation">Compilation.</param>
+            <param name="outputPath">Path of the file to which the PE image will be written.</param>
+            <param name="pdbPath">Path of the file to which the compilation's debug info will be written.
+            Also embedded in the output file.  Null to forego PDB generation.
+            </param>
+            <param name="xmlDocumentationPath">Path of the file to which the compilation's XML documentation will be written.  Null to forego XML generation.</param>
+            <param name="win32ResourcesPath">Path of the file from which the compilation's Win32 resources will be read (in RES format).  
+            Null to indicate that there are none.</param>
+            <param name="manifestResources">List of the compilation's managed resources.  Null to indicate that there are none.</param>
+            <param name="cancellationToken">To cancel the emit process.</param>
+            <exception cref="T:System.ArgumentNullException">Compilation or path is null.</exception>
+            <exception cref="T:System.ArgumentException">Path is empty or invalid.</exception>
+            <exception cref="T:System.IO.IOException">An error occurred while reading or writing a file.</exception>
+        </member>
         <member name="T:Microsoft.CodeAnalysis.CSharp.CSharpParseOptions">
             <summary>
             This class stores several source parsing related options and offers access to their values.
             </summary>
         </member>
-        <member name="F:Microsoft.CodeAnalysis.CSharp.CSharpParseOptions.Default">
+        <member name="P:Microsoft.CodeAnalysis.CSharp.CSharpParseOptions.Default">
             <summary>
             The default parse options.
             </summary>
@@ -15454,6 +15607,11 @@
               Looks up a localized string similar to Parameter {0} is declared as type &apos;{1}{2}&apos; but should be &apos;{3}{4}&apos;.
             </summary>
         </member>
+        <member name="P:Microsoft.CodeAnalysis.CSharp.CSharpResources.ERR_BadPdbData">
+            <summary>
+              Looks up a localized string similar to Error reading debug information for &apos;{0}&apos;.
+            </summary>
+        </member>
         <member name="P:Microsoft.CodeAnalysis.CSharp.CSharpResources.ERR_BadPlatformType">
             <summary>
               Looks up a localized string similar to Invalid option &apos;{0}&apos; for /platform; must be anycpu, x86, Itanium or x64.
@@ -16064,6 +16222,11 @@
               Looks up a localized string similar to A constant value is expected.
             </summary>
         </member>
+        <member name="P:Microsoft.CodeAnalysis.CSharp.CSharpResources.ERR_ConstantStringTooLong">
+            <summary>
+              Looks up a localized string similar to Length of String constant exceeds current memory limit.  Try splitting the string into multiple constants..
+            </summary>
+        </member>
         <member name="P:Microsoft.CodeAnalysis.CSharp.CSharpResources.ERR_ConstOutOfRange">
             <summary>
               Looks up a localized string similar to Constant value &apos;{0}&apos; cannot be converted to a &apos;{1}&apos;.
@@ -16097,11 +16260,6 @@
         <member name="P:Microsoft.CodeAnalysis.CSharp.CSharpResources.ERR_ConstValueRequired">
             <summary>
               Looks up a localized string similar to A const field requires a value to be provided.
-            </summary>
-        </member>
-        <member name="P:Microsoft.CodeAnalysis.CSharp.CSharpResources.ERR_ContantStringTooLong">
-            <summary>
-              Looks up a localized string similar to Length of String constant exceeds current memory limit.  Try splitting the string into multiple constants..
             </summary>
         </member>
         <member name="P:Microsoft.CodeAnalysis.CSharp.CSharpResources.ERR_ConversionNotInvolvingContainedType">
@@ -19344,6 +19502,11 @@
               Looks up a localized string similar to anonymous method.
             </summary>
         </member>
+        <member name="P:Microsoft.CodeAnalysis.CSharp.CSharpResources.IDS_AwaitInCatchAndFinally">
+            <summary>
+              Looks up a localized string similar to await in catch blocks and finally blocks.
+            </summary>
+        </member>
         <member name="P:Microsoft.CodeAnalysis.CSharp.CSharpResources.IDS_Collection">
             <summary>
               Looks up a localized string similar to collection.
@@ -19631,7 +19794,7 @@
         </member>
         <member name="P:Microsoft.CodeAnalysis.CSharp.CSharpResources.IDS_LogoLine1">
             <summary>
-              Looks up a localized string similar to Microsoft (R) Visual C# Compiler version {0}.
+              Looks up a localized string similar to {0} version {1}.
             </summary>
         </member>
         <member name="P:Microsoft.CodeAnalysis.CSharp.CSharpResources.IDS_LogoLine2">
@@ -19742,6 +19905,11 @@
         <member name="P:Microsoft.CodeAnalysis.CSharp.CSharpResources.IDS_Text">
             <summary>
               Looks up a localized string similar to &lt;text&gt;.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.CSharp.CSharpResources.IDS_ToolName">
+            <summary>
+              Looks up a localized string similar to Microsoft (R) Visual C# Compiler.
             </summary>
         </member>
         <member name="P:Microsoft.CodeAnalysis.CSharp.CSharpResources.IDS_USINGLOCAL">
@@ -21982,6 +22150,18 @@
             The compiler-generated implementation type for each fixed-size buffer.
             </summary>
         </member>
+        <member name="P:Microsoft.CodeAnalysis.CSharp.Emit.PEModuleBuilder.IgnoreAccessibility">
+            <summary>
+            Ignore accessibility when resolving well-known type
+            members, in particular for generic type arguments
+            (e.g.: binding to internal types in the EE).
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.CSharp.Emit.PEModuleBuilder.DynamicOperationContextType">
+            <summary>
+            Override the dynamic operation context type for all dynamic calls in the module.
+            </summary>
+        </member>
         <member name="P:Microsoft.CodeAnalysis.CSharp.Emit.PEModuleBuilder.IsEncDelta">
             <summary>
             True if this module is an ENC update.
@@ -23617,7 +23797,7 @@
             The returned node needs to be lowered but its children are already lowered.
             </returns>
         </member>
-        <member name="M:Microsoft.CodeAnalysis.CSharp.LocalRewriter.IntroducingReadCanBeObservable(Microsoft.CodeAnalysis.CSharp.BoundExpression,System.Boolean)">
+        <member name="M:Microsoft.CodeAnalysis.CSharp.LocalRewriter.CanChangeValueBetweenReads(Microsoft.CodeAnalysis.CSharp.BoundExpression,System.Boolean)">
             <summary>
             Variables local to current frame do not need temps when re-read multiple times
             as long as there is no code that may write to locals in between accesses and they
@@ -24138,6 +24318,16 @@
             <param name="locals">The set of locals declared in the original version of this statement</param>
             <param name="wrapped">A delegate to return the translation of the body of this statement</param>
         </member>
+        <member name="M:Microsoft.CodeAnalysis.CSharp.MethodToStateMachineRewriter.MakeStateMachineScope(System.Collections.Immutable.ImmutableArray{Microsoft.CodeAnalysis.CSharp.StateMachineFieldSymbol},Microsoft.CodeAnalysis.CSharp.BoundStatement)">
+            <remarks>
+            Must remain in sync with <see cref="M:Microsoft.CodeAnalysis.CSharp.MethodToStateMachineRewriter.TryUnwrapBoundStateMachineScope(Microsoft.CodeAnalysis.CSharp.BoundStatement@,System.Collections.Immutable.ImmutableArray{Microsoft.CodeAnalysis.CSharp.StateMachineFieldSymbol}@)"/>.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.CSharp.MethodToStateMachineRewriter.TryUnwrapBoundStateMachineScope(Microsoft.CodeAnalysis.CSharp.BoundStatement@,System.Collections.Immutable.ImmutableArray{Microsoft.CodeAnalysis.CSharp.StateMachineFieldSymbol}@)">
+            <remarks>
+            Must remain in sync with <see cref="M:Microsoft.CodeAnalysis.CSharp.MethodToStateMachineRewriter.MakeStateMachineScope(System.Collections.Immutable.ImmutableArray{Microsoft.CodeAnalysis.CSharp.StateMachineFieldSymbol},Microsoft.CodeAnalysis.CSharp.BoundStatement)"/>.
+            </remarks>
+        </member>
         <member name="M:Microsoft.CodeAnalysis.CSharp.MethodToStateMachineRewriter.MightContainReferences(Microsoft.CodeAnalysis.CSharp.Symbols.TypeSymbol)">
             <summary>
             Might the given type be, or contain, managed references?  This is used to determine which
@@ -24194,6 +24384,18 @@
         <member name="T:Microsoft.CodeAnalysis.CSharp.SynthesizedStateMachineMethod">
             <summary>
             State machine interface method implementation.
+            </summary>
+        </member>
+        <member name="T:Microsoft.CodeAnalysis.CSharp.SynthesizedStateMachineMoveNextMethod">
+            <summary>
+            Represents a state machine MoveNext method.
+            Handles special behavior around inheriting some attributes from the original async/iterator method.
+            </summary>
+        </member>
+        <member name="T:Microsoft.CodeAnalysis.CSharp.SynthesizedStateMachineDebuggerHiddenMethod">
+            <summary>
+            Represents a state machine method other than a MoveNext method.
+            All such methods are considered debugger hidden. 
             </summary>
         </member>
         <member name="T:Microsoft.CodeAnalysis.CSharp.SynthesizedSubmissionFields">
@@ -25561,10 +25763,10 @@
             <summary>InitializerExpressionSyntax representing the initializer expression for the object being created.</summary>
         </member>
         <member name="P:Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.AnonymousObjectMemberDeclaratorSyntax.NameEquals">
-            <summary>NameEqualsSyntax representing the optional name of the property being initialized.</summary>
+            <summary>NameEqualsSyntax representing the optional name of the member being initialized.</summary>
         </member>
         <member name="P:Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.AnonymousObjectMemberDeclaratorSyntax.Expression">
-            <summary>ExpressionSyntax representing the value the property is initialized with.</summary>
+            <summary>ExpressionSyntax representing the value the member is initialized with.</summary>
         </member>
         <member name="T:Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.AnonymousObjectCreationExpressionSyntax">
             <summary>Class which represents the syntax node for anonymous object creation expression.</summary>
@@ -25576,7 +25778,7 @@
             <summary>SyntaxToken representing the open brace.</summary>
         </member>
         <member name="P:Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.AnonymousObjectCreationExpressionSyntax.Initializers">
-            <summary>SeparatedSyntaxList of AnonymousObjectPropertyInitializerSyntax representing the list of object property initializers.</summary>
+            <summary>SeparatedSyntaxList of AnonymousObjectMemberDeclaratorSyntax representing the list of object member initializers.</summary>
         </member>
         <member name="P:Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.AnonymousObjectCreationExpressionSyntax.CloseBraceToken">
             <summary>SyntaxToken representing the close brace.</summary>
@@ -27118,10 +27320,10 @@
             <summary>InitializerExpressionSyntax representing the initializer expression for the object being created.</summary>
         </member>
         <member name="P:Microsoft.CodeAnalysis.CSharp.Syntax.AnonymousObjectMemberDeclaratorSyntax.NameEquals">
-            <summary>NameEqualsSyntax representing the optional name of the property being initialized.</summary>
+            <summary>NameEqualsSyntax representing the optional name of the member being initialized.</summary>
         </member>
         <member name="P:Microsoft.CodeAnalysis.CSharp.Syntax.AnonymousObjectMemberDeclaratorSyntax.Expression">
-            <summary>ExpressionSyntax representing the value the property is initialized with.</summary>
+            <summary>ExpressionSyntax representing the value the member is initialized with.</summary>
         </member>
         <member name="T:Microsoft.CodeAnalysis.CSharp.Syntax.AnonymousObjectCreationExpressionSyntax">
             <summary>Class which represents the syntax node for anonymous object creation expression.</summary>
@@ -27133,7 +27335,7 @@
             <summary>SyntaxToken representing the open brace.</summary>
         </member>
         <member name="P:Microsoft.CodeAnalysis.CSharp.Syntax.AnonymousObjectCreationExpressionSyntax.Initializers">
-            <summary>SeparatedSyntaxList of AnonymousObjectPropertyInitializerSyntax representing the list of object property initializers.</summary>
+            <summary>SeparatedSyntaxList of AnonymousObjectMemberDeclaratorSyntax representing the list of object member initializers.</summary>
         </member>
         <member name="P:Microsoft.CodeAnalysis.CSharp.Syntax.AnonymousObjectCreationExpressionSyntax.CloseBraceToken">
             <summary>SyntaxToken representing the close brace.</summary>
@@ -27899,7 +28101,7 @@
             </summary>
             <param name="cat">The Unicode character.</param>
         </member>
-        <member name="F:Microsoft.CodeAnalysis.CSharp.SyntaxFacts.EqualityComparer">
+        <member name="P:Microsoft.CodeAnalysis.CSharp.SyntaxFacts.EqualityComparer">
             <summary>
             A custom equality comparer for <see cref="T:Microsoft.CodeAnalysis.CSharp.SyntaxKind"/>
             </summary>
@@ -28025,7 +28227,7 @@
             Displays a symbol in the C# style, based on a <see cref="T:Microsoft.CodeAnalysis.SymbolDisplayFormat"/>.
             </summary>
             <param name="symbol">The symbol to be displayed.</param>
-            <param name="format">The formatting options to apply.  If null is passed, <see cref="F:Microsoft.CodeAnalysis.SymbolDisplayFormat.CSharpErrorMessageFormat"/> will be used.</param>
+            <param name="format">The formatting options to apply.  If null is passed, <see cref="P:Microsoft.CodeAnalysis.SymbolDisplayFormat.CSharpErrorMessageFormat"/> will be used.</param>
             <returns>A formatted string that can be displayed to the user.</returns>
             <remarks>
             The return value is not expected to be syntactically valid C#.
@@ -28040,7 +28242,7 @@
             <param name="symbol">The symbol to be displayed.</param>
             <param name="semanticModel">Semantic information about the context in which the symbol is being displayed.</param>
             <param name="position">A position within the <see cref="T:Microsoft.CodeAnalysis.SyntaxTree"/> or <paramref name="semanticModel"/>.</param>
-            <param name="format">The formatting options to apply.  If null is passed, <see cref="F:Microsoft.CodeAnalysis.SymbolDisplayFormat.CSharpErrorMessageFormat"/> will be used.</param>
+            <param name="format">The formatting options to apply.  If null is passed, <see cref="P:Microsoft.CodeAnalysis.SymbolDisplayFormat.CSharpErrorMessageFormat"/> will be used.</param>
             <returns>A formatted string that can be displayed to the user.</returns>
             <remarks>
             The return value is not expected to be syntactically valid C#.
@@ -28052,7 +28254,7 @@
             colorizing the display string.
             </summary>
             <param name="symbol">The symbol to be displayed.</param>
-            <param name="format">The formatting options to apply.  If null is passed, <see cref="F:Microsoft.CodeAnalysis.SymbolDisplayFormat.CSharpErrorMessageFormat"/> will be used.</param>
+            <param name="format">The formatting options to apply.  If null is passed, <see cref="P:Microsoft.CodeAnalysis.SymbolDisplayFormat.CSharpErrorMessageFormat"/> will be used.</param>
             <returns>A list of display parts.</returns>
             <remarks>
             Parts are not localized until they are converted to strings.
@@ -28066,7 +28268,7 @@
             <param name="symbol">The symbol to be displayed.</param>
             <param name="semanticModel">Semantic information about the context in which the symbol is being displayed.</param>
             <param name="position">A position within the <see cref="T:Microsoft.CodeAnalysis.SyntaxTree"/> or <paramref name="semanticModel"/>.</param>
-            <param name="format">The formatting options to apply.  If null is passed, <see cref="F:Microsoft.CodeAnalysis.SymbolDisplayFormat.CSharpErrorMessageFormat"/> will be used.</param>
+            <param name="format">The formatting options to apply.  If null is passed, <see cref="P:Microsoft.CodeAnalysis.SymbolDisplayFormat.CSharpErrorMessageFormat"/> will be used.</param>
             <returns>A list of display parts.</returns>
             <remarks>
             Parts are not localized until they are converted to strings.
@@ -29935,91 +30137,100 @@
         <member name="M:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.AnonymousMethodExpression">
             <summary>Creates a new AnonymousMethodExpressionSyntax instance.</summary>
         </member>
-        <member name="F:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.CarriageReturnLineFeed">
+        <member name="P:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.CarriageReturnLineFeed">
             <summary>
-            A trivia with kind EndOfLineTrivia containing both the carriage return and line feed
-            characters.
+            A trivia with kind EndOfLineTrivia containing both the carriage return and line feed characters.
             </summary>
         </member>
-        <member name="F:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.LineFeed">
+        <member name="P:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.LineFeed">
             <summary>
             A trivia with kind EndOfLineTrivia containing a single line feed character.
             </summary>
         </member>
-        <member name="F:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.CarriageReturn">
+        <member name="P:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.CarriageReturn">
             <summary>
             A trivia with kind EndOfLineTrivia containing a single carriage return character.
             </summary>
         </member>
-        <member name="F:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.Space">
+        <member name="P:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.Space">
             <summary>
              A trivia with kind WhitespaceTrivia containing a single space character.
             </summary>
         </member>
-        <member name="F:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.Tab">
+        <member name="P:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.Tab">
             <summary>
             A trivia with kind WhitespaceTrivia containing a single tab character.
             </summary>
         </member>
-        <member name="F:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.ElasticCarriageReturnLineFeed">
+        <member name="P:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.ElasticCarriageReturnLineFeed">
             <summary>
             An elastic trivia with kind EndOfLineTrivia containing both the carriage return and line feed characters.
             Elastic trivia are used to denote trivia that was not produced by parsing source text, and are usually not
             preserved during formatting.
             </summary>
         </member>
-        <member name="F:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.ElasticLineFeed">
+        <member name="P:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.ElasticLineFeed">
             <summary>
             An elastic trivia with kind EndOfLineTrivia containing a single line feed character. Elastic trivia are used
             to denote trivia that was not produced by parsing source text, and are usually not preserved during
             formatting.
             </summary>
         </member>
-        <member name="F:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.ElasticCarriageReturn">
+        <member name="P:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.ElasticCarriageReturn">
             <summary>
             An elastic trivia with kind EndOfLineTrivia containing a single carriage return character. Elastic trivia
             are used to denote trivia that was not produced by parsing source text, and are usually not preserved during
             formatting.
             </summary>
         </member>
-        <member name="F:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.ElasticSpace">
+        <member name="P:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.ElasticSpace">
             <summary>
             An elastic trivia with kind WhitespaceTrivia containing a single space character. Elastic trivia are used to
             denote trivia that was not produced by parsing source text, and are usually not preserved during formatting.
             </summary>
         </member>
-        <member name="F:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.ElasticTab">
+        <member name="P:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.ElasticTab">
             <summary>
             An elastic trivia with kind WhitespaceTrivia containing a single tab character. Elastic trivia are used to
             denote trivia that was not produced by parsing source text, and are usually not preserved during formatting.
             </summary>
         </member>
-        <member name="F:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.ElasticMarker">
+        <member name="P:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.ElasticMarker">
             <summary>
             An elastic trivia with kind WhitespaceTrivia containing no characters. Elastic marker trivia are included
             automatically by factory methods when trivia is not specified. Syntax formatting will replace elastic
             markers with appropriate trivia.
             </summary>
         </member>
-        <member name="M:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.EndOfLine(System.String,System.Boolean)">
+        <member name="M:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.EndOfLine(System.String)">
             <summary>
             Creates a trivia with kind EndOfLineTrivia containing the specified text. 
             </summary>
-            <param name="text">The text of the trivia. Any text can be specified here, however only carriage return and
+            <param name="text">The text of the end of line. Any text can be specified here, however only carriage return and
             line feed characters are recognized by the parser as end of line.</param>
-            <param name="elastic">If true, the trivia produced is an elastic trivia. Elastic trivia are used to denote
-            trivia that was not produced by parsing source text, and are usually not preserved during
-            formatting.</param>
         </member>
-        <member name="M:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.Whitespace(System.String,System.Boolean)">
+        <member name="M:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.ElasticEndOfLine(System.String)">
+            <summary>
+            Creates a trivia with kind EndOfLineTrivia containing the specified text. Elastic trivia are used to
+            denote trivia that was not produced by parsing source text, and are usually not preserved during formatting.
+            </summary>
+            <param name="text">The text of the end of line. Any text can be specified here, however only carriage return and
+            line feed characters are recognized by the parser as end of line.</param>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.Whitespace(System.String)">
             <summary>
             Creates a trivia with kind WhitespaceTrivia containing the specified text.
             </summary>
             <param name="text">The text of the whitespace. Any text can be specified here, however only specific
             whitespace characters are recognized by the parser.</param>
-            <param name="elastic">If true, the trivia produced is an elastic trivia. Elastic trivia are used to denote
-            trivia that was not produced by parsing source text, and are usually not preserved during
-            formatting.</param>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.ElasticWhitespace(System.String)">
+            <summary>
+            Creates a trivia with kind WhitespaceTrivia containing the specified text. Elastic trivia are used to
+            denote trivia that was not produced by parsing source text, and are usually not preserved during formatting.
+            </summary>
+            <param name="text">The text of the whitespace. Any text can be specified here, however only specific
+            whitespace characters are recognized by the parser.</param>
         </member>
         <member name="M:Microsoft.CodeAnalysis.CSharp.SyntaxFactory.Comment(System.String)">
             <summary>
@@ -32182,14 +32393,35 @@
             Given a node that represents a lambda body returns a node that represents the lambda.
             </summary>
         </member>
-        <member name="M:Microsoft.CodeAnalysis.CSharp.LambdaUtilities.GetCorrespondingLambdaBody(Microsoft.CodeAnalysis.SyntaxNode,Microsoft.CodeAnalysis.SyntaxNode)">
+        <member name="M:Microsoft.CodeAnalysis.CSharp.LambdaUtilities.TryGetCorrespondingLambdaBody(Microsoft.CodeAnalysis.SyntaxNode,Microsoft.CodeAnalysis.SyntaxNode)">
             <summary>
             See SyntaxNode.GetCorrespondingLambdaBody.
             </summary>
         </member>
-        <member name="M:Microsoft.CodeAnalysis.CSharp.LambdaUtilities.IsLambdaBody(Microsoft.CodeAnalysis.SyntaxNode)">
+        <member name="M:Microsoft.CodeAnalysis.CSharp.LambdaUtilities.IsLambdaBody(Microsoft.CodeAnalysis.SyntaxNode,System.Boolean)">
             <summary>
             Returns true if the specified <paramref name="node"/> represents a body of a lambda.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.CSharp.LambdaUtilities.IsReducedSelectOrGroupByClause(Microsoft.CodeAnalysis.CSharp.Syntax.SelectOrGroupClauseSyntax,Microsoft.CodeAnalysis.CSharp.Syntax.ExpressionSyntax)">
+            <summary>
+            When queries are translated into expressions select and group-by expressions such that
+            1) select/group-by expression is the same identifier as the "source" identifier and
+            2) at least one Where or OrderBy clause but no other clause is present in the contained query body or
+               the expression in question is a group-by expression and the body has no clause
+            
+            do not translate into lambdas.
+            By "source" identifier we mean the identifier specified in the from clause that initiates the query or the query continuation that includes the body.
+            
+            The above condition can be dervied from the language specification (chapter 7.16.2) as follows:
+            - In order for 7.16.2.5 "Select clauses" to be applicable the following conditions must hold:
+              - There has to be at least one clause in the body, otherwise the query is reduced into a final form by 7.16.2.3 "Degenerate query expressions".
+              - Only where and order-by clauses may be present in the query body, otherwise a transformation in 7.16.2.4 "From, let, where, join and orderby clauses"
+                produces pattern that doesn't match the requirements of 7.16.2.5.
+              
+            - In order for 7.16.2.6 "Groupby clauses" to be applicable the following conditions must hold:
+              - Only where and order-by clauses may be present in the query body, otherwise a transformation in 7.16.2.4 "From, let, where, join and orderby clauses"
+                produces pattern that doesn't match the requirements of 7.16.2.5.
             </summary>
         </member>
         <member name="M:Microsoft.CodeAnalysis.CSharp.LambdaUtilities.IsLambdaBodyStatementOrExpression(Microsoft.CodeAnalysis.SyntaxNode)">
@@ -32204,10 +32436,14 @@
             If the specified node represents a lambda returns a node (or nodes) that represent its body (bodies).
             </summary>
         </member>
+        <member name="M:Microsoft.CodeAnalysis.CSharp.LambdaUtilities.AreEquivalentIgnoringLambdaBodies(Microsoft.CodeAnalysis.SyntaxNode,Microsoft.CodeAnalysis.SyntaxNode)">
+            <summary>
+            Compares content of two nodes ignoring lambda bodies and trivia.
+            </summary>
+        </member>
         <member name="M:Microsoft.CodeAnalysis.CSharp.LambdaUtilities.IsQueryPairLambda(Microsoft.CodeAnalysis.SyntaxNode)">
             <summary>
             "Pair lambda" is a synthesized lambda that creates an instance of an anonymous type representing a pair of values. 
-            TODO: Avoid generating these lambdas. Instead generate a method on the anonymous type, or use KeyValuePair instead.
             </summary>
         </member>
         <member name="M:Microsoft.CodeAnalysis.CSharp.LambdaUtilities.IsClosureScope(Microsoft.CodeAnalysis.SyntaxNode)">

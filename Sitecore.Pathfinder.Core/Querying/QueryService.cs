@@ -14,7 +14,7 @@ namespace Sitecore.Pathfinder.Querying
     {
         public IProjectItem FindProjectItem(IProject project, string qualifiedName)
         {
-            return project.Items.FirstOrDefault(i => string.Compare(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase) == 0);
+            return project.FindQualifiedItem(qualifiedName);
         }
 
         public IEnumerable<IReference> FindUsages(IProject project, string qualifiedName)

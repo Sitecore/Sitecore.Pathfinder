@@ -134,7 +134,7 @@ namespace Sitecore.Pathfinder.Projects
             // todo: external references must have correct id!
             foreach (var externalReference in Options.ExternalReferences)
             {
-                var projectItem = Factory.ExternalReferenceItem(this, externalReference, Snapshot.Empty, Options.DatabaseName, Path.GetFileName(externalReference) ?? string.Empty, externalReference);
+                var projectItem = Factory.ExternalReferenceItem(this, externalReference.Item1.Format(), Snapshot.Empty, Options.DatabaseName, Path.GetFileName(externalReference.Item2) ?? string.Empty, externalReference.Item2);
                 AddOrMerge(context, projectItem);
             }
 
@@ -201,6 +201,12 @@ namespace Sitecore.Pathfinder.Projects
 
         public IProjectItem FindQualifiedItem(string qualifiedName)
         {
+            Guid guid;
+            if (Guid.TryParse(qualifiedName, out guid))
+            {
+                return Items.FirstOrDefault(i => i.Guid == guid);
+            }
+
             return Items.FirstOrDefault(i => string.Compare(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase) == 0);
         }
 

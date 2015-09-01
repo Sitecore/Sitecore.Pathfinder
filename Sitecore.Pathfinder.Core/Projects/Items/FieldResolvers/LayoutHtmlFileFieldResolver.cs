@@ -36,16 +36,16 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
             var rendering = project.Items.OfType<Rendering>().FirstOrDefault(i => string.Compare(i.FilePath, value, StringComparison.OrdinalIgnoreCase) == 0);
             if (rendering == null)
             {
-                trace.Writeline("Reference not found", value);
+                trace.Writeline("Rendering reference not found", value);
             }
 
             var layoutItem = project.Items.OfType<ExternalReferenceItem>().FirstOrDefault(i => i.ItemIdOrPath == "/sitecore/layout/Layouts/MvcLayout");
             if (layoutItem == null)
             {
-                trace.Writeline("Reference not found", "/sitecore/layout/Layouts/MvcLayout");
+                trace.Writeline("Layout reference not found", "/sitecore/layout/Layouts/MvcLayout");
             }
 
-            var renderingId = rendering.Item.Guid.ToString("B").ToUpperInvariant();
+            var renderingId = rendering.Item.Guid.Format();
 
             var writer = new StringWriter();
             var output = new XmlTextWriter(writer);

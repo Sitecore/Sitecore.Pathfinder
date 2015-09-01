@@ -9,6 +9,7 @@ using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitters;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
@@ -114,7 +115,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
                     item.Help.Text = Template.LongHelp.Value;
                 }
 
-                item[FieldIDs.StandardValues] = Template.StandardValuesItem?.Guid.ToString("B").ToUpperInvariant() ?? string.Empty;
+                item[FieldIDs.StandardValues] = Template.StandardValuesItem?.Guid.Format() ?? string.Empty;
             }
 
             foreach (var section in Sections)
@@ -535,7 +536,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
                 item.Appearance.Icon = Template.Icon.Value;
                 item.Help.ToolTip = Template.ShortHelp.Value;
                 item.Help.Text = Template.LongHelp.Value;
-                item[FieldIDs.StandardValues] = Template.StandardValuesItem?.Guid.ToString("B").ToUpperInvariant() ?? string.Empty;
+                item[FieldIDs.StandardValues] = Template.StandardValuesItem?.Guid.Format() ?? string.Empty;
             }
 
             foreach (var templateSectionBuilder in Sections)

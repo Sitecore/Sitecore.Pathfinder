@@ -396,7 +396,7 @@ Everything in Pathfinder is a file, so you can use Notepad to edit any file.
 ## Visual Studio Code
 
 [Visual Studio Code](https://code.visualstudio.com/) is a nice code editor and Pathfinder contains default
-configuration files for Code in the .settings directory. The default build task in Code has been configured
+configuration files for Code in the .vscode directory. The default build task in Code has been configured
 to execute the build pipeline in Pathfinder. In Code the build task can be executed by pressing Ctrl+Shift+B.
 
 ## Visual Studio

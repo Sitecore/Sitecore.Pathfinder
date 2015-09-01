@@ -41,7 +41,7 @@ namespace Sitecore.Pathfinder.Extensibility
             Console.WriteLine(Texts.scc_cmd_0_0___information_SCC0000__Compiling_checkers___);
 
             var syntaxTrees = fileNames.Select(File.ReadAllText).Select(code => CSharpSyntaxTree.ParseText(code)).ToList();
-            var references = AppDomain.CurrentDomain.GetAssemblies().Select(MetadataReference.CreateFromAssembly).ToList();
+            var references = AppDomain.CurrentDomain.GetAssemblies().Select(delegate(Assembly assembly) { return MetadataReference.CreateFromFile(assembly.Location); }).ToList();
             var options = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary);
 
             var compilation = CSharpCompilation.Create("Sitecore.Pathfinder.Extensions", syntaxTrees, references, options);
@@ -80,7 +80,7 @@ namespace Sitecore.Pathfinder.Extensibility
                 return CSharpSyntaxTree.ParseText(code).WithFilePath(s);
             }).ToList();
 
-            var refs = AppDomain.CurrentDomain.GetAssemblies().Where(a => !a.IsDynamic).Select(MetadataReference.CreateFromAssembly).ToList();
+            var refs = AppDomain.CurrentDomain.GetAssemblies().Where(a => !a.IsDynamic).Select(assembly => MetadataReference.CreateFromFile(assembly.Location)).ToList();
             refs.AddRange(references.Select(r => MetadataReference.CreateFromFile(r)));
 
             var options = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary);

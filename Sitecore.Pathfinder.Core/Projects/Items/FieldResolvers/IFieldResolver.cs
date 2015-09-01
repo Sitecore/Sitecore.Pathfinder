@@ -8,9 +8,9 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
     {
         double Priority { get; }
 
-        bool CanResolve(ITraceService trace, [NotNull] IProject project, [NotNull] Field field);
+        bool CanResolve([NotNull] ITraceService trace, [NotNull] IProject project, [NotNull] Field field);
 
         [NotNull]
-        string Resolve(ITraceService trace, [NotNull] IProject project, [NotNull] Field field);
+        string Resolve([NotNull] ITraceService trace, [NotNull] IProject project, [NotNull] Field field);
     }
 }
