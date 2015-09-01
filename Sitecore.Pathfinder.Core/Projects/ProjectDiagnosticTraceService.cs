@@ -7,9 +7,9 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects
 {
-    public class DiagnosticTraceService : TraceService
+    public class ProjectDiagnosticTraceService : TraceService
     {
-        public DiagnosticTraceService([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory) : base(configuration)
+        public ProjectDiagnosticTraceService([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory) : base(configuration)
         {
             Factory = factory;
         }

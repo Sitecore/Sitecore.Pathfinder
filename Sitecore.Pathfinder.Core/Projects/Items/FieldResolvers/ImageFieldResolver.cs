@@ -14,23 +14,24 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
         {
         }
 
-        public override bool CanResolve(ITraceService trace, IProject project, Field field)
+        public override bool CanResolve(Field field)
         {
             return string.Compare(field.TemplateField.Type, "image", StringComparison.OrdinalIgnoreCase) == 0;
         }
 
-        public override string Resolve(ITraceService trace, IProject project, Field field)
+        public override string Resolve(Field field)
         {
-            var qualifiedName = field.Value.Value;
+            var qualifiedName = field.Value.Value.Trim();
             if (string.IsNullOrEmpty(qualifiedName))
             {
                 return string.Empty;
             }
 
-            var item = project.FindQualifiedItem(qualifiedName);
+            var item = field.Item.Project.FindQualifiedItem(qualifiedName);
             if (item == null)
             {
-                trace.Writeline("Image reference not found", qualifiedName);
+                field.WriteDiagnostic(Severity.Error, "Image reference not found", qualifiedName);
+                return string.Empty;
             }
 
             return $"<image mediapath=\"\" alt=\"Vista15\" width=\"\" height=\"\" hspace=\"\" vspace=\"\" showineditor=\"\" usethumbnail=\"\" src=\"\" mediaid=\"{item.Guid.Format()}\" />";

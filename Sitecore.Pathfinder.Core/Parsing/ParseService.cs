@@ -37,19 +37,19 @@ namespace Sitecore.Pathfinder.Parsing
 
             var parseContext = CompositionService.Resolve<IParseContext>().With(project, textDocument);
 
-            try
+            foreach (var parser in Parsers.OrderBy(c => c.Sortorder))
             {
-                foreach (var parser in Parsers.OrderBy(c => c.Sortorder))
+                try
                 {
                     if (parser.CanParse(parseContext))
                     {
                         parser.Parse(parseContext);
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                parseContext.Trace.TraceError(string.Empty, sourceFile.FileName, TextPosition.Empty, ex.Message);
+                catch (Exception ex)
+                {
+                    parseContext.Trace.TraceError(string.Empty, sourceFile.FileName, TextPosition.Empty, ex.Message);
+                }
             }
         }
     }

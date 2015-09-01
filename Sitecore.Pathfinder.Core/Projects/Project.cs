@@ -211,7 +211,7 @@ namespace Sitecore.Pathfinder.Projects
         }
 
         [NotNull]
-        protected virtual IProjectItem MergeItem<T>(IParseContext context, [NotNull] T newItem) where T : Item
+        protected virtual IProjectItem MergeItem<T>([NotNull] IParseContext context, [NotNull] T newItem) where T : Item
         {
             Item item = null;
             if (newItem.MergingMatch == MergingMatch.MatchUsingSourceFile)

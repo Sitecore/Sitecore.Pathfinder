@@ -35,6 +35,7 @@ namespace Sitecore.Pathfinder.Configuration
         [NotNull]
         Field Field([NotNull] Item item);
 
+        [NotNull]
         Field Field([NotNull] Item item, [NotNull] string fieldName, [NotNull] string fieldValue);
 
         [NotNull]

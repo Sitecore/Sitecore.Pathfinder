@@ -18,14 +18,14 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
         {
         }
 
-        public override bool CanResolve(ITraceService trace, IProject project, Field field)
+        public override bool CanResolve(Field field)
         {
             return field.ValueHint.Value.Contains("HtmlTemplate");
         }
 
-        public override string Resolve(ITraceService trace, IProject project, Field field)
+        public override string Resolve(Field field)
         {
-            var htmlTemplate = field.Value.Value;
+            var htmlTemplate = field.Value.Value.Trim();
             if (string.IsNullOrEmpty(htmlTemplate))
             {
                 return string.Empty;
@@ -33,16 +33,21 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
 
             var value = htmlTemplate;
 
-            var rendering = project.Items.OfType<Rendering>().FirstOrDefault(i => string.Compare(i.FilePath, value, StringComparison.OrdinalIgnoreCase) == 0);
+            var rendering = field.Item.Project.Items.OfType<Rendering>().FirstOrDefault(i => string.Compare(i.FilePath, value, StringComparison.OrdinalIgnoreCase) == 0);
             if (rendering == null)
             {
-                trace.Writeline("Rendering reference not found", value);
+                field.WriteDiagnostic(Severity.Error, "Rendering reference not found", value);
             }
 
-            var layoutItem = project.Items.OfType<ExternalReferenceItem>().FirstOrDefault(i => i.ItemIdOrPath == "/sitecore/layout/Layouts/MvcLayout");
+            var layoutItem = field.Item.Project.Items.OfType<ExternalReferenceItem>().FirstOrDefault(i => i.ItemIdOrPath == "/sitecore/layout/Layouts/MvcLayout");
             if (layoutItem == null)
             {
-                trace.Writeline("Layout reference not found", "/sitecore/layout/Layouts/MvcLayout");
+                field.WriteDiagnostic(Severity.Error, "Layout reference not found", "/sitecore/layout/Layouts/MvcLayout");
+            }
+
+            if (rendering == null || layoutItem == null)
+            {
+                return string.Empty;
             }
 
             var renderingId = rendering.Item.Guid.Format();
@@ -53,7 +58,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
 
             output.WriteStartElement("r");
 
-            foreach (var deviceItem in project.Items.OfType<ExternalReferenceItem>())
+            foreach (var deviceItem in field.Item.Project.Items.OfType<ExternalReferenceItem>())
             {
                 if (!deviceItem.ItemIdOrPath.StartsWith("/sitecore/layout/Devices/"))
                 {

@@ -34,7 +34,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
         public override bool CanParse(IParseContext context)
         {
             var fileName = context.Snapshot.SourceFile.FileName;
-            return FileExtensions.Any(extension => fileName.EndsWith(extension, StringComparison.OrdinalIgnoreCase));
+            return FileExtensions.Any(extension => fileName.EndsWith(extension, StringComparison.OrdinalIgnoreCase)) && context.Snapshot is ITextSnapshot;
         }
 
         public override void Parse(IParseContext context)
@@ -44,16 +44,9 @@ namespace Sitecore.Pathfinder.Parsing.Items
             var textNode = textDocument.Root;
             if (textNode == TextNode.Empty)
             {
-                var textPosition = textDocument.ParseErrorTextPosition == TextPosition.Empty ? textDocument.Root.Position : textDocument.ParseErrorTextPosition;
-
-                if (!string.IsNullOrEmpty(textDocument.ParseError))
-                {
-                    context.Trace.TraceWarning(textDocument.ParseError, textDocument.SourceFile.FileName, textPosition);
-                }
-                else
-                {
-                    context.Trace.TraceWarning(Texts.Source_file_is_empty, textDocument.SourceFile.FileName, textPosition);
-                }
+                var textPosition = textDocument.ParseErrorTextPosition != TextPosition.Empty ? textDocument.ParseErrorTextPosition : textDocument.Root.Position;
+                var text = !string.IsNullOrEmpty(textDocument.ParseError) ? textDocument.ParseError : Texts.Source_file_is_empty;
+                context.Trace.TraceWarning(text, textDocument.SourceFile.FileName, textPosition);
                 return;
             }
 

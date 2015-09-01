@@ -35,7 +35,7 @@ namespace Sitecore.Pathfinder.Checking
         public ICheckerContext With(IProject project)
         {
             Project = project;
-            Trace = new DiagnosticTraceService(Configuration, Factory).With(Project);
+            Trace = new ProjectDiagnosticTraceService(Configuration, Factory).With(Project);
 
             return this;
         }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Layouts;
 using Sitecore.Pathfinder.Projects.Templates;
@@ -29,8 +30,8 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
             "VaryByUser"
         };
 
-        [Diagnostics.NotNull]
-        public virtual string Resolve([Diagnostics.NotNull] LayoutResolveContext context, [Diagnostics.NotNull] ITextNode textNode)
+        [NotNull]
+        public virtual string Resolve([NotNull] LayoutResolveContext context, [NotNull] ITextNode textNode)
         {
             var writer = new StringWriter();
             var output = new XmlTextWriter(writer)
@@ -44,8 +45,8 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
             return result;
         }
 
-        [Diagnostics.NotNull]
-        protected virtual Rendering[] FindRenderingItems([Diagnostics.NotNull] IEnumerable<Rendering> renderingItems, [Diagnostics.NotNull] string renderingItemId)
+        [NotNull]
+        protected virtual Rendering[] FindRenderingItems([NotNull] IEnumerable<Rendering> renderingItems, [NotNull] string renderingItemId)
         {
             var n = renderingItemId.LastIndexOf('.');
             if (n < 0)
@@ -58,27 +59,27 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
             return renderingItems.Where(r => r.ShortName == renderingItemId).ToArray();
         }
 
-        [Diagnostics.NotNull]
-        protected virtual string GetPlaceholders([Diagnostics.NotNull] ITextNode renderingTextNode, [Diagnostics.NotNull] IProjectItem renderingItem)
+        [NotNull]
+        protected virtual string GetPlaceholders([NotNull] ITextNode renderingTextNode, [NotNull] IProjectItem renderingItem)
         {
             return string.Empty;
         }
 
-        protected virtual bool IsContentProperty([Diagnostics.NotNull] ITextNode renderingTextNode, [Diagnostics.NotNull] ITextNode childTextNode)
+        protected virtual bool IsContentProperty([NotNull] ITextNode renderingTextNode, [NotNull] ITextNode childTextNode)
         {
             return childTextNode.Name.StartsWith(renderingTextNode.Name + ".");
         }
 
-        [Diagnostics.NotNull]
-        protected virtual Rendering[] ResolveRenderingItem([Diagnostics.NotNull] IEnumerable<Rendering> renderingItems, [Diagnostics.NotNull] string renderingItemId)
+        [NotNull]
+        protected virtual Rendering[] ResolveRenderingItem([NotNull] IEnumerable<Rendering> renderingItems, [NotNull] string renderingItemId)
         {
             var path = "/" + renderingItemId.Replace(".", "/");
 
             return renderingItems.Where(r => r.Item.ItemIdOrPath.EndsWith(path, StringComparison.InvariantCultureIgnoreCase)).ToArray();
         }
 
-        [Diagnostics.NotNull]
-        protected virtual Rendering[] ResolveRenderingItemId([Diagnostics.NotNull] IEnumerable<Rendering> renderingItems, [Diagnostics.NotNull] string renderingItemId)
+        [NotNull]
+        protected virtual Rendering[] ResolveRenderingItemId([NotNull] IEnumerable<Rendering> renderingItems, [NotNull] string renderingItemId)
         {
             var matches = renderingItems.Where(r => r.ShortName == renderingItemId).ToArray();
 
@@ -95,7 +96,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
             return matches;
         }
 
-        protected virtual void WriteBool([Diagnostics.NotNull] LayoutResolveContext context, [Diagnostics.NotNull] XmlTextWriter output, [Diagnostics.NotNull] ITextNode renderingTextNode, [Diagnostics.NotNull] string id, [Diagnostics.NotNull] string attributeName, [Diagnostics.NotNull] string name, bool ignoreValue = false)
+        protected virtual void WriteBool([NotNull] LayoutResolveContext context, [NotNull] XmlTextWriter output, [NotNull] ITextNode renderingTextNode, [NotNull] string id, [NotNull] string attributeName, [NotNull] string name, bool ignoreValue = false)
         {
             var value = renderingTextNode.GetAttributeValue(attributeName);
             if (string.IsNullOrEmpty(value))
@@ -118,7 +119,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
             output.WriteAttributeString(name, b ? "1" : "0");
         }
 
-        protected virtual void WriteDataSource(LayoutResolveContext context, [Diagnostics.NotNull] XmlTextWriter output, [Diagnostics.NotNull] ITextNode renderingTextNode)
+        protected virtual void WriteDataSource([NotNull] LayoutResolveContext context, [NotNull] XmlTextWriter output, [NotNull] ITextNode renderingTextNode)
         {
             var dataSource = renderingTextNode.GetAttributeValue("DataSource");
             if (string.IsNullOrEmpty(dataSource))
@@ -136,7 +137,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
             output.WriteAttributeString("ds", item.Guid.Format());
         }
 
-        protected virtual void WriteDevice([Diagnostics.NotNull] LayoutResolveContext context, [Diagnostics.NotNull] XmlTextWriter output, [Diagnostics.NotNull] IEnumerable<Rendering> renderingItems, [Diagnostics.NotNull] ITextNode deviceTextNode)
+        protected virtual void WriteDevice([NotNull] LayoutResolveContext context, [NotNull] XmlTextWriter output, [NotNull] IEnumerable<Rendering> renderingItems, [NotNull] ITextNode deviceTextNode)
         {
             output.WriteStartElement("d");
 
@@ -197,7 +198,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
             output.WriteEndElement();
         }
 
-        protected virtual void WriteLayout([Diagnostics.NotNull] LayoutResolveContext context, [Diagnostics.NotNull] XmlTextWriter output, [Diagnostics.NotNull] ITextNode layoutTextNode)
+        protected virtual void WriteLayout([NotNull] LayoutResolveContext context, [NotNull] XmlTextWriter output, [NotNull] ITextNode layoutTextNode)
         {
             // todo: cache this in the build context
             // todo: use better search
@@ -221,7 +222,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
             output.WriteEndElement();
         }
 
-        protected virtual void WritePlaceholder([Diagnostics.NotNull] LayoutResolveContext context, [Diagnostics.NotNull] XmlTextWriter output, [Diagnostics.NotNull] ITextNode renderingTextNode, [Diagnostics.NotNull] string id, [Diagnostics.NotNull] string placeholders)
+        protected virtual void WritePlaceholder([NotNull] LayoutResolveContext context, [NotNull] XmlTextWriter output, [NotNull] ITextNode renderingTextNode, [NotNull] string id, [NotNull] string placeholders)
         {
             var placeholder = renderingTextNode.GetAttributeValue("Placeholder");
 
@@ -250,7 +251,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
             output.WriteAttributeString("ph", placeholder);
         }
 
-        protected virtual void WriteRendering([Diagnostics.NotNull] LayoutResolveContext context, [Diagnostics.NotNull] XmlTextWriter output, [Diagnostics.NotNull] IEnumerable<Rendering> renderingItems, [Diagnostics.NotNull] ITextNode renderingTextNode, [Diagnostics.NotNull] string placeholders)
+        protected virtual void WriteRendering([NotNull] LayoutResolveContext context, [NotNull] XmlTextWriter output, [NotNull] IEnumerable<Rendering> renderingItems, [NotNull] ITextNode renderingTextNode, [NotNull] string placeholders)
         {
             string renderingItemId;
 
@@ -354,7 +355,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
             }
         }
 
-        private void WriteParameters([Diagnostics.NotNull] LayoutResolveContext context, [Diagnostics.NotNull] XmlTextWriter output, [Diagnostics.NotNull] ITextNode renderingTextNode, [Diagnostics.NotNull] Rendering renderingItem, [Diagnostics.NotNull] string id)
+        private void WriteParameters([NotNull] LayoutResolveContext context, [NotNull] XmlTextWriter output, [NotNull] ITextNode renderingTextNode, [NotNull] Rendering renderingItem, [NotNull] string id)
         {
             var fields = new Dictionary<string, string>();
 

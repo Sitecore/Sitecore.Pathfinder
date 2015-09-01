@@ -13,19 +13,26 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
         {
         }
 
-        public override bool CanResolve(ITraceService trace, IProject project, Field field)
+        public override bool CanResolve(Field field)
         {
             return string.Compare(field.TemplateField.Type, "checkbox", StringComparison.OrdinalIgnoreCase) == 0;
         }
 
-        public override string Resolve(ITraceService trace, IProject project, Field field)
+        public override string Resolve(Field field)
         {
-            if (string.Compare(field.Value.Value, "true", StringComparison.OrdinalIgnoreCase) == 0)
+            var value = field.Value.Value.Trim();
+
+            if (string.Compare(value, "True", StringComparison.OrdinalIgnoreCase) != 0 && string.Compare(value, "False", StringComparison.OrdinalIgnoreCase) != 0)
+            {
+                field.WriteDiagnostic(Severity.Error, "Checkbox field value must be 'true' or 'false'.", value);
+            }
+
+            if (string.Compare(value, "true", StringComparison.OrdinalIgnoreCase) == 0)
             {
                 return "1";
             }
 
-            if (string.Compare(field.Value.Value, "1", StringComparison.OrdinalIgnoreCase) == 0)
+            if (string.Compare(value, "1", StringComparison.OrdinalIgnoreCase) == 0)
             {
                 return "1";
             }

@@ -49,7 +49,7 @@ namespace Sitecore.Pathfinder.Parsing
         {
             Project = project;
             Snapshot = snapshot;
-            Trace = new DiagnosticTraceService(Configuration, Factory).With(Project);
+            Trace = new ProjectDiagnosticTraceService(Configuration, Factory).With(Project);
 
             var fileContext = FileContext.GetFileContext(Project, Configuration, snapshot.SourceFile);
             FilePath = fileContext.FilePath;

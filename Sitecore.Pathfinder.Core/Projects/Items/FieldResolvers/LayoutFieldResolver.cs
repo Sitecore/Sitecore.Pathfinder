@@ -2,7 +2,6 @@
 
 using System;
 using System.ComponentModel.Composition;
-using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -15,12 +14,12 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
         {
         }
 
-        public override bool CanResolve(ITraceService trace, IProject project, Field field)
+        public override bool CanResolve(Field field)
         {
             return string.Compare(field.TemplateField.Type, "layout", StringComparison.OrdinalIgnoreCase) == 0 && field.ValueHint.Value.Contains("Layout");
         }
 
-        public override string Resolve(ITraceService trace, IProject project, Field field)
+        public override string Resolve(Field field)
         {
             var textNode = field.Value.Source ?? TextNode.Empty;
             if (textNode == TextNode.Empty)

@@ -38,11 +38,11 @@ namespace Sitecore.Pathfinder.Projects.Templates
             Merge(context, newTemplate, true);
         }
 
-        protected override void Merge(IParseContext context, IProjectItem projectItem, bool overwrite)
+        protected override void Merge(IParseContext context, IProjectItem newProjectItem, bool overwrite)
         {
-            base.Merge(context, projectItem, overwrite);
+            base.Merge(context, newProjectItem, overwrite);
 
-            var newTemplate = projectItem as Template;
+            var newTemplate = newProjectItem as Template;
             if (newTemplate == null)
             {
                 return;

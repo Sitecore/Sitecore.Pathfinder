@@ -1,25 +1,26 @@
-﻿using Sitecore.Pathfinder.Snapshots;
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using System.ComponentModel.Composition;
+using System.Linq;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checking.Checkers
 {
-  using System.ComponentModel.Composition;
-  using System.Linq;
-
-  [Export(typeof(IChecker))]
-  public class ReferenceChecker : CheckerBase
-  {
-    public override void Check(ICheckerContext context)
+    [Export(typeof(IChecker))]
+    public class ReferenceChecker : CheckerBase
     {
-      foreach (var projectItem in context.Project.Items)
-      {
-        foreach (var reference in projectItem.References)
+        public override void Check(ICheckerContext context)
         {
-          if (!reference.IsValid)
-          {
-            context.Trace.TraceWarning("Reference not found", projectItem.Snapshots.First().SourceFile.FileName, reference.SourceAttribute?.Source?.Position ?? TextPosition.Empty, reference.TargetQualifiedName);
-          }
+            foreach (var projectItem in context.Project.Items)
+            {
+                foreach (var reference in projectItem.References)
+                {
+                    if (!reference.IsValid)
+                    {
+                        context.Trace.TraceWarning("Reference not found", projectItem.Snapshots.First().SourceFile.FileName, reference.SourceAttribute?.Source?.Position ?? TextPosition.Empty, reference.TargetQualifiedName);
+                    }
+                }
+            }
         }
-      }
     }
-  }
 }

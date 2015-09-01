@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Parsing.Layouts
@@ -29,8 +30,6 @@ namespace Sitecore.Pathfinder.Parsing.Layouts
 
         public override void Parse(IParseContext context)
         {
-            var contents = context.Snapshot.SourceFile.ReadAsText();
-            var placeHolders = GetPlaceholders(contents);
             var path = context.FilePath;
             var snapshotTextNode = new SnapshotTextNode(context.Snapshot);
 
@@ -41,21 +40,21 @@ namespace Sitecore.Pathfinder.Parsing.Layouts
             var field = context.Factory.Field(item, "Path", path);
             item.Fields.Add(field);
 
+            // add file name as reference
+            var sourceAttribute = new Attribute<string>(snapshotTextNode.Name, string.Empty, SourceFlags.IsFileName);
+            sourceAttribute.AddSource(snapshotTextNode);
+            var fileReference = context.Factory.FileReference(item, sourceAttribute, path);
+            item.References.Add(fileReference);
+
             // todo: make this configurable
             if (string.Compare(context.DatabaseName, "core", StringComparison.OrdinalIgnoreCase) == 0)
             {
-                field = context.Factory.Field(item, "Place Holders", string.Join(",", placeHolders));
-                item.Fields.Add(field);
+                AddPlaceholdersField(context, item);
             }
 
-            var sourceAttribute = new Attribute<string>(snapshotTextNode.Name, string.Empty);
-            sourceAttribute.AddSource(snapshotTextNode);
-            sourceAttribute.SourceFlags = SourceFlags.IsFileName;
-            item.References.Add(context.Factory.FileReference(item, sourceAttribute, path));
+            var addedItem = context.Project.AddOrMerge(context, item);
 
-            item = context.Project.AddOrMerge(context, item);
-
-            var rendering = context.Factory.Rendering(context.Project, context.Snapshot, context.FilePath, item);
+            var rendering = context.Factory.Rendering(context.Project, context.Snapshot, context.FilePath, addedItem);
             context.Project.AddOrMerge(context, rendering);
 
             context.Project.Ducats += 100;
@@ -63,5 +62,14 @@ namespace Sitecore.Pathfinder.Parsing.Layouts
 
         [NotNull]
         protected abstract IEnumerable<string> GetPlaceholders([NotNull] string contents);
+
+        private void AddPlaceholdersField([NotNull] IParseContext context, [NotNull] Item item)
+        {
+            var contents = context.Snapshot.SourceFile.ReadAsText();
+            var placeHolders = GetPlaceholders(contents);
+
+            var field = context.Factory.Field(item, "Place Holders", string.Join(",", placeHolders));
+            item.Fields.Add(field);
+        }
     }
 }

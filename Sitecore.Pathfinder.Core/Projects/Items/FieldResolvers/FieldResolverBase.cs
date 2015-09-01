@@ -1,7 +1,5 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using Sitecore.Pathfinder.Diagnostics;
-
 namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
 {
     public abstract class FieldResolverBase : IFieldResolver
@@ -13,8 +11,8 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
 
         public double Priority { get; }
 
-        public abstract bool CanResolve(ITraceService trace, IProject project, Field field);
+        public abstract bool CanResolve(Field field);
 
-        public abstract string Resolve(ITraceService trace, IProject project, Field field);
+        public abstract string Resolve(Field field);
     }
 }

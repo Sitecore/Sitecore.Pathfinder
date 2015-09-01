@@ -1,16 +1,16 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Emitters.FieldResolvers.Layouts
 {
     public class LayoutResolveContext
     {
-        public LayoutResolveContext(ITraceService trace, [NotNull] IProject project, [NotNull] ITextSnapshot snapshot, string databaseName)
+        public LayoutResolveContext(Field field, [NotNull] IProject project, [NotNull] ITextSnapshot snapshot, string databaseName)
         {
-            Trace = trace;
+            Field = field;
             Project = project;
             Snapshot = snapshot;
             DatabaseName = databaseName;
@@ -20,12 +20,12 @@ namespace Sitecore.Pathfinder.Emitters.FieldResolvers.Layouts
         public string DatabaseName { get; }
 
         [NotNull]
+        public Field Field { get; }
+
+        [NotNull]
         public IProject Project { get; }
 
         [NotNull]
         public ITextSnapshot Snapshot { get; }
-
-        [NotNull]
-        public ITraceService Trace { get; }
     }
 }

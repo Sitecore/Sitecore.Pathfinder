@@ -164,7 +164,7 @@
     <Compile Include="Parsing\Files\SerializationFileParser.cs" />
     <Compile Include="Parsing\IParseService.cs" />
     <Compile Include="Projects\Diagnostic.cs" />
-    <Compile Include="Projects\DiagnosticTraceService.cs" />
+    <Compile Include="Projects\ProjectDiagnosticTraceService.cs" />
     <Compile Include="Projects\ProjectOptions.cs" />
     <Compile Include="Projects\References\FileReference.cs" />
     <Compile Include="Projects\References\IReference.cs" />
@@ -256,6 +256,7 @@
   <ItemGroup>
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
+    <Analyzer Include="..\packages\NotNullAttributes.1.0.2.0\tools\analyzers\NotNullAttributes.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

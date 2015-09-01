@@ -15,20 +15,21 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
         {
         }
 
-        public override bool CanResolve(ITraceService trace, IProject project, Field field)
+        public override bool CanResolve(Field field)
         {
             return field.Value.Value.IndexOf("/sitecore", StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
-        public override string Resolve(ITraceService trace, IProject project, Field field)
+        public override string Resolve(Field field)
         {
-            var value = field.Value.Value;
+            var value = field.Value.Value.Trim();
             if (value.IndexOf('|') < 0)
             {
-                var item = project.FindQualifiedItem(value);
+                var item = field.Item.Project.FindQualifiedItem(value);
                 if (item == null)
                 {
-                    trace.Writeline("Item path reference not found", value);
+                    field.WriteDiagnostic(Severity.Error, "Item path reference not found", value);
+                    return string.Empty;
                 }
 
                 return item.Guid.Format();
@@ -37,18 +38,20 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
             var sb = new StringBuilder();
             foreach (var itemPath in value.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries))
             {
-                var item = project.FindQualifiedItem(itemPath);
+                var item = field.Item.Project.FindQualifiedItem(itemPath);
                 if (item == null)
                 {
-                    trace.Writeline("Item path reference not found", itemPath);
+                    field.WriteDiagnostic(Severity.Error, "Item path reference not found", itemPath);
                 }
-
-                if (sb.Length > 0)
+                else
                 {
-                    sb.Append('|');
-                }
+                    if (sb.Length > 0)
+                    {
+                        sb.Append('|');
+                    }
 
-                sb.Append(item.Guid.Format());
+                    sb.Append(item.Guid.Format());
+                }
             }
 
             return sb.ToString();

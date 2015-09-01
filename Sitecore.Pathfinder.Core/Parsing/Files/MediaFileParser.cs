@@ -12,6 +12,7 @@ namespace Sitecore.Pathfinder.Parsing.Files
     [Export(typeof(IParser))]
     public class MediaFileParser : ParserBase
     {
+        // todo: make this configurable
         private static readonly string[] FileExtensions =
         {
             ".png",

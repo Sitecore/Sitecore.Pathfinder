@@ -23,6 +23,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
         [NotNull]
         public ItemParser Parser { get; }
 
+        [NotNull]
         public ITextSnapshot Snapshot => (ITextSnapshot)ParseContext.Snapshot;
     }
 }

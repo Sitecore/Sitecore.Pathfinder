@@ -32,4 +32,8 @@
   <Field Name="OlderPosts" Field.ShortHelp="Older posts link." Field.LongHelp="Older posts link.">
     Older Posts
   </Field>
+
+  <Field Name="Checkbox" Field.ShortHelp="Older posts link." Field.LongHelp="Older posts link." Field.Type="Checkbox">
+    true
+  </Field>
 </Item>

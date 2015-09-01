@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Checking\Checkers\Items\ItemChecker.cs" />
     <Compile Include="Checking\Checkers\Files\MediaFileChecker.cs" />
+    <Compile Include="Checking\Checkers\Items\FieldValueChecker.cs" />
     <Compile Include="Checking\Checkers\Items\TemplateChecker.cs" />
     <Compile Include="Checking\Checkers\ReferenceChecker.cs" />
     <Compile Include="CodeGen\PocoTemplate.cs" />

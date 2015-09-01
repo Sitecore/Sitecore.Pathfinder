@@ -39,9 +39,17 @@ namespace Sitecore.Pathfinder.Projects
             _defaultValue = defaultValue;
         }
 
+        public Attribute([NotNull] string name, [NotNull] T defaultValue, SourceFlags sourceFlags)
+        {
+            Name = name;
+            Value = defaultValue;
+            _defaultValue = defaultValue;
+            SourceFlags = sourceFlags;
+        }
+
         [NotNull]
         public string Name { get; private set; }
-                 
+
         // todo: attributes can be set in multiple sources - must be a list
         [CanBeNull]
         public ITextNode Source { get; private set; }
@@ -75,7 +83,8 @@ namespace Sitecore.Pathfinder.Projects
             return true;
         }
 
-        public static implicit operator string(Attribute<T> attribute)
+        [NotNull]
+        public static implicit operator string([NotNull] Attribute<T> attribute)
         {
             return attribute.Value.ToString();
         }
