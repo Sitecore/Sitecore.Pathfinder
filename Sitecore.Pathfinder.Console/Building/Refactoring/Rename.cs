@@ -61,9 +61,9 @@ namespace Sitecore.Pathfinder.Building.Refactoring
 
             foreach (var reference in references)
             {
-                if (reference.SourceAttribute != null)
+                if (reference.SourceSourceProperty != null)
                 {
-                    reference.SourceAttribute.SetValue(value);
+                    reference.SourceSourceProperty.SetValue(value);
                 }
             }
 

@@ -414,4 +414,7 @@
     <data name="Device_item_not_found" xml:space="preserve">
     <value>Device item not found</value>
   </data>
+    <data name="The__Template__attribute_must_be_specified_when__Template_CreateFromFields__equals_true_" xml:space="preserve">
+    <value>The 'Template' attribute must be specified when 'Template.CreateFromFields' equals true.</value>
+  </data>
 </root>

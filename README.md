@@ -182,7 +182,7 @@ Templates can be nested in the same way that multiple items can be nested inside
 If you have a template that is used by a single item, you can have Pathfinder automatically create the template from the fields in the
 item - Pathfinder will infer the template fields from the fields you specify in the item.
 
-To infer and create the template use the "Template.Create" attribute instead of the "Template" attribute in item files.
+To infer and create the template add the "Template.CreateFromFields='true'" attribute.
 
 ```xml
 <Item xmlns="http://www.sitecore.net/pathfinder/item" Template.Create="/sitecore/templates/Sample/InferredTemplate">

@@ -16,21 +16,21 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
 
         public override bool CanResolve(Field field)
         {
-            return string.Compare(field.TemplateField.Type, "layout", StringComparison.OrdinalIgnoreCase) == 0 && field.ValueHint.Value.Contains("Layout");
+            return string.Compare(field.TemplateField.TypeProperty, "layout", StringComparison.OrdinalIgnoreCase) == 0 && field.ValueHint.Contains("Layout");
         }
 
         public override string Resolve(Field field)
         {
-            var textNode = field.Value.Source ?? TextNode.Empty;
+            var textNode = field.ValueProperty.SourceTextNode ?? TextNode.Empty;
             if (textNode == TextNode.Empty)
             {
-                return field.Value.Value.Mid(8);
+                return field.Value.Mid(8);
             }
 
             var textSnapshot = textNode.Snapshot as ITextSnapshot;
             if (textSnapshot == null)
             {
-                return field.Value.Value.Mid(8);
+                return field.Value.Mid(8);
             }
 
             /*
@@ -41,7 +41,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
             return resolver.Resolve(layoutResolveContext, textNode);
             */
 
-            return field.Value.Value.Mid(8);
+            return field.Value.Mid(8);
         }
     }
 }

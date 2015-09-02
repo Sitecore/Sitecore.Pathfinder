@@ -9,7 +9,7 @@ namespace Sitecore.Pathfinder.Projects.References
 {
     public class LayoutRenderingReference : Reference
     {
-        public LayoutRenderingReference([NotNull] IProjectItem owner, [NotNull] Attribute<string> sourceAttribute, [NotNull] string targetQualifiedName) : base(owner, sourceAttribute, targetQualifiedName)
+        public LayoutRenderingReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceSourceProperty, [NotNull] string targetQualifiedName) : base(owner, sourceSourceProperty, targetQualifiedName)
         {
         }
 
@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Projects.References
                     continue;
                 }
 
-                var templateIdOrPath = item.TemplateIdOrPath.Value;
+                var templateIdOrPath = item.TemplateIdOrPath;
                 //if (templateIdOrPath != Constants.Templates.ViewRendering && templateIdOrPath != Constants.Templates.Sublayout)
                 //{
                 //    continue;

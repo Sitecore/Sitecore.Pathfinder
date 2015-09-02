@@ -33,7 +33,7 @@
         <xs:attribute name="Id" type="xs:string" use="optional" />
         <xs:attribute name="Name" type="xs:string" use="optional" />
         <xs:attribute name="Template" type="xs:string" use="optional" />
-        <xs:attribute name="Template.Create" type="xs:string" use="optional" />
+        <xs:attribute name="Template.CreateFromFields" type="bool" use="optional" />
         <xs:attribute name="Template.BaseTemplates" type="xs:string" use="optional" />
         <xs:attribute name="Template.Icon" type="xs:string" use="optional" />
         <xs:attribute name="Template.ShortHelp" type="xs:string" use="optional" />

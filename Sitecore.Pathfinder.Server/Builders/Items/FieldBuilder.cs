@@ -6,22 +6,29 @@ namespace Sitecore.Pathfinder.Builders.Items
 {
     public class FieldBuilder
     {
-        public FieldBuilder([Diagnostics.NotNull] Attribute<string> fieldName, [Diagnostics.NotNull] string language, int version, [Diagnostics.NotNull] string databaseValue)
+        public FieldBuilder([Diagnostics.NotNull] SourceProperty<string> fieldNameProperty, [Diagnostics.NotNull] string language, int version, [Diagnostics.NotNull] string databaseValue)
         {
-            FieldName = fieldName;
+            FieldNameProperty = fieldNameProperty;
             Language = language;
             Version = version;
             DatabaseValue = databaseValue;
         }
 
         [Diagnostics.NotNull]
-        public Attribute<string> FieldName { get; }
+        public string DatabaseValue { get; set; }
+
+        [NotNull]
+        public string FieldName
+        {
+            get { return FieldNameProperty.GetValue(); }
+            set { FieldNameProperty.SetValue(value); }
+        }
+
+        [Diagnostics.NotNull]
+        public SourceProperty<string> FieldNameProperty { get; }
 
         [Diagnostics.NotNull]
         public string Language { get; }
-
-        [Diagnostics.NotNull]
-        public string DatabaseValue { get; set; }
 
         public int Version { get; }
     }

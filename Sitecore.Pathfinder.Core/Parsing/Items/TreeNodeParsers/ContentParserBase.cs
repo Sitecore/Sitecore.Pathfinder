@@ -16,16 +16,16 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
         public override void Parse(ItemParseContext context, ITextNode textNode)
         {
-            var itemName = GetItemName(context.ParseContext, textNode);
+            var itemNameTextNode = GetItemNameTextNode(context.ParseContext, textNode);
             var parentItemPath = textNode.GetAttributeValue("Parent-Item-Path", context.ParentItemPath);
-            var itemIdOrPath = parentItemPath + "/" + itemName;
+            var itemIdOrPath = parentItemPath + "/" + itemNameTextNode.Value;
             var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
 
-            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemName, itemIdOrPath, textNode.Name);
-            item.ItemName.Merge(itemName);
-            item.TemplateIdOrPath.AddSource(new AttributeNameTextNode(textNode));
+            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemNameTextNode.Value, itemIdOrPath, textNode.Name);
+            item.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
+            item.TemplateIdOrPathProperty.AddSourceTextNode(new AttributeNameTextNode(textNode));
 
-            item.References.AddRange(ParseReferences(context, item, textNode, item.TemplateIdOrPath));
+            item.References.AddRange(ParseReferences(context, item, textNode, item.TemplateIdOrPathProperty));
 
             ParseAttributes(context, item, textNode);
 
@@ -44,7 +44,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             }
             
             // check if field is already defined
-            var field = item.Fields.FirstOrDefault(f => string.Compare(f.FieldName.Value, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
+            var field = item.Fields.FirstOrDefault(f => string.Compare(f.FieldName, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
             if (field != null)
             {
                 context.ParseContext.Trace.TraceError(Texts.Field_is_already_defined, fieldTextNode.Snapshot.SourceFile.FileName, fieldTextNode.Position, fieldName);
@@ -52,12 +52,12 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
             // todo: support language and version
             field = context.ParseContext.Factory.Field(item);
-            field.FieldName.AddSource(new AttributeNameTextNode(fieldTextNode));
-            field.Value.AddSource(fieldTextNode);
+            field.FieldNameProperty.SetValue(new AttributeNameTextNode(fieldTextNode));
+            field.ValueProperty.SetValue(fieldTextNode);
 
             item.Fields.Add(field);
 
-            item.References.AddRange(ParseReferences(context, item, fieldTextNode, field.Value));
+            item.References.AddRange(ParseReferences(context, item, fieldTextNode, field.ValueProperty));
         }
     }
 }

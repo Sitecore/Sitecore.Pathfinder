@@ -41,9 +41,9 @@ namespace Sitecore.Pathfinder.Parsing.Files
             ParseLines(context, serializationItemBuilder, lines, 0);
 
             var item = context.Factory.Item(context.Project, serializationItemBuilder.ProjectUniqueId, root, serializationItemBuilder.DatabaseName, serializationItemBuilder.ItemName, serializationItemBuilder.ItemIdOrPath, serializationItemBuilder.TemplateIdOrPath);
-            item.ItemName.AddSource(serializationItemBuilder.ItemNameSource);
-            item.TemplateIdOrPath.AddSource(serializationItemBuilder.TemplateIdOrPathSource);
-            item.Icon.SetValue(serializationItemBuilder.Icon);
+            item.ItemNameProperty.AddSourceTextNode(serializationItemBuilder.ItemNameTextNode);
+            item.TemplateIdOrPathProperty.AddSourceTextNode(serializationItemBuilder.TemplateIdOrPathTextNode);
+            item.IconProperty.SetValue(serializationItemBuilder.Icon);
             item.IsEmittable = false;
 
             foreach (var field in serializationItemBuilder.Fields)
@@ -131,10 +131,12 @@ namespace Sitecore.Pathfinder.Parsing.Files
             }
 
             var field = context.Factory.Field(Item.Empty);
-            field.FieldName.SetValue(fieldName);
-            field.Language.SetValue(language);
-            field.Version.SetValue(version);
-            field.Value.AddSource(context.Factory.TextNode(serializationItemBuilder.ItemNameSource.Snapshot, new TextPosition(lineNumber, 0, lineLength), fieldName, fieldValue, serializationItemBuilder.ItemNameSource));
+            field.FieldNameProperty.SetValue(fieldName);
+            field.LanguageProperty.SetValue(language);
+            field.VersionProperty.SetValue(version);
+
+            var textNode = context.Factory.TextNode(serializationItemBuilder.ItemNameTextNode.Snapshot, new TextPosition(lineNumber, 0, lineLength), fieldName, fieldValue, serializationItemBuilder.ItemNameTextNode);
+            field.ValueProperty.SetValue(textNode);
 
             serializationItemBuilder.Fields.Add(field);
 
@@ -195,13 +197,13 @@ namespace Sitecore.Pathfinder.Parsing.Files
                         break;
                     case "name":
                         serializationItemBuilder.ItemName = value;
-                        serializationItemBuilder.ItemNameSource = context.Factory.TextNode(context.Snapshot, new TextPosition(n, 0, line.Length), "name", value, null);
+                        serializationItemBuilder.ItemNameTextNode = context.Factory.TextNode(context.Snapshot, new TextPosition(n, 0, line.Length), "name", value, null);
                         break;
                     case "master":
                         break;
                     case "template":
                         serializationItemBuilder.TemplateIdOrPath = value;
-                        serializationItemBuilder.TemplateIdOrPathSource = context.Factory.TextNode(context.Snapshot, new TextPosition(n, 0, line.Length), "template", value, null);
+                        serializationItemBuilder.TemplateIdOrPathTextNode = context.Factory.TextNode(context.Snapshot, new TextPosition(n, 0, line.Length), "template", value, null);
                         break;
                     case "templatekey":
                         break;
@@ -266,7 +268,7 @@ namespace Sitecore.Pathfinder.Parsing.Files
             public string ItemName { get; set; } = string.Empty;
 
             [NotNull]
-            public ITextNode ItemNameSource { get; set; } = TextNode.Empty;
+            public ITextNode ItemNameTextNode { get; set; } = TextNode.Empty;
 
             [NotNull]
             public string ProjectUniqueId { get; set; } = string.Empty;
@@ -275,7 +277,7 @@ namespace Sitecore.Pathfinder.Parsing.Files
             public string TemplateIdOrPath { get; set; } = string.Empty;
 
             [NotNull]
-            public ITextNode TemplateIdOrPathSource { get; set; } = TextNode.Empty;
+            public ITextNode TemplateIdOrPathTextNode { get; set; } = TextNode.Empty;
         }
     }
 }

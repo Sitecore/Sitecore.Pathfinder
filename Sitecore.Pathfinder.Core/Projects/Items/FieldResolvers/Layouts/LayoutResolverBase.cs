@@ -359,13 +359,13 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
         {
             var fields = new Dictionary<string, string>();
 
-            var parametersTemplateItemId = renderingItem.Item.Fields.FirstOrDefault(f => f.FieldName == "Parameters Template")?.Value.Value ?? string.Empty;
+            var parametersTemplateItemId = renderingItem.Item.Fields.FirstOrDefault(f => f.FieldName == "Parameters Template")?.Value ?? string.Empty;
             var parametersTemplateItem = context.Project.FindQualifiedItem(parametersTemplateItemId) as Template;
             if (parametersTemplateItem != null)
             {
                 foreach (var field in parametersTemplateItem.Sections.SelectMany(s => s.Fields))
                 {
-                    fields[field.FieldName.Value.ToLowerInvariant()] = field.Type.Value;
+                    fields[field.FieldName.ToLowerInvariant()] = field.Type;
                 }
             }
 

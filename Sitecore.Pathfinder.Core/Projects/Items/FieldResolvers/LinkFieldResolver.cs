@@ -16,12 +16,12 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
 
         public override bool CanResolve(Field field)
         {
-            return string.Compare(field.TemplateField.Type, "general link", StringComparison.OrdinalIgnoreCase) == 0 || string.Compare(field.TemplateField.Type, "link", StringComparison.OrdinalIgnoreCase) == 0;
+            return string.Compare(field.TemplateField.TypeProperty, "general link", StringComparison.OrdinalIgnoreCase) == 0 || string.Compare(field.TemplateField.TypeProperty, "link", StringComparison.OrdinalIgnoreCase) == 0;
         }
 
         public override string Resolve(Field field)
         {
-            var qualifiedName = field.Value.Value.Trim();
+            var qualifiedName = field.Value.Trim();
             if (string.IsNullOrEmpty(qualifiedName))
             {
                 return string.Empty;

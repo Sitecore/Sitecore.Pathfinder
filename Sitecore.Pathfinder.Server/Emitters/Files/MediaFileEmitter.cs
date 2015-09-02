@@ -35,7 +35,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
             var mediaFile = (MediaFile)projectItem;
 
             var database = Factory.GetDatabase(mediaFile.MediaItem.DatabaseName);
-            var name = mediaFile.MediaItem.ItemName.Value;
+            var name = mediaFile.MediaItem.ItemName;
 
             var options = new MediaCreatorOptions
             {

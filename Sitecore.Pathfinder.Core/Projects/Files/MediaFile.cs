@@ -11,6 +11,7 @@ namespace Sitecore.Pathfinder.Projects.Files
         public MediaFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath, [NotNull] Item mediaItem) : base(project, snapshot, filePath)
         {
             MediaItem = mediaItem;
+            MediaItem.TemplateIdOrPath = "/sitecore/templates/System/Media/Unversioned/File";
         }
 
         [NotNull]

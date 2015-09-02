@@ -19,16 +19,37 @@ namespace Sitecore.Pathfinder.Projects.Templates
         }
 
         [NotNull]
-        public Attribute<string> BaseTemplates { get; } = new Attribute<string>("BaseTemplates", string.Empty);
+        public string BaseTemplates
+        {
+            get { return BaseTemplatesProperty.GetValue(); }
+            set { BaseTemplatesProperty.SetValue(value); }
+        }
 
         [NotNull]
-        public Attribute<string> LongHelp { get; } = new Attribute<string>("LongHelp", string.Empty);
+        public SourceProperty<string> BaseTemplatesProperty { get; } = new SourceProperty<string>("BaseTemplates", string.Empty);
+
+        [NotNull]
+        public string LongHelp
+        {
+            get { return LongHelpProperty.GetValue(); }
+            set { LongHelpProperty.SetValue(value); }
+        }
+
+        [NotNull]
+        public SourceProperty<string> LongHelpProperty { get; } = new SourceProperty<string>("LongHelp", string.Empty);
 
         [NotNull]
         public IList<TemplateSection> Sections { get; } = new List<TemplateSection>();
 
         [NotNull]
-        public Attribute<string> ShortHelp { get; } = new Attribute<string>("ShortHelp", string.Empty);
+        public string ShortHelp
+        {
+            get { return ShortHelpProperty.GetValue(); }
+            set { ShortHelpProperty.SetValue(value); }
+        }
+
+        [NotNull]
+        public SourceProperty<string> ShortHelpProperty { get; } = new SourceProperty<string>("ShortHelp", string.Empty);
 
         [CanBeNull]
         public Item StandardValuesItem { get; set; }
@@ -48,30 +69,30 @@ namespace Sitecore.Pathfinder.Projects.Templates
                 return;
             }
 
-            if (!string.IsNullOrEmpty(newTemplate.BaseTemplates.Value))
+            if (!string.IsNullOrEmpty(newTemplate.BaseTemplates))
             {
                 // todo: join base templates
-                BaseTemplates.Merge(newTemplate.BaseTemplates);
+                BaseTemplatesProperty.SetValue(newTemplate.BaseTemplatesProperty);
             }
 
-            if (!string.IsNullOrEmpty(newTemplate.Icon.Value))
+            if (!string.IsNullOrEmpty(newTemplate.Icon))
             {
-                Icon.Merge(newTemplate.Icon);
+                IconProperty.SetValue(newTemplate.IconProperty);
             }
 
-            if (!string.IsNullOrEmpty(newTemplate.ShortHelp.Value))
+            if (!string.IsNullOrEmpty(newTemplate.ShortHelp))
             {
-                ShortHelp.Merge(newTemplate.ShortHelp);
+                ShortHelpProperty.SetValue(newTemplate.ShortHelpProperty);
             }
 
-            if (!string.IsNullOrEmpty(newTemplate.LongHelp.Value))
+            if (!string.IsNullOrEmpty(newTemplate.LongHelp))
             {
-                LongHelp.Merge(newTemplate.LongHelp);
+                LongHelpProperty.SetValue(newTemplate.LongHelpProperty);
             }
 
             foreach (var newSection in newTemplate.Sections)
             {
-                var section = Sections.FirstOrDefault(s => string.Compare(s.SectionName.Value, newSection.SectionName.Value, StringComparison.OrdinalIgnoreCase) == 0);
+                var section = Sections.FirstOrDefault(s => string.Compare(s.SectionName, newSection.SectionName, StringComparison.OrdinalIgnoreCase) == 0);
                 if (section == null)
                 {
                     Sections.Add(newSection);

@@ -25,7 +25,14 @@ namespace Sitecore.Pathfinder.Projects.Items
         public ICollection<Diagnostic> Diagnostics { get; } = new List<Diagnostic>();
 
         [NotNull]
-        public Attribute<string> FieldName { get; } = new Attribute<string>("Name", string.Empty);
+        public string FieldName
+        {
+            get { return FieldNameProperty.GetValue(); }
+            set { FieldNameProperty.SetValue(value); }
+        }
+
+        [NotNull]
+        public SourceProperty<string> FieldNameProperty { get; } = new SourceProperty<string>("Name", string.Empty);
 
         public bool IsResolved { get; set; }
 
@@ -50,22 +57,49 @@ namespace Sitecore.Pathfinder.Projects.Items
         public Item Item { get; set; }
 
         [NotNull]
-        public Attribute<string> Language { get; } = new Attribute<string>("Language", string.Empty);
+        public string Language
+        {
+            get { return LanguageProperty.GetValue(); }
+            set { LanguageProperty.SetValue(value); }
+        }
+
+        [NotNull]
+        public SourceProperty<string> LanguageProperty { get; } = new SourceProperty<string>("Language", string.Empty);
 
         [NotNull]
         public string ResolvedValue { get; private set; }
 
         [NotNull]
-        public TemplateField TemplateField => Item.Template.Sections.SelectMany(s => s.Fields).FirstOrDefault(f => string.Compare(f.FieldName.Value, FieldName.Value, StringComparison.OrdinalIgnoreCase) == 0) ?? TemplateField.Empty;
+        public TemplateField TemplateField => Item.Template.Sections.SelectMany(s => s.Fields).FirstOrDefault(f => string.Compare(f.FieldName, FieldName, StringComparison.OrdinalIgnoreCase) == 0) ?? TemplateField.Empty;
 
         [NotNull]
-        public Attribute<string> Value { get; } = new Attribute<string>("Value", string.Empty);
+        public string Value
+        {
+            get { return ValueProperty.GetValue(); }
+            set { ValueProperty.SetValue(value); }
+        }
 
         [NotNull]
-        public Attribute<string> ValueHint { get; } = new Attribute<string>("Value.Hint", string.Empty);
+        public string ValueHint
+        {
+            get { return ValueHintProperty.GetValue(); }
+            set { ValueHintProperty.SetValue(value); }
+        }
 
         [NotNull]
-        public Attribute<int> Version { get; } = new Attribute<int>("Version", 0);
+        public SourceProperty<string> ValueHintProperty { get; } = new SourceProperty<string>("Value.Hint", string.Empty);
+
+        [NotNull]
+        public SourceProperty<string> ValueProperty { get; } = new SourceProperty<string>("Value", string.Empty);
+
+        public int Version
+        {
+            get { return VersionProperty.GetValue(); }
+            set { VersionProperty.SetValue(value); }
+        }
+
+        [NotNull]
+        public SourceProperty<int> VersionProperty { get; } = new SourceProperty<int>("Version", 0);
 
         public void Invalidate()
         {
@@ -81,7 +115,7 @@ namespace Sitecore.Pathfinder.Projects.Items
             }
 
             IsResolved = true;
-            ResolvedValue = Value.Value;
+            ResolvedValue = Value;
 
             foreach (var fieldResolver in Item.Project.FieldResolvers.OrderBy(r => r.Priority))
             {
@@ -97,7 +131,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         public virtual void WriteDiagnostic(Severity severity, [NotNull] string text, [NotNull] string details = "")
         {
-            var source = FieldName.Source ?? TextNode.Empty;
+            var source = FieldNameProperty.SourceTextNode ?? TextNode.Empty;
             WriteDiagnostic(severity, text, source, details.Trim());
         }
 

@@ -17,16 +17,16 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
         public override void Parse(ItemParseContext context, ITextNode textNode)
         {
-            var itemName = GetItemName(context.ParseContext, textNode);
-            var itemIdOrPath = context.ParentItemPath + "/" + itemName.Value;
+            var itemNameTextNode = GetItemNameTextNode(context.ParseContext, textNode);
+            var itemIdOrPath = context.ParentItemPath + "/" + itemNameTextNode.Value;
             var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
 
-            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemName.Value, itemIdOrPath, string.Empty);
-            item.ItemName.Merge(itemName);
+            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemNameTextNode.Value, itemIdOrPath, string.Empty);
+            item.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
 
             var field = context.ParseContext.Factory.Field(item, "__Renderings", string.Empty);
-            field.Value.AddSource(textNode.GetInnerTextNode());
-            field.ValueHint.SetValue("Layout");
+            field.ValueProperty.SetValue(textNode.GetInnerTextNode());
+            field.ValueHintProperty.SetValue("Layout");
 
             item.Fields.Add(field);
 
@@ -37,17 +37,17 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
         protected virtual void ParseDeviceReferences([NotNull] ItemParseContext context, [NotNull] ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode deviceTextNode)
         {
-            var deviceNameAttribute = new Attribute<string>("Name", string.Empty);
-            deviceNameAttribute.SourceFlags = SourceFlags.IsShort;
+            var deviceNameAttribute = new SourceProperty<string>("Name", string.Empty);
+            deviceNameAttribute.SourcePropertyFlags = SourcePropertyFlags.IsShort;
             deviceNameAttribute.Parse(deviceTextNode);
 
-            references.Add(context.ParseContext.Factory.DeviceReference(projectItem, deviceNameAttribute, deviceNameAttribute.Value));
+            references.Add(context.ParseContext.Factory.DeviceReference(projectItem, deviceNameAttribute, deviceNameAttribute.GetValue()));
 
-            var layoutAttribute = new Attribute<string>("Layout", string.Empty);
-            layoutAttribute.SourceFlags = SourceFlags.IsShort;
+            var layoutAttribute = new SourceProperty<string>("Layout", string.Empty);
+            layoutAttribute.SourcePropertyFlags = SourcePropertyFlags.IsShort;
             layoutAttribute.Parse(deviceTextNode);
 
-            references.Add(context.ParseContext.Factory.LayoutReference(projectItem, layoutAttribute, layoutAttribute.Value));
+            references.Add(context.ParseContext.Factory.LayoutReference(projectItem, layoutAttribute, layoutAttribute.GetValue()));
 
             foreach (var renderingsTextNode in deviceTextNode.ChildNodes)
             {
@@ -80,11 +80,10 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         {
             if (!string.IsNullOrEmpty(renderingTextNode.Name))
             {
-                var textNode = new Attribute<string>(renderingTextNode.Name, string.Empty);
-                textNode.AddSource(new AttributeNameTextNode(renderingTextNode));
-                textNode.SourceFlags = SourceFlags.IsShort;
+                var sourceProperty = new SourceProperty<string>(renderingTextNode.Name, string.Empty, SourcePropertyFlags.IsShort);
+                sourceProperty.SetValue(new AttributeNameTextNode(renderingTextNode));
 
-                references.Add(context.ParseContext.Factory.LayoutRenderingReference(projectItem, textNode, renderingTextNode.Name));
+                references.Add(context.ParseContext.Factory.LayoutRenderingReference(projectItem, sourceProperty, renderingTextNode.Name));
             }
 
             foreach (var childTextNode in renderingTextNode.ChildNodes)

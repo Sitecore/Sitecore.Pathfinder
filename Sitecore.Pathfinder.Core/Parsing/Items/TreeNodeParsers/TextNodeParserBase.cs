@@ -25,28 +25,13 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         public abstract void Parse(ItemParseContext context, ITextNode textNode);
 
         [NotNull]
-        protected virtual Attribute<string> GetItemName([NotNull] IParseContext context, [NotNull] ITextNode textNode, [NotNull] string attributeName = "Name")
+        protected virtual ITextNode GetItemNameTextNode([NotNull] IParseContext context, [NotNull] ITextNode textNode, [NotNull] string attributeName = "Name")
         {
             var itemNameTextNode = textNode.GetAttributeTextNode(attributeName);
 
-            string value;
-            ITextNode source;
+            var source = itemNameTextNode ?? new FileNameTextNode(context.ItemName, textNode.Snapshot);
 
-            if (itemNameTextNode != null)
-            {
-                value = itemNameTextNode.Value;
-                source = itemNameTextNode;
-            }
-            else
-            {
-                value = context.ItemName;
-                source = new FileNameTextNode(value, textNode.Snapshot);
-            }
-
-            var attribute = new Attribute<string>(attributeName, value);
-            attribute.AddSource(source);
-
-            return attribute;
+            return source;
         }
 
         [CanBeNull]
@@ -54,19 +39,17 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         {
             if (text.StartsWith("/sitecore/", StringComparison.OrdinalIgnoreCase))
             {
-                var sourceAttribute = new Attribute<string>(source.Name, string.Empty);
-                sourceAttribute.AddSource(source);
-                sourceAttribute.SourceFlags = SourceFlags.IsQualified;
-                return context.ParseContext.Factory.Reference(projectItem, sourceAttribute, text);
+                var sourceProperty = new SourceProperty<string>(source.Name, string.Empty, SourcePropertyFlags.IsQualified);
+                sourceProperty.SetValue(source);
+                return context.ParseContext.Factory.Reference(projectItem, sourceProperty, text);
             }
 
             Guid guid;
             if (Guid.TryParse(text, out guid))
             {
-                var sourceAttribute = new Attribute<string>(source.Name, string.Empty);
-                sourceAttribute.AddSource(source);
-                sourceAttribute.SourceFlags = SourceFlags.IsGuid;
-                return context.ParseContext.Factory.Reference(projectItem, sourceAttribute, guid.Format());
+                var sourceProperty = new SourceProperty<string>(source.Name, string.Empty, SourcePropertyFlags.IsGuid);
+                sourceProperty.SetValue(source);
+                return context.ParseContext.Factory.Reference(projectItem, sourceProperty, guid.Format());
             }
 
             return null;

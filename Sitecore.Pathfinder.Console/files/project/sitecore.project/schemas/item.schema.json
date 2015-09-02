@@ -17,7 +17,7 @@
         "Id": { "type": "string" },
         "Name": { "type": "string" },
         "Template": { "type": "string" },
-        "Template.Create": { "type": "string" },
+        "Template.CreateFromFields": { "type": "boolean" },
         "Template.Id": { "type": "string" },
         "Layout.HtmlFile": { "type": "string" },
         "Fields": {

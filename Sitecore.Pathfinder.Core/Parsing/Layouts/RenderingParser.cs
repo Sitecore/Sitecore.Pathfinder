@@ -34,15 +34,15 @@ namespace Sitecore.Pathfinder.Parsing.Layouts
             var snapshotTextNode = new SnapshotTextNode(context.Snapshot);
 
             var item = context.Factory.Item(context.Project, context.ItemPath, snapshotTextNode, context.DatabaseName, context.ItemName, context.ItemPath, TemplateIdOrPath);
-            item.ItemName.AddSource(new FileNameTextNode(context.ItemName, context.Snapshot));
+            item.ItemNameProperty.AddSourceTextNode(new FileNameTextNode(context.ItemName, context.Snapshot));
             item.OverwriteWhenMerging = true;
 
             var field = context.Factory.Field(item, "Path", path);
             item.Fields.Add(field);
 
             // add file name as reference
-            var sourceAttribute = new Attribute<string>(snapshotTextNode.Name, string.Empty, SourceFlags.IsFileName);
-            sourceAttribute.AddSource(snapshotTextNode);
+            var sourceAttribute = new SourceProperty<string>(snapshotTextNode.Name, string.Empty, SourcePropertyFlags.IsFileName);
+            sourceAttribute.SetValue(snapshotTextNode);
             var fileReference = context.Factory.FileReference(item, sourceAttribute, path);
             item.References.Add(fileReference);
 

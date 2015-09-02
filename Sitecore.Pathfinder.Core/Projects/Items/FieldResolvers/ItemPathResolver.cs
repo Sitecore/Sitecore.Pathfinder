@@ -17,12 +17,12 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
 
         public override bool CanResolve(Field field)
         {
-            return field.Value.Value.IndexOf("/sitecore", StringComparison.OrdinalIgnoreCase) >= 0;
+            return field.Value.IndexOf("/sitecore", StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         public override string Resolve(Field field)
         {
-            var value = field.Value.Value.Trim();
+            var value = field.Value.Trim();
             if (value.IndexOf('|') < 0)
             {
                 var item = field.Item.Project.FindQualifiedItem(value);

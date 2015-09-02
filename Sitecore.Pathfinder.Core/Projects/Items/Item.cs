@@ -23,25 +23,38 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         public Item([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath) : base(project, projectUniqueId, textNode, databaseName, itemName, itemIdOrPath)
         {
-            TemplateIdOrPath.SetValue(templateIdOrPath);
-            TemplateIdOrPath.SourceFlags = SourceFlags.IsQualified;
+            TemplateIdOrPath = templateIdOrPath;
         }
 
         [NotNull]
         public IList<Field> Fields { get; } = new List<Field>();
 
         [NotNull]
-        public Attribute<string> LayoutHtmlFile { get; } = new Attribute<string>("Layout.HtmlFile", string.Empty);
+        public string LayoutHtmlFile
+        {
+            get { return LayoutHtmlFileProperty.GetValue(); }
+            set { LayoutHtmlFileProperty.SetValue(value); }
+        }
+
+        [NotNull]
+        public SourceProperty<string> LayoutHtmlFileProperty { get; } = new SourceProperty<string>("Layout.HtmlFile", string.Empty);
 
         public MergingMatch MergingMatch { get; set; }
 
         public bool OverwriteWhenMerging { get; set; }
 
         [NotNull]
-        public Template Template => Project.Items.OfType<Template>().FirstOrDefault(i => string.Compare(i.QualifiedName, TemplateIdOrPath.Value, StringComparison.OrdinalIgnoreCase) == 0) ?? Template.Empty;
+        public Template Template => Project.Items.OfType<Template>().FirstOrDefault(i => string.Compare(i.QualifiedName, TemplateIdOrPath, StringComparison.OrdinalIgnoreCase) == 0) ?? Template.Empty;
 
         [NotNull]
-        public Attribute<string> TemplateIdOrPath { get; } = new Attribute<string>("Template", string.Empty);
+        public string TemplateIdOrPath
+        {
+            get { return TemplateIdOrPathProperty.GetValue(); }
+            set { TemplateIdOrPathProperty.SetValue(value); }
+        }
+
+        [NotNull]
+        public SourceProperty<string> TemplateIdOrPathProperty { get; } = new SourceProperty<string>("Template", string.Empty, SourcePropertyFlags.IsQualified);
 
         public void Merge([NotNull] IParseContext context, [NotNull] Item newProjectItem)
         {
@@ -58,9 +71,12 @@ namespace Sitecore.Pathfinder.Projects.Items
                 return;
             }
 
-            if (!string.IsNullOrEmpty(newItem.TemplateIdOrPath.Value))
+            if (!string.IsNullOrEmpty(newItem.TemplateIdOrPath))
             {
-                TemplateIdOrPath.AddSource(newItem.TemplateIdOrPath.Source);
+                if (newItem.TemplateIdOrPathProperty.SourceTextNode != null)
+                {
+                    TemplateIdOrPathProperty.SetValue(newItem.TemplateIdOrPathProperty.SourceTextNode);
+                }
             }
 
             OverwriteWhenMerging = OverwriteWhenMerging && newItem.OverwriteWhenMerging;
@@ -69,7 +85,7 @@ namespace Sitecore.Pathfinder.Projects.Items
             // todo: add SourceFile
             foreach (var newField in newItem.Fields)
             {
-                var field = Fields.FirstOrDefault(f => string.Compare(f.FieldName.Value, newField.FieldName.Value, StringComparison.OrdinalIgnoreCase) == 0 && string.Compare(f.Language.Value, newField.Language.Value, StringComparison.OrdinalIgnoreCase) == 0 && f.Version.Value == newField.Version.Value);
+                var field = Fields.FirstOrDefault(f => string.Compare(f.FieldName, newField.FieldName, StringComparison.OrdinalIgnoreCase) == 0 && string.Compare(f.Language, newField.Language, StringComparison.OrdinalIgnoreCase) == 0 && f.Version == newField.Version);
                 if (field == null)
                 {
                     newField.Item = this;
@@ -77,12 +93,12 @@ namespace Sitecore.Pathfinder.Projects.Items
                     continue;
                 }
 
-                if (field.Value.Value != newField.Value.Value)
+                if (field.Value != newField.Value)
                 {
-                    context.Trace.TraceError(Texts.Field_is_being_assigned_two_different_values, field.FieldName.Value);
+                    context.Trace.TraceError(Texts.Field_is_being_assigned_two_different_values, field.FieldName);
                 }
 
-                field.Value.AddSource(newField.Value.Source);
+                field.ValueProperty.SetValue(newField.ValueProperty);
                 field.IsTestable = field.IsTestable || newField.IsTestable;
             }
         }

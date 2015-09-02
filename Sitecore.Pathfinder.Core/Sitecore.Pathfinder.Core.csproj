@@ -134,7 +134,7 @@
     <Compile Include="Parsing\Layouts\HtmlTemplateRenderingParser.cs" />
     <Compile Include="Parsing\Pipelines\ItemParserPipelines\HtmlTemplateItemParser.cs" />
     <Compile Include="Parsing\Pipelines\ItemParserPipelines\ItemParserPipeline.cs" />
-    <Compile Include="Projects\Attribute.cs" />
+    <Compile Include="Projects\SourceProperty.cs" />
     <Compile Include="Snapshots\Serialization\SerializationSnapshotLoader.cs" />
     <Compile Include="Snapshots\Xml\ItemXmlSnapshotLoader.cs" />
     <Compile Include="Extensions\CompositionServiceExtensions.cs" />
@@ -256,7 +256,7 @@
   <ItemGroup>
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
-    <Analyzer Include="..\packages\NotNullAttributes.1.0.2.0\tools\analyzers\NotNullAttributes.dll" />
+    <Analyzer Include="..\packages\NotNullAttributes.1.0.3.0\tools\analyzers\NotNullAttributes.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

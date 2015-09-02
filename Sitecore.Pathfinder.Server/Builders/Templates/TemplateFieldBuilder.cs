@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
         {
             if (Item == null && sectionItem != null)
             {
-                Item = sectionItem.Children[TemplateField.FieldName.Value];
+                Item = sectionItem.Children[TemplateField.FieldName];
             }
         }
     }

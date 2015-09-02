@@ -2,10 +2,8 @@
 
 using System;
 using System.ComponentModel.Composition;
-using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitters.FieldResolvers.Layouts;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Items.FieldResolvers;
 using Sitecore.Pathfinder.Snapshots;
@@ -22,21 +20,21 @@ namespace Sitecore.Pathfinder.Emitters.FieldResolvers
 
         public override bool CanResolve(Field field)
         {
-            return string.Compare(field.TemplateField.Type, "layout", StringComparison.OrdinalIgnoreCase) == 0 && field.ValueHint.Value.Contains("Layout");
+            return string.Compare(field.TemplateField.TypeProperty, "layout", StringComparison.OrdinalIgnoreCase) == 0 && field.ValueHint.Contains("Layout");
         }
 
         public override string Resolve(Field field)
         {
-            var textNode = field.Value.Source ?? TextNode.Empty;
+            var textNode = field.ValueProperty.SourceTextNode ?? TextNode.Empty;
             if (textNode == TextNode.Empty)
             {
-                return field.Value.Value.Mid(8);
+                return field.Value.Mid(8);
             }
 
             var textSnapshot = textNode.Snapshot as ITextSnapshot;
             if (textSnapshot == null)
             {
-                return field.Value.Value.Mid(8);
+                return field.Value.Mid(8);
             }
 
             var layoutResolveContext = new LayoutResolveContext(field, field.Item.Project, textSnapshot, field.Item.DatabaseName);

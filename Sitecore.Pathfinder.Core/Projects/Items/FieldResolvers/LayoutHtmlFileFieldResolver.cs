@@ -20,12 +20,12 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
 
         public override bool CanResolve(Field field)
         {
-            return field.ValueHint.Value.Contains("HtmlTemplate");
+            return field.ValueHint.Contains("HtmlTemplate");
         }
 
         public override string Resolve(Field field)
         {
-            var htmlTemplate = field.Value.Value.Trim();
+            var htmlTemplate = field.Value.Trim();
             if (string.IsNullOrEmpty(htmlTemplate))
             {
                 return string.Empty;

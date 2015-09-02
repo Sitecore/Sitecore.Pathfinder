@@ -74,7 +74,7 @@ namespace Sitecore.Pathfinder.CodeGen
                     {
                         output.WriteLine("        [NotNull]");
                         output.WriteLine("        [System.CodeDom.Compiler.GeneratedCode(\"Sitecore.Pathfinder\", \"1.0.0.0\")]");
-                        output.WriteLine("        public string " + field.FieldName.Value.GetSafeCodeIdentifier() + " { get { return InnerItem[\"" + field.FieldName.Value + "\"]; } }");
+                        output.WriteLine("        public string " + field.FieldName.GetSafeCodeIdentifier() + " { get { return InnerItem[\"" + field.FieldName + "\"]; } }");
                         output.WriteLine();
                     }
                 }

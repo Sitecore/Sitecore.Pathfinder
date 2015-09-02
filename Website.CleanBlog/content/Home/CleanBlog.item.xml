@@ -1,5 +1,6 @@
 ﻿<Item xmlns="http://www.sitecore.net/pathfinder/item" 
-  Template.Create="/sitecore/templates/CleanBlog/CleanBlog" 
+  Template="/sitecore/templates/CleanBlog/CleanBlog" 
+  Template.CreateFromFields="true" 
   Template.ShortHelp="Clean blog."
   Template.LongHelp="Clean blog from StartBootstrap."
   Template.Icon="Applications/16x16/about.png"

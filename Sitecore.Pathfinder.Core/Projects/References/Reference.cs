@@ -18,10 +18,10 @@ namespace Sitecore.Pathfinder.Projects.References
             TargetQualifiedName = targetQualifiedName;
         }
 
-        public Reference([NotNull] IProjectItem owner, [NotNull] Attribute<string> sourceAttribute, [NotNull] string targetQualifiedName)
+        public Reference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceSourceProperty, [NotNull] string targetQualifiedName)
         {
             Owner = owner;
-            SourceAttribute = sourceAttribute;
+            SourceSourceProperty = sourceSourceProperty;
             TargetQualifiedName = targetQualifiedName;
         }
 
@@ -47,7 +47,7 @@ namespace Sitecore.Pathfinder.Projects.References
 
         public IProjectItem Owner { get; }
 
-        public Attribute<string> SourceAttribute { get; set; }
+        public SourceProperty<string> SourceSourceProperty { get; set; }
 
         public string TargetQualifiedName { get; }
 

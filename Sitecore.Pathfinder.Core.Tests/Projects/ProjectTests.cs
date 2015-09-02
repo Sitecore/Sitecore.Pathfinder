@@ -4,8 +4,6 @@ using System.IO;
 using System.Linq;
 using NUnit.Framework;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Documents;
-using Sitecore.Pathfinder.Documents.Xml;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects.Items;
@@ -66,18 +64,18 @@ namespace Sitecore.Pathfinder.Projects
 
             var item = projectItem as Item;
             Assert.IsNotNull(item);
-            Assert.AreEqual("JsonContentItem", item.ItemName.Value);
+            Assert.AreEqual("JsonContentItem", item.ItemName);
             Assert.AreEqual("/sitecore/content/Home/JsonContentItem", item.ItemIdOrPath);
-            Assert.AreEqual("Sample Item", item.TemplateIdOrPath.Value);
-            Assert.IsNotNull(item.ItemName.Source);
-            Assert.IsInstanceOf<FileNameTextNode>(item.ItemName.Source);
-            Assert.IsNotNull(item.TemplateIdOrPath.Source);
-            Assert.IsInstanceOf<AttributeNameTextNode>(item.TemplateIdOrPath.Source);
-            Assert.AreEqual("Sample Item", item.TemplateIdOrPath.Source.Value);
+            Assert.AreEqual("Sample Item", item.TemplateIdOrPath);
+            Assert.IsNotNull(item.ItemNameProperty.SourceTextNode);
+            Assert.IsInstanceOf<FileNameTextNode>(item.ItemNameProperty.SourceTextNode);
+            Assert.IsNotNull(item.TemplateIdOrPathProperty.SourceTextNode);
+            Assert.IsInstanceOf<AttributeNameTextNode>(item.TemplateIdOrPathProperty.SourceTextNode);
+            Assert.AreEqual("Sample Item", item.TemplateIdOrPathProperty.SourceTextNode.Value);
 
-            var field = item.Fields.FirstOrDefault(f => f.FieldName.Value == "Text");
+            var field = item.Fields.FirstOrDefault(f => f.FieldName == "Text");
             Assert.IsNotNull(field);
-            Assert.AreEqual("Hello World", field.Value.Value);
+            Assert.AreEqual("Hello World", field.Value);
 
             var textDocument = projectItem.Snapshots.First() as ITextSnapshot;
             Assert.IsNotNull(textDocument);
@@ -93,26 +91,28 @@ namespace Sitecore.Pathfinder.Projects
 
             var item = projectItem as Item;
             Assert.IsNotNull(item);
-            Assert.AreEqual("Foo", item.ItemName.Value);
+            Assert.AreEqual("Foo", item.ItemName);
             Assert.AreEqual("/sitecore/content/Home/Foo", item.ItemIdOrPath);
-            Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", item.TemplateIdOrPath.Value);
-            Assert.IsNotNull(item.ItemName.Source);
-            Assert.IsInstanceOf<FileNameTextNode>(item.ItemName.Source);
+            Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", item.TemplateIdOrPath);
+            Assert.IsNotNull(item.ItemNameProperty.SourceTextNode);
+            Assert.IsInstanceOf<FileNameTextNode>(item.ItemNameProperty.SourceTextNode);
 
             var textDocument = projectItem.Snapshots.First() as ITextSnapshot;
             Assert.IsNotNull(textDocument);
 
             var treeNode = textDocument.Root;
             Assert.AreEqual("Item", treeNode.Name);
-            Assert.AreEqual(1, treeNode.Attributes.Count());
+            Assert.AreEqual(2, treeNode.Attributes.Count());
 
             var attr = treeNode.Attributes.First();
-            Assert.AreEqual("Template.Create", attr.Name);
+            Assert.AreEqual("Template", attr.Name);
             Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", attr.Value);
+            attr = treeNode.Attributes.ElementAt(1);
+            Assert.AreEqual("Template.CreateFromFields", attr.Name);
 
-            var field = item.Fields.FirstOrDefault(f => f.FieldName.Value == "Title");
+            var field = item.Fields.FirstOrDefault(f => f.FieldName == "Title");
             Assert.IsNotNull(field);
-            Assert.AreEqual("Hello", field.Value.Value);
+            Assert.AreEqual("Hello", field.Value);
         }
 
         [Test]
@@ -147,12 +147,12 @@ namespace Sitecore.Pathfinder.Projects
 
             var item = projectItem as Item;
             Assert.IsNotNull(item);
-            Assert.AreEqual("Mushrooms", item.ItemName.Value);
+            Assert.AreEqual("Mushrooms", item.ItemName);
             Assert.AreEqual("/sitecore/media library/Mushrooms", item.ItemIdOrPath);
 
-            var field = item.Fields.FirstOrDefault(f => f.FieldName.Value == "Description");
+            var field = item.Fields.FirstOrDefault(f => f.FieldName == "Description");
             Assert.IsNotNull(field);
-            Assert.AreEqual("Mushrooms", field.Value.Value);
+            Assert.AreEqual("Mushrooms", field.Value);
         }
 
         [Test]
@@ -165,21 +165,21 @@ namespace Sitecore.Pathfinder.Projects
 
             var item = projectItem as Item;
             Assert.IsNotNull(item);
-            Assert.AreEqual("Pipper", item.ItemName.Value);
+            Assert.AreEqual("Pipper", item.ItemName);
             Assert.AreEqual("/sitecore/content/Home/Pipper", item.ItemIdOrPath);
-            Assert.AreEqual("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}", item.TemplateIdOrPath.Value);
+            Assert.AreEqual("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}", item.TemplateIdOrPath);
 
             var field = item.Fields.FirstOrDefault();
             Assert.IsNotNull(field);
-            Assert.AreEqual("__Workflow", field.FieldName.Value);
-            Assert.AreEqual("{A5BC37E7-ED96-4C1E-8590-A26E64DB55EA}", field.Value.Value);
+            Assert.AreEqual("__Workflow", field.FieldName);
+            Assert.AreEqual("{A5BC37E7-ED96-4C1E-8590-A26E64DB55EA}", field.Value);
 
             field = item.Fields.ElementAt(1);
             Assert.IsNotNull(field);
-            Assert.AreEqual("Title", field.FieldName.Value);
-            Assert.AreEqual("Pip 1", field.Value.Value);
-            Assert.AreEqual("en", field.Language.Value);
-            Assert.AreEqual(1, field.Version.Value);
+            Assert.AreEqual("Title", field.FieldName);
+            Assert.AreEqual("Pip 1", field.Value);
+            Assert.AreEqual("en", field.Language);
+            Assert.AreEqual(1, field.Version);
         }
 
         [Test]
@@ -192,20 +192,20 @@ namespace Sitecore.Pathfinder.Projects
 
             var item = projectItem as Item;
             Assert.IsNotNull(item);
-            Assert.AreEqual("XmlContentItem", item.ItemName.Value);
+            Assert.AreEqual("XmlContentItem", item.ItemName);
             Assert.AreEqual("/sitecore/content/XmlContentItem", item.ItemIdOrPath);
-            Assert.AreEqual("Sample-Item", item.TemplateIdOrPath.Value);
-            Assert.IsNotNull(item.ItemName.Source);
-            Assert.IsInstanceOf<FileNameTextNode>(item.ItemName.Source);
-            Assert.IsInstanceOf<AttributeNameTextNode>(item.TemplateIdOrPath.Source);
-            Assert.AreEqual("Sample-Item", item.TemplateIdOrPath.Source?.Value);
+            Assert.AreEqual("Sample-Item", item.TemplateIdOrPath);
+            Assert.IsNotNull(item.ItemNameProperty.SourceTextNode);
+            Assert.IsInstanceOf<FileNameTextNode>(item.ItemNameProperty.SourceTextNode);
+            Assert.IsInstanceOf<AttributeNameTextNode>(item.TemplateIdOrPathProperty.SourceTextNode);
+            Assert.AreEqual("Sample-Item", item.TemplateIdOrPathProperty.SourceTextNode?.Value);
 
-            var field = item.Fields.FirstOrDefault(f => f.FieldName.Value == "Text");
+            var field = item.Fields.FirstOrDefault(f => f.FieldName == "Text");
             Assert.IsNotNull(field);
-            Assert.AreEqual("Hello World", field.Value.Value);
-            Assert.IsInstanceOf<XmlTextNode>(field.Value.Source);
-            Assert.AreEqual("Hello World", field.Value.Source?.Value);
-            Assert.AreEqual("Text", field.Value.Source?.Name);
+            Assert.AreEqual("Hello World", field.Value);
+            Assert.IsInstanceOf<XmlTextNode>(field.ValueProperty.SourceTextNode);
+            Assert.AreEqual("Hello World", field.ValueProperty.SourceTextNode?.Value);
+            Assert.AreEqual("Text", field.ValueProperty.SourceTextNode?.Name);
 
             var textDocument = projectItem.Snapshots.First() as ITextSnapshot;
             Assert.IsNotNull(textDocument);
@@ -225,28 +225,28 @@ namespace Sitecore.Pathfinder.Projects
 
             var item = projectItem as Item;
             Assert.IsNotNull(item);
-            Assert.AreEqual("HelloWorld", item.ItemName.Value);
+            Assert.AreEqual("HelloWorld", item.ItemName);
             Assert.AreEqual("/sitecore/content/Home/HelloWorld", item.ItemIdOrPath);
-            Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", item.TemplateIdOrPath.Value);
-            Assert.IsNotNull(item.ItemName.Source);
-            Assert.IsInstanceOf<FileNameTextNode>(item.ItemName.Source);
-            Assert.IsInstanceOf<XmlTextNode>(item.TemplateIdOrPath.Source);
-            Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", item.TemplateIdOrPath.Source?.Value);
-            Assert.AreEqual("Template.Create", item.TemplateIdOrPath.Source?.Name);
+            Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", item.TemplateIdOrPath);
+            Assert.IsNotNull(item.ItemNameProperty.SourceTextNode);
+            Assert.IsInstanceOf<FileNameTextNode>(item.ItemNameProperty.SourceTextNode);
+            Assert.IsInstanceOf<XmlTextNode>(item.TemplateIdOrPathProperty.SourceTextNode);
+            Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", item.TemplateIdOrPathProperty.SourceTextNode?.Value);
+            Assert.AreEqual("Template", item.TemplateIdOrPathProperty.SourceTextNode?.Name);
 
-            var field = item.Fields.FirstOrDefault(f => f.FieldName.Value == "Title");
+            var field = item.Fields.FirstOrDefault(f => f.FieldName == "Title");
             Assert.IsNotNull(field);
-            Assert.AreEqual("Hello", field.Value.Value);
+            Assert.AreEqual("Hello", field.Value);
 
             var textDocument = projectItem.Snapshots.First() as ITextSnapshot;
             Assert.IsNotNull(textDocument);
 
             var treeNode = textDocument.Root;
             Assert.AreEqual("Item", treeNode.Name);
-            Assert.AreEqual(1, treeNode.Attributes.Count());
+            Assert.AreEqual(2, treeNode.Attributes.Count());
 
             var attr = treeNode.Attributes.First();
-            Assert.AreEqual("Template.Create", attr.Name);
+            Assert.AreEqual("Template", attr.Name);
             Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", attr.Value);
         }
     }

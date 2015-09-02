@@ -22,17 +22,18 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
             }
         }
 
-        protected virtual void CheckGoodName([NotNull] ICheckerContext context, [NotNull] Attribute<string> itemName)
+        protected virtual void CheckGoodName([NotNull] ICheckerContext context, [NotNull] SourceProperty<string> itemName)
         {
-            if (itemName.Value.IndexOf(' ') >= 0 && itemName != "__Standard Values")
+            var value = itemName.GetValue();
+            if (value.IndexOf(' ') >= 0 && value != "__Standard Values")
             {
-                context.Trace.TraceWarning("Name should not contain spaces", itemName.Source ?? TextNode.Empty, itemName);
+                context.Trace.TraceWarning("Name should not contain spaces", itemName.SourceTextNode ?? TextNode.Empty, itemName);
             }
         }
 
         protected virtual void CheckTemplate([NotNull] ICheckerContext context, [NotNull] Item item)
         {
-            CheckGoodName(context, item.ItemName);
+            CheckGoodName(context, item.ItemNameProperty);
             CheckTemplateFields(context, item);
         }
 
@@ -41,6 +42,11 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
             var template = item.Template;
             if (template == Template.Empty)
             {
+                if (item.Project.FindQualifiedItem(item.TemplateIdOrPath) == null)
+                {
+                    context.Trace.TraceWarning("Item does not have a template", item.ItemNameProperty.SourceTextNode ?? TextNode.Empty);
+                }
+
                 return;
             }
 
@@ -52,10 +58,10 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
                     continue;
                 }
 
-                var templateField = template.Sections.SelectMany(i => i.Fields).FirstOrDefault(f => string.Compare(f.FieldName, field.FieldName, StringComparison.OrdinalIgnoreCase) == 0);
+                var templateField = template.Sections.SelectMany(i => i.Fields).FirstOrDefault(f => string.Compare(f.FieldNameProperty, field.FieldName, StringComparison.OrdinalIgnoreCase) == 0);
                 if (templateField == null)
                 {
-                    context.Trace.TraceWarning("Field is not defined in the template", field.FieldName.Source ?? TextNode.Empty, field.FieldName);
+                    context.Trace.TraceWarning("Field is not defined in the template", field.FieldNameProperty.SourceTextNode ?? TextNode.Empty, field.FieldName);
                 }
             }
         }

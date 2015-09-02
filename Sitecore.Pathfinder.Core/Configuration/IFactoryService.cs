@@ -24,7 +24,7 @@ namespace Sitecore.Pathfinder.Configuration
         IProjectItem ContentFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath);
 
         [NotNull]
-        DeviceReference DeviceReference([NotNull] IProjectItem projectItem, [NotNull] Attribute<string> deviceNameAttribute, [NotNull] string targetQualifiedName);
+        DeviceReference DeviceReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> deviceNameSourceProperty, [NotNull] string targetQualifiedName);
 
         [NotNull]
         Diagnostic Diagnostic([NotNull] string fileName, TextPosition position, Severity severity, [NotNull] string text);
@@ -39,19 +39,19 @@ namespace Sitecore.Pathfinder.Configuration
         Field Field([NotNull] Item item, [NotNull] string fieldName, [NotNull] string fieldValue);
 
         [NotNull]
-        FileReference FileReference([NotNull] IProjectItem owner, [NotNull] Attribute<string> sourceAttribute, [NotNull] string targetQualifiedName);
+        FileReference FileReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceSourceProperty, [NotNull] string targetQualifiedName);
 
         [NotNull]
-        Item Item([NotNull] IProject project, [NotNull] string itemPath, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath);
+        Item Item([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath);
 
         [NotNull]
         ItemParseContext ItemParseContext([NotNull] IParseContext context, [NotNull] ItemParser itemParser, [NotNull] string parentItemPath);
 
         [NotNull]
-        LayoutReference LayoutReference([NotNull] IProjectItem projectItem, [NotNull] Attribute<string> layoutAttribute, [NotNull] string targetQualifiedName);
+        LayoutReference LayoutReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> layoutSourceProperty, [NotNull] string targetQualifiedName);
 
         [NotNull]
-        LayoutRenderingReference LayoutRenderingReference([NotNull] IProjectItem projectItem, [NotNull] Attribute<string> renderingTextNode, [NotNull] string targetQualifiedName);
+        LayoutRenderingReference LayoutRenderingReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> renderingTextNode, [NotNull] string targetQualifiedName);
 
         [NotNull]
         MediaFile MediaFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath, [NotNull] Item mediaItem);
@@ -63,7 +63,7 @@ namespace Sitecore.Pathfinder.Configuration
         ProjectOptions ProjectOptions([NotNull] string projectDirectory, [NotNull] string databaseName);
 
         [NotNull]
-        IReference Reference([NotNull] IProjectItem projectItem, [NotNull] Attribute<string> sourceAttribute, [NotNull] string targetQualifiedName);
+        IReference Reference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> sourceSourceProperty, [NotNull] string targetQualifiedName);
 
         [NotNull]
         Rendering Rendering([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath, [NotNull] Item item);

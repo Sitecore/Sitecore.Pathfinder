@@ -14,42 +14,83 @@ namespace Sitecore.Pathfinder.Projects.Templates
         }
 
         [NotNull]
-        public Attribute<string> FieldName { get; } = new Attribute<string>("Name", string.Empty);
+        public string FieldName
+        {
+            get { return FieldNameProperty.GetValue(); }
+            set { FieldNameProperty.SetValue(value); }
+        }
 
         [NotNull]
-        public Attribute<string> LongHelp { get; } = new Attribute<string>("LongHelp", string.Empty);
+        public SourceProperty<string> FieldNameProperty { get; } = new SourceProperty<string>("Name", string.Empty);
+
+        [NotNull]
+        public string LongHelp
+        {
+            get { return LongHelpProperty.GetValue(); }
+            set { LongHelpProperty.SetValue(value); }
+        }
+
+        [NotNull]
+        public SourceProperty<string> LongHelpProperty { get; } = new SourceProperty<string>("LongHelp", string.Empty);
 
         // todo: make shared and unversioned into attributes
         public bool Shared { get; set; }
 
         [NotNull]
-        public Attribute<string> ShortHelp { get; } = new Attribute<string>("ShortHelp", string.Empty);
+        public string ShortHelp
+        {
+            get { return ShortHelpProperty.GetValue(); }
+            set { ShortHelpProperty.SetValue(value); }
+        }
 
         [NotNull]
-        public Attribute<int> SortOrder { get; } = new Attribute<int>("SortOrder", 0);
+        public SourceProperty<string> ShortHelpProperty { get; } = new SourceProperty<string>("ShortHelp", string.Empty);
+
+        public int SortOrder
+        {
+            get { return SortOrderProperty.GetValue(); }
+            set { SortOrderProperty.SetValue(value); }
+        }
 
         [NotNull]
-        public Attribute<string> Source { get; } = new Attribute<string>("Source", string.Empty);
+        public SourceProperty<int> SortOrderProperty { get; } = new SourceProperty<int>("SortOrder", 0);
+
+        [NotNull]
+        public string Source
+        {
+            get { return SourceProperty.GetValue(); }
+            set { SourceProperty.SetValue(value); }
+        }
+
+        [NotNull]
+        public SourceProperty<string> SourceProperty { get; } = new SourceProperty<string>("Source", string.Empty);
 
         [NotNull]
         public Template Template { get; }
 
         [NotNull]
-        public Attribute<string> Type { get; } = new Attribute<string>("Type", string.Empty);
+        public string Type
+        {
+            get { return TypeProperty.GetValue(); }
+            set { TypeProperty.SetValue(value); }
+        }
+
+        [NotNull]
+        public SourceProperty<string> TypeProperty { get; } = new SourceProperty<string>("Type", string.Empty);
 
         public bool Unversioned { get; set; }
 
         public void Merge([NotNull] TemplateField newField, bool overwrite)
         {
             // todo: consider making a strict and loose mode
-            if (!string.IsNullOrEmpty(newField.Type.Value))
+            if (!string.IsNullOrEmpty(newField.Type))
             {
-                Type.Merge(newField.Type);
+                TypeProperty.SetValue(newField.TypeProperty);
             }
 
-            if (!string.IsNullOrEmpty(newField.Source.Value))
+            if (!string.IsNullOrEmpty(newField.Source))
             {
-                Source.Merge(newField.Source);
+                SourceProperty.SetValue(newField.SourceProperty);
             }
 
             if (newField.Shared)
@@ -62,19 +103,19 @@ namespace Sitecore.Pathfinder.Projects.Templates
                 Unversioned = true;
             }
 
-            if (!string.IsNullOrEmpty(newField.ShortHelp.Value))
+            if (!string.IsNullOrEmpty(newField.ShortHelp))
             {
-                ShortHelp.Merge(newField.ShortHelp);
+                ShortHelpProperty.SetValue(newField.ShortHelpProperty);
             }
 
-            if (!string.IsNullOrEmpty(newField.LongHelp.Value))
+            if (!string.IsNullOrEmpty(newField.LongHelp))
             {
-                LongHelp.Merge(newField.LongHelp);
+                LongHelpProperty.SetValue(newField.LongHelpProperty);
             }
 
-            if (newField.SortOrder.Value != 0)
+            if (newField.SortOrder != 0)
             {
-                SortOrder.Merge(newField.SortOrder);
+                SortOrderProperty.SetValue(newField.SortOrderProperty);
             }
         }
     }

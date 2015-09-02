@@ -33,30 +33,30 @@ namespace Sitecore.Pathfinder.Building.Testing.UnitTests.Pipelines
                 pipeline.Stream.WriteLine("            Assert.IsNotNull(item);");
                 pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + item.ItemName + "\", item.Name);");
 
-                if (!string.IsNullOrEmpty(item.TemplateIdOrPath.Value))
+                if (!string.IsNullOrEmpty(item.TemplateIdOrPath))
                 {
                     Guid guid;
-                    if (Guid.TryParse(item.TemplateIdOrPath.Value, out guid))
+                    if (Guid.TryParse(item.TemplateIdOrPath, out guid))
                     {
-                        pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + item.TemplateIdOrPath.Value + "\", item.TemplateID.ToString());");
+                        pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + item.TemplateIdOrPath + "\", item.TemplateID.ToString());");
                     }
                     else
                     {
-                        pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + item.TemplateIdOrPath.Value + "\", database.GetItem(item.TemplateID).Paths.Path);");
+                        pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + item.TemplateIdOrPath + "\", database.GetItem(item.TemplateID).Paths.Path);");
                     }
                 }
 
-                if (!string.IsNullOrEmpty(item.Icon.Value))
+                if (!string.IsNullOrEmpty(item.Icon))
                 {
-                    pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + item.Icon.Value + "\", item.Appearance.Icon);");
+                    pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + item.Icon + "\", item.Appearance.Icon);");
                 }
 
-                var sharedFields = item.Fields.Where(f => f.IsTestable && string.IsNullOrEmpty(f.Language.Value) && f.Version.Value == 0).ToList();
-                var versionedFields = item.Fields.Where(f => f.IsTestable && (!string.IsNullOrEmpty(f.Language.Value) || f.Version.Value != 0)).ToList();
+                var sharedFields = item.Fields.Where(f => f.IsTestable && string.IsNullOrEmpty(f.Language) && f.Version == 0).ToList();
+                var versionedFields = item.Fields.Where(f => f.IsTestable && (!string.IsNullOrEmpty(f.Language) || f.Version != 0)).ToList();
 
                 foreach (var field in sharedFields)
                 {
-                    pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + field.Value.Value + "\", item[\"" + field.FieldName.Value + "\"]);");
+                    pipeline.Stream.WriteLine("            Assert.AreEqual(\"" + field.Value + "\", item[\"" + field.FieldName + "\"]);");
                 }
 
                 if (versionedFields.Any())
@@ -65,22 +65,22 @@ namespace Sitecore.Pathfinder.Building.Testing.UnitTests.Pipelines
 
                     foreach (var field in versionedFields)
                     {
-                        pipeline.Stream.Write("            Assert.AreEqual(\"" + field.Value.Value + "\", versions.First(v => ");
+                        pipeline.Stream.Write("            Assert.AreEqual(\"" + field.Value + "\", versions.First(v => ");
 
-                        if (!string.IsNullOrEmpty(field.Language.Value) && field.Version.Value != 0)
+                        if (!string.IsNullOrEmpty(field.Language) && field.Version != 0)
                         {
-                            pipeline.Stream.Write("v.Language == \"" + field.Language.Value + "\" && v.Version == " + field.Version.Value);
+                            pipeline.Stream.Write("v.Language == \"" + field.Language + "\" && v.Version == " + field.Version);
                         }
-                        else if (!string.IsNullOrEmpty(field.Language.Value))
+                        else if (!string.IsNullOrEmpty(field.Language))
                         {
-                            pipeline.Stream.Write("v.Language == \"" + field.Language.Value + "\"");
+                            pipeline.Stream.Write("v.Language == \"" + field.Language + "\"");
                         }
-                        else if (field.Version.Value != 0)
+                        else if (field.Version != 0)
                         {
-                            pipeline.Stream.Write("v.Version == " + field.Version.Value);
+                            pipeline.Stream.Write("v.Version == " + field.Version);
                         }
 
-                        pipeline.Stream.WriteLine(")[\"" + field.FieldName.Value + "\"]);");
+                        pipeline.Stream.WriteLine(")[\"" + field.FieldName + "\"]);");
                     }
                 }
 

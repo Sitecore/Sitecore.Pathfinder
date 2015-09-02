@@ -161,7 +161,7 @@ namespace Sitecore.Pathfinder.Builders.Items
 
                 foreach (var field in Fields.Where(i => string.IsNullOrEmpty(i.Language) && i.Version == 0))
                 {
-                    SetFieldValue(item, field.FieldName.Value, field.DatabaseValue);
+                    SetFieldValue(item, field.FieldName, field.DatabaseValue);
                 }
             }
 
@@ -179,7 +179,7 @@ namespace Sitecore.Pathfinder.Builders.Items
                     if (versionedItem == null)
                     {
                         // todo: validate this before updating the item
-                        context.Trace.TraceError(Texts.Item_not_found, field.FieldName.Source ?? TextNode.Empty, $"language: {field.Language}, version; {field.Version}");
+                        context.Trace.TraceError(Texts.Item_not_found, field.FieldNameProperty.SourceTextNode ?? TextNode.Empty, $"language: {field.Language}, version; {field.Version}");
                         continue;
                     }
 
@@ -188,7 +188,7 @@ namespace Sitecore.Pathfinder.Builders.Items
                     versionedItem.Fields.ReadAll();
                 }
 
-                SetFieldValue(versionedItem, field.FieldName.Value, field.DatabaseValue);
+                SetFieldValue(versionedItem, field.FieldName, field.DatabaseValue);
             }
 
             foreach (var i in versionedItems)

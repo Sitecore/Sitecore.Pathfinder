@@ -40,9 +40,9 @@ namespace Sitecore.Pathfinder.Configuration
             return new ContentFile(project, snapshot, filePath);
         }
 
-        public virtual DeviceReference DeviceReference(IProjectItem projectItem, Attribute<string> deviceNameAttribute, string targetQualifiedName)
+        public virtual DeviceReference DeviceReference(IProjectItem projectItem, SourceProperty<string> deviceNameSourceProperty, string targetQualifiedName)
         {
-            return new DeviceReference(projectItem, deviceNameAttribute, targetQualifiedName);
+            return new DeviceReference(projectItem, deviceNameSourceProperty, targetQualifiedName);
         }
 
         public virtual Diagnostic Diagnostic(string fileName, TextPosition position, Severity severity, string text)
@@ -64,19 +64,19 @@ namespace Sitecore.Pathfinder.Configuration
         public Field Field(Item item, string fieldName, string fieldValue)
         {
             var field = new Field(item);
-            field.FieldName.SetValue(fieldName);
-            field.Value.SetValue(fieldValue);
+            field.FieldNameProperty.SetValue(fieldName);
+            field.ValueProperty.SetValue(fieldValue);
             return field;
         }
 
-        public virtual FileReference FileReference(IProjectItem owner, Attribute<string> sourceAttribute, string targetQualifiedName)
+        public virtual FileReference FileReference(IProjectItem owner, SourceProperty<string> sourceSourceProperty, string targetQualifiedName)
         {
-            return new FileReference(owner, sourceAttribute, targetQualifiedName);
+            return new FileReference(owner, sourceSourceProperty, targetQualifiedName);
         }
 
-        public virtual Item Item(IProject project, string itemPath, ITextNode textNode, string databaseName, string itemName, string itemIdOrPath, string templateIdOrPath)
+        public virtual Item Item(IProject project, string projectUniqueId, ITextNode textNode, string databaseName, string itemName, string itemIdOrPath, string templateIdOrPath)
         {
-            return new Item(project, itemPath, textNode, databaseName, itemName, itemIdOrPath, templateIdOrPath);
+            return new Item(project, projectUniqueId, textNode, databaseName, itemName, itemIdOrPath, templateIdOrPath);
         }
 
         public virtual ItemParseContext ItemParseContext(IParseContext context, ItemParser itemParser, string parentItemPath)
@@ -84,12 +84,12 @@ namespace Sitecore.Pathfinder.Configuration
             return new ItemParseContext(context, itemParser, parentItemPath);
         }
 
-        public virtual LayoutReference LayoutReference(IProjectItem projectItem, Attribute<string> layoutAttribute, string targetQualifiedName)
+        public virtual LayoutReference LayoutReference(IProjectItem projectItem, SourceProperty<string> layoutSourceProperty, string targetQualifiedName)
         {
-            return new LayoutReference(projectItem, layoutAttribute, targetQualifiedName);
+            return new LayoutReference(projectItem, layoutSourceProperty, targetQualifiedName);
         }
 
-        public virtual LayoutRenderingReference LayoutRenderingReference(IProjectItem projectItem, Attribute<string> renderingTextNode, string targetQualifiedName)
+        public virtual LayoutRenderingReference LayoutRenderingReference(IProjectItem projectItem, SourceProperty<string> renderingTextNode, string targetQualifiedName)
         {
             return new LayoutRenderingReference(projectItem, renderingTextNode, targetQualifiedName);
         }
@@ -109,9 +109,9 @@ namespace Sitecore.Pathfinder.Configuration
             return new ProjectOptions(projectDirectory, databaseName);
         }
 
-        public virtual IReference Reference(IProjectItem projectItem, Attribute<string> sourceAttribute, string targetQualifiedName)
+        public virtual IReference Reference(IProjectItem projectItem, SourceProperty<string> sourceSourceProperty, string targetQualifiedName)
         {
-            return new Reference(projectItem, sourceAttribute, targetQualifiedName);
+            return new Reference(projectItem, sourceSourceProperty, targetQualifiedName);
         }
 
         public virtual Rendering Rendering(IProject project, ISnapshot snapshot, string filePath, Item item)

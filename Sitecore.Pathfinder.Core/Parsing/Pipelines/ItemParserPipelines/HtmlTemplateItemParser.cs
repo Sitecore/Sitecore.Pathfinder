@@ -1,8 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using Sitecore.Pathfinder.Extensibility.Pipelines;
-using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.Projects.References;
 
 namespace Sitecore.Pathfinder.Parsing.Pipelines.ItemParserPipelines
 {
@@ -14,9 +12,9 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.ItemParserPipelines
 
         protected override void Process(ItemParserPipeline pipeline)
         {
-            pipeline.Item.LayoutHtmlFile.Parse(pipeline.TextNode);
+            pipeline.Item.LayoutHtmlFileProperty.Parse(pipeline.TextNode);
 
-            var fieldValue = pipeline.Item.LayoutHtmlFile.Value;
+            var fieldValue = pipeline.Item.LayoutHtmlFile;
             if (string.IsNullOrEmpty(fieldValue))
             {
                 return;
@@ -30,10 +28,10 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.ItemParserPipelines
             */
 
             var field = pipeline.Context.ParseContext.Factory.Field(pipeline.Item, "__Renderings", fieldValue);
-            field.ValueHint.SetValue("HtmlTemplate");
+            field.ValueHintProperty.SetValue("HtmlTemplate");
             pipeline.Item.Fields.Add(field);
 
-            pipeline.Item.References.Add(pipeline.Context.ParseContext.Factory.FileReference(pipeline.Item, pipeline.Item.LayoutHtmlFile, fieldValue));
+            pipeline.Item.References.Add(pipeline.Context.ParseContext.Factory.FileReference(pipeline.Item, pipeline.Item.LayoutHtmlFileProperty, fieldValue));
         }
     }
 }
