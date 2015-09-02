@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
@@ -12,13 +13,17 @@ namespace Sitecore.Pathfinder.Projects.Items
 {
     // todo: consider basing this on ProjectElement
     [DebuggerDisplay("{GetType().Name,nq}: {FieldName,nq} = {Value}")]
-    public class Field
+    public class Field : IHasSourceTextNodes
     {
         private bool _isValid;
 
-        public Field([NotNull] Item item)
+        public Field([NotNull] Item item, [NotNull] ITextNode textNode)
         {
             Item = item;
+
+            SourceTextNodes.Add(textNode);
+
+            ValueProperty.PropertyChanged += HandlePropertyChanged;
         }
 
         [NotNull]
@@ -69,6 +74,8 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public string ResolvedValue { get; private set; }
 
+        public ICollection<ITextNode> SourceTextNodes { get; } = new List<ITextNode>();
+
         [NotNull]
         public TemplateField TemplateField => Item.Template.Sections.SelectMany(s => s.Fields).FirstOrDefault(f => string.Compare(f.FieldName, FieldName, StringComparison.OrdinalIgnoreCase) == 0) ?? TemplateField.Empty;
 
@@ -105,6 +112,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         {
             IsResolved = false;
             IsValid = false;
+            Diagnostics.Clear();
         }
 
         public void Resolve()
@@ -116,6 +124,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
             IsResolved = true;
             ResolvedValue = Value;
+            Diagnostics.Clear();
 
             foreach (var fieldResolver in Item.Project.FieldResolvers.OrderBy(r => r.Priority))
             {
@@ -131,7 +140,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         public virtual void WriteDiagnostic(Severity severity, [NotNull] string text, [NotNull] string details = "")
         {
-            var source = FieldNameProperty.SourceTextNode ?? TextNode.Empty;
+            var source = TraceHelper.FirstTextNode(FieldNameProperty);
             WriteDiagnostic(severity, text, source, details.Trim());
         }
 
@@ -145,6 +154,14 @@ namespace Sitecore.Pathfinder.Projects.Items
             }
 
             Diagnostics.Add(new Diagnostic(string.Empty, textNode.Position, severity, text));
+        }
+
+        private void HandlePropertyChanged([NotNull] object sender, [NotNull] PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Value")
+            {
+                Invalidate();
+            }
         }
     }
 }

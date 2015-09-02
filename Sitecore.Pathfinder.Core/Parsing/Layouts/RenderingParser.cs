@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Parsing.Layouts
             item.ItemNameProperty.AddSourceTextNode(new FileNameTextNode(context.ItemName, context.Snapshot));
             item.OverwriteWhenMerging = true;
 
-            var field = context.Factory.Field(item, "Path", path);
+            var field = context.Factory.Field(item, TextNode.Empty, "Path", path);
             item.Fields.Add(field);
 
             // add file name as reference
@@ -68,7 +68,7 @@ namespace Sitecore.Pathfinder.Parsing.Layouts
             var contents = context.Snapshot.SourceFile.ReadAsText();
             var placeHolders = GetPlaceholders(contents);
 
-            var field = context.Factory.Field(item, "Place Holders", string.Join(",", placeHolders));
+            var field = context.Factory.Field(item, TextNode.Empty, "Place Holders", string.Join(",", placeHolders));
             item.Fields.Add(field);
         }
     }

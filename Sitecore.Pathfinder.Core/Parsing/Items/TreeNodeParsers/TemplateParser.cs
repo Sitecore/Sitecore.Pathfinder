@@ -53,12 +53,12 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             }
 
             // setup HtmlTemplate
-            var htmlTemplate = textNode.GetAttributeTextNode("Layout.HtmlFile");
-            if (htmlTemplate != null && !string.IsNullOrEmpty(htmlTemplate.Value))
+            var htmlTemplateTextNode = textNode.GetAttributeTextNode("Layout.HtmlFile");
+            if (htmlTemplateTextNode != null && !string.IsNullOrEmpty(htmlTemplateTextNode.Value))
             {
-                var field = context.ParseContext.Factory.Field(template.StandardValuesItem);
+                var field = context.ParseContext.Factory.Field(template.StandardValuesItem, htmlTemplateTextNode);
                 field.FieldNameProperty.SetValue("__Renderings");
-                field.ValueProperty.SetValue(htmlTemplate.Value);
+                field.ValueProperty.SetValue(htmlTemplateTextNode.Value);
                 field.ValueHintProperty.SetValue("HtmlTemplate");
                 template.StandardValuesItem.Fields.Add(field);
             }
@@ -67,52 +67,52 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             context.ParseContext.Project.AddOrMerge(context.ParseContext, standardValuesItem);
         }
 
-        protected virtual void ParseField([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] TemplateSection templateSection, [NotNull] ITextNode fieldTextNode, ref int nextSortOrder)
+        protected virtual void ParseField([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] TemplateSection templateSection, [NotNull] ITextNode templateFieldTextNode, ref int nextSortOrder)
         {
-            var fieldName = fieldTextNode.GetAttributeTextNode("Name");
+            var fieldName = templateFieldTextNode.GetAttributeTextNode("Name");
             if (fieldName == null)
             {
-                context.ParseContext.Trace.TraceError(Texts._Field__element_must_have_a__Name__attribute, fieldTextNode.Snapshot.SourceFile.FileName, fieldTextNode.Position);
+                context.ParseContext.Trace.TraceError(Texts._Field__element_must_have_a__Name__attribute, templateFieldTextNode.Snapshot.SourceFile.FileName, templateFieldTextNode.Position);
                 return;
             }
 
             var templateField = templateSection.Fields.FirstOrDefault(f => string.Compare(f.FieldName, fieldName.Value, StringComparison.OrdinalIgnoreCase) == 0);
             if (templateField == null)
             {
-                templateField = context.ParseContext.Factory.TemplateField(template);
+                templateField = context.ParseContext.Factory.TemplateField(template, templateFieldTextNode);
                 templateSection.Fields.Add(templateField);
                 templateField.FieldNameProperty.SetValue(fieldName);
             }
 
-            templateField.TypeProperty.Parse(fieldTextNode, "Single-Line Text");
-            templateField.Shared = string.Compare(fieldTextNode.GetAttributeValue("Sharing"), "Shared", StringComparison.OrdinalIgnoreCase) == 0;
-            templateField.Unversioned = string.Compare(fieldTextNode.GetAttributeValue("Sharing"), "Unversioned", StringComparison.OrdinalIgnoreCase) == 0;
-            templateField.SourceProperty.Parse(fieldTextNode);
-            templateField.ShortHelpProperty.Parse(fieldTextNode);
-            templateField.LongHelpProperty.Parse(fieldTextNode);
-            templateField.SortOrderProperty.Parse(fieldTextNode, nextSortOrder);
+            templateField.TypeProperty.Parse(templateFieldTextNode, "Single-Line Text");
+            templateField.Shared = string.Compare(templateFieldTextNode.GetAttributeValue("Sharing"), "Shared", StringComparison.OrdinalIgnoreCase) == 0;
+            templateField.Unversioned = string.Compare(templateFieldTextNode.GetAttributeValue("Sharing"), "Unversioned", StringComparison.OrdinalIgnoreCase) == 0;
+            templateField.SourceProperty.Parse(templateFieldTextNode);
+            templateField.ShortHelpProperty.Parse(templateFieldTextNode);
+            templateField.LongHelpProperty.Parse(templateFieldTextNode);
+            templateField.SortOrderProperty.Parse(templateFieldTextNode, nextSortOrder);
 
             nextSortOrder = templateField.SortOrder + 100;
 
-            var standardValue = fieldTextNode.GetAttributeTextNode("StandardValue");
-            if (standardValue != null && !string.IsNullOrEmpty(standardValue.Value))
+            var standardValueTextNode = templateFieldTextNode.GetAttributeTextNode("StandardValue");
+            if (standardValueTextNode != null && !string.IsNullOrEmpty(standardValueTextNode.Value))
             {
                 if (template.StandardValuesItem == null)
                 {
-                    context.ParseContext.Trace.TraceError(Texts.Template_does_not_a_standard_values_item, standardValue);
+                    context.ParseContext.Trace.TraceError(Texts.Template_does_not_a_standard_values_item, standardValueTextNode);
                 }
                 else
                 {
                     // todo: support language and version
-                    var field = context.ParseContext.Factory.Field(template.StandardValuesItem);
+                    var field = context.ParseContext.Factory.Field(template.StandardValuesItem, standardValueTextNode);
                     field.FieldNameProperty.SetValue(fieldName);
-                    field.ValueProperty.SetValue(standardValue);
+                    field.ValueProperty.SetValue(standardValueTextNode);
 
                     template.StandardValuesItem.Fields.Add(field);
                 }
             }
 
-            template.References.AddRange(ParseReferences(context, template, fieldTextNode, templateField.Source));
+            template.References.AddRange(ParseReferences(context, template, templateFieldTextNode, templateField.Source));
         }
 
         protected virtual void ParseSection([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] ITextNode templateSectionTextNode)

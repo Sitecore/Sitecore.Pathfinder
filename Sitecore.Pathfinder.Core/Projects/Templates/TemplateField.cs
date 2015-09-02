@@ -1,16 +1,19 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects.Templates
 {
-    public class TemplateField
+    public class TemplateField : IHasSourceTextNodes
     {
-        public static readonly TemplateField Empty = new TemplateField(Template.Empty);
+        public static readonly TemplateField Empty = new TemplateField(Template.Empty, TextNode.Empty);
 
-        public TemplateField([NotNull] Template template)
+        public TemplateField([NotNull] Template template, [NotNull] ITextNode textNode)
         {
             Template = template;
+            SourceTextNodes.Add(textNode);
         }
 
         [NotNull]
@@ -64,6 +67,8 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
         [NotNull]
         public SourceProperty<string> SourceProperty { get; } = new SourceProperty<string>("Source", string.Empty);
+
+        public ICollection<ITextNode> SourceTextNodes { get; } = new List<ITextNode>();
 
         [NotNull]
         public Template Template { get; }

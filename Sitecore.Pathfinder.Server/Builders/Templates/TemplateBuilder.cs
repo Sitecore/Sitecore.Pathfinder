@@ -396,7 +396,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
                 item = ItemManager.AddFromTemplate(templateFieldBuilder.TemplateField.FieldName, new TemplateID(TemplateIDs.TemplateField), templateSectionBuilder.Item);
                 if (item == null)
                 {
-                    throw new EmitException(Texts.Could_not_create_template_field, templateFieldBuilder.TemplateField.FieldNameProperty.SourceTextNode ?? TextNode.Empty, templateFieldBuilder.TemplateField.FieldName);
+                    throw new EmitException(Texts.Could_not_create_template_field, TraceHelper.FirstTextNode(templateFieldBuilder.TemplateField.FieldNameProperty), templateFieldBuilder.TemplateField.FieldName);
                 }
 
                 templateFieldBuilder.Item = item;
@@ -463,7 +463,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
                 templateSectionBuilder.Item = ItemManager.AddFromTemplate(templateSectionBuilder.TemplateSection.SectionName, new TemplateID(TemplateIDs.TemplateSection), Item);
                 if (templateSectionBuilder.Item == null)
                 {
-                    throw new EmitException(Texts.Could_not_create_section_item, Template.ItemNameProperty.SourceTextNode ?? TextNode.Empty);
+                    throw new EmitException(Texts.Could_not_create_section_item, TraceHelper.FirstTextNode(Template.ItemNameProperty));
                 }
             }
             else

@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                 {
                     if (!reference.IsValid)
                     {
-                        context.Trace.TraceWarning("Reference not found", projectItem.Snapshots.First().SourceFile.FileName, reference.SourceSourceProperty?.SourceTextNode?.Position ?? TextPosition.Empty, reference.TargetQualifiedName);
+                        context.Trace.TraceWarning("Reference not found", projectItem.Snapshots.First().SourceFile.FileName, reference.SourceSourceProperty?.SourceTextNodes.First().Position ?? TextPosition.Empty, reference.TargetQualifiedName);
                     }
                 }
             }

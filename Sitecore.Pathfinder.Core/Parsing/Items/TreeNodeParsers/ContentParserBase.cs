@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             item.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
             item.TemplateIdOrPathProperty.AddSourceTextNode(new AttributeNameTextNode(textNode));
 
-            item.References.AddRange(ParseReferences(context, item, textNode, item.TemplateIdOrPathProperty));
+            item.References.AddRange(ParseReferences(context, item, textNode, item.TemplateIdOrPath));
 
             ParseAttributes(context, item, textNode);
 
@@ -51,13 +51,13 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             }
 
             // todo: support language and version
-            field = context.ParseContext.Factory.Field(item);
+            field = context.ParseContext.Factory.Field(item, fieldTextNode);
             field.FieldNameProperty.SetValue(new AttributeNameTextNode(fieldTextNode));
             field.ValueProperty.SetValue(fieldTextNode);
 
             item.Fields.Add(field);
 
-            item.References.AddRange(ParseReferences(context, item, fieldTextNode, field.ValueProperty));
+            item.References.AddRange(ParseReferences(context, item, fieldTextNode, field.Value));
         }
     }
 }

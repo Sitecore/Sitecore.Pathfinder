@@ -10,7 +10,7 @@
     Clean Blog
   </Field>
   
-  <Field Name="Header" Field.ShortHelp="Header." Field.LongHelp="Blog Header.">
+  <Field Name="Header" Field.ShortHelp="Hello World."  Field.LongHelp="Blog Header.">
     Clean Blog
   </Field>
   

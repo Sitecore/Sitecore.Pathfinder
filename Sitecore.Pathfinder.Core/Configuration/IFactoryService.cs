@@ -33,10 +33,10 @@ namespace Sitecore.Pathfinder.Configuration
         ExternalReferenceItem ExternalReferenceItem([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ISnapshot snapshot, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath);
 
         [NotNull]
-        Field Field([NotNull] Item item);
+        Field Field([NotNull] Item item, [NotNull] ITextNode textNode);
 
         [NotNull]
-        Field Field([NotNull] Item item, [NotNull] string fieldName, [NotNull] string fieldValue);
+        Field Field([NotNull] Item item, [NotNull] ITextNode textNode, [NotNull] string fieldName, [NotNull] string fieldValue);
 
         [NotNull]
         FileReference FileReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceSourceProperty, [NotNull] string targetQualifiedName);
@@ -81,7 +81,7 @@ namespace Sitecore.Pathfinder.Configuration
         Template Template([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath);
 
         [NotNull]
-        TemplateField TemplateField([NotNull] Template template);
+        TemplateField TemplateField([NotNull] Template template, [NotNull] ITextNode templateFieldTextNode);
 
         [NotNull]
         TemplateSection TemplateSection([NotNull] ITextNode templateSectionTextNode);

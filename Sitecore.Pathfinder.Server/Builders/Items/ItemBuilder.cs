@@ -179,7 +179,7 @@ namespace Sitecore.Pathfinder.Builders.Items
                     if (versionedItem == null)
                     {
                         // todo: validate this before updating the item
-                        context.Trace.TraceError(Texts.Item_not_found, field.FieldNameProperty.SourceTextNode ?? TextNode.Empty, $"language: {field.Language}, version; {field.Version}");
+                        context.Trace.TraceError(Texts.Item_not_found, TraceHelper.FirstTextNode(field.FieldNameProperty), $"language: {field.Language}, version; {field.Version}");
                         continue;
                     }
 

@@ -73,10 +73,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
             if (!string.IsNullOrEmpty(newItem.TemplateIdOrPath))
             {
-                if (newItem.TemplateIdOrPathProperty.SourceTextNode != null)
-                {
-                    TemplateIdOrPathProperty.SetValue(newItem.TemplateIdOrPathProperty.SourceTextNode);
-                }
+                TemplateIdOrPathProperty.SetValue(newItem.TemplateIdOrPathProperty);
             }
 
             OverwriteWhenMerging = OverwriteWhenMerging && newItem.OverwriteWhenMerging;

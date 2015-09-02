@@ -4,6 +4,7 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Querying;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Building.Querying
 {
@@ -38,8 +39,8 @@ namespace Sitecore.Pathfinder.Building.Querying
             {
                 string line = $"{reference.Owner.Snapshots.First().SourceFile.GetProjectPath(context.Project)}";
 
-                var textNode = reference.SourceSourceProperty?.SourceTextNode;
-                line += textNode != null ? $"({textNode.Position.LineNumber},{textNode.Position.LineNumber})" : "(0,0)";
+                var textNode = TraceHelper.FirstTextNode(reference.SourceSourceProperty);
+                line += $"({textNode.Position.LineNumber},{textNode.Position.LineNumber})";
 
                 line += ": " + reference.TargetQualifiedName;
 

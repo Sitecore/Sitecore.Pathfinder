@@ -130,12 +130,12 @@ namespace Sitecore.Pathfinder.Parsing.Files
                 }
             }
 
-            var field = context.Factory.Field(Item.Empty);
+            var textNode = context.Factory.TextNode(serializationItemBuilder.ItemNameTextNode.Snapshot, new TextPosition(lineNumber, 0, lineLength), fieldName, fieldValue, serializationItemBuilder.ItemNameTextNode);
+
+            var field = context.Factory.Field(Item.Empty, textNode);
             field.FieldNameProperty.SetValue(fieldName);
             field.LanguageProperty.SetValue(language);
             field.VersionProperty.SetValue(version);
-
-            var textNode = context.Factory.TextNode(serializationItemBuilder.ItemNameTextNode.Snapshot, new TextPosition(lineNumber, 0, lineLength), fieldName, fieldValue, serializationItemBuilder.ItemNameTextNode);
             field.ValueProperty.SetValue(textNode);
 
             serializationItemBuilder.Fields.Add(field);

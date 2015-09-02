@@ -8,11 +8,11 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects.Templates
 {
-    public class TemplateSection
+    public class TemplateSection : IHasSourceTextNodes
     {
         public TemplateSection([NotNull] ITextNode templateSectionTextNode)
         {
-            TemplateSectionTextNode = templateSectionTextNode;
+            SourceTextNodes.Add(templateSectionTextNode);
         }
 
         [NotNull]
@@ -38,8 +38,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull]
         public SourceProperty<string> SectionNameProperty { get; } = new SourceProperty<string>("Name", string.Empty);
 
-        [NotNull]
-        public ITextNode TemplateSectionTextNode { get; }
+        public ICollection<ITextNode> SourceTextNodes { get; } = new List<ITextNode>();
 
         public void Merge([NotNull] TemplateSection newSection, bool overwrite)
         {

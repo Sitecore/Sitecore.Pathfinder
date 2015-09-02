@@ -94,7 +94,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
                 }
             }
 
-            field = context.ParseContext.Factory.Field(item);
+            field = context.ParseContext.Factory.Field(item, fieldTextNode);
             field.FieldNameProperty.Parse(fieldTextNode);
             field.LanguageProperty.Parse(fieldTextNode);
             field.VersionProperty.Parse(fieldTextNode);
@@ -120,9 +120,9 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
             item.Fields.Add(field);
 
-            if (field.ValueProperty.SourceTextNode != null && !field.ValueHint.Contains("NoReference"))
+            if (!field.ValueHint.Contains("NoReference"))
             {
-                item.References.AddRange(ParseReferences(context, item, field.ValueProperty.SourceTextNode, field.Value));
+                item.References.AddRange(ParseReferences(context, item, TraceHelper.FirstTextNode(field.ValueProperty), field.Value));
             }
         }
 
@@ -165,7 +165,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
                         continue;
                     }
 
-                    var templateField = context.ParseContext.Factory.TemplateField(template);
+                    var templateField = context.ParseContext.Factory.TemplateField(template, child);
                     templateSection.Fields.Add(templateField);
 
                     templateField.FieldNameProperty.Parse(child);

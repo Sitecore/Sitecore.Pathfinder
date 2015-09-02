@@ -27,7 +27,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
             var value = itemName.GetValue();
             if (value.IndexOf(' ') >= 0 && value != "__Standard Values")
             {
-                context.Trace.TraceWarning("Name should not contain spaces", itemName.SourceTextNode ?? TextNode.Empty, itemName);
+                context.Trace.TraceWarning("Name should not contain spaces", TraceHelper.FirstTextNode(itemName), value);
             }
         }
 
@@ -44,7 +44,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
             {
                 if (item.Project.FindQualifiedItem(item.TemplateIdOrPath) == null)
                 {
-                    context.Trace.TraceWarning("Item does not have a template", item.ItemNameProperty.SourceTextNode ?? TextNode.Empty);
+                    context.Trace.TraceWarning("Item does not have a template", TraceHelper.FirstTextNode(item.ItemNameProperty));
                 }
 
                 return;
@@ -58,10 +58,10 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
                     continue;
                 }
 
-                var templateField = template.Sections.SelectMany(i => i.Fields).FirstOrDefault(f => string.Compare(f.FieldNameProperty, field.FieldName, StringComparison.OrdinalIgnoreCase) == 0);
+                var templateField = template.Sections.SelectMany(i => i.Fields).FirstOrDefault(f => string.Compare(f.FieldName, field.FieldName, StringComparison.OrdinalIgnoreCase) == 0);
                 if (templateField == null)
                 {
-                    context.Trace.TraceWarning("Field is not defined in the template", field.FieldNameProperty.SourceTextNode ?? TextNode.Empty, field.FieldName);
+                    context.Trace.TraceWarning("Field is not defined in the template", TraceHelper.FirstTextNode(field.FieldNameProperty), field.FieldName);
                 }
             }
         }

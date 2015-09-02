@@ -20,12 +20,12 @@ namespace Sitecore.Pathfinder.Emitters.FieldResolvers
 
         public override bool CanResolve(Field field)
         {
-            return string.Compare(field.TemplateField.TypeProperty, "layout", StringComparison.OrdinalIgnoreCase) == 0 && field.ValueHint.Contains("Layout");
+            return string.Compare(field.TemplateField.Type, "layout", StringComparison.OrdinalIgnoreCase) == 0 && field.ValueHint.Contains("Layout");
         }
 
         public override string Resolve(Field field)
         {
-            var textNode = field.ValueProperty.SourceTextNode ?? TextNode.Empty;
+            var textNode = TraceHelper.FirstTextNode(field.ValueProperty);
             if (textNode == TextNode.Empty)
             {
                 return field.Value.Mid(8);

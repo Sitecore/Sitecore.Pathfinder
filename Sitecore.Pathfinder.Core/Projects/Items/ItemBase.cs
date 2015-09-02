@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Parsing;
@@ -7,13 +8,14 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects.Items
 {
-    public abstract class ItemBase : ProjectItem
+    public abstract class ItemBase : ProjectItem, IHasSourceTextNodes
     {
         protected ItemBase([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, projectUniqueId, textNode.Snapshot)
         {
             DatabaseName = databaseName;
             ItemName = itemName;
             ItemIdOrPath = itemIdOrPath;
+            SourceTextNodes.Add(textNode);
         }
 
         [NotNull]
@@ -47,6 +49,8 @@ namespace Sitecore.Pathfinder.Projects.Items
         public override string QualifiedName => ItemIdOrPath;
 
         public override string ShortName => ItemName;
+
+        public ICollection<ITextNode> SourceTextNodes { get; } = new List<ITextNode>();
 
         public override void Rename(string newShortName)
         {

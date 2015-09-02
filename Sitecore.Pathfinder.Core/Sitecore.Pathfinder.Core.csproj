@@ -116,6 +116,7 @@
     <Compile Include="Projects\Items\FieldResolvers\Layouts\XmlLayoutResolver.cs" />
     <Compile Include="Projects\Items\FieldResolvers\LinkFieldResolver.cs" />
     <Compile Include="Snapshots\AttributeNameTextNode.cs" />
+    <Compile Include="Snapshots\IHasSourceTextNodes.cs" />
     <Compile Include="Snapshots\InnerTextNode.cs" />
     <Compile Include="Extensibility\CsharpCompiler.cs" />
     <Compile Include="Configuration\ConfigurationService.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Parsing\Pipelines\ItemParserPipelines\ItemParserPipeline.cs" />
     <Compile Include="Projects\SourceProperty.cs" />
     <Compile Include="Snapshots\Serialization\SerializationSnapshotLoader.cs" />
+    <Compile Include="Snapshots\TraceHelper.cs" />
     <Compile Include="Snapshots\Xml\ItemXmlSnapshotLoader.cs" />
     <Compile Include="Extensions\CompositionServiceExtensions.cs" />
     <Compile Include="Extensions\ConfigurationExtensions.cs" />

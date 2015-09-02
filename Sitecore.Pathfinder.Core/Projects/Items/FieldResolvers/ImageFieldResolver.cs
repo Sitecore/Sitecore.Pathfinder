@@ -16,7 +16,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
 
         public override bool CanResolve(Field field)
         {
-            return string.Compare(field.TemplateField.TypeProperty, "image", StringComparison.OrdinalIgnoreCase) == 0;
+            return string.Compare(field.TemplateField.Type, "image", StringComparison.OrdinalIgnoreCase) == 0;
         }
 
         public override string Resolve(Field field)

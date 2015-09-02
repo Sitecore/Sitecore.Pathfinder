@@ -1,6 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using Sitecore.Pathfinder.Diagnostics;
@@ -28,7 +29,7 @@ namespace Sitecore.Pathfinder.Projects
     }
 
     [DebuggerDisplay("\\{{GetType().Name,nq}\\}: {Name,nq} = {GetValue()}")]
-    public class SourceProperty<T> : INotifyPropertyChanged
+    public class SourceProperty<T> : INotifyPropertyChanged, IHasSourceTextNodes
     {
         [NotNull]
         private readonly T _defaultValue;
@@ -58,25 +59,19 @@ namespace Sitecore.Pathfinder.Projects
         public SourcePropertyFlags SourcePropertyFlags { get; set; }
 
         // todo: attributes can be set in multiple sources - must be a list
-        [CanBeNull]
-        public ITextNode SourceTextNode { get; private set; }
+
+        public ICollection<ITextNode> SourceTextNodes { get;  } = new List<ITextNode>();
 
         protected bool IsUpdateSourceTextNodeEnabled { get; set; } = true;
 
         public virtual bool AddSourceTextNode([CanBeNull] ITextNode textNode)
         {
-            SourceTextNode = textNode;
+            SourceTextNodes.Add(textNode);
             return true;
         }
 
         [NotNull]
         public T GetValue() => _value;
-
-        [NotNull]
-        public static implicit operator string([NotNull] SourceProperty<T> sourceProperty)
-        {
-            return sourceProperty.GetValue().ToString();
-        }
 
         public virtual void Parse([NotNull] ITextNode textNode, T defaultValue = default(T))
         {
@@ -117,7 +112,12 @@ namespace Sitecore.Pathfinder.Projects
         public virtual bool SetValue([NotNull] SourceProperty<T> sourceProperty)
         {
             SetValue(sourceProperty.GetValue());
-            AddSourceTextNode(sourceProperty.SourceTextNode);
+
+            foreach (var sourceTextNode in sourceProperty.SourceTextNodes)
+            {
+              AddSourceTextNode(sourceTextNode);
+            }
+
             return true;
         }
 
@@ -137,9 +137,12 @@ namespace Sitecore.Pathfinder.Projects
 
             _value = value;
 
-            if (SourceTextNode != null && IsUpdateSourceTextNodeEnabled)
+            if (IsUpdateSourceTextNodeEnabled)
             {
-                SourceTextNode.SetValue(ConvertValue(_value.ToString()));
+                foreach (var sourceTextNode in SourceTextNodes)
+                {
+                  sourceTextNode.SetValue(ConvertValue(_value.ToString()));
+                }
             }
 
             // ReSharper disable once NotResolvedInText

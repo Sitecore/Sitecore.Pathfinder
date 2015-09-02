@@ -55,15 +55,14 @@ namespace Sitecore.Pathfinder.Configuration
             return new ExternalReferenceItem(project, projectUniqueId, snapshot, databaseName, itemName, itemIdOrPath);
         }
 
-        public virtual Field Field(Item item)
+        public virtual Field Field(Item item, ITextNode textNode)
         {
-            return new Field(item);
+            return new Field(item, textNode);
         }
 
-        [NotNull]
-        public Field Field(Item item, string fieldName, string fieldValue)
+        public Field Field(Item item, ITextNode textNode, string fieldName, string fieldValue)
         {
-            var field = new Field(item);
+            var field = new Field(item, textNode);
             field.FieldNameProperty.SetValue(fieldName);
             field.ValueProperty.SetValue(fieldValue);
             return field;
@@ -139,9 +138,9 @@ namespace Sitecore.Pathfinder.Configuration
             return new Template(project, projectUniqueId, textNode, databaseName, itemName, itemIdOrPath);
         }
 
-        public virtual TemplateField TemplateField(Template template)
+        public virtual TemplateField TemplateField(Template template, ITextNode templateFieldTextNode)
         {
-            return new TemplateField(template);
+            return new TemplateField(template, templateFieldTextNode);
         }
 
         public virtual TemplateSection TemplateSection(ITextNode templateSectionTextNode)

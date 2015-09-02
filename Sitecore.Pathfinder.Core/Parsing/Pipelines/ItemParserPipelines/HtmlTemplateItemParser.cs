@@ -1,6 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using Sitecore.Pathfinder.Extensibility.Pipelines;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Parsing.Pipelines.ItemParserPipelines
 {
@@ -27,7 +28,7 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.ItemParserPipelines
             }
             */
 
-            var field = pipeline.Context.ParseContext.Factory.Field(pipeline.Item, "__Renderings", fieldValue);
+            var field = pipeline.Context.ParseContext.Factory.Field(pipeline.Item, TextNode.Empty, "__Renderings", fieldValue);
             field.ValueHintProperty.SetValue("HtmlTemplate");
             pipeline.Item.Fields.Add(field);
 
