@@ -58,8 +58,6 @@ namespace Sitecore.Pathfinder.Projects
 
         public SourcePropertyFlags SourcePropertyFlags { get; set; }
 
-        // todo: attributes can be set in multiple sources - must be a list
-
         public ICollection<ITextNode> SourceTextNodes { get;  } = new List<ITextNode>();
 
         protected bool IsUpdateSourceTextNodeEnabled { get; set; } = true;
@@ -141,7 +139,7 @@ namespace Sitecore.Pathfinder.Projects
             {
                 foreach (var sourceTextNode in SourceTextNodes)
                 {
-                  sourceTextNode.SetValue(ConvertValue(_value.ToString()));
+                  sourceTextNode.SetValue(ToSourceValue(_value.ToString()));
                 }
             }
 
@@ -155,7 +153,7 @@ namespace Sitecore.Pathfinder.Projects
         }
 
         [NotNull]
-        protected virtual string ConvertValue([NotNull] string value)
+        protected virtual string ToSourceValue([NotNull] string value)
         {
             if ((SourcePropertyFlags & SourcePropertyFlags.IsShort) == SourcePropertyFlags.IsShort)
             {

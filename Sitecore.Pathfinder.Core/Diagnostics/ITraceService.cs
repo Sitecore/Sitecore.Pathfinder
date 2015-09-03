@@ -11,6 +11,8 @@ namespace Sitecore.Pathfinder.Diagnostics
 
         void TraceError([Localizable(true)] [NotNull] string text, [NotNull] string fileName, TextPosition position, [NotNull] string details = "");
 
+        void TraceError([Localizable(true)] [NotNull] string text, [NotNull] ISourceFile sourceFile, [NotNull] string details = "");
+
         void TraceError([Localizable(true)] [NotNull] string text, [NotNull] ITextNode textNode, [NotNull] string details = "");
 
         void TraceInformation([Localizable(true)] [NotNull] string text, [NotNull] string details = "");

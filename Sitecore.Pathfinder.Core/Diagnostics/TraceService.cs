@@ -45,6 +45,16 @@ namespace Sitecore.Pathfinder.Diagnostics
             }
         }
 
+        public void TraceError(string text, ISourceFile sourceFile, string details = "")
+        {
+            Write(text, Severity.Error, sourceFile.FileName, TextPosition.Empty, details);
+
+            if (Configuration.GetBool(Constants.Configuration.Debug))
+            {
+                Debugger.Launch();
+            }
+        }
+
         public void TraceError(string text, ITextNode textNode, string details = "")
         {
             Write(text, Severity.Error, textNode.Snapshot.SourceFile.FileName, textNode.Position, details);
