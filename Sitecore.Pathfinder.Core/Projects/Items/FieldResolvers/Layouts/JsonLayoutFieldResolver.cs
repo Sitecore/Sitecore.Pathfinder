@@ -2,6 +2,8 @@
 
 using System;
 using System.ComponentModel.Composition;
+using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Pathfinder.Snapshots.Json;
 
@@ -10,9 +12,14 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
     [Export(typeof(IFieldResolver))]
     public class JsonLayoutFieldResolver : FieldResolverBase
     {
-        public JsonLayoutFieldResolver() : base(Constants.FieldResolvers.Normal)
+        [ImportingConstructor]
+        public JsonLayoutFieldResolver(IFileSystemService fileSystem) : base(Constants.FieldResolvers.Normal)
         {
+            FileSystem = fileSystem;
         }
+
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
 
         public override bool CanResolve(Field field)
         {
@@ -39,7 +46,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
                 return field.Value;
             }
 
-            var layoutResolveContext = new LayoutResolveContext(field, textSnapshot);
+            var layoutResolveContext = new LayoutResolveContext(FileSystem, field, textSnapshot);
 
             var resolver = new JsonLayoutResolver();
 

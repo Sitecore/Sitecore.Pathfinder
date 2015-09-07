@@ -4,9 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.Layouts;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
@@ -60,9 +62,33 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
         }
 
         [NotNull]
-        protected virtual string GetPlaceholders([NotNull] ITextNode renderingTextNode, [NotNull] IProjectItem renderingItem)
+        protected virtual string GetPlaceholders([NotNull] LayoutResolveContext context, [NotNull] ITextNode renderingTextNode, [NotNull] Item item)
         {
-            return string.Empty;
+            var id = renderingTextNode.GetAttributeValue("Id");
+            var result = ",";
+
+            var placeHoldersField = item.Fields.FirstOrDefault(f => string.Compare(f.FieldName, "Place Holders", StringComparison.OrdinalIgnoreCase) == 0);
+            if (placeHoldersField != null)
+            {
+                foreach (var s in placeHoldersField.Value.Split(','))
+                {
+                    if (string.IsNullOrEmpty(s))
+                    {
+                        continue;
+                    }
+
+                    var placeholderName = s.Replace("$Id", id).Trim();
+
+                    result += placeholderName + ",";
+                }
+            }
+
+            foreach (var placeholderName in AnalyzeFile(context, item, true))
+            {
+                result += placeholderName + ",";
+            }
+
+            return result;
         }
 
         protected virtual bool IsContentProperty([NotNull] ITextNode renderingTextNode, [NotNull] ITextNode childTextNode)
@@ -172,7 +198,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
             var layoutPath = deviceTextNode.GetAttributeTextNode("Layout");
             if (layoutPath != null && !string.IsNullOrEmpty(layoutPath.Value))
             {
-                var l = context.Field.Item.Project.FindQualifiedItem(layoutPath.Value) as ItemBase;
+                var l = context.Field.Item.Project.FindQualifiedItem(layoutPath.Value) as Item;
                 if (l == null)
                 {
                     context.Field.WriteDiagnostic(Severity.Error, Texts.Layout_not_found_, layoutPath.Value);
@@ -180,7 +206,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
                 }
 
                 output.WriteAttributeString("l", l.Guid.Format());
-                layoutPlaceholders = GetPlaceholders(deviceTextNode, l);
+                layoutPlaceholders = GetPlaceholders(context, deviceTextNode, l);
             }
 
             var renderings = context.Snapshot.GetJsonChildTextNode(deviceTextNode, "Renderings");
@@ -351,8 +377,76 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
                     continue;
                 }
 
-                WriteRendering(context, output, renderingItems, child, GetPlaceholders(renderingTextNode, renderingItem));
+                WriteRendering(context, output, renderingItems, child, GetPlaceholders(context, renderingTextNode, renderingItem));
             }
+        }
+
+        private IEnumerable<string> AnalyzeFile([NotNull] LayoutResolveContext context, Item item, bool includeDynamicPlaceholders)
+        {
+            var pathField = item.Fields.FirstOrDefault(f => string.Compare(f.FieldName, "Path", StringComparison.OrdinalIgnoreCase) == 0);
+            if (pathField == null)
+            {
+                return Enumerable.Empty<string>();
+            }
+
+            var path = PathHelper.Combine(item.Project.Options.ProjectDirectory, pathField.Value);
+            if (context.FileSystem.FileExists(path))
+            {
+                return Enumerable.Empty<string>();
+            }
+
+            var source = context.FileSystem.ReadAllText(path);
+
+            if (string.Compare(Path.GetExtension(path), ".ascx", StringComparison.CurrentCultureIgnoreCase) == 0 || string.Compare(Path.GetExtension(path), ".aspx", StringComparison.CurrentCultureIgnoreCase) == 0)
+            {
+                return AnalyzeWebFormsFile(source);
+            }
+
+            if (string.Compare(Path.GetExtension(path), ".cshtml", StringComparison.CurrentCultureIgnoreCase) == 0)
+            {
+                return includeDynamicPlaceholders ? AnalyzeViewFileWithDynamicPlaceholders(source) : AnalyzeViewFile(source);
+            }
+
+            return Enumerable.Empty<string>();
+        }
+
+        private IEnumerable<string> AnalyzeViewFile(string source)
+        {
+            var matches = Regex.Matches(source, "\\@Html\\.Sitecore\\(\\)\\.Placeholder\\(\"([^\"]*)\"\\)", RegexOptions.IgnoreCase);
+            return matches.OfType<Match>().Select(i => i.Groups[1].ToString().Trim());
+        }
+
+        private IEnumerable<string> AnalyzeViewFileWithDynamicPlaceholders(string source)
+        {
+            var matches = Regex.Matches(source, "\\@Html\\.Sitecore\\(\\)\\.Placeholder\\(([^\"\\)]*)\"([^\"]*)\"\\)", RegexOptions.IgnoreCase);
+
+            var result = new List<string>();
+            foreach (var match in matches.OfType<Match>())
+            {
+                var prefix = match.Groups[1].ToString().Trim();
+                var name = match.Groups[2].ToString().Trim();
+
+                if (!string.IsNullOrEmpty(prefix))
+                {
+                    if (name.StartsWith("."))
+                    {
+                        name = name.Mid(1);
+                    }
+
+                    name = "$Id." + name;
+                }
+
+                result.Add(name);
+            }
+
+            return result;
+        }
+
+        private IEnumerable<string> AnalyzeWebFormsFile(string source)
+        {
+            var matches = Regex.Matches(source, "<[^>]*Placeholder[^>]*Key=\"([^\"]*)\"[^>]*>", RegexOptions.IgnoreCase);
+
+            return matches.OfType<Match>().Select(i => i.Groups[1].ToString().Trim());
         }
 
         private void WriteParameters([NotNull] LayoutResolveContext context, [NotNull] XmlTextWriter output, [NotNull] ITextNode renderingTextNode, [NotNull] Item renderingItem, [NotNull] string id)
