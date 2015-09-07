@@ -122,7 +122,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
             if (!field.ValueHint.Contains("NoReference"))
             {
-                item.References.AddRange(ParseReferences(context, item, TraceHelper.FirstTextNode(field.ValueProperty), field.Value));
+                item.References.AddRange(ParseReferences(context, item, TraceHelper.GetTextNode(field.ValueProperty), field.Value));
             }
         }
 

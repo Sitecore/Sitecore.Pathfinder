@@ -10,7 +10,7 @@ namespace Sitecore.Pathfinder.Projects.References
         {
         }
 
-        public DeviceReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceSourceProperty, [NotNull] string targetQualifiedName) : base(owner, sourceSourceProperty, targetQualifiedName)
+        public DeviceReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceProperty, [NotNull] string targetQualifiedName) : base(owner, sourceProperty, targetQualifiedName)
         {
         }
 

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Snapshots;
@@ -58,7 +59,10 @@ namespace Sitecore.Pathfinder.Projects
 
         public SourcePropertyFlags SourcePropertyFlags { get; set; }
 
-        public ICollection<ITextNode> SourceTextNodes { get;  } = new List<ITextNode>();
+        [CanBeNull]
+        public ITextNode SourceTextNode => SourceTextNodes.LastOrDefault();
+
+        public ICollection<ITextNode> SourceTextNodes { get; } = new List<ITextNode>();
 
         protected bool IsUpdateSourceTextNodeEnabled { get; set; } = true;
 

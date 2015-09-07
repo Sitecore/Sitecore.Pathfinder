@@ -6,7 +6,7 @@
 
     <xs:element name="Item" type="Item" />
     <xs:element name="Template" type="Template" />
-    <xs:element name="LayoutField" type="Layout" />
+    <xs:element name="Layout" type="Layout" />
 
     <xs:complexType name="Field">
         <xs:simpleContent>
@@ -91,7 +91,7 @@
             <xs:element name="Field" type="Field" />
             <xs:element name="Item" type="Item" />
             <xs:element name="Template" type="Template" />
-            <xs:element name="LayoutField" type="Layout" minOccurs="0" maxOccurs="1" />
+            <xs:element name="Layout" type="Layout" minOccurs="0" maxOccurs="1" />
         </xs:choice>
     </xs:group>
 

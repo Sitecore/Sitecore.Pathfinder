@@ -7,7 +7,7 @@ using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
-    [DebuggerDisplay("\\{{GetType().FullName,nq}\\}: {Name,nq} = {Value}")]
+    [DebuggerDisplay("\\{{GetType().FullName,nq}\\}: {Name,nq}={Value}")]
     public class TextNode : ITextNode
     {
         public static readonly ITextNode Empty = new SnapshotTextNode(Snapshots.Snapshot.Empty);

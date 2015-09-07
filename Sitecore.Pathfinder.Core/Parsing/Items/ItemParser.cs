@@ -18,6 +18,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
         {
             ".item.xml",
             ".content.xml",
+            ".layout.xml",
             ".item.json",
             ".content.json",
             ".layout.json"

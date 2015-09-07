@@ -140,7 +140,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         public virtual void WriteDiagnostic(Severity severity, [NotNull] string text, [NotNull] string details = "")
         {
-            var source = TraceHelper.FirstTextNode(FieldNameProperty);
+            var source = TraceHelper.GetTextNode(FieldNameProperty);
             WriteDiagnostic(severity, text, source, details.Trim());
         }
 

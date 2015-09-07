@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Snapshots.Xml;
 
-namespace Sitecore.Pathfinder.Snapshots
+namespace Sitecore.Pathfinder.Snapshots.Xml
 {
-    public class InnerTextNode : ITextNode
+    public class XmlInnerTextNode : ITextNode
     {
         private static readonly Regex RemoveNamespaces = new Regex("\\sxmlns[^\"]+\"[^\"]+\"", RegexOptions.Compiled);
 
@@ -17,7 +16,7 @@ namespace Sitecore.Pathfinder.Snapshots
 
         private string _value;
 
-        public InnerTextNode([NotNull] XmlTextNode textNode, [NotNull] XElement element)
+        public XmlInnerTextNode([NotNull] XmlTextNode textNode, [NotNull] XElement element)
         {
             Parent = textNode;
             _element = element;
@@ -35,7 +34,7 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public ISnapshot Snapshot => Parent?.Snapshot ?? Snapshots.Snapshot.Empty;
 
-        public string Value => _value ?? (_value = RemoveNamespaces.Replace(string.Join(string.Empty, _element.Nodes().Select(n => n.ToString(SaveOptions.OmitDuplicateNamespaces)).ToArray()), string.Empty));
+        public string Value => _value ?? (_value = RemoveNamespaces.Replace(string.Join(string.Empty, _element.Nodes().Select(n => n.ToString(SaveOptions.OmitDuplicateNamespaces)).ToArray()).Trim(), string.Empty));
 
         public ITextNode GetAttributeTextNode(string attributeName)
         {

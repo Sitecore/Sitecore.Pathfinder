@@ -4,11 +4,13 @@
     <Field Name="Image" Field.Type="Image">/sitecore/media library/mushrooms</Field>
     <Field Name="__Workflow"></Field>
     <Field Name="__Workflow State"></Field>
-    <LayoutField>
+    <Layout>
         <Layout xmlns="http://www.sitecore.net/pathfinder/layouts/master">
             <Device Name="Default" Layout="/sitecore/layout/Layouts/MvcLayout">
-                <HelloWorld />
+                <HelloWorld Text="123"/>
+                <HelloWorld/>
+                <HelloWorld/>
             </Device>
         </Layout>
-    </LayoutField>
+    </Layout>
 </Item>

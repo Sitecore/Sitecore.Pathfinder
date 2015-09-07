@@ -1,6 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.ComponentModel.Composition;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Pathfinder.Snapshots.Json;
@@ -30,12 +31,22 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers.Json
                         ParseFieldTreeNode(context, item, fieldTreeNode);
                     }
                 }
+                else if (childTreeNode.Name == "Layout")
+                {
+                    ParseLayoutTreeNode(context, item, childTreeNode);
+                }
                 else
                 {
                     var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, context.ParentItemPath + "/" + childTreeNode.Name);
                     context.Parser.ParseTextNode(newContext, childTreeNode);
                 }
             }
+        }
+
+        protected void ParseLayoutTreeNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode textNode)
+        {
+            var parser = new JsonLayoutParser();
+            parser.Parse(context, textNode, item);
         }
     }
 }

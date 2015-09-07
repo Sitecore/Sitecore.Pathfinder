@@ -157,7 +157,14 @@
     <Content Include="Website.Bad\templates\XmlTemplate.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Website\content\Home\XmlLayout.item.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Website\templates\XmlTemplate.item.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Console\scconfig.json">
+      <Link>Website\sitecore.tools\scconfig.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="app.config" />
@@ -174,10 +181,16 @@
     <None Include="Website\content\Home\JsonContentItem.master.content.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Website\content\Home\Pipper.item">
+    <None Include="Website\content\Home\JsonLayout.layout.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Website\content\Home\Foo.item.json">
+    <None Include="Website\content\Home\JsonLayout.item.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Website\content\Home\SerializedItem.item">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Website\content\Home\JsonItem.item.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Website\layout\layouts\MvcLayout.cshtml">
@@ -188,9 +201,6 @@
     </None>
     <None Include="Website\layout\web.config" />
     <None Include="Website\scconfig.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Website\sitecore.tools\scconfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Website\templates\JsonTemplate.item.json">
@@ -207,7 +217,7 @@
     <Content Include="Website\content\Home\HelloWorld.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Website\content\Home\HelloWorld.layout.xml">
+    <Content Include="Website\content\Home\XmlLayout.layout.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Website\content\Home\XmlContentItem.master.content.xml">
@@ -253,7 +263,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Website_2content_2Home_2Foo_1item_1json__JSONSchema="item.schema.json" Website_2content_2Home_2JsonContentItem_1master_1content_1json__JSONSchema="..\..\.schemas\master.content.schema.json" />
+      <UserProperties Website_2content_2Home_2JsonContentItem_1master_1content_1json__JSONSchema="..\..\.schemas\master.content.schema.json" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

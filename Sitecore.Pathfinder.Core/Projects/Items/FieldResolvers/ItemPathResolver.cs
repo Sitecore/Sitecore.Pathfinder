@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
 
         public override bool CanResolve(Field field)
         {
-            return field.Value.IndexOf("/sitecore", StringComparison.OrdinalIgnoreCase) >= 0;
+            return field.Value.StartsWith("/sitecore", StringComparison.OrdinalIgnoreCase);
         }
 
         public override string Resolve(Field field)

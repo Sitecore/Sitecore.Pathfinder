@@ -46,12 +46,12 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
         }
 
         [NotNull]
-        protected virtual Rendering[] FindRenderingItems([NotNull] IEnumerable<Rendering> renderingItems, [NotNull] string renderingItemId)
+        protected virtual Item[] FindRenderingItems([NotNull] IEnumerable<Item> renderingItems, [NotNull] string renderingItemId)
         {
             var n = renderingItemId.LastIndexOf('.');
             if (n < 0)
             {
-                return new Rendering[0];
+                return new Item[0];
             }
 
             renderingItemId = renderingItemId.Mid(n + 1);
@@ -71,15 +71,15 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
         }
 
         [NotNull]
-        protected virtual Rendering[] ResolveRenderingItem([NotNull] IEnumerable<Rendering> renderingItems, [NotNull] string renderingItemId)
+        protected virtual Item[] ResolveRenderingItem([NotNull] IEnumerable<Item> renderingItems, [NotNull] string renderingItemId)
         {
             var path = "/" + renderingItemId.Replace(".", "/");
 
-            return renderingItems.Where(r => r.Item.ItemIdOrPath.EndsWith(path, StringComparison.InvariantCultureIgnoreCase)).ToArray();
+            return renderingItems.Where(r => r.ItemIdOrPath.EndsWith(path, StringComparison.InvariantCultureIgnoreCase)).ToArray();
         }
 
         [NotNull]
-        protected virtual Rendering[] ResolveRenderingItemId([NotNull] IEnumerable<Rendering> renderingItems, [NotNull] string renderingItemId)
+        protected virtual Item[] ResolveRenderingItemId([NotNull] IEnumerable<Item> renderingItems, [NotNull] string renderingItemId)
         {
             var matches = renderingItems.Where(r => r.ShortName == renderingItemId).ToArray();
 
@@ -106,7 +106,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
 
             if (value != "True" && value != "False")
             {
-                context.Trace.TraceError(id + Texts.__Boolean_parameter_must_have_value__True__or__False_, renderingTextNode, attributeName);
+                context.Field.WriteDiagnostic(Severity.Error, id + Texts.__Boolean_parameter_must_have_value__True__or__False_, renderingTextNode, attributeName);
                 value = "False";
             }
 
@@ -127,39 +127,39 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
                 return;
             }
 
-            var item = context.Project.FindQualifiedItem(dataSource);
+            var item = context.Field.Item.Project.FindQualifiedItem(dataSource);
             if (item == null)
             {
-                context.Trace.Writeline(Texts.Datasource_not_found, dataSource);
+                context.Field.WriteDiagnostic(Severity.Error, Texts.Datasource_not_found, dataSource);
                 return;
             }
 
             output.WriteAttributeString("ds", item.Guid.Format());
         }
 
-        protected virtual void WriteDevice([NotNull] LayoutResolveContext context, [NotNull] XmlTextWriter output, [NotNull] IEnumerable<Rendering> renderingItems, [NotNull] ITextNode deviceTextNode)
+        protected virtual void WriteDevice([NotNull] LayoutResolveContext context, [NotNull] XmlTextWriter output, [NotNull] IEnumerable<Item> renderingItems, [NotNull] ITextNode deviceTextNode)
         {
             output.WriteStartElement("d");
 
             var deviceName = deviceTextNode.GetAttributeValue("Name");
             if (string.IsNullOrEmpty(deviceName))
             {
-                context.Trace.TraceError(Texts.Device_element_is_missing__Name__attribute_, deviceTextNode);
+                context.Field.WriteDiagnostic(Severity.Error, Texts.Device_element_is_missing__Name__attribute_, deviceTextNode);
             }
             else
             {
                 // todo: get device from project
-                var devices = context.Project.Items.OfType<ExternalReferenceItem>().Where(i => i.ItemIdOrPath.StartsWith("/sitecore/layout/Devices/")).ToList();
+                var devices = context.Field.Item.Project.Items.OfType<ExternalReferenceItem>().Where(i => i.ItemIdOrPath.StartsWith("/sitecore/layout/Devices/")).ToList();
                 if (!devices.Any())
                 {
-                    context.Trace.TraceError(Texts.Device_item_not_found, deviceTextNode);
+                    context.Field.WriteDiagnostic(Severity.Error, Texts.Device_item_not_found, deviceTextNode);
                 }
                 else
                 {
                     var device = devices.FirstOrDefault(d => string.Compare(d.ItemName, deviceName, StringComparison.OrdinalIgnoreCase) == 0);
                     if (device == null)
                     {
-                        context.Trace.TraceError(Texts.Device_not_found, deviceTextNode, deviceName);
+                        context.Field.WriteDiagnostic(Severity.Error, Texts.Device_not_found, deviceTextNode, deviceName);
                     }
                     else
                     {
@@ -172,10 +172,10 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
             var layoutPath = deviceTextNode.GetAttributeTextNode("Layout");
             if (layoutPath != null && !string.IsNullOrEmpty(layoutPath.Value))
             {
-                var l = context.Project.FindQualifiedItem(layoutPath.Value) as ItemBase;
+                var l = context.Field.Item.Project.FindQualifiedItem(layoutPath.Value) as ItemBase;
                 if (l == null)
                 {
-                    context.Trace.Writeline(Texts.Layout_not_found_, layoutPath.Value);
+                    context.Field.WriteDiagnostic(Severity.Error, Texts.Layout_not_found_, layoutPath.Value);
                     return;
                 }
 
@@ -203,7 +203,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
             // todo: cache this in the build context
             // todo: use better search
             // todo: add renderings from project
-            var renderingItems = context.Project.Items.OfType<Rendering>().ToList();
+            var renderingItems = context.Field.Item.Project.Items.OfType<Rendering>().Select(r => r.Item).ToList();
 
             output.WriteStartElement("r");
 
@@ -244,14 +244,14 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
             {
                 if (placeholders.IndexOf("," + placeholder + ",", StringComparison.InvariantCultureIgnoreCase) < 0)
                 {
-                    context.Trace.TraceWarning(string.Format(Texts._2___Placeholder___0___is_not_defined_in_the_parent_rendering__Parent_rendering_has_these_placeholders___1__, placeholder, placeholders.Mid(1, placeholders.Length - 2), id), renderingTextNode, "Placeholder");
+                    context.Field.WriteDiagnostic(Severity.Warning, string.Format(Texts._2___Placeholder___0___is_not_defined_in_the_parent_rendering__Parent_rendering_has_these_placeholders___1__, placeholder, placeholders.Mid(1, placeholders.Length - 2), id), renderingTextNode, "Placeholder");
                 }
             }
 
             output.WriteAttributeString("ph", placeholder);
         }
 
-        protected virtual void WriteRendering([NotNull] LayoutResolveContext context, [NotNull] XmlTextWriter output, [NotNull] IEnumerable<Rendering> renderingItems, [NotNull] ITextNode renderingTextNode, [NotNull] string placeholders)
+        protected virtual void WriteRendering([NotNull] LayoutResolveContext context, [NotNull] XmlTextWriter output, [NotNull] IEnumerable<Item> renderingItems, [NotNull] ITextNode renderingTextNode, [NotNull] string placeholders)
         {
             string renderingItemId;
 
@@ -276,14 +276,14 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
 
             if (string.IsNullOrEmpty(renderingItemId))
             {
-                context.Trace.TraceError($"Unknown element \"{id}\".", renderingTextNode);
+                context.Field.WriteDiagnostic(Severity.Error, $"Unknown element \"{id}\".", renderingTextNode);
                 return;
             }
 
-            Rendering renderingItem;
+            Item renderingItem;
             if (renderingItemId.IsGuid())
             {
-                renderingItem = context.Project.Items.OfType<Rendering>().FirstOrDefault(i => i.Guid.Format() == renderingItemId);
+                renderingItem = context.Field.Item.Project.Items.OfType<Item>().FirstOrDefault(i => i.Guid.Format() == renderingItemId);
             }
             else
             {
@@ -291,13 +291,13 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
 
                 if (matches.Length == 0)
                 {
-                    context.Trace.TraceError($"Rendering \"{renderingItemId}\" not found.", renderingTextNode);
+                    context.Field.WriteDiagnostic(Severity.Error, $"Rendering \"{renderingItemId}\" not found.", renderingTextNode);
                     return;
                 }
 
                 if (matches.Length > 1)
                 {
-                    context.Trace.TraceError($"Ambiguous rendering match. {matches.Length} renderings match \"{renderingItemId}\".", renderingTextNode);
+                    context.Field.WriteDiagnostic(Severity.Error, $"Ambiguous rendering match. {matches.Length} renderings match \"{renderingItemId}\".", renderingTextNode);
                     return;
                 }
 
@@ -306,7 +306,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
 
             if (renderingItem == null)
             {
-                context.Trace.TraceError($"Rendering \"{renderingItemId}\" not found.", renderingTextNode);
+                context.Field.WriteDiagnostic(Severity.Error, $"Rendering \"{renderingItemId}\" not found.", renderingTextNode);
                 return;
             }
 
@@ -355,12 +355,12 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
             }
         }
 
-        private void WriteParameters([NotNull] LayoutResolveContext context, [NotNull] XmlTextWriter output, [NotNull] ITextNode renderingTextNode, [NotNull] Rendering renderingItem, [NotNull] string id)
+        private void WriteParameters([NotNull] LayoutResolveContext context, [NotNull] XmlTextWriter output, [NotNull] ITextNode renderingTextNode, [NotNull] Item renderingItem, [NotNull] string id)
         {
             var fields = new Dictionary<string, string>();
 
-            var parametersTemplateItemId = renderingItem.Item.Fields.FirstOrDefault(f => f.FieldName == "Parameters Template")?.Value ?? string.Empty;
-            var parametersTemplateItem = context.Project.FindQualifiedItem(parametersTemplateItemId) as Template;
+            var parametersTemplateItemId = renderingItem.Fields.FirstOrDefault(f => f.FieldName == "Parameters Template")?.Value ?? string.Empty;
+            var parametersTemplateItem = context.Field.Item.Project.FindQualifiedItem(parametersTemplateItemId) as Template;
             if (parametersTemplateItem != null)
             {
                 foreach (var field in parametersTemplateItem.Sections.SelectMany(s => s.Fields))
@@ -408,7 +408,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
                             {
                                 if (value != "True" && value != "False")
                                 {
-                                    context.Trace.TraceError($"{id}: Boolean parameter must have value \"True\", \"False\", \"{{Binding ... }}\" or \"{{@ ... }}\".", renderingTextNode, attributeName);
+                                    context.Field.WriteDiagnostic(Severity.Error, $"{id}: Boolean parameter must have value \"True\", \"False\", \"{{Binding ... }}\" or \"{{@ ... }}\".", renderingTextNode, attributeName);
                                 }
 
                                 value = value == "1" || string.Compare(value, "true", StringComparison.OrdinalIgnoreCase) == 0 ? "1" : "0";
@@ -419,12 +419,12 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
                 }
                 else
                 {
-                    context.Trace.TraceWarning(string.Format(Texts._1___Parameter___0___is_not_defined_in_the_parameters_template_, attributeName, id), renderingTextNode, attributeName);
+                    context.Field.WriteDiagnostic(Severity.Warning, string.Format(Texts._1___Parameter___0___is_not_defined_in_the_parameters_template_, attributeName, id), renderingTextNode, attributeName);
                 }
 
                 if (value.StartsWith("/sitecore", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    var item = context.Project.FindQualifiedItem(value);
+                    var item = context.Field.Item.Project.FindQualifiedItem(value);
                     if (item != null)
                     {
                         value = item.Guid.Format();

@@ -2,9 +2,9 @@
 version: 1
 id: {CEABE4B1-E915-4904-B396-BBC0C081F111}
 database: master
-path: /sitecore/content/Home/Pipper
+path: /sitecore/content/Home/SerializedItem
 parent: {110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}
-name: Pipper
+name: SerializedItem
 master: {00000000-0000-0000-0000-000000000000}
 template: {76036F5E-CBCE-46D1-AF0A-4143F9B557AA}
 templatekey: Sample Item

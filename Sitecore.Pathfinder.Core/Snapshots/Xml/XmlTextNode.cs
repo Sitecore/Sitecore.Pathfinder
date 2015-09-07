@@ -38,7 +38,7 @@ namespace Sitecore.Pathfinder.Snapshots.Xml
             var element = _node as XElement;
             if (element != null)
             {
-                return _innerText ?? (_innerText = new InnerTextNode(this, element));
+                return _innerText ?? (_innerText = new XmlInnerTextNode(this, element));
             }
 
             return null;

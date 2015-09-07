@@ -56,9 +56,9 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         }
 
         [NotNull]
-        protected virtual IEnumerable<IReference> ParseReferences([NotNull] ItemParseContext context, [NotNull] IProjectItem projectItem, [NotNull] ITextNode source, [NotNull] string text)
+        protected virtual IEnumerable<IReference> ParseReferences([NotNull] ItemParseContext context, [NotNull] IProjectItem projectItem, [NotNull] ITextNode textNode, [NotNull] string text)
         {
-            var reference = ParseReference(context, projectItem, source, text);
+            var reference = ParseReference(context, projectItem, textNode, text);
             if (reference != null)
             {
                 yield return reference;
@@ -70,7 +70,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
                 var parts = text.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var part in parts)
                 {
-                    reference = ParseReference(context, projectItem, source, part);
+                    reference = ParseReference(context, projectItem, textNode, part);
                     if (reference != null)
                     {
                         yield return reference;
@@ -96,7 +96,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
                 var value = urlString.Parameters[key];
 
-                reference = ParseReference(context, projectItem, source, value);
+                reference = ParseReference(context, projectItem, textNode, value);
                 if (reference != null)
                 {
                     yield return reference;

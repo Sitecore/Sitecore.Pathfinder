@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers.Xml
 
         public override bool CanParse(ItemParseContext context, ITextNode textNode)
         {
-            return textNode.Name == "LayoutField" && textNode.Snapshot is XmlTextSnapshot;
+            return textNode.Name == "Layout" && textNode.Snapshot is XmlTextSnapshot;
         }
     }
 }

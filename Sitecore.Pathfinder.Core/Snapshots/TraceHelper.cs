@@ -8,7 +8,7 @@ namespace Sitecore.Pathfinder.Snapshots
     public static class TraceHelper
     {
         [NotNull]
-        public static ITextNode FirstTextNode([NotNull] params IHasSourceTextNodes[] sourceTextNodes)
+        public static ITextNode GetTextNode([NotNull] params IHasSourceTextNodes[] sourceTextNodes)
         {
             foreach (var sourceTextNode in sourceTextNodes)
             {
@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Snapshots
                     continue;
                 }
 
-                var textNode = sourceTextNode.SourceTextNodes.FirstOrDefault(f => f != TextNode.Empty);
+                var textNode = sourceTextNode.SourceTextNodes.LastOrDefault(f => f != TextNode.Empty);
                 if (textNode != null)
                 {
                     return textNode;

@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Emitters.FieldResolvers
 
         public override string Resolve(Field field)
         {
-            var textNode = TraceHelper.FirstTextNode(field.ValueProperty);
+            var textNode = TraceHelper.GetTextNode(field.ValueProperty);
             if (textNode == TextNode.Empty)
             {
                 return field.Value.Mid(8);

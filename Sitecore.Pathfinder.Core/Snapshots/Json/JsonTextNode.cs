@@ -41,6 +41,11 @@ namespace Sitecore.Pathfinder.Snapshots.Json
             return new TextPosition(lineInfo.LineNumber, lineInfo.LinePosition + 1, lineLength);
         }
 
+        public override ITextNode GetInnerTextNode()
+        {
+            return new JsonInnerTextNode(this, _jtoken);
+        }
+
         public override bool SetName(string newName)
         {
             var property = _jtoken as JProperty;
