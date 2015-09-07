@@ -11,13 +11,13 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
     [Export(typeof(IFieldResolver))]
     public class ItemPathResolver : FieldResolverBase
     {
-        public ItemPathResolver() : base(Constants.FieldResolvers.Normal)
+        public ItemPathResolver() : base(Constants.FieldResolvers.Normal + 10)
         {
         }
 
         public override bool CanResolve(Field field)
         {
-            return field.Value.StartsWith("/sitecore", StringComparison.OrdinalIgnoreCase);
+            return field.Value.IndexOf("/sitecore", StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         public override string Resolve(Field field)

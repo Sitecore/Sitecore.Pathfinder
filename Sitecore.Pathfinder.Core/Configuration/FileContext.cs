@@ -40,9 +40,9 @@ namespace Sitecore.Pathfinder.Configuration
             var localFileName = "/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(project.Options.ProjectDirectory, sourceFile.FileName)).TrimStart('/');
 
             string database = null;
-            string itemPathConfig = string.Empty;
-            string localFileDirectory = string.Empty;
-            string serverFileDirectory = string.Empty;
+            var itemPathConfig = string.Empty;
+            var localFileDirectory = string.Empty;
+            var serverFileDirectory = string.Empty;
 
             foreach (var pair in configuration.GetSubKeys("files"))
             {

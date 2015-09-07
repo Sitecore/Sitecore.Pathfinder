@@ -13,6 +13,23 @@
     // build pipeline
     "pipeline": "lint nuget-pack",
 
+    // mapping of files between local path and server path and item path
+    "files": {
+         "html": {
+             "project-directory": "",
+             "include": "/*.html",
+             "website-directory": "/CleanBlog/layout/renderings",
+             "item-path": "/sitecore/layout/renderings/CleanBlog",
+             "database": "master"
+         },
+         "img": {
+             "project-directory": "/img",
+             "include": "**",
+             "website-directory": "",
+             "item-path": "/sitecore/media library/CleanBlog"
+         }
+    },
+    
     "external-references": {
         "{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}": "/sitecore/layout/Devices/Default",
         "{46D2F427-4CE5-4E1F-BA10-EF3636F43534}": "/sitecore/layout/Devices/Print",

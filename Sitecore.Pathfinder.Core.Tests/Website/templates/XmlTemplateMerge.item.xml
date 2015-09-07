@@ -1,4 +1,4 @@
-﻿<Template xmlns="http://www.sitecore.net/pathfinder/item" Name="Xml-Template" BaseTemplates="/sitecore/templates/System/Templates/Standard Template"
+﻿<Template xmlns="http://www.sitecore.net/pathfinder/item" Name="Xml-Template-Merge" BaseTemplates="/sitecore/templates/System/Templates/Standard Template"
     Icon="Applications/16x16/about.png" LongHelp="Long Help." ShortHelp="Short Help." Layout.HtmlFile="~/layout/renderings/HelloWorld.html">
     <Section Name="Fields" Icon="Applications/16x16/about.png">
         <Field Name="Title" Type="Single-Line Text" ShortHelp="Short Help." LongHelp="Long Help." Sharing="Shared" SortOrder="100" Source="/sitecore/content" />

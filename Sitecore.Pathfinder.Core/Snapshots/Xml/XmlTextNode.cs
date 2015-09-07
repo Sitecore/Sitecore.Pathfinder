@@ -9,7 +9,7 @@ namespace Sitecore.Pathfinder.Snapshots.Xml
 {
     public class XmlTextNode : TextNode
     {
-        private readonly XObject _node;
+        private XObject _node;
 
         private ITextNode _innerText;
 
@@ -72,6 +72,9 @@ namespace Sitecore.Pathfinder.Snapshots.Xml
                 attributes.Insert(n, newAttribute);
 
                 parent.ReplaceAttributes(attributes);
+
+                _node = newAttribute;
+                Name = newName;
 
                 Snapshot.IsModified = true;
                 return true;

@@ -9,7 +9,6 @@ using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Checking;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Documents;
 using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;

@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public IEnumerable<ITextNode> ChildNodes { get; } = Enumerable.Empty<ITextNode>();
 
-        public string Name { get; } = string.Empty;
+        public string Name => Value;
 
         public ITextNode Parent { get; } = null;
 

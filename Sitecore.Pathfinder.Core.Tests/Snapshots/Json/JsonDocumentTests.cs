@@ -2,10 +2,8 @@
 
 using System.Linq;
 using NUnit.Framework;
-using Sitecore.Pathfinder.Snapshots;
-using Sitecore.Pathfinder.Snapshots.Json;
 
-namespace Sitecore.Pathfinder.Documents.Json
+namespace Sitecore.Pathfinder.Snapshots.Json
 {
     [TestFixture]
     public class JsonDocumentTests : Tests

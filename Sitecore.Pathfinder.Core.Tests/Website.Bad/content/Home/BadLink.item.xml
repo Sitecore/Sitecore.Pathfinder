@@ -1,3 +1,0 @@
-﻿<Item xmlns="http://www.sitecore.net/pathfinder/item" Template.Create="/sitecore/templates/Sample/HelloWorld">
-    <Field Name="BadLink">/sitecore/media library/badlink</Field>
-</Item>

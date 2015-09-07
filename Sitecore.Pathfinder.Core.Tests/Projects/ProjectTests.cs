@@ -7,6 +7,7 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Pathfinder.Snapshots.Xml;
 
@@ -51,7 +52,7 @@ namespace Sitecore.Pathfinder.Projects
         public void FindUsagesTest()
         {
             var references = Services.QueryService.FindUsages(Project, "/sitecore/media library/mushrooms");
-            Assert.AreEqual(2, references.Count());
+            Assert.AreEqual(4, references.Count());
         }
 
         [Test]
@@ -102,17 +103,38 @@ namespace Sitecore.Pathfinder.Projects
 
             var treeNode = textDocument.Root;
             Assert.AreEqual("Item", treeNode.Name);
-            Assert.AreEqual(2, treeNode.Attributes.Count());
+            Assert.AreEqual(1, treeNode.Attributes.Count());
 
             var attr = treeNode.Attributes.First();
             Assert.AreEqual("Template", attr.Name);
             Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", attr.Value);
-            attr = treeNode.Attributes.ElementAt(1);
-            Assert.AreEqual("Template.CreateFromFields", attr.Name);
 
             var field = item.Fields.FirstOrDefault(f => f.FieldName == "Title");
             Assert.IsNotNull(field);
             Assert.AreEqual("Hello", field.Value);
+
+            var layout = item.Fields.FirstOrDefault(f => f.FieldName == "__Renderings");
+            Assert.IsNotNull(layout);
+            layout.Resolve();
+            Assert.AreEqual(@"<r>
+  <d id=""{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}"" l=""{5E9D5374-E00A-4053-9127-EBC96A02C721}"">
+    <r id=""{4E924ED2-1534-483A-49FD-85A6D99331EE}"" par=""Text=123"" />
+    <r id=""{4E924ED2-1534-483A-49FD-85A6D99331EE}"" par="""" />
+    <r id=""{4E924ED2-1534-483A-49FD-85A6D99331EE}"" par="""" />
+  </d>
+</r>", layout.ResolvedValue);
+        }
+
+        [Test]
+        public void JsonLayoutTest()
+        {
+            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/JsonLayout");
+            Assert.IsNotNull(projectItem);
+            Assert.AreEqual("JsonLayout", projectItem.ShortName);
+            Assert.AreEqual("/sitecore/content/Home/JsonLayout", projectItem.QualifiedName);
+
+            var item = projectItem as Item;
+            Assert.IsNotNull(item);
 
             var layout = item.Fields.FirstOrDefault(f => f.FieldName == "__Renderings");
             Assert.IsNotNull(layout);
@@ -251,6 +273,7 @@ namespace Sitecore.Pathfinder.Projects
             Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", item.TemplateIdOrPathProperty.SourceTextNode?.Value);
             Assert.AreEqual("Template", item.TemplateIdOrPathProperty.SourceTextNode?.Name);
 
+            // text field
             var field = item.Fields.FirstOrDefault(f => f.FieldName == "Title");
             Assert.IsNotNull(field);
             Assert.AreEqual("Hello", field.Value);
@@ -266,6 +289,38 @@ namespace Sitecore.Pathfinder.Projects
             Assert.AreEqual("Template", attr.Name);
             Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", attr.Value);
 
+            // link field
+            var linkField = item.Fields.FirstOrDefault(f => f.FieldName == "Link");
+            Assert.IsNotNull(linkField);
+            Assert.AreEqual("/sitecore/media library/mushrooms", linkField.Value);
+            linkField.Resolve();
+            Assert.AreEqual("<link text=\"\" linktype=\"internal\" url=\"\" anchor=\"\" title=\"\" class=\"\" target=\"\" querystring=\"\" id=\"{7DAFA53F-6355-4C85-643A-9608E6B92BE6}\" />", linkField.ResolvedValue);
+
+            // image field
+            var imageField = item.Fields.FirstOrDefault(f => f.FieldName == "Image");
+            Assert.IsNotNull(imageField);
+            Assert.AreEqual("/sitecore/media library/mushrooms", imageField.Value);
+            imageField.Resolve();
+            Assert.AreEqual("<image mediapath=\"\" alt=\"\" width=\"\" height=\"\" hspace=\"\" vspace=\"\" showineditor=\"\" usethumbnail=\"\" src=\"\" mediaid=\"{7DAFA53F-6355-4C85-643A-9608E6B92BE6}\" />", imageField.ResolvedValue);
+
+            // implicit link field
+            var itemPathField = item.Fields.FirstOrDefault(f => f.FieldName == "ItemPath");
+            Assert.IsNotNull(itemPathField);
+            Assert.AreEqual("/sitecore/media library/mushrooms", itemPathField.Value);
+            itemPathField.Resolve();
+            Assert.AreEqual("{7DAFA53F-6355-4C85-643A-9608E6B92BE6}", itemPathField.ResolvedValue);
+
+            // checkbox fields
+            var checkBoxField = item.Fields.FirstOrDefault(f => f.FieldName == "TrueCheckbox");
+            Assert.IsNotNull(checkBoxField);
+            checkBoxField.Resolve();
+            Assert.AreEqual("1", checkBoxField.ResolvedValue);
+            checkBoxField = item.Fields.FirstOrDefault(f => f.FieldName == "FalseCheckbox");
+            Assert.IsNotNull(checkBoxField);
+            checkBoxField.Resolve();
+            Assert.AreEqual(string.Empty, checkBoxField.ResolvedValue);
+
+            // layout field
             var layout = item.Fields.FirstOrDefault(f => f.FieldName == "__Renderings");
             Assert.IsNotNull(layout);
             layout.Resolve();
@@ -302,26 +357,16 @@ namespace Sitecore.Pathfinder.Projects
         }
 
         [Test]
-        public void JsonLayoutTest()
+        public void TemplateMergeTest()
         {
-            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/JsonLayout");
-            Assert.IsNotNull(projectItem);
-            Assert.AreEqual("JsonLayout", projectItem.ShortName);
-            Assert.AreEqual("/sitecore/content/Home/JsonLayout", projectItem.QualifiedName);
+            var template = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/templates/Xml-Template-Merge") as Template;
+            Assert.IsNotNull(template);
 
-            var item = projectItem as Item;
-            Assert.IsNotNull(item);
-
-            var layout = item.Fields.FirstOrDefault(f => f.FieldName == "__Renderings");
-            Assert.IsNotNull(layout);
-            layout.Resolve();
-            Assert.AreEqual(@"<r>
-  <d id=""{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}"" l=""{5E9D5374-E00A-4053-9127-EBC96A02C721}"">
-    <r id=""{4E924ED2-1534-483A-49FD-85A6D99331EE}"" par=""Text=123"" />
-    <r id=""{4E924ED2-1534-483A-49FD-85A6D99331EE}"" par="""" />
-    <r id=""{4E924ED2-1534-483A-49FD-85A6D99331EE}"" par="""" />
-  </d>
-</r>", layout.ResolvedValue);
+            Assert.AreEqual(2, template.Sections.Count);
+            Assert.AreEqual("Fields", template.Sections.First().SectionName);
+            Assert.AreEqual(3, template.Sections.First().Fields.Count);
+            Assert.AreEqual("Data", template.Sections.ElementAt(1).SectionName);
+            Assert.AreEqual(2, template.Sections.Last().Fields.Count);
         }
     }
 }

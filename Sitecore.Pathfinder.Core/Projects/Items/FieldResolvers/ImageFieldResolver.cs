@@ -34,7 +34,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
                 return string.Empty;
             }
 
-            return $"<image mediapath=\"\" alt=\"Vista15\" width=\"\" height=\"\" hspace=\"\" vspace=\"\" showineditor=\"\" usethumbnail=\"\" src=\"\" mediaid=\"{item.Guid.Format()}\" />";
+            return $"<image mediapath=\"\" alt=\"\" width=\"\" height=\"\" hspace=\"\" vspace=\"\" showineditor=\"\" usethumbnail=\"\" src=\"\" mediaid=\"{item.Guid.Format()}\" />";
         }
     }
 }

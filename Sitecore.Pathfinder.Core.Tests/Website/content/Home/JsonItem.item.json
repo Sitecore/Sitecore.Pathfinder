@@ -2,7 +2,6 @@
     "$schema": "../../../../sitecore.pathfinder.console/files/project/sitecore.project/schemas/item.schema.json#",
     "Item": {
         "Template": "/sitecore/templates/Sample/HelloWorld",
-        "Template.CreateFromFields": true,
         "Fields": [
             {
                 "Name": "Title",

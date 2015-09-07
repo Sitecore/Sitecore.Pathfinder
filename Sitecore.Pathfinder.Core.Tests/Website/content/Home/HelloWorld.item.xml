@@ -2,6 +2,10 @@
     <Field Name="Title">Hello</Field>
     <Field Name="Text">Hello World</Field>
     <Field Name="Image" Field.Type="Image">/sitecore/media library/mushrooms</Field>
+    <Field Name="Link" Field.Type="General Link">/sitecore/media library/mushrooms</Field>
+    <Field Name="ItemPath">/sitecore/media library/mushrooms</Field>
+    <Field Name="TrueCheckbox" Field.Type="Checkbox">True</Field>
+    <Field Name="FalseCheckbox" Field.Type="Checkbox">False</Field>
     <Field Name="__Workflow"></Field>
     <Field Name="__Workflow State"></Field>
     <Layout>

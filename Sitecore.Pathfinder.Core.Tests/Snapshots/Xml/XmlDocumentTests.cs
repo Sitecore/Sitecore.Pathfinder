@@ -2,10 +2,8 @@
 
 using System.Linq;
 using NUnit.Framework;
-using Sitecore.Pathfinder.Snapshots;
-using Sitecore.Pathfinder.Snapshots.Xml;
 
-namespace Sitecore.Pathfinder.Documents.Xml
+namespace Sitecore.Pathfinder.Snapshots.Xml
 {
     [TestFixture]
     public class XmlDocumentTests : Tests

@@ -1,0 +1,8 @@
+﻿<Item xmlns="http://www.sitecore.net/pathfinder/item" Template="/sitecore/templates/Sample/HelloWorld" Template.CreateFromFields="True">
+    <Field Name="BadLink">/sitecore/media library/badlink</Field>
+    <Field Name="BadLink1" Field.Type="General Link">/sitecore/media library/badlink</Field>
+    <Field Name="BadLink2" Field.Type="General Link"></Field>
+    <Field Name="Multiple">/sitecore/media library/badlink|/sitecore/media library/badlink</Field>
+    <Field Name="BadImage" Field.Type="Image">/sitecore/media library/badlink</Field>
+    <Field Name="BadImage2" Field.Type="Image"></Field>
+</Item>
