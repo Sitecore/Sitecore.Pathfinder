@@ -3,6 +3,7 @@
 using System;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -18,31 +19,57 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         {
             var itemNameTextNode = GetItemNameTextNode(context.ParseContext, textNode);
             var parentItemPath = textNode.GetAttributeValue("Parent-Item-Path", context.ParentItemPath);
-            var itemIdOrPath = parentItemPath + "/" + itemNameTextNode.Value;
+            var itemIdOrPath = PathHelper.CombineItemPath(parentItemPath, itemNameTextNode.Value);
             var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
+            var databaseName = textNode.GetAttributeValue("Database", context.DatabaseName);
 
-            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemNameTextNode.Value, itemIdOrPath, textNode.Name);
+            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, databaseName, itemNameTextNode.Value, itemIdOrPath, textNode.Name);
             item.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
             item.TemplateIdOrPathProperty.AddSourceTextNode(new AttributeNameTextNode(textNode));
+            item.IsEmittable = string.Compare(textNode.GetAttributeValue("IsEmittable"), "False", StringComparison.OrdinalIgnoreCase) != 0;
+            item.IsExternalReference = string.Compare(textNode.GetAttributeValue("IsExternalReference"), "True", StringComparison.OrdinalIgnoreCase) == 0;
 
-            item.References.AddRange(ParseReferences(context, item, textNode, item.TemplateIdOrPath));
+            if (!item.IsExternalReference)
+            {
+                item.References.AddRange(ParseReferences(context, item, textNode, item.TemplateIdOrPath));
+            }
 
             ParseAttributes(context, item, textNode);
+
+            ParseChildNodes(context, item, textNode);
 
             context.ParseContext.Project.AddOrMerge(context.ParseContext, item);
         }
 
-        protected abstract void ParseAttributes([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode textNode);
+        protected virtual void ParseAttributes([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode textNode)
+        {
+            foreach (var childTreeNode in textNode.Attributes)
+            {
+                ParseFieldTreeNode(context, item, childTreeNode);
+            }
+        }
+
+        protected virtual void ParseChildNodes([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode textNode)
+        {
+            foreach (var childTreeNode in textNode.ChildNodes)
+            {
+                var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, item.ItemIdOrPath);
+                context.Parser.ParseTextNode(newContext, childTreeNode);
+            }
+        }
 
         protected virtual void ParseFieldTreeNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode fieldTextNode)
         {
             var fieldName = fieldTextNode.Name;
 
-            if (fieldName == "Name" || fieldName == "Id" || fieldName == "Parent-Item-Path")
+            if (fieldName == "Name" || fieldName == "Id" || fieldName == "Parent-Item-Path" || fieldName == "IsEmittable" || fieldName == "IsExternalReference" || fieldName == "Database")
             {
                 return;
             }
-            
+
+            // support for spaces in field names - use "--"
+            fieldName = fieldName.Replace("--", " ");
+
             // check if field is already defined
             var field = item.Fields.FirstOrDefault(f => string.Compare(f.FieldName, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
             if (field != null)
@@ -57,7 +84,10 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
             item.Fields.Add(field);
 
-            item.References.AddRange(ParseReferences(context, item, fieldTextNode, field.Value));
+            if (!item.IsExternalReference)
+            {
+                item.References.AddRange(ParseReferences(context, item, fieldTextNode, field.Value));
+            }
         }
     }
 }

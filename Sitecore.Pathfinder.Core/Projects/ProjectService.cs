@@ -42,7 +42,6 @@ namespace Sitecore.Pathfinder.Projects
         {
             var projectOptions = CreateProjectOptions();
 
-            LoadExternalReferences(projectOptions);
             LoadStandardTemplateFields(projectOptions);
 
             var sourceFileNames = new List<string>();
@@ -60,26 +59,6 @@ namespace Sitecore.Pathfinder.Projects
             var databaseName = Configuration.GetString(Constants.Configuration.Database);
 
             return Factory.ProjectOptions(projectDirectory, databaseName);
-        }
-
-        protected virtual void LoadExternalReferences([NotNull] ProjectOptions projectOptions)
-        {
-            foreach (var pair in Configuration.GetSubKeys(Constants.Configuration.ExternalReferences))
-            {
-                Guid guid;
-                if (!Guid.TryParse(pair.Key, out guid))
-                {
-                    throw new InvalidOperationException($"External reference Guid is not valid: {pair.Key}");
-                }
-
-                var value = Configuration.Get(Constants.Configuration.ExternalReferences + ":" + pair.Key);
-                if (string.IsNullOrEmpty(value))
-                {
-                    throw new InvalidOperationException($"External reference path is not valid: {pair.Key}");
-                }
-
-                projectOptions.ExternalReferences.Add(new Tuple<Guid, string>(guid, value));
-            }
         }
 
         protected virtual void LoadStandardTemplateFields([NotNull] ProjectOptions projectOptions)

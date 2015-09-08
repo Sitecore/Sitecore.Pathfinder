@@ -227,6 +227,12 @@
     <None Include="files\project\sitecore.filetemplates\gruntfile.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Content Include="files\project\sitecore.project\core.master.content.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\project\sitecore.project\master.master.content.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="files\website\sitecore\shell\client\Applications\Pathfinder\packageDefaultIcon-50x50.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

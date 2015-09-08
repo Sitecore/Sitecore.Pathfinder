@@ -14,8 +14,13 @@ namespace Sitecore.Pathfinder
         };
 
         public static readonly char[] Pipe =
-        {                                              
+        {
             '|'
+        };
+
+        public static readonly char[] Semicolon =
+        {
+            ';'
         };
 
         public static readonly char[] Slash =
@@ -26,11 +31,6 @@ namespace Sitecore.Pathfinder
         public static readonly char[] Space =
         {
             ' '
-        };
-
-        public static readonly char[] Semicolon =
-        {
-            ';'
         };
 
         public static class Configuration
@@ -47,9 +47,9 @@ namespace Sitecore.Pathfinder
 
             public const string Debug = "system:debug";
 
-            public const string ExternalReferences = "external-references";
+            public const string DependenciesDirectory = "dependencies-directory";
 
-            public const string StandardTemplateFields = "standard-template-fields";
+            public const string ExternalReferences = "external-references";
 
             public const string HostName = "host-name";
 
@@ -78,7 +78,8 @@ namespace Sitecore.Pathfinder
             public const string RemapFileDirectories = "remap-file-directories";
 
             public const string SolutionDirectory = "solutiondirectory";
-            public const string DependenciesDirectory = "dependencies-directory";
+
+            public const string StandardTemplateFields = "standard-template-fields";
 
             public const string SystemConfigFileName = "system:config";
 

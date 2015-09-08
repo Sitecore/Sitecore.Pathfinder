@@ -48,6 +48,7 @@ namespace Sitecore.Pathfinder.Projects
         private Project()
         {
             Options = ProjectOptions.Empty;
+            _projectUniqueId = "{00000000-0000-0000-0000-000000000000}";
         }
 
         public ICollection<Diagnostic> Diagnostics => _diagnostics;
@@ -131,12 +132,8 @@ namespace Sitecore.Pathfinder.Projects
 
             var context = CompositionService.Resolve<IParseContext>().With(this, Snapshot.Empty);
 
-            // todo: external references must have correct id!
-            foreach (var externalReference in Options.ExternalReferences)
-            {
-                var projectItem = Factory.ExternalReferenceItem(this, externalReference.Item1.Format(), Snapshot.Empty, Options.DatabaseName, Path.GetFileName(externalReference.Item2) ?? string.Empty, externalReference.Item2);
-                AddOrMerge(context, projectItem);
-            }
+            Add(PathHelper.Combine(context.Configuration.GetString(Constants.Configuration.SolutionDirectory), "sitecore.project\\master.master.content.xml"));
+            Add(PathHelper.Combine(context.Configuration.GetString(Constants.Configuration.SolutionDirectory), "sitecore.project\\core.master.content.xml"));
 
             foreach (var sourceFileName in sourceFileNames)
             {
@@ -210,6 +207,17 @@ namespace Sitecore.Pathfinder.Projects
             return Items.FirstOrDefault(i => string.Compare(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase) == 0);
         }
 
+        public T FindQualifiedItem<T>(string qualifiedName) where T: IProjectItem
+        {
+            Guid guid;
+            if (Guid.TryParse(qualifiedName, out guid))
+            {
+                return Items.OfType<T>().FirstOrDefault(i => i.Guid == guid);
+            }
+
+            return Items.OfType<T>().FirstOrDefault(i => string.Compare(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase) == 0);
+        }
+
         [NotNull]
         protected virtual IProjectItem MergeItem<T>([NotNull] IParseContext context, [NotNull] T newItem) where T : Item
         {
@@ -226,7 +234,7 @@ namespace Sitecore.Pathfinder.Projects
 
             if (item == null)
             {
-                item = Items.OfType<Item>().FirstOrDefault(i => string.Compare(i.ItemIdOrPath, newItem.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) == 0);
+                item = Items.OfType<Item>().FirstOrDefault(i => string.Compare(i.ItemIdOrPath, newItem.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) == 0 && string.Compare(i.DatabaseName, newItem.DatabaseName, StringComparison.OrdinalIgnoreCase) == 0);
             }
 
             if (item == null)
@@ -242,7 +250,7 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         protected virtual IProjectItem MergeTemplate<T>([NotNull] IParseContext context, [NotNull] T newTemplate) where T : Template
         {
-            var template = Items.OfType<Template>().FirstOrDefault(i => string.Compare(i.ItemIdOrPath, newTemplate.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) == 0);
+            var template = Items.OfType<Template>().FirstOrDefault(i => string.Compare(i.ItemIdOrPath, newTemplate.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) == 0 && string.Compare(i.DatabaseName, newTemplate.DatabaseName, StringComparison.OrdinalIgnoreCase) == 0);
             if (template == null)
             {
                 _items.Add(newTemplate);

@@ -78,9 +78,9 @@ namespace Sitecore.Pathfinder.Configuration
             return new Item(project, projectUniqueId, textNode, databaseName, itemName, itemIdOrPath, templateIdOrPath);
         }
 
-        public virtual ItemParseContext ItemParseContext(IParseContext context, ItemParser itemParser, string parentItemPath)
+        public virtual ItemParseContext ItemParseContext(IParseContext context, ItemParser itemParser, string databaseName, string parentItemPath)
         {
-            return new ItemParseContext(context, itemParser, parentItemPath);
+            return new ItemParseContext(context, itemParser, databaseName, parentItemPath);
         }
 
         public virtual LayoutReference LayoutReference(IProjectItem projectItem, SourceProperty<string> layoutSourceProperty, string targetQualifiedName)

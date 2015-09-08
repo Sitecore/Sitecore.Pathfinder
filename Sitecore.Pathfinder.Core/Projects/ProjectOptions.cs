@@ -20,9 +20,6 @@ namespace Sitecore.Pathfinder.Projects
         public string DatabaseName { get; }
 
         [NotNull]
-        public ICollection<Tuple<Guid, string>> ExternalReferences { get; } = new List<Tuple<Guid, string>>();
-
-        [NotNull]
         public string ProjectDirectory { get; }
 
         [NotNull]

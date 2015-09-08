@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
         public override void Emit(IEmitContext context, IProjectItem projectItem)
         {
             var item = (Item)projectItem;
-            if (!item.IsEmittable)
+            if (!item.IsEmittable || item.IsExternalReference)
             {
                 return;
             }

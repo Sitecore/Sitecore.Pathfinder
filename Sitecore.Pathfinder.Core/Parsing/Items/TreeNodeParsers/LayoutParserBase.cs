@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.References;
@@ -19,10 +20,11 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         public override void Parse(ItemParseContext context, ITextNode textNode)
         {
             var itemNameTextNode = GetItemNameTextNode(context.ParseContext, textNode);
-            var itemIdOrPath = context.ParentItemPath + "/" + itemNameTextNode.Value;
+            var itemIdOrPath = PathHelper.CombineItemPath(context.ParentItemPath, itemNameTextNode.Value);
             var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
+            var databaseName = textNode.GetAttributeValue("Database", context.DatabaseName);
 
-            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemNameTextNode.Value, itemIdOrPath, string.Empty);
+            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, databaseName, itemNameTextNode.Value, itemIdOrPath, string.Empty);
             item.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
 
             Parse(context, textNode, item);

@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Snapshots;
@@ -65,8 +66,15 @@ namespace Sitecore.Pathfinder.Projects
 
         private void SetGuid()
         {
+            var projectUniqueId = ProjectUniqueId;
+            var n = projectUniqueId.LastIndexOf('/');
+            if (n >= 0)
+            {
+                projectUniqueId = projectUniqueId.Mid(n + 1);
+            }
+
             Guid guid;
-            if (!Guid.TryParse(ProjectUniqueId, out guid))
+            if (!Guid.TryParse(projectUniqueId, out guid))
             {
                 // calculate guid from project unique id and project id
                 var text = Project.ProjectUniqueId + "/" + ProjectUniqueId;

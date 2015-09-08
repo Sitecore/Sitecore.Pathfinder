@@ -1,7 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing;
@@ -14,6 +13,11 @@ namespace Sitecore.Pathfinder.Projects
     {
         [NotNull]
         ICollection<Diagnostic> Diagnostics { get; }
+
+        long Ducats { get; set; }
+
+        [NotNull]
+        IEnumerable<IFieldResolver> FieldResolvers { get; }
 
         [NotNull]
         IFileSystemService FileSystem { get; }
@@ -32,16 +36,17 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         ICollection<ISourceFile> SourceFiles { get; }
 
-        long Ducats { get; set; }
-
         void Add([NotNull] string sourceFileName);
 
         T AddOrMerge<T>([NotNull] IParseContext context, [NotNull] T projectItem) where T : IProjectItem;
 
         void Compile();
 
-        [NotNull]
-        IEnumerable<IFieldResolver> FieldResolvers { get; }
+        [CanBeNull]
+        IProjectItem FindQualifiedItem([NotNull] string qualifiedName);
+
+        [CanBeNull]
+        T FindQualifiedItem<T>([NotNull] string qualifiedName) where T : IProjectItem;
 
         [NotNull]
         IProject Load([NotNull] ProjectOptions projectOptions, [NotNull] IEnumerable<string> sourceFileNames);
@@ -51,8 +56,5 @@ namespace Sitecore.Pathfinder.Projects
         void Remove([NotNull] string sourceFileName);
 
         void SaveChanges();
-
-        [CanBeNull]
-        IProjectItem FindQualifiedItem([NotNull] string qualifiedName);
     }
 }

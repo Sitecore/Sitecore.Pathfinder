@@ -62,8 +62,14 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
         }
 
         [NotNull]
-        protected virtual string GetPlaceholders([NotNull] LayoutResolveContext context, [NotNull] ITextNode renderingTextNode, [NotNull] Item item)
+        protected virtual string GetPlaceholders([NotNull] LayoutResolveContext context, [NotNull] ITextNode renderingTextNode, [NotNull] IProjectItem projectItem)
         {
+            var item = projectItem as Item;
+            if (item == null)
+            {
+                return string.Empty;
+            }
+
             var id = renderingTextNode.GetAttributeValue("Id");
             var result = ",";
 
@@ -81,6 +87,8 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
 
                     result += placeholderName + ",";
                 }
+
+                return result;
             }
 
             foreach (var placeholderName in AnalyzeFile(context, item, true))
@@ -174,8 +182,8 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
             }
             else
             {
-                // todo: get device from project
-                var devices = context.Field.Item.Project.Items.OfType<ExternalReferenceItem>().Where(i => i.ItemIdOrPath.StartsWith("/sitecore/layout/Devices/")).ToList();
+                // todo: use proper template id or name
+                var devices = context.Field.Item.Project.Items.OfType<Item>().Where(i => i.TemplateIdOrPath == "Device").ToList();
                 if (!devices.Any())
                 {
                     context.Field.WriteDiagnostic(Severity.Error, Texts.Device_item_not_found, deviceTextNode);
@@ -198,7 +206,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
             var layoutPath = deviceTextNode.GetAttributeTextNode("Layout");
             if (layoutPath != null && !string.IsNullOrEmpty(layoutPath.Value))
             {
-                var l = context.Field.Item.Project.FindQualifiedItem(layoutPath.Value) as Item;
+                var l = context.Field.Item.Project.FindQualifiedItem(layoutPath.Value);
                 if (l == null)
                 {
                     context.Field.WriteDiagnostic(Severity.Error, Texts.Layout_not_found_, layoutPath.Value);
@@ -389,8 +397,8 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
                 return Enumerable.Empty<string>();
             }
 
-            var path = PathHelper.Combine(item.Project.Options.ProjectDirectory, pathField.Value);
-            if (context.FileSystem.FileExists(path))
+            var path = PathHelper.Combine(item.Project.Options.ProjectDirectory, pathField.Value.TrimStart('/'));
+            if (!context.FileSystem.FileExists(path))
             {
                 return Enumerable.Empty<string>();
             }

@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing.Pipelines.ItemParserPipelines;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
@@ -21,18 +22,25 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         public override void Parse(ItemParseContext context, ITextNode textNode)
         {
             var itemNameTextNode = GetItemNameTextNode(context.ParseContext, textNode);
-            var itemIdOrPath = context.ParentItemPath + "/" + itemNameTextNode.Value;
+            var itemIdOrPath = PathHelper.CombineItemPath(context.ParentItemPath, itemNameTextNode.Value);
             var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
-            var templateIdOrPathTextNode = GetTemplateIdOrPathTextNode(context, textNode);
+            var databaseName = textNode.GetAttributeValue("Database", context.DatabaseName);
+            var templateIdOrPathTextNode = GetTemplateIdOrPathTextNode(context, databaseName, textNode);
             var templateIdOrPath = templateIdOrPathTextNode?.Value ?? string.Empty;
 
-            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemNameTextNode.Value, itemIdOrPath, templateIdOrPath);
+            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, databaseName, itemNameTextNode.Value, itemIdOrPath, templateIdOrPath);
             item.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
+            item.IsEmittable = string.Compare(textNode.GetAttributeValue("IsEmittable"), "False", StringComparison.OrdinalIgnoreCase) != 0;
+            item.IsExternalReference = string.Compare(textNode.GetAttributeValue("IsExternalReference"), "True", StringComparison.OrdinalIgnoreCase) == 0;
 
             if (templateIdOrPathTextNode != null)
             {
                 item.TemplateIdOrPathProperty.AddSourceTextNode(templateIdOrPathTextNode);
-                item.References.AddRange(ParseReferences(context, item, templateIdOrPathTextNode, templateIdOrPathTextNode.Value));
+
+                if (!item.IsExternalReference)
+                {
+                    item.References.AddRange(ParseReferences(context, item, templateIdOrPathTextNode, templateIdOrPathTextNode.Value));
+                }
             }
 
             context.ParseContext.PipelineService.Resolve<ItemParserPipeline>().Execute(context, item, textNode);
@@ -43,7 +51,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         }
 
         [CanBeNull]
-        protected virtual ITextNode GetTemplateIdOrPathTextNode([NotNull] ItemParseContext context, [NotNull] ITextNode textNode)
+        protected virtual ITextNode GetTemplateIdOrPathTextNode([NotNull] ItemParseContext context, string databaseName, [NotNull] ITextNode textNode)
         {
             // todo: consider moving template into the ItemParserPipeline
             var templateIdOrPath = textNode.GetAttributeTextNode("Template");
@@ -60,7 +68,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
                 return null;
             }
 
-            ParseTemplate(context, textNode, templateIdOrPath);
+            ParseTemplate(context, textNode, databaseName, templateIdOrPath);
 
             return templateIdOrPath;
         }
@@ -120,21 +128,21 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
             item.Fields.Add(field);
 
-            if (!field.ValueHint.Contains("NoReference"))
+            if (!item.IsExternalReference && !field.ValueHint.Contains("NoReference"))
             {
                 item.References.AddRange(ParseReferences(context, item, TraceHelper.GetTextNode(field.ValueProperty), field.Value));
             }
         }
 
         [NotNull]
-        protected virtual Template ParseTemplate([NotNull] ItemParseContext context, [NotNull] ITextNode itemTextNode, [NotNull] ITextNode templateIdOrPathTextNode)
+        protected virtual Template ParseTemplate([NotNull] ItemParseContext context, [NotNull] ITextNode itemTextNode, string databaseName, [NotNull] ITextNode templateIdOrPathTextNode)
         {
             var itemIdOrPath = templateIdOrPathTextNode.Value;
 
             var itemName = itemIdOrPath.Mid(itemIdOrPath.LastIndexOf('/') + 1);
             var projectUniqueId = itemTextNode.GetAttributeValue("Template.Id", itemIdOrPath);
 
-            var template = context.ParseContext.Factory.Template(context.ParseContext.Project, projectUniqueId, itemTextNode, context.ParseContext.DatabaseName, itemName, itemIdOrPath);
+            var template = context.ParseContext.Factory.Template(context.ParseContext.Project, projectUniqueId, itemTextNode, databaseName, itemName, itemIdOrPath);
 
             template.ItemName = itemName;
             template.ItemNameProperty.AddSourceTextNode(templateIdOrPathTextNode);

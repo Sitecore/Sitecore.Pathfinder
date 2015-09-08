@@ -3,7 +3,6 @@
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
-using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
@@ -46,6 +45,12 @@ namespace Sitecore.Pathfinder.IO
             }
 
             return path;
+        }
+
+        [NotNull]
+        public static string CombineItemPath([NotNull] string path1, [NotNull] string path2)
+        {
+            return path1.TrimEnd('/') + "/" + path2.Trim('/');
         }
 
         public static bool CompareFiles([NotNull] string sourceFileName, [NotNull] string destinationFileName)

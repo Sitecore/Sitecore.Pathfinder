@@ -2,6 +2,7 @@
 
 using System.ComponentModel.Composition;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Pathfinder.Snapshots.Json;
@@ -37,7 +38,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers.Json
                 }
                 else
                 {
-                    var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, context.ParentItemPath + "/" + childTreeNode.Name);
+                    var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, PathHelper.CombineItemPath(context.ParentItemPath, childTreeNode.Name));
                     context.Parser.ParseTextNode(newContext, childTreeNode);
                 }
             }

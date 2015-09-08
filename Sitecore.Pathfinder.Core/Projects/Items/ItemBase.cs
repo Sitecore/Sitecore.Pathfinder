@@ -10,7 +10,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 {
     public abstract class ItemBase : ProjectItem, IHasSourceTextNodes
     {
-        protected ItemBase([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, projectUniqueId, textNode.Snapshot)
+        protected ItemBase([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, databaseName + "/" + projectUniqueId, textNode.Snapshot)
         {
             DatabaseName = databaseName;
             ItemName = itemName;
@@ -32,6 +32,8 @@ namespace Sitecore.Pathfinder.Projects.Items
         public SourceProperty<string> IconProperty { get; } = new SourceProperty<string>("Icon", string.Empty);
 
         public bool IsEmittable { get; set; } = true;
+
+        public bool IsExternalReference { get; set; }
 
         [NotNull]
         public string ItemIdOrPath { get; private set; }
@@ -90,6 +92,7 @@ namespace Sitecore.Pathfinder.Projects.Items
             }
 
             IsEmittable = IsEmittable || newItemBase.IsEmittable;
+            IsExternalReference = IsExternalReference || newItemBase.IsExternalReference;
 
             References.AddRange(newItemBase.References);
         }

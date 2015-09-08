@@ -65,12 +65,6 @@
     // files to copy to website
     "content-files": ".js .css .config .htm .ashx .asmx",
 
-    "external-references": {
-        "{962B53C4-F93B-4DF9-9821-415C867B8903}": "/sitecore/templates/System/Media/Unversioned/File",
-        "{1930BBEB-7805-471A-A3BE-4858AC7CF696}": "/sitecore/templates/System/Templates/Standard template",
-        "{3A45A723-64EE-4919-9D41-02FD40FD1466}": "/sitecore/templates/System/Layout/Layout"
-    },
-
     "standard-template-fields": {
         "{56C15C6D-FD5A-40CA-BB37-64CEEC6A9BD5}": "__Archive date",
         "{1D99005E-65CA-45CA-9D9A-FD7016E23F1E}": "__Archive Version date",

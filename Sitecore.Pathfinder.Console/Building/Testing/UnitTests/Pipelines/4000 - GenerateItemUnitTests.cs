@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Building.Testing.UnitTests.Pipelines
         {
             foreach (var item in pipeline.Context.Project.Items.OfType<Item>())
             {
-                if (!item.IsEmittable)
+                if (!item.IsEmittable || item.IsExternalReference)
                 {
                     continue;
                 }

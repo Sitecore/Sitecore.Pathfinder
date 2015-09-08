@@ -4,6 +4,7 @@ using System;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -24,10 +25,11 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         public override void Parse(ItemParseContext context, ITextNode textNode)
         {
             var itemNameTextNode = GetItemNameTextNode(context.ParseContext, textNode);
-            var itemIdOrPath = context.ParentItemPath + "/" + itemNameTextNode.Value;
+            var itemIdOrPath = PathHelper.CombineItemPath(context.ParentItemPath, itemNameTextNode.Value);
             var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
+            var databaseName = textNode.GetAttributeValue("Database", context.DatabaseName);
 
-            var template = context.ParseContext.Factory.Template(context.ParseContext.Project, projectUniqueId, textNode, context.ParseContext.DatabaseName, itemNameTextNode.Value, itemIdOrPath);
+            var template = context.ParseContext.Factory.Template(context.ParseContext.Project, projectUniqueId, textNode, databaseName, itemNameTextNode.Value, itemIdOrPath);
             template.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
             template.BaseTemplatesProperty.Parse(textNode, Constants.Templates.StandardTemplate);
             template.IconProperty.Parse(textNode);
@@ -38,7 +40,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
             // create standard values item
             var standardValuesItemIdOrPath = itemIdOrPath + "/__Standard Values";
-            var standardValuesItem = context.ParseContext.Factory.Item(context.ParseContext.Project, standardValuesItemIdOrPath, textNode, context.ParseContext.DatabaseName, "__Standard Values", standardValuesItemIdOrPath, itemIdOrPath);
+            var standardValuesItem = context.ParseContext.Factory.Item(context.ParseContext.Project, standardValuesItemIdOrPath, textNode, databaseName, "__Standard Values", standardValuesItemIdOrPath, itemIdOrPath);
 
             template.StandardValuesItem = standardValuesItem;
 
