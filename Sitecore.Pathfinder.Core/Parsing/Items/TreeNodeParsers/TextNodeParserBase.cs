@@ -27,11 +27,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         [NotNull]
         protected virtual ITextNode GetItemNameTextNode([NotNull] IParseContext context, [NotNull] ITextNode textNode, [NotNull] string attributeName = "Name")
         {
-            var itemNameTextNode = textNode.GetAttributeTextNode(attributeName);
-
-            var source = itemNameTextNode ?? new FileNameTextNode(context.ItemName, textNode.Snapshot);
-
-            return source;
+            return textNode.GetAttributeTextNode(attributeName) ?? new FileNameTextNode(context.ItemName, textNode.Snapshot);
         }
 
         [CanBeNull]

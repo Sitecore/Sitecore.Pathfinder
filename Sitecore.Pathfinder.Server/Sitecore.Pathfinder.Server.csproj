@@ -166,11 +166,6 @@
     <Compile Include="Configuration\PathfinderSettings.cs" />
     <Compile Include="Diagnostics\EmitException.cs" />
     <Compile Include="Diagnostics\RetryableEmitException.cs" />
-    <Compile Include="Emitters\FieldResolvers\Layouts\JsonLayoutResolver.cs" />
-    <Compile Include="Emitters\FieldResolvers\LayoutFieldResolver.cs" />
-    <Compile Include="Emitters\FieldResolvers\Layouts\LayoutResolveContext.cs" />
-    <Compile Include="Emitters\FieldResolvers\Layouts\LayoutResolverBase.cs" />
-    <Compile Include="Emitters\FieldResolvers\Layouts\XmlLayoutResolver.cs" />
     <Compile Include="Emitters\Items\ItemEmitter.cs" />
     <Compile Include="Emitters\Files\ContentFileEmitter.cs" />
     <Compile Include="Emitters\Emitter.cs" />

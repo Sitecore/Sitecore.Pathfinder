@@ -1,5 +1,5 @@
 ﻿[
   {
-    "Sample Item": {"Text": "Hello World", "Parent-Item-Path": "/sitecore/content/Home" }
+    "Sample Item": {"Text": "Hello World", "ParentItemPath": "/sitecore/content/Home" }
   }
 ]  

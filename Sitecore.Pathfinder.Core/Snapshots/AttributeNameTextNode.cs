@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
@@ -12,7 +13,7 @@ namespace Sitecore.Pathfinder.Snapshots
         public AttributeNameTextNode([NotNull] ITextNode textNode)
         {
             TextNode = textNode;
-            _name = textNode.Name.Replace("--", " ");
+            _name = StringHelper.UnescapeXmlNodeName(textNode.Name);
         }
 
         public IEnumerable<ITextNode> Attributes => TextNode.Attributes;
@@ -49,13 +50,13 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public bool SetName(string newName)
         {
-            _name = newName.Replace("--", " ");
+            _name = StringHelper.UnescapeXmlNodeName(newName);
             return TextNode.SetName(newName);
         }
 
         public bool SetValue(string value)
         {
-            _name = value.Replace("--", " ");
+            _name = StringHelper.UnescapeXmlNodeName(value);
             return TextNode.SetName(value);
         }
     }

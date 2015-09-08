@@ -6,6 +6,7 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
+using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 {
@@ -18,12 +19,13 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         public override void Parse(ItemParseContext context, ITextNode textNode)
         {
             var itemNameTextNode = GetItemNameTextNode(context.ParseContext, textNode);
-            var parentItemPath = textNode.GetAttributeValue("Parent-Item-Path", context.ParentItemPath);
+            var parentItemPath = textNode.GetAttributeValue("ParentItemPath", context.ParentItemPath);
             var itemIdOrPath = PathHelper.CombineItemPath(parentItemPath, itemNameTextNode.Value);
             var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
             var databaseName = textNode.GetAttributeValue("Database", context.DatabaseName);
+            var templateIdOrPath = StringHelper.UnescapeXmlNodeName(textNode.Name);
 
-            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, databaseName, itemNameTextNode.Value, itemIdOrPath, textNode.Name);
+            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, databaseName, itemNameTextNode.Value, itemIdOrPath, templateIdOrPath);
             item.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
             item.TemplateIdOrPathProperty.AddSourceTextNode(new AttributeNameTextNode(textNode));
             item.IsEmittable = string.Compare(textNode.GetAttributeValue("IsEmittable"), "False", StringComparison.OrdinalIgnoreCase) != 0;
@@ -60,15 +62,12 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
         protected virtual void ParseFieldTreeNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode fieldTextNode)
         {
-            var fieldName = fieldTextNode.Name;
+            var fieldName = StringHelper.UnescapeXmlNodeName(fieldTextNode.Name);
 
-            if (fieldName == "Name" || fieldName == "Id" || fieldName == "Parent-Item-Path" || fieldName == "IsEmittable" || fieldName == "IsExternalReference" || fieldName == "Database")
+            if (fieldName == "Name" || fieldName == "Id" || fieldName == "ParentItemPath" || fieldName == "IsEmittable" || fieldName == "IsExternalReference" || fieldName == "Database")
             {
                 return;
             }
-
-            // support for spaces in field names - use "--"
-            fieldName = fieldName.Replace("--", " ");
 
             // check if field is already defined
             var field = item.Fields.FirstOrDefault(f => string.Compare(f.FieldName, fieldName, StringComparison.OrdinalIgnoreCase) == 0);

@@ -182,7 +182,7 @@ namespace Sitecore.Pathfinder.Synchronizing
                 return;
             }
 
-            output.WriteStartObject("Parent-Item-Path");
+            output.WriteStartObject("ParentItemPath");
             output.WritePropertyString("description", "The path of the parent item.");
 
             output.WriteStartArray("enum");
@@ -258,7 +258,7 @@ namespace Sitecore.Pathfinder.Synchronizing
             var fieldNames = new List<string>();
             fieldNames.Add("Name");
             fieldNames.Add("Id");
-            fieldNames.Add("Parent-Item-Path");
+            fieldNames.Add("ParentItemPath");
             fieldNames.Add("__Icon");
             fieldNames.Add("Children");
 

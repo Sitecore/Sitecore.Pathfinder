@@ -110,6 +110,45 @@ Json format (extension .item.json):
 }
 ```
 
+Content Xml format (extension .content.xml) - please notice that the element names spelcifies the template and fields are attributes. Spaces
+in template or field names are replaced by 2 dashes '--'. 
+```xml
+<Root Id="{11111111-1111-1111-1111-111111111111}" Database="master" Name="sitecore" ParentItemPath="/">
+    <Main--Section Id="{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}" Name="content"/>
+
+    <Main--Section Id="{EB2E4FFD-2761-4653-B052-26A64D385227}" Name="layout">
+        <!-- /sitecore/layout/Layouts -->
+        <Node Id="{75CC5CE4-8979-4008-9D3C-806477D57619}" Name="Layouts">
+            <View--Rendering Id="{5E9D5374-E00A-4053-9127-EBC96A02C721}" Name="MvcLayout" Path="/layout/layouts/MvcLayout.cshtml" Place--Holders="Page.Body"/>
+        </Node>
+
+        <!-- /sitecore/layout/Devices -->
+        <Node Id="{E18F4BC6-46A2-4842-898B-B6613733F06F}" Name="Devices">
+            <Device Id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}" Name="Default" />
+            <Device Id="{46D2F427-4CE5-4E1F-BA10-EF3636F43534}" Name="Print" />
+            <Device Id="{207131FA-F6B2-4488-BCB3-3BF70100B9B8}" Name="App Center Placeholder" />
+            <Device Id="{73966209-F1B6-43CA-853A-F1DB1C9A654B}" Name="Feed" />
+        </Node>
+    </Main--Section>
+
+    <Main--Section Id="{3C1715FE-6A13-4FCF-845F-DE308BA9741D}" Name="templates">
+        <!-- /sitecore/templates/Sample -->
+        <Template--Folder Id="{73BAECEB-744D-4D4A-A7A5-7A935638643F}" Name="Sample">
+            <Template Id="{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}" Name="Sample Item"/>
+        </Template--Folder>
+
+        <!-- /sitecore/templates/System -->
+        <Template--Folder Id="{4BF98EF5-1D09-4DD1-9AFE-795F9829FD44}" Name="System">
+            <Folder Id="{FB6B721E-D64D-4392-A1F0-A15194CBFAD9}" Name="Layout">
+                <Folder Id="{531BF4A2-C3B2-4EB9-89D0-FA30C82AB33B}" Name="Renderings">
+                    <Template Id="{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}" Name="View Rendering"/>
+                </Folder>
+            </Folder>
+        </Template--Folder>
+    </Main--Section>
+</Root>
+```
+
 You will notice that the examples above do not specify the name of the item. By default the name of the file (without extensions) is used
 as item name.
 
@@ -225,7 +264,16 @@ code editors. The format of content item files is also more compact than other t
 
 So the advantages of content item files are validation against the template and a more compact format, but you have to synchronize the 
 website, if you change a template.
-                                                                                         
+
+```xml
+<Root Database="master" Name="sitecore" ParentItemPath="/">
+    <Main--Section Name="layout">
+        <Node Name="Layouts">
+            <View--Rendering Name="MvcLayout" Path="/layout/layouts/MvcLayout.cshtml" Place--Holders="Page.Body"/>
+        </Node>
+    </Main--Section>
+</Root>
+```
 
 ### Media files
 If you drop a media file (.gif, .png, .jpg, .bmp, .pdf, .docx) into your project folder, Pathfinder will upload the file to the Media Library.
@@ -237,7 +285,33 @@ You no longer have to explicitly create and configure a Sitecore Rendering or La
 populated automatically.
 
 ### Json layout format
-TBD
+To specify a layout in Json, use the format below.
+
+```js
+{
+    "Item": {
+        "Layout": {
+            "Devices": [
+                {
+                    "Name": "Default",
+                    "Layout": "/sitecore/layout/Layouts/MvcLayout",
+                    "Renderings": [
+                        {
+                            "HelloWorld": { "Text": "Welcome" }
+                        },
+                        {
+                            "BodyText": { }
+                        },
+                        {
+                            "Footer": { }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
+```
 
 ### Populating additional fields for implicitly created items
 Supposed you have an MVC View rendering HelloWorld.cshtml and want to set the Parameters field. Simply create a HelloWorld.item.xml (or 

@@ -183,7 +183,7 @@ namespace Sitecore.Pathfinder.Synchronizing
             }
 
             output.WriteStartElement(Xs, "attribute", Namespace);
-            output.WriteAttributeString("name", "Parent-Item-Path");
+            output.WriteAttributeString("name", "ParentItemPath");
 
             output.WriteStartElement(Xs, "annotation", Namespace);
             output.WriteStartElement(Xs, "documentation", Namespace);
@@ -250,7 +250,7 @@ namespace Sitecore.Pathfinder.Synchronizing
             var fieldNames = new List<string>();
             fieldNames.Add("Name");
             fieldNames.Add("Id");
-            fieldNames.Add("Parent-Item-Path");
+            fieldNames.Add("ParentItemPath");
             fieldNames.Add("__Icon");
 
             foreach (var field in template.GetFields(true).OrderBy(f => f.Name))
