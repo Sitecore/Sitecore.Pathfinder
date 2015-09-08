@@ -28,6 +28,10 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             item.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
 
             Parse(context, textNode, item);
+
+            item.References.AddRange(ParseReferences(context, item, textNode, string.Empty));
+
+            context.ParseContext.Project.AddOrMerge(context.ParseContext, item);
         }
 
         public virtual void Parse([NotNull] ItemParseContext context, [NotNull] ITextNode textNode, [NotNull] Item item)
@@ -45,10 +49,6 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             field.ValueHintProperty.SetValue("Layout");
 
             item.Fields.Add(field);
-
-            item.References.AddRange(ParseReferences(context, item, textNode, string.Empty));
-
-            context.ParseContext.Project.AddOrMerge(context.ParseContext, item);
         }
 
         protected virtual void ParseDeviceReferences([NotNull] ItemParseContext context, [NotNull] ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode deviceTextNode)

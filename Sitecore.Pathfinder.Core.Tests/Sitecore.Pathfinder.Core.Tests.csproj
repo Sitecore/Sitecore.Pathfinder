@@ -131,8 +131,8 @@
     <Compile Include="Tests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Sitecore.Pathfinder.Console\files\project\sitecore.project\core.master.content.xml">
-      <Link>Website\sitecore.project\core.master.content.xml</Link>
+    <Content Include="..\Sitecore.Pathfinder.Console\files\project\sitecore.project\core.core.content.xml">
+      <Link>Website\sitecore.project\core.core.content.xml</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Sitecore.Pathfinder.Console\files\project\sitecore.project\master.master.content.xml">
@@ -174,7 +174,7 @@
     <Content Include="Website.Bad\content\Home\XmlItem.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Website.Bad\sitecore.project\core.master.content.xml">
+    <Content Include="Website.Bad\sitecore.project\core.core.content.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Website.Bad\sitecore.project\master.master.content.xml">

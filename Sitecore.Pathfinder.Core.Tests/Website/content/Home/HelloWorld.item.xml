@@ -6,8 +6,6 @@
     <Field Name="ItemPath">/sitecore/media library/mushrooms</Field>
     <Field Name="TrueCheckbox" Field.Type="Checkbox">True</Field>
     <Field Name="FalseCheckbox" Field.Type="Checkbox">False</Field>
-    <Field Name="__Workflow"></Field>
-    <Field Name="__Workflow State"></Field>
     <Layout>
         <Layout xmlns="http://www.sitecore.net/pathfinder/layouts/master">
             <Device Name="Default" Layout="/sitecore/layout/Layouts/MvcLayout">

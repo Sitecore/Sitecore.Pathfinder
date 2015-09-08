@@ -16,7 +16,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
     {
         public override void Check(ICheckerContext context)
         {
-            foreach (var item in context.Project.Items.OfType<Item>())
+            foreach (var item in context.Project.Items.OfType<Item>().Where(i => !i.IsExternalReference))
             {
                 CheckTemplate(context, item);
             }
@@ -61,7 +61,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
                 var templateField = template.Sections.SelectMany(i => i.Fields).FirstOrDefault(f => string.Compare(f.FieldName, field.FieldName, StringComparison.OrdinalIgnoreCase) == 0);
                 if (templateField == null)
                 {
-                    context.Trace.TraceWarning("Field is not defined in the template", TraceHelper.GetTextNode(field.FieldNameProperty), field.FieldName);
+                    context.Trace.TraceWarning("Field is not defined in the template", TraceHelper.GetTextNode(field.FieldNameProperty, field.Item), field.FieldName);
                 }
             }
         }

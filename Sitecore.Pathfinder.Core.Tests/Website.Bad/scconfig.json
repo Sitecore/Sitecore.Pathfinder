@@ -11,11 +11,6 @@
     "database": "master",
 
     // build pipeline
-    "pipeline": "lint nuget-pack",
-
-    "external-references": {
-        "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}": "/sitecore/templates/Sample/Sample Item",
-        "{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}": "/sitecore/templates/System/Layout/Renderings/View rendering"
-    }
+    "pipeline": "lint nuget-pack"
 }
                                        

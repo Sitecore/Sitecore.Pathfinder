@@ -11,7 +11,6 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
-using Sitecore.SecurityModel;
 
 namespace Sitecore.Pathfinder.Emitters
 {
@@ -83,12 +82,8 @@ namespace Sitecore.Pathfinder.Emitters
             var emitters = Emitters.OrderBy(e => e.Sortorder).ToList();
             var retries = new List<Tuple<IProjectItem, Exception>>();
 
-            // todo: use proper user
-            using (new SecurityDisabler())
-            {
-                Emit(context, project, emitters, retries);
-                EmitRetry(context, emitters, retries);
-            }
+            Emit(context, project, emitters, retries);
+            EmitRetry(context, emitters, retries);
         }
 
         protected virtual void Emit([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] List<IEmitter> emitters, [Diagnostics.NotNull] ICollection<Tuple<IProjectItem, Exception>> retries)

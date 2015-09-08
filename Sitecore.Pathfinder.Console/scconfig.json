@@ -60,7 +60,7 @@
 
     // files and directories to ignore
     "ignore-directories": ".vscode sitecore.filetemplates sitecore.project/schemas sitecore.tools node_modules",
-    "ignore-filenames": "scc.cmd sitecore.nuspec sitecore.nupkg project.json readme.txt",
+    "ignore-filenames": "scc.cmd sitecore.nuspec sitecore.nupkg project.json readme.txt master.master.content.xml core.core.content.xml",
 
     // files to copy to website
     "content-files": ".js .css .config .htm .ashx .asmx",

@@ -128,12 +128,21 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual IProject Load(ProjectOptions projectOptions, IEnumerable<string> sourceFileNames)
         {
-            Options = projectOptions;
+            Options = projectOptions;     
 
             var context = CompositionService.Resolve<IParseContext>().With(this, Snapshot.Empty);
 
-            Add(PathHelper.Combine(context.Configuration.GetString(Constants.Configuration.SolutionDirectory), "sitecore.project\\master.master.content.xml"));
-            Add(PathHelper.Combine(context.Configuration.GetString(Constants.Configuration.SolutionDirectory), "sitecore.project\\core.master.content.xml"));
+            var masterExternalReferences = PathHelper.Combine(context.Configuration.GetString(Constants.Configuration.SolutionDirectory), "sitecore.project\\master.master.content.xml");
+            if (FileSystem.FileExists(masterExternalReferences))
+            {
+                Add(masterExternalReferences);
+            }
+
+            var coreExternalReferences = PathHelper.Combine(context.Configuration.GetString(Constants.Configuration.SolutionDirectory), "sitecore.project\\core.core.content.xml");
+            if (FileSystem.FileExists(coreExternalReferences))
+            {
+                Add(coreExternalReferences);
+            }
 
             foreach (var sourceFileName in sourceFileNames)
             {

@@ -1,6 +1,6 @@
 ﻿<Item xmlns="http://www.sitecore.net/pathfinder/item" 
   Template="/sitecore/templates/CleanBlog/CleanBlog" 
-  Template.CreateFromFields="true" 
+  Template.CreateFromFields="True" 
   Template.ShortHelp="Clean blog."
   Template.LongHelp="Clean blog from StartBootstrap."
   Template.Icon="Applications/16x16/about.png"
@@ -10,7 +10,7 @@
     Clean Blog
   </Field>
   
-  <Field Name="Header" Field.ShortHelp="Hello World."  Field.LongHelp="Blog Header.">
+  <Field Name="Header" Field.ShortHelp="Header." Field.LongHelp="Blog Header.">
     Clean Blog
   </Field>
   
@@ -32,9 +32,5 @@
   
   <Field Name="OlderPosts" Field.ShortHelp="Older posts link." Field.LongHelp="Older posts link.">
     Older Posts
-  </Field>
-
-  <Field Name="Checkbox" Field.ShortHelp="Older posts link." Field.LongHelp="Older posts link." Field.Type="Checkbox">
-    true
   </Field>
 </Item>

@@ -227,7 +227,7 @@
     <None Include="files\project\sitecore.filetemplates\gruntfile.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="files\project\sitecore.project\core.master.content.xml">
+    <Content Include="files\project\sitecore.project\core.core.content.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="files\project\sitecore.project\master.master.content.xml">

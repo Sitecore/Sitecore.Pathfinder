@@ -182,7 +182,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
             }
             else
             {
-                // todo: use proper template id or name
+                // todo: use proper template id or item path
                 var devices = context.Field.Item.Project.Items.OfType<Item>().Where(i => i.TemplateIdOrPath == "Device").ToList();
                 if (!devices.Any())
                 {

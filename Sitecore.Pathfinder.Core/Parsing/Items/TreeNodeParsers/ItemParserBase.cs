@@ -153,7 +153,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             template.ShortHelpProperty.Parse("Template.ShortHelp", itemTextNode);
             template.LongHelpProperty.Parse("Template.LongHelp", itemTextNode);
 
-            template.References.AddRange(ParseReferences(context, template, itemTextNode, template.BaseTemplates));
+            template.References.AddRange(ParseReferences(context, template, templateIdOrPathTextNode, template.BaseTemplates));
 
             // section
             var templateSection = context.ParseContext.Factory.TemplateSection(TextNode.Empty);

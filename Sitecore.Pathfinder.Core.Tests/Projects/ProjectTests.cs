@@ -45,8 +45,17 @@ namespace Sitecore.Pathfinder.Projects
         [Test]
         public void FindUsagesTest()
         {
-            var references = Services.QueryService.FindUsages(Project, "/sitecore/media library/mushrooms");
+            var references = Services.QueryService.FindUsages(Project, "/sitecore/media library/mushrooms").ToList();
             Assert.AreEqual(4, references.Count());
+        }
+
+        [Test]
+        public void ExternalReferencesTest()
+        {
+            var projectItems = Project.Items.Where(i => i.QualifiedName == "/sitecore").ToList();
+            Assert.AreEqual(2, projectItems.Count);
+            Assert.IsTrue(projectItems.OfType<Item>().Any(i => i.DatabaseName == "master"));
+            Assert.IsTrue(projectItems.OfType<Item>().Any(i => i.DatabaseName == "core"));
         }
 
         [Test]
@@ -112,9 +121,9 @@ namespace Sitecore.Pathfinder.Projects
             layout.Resolve();
             Assert.AreEqual(@"<r>
   <d id=""{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}"" l=""{5E9D5374-E00A-4053-9127-EBC96A02C721}"">
-    <r id=""{67316C66-30BB-BF17-4D77-12470CABC990}"" par=""Text=123"" ph=""Page.Body"" />
-    <r id=""{67316C66-30BB-BF17-4D77-12470CABC990}"" par="""" ph=""Page.Body"" />
-    <r id=""{67316C66-30BB-BF17-4D77-12470CABC990}"" par="""" ph=""Page.Body"" />
+    <r id=""{4E924ED2-1534-483A-49FD-85A6D99331EE}"" par=""Text=123"" ph=""Page.Body"" />
+    <r id=""{4E924ED2-1534-483A-49FD-85A6D99331EE}"" par="""" ph=""Page.Body"" />
+    <r id=""{4E924ED2-1534-483A-49FD-85A6D99331EE}"" par="""" ph=""Page.Body"" />
   </d>
 </r>", layout.ResolvedValue);
         }
@@ -135,9 +144,9 @@ namespace Sitecore.Pathfinder.Projects
             layout.Resolve();
             Assert.AreEqual(@"<r>
   <d id=""{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}"" l=""{5E9D5374-E00A-4053-9127-EBC96A02C721}"">
-    <r id=""{67316C66-30BB-BF17-4D77-12470CABC990}"" par=""Text=123"" ph=""Page.Body"" />
-    <r id=""{67316C66-30BB-BF17-4D77-12470CABC990}"" par="""" ph=""Page.Body"" />
-    <r id=""{67316C66-30BB-BF17-4D77-12470CABC990}"" par="""" ph=""Page.Body"" />
+    <r id=""{4E924ED2-1534-483A-49FD-85A6D99331EE}"" par=""Text=123"" ph=""Page.Body"" />
+    <r id=""{4E924ED2-1534-483A-49FD-85A6D99331EE}"" par="""" ph=""Page.Body"" />
+    <r id=""{4E924ED2-1534-483A-49FD-85A6D99331EE}"" par="""" ph=""Page.Body"" />
   </d>
 </r>", layout.ResolvedValue);
         }
@@ -190,7 +199,7 @@ namespace Sitecore.Pathfinder.Projects
             Assert.AreEqual("SerializedItem", projectItem.ShortName);
             Assert.AreEqual("/sitecore/content/Home/SerializedItem", projectItem.QualifiedName);
             Assert.AreEqual("{CEABE4B1-E915-4904-B396-BBC0C081F111}", projectItem.Guid.Format());
-            Assert.AreEqual("master/{CEABE4B1-E915-4904-B396-BBC0C081F111}", projectItem.ProjectUniqueId);
+            Assert.AreEqual("{CEABE4B1-E915-4904-B396-BBC0C081F111}", projectItem.ProjectUniqueId);
             Assert.AreEqual(1, projectItem.Snapshots.Count);
 
             var item = projectItem as Item;
@@ -288,21 +297,21 @@ namespace Sitecore.Pathfinder.Projects
             Assert.IsNotNull(linkField);
             Assert.AreEqual("/sitecore/media library/mushrooms", linkField.Value);
             linkField.Resolve();
-            Assert.AreEqual("<link text=\"\" linktype=\"internal\" url=\"\" anchor=\"\" title=\"\" class=\"\" target=\"\" querystring=\"\" id=\"{5B16A23D-06CD-B7D2-1159-86DDF89C9B94}\" />", linkField.ResolvedValue);
+            Assert.AreEqual("<link text=\"\" linktype=\"internal\" url=\"\" anchor=\"\" title=\"\" class=\"\" target=\"\" querystring=\"\" id=\"{7DAFA53F-6355-4C85-643A-9608E6B92BE6}\" />", linkField.ResolvedValue);
 
             // image field
             var imageField = item.Fields.FirstOrDefault(f => f.FieldName == "Image");
             Assert.IsNotNull(imageField);
             Assert.AreEqual("/sitecore/media library/mushrooms", imageField.Value);
             imageField.Resolve();
-            Assert.AreEqual("<image mediapath=\"\" alt=\"\" width=\"\" height=\"\" hspace=\"\" vspace=\"\" showineditor=\"\" usethumbnail=\"\" src=\"\" mediaid=\"{5B16A23D-06CD-B7D2-1159-86DDF89C9B94}\" />", imageField.ResolvedValue);
+            Assert.AreEqual("<image mediapath=\"\" alt=\"\" width=\"\" height=\"\" hspace=\"\" vspace=\"\" showineditor=\"\" usethumbnail=\"\" src=\"\" mediaid=\"{7DAFA53F-6355-4C85-643A-9608E6B92BE6}\" />", imageField.ResolvedValue);
 
             // implicit link field
             var itemPathField = item.Fields.FirstOrDefault(f => f.FieldName == "ItemPath");
             Assert.IsNotNull(itemPathField);
             Assert.AreEqual("/sitecore/media library/mushrooms", itemPathField.Value);
             itemPathField.Resolve();
-            Assert.AreEqual("{5B16A23D-06CD-B7D2-1159-86DDF89C9B94}", itemPathField.ResolvedValue);
+            Assert.AreEqual("{7DAFA53F-6355-4C85-643A-9608E6B92BE6}", itemPathField.ResolvedValue);
 
             // checkbox fields
             var checkBoxField = item.Fields.FirstOrDefault(f => f.FieldName == "TrueCheckbox");
@@ -320,9 +329,9 @@ namespace Sitecore.Pathfinder.Projects
             layout.Resolve();
             Assert.AreEqual(@"<r>
   <d id=""{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}"" l=""{5E9D5374-E00A-4053-9127-EBC96A02C721}"">
-    <r id=""{67316C66-30BB-BF17-4D77-12470CABC990}"" par=""Text=123"" ph=""Page.Body"" />
-    <r id=""{67316C66-30BB-BF17-4D77-12470CABC990}"" par="""" ph=""Page.Body"" />
-    <r id=""{67316C66-30BB-BF17-4D77-12470CABC990}"" par="""" ph=""Page.Body"" />
+    <r id=""{4E924ED2-1534-483A-49FD-85A6D99331EE}"" par=""Text=123"" ph=""Page.Body"" />
+    <r id=""{4E924ED2-1534-483A-49FD-85A6D99331EE}"" par="""" ph=""Page.Body"" />
+    <r id=""{4E924ED2-1534-483A-49FD-85A6D99331EE}"" par="""" ph=""Page.Body"" />
   </d>
 </r>", layout.ResolvedValue);
         }
@@ -343,9 +352,9 @@ namespace Sitecore.Pathfinder.Projects
             layout.Resolve();
             Assert.AreEqual(@"<r>
   <d id=""{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}"" l=""{5E9D5374-E00A-4053-9127-EBC96A02C721}"">
-    <r id=""{67316C66-30BB-BF17-4D77-12470CABC990}"" par=""Text=123"" ph=""Page.Body"" />
-    <r id=""{67316C66-30BB-BF17-4D77-12470CABC990}"" par="""" ph=""Page.Body"" />
-    <r id=""{67316C66-30BB-BF17-4D77-12470CABC990}"" par="""" ph=""Page.Body"" />
+    <r id=""{4E924ED2-1534-483A-49FD-85A6D99331EE}"" par=""Text=123"" ph=""Page.Body"" />
+    <r id=""{4E924ED2-1534-483A-49FD-85A6D99331EE}"" par="""" ph=""Page.Body"" />
+    <r id=""{4E924ED2-1534-483A-49FD-85A6D99331EE}"" par="""" ph=""Page.Body"" />
   </d>
 </r>", layout.ResolvedValue);
         }

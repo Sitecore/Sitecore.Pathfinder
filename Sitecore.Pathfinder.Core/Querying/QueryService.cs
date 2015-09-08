@@ -1,9 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Linq;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.References;
 

@@ -52,7 +52,10 @@ namespace Sitecore.Pathfinder.Projects
         {
             foreach (var snapshot in newProjectItem.Snapshots)
             {
-                Snapshots.Add(snapshot);
+                if (!Snapshots.Contains(snapshot))
+                {
+                    Snapshots.Add(snapshot);
+                }
             }
 
             if (!overwrite)
@@ -66,15 +69,8 @@ namespace Sitecore.Pathfinder.Projects
 
         private void SetGuid()
         {
-            var projectUniqueId = ProjectUniqueId;
-            var n = projectUniqueId.LastIndexOf('/');
-            if (n >= 0)
-            {
-                projectUniqueId = projectUniqueId.Mid(n + 1);
-            }
-
             Guid guid;
-            if (!Guid.TryParse(projectUniqueId, out guid))
+            if (!Guid.TryParse(ProjectUniqueId, out guid))
             {
                 // calculate guid from project unique id and project id
                 var text = Project.ProjectUniqueId + "/" + ProjectUniqueId;

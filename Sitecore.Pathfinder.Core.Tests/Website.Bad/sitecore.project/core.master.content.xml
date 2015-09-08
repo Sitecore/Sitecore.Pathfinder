@@ -1,7 +1,0 @@
-﻿<Root Id="{11111111-1111-1111-1111-111111111111}" Database="core" Name="sitecore" ParentItemPath="/" IsExternalReference="True">
-    <Main-Section Id="{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}" Name="content" IsExternalReference="True" />
-
-    <Main-Section Id="{EB2E4FFD-2761-4653-B052-26A64D385227}" Name="layout" IsExternalReference="True" />
-
-    <Main-Section Id="{3C1715FE-6A13-4FCF-845F-DE308BA9741D}" Name="templates" IsExternalReference="True" />
-</Root>

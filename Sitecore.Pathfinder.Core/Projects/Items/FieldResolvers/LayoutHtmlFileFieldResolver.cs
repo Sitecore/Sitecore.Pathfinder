@@ -39,7 +39,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
                 field.WriteDiagnostic(Severity.Error, "Rendering reference not found", value);
             }
 
-            var layoutItem = field.Item.Project.Items.OfType<ExternalReferenceItem>().FirstOrDefault(i => i.ItemIdOrPath == "/sitecore/layout/Layouts/MvcLayout");
+            var layoutItem = field.Item.Project.Items.OfType<Item>().FirstOrDefault(i => i.ItemIdOrPath == "/sitecore/layout/Layouts/MvcLayout");
             if (layoutItem == null)
             {
                 field.WriteDiagnostic(Severity.Error, "Layout reference not found", "/sitecore/layout/Layouts/MvcLayout");
@@ -58,7 +58,8 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
 
             output.WriteStartElement("r");
 
-            foreach (var deviceItem in field.Item.Project.Items.OfType<ExternalReferenceItem>())
+            // todo: use proper template id or item path
+            foreach (var deviceItem in field.Item.Project.Items.OfType<Item>().Where(i => i.TemplateIdOrPath == "Device"))
             {
                 if (!deviceItem.ItemIdOrPath.StartsWith("/sitecore/layout/Devices/"))
                 {

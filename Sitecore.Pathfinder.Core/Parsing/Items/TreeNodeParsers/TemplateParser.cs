@@ -35,8 +35,13 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             template.IconProperty.Parse(textNode);
             template.ShortHelpProperty.Parse(textNode);
             template.LongHelpProperty.Parse(textNode);
+            template.IsEmittable = string.Compare(textNode.GetAttributeValue("IsEmittable"), "False", StringComparison.OrdinalIgnoreCase) != 0;
+            template.IsExternalReference = string.Compare(textNode.GetAttributeValue("IsExternalReference"), "True", StringComparison.OrdinalIgnoreCase) == 0;
 
-            template.References.AddRange(ParseReferences(context, template, textNode, template.BaseTemplates));
+            if (!template.IsExternalReference)
+            {
+                template.References.AddRange(ParseReferences(context, template, textNode, template.BaseTemplates));
+            }
 
             // create standard values item
             var standardValuesItemIdOrPath = itemIdOrPath + "/__Standard Values";

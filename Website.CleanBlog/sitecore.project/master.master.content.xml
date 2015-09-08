@@ -40,7 +40,7 @@
                     <Template Id="{962B53C4-F93B-4DF9-9821-415C867B8903}" Name="File" IsExternalReference="True"/>
                 </Folder>
             </Folder>
-
+            
             <Folder Id="{633549D3-4B7D-40EB-B58F-EDA50BA5F7F0}" Name="Templates" IsExternalReference="True">
                 <Template Id="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" Name="Standard template" IsExternalReference="True"/>
             </Folder>

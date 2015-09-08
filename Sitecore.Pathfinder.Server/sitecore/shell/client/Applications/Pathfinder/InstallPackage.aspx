@@ -6,6 +6,18 @@
     var output = new StringWriter();
     Console.SetOut(output);
 
+    var userName = WebUtil.GetQueryString("u");
+    if (!string.IsNullOrEmpty(userName))
+    {
+        var password = WebUtil.GetQueryString("p");
+        if (!Sitecore.Security.Authentication.AuthenticationManager.Login(userName, password))
+        {
+            Response.StatusCode = 401;
+            Response.Write("Failed to login");
+            return;
+        }
+    }
+
     var packageService = new PackageService();
 
     var versionString = WebUtil.GetQueryString("v", string.Empty);

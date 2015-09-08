@@ -18,7 +18,11 @@
     // build pipeline
     "pipeline": "check-project pack-nuget copy-dependencies copy-package install-package publish-database",
     
-    // mapping of files between local path and server path and item path
+    "nuget": {
+        "filename": "sitecore.project\\sitecorepathfindercleanblog.nuspec"
+    },
+
+// mapping of files between local path and server path and item path
     "files": {
          "html": {
              "project-directory": "",
@@ -33,15 +37,5 @@
              "website-directory": "",
              "item-path": "/sitecore/media library/CleanBlog"
          }
-    },
-    
-    "external-references": {
-        "{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}": "/sitecore/layout/Devices/Default",
-        "{46D2F427-4CE5-4E1F-BA10-EF3636F43534}": "/sitecore/layout/Devices/Print",
-        "{207131FA-F6B2-4488-BCB3-3BF70100B9B8}": "/sitecore/layout/Devices/App Center Placeholder",
-        "{73966209-F1B6-43CA-853A-F1DB1C9A654B}": "/sitecore/layout/Devices/Feed",
-        "{5E9D5374-E00A-4053-9127-EBC96A02C721}": "/sitecore/layout/Layouts/MvcLayout",
-        "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}": "/sitecore/templates/Sample/Sample Item",
-        "{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}": "/sitecore/templates/System/Layout/Renderings/View rendering"
     }
 }

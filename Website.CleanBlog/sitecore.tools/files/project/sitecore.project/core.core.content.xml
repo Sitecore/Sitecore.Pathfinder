@@ -1,0 +1,25 @@
+﻿<Root Id="{11111111-1111-1111-1111-111111111111}" Database="core" Name="sitecore" ParentItemPath="/" IsExternalReference="True">
+    <Main--Section Id="{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}" Name="content" IsExternalReference="True" />
+
+    <Main--Section Id="{EB2E4FFD-2761-4653-B052-26A64D385227}" Name="layout" IsExternalReference="True" />
+
+    <Main--Section Id="{3C1715FE-6A13-4FCF-845F-DE308BA9741D}" Name="templates" IsExternalReference="True">
+        <Template--Folder Id="{4BF98EF5-1D09-4DD1-9AFE-795F9829FD44}" Name="System" IsExternalReference="True">
+            <Folder Id="{FB6B721E-D64D-4392-A1F0-A15194CBFAD9}" Name="Layout" IsExternalReference="True">
+                <Folder Id="{531BF4A2-C3B2-4EB9-89D0-FA30C82AB33B}" Name="Renderings" IsExternalReference="True">
+                    <Template Id="{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}" Name="View Rendering" IsExternalReference="True"/>
+                </Folder>
+            </Folder>
+
+            <Folder Id="{D150DF1B-01BA-45B7-AEB1-4CA5C2F20A64}" Name="Media" IsExternalReference="True">
+                <Folder Id="{00373F71-5D08-4E9A-840F-9BB3C8193518}" Name="Unversioned" IsExternalReference="True">
+                    <Template Id="{962B53C4-F93B-4DF9-9821-415C867B8903}" Name="File" IsExternalReference="True"/>
+                </Folder>
+            </Folder>
+            
+            <Folder Id="{633549D3-4B7D-40EB-B58F-EDA50BA5F7F0}" Name="Templates" IsExternalReference="True">
+                <Template Id="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" Name="Standard template" IsExternalReference="True"/>
+            </Folder>
+        </Template--Folder>
+    </Main--Section>
+</Root>
