@@ -1,6 +1,5 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.References;
@@ -10,13 +9,8 @@ namespace Sitecore.Pathfinder.Projects
 {
     public interface IProjectItem
     {
-        Guid Guid { get; }
-
         [NotNull]
         IProject Project { get; }
-
-        [NotNull]
-        string ProjectUniqueId { get; }
 
         [NotNull]
         string QualifiedName { get; }
@@ -29,6 +23,9 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull]
         ICollection<ISnapshot> Snapshots { get; }
+
+        [NotNull]
+        ProjectItemUri Uri { get; }
 
         void Rename([NotNull] string newShortName);
     }

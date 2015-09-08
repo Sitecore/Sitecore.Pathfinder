@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
@@ -24,13 +25,10 @@ namespace Sitecore.Pathfinder.Configuration
         IProjectItem ContentFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath);
 
         [NotNull]
-        DeviceReference DeviceReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> deviceNameSourceProperty, [NotNull] string targetQualifiedName);
+        DeviceReference DeviceReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> deviceNameSourceProperty);
 
         [NotNull]
         Diagnostic Diagnostic([NotNull] string fileName, TextPosition position, Severity severity, [NotNull] string text);
-
-        [NotNull]
-        ExternalReferenceItem ExternalReferenceItem([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ISnapshot snapshot, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath);
 
         [NotNull]
         Field Field([NotNull] Item item, [NotNull] ITextNode textNode);
@@ -39,19 +37,19 @@ namespace Sitecore.Pathfinder.Configuration
         Field Field([NotNull] Item item, [NotNull] ITextNode textNode, [NotNull] string fieldName, [NotNull] string fieldValue);
 
         [NotNull]
-        FileReference FileReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceSourceProperty, [NotNull] string targetQualifiedName);
+        FileReference FileReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceSourceProperty);
 
         [NotNull]
-        Item Item([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath);
+        Item Item([NotNull] IProject project, Guid guid, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath);
 
         [NotNull]
         ItemParseContext ItemParseContext([NotNull] IParseContext context, [NotNull] ItemParser itemParser, [NotNull] string databaseName, [NotNull] string parentItemPath);
 
         [NotNull]
-        LayoutReference LayoutReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> layoutSourceProperty, [NotNull] string targetQualifiedName);
+        LayoutReference LayoutReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> layoutSourceProperty);
 
         [NotNull]
-        LayoutRenderingReference LayoutRenderingReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> renderingTextNode, [NotNull] string targetQualifiedName);
+        LayoutRenderingReference LayoutRenderingReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> layoutTextNode);
 
         [NotNull]
         MediaFile MediaFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath, [NotNull] Item mediaItem);
@@ -63,7 +61,7 @@ namespace Sitecore.Pathfinder.Configuration
         ProjectOptions ProjectOptions([NotNull] string projectDirectory, [NotNull] string databaseName);
 
         [NotNull]
-        IReference Reference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> sourceSourceProperty, [NotNull] string targetQualifiedName);
+        IReference Reference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> sourceSourceProperty);
 
         [NotNull]
         Rendering Rendering([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath, [NotNull] Item item);
@@ -75,10 +73,10 @@ namespace Sitecore.Pathfinder.Configuration
         ISnapshot Snapshot([NotNull] ISourceFile sourceFile);
 
         [NotNull]
-        ISourceFile SourceFile([NotNull] IFileSystemService fileSystem, [NotNull] string sourceFileName);
+        ISourceFile SourceFile([NotNull] IFileSystemService fileSystem, [NotNull] string sourceFileName, [NotNull] string projectFileName);
 
         [NotNull]
-        Template Template([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath);
+        Template Template([NotNull] IProject project, Guid guid, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath);
 
         [NotNull]
         TemplateField TemplateField([NotNull] Template template, [NotNull] ITextNode templateFieldTextNode);

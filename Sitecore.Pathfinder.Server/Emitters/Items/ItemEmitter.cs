@@ -61,7 +61,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
             {
                 Snapshot = item.Snapshots.First(),
                 DatabaseName = item.DatabaseName,
-                Guid = projectItem.Guid,
+                Guid = projectItem.Uri.Guid,
                 ItemName = item.ItemName,
                 ItemIdOrPath = item.ItemIdOrPath,
                 TemplateIdOrPath = templateIdOrPath

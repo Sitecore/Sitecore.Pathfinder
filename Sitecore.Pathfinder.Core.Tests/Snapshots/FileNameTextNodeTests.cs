@@ -16,7 +16,7 @@ namespace Sitecore.Pathfinder.Snapshots
         [Test]
         public void FileNameTests()
         {
-            var sourceFile = new SourceFile(Services.FileSystem, "test.txt");
+            var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt");
 
             var snapshot = new XmlTextSnapshot(sourceFile, "<Item><Field Name=\"Text\" Value=\"123\" /></Item>", string.Empty, string.Empty);
             Assert.AreEqual("Item", snapshot.Root.Name);

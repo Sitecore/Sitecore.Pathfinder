@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
+using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Parsing.Files
 {
@@ -38,7 +39,8 @@ namespace Sitecore.Pathfinder.Parsing.Files
 
         public override void Parse(IParseContext context)
         {
-            var mediaItem = context.Factory.Item(context.Project, context.ItemPath, new SnapshotTextNode(context.Snapshot), context.DatabaseName, context.ItemName, context.ItemPath, string.Empty);
+            var guid = StringHelper.GetGuid(context.Project, context.ItemPath);
+            var mediaItem = context.Factory.Item(context.Project, guid, new SnapshotTextNode(context.Snapshot), context.DatabaseName, context.ItemName, context.ItemPath, string.Empty);
             mediaItem.ItemNameProperty.AddSourceTextNode(new FileNameTextNode(context.ItemName, context.Snapshot));
             mediaItem.IsEmittable = false;
             mediaItem.OverwriteWhenMerging = true;

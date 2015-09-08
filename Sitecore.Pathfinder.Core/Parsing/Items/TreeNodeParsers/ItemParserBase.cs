@@ -10,6 +10,7 @@ using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
+using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 {
@@ -23,12 +24,12 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         {
             var itemNameTextNode = GetItemNameTextNode(context.ParseContext, textNode);
             var itemIdOrPath = PathHelper.CombineItemPath(context.ParentItemPath, itemNameTextNode.Value);
-            var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
+            var guid = StringHelper.GetGuid(context.ParseContext.Project, textNode.GetAttributeValue("Id", itemIdOrPath));
             var databaseName = textNode.GetAttributeValue("Database", context.DatabaseName);
             var templateIdOrPathTextNode = GetTemplateIdOrPathTextNode(context, databaseName, textNode);
             var templateIdOrPath = templateIdOrPathTextNode?.Value ?? string.Empty;
 
-            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, databaseName, itemNameTextNode.Value, itemIdOrPath, templateIdOrPath);
+            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, guid, textNode, databaseName, itemNameTextNode.Value, itemIdOrPath, templateIdOrPath);
             item.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
             item.IsEmittable = string.Compare(textNode.GetAttributeValue("IsEmittable"), "False", StringComparison.OrdinalIgnoreCase) != 0;
             item.IsExternalReference = string.Compare(textNode.GetAttributeValue("IsExternalReference"), "True", StringComparison.OrdinalIgnoreCase) == 0;
@@ -39,7 +40,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
                 if (!item.IsExternalReference)
                 {
-                    item.References.AddRange(ParseReferences(context, item, templateIdOrPathTextNode, templateIdOrPathTextNode.Value));
+                    item.References.AddRange(ParseReferences(context, item, item.TemplateIdOrPathProperty));
                 }
             }
 
@@ -109,28 +110,24 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             field.ValueHintProperty.Parse(fieldTextNode);
 
             // get field value either from Value attribute or from inner text
-            var inner = fieldTextNode.GetInnerTextNode();
-            var attribute = fieldTextNode.GetAttributeTextNode("Value");
+            var innerTextNode = fieldTextNode.GetInnerTextNode();
+            var attributeTextNode = fieldTextNode.GetAttributeTextNode("Value");
+            if (innerTextNode != null && attributeTextNode != null)
+            {
+                context.ParseContext.Trace.TraceWarning(Texts.Value_is_specified_in_both__Value__attribute_and_in_element__Using_value_from_attribute, fieldTextNode.Snapshot.SourceFile.FileName, attributeTextNode.Position, fieldName.Value);
+            }
 
-            if (inner != null && attribute != null)
+            var valueTextNode = attributeTextNode ?? innerTextNode;
+            if (valueTextNode != null)
             {
-                context.ParseContext.Trace.TraceWarning(Texts.Value_is_specified_in_both__Value__attribute_and_in_element__Using_value_from_attribute, fieldTextNode.Snapshot.SourceFile.FileName, attribute.Position, fieldName.Value);
-                field.ValueProperty.SetValue(attribute);
-            }
-            else if (inner != null)
-            {
-                field.ValueProperty.SetValue(inner);
-            }
-            else if (attribute != null)
-            {
-                field.ValueProperty.SetValue(attribute);
+                field.ValueProperty.SetValue(valueTextNode);
             }
 
             item.Fields.Add(field);
 
             if (!item.IsExternalReference && !field.ValueHint.Contains("NoReference"))
             {
-                item.References.AddRange(ParseReferences(context, item, TraceHelper.GetTextNode(field.ValueProperty), field.Value));
+                item.References.AddRange(ParseReferences(context, item, field.ValueProperty));
             }
         }
 
@@ -140,9 +137,8 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             var itemIdOrPath = templateIdOrPathTextNode.Value;
 
             var itemName = itemIdOrPath.Mid(itemIdOrPath.LastIndexOf('/') + 1);
-            var projectUniqueId = itemTextNode.GetAttributeValue("Template.Id", itemIdOrPath);
-
-            var template = context.ParseContext.Factory.Template(context.ParseContext.Project, projectUniqueId, itemTextNode, databaseName, itemName, itemIdOrPath);
+            var guid = StringHelper.GetGuid(context.ParseContext.Project, itemTextNode.GetAttributeValue("Template.Id", itemIdOrPath));
+            var template = context.ParseContext.Factory.Template(context.ParseContext.Project, guid, itemTextNode, databaseName, itemName, itemIdOrPath);
 
             template.ItemName = itemName;
             template.ItemNameProperty.AddSourceTextNode(templateIdOrPathTextNode);
@@ -152,8 +148,13 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             template.BaseTemplatesProperty.Parse("Template.BaseTemplates", itemTextNode, Constants.Templates.StandardTemplate);
             template.ShortHelpProperty.Parse("Template.ShortHelp", itemTextNode);
             template.LongHelpProperty.Parse("Template.LongHelp", itemTextNode);
+            template.IsEmittable = string.Compare(itemTextNode.GetAttributeValue("IsEmittable"), "False", StringComparison.OrdinalIgnoreCase) != 0;
+            template.IsExternalReference = string.Compare(itemTextNode.GetAttributeValue("IsExternalReference"), "True", StringComparison.OrdinalIgnoreCase) == 0;
 
-            template.References.AddRange(ParseReferences(context, template, templateIdOrPathTextNode, template.BaseTemplates));
+            if (!template.IsExternalReference)
+            {
+                template.References.AddRange(ParseReferences(context, template, template.BaseTemplatesProperty));
+            }
 
             // section
             var templateSection = context.ParseContext.Factory.TemplateSection(TextNode.Empty);
@@ -187,7 +188,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
                     nextSortOrder = templateField.SortOrder + 100;
 
-                    template.References.AddRange(ParseReferences(context, template, child, templateField.Source));
+                    template.References.AddRange(ParseReferences(context, template, templateField.SourceProperty));
                 }
             }
 

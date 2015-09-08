@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Projects.Files
     {
         private string _shortName;
 
-        public File([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath) : base(project, GetProjectUniqueId(project, snapshot), snapshot)
+        public File([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath) : base(project, GetUri(project, snapshot), snapshot)
         {
             FilePath = filePath;
         }
@@ -40,10 +40,11 @@ namespace Sitecore.Pathfinder.Projects.Files
         }
 
         [NotNull]
-        private static string GetProjectUniqueId([NotNull] IProject project, [NotNull] ISnapshot snapshot)
+        private static ProjectItemUri GetUri([NotNull] IProject project, [NotNull] ISnapshot snapshot)
         {
             // include file extensions in project unique ID for file, so they don't clash with items
-            return PathHelper.NormalizeItemPath(PathHelper.UnmapPath(project.Options.ProjectDirectory, snapshot.SourceFile.FileName));
+            var filePath = "~/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(project.Options.ProjectDirectory, snapshot.SourceFile.FileName)).TrimStart('/');
+            return new ProjectItemUri(project, filePath);
         }
     }
 }

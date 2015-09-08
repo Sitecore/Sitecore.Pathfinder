@@ -6,11 +6,7 @@ namespace Sitecore.Pathfinder.Projects.References
 {
     public class LayoutReference : Reference
     {
-        public LayoutReference([NotNull] IProjectItem owner, [NotNull] string targetQualifiedName) : base(owner, targetQualifiedName)
-        {
-        }
-
-        public LayoutReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceProperty, [NotNull] string targetQualifiedName) : base(owner, sourceProperty, targetQualifiedName)
+        public LayoutReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceProperty) : base(owner, sourceProperty)
         {
         }
 

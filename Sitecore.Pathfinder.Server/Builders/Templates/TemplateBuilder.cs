@@ -86,7 +86,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
                 throw new RetryableEmitException(Texts.Failed_to_create_template, Template.Snapshots.First());
             }
 
-            var item = ItemManager.AddFromTemplate(Template.ItemName, new TemplateID(TemplateIDs.Template), parentItem, new ID(Template.Guid));
+            var item = ItemManager.AddFromTemplate(Template.ItemName, new TemplateID(TemplateIDs.Template), parentItem, new ID(Template.Uri.Guid));
             if (item == null)
             {
                 throw new EmitException(Texts.Failed_to_add_new_template, Template.Snapshots.First());
@@ -115,7 +115,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
                     item.Help.Text = Template.LongHelp;
                 }
 
-                item[FieldIDs.StandardValues] = Template.StandardValuesItem?.Guid.Format() ?? string.Empty;
+                item[FieldIDs.StandardValues] = Template.StandardValuesItem?.Uri.Guid.Format() ?? string.Empty;
             }
 
             foreach (var section in Sections)
@@ -275,7 +275,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
                 return;
             }
 
-            Item = database.GetItem(new ID(Template.Guid));
+            Item = database.GetItem(new ID(Template.Uri.Guid));
             if (Item == null)
             {
                 return;
@@ -536,7 +536,7 @@ namespace Sitecore.Pathfinder.Builders.Templates
                 item.Appearance.Icon = Template.Icon;
                 item.Help.ToolTip = Template.ShortHelp;
                 item.Help.Text = Template.LongHelp;
-                item[FieldIDs.StandardValues] = Template.StandardValuesItem?.Guid.Format() ?? string.Empty;
+                item[FieldIDs.StandardValues] = Template.StandardValuesItem?.Uri.Guid.Format() ?? string.Empty;
             }
 
             foreach (var templateSectionBuilder in Sections)

@@ -32,7 +32,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
                     return string.Empty;
                 }
 
-                return item.Guid.Format();
+                return item.Uri.Guid.Format();
             }
 
             var sb = new StringBuilder();
@@ -50,7 +50,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
                         sb.Append('|');
                     }
 
-                    sb.Append(item.Guid.Format());
+                    sb.Append(item.Uri.Guid.Format());
                 }
             }
 

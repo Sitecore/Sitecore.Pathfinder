@@ -4,7 +4,7 @@
   Template.ShortHelp="About page."
   Template.LongHelp="About page."
   Template.Icon="Applications/16x16/about.png"
-  Layout.HtmlFile="/CleanBlog/layout/renderings/about.html">
+  Layout.HtmlFile="~/CleanBlog/layout/renderings/about.html">
 
   <Field Name="PageTitle" Field.Type="Single-Line Text" Field.ShortHelp="Name of the page." Field.LongHelp="Displayed in the browser window caption.">
     Clean Blog - About Me

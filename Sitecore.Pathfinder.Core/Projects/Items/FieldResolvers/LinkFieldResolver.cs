@@ -34,7 +34,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
                 return string.Empty;
             }
 
-            return $"<link text=\"\" linktype=\"internal\" url=\"\" anchor=\"\" title=\"\" class=\"\" target=\"\" querystring=\"\" id=\"{item.Guid.Format()}\" />";
+            return $"<link text=\"\" linktype=\"internal\" url=\"\" anchor=\"\" title=\"\" class=\"\" target=\"\" querystring=\"\" id=\"{item.Uri.Guid.Format()}\" />";
         }
     }
 }

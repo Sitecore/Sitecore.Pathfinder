@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -10,7 +11,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 {
     public abstract class ItemBase : ProjectItem, IHasSourceTextNodes
     {
-        protected ItemBase([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, projectUniqueId, textNode.Snapshot)
+        protected ItemBase([NotNull] IProject project, Guid guid, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, new ProjectItemUri(databaseName, guid), textNode.Snapshot)
         {
             DatabaseName = databaseName;
             ItemName = itemName;

@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using NUnit.Framework;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Snapshots
@@ -20,12 +21,13 @@ namespace Sitecore.Pathfinder.Snapshots
             Start();
             Project = Services.ProjectService.LoadProjectFromConfiguration();
 
+            var projectFileName = "~/content/Home/HelloWorld.item.xml";
             var fileName = Path.Combine(ProjectDirectory, "content\\Home\\HelloWorld.item.xml");
-            var sourceFile = new SourceFile(Services.FileSystem, fileName);
+            var sourceFile = new SourceFile(Services.FileSystem, fileName, projectFileName);
 
             Assert.AreEqual(fileName, sourceFile.FileName);
             Assert.AreNotEqual(DateTime.MinValue, sourceFile.LastWriteTimeUtc);
-            Assert.AreEqual("content\\Home\\HelloWorld.item.xml", sourceFile.GetProjectPath(Project));
+            Assert.AreEqual("~/content/Home/HelloWorld.item.xml", sourceFile.ProjectFileName);
 
             var element = sourceFile.ReadAsXml();
             Assert.IsNotNull(element);

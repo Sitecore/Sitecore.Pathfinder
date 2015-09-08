@@ -11,11 +11,8 @@ namespace Sitecore.Pathfinder.Projects.References
         [NotNull]
         IProjectItem Owner { get; }
 
-        [CanBeNull]
-        SourceProperty<string> SourceProperty { get; }
-
         [NotNull]
-        string TargetQualifiedName { get; }
+        SourceProperty<string> SourceProperty { get; }
 
         void Invalidate();
 

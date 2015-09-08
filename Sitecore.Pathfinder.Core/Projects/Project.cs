@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.IO;
 using System.Linq;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Checking;
@@ -94,7 +93,9 @@ namespace Sitecore.Pathfinder.Projects
                 Remove(sourceFileName);
             }
 
-            var sourceFile = Factory.SourceFile(FileSystem, sourceFileName);
+            var projectFileName = "~/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(Options.ProjectDirectory, PathHelper.GetDirectoryAndFileNameWithoutExtensions(sourceFileName))).TrimStart('/');
+
+            var sourceFile = Factory.SourceFile(FileSystem, sourceFileName, projectFileName);
             SourceFiles.Add(sourceFile);
 
             ParseService.Parse(this, sourceFile);
@@ -210,21 +211,10 @@ namespace Sitecore.Pathfinder.Projects
             Guid guid;
             if (Guid.TryParse(qualifiedName, out guid))
             {
-                return Items.FirstOrDefault(i => i.Guid == guid);
+                return Items.FirstOrDefault(i => i.Uri.Guid == guid);
             }
 
-            return Items.FirstOrDefault(i => string.Compare(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase) == 0);
-        }
-
-        public T FindQualifiedItem<T>(string qualifiedName) where T: IProjectItem
-        {
-            Guid guid;
-            if (Guid.TryParse(qualifiedName, out guid))
-            {
-                return Items.OfType<T>().FirstOrDefault(i => i.Guid == guid);
-            }
-
-            return Items.OfType<T>().FirstOrDefault(i => string.Compare(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase) == 0);
+            return Items.FirstOrDefault(i => string.Equals(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase));
         }
 
         [NotNull]

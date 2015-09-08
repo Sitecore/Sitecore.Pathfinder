@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Snapshots.Json
         [Test]
         public void GetNestedTextNodeTests()
         {
-            var sourceFile = new SourceFile(Services.FileSystem, "test.txt");
+            var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt");
 
             var doc = new JsonTextSnapshot(sourceFile, "{ \"Item\": { \"Fields\": [ { \"Name\": \"Text\", \"Value\": \"123\" } ] } }");
             var root = doc.Root;
@@ -33,7 +33,7 @@ namespace Sitecore.Pathfinder.Snapshots.Json
         [Test]
         public void InvalidJsonTests()
         {
-            var sourceFile = new SourceFile(Services.FileSystem, "test.txt");
+            var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt");
 
             var doc = new JsonTextSnapshot(sourceFile, "\"Item\": { }");
             Assert.AreEqual(TextNode.Empty, doc.Root);
@@ -45,7 +45,7 @@ namespace Sitecore.Pathfinder.Snapshots.Json
         [Test]
         public void ItemTests()
         {
-            var sourceFile = new SourceFile(Services.FileSystem, "test.txt");
+            var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt");
 
             var doc = new JsonTextSnapshot(sourceFile, "{ \"Item\": { \"Fields\": [ { \"Name\": \"Text\", \"Value\": \"123\" } ] } }");
             var root = doc.Root;

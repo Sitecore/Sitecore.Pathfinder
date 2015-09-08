@@ -8,6 +8,7 @@ using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Snapshots;
+using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 {
@@ -21,15 +22,13 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         {
             var itemNameTextNode = GetItemNameTextNode(context.ParseContext, textNode);
             var itemIdOrPath = PathHelper.CombineItemPath(context.ParentItemPath, itemNameTextNode.Value);
-            var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
+            var guid = StringHelper.GetGuid(context.ParseContext.Project, textNode.GetAttributeValue("Id", itemIdOrPath));
             var databaseName = textNode.GetAttributeValue("Database", context.DatabaseName);
 
-            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, databaseName, itemNameTextNode.Value, itemIdOrPath, string.Empty);
+            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, guid, textNode, databaseName, itemNameTextNode.Value, itemIdOrPath, string.Empty);
             item.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
 
             Parse(context, textNode, item);
-
-            item.References.AddRange(ParseReferences(context, item, textNode, string.Empty));
 
             context.ParseContext.Project.AddOrMerge(context.ParseContext, item);
         }
@@ -42,6 +41,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             var innerTextNode = textNode.GetInnerTextNode();
             if (innerTextNode != null)
             {
+                // use the inner value but the outer text node
                 field.ValueProperty.SetValue(innerTextNode.Value);
                 field.ValueProperty.AddSourceTextNode(textNode);
             }
@@ -55,11 +55,11 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         {
             var deviceNameProperty = new SourceProperty<string>("Name", string.Empty, SourcePropertyFlags.IsShort);
             deviceNameProperty.Parse(deviceTextNode);
-            references.Add(context.ParseContext.Factory.DeviceReference(projectItem, deviceNameProperty, deviceNameProperty.GetValue()));
+            references.Add(context.ParseContext.Factory.DeviceReference(projectItem, deviceNameProperty));
 
             var layoutProperty = new SourceProperty<string>("Layout", string.Empty, SourcePropertyFlags.IsShort);
             layoutProperty.Parse(deviceTextNode);
-            references.Add(context.ParseContext.Factory.LayoutReference(projectItem, layoutProperty, layoutProperty.GetValue()));
+            references.Add(context.ParseContext.Factory.LayoutReference(projectItem, layoutProperty));
 
             var renderingsTextNode = deviceTextNode.Snapshot.GetJsonChildTextNode(deviceTextNode, "Renderings");
             if (renderingsTextNode == null)
@@ -73,9 +73,9 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             }
         }
 
-        protected override IEnumerable<IReference> ParseReferences(ItemParseContext context, IProjectItem projectItem, ITextNode layoutTextNode, string text)
+        protected override IEnumerable<IReference> ParseReferences(ItemParseContext context, IProjectItem projectItem, ITextNode layoutTextNode)
         {
-            var result = base.ParseReferences(context, projectItem, layoutTextNode, text).ToList();
+            var result = base.ParseReferences(context, projectItem, layoutTextNode).ToList();
 
             var devicesTextNode = layoutTextNode.Snapshot.GetJsonChildTextNode(layoutTextNode, "Devices");
             if (devicesTextNode == null)
@@ -98,12 +98,13 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
                 var sourceProperty = new SourceProperty<string>(renderingTextNode.Name, string.Empty, SourcePropertyFlags.IsShort);
                 sourceProperty.SetValue(new AttributeNameTextNode(renderingTextNode));
 
-                references.Add(context.ParseContext.Factory.LayoutRenderingReference(projectItem, sourceProperty, renderingTextNode.Name));
+                references.Add(context.ParseContext.Factory.LayoutRenderingReference(projectItem, sourceProperty));
             }
 
+            // parse references for rendering properties
             foreach (var attributeTextNode in renderingTextNode.Attributes)
             {
-                foreach (var reference in base.ParseReferences(context, projectItem, attributeTextNode, attributeTextNode.Value))
+                foreach (var reference in base.ParseReferences(context, projectItem, attributeTextNode))
                 {
                   references.Add(reference);
                 }

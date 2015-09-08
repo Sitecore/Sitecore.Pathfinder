@@ -12,9 +12,9 @@ namespace Sitecore.Pathfinder.Projects.Templates
 {
     public class Template : ItemBase
     {
-        public static readonly Template Empty = new Template(Projects.Project.Empty, "{7A3E077F-D985-453F-8773-348ADFEAF2FD}", TextNode.Empty, string.Empty, string.Empty, string.Empty);
+        public static readonly Template Empty = new Template(Projects.Project.Empty, new Guid("{7A3E077F-D985-453F-8773-348ADFEAF2FD}"), TextNode.Empty, string.Empty, string.Empty, string.Empty);
 
-        public Template([NotNull] IProject project, [NotNull] string projectUniqueId, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, projectUniqueId, textNode, databaseName, itemName, itemIdOrPath)
+        public Template([NotNull] IProject project, Guid guid, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, guid, textNode, databaseName, itemName, itemIdOrPath)
         {
         }
 

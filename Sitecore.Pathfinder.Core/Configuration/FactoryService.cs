@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Sitecore.Pathfinder.Diagnostics;
@@ -29,7 +30,6 @@ namespace Sitecore.Pathfinder.Configuration
         [NotNull]
         protected ICompositionService CompositionService { get; }
 
-        [NotNull]
         public virtual BinFile BinFile(IProject project, ISnapshot snapshot, string filePath)
         {
             return new BinFile(project, snapshot, filePath);
@@ -40,19 +40,14 @@ namespace Sitecore.Pathfinder.Configuration
             return new ContentFile(project, snapshot, filePath);
         }
 
-        public virtual DeviceReference DeviceReference(IProjectItem projectItem, SourceProperty<string> deviceNameSourceProperty, string targetQualifiedName)
+        public virtual DeviceReference DeviceReference(IProjectItem projectItem, SourceProperty<string> deviceNameSourceProperty)
         {
-            return new DeviceReference(projectItem, deviceNameSourceProperty, targetQualifiedName);
+            return new DeviceReference(projectItem, deviceNameSourceProperty);
         }
 
         public virtual Diagnostic Diagnostic(string fileName, TextPosition position, Severity severity, string text)
         {
             return new Diagnostic(fileName, position, severity, text);
-        }
-
-        public virtual ExternalReferenceItem ExternalReferenceItem(IProject project, string projectUniqueId, ISnapshot snapshot, string databaseName, string itemName, string itemIdOrPath)
-        {
-            return new ExternalReferenceItem(project, projectUniqueId, snapshot, databaseName, itemName, itemIdOrPath);
         }
 
         public virtual Field Field(Item item, ITextNode textNode)
@@ -68,14 +63,14 @@ namespace Sitecore.Pathfinder.Configuration
             return field;
         }
 
-        public virtual FileReference FileReference(IProjectItem owner, SourceProperty<string> sourceSourceProperty, string targetQualifiedName)
+        public virtual FileReference FileReference(IProjectItem owner, SourceProperty<string> sourceSourceProperty)
         {
-            return new FileReference(owner, sourceSourceProperty, targetQualifiedName);
+            return new FileReference(owner, sourceSourceProperty);
         }
 
-        public virtual Item Item(IProject project, string projectUniqueId, ITextNode textNode, string databaseName, string itemName, string itemIdOrPath, string templateIdOrPath)
+        public virtual Item Item(IProject project, Guid guid, ITextNode textNode, string databaseName, string itemName, string itemIdOrPath, string templateIdOrPath)
         {
-            return new Item(project, projectUniqueId, textNode, databaseName, itemName, itemIdOrPath, templateIdOrPath);
+            return new Item(project, guid, textNode, databaseName, itemName, itemIdOrPath, templateIdOrPath);
         }
 
         public virtual ItemParseContext ItemParseContext(IParseContext context, ItemParser itemParser, string databaseName, string parentItemPath)
@@ -83,14 +78,14 @@ namespace Sitecore.Pathfinder.Configuration
             return new ItemParseContext(context, itemParser, databaseName, parentItemPath);
         }
 
-        public virtual LayoutReference LayoutReference(IProjectItem projectItem, SourceProperty<string> layoutSourceProperty, string targetQualifiedName)
+        public virtual LayoutReference LayoutReference(IProjectItem projectItem, SourceProperty<string> layoutSourceProperty)
         {
-            return new LayoutReference(projectItem, layoutSourceProperty, targetQualifiedName);
+            return new LayoutReference(projectItem, layoutSourceProperty);
         }
 
-        public virtual LayoutRenderingReference LayoutRenderingReference(IProjectItem projectItem, SourceProperty<string> renderingTextNode, string targetQualifiedName)
+        public virtual LayoutRenderingReference LayoutRenderingReference(IProjectItem projectItem, SourceProperty<string> renderingTextNode)
         {
-            return new LayoutRenderingReference(projectItem, renderingTextNode, targetQualifiedName);
+            return new LayoutRenderingReference(projectItem, renderingTextNode);
         }
 
         public virtual MediaFile MediaFile(IProject project, ISnapshot snapshot, string filePath, Item mediaItem)
@@ -108,9 +103,9 @@ namespace Sitecore.Pathfinder.Configuration
             return new ProjectOptions(projectDirectory, databaseName);
         }
 
-        public virtual IReference Reference(IProjectItem projectItem, SourceProperty<string> sourceSourceProperty, string targetQualifiedName)
+        public virtual IReference Reference(IProjectItem projectItem, SourceProperty<string> sourceSourceProperty)
         {
-            return new Reference(projectItem, sourceSourceProperty, targetQualifiedName);
+            return new Reference(projectItem, sourceSourceProperty);
         }
 
         public virtual Rendering Rendering(IProject project, ISnapshot snapshot, string filePath, Item item)
@@ -128,14 +123,14 @@ namespace Sitecore.Pathfinder.Configuration
             return new Snapshot(sourceFile);
         }
 
-        public virtual ISourceFile SourceFile(IFileSystemService fileSystem, string sourceFileName)
+        public virtual ISourceFile SourceFile(IFileSystemService fileSystem, string sourceFileName, string projectFileName)
         {
-            return new SourceFile(fileSystem, sourceFileName);
+            return new SourceFile(fileSystem, sourceFileName, projectFileName);
         }
 
-        public virtual Template Template(IProject project, string projectUniqueId, ITextNode textNode, string databaseName, string itemName, string itemIdOrPath)
+        public virtual Template Template(IProject project, Guid guid, ITextNode textNode, string databaseName, string itemName, string itemIdOrPath)
         {
-            return new Template(project, projectUniqueId, textNode, databaseName, itemName, itemIdOrPath);
+            return new Template(project, guid, textNode, databaseName, itemName, itemIdOrPath);
         }
 
         public virtual TemplateField TemplateField(Template template, ITextNode templateFieldTextNode)

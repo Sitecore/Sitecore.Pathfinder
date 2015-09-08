@@ -50,7 +50,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
                 return string.Empty;
             }
 
-            var renderingId = rendering.Item.Guid.Format();
+            var renderingId = rendering.Item.Uri.Guid.Format();
 
             var writer = new StringWriter();
             var output = new XmlTextWriter(writer);
@@ -67,8 +67,8 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
                 }
 
                 output.WriteStartElement("d");
-                output.WriteAttributeString("id", deviceItem.Guid.Format());
-                output.WriteAttributeString("l", layoutItem.Guid.Format());
+                output.WriteAttributeString("id", deviceItem.Uri.Guid.Format());
+                output.WriteAttributeString("l", layoutItem.Uri.Guid.Format());
 
                 output.WriteStartElement("r");
                 output.WriteAttributeString("id", renderingId);

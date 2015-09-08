@@ -3,9 +3,10 @@
 using System;
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Snapshots;
+using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Parsing.Layouts
 {
@@ -33,18 +34,14 @@ namespace Sitecore.Pathfinder.Parsing.Layouts
             var path = context.FilePath;
             var snapshotTextNode = new SnapshotTextNode(context.Snapshot);
 
-            var item = context.Factory.Item(context.Project, context.ItemPath, snapshotTextNode, context.DatabaseName, context.ItemName, context.ItemPath, TemplateIdOrPath);
+            var guid = StringHelper.GetGuid(context.Project, context.ItemPath);
+            var item = context.Factory.Item(context.Project, guid, snapshotTextNode, context.DatabaseName, context.ItemName, context.ItemPath, TemplateIdOrPath);
             item.ItemNameProperty.AddSourceTextNode(new FileNameTextNode(context.ItemName, context.Snapshot));
             item.OverwriteWhenMerging = true;
 
-            var field = context.Factory.Field(item, TextNode.Empty, "Path", path);
+            var field = context.Factory.Field(item, snapshotTextNode, "Path", path);
             item.Fields.Add(field);
-
-            // add file name as reference
-            var sourceAttribute = new SourceProperty<string>(snapshotTextNode.Name, string.Empty, SourcePropertyFlags.IsFileName);
-            sourceAttribute.SetValue(snapshotTextNode);
-            var fileReference = context.Factory.FileReference(item, sourceAttribute, path);
-            item.References.Add(fileReference);
+            item.References.Add(new FileReference(item, field.ValueProperty));
 
             // todo: make this configurable
             if (string.Compare(context.DatabaseName, "core", StringComparison.OrdinalIgnoreCase) == 0)

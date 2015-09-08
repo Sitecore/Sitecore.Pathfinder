@@ -32,7 +32,7 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.ItemParserPipelines
             field.ValueHintProperty.SetValue("HtmlTemplate");
             pipeline.Item.Fields.Add(field);
 
-            pipeline.Item.References.Add(pipeline.Context.ParseContext.Factory.FileReference(pipeline.Item, pipeline.Item.LayoutHtmlFileProperty, fieldValue));
+            pipeline.Item.References.Add(pipeline.Context.ParseContext.Factory.FileReference(pipeline.Item, pipeline.Item.LayoutHtmlFileProperty));
         }
     }
 }

@@ -21,11 +21,11 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             var itemNameTextNode = GetItemNameTextNode(context.ParseContext, textNode);
             var parentItemPath = textNode.GetAttributeValue("ParentItemPath", context.ParentItemPath);
             var itemIdOrPath = PathHelper.CombineItemPath(parentItemPath, itemNameTextNode.Value);
-            var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
+            var guid = StringHelper.GetGuid(context.ParseContext.Project, textNode.GetAttributeValue("Id", itemIdOrPath));
             var databaseName = textNode.GetAttributeValue("Database", context.DatabaseName);
             var templateIdOrPath = StringHelper.UnescapeXmlNodeName(textNode.Name);
 
-            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, projectUniqueId, textNode, databaseName, itemNameTextNode.Value, itemIdOrPath, templateIdOrPath);
+            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, guid, textNode, databaseName, itemNameTextNode.Value, itemIdOrPath, templateIdOrPath);
             item.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
             item.TemplateIdOrPathProperty.AddSourceTextNode(new AttributeNameTextNode(textNode));
             item.IsEmittable = string.Compare(textNode.GetAttributeValue("IsEmittable"), "False", StringComparison.OrdinalIgnoreCase) != 0;
@@ -33,7 +33,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
             if (!item.IsExternalReference)
             {
-                item.References.AddRange(ParseReferences(context, item, textNode, item.TemplateIdOrPath));
+                item.References.AddRange(ParseReferences(context, item, item.TemplateIdOrPathProperty));
             }
 
             ParseAttributes(context, item, textNode);
@@ -85,7 +85,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
             if (!item.IsExternalReference)
             {
-                item.References.AddRange(ParseReferences(context, item, fieldTextNode, field.Value));
+                item.References.AddRange(ParseReferences(context, item, field.ValueProperty));
             }
         }
     }

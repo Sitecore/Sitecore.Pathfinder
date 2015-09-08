@@ -14,6 +14,8 @@ namespace Sitecore.Pathfinder.Projects.Files
             MediaItem.TemplateIdOrPath = "/sitecore/templates/System/Media/Unversioned/File";
         }
 
+        // todo: disable upload
+
         [NotNull]
         public Item MediaItem { get; }
     }

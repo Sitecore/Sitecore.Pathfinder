@@ -168,7 +168,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
                 return;
             }
 
-            output.WriteAttributeString("ds", item.Guid.Format());
+            output.WriteAttributeString("ds", item.Uri.Guid.Format());
         }
 
         protected virtual void WriteDevice([NotNull] LayoutResolveContext context, [NotNull] XmlTextWriter output, [NotNull] IEnumerable<Item> renderingItems, [NotNull] ITextNode deviceTextNode)
@@ -197,7 +197,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
                     }
                     else
                     {
-                        output.WriteAttributeString("id", device.Guid.Format());
+                        output.WriteAttributeString("id", device.Uri.Guid.Format());
                     }
                 }
             }
@@ -213,7 +213,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
                     return;
                 }
 
-                output.WriteAttributeString("l", l.Guid.Format());
+                output.WriteAttributeString("l", l.Uri.Guid.Format());
                 layoutPlaceholders = GetPlaceholders(context, deviceTextNode, l);
             }
 
@@ -317,7 +317,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
             Item renderingItem;
             if (renderingItemId.IsGuid())
             {
-                renderingItem = context.Field.Item.Project.Items.OfType<Item>().FirstOrDefault(i => i.Guid.Format() == renderingItemId);
+                renderingItem = context.Field.Item.Project.Items.OfType<Item>().FirstOrDefault(i => i.Uri.Guid.Format() == renderingItemId);
             }
             else
             {
@@ -347,7 +347,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
             output.WriteStartElement("r");
 
             WriteBool(context, output, renderingTextNode, id, "Cacheable", "cac");
-            output.WriteAttributeString("id", renderingItem.Guid.Format());
+            output.WriteAttributeString("id", renderingItem.Uri.Guid.Format());
             WriteDataSource(context, output, renderingTextNode);
             WriteParameters(context, output, renderingTextNode, renderingItem, id);
             WritePlaceholder(context, output, renderingTextNode, id, placeholders);
@@ -529,7 +529,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
                     var item = context.Field.Item.Project.FindQualifiedItem(value);
                     if (item != null)
                     {
-                        value = item.Guid.Format();
+                        value = item.Uri.Guid.Format();
                     }
                 }
 

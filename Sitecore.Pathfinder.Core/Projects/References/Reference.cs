@@ -7,22 +7,15 @@ using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Projects.References
 {
-    [DebuggerDisplay("{GetType().Name,nq}: {TargetQualifiedName}")]
+    [DebuggerDisplay("{GetType().Name,nq}: {SourceProperty.GetValue()}")]
     public class Reference : IReference
     {
         private bool _isValid;
 
-        public Reference([NotNull] IProjectItem owner, [NotNull] string targetQualifiedName)
-        {
-            Owner = owner;
-            TargetQualifiedName = targetQualifiedName;
-        }
-
-        public Reference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceProperty, [NotNull] string targetQualifiedName)
+        public Reference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceProperty)
         {
             Owner = owner;
             SourceProperty = sourceProperty;
-            TargetQualifiedName = targetQualifiedName;
         }
 
         public bool IsResolved { get; set; }
@@ -49,15 +42,13 @@ namespace Sitecore.Pathfinder.Projects.References
 
         public SourceProperty<string> SourceProperty { get; set; }
 
-        public string TargetQualifiedName { get; }
-
-        protected Guid TargetProjectItemGuid { get; set; } = Guid.Empty;
+        protected ProjectItemUri ResolvedUri { get; set; }
 
         public void Invalidate()
         {
             IsResolved = false;
             IsValid = false;
-            TargetProjectItemGuid = Guid.Empty;
+            ResolvedUri = null;
         }
 
         public virtual IProjectItem Resolve()
@@ -69,11 +60,11 @@ namespace Sitecore.Pathfinder.Projects.References
                     return null;
                 }
 
-                var result = Owner.Project.Items.FirstOrDefault(i => i.Guid == TargetProjectItemGuid);
+                var result = Owner.Project.Items.FirstOrDefault(i => i.Uri == ResolvedUri);
                 if (result == null)
                 {
                     IsValid = false;
-                    TargetProjectItemGuid = Guid.Empty;
+                    ResolvedUri = null;
                 }
 
                 return result;
@@ -81,15 +72,15 @@ namespace Sitecore.Pathfinder.Projects.References
 
             IsResolved = true;
 
-            var projectItem = Owner.Project.FindQualifiedItem(TargetQualifiedName);
+            var projectItem = Owner.Project.FindQualifiedItem(SourceProperty.GetValue());
             if (projectItem == null)
             {
                 IsValid = false;
-                TargetProjectItemGuid = Guid.Empty;
+                ResolvedUri = null;
                 return null;
             }
 
-            TargetProjectItemGuid = projectItem.Guid;
+            ResolvedUri = projectItem.Uri;
             IsValid = true;
 
             return projectItem;

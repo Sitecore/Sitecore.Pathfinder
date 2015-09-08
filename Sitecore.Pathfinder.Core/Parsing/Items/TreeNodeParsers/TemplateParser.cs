@@ -7,6 +7,7 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
+using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 {
@@ -26,10 +27,10 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         {
             var itemNameTextNode = GetItemNameTextNode(context.ParseContext, textNode);
             var itemIdOrPath = PathHelper.CombineItemPath(context.ParentItemPath, itemNameTextNode.Value);
-            var projectUniqueId = textNode.GetAttributeValue("Id", itemIdOrPath);
+            var guid = StringHelper.GetGuid(context.ParseContext.Project, textNode.GetAttributeValue("Id", itemIdOrPath));
             var databaseName = textNode.GetAttributeValue("Database", context.DatabaseName);
 
-            var template = context.ParseContext.Factory.Template(context.ParseContext.Project, projectUniqueId, textNode, databaseName, itemNameTextNode.Value, itemIdOrPath);
+            var template = context.ParseContext.Factory.Template(context.ParseContext.Project, guid, textNode, databaseName, itemNameTextNode.Value, itemIdOrPath);
             template.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
             template.BaseTemplatesProperty.Parse(textNode, Constants.Templates.StandardTemplate);
             template.IconProperty.Parse(textNode);
@@ -38,14 +39,12 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             template.IsEmittable = string.Compare(textNode.GetAttributeValue("IsEmittable"), "False", StringComparison.OrdinalIgnoreCase) != 0;
             template.IsExternalReference = string.Compare(textNode.GetAttributeValue("IsExternalReference"), "True", StringComparison.OrdinalIgnoreCase) == 0;
 
-            if (!template.IsExternalReference)
-            {
-                template.References.AddRange(ParseReferences(context, template, textNode, template.BaseTemplates));
-            }
+            template.References.AddRange(ParseReferences(context, template, template.BaseTemplatesProperty));
 
             // create standard values item
             var standardValuesItemIdOrPath = itemIdOrPath + "/__Standard Values";
-            var standardValuesItem = context.ParseContext.Factory.Item(context.ParseContext.Project, standardValuesItemIdOrPath, textNode, databaseName, "__Standard Values", standardValuesItemIdOrPath, itemIdOrPath);
+            var standardValuesGuid = StringHelper.GetGuid(context.ParseContext.Project, standardValuesItemIdOrPath);
+            var standardValuesItem = context.ParseContext.Factory.Item(context.ParseContext.Project, standardValuesGuid, textNode, databaseName, "__Standard Values", standardValuesItemIdOrPath, itemIdOrPath);
 
             template.StandardValuesItem = standardValuesItem;
 
@@ -119,7 +118,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
                 }
             }
 
-            template.References.AddRange(ParseReferences(context, template, templateFieldTextNode, templateField.Source));
+              template.References.AddRange(ParseReferences(context, template, templateField.SourceProperty));
         }
 
         protected virtual void ParseSection([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] ITextNode templateSectionTextNode)

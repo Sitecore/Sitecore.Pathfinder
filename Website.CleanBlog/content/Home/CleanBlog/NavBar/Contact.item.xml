@@ -4,7 +4,7 @@
   Template.ShortHelp="Contact page."
   Template.LongHelp="Contact page."
   Template.Icon="Applications/16x16/about.png"
-  Layout.HtmlFile="/CleanBlog/layout/renderings/contact.html">
+  Layout.HtmlFile="~/CleanBlog/layout/renderings/contact.html">
   
   <Field Name="PageTitle" Field.Type="Single-Line Text" Field.ShortHelp="Name of the page." Field.LongHelp="Displayed in the browser window caption.">
     Clean Blog - Contact

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
@@ -37,7 +38,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             {
                 var sourceProperty = new SourceProperty<string>(source.Name, string.Empty, SourcePropertyFlags.IsQualified);
                 sourceProperty.SetValue(source);
-                return context.ParseContext.Factory.Reference(projectItem, sourceProperty, text);
+                return context.ParseContext.Factory.Reference(projectItem, sourceProperty);
             }
 
             Guid guid;
@@ -45,15 +46,29 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             {
                 var sourceProperty = new SourceProperty<string>(source.Name, string.Empty, SourcePropertyFlags.IsGuid);
                 sourceProperty.SetValue(source);
-                return context.ParseContext.Factory.Reference(projectItem, sourceProperty, guid.Format());
+                return context.ParseContext.Factory.Reference(projectItem, sourceProperty);
             }
 
             return null;
         }
 
         [NotNull]
-        protected virtual IEnumerable<IReference> ParseReferences([NotNull] ItemParseContext context, [NotNull] IProjectItem projectItem, [NotNull] ITextNode textNode, [NotNull] string text)
+        protected virtual IEnumerable<IReference> ParseReferences<T>([NotNull] ItemParseContext context, [NotNull] IProjectItem projectItem, [NotNull] SourceProperty<T> sourceProperty)
         {
+            var sourceTextNode = sourceProperty.SourceTextNode;
+            if (sourceTextNode == null)
+            {
+                return Enumerable.Empty<IReference>();
+            }
+
+            return ParseReferences(context, projectItem, sourceTextNode);
+        }
+
+        [NotNull]
+        protected virtual IEnumerable<IReference> ParseReferences([NotNull] ItemParseContext context, [NotNull] IProjectItem projectItem, [NotNull] ITextNode textNode)
+        {
+            var text = textNode.Value;
+
             var reference = ParseReference(context, projectItem, textNode, text);
             if (reference != null)
             {
@@ -90,9 +105,9 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
                     continue;
                 }
 
-                var value = urlString.Parameters[key];
+                var parameterValue = urlString.Parameters[key];
 
-                reference = ParseReference(context, projectItem, textNode, value);
+                reference = ParseReference(context, projectItem, textNode, parameterValue);
                 if (reference != null)
                 {
                     yield return reference;

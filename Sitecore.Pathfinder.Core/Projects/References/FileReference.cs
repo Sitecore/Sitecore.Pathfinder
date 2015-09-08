@@ -9,11 +9,7 @@ namespace Sitecore.Pathfinder.Projects.References
 {
     public class FileReference : Reference
     {
-        public FileReference([NotNull] IProjectItem owner, [NotNull] string targetQualifiedName) : base(owner, targetQualifiedName)
-        {
-        }
-
-        public FileReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceProperty, [NotNull] string targetQualifiedName) : base(owner, sourceProperty, targetQualifiedName)
+        public FileReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceProperty) : base(owner, sourceProperty)
         {
         }
 
@@ -26,11 +22,11 @@ namespace Sitecore.Pathfinder.Projects.References
                     return null;
                 }
 
-                var result = Owner.Project.Items.FirstOrDefault(i => i.Guid == TargetProjectItemGuid);
+                var result = Owner.Project.Items.FirstOrDefault(i => i.Uri == ResolvedUri);
                 if (result == null)
                 {
                     IsValid = false;
-                    TargetProjectItemGuid = Guid.Empty;
+                    ResolvedUri = null;
                 }
 
                 return result;
@@ -38,15 +34,16 @@ namespace Sitecore.Pathfinder.Projects.References
 
             IsResolved = true;
 
-            var projectItem = Owner.Project.Items.OfType<File>().FirstOrDefault(i => string.Compare(i.FilePath, TargetQualifiedName, StringComparison.OrdinalIgnoreCase) == 0);
+            var filePath = SourceProperty.GetValue();
+            var projectItem = Owner.Project.Items.OfType<File>().FirstOrDefault(i => string.Equals(i.FilePath, filePath, StringComparison.OrdinalIgnoreCase));
             if (projectItem == null)
             {
                 IsValid = false;
-                TargetProjectItemGuid = Guid.Empty;
+                ResolvedUri = null;
                 return null;
             }
 
-            TargetProjectItemGuid = projectItem.Guid;
+            ResolvedUri = projectItem.Uri;
             IsValid = true;
 
             return projectItem;

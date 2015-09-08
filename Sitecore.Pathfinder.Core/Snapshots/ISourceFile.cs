@@ -3,7 +3,6 @@
 using System;
 using System.Xml.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
@@ -17,10 +16,10 @@ namespace Sitecore.Pathfinder.Snapshots
         DateTime LastWriteTimeUtc { get; }
 
         [NotNull]
-        string GetFileNameWithoutExtensions();
+        string ProjectFileName { get; }
 
         [NotNull]
-        string GetProjectPath([NotNull] IProject project);
+        string GetFileNameWithoutExtensions();
 
         [NotNull]
         string[] ReadAsLines();

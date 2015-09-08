@@ -148,7 +148,7 @@ namespace Sitecore.Pathfinder.IO
                 filePath = serverFileDirectory.TrimEnd('/') + "/" + filePath.Mid(localFileDirectory.Length);
             }
 
-            return filePath;
+            return "~" + filePath;
         }
 
         [NotNull]

@@ -32,7 +32,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                         continue;
                     }
 
-                    if (projectItem1.Guid != projectItem2.Guid)
+                    if (projectItem1.Uri.Guid != projectItem2.Uri.Guid)
                     {
                         continue;
                     }

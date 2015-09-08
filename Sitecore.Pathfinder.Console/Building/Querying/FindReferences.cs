@@ -37,12 +37,12 @@ namespace Sitecore.Pathfinder.Building.Querying
 
             foreach (var reference in projectItem.References)
             {
-                string line = $"{reference.Owner.Snapshots.First().SourceFile.GetProjectPath(context.Project)}";
+                string line = $"{reference.Owner.Snapshots.First().SourceFile.ProjectFileName}";
 
                 var textNode = TraceHelper.GetTextNode(reference.SourceProperty);
                 line += $"({textNode.Position.LineNumber},{textNode.Position.LineNumber})";
 
-                line += ": " + reference.TargetQualifiedName;
+                line += ": " + reference.SourceProperty.GetValue();
 
                 if (!reference.IsValid)
                 {

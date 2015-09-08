@@ -18,6 +18,8 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public DateTime LastWriteTimeUtc { get; } = DateTime.MinValue;
 
+        public string ProjectFileName { get; } = string.Empty;
+
         public string GetFileNameWithoutExtensions()
         {
             return _fileNameWithoutExtensions;

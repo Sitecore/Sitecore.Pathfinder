@@ -8,6 +8,7 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
+using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Parsing.Files
 {
@@ -40,7 +41,9 @@ namespace Sitecore.Pathfinder.Parsing.Files
             var serializationItemBuilder = new SerializationItemBuilder();
             ParseLines(context, serializationItemBuilder, lines, 0);
 
-            var item = context.Factory.Item(context.Project, serializationItemBuilder.ProjectUniqueId, root, serializationItemBuilder.DatabaseName, serializationItemBuilder.ItemName, serializationItemBuilder.ItemIdOrPath, serializationItemBuilder.TemplateIdOrPath);
+            var guid = StringHelper.GetGuid(context.Project, serializationItemBuilder.ProjectUniqueId);
+
+            var item = context.Factory.Item(context.Project, guid, root, serializationItemBuilder.DatabaseName, serializationItemBuilder.ItemName, serializationItemBuilder.ItemIdOrPath, serializationItemBuilder.TemplateIdOrPath);
             item.ItemNameProperty.AddSourceTextNode(serializationItemBuilder.ItemNameTextNode);
             item.TemplateIdOrPathProperty.AddSourceTextNode(serializationItemBuilder.TemplateIdOrPathTextNode);
             item.IconProperty.SetValue(serializationItemBuilder.Icon);

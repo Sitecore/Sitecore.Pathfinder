@@ -12,10 +12,11 @@ namespace Sitecore.Pathfinder.Snapshots
     [DebuggerDisplay("{GetType().Name}: FileName={FileName}")]
     public class SourceFile : ISourceFile
     {
-        public SourceFile([NotNull] IFileSystemService fileSystem, [NotNull] string fileName)
+        public SourceFile([NotNull] IFileSystemService fileSystem, [NotNull] string fileName, string projectFileName)
         {
             FileSystem = fileSystem;
             FileName = fileName;
+            ProjectFileName = projectFileName;
 
             LastWriteTimeUtc = FileSystem.GetLastWriteTimeUtc(FileName);
         }
@@ -29,17 +30,14 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public DateTime LastWriteTimeUtc { get; }
 
+        public string ProjectFileName { get; }
+
         [NotNull]
         protected IFileSystemService FileSystem { get; }
 
         public string GetFileNameWithoutExtensions()
         {
             return PathHelper.GetDirectoryAndFileNameWithoutExtensions(FileName);
-        }
-
-        public string GetProjectPath(IProject project)
-        {
-            return PathHelper.UnmapPath(project.Options.ProjectDirectory, FileName);
         }
 
         public string[] ReadAsLines()

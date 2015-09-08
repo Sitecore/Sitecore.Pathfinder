@@ -116,6 +116,7 @@
     <Compile Include="Projects\Items\FieldResolvers\Layouts\LayoutResolverBase.cs" />
     <Compile Include="Projects\Items\FieldResolvers\Layouts\XmlLayoutResolver.cs" />
     <Compile Include="Projects\Items\FieldResolvers\LinkFieldResolver.cs" />
+    <Compile Include="Projects\ProjectItemUri.cs" />
     <Compile Include="Snapshots\AttributeNameTextNode.cs" />
     <Compile Include="Snapshots\IHasSourceTextNodes.cs" />
     <Compile Include="Snapshots\Json\JsonInnerTextNode.cs" />
@@ -181,7 +182,6 @@
     <Compile Include="Snapshots\EmptySourceFile.cs" />
     <Compile Include="Projects\IProjectItem.cs" />
     <Compile Include="Projects\IProjectService.cs" />
-    <Compile Include="Projects\Items\ExternalReferenceItem.cs" />
     <Compile Include="Projects\Items\Item.cs" />
     <Compile Include="Snapshots\ISnapshot.cs" />
     <Compile Include="Snapshots\ITextTokenService.cs" />

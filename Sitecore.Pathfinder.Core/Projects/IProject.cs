@@ -45,9 +45,6 @@ namespace Sitecore.Pathfinder.Projects
         [CanBeNull]
         IProjectItem FindQualifiedItem([NotNull] string qualifiedName);
 
-        [CanBeNull]
-        T FindQualifiedItem<T>([NotNull] string qualifiedName) where T : IProjectItem;
-
         [NotNull]
         IProject Load([NotNull] ProjectOptions projectOptions, [NotNull] IEnumerable<string> sourceFileNames);
 
