@@ -15,16 +15,25 @@ namespace Sitecore.Pathfinder.Text
         public static Guid GetGuid(IProject project, string id)
         {
             Guid guid;
-            if (!Guid.TryParse(id, out guid))
+            if (Guid.TryParse(id, out guid))
             {
-                // calculate guid from id and project id case-insensitively
-                var text = (project.ProjectUniqueId + "/" + id).ToUpperInvariant();
-                var bytes = Encoding.UTF8.GetBytes(text);
-                var hash = Md5Hash.ComputeHash(bytes);
-                guid = new Guid(hash);
+                return guid;
             }
 
-            return guid;
+            if (id.StartsWith("{") && id.EndsWith("}"))
+            {
+                return ToGuid(id);
+            }
+
+            // calculate guid from id and project id case-insensitively
+            return ToGuid((project.ProjectUniqueId + "/" + id).ToUpperInvariant());
+        }
+
+        public static Guid ToGuid([NotNull] string text)
+        {
+            var bytes = Encoding.UTF8.GetBytes(text);
+            var hash = Md5Hash.ComputeHash(bytes);
+            return new Guid(hash);
         }
 
         [NotNull]

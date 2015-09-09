@@ -236,13 +236,15 @@ Normally you do not need to specify the ID of an item, but in some case, it may 
 item ID does not have to be a Guid (but it can be).
 
 By default Pathfinder calculates the ID of an item hashing the project unique ID and the file path (without file extensions), like this 
-`item.Guid = MD5(Project_Unique_ID + item.FilePath)`. This means that the item ID is always the same, as long as the file path remains the same.
+`item.Guid = MD5((Project_Unique_ID + item.FilePath).ToUpperInvariant())`. This means that the item ID is always the same, as long as the 
+file path remains the same.
 
 You can explicitly set the ID by specifying the ID in item file as either a Guid or as a soft ID.
 
-* If no ID is specified, the item ID is calculated as `item.Guid = MD5(Project_Unique_ID + item.ItemPath)`.
+* If no ID is specified, the item ID is calculated as `item.Guid = MD5((Project_Unique_ID + item.FilePath).ToUpperInvariant())`.
 * If the ID is specified as a Guid, the item ID uses Guid as is.
-* If the ID is specified (but not a Guid), the item ID is calculated as `item.Guid = MD5(Project_Unique_ID + item.ID)`.
+* If the ID is specified and starts with '{' and ends with '}' (a soft ID), the item ID is calculated as `item.Guid = MD5(item.ID)`.
+* If the ID is specified (but not a Guid), the item ID is calculated as `item.Guid = MD5((Project_Unique_ID + item.ID).ToUpperInvariant())`.
 
 If you rename an item, but want to keep the original item ID, specify the ID as the original file path (without extensions), e.g.:
 ```xml

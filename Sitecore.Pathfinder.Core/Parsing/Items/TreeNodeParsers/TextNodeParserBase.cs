@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Snapshots;
@@ -45,6 +44,13 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             if (Guid.TryParse(text, out guid))
             {
                 var sourceProperty = new SourceProperty<string>(source.Name, string.Empty, SourcePropertyFlags.IsGuid);
+                sourceProperty.SetValue(source);
+                return context.ParseContext.Factory.Reference(projectItem, sourceProperty);
+            }
+
+            if (text.StartsWith("{") && text.EndsWith("}"))
+            {
+                var sourceProperty = new SourceProperty<string>(source.Name, string.Empty, SourcePropertyFlags.IsSoftGuid);
                 sourceProperty.SetValue(source);
                 return context.ParseContext.Factory.Reference(projectItem, sourceProperty);
             }

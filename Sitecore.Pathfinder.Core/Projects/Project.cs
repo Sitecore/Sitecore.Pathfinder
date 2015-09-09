@@ -15,6 +15,7 @@ using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Items.FieldResolvers;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
+using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Projects
 {
@@ -214,6 +215,12 @@ namespace Sitecore.Pathfinder.Projects
                 return Items.FirstOrDefault(i => i.Uri.Guid == guid);
             }
 
+            if (qualifiedName.StartsWith("{") && qualifiedName.EndsWith("}"))
+            {
+                guid = StringHelper.ToGuid(qualifiedName);
+                return Items.FirstOrDefault(i => i.Uri.Guid == guid);
+            }
+
             return Items.FirstOrDefault(i => string.Equals(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase));
         }
 
@@ -223,17 +230,17 @@ namespace Sitecore.Pathfinder.Projects
             Item item = null;
             if (newItem.MergingMatch == MergingMatch.MatchUsingSourceFile)
             {
-                item = Items.OfType<Item>().FirstOrDefault(i => string.Compare(i.Snapshots.First().SourceFile.GetFileNameWithoutExtensions(), newItem.Snapshots.First().SourceFile.GetFileNameWithoutExtensions(), StringComparison.OrdinalIgnoreCase) == 0);
+                item = Items.OfType<Item>().FirstOrDefault(i => string.Equals(i.Snapshots.First().SourceFile.GetFileNameWithoutExtensions(), newItem.Snapshots.First().SourceFile.GetFileNameWithoutExtensions(), StringComparison.OrdinalIgnoreCase));
             }
 
             if (item == null)
             {
-                item = Items.OfType<Item>().FirstOrDefault(i => i.MergingMatch == MergingMatch.MatchUsingSourceFile && string.Compare(i.Snapshots.First().SourceFile.GetFileNameWithoutExtensions(), newItem.Snapshots.First().SourceFile.GetFileNameWithoutExtensions(), StringComparison.OrdinalIgnoreCase) == 0);
+                item = Items.OfType<Item>().FirstOrDefault(i => i.MergingMatch == MergingMatch.MatchUsingSourceFile && string.Equals(i.Snapshots.First().SourceFile.GetFileNameWithoutExtensions(), newItem.Snapshots.First().SourceFile.GetFileNameWithoutExtensions(), StringComparison.OrdinalIgnoreCase));
             }
 
             if (item == null)
             {
-                item = Items.OfType<Item>().FirstOrDefault(i => string.Compare(i.ItemIdOrPath, newItem.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) == 0 && string.Compare(i.DatabaseName, newItem.DatabaseName, StringComparison.OrdinalIgnoreCase) == 0);
+                item = Items.OfType<Item>().FirstOrDefault(i => string.Equals(i.ItemIdOrPath, newItem.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) && string.Equals(i.DatabaseName, newItem.DatabaseName, StringComparison.OrdinalIgnoreCase));
             }
 
             if (item == null)
@@ -249,7 +256,7 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         protected virtual IProjectItem MergeTemplate<T>([NotNull] IParseContext context, [NotNull] T newTemplate) where T : Template
         {
-            var template = Items.OfType<Template>().FirstOrDefault(i => string.Compare(i.ItemIdOrPath, newTemplate.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) == 0 && string.Compare(i.DatabaseName, newTemplate.DatabaseName, StringComparison.OrdinalIgnoreCase) == 0);
+            var template = Items.OfType<Template>().FirstOrDefault(i => string.Equals(i.ItemIdOrPath, newTemplate.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) && string.Equals(i.DatabaseName, newTemplate.DatabaseName, StringComparison.OrdinalIgnoreCase));
             if (template == null)
             {
                 _items.Add(newTemplate);

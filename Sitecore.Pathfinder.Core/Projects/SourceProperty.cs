@@ -22,11 +22,13 @@ namespace Sitecore.Pathfinder.Projects
 
         IsGuid = 0x04,
 
-        IsFileName = 0x08,
+        IsSoftGuid = 0x08,
 
-        ConvertToXmlIdentifier = 0x10,
+        IsFileName = 0x10,
 
-        ConvertToCodelIdentifier = 0x11
+        ConvertToXmlIdentifier = 0x11,
+
+        ConvertToCodelIdentifier = 0x12
     }
 
     [DebuggerDisplay("\\{{GetType().Name,nq}\\}: {Name,nq} = {GetValue()}")]
