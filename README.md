@@ -526,6 +526,19 @@ module.exports = function (grunt) {
 10. If you want to use code generate, right-click 'generate-code' and select Binding | Before Build.
 
 
+## Using SQL LocalDb
+See [http://sitecoresupport.blogspot.dk/2012/03/sitecore-on-sql-2012-denali-with.html](http://sitecoresupport.blogspot.dk/2012/03/sitecore-on-sql-2012-denali-with.html)
+
+1. Install SQL Server LocalDB using Web Platform Installer.
+1. Modify /App_Config/ConnectionStrings.xml to use "Server=(localdb)\v11.0; Integrated Security=true; AttachDbFileName=E:\db\Sitecore.Core.MDF" ...
+1. Change the AppPool Identity of the IIS Website to "LocalSystem"
+1. Start SQL LocalDB service using "sqllocaldb.exe start v11.0"
+
+## Using IIS Express
+See [http://chrismcleod.me/2011/01/14/iis-express-website-here-shell-extension/](http://chrismcleod.me/2011/01/14/iis-express-website-here-shell-extension/)
+
+1. Install IIS Express Website Here
+
 ## Sitecore toolbox
 As a Sitecore developer, what should be in your development toolbox? 
 
@@ -536,4 +549,5 @@ Application   | Description | Difficulty
 [Sitecore Rocks Visual Studio](https://visualstudiogallery.msdn.microsoft.com/44a26c88-83a7-46f6-903c-5c59bcd3d35b/) | Visual Studio plugin for working with Sitecore | Low to high
 [Sitecore Rocks Windows](https://github.com/JakobChristensen/Sitecore.Rocks.Docs) | Sitecore Rocks version that does not require Visual Studio | Low to high
 [Sitecore Pathfinder](https://github.com/JakobChristensen/Sitecore.Pathfinder) | Sitecore build toolchain | Low
+
 

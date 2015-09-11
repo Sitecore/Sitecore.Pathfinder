@@ -13,6 +13,7 @@ using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Data.Templates;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Text;
 using Sitecore.SecurityModel;
 using Sitecore.Text;
 using Sitecore.Zip;
@@ -74,7 +75,7 @@ namespace Sitecore.Pathfinder.Synchronizing
             output.WriteEndObject();
         }
 
-        protected virtual bool WriteDropListAttribute([Diagnostics.NotNull] JsonTextWriter output, [Diagnostics.NotNull] Database database, [Diagnostics.NotNull] TemplateField field, [Diagnostics.NotNull] UrlString urlString, [Diagnostics.NotNull] string bindmode)
+        protected virtual bool WriteDropListAttribute([Diagnostics.NotNull] JsonTextWriter output, [Diagnostics.NotNull] Database database, [Diagnostics.NotNull] TemplateField field, [Diagnostics.NotNull] Sitecore.Text.UrlString urlString, [Diagnostics.NotNull] string bindmode)
         {
             var itemId = ID.IsID(field.Source) ? field.Source : urlString["datasource"];
 
@@ -186,7 +187,7 @@ namespace Sitecore.Pathfinder.Synchronizing
 
                 fieldNames.Add(fieldName);
 
-                var urlString = new UrlString(field.Source);
+                var urlString = new Sitecore.Text.UrlString(field.Source);
                 var bindmode = (urlString["bindmode"] ?? string.Empty).ToLowerInvariant();
 
                 if (string.Compare(field.Type, "droplist", StringComparison.InvariantCultureIgnoreCase) == 0)

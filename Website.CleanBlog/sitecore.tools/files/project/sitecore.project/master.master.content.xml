@@ -4,7 +4,7 @@
     <Main--Section Id="{EB2E4FFD-2761-4653-B052-26A64D385227}" Name="layout" IsExternalReference="True">
         <!-- /sitecore/layout/Layouts -->
         <Node Id="{75CC5CE4-8979-4008-9D3C-806477D57619}" Name="Layouts" IsExternalReference="True">
-            <View--Rendering Id="{5E9D5374-E00A-4053-9127-EBC96A02C721}" Name="MvcLayout" IsExternalReference="True" Path="/layout/layouts/MvcLayout.cshtml" Place--Holders="Page.Body"/>
+            <View--Rendering Id="{1A5A92AD-D537-7E87-FB00-A39BFDE2538B}" Name="MvcLayout" IsExternalReference="True" Path="/layout/layouts/MvcLayout.cshtml" Place--Holders="Page.Body"/>
         </Node>
 
         <!-- /sitecore/layout/Devices -->

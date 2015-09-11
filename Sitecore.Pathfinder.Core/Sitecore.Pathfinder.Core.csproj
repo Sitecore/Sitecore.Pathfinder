@@ -105,6 +105,7 @@
     <Compile Include="Extensions\GuidExtensions.cs" />
     <Compile Include="Projects\Items\FieldResolvers\CheckboxFieldResolver.cs" />
     <Compile Include="Projects\Items\FieldResolvers\FieldResolverBase.cs" />
+    <Compile Include="Projects\Items\FieldResolvers\FileNameFieldResolver.cs" />
     <Compile Include="Projects\Items\FieldResolvers\IFieldResolver.cs" />
     <Compile Include="Projects\Items\FieldResolvers\ImageFieldResolver.cs" />
     <Compile Include="Projects\Items\FieldResolvers\ItemPathResolver.cs" />

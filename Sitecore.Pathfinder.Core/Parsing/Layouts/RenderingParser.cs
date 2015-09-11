@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Snapshots;
@@ -40,6 +41,7 @@ namespace Sitecore.Pathfinder.Parsing.Layouts
             item.OverwriteWhenMerging = true;
 
             var field = context.Factory.Field(item, snapshotTextNode, "Path", path);
+            field.ValueProperty.SourcePropertyFlags = SourcePropertyFlags.IsFileName;
             item.Fields.Add(field);
             item.References.Add(new FileReference(item, field.ValueProperty));
 
