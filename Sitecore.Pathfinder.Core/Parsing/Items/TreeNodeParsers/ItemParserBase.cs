@@ -112,11 +112,13 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             // get field value either from Value attribute or from inner text
             var innerTextNode = fieldTextNode.GetInnerTextNode();
             var attributeTextNode = fieldTextNode.GetAttributeTextNode("Value");
+            // todo: fix this
+            /*
             if (innerTextNode != null && attributeTextNode != null)
             {
                 context.ParseContext.Trace.TraceWarning(Texts.Value_is_specified_in_both__Value__attribute_and_in_element__Using_value_from_attribute, fieldTextNode.Snapshot.SourceFile.FileName, attributeTextNode.Position, fieldName.Value);
             }
-
+            */
             var valueTextNode = attributeTextNode ?? innerTextNode;
             if (valueTextNode != null)
             {

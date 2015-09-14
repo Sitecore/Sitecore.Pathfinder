@@ -49,7 +49,7 @@ namespace Sitecore.Pathfinder.Projects
 
             var renderings = standardValuesItem.Fields.FirstOrDefault(f => f.FieldName == "__Renderings");
             Assert.IsNotNull(renderings);
-            Assert.AreEqual("~/layout/renderings/HelloWorld.html", renderings.Value);
+            Assert.AreEqual("~/layout/renderings/HelloWorld.cshtml", renderings.Value);
             Assert.AreEqual("HtmlTemplate", renderings.ValueHint);
         }
     }

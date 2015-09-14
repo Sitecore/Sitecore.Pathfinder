@@ -44,7 +44,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         {
             if (!string.IsNullOrEmpty(newSection.Icon))
             {
-                IconProperty.SetValue(newSection.IconProperty);
+                IconProperty.SetValue(newSection.IconProperty, SetSourcePropertyValue.NoUpdate);
             }
 
             foreach (var newField in newSection.Fields)

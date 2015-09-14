@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
             var item = field.Item.Project.FindQualifiedItem(qualifiedName);
             if (item == null)
             {
-                trace.TraceError("Image reference not found", qualifiedName);
+                trace.TraceError(Texts.Image_reference_not_found, qualifiedName);
                 return string.Empty;
             }
 

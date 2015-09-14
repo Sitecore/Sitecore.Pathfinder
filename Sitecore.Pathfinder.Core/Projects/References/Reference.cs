@@ -42,6 +42,7 @@ namespace Sitecore.Pathfinder.Projects.References
 
         public SourceProperty<string> SourceProperty { get; set; }
 
+        [CanBeNull]
         protected ProjectItemUri ResolvedUri { get; set; }
 
         public void Invalidate()
@@ -60,7 +61,7 @@ namespace Sitecore.Pathfinder.Projects.References
                     return null;
                 }
 
-                var result = Owner.Project.Items.FirstOrDefault(i => i.Uri == ResolvedUri);
+                var result = Owner.Project.FindQualifiedItem(ResolvedUri);
                 if (result == null)
                 {
                     IsValid = false;

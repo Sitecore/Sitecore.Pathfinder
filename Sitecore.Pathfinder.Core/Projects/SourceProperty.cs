@@ -66,8 +66,6 @@ namespace Sitecore.Pathfinder.Projects
 
         public ICollection<ITextNode> SourceTextNodes { get; } = new List<ITextNode>();
 
-        protected bool IsUpdateSourceTextNodeEnabled { get; set; } = true;
-
         public virtual bool AddSourceTextNode([CanBeNull] ITextNode textNode)
         {
             SourceTextNodes.Add(textNode);
@@ -77,35 +75,27 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         public T GetValue() => _value;
 
-        public virtual void Parse([NotNull] ITextNode textNode, T defaultValue = default(T))
+        public virtual void Parse([NotNull] ITextNode textNode, [CanBeNull] T defaultValue = default(T))
         {
-            IsUpdateSourceTextNodeEnabled = false;
-            try
+            var source = textNode.GetAttributeTextNode(Name);
+
+            if (source != null)
             {
-                var source = textNode.GetAttributeTextNode(Name);
-
-                if (source != null)
-                {
-                    SetValue((T)Convert.ChangeType(source.Value, typeof(T)));
-                    AddSourceTextNode(source);
-                    return;
-                }
-
-                if (defaultValue != null)
-                {
-                    SetValue(defaultValue);
-                    return;
-                }
-
-                SetValue(_defaultValue);
+                SetValue((T)Convert.ChangeType(source.Value, typeof(T)), SetSourcePropertyValue.NoUpdate);
+                AddSourceTextNode(source);
+                return;
             }
-            finally
+
+            if (defaultValue != null)
             {
-                IsUpdateSourceTextNodeEnabled = true;
+                SetValue(defaultValue, SetSourcePropertyValue.NoUpdate);
+                return;
             }
+
+            SetValue(_defaultValue, SetSourcePropertyValue.NoUpdate);
         }
 
-        public virtual void Parse([NotNull] string newName, [NotNull] ITextNode textNode, T defaultValue = default(T))
+        public virtual void Parse([NotNull] string newName, [NotNull] ITextNode textNode, [CanBeNull] T defaultValue = default(T))
         {
             Name = newName;
             Parse(textNode, defaultValue);
@@ -113,9 +103,9 @@ namespace Sitecore.Pathfinder.Projects
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public virtual bool SetValue([NotNull] SourceProperty<T> sourceProperty)
+        public virtual bool SetValue([NotNull] SourceProperty<T> sourceProperty, SetSourcePropertyValue options = SetSourcePropertyValue.UpdateTextNodes)
         {
-            SetValue(sourceProperty.GetValue());
+            SetValue(sourceProperty.GetValue(), options);
 
             foreach (var sourceTextNode in sourceProperty.SourceTextNodes)
             {
@@ -125,14 +115,14 @@ namespace Sitecore.Pathfinder.Projects
             return true;
         }
 
-        public virtual bool SetValue([NotNull] ITextNode textNode)
+        public virtual bool SetValue([NotNull] ITextNode textNode, SetSourcePropertyValue options = SetSourcePropertyValue.UpdateTextNodes)
         {
-            SetValue((T)Convert.ChangeType(textNode.Value, typeof(T)));
+            SetValue((T)Convert.ChangeType(textNode.Value, typeof(T)), options);
             AddSourceTextNode(textNode);
             return true;
         }
 
-        public virtual void SetValue([NotNull] T value)
+        public virtual void SetValue([NotNull] T value, SetSourcePropertyValue options = SetSourcePropertyValue.UpdateTextNodes)
         {
             if (value.Equals(_value))
             {
@@ -141,7 +131,7 @@ namespace Sitecore.Pathfinder.Projects
 
             _value = value;
 
-            if (IsUpdateSourceTextNodeEnabled)
+            if (options == SetSourcePropertyValue.UpdateTextNodes)
             {
                 foreach (var sourceTextNode in SourceTextNodes)
                 {
@@ -185,5 +175,11 @@ namespace Sitecore.Pathfinder.Projects
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+    }
+
+    public enum SetSourcePropertyValue
+    {
+        NoUpdate,
+        UpdateTextNodes
     }
 }

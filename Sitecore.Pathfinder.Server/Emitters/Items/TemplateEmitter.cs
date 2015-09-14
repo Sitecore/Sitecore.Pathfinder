@@ -1,7 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.ComponentModel.Composition;
-using Sitecore.Pathfinder.Builders.Templates;
+using Sitecore.Pathfinder.Emitters.Writers.Templates;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Templates;
 
@@ -27,8 +27,8 @@ namespace Sitecore.Pathfinder.Emitters.Items
                 return;
             }
 
-            var templateBuilder = new TemplateBuilder(template);
-            templateBuilder.Build(context);
+            var templateWriter = new TemplateWriter(template);
+            templateWriter.Write(context);
         }
     }
 }

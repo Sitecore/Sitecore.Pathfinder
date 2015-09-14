@@ -2,11 +2,11 @@
 
 using Sitecore.Pathfinder.Projects;
 
-namespace Sitecore.Pathfinder.Builders.Items
+namespace Sitecore.Pathfinder.Emitters.Writers.Items
 {
-    public class FieldBuilder
+    public class FieldWriter
     {
-        public FieldBuilder([Diagnostics.NotNull] SourceProperty<string> fieldNameProperty, [Diagnostics.NotNull] string language, int version, [Diagnostics.NotNull] string databaseValue)
+        public FieldWriter([Diagnostics.NotNull] SourceProperty<string> fieldNameProperty, [Diagnostics.NotNull] string language, int version, [Diagnostics.NotNull] string databaseValue)
         {
             FieldNameProperty = fieldNameProperty;
             Language = language;

@@ -38,13 +38,15 @@ namespace Sitecore.Pathfinder.Projects
             Assert.IsNotNull(linkField);
             Assert.AreEqual("/sitecore/media library/badlink", linkField.Value);
             Assert.AreEqual(string.Empty, linkField.ResolvedValue);
-          
+            diagnostic = Project.Diagnostics.FirstOrDefault(d => d.Text == "Link field reference not found: /sitecore/media library/badlink");
+            Assert.IsNotNull(diagnostic);
+
             // link field
             linkField = item.Fields.FirstOrDefault(f => f.FieldName == "BadLink1");
             Assert.IsNotNull(linkField);
             Assert.AreEqual("/sitecore/media library/badlink", linkField.Value);
             Assert.AreEqual(string.Empty, linkField.ResolvedValue);
-          
+
             // link field
             linkField = item.Fields.FirstOrDefault(f => f.FieldName == "BadLink2");
             Assert.IsNotNull(linkField);
@@ -62,7 +64,9 @@ namespace Sitecore.Pathfinder.Projects
             Assert.IsNotNull(imageField);
             Assert.AreEqual("/sitecore/media library/badlink", imageField.Value);
             Assert.AreEqual(string.Empty, imageField.ResolvedValue);
-          
+            diagnostic = Project.Diagnostics.FirstOrDefault(d => d.Text == "Image reference not found: /sitecore/media library/badlink");
+            Assert.IsNotNull(diagnostic);
+
             // image field
             imageField = item.Fields.FirstOrDefault(f => f.FieldName == "BadImage2");
             Assert.IsNotNull(imageField);

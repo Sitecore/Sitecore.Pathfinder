@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using Sitecore.Pathfinder.Diagnostics;
 using System;
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
@@ -52,10 +53,10 @@ namespace Sitecore.Pathfinder.Configuration
         LayoutRenderingReference LayoutRenderingReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> layoutTextNode);
 
         [NotNull]
-        MediaFile MediaFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath, [NotNull] Item mediaItem);
+        MediaFile MediaFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath, [NotNull] ProjectItemUri mediaItemUri);
 
         [NotNull]
-        IProject Project([NotNull] ProjectOptions projectOptions, [NotNull] List<string> sourceFileNames);
+        IProject Project([NotNull] ProjectOptions projectOptions, [NotNull][ItemNotNull] List<string> sourceFileNames);
 
         [NotNull]
         ProjectOptions ProjectOptions([NotNull] string projectDirectory, [NotNull] string databaseName);
@@ -67,7 +68,7 @@ namespace Sitecore.Pathfinder.Configuration
         Rendering Rendering([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath, [NotNull] Item item);
 
         [NotNull]
-        SerializationFile SerializationFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath);
+        SerializationFile SerializationFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] ProjectItemUri uri, [NotNull] string filePath);
 
         [NotNull]
         ISnapshot Snapshot([NotNull] ISourceFile sourceFile);

@@ -6,7 +6,7 @@
         "Icon": "Applications/16x16/about.png",
         "ShortHelp": "Short Help.",
         "LongHelp": "Long Help.",
-        "Layout.HtmlFile": "~/layout/renderings/HelloWorld.html",
+        "Layout.HtmlFile": "~/layout/renderings/HelloWorld.cshtml",
         "Sections": [
             {
                 "Name": "Fields",
@@ -24,7 +24,9 @@
                     {
                         "Name": "Text",
                         "Type": "Rich Text",
-                        "StandardValue": "Hello World"
+                        "StandardValue": "Hello World",
+                        "ShortHelp": "Short Help.",
+                        "LongHelp": "Long Help."
                     }
                 ]
             }

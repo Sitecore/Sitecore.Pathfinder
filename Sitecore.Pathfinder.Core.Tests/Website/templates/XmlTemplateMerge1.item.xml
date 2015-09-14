@@ -1,11 +1,11 @@
 ﻿<Template xmlns="http://www.sitecore.net/pathfinder/item" Name="Xml-Template-Merge" BaseTemplates="/sitecore/templates/System/Templates/Standard Template"
-    Icon="Applications/16x16/about.png" LongHelp="Long Help." ShortHelp="Short Help." Layout.HtmlFile="~/layout/renderings/HelloWorld.html">
+    Icon="Applications/16x16/about.png" LongHelp="Long Help." ShortHelp="Short Help." Layout.HtmlFile="~/layout/renderings/HelloWorld.cshtml">
     <Section Name="Fields" Icon="Applications/16x16/about.png">
         <Field Name="Data1" Type="Single-Line Text" ShortHelp="Short Help." LongHelp="Long Help." Sharing="Shared" SortOrder="100" Source="/sitecore/content" />
         <Field Name="Text" Type="Single-Line Text" ShortHelp="Short Help." LongHelp="Long Help." Sharing="Shared" SortOrder="100" Source="/sitecore/content" />
     </Section>
     <Section Name="Data" Icon="Applications/16x16/about.png">
         <Field Name="Data1" Type="Single-Line Text" ShortHelp="Short Help." LongHelp="Long Help." Sharing="Shared" SortOrder="100" Source="/sitecore/content" />
-        <Field Name="Data2" Type="Rich Text" StandardValue="Hello World" />
+        <Field Name="Data2" Type="Rich Text" ShortHelp="Short Help." LongHelp="Long Help." StandardValue="Hello World" />
     </Section>
 </Template>

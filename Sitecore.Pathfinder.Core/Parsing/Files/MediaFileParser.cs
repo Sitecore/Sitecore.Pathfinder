@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using Sitecore.Pathfinder.Diagnostics;
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
@@ -14,6 +15,8 @@ namespace Sitecore.Pathfinder.Parsing.Files
     public class MediaFileParser : ParserBase
     {
         // todo: make this configurable
+        [NotNull]
+        [ItemNotNull]
         private static readonly string[] FileExtensions =
         {
             ".png",
@@ -42,13 +45,14 @@ namespace Sitecore.Pathfinder.Parsing.Files
             var guid = StringHelper.GetGuid(context.Project, context.ItemPath);
             var mediaItem = context.Factory.Item(context.Project, guid, new SnapshotTextNode(context.Snapshot), context.DatabaseName, context.ItemName, context.ItemPath, string.Empty);
             mediaItem.ItemNameProperty.AddSourceTextNode(new FileNameTextNode(context.ItemName, context.Snapshot));
+            mediaItem.TemplateIdOrPath = "/sitecore/templates/System/Media/Unversioned/File";
             mediaItem.IsEmittable = false;
             mediaItem.OverwriteWhenMerging = true;
             mediaItem.MergingMatch = MergingMatch.MatchUsingSourceFile;
 
             mediaItem = context.Project.AddOrMerge(context, mediaItem);
 
-            var mediaFile = context.Factory.MediaFile(context.Project, context.Snapshot, context.FilePath, mediaItem);
+            var mediaFile = context.Factory.MediaFile(context.Project, context.Snapshot, context.FilePath, mediaItem.Uri);
             context.Project.AddOrMerge(context, mediaFile);
 
             context.Project.Ducats += 100;

@@ -8,19 +8,18 @@ using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Emitters;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Snapshots;
 
-namespace Sitecore.Pathfinder.Builders.Items
+namespace Sitecore.Pathfinder.Emitters.Writers.Items
 {
-    public class ItemBuilder
+    public class ItemWriter
     {
         [Diagnostics.NotNull]
         public string DatabaseName { get; set; } = string.Empty;
 
         [Diagnostics.NotNull]
-        public ICollection<FieldBuilder> Fields { get; } = new List<FieldBuilder>();
+        public ICollection<FieldWriter> Fields { get; } = new List<FieldWriter>();
 
         public Guid Guid { get; set; } = Guid.Empty;
 
@@ -36,7 +35,7 @@ namespace Sitecore.Pathfinder.Builders.Items
         [Diagnostics.NotNull]
         public string TemplateIdOrPath { get; set; } = string.Empty;
 
-        public virtual void Build([Diagnostics.NotNull] IEmitContext context)
+        public virtual void Write([Diagnostics.NotNull] IEmitContext context)
         {
             var database = context.DataService.GetDatabase(DatabaseName);
             if (database == null)

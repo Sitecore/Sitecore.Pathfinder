@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Parsing;
@@ -9,6 +10,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects.Items
 {
+    [DebuggerDisplay("{GetType().Name,nq}: {ItemIdOrPath}")]
     public abstract class ItemBase : ProjectItem, IHasSourceTextNodes
     {
         protected ItemBase([NotNull] IProject project, Guid guid, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, new ProjectItemUri(databaseName, guid), textNode.Snapshot)
@@ -89,7 +91,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
             if (!string.IsNullOrEmpty(newItemBase.Icon))
             {
-                IconProperty.SetValue(newItemBase.IconProperty);
+                IconProperty.SetValue(newItemBase.IconProperty, SetSourcePropertyValue.NoUpdate);
             }
 
             IsEmittable = IsEmittable || newItemBase.IsEmittable;

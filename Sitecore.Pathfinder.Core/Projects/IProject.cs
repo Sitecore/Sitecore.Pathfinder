@@ -38,12 +38,16 @@ namespace Sitecore.Pathfinder.Projects
 
         void Add([NotNull] string sourceFileName);
 
+        [NotNull]
         T AddOrMerge<T>([NotNull] IParseContext context, [NotNull] T projectItem) where T : IProjectItem;
 
         void Compile();
 
         [CanBeNull]
         IProjectItem FindQualifiedItem([NotNull] string qualifiedName);
+
+        [CanBeNull]
+        IProjectItem FindQualifiedItem([NotNull] ProjectItemUri uri);
 
         [NotNull]
         IProject Load([NotNull] ProjectOptions projectOptions, [NotNull] IEnumerable<string> sourceFileNames);

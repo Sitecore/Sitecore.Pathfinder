@@ -7,8 +7,12 @@ namespace Sitecore.Pathfinder.Projects.Files
 {
     public class SerializationFile : File
     {
-        public SerializationFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath) : base(project, snapshot, filePath)
+        public SerializationFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] ProjectItemUri itemUri, [NotNull] string filePath) : base(project, snapshot, filePath)
         {
+            ItemUri = itemUri;
         }
+
+        [NotNull]
+        public ProjectItemUri ItemUri { get; }
     }
 }

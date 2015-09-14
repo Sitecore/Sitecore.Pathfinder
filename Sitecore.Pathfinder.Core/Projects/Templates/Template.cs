@@ -72,22 +72,22 @@ namespace Sitecore.Pathfinder.Projects.Templates
             if (!string.IsNullOrEmpty(newTemplate.BaseTemplates))
             {
                 // todo: join base templates
-                BaseTemplatesProperty.SetValue(newTemplate.BaseTemplatesProperty);
+                BaseTemplatesProperty.SetValue(newTemplate.BaseTemplatesProperty, SetSourcePropertyValue.NoUpdate);
             }
 
             if (!string.IsNullOrEmpty(newTemplate.Icon))
             {
-                IconProperty.SetValue(newTemplate.IconProperty);
+                IconProperty.SetValue(newTemplate.IconProperty, SetSourcePropertyValue.NoUpdate);
             }
 
             if (!string.IsNullOrEmpty(newTemplate.ShortHelp))
             {
-                ShortHelpProperty.SetValue(newTemplate.ShortHelpProperty);
+                ShortHelpProperty.SetValue(newTemplate.ShortHelpProperty, SetSourcePropertyValue.NoUpdate);
             }
 
             if (!string.IsNullOrEmpty(newTemplate.LongHelp))
             {
-                LongHelpProperty.SetValue(newTemplate.LongHelpProperty);
+                LongHelpProperty.SetValue(newTemplate.LongHelpProperty, SetSourcePropertyValue.NoUpdate);
             }
 
             foreach (var newSection in newTemplate.Sections)

@@ -1,6 +1,6 @@
 ﻿<Layout xmlns="http://www.sitecore.net/pathfinder/layouts/master">
     <Device Name="Default" Layout="/sitecore/layout/Layouts/MvcLayout">
-        <HelloWorld Text="123" />
+        <HelloWorld DataSource="/sitecore" />
         <HelloWorld />
         <HelloWorld />
     </Device>

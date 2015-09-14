@@ -522,6 +522,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Image reference not found.
+        /// </summary>
+        public static string Image_reference_not_found {
+            get {
+                return ResourceManager.GetString("Image_reference_not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Incremental build started....
         /// </summary>
         public static string Incremental_build_started___ {

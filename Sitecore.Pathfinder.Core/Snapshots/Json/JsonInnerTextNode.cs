@@ -19,7 +19,7 @@ namespace Sitecore.Pathfinder.Snapshots.Json
         public JsonInnerTextNode([NotNull] JsonTextNode textNode, [NotNull] JToken token)
         {
             Parent = textNode;
-            _token = token;
+            _token = token; 
         }
 
         public IEnumerable<ITextNode> Attributes => Enumerable.Empty<ITextNode>();

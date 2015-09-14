@@ -417,4 +417,7 @@
     <data name="The__Template__attribute_must_be_specified_when__Template_CreateFromFields__equals_true_" xml:space="preserve">
     <value>The 'Template' attribute must be specified when 'Template.CreateFromFields' equals true.</value>
   </data>
+    <data name="Image_reference_not_found" xml:space="preserve">
+    <value>Image reference not found</value>
+  </data>
 </root>

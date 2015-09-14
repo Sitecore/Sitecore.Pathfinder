@@ -162,7 +162,7 @@
     <Content Include="sitecore\shell\client\Applications\Pathfinder\InstallPackage.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Builders\Items\FieldBuilder.cs" />
+    <Compile Include="Emitters\Writers\Items\FieldWriter.cs" />
     <Compile Include="Configuration\PathfinderSettings.cs" />
     <Compile Include="Diagnostics\EmitException.cs" />
     <Compile Include="Diagnostics\RetryableEmitException.cs" />
@@ -174,10 +174,10 @@
     <Compile Include="Emitters\IEmitContext.cs" />
     <Compile Include="Data\DataService.cs" />
     <Compile Include="Data\IDataService.cs" />
-    <Compile Include="Builders\Items\ItemBuilder.cs" />
-    <Compile Include="Builders\Templates\TemplateBuilder.cs" />
-    <Compile Include="Builders\Templates\TemplateFieldBuilder.cs" />
-    <Compile Include="Builders\Templates\TemplateSectionBuilder.cs" />
+    <Compile Include="Emitters\Writers\Items\ItemWriter.cs" />
+    <Compile Include="Emitters\Writers\Templates\TemplateWriter.cs" />
+    <Compile Include="Emitters\Writers\Templates\TemplateFieldWriter.cs" />
+    <Compile Include="Emitters\Writers\Templates\TemplateSectionWriter.cs" />
     <Compile Include="Emitters\IEmitter.cs" />
     <Compile Include="Emitters\EmitService.cs" />
     <Compile Include="Emitters\EmitterBase.cs" />

@@ -6,9 +6,10 @@ using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
-    [DebuggerDisplay("\\{{GetType().FullName,nq}\\}: FileName: {SourceFile.FileName}")]
+    [DebuggerDisplay("\\{{GetType().Name,nq}\\}: ProjectFileName: {SourceFile.ProjectFileName}")]
     public class Snapshot : ISnapshot
     {
+        [NotNull]
         public static readonly ISnapshot Empty = new Snapshot(Snapshots.SourceFile.Empty);
 
         public Snapshot([NotNull] ISourceFile sourceFile)

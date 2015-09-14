@@ -2,12 +2,14 @@
 
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
     [Export(typeof(ITextTokenService))]
     public class TextTokenService : ITextTokenService
     {
+        [NotNull]
         private readonly Dictionary<string, string> _globalTokens = new Dictionary<string, string>();
 
         public string this[string tokenName]

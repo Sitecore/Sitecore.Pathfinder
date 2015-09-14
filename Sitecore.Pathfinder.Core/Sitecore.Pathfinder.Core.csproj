@@ -107,6 +107,8 @@
     <Compile Include="CodeGeneration\ICodeGenerator.cs" />
     <Compile Include="Configuration\FileContext.cs" />
     <Compile Include="Extensions\GuidExtensions.cs" />
+    <Compile Include="Parsing\Builders\FieldBuilder.cs" />
+    <Compile Include="Parsing\Builders\ItemBuilder.cs" />
     <Compile Include="Projects\Items\FieldResolvers\CheckboxFieldResolver.cs" />
     <Compile Include="Projects\Items\FieldResolvers\FieldResolverBase.cs" />
     <Compile Include="Projects\Items\FieldResolvers\FileNameFieldResolver.cs" />
@@ -171,7 +173,7 @@
     <Compile Include="Parsing\Layouts\ViewRenderingParser.cs" />
     <Compile Include="Parsing\Layouts\WebFormsRenderingParser.cs" />
     <Compile Include="Parsing\Files\MediaFileParser.cs" />
-    <Compile Include="Parsing\Files\SerializationFileParser.cs" />
+    <Compile Include="Parsing\Items\SerializationFileParser.cs" />
     <Compile Include="Parsing\IParseService.cs" />
     <Compile Include="Projects\Diagnostic.cs" />
     <Compile Include="Projects\ProjectDiagnosticTraceService.cs" />

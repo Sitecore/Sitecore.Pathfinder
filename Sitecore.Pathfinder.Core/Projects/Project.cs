@@ -53,8 +53,13 @@ namespace Sitecore.Pathfinder.Projects
 
         public ICollection<Diagnostic> Diagnostics => _diagnostics;
 
+        public long Ducats { get; set; }
+
         [NotNull]
         public IFactoryService Factory { get; }
+
+        [ImportMany]
+        public IEnumerable<IFieldResolver> FieldResolvers { get; private set; }
 
         public IFileSystemService FileSystem { get; }
 
@@ -67,8 +72,6 @@ namespace Sitecore.Pathfinder.Projects
         public string ProjectUniqueId => _projectUniqueId ?? (_projectUniqueId = Configuration.Get(Constants.Configuration.ProjectUniqueId));
 
         public ICollection<ISourceFile> SourceFiles { get; } = new List<ISourceFile>();
-
-        public long Ducats { get; set; }
 
         [NotNull]
         protected ICheckerService Checker { get; }
@@ -131,12 +134,31 @@ namespace Sitecore.Pathfinder.Projects
             Checker.CheckProject(this);
         }
 
-        [ImportMany]
-        public IEnumerable<IFieldResolver> FieldResolvers { get; private set; }
+        public IProjectItem FindQualifiedItem(ProjectItemUri uri)
+        {
+            return Items.FirstOrDefault(i => i.Uri == uri);
+        }
+
+        public IProjectItem FindQualifiedItem(string qualifiedName)
+        {
+            Guid guid;
+            if (Guid.TryParse(qualifiedName, out guid))
+            {
+                return Items.FirstOrDefault(i => i.Uri.Guid == guid);
+            }
+
+            if (qualifiedName.StartsWith("{") && qualifiedName.EndsWith("}"))
+            {
+                guid = StringHelper.ToGuid(qualifiedName);
+                return Items.FirstOrDefault(i => i.Uri.Guid == guid);
+            }
+
+            return Items.FirstOrDefault(i => string.Equals(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase));
+        }
 
         public virtual IProject Load(ProjectOptions projectOptions, IEnumerable<string> sourceFileNames)
         {
-            Options = projectOptions;     
+            Options = projectOptions;
 
             var context = CompositionService.Resolve<IParseContext>().With(this, Snapshot.Empty);
 
@@ -211,23 +233,6 @@ namespace Sitecore.Pathfinder.Projects
                     snapshot.SaveChanges();
                 }
             }
-        }
-
-        public IProjectItem FindQualifiedItem(string qualifiedName)
-        {
-            Guid guid;
-            if (Guid.TryParse(qualifiedName, out guid))
-            {
-                return Items.FirstOrDefault(i => i.Uri.Guid == guid);
-            }
-
-            if (qualifiedName.StartsWith("{") && qualifiedName.EndsWith("}"))
-            {
-                guid = StringHelper.ToGuid(qualifiedName);
-                return Items.FirstOrDefault(i => i.Uri.Guid == guid);
-            }
-
-            return Items.FirstOrDefault(i => string.Equals(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase));
         }
 
         [NotNull]

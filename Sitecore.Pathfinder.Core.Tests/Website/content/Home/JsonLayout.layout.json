@@ -8,7 +8,7 @@
                     "Layout": "/sitecore/layout/Layouts/MvcLayout",
                     "Renderings": [
                         {
-                            "HelloWorld": { "Text": "123" }
+                            "HelloWorld": { "DataSource": "/sitecore" }
                         },
                         {
                             "HelloWorld": { }

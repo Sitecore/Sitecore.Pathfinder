@@ -7,8 +7,8 @@ using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Managers;
 using Sitecore.Data.Templates;
-using Sitecore.Pathfinder.Builders.Items;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Emitters.Writers.Items;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
@@ -57,7 +57,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
 
             ValidateFields(database, template, item);
 
-            var itemBuilder = new ItemBuilder
+            var itemWriter = new ItemWriter
             {
                 Snapshot = item.Snapshots.First(),
                 DatabaseName = item.DatabaseName,
@@ -75,11 +75,11 @@ namespace Sitecore.Pathfinder.Emitters.Items
                     throw new RetryableEmitException(Texts.Template_field_missing, TraceHelper.GetTextNode(field.FieldNameProperty, item.ItemNameProperty), field.FieldName);
                 }
 
-                var fieldBuilder = new FieldBuilder(field.FieldNameProperty, field.Language, field.Version, field.ResolvedValue);
-                itemBuilder.Fields.Add(fieldBuilder);
+                var fieldWriter = new FieldWriter(field.FieldNameProperty, field.Language, field.Version, field.ResolvedValue);
+                itemWriter.Fields.Add(fieldWriter);
             }
 
-            itemBuilder.Build(context);
+            itemWriter.Write(context);
         }
 
         [Diagnostics.CanBeNull]

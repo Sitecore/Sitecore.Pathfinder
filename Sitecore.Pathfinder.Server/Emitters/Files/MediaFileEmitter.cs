@@ -34,8 +34,15 @@ namespace Sitecore.Pathfinder.Emitters.Files
         {
             var mediaFile = (MediaFile)projectItem;
 
-            var database = Factory.GetDatabase(mediaFile.MediaItem.DatabaseName);
-            var name = mediaFile.MediaItem.ItemName;
+            var mediaItem = context.Project.FindQualifiedItem(mediaFile.MediaItemUri) as Projects.Items.Item;
+            if (mediaItem == null)
+            {
+                context.Trace.TraceError("Media item not found", new SnapshotTextNode(mediaFile.Snapshots.First()), mediaFile.MediaItemUri.Guid.Format());
+                return;
+            }
+
+            var database = Factory.GetDatabase(mediaItem.DatabaseName);
+            var name = mediaItem.ItemName;
 
             var options = new MediaCreatorOptions
             {
@@ -48,12 +55,12 @@ namespace Sitecore.Pathfinder.Emitters.Files
                 KeepExisting = false,
                 Language = LanguageManager.DefaultLanguage,
                 Versioned = false,
-                Destination = mediaFile.MediaItem.ItemIdOrPath
+                Destination = mediaItem.ItemIdOrPath
             };
 
-            var destinationItem = database.GetItem(mediaFile.MediaItem.ItemIdOrPath);
+            var destinationItem = database.GetItem(mediaItem.ItemIdOrPath);
 
-            if (destinationItem != null && destinationItem.ID.ToGuid() != mediaFile.MediaItem.Uri.Guid)
+            if (destinationItem != null && destinationItem.ID.ToGuid() != mediaItem.Uri.Guid)
             {
                 // whoops - item has wrong ID
                 destinationItem.Delete();
@@ -63,12 +70,12 @@ namespace Sitecore.Pathfinder.Emitters.Files
             if (destinationItem == null)
             {
                 // create parent path of media folders before uploading
-                var parentPath = PathHelper.GetItemParentPath(mediaFile.MediaItem.ItemIdOrPath);
+                var parentPath = PathHelper.GetItemParentPath(mediaItem.ItemIdOrPath);
                 var mediaFolderTemplate = new TemplateItem(database.GetItem(TemplateIDs.MediaFolder));
                 var parent = database.CreateItemPath(parentPath, mediaFolderTemplate);
 
                 // create media item with correct ID, but probably wrong template
-                ItemManager.AddFromTemplate(name, TemplateIDs.Folder, parent, new ID(mediaFile.MediaItem.Uri.Guid));
+                ItemManager.AddFromTemplate(name, TemplateIDs.Folder, parent, new ID(mediaItem.Uri.Guid));
             }
 
             using (var stream = new FileStream(projectItem.Snapshots.First().SourceFile.FileName, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -79,14 +86,14 @@ namespace Sitecore.Pathfinder.Emitters.Files
                     throw new EmitException(Texts.Failed_to_upload_media, projectItem.Snapshots.First());
                 }
 
-                if (mediaFile.MediaItem.Uri.Guid != item.ID.ToGuid())
+                if (mediaItem.Uri.Guid != item.ID.ToGuid())
                 {
-                    context.Trace.TraceError(Texts.Media_item_created_with_wrong_ID, new SnapshotTextNode(mediaFile.Snapshots.First()), $"{item.ID} != {mediaFile.MediaItem.Uri.Guid.Format()}");
+                    context.Trace.TraceError(Texts.Media_item_created_with_wrong_ID, new SnapshotTextNode(mediaFile.Snapshots.First()), $"{item.ID} != {mediaItem.Uri.Guid.Format()}");
                 }
             }
 
             var itemEmitter = new ItemEmitter();
-            itemEmitter.Emit(context, mediaFile.MediaItem);
+            itemEmitter.Emit(context, mediaItem);
         }
     }
 }

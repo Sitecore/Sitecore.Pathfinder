@@ -19,7 +19,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers.Json
 
         public override bool CanParse(ItemParseContext context, ITextNode textNode)
         {
-            return textNode.Name == "LayoutField" && textNode.Snapshot is JsonTextSnapshot;
+            return textNode.Name == "Layout" && textNode.Snapshot is JsonTextSnapshot;
         }
 
         protected override void ParseRenderingReferences(ItemParseContext context, ICollection<IReference> references, IProjectItem projectItem, ITextNode renderingTextNode)

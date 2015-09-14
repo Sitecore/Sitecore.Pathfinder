@@ -88,9 +88,9 @@ namespace Sitecore.Pathfinder.Configuration
             return new LayoutRenderingReference(projectItem, renderingTextNode);
         }
 
-        public virtual MediaFile MediaFile(IProject project, ISnapshot snapshot, string filePath, Item mediaItem)
+        public virtual MediaFile MediaFile(IProject project, ISnapshot snapshot, string filePath, ProjectItemUri mediaItemUri)
         {
-            return new MediaFile(project, snapshot, filePath, mediaItem);
+            return new MediaFile(project, snapshot, filePath, mediaItemUri);
         }
 
         public virtual IProject Project(ProjectOptions projectOptions, List<string> sourceFileNames)
@@ -113,9 +113,9 @@ namespace Sitecore.Pathfinder.Configuration
             return new Rendering(project, snapshot, filePath, item);
         }
 
-        public virtual SerializationFile SerializationFile(IProject project, ISnapshot snapshot, string filePath)
+        public virtual SerializationFile SerializationFile(IProject project, ISnapshot snapshot, ProjectItemUri uri, string filePath)
         {
-            return new SerializationFile(project, snapshot, filePath);
+            return new SerializationFile(project, snapshot, uri, filePath);
         }
 
         public virtual ISnapshot Snapshot(ISourceFile sourceFile)

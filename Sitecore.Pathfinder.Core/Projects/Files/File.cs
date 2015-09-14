@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
@@ -9,8 +10,10 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects.Files
 {
+    [DebuggerDisplay("{GetType().Name,nq}: {FilePath}")]
     public class File : ProjectItem
     {
+        [NotNull]
         private string _shortName;
 
         public File([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath) : base(project, GetUri(project, snapshot), snapshot)

@@ -44,7 +44,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
             {
                 if (item.Project.FindQualifiedItem(item.TemplateIdOrPath) == null)
                 {
-                    context.Trace.TraceWarning("Item does not have a template", TraceHelper.GetTextNode(item.ItemNameProperty));
+                    context.Trace.TraceWarning("Item does not have a template", TraceHelper.GetTextNode(item.ItemNameProperty), item.ItemIdOrPath);
                 }
 
                 return;

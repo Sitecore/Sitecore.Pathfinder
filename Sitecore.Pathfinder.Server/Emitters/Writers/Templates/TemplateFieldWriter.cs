@@ -1,14 +1,13 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using Sitecore.Data.Items;
-using Sitecore.Pathfinder.Emitters;
 using Sitecore.Pathfinder.Projects.Templates;
 
-namespace Sitecore.Pathfinder.Builders.Templates
+namespace Sitecore.Pathfinder.Emitters.Writers.Templates
 {
-    public class TemplateFieldBuilder
+    public class TemplateFieldWriter
     {
-        public TemplateFieldBuilder([NotNull] TemplateField templateField)
+        public TemplateFieldWriter([NotNull] TemplateField templateField)
         {
             TemplateField = templateField;
         }

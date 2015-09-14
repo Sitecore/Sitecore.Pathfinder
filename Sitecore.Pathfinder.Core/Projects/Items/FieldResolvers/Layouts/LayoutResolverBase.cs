@@ -211,7 +211,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
                 var l = context.Field.Item.Project.FindQualifiedItem(layoutPath.Value);
                 if (l == null)
                 {
-                    context.Trace.TraceError(Texts.Layout_not_found_, layoutPath.Value);
+                    context.Trace.TraceError(Texts.Layout_not_found_, layoutPath, layoutPath.Value);
                     return;
                 }
 
@@ -301,7 +301,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
             }
             else
             {
-                renderingItemId = renderingTextNode.Name;
+                renderingItemId = StringHelper.UnescapeXmlNodeName(renderingTextNode.Name);
             }
 
             var id = renderingTextNode.GetAttributeValue("Id");

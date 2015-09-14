@@ -1,7 +1,7 @@
 ﻿<Template xmlns="http://www.sitecore.net/pathfinder/item" Name="Xml-Template" BaseTemplates="/sitecore/templates/System/Templates/Standard Template"
-    Icon="Applications/16x16/about.png" LongHelp="Long Help." ShortHelp="Short Help." Layout.HtmlFile="~/layout/renderings/HelloWorld.html">
+    Icon="Applications/16x16/about.png" LongHelp="Long Help." ShortHelp="Short Help." Layout.HtmlFile="~/layout/renderings/HelloWorld.cshtml">
     <Section Name="Fields" Icon="Applications/16x16/about.png">
         <Field Name="Title" Type="Single-Line Text" ShortHelp="Short Help." LongHelp="Long Help." Sharing="Shared" SortOrder="100" Source="/sitecore/content" />
-        <Field Name="Text" Type="Rich Text" StandardValue="Hello World" />
+        <Field Name="Text" Type="Rich Text" ShortHelp="Short Help." LongHelp="Long Help." StandardValue="Hello World" />
     </Section>
 </Template>
