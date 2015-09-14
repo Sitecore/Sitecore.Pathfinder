@@ -13,9 +13,7 @@ using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Data.Templates;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.Text;
 using Sitecore.SecurityModel;
-using Sitecore.Text;
 using Sitecore.Zip;
 
 namespace Sitecore.Pathfinder.Synchronizing

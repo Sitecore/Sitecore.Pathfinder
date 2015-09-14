@@ -11,6 +11,6 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
         bool CanResolve([NotNull] Field field);
 
         [NotNull]
-        string Resolve([NotNull] Field field);
+        string Resolve([NotNull] ITraceService trace, [NotNull] Field field);
     }
 }

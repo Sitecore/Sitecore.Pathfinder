@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
             return field.Value.IndexOf("/sitecore", StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
-        public override string Resolve(Field field)
+        public override string Resolve(ITraceService trace, Field field)
         {
             var value = field.Value.Trim();
             if (value.IndexOf('|') < 0)
@@ -28,7 +28,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
                 var item = field.Item.Project.FindQualifiedItem(value);
                 if (item == null)
                 {
-                    field.WriteDiagnostic(Severity.Error, "Item path reference not found", value);
+                    trace.TraceError("Item path reference not found", value);
                     return string.Empty;
                 }
 
@@ -41,7 +41,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
                 var item = field.Item.Project.FindQualifiedItem(itemPath);
                 if (item == null)
                 {
-                    field.WriteDiagnostic(Severity.Error, "Item path reference not found", itemPath);
+                    trace.TraceError("Item path reference not found", itemPath);
                 }
                 else
                 {

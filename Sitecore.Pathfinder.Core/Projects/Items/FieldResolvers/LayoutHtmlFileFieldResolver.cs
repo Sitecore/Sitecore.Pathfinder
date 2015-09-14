@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
             return field.ValueHint.Contains("HtmlTemplate");
         }
 
-        public override string Resolve(Field field)
+        public override string Resolve(ITraceService trace, Field field)
         {
             var htmlTemplate = field.Value.Trim();
             if (string.IsNullOrEmpty(htmlTemplate))
@@ -36,13 +36,13 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
             var rendering = field.Item.Project.Items.OfType<Rendering>().FirstOrDefault(i => string.Compare(i.FilePath, value, StringComparison.OrdinalIgnoreCase) == 0);
             if (rendering == null)
             {
-                field.WriteDiagnostic(Severity.Error, "Rendering reference not found", value);
+                trace.TraceError("Rendering reference not found", value);
             }
 
             var layoutItem = field.Item.Project.Items.OfType<Item>().FirstOrDefault(i => i.ItemIdOrPath == "/sitecore/layout/Layouts/MvcLayout");
             if (layoutItem == null)
             {
-                field.WriteDiagnostic(Severity.Error, "Layout reference not found", "/sitecore/layout/Layouts/MvcLayout");
+                trace.TraceError("Layout reference not found", "/sitecore/layout/Layouts/MvcLayout");
             }
 
             if (rendering == null || layoutItem == null)

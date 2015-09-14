@@ -16,7 +16,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
             return (field.ValueProperty.SourcePropertyFlags & SourcePropertyFlags.IsFileName) == SourcePropertyFlags.IsFileName & field.Value.StartsWith("~", StringComparison.Ordinal);
         }
 
-        public override string Resolve(Field field)
+        public override string Resolve(ITraceService trace, Field field)
         {
             return field.Value.TrimStart('~');
         }

@@ -1,0 +1,38 @@
+Item
+  Template: /sitecore/templates/CleanBlog/CleanBlog 
+  Template.CreateFromFields: True 
+  Template.ShortHelp: Clean blog.
+  Template.LongHelp: Clean blog from StartBootstrap.
+  Template.Icon: Applications/16x16/about.png
+  Layout.HtmlFile: ~/CleanBlog/layout/renderings/index.html
+
+  - Shared
+    - Field: Header
+      Field.ShortHelp: Header. 
+      Field.LongHelp: Blog Header.
+      Value: >
+        Clean Blog
+
+  - Unversioned
+    - en
+        - Field: Subheader
+          Field.ShortHelp: Header. 
+          Field.LongHelp: Blog Header.
+          Value: >
+            A Clean Blog Theme by Start Bootstrap
+
+        - Field: Subheader
+          Field.ShortHelp: Header. 
+          Field.LongHelp: Blog Header.
+          Value: >
+            A Clean Blog Theme by Start Bootstrap
+        
+  - Versioned
+    - en
+        - 1
+            - Field: Subheader
+              Field.ShortHelp: Header. 
+              Field.LongHelp: Blog Header.
+              Value: >
+                  A Clean Blog Theme by Start Bootstrap
+        

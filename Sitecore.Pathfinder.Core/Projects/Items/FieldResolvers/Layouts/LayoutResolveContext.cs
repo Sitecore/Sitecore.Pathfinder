@@ -8,8 +8,9 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
 {
     public class LayoutResolveContext
     {
-        public LayoutResolveContext(IFileSystemService fileSystem, [NotNull] Field field, [NotNull] ITextSnapshot snapshot)
+        public LayoutResolveContext([NotNull] ITraceService trace, [NotNull] IFileSystemService fileSystem, [NotNull] Field field, [NotNull] ITextSnapshot snapshot)
         {
+            Trace = trace;
             Field = field;
             FileSystem = fileSystem;
             Snapshot = snapshot;
@@ -23,5 +24,8 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
 
         [NotNull]
         public ITextSnapshot Snapshot { get; }
+
+        [NotNull]
+        public ITraceService Trace { get; }
     }
 }

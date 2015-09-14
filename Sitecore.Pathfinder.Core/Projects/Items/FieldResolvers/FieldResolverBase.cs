@@ -1,5 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using Sitecore.Pathfinder.Diagnostics;
+
 namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
 {
     public abstract class FieldResolverBase : IFieldResolver
@@ -13,6 +15,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
 
         public abstract bool CanResolve(Field field);
 
-        public abstract string Resolve(Field field);
+        [NotNull]
+        public abstract string Resolve([NotNull] ITraceService trace, [NotNull] Field field);
     }
 }

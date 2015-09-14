@@ -32,7 +32,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
             return string.Compare(field.TemplateField.Type, "layout", StringComparison.OrdinalIgnoreCase) == 0 || field.ValueHint.Contains("Layout");
         }
 
-        public override string Resolve(Field field)
+        public override string Resolve(ITraceService trace, Field field)
         {
             var textNode = TraceHelper.GetTextNode(field.ValueProperty);
             if (textNode == TextNode.Empty)
@@ -46,7 +46,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
                 return field.Value;
             }
 
-            var layoutResolveContext = new LayoutResolveContext(FileSystem, field, textSnapshot);
+            var layoutResolveContext = new LayoutResolveContext(trace, FileSystem, field, textSnapshot);
 
             var resolver = new XmlLayoutResolver();
 

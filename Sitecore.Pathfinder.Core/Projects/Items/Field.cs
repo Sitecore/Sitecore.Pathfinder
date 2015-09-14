@@ -15,8 +15,6 @@ namespace Sitecore.Pathfinder.Projects.Items
     [DebuggerDisplay("{GetType().Name,nq}: {FieldName,nq} = {Value}")]
     public class Field : IHasSourceTextNodes
     {
-        private bool _isValid;
-
         public Field([NotNull] Item item, [NotNull] ITextNode textNode)
         {
             Item = item;
@@ -25,9 +23,6 @@ namespace Sitecore.Pathfinder.Projects.Items
 
             ValueProperty.PropertyChanged += HandlePropertyChanged;
         }
-
-        [NotNull]
-        public ICollection<Diagnostic> Diagnostics { get; } = new List<Diagnostic>();
 
         [NotNull]
         public string FieldName
@@ -42,21 +37,6 @@ namespace Sitecore.Pathfinder.Projects.Items
         public bool IsResolved { get; set; }
 
         public bool IsTestable { get; set; } = true;
-
-        public bool IsValid
-        {
-            get
-            {
-                if (!IsResolved)
-                {
-                    Resolve();
-                }
-
-                return _isValid;
-            }
-
-            protected set { _isValid = value; }
-        }
 
         [NotNull]
         public Item Item { get; set; }
@@ -74,6 +54,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public string ResolvedValue { get; private set; }
 
+        [NotNull]
         public ICollection<ITextNode> SourceTextNodes { get; } = new List<ITextNode>();
 
         [NotNull]
@@ -111,11 +92,9 @@ namespace Sitecore.Pathfinder.Projects.Items
         public void Invalidate()
         {
             IsResolved = false;
-            IsValid = false;
-            Diagnostics.Clear();
         }
 
-        public void Resolve()
+        public void Resolve([NotNull] ITraceService trace)
         {
             if (IsResolved)
             {
@@ -124,36 +103,15 @@ namespace Sitecore.Pathfinder.Projects.Items
 
             IsResolved = true;
             ResolvedValue = Value;
-            Diagnostics.Clear();
 
             foreach (var fieldResolver in Item.Project.FieldResolvers.OrderBy(r => r.Priority))
             {
                 if (fieldResolver.CanResolve(this))
                 {
-                    ResolvedValue = fieldResolver.Resolve(this);
+                    ResolvedValue = fieldResolver.Resolve(trace, this);
                     break;
                 }
             }
-
-            IsValid = Diagnostics.All(d => d.Severity != Severity.Error);
-        }
-
-        public virtual void WriteDiagnostic(Severity severity, [NotNull] string text, [NotNull] string details = "")
-        {
-            var source = TraceHelper.GetTextNode(FieldNameProperty);
-            WriteDiagnostic(severity, text, source, details.Trim());
-        }
-
-        public void WriteDiagnostic(Severity severity, [NotNull] string text, [NotNull] ITextNode textNode, [NotNull] string details = "")
-        {
-            details = details.Trim();
-
-            if (!string.IsNullOrEmpty(details))
-            {
-                text += ": " + details;
-            }
-
-            Diagnostics.Add(new Diagnostic(string.Empty, textNode.Position, severity, text));
         }
 
         private void HandlePropertyChanged([NotNull] object sender, [NotNull] PropertyChangedEventArgs e)

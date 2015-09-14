@@ -122,6 +122,12 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual void Compile()
         {
+            var trace = new ProjectDiagnosticTraceService(Configuration, Factory).With(this);
+            foreach (var field in Items.OfType<Item>().SelectMany(item => item.Fields))
+            {
+                field.Resolve(trace);
+            }
+
             Checker.CheckProject(this);
         }
 

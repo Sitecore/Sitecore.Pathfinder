@@ -19,7 +19,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
             return string.Compare(field.TemplateField.Type, "image", StringComparison.OrdinalIgnoreCase) == 0;
         }
 
-        public override string Resolve(Field field)
+        public override string Resolve(ITraceService trace, Field field)
         {
             var qualifiedName = field.Value.Trim();
             if (string.IsNullOrEmpty(qualifiedName))
@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers
             var item = field.Item.Project.FindQualifiedItem(qualifiedName);
             if (item == null)
             {
-                field.WriteDiagnostic(Severity.Error, "Image reference not found", qualifiedName);
+                trace.TraceError("Image reference not found", qualifiedName);
                 return string.Empty;
             }
 

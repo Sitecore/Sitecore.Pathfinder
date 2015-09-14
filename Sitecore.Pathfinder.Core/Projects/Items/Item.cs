@@ -44,7 +44,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         public bool OverwriteWhenMerging { get; set; }
 
         [NotNull]
-        public Template Template => Project.Items.OfType<Template>().FirstOrDefault(i => string.Compare(i.QualifiedName, TemplateIdOrPath, StringComparison.OrdinalIgnoreCase) == 0) ?? Template.Empty;
+        public Template Template => Project.FindQualifiedItem(TemplateIdOrPath) as Template ?? Template.Empty;
 
         [NotNull]
         public string TemplateIdOrPath
@@ -79,7 +79,6 @@ namespace Sitecore.Pathfinder.Projects.Items
             OverwriteWhenMerging = OverwriteWhenMerging && newItem.OverwriteWhenMerging;
             MergingMatch = MergingMatch == MergingMatch.MatchUsingSourceFile && newItem.MergingMatch == MergingMatch.MatchUsingSourceFile ? MergingMatch.MatchUsingSourceFile : MergingMatch.MatchUsingItemPath;
 
-            // todo: add SourceFile
             foreach (var newField in newItem.Fields)
             {
                 var field = Fields.FirstOrDefault(f => string.Compare(f.FieldName, newField.FieldName, StringComparison.OrdinalIgnoreCase) == 0 && string.Compare(f.Language, newField.Language, StringComparison.OrdinalIgnoreCase) == 0 && f.Version == newField.Version);
