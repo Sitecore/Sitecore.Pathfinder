@@ -10,7 +10,6 @@ using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
-using Sitecore.Pathfinder.Snapshots.Xml;
 
 namespace Sitecore.Pathfinder.Projects
 {
@@ -26,7 +25,7 @@ namespace Sitecore.Pathfinder.Projects
             Start();
             Project = Services.ProjectService.LoadProjectFromConfiguration();
 
-            Assert.AreEqual(1, Project.Diagnostics.Count);
+            Assert.AreEqual(2, Project.Diagnostics.Count);
         }
 
         [Test]
@@ -35,7 +34,7 @@ namespace Sitecore.Pathfinder.Projects
             var project = Resolve<IProject>().Load(new ProjectOptions(ProjectDirectory, "master"), Enumerable.Empty<string>());
             var count = project.SourceFiles.Count;
 
-            var fileName = Path.Combine(ProjectDirectory, "content\\Home\\HelloWorld.item.xml");
+            var fileName = Path.Combine(ProjectDirectory, "content\\Home\\XmlItem.item.xml");
 
             project.Add(fileName);
             Assert.AreEqual(count + 1, project.SourceFiles.Count);
@@ -49,7 +48,7 @@ namespace Sitecore.Pathfinder.Projects
         public void FindUsagesTest()
         {
             var references = Services.QueryService.FindUsages(Project, "/sitecore/media library/mushrooms").ToList();
-            Assert.AreEqual(4, references.Count);
+            Assert.AreEqual(6, references.Count);
         }
 
         [Test]
@@ -59,97 +58,6 @@ namespace Sitecore.Pathfinder.Projects
             Assert.AreEqual(2, projectItems.Count);
             Assert.IsTrue(projectItems.OfType<Item>().Any(i => i.DatabaseName == "master"));
             Assert.IsTrue(projectItems.OfType<Item>().Any(i => i.DatabaseName == "core"));
-        }
-
-        [Test]
-        public void JsonContentItemTest()
-        {
-            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/JsonContentItem");
-            Assert.IsNotNull(projectItem);
-            Assert.AreEqual("JsonContentItem", projectItem.ShortName);
-            Assert.AreEqual("/sitecore/content/Home/JsonContentItem", projectItem.QualifiedName);
-
-            var item = projectItem as Item;
-            Assert.IsNotNull(item);
-            Assert.AreEqual("JsonContentItem", item.ItemName);
-            Assert.AreEqual("/sitecore/content/Home/JsonContentItem", item.ItemIdOrPath);
-            Assert.AreEqual("Sample Item", item.TemplateIdOrPath);
-            Assert.IsNotNull(item.ItemNameProperty.SourceTextNodes);
-            Assert.IsInstanceOf<FileNameTextNode>(item.ItemNameProperty.SourceTextNode);
-            Assert.IsNotNull(item.TemplateIdOrPathProperty.SourceTextNodes);
-            Assert.IsInstanceOf<AttributeNameTextNode>(item.TemplateIdOrPathProperty.SourceTextNode);
-            Assert.AreEqual("Sample Item", TraceHelper.GetTextNode(item.TemplateIdOrPathProperty).Value);
-
-            var field = item.Fields.FirstOrDefault(f => f.FieldName == "Text");
-            Assert.IsNotNull(field);
-            Assert.AreEqual("Hello World", field.Value);
-
-            var textDocument = projectItem.Snapshots.First() as ITextSnapshot;
-            Assert.IsNotNull(textDocument);
-        }
-
-        [Test]
-        public void JsonItemTest()
-        {
-            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/JsonItem");
-            Assert.IsNotNull(projectItem);
-            Assert.AreEqual("JsonItem", projectItem.ShortName);
-            Assert.AreEqual("/sitecore/content/Home/JsonItem", projectItem.QualifiedName);
-
-            var item = projectItem as Item;
-            Assert.IsNotNull(item);
-            Assert.AreEqual("JsonItem", item.ItemName);
-            Assert.AreEqual("/sitecore/content/Home/JsonItem", item.ItemIdOrPath);
-            Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", item.TemplateIdOrPath);
-            Assert.AreEqual(1, item.ItemNameProperty.SourceTextNodes.Count);
-            Assert.IsInstanceOf<FileNameTextNode>(item.ItemNameProperty.SourceTextNode);
-
-            var textDocument = projectItem.Snapshots.First() as ITextSnapshot;
-            Assert.IsNotNull(textDocument);
-
-            var treeNode = textDocument.Root;
-            Assert.AreEqual("Item", treeNode.Name);
-            Assert.AreEqual(1, treeNode.Attributes.Count());
-
-            var attr = treeNode.Attributes.First();
-            Assert.AreEqual("Template", attr.Name);
-            Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", attr.Value);
-
-            var field = item.Fields.FirstOrDefault(f => f.FieldName == "Title");
-            Assert.IsNotNull(field);
-            Assert.AreEqual("Hello", field.Value);
-
-            var layout = item.Fields.FirstOrDefault(f => f.FieldName == "__Renderings");
-            Assert.IsNotNull(layout);
-            Assert.AreEqual(@"<r>
-  <d id=""{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}"" l=""{1A5A92AD-D537-7E87-FB00-A39BFDE2538B}"">
-    <r id=""{663E1E86-C959-7A70-8945-CFCEA79AFAC2}"" ds=""{11111111-1111-1111-1111-111111111111}"" par="""" ph=""Page.Body"" />
-    <r id=""{663E1E86-C959-7A70-8945-CFCEA79AFAC2}"" par="""" ph=""Page.Body"" />
-    <r id=""{663E1E86-C959-7A70-8945-CFCEA79AFAC2}"" par="""" ph=""Page.Body"" />
-  </d>
-</r>", layout.ResolvedValue);
-        }
-
-        [Test]
-        public void JsonLayoutTest()
-        {
-            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/JsonLayout");
-            Assert.IsNotNull(projectItem);
-            Assert.AreEqual("JsonLayout", projectItem.ShortName);
-            Assert.AreEqual("/sitecore/content/Home/JsonLayout", projectItem.QualifiedName);
-
-            var item = projectItem as Item;
-            Assert.IsNotNull(item);
-
-            var layout = item.Fields.FirstOrDefault(f => f.FieldName == "__Renderings");
-            Assert.IsNotNull(layout);
-            Assert.AreEqual(@"<r>
-  <d id=""{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}"" l=""{1A5A92AD-D537-7E87-FB00-A39BFDE2538B}"">
-    <r id=""{663E1E86-C959-7A70-8945-CFCEA79AFAC2}"" ds=""{11111111-1111-1111-1111-111111111111}"" par="""" ph=""Page.Body"" />
-    <r id=""{663E1E86-C959-7A70-8945-CFCEA79AFAC2}"" par="""" ph=""Page.Body"" />
-    <r id=""{663E1E86-C959-7A70-8945-CFCEA79AFAC2}"" par="""" ph=""Page.Body"" />
-  </d>
-</r>", layout.ResolvedValue);
         }
 
         [Test]
@@ -221,132 +129,6 @@ namespace Sitecore.Pathfinder.Projects
             Assert.AreEqual("Pip 1", field.ResolvedValue);
             Assert.AreEqual("en", field.Language);
             Assert.AreEqual(1, field.Version);
-        }
-
-        [Test]
-        public void XmlContentItemTest()
-        {
-            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/XmlContentItem");
-            Assert.IsNotNull(projectItem);
-            Assert.AreEqual("XmlContentItem", projectItem.ShortName);
-            Assert.AreEqual("/sitecore/content/XmlContentItem", projectItem.QualifiedName);
-
-            var item = projectItem as Item;
-            Assert.IsNotNull(item);
-            Assert.AreEqual("XmlContentItem", item.ItemName);
-            Assert.AreEqual("/sitecore/content/XmlContentItem", item.ItemIdOrPath);
-            Assert.AreEqual("Sample Item", item.TemplateIdOrPath);
-            Assert.IsNotNull(item.ItemNameProperty.SourceTextNodes);
-            Assert.IsInstanceOf<FileNameTextNode>(item.ItemNameProperty.SourceTextNode);
-            Assert.IsInstanceOf<AttributeNameTextNode>(item.TemplateIdOrPathProperty.SourceTextNode);
-            Assert.AreEqual("Sample Item", TraceHelper.GetTextNode(item.TemplateIdOrPathProperty).Value);
-
-            var field = item.Fields.FirstOrDefault(f => f.FieldName == "Text");
-            Assert.IsNotNull(field);
-            Assert.AreEqual("Hello World", field.Value);
-            Assert.IsInstanceOf<XmlTextNode>(field.ValueProperty.SourceTextNode);
-            Assert.AreEqual("Hello World", field.ValueProperty.SourceTextNode?.Value);
-            Assert.AreEqual("Text", field.ValueProperty.SourceTextNode?.Name);
-
-            var textDocument = projectItem.Snapshots.First() as ITextSnapshot;
-            Assert.IsNotNull(textDocument);
-
-            var treeNode = textDocument.Root;
-            Assert.AreEqual("Sample--Item", treeNode.Name);
-            Assert.AreEqual(2, treeNode.Attributes.Count());
-        }
-
-        [Test]
-        public void XmlItemTest()
-        {
-            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/HelloWorld");
-            Assert.IsNotNull(projectItem);
-            Assert.AreEqual("HelloWorld", projectItem.ShortName);
-            Assert.AreEqual("/sitecore/content/Home/HelloWorld", projectItem.QualifiedName);
-
-            var item = projectItem as Item;
-            Assert.IsNotNull(item);
-            Assert.AreEqual("HelloWorld", item.ItemName);
-            Assert.AreEqual("/sitecore/content/Home/HelloWorld", item.ItemIdOrPath);
-            Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", item.TemplateIdOrPath);
-            Assert.IsNotNull(item.ItemNameProperty.SourceTextNodes);
-            Assert.IsInstanceOf<FileNameTextNode>(item.ItemNameProperty.SourceTextNode);
-            Assert.IsInstanceOf<XmlTextNode>(item.TemplateIdOrPathProperty.SourceTextNode);
-            Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", item.TemplateIdOrPathProperty.SourceTextNode?.Value);
-            Assert.AreEqual("Template", item.TemplateIdOrPathProperty.SourceTextNode?.Name);
-
-            // text field
-            var field = item.Fields.FirstOrDefault(f => f.FieldName == "Title");
-            Assert.IsNotNull(field);
-            Assert.AreEqual("Hello", field.Value);
-
-            var textDocument = projectItem.Snapshots.First() as ITextSnapshot;
-            Assert.IsNotNull(textDocument);
-
-            var treeNode = textDocument.Root;
-            Assert.AreEqual("Item", treeNode.Name);
-            Assert.AreEqual(5, treeNode.Attributes.Count());
-
-            var attr = treeNode.Attributes.First();
-            Assert.AreEqual("Template", attr.Name);
-            Assert.AreEqual("/sitecore/templates/Sample/HelloWorld", attr.Value);
-
-            // link field
-            var linkField = item.Fields.FirstOrDefault(f => f.FieldName == "Link");
-            Assert.IsNotNull(linkField);
-            Assert.AreEqual("/sitecore/media library/mushrooms", linkField.Value);
-            Assert.AreEqual("<link text=\"\" linktype=\"internal\" url=\"\" anchor=\"\" title=\"\" class=\"\" target=\"\" querystring=\"\" id=\"{62A9DD2C-72FC-F9FF-B9B8-9FC477002D0D}\" />", linkField.ResolvedValue);
-
-            // image field
-            var imageField = item.Fields.FirstOrDefault(f => f.FieldName == "Image");
-            Assert.IsNotNull(imageField);
-            Assert.AreEqual("/sitecore/media library/mushrooms", imageField.Value);
-            Assert.AreEqual("<image mediapath=\"\" alt=\"\" width=\"\" height=\"\" hspace=\"\" vspace=\"\" showineditor=\"\" usethumbnail=\"\" src=\"\" mediaid=\"{62A9DD2C-72FC-F9FF-B9B8-9FC477002D0D}\" />", imageField.ResolvedValue);
-
-            // implicit link field
-            var itemPathField = item.Fields.FirstOrDefault(f => f.FieldName == "ItemPath");
-            Assert.IsNotNull(itemPathField);
-            Assert.AreEqual("/sitecore/media library/mushrooms", itemPathField.Value);
-            Assert.AreEqual("{62A9DD2C-72FC-F9FF-B9B8-9FC477002D0D}", itemPathField.ResolvedValue);
-
-            // checkbox fields
-            var checkBoxField = item.Fields.FirstOrDefault(f => f.FieldName == "TrueCheckbox");
-            Assert.IsNotNull(checkBoxField);
-            Assert.AreEqual("1", checkBoxField.ResolvedValue);
-            checkBoxField = item.Fields.FirstOrDefault(f => f.FieldName == "FalseCheckbox");
-            Assert.IsNotNull(checkBoxField);
-            Assert.AreEqual(string.Empty, checkBoxField.ResolvedValue);
-
-            // layout field
-            var layout = item.Fields.FirstOrDefault(f => f.FieldName == "__Renderings");
-            Assert.IsNotNull(layout);
-            Assert.AreEqual(@"<r>
-  <d id=""{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}"" l=""{1A5A92AD-D537-7E87-FB00-A39BFDE2538B}"">
-    <r id=""{663E1E86-C959-7A70-8945-CFCEA79AFAC2}"" ds=""{11111111-1111-1111-1111-111111111111}"" par="""" ph=""Page.Body"" />
-  </d>
-</r>", layout.ResolvedValue);
-        }
-
-        [Test]
-        public void XmlLayoutTest()
-        {
-            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/XmlLayout");
-            Assert.IsNotNull(projectItem);
-            Assert.AreEqual("XmlLayout", projectItem.ShortName);
-            Assert.AreEqual("/sitecore/content/Home/XmlLayout", projectItem.QualifiedName);
-
-            var item = projectItem as Item;
-            Assert.IsNotNull(item);
-
-            var layout = item.Fields.FirstOrDefault(f => f.FieldName == "__Renderings");
-            Assert.IsNotNull(layout);
-            Assert.AreEqual(@"<r>
-  <d id=""{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}"" l=""{1A5A92AD-D537-7E87-FB00-A39BFDE2538B}"">
-    <r id=""{663E1E86-C959-7A70-8945-CFCEA79AFAC2}"" ds=""{11111111-1111-1111-1111-111111111111}"" par="""" ph=""Page.Body"" />
-    <r id=""{663E1E86-C959-7A70-8945-CFCEA79AFAC2}"" par="""" ph=""Page.Body"" />
-    <r id=""{663E1E86-C959-7A70-8945-CFCEA79AFAC2}"" par="""" ph=""Page.Body"" />
-  </d>
-</r>", layout.ResolvedValue);
         }
 
         [Test]

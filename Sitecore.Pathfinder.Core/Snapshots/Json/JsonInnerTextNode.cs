@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 
@@ -10,8 +9,7 @@ namespace Sitecore.Pathfinder.Snapshots.Json
 {
     public class JsonInnerTextNode : ITextNode
     {
-        private static readonly Regex RemoveNamespaces = new Regex("\\sxmlns[^\"]+\"[^\"]+\"", RegexOptions.Compiled);
-
+        [NotNull]
         private readonly JToken _token;
 
         private string _value;

@@ -1,3 +1,5 @@
 ﻿<Item xmlns="http://www.sitecore.net/pathfinder/item" Name="Mushrooms">
-    <Field Name="Description">Mushrooms</Field>
+    <Fields>
+      <Field Name="Description">Mushrooms</Field>
+    </Fields>
 </Item>

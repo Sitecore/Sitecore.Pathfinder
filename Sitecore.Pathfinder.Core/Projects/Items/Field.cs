@@ -1,11 +1,11 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using Sitecore.Pathfinder.Diagnostics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -55,6 +55,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         public string ResolvedValue { get; private set; }
 
         [NotNull]
+        [ItemNotNull]
         public ICollection<ITextNode> SourceTextNodes { get; } = new List<ITextNode>();
 
         [NotNull]
@@ -94,7 +95,7 @@ namespace Sitecore.Pathfinder.Projects.Items
             IsResolved = false;
         }
 
-        public void Resolve([NotNull] ITraceService trace)
+        public void ResolveValue([NotNull] ITraceService trace)
         {
             if (IsResolved)
             {

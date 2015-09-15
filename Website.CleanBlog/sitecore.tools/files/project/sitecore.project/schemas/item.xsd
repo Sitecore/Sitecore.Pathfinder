@@ -13,8 +13,6 @@
             <xs:extension base="xs:string">
                 <xs:attribute name="Name" type="xs:string" use="required" />
                 <xs:attribute name="Value" type="xs:string" use="optional" />
-                <xs:attribute name="Language" type="xs:string" use="optional" />
-                <xs:attribute name="Version" type="xs:integer" use="optional" />
                 <xs:attribute name="Value.Hint" type="FieldValueHint" use="optional" />
                 <xs:attribute name="Field.Type" type="FieldType" use="optional" />
                 <xs:attribute name="Field.Sharing" type="Sharing" use="optional" />
@@ -27,9 +25,45 @@
     </xs:complexType>
 
     <xs:complexType name="Item">
-        <xs:sequence minOccurs="0" maxOccurs="unbounded">
-            <xs:group ref="ItemGroup" />
+        <xs:sequence>
+            <xs:element name="Fields" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Field" type="Field" minOccurs="0" maxOccurs="unbounded" />
+
+                        <xs:element name="Unversioned" minOccurs="0" maxOccurs="1" >
+                            <xs:complexType>
+                                <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                                    <xs:element name="Field" type="Field" />
+                                </xs:sequence>
+                                <xs:attribute name="Language" type="xs:string" use="required" />
+                            </xs:complexType>
+                        </xs:element>
+
+                        <xs:element name="Versioned" minOccurs="0" maxOccurs="1">
+                            <xs:complexType>
+                                <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                                    <xs:element minOccurs="0" maxOccurs="1" name="Version">
+                                        <xs:complexType>
+                                            <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                                                <xs:element name="Field" type="Field" />
+                                            </xs:sequence>
+                                            <xs:attribute name="Number" type="xs:int" use="required" />
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:sequence>
+                                <xs:attribute name="Language" type="xs:string" use="required" />
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="Layout" type="Layout" minOccurs="0" maxOccurs="1" />
+            
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="ItemGroup" />
         </xs:sequence>
+
         <xs:attribute name="Id" type="xs:string" use="optional" />
         <xs:attribute name="Name" type="xs:string" use="optional" />
         <xs:attribute name="Template" type="xs:string" use="optional" />
@@ -74,24 +108,22 @@
     </xs:complexType>
 
     <xs:complexType name="Layout">
-        <xs:sequence>
-            <xs:any minOccurs="0" />
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:any />
         </xs:sequence>
     </xs:complexType>
 
-    <xs:group name="ElementGroup">
+    <xs:group name="ItemGroup">
         <xs:choice>
             <xs:element name="Item" type="Item" />
             <xs:element name="Template" type="Template" />
         </xs:choice>
     </xs:group>
 
-    <xs:group name="ItemGroup">
+    <xs:group name="ElementGroup">
         <xs:choice>
-            <xs:element name="Field" type="Field" />
             <xs:element name="Item" type="Item" />
             <xs:element name="Template" type="Template" />
-            <xs:element name="Layout" type="Layout" minOccurs="0" maxOccurs="1" />
         </xs:choice>
     </xs:group>
 

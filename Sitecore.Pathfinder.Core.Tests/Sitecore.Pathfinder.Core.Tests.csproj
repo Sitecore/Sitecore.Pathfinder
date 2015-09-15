@@ -115,13 +115,15 @@
     <Compile Include="Configuration\ConfigurationServicesTests.cs" />
     <Compile Include="Helpers\Services.cs" />
     <Compile Include="IO\MockedFileSystemService.cs" />
+    <Compile Include="Projects\ProjectTests.Json.cs" />
+    <Compile Include="Projects\ProjectTests.Xml.cs" />
     <Compile Include="Snapshots\FileNameTextNodeTests.cs" />
     <Compile Include="Snapshots\Json\JsonDocumentTests.cs" />
     <Compile Include="IO\PathHelperTests.cs" />
     <Compile Include="IO\PathMatcherTests.cs" />
     <Compile Include="Projects\BadProjectTests.cs" />
-    <Compile Include="Projects\Templates\ProjectTests.JsonTemplates.cs" />
-    <Compile Include="Projects\Templates\ProjectTests.XmlTemplates.cs" />
+    <Compile Include="Projects\ProjectTests.JsonTemplates.cs" />
+    <Compile Include="Projects\ProjectTests.XmlTemplates.cs" />
     <Compile Include="Projects\ProjectTests.cs" />
     <Compile Include="Snapshots\SourceFileTests.cs" />
     <Compile Include="Snapshots\TextPositionTests.cs" />
@@ -246,7 +248,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Website\content\Home\HelloWorld.item.xml">
+    <Content Include="Website\content\Home\XmlItem.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Website\content\Home\XmlLayout.layout.xml">

@@ -91,7 +91,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
             if (!string.IsNullOrEmpty(newItem.TemplateIdOrPath))
             {
-                TemplateIdOrPathProperty.SetValue(newItem.TemplateIdOrPathProperty, SetSourcePropertyValue.NoUpdate);
+                TemplateIdOrPathProperty.SetValue(newItem.TemplateIdOrPathProperty, SetValueOptions.DisableUpdates);
             }
 
             OverwriteWhenMerging = OverwriteWhenMerging && newItem.OverwriteWhenMerging;
@@ -112,7 +112,7 @@ namespace Sitecore.Pathfinder.Projects.Items
                     context.Trace.TraceError(Texts.Field_is_being_assigned_two_different_values, field.FieldName);
                 }
 
-                field.ValueProperty.SetValue(newField.ValueProperty, SetSourcePropertyValue.NoUpdate);
+                field.ValueProperty.SetValue(newField.ValueProperty, SetValueOptions.DisableUpdates);
                 field.IsTestable = field.IsTestable || newField.IsTestable;
             }
         }

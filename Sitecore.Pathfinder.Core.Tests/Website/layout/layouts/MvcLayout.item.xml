@@ -1,4 +1,6 @@
 ﻿<Item xmlns="http://www.sitecore.net/pathfinder/item" Template="/sitecore/templates/System/Layout/Renderings/View rendering">
-    <Field Name="Path">$FilePathWithoutExtensions.cshtml</Field>
-    <Field Name="Place Holders">Page.Body</Field>
+    <Fields>
+        <Field Name="Path">$FilePathWithoutExtensions.cshtml</Field>
+        <Field Name="Place Holders">Page.Body</Field>
+    </Fields>
 </Item>

@@ -29,8 +29,8 @@ namespace Sitecore.Pathfinder.Projects
             var diagnostic = Project.Diagnostics.FirstOrDefault(d => d.Text == "Reference not found: /sitecore/media library/badlink");
             Assert.IsNotNull(diagnostic);
             Assert.AreEqual(Severity.Warning, diagnostic.Severity);
-            Assert.AreEqual(2, diagnostic.Position.LineNumber);
-            Assert.AreEqual(6, diagnostic.Position.LinePosition);
+            Assert.AreEqual(3, diagnostic.Position.LineNumber);
+            Assert.AreEqual(10, diagnostic.Position.LinePosition);
             Assert.AreEqual(5, diagnostic.Position.LineLength);
 
             // link field

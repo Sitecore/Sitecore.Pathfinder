@@ -26,9 +26,9 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers.Xml
         {
             foreach (var childTreeNode in textNode.ChildNodes)
             {
-                if (childTreeNode.Name == "Field")
+                if (childTreeNode.Name == "Fields")
                 {
-                    ParseFieldTreeNode(context, item, childTreeNode);
+                    ParseFieldsTreeNode(context, item, childTreeNode);
                 }
                 else if (childTreeNode.Name == "Layout")
                 {
@@ -38,6 +38,47 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers.Xml
                 {
                     var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, PathHelper.CombineItemPath(context.ParentItemPath, childTreeNode.Name));
                     context.Parser.ParseTextNode(newContext, childTreeNode);
+                }
+            }
+        }
+
+        protected virtual void ParseFieldsTreeNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode fieldsTextNode)
+        {
+            var fieldContext = new FieldContext();
+
+            foreach (var childNode in fieldsTextNode.ChildNodes)
+            {
+                switch (childNode.Name)
+                {
+                    case "Field":
+                        ParseFieldTreeNode(context, item, fieldContext, childNode);
+                        break;
+
+                    case "Unversioned":
+                        fieldContext = new FieldContext();
+                        fieldContext.LanguageProperty.Parse(childNode);
+
+                        foreach (var unversionedChildNode in childNode.ChildNodes)
+                        {
+                            ParseFieldTreeNode(context, item, fieldContext, unversionedChildNode);
+                        }
+
+                        break;
+
+                    case "Versioned":
+                        foreach (var versionChildNode in childNode.ChildNodes)
+                        {
+                            fieldContext = new FieldContext();
+                            fieldContext.LanguageProperty.Parse(childNode);
+                            fieldContext.VersionProperty.Parse(versionChildNode);
+
+                            foreach (var versionedChildNode in versionChildNode.ChildNodes)
+                            {
+                                ParseFieldTreeNode(context, item, fieldContext, versionedChildNode);
+                            }
+                        }
+
+                        break;
                 }
             }
         }

@@ -91,7 +91,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
             if (!string.IsNullOrEmpty(newItemBase.Icon))
             {
-                IconProperty.SetValue(newItemBase.IconProperty, SetSourcePropertyValue.NoUpdate);
+                IconProperty.SetValue(newItemBase.IconProperty, SetValueOptions.DisableUpdates);
             }
 
             IsEmittable = IsEmittable || newItemBase.IsEmittable;

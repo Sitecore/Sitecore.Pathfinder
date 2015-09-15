@@ -1,7 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
+using System.Collections.Generic;
 using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -16,12 +16,14 @@ namespace Sitecore.Pathfinder.Projects
         string QualifiedName { get; }
 
         [NotNull]
+        [ItemNotNull]
         ReferenceCollection References { get; }
 
         [NotNull]
         string ShortName { get; }
 
         [NotNull]
+        [ItemNotNull]
         ICollection<ISnapshot> Snapshots { get; }
 
         [NotNull]

@@ -90,12 +90,12 @@ namespace Sitecore.Pathfinder.Projects.Templates
             // todo: consider making a strict and loose mode
             if (!string.IsNullOrEmpty(newField.Type))
             {
-                TypeProperty.SetValue(newField.TypeProperty, SetSourcePropertyValue.NoUpdate);
+                TypeProperty.SetValue(newField.TypeProperty, SetValueOptions.DisableUpdates);
             }
 
             if (!string.IsNullOrEmpty(newField.Source))
             {
-                SourceProperty.SetValue(newField.SourceProperty, SetSourcePropertyValue.NoUpdate);
+                SourceProperty.SetValue(newField.SourceProperty, SetValueOptions.DisableUpdates);
             }
 
             if (newField.Shared)
@@ -110,17 +110,17 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
             if (!string.IsNullOrEmpty(newField.ShortHelp))
             {
-                ShortHelpProperty.SetValue(newField.ShortHelpProperty, SetSourcePropertyValue.NoUpdate);
+                ShortHelpProperty.SetValue(newField.ShortHelpProperty, SetValueOptions.DisableUpdates);
             }
 
             if (!string.IsNullOrEmpty(newField.LongHelp))
             {
-                LongHelpProperty.SetValue(newField.LongHelpProperty, SetSourcePropertyValue.NoUpdate);
+                LongHelpProperty.SetValue(newField.LongHelpProperty, SetValueOptions.DisableUpdates);
             }
 
             if (newField.SortOrder != 0)
             {
-                SortOrderProperty.SetValue(newField.SortOrderProperty, SetSourcePropertyValue.NoUpdate);
+                SortOrderProperty.SetValue(newField.SortOrderProperty, SetValueOptions.DisableUpdates);
             }
         }
     }

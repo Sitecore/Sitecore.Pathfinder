@@ -1,1 +1,1 @@
-﻿<Item xmlns="http://www.sitecore.net/pathfinder/item" Template="/sitecore/templates/Sample/HelloWorld" />
+﻿<Item xmlns="http://www.sitecore.net/pathfinder/item" Template="/sitecore/templates/Sample/XmlItemTemplate" />

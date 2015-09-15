@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
             {
                 foreach (var field in item.Fields)
                 {
-                    field.Resolve(context.Trace);
+                    field.ResolveValue(context.Trace);
                 }
             }
         }
