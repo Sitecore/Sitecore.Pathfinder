@@ -312,7 +312,7 @@ namespace Sitecore.Pathfinder.Packages
                 return;
             }
 
-            var emitService = new EmitService(e.InstallPath);
+            var emitService = new EmitService(e.InstallPath, EmitSource.NugetPackage);
             emitService.Start();
         }
     }

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
+  <sitecore>
+    <contentSearch>
+      <indexConfigurations>
+        <defaultFxmSolrIndexConfiguration type="Sitecore.ContentSearch.SolrProvider.SolrIndexConfiguration, Sitecore.ContentSearch.SolrProvider">
+          <indexAllFields>false</indexAllFields>
+          <include hint="list:IncludeTemplate">
+            <domainMatcherTemplateId>{036DB470-1850-4848-A48A-0931F825B867}</domainMatcherTemplateId>
+          </include>
+          <include hint="list:IncludeField">
+            <!-- display name -->
+            <fieldId>{B5E02AD9-D56F-4C41-A065-A133DB87BDEB}</fieldId>
+          </include>
+          <fieldMap ref="contentSearch/indexConfigurations/defaultSolrIndexConfiguration/fieldMap">
+            <fieldNames hint="raw:AddFieldByFieldName">
+              <fieldType fieldName="createdby" returnType="string" />
+              <fieldType fieldName="updatedby" returnType="string" />
+              <fieldType fieldName="revision" returnType="string" />
+              <fieldType fieldName="domainmatchrule" returnType="string" />
+            </fieldNames>
+          </fieldMap>
+          <fields hint="raw:AddComputedIndexField">
+            <field fieldName="createdby" returnType="string">Sitecore.FXM.Service.Data.DomainMatchers.ContentSearch.ComputedFields.CreatedBy, Sitecore.FXM.Service</field>
+            <field fieldName="updatedby" returnType="string">Sitecore.FXM.Service.Data.DomainMatchers.ContentSearch.ComputedFields.UpdatedBy, Sitecore.FXM.Service</field>
+            <field fieldName="revision" returnType="string">Sitecore.FXM.Service.Data.DomainMatchers.ContentSearch.ComputedFields.Revision, Sitecore.FXM.Service</field>
+            <field fieldName="domainmatchrule" returnType="string">Sitecore.FXM.Service.Data.DomainMatchers.ContentSearch.ComputedFields.DomainMatcherRule, Sitecore.FXM.Service</field>
+          </fields>
+
+          <fieldReaders ref="contentSearch/indexConfigurations/defaultSolrIndexConfiguration/fieldReaders" />
+          <indexFieldStorageValueFormatter ref="contentSearch/indexConfigurations/defaultSolrIndexConfiguration/indexFieldStorageValueFormatter" />
+          <indexDocumentPropertyMapper ref="contentSearch/indexConfigurations/defaultSolrIndexConfiguration/indexDocumentPropertyMapper" />
+          <documentBuilderType ref="contentSearch/indexConfigurations/defaultSolrIndexConfiguration/documentBuilderType" />
+
+        </defaultFxmSolrIndexConfiguration>
+      </indexConfigurations>
+      <!-- The Domain index is only required by the FXM Speak App, hence both master and web indices only need be located on the Content Management servers.
+           Which is why they are both specified here in the same file. -->
+      <configuration type="Sitecore.ContentSearch.ContentSearchConfiguration, Sitecore.ContentSearch">
+        <indexes hint="list:AddIndex">
+          <index id="sitecore_fxm_master_index" type="Sitecore.ContentSearch.SolrProvider.SolrSearchIndex, Sitecore.ContentSearch.SolrProvider">
+            <param desc="name">$(id)</param>
+            <param desc="core">$(id)</param>
+            <param desc="propertyStore" ref="contentSearch/indexConfigurations/databasePropertyStore" param1="$(id)" />
+            <configuration ref="contentSearch/indexConfigurations/defaultFxmSolrIndexConfiguration" />
+            <strategies hint="list:AddStrategy">
+              <strategy ref="contentSearch/indexConfigurations/indexUpdateStrategies/syncMaster" />
+            </strategies>
+            <locations hint="list:AddCrawler">
+              <crawler type="Sitecore.ContentSearch.SitecoreItemCrawler, Sitecore.ContentSearch">
+                <Database>master</Database>
+                <Root>/sitecore/system/Marketing Control Panel/fxm/</Root>
+              </crawler>
+            </locations>
+          </index>
+          <index id="sitecore_fxm_web_index" type="Sitecore.ContentSearch.SolrProvider.SolrSearchIndex, Sitecore.ContentSearch.SolrProvider">
+            <param desc="name">$(id)</param>
+            <param desc="core">$(id)</param>
+            <param desc="propertyStore" ref="contentSearch/indexConfigurations/databasePropertyStore" param1="$(id)" />
+            <configuration ref="contentSearch/indexConfigurations/defaultFxmSolrIndexConfiguration" />
+            <strategies hint="list:AddStrategy">
+              <strategy ref="contentSearch/indexConfigurations/indexUpdateStrategies/onPublishEndAsync" />
+            </strategies>
+            <locations hint="list:AddCrawler">
+              <crawler type="Sitecore.ContentSearch.SitecoreItemCrawler, Sitecore.ContentSearch">
+                <Database>web</Database>
+                <Root>/sitecore/system/Marketing Control Panel/fxm/</Root>
+              </crawler>
+            </locations>
+          </index>
+        </indexes>
+      </configuration>
+    </contentSearch>
+  </sitecore>
+</configuration>

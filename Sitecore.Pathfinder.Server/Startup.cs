@@ -6,6 +6,7 @@ using System.IO;
 using System.Reflection;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.IO;
+using Sitecore.Pathfinder.Emitters;
 using Sitecore.Pathfinder.Parsing;
 
 namespace Sitecore.Pathfinder
@@ -47,12 +48,14 @@ namespace Sitecore.Pathfinder
         }
 
         [Diagnostics.NotNull]
-        public virtual IConfigurationSourceRoot RegisterConfiguration([Diagnostics.NotNull] string solutionDirectory)
+        public virtual IConfigurationSourceRoot RegisterConfiguration([Diagnostics.NotNull] string solutionDirectory, EmitSource emitSource)
         {
             var configuration = new Microsoft.Framework.ConfigurationModel.Configuration();
             configuration.Add(new MemoryConfigurationSource());
 
-            configuration.Set(Constants.Configuration.ToolsDirectory, Path.Combine(solutionDirectory, "content\\sitecore.tools"));
+            var toolsDirectory = emitSource == EmitSource.NugetPackage ? Path.Combine(solutionDirectory, "content\\sitecore.tools") : Path.Combine(solutionDirectory, "sitecore.tools");
+
+            configuration.Set(Constants.Configuration.ToolsDirectory, toolsDirectory);
             configuration.Set(Constants.Configuration.SystemConfigFileName, "scconfig.json");
 
             return configuration;

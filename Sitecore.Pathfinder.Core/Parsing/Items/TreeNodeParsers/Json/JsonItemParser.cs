@@ -36,7 +36,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers.Json
                 }
                 else
                 {
-                    var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, PathHelper.CombineItemPath(context.ParentItemPath, childTreeNode.Name));
+                    var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, PathHelper.CombineItemPath(context.ParentItemPath, item.ItemName));
                     context.Parser.ParseTextNode(newContext, childTreeNode);
                 }
             }
