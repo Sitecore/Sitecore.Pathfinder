@@ -5,15 +5,15 @@ using System.ComponentModel.Composition;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Snapshots;
-using Sitecore.Pathfinder.Snapshots.Xml;
+using Sitecore.Pathfinder.Snapshots.Yaml;
 
 namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
 {
     [Export(typeof(IFieldResolver))]
-    public class XmlLayoutFieldResolver : FieldResolverBase
+    public class YamlLayoutFieldResolver : FieldResolverBase
     {
         [ImportingConstructor]
-        public XmlLayoutFieldResolver(IFileSystemService fileSystem) : base(Constants.FieldResolvers.Normal)
+        public YamlLayoutFieldResolver(IFileSystemService fileSystem) : base(Constants.FieldResolvers.Normal)
         {
             FileSystem = fileSystem;
         }
@@ -24,7 +24,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
         public override bool CanResolve(Field field)
         {
             var textNode = TraceHelper.GetTextNode(field.ValueProperty);
-            if (!(textNode is XmlTextNode))
+            if (!(textNode is YamlTextNode))
             {
                 return false;
             }

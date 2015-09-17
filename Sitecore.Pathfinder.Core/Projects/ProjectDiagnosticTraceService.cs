@@ -27,14 +27,14 @@ namespace Sitecore.Pathfinder.Projects
             return this;
         }
 
-        protected override void Write(string text, Severity severity, string fileName, TextPosition position, string details)
+        protected override void Write(string text, Severity severity, string fileName, TextSpan span, string details)
         {
             if (!string.IsNullOrEmpty(details))
             {
                 text += ": " + details;
             }
 
-            var diagnostic = Factory.Diagnostic(fileName, position, severity, text);
+            var diagnostic = Factory.Diagnostic(fileName, span, severity, text);
 
             Project.Diagnostics.Add(diagnostic);
         }

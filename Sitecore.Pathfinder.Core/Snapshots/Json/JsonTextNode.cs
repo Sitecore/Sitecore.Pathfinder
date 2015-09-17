@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Snapshots.Json
             _jtoken = jproperty;
         }
 
-        private static TextPosition GetPosition([NotNull] IJsonLineInfo lineInfo)
+        private static TextSpan GetPosition([NotNull] IJsonLineInfo lineInfo)
         {
             var lineLength = 0;
 
@@ -38,7 +38,7 @@ namespace Sitecore.Pathfinder.Snapshots.Json
                 lineLength = string.IsNullOrEmpty(value) ? 0 : value.Length + 2;
             }
 
-            return new TextPosition(lineInfo.LineNumber, lineInfo.LinePosition + 1, lineLength);
+            return new TextSpan(lineInfo.LineNumber, lineInfo.LinePosition + 1, lineLength);
         }
 
         public override ITextNode GetInnerTextNode()

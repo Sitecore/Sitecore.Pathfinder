@@ -13,6 +13,7 @@ namespace Sitecore.Pathfinder.Snapshots.Xml
 {
     public class XmlTextSnapshot : TextSnapshot
     {
+        [NotNull]
         protected static readonly Dictionary<string, XmlSchemaSet> Schemas = new Dictionary<string, XmlSchemaSet>();
 
         private ITextNode _root;
@@ -30,7 +31,7 @@ namespace Sitecore.Pathfinder.Snapshots.Xml
             catch (XmlException ex)
             {
                 ParseError = ex.Message;
-                ParseErrorTextPosition = new TextPosition(ex.LineNumber, ex.LinePosition, 0);
+                ParseErrorTextSpan = new TextSpan(ex.LineNumber, ex.LinePosition, 0);
                 RootElement = null;
             }
             catch (Exception ex)
@@ -94,10 +95,10 @@ namespace Sitecore.Pathfinder.Snapshots.Xml
                 switch (args.Severity)
                 {
                     case XmlSeverityType.Error:
-                        context.Trace.TraceError(string.Empty, context.Snapshot.SourceFile.FileName, new TextPosition(args.Exception.LineNumber, args.Exception.LinePosition, 0), args.Message);
+                        context.Trace.TraceError(string.Empty, context.Snapshot.SourceFile.FileName, new TextSpan(args.Exception.LineNumber, args.Exception.LinePosition, 0), args.Message);
                         break;
                     case XmlSeverityType.Warning:
-                        context.Trace.TraceWarning(string.Empty, context.Snapshot.SourceFile.FileName, new TextPosition(args.Exception.LineNumber, args.Exception.LinePosition, 0), args.Message);
+                        context.Trace.TraceWarning(string.Empty, context.Snapshot.SourceFile.FileName, new TextSpan(args.Exception.LineNumber, args.Exception.LinePosition, 0), args.Message);
                         break;
                 }
             };
@@ -108,7 +109,7 @@ namespace Sitecore.Pathfinder.Snapshots.Xml
             }
             catch (Exception ex)
             {
-                context.Trace.TraceError(Texts.The_file_does_not_contain_valid_XML, context.Snapshot.SourceFile.FileName, TextPosition.Empty, ex.Message);
+                context.Trace.TraceError(Texts.The_file_does_not_contain_valid_XML, context.Snapshot.SourceFile.FileName, TextSpan.Empty, ex.Message);
             }
         }
 

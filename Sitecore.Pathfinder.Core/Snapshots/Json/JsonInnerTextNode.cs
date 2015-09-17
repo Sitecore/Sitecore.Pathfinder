@@ -28,7 +28,7 @@ namespace Sitecore.Pathfinder.Snapshots.Json
 
         public ITextNode Parent { get; }
 
-        public TextPosition Position => Parent?.Position ?? TextPosition.Empty;
+        public TextSpan Span => Parent?.Span ?? TextSpan.Empty;
 
         public ISnapshot Snapshot => Parent?.Snapshot ?? Snapshots.Snapshot.Empty;
 

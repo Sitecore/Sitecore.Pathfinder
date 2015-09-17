@@ -13,10 +13,10 @@ namespace Sitecore.Pathfinder.Snapshots
     {
         public static readonly ITextNode Empty = new SnapshotTextNode(Snapshots.Snapshot.Empty);
 
-        public TextNode([NotNull] ISnapshot snapshot, TextPosition position, [NotNull] string name, [NotNull] string value, [CanBeNull] ITextNode parent)
+        public TextNode([NotNull] ISnapshot snapshot, TextSpan span, [NotNull] string name, [NotNull] string value, [CanBeNull] ITextNode parent)
         {
             Snapshot = snapshot;
-            Position = position;
+            Span = span;
             Name = name;
             Value = value;
             Parent = parent;
@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public ITextNode Parent { get; }
 
-        public TextPosition Position { get; }
+        public TextSpan Span { get; }
 
         public ISnapshot Snapshot { get; }
 

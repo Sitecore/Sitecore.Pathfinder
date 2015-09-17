@@ -53,7 +53,7 @@ namespace Sitecore.Pathfinder.Projects
         public void FindUsagesTest()
         {
             var references = Services.QueryService.FindUsages(Project, "/sitecore/media library/mushrooms").ToList();
-            Assert.AreEqual(6, references.Count);
+            Assert.AreEqual(9, references.Count);
         }
 
         [Test]

@@ -14,7 +14,7 @@ namespace Sitecore.Pathfinder.Diagnostics
 
             Details = string.Empty;
             FileName = string.Empty;
-            Position = TextPosition.Empty;
+            Span = TextSpan.Empty;
             Details = string.Empty;
         }
 
@@ -22,7 +22,7 @@ namespace Sitecore.Pathfinder.Diagnostics
         {
             Text = text;
             FileName = snapshot.SourceFile.FileName;
-            Position = TextPosition.Empty;
+            Span = TextSpan.Empty;
             Details = details;
         }
 
@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Diagnostics
         {
             Text = text;
             FileName = textNode.Snapshot.SourceFile.FileName;
-            Position = textNode.Position;
+            Span = textNode.Span;
             Details = details;
         }
 
@@ -40,7 +40,7 @@ namespace Sitecore.Pathfinder.Diagnostics
         [NotNull]
         public string FileName { get; }
 
-        public TextPosition Position { get; }
+        public TextSpan Span { get; }
 
         [NotNull]
         public string Text { get; }

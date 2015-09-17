@@ -16,21 +16,24 @@ namespace Sitecore.Pathfinder
 {
     public class Startup
     {
-        public virtual void Start()
+        public virtual int Start()
         {
             var configuration = RegisterConfiguration();
             var compositionService = RegisterCompositionService(configuration);
+            var errorCode = 0;
 
             if (compositionService != null)
             {
                 var build = compositionService.Resolve<Build>();
-                build.Start();
+                errorCode = build.Start();
             }
 
             if (string.Compare(configuration.Get("pause"), "true", StringComparison.OrdinalIgnoreCase) == 0)
             {
                 Console.ReadLine();
             }
+
+            return errorCode;
         }
 
         [CanBeNull]

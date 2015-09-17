@@ -7,7 +7,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
 {
-    public class JsonLayoutResolver : LayoutResolverBase
+    public class JsonLayoutResolver : LayoutResolver
     {
         protected override void WriteRendering(LayoutResolveContext context, XmlTextWriter output, IEnumerable<Item> renderingItems, ITextNode renderingTextNode, string placeholders)
         {

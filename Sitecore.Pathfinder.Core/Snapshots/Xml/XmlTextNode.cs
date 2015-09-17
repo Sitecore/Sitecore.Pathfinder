@@ -28,9 +28,9 @@ namespace Sitecore.Pathfinder.Snapshots.Xml
             _node = node;
         }
 
-        private static TextPosition GetPosition([NotNull] IXmlLineInfo lineInfo, int lineLength)
+        private static TextSpan GetPosition([NotNull] IXmlLineInfo lineInfo, int lineLength)
         {
-            return new TextPosition(lineInfo.LineNumber, lineInfo.LinePosition, lineLength);
+            return new TextSpan(lineInfo.LineNumber, lineInfo.LinePosition, lineLength);
         }
 
         public override ITextNode GetInnerTextNode()

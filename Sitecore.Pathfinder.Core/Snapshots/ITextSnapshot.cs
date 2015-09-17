@@ -10,7 +10,7 @@ namespace Sitecore.Pathfinder.Snapshots
         [NotNull]
         string ParseError { get; }
 
-        TextPosition ParseErrorTextPosition { get; }
+        TextSpan ParseErrorTextSpan { get; }
 
         [NotNull]
         ITextNode Root { get; }

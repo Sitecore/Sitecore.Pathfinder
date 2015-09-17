@@ -45,9 +45,9 @@ namespace Sitecore.Pathfinder.Configuration
             return new DeviceReference(projectItem, deviceNameSourceProperty);
         }
 
-        public virtual Diagnostic Diagnostic(string fileName, TextPosition position, Severity severity, string text)
+        public virtual Diagnostic Diagnostic(string fileName, TextSpan span, Severity severity, string text)
         {
-            return new Diagnostic(fileName, position, severity, text);
+            return new Diagnostic(fileName, span, severity, text);
         }
 
         public virtual Field Field(Item item, ITextNode textNode)
@@ -113,9 +113,9 @@ namespace Sitecore.Pathfinder.Configuration
             return new Rendering(project, snapshot, filePath, item);
         }
 
-        public virtual SerializationFile SerializationFile(IProject project, ISnapshot snapshot, ProjectItemUri uri, string filePath)
+        public virtual YamlItemFile SerializationFile(IProject project, ISnapshot snapshot, ProjectItemUri uri, string filePath)
         {
-            return new SerializationFile(project, snapshot, uri, filePath);
+            return new YamlItemFile(project, snapshot, uri, filePath);
         }
 
         public virtual ISnapshot Snapshot(ISourceFile sourceFile)
@@ -143,9 +143,9 @@ namespace Sitecore.Pathfinder.Configuration
             return new TemplateSection(templateSectionTextNode);
         }
 
-        public virtual TextNode TextNode(ISnapshot snapshot, TextPosition position, string name, string value, ITextNode parent)
+        public virtual TextNode TextNode(ISnapshot snapshot, TextSpan span, string name, string value, ITextNode parent)
         {
-            return new TextNode(snapshot, position, name, value, parent);
+            return new TextNode(snapshot, span, name, value, parent);
         }
     }
 }

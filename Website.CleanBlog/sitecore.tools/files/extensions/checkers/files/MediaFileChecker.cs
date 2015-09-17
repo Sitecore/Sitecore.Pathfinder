@@ -26,7 +26,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Files
 
             if (fileInfo.Length > 5 * 1025 * 1025)
             {
-                context.Trace.TraceWarning("Media file size exceeds 5MB. Consider reducing the size of the file", mediaFile.Snapshots.First().SourceFile.FileName, TextPosition.Empty);
+                context.Trace.TraceWarning("Media file size exceeds 5MB. Consider reducing the size of the file", mediaFile.Snapshots.First().SourceFile.FileName, TextSpan.Empty);
             }
         }
     }

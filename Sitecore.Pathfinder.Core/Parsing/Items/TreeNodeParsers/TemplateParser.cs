@@ -78,7 +78,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             var fieldName = templateFieldTextNode.GetAttributeTextNode("Name");
             if (fieldName == null)
             {
-                context.ParseContext.Trace.TraceError(Texts._Field__element_must_have_a__Name__attribute, templateFieldTextNode.Snapshot.SourceFile.FileName, templateFieldTextNode.Position);
+                context.ParseContext.Trace.TraceError(Texts._Field__element_must_have_a__Name__attribute, templateFieldTextNode.Snapshot.SourceFile.FileName, templateFieldTextNode.Span);
                 return;
             }
 

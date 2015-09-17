@@ -51,6 +51,20 @@ namespace Sitecore.Pathfinder.Parsing.Builders
         public ITextNode VersionTextNode { get; set; } = TextNode.Empty;
 
         [NotNull]
+        public string TemplateLongHelp { get; set; } = string.Empty;
+
+        [NotNull]
+        public ITextNode TemplateLongHelpTextNode { get; set; } = TextNode.Empty;
+
+        [NotNull]
+        public string TemplateShortHelp { get; set; } = string.Empty;
+
+        [NotNull]
+        public ITextNode TemplateShortHelpTextNode { get; set; } = TextNode.Empty;
+
+
+
+        [NotNull]
         public Field Build([NotNull] IParseContext context, [NotNull] Item item)
         {
             var field = context.Factory.Field(item, FieldTextNode);

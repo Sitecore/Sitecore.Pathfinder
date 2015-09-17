@@ -14,7 +14,7 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public string ParseError { get; protected set; } = string.Empty;
 
-        public TextPosition ParseErrorTextPosition { get; protected set; } = TextPosition.Empty;
+        public TextSpan ParseErrorTextSpan { get; protected set; } = TextSpan.Empty;
 
         public virtual ITextNode Root { get; }
 

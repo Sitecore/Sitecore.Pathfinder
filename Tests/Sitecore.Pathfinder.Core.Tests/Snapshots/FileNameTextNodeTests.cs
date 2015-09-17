@@ -28,8 +28,8 @@ namespace Sitecore.Pathfinder.Snapshots
             Assert.AreEqual(0, fileNameTextNode.ChildNodes.Count());
             Assert.AreEqual("test", fileNameTextNode.Name);
             Assert.AreEqual(null, fileNameTextNode.Parent);
-            Assert.AreEqual(0, fileNameTextNode.Position.LineNumber);
-            Assert.AreEqual(0, fileNameTextNode.Position.LinePosition);
+            Assert.AreEqual(0, fileNameTextNode.Span.LineNumber);
+            Assert.AreEqual(0, fileNameTextNode.Span.LinePosition);
             Assert.AreEqual(field.Snapshot, fileNameTextNode.Snapshot);
 
             Assert.AreEqual(null, fileNameTextNode.GetAttributeTextNode("None"));

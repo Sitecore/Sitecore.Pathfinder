@@ -29,7 +29,7 @@ namespace Sitecore.Pathfinder.Configuration
         DeviceReference DeviceReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> deviceNameSourceProperty);
 
         [NotNull]
-        Diagnostic Diagnostic([NotNull] string fileName, TextPosition position, Severity severity, [NotNull] string text);
+        Diagnostic Diagnostic([NotNull] string fileName, TextSpan span, Severity severity, [NotNull] string text);
 
         [NotNull]
         Field Field([NotNull] Item item, [NotNull] ITextNode textNode);
@@ -68,7 +68,7 @@ namespace Sitecore.Pathfinder.Configuration
         Rendering Rendering([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath, [NotNull] Item item);
 
         [NotNull]
-        SerializationFile SerializationFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] ProjectItemUri uri, [NotNull] string filePath);
+        YamlItemFile SerializationFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] ProjectItemUri uri, [NotNull] string filePath);
 
         [NotNull]
         ISnapshot Snapshot([NotNull] ISourceFile sourceFile);
@@ -86,6 +86,6 @@ namespace Sitecore.Pathfinder.Configuration
         TemplateSection TemplateSection([NotNull] ITextNode templateSectionTextNode);
 
         [NotNull]
-        TextNode TextNode([NotNull] ISnapshot snapshot, TextPosition position, [NotNull] string name, [NotNull] string value, [CanBeNull] ITextNode parent);
+        TextNode TextNode([NotNull] ISnapshot snapshot, TextSpan span, [NotNull] string name, [NotNull] string value, [CanBeNull] ITextNode parent);
     }
 }

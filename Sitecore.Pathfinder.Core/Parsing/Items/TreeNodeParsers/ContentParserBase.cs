@@ -73,7 +73,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             var field = item.Fields.FirstOrDefault(f => string.Compare(f.FieldName, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
             if (field != null)
             {
-                context.ParseContext.Trace.TraceError(Texts.Field_is_already_defined, fieldTextNode.Snapshot.SourceFile.FileName, fieldTextNode.Position, fieldName);
+                context.ParseContext.Trace.TraceError(Texts.Field_is_already_defined, fieldTextNode.Snapshot.SourceFile.FileName, fieldTextNode.Span, fieldName);
             }
 
             // todo: support language and version

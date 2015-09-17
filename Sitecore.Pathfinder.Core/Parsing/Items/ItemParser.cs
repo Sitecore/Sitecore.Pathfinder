@@ -1,10 +1,10 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using Sitecore.Pathfinder.Diagnostics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
-using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers;
 using Sitecore.Pathfinder.Snapshots;
@@ -21,7 +21,10 @@ namespace Sitecore.Pathfinder.Parsing.Items
             ".layout.xml",
             ".item.json",
             ".content.json",
-            ".layout.json"
+            ".layout.json",
+            ".item.yaml",
+            ".content.yaml",
+            ".layout.yaml"
         };
 
         public ItemParser() : base(Constants.Parsers.Items)
@@ -30,7 +33,8 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
         [NotNull]
         [ImportMany]
-        public IEnumerable<ITextNodeParser> TextNodeParsers { get; [UsedImplicitly] private set; }
+        [ItemNotNull]
+        public IEnumerable<ITextNodeParser> TextNodeParsers { get;[UsedImplicitly] private set; }
 
         public override bool CanParse(IParseContext context)
         {
@@ -45,9 +49,9 @@ namespace Sitecore.Pathfinder.Parsing.Items
             var textNode = textDocument.Root;
             if (textNode == TextNode.Empty)
             {
-                var textPosition = textDocument.ParseErrorTextPosition != TextPosition.Empty ? textDocument.ParseErrorTextPosition : textDocument.Root.Position;
+                var textSpan = textDocument.ParseErrorTextSpan != TextSpan.Empty ? textDocument.ParseErrorTextSpan : textDocument.Root.Span;
                 var text = !string.IsNullOrEmpty(textDocument.ParseError) ? textDocument.ParseError : Texts.Source_file_is_empty;
-                context.Trace.TraceWarning(text, textDocument.SourceFile.FileName, textPosition);
+                context.Trace.TraceWarning(text, textDocument.SourceFile.FileName, textSpan);
                 return;
             }
 
@@ -82,7 +86,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             }
             catch (Exception ex)
             {
-                context.ParseContext.Trace.TraceError(string.Empty, context.ParseContext.Snapshot.SourceFile.FileName, TextPosition.Empty, ex.Message);
+                context.ParseContext.Trace.TraceError(string.Empty, context.ParseContext.Snapshot.SourceFile.FileName, TextSpan.Empty, ex.Message);
             }
         }
     }

@@ -88,6 +88,19 @@ namespace Sitecore.Pathfinder.Extensions
             return str.Replace(es, es + es).Replace(c, es + character);
         }
 
+        public static int IndexOfNotWhitespace([NotNull] this string text, int startIndex = 0)
+        {
+            for (var index = startIndex; index < text.Length; index++)
+            {
+                if (!char.IsWhiteSpace(text[index]))
+                {
+                    return index;
+                }
+            }
+
+            return 0;
+        }
+
         [NotNull]
         public static string GetSafeCodeIdentifier([NotNull] this string text)
         {

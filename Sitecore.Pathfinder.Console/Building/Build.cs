@@ -35,7 +35,7 @@ namespace Sitecore.Pathfinder.Building
         [NotNull]
         protected ITraceService Trace { get; }
 
-        public virtual void Start()
+        public virtual int Start()
         {
             try
             {
@@ -45,7 +45,7 @@ namespace Sitecore.Pathfinder.Building
             {
                 Trace.Writeline(ex.Message);
                 DisplayHelp();
-                return;
+                return 0;
             }
 
             var context = CompositionService.Resolve<IBuildContext>();
@@ -57,6 +57,9 @@ namespace Sitecore.Pathfinder.Building
                 context.Trace.Writeline(string.Format(Texts.Ducats___0_, context.Project.Ducats.ToString("#,##0")));
                 context.Trace.Writeline(Texts.Done);
             }
+
+            var errorCode = context.Project.Diagnostics.Any(d => d.Severity == Severity.Warning || d.Severity == Severity.Error) ? 1 : 0;
+            return errorCode;
         }
 
         [NotNull]

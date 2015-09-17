@@ -21,7 +21,7 @@ namespace Sitecore.Pathfinder.Snapshots
         [CanBeNull]
         ITextNode Parent { get; }
 
-        TextPosition Position { get; }
+        TextSpan Span { get; }
 
         [NotNull]
         ISnapshot Snapshot { get; }

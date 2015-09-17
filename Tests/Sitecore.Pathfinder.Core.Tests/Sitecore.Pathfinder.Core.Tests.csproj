@@ -100,6 +100,7 @@
     <Compile Include="Helpers\Services.cs" />
     <Compile Include="IO\MockedFileSystemService.cs" />
     <Compile Include="Projects\ProjectTests.Json.cs" />
+    <Compile Include="Projects\ProjectTests.Yaml.cs" />
     <Compile Include="Projects\ProjectTests.Xml.cs" />
     <Compile Include="Snapshots\FileNameTextNodeTests.cs" />
     <Compile Include="Snapshots\Json\JsonDocumentTests.cs" />
@@ -110,7 +111,7 @@
     <Compile Include="Projects\ProjectTests.XmlTemplates.cs" />
     <Compile Include="Projects\ProjectTests.cs" />
     <Compile Include="Snapshots\SourceFileTests.cs" />
-    <Compile Include="Snapshots\TextPositionTests.cs" />
+    <Compile Include="Snapshots\TextSpanTests.cs" />
     <Compile Include="Snapshots\AttributeNameTextNodeTests.cs" />
     <Compile Include="Snapshots\Xml\XmlDocumentTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

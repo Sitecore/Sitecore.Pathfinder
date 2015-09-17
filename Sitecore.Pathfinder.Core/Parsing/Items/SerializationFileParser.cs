@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             var rootTextNode = textDocument.Root;
             if (rootTextNode == TextNode.Empty)
             {
-                context.Trace.TraceError(Texts.Document_is_not_valid, textDocument.SourceFile.FileName, TextPosition.Empty);
+                context.Trace.TraceError(Texts.Document_is_not_valid, textDocument.SourceFile.FileName, TextSpan.Empty);
                 return;
             }
 
@@ -50,7 +50,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
         protected virtual int ParseField([NotNull] IParseContext context, [NotNull] ItemBuilder itemBuilder, [NotNull] VersionContext versionContext, [NotNull] [ItemNotNull] string[] lines, int lineNumber)
         {
-            var textNode = context.Factory.TextNode(context.Snapshot, new TextPosition(lineNumber, 0, 0), string.Empty, string.Empty, null);
+            var textNode = context.Factory.TextNode(context.Snapshot, new TextSpan(lineNumber, 0, 0), string.Empty, string.Empty, null);
 
             var fieldBuilder = new FieldBuilder(itemBuilder, textNode);
             itemBuilder.Fields.Add(fieldBuilder);
@@ -89,7 +89,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
                         break;
                     case "name":
                         fieldBuilder.FieldName = value;
-                        fieldBuilder.FieldNameTextNode = context.Factory.TextNode(context.Snapshot, new TextPosition(lineNumber, 0, lineLength), "name", value, null);
+                        fieldBuilder.FieldNameTextNode = context.Factory.TextNode(context.Snapshot, new TextSpan(lineNumber, 0, lineLength), "name", value, null);
                         break;
                     case "key":
                         break;
@@ -130,13 +130,13 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
                 value = sb.ToString().Trim().TrimEnd('\n', '\r');
                 fieldBuilder.Value = value;
-                fieldBuilder.ValueTextNode = context.Factory.TextNode(context.Snapshot, new TextPosition(startIndex, 0, contentLength), string.Empty, value, null);
+                fieldBuilder.ValueTextNode = context.Factory.TextNode(context.Snapshot, new TextSpan(startIndex, 0, contentLength), string.Empty, value, null);
                 return n - 1;
             }
 
             value = sb.ToString().Trim().TrimEnd('\n', '\r');
             fieldBuilder.Value = value;
-            fieldBuilder.ValueTextNode = context.Factory.TextNode(context.Snapshot, new TextPosition(startIndex, 0, contentLength), string.Empty, value, null);
+            fieldBuilder.ValueTextNode = context.Factory.TextNode(context.Snapshot, new TextSpan(startIndex, 0, contentLength), string.Empty, value, null);
             return lines.Length;
         }
 
@@ -193,13 +193,13 @@ namespace Sitecore.Pathfinder.Parsing.Items
                         break;
                     case "name":
                         itemBuilder.ItemName = value;
-                        itemBuilder.ItemNameTextNode = context.Factory.TextNode(context.Snapshot, new TextPosition(n, 0, line.Length), "name", value, null);
+                        itemBuilder.ItemNameTextNode = context.Factory.TextNode(context.Snapshot, new TextSpan(n, 0, line.Length), "name", value, null);
                         break;
                     case "master":
                         break;
                     case "template":
                         itemBuilder.TemplateIdOrPath = value;
-                        itemBuilder.TemplateIdOrPathTextNode = context.Factory.TextNode(context.Snapshot, new TextPosition(n, 0, line.Length), "template", value, null);
+                        itemBuilder.TemplateIdOrPathTextNode = context.Factory.TextNode(context.Snapshot, new TextSpan(n, 0, line.Length), "template", value, null);
                         break;
                     case "templatekey":
                         break;
@@ -234,11 +234,11 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 {
                     case "language":
                         versionContext.Language = value;
-                        versionContext.LanguageTextNode = context.Factory.TextNode(context.Snapshot, new TextPosition(n, 0, line.Length), "language", value, null);
+                        versionContext.LanguageTextNode = context.Factory.TextNode(context.Snapshot, new TextSpan(n, 0, line.Length), "language", value, null);
                         break;
                     case "version":
                         versionContext.Version = int.Parse(value);
-                        versionContext.VersionTextNode = context.Factory.TextNode(context.Snapshot, new TextPosition(n, 0, line.Length), "version", value, null);
+                        versionContext.VersionTextNode = context.Factory.TextNode(context.Snapshot, new TextSpan(n, 0, line.Length), "version", value, null);
                         break;
                     case "revision":
                         break;

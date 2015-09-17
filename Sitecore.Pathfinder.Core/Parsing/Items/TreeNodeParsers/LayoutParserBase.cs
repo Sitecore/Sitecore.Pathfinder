@@ -43,9 +43,9 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             {
                 // use the inner value but the outer text node
                 field.ValueProperty.SetValue(innerTextNode.Value);
-                field.ValueProperty.AddSourceTextNode(textNode);
             }
 
+            field.ValueProperty.AddSourceTextNode(textNode);
             field.ValueHintProperty.SetValue("Layout");
 
             item.Fields.Add(field);

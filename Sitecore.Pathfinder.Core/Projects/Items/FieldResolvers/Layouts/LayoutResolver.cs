@@ -16,7 +16,7 @@ using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
 {
-    public abstract class LayoutResolverBase
+    public class LayoutResolver
     {
         [NotNull]
         [ItemNotNull]

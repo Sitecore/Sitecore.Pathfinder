@@ -48,7 +48,7 @@ namespace Sitecore.Pathfinder.Parsing
                 }
                 catch (Exception ex)
                 {
-                    parseContext.Trace.TraceError(ex.Message, sourceFile.FileName, TextPosition.Empty);
+                    parseContext.Trace.TraceError(ex.Message, sourceFile.FileName, TextSpan.Empty);
                 }
             }
         }

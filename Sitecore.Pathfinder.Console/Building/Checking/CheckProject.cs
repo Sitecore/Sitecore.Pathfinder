@@ -32,13 +32,13 @@ namespace Sitecore.Pathfinder.Building.Checking
                 switch (diagnostic.Severity)
                 {
                     case Severity.Error:
-                        context.Trace.TraceError(diagnostic.Text, diagnostic.FileName, diagnostic.Position);
+                        context.Trace.TraceError(diagnostic.Text, diagnostic.FileName, diagnostic.Span);
                         break;
                     case Severity.Warning:
-                        context.Trace.TraceWarning(diagnostic.Text, diagnostic.FileName, diagnostic.Position);
+                        context.Trace.TraceWarning(diagnostic.Text, diagnostic.FileName, diagnostic.Span);
                         break;
                     default:
-                        context.Trace.TraceInformation(diagnostic.Text, diagnostic.FileName, diagnostic.Position);
+                        context.Trace.TraceInformation(diagnostic.Text, diagnostic.FileName, diagnostic.Span);
                         break;
                 }
             }

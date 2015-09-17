@@ -6,11 +6,11 @@ using Sitecore.Pathfinder.Diagnostics;
 namespace Sitecore.Pathfinder.Snapshots
 {
     [DebuggerDisplay("{GetType().Name,nq}: ({LineNumber,nq}, {LinePosition,nq}, {LineLength,nq})")]
-    public struct TextPosition
+    public struct TextSpan
     {
-        public static readonly TextPosition Empty = new TextPosition(0, 0, 0);
+        public static readonly TextSpan Empty = new TextSpan(0, 0, 0);
 
-        public TextPosition(int lineNumber, int linePosition, int lineLength)
+        public TextSpan(int lineNumber, int linePosition, int lineLength)
         {
             LineNumber = lineNumber;
             LinePosition = linePosition;
@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public int LinePosition { get; }
 
-        public bool Equals(TextPosition other)
+        public bool Equals(TextSpan other)
         {
             return LineLength == other.LineLength && LineNumber == other.LineNumber && LinePosition == other.LinePosition;
         }
@@ -35,7 +35,7 @@ namespace Sitecore.Pathfinder.Snapshots
                 return false;
             }
 
-            return obj is TextPosition && Equals((TextPosition)obj);
+            return obj is TextSpan && Equals((TextSpan)obj);
         }
 
         public override int GetHashCode()
@@ -49,12 +49,12 @@ namespace Sitecore.Pathfinder.Snapshots
             }
         }
 
-        public static bool operator ==(TextPosition c1, TextPosition c2)
+        public static bool operator ==(TextSpan c1, TextSpan c2)
         {
             return c1.Equals(c2);
         }
 
-        public static bool operator !=(TextPosition c1, TextPosition c2)
+        public static bool operator !=(TextSpan c1, TextSpan c2)
         {
             return !c1.Equals(c2);
         }

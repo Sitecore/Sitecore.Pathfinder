@@ -109,6 +109,11 @@
     <Compile Include="Extensions\GuidExtensions.cs" />
     <Compile Include="Parsing\Builders\FieldBuilder.cs" />
     <Compile Include="Parsing\Builders\ItemBuilder.cs" />
+    <Compile Include="Parsing\Builders\LanguageVersionBuilder.cs" />
+    <Compile Include="Parsing\Items\TreeNodeParsers\Yaml\YamlContentParser.cs" />
+    <Compile Include="Parsing\Items\TreeNodeParsers\Yaml\YamlLayoutParser.cs" />
+    <Compile Include="Parsing\Items\TreeNodeParsers\Yaml\YamlItemParser.cs" />
+    <Compile Include="Projects\Items\FieldResolvers\Layouts\YamlLayoutFieldResolver.cs" />
     <Compile Include="Projects\Pipelines\CompilePipelines\CompilePipeline.cs" />
     <Compile Include="Projects\Items\FieldResolvers\CheckboxFieldResolver.cs" />
     <Compile Include="Projects\Items\FieldResolvers\FieldResolverBase.cs" />
@@ -121,8 +126,7 @@
     <Compile Include="Projects\Items\FieldResolvers\LayoutHtmlFileFieldResolver.cs" />
     <Compile Include="Projects\Items\FieldResolvers\Layouts\JsonLayoutResolver.cs" />
     <Compile Include="Projects\Items\FieldResolvers\Layouts\LayoutResolveContext.cs" />
-    <Compile Include="Projects\Items\FieldResolvers\Layouts\LayoutResolverBase.cs" />
-    <Compile Include="Projects\Items\FieldResolvers\Layouts\XmlLayoutResolver.cs" />
+    <Compile Include="Projects\Items\FieldResolvers\Layouts\LayoutResolver.cs" />
     <Compile Include="Projects\Items\FieldResolvers\LinkFieldResolver.cs" />
     <Compile Include="Projects\ProjectItemUri.cs" />
     <Compile Include="Snapshots\AttributeNameTextNode.cs" />
@@ -210,7 +214,7 @@
     <Compile Include="Parsing\Files\ContentFileParser.cs" />
     <Compile Include="Parsing\IParser.cs" />
     <Compile Include="Parsing\IParseContext.cs" />
-    <Compile Include="Projects\Files\SerializationFile.cs" />
+    <Compile Include="Projects\Items\YamlItemFile.cs" />
     <Compile Include="Projects\Files\File.cs" />
     <Compile Include="Projects\Files\BinFile.cs" />
     <Compile Include="Projects\Files\ContentFile.cs" />
@@ -224,7 +228,7 @@
     <Compile Include="Diagnostics\CodeAnnotations.cs" />
     <Compile Include="Diagnostics\ConfigurationException.cs" />
     <Compile Include="Diagnostics\ITraceService.cs" />
-    <Compile Include="Snapshots\TextPosition.cs" />
+    <Compile Include="Snapshots\TextSpan.cs" />
     <Compile Include="Snapshots\TextTokenService.cs" />
     <Compile Include="Diagnostics\TraceService.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
@@ -246,6 +250,11 @@
     <Compile Include="Snapshots\Xml\XmlSnapshotLoader.cs" />
     <Compile Include="Snapshots\Xml\XmlTextNode.cs" />
     <Compile Include="Snapshots\Xml\XmlTextSnapshot.cs" />
+    <Compile Include="Snapshots\Yaml\YamlSnapshotLoader.cs" />
+    <Compile Include="Snapshots\Yaml\YamlTextNode.cs" />
+    <Compile Include="Snapshots\Yaml\YamlTextSnapshot.Token.cs" />
+    <Compile Include="Snapshots\Yaml\YamlTextSnapshot.Tokenizer.cs" />
+    <Compile Include="Snapshots\Yaml\YamlTextSnapshot.cs" />
     <Compile Include="Testing\ITestRunner.cs" />
     <Compile Include="Texts.Designer.cs">
       <AutoGen>True</AutoGen>

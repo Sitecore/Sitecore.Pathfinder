@@ -66,6 +66,12 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="content\Home\YamlContentItem.master.content.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="content\Home\YamlItem.item.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Content Include="packages.config" />
     <Content Include="..\..\sitecore.pathfinder.console\files\project\sitecore.project\schemas\core.layout.schema.json">
       <Link>sitecore.tools\schemas\core.layout.schema.json</Link>

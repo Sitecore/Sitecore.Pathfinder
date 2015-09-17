@@ -4,11 +4,10 @@ using System;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
-using Sitecore.Data.Items;
 using Sitecore.Data.Serialization;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
-using Sitecore.Pathfinder.Projects.Files;
+using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Emitters.Files
 {
@@ -26,12 +25,12 @@ namespace Sitecore.Pathfinder.Emitters.Files
 
         public override bool CanEmit(IEmitContext context, IProjectItem projectItem)
         {
-            return projectItem is SerializationFile;
+            return projectItem is YamlItemFile;
         }
 
         public override void Emit(IEmitContext context, IProjectItem projectItem)
         {
-            var itemModel = (SerializationFile)projectItem;
+            var itemModel = (YamlItemFile)projectItem;
 
             try
             {
@@ -48,9 +47,9 @@ namespace Sitecore.Pathfinder.Emitters.Files
         }
 
         [Diagnostics.CanBeNull]
-        protected virtual Item DoLoadItem([Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] LoadOptions options)
+        protected virtual Sitecore.Data.Items.Item DoLoadItem([Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] LoadOptions options)
         {
-            using (var reader = new StreamReader(System.IO.File.Open(fileName, FileMode.Open, FileAccess.Read, FileShare.Read)))
+            using (var reader = new StreamReader(File.Open(fileName, FileMode.Open, FileAccess.Read, FileShare.Read)))
             {
                 var disabledLocally = ItemHandler.DisabledLocally;
                 try
