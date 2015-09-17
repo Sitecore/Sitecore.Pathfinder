@@ -21,7 +21,7 @@
             <Device Id="{207131FA-F6B2-4488-BCB3-3BF70100B9B8}" Name="App Center Placeholder" IsExternalReference="True" />
             <Device Id="{73966209-F1B6-43CA-853A-F1DB1C9A654B}" Name="Feed" IsExternalReference="True" />
         </Node>
-    </Main--Section>
+    </Main--Section>                     
 
     <Main--Section Id="{3C1715FE-6A13-4FCF-845F-DE308BA9741D}" Name="templates" IsExternalReference="True">
         <!-- /sitecore/templates/Sample -->
@@ -39,9 +39,9 @@
             <Folder Id="{FB6B721E-D64D-4392-A1F0-A15194CBFAD9}" Name="Layout" IsExternalReference="True">
                 <Folder Id="{531BF4A2-C3B2-4EB9-89D0-FA30C82AB33B}" Name="Renderings" IsExternalReference="True">
                     <Template Id="{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}" Name="View Rendering" IsExternalReference="True">
-                        <Template--Section Id="{CBA7C9A0-B79F-464F-8661-23D6A9B6E1BB}" Name="Data" IsExternalReference="True">
-                            <Template--Field Id="{51B435BC-F7B9-478A-9C51-52916AF96FF5}" Name="Path" IsExternalReference="True" />
-                        </Template--Section>
+                        <Section Id="{CBA7C9A0-B79F-464F-8661-23D6A9B6E1BB}" Name="Data" IsExternalReference="True">
+                            <Field Id="{51B435BC-F7B9-478A-9C51-52916AF96FF5}" Name="Path" IsExternalReference="True" />
+                        </Section>
                     </Template>
                 </Folder>
             </Folder>
@@ -49,9 +49,9 @@
             <Folder Id="{D150DF1B-01BA-45B7-AEB1-4CA5C2F20A64}" Name="Media" IsExternalReference="True">
                 <Folder Id="{00373F71-5D08-4E9A-840F-9BB3C8193518}" Name="Unversioned" IsExternalReference="True">
                     <Template Id="{962B53C4-F93B-4DF9-9821-415C867B8903}" Name="File" IsExternalReference="True">
-                        <Template--Section Id="{69FB081B-F3A5-4216-ACAF-6E3A44BE990A}" Name="Information" IsExternalReference="True">
-                            <Template--Field Id="{BA8341A1-FF30-47B8-AE6A-F4947E4113F0}" Name="Description" IsExternalReference="True"/>
-                        </Template--Section>
+                        <Section Id="{69FB081B-F3A5-4216-ACAF-6E3A44BE990A}" Name="Information" IsExternalReference="True">
+                            <Field Id="{BA8341A1-FF30-47B8-AE6A-F4947E4113F0}" Name="Description" IsExternalReference="True"/>
+                        </Section>
                     </Template>
                 </Folder>
             </Folder>

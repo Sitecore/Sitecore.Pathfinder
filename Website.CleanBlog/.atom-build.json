@@ -1,0 +1,11 @@
+{
+  "cmd": "scc.cmd",
+  "name": "Compiler",
+  "args": [ ],
+  "sh": false,
+  "cwd": "e:/sitecore/sitecore.pathfinder/website.cleanblog",
+  "errorMatch": [
+    "(?<file>[\\/0-9a-zA-Z\\._]+)"
+  ],
+  "keymap": ""
+}

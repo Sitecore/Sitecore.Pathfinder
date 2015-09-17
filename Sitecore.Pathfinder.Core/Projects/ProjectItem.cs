@@ -32,6 +32,8 @@ namespace Sitecore.Pathfinder.Projects
 
         public ICollection<ISnapshot> Snapshots { get; } = new List<ISnapshot>();
 
+        public ProjectItemState State { get; set; }
+
         public ProjectItemUri Uri { get; private set; }
 
         public abstract void Rename(string newShortName);

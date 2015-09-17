@@ -33,9 +33,9 @@ namespace Sitecore.Pathfinder.Parsing
 
         public virtual void Parse(IProject project, ISourceFile sourceFile)
         {
-            var textDocument = SnapshotService.LoadSnapshot(project, sourceFile);
+            var snapshot = SnapshotService.LoadSnapshot(project, sourceFile);
 
-            var parseContext = CompositionService.Resolve<IParseContext>().With(project, textDocument);
+            var parseContext = CompositionService.Resolve<IParseContext>().With(project, snapshot);
 
             foreach (var parser in Parsers.OrderBy(c => c.Sortorder))
             {

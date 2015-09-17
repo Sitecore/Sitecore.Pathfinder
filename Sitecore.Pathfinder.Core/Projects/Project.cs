@@ -8,11 +8,13 @@ using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Checking;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Items.FieldResolvers;
+using Sitecore.Pathfinder.Projects.Pipelines.CompilePipelines;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Pathfinder.Text;
@@ -33,7 +35,7 @@ namespace Sitecore.Pathfinder.Projects
         private string _projectUniqueId;
 
         [ImportingConstructor]
-        public Project([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService, [NotNull] ICheckerService checker)
+        public Project([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService, [NotNull] ICheckerService checker, IPipelineService pipelineService)
         {
             CompositionService = compositionService;
             Configuration = configuration;
@@ -41,6 +43,7 @@ namespace Sitecore.Pathfinder.Projects
             FileSystem = fileSystem;
             ParseService = parseService;
             Checker = checker;
+            PipelineService = pipelineService;
 
             Options = ProjectOptions.Empty;
         }
@@ -75,6 +78,9 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull]
         protected ICheckerService Checker { get; }
+
+        [NotNull]
+        protected IPipelineService PipelineService { get; }
 
         [NotNull]
         protected ICompositionService CompositionService { get; }
@@ -125,12 +131,33 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual void Compile()
         {
+            // compile new files
+            var uncompiledProjectItem = Items.FirstOrDefault(i => i.State == ProjectItemState.CompilationPending);
+            while (uncompiledProjectItem != null)
+            {
+                PipelineService.Resolve<CompilePipeline>().Execute(uncompiledProjectItem);
+                uncompiledProjectItem.State = ProjectItemState.Compiled;
+
+                uncompiledProjectItem = Items.FirstOrDefault(i => i.State == ProjectItemState.CompilationPending);
+            }
+
+            // resolve field values
             var trace = new ProjectDiagnosticTraceService(Configuration, Factory).With(this);
             foreach (var field in Items.OfType<Item>().SelectMany(item => item.Fields))
             {
                 field.ResolveValue(trace);
             }
 
+            // resolve refernces
+            foreach (var projectItem in Items)
+            {
+                foreach (var reference in projectItem.References)
+                {
+                    reference.Resolve();
+                }
+            }
+
+            // run checkers
             Checker.CheckProject(this);
         }
 

@@ -3,7 +3,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>SitecorePathfinderCleanBlog</id>
-        <title>Sitecore Pathfinder Clean Blog Package</title>
+        <title>Sitecore Pathfinder Package</title>
         <version>1.0.0</version>
         <authors>Pathfinder</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>

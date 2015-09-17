@@ -1,12 +1,19 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using Sitecore.Pathfinder.Diagnostics;
 using System.Collections.Generic;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects
 {
+    public enum ProjectItemState
+    {
+        CompilationPending,
+
+        Compiled
+    }
+
     public interface IProjectItem
     {
         [NotNull]
@@ -25,6 +32,8 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         [ItemNotNull]
         ICollection<ISnapshot> Snapshots { get; }
+
+        ProjectItemState State { get; set; }
 
         [NotNull]
         ProjectItemUri Uri { get; }

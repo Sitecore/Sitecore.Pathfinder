@@ -109,6 +109,7 @@
     <Compile Include="Extensions\GuidExtensions.cs" />
     <Compile Include="Parsing\Builders\FieldBuilder.cs" />
     <Compile Include="Parsing\Builders\ItemBuilder.cs" />
+    <Compile Include="Projects\Pipelines\CompilePipelines\CompilePipeline.cs" />
     <Compile Include="Projects\Items\FieldResolvers\CheckboxFieldResolver.cs" />
     <Compile Include="Projects\Items\FieldResolvers\FieldResolverBase.cs" />
     <Compile Include="Projects\Items\FieldResolvers\FileNameFieldResolver.cs" />
@@ -270,6 +271,7 @@
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
     <Analyzer Include="..\packages\ResharperCodeContractNullability.1.0.1\analyzers\dotnet\cs\CodeContractNullability.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -43,6 +43,8 @@ namespace Sitecore.Pathfinder.Building.Packaging
 
             if (!context.FileSystem.FileExists(nuspecFileName))
             {
+                context.Trace.TraceError("Nuspec file not found", nuspecFileName);
+                context.IsAborted = true;
                 return;
             }
 

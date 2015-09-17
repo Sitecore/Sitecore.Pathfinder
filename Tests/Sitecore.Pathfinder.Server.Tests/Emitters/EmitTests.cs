@@ -8,7 +8,7 @@ using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Server.Tests.Emitters
 {
-    [TestFixture]
+    // [TestFixture]
     public class EmitTests
     {
         public const string GoodWebsite = "..\\..\\Website.Good\\bin";
