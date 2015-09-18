@@ -55,11 +55,11 @@ namespace Sitecore.Pathfinder.Projects.Items
 
                 if (templateIdOrPath.Contains('/') || templateIdOrPath.Contains('{'))
                 {
-                    return Project.FindQualifiedItem(templateIdOrPath) as Template ?? Template.Empty;
+                    return Project.FindQualifiedItem(templateIdOrPath, DatabaseName) as Template ?? Template.Empty;
                 }
 
                 // resolve by short name
-                var templates = Project.Items.OfType<Template>().Where(t => t.ShortName == templateIdOrPath).ToList();
+                var templates = Project.Items.OfType<Template>().Where(t => t.ShortName == templateIdOrPath && string.Equals(t.DatabaseName, DatabaseName, StringComparison.OrdinalIgnoreCase)).ToList();
                 return templates.Count == 1 ? templates.First() : Template.Empty;
             }
         }

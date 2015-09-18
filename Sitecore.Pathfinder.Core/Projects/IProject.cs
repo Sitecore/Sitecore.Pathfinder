@@ -47,6 +47,9 @@ namespace Sitecore.Pathfinder.Projects
         IProjectItem FindQualifiedItem([NotNull] string qualifiedName);
 
         [CanBeNull]
+        IProjectItem FindQualifiedItem([NotNull] string qualifiedName, [NotNull] string databaseName);
+
+        [CanBeNull]
         IProjectItem FindQualifiedItem([NotNull] ProjectItemUri uri);
 
         [NotNull]

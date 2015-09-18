@@ -161,6 +161,23 @@ namespace Sitecore.Pathfinder.Projects
             Checker.CheckProject(this);
         }
 
+        public IProjectItem FindQualifiedItem(string qualifiedName, string databaseName)
+        {
+            Guid guid;
+            if (Guid.TryParse(qualifiedName, out guid))
+            {
+                return Items.FirstOrDefault(i => i.Uri.Guid == guid && i.Uri.FileOrDatabaseName == databaseName);
+            }
+
+            if (qualifiedName.StartsWith("{") && qualifiedName.EndsWith("}"))
+            {
+                guid = StringHelper.ToGuid(qualifiedName);
+                return Items.FirstOrDefault(i => i.Uri.Guid == guid && i.Uri.FileOrDatabaseName == databaseName);
+            }
+
+            return Items.FirstOrDefault(i => string.Equals(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase) && i.Uri.FileOrDatabaseName == databaseName);
+        }
+
         public IProjectItem FindQualifiedItem(ProjectItemUri uri)
         {
             return Items.FirstOrDefault(i => i.Uri == uri);
