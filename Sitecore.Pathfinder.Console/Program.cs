@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder
 
             var errorCode = new Startup().Start();
 
-            return errorCode;
+            return errorCode;       
         }
     }
 }

@@ -370,13 +370,13 @@
     <value>Ducats earned: {0}</value>
   </data>
     <data name="Copying_dependencies___" xml:space="preserve">
-    <value>Copying dependencies...</value>
+    <value>Copying dependency packages...</value>
   </data>
     <data name="Database" xml:space="preserve">
     <value>Database</value>
   </data>
     <data name="Copying_dependency" xml:space="preserve">
-    <value>Copying dependency</value>
+    <value>Copying</value>
   </data>
     <data name="Running_unit_tests___" xml:space="preserve">
     <value>Running unit tests...</value>
@@ -394,7 +394,7 @@
     <value>Go get a cup of coffee or read some emails - this may take a while...</value>
   </data>
     <data name="Dependencies_directory_not_found__Skipping" xml:space="preserve">
-    <value>Dependencies directory not found. Skipping</value>
+    <value>Packages directory not found. Skipping</value>
   </data>
     <data name="Template_does_not_a_standard_values_item" xml:space="preserve">
     <value>Template does not a standard values item</value>

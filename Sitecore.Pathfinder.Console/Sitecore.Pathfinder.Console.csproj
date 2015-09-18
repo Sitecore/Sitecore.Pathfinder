@@ -93,46 +93,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Components\Microsoft.Framework.ConfigurationModel.dll">
-      <Link>files\website\bin\Microsoft.Framework.ConfigurationModel.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Components\Microsoft.Framework.ConfigurationModel.Interfaces.dll">
-      <Link>files\website\bin\Microsoft.Framework.ConfigurationModel.Interfaces.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Components\Microsoft.Framework.ConfigurationModel.Json.dll">
-      <Link>files\website\bin\Microsoft.Framework.ConfigurationModel.Json.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Components\Microsoft.Framework.ConfigurationModel.Xml.dll">
-      <Link>files\website\bin\Microsoft.Framework.ConfigurationModel.Xml.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Components\NuGet.Core.dll">
-      <Link>files\website\bin\NuGet.Core.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Components\nunit.core.dll">
-      <Link>files\website\bin\nunit.core.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Components\nunit.core.interfaces.dll">
-      <Link>files\website\bin\nunit.core.interfaces.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Components\nunit.framework.dll">
-      <Link>files\website\bin\nunit.framework.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Components\Sitecore.Rocks.Server.Core.dll">
-      <Link>files\website\bin\Sitecore.Rocks.Server.Core.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Components\Sitecore.Rocks.Server.Validation.dll">
-      <Link>files\website\bin\Sitecore.Rocks.Server.Validation.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\ReferenceChecker.cs">
       <Link>files\extensions\checkers\ReferenceChecker.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -170,10 +130,11 @@
     <Compile Include="Building\Deploying\CopyDependencies.cs" />
     <Compile Include="Building\Initializing\Init.cs" />
     <Compile Include="Building\Initializing\SynchronizeWebsite.cs" />
+    <Compile Include="Building\Packaging\PackDependencies.cs" />
     <Compile Include="Building\Testing\UnitTests\GenerateUnitTest.cs" />
     <Compile Include="Building\Querying\FindReferences.cs" />
     <Compile Include="Building\Querying\FindUsages.cs" />
-    <Compile Include="Building\Packaging\CreateNupkg.cs" />
+    <Compile Include="Building\Packaging\PackNupkgPackage.cs" />
     <Compile Include="Building\Checking\CheckProject.cs" />
     <Compile Include="Building\Build.cs" />
     <Compile Include="Building\Querying\QueryTaskBase.cs" />
@@ -208,6 +169,7 @@
     <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\Package.aspx">
       <Link>files\website\sitecore\shell\client\Applications\Pathfinder\Package.aspx</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\Packages.aspx">
       <Link>files\website\sitecore\shell\client\Applications\Pathfinder\Packages.aspx</Link>
@@ -221,6 +183,18 @@
       <Link>files\website\sitecore\shell\client\Applications\Pathfinder\SitecoreRocksValidation.ashx</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="files\project\sitecore.filetemplates\Item.master.content.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="files\project\sitecore.filetemplates\Item.item.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="files\project\sitecore.filetemplates\Item.master.content.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\project\sitecore.filetemplates\Layout.master.layout.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="files\starterkits\SitecorePathfinderCleanBlog.nupkg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -231,10 +205,43 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="files\project\sitecore.project\core.core.content.xml">
+    <Content Include="files\project\sitecore.filetemplates\Layout.master.layout.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="files\project\sitecore.project\master.master.content.xml">
+    <Content Include="files\project\sitecore.project\external\core.core.content.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\project\sitecore.project\external\master.master.content.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\website\bin\Microsoft.Framework.ConfigurationModel.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\website\bin\Microsoft.Framework.ConfigurationModel.Interfaces.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\website\bin\Microsoft.Framework.ConfigurationModel.Json.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\website\bin\Microsoft.Framework.ConfigurationModel.Xml.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\website\bin\NuGet.Core.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\website\bin\nunit.core.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\website\bin\nunit.core.interfaces.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\website\bin\nunit.framework.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\website\bin\Sitecore.Rocks.Server.Core.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\website\bin\Sitecore.Rocks.Server.Validation.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="files\website\sitecore\shell\client\Applications\Pathfinder\packageDefaultIcon-50x50.png">
@@ -292,7 +299,7 @@
     <Content Include="files\project\sitecore.filetemplates\htmltemplate.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="files\project\sitecore.project\dependencies\SitecorePathfinderCore.nupkg">
+    <None Include="files\project\sitecore.project\packages\SitecorePathfinderCore.nupkg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="files\project\sitecore.project\schemas\core.layout.schema.json">

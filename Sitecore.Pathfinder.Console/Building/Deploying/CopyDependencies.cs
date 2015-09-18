@@ -18,11 +18,11 @@ namespace Sitecore.Pathfinder.Building.Deploying
         {
             context.Trace.TraceInformation(Texts.Copying_dependencies___);
 
-            var dependenciesDirectory = context.Configuration.Get(Constants.Configuration.DependenciesDirectory);
-            var sourceDirectory = Path.Combine(context.SolutionDirectory, dependenciesDirectory);
+            var packagesDirectory = context.Configuration.Get(Constants.Configuration.PackagesDirectory);
+            var sourceDirectory = Path.Combine(context.SolutionDirectory, packagesDirectory);
             if (!context.FileSystem.DirectoryExists(sourceDirectory))
             {
-                context.Trace.TraceInformation(Texts.Dependencies_directory_not_found__Skipping, dependenciesDirectory);
+                context.Trace.TraceInformation(Texts.Dependencies_directory_not_found__Skipping, packagesDirectory);
                 return;
             }
 
@@ -33,32 +33,18 @@ namespace Sitecore.Pathfinder.Building.Deploying
 
             context.FileSystem.CreateDirectory(destinationDirectory);
 
-            CopySitecorePackages(context, sourceDirectory, destinationDirectory);
             CopyNuGetPackages(context, sourceDirectory, destinationDirectory);
         }
 
         public override void WriteHelp(HelpWriter helpWriter)
         {
-            helpWriter.Summary.Write("Copies the dependencies to the website.");
-            helpWriter.Remarks.Write("The dependencies can be Nuget packages and Sitecore packages. The packages are located in the sitecore.project/dependencies directory.");
+            helpWriter.Summary.Write("Copies the dependency packages to the website.");
+            helpWriter.Remarks.Write("The packages dependencies are Nuget packages. The packages are located in the sitecore.project/packages directory. To wrap a Sitecore package (.zip) in a Nuget package use the 'pack-dependencies' task.");
         }
 
         private void CopyNuGetPackages([NotNull] IBuildContext context, [NotNull] string sourceDirectory, [NotNull] string destinationDirectory)
         {
             foreach (var sourceFileName in context.FileSystem.GetFiles(sourceDirectory, "*.nupkg", SearchOption.AllDirectories))
-            {
-                var destinationFileName = Path.Combine(destinationDirectory, Path.GetFileName(sourceFileName) ?? string.Empty);
-                if (!context.FileSystem.FileExists(destinationFileName) || context.FileSystem.GetLastWriteTimeUtc(sourceFileName) > context.FileSystem.GetLastWriteTimeUtc(destinationFileName))
-                {
-                    context.Trace.TraceInformation(Texts.Copying_dependency, Path.GetFileName(sourceFileName) ?? string.Empty);
-                    context.FileSystem.Copy(sourceFileName, destinationFileName);
-                }
-            }
-        }
-
-        private void CopySitecorePackages([NotNull] IBuildContext context, [NotNull] string sourceDirectory, [NotNull] string destinationDirectory)
-        {
-            foreach (var sourceFileName in context.FileSystem.GetFiles(sourceDirectory, "*.zip", SearchOption.AllDirectories))
             {
                 var destinationFileName = Path.Combine(destinationDirectory, Path.GetFileName(sourceFileName) ?? string.Empty);
                 if (!context.FileSystem.FileExists(destinationFileName) || context.FileSystem.GetLastWriteTimeUtc(sourceFileName) > context.FileSystem.GetLastWriteTimeUtc(destinationFileName))

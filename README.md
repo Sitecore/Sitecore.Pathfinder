@@ -425,9 +425,66 @@ Extension            | Description
 .css                 | Stylesheet content file
 .config              | Config content file
 
+## Deploying
+By default Pathfinder copies the build package to a website and installs it. The package is copied to the 
+[DataFolder]/Data/Pathfinder/Available directory. Any dependencies from the sitecore.project/packages directory are also copied to
+this directory.
+
+### Installation
+The package is installed by making a request to the /sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx with the name of the 
+package on the query string. This webpage uses Nuget to unpack the files to the /Data/Pathfinder/Installed directory. Once the files 
+are available, Pathfinder rebuilds the project and emits items and files to the website.
+
+Any dependency packages are unpacked before the package and are processed in the same way.
+
+### Dependency packages
+A project can depend on other Nuget packages using the standard Nuget dependency mechanism. Dependency packages are located in the
+sitecore.project/packages directory. As part of deploying these packages are copied to the website and installed.
+
+To add a new dependency package, copy the file (.nupkg) to the sitecore.project/packages directory. In the Nuspec file sitecore.project/sitecore.nuspec
+add the filename to the ``dependencies`` tag like this (see [Nuspec Reference](https://docs.nuget.org/create/nuspec-reference)):
+
+```xml
+<dependencies>
+    <dependency id="SitecorePathfinderCore" version="1.0.0" />
+    <dependency id="SitecorePowerShellExtensions32ForSitecore8" version="1.0.0" />
+</dependencies>
+```
+
+The SitecorePowerShellExtensions32ForSitecore8.nupkg will be copied to the [DataFolder]/Pathfinder/Available directory.
+
+Standard Sitecore Packages cannot be used directly as dependencies since Nuget does not understand Sitecore Packages. Instead you have to wrap
+a Sitecore Package in a Nuget package. There are different way to do this. 
+
+First of all you can convert the Sitecore Package to a Nuget package using a community tool like this
+
+* [CreateSitecoreNugetPackage](http://hermanussen.eu/sitecore/wordpress/2013/05/turn----any----sitecore----package----into----a----nuget----package/) by Robin Hermanussen
+
+Alternatively Pathfinder contains the 'pack-dependencies' task that simply converts all *.zip files in the sitecore.project/packages directory 
+to Nuget packages. For each zip file it creates a Nuget package where the zip files is located in the content/packages directory in the .nupkg file. 
+Pathfinder understands, that any zip files in the content/packages directory is a Sitecore Package and installs it.
+
+Finally you can create the Nuget package manually by creating a Nuspec file like this:
+
+```xml
+<package xmlns=\"http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd\">
+    <metadata>
+        <id>MyPackage</id>
+        <title>My Package</title>
+        <version>1.0.0</version>
+        <authors>Me</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>My package</description>
+    </metadata>
+    <files>
+        <file src="mypackage.zip" target="content\packages\mypackage.zip"/>
+    </files>
+</package>
+```
+
 ## Extensions
 Pathfinder includes the Roslyn compiler to compile extensions on the fly. Extensions are C# files that are compiled and loaded dynamically through 
-(MEF)[https://msdn.microsoft.com/en-us/library/dd460648(v=vs.110).aspx]. This allows you to extend Pathfinder with new tasks, checkers, code 
+[MEF](https://msdn.microsoft.com/en-us/library/dd460648(v=vs.110).aspx). This allows you to extend Pathfinder with new tasks, checkers, code 
 generation handler and much more. 
 
 When Pathfinder starts it looks through the /sitecore.tools/files/extensions directory to find any extension files, and if any file is newer than the

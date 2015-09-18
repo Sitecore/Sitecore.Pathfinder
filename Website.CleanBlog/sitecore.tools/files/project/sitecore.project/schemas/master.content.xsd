@@ -20,33 +20,18 @@
 
     <xs:group name="Templates">
         <xs:choice>
-            <xs:element ref="HelloWorld" />
+            <xs:element ref="Sample--Item" />
         </xs:choice>
     </xs:group>
 
-    <xs:element name="HelloWorld">
+    <xs:element name="Sample--Item">
         <xs:complexType>
             <xs:sequence minOccurs="0" maxOccurs="unbounded">
                 <xs:group ref="Templates" />
             </xs:sequence>
-            <xs:attribute name="Text" type="xs:string">
+            <xs:attribute name="Title" type="xs:string">
                 <xs:annotation>
-                    <xs:documentation>The full name of the rendering.</xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
-            <xs:attributeGroup ref="stdattr" />
-            <xs:anyAttribute processContents="lax" />
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="HelloWorld2">
-        <xs:complexType>
-            <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                <xs:group ref="Templates" />
-            </xs:sequence>
-            <xs:attribute name="Text" type="xs:string">
-                <xs:annotation>
-                    <xs:documentation>The full name of the rendering.</xs:documentation>
+                    <xs:documentation>The title of the item.</xs:documentation>
                 </xs:annotation>
             </xs:attribute>
             <xs:attributeGroup ref="stdattr" />

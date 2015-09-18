@@ -80,9 +80,6 @@ namespace Sitecore.Pathfinder.Projects
         protected ICheckerService Checker { get; }
 
         [NotNull]
-        protected IPipelineService PipelineService { get; }
-
-        [NotNull]
         protected ICompositionService CompositionService { get; }
 
         [NotNull]
@@ -90,6 +87,9 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull]
         protected IParseService ParseService { get; }
+
+        [NotNull]
+        protected IPipelineService PipelineService { get; }
 
         public virtual void Add(string sourceFileName)
         {
@@ -189,17 +189,7 @@ namespace Sitecore.Pathfinder.Projects
 
             var context = CompositionService.Resolve<IParseContext>().With(this, Snapshot.Empty);
 
-            var masterExternalReferences = PathHelper.Combine(context.Configuration.GetString(Constants.Configuration.SolutionDirectory), "sitecore.project\\master.master.content.xml");
-            if (FileSystem.FileExists(masterExternalReferences))
-            {
-                Add(masterExternalReferences);
-            }
-
-            var coreExternalReferences = PathHelper.Combine(context.Configuration.GetString(Constants.Configuration.SolutionDirectory), "sitecore.project\\core.core.content.xml");
-            if (FileSystem.FileExists(coreExternalReferences))
-            {
-                Add(coreExternalReferences);
-            }
+            AddExternals(context);
 
             foreach (var sourceFileName in sourceFileNames)
             {
@@ -259,6 +249,20 @@ namespace Sitecore.Pathfinder.Projects
                 {
                     snapshot.SaveChanges();
                 }
+            }
+        }
+
+        protected virtual void AddExternals([NotNull] IParseContext context)
+        {
+            var externalDirectory = PathHelper.Combine(context.Configuration.GetString(Constants.Configuration.SolutionDirectory), context.Configuration.GetString(Constants.Configuration.ExternalDirectory));
+            if (!FileSystem.DirectoryExists(externalDirectory))
+            {
+                return;
+            }
+
+            foreach (var fileName in FileSystem.GetFiles(externalDirectory))
+            {
+                Add(fileName);
             }
         }
 

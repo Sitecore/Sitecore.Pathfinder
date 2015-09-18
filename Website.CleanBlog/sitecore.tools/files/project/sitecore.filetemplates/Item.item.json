@@ -3,8 +3,7 @@
     "Item": {
         "Template": "/sitecore/templates/Sample/Sample Item",
         "Fields": {
-            "Title": "Welcome",
-            "Text": "Welcome to Sitecore"
+            "Title": "Hello friend"
         }
     }
 }

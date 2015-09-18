@@ -66,6 +66,14 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\Sitecore.Pathfinder.Console\files\project\sitecore.project\external\core.core.content.xml">
+      <Link>sitecore.project\external\core.core.content.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Sitecore.Pathfinder.Console\files\project\sitecore.project\external\master.master.content.xml">
+      <Link>sitecore.project\external\master.master.content.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="packages.config" />
     <Content Include="scconfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -117,14 +125,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\sitecore.pathfinder.console\files\project\sitecore.project\core.core.content.xml">
-      <Link>sitecore.project\core.core.content.xml</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\sitecore.pathfinder.console\files\project\sitecore.project\master.master.content.xml">
-      <Link>sitecore.project\master.master.content.xml</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="content\Home\XmlItem.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

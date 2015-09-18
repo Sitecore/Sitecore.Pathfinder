@@ -47,9 +47,7 @@ namespace Sitecore.Pathfinder
 
             public const string Debug = "system:debug";
 
-            public const string DependenciesDirectory = "dependencies-directory";
-
-            public const string ExternalReferences = "external-references";
+            public const string ExternalDirectory = "external-directory";
 
             public const string HostName = "host-name";
 
@@ -62,6 +60,8 @@ namespace Sitecore.Pathfinder
             public const string LocalTestDirectory = "local-test-directory";
 
             public const string PackageDirectory = "deploying:packagedirectory";
+
+            public const string PackagesDirectory = "packages-directory";
 
             public const string Password = "password";
 

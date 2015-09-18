@@ -28,7 +28,11 @@
         "filename": "sitecore.project\\sitecore.nuspec"
     },
 
-    "dependencies-directory": "sitecore.project\\dependencies",
+    // directory for dependency packages
+    "packages-directory": "sitecore.project\\packages",
+
+    // directory that holds external external references
+    "external-directory": "sitecore.project\\external",
 
     // deploying URLs
     "deploying": {
@@ -59,8 +63,8 @@
     "web-test-runner-name": "NUnit",
 
     // files and directories to ignore
-    "ignore-directories": ".vscode sitecore.filetemplates sitecore.project/schemas sitecore.tools node_modules roslyn",
-    "ignore-filenames": "scc.cmd sitecore.nuspec sitecore.nupkg project.json readme.txt master.master.content.xml core.core.content.xml",
+    "ignore-directories": ".vscode sitecore.filetemplates sitecore.project sitecore.tools node_modules roslyn",
+    "ignore-filenames": "scc.cmd sitecore.nuspec sitecore.nupkg project.json readme.txt",
 
     // files to copy to website
     "content-files": ".js .css .config .htm .ashx .asmx",

@@ -5,9 +5,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using NuGet;
+using Sitecore.Data.Engines;
+using Sitecore.Data.Proxies;
+using Sitecore.Install;
+using Sitecore.Install.Files;
+using Sitecore.Install.Framework;
+using Sitecore.Install.Items;
+using Sitecore.Install.Metadata;
+using Sitecore.Install.Utils;
+using Sitecore.Install.Zip;
 using Sitecore.IO;
 using Sitecore.Pathfinder.Emitters;
 using Sitecore.Pathfinder.Packages.Packages;
+using Sitecore.SecurityModel;
 
 namespace Sitecore.Pathfinder.Packages
 {
@@ -94,20 +104,6 @@ namespace Sitecore.Pathfinder.Packages
             return installedPackages;
         }
 
-        [Diagnostics.NotNull]
-        public virtual IEnumerable<NugetPackage> FindPackagesById([NotNull] string packageId)
-        {
-            var availableRepository = GetAvailableRepository();
-
-            var packages = availableRepository.FindPackagesById(packageId);
-            if (packages == null)
-            {
-                throw new InvalidOperationException("Package not found: " + packageId);
-            }
-
-            return packages.Select(p => new NugetPackage(p)).ToList();
-        }
-
         [Diagnostics.CanBeNull]
         public virtual NugetPackage FindInstalledPackageById([NotNull] string packageId)
         {
@@ -122,6 +118,20 @@ namespace Sitecore.Pathfinder.Packages
             return new NugetPackage(packages.First());
         }
 
+        [Diagnostics.NotNull]
+        public virtual IEnumerable<NugetPackage> FindPackagesById([NotNull] string packageId)
+        {
+            var availableRepository = GetAvailableRepository();
+
+            var packages = availableRepository.FindPackagesById(packageId);
+            if (packages == null)
+            {
+                throw new InvalidOperationException("Package not found: " + packageId);
+            }
+
+            return packages.Select(p => new NugetPackage(p)).ToList();
+        }
+
         [NotNull]
         public virtual IEnumerable<PackageBase> GetAvailablePackages([Diagnostics.NotNull] string queryText, [Diagnostics.NotNull] string author, [Diagnostics.NotNull] string tags, int skip = -1)
         {
@@ -134,11 +144,6 @@ namespace Sitecore.Pathfinder.Packages
 
             return query.Select(p => new NugetPackage(p)).ToList();
         }
-        public virtual int GetTotalPackageCount([Diagnostics.NotNull] string queryText, [Diagnostics.NotNull] string author, [Diagnostics.NotNull] string tags)
-        {
-            var query = GetAvailablePackagesQuery(queryText, author, tags);
-            return query.Count();
-        }
 
         [NotNull]
         public virtual IEnumerable<PackageBase> GetInstalledPackages()
@@ -149,6 +154,12 @@ namespace Sitecore.Pathfinder.Packages
             {
                 IsInstalled = true
             }).ToList();
+        }
+
+        public virtual int GetTotalPackageCount([Diagnostics.NotNull] string queryText, [Diagnostics.NotNull] string author, [Diagnostics.NotNull] string tags)
+        {
+            var query = GetAvailablePackagesQuery(queryText, author, tags);
+            return query.Count();
         }
 
         [NotNull]
@@ -307,13 +318,65 @@ namespace Sitecore.Pathfinder.Packages
         {
             // check if this is a Pathfinder NuGet package
             var configFileName = Path.Combine(e.InstallPath, "content\\sitecore.tools\\scconfig.json");
-            if (!File.Exists(configFileName))
+            if (File.Exists(configFileName))
+            {
+                var emitService = new EmitService(e.InstallPath, EmitSource.NugetPackage);
+                emitService.Start();
+            }
+
+            var packagesDirectory = Path.Combine(e.InstallPath, "content\\packages");
+            if (Directory.Exists(packagesDirectory))
+            {
+                InstallPackageDirectory(packagesDirectory);
+            }
+        }
+
+        protected virtual void InstallPackageDirectory(string packagesDirectory)
+        {
+            if (!Directory.Exists(packagesDirectory))
             {
                 return;
             }
 
-            var emitService = new EmitService(e.InstallPath, EmitSource.NugetPackage);
-            emitService.Start();
+            foreach (var fileName in Directory.GetFiles(packagesDirectory, "*.zip"))
+            {
+                InstallSitecorePackage(fileName);
+            }
+        }
+
+        private void InstallSitecorePackage(string fileName)
+        {
+            Context.SetActiveSite("shell");
+            using (new SecurityDisabler())
+            {
+                using (new ProxyDisabler())
+                {
+                    using (new SyncOperationContext())
+                    {
+                        var context = new SimpleProcessingContext();
+
+                        var defaultItemInstallerEvents = new DefaultItemInstallerEvents(new BehaviourOptions(InstallMode.Overwrite, MergeMode.Clear));
+                        context.AddAspect(defaultItemInstallerEvents);
+
+                        var defaultFileInstallerEvents = new DefaultFileInstallerEvents(true);
+                        context.AddAspect(defaultFileInstallerEvents);
+
+                        var installer = new Installer();
+                        installer.InstallPackage(FileUtil.MapPath(fileName), context);
+
+                        var packageReader = new PackageReader(FileUtil.MapPath(fileName));
+                        var previewContext = Installer.CreatePreviewContext();
+                        var view = new MetadataView(previewContext);
+                        var sink = new MetadataSink(view);
+
+                        sink.Initialize(previewContext);
+
+                        packageReader.Populate(sink);
+
+                        installer.ExecutePostStep(view.PostStep, previewContext);
+                    }
+                }
+            }
         }
     }
 }
