@@ -609,6 +609,11 @@ to execute the build pipeline in Pathfinder. In Code the build task can be execu
 
 ## Visual Studio
 
+To quickly create a Visual Studio project, run this command ```scc init-visualstudio```. This will create a .csproj file and some additional files to 
+support Visual Studio and Grunt. Afterwards make sure the run the installgrunt.cmd to install GruntJS. 
+
+To manually create a Visual Studio project:
+
 1. Create a web project in Visual Studio
 1. Add a reference to Sitecore.Kernel
 1. Install the Sitecore Pathfinder Nuget package
