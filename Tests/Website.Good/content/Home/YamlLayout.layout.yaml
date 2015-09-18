@@ -1,0 +1,10 @@
+﻿Layout
+    - Device
+        Name: Default
+        Layout: /sitecore/layout/Layouts/MvcLayout
+
+        - HelloWorld
+            DataSource: /sitecore
+        - HelloWorld
+        - HelloWorld
+    

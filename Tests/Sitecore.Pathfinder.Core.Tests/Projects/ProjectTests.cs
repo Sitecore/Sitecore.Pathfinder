@@ -25,6 +25,12 @@ namespace Sitecore.Pathfinder.Projects
             Start(GoodWebsite);
 
             Project = Services.ProjectService.LoadProjectFromConfiguration();
+
+            foreach (var diagnostic in Project.Diagnostics)
+            {
+                Console.WriteLine($"{diagnostic.Severity} ({diagnostic.Span.LineNumber}, {diagnostic.Span.LinePosition}, {diagnostic.Span.LineLength}): {diagnostic.Text} [{diagnostic.FileName}]");
+                Console.WriteLine();
+            }
         }
 
         [Test]
