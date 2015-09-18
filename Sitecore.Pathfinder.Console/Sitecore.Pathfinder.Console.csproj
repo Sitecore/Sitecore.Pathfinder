@@ -129,6 +129,7 @@
     <Compile Include="Building\Initializing\Help.cs" />
     <Compile Include="Building\Deploying\CopyDependencies.cs" />
     <Compile Include="Building\Initializing\Init.cs" />
+    <Compile Include="Building\Initializing\InitVisualStudio.cs" />
     <Compile Include="Building\Initializing\SynchronizeWebsite.cs" />
     <Compile Include="Building\Packaging\PackDependencies.cs" />
     <Compile Include="Building\Testing\UnitTests\GenerateUnitTest.cs" />
@@ -212,6 +213,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="files\project\sitecore.project\external\master.master.content.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\visualstudio\gruntfile.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\visualstudio\Sitecore.Website.csproj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\visualstudio\Sitecore.Website.csproj.user">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="files\website\bin\Microsoft.Framework.ConfigurationModel.dll">
@@ -356,6 +366,9 @@
     <None Include="files\project\scconfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Content Include="files\visualstudio\installgrunt.cmd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="files\website\App_Config\include\Sitecore.Pathfinder.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
