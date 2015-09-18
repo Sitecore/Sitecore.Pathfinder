@@ -22,8 +22,8 @@ Then download [Sitecore Pathfinder](Sitecore.Pathfinder.zip) to try it out.
 After giving Pathfinder some serious thought, I have come to this conclusion:
 
 ![Standard](http://imgs.xkcd.com/comics/standards.png)
-                   
-As such Pathfinder will continue as mostly an academic execise. The emphasis will be on bringing the many Sitecore tools 
+                                                          
+As such Pathfinder will continue as mostly an academic exercise. The emphasis will be on bringing the many Sitecore tools 
 developed by the Sitecore community together in a cohesive manner.
                                                                
 # Introduction
@@ -44,14 +44,14 @@ Pathfinder makes it easy to start working with Sitecore.
 3. Execute the scc.exe in the sitecore.tools folder
 4. Edit the scconfig.json file to setup 'project-unique-id', 'wwwroot' and 'host-name'
 5. Done - you are now ready
-6. Copy a starter kit to your project directory. Starter kits are located in sitecore.tools/files/starterkits/.
+6. Copy a starter kit to your project directory. Starter kits are located in the sitecore.tools/files/starterkits/ directory.
 
 In step 3 Pathfinder creates a blank project for you. It consists of a number of directories and files, 
 including an scc.cmd file which is a shortcut to the sitecore.tools\scc.exe file.
 
 ## How does Pathfinder make Sitecore easier
 * Familiar developer experience: Edit source files, build project, test website, repeat.
-* Text editor agnostic (Visual Studio not required - use Notepad, Notepad++, SublimeText, VS Code etc.)
+* Text editor agnostic (Visual Studio not required - use Notepad, Notepad++, SublimeText, Atom, VS Code etc.)
 * Build process agnostic (command-line tool, so it integrates easily with Grunt, Gulp, MSBuild etc.)
 * Everything is a file (easy to edit, source control friendly)
 * Project directory has whole and single truth (source is not spead across development projects, databases and websites, contineous integration friendly) 
@@ -79,35 +79,95 @@ about your project. Your project is no longer spread across development projects
 This is also how classic development projects work. In a Visual Studio application project every asset, that is needed by the application, is
 included or referenced from the project.
 
-Items are stored as file but can have a number of formats. Currently Json and Xml formats are supported, but plain file ansd Markdown will hopefully
-be supported at some point. Json and Xml are good formats, since code editors can support schema validation and Intellisense.
-
-Xml format (extension .item.xml) - please notice the namespace, which indicates the Xml schema to use.
-```xml
-<Item xmlns="http://www.sitecore.net/pathfinder/item" 
-    Template="/sitecore/templates/Sample/Sample Item">
-    <Field Name="Title">Pathfinder</Field>
-    <Field Name="Text">Welcome to Sitecore Pathfinder</Field>
-</Item>
-```
+Items are stored as files but can have a number of formats. Currently Json, Yaml and Xml formats are supported. Json and Xml are good formats, 
+since code editors can support schema validation and IntelliSense.
 
 Json format (extension .item.json): 
 ```js
 {
-  "Item": {
-    "Template": "/sitecore/templates/Sample/Sample Item",
-    "Fields": [
-      {
-        "Name": "Title",
-        "Value": "Welcome"
-      },
-      {
-        "Name": "Text",
-        "Value": "Welcome to Sitecore"
-      }
-    ]
-  }
+    "Item": {
+        "Template": "/sitecore/templates/Sample/JsonItem",
+        "Fields": {
+            "Title": {
+                "Value": "Hello"
+            },
+            "Text": {
+                "Value": "Hello World"
+            },
+
+            "Unversioned": {
+                "da-DK": {
+                    "UnversionedField": {
+                        "Value": "Hello"
+                    }
+                }
+            },
+
+            "Versioned": {
+                "da-DK": {
+                    "1": {
+                        "VersionedField": {
+                            "Value": "Version 1"
+                        }
+                    },
+                    "2": {
+                        "VersionedField": "Version 2"
+                    }
+                }
+            }
+        }
+    }
 }
+```
+
+Yaml format (extension .item.yaml): 
+```yaml
+Item :
+    Template : /sitecore/templates/Sample/YamlItemTemplate
+    - Fields :
+        - Field : Title
+          Value : Hello
+        - Field : Text
+          Value : Hello World
+
+        - Unversioned :
+            - da-DK :
+                - Field : UnversionedField
+                  Value: >
+                        Hello
+
+        - Versioned :
+            - da-DK :
+                - 1 :
+                    - Field : VersionedField
+                      Value : Version 1
+                - 2 :
+                    - Field : VersionedField
+                      Value : Version 2
+```
+
+Xml format (extension .item.xml) - please notice the namespace, which indicates the Xml schema to use.
+```xml
+<Item xmlns="http://www.sitecore.net/pathfinder/item" Template="/sitecore/templates/Sample/XmlItemTemplate">
+
+    <Fields>
+        <Field Name="Title" Field.ShortHelp="Title field." Field.LongHelp="Title field.">Hello</Field>
+        <Field Name="Text" Field.ShortHelp="Text field." Field.LongHelp="Text field.">Hello World</Field>
+
+        <Unversioned Language="da-DK">
+            <Field Name="UnversionedField" Field.ShortHelp="Title field." Field.LongHelp="Title field.">Hello</Field>
+        </Unversioned>
+
+        <Versioned Language="da-DK">
+            <Version Number="1">
+                <Field Name="VersionedField" Field.ShortHelp="Checkbox field." Field.LongHelp="Checkbox field.">Version 1</Field>
+            </Version>
+            <Version Number="2">
+                <Field Name="VersionedField">Version 2</Field>
+            </Version>
+        </Versioned>
+    </Fields>
+</Item>
 ```
 
 Content Xml format (extension .content.xml) - please notice that the element names spelcifies the template and fields are attributes. Spaces
@@ -184,14 +244,20 @@ An item file can contain multiple nested items. Below is an example:
 
 ```xml
 <Item xmlns="http://www.sitecore.net/pathfinder/item" Template="/sitecore/templates/Sample/Sample Item">
-  <Field Name="Title" Value="Hello" />
+  <Fields>
+    <Field Name="Title" Value="Hello" />
+  </Fields>
 
   <Item Name="Hi" Template="/sitecore/templates/Sample/Sample Item">
-    <Field Name="Title" Value="Hi" />
+    <Fields>
+      <Field Name="Title" Value="Hi" />
+    </Fields>
   </Item>
 
   <Item Name="Hey" Template="/sitecore/templates/Sample/Sample Item">
-    <Field Name="Title" Value="Hey" />
+    <Fields>
+      <Field Name="Title" Value="Hey" />
+    </Fields>
   </Item>
 </Item>
 ```
@@ -225,7 +291,9 @@ To infer and create the template add the "Template.CreateFromFields='true'" attr
 
 ```xml
 <Item xmlns="http://www.sitecore.net/pathfinder/item" Template.Create="/sitecore/templates/Sample/InferredTemplate">
-  <Field Name="Text" Value="Hello" Field.Type="Rich Text" />
+    <Fields>
+        <Field Name="Text" Value="Hello" Field.Type="Rich Text" />
+    </Fields>
 </Item>
 ```
 The example above creates the template "InferredTemplate" with a single template field "Text". The type of the field is "Rich Text".
@@ -251,8 +319,10 @@ If you rename an item, but want to keep the original item ID, specify the ID as 
 <Item xmlns="http://www.sitecore.net/pathfinder/item" 
     Id="/sitecore/content/Home/HelloWorld" 
     Template="/sitecore/templates/Sample/Sample Item">
-    <Field Name="Title">Pathfinder</Field>
-    <Field Name="Text">Welcome to Sitecore Pathfinder</Field>
+    <Fields>
+        <Field Name="Title">Pathfinder</Field>
+        <Field Name="Text">Welcome to Sitecore Pathfinder</Field>
+    </Fields>
 </Item>
 ```
 
@@ -330,16 +400,21 @@ values.
 
 Extension            | Description 
 -------------------- | ------------
-.item.xml            | Item in Xml format
 .item.json           | Item in Json format
-.master.content.xml  | Item in Xml content format (master database)
-.core.content.xml    | Item in Xml content format (core database)
+.item.yaml           | Item in Yaml format
+.item.xml            | Item in Xml format
 .master.content.json | Item in Json content format (master database)
 .core.content.json   | Item in Json content format (core database)
-.master.layout.xml   | Layout definition in Xml format (master database)
-.core.layout.xml     | Layout definition in Xml format (core database)
+.master.content.yaml | Item in Yaml content format (master database)
+.core.content.yaml   | Item in Yaml content format (core database)
+.master.content.xml  | Item in Xml content format (master database)
+.core.content.xml    | Item in Xml content format (core database)
 .master.layout.json  | Layout definition in Json format (master database)
 .core.layout.json    | Layout definition in Json format (core database)
+.master.layout.yaml  | Layout definition in Yaml format (master database)
+.core.layout.yaml    | Layout definition in Yaml format (core database)
+.master.layout.xml   | Layout definition in Xml format (master database)
+.core.layout.xml     | Layout definition in Xml format (core database)
 .dll                 | Binary file - copied to /bin folder
 .aspx                | Layout file
 .ascx                | SubLayout
