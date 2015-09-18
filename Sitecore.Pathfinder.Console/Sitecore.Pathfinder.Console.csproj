@@ -129,7 +129,9 @@
     <Compile Include="Building\Initializing\Help.cs" />
     <Compile Include="Building\Deploying\CopyDependencies.cs" />
     <Compile Include="Building\Initializing\Init.cs" />
+    <Compile Include="Building\Initializing\InitAtom.cs" />
     <Compile Include="Building\Initializing\InitVisualStudio.cs" />
+    <Compile Include="Building\Initializing\InitVsCode.cs" />
     <Compile Include="Building\Initializing\SynchronizeWebsite.cs" />
     <Compile Include="Building\Packaging\PackDependencies.cs" />
     <Compile Include="Building\Testing\UnitTests\GenerateUnitTest.cs" />
@@ -187,6 +189,7 @@
     <Content Include="files\project\sitecore.filetemplates\Item.master.content.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="files\atom\.atom-build.json" />
     <None Include="files\project\sitecore.filetemplates\Item.item.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -288,7 +291,7 @@
     <Content Include="files\project\sitecore.filetemplates\Template.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="files\project\.vscode\tasks.json">
+    <Content Include="files\vscode\.vscode\tasks.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="files\project\layout\layouts\readme.txt">
@@ -330,7 +333,7 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="files\project\.vscode\settings.json">
+    <Content Include="files\vscode\.vscode\settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="files\project\sitecore.filetemplates\Item.item.json">
