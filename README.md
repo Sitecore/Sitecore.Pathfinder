@@ -601,15 +601,29 @@ Normally you want to run the `generate-code` task before building an assembly, s
 ## Notepad
 Everything in Pathfinder is a file, so you can use Notepad to edit any file.
 
+## Atom 
+
+[Atom](https://atom.io/) is a good code editor with lots of plugins. You need to install a build package to be
+able to run the Pathfinder build pipeline, e.g. ([Build](https://github.com/noseglid/atom-build) by nosegild)
+
+After creating an Atom project, the default build task has been configured to execute the build pipeline in Pathfinder. 
+In Atom the build task can be executed by pressing Ctrl+Alt+B.
+
+To create a Atom project, run this command ``scc init-atom``. This will create a .atom-build.json file
+that contains default configuration for Pathfinder.
+
 ## Visual Studio Code
 
-[Visual Studio Code](https://code.visualstudio.com/) is a nice code editor and Pathfinder contains default
-configuration files for Code in the .vscode directory. The default build task in Code has been configured
-to execute the build pipeline in Pathfinder. In Code the build task can be executed by pressing Ctrl+Shift+B.
+[Visual Studio Code](https://code.visualstudio.com/) is a nice code editor. After creating a VS Code project,
+the default build task has been configured to execute the build pipeline in Pathfinder. In Code the build task 
+can be executed by pressing Ctrl+Shift+B.
+
+To create a VS Code project, run this command ``scc init-vscode``. This will create a .vscode directory
+that contains default configuration for Pathfinder.
 
 ## Visual Studio
 
-To quickly create a Visual Studio project, run this command ```scc init-visualstudio```. This will create a .csproj file and some additional files to 
+To create a Visual Studio project, run this command ``scc init-visualstudio`` after having initialized the project. This will create a .csproj file and some additional files to 
 support Visual Studio and Grunt. Afterwards make sure the run the installgrunt.cmd to install GruntJS. 
 
 To manually create a Visual Studio project:
