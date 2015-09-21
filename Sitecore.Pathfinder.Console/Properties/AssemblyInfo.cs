@@ -7,12 +7,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("Sitecore.Compiler")]
+[assembly: AssemblyTitle("Sitecore Pathfinder")]
 [assembly: AssemblyDescription("Compiles and deploys a Sitecore project")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Sitecore A/S")]
-[assembly: AssemblyProduct("Sitecore.Compiler")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyProduct("Sitecore Pathfinder")]
+[assembly: AssemblyCopyright("Copyright © 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

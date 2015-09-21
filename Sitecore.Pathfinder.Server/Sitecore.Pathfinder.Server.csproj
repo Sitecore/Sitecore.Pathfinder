@@ -200,12 +200,13 @@
       <DependentUpon>WebTestRunner.ashx</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
-    <Compile Include="Synchronizing\ISynchronizationExporter.cs" />
-    <Compile Include="Synchronizing\JsonLayoutSchemaExporter.cs" />
-    <Compile Include="Synchronizing\JsonTemplateSchemaExporter.cs" />
+    <Compile Include="Synchronizing\Content\ContentXmlSynchronizer.cs" />
+    <Compile Include="Synchronizing\ISynchronizer.cs" />
+    <Compile Include="Synchronizing\Content\JsonLayoutSchemaExporter.cs" />
+    <Compile Include="Synchronizing\Content\JsonTemplateSchemaExporter.cs" />
     <Compile Include="Synchronizing\SynchronizationManager.cs" />
-    <Compile Include="Synchronizing\XsdLayoutSchemaExporter.cs" />
-    <Compile Include="Synchronizing\XsdTemplateSchemaExporter.cs" />
+    <Compile Include="Synchronizing\Content\XsdLayoutSchemaExporter.cs" />
+    <Compile Include="Synchronizing\Content\XsdTemplateSchemaSynchronizer.cs" />
     <Compile Include="Testing\UnitTestRunner.cs" />
   </ItemGroup>
   <ItemGroup>

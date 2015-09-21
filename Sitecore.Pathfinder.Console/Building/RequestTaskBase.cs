@@ -20,6 +20,7 @@ namespace Sitecore.Pathfinder.Building
         protected virtual bool DownloadFile([NotNull] IBuildContext context, [NotNull] string url, [NotNull] string targetFileName)
         {
             var webClient = new WebClient();
+
             try
             {
                 webClient.DownloadFile(url, targetFileName);

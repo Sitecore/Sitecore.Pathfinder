@@ -1,0 +1,56 @@
+{
+    "$schema": "../../../sitecore.project/schemas/item.schema.json#",
+    "Item": {
+        "Database": "core",
+        "Template": "/sitecore/templates/TodoMvc/TodoMvcApp",
+        "Template.CreateFromFields": true,
+        "Template.ShortHelp": "Pathfinder TodoMvc sample.",
+        "Template.LongHelp": "Pathfinder TodoMvc sample.",
+        "Template.Icon": "Applications/16x16/About.png",
+        "Fields": {
+            "Title": {
+                "Value": "todos",
+                "Field.ShortHelp": "Title field.",
+                "Field.LongHelp": "Title field."
+            },
+            "Watermark": {
+                "Value": "What needs to be done?",
+                "Field.ShortHelp": "Watermark.",
+                "Field.LongHelp": "Watermark in the inout field."
+            }
+        },
+        "Layout": {
+            "Devices": [
+                {
+                    "Name": "Default",
+                    "Layout": "/sitecore/client/Speak/Layouts/Layouts/Speak-Layout",
+                    "Renderings": [
+                        {
+                            "PageCode": { "Placeholder": "Page.Code" }
+                        },
+                        {
+                            "Dashboard": {
+                                "Placeholder": "Page.Body",
+                                "Renderings": [
+                                    {
+                                        "GlobalHeader": {
+                                            "Renderings": [
+                                                {
+                                                    "GlobaLogo": { }
+                                                },
+                                                {
+                                                    "AccountInformation": { "Placeholder": "GlobalHeader.LoginInfo" }
+                                                }
+                                            ]
+                                        }
+
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

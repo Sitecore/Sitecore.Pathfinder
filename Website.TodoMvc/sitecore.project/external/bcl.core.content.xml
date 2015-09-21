@@ -1,0 +1,1562 @@
+<Folder Id="{67016973-8CD9-443A-A62F-5EFA054C0A7D}" Name="Business Component Library" Database="core" ParentItemPath="/sitecore/client" IsExternalReference="True">
+  <Layout--Folder Id="{50D234E1-9E8D-4AFB-8259-C1A242C5EC2D}" Name="Layouts" IsExternalReference="True">
+    <Layout--Folder Id="{1022DB8F-DBF7-42A8-AC04-C7637151AC86}" Name="Layouts" IsExternalReference="True" />
+    <Speak-RenderingFolder Id="{7911B2B0-B1FF-4734-AEAC-90B1980ED4FE}" Name="Renderings" IsExternalReference="True">
+      <Folder Id="{D0D6A981-7F04-4B99-867C-0A00AFFD4C78}" Name="Authentications" IsExternalReference="True">
+        <View--rendering Id="{2EE499CD-439A-4F10-B81F-36A54CAC01DB}" Name="AccountInformation" IsExternalReference="True">
+          <Template Id="{DBE1B011-D64C-467A-A958-65BE5EFC79BE}" Name="AccountInformation" IsExternalReference="True" />
+        </View--rendering>
+      </Folder>
+      <Folder Id="{C1D5EAC2-716E-4606-9E6D-55D7838E8A03}" Name="Behaviors" IsExternalReference="True">
+        <View--rendering Id="{327FD09D-41D6-4F15-8B18-611799364853}" Name="MultiSelectList" IsExternalReference="True">
+          <Template Id="{2EF74F5A-4706-46F6-AB6B-19113886DA75}" Name="MultiSelectList" IsExternalReference="True" />
+        </View--rendering>
+        <View--rendering Id="{DC707F46-7F5E-4BA1-9BF9-820B4A23EC3F}" Name="Scrollbar" IsExternalReference="True">
+          <Template Id="{3F1948E9-22DD-44AC-BA27-1CA8E395A69D}" Name="Scrollbar" IsExternalReference="True" />
+        </View--rendering>
+      </Folder>
+      <Folder Id="{061AFAF0-C807-4D9B-895F-B43F937E0BD8}" Name="Charts" IsExternalReference="True">
+        <View--rendering Id="{7FA4957C-08F8-4C31-8877-88CB3525EE4D}" Name="LineChart" IsExternalReference="True">
+          <Template Id="{59AE580B-B256-4864-A8D3-EB2EA6FF2C74}" Name="LineChart Parameters" IsExternalReference="True" />
+        </View--rendering>
+        <View--rendering Id="{E0E9BE29-2F09-4A34-88C2-D6AA8E023F38}" Name="RadarChart" IsExternalReference="True">
+          <Template Id="{C7FC66E2-FDD5-4F8A-B22C-B3661C846FCC}" Name="RadarChart Parameters" IsExternalReference="True" />
+        </View--rendering>
+        <View--rendering Id="{E9833DEE-38B4-4B8F-8FDB-267F674B16FB}" Name="AreaChart" IsExternalReference="True">
+          <Template Id="{96EA7522-FA24-41F5-9A03-214118E79F53}" Name="AreaChart Parameters" IsExternalReference="True" />
+        </View--rendering>
+        <View--rendering Id="{A3603FDC-240E-481F-AE0C-4507870798AE}" Name="BarChart" IsExternalReference="True">
+          <Template Id="{9861CFD2-0055-4C3E-A015-4C92BC64AC3E}" Name="BarChart Parameters" IsExternalReference="True" />
+        </View--rendering>
+        <View--rendering Id="{01571226-416B-4E07-863E-B00EA2B3245D}" Name="ColumnChart" IsExternalReference="True">
+          <Template Id="{463A3C33-A637-4470-A55E-A7AAB9C5E5EE}" Name="ColumnChart Parameters" IsExternalReference="True" />
+        </View--rendering>
+        <View--rendering Id="{45F8355B-3FDC-437A-94CD-85112E57390F}" Name="DoughnutChart" IsExternalReference="True">
+          <Template Id="{4A8DDDD0-9D3C-425F-9AA6-16DC0EACF3BE}" Name="DoughnutChart Parameters" IsExternalReference="True" />
+        </View--rendering>
+        <View--rendering Id="{DC3B4F5A-4626-4CEC-B12A-473F2D6CDF54}" Name="JourneyChart" IsExternalReference="True" Place--Holders="$Id.DetailsPanel">
+          <Folder Id="{B395F502-D27E-4190-A680-969C560C12EB}" Name="DurationItems" IsExternalReference="True">
+            <JourneyDuration Id="{F14B8FD2-2F2A-41D3-8A89-5A8E5A30B965}" Name="Hour" IsExternalReference="True" />
+            <JourneyDuration Id="{DA84BE09-97F1-4A91-854F-87362C347032}" Name="Day" IsExternalReference="True" />
+            <JourneyDuration Id="{AF820690-DAC2-4D40-950F-E283E1882450}" Name="Week" IsExternalReference="True" />
+            <JourneyDuration Id="{83D7A5D9-2E1F-45A1-AD99-9505EA807066}" Name="Month" IsExternalReference="True" />
+            <JourneyDuration Id="{79B27070-D23D-47EA-8833-4C3BFDD9BD9C}" Name="Quarter" IsExternalReference="True" />
+            <JourneyDuration Id="{A7FF5B3E-2C13-41A3-8019-303234E37BE9}" Name="Year" IsExternalReference="True" />
+          </Folder>
+          <Template Id="{7259B0C8-4F44-4D0A-9052-D6D7F719856D}" Name="JourneyFCChart Parameters" IsExternalReference="True">
+            <Section Id="{4F0F5C5E-E47F-4EFF-BE87-9B263199E348}" Name="Behavior">
+              <Field Id="{BD7D2BAE-BF43-43EB-A4A4-BAAE5BC3A053}" Name="SegmentSelectedAction" />
+              <Field Id="{FF95A104-481B-415D-854B-361E3626C0C1}" Name="DurationItems" />
+              <Field Id="{93276146-AF61-460C-A803-F1CABC0DC9C5}" Name="SelectedDurationItemId" />
+              <Field Id="{3A417C14-B3A7-4976-A971-0171B39B3B9A}" Name="IsDurationButtonsPanelVisible" />
+            </Section>
+          </Template>
+          <Folder Id="{826826F7-CAA9-44C0-87AD-70764C77BBC0}" Name="Duration" IsExternalReference="True">
+            <Folder Id="{9F23DE26-2B64-4411-B728-D31A73BEF59C}" Name="Year" IsExternalReference="True" />
+            <Folder Id="{FB66B85B-00DE-4C8F-BB05-353959AF4EAE}" Name="Quarter" IsExternalReference="True" />
+            <Folder Id="{63AE0C6A-4B7C-415E-9029-E39BFA67D997}" Name="Month" IsExternalReference="True" />
+            <Folder Id="{74B3B865-0044-464D-A827-45867EC81706}" Name="Week" IsExternalReference="True" />
+            <Folder Id="{6545C41A-EF42-4C56-B128-13EEC4584EAA}" Name="Day" IsExternalReference="True" />
+          </Folder>
+          <Folder Id="{D45A7B7D-931B-4882-91A7-A5D205AA136D}" Name="Unit" IsExternalReference="True">
+            <Folder Id="{D8C1E4FB-43E9-4828-B0A6-40A33A9EE21F}" Name="Month" IsExternalReference="True" />
+            <Folder Id="{A53A20B7-227B-438A-8CD1-7814CF747711}" Name="Quarter" IsExternalReference="True" />
+            <Folder Id="{8FB90DAA-691A-46D1-9CF6-922588A80676}" Name="Week" IsExternalReference="True" />
+            <Folder Id="{58D5BE04-1D92-4BE6-8048-6D5BE71DC472}" Name="Day" IsExternalReference="True" />
+            <Folder Id="{C80B8A0A-70E1-4F0C-8B98-F648DD8F4CF2}" Name="Hour" IsExternalReference="True" />
+          </Folder>
+          <Folder Id="{E986E073-E048-48C2-8E56-3DEC3D4FB4DF}" Name="SegmentSelectedAction" IsExternalReference="True">
+            <Folder Id="{2AF0A9FD-B21F-4C63-A47D-BF718D773A4A}" Name="NoAction" IsExternalReference="True" />
+            <Folder Id="{6C4E498F-2FA1-421C-8EA2-566190219236}" Name="DrillDown" IsExternalReference="True" />
+            <Folder Id="{F787BE55-7762-4F5B-A346-238DC90D6E2C}" Name="ShowDetails" IsExternalReference="True" />
+          </Folder>
+        </View--rendering>
+        <View--rendering Id="{CD546D18-2D49-4B3F-B664-8F35CE8520A9}" Name="PieChart" IsExternalReference="True">
+          <Template Id="{C46F81C2-ADD5-4440-AC36-C81CE8C8456E}" Name="PieChart Parameters" IsExternalReference="True" />
+        </View--rendering>
+      </Folder>
+      <Folder Id="{8ECB5C68-B117-45EB-A9D7-3E64F79E2166}" Name="Common" IsExternalReference="True">
+        <View--rendering Id="{C2FAF554-1419-4B6E-96B8-EC7DB6995B3C}" Name="ActionControl" IsExternalReference="True">
+          <Template Id="{5EE9A69B-BC29-452E-B2D0-AD421A04E7BF}" Name="Action" IsExternalReference="True">
+            <Section Id="{B51A0CEB-5A4D-49D8-B138-10D9A039E895}" Name="Data">
+              <Field Id="{443C0046-CEB9-432A-9DB0-CBC11787C786}" Name="Title" />
+              <Field Id="{E5686312-23F4-40E7-84AD-BED5A59A33CE}" Name="Icon" />
+              <Field Id="{DA52B521-2069-45DC-AE90-784762C277A1}" Name="AccessKey" />
+              <Field Id="{FC928A95-5D8F-4E62-A101-B7E57BD9BF09}" Name="Favorite" />
+              <Field Id="{9384139B-2F73-4F0F-8650-0C7A1D4C6DDC}" Name="Tooltip" />
+              <Field Id="{549DA08F-8B0E-4A2F-9F1F-B35C474FE2A0}" Name="ImageUrl" />
+              <Field Id="{94A265ED-FB40-4159-A0D4-28378F10E9E3}" Name="BackgroundPosition" />
+              <Field Id="{04192E48-4C7B-4765-A133-7ADC843CB471}" Name="Disable" />
+            </Section>
+            <Section Id="{40EB5FE1-03E6-40E9-AF91-CB166476D297}" Name="Action">
+              <Field Id="{377BCA4B-8687-4A89-B0D7-CC56765AD81B}" Name="Click" />
+            </Section>
+          </Template>
+          <Template Id="{23B8F26C-0957-4328-9D82-087DD65921C6}" Name="ActionColumn" IsExternalReference="True" />
+          <Template Id="{A6939389-0A95-4DFB-9E62-314B5A198199}" Name="ActionControl" IsExternalReference="True" />
+          <Template Id="{9294594C-DEA2-4102-929B-60D4E1E1FBC8}" Name="ActionControl Parameters" IsExternalReference="True">
+            <Section Id="{080C0C7C-5B38-4C6A-ACB1-01BD0BD521C5}" Name="Appearance">
+              <Field Id="{7F831EA6-188A-48A2-9870-F799E03911FA}" Name="Text" />
+              <Field Id="{FA9973E8-05B7-4D1A-B3FB-63ED2D2F6D76}" Name="Menu" />
+            </Section>
+            <Section Id="{069627EE-DDE9-4C3D-AC03-B88B9D344C93}" Name="Data">
+              <Field Id="{55D8D858-16E9-49AB-80EA-F8E41A1A0372}" Name="Data" />
+            </Section>
+          </Template>
+          <Template Id="{12E9DF28-3315-419C-B302-B9F06DB4A155}" Name="ActionGroup" IsExternalReference="True">
+            <Section Id="{E1ED8883-B247-47C1-B576-1CEF489D436C}" Name="Data">
+              <Field Id="{C59DC8BE-F396-4423-AF8F-4E31E750FA77}" Name="Text" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{11F2C4B0-75DE-4D37-B441-8A29DF23E14B}" Name="AdvancedComboBox" IsExternalReference="True">
+          <Template Id="{B77C73E4-AFFB-43A5-A10E-C6475ED1029F}" Name="AdvancedComboBox Parameters" IsExternalReference="True">
+            <Section Id="{5141760E-D662-49E9-A823-78F09CD31DB5}" Name="Data">
+              <Field Id="{D7DFFC50-591A-4B71-A6ED-BA7D1F7FE256}" Name="GroupFieldName" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{C80807A7-AD13-4693-9822-DD840CB266C5}" Name="BackButton" IsExternalReference="True">
+          <Template Id="{61D779CE-58D3-4909-9932-941D53D749CB}" Name="BackButton Parameters" IsExternalReference="True">
+            <Section Id="{10C31B89-59B1-41A6-805A-9B6F0C3A8EEE}" Name="Appearance">
+              <Field Id="{6C88F031-BD24-453E-B969-DD1EC70353E7}" Name="Text" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{913AB005-2527-4C2D-9827-FB3A8DFB135C}" Name="Button" IsExternalReference="True">
+          <Template Id="{8A9F4991-322D-4FA3-B40B-41B1C715C34B}" Name="Button Parameters" IsExternalReference="True">
+            <Section Id="{8D3601B4-B874-4E9F-A30D-03E8DEF76557}" Name="Appearance">
+              <Field Id="{799BCB23-81F9-4C11-A613-97788196C3C9}" Name="ButtonType" />
+              <Field Id="{4C9BDFE0-DF3D-488D-B562-BC2E36126014}" Name="Dimension" />
+              <Field Id="{99A761CF-5262-4D10-B53E-4CD9E79C232D}" Name="Text" />
+              <Field Id="{9E6D593E-F222-4906-8D85-A5536EFEB12C}" Name="ImageUrl" />
+              <Field Id="{5330C3A2-D055-442B-B01D-0CFE9A450B2F}" Name="BackgroundPosition" />
+            </Section>
+          </Template>
+          <Folder Id="{E94E7D3D-BE86-41BD-A66F-DECD96017DED}" Name="ButtonTypes" IsExternalReference="True">
+            <Folder Id="{84E3EE39-9818-42A3-85A1-12A4A98F29BC}" Name="Default" IsExternalReference="True" />
+            <Folder Id="{304CA172-1AC7-47E8-8BDA-400DC8029741}" Name="Inverse" IsExternalReference="True" />
+            <Folder Id="{7DC71C7C-DDD8-44AD-9D24-0F596C225420}" Name="Primary" IsExternalReference="True" />
+          </Folder>
+          <Folder Id="{1D857458-40F2-4762-8461-913B17861756}" Name="Dimension" IsExternalReference="True">
+            <Folder Id="{829579DE-D2F6-4718-A4FB-DC0E781FCD25}" Name="Normal" IsExternalReference="True" />
+            <Folder Id="{D7C4257A-581D-4B8F-A322-2726C667AD46}" Name="Large" IsExternalReference="True" />
+          </Folder>
+        </View--rendering>
+        <View--rendering Id="{E4C8C7BE-E941-49F2-9724-29237AE7EA37}" Name="ButtonTextBox" IsExternalReference="True">
+          <Template Id="{79F8DA6E-F8E4-421F-9B01-BDE483F15548}" Name="ButtonTextBox Parameters" IsExternalReference="True">
+            <Section Id="{A638418F-E089-40D6-B3BF-17186B37DD82}" Name="Appearance">
+              <Field Id="{195BC7A4-520F-4349-9D35-68CA70D09D38}" Name="ButtonText" />
+              <Field Id="{092CDF3E-092A-48E0-913D-4B7CE9F190F5}" Name="ButtonImageUrl" />
+              <Field Id="{6E3D9566-CE91-4DB2-A040-592FD9404FCF}" Name="ButtonType" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{3824DAB6-745A-468A-9D75-044591E72FB5}" Name="CheckBox" IsExternalReference="True">
+          <Template Id="{792C3A6D-F6CB-4E95-9FE6-990AB022E766}" Name="CheckBox Parameters" IsExternalReference="True">
+            <Section Id="{AECBEA15-B3B9-4FF3-8C88-EB9C5127E00B}" Name="Data">
+              <Field Id="{05A780A5-EB6D-4936-8E6B-2C760D15B193}" Name="Value" />
+              <Field Id="{09CC7B27-BF07-4AB5-8A3D-949E361B935F}" Name="IsChecked" />
+              <Field Id="{C4A7714D-E8B9-4D71-99BC-CFCE1E05C2A1}" Name="Text" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{25D357D3-3648-4336-9B53-55EED7CFA078}" Name="ComboBox" IsExternalReference="True">
+          <Template Id="{54DB6550-E843-4A04-84C5-BD6269CCE513}" Name="ComboBox Parameters" IsExternalReference="True" />
+        </View--rendering>
+        <View--rendering Id="{FA6DD28F-537A-4481-AB49-AC24EC97F5DD}" Name="ContextSwitcher" IsExternalReference="True">
+          <Template Id="{0017AE80-092C-4E30-A909-8424B3E5A89F}" Name="ContextItem" IsExternalReference="True">
+            <Section Id="{C0D2DE28-4A91-4A68-AC61-81D0E66E4350}" Name="Data">
+              <Field Id="{9DE38A77-8B55-4317-B234-83C2C7B1FC71}" Name="Name" />
+              <Field Id="{C3BCE7A1-4AB2-4C14-B358-2A3CD34A78FB}" Name="Selected" />
+            </Section>
+          </Template>
+          <Template Id="{056D6934-64F9-48DB-A3E1-F8BEA5BD3A63}" Name="ContextSwitcher-Parameters" IsExternalReference="True" />
+        </View--rendering>
+        <View--rendering Id="{3CAC8515-EA11-4B97-A1E5-546DC6FC5E59}" Name="DatePicker" IsExternalReference="True">
+          <Template Id="{A006AF51-8C91-4229-A590-C7A853684249}" Name="DatePicker Parameters" IsExternalReference="True">
+            <Section Id="{04C44EC4-9C77-4328-B7CE-5DD4FA46D3E3}" Name="Data">
+              <Field Id="{45029914-8901-4ECB-A6EC-F8F45043D482}" Name="Date" />
+              <Field Id="{18C0DB7A-1D8B-4B99-A0D0-7D9B6E00F6F1}" Name="Format" />
+              <Field Id="{3A305415-8697-4BF1-A9CB-D4D02F851629}" Name="FirstDay" />
+              <Field Id="{4CBE45A9-FFA0-499D-82B7-0DFDAFDA7820}" Name="ShowOtherMonths" />
+              <Field Id="{E84546B3-875D-4F30-9394-082691811DB1}" Name="IsReadOnly" />
+              <Field Id="{C64117D7-CACF-4BA3-B3EE-8F1194A0261D}" Name="MinDate" />
+              <Field Id="{497B0426-E380-4E53-9A3F-0CF38EA228F2}" Name="MaxDate" />
+              <Field Id="{75C13FD2-073F-4CF4-985B-906E049CED68}" Name="ShowToday" />
+              <Field Id="{C37F3302-2D96-40F0-801A-21ED80A645D3}" Name="ViewMode" />
+              <Field Id="{6635B701-36DD-45E8-9B16-91DEF3D87D74}" Name="Time" />
+            </Section>
+          </Template>
+          <Folder Id="{8D1D518F-CAF8-41AD-BD93-11459051732E}" Name="FirstDay" IsExternalReference="True">
+            <Folder Id="{C5A330B3-6925-4259-9453-A67E526EC4CF}" Name="Monday" IsExternalReference="True" />
+            <Folder Id="{25304681-1FAB-423C-B760-0B1ABA0250F1}" Name="Tuesday" IsExternalReference="True" />
+            <Folder Id="{F724B2C1-F307-4713-BB98-BC06C04C7C40}" Name="Wednesday" IsExternalReference="True" />
+            <Folder Id="{0AFFCEF6-8AE6-4DA8-AE40-06860D1EEE2E}" Name="Thursday" IsExternalReference="True" />
+            <Folder Id="{61F55DF1-E701-4319-ADBE-1BB4BACB5F95}" Name="Friday" IsExternalReference="True" />
+            <Folder Id="{304A66BE-4F8C-492A-B5B4-4B74B5DD5EAD}" Name="Saturday" IsExternalReference="True" />
+            <Folder Id="{6C1CE5D8-6C9C-4748-8B14-7D10FF8CECB9}" Name="Sunday" IsExternalReference="True" />
+          </Folder>
+          <Folder Id="{DE52DFC9-A953-41BF-861F-AA78F27FA1B3}" Name="Texts" IsExternalReference="True">
+            <Folder Id="{DB8A5C28-3CBA-46F3-85E4-E47541346240}" Name="ErrorMessages" IsExternalReference="True">
+              <Text Id="{77F6084F-68AE-4243-A223-C2517EDE7189}" Name="Error Incorrect date format it should be in the Sitecore Date or DateTime format" IsExternalReference="True" />
+            </Folder>
+            <Text Id="{9875B06F-F085-404A-8A9F-6C776647EB17}" Name="Next" IsExternalReference="True" />
+            <Text Id="{DD89E78B-F33D-4797-B0BE-3582FD4820AA}" Name="Previous" IsExternalReference="True" />
+            <Text Id="{C5DE3878-35AA-48E2-A7E7-9A10E1BCA7B7}" Name="Today" IsExternalReference="True" />
+            <Text Id="{63ADF359-A6ED-4688-93F5-2272885B607E}" Name="YearSuffix" IsExternalReference="True" />
+            <Folder Id="{1F194F42-4BEA-4257-AC5A-3B67BD392A2F}" Name="DaysMin" IsExternalReference="True">
+              <Text Id="{9A479A68-70A6-4BAF-9399-1C27650B2DB6}" Name="Su" IsExternalReference="True" />
+              <Text Id="{ED3DC6D4-385E-430E-B86A-ADA80B12D573}" Name="Mo" IsExternalReference="True" />
+              <Text Id="{C5312A15-48F0-4AC7-A765-06E431CD25AB}" Name="Tu" IsExternalReference="True" />
+              <Text Id="{8770B7B1-1FE2-41E5-8C72-8356516283F8}" Name="We" IsExternalReference="True" />
+              <Text Id="{12ABC988-758B-4E50-BFD2-B6A6B402E4F5}" Name="Th" IsExternalReference="True" />
+              <Text Id="{ADC18DE6-0612-41B2-90C8-D897F8C944BC}" Name="Fr" IsExternalReference="True" />
+              <Text Id="{627E7B1E-548A-481E-9847-70837E8A7897}" Name="Sa" IsExternalReference="True" />
+            </Folder>
+            <Folder Id="{535A1757-DAD2-44A9-9676-C8CBC15B40FA}" Name="DaysShort" IsExternalReference="True">
+              <Text Id="{93CCDAD6-8EC9-4F94-8140-5B139AFCBF2B}" Name="Sun" IsExternalReference="True" />
+              <Text Id="{B5EC39D5-86FB-45C2-A63B-964E9EF79279}" Name="Mon" IsExternalReference="True" />
+              <Text Id="{FCEB7883-632F-495B-88C3-7F89D065FF96}" Name="Tue" IsExternalReference="True" />
+              <Text Id="{17FCAF3D-CAE4-4313-9795-935D66B350F6}" Name="Wed" IsExternalReference="True" />
+              <Text Id="{F61B3F05-B36B-4630-9993-A9E6A3714186}" Name="Thu" IsExternalReference="True" />
+              <Text Id="{293AFDC3-F5DF-4912-8AB1-0DC7F3AA9C26}" Name="Fri" IsExternalReference="True" />
+              <Text Id="{2A8AE4DC-064F-48BE-8E52-407BC62C977E}" Name="Sat" IsExternalReference="True" />
+            </Folder>
+            <Folder Id="{D36AD737-7334-40F8-82A3-00AAE13CCAFB}" Name="Days" IsExternalReference="True">
+              <Text Id="{D904E4FF-AB49-4B37-A172-81E520B46031}" Name="Sunday" IsExternalReference="True" />
+              <Text Id="{65EAD1A1-43C4-4C05-9DD8-8C82398EB138}" Name="Monday" IsExternalReference="True" />
+              <Text Id="{5C17567C-C303-4979-B936-1E427252BD11}" Name="Tuesday" IsExternalReference="True" />
+              <Text Id="{806F9445-7F25-47CB-8418-3345F265FF77}" Name="Wednesday" IsExternalReference="True" />
+              <Text Id="{E7CA1545-3C2A-423A-BB0F-3E9547BB246F}" Name="Thursday" IsExternalReference="True" />
+              <Text Id="{3E114F00-FD80-49F3-8C19-B18D20AB93FE}" Name="Friday" IsExternalReference="True" />
+              <Text Id="{578941C7-169E-4D37-AC95-C081DBB40FB4}" Name="Saturday" IsExternalReference="True" />
+            </Folder>
+            <Folder Id="{727AD468-5F85-4F91-B3EE-2F497DDC333E}" Name="Months" IsExternalReference="True">
+              <Text Id="{04BCDB70-D6F7-4AA0-88B6-4771B67387A7}" Name="January" IsExternalReference="True" />
+              <Text Id="{D388F645-3827-42DD-A614-2E1A5CCAE2A9}" Name="February" IsExternalReference="True" />
+              <Text Id="{666E8999-4697-4211-A0F0-036F179CEE19}" Name="March" IsExternalReference="True" />
+              <Text Id="{C7344477-1877-4F4F-B90F-8C6BE9A23EE3}" Name="April" IsExternalReference="True" />
+              <Text Id="{0DBDBD77-6884-4653-B70D-6BFF2CFEE6E1}" Name="May" IsExternalReference="True" />
+              <Text Id="{32B2BC6F-0138-4CD3-9B0E-CB3BBCC7D5AC}" Name="June" IsExternalReference="True" />
+              <Text Id="{9ADD1A2F-8FB7-47E8-84A0-6F038A9281B8}" Name="July" IsExternalReference="True" />
+              <Text Id="{7E8E7918-D42D-49C1-9053-F53E89A65C24}" Name="August" IsExternalReference="True" />
+              <Text Id="{98CA5E65-DDF5-4E27-A92F-D849A7A541D0}" Name="September" IsExternalReference="True" />
+              <Text Id="{8D7421F1-AB77-4861-9DFD-CF4EEC9F67DC}" Name="October" IsExternalReference="True" />
+              <Text Id="{40DBC26A-26D8-4265-AEC0-4D54FF4A05A1}" Name="November" IsExternalReference="True" />
+              <Text Id="{9FF21EBE-F881-4E40-9159-2B0C783C3B62}" Name="December" IsExternalReference="True" />
+            </Folder>
+            <Folder Id="{BBF7DD8F-2E5F-4B40-B15B-112319291E0A}" Name="MonthsShort" IsExternalReference="True">
+              <Text Id="{DAEE3346-0DD8-46EA-9A7D-61EF158E5796}" Name="Jan" IsExternalReference="True" />
+              <Text Id="{04E7F498-8AC4-45C9-BED6-8B42167F5600}" Name="Feb" IsExternalReference="True" />
+              <Text Id="{B07CFB66-D496-4BDC-AF11-BEA088305513}" Name="Mar" IsExternalReference="True" />
+              <Text Id="{284B1685-6258-444A-B340-D9E93B1051F6}" Name="Apr" IsExternalReference="True" />
+              <Text Id="{01189CFD-26F7-45C1-B99E-CB462F00C204}" Name="May" IsExternalReference="True" />
+              <Text Id="{A6E0B45C-4130-4A80-AB21-5B3BE9D6A2C1}" Name="Jun" IsExternalReference="True" />
+              <Text Id="{134A20AD-3B0F-4940-AFC0-A6C08819E975}" Name="Jul" IsExternalReference="True" />
+              <Text Id="{BD804B56-03FF-4121-A54D-6E7E2EF2AA2C}" Name="Aug" IsExternalReference="True" />
+              <Text Id="{8FB7881E-1D3E-4B85-BE97-B463F8927708}" Name="Sep" IsExternalReference="True" />
+              <Text Id="{FCF41FA9-0167-47DF-AAC8-2003161B4C11}" Name="Oct" IsExternalReference="True" />
+              <Text Id="{543DF2B2-6485-4484-B40B-06A9356A724F}" Name="Nov" IsExternalReference="True" />
+              <Text Id="{7CE439AF-934C-4D54-8127-876267A5F545}" Name="Dec" IsExternalReference="True" />
+            </Folder>
+          </Folder>
+          <Folder Id="{47415D3B-99F3-4CF0-A212-4B68FD1FB181}" Name="ViewModes" IsExternalReference="True">
+            <Folder Id="{F5727B5B-580E-4106-8896-2FCCAEE1AAA2}" Name="Calendar" IsExternalReference="True" />
+            <Folder Id="{8AB0457E-12A6-4934-A7B3-785C0261FCF4}" Name="Textbox" IsExternalReference="True" />
+          </Folder>
+        </View--rendering>
+        <View--rendering Id="{2F8BFAC9-65F2-420E-9CD7-D9889C01E35C}" Name="DropDownButton" IsExternalReference="True" Place--Holders="$Id.Content">
+          <Template Id="{13BFBFE2-21C7-4400-A1C5-68F3F6D9F132}" Name="DropDownButton Parameters" IsExternalReference="True">
+            <Section Id="{8DC4B327-0125-471A-8953-187E041E5DE6}" Name="Appearance">
+              <Field Id="{A5B1B7E6-79ED-4FD5-BD87-03CBC0E94DD0}" Name="ButtonType" />
+              <Field Id="{4AB0B3D5-62F8-43FE-B434-0C4ED7D036B4}" Name="Text" />
+              <Field Id="{8B9B6ED8-DD55-468E-80A1-1208F408B126}" Name="ImageUrl" />
+              <Field Id="{7FCDF491-5A5B-4599-8FA0-0515B66D1FAD}" Name="BackgroundPosition" />
+              <Field Id="{6F95204D-F5AA-4B4A-8B81-80A8CF9311D3}" Name="ContentAlignment" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{7A69C522-7E99-4630-A25A-5D571505862A}" Name="GlobalLogo" IsExternalReference="True">
+          <Template Id="{C9074FE9-9F1F-4838-8737-4158C0F7AA58}" Name="GlobalLogo" IsExternalReference="True">
+            <Section Id="{8975882F-E10E-4EA3-8A8E-720B2B56A4BF}" Name="Appearance">
+              <Field Id="{DA8962FA-58BB-4D0C-B644-F5B73DCD78CA}" Name="Dimension" />
+              <Field Id="{761FCAE8-3B12-4592-A1FF-440D7C5C1C1A}" Name="NavigateUrl" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{162FC747-B9E6-4FCE-A96C-1EFE125643F2}" Name="HyperlinkButton" IsExternalReference="True">
+          <Template Id="{6B2C1723-B4E0-49BE-8EF2-F1D12C969E54}" Name="HyperlinkButton Parameters" IsExternalReference="True">
+            <Section Id="{35C14CE5-1538-4F3C-B93D-FEFEC8DE84AA}" Name="Appearance">
+              <Field Id="{368E1AB6-8708-4F58-AF08-7DAA53A5BF32}" Name="Text" />
+              <Field Id="{DF407AD6-A4C8-4E04-92AC-C59C53B1CDAC}" Name="IsButtonMode" />
+            </Section>
+            <Section Id="{4B54AEF1-1923-4C6B-90A2-A8154226B8AF}" Name="Behavior">
+              <Field Id="{AEE5C6C6-CB2D-4645-AE50-8640E8ED293F}" Name="NavigateUrl" />
+              <Field Id="{8B04277E-1CA1-4163-963F-1BFB4D0F325A}" Name="Target" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{5521B8A4-2728-414D-8711-A0404515AE2C}" Name="IconButton" IsExternalReference="True">
+          <Template Id="{D9D2581E-D0A1-4593-9B6A-66E3BD4E29F5}" Name="IconButton Parameters" IsExternalReference="True">
+            <Section Id="{84EDB613-D308-494D-913D-B44A4B9B3084}" Name="Appearance">
+              <Field Id="{35C5B7B7-B7C0-4B61-AB27-9CAFE1CF2361}" Name="ImageUrl" />
+              <Field Id="{81873C74-6967-4C4C-BE5E-0F2817C00FA8}" Name="Dimensions" />
+              <Field Id="{84D01FA0-54D3-40F7-BC22-3990C9F92084}" Name="BackgroundPosition" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{51194966-86A8-44C3-988D-E983744AB0DE}" Name="IconHyperlinkButton" IsExternalReference="True">
+          <Template Id="{319DBCA2-FAB2-45FF-BDE1-BC8E9F7B5C83}" Name="IconHyperlinkButton Parameters" IsExternalReference="True">
+            <Section Id="{8EA40E7A-C1DC-4D41-A296-868349441E4D}" Name="Appearance">
+              <Field Id="{3836591E-EEFF-41F3-A9B2-FB85004B92D1}" Name="Text" />
+              <Field Id="{4D60A4D1-AF86-4285-84F1-AC2FD3C0E8C5}" Name="ImageUrl" />
+              <Field Id="{9B1F9600-7011-4C3D-9A61-7CFFEB5BA055}" Name="BackgroundPosition" />
+            </Section>
+            <Section Id="{CE052BC8-1CF1-40B8-98D6-6DC4CA0CE495}" Name="Behavior">
+              <Field Id="{C24B326F-1CA2-4B70-B5E1-8813B6E91393}" Name="NavigateUrl" />
+              <Field Id="{88248A39-8731-4909-AFC9-A9CD19102DEE}" Name="Target" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{F517C5E4-9A53-46C3-B922-5B44E6DAAA48}" Name="Image" IsExternalReference="True">
+          <Template Id="{6E322E3F-303E-41C6-8B4E-64101101F624}" Name="Image Parameters" IsExternalReference="True">
+            <Section Id="{862B8C6E-02A2-4923-B4E6-06FBA92B8969}" Name="Appearance">
+              <Field Id="{5F888B95-7E07-4342-B194-CED939339B79}" Name="Alt" />
+              <Field Id="{C3909FF1-3468-4F54-9186-4593497DA24C}" Name="Height" />
+              <Field Id="{F8F13FC5-0DD6-4120-AB9E-CC90460C4619}" Name="Width" />
+            </Section>
+            <Section Id="{5662EA80-E707-4103-884F-7FB984719ABA}" Name="Data">
+              <Field Id="{D386A183-8F01-41B5-A995-070C2A431A96}" Name="ImageUrl" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{98316BB6-F3F5-4E6F-81F0-79F173D151D8}" Name="Label" IsExternalReference="True">
+          <Template Id="{1B868F3C-E34E-4421-8EAC-CC026D8199B5}" Name="Label Parameters" IsExternalReference="True">
+            <Section Id="{B922C6B9-DC53-442B-B5EE-8FBC24B1B5EF}" Name="Appearance">
+              <Field Id="{B76D36E3-CD97-47D1-A721-1CC942DAF7CE}" Name="Target" />
+              <Field Id="{730A4068-4647-4006-B41C-CE28325432C7}" Name="Text" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{D3C7F925-3268-4F4D-8996-9D088344F7A3}" Name="ListBox" IsExternalReference="True">
+          <Template Id="{5FBFE2A4-52D5-4821-A6DC-2906F2502FD0}" Name="ListBox Parameters" IsExternalReference="True" />
+        </View--rendering>
+        <View--rendering Id="{910155C7-3881-4A56-90FB-D126490EDE55}" Name="MessageBar" IsExternalReference="True">
+          <Template Id="{527F69BD-B419-43D2-B279-98B44C1B5714}" Name="ActionLink" IsExternalReference="True">
+            <Section Id="{4A243E0A-E041-4132-B6A8-6A0A8EF48F0C}" Name="Data">
+              <Field Id="{6436710D-50EF-4029-ABD4-DBCB3091B7F1}" Name="Text" />
+              <Field Id="{8FB91593-88D6-4A5F-BADB-3185625372ED}" Name="Action" />
+            </Section>
+          </Template>
+          <Folder Id="{65771594-CA32-40CE-A097-39F9FA614531}" Name="JavaScript Errors" IsExternalReference="True">
+            <Text Id="{10EBF5B7-EDA6-4BB0-BC8D-12EBC6B22421}" Name="Error you must specify a function that has a parameter" IsExternalReference="True" />
+            <Text Id="{DE22C646-9770-42C2-88A3-4C95AC79B3EA}" Name="Error you must specify a type and a message" IsExternalReference="True" />
+          </Folder>
+          <Folder Id="{CC9801F6-9611-463F-BD3A-8BF98786D809}" Name="Message Types" IsExternalReference="True">
+            <Template Id="{27F53C6B-04A8-4413-8130-9415223597DC}" Name="Error Message" IsExternalReference="True" />
+            <Template Id="{76C2629E-3B7D-4EEE-82D0-F5DF443B56A5}" Name="Notification Message" IsExternalReference="True">
+              <Section Id="{78BCEFD1-520C-422F-B48C-7B5F9DE41B68}" Name="Appearance">
+                <Field Id="{011E8BDD-D49F-4CEE-A6B2-7BF3E6BAA069}" Name="IsTemporary" />
+              </Section>
+            </Template>
+            <Template Id="{622D0279-3D83-4FA7-8C8F-45875615C7D8}" Name="Warning Message" IsExternalReference="True" />
+          </Folder>
+          <Template Id="{08D03DC0-E4D2-40A4-A446-65ECEECF4F9C}" Name="MessageBar Parameters" IsExternalReference="True">
+            <Section Id="{32B0A3FE-959C-4E1B-B230-99CE65EE3AE2}" Name="Data">
+              <Field Id="{D39E055D-7C3C-4711-949F-4CE29F93DBAE}" Name="Messages" />
+            </Section>
+            <Section Id="{0D55F9AB-4B9D-4E50-9930-4AF34891164F}" Name="State">
+              <Field Id="{1EAB2945-398F-4D85-87D9-DD6C15ABEF19}" Name="HasErrorMessages" />
+              <Field Id="{750D44E1-CAFC-4B76-B81C-56679D8E2200}" Name="HasMessages" />
+              <Field Id="{8EDB72F4-293F-4CA8-9DC7-FF420FE15BF1}" Name="HasNotificationMessages" />
+              <Field Id="{9E655490-CC51-4EEF-AE4C-EC351FE4E2F6}" Name="HasWarningMessages" />
+            </Section>
+          </Template>
+          <Template Id="{854A20C5-20DD-48CF-BAFA-D1CB72638D59}" Name="Message" IsExternalReference="True">
+            <Section Id="{D33C869B-6429-4219-82FD-1848B295D842}" Name="Data">
+              <Field Id="{D281BD0C-D3EF-4012-B560-5DAAF3FA37A8}" Name="Text" />
+              <Field Id="{957E1A7D-9727-4EEE-811D-1F3998A9FD99}" Name="Actions" />
+            </Section>
+            <Section Id="{CC746F1E-CD1C-4965-B082-505CA223D15F}" Name="Appearence">
+              <Field Id="{2A471C94-914F-4724-9552-ED0AC2FD5423}" Name="IsClosable" />
+            </Section>
+          </Template>
+          <Image Id="{F6E7B5A9-7AD7-4353-B06E-6472DAD60C1F}" Name="message-bar-icons" IsExternalReference="True" />
+          <Folder Id="{41047ECE-DC3A-4A69-8492-77FDF51C8F58}" Name="Texts" IsExternalReference="True">
+            <Text Id="{81438631-719F-49E3-A2E6-3F9134368814}" Name="errors" IsExternalReference="True" />
+            <Text Id="{C56670FA-51E3-48A0-A37B-73F09833446A}" Name="Less" IsExternalReference="True" />
+            <Text Id="{6777DEF3-F41A-42FE-A847-9A54B548270C}" Name="More" IsExternalReference="True" />
+            <Text Id="{1D8F075E-99C1-4D15-AE37-71635DD9DFAB}" Name="notifications" IsExternalReference="True" />
+            <Text Id="{D07786E3-B7B9-40B4-B733-F4F59F64BA39}" Name="There are" IsExternalReference="True" />
+            <Text Id="{684D1AD7-5E58-4484-B2EB-19D7CBEBB9B7}" Name="warnings" IsExternalReference="True" />
+          </Folder>
+        </View--rendering>
+        <View--rendering Id="{AF6438A4-8295-4925-90B3-2BF97D3515AF}" Name="ProgressBar" IsExternalReference="True">
+          <Template Id="{437219C1-289E-4292-9525-63A5CCD69224}" Name="ProgressBar-Parameters" IsExternalReference="True">
+            <Section Id="{0A305331-16FB-4B7E-8C18-6B7FD00E9E8C}" Name="Data">
+              <Field Id="{496BF996-92BE-453E-BF04-59EC919F9EEA}" Name="MaxValue" />
+              <Field Id="{FABB706D-DAE6-4DFE-9DDD-5537FE87C32B}" Name="UpdateInterval" />
+              <Field Id="{0C183E55-81CE-471B-A260-AB85888826F9}" Name="Value" />
+            </Section>
+            <Section Id="{110541CB-C305-44FB-87E1-1B296113980B}" Name="Appearance">
+              <Field Id="{C60247E5-D860-456F-9461-96E82C11F45F}" Name="ShowLabel" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{FE9723FC-56E4-4CA8-9C64-CB34F29462A5}" Name="ProgressIndicator" IsExternalReference="True">
+          <Template Id="{D6703202-3D2C-4394-81D6-54AA9841189B}" Name="ProgressIndicator Parameters" IsExternalReference="True">
+            <Section Id="{7F5FDC5F-5F09-4F98-B0DB-5DAFD00C6549}" Name="Appearance">
+              <Field Id="{5EA166D4-3EF1-4E74-A43A-FD7646B24381}" Name="IsFullscreen" />
+              <Field Id="{BBBD9115-7D2A-46A7-9AB6-A15EA5D6A3F9}" Name="Delay" />
+              <Field Id="{2082E57B-DAAC-4396-80EF-11A6C25395F7}" Name="IsBusy" />
+              <Field Id="{111287E4-1526-4970-9A6B-D725DF5606B4}" Name="HideTargetContent" />
+            </Section>
+            <Section Id="{BFF49364-30C7-458D-8255-0D714F930F7E}" Name="Behavior">
+              <Field Id="{55B3805C-F02E-42BB-834B-E3E30759E623}" Name="TargetControl" />
+            </Section>
+            <Section Id="{348DCD10-98EB-49AC-A1C3-4BE0AC1F1359}" Name="Data">
+              <Field Id="{80506FFD-BC6E-4976-8570-674805D977AB}" Name="AutoShow" />
+              <Field Id="{26FF2CBE-FCE1-42FF-BEC6-B410216225E2}" Name="AutoShowTimeout" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{8BECEF35-1374-4D25-8A1A-4CDCC4218AA9}" Name="RadioButton" IsExternalReference="True">
+          <Template Id="{56E3E9CE-F699-45E5-9938-6FED97DA6A65}" Name="RadioButton Parameters" IsExternalReference="True">
+            <Section Id="{852E084F-3DD1-41B6-9502-5FD3EC524CDC}" Name="Data">
+              <Field Id="{E861093B-D666-4D0D-AC0C-508713D325CF}" Name="IsChecked" />
+              <Field Id="{832A17FC-FCCC-40C5-A68A-82E08C297FF9}" Name="Value" />
+              <Field Id="{2A2A3E10-CC00-4044-B1E6-6B761387D8F3}" Name="Text" />
+              <Field Id="{B9C4C778-412F-4421-933D-1AD57EEB745C}" Name="GroupName" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{73C16115-8B56-43AF-8EA3-4D704FCDA127}" Name="Separator" IsExternalReference="True">
+          <Template Id="{5C9C838A-1772-470E-87C3-C89BC5999CC7}" Name="Separator Parameters" IsExternalReference="True" />
+        </View--rendering>
+        <View--rendering Id="{CA60348E-8A37-4DC7-953D-837D2BC5FAE1}" Name="SheerUI" IsExternalReference="True">
+          <Template Id="{EF99BAB5-1AC1-4B9B-A06F-5D13E4E602F9}" Name="SheerUI-Parameters" IsExternalReference="True" />
+        </View--rendering>
+        <View--rendering Id="{1E538B08-446D-40BF-BE63-B6ABBD266C6A}" Name="SubAppRenderer" IsExternalReference="True">
+          <Template Id="{8ABB2BDC-FBE4-427D-939F-2D9F84E23E8A}" Name="SubAppRenderer Parameters" IsExternalReference="True" />
+        </View--rendering>
+        <View--rendering Id="{7717EB6C-9F90-4C58-826D-5E87722A0318}" Name="Text" IsExternalReference="True">
+          <Template Id="{6437CFD5-76CA-48AA-BFBD-8B8D73EB5581}" Name="Text Parameters" IsExternalReference="True">
+            <Section Id="{316A46D1-7163-46E1-814E-6A11C4727E50}" Name="Appearance">
+              <Field Id="{844FE7AA-2CB9-49A2-AC81-917C04B0713E}" Name="TextType" />
+              <Field Id="{3564B3D0-3804-4D86-9880-B5E7473EF56C}" Name="Text" />
+            </Section>
+            <Section Id="{6B12D553-FB7F-462E-B919-2A02ACB38AFA}" Name="Data">
+              <Field Id="{FB26E8C9-3CF0-45F3-A982-3954FD849157}" Name="FieldName" />
+            </Section>
+          </Template>
+          <Folder Id="{E0BD7710-01BE-4EAC-93C4-9C48BD4F40FA}" Name="TextTypes" IsExternalReference="True">
+            <Folder Id="{330807F1-C7DC-47A5-B8E1-B4EA31A8509F}" Name="Text" IsExternalReference="True" />
+            <Folder Id="{01632E5C-E3F3-4717-9DFE-F0636BDEC356}" Name="Label" IsExternalReference="True" />
+            <Folder Id="{A2E2B795-EF9C-41F7-B979-AB893F1C5CE5}" Name="HelpLabel" IsExternalReference="True" />
+            <Folder Id="{CFC15E1F-E411-4854-9F08-646C09BAA666}" Name="LargeLabel" IsExternalReference="True" />
+            <Folder Id="{88447D64-844F-414D-B703-70D97D4F9DC1}" Name="Value" IsExternalReference="True" />
+            <Folder Id="{3798B7DA-B87F-4CE8-974F-2E494ABC3FDB}" Name="LargeValue" IsExternalReference="True" />
+            <Folder Id="{A4EF20A5-16FD-43FF-BA8A-BC75B9537A3D}" Name="Title" IsExternalReference="True" />
+            <Folder Id="{879ADE12-DBB3-4B92-9CAE-4780892DA45E}" Name="LargeTitle" IsExternalReference="True" />
+            <Folder Id="{B9870DD1-8670-4422-910B-BE8A5B728FF9}" Name="SmallTitle" IsExternalReference="True" />
+            <Folder Id="{1FFD83B5-1999-4A30-AEDC-A1E21926991C}" Name="Divider" IsExternalReference="True" />
+          </Folder>
+        </View--rendering>
+        <View--rendering Id="{9918B36C-92ED-4EB8-A95A-009E2523C672}" Name="TextArea" IsExternalReference="True">
+          <Template Id="{CA47D795-8860-4951-8C5E-518714D34767}" Name="TextArea Parameters" IsExternalReference="True">
+            <Section Id="{A1253DB6-AFE2-46C5-A014-9F331A72829A}" Name="Appearance">
+              <Field Id="{E4D96B87-780D-4449-8C8E-49C2FA59A2C7}" Name="Columns" />
+              <Field Id="{9AD88918-AA9B-48A0-A373-7BB7F8770A97}" Name="Rows" />
+              <Field Id="{CE54987C-6575-4E28-AE70-6097ECB590DF}" Name="Watermark" />
+              <Field Id="{5BD7EA7A-EF0A-4816-934C-DC76EE4CD2D2}" Name="Text" />
+              <Field Id="{20F1A603-3144-4504-8EE0-2DDD51D7F7ED}" Name="WidthPolicy" />
+            </Section>
+            <Section Id="{E3A0D677-B454-4954-BD30-1A93DA41F147}" Name="Behavior">
+              <Field Id="{59DA7787-6D23-446F-AB9E-E28907021D3D}" Name="MaxLength" />
+              <Field Id="{7C2879A3-8928-490E-9E61-EB4A03808B8E}" Name="Wrap" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{57F86E9A-1844-45CE-BF8A-62900AE17A92}" Name="TextBox" IsExternalReference="True">
+          <Template Id="{16494224-6913-4B34-98AC-8EB69DD0A334}" Name="TextBox Parameters" IsExternalReference="True">
+            <Section Id="{7850AB53-B6BD-43E8-A7C4-0889716C4CE9}" Name="Appearance">
+              <Field Id="{B2ED3206-36D3-4F87-BA57-253AA89DD626}" Name="Text" />
+              <Field Id="{682C296B-00E2-4A90-8F51-CFE5E6C8FDBD}" Name="Type" />
+              <Field Id="{9378805D-F410-4DB5-B343-16A3BE940979}" Name="Watermark" />
+              <Field Id="{CB6941FC-D4D1-437E-81F2-6EAEADE178BF}" Name="WidthPolicy" />
+            </Section>
+            <Section Id="{0258BF64-D681-4BB4-9C47-249F916FE4F8}" Name="Behavior">
+              <Field Id="{634FD258-188E-4037-B789-181240F9BEEF}" Name="IsReadonly" />
+              <Field Id="{1504DEC7-6E50-47E9-BE51-67F14484D76E}" Name="MaxLength" />
+              <Field Id="{F54B4E83-9D4C-4584-B6A0-D7358E2B28A6}" Name="IsRequired" />
+              <Field Id="{63A1E833-CDA6-4496-8CF4-9F1A16A61D98}" Name="TriggerTextChangeOnKeyUp" />
+            </Section>
+          </Template>
+          <Folder Id="{56C48A1C-DBAC-406E-9FED-403F25702CB9}" Name="WidthPolicy" IsExternalReference="True">
+            <Folder Id="{10E1CB3E-660F-4C5E-9F25-F67C4637D463}" Name="BlockLevel" IsExternalReference="True" />
+            <Folder Id="{71C547F5-0BCC-4102-8207-F30E0D696F20}" Name="Default" IsExternalReference="True" />
+          </Folder>
+        </View--rendering>
+        <View--rendering Id="{932BCB0B-2F31-4A61-974A-889C0AB36D41}" Name="Timeline" IsExternalReference="True">
+          <Template Id="{70C27CA9-5BD7-41CD-8D76-B1D9A1B4F689}" Name="Timeline-Parameters" IsExternalReference="True">
+            <Section Id="{E9D437DF-6D80-4F8F-9295-335CABA58E71}" Name="Data">
+              <Field Id="{265BE0E4-DB27-4A7F-A3DC-EDAABC6583F9}" Name="Data" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{2C2B43A1-404B-46F5-8D9B-435EFDDBF526}" Name="TimePicker" IsExternalReference="True">
+          <Template Id="{0EED43DF-00B9-4849-83A8-4E1685243BCA}" Name="TimePicker Parameters" IsExternalReference="True">
+            <Section Id="{49963D34-5AC7-4DE2-95C9-75518A469FAA}" Name="Data">
+              <Field Id="{3463C746-D851-4561-BE95-080B08AD0054}" Name="MinTime" />
+              <Field Id="{C9A715B5-DA9A-4A8A-8794-D2F11EB6185F}" Name="MaxTime" />
+              <Field Id="{780528B5-CCB9-4354-9C14-7DB80B6410FE}" Name="TimeStep" />
+              <Field Id="{A5F51A76-5256-49F9-A8AA-8ABD4EA505EE}" Name="IsDefaultCurrentTime" />
+              <Field Id="{660F457F-E90E-46B1-ADC6-C877264A2B94}" Name="Time" />
+            </Section>
+            <Section Id="{2AF30399-ED2D-4241-A896-A6DF0C65EDCC}" Name="Appearance">
+              <Field Id="{D1291FD5-7919-4590-B4E6-95D6665258D4}" Name="IsAMPMFormat" />
+              <Field Id="{A26C3003-A4E7-4703-8562-06C1C8CE9BBD}" Name="IsAnyValueAccepted" />
+              <Field Id="{A24187EA-D306-4E82-A3C0-6233054B7034}" Name="IsReadOnly" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{26B2B002-BCA0-4968-99E4-01573338B6A9}" Name="ToggleButton" IsExternalReference="True">
+          <Folder Id="{824C3ECF-15D2-4F7B-AD22-07474393D203}" Name="ButtonTypes" IsExternalReference="True">
+            <Folder Id="{692588C4-0138-4032-9FEA-4ABFA867A2B4}" Name="Default" IsExternalReference="True" />
+            <Folder Id="{C7609E3B-0E7A-44E0-95A2-FFB37AE7075E}" Name="Inverse" IsExternalReference="True" />
+            <Folder Id="{61CC797D-B079-441C-B0DA-1A666E1A7722}" Name="Primary" IsExternalReference="True" />
+          </Folder>
+          <Folder Id="{B8EC9C72-85C2-4A10-B236-059BC1ED0284}" Name="Dimension" IsExternalReference="True">
+            <Folder Id="{9C9F5613-AD46-41F5-84DF-0427664B2D93}" Name="Normal" IsExternalReference="True" />
+            <Folder Id="{42C39E75-D692-497D-9CBE-26793B892499}" Name="Large" IsExternalReference="True" />
+          </Folder>
+          <Template Id="{139E615F-4DFA-41DA-B596-BCA15788E73E}" Name="ToggleButton Parameters" IsExternalReference="True">
+            <Section Id="{1EC63FB3-F36E-4E8E-978B-7A586F8DF58E}" Name="Appearance">
+              <Field Id="{7E19F980-CF86-4875-A9E6-49C7FD77B2EF}" Name="ButtonType" />
+              <Field Id="{8F632709-9424-46A5-A4E3-F7D164B7D377}" Name="Dimension" />
+              <Field Id="{F5179A25-3FF7-4CF7-8A4E-70C3EC1579C3}" Name="Text" />
+              <Field Id="{BE821688-018F-4C09-BB3F-6000F171FABD}" Name="IsOpen" />
+              <Field Id="{678C433B-4C78-465C-A272-4B0868D5C52C}" Name="ImageUrl" />
+              <Field Id="{D4B0E06E-0578-42AA-9210-ED5DDA7B4ABD}" Name="BackgroundPosition" />
+              <Field Id="{A619C673-D47C-40A9-B56A-AA3DCD9B50F5}" Name="ShowArrow" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{4C6DB54A-0DED-493A-BCBA-3149BF929497}" Name="ToolTip" IsExternalReference="True">
+          <Template Id="{0F15C584-3F82-44EB-BDB7-53274363679D}" Name="ToolTip Parameters" IsExternalReference="True">
+            <Section Id="{BD7BB45F-4218-4F17-819A-7464E0869CBD}" Name="Appearance">
+              <Field Id="{3F83CC97-EA69-4F91-BB73-3894B5E2FD02}" Name="Simple" />
+              <Field Id="{548FA73E-F03C-430F-82C9-756944F4D848}" Name="Delay" />
+              <Field Id="{AC858BC1-2B2F-4015-8B67-EFE19758C69E}" Name="Tooltip" />
+            </Section>
+            <Section Id="{D2DC9373-0D56-4391-A2CA-7BEA0B3B83CD}" Name="Behavior">
+              <Field Id="{DA79D4D3-10F4-4946-B6C1-24BA2605CEC7}" Name="TargetControl" />
+              <Field Id="{248A367E-9600-4927-9597-9460D1023439}" Name="Placement" />
+              <Field Id="{3BA1FE61-F794-4E17-BEEF-F91857749728}" Name="ContainsHTML" />
+              <Field Id="{36B50162-3595-46F8-8B0C-B53BB00F3457}" Name="AccessKey" />
+              <Field Id="{56761079-E342-4BE3-8F24-43758E65BEEB}" Name="Trigger" />
+            </Section>
+            <Section Id="{D0F12299-13E9-44BD-8388-925EDF1E8D14}" Name="Data">
+              <Field Id="{B4ABFEF0-9602-4687-87CE-94458DF7F5BB}" Name="Content" />
+              <Field Id="{7B2398CA-EF99-4470-9385-2C916C2E6AD0}" Name="Title" />
+            </Section>
+          </Template>
+          <Folder Id="{ACA3923B-E194-435F-A79C-83997B6BF01C}" Name="Placement" IsExternalReference="True">
+            <Folder Id="{3A85DBD9-C27F-46BE-9CB4-0599E762A700}" Name="Bottom" IsExternalReference="True" />
+            <Folder Id="{518915EB-0DB3-4B42-9437-57E9406C0D7D}" Name="Left" IsExternalReference="True" />
+            <Folder Id="{37AEDB08-6BD5-49E0-8020-A0ADED692DF6}" Name="Right" IsExternalReference="True" />
+            <Folder Id="{6F06DEA7-70FF-4AF2-A6BB-58720346A5F2}" Name="Top" IsExternalReference="True" />
+          </Folder>
+          <Folder Id="{7DD61C67-960E-4094-B778-713C73C2CFF1}" Name="Trigger" IsExternalReference="True">
+            <Folder Id="{333398B2-F24C-47B6-8672-AD675D97866E}" Name="Click" IsExternalReference="True" />
+            <Folder Id="{F74715AE-EFFB-4602-8A5A-EF292E9CF95F}" Name="Focus" IsExternalReference="True" />
+            <Folder Id="{BACC4304-1D9B-42C2-83E3-43F2875025AE}" Name="Hover" IsExternalReference="True" />
+            <Folder Id="{EAC8FD7A-C5AF-4930-9AA5-6CDA5F1E356F}" Name="Manual" IsExternalReference="True" />
+          </Folder>
+        </View--rendering>
+        <View--rendering Id="{7E49DE99-146A-4F62-8555-A731AAB7427B}" Name="Slider" IsExternalReference="True">
+          <Template Id="{5CDE79BE-228F-4BE5-B9D3-E63E365F1063}" Name="Slider Parameters" IsExternalReference="True">
+            <Section Id="{A5ACF094-ABD0-48A0-A369-53C7D4EAA1D3}" Name="Appearance">
+              <Field Id="{0C997B28-059C-456B-AF24-3785416AA24B}" Name="DisplayFieldName" />
+              <Field Id="{12BF6461-3746-4658-ACFB-4C3ACF3483A3}" Name="IsTitleBar" />
+              <Field Id="{4CF9AB62-E1B7-4A15-920B-57F1201DA699}" Name="ValueFieldName" />
+              <Field Id="{814FAEB1-C6A9-4BF8-9224-03EC1B29A52B}" Name="Type" />
+              <Field Id="{6D845445-CE74-4649-A2DA-24F912A9471A}" Name="TitleValuesStep" />
+              <Field Id="{CE272A7D-D61D-4C13-A060-1B658C84B6C2}" Name="HideTooltip" />
+            </Section>
+            <Section Id="{491FA644-EA8D-404F-9F2D-CB44B7F98FF6}" Name="Data">
+              <Field Id="{AB50EF7C-A4E9-41AA-A6FE-C5E581374B6A}" Name="ItemsDataSource" />
+              <Field Id="{E6D6A619-E0B5-4361-8C0E-EC8FC3D2F402}" Name="Minimum" />
+              <Field Id="{0EC9416C-B808-45B4-9319-089CC747B6B8}" Name="Maximum" />
+              <Field Id="{55E43232-AB8A-4400-AD10-F0786906A746}" Name="Step" />
+              <Field Id="{FF5074FA-9220-4DBA-89AF-61E82BABDF02}" Name="SelectedValue" />
+              <Field Id="{426581FF-C36A-42C7-9600-2DF54C3ED934}" Name="SelectedValueStart" />
+              <Field Id="{131D0BBD-1566-48CC-BF3D-9C3C7E679204}" Name="SelectedValueEnd" />
+              <Field Id="{572506E0-9DB9-4FB3-AB67-1C282A870E4B}" Name="TitleValueAffix" />
+              <Field Id="{6B217809-8556-46DD-8447-DAFF1C3E00C8}" Name="TitleValueSuffix" />
+            </Section>
+          </Template>
+          <Folder Id="{856F8C5C-9DBA-40DE-9A7B-AF6C58FA745A}" Name="SliderType" IsExternalReference="True">
+            <Folder Id="{3D120398-7E96-4B6C-8991-D9048DDB6784}" Name="Single" IsExternalReference="True" />
+            <Folder Id="{B71FD42F-7EE6-4980-A9BF-83F7E10B6181}" Name="Range" IsExternalReference="True" />
+          </Folder>
+          <Template Id="{81B11155-DAF3-4F40-8AF9-314D961AE68E}" Name="SliderStep" IsExternalReference="True">
+            <Section Id="{F095A7FF-C356-46AF-839A-160961CCF586}" Name="Data">
+              <Field Id="{A188EE40-431D-4345-B59C-5D789D37C7B1}" Name="ImageUrl" />
+              <Field Id="{E497DF8B-8349-49C9-AFA9-A606BD8F25E4}" Name="Name" />
+              <Field Id="{46DFE776-5075-4D64-9386-CB545E08D36A}" Name="Value" />
+              <Field Id="{F8344FF5-75D6-42D4-A0C2-5D756F1F5C0F}" Name="Description" />
+            </Section>
+          </Template>
+        </View--rendering>
+      </Folder>
+      <Folder Id="{CDAD270A-3A2B-4637-91BC-EF6344B68AC6}" Name="Containers" IsExternalReference="True">
+        <View--rendering Id="{442BD093-FBAD-4E36-BC08-489E16C82D08}" Name="AdvancedExpander" IsExternalReference="True" Place--Holders="$Id.ActionBar, $Id.PromotedFields, $Id.Body">
+          <Template Id="{1C98E698-030C-43FF-8B6C-08D6D7E1B8DC}" Name="AdvancedExpander Parameters" IsExternalReference="True">
+            <Section Id="{80EED2F4-F76A-4B74-911D-EB0A207F815F}" Name="Appearance">
+              <Field Id="{8D593EBB-4A48-4B85-8E79-BF745023BD61}" Name="Header" />
+              <Field Id="{0EA58259-0F86-47BB-B1B7-2EB33D905D15}" Name="IsOpen" />
+              <Field Id="{173DFBC9-5924-4BB7-8A74-1DCEA1002874}" Name="EnableAdditional" />
+              <Field Id="{469A7DD8-DC22-4037-803D-490515C909B1}" Name="ShowAdditional" />
+              <Field Id="{67F4E062-F3CB-4DFB-BF94-81A77A438BF8}" Name="ContentHeight" />
+              <Field Id="{BF3F6CD4-26C8-4488-9BE9-336346883AEC}" Name="ImageUrl" />
+              <Field Id="{937F9157-5396-41A0-B51D-2AADDF3F50A5}" Name="IsCollapsible" />
+            </Section>
+          </Template>
+          <Folder Id="{F34083B0-D367-42DA-9DBB-AA5E13E2CD0D}" Name="Texts" IsExternalReference="True">
+            <Text Id="{84F96E7A-A9B0-4BDA-BF5A-8756350BB092}" Name="Less" IsExternalReference="True" />
+            <Text Id="{750D2E0B-0092-45F6-BB4B-8C1FE1A77662}" Name="More" IsExternalReference="True" />
+          </Folder>
+        </View--rendering>
+        <View--rendering Id="{F6C9F461-FCAF-47DC-AA01-C8C64C2EFFB8}" Name="Border" IsExternalReference="True" Place--Holders="$Id.Content">
+          <Template Id="{CD936D55-EDEA-4F4E-8EEC-4D297258A09B}" Name="Border Parameters" IsExternalReference="True">
+            <Section Id="{CC12575E-0144-4E59-A573-E4BE8D533C85}" Name="Appearance">
+              <Field Id="{0DA96568-CC92-4B4C-9B16-BC9CBEBDD6B8}" Name="ContentAlignment" />
+              <Field Id="{11A5B621-725E-4729-BD58-C36B2A8BF474}" Name="ShowBorder" />
+              <Field Id="{1A031D7B-6F2D-438F-93D8-A48214C9FE00}" Name="UsePadding" />
+              <Field Id="{37BC1499-9F8E-4EC2-9C6F-0A211AE9F2A7}" Name="PaddingType" />
+              <Field Id="{DF19EDBC-0DD2-43F6-BF02-D027E97E3475}" Name="Height" />
+              <Field Id="{112B3F72-80F1-4175-A758-BBB76332C77D}" Name="Width" />
+            </Section>
+          </Template>
+          <Folder Id="{0F7A10D4-C8F2-4B3A-B93E-CE0C159000E4}" Name="ContentAlignment" IsExternalReference="True">
+            <Folder Id="{425589D0-1A06-4C05-8051-B8618390BD49}" Name="Left" IsExternalReference="True" />
+            <Folder Id="{8790BC81-A6DF-4ADD-94F8-DB7357166F82}" Name="Center" IsExternalReference="True" />
+            <Folder Id="{FABEAF71-D78C-4D05-878C-E51476AE3DC5}" Name="Right" IsExternalReference="True" />
+          </Folder>
+          <Folder Id="{E79F280F-AA41-4774-9BD4-130A2F748B89}" Name="PaddingType" IsExternalReference="True">
+            <Folder Id="{E01F397F-9839-4AD0-A036-B735E3F99D20}" Name="All" IsExternalReference="True" />
+            <Folder Id="{9E43F4CE-50FB-41F8-BADC-7833FAE30587}" Name="Top" IsExternalReference="True" />
+            <Folder Id="{DA3CFF90-BE01-4021-8596-AA4D048D419B}" Name="Right" IsExternalReference="True" />
+            <Folder Id="{CD5CC1C5-345E-4311-A7AC-9E7FAAA2E40E}" Name="Bottom" IsExternalReference="True" />
+            <Folder Id="{B3CB51A4-90CD-4A06-A2D8-AA33D891225D}" Name="Left" IsExternalReference="True" />
+            <Folder Id="{5A9145D3-AC06-45F9-B4D5-273D358CDDC2}" Name="LeftBottom" IsExternalReference="True" />
+          </Folder>
+        </View--rendering>
+        <View--rendering Id="{5CB208F6-1860-426B-8221-FAA85B329848}" Name="ColumnPanel" IsExternalReference="True" Place--Holders="$Id.Content">
+          <Template Id="{FAD8183C-3169-4239-B9A0-8EA13DF4D95C}" Name="ColumnPanel Parameters" IsExternalReference="True">
+            <Section Id="{2B1264F9-7457-47F5-88A4-3DACC910C201}" Name="Appearance">
+              <Field Id="{725AF82E-8E97-4BEF-B7FB-5B0E519940E2}" Name="GridColumns" />
+              <Field Id="{A86BF501-99FF-41A1-B409-BA649980025C}" Name="ContentAlign" />
+              <Field Id="{3DF0B8D0-9492-4FB7-B880-BF99BF56C860}" Name="ApplyGridColumsToAllSizes" />
+            </Section>
+          </Template>
+          <Folder Id="{599ABF7A-8325-40C5-98B6-43D5A4A7ED79}" Name="ContentAlignment" IsExternalReference="True">
+            <Folder Id="{1A3FD194-BABB-457B-8E36-78CD461A898C}" Name="Left" IsExternalReference="True" />
+            <Folder Id="{6B23BA47-0D54-4913-BBDA-D15CD3529F41}" Name="Center" IsExternalReference="True" />
+            <Folder Id="{2AD80D62-4CC0-4E88-8849-D8FAFA1F05E2}" Name="Right" IsExternalReference="True" />
+          </Folder>
+          <Folder Id="{393205E2-B8AD-4AAA-B670-6643521DABA2}" Name="GridColumns" IsExternalReference="True">
+            <Folder Id="{CFF34D21-A880-4D65-9617-6B0A442D3636}" Name="1" IsExternalReference="True" />
+            <Folder Id="{D533F972-0CFA-4A93-A0BE-62CD950422D1}" Name="2" IsExternalReference="True" />
+            <Folder Id="{4B954529-6DB6-4A05-A7AA-F73DAC07DD72}" Name="3" IsExternalReference="True" />
+            <Folder Id="{AA7CD709-43D0-42D9-9435-8D83DEAEEE42}" Name="4" IsExternalReference="True" />
+            <Folder Id="{BC658225-AC52-456D-92B1-2D81C8CF3B64}" Name="5" IsExternalReference="True" />
+            <Folder Id="{AC7BCDC0-DB33-48CC-B51D-FACD5A867D2B}" Name="6" IsExternalReference="True" />
+            <Folder Id="{A41681CA-0124-44F7-8520-08E583AC95B5}" Name="7" IsExternalReference="True" />
+            <Folder Id="{5D6C7429-D466-4D43-B9E4-53EA2B8AC4BF}" Name="8" IsExternalReference="True" />
+            <Folder Id="{E4AE7F0C-866B-4BB3-9C19-855999546B35}" Name="9" IsExternalReference="True" />
+            <Folder Id="{06F37913-60B0-4FEB-95A2-9CB62D06CE54}" Name="10" IsExternalReference="True" />
+            <Folder Id="{ECBDD4DE-C5F3-4EC6-A9C3-78508E7326C0}" Name="11" IsExternalReference="True" />
+            <Folder Id="{D799B3AA-4F02-4310-BEBE-03129BDC4834}" Name="12" IsExternalReference="True" />
+          </Folder>
+        </View--rendering>
+        <View--rendering Id="{CA84FBFF-B3A0-4AEC-9C2C-7DDBBF7DA102}" Name="Expander" IsExternalReference="True" Place--Holders="$Id.Body">
+          <Image Id="{30FA2D31-62F9-4CD5-9F3C-CF0B71BB79F1}" Name="chevron-medium-1-01" IsExternalReference="True" />
+          <Image Id="{D269AD77-5CDC-4335-8DD9-9982C1BDD8D5}" Name="chevron-medium-2-01" IsExternalReference="True" />
+          <Template Id="{C3BD8C0A-7AF9-42C6-BF9E-AF0B2B506572}" Name="Expander" IsExternalReference="True">
+            <Section Id="{1BD1B7B5-E51B-4947-97E2-138F7F58CC02}" Name="Appearance">
+              <Field Id="{0A3A9E9E-8558-4EBB-9A39-79767B03F33E}" Name="IsOpen" />
+              <Field Id="{FCCC1884-01C4-4A56-9C5F-93C3A0CFB4D6}" Name="Text" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{41EF8D3D-6B51-4E31-B61E-417A5E652AE1}" Name="Frame" IsExternalReference="True" Place--Holders="$Id.Content">
+          <Template Id="{D0DB19FA-CA3E-4952-AD72-F81974D44FB6}" Name="Frame Parameters" IsExternalReference="True">
+            <Section Id="{EE13E15C-CB19-48DA-91B2-301DC67E7C5B}" Name="Data">
+              <Field Id="{4FBCF5C0-808C-4E3E-8E8E-424FC7596628}" Name="SourceUrl" />
+              <Field Id="{6A833D0A-5801-40A0-B38A-3250C7AD4C18}" Name="Width" />
+              <Field Id="{B8009E8D-C1EA-4ACF-ACB7-FD820D8072AD}" Name="Height" />
+              <Field Id="{E082BF93-F652-41F4-8E4C-D8DC42D8E9FE}" Name="IsDeferred" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{24CE7146-7ADF-4AC5-8629-457ACA6B32D2}" Name="Popover" IsExternalReference="True" Place--Holders="$Id.Content">
+          <Folder Id="{DBC0B5D0-D3EF-4076-9E83-349EAB530564}" Name="Placement" IsExternalReference="True">
+            <Folder Id="{3D45843D-B4EE-4B8B-84E4-ED1F2ED66388}" Name="auto" IsExternalReference="True" />
+            <Folder Id="{30240131-0723-4951-B417-1E6362FCEB39}" Name="bottom" IsExternalReference="True" />
+            <Folder Id="{F6853549-FAC3-460B-BD2D-C35650CDE878}" Name="bottom auto" IsExternalReference="True" />
+            <Folder Id="{F12F50A7-3CF2-464C-8697-253877ED2E5E}" Name="left" IsExternalReference="True" />
+            <Folder Id="{ABE1A50B-73E4-464C-8419-5FDF24ADE549}" Name="left auto" IsExternalReference="True" />
+            <Folder Id="{CE1A4BE9-0F02-49FA-A1D6-1F4097923535}" Name="right" IsExternalReference="True" />
+            <Folder Id="{53A9437E-837F-4C02-A263-A64F13CA781C}" Name="right auto" IsExternalReference="True" />
+            <Folder Id="{FBC87FD5-E5D1-469F-A2AC-13D65A9EF28F}" Name="top" IsExternalReference="True" />
+            <Folder Id="{AC56879E-7007-4E78-B5A4-F98212316A3F}" Name="top auto" IsExternalReference="True" />
+          </Folder>
+          <Template Id="{5085EB66-844D-49FB-9353-34D2EAEBA556}" Name="Popover-Parameters" IsExternalReference="True">
+            <Section Id="{CB8EC8FF-F13D-4843-84DD-47F29940EC4F}" Name="Behavior">
+              <Field Id="{E1DCA587-601A-47F7-BB42-4A642E322B0E}" Name="TargetControl" />
+              <Field Id="{980FA3AA-EE63-4522-ADD5-AD962F34C1D9}" Name="Trigger" />
+              <Field Id="{BA395174-3248-49B2-8ABC-C8D4E91251E9}" Name="Placement" />
+            </Section>
+          </Template>
+          <Folder Id="{7035590E-4C28-4DCB-AAF0-1A34DEACFD4D}" Name="Trigger" IsExternalReference="True">
+            <Folder Id="{B744605A-9A93-4E97-89CD-F1165D248F51}" Name="click" IsExternalReference="True" />
+            <Folder Id="{83061F92-5375-4687-91FC-9EDD62230402}" Name="hover" IsExternalReference="True" />
+          </Folder>
+        </View--rendering>
+        <View--rendering Id="{D97873D4-FA6F-4E14-86E3-5E189F72C60D}" Name="ProtectedBorder" IsExternalReference="True" Place--Holders="$Id.Content">
+          <Template Id="{48924435-AE17-4ABA-B580-47735E89B07D}" Name="ProtectedBorder Parameters" IsExternalReference="True">
+            <Section Id="{1175613B-823F-475F-872C-D88B3328D723}" Name="Security">
+              <Field Id="{A4437A3E-8E18-4799-9112-4AF8A0238704}" Name="RequiresRead" />
+              <Field Id="{ACC33EED-7C08-45AA-A010-F594D19885AA}" Name="RequiresWrite" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{BB7C3714-EC05-459D-A93E-39C8B9C504D3}" Name="Repeater" IsExternalReference="True">
+          <Template Id="{AB2047F4-D56C-4C27-A317-74D6BB06C31F}" Name="Repeater Parameters" IsExternalReference="True">
+            <Section Id="{0ACC7EAC-6154-4A55-A744-77E90A639231}" Name="Data">
+              <Field Id="{9D2C60BA-F40D-426A-AB97-752A8BC656B2}" Name="Items" />
+              <Field Id="{ADA3E7C3-F69D-4766-9B6F-1C7FD605BF1A}" Name="QueryStringSuffix" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{C4393722-39FA-4869-9582-3A8EB8983A0D}" Name="RowPanel" IsExternalReference="True" Place--Holders="$Id.Content">
+          <Template Id="{72C60F90-5A23-4BC5-B000-24E023837067}" Name="RowPanel Parameters" IsExternalReference="True">
+            <Section Id="{93D48576-8210-4533-8BB2-5ED8D23778B0}" Name="Appearance">
+              <Field Id="{D1469346-3579-4683-B5F2-37F9A8735043}" Name="UsePadding" />
+              <Field Id="{3D233943-C65A-473C-A48F-D39AF5E5B28D}" Name="PaddingType" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{44DBDD8B-A63F-42F7-BD11-EB7B26C413FB}" Name="Section" IsExternalReference="True" Place--Holders="$Id.Content">
+          <Template Id="{D77E67D0-4D06-4A90-AA78-87E4B832D4FF}" Name="Section Parameters" IsExternalReference="True" />
+        </View--rendering>
+        <View--rendering Id="{054CA6D7-125D-46D0-957C-D38A26190274}" Name="SmartPanel" IsExternalReference="True" Place--Holders="$Id.Header, $Id.Content, $Id.Buttons">
+          <Folder Id="{88701442-7958-4321-9C01-553F7716C1F0}" Name="Dimensions" IsExternalReference="True">
+            <Folder Id="{DCD242F7-3E0E-4081-ABFD-AC1F08D8B6BF}" Name="Normal" IsExternalReference="True" />
+            <Folder Id="{832D4CB8-A9FF-4B0C-BBEE-57A2AA9E83CC}" Name="Small" IsExternalReference="True" />
+            <Folder Id="{AD8CFE42-939A-4353-BC62-961863288369}" Name="Large" IsExternalReference="True" />
+          </Folder>
+          <Folder Id="{282CEA99-A121-45A1-9516-DA1651C99DAD}" Name="Position" IsExternalReference="True">
+            <Folder Id="{4084343B-373A-4300-AE67-B53D9E521A68}" Name="Right" IsExternalReference="True" />
+            <Folder Id="{EAECF29B-3739-4773-9380-E3134B37C0B2}" Name="Bottom" IsExternalReference="True" />
+            <Folder Id="{002C2DE2-4B33-4A46-85C2-D8E872DCE968}" Name="Left" IsExternalReference="True" />
+            <Folder Id="{EAE8F943-38D3-4F03-A585-0D01203F9540}" Name="Top" IsExternalReference="True" />
+          </Folder>
+          <Template Id="{D05F6384-D405-4D47-9C3A-3154F79DDA8C}" Name="SmartPanel Parameters" IsExternalReference="True">
+            <Section Id="{4CD64AD1-650E-40FC-A47A-81299E7D31CB}" Name="Appearance">
+              <Field Id="{36C3FACF-5B87-4F30-8968-655D6B1C907D}" Name="Position" />
+              <Field Id="{B04C37F2-A941-41C9-90EF-623A5A086768}" Name="Dimensions" />
+              <Field Id="{0F1C6274-EBE0-4BDD-A283-4E02620746A7}" Name="OffsetTop" />
+              <Field Id="{BF85BD6E-4FD2-4677-B018-597B757DE824}" Name="OffsetBottom" />
+              <Field Id="{BEFD1C57-154F-455F-AECC-ABC2CDF96F4D}" Name="IsOpen" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{7426CD5B-A534-4462-ABEE-D700D78ECF6A}" Name="TabControl" IsExternalReference="True">
+          <Folder Id="{579B5DA0-C818-4715-999D-4CA954473D41}" Name="TabType" IsExternalReference="True">
+            <Folder Id="{41919270-5F09-48E4-9FB4-6A1497DB5E50}" Name="Normal" IsExternalReference="True" />
+            <Folder Id="{A55E64F4-7CDC-43D3-8B06-DAB222D6A1CE}" Name="Progressive" IsExternalReference="True" />
+            <Folder Id="{5993EC4E-BD49-48C6-8186-ABF48074A88B}" Name="SubTab" IsExternalReference="True" />
+          </Folder>
+          <Template Id="{87FE4E75-D567-4873-81B1-CF8560667EE0}" Name="TabControl Parameters" IsExternalReference="True">
+            <Section Id="{424B7070-39D6-47C3-A34E-7B15887771D8}" Name="Data">
+              <Field Id="{DADD0636-E0F8-4B03-B9DF-7FA4D4F450A0}" Name="Tabs" />
+              <Field Id="{3EA5253C-EAB0-4271-B65F-859EF5A17B26}" Name="SelectedTab" />
+            </Section>
+            <Section Id="{E6154DED-1CF2-4FAD-8C9C-C83A0F2925CD}" Name="Appearance">
+              <Field Id="{48397565-B71C-4ED0-B810-E192816B9218}" Name="TabType" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{FD97BD6A-2C46-4EB9-9F1F-7A2D7249DCC5}" Name="LoadOnDemandPanel" IsExternalReference="True">
+          <Template Id="{E43A8A1B-76A4-430E-A707-4653B1722406}" Name="LoadOnDemandPanel Parameters" IsExternalReference="True">
+            <Section Id="{179BB222-142D-4BA4-AB04-80702793186A}" Name="Data">
+              <Field Id="{09C214ED-BC9A-43FE-91D8-6AA2DF51960C}" Name="ItemId" />
+              <Field Id="{E831D73C-A870-4197-A91E-1326DB60705E}" Name="Database" />
+              <Field Id="{CCF11E5B-EDC1-48F3-BE0B-B62735E4F124}" Name="TriggerLoad" />
+              <Field Id="{F50D1174-0781-40D0-84D0-7FB79153A9AC}" Name="LoadOnVisible" />
+            </Section>
+          </Template>
+        </View--rendering>
+      </Folder>
+      <Folder Id="{38D599AF-09F7-4EC4-8FF6-5636DF767435}" Name="Dialogs" IsExternalReference="True">
+        <View--rendering Id="{B60FB581-44D1-4372-86A2-D6E494F020E1}" Name="DialogWindow" IsExternalReference="True" Place--Holders="$Id.Actions, $Id.Content, $Id.Navigation, $Id.Buttons">
+          <Folder Id="{41D512F0-3295-4CE6-A86A-D525ABD75B52}" Name="Backdrop" IsExternalReference="True">
+            <Folder Id="{E51EC964-B0D6-4DAE-987F-1D776472A0BA}" Name="True" IsExternalReference="True" />
+            <Folder Id="{AA9A43F8-6E10-485C-91D7-8D4A2382BECA}" Name="False" IsExternalReference="True" />
+            <Folder Id="{4C38E6E7-FBA8-48F9-B208-16D67DE98C1C}" Name="Static" IsExternalReference="True" />
+          </Folder>
+          <Template Id="{4D96D06C-54EE-47F3-97E5-1B4FA4B902B0}" Name="DialogWindow Parameters" IsExternalReference="True">
+            <Section Id="{D791AC81-32C8-4A67-B409-510292FE9C6F}" Name="Appearance">
+              <Field Id="{BE209153-7AFA-426F-BB6E-8360833F19E6}" Name="EnableKeyboard" />
+              <Field Id="{6A80F83A-4295-47E0-BFB5-2F88729AB09B}" Name="Size" />
+              <Field Id="{AF3E0D23-9D4C-4E4E-AF9A-F3179D6098D3}" Name="IsAnimated" />
+              <Field Id="{7065AC6A-3607-4F0B-97CF-9D0B46B961FF}" Name="HeaderText" />
+              <Field Id="{31CBA38C-D720-49AC-A07D-DDE4CA0BC859}" Name="HeaderLess" />
+              <Field Id="{91B99AF8-8C82-4F69-A1AB-D2C6B90140BF}" Name="Backdrop" />
+            </Section>
+          </Template>
+          <Folder Id="{DBF7837E-F8FA-44D6-9806-8FF593922C55}" Name="Dimension" IsExternalReference="True">
+            <Dimensions Id="{C2E3A7F7-BD13-4312-A6A7-C03E08951DCC}" Name="MessageSpecific" IsExternalReference="True" />
+            <Dimensions Id="{DFE6D45B-ED26-4D2C-8C5C-5A1EA07B1DEF}" Name="Small" IsExternalReference="True" />
+            <Dimensions Id="{F505B72F-890A-4190-8C48-742A4FEBD6B0}" Name="Medium" IsExternalReference="True" />
+            <Dimensions Id="{1255F2C7-60B0-4FF6-8C00-D6E6E50147A7}" Name="Large" IsExternalReference="True" />
+            <Dimensions Id="{E91073FF-E1C6-49FC-BFC4-C97AF1CD6C21}" Name="X-Large" IsExternalReference="True" />
+          </Folder>
+        </View--rendering>
+      </Folder>
+      <Folder Id="{8CD1190B-C713-4FFD-A94D-0F6068F86F6B}" Name="Forms" IsExternalReference="True">
+        <View--rendering Id="{B2257CAC-47CA-4061-9352-C06D687ED32C}" Name="Uploader" IsExternalReference="True">
+          <Template Id="{5A2718F9-F5BC-4C33-9DEF-4F580C0FCCAA}" Name="Uploader Parameter" IsExternalReference="True">
+            <Section Id="{444A46C0-54B1-4C45-8C58-7E1DC7024718}" Name="Data">
+              <Field Id="{109DB5F3-8486-47FC-B406-D582FAC6A089}" Name="Database" />
+              <Field Id="{8B28A700-87B0-418A-87DF-7563A29F0FAE}" Name="DestinationUrl" />
+            </Section>
+            <Section Id="{86DDB82A-C008-4137-A265-BC6674A5A120}" Name="Appearance">
+              <Field Id="{CC06D939-E016-479B-B847-5CF4BAF6410A}" Name="BrowseButtonText" />
+              <Field Id="{493D4C08-42C8-49C8-A87F-25395A6017F7}" Name="ShortDescriptionText" />
+            </Section>
+          </Template>
+          <Folder Id="{1607C8C2-C8E9-49F2-A7FC-F5D4FF4B9546}" Name="Messages" IsExternalReference="True">
+            <Notification--Message Id="{7F5A190F-64A6-495B-B148-80569C03348D}" Name="The maximum amount of data that you can upload is" IsExternalReference="True" />
+            <Notification--Message Id="{B995246F-A761-451E-9539-AAC4B7761F06}" Name="The media files could not be uploaded Please try again" IsExternalReference="True" />
+          </Folder>
+        </View--rendering>
+        <View--rendering Id="{F05CDBA5-03ED-46D2-B58C-C0283F86C332}" Name="UploaderInfo" IsExternalReference="True">
+          <Template Id="{FF815C79-72BC-44D8-9FAA-D3B3B789E0DF}" Name="UploaderInfo Parameter" IsExternalReference="True">
+            <Section Id="{0FA94279-13F1-4EE0-ABE5-95773C6A723B}" Name="Appearance">
+              <Field Id="{E671A0B5-9EAB-443D-A5AB-2D14AF9AE467}" Name="ShowNameField" />
+              <Field Id="{484ADF8C-D3BB-47AD-BE52-74AEDA2A82A1}" Name="ShowDescriptionField" />
+              <Field Id="{F83825F4-8D0D-4404-B06E-D5DCD2481E8F}" Name="ShowAlternateTextField" />
+            </Section>
+          </Template>
+        </View--rendering>
+      </Folder>
+      <Folder Id="{49B12360-B11D-4069-A58D-823E9F95A55C}" Name="Indicators" IsExternalReference="True">
+        <View--rendering Id="{D94B6741-899C-4995-BCF3-5CFE25287019}" Name="ArrowIndicator" IsExternalReference="True">
+          <Template Id="{F8852405-3827-4C67-ABF6-2EEA94DC0176}" Name="ArrowIndicator - Parameters" IsExternalReference="True">
+            <Section Id="{4DF1AC48-86A2-4A04-8626-A35FEEB71B4A}" Name="Appearance">
+              <Field Id="{F99DB96B-CB00-4CC4-AF1B-ED4AD6F0289F}" Name="ValueSize" />
+              <Field Id="{80DCFA36-A21D-41AE-A164-26C2A10701DE}" Name="ValueFormat" />
+              <Field Id="{138A82FC-2522-472A-BBB5-80AC76C173FC}" Name="ImageSize" />
+              <Field Id="{FE252EFF-AB2E-4E23-A367-A4C228376662}" Name="UpArrowColor" />
+              <Field Id="{8E335684-E160-4704-A2DE-76A8709BDBA1}" Name="DownArrowColor" />
+              <Field Id="{3D48DB92-D318-47F3-8088-7B121BD4FDDD}" Name="EqualSignColor" />
+              <Field Id="{46A56957-27EB-41EC-BC97-181C7A60634F}" Name="ValueColor" />
+              <Field Id="{121CAC8D-25BD-4B82-B226-C88F634E6580}" Name="ShowMinusSign" />
+            </Section>
+            <Section Id="{CCCDD829-111C-4E7D-88B4-723CD280172D}" Name="Data">
+              <Field Id="{8C28C9C4-5712-4883-A316-B227422C10BE}" Name="OldValue" />
+              <Field Id="{393D0430-54DF-4E8D-A569-5C665A956C28}" Name="NewValue" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{F9150528-A261-4453-84D0-BFC39E309421}" Name="ValueLabel" IsExternalReference="True">
+          <Folder Id="{328EBA37-72C7-4ABF-A34B-FFA6CBA43D3C}" Name="DataFunction" IsExternalReference="True">
+            <Folder Id="{ACBF04E3-7CD3-41A3-B0B0-50169C7916FE}" Name="Sum" IsExternalReference="True" />
+            <Folder Id="{BDF5B1DE-B4D1-49C3-B6DF-CDA8F8D25C39}" Name="Average" IsExternalReference="True" />
+            <Folder Id="{DB25F894-80CF-409C-B447-49E962F9934A}" Name="Max" IsExternalReference="True" />
+            <Folder Id="{10699B0B-81E7-405C-9B80-B457FB0FE510}" Name="Min" IsExternalReference="True" />
+            <Folder Id="{439502DD-0B43-4FB6-A0AB-CE6087A982BC}" Name="First" IsExternalReference="True" />
+            <Folder Id="{9CDEEC5D-E48B-4B95-BDDD-6A80DDE7D888}" Name="Last" IsExternalReference="True" />
+          </Folder>
+          <Template Id="{676ACEE1-2B1D-447B-82C0-C0844E9FBE9A}" Name="ValueLabel - Parameters" IsExternalReference="True">
+            <Section Id="{7F67A490-5608-4DC7-90C5-DD96251DD79E}" Name="Data">
+              <Field Id="{6957FF69-700F-4773-B572-A8CAEE2A30DD}" Name="Data" />
+            </Section>
+            <Section Id="{099160FB-482C-4460-920E-9DE7DC3FB604}" Name="Appearance">
+              <Field Id="{6F3F29C9-5EBB-46B7-9726-D3589AC6F8E2}" Name="Value" />
+              <Field Id="{02E7CC3A-09B5-48C1-BCD1-3B8DE77FBA8D}" Name="ValueSize" />
+              <Field Id="{F7F0E4F9-3A61-4326-A541-4008E7FC8C22}" Name="ValueColor" />
+              <Field Id="{1B01B730-5772-439B-8B79-09D563222B2A}" Name="Label" />
+              <Field Id="{12A34727-6DE8-488D-A90C-77391CF28326}" Name="LabelSize" />
+              <Field Id="{27BF3E96-EA8A-4ABA-B526-1497A1ACE8A9}" Name="LabelColor" />
+              <Field Id="{2642C1A6-33FE-4757-9F69-41218D1697D0}" Name="LabelPosition" />
+            </Section>
+            <Section Id="{558EFFF6-DCCB-4793-9DFC-793E67489B23}" Name="DataMapping">
+              <Field Id="{FD60A5D8-9378-42C5-8BAC-C8CDBC2408F1}" Name="DataField" />
+              <Field Id="{D90B71FA-8CE4-4CEC-8591-568D735000E9}" Name="DataFunction" />
+            </Section>
+          </Template>
+          <Folder Id="{25DE94A2-2BBA-402B-8661-328383F35278}" Name="LabelPosition" IsExternalReference="True">
+            <Folder Id="{23964433-E35B-46CF-AF15-75600DCDCEAB}" Name="Bottom" IsExternalReference="True" />
+            <Folder Id="{18531B94-B05D-46CA-BA60-B1C9CE912929}" Name="Right" IsExternalReference="True" />
+            <Folder Id="{DC1F8946-EA14-44B9-85A4-F5EC3B8527E1}" Name="Top" IsExternalReference="True" />
+          </Folder>
+        </View--rendering>
+      </Folder>
+      <Folder Id="{4F284ECC-B1AB-4235-BB11-2CC2782DAADF}" Name="Lists and Grids" IsExternalReference="True">
+        <View--rendering Id="{4B1AE3E0-46F9-4CC7-BC01-49506C901D11}" Name="Carousel" IsExternalReference="True">
+          <Template Id="{0EB8CDB8-936A-4513-99E0-90C36F5E638D}" Name="Carousel Parameters" IsExternalReference="True">
+            <Section Id="{E7F31900-48CE-41EC-9BC3-52914F285E8A}" Name="Appearance">
+              <Field Id="{1713CB90-1C28-4DEA-BCB7-E5884C46B35A}" Name="MinimumTiles" />
+              <Field Id="{DB2A2E6F-0924-41CD-8343-73D460D47E47}" Name="TileWidth" />
+              <Field Id="{CC938538-BA1C-4967-8A63-DEC339B084A5}" Name="TileHeight" />
+              <Field Id="{EF2712ED-0C37-4922-BE14-77C0603C27E4}" Name="TilesPadding" />
+              <Field Id="{50621C6E-BA3D-42D8-89B4-64BDFADE76AF}" Name="OnlyEntireTiles" />
+              <Field Id="{52493B94-5F32-4E93-975A-8893A9551242}" Name="Orientation" />
+            </Section>
+            <Section Id="{0D8AB9E3-D310-402D-A0DB-1CC1DF5C22C7}" Name="Data">
+              <Field Id="{D654EC8E-7CF2-4412-86C1-8C5AB53C6DC6}" Name="Tiles" />
+            </Section>
+          </Template>
+          <Template Id="{262BCE34-D638-4915-990C-A910AB9CB868}" Name="Carousel Tile" IsExternalReference="True">
+            <Section Id="{B97AC52D-D611-4F10-98A8-2B7E39183785}" Name="Data">
+              <Field Id="{DE4FEAE5-49DF-4CF5-9A86-30CDE1BB29F5}" Name="Source" />
+            </Section>
+            <Section Id="{8DDE041D-288A-41AE-AEDF-24434306EE81}" Name="Appearance">
+              <Field Id="{8A788E79-BAC7-4BE5-9BF7-922E9D553344}" Name="Tooltip" />
+              <Field Id="{1E6BD8FF-81C0-4AFE-8BE4-9E67766DBB10}" Name="Alt" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{08B6767B-8E8A-41C8-8880-EFEBB4EAE0E3}" Name="ItemTreeView" IsExternalReference="True">
+          <Template Id="{26B80ACE-40E4-4136-B288-E80A34A63E80}" Name="ItemTreeView Parameters" IsExternalReference="True">
+            <Section Id="{662338B1-9825-4EDB-AB83-E024387716EA}" Name="Data">
+              <Field Id="{C7424269-BD5F-4862-AC3B-6010605242F6}" Name="Database" />
+              <Field Id="{BAD9423E-261E-4230-A4CE-4EAC65413340}" Name="RootItem" />
+              <Field Id="{72D8A100-78EF-4F8E-B160-5E136FF8D067}" Name="PreLoadPath" />
+              <Field Id="{C198713A-935E-4B9E-8B03-DA90CF736232}" Name="SelectedItemId" />
+              <Field Id="{2A5CAE36-BBCD-4E55-9ACB-073A40BA6906}" Name="CheckedItemIds" />
+            </Section>
+            <Section Id="{0B9486BB-AE05-47D7-BF4E-B84304963627}" Name="Behavior">
+              <Field Id="{FCF7175C-CCF3-46A1-ABF4-45A91CC46F42}" Name="ClickFolderMode" />
+              <Field Id="{7EBF12E9-A284-4A92-A724-9B412878F225}" Name="IsCheckboxEnabled" />
+              <Field Id="{BF3EDBC1-CD91-4598-B338-8C9867F41D95}" Name="SelectMode" />
+              <Field Id="{38268462-7D20-4C20-8285-A8B20F6EB3AE}" Name="ShowSitecoreIcons" />
+              <Field Id="{E3602A07-7256-40D7-B5BC-379E202D6238}" Name="ShowIconImage" />
+            </Section>
+            <Section Id="{6756425E-B7A5-4D42-AC5B-4458C776F662}" Name="Filters">
+              <Field Id="{3B288ACE-F7FB-4583-A32D-EF397029661C}" Name="Template" />
+              <Field Id="{BDB5B8CD-B9C9-4A4F-9C63-31466489BEF5}" Name="Base Templates" />
+              <Field Id="{184E414E-EFE8-4CAF-BB74-09E6297611AC}" Name="ShowHiddenItems" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{ACE0AFD6-3DE0-42CF-8E62-4E68CD810A8D}" Name="ListControl" IsExternalReference="True">
+          <Template Id="{88B6AF7B-7253-471D-A644-12B81EF8F578}" Name="ListControl Parameters" IsExternalReference="True">
+            <Section Id="{1601DFD4-66D6-46E5-9C23-F4C166FB61A2}" Name="Appearance">
+              <Field Id="{89ABDF43-7C7F-4557-9A1B-D0B98F51F858}" Name="AllowMultipleColumnSorting" />
+              <Field Id="{61547F03-3E12-4164-996F-265FA302200B}" Name="ViewMode" />
+              <Field Id="{27A87EDE-1A3D-4594-A83A-6FE6F6435A4E}" Name="Height" />
+              <Field Id="{0916C4C2-A4B1-436E-AFF9-CBA9E9C4B64B}" Name="MinHeight" />
+              <Field Id="{7AC3CB3C-C9D2-4E51-A5DB-F4B1CB051D87}" Name="MaxHeight" />
+              <Field Id="{51F262C5-7235-4D7C-86B6-9DE1EDCFB76D}" Name="Sorting" />
+              <Field Id="{FFBB232B-423F-4AF3-A851-901A85FC9693}" Name="IconViewDisplayFieldName" />
+              <Field Id="{7207DA78-5687-4AFD-A2E8-C7D39E9D1A52}" Name="MaxIconSize" />
+              <Field Id="{FE7374D5-064D-489E-BB96-BEEC8ED44FA2}" Name="TileHtmlFileName" />
+              <Field Id="{0A3F5C42-7864-448C-BCFE-3D878059FE1C}" Name="TileCssFileName" />
+              <Field Id="{90FD77DA-B57F-4EFC-A752-69FFE998CE4E}" Name="IsEndlessScrollEnabled" />
+              <Field Id="{8B2E442B-2439-4FCE-A484-1289DC477A18}" Name="IsActiveResizeEnabled" />
+            </Section>
+            <Section Id="{14F68970-C7AB-4D2F-A3D9-BB1218B611F9}" Name="Data Bindings">
+              <Field Id="{F4D8DF9A-E80F-426E-A9D3-53495946C2AB}" Name="Items" />
+            </Section>
+            <Section Id="{84C287F9-2858-4C50-BBC7-43B854B53A89}" Name="Data">
+              <Field Id="{2831C0D4-32CE-438B-A501-6B6C264D865A}" Name="SelectedItemId" />
+              <Field Id="{94EFD3FB-4B9D-4191-A622-C726534B7276}" Name="ContentLanguage" />
+              <Field Id="{8EA44295-EAF3-4B89-ADB0-53BD40F25F6A}" Name="HasSelectedItem" />
+            </Section>
+            <Section Id="{A9D47A56-AE0E-45CD-BB18-2EAF0C3B3253}" Name="Events">
+              <Field Id="{B27AD68C-CCC0-42CF-9689-1C73E7BFCBD8}" Name="ScrollMoreData" />
+            </Section>
+          </Template>
+          <Folder Id="{39F91199-A2C5-4AE0-8506-26514AB673CF}" Name="ViewModes" IsExternalReference="True">
+            <Folder Id="{64982EB6-7088-4D3B-92C7-C4EA019B698C}" Name="DetailList" IsExternalReference="True" />
+            <Folder Id="{456D2766-5C7B-4F8A-B58E-D0B3CB8DC738}" Name="IconList" IsExternalReference="True" />
+            <Folder Id="{29C047EC-15CF-48ED-A97A-931B56CD2DEF}" Name="TileList" IsExternalReference="True" />
+          </Folder>
+        </View--rendering>
+      </Folder>
+      <Folder Id="{D4442627-AF9D-44B4-BCA8-D677312C4A7F}" Name="Navigation" IsExternalReference="True">
+        <View--rendering Id="{AF79ED5D-4396-4EEC-8E22-9D7C523266FA}" Name="Breadcrumb" IsExternalReference="True">
+          <Template Id="{CFE8439A-969C-4F8B-8614-23A8001F7622}" Name="Breadcrumb Parameters" IsExternalReference="True">
+            <Section Id="{FD900517-4BEE-45C1-9D53-F00E4B583442}" Name="Data">
+              <Field Id="{4242B959-C924-473D-97E1-F7CE872D951D}" Name="RootItemId" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{DDF19992-89DB-4F29-82EC-F16A8C8D15B9}" Name="HyperlinkButtonsGroup" IsExternalReference="True">
+          <Template Id="{9989A6D4-DCD2-4460-8626-7228A6857D53}" Name="HyperlinkButtonGroup Parameters" IsExternalReference="True">
+            <Section Id="{53B0A2B9-3E11-4E7C-9FCB-80BBED1E67BC}" Name="Appearance">
+              <Field Id="{D35C9A50-FA2C-49E8-8619-620917B41D3E}" Name="IsEnabled" />
+            </Section>
+            <Section Id="{5B2D4F49-B1D2-4F34-AD5D-394A4197B219}" Name="Data">
+              <Field Id="{2DCB4AF7-E1D6-4DF6-9280-6FF58E76F1B9}" Name="SelectedItemId" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{C5D667DE-AA48-4072-872E-7C8BFFCE4D44}" Name="Menu" IsExternalReference="True">
+          <Template Id="{CF9F1292-0402-48F5-AEA5-70BC86179A0E}" Name="Menu Parameters" IsExternalReference="True">
+            <Section Id="{F266BC8A-20AF-4A58-9389-A18F620AB6FA}" Name="Appearance">
+              <Field Id="{DB810B46-DECF-4516-8CAE-587F117F01D2}" Name="IsEnabled" />
+              <Field Id="{5A3FD08A-7555-46CC-94E8-E8BF24F5CA27}" Name="IsRootHidden" />
+              <Field Id="{9B66BA66-45D9-4F93-AE32-76BE6E5DCEEB}" Name="ExpandedItemIds" />
+            </Section>
+            <Section Id="{C9C5F762-8F56-4045-B534-50E17D02A116}" Name="Data">
+              <Field Id="{2CAF6BA2-A484-4AEB-990A-A9AB9174C73D}" Name="ItemsDataSource" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{EA28ED83-0F59-4BB9-AA95-6FAC9C3385D6}" Name="NavigationPanelToggleButton" IsExternalReference="True">
+          <Template Id="{60C8D6FE-707A-47D4-8644-16E4B25D2B81}" Name="NavigationPanelTogglerButtonParameters" IsExternalReference="True">
+            <Section Id="{313A1DCA-8154-45A2-A896-68ED75E4C8F7}" Name="Appearance">
+              <Field Id="{9E666E88-7FC2-4002-A714-C1F665BE016B}" Name="ImageUrl" />
+              <Field Id="{07B96C65-5DAE-46F1-AB35-0BD72D1105A0}" Name="Dimensions" />
+              <Field Id="{56C3C681-C966-467F-BCD4-F27D90735F98}" Name="BackgroundPosition" />
+            </Section>
+          </Template>
+        </View--rendering>
+      </Folder>
+      <Folder Id="{28364BDF-67F8-4A4A-81FB-287D65420360}" Name="Searching and Filtering" IsExternalReference="True">
+        <View--rendering Id="{9B00BB85-3894-4FBD-8522-3C467FDEB050}" Name="FilterControl" IsExternalReference="True">
+          <Template Id="{9846DAE2-9043-46C8-AA3B-B3F20473B8C8}" Name="FilterControl Parameters" IsExternalReference="True">
+            <Section Id="{1A67BE76-A786-4645-97B7-D6D057F04359}" Name="Data">
+              <Field Id="{441CCF03-EF30-468F-8F3C-0DE0BCA76C86}" Name="Facets" />
+              <Field Id="{C5075785-B023-4B49-81AF-274AEE79536F}" Name="SelectedFacets" />
+            </Section>
+          </Template>
+        </View--rendering>
+        <View--rendering Id="{ED5C3BA8-17E3-4F82-89C2-1496E8D61434}" Name="SearchPanel" IsExternalReference="True" Place--Holders="$Id.Filters, $Id.Searches, $Id.Details">
+          <Template Id="{83E8F3D3-065A-40E3-B17D-C4A1E9DAD6B4}" Name="SearchPanel Config" IsExternalReference="True">
+            <Section Id="{982E7681-1F7B-4562-832E-F46B7862DE7F}" Name="Data">
+              <Field Id="{2354B5AC-94AD-475E-8A67-AAC438543471}" Name="DisplayText" />
+            </Section>
+            <Section Id="{B52956CE-8D03-4F76-8698-BC44251231D8}" Name="Search">
+              <Field Id="{CFB92D75-97A3-4B3D-B8D4-304F7FBC7E1E}" Name="Search" />
+              <Field Id="{C41AA0FB-CD20-4764-92D8-43E3F6562144}" Name="AppendSearchText" />
+            </Section>
+            <Section Id="{4AB6F949-0B6B-459E-9C66-B724F28593C4}" Name="Filters">
+              <Field Id="{19E8EDB4-8D83-40D9-936E-A21B08CBBC33}" Name="Root" />
+              <Field Id="{8F92BB79-70A4-4224-BF62-E0335D0892AB}" Name="Template" />
+              <Field Id="{58248235-7713-4BCB-B9BB-B6A31B114302}" Name="Base Templates" />
+            </Section>
+            <Section Id="{9537A2D6-0444-4F9E-B317-7B9CBC549E46}" Name="Date">
+              <Field Id="{1F2AA706-C917-44F2-AE65-738617CB252E}" Name="UpdatedWithin7Days" />
+              <Field Id="{C5D69882-79CD-449E-AC3B-91CDF638FDAC}" Name="CreatedWithin7Days" />
+            </Section>
+            <Section Id="{2623AEAD-B1BA-48CC-BD03-85E9508CE266}" Name="Users">
+              <Field Id="{1EB83C54-906C-4EC9-BBC7-9E5D3608C3F1}" Name="UpdatedByCurrentUser" />
+              <Field Id="{2B3C2F23-9632-46E5-9D87-D965847A10CF}" Name="UpdatedBySpecificUser" />
+              <Field Id="{E4CECADC-5661-4DD6-A765-F30E15B01C6E}" Name="CreatedByCurrentUser" />
+              <Field Id="{CF785E5B-FAAE-4191-849B-0F3B02839BEC}" Name="CreatedBySpecificUser" />
+            </Section>
+            <Section Id="{E4078E58-6E9B-44C2-925A-392C02180D1A}" Name="Sorting">
+              <Field Id="{80B15238-CA9D-4325-B4A2-102077DC66C9}" Name="Sorting" />
+            </Section>
+          </Template>
+          <Template Id="{D838FE2F-ED2E-409A-B340-608AA8562680}" Name="SearchPanel Parameters" IsExternalReference="True" />
+        </View--rendering>
+      </Folder>
+      <Folder Id="{9AAE8F87-F1A5-4841-BBB4-B9585B3CBC2D}" Name="Silverlight" IsExternalReference="True">
+        <View--rendering Id="{8A48B57B-D8CD-4AF0-A0ED-0C5D119CCEAC}" Name="SilverlightFrame" IsExternalReference="True">
+          <Template Id="{D920CC4A-CED8-4D89-8396-5B8EF4025242}" Name="SilverlightFrame Parameters" IsExternalReference="True">
+            <Section Id="{A8BA83D9-263F-4602-A269-FEDA2A6798AB}" Name="Data">
+              <Field Id="{8F0E3484-8BED-4385-A300-026F0073D1E4}" Name="Source" />
+              <Field Id="{32E33503-FD15-444D-B949-9B28DB2155C1}" Name="ScriptFile" />
+              <Field Id="{7924718E-A831-4CC4-9FA7-50F74A512E07}" Name="InitParams" />
+              <Field Id="{1A90A26B-8FBC-4C21-A252-201263F1725A}" Name="OnError" />
+              <Field Id="{2943C7F0-BEDB-4C31-8841-36769FAB83AD}" Name="MinRuntimeVersion" />
+              <Field Id="{6498EABF-42AA-4BBD-96C0-E4DE9E9E649E}" Name="AutoUpgrade" />
+              <Field Id="{85D59E40-4461-4A32-B5E4-75008EB4DC5B}" Name="WindowLess" />
+              <Field Id="{1DCA5068-1E8B-409C-BA7E-217D000319ED}" Name="OnLoad" />
+              <Field Id="{57B07113-BE7A-479E-8BF3-A26BCDEBF1A2}" Name="Width" />
+              <Field Id="{5C83388D-E657-429D-80D7-60F94E4EF76E}" Name="Height" />
+              <Field Id="{F7B0B65F-D503-4100-9071-209968992424}" Name="AppName" />
+              <Field Id="{FF752D2B-2F16-412A-9106-DF2A07559370}" Name="SilverlightObjectId" />
+            </Section>
+            <Section Id="{91D1496F-5B0A-47EC-AA2A-23AAB9839DA3}" Name="Code">
+              <Field Id="{6F87342E-A172-4898-A4D2-6D4FFA714080}" Name="ParseParameterType" />
+            </Section>
+          </Template>
+        </View--rendering>
+      </Folder>
+      <Folder Id="{287D0F8D-5AA6-4B7D-9AF0-A13EFF4AB609}" Name="Structures" IsExternalReference="True">
+        <Folder Id="{E29B5FD3-0CB2-4E30-986E-02A2DBF1C926}" Name="Page Structures" IsExternalReference="True">
+          <Folder Id="{9906CFA4-5899-4CDC-BC52-9CD96C3C675C}" Name="Application" IsExternalReference="True">
+            <View--rendering Id="{BE007891-2D9C-4E67-943C-752DBA0C041F}" Name="Dashboard" IsExternalReference="True" Place--Holders="GlobalHeader, ApplicationContent,  GlobalFooter">
+              <Template Id="{723D926F-EE25-4894-A3B0-FE28A51E2A4C}" Name="Dashboard Parameters" IsExternalReference="True">
+                <Section Id="{5E0EFFED-A2FF-4DA6-955A-222BD55BD9EC}" Name="Appearance">
+                  <Field Id="{FEC21E73-395E-4C51-8F35-0277DFDB11A5}" Name="ShowFooter" />
+                </Section>
+              </Template>
+            </View--rendering>
+            <View--rendering Id="{225B55AC-0270-44F9-842B-96D89F9C20A9}" Name="List" IsExternalReference="True" Place--Holders="GlobalHeader, ApplicationHeader,  ApplicationContent,  GlobalFooter">
+              <Template Id="{EF2707A1-5F67-458D-BE14-8B63C04C4C07}" Name="List Parameters" IsExternalReference="True">
+                <Section Id="{D4C12B52-7943-403C-8E81-ABB79C00781A}" Name="Appearance">
+                  <Field Id="{2DBAFD1A-21ED-47EC-A6A0-49537DA291A7}" Name="ShowFooter" />
+                </Section>
+              </Template>
+            </View--rendering>
+            <View--rendering Id="{56A04392-9E0E-4609-AE9A-ACD28C7F749B}" Name="Task" IsExternalReference="True" Place--Holders="GlobalHeader, ApplicationHeader, ApplicationContent, GlobalFooter">
+              <Template Id="{3256C021-9EAA-404D-865D-72ACCD9EA25B}" Name="Task Parameters" IsExternalReference="True">
+                <Section Id="{7B3241EA-8B5B-4BE7-9225-E2F9FE81C2EC}" Name="Appearance">
+                  <Field Id="{FD5C1E76-0655-4F37-8197-6CEBB582DF21}" Name="ShowFooter" />
+                </Section>
+              </Template>
+            </View--rendering>
+          </Folder>
+          <Folder Id="{1494277C-650C-426F-8016-25B5F3C0AD39}" Name="Dialog" IsExternalReference="True">
+            <View--rendering Id="{7BA20861-BC27-4F0E-94DD-8F974628A5C4}" Name="Dialog" IsExternalReference="True" Place--Holders="DialogHeader, DialogContent, DialogFooter" />
+          </Folder>
+          <Folder Id="{7862106B-EE72-43A7-97F3-67D4EC15C26A}" Name="Framework" IsExternalReference="True">
+            <View--rendering Id="{E7CDA438-B731-4719-AB72-26DCC8142B8D}" Name="SearchResults" IsExternalReference="True" Place--Holders="GlobalHeader, ApplicationContentMain" />
+            <View--rendering Id="{FDE6FB54-A5F6-4B20-A5AE-3AD8F8E539C9}" Name="Start" IsExternalReference="True" Place--Holders="GlobalHeader, ApplicationMain" />
+          </Folder>
+        </Folder>
+        <Folder Id="{164A2016-6737-4351-A7F7-96813C3B3E23}" Name="Substructures" IsExternalReference="True">
+          <View--rendering Id="{19A9EB6B-1283-49EB-BD75-AAFE76453469}" Name="ApplicationContentM" IsExternalReference="True" Place--Holders="ApplicationContent.Main" />
+          <View--rendering Id="{26541BC4-C62D-4F2F-BE3F-A4E2195FEE0F}" Name="ApplicationContentMI" IsExternalReference="True" Place--Holders="ApplicationContent.Main, ApplicationContent.Info" />
+          <View--rendering Id="{EB6214BE-5687-4706-ABA6-B25C0958C85B}" Name="ApplicationContentNM" IsExternalReference="True" Place--Holders="ApplicationContent.Navigation, ApplicationContent.Main, ApplicationHeader" />
+          <View--rendering Id="{7C65059F-B991-4022-A461-DD5161822DCF}" Name="ApplicationContentNMI" IsExternalReference="True" Place--Holders="ApplicationContent.Navigation, ApplicationContent.Main, ApplicationContent.Info, ApplicationHeader" />
+          <View--rendering Id="{93CEEFCD-2DE1-40AF-AE9A-EBBFBCCC522F}" Name="ApplicationHeader" IsExternalReference="True" Place--Holders="ApplicationHeader.BreadCrumb, ApplicationHeader.Title, ApplicationHeader.Back,ApplicationHeader.ContextSwitch,ApplicationHeader.Actions">
+            <Template Id="{3620696D-19CE-4C16-8D40-E88FA1BF30F4}" Name="ApplicationHeader Parameters" IsExternalReference="True">
+              <Section Id="{3ACBED61-BB13-4D55-A137-8EA66E9ECFF1}" Name="Appearance">
+                <Field Id="{243CDAD4-9988-425A-BBBF-96F292E45329}" Name="ShowHeader" />
+              </Section>
+            </Template>
+          </View--rendering>
+          <View--rendering Id="{8817F241-28C9-45AA-8C8D-434E71BCEF4B}" Name="DialogContentM" IsExternalReference="True" Place--Holders="DialogContent.Back, DialogContent.ContextSwitch, DialogContent.Actions, DialogContent.Main">
+            <Template Id="{38F18687-AED1-4EBE-B47D-22101A534E89}" Name="DialogM Parameters" IsExternalReference="True">
+              <Section Id="{9554D81D-0FF1-4D6E-A580-6B22BE324665}" Name="Appearance">
+                <Field Id="{79402266-1E56-46A4-B715-414776172BDE}" Name="ShowToolbar" />
+              </Section>
+            </Template>
+          </View--rendering>
+          <View--rendering Id="{55D83E2F-AE95-45D4-A410-2A98A53E50B1}" Name="DialogContentMI" IsExternalReference="True" Place--Holders="DialogContent.Back, DialogContent.ContextSwitch, DialogContent.Actions, DialogContent.Main, DialogContent.Info">
+            <Template Id="{8AA32F75-747C-4CC0-BB6D-4229EC992BA7}" Name="DialogMI Parameters" IsExternalReference="True">
+              <Section Id="{61FA902F-F4F3-44F4-A4D1-E940D0C13251}" Name="Appearance">
+                <Field Id="{009CB68C-0F90-4F9C-A94C-E100D24B93B4}" Name="ShowToolbar" />
+              </Section>
+            </Template>
+          </View--rendering>
+          <View--rendering Id="{300455F0-D5AF-4EB6-8758-BD41875C981C}" Name="DialogContentNM" IsExternalReference="True" Place--Holders="DialogContent.Navigation, DialogContent.Main, DialogContent.Title, DialogContent.Back, DialogContent.ContextSwitch, DialogContent.Actions">
+            <Template Id="{BF741069-99CA-4C0F-894F-4171C57BDD45}" Name="DialogMI Parameters" IsExternalReference="True">
+              <Section Id="{89EA5420-E9EB-472E-9054-EBF75EB3F176}" Name="Appearance">
+                <Field Id="{FF6D9B92-A02E-4580-BA28-3AEAC34F565D}" Name="ShowToolbar" />
+              </Section>
+            </Template>
+          </View--rendering>
+          <View--rendering Id="{642C1164-3AE1-4D86-8474-3BC19FE4433B}" Name="DialogHeader" IsExternalReference="True" Place--Holders="DialogHeader.Title, DialogHeader.Actions, DialogHeader.Close, DialogHeader.Navigation" />
+          <View--rendering Id="{D8C6868D-7AE2-447F-9FD2-E712FDFA46C1}" Name="DialogFooter" IsExternalReference="True" Place--Holders="DialogFooter.Buttons" />
+          <View--rendering Id="{EC86834B-890C-405C-BB36-CA25044909E1}" Name="GlobalFooter" IsExternalReference="True" Place--Holders="GlobalFooter.FooterInfo" />
+          <View--rendering Id="{5AE97C0C-EE88-4564-A363-4FA11C01C90A}" Name="GlobalHeader" IsExternalReference="True" Place--Holders="GlobalHeader.StartButton, GlobalHeader.NavigationToggler, GlobalHeader.LoginInfo" />
+        </Folder>
+      </Folder>
+    </Speak-RenderingFolder>
+  </Layout--Folder>
+  <Folder Id="{8965911C-B491-457D-A337-367F5A66D4FE}" Name="System" IsExternalReference="True">
+    <Folder Id="{E6F14E48-98D7-44F4-A469-FA6C066FEB55}" Name="Alignment" IsExternalReference="True">
+      <Folder Id="{0DC429CD-7EB7-47EF-9B89-AE099727ADD5}" Name="Horizontal" IsExternalReference="True">
+        <Folder Id="{D6AD4470-B309-4558-BE16-2B4B4C9BC8D8}" Name="Center" IsExternalReference="True" />
+        <Folder Id="{DD7C736F-EFF0-403E-9777-78D59F383810}" Name="Left" IsExternalReference="True" />
+        <Folder Id="{07A8B1E1-D779-4CF2-81FC-0768ABF97CDC}" Name="Right" IsExternalReference="True" />
+      </Folder>
+      <Folder Id="{A63089EB-97EA-46F8-A34F-F64C3F784102}" Name="Vertical" IsExternalReference="True">
+        <Folder Id="{FA5AD3FA-7367-482F-9376-47C324FA1556}" Name="Bottom" IsExternalReference="True" />
+        <Folder Id="{36574289-8F86-4288-B8EC-5D27EDB76890}" Name="Middle" IsExternalReference="True" />
+        <Folder Id="{E31A7AF0-3C43-41F5-A816-3873811FFFB3}" Name="Top" IsExternalReference="True" />
+      </Folder>
+    </Folder>
+    <Folder Id="{C7B98C45-7439-4CEA-95BB-2DBA8D74B99B}" Name="Charting" IsExternalReference="True">
+      <Folder Id="{43924E95-AB8A-4273-A9B4-B1C3BD84B397}" Name="AxisPosition" IsExternalReference="True">
+        <Folder Id="{EED73021-BDA7-4502-B719-61FDC257893B}" Name="Left" IsExternalReference="True" />
+        <Folder Id="{A5436BE7-269F-4C45-ABE1-B33FFAA77C94}" Name="Right" IsExternalReference="True" />
+      </Folder>
+      <Folder Id="{B32175B9-1F78-4750-8763-E5AF28509A07}" Name="NumberFormat" IsExternalReference="True">
+        <Folder Id="{02B97571-EE93-4922-B1F8-30F727929CE9}" Name="Percentage" IsExternalReference="True" />
+        <Folder Id="{FD01DCF2-E78C-425E-9FE3-937C73159D55}" Name="Number" IsExternalReference="True" />
+      </Folder>
+      <Folder Id="{AB131647-2B90-4477-83A8-E05D60EA7E70}" Name="SeriesRenderingType" IsExternalReference="True">
+        <Folder Id="{052F16F9-7947-4984-89B3-955A65C25E32}" Name="Line" IsExternalReference="True" />
+        <Folder Id="{C586D252-522A-46DB-B8EC-125EAB65BC9E}" Name="Area" IsExternalReference="True" />
+        <Folder Id="{28F29F11-E6F1-45AA-A985-E35797C7770C}" Name="Column" IsExternalReference="True" />
+      </Folder>
+      <Folder Id="{52015EA7-C0A4-412D-9655-17ABEC6294BE}" Name="NumberScales" IsExternalReference="True">
+        <NumberScale Id="{32C43E62-77AA-4E62-9189-05E119FD2811}" Name="DataSize" IsExternalReference="True" />
+        <NumberScale Id="{2E47DEBE-06C0-47D0-91B4-F1BF58F46348}" Name="Number" IsExternalReference="True" />
+        <NumberScale Id="{9C79FECE-5F77-41EE-892F-3989A3F736AA}" Name="Percentage" IsExternalReference="True" />
+        <NumberScale Id="{ECB99D0B-140E-4C21-8542-BEB9507EFF7E}" Name="Time" IsExternalReference="True" />
+      </Folder>
+      <Folder Id="{4FACEF2C-1EDC-4C96-8A18-9E26AE279AC0}" Name="Texts" IsExternalReference="True">
+        <Folder Id="{77D70CAC-8834-4ABA-A188-9DACCF335B52}" Name="ChartErrorMessages" IsExternalReference="True">
+          <Text Id="{C4255798-67A7-4A8A-AB4F-B40F4F5E5B54}" Name="CategoryChartField not defined" IsExternalReference="True" />
+          <Text Id="{6CBCF84A-67F0-4B3E-A27B-C02750D614AA}" Name="CategoryChartField not found" IsExternalReference="True" />
+          <Text Id="{25F313F1-CADB-4F1A-893D-68D79CDF70EE}" Name="DataField not found" IsExternalReference="True" />
+          <Text Id="{DA5A50F6-B5B0-4099-B60C-AC53E6A49235}" Name="GetChartComponentName is not overridden" IsExternalReference="True" />
+          <Text Id="{AAAD44C8-9ACC-4E65-B3C4-986924CA3AE9}" Name="No categories found" IsExternalReference="True" />
+          <Text Id="{3D4D2B4A-6618-48F9-B6C7-1555576F52D9}" Name="No data to display" IsExternalReference="True" />
+          <Text Id="{F2743BA4-BD93-4D22-BDD3-C10CEB8E14E5}" Name="Property not defined" IsExternalReference="True" />
+          <Text Id="{A7C682ED-B376-4291-B379-9D1B82D641CD}" Name="SeriesChartField not found" IsExternalReference="True" />
+          <Text Id="{A58F868C-AF32-4AA0-B3AF-66CFFEE78640}" Name="ValueChartField not found" IsExternalReference="True" />
+          <Text Id="{04EF30C1-FD45-41C3-8132-DDBC348D4142}" Name="ValueChartFields not defined" IsExternalReference="True" />
+        </Folder>
+        <Folder Id="{B14F6FDC-8453-461C-9F3D-531CA7580DB1}" Name="DateProviderErrorMessages" IsExternalReference="True">
+          <Text Id="{85BEED73-6264-45DB-ACE5-C40957631528}" Name="GetData is not overridden" IsExternalReference="True" />
+          <Text Id="{884B9AA5-E7A8-457C-B251-8AEA1802D082}" Name="Server returned" IsExternalReference="True" />
+          <Text Id="{B8C9D7C5-27C7-4FCC-BCD1-87CB99E3B23E}" Name="SuccessHandler is not overridden" IsExternalReference="True" />
+        </Folder>
+        <Folder Id="{1474A76D-C61D-4905-9169-86D7FAFEEC11}" Name="Journey" IsExternalReference="True">
+          <Text Id="{400DD777-3C5F-492A-89F3-41B80C5CC3E3}" Name="Next" IsExternalReference="True" />
+          <Text Id="{959C27CC-469D-4B48-8D8D-ACCF5FFD77AF}" Name="Previous" IsExternalReference="True" />
+        </Folder>
+      </Folder>
+      <Folder Id="{74954A8B-AB24-4947-91DA-9DF32D3E86E2}" Name="TextSize" IsExternalReference="True">
+        <Folder Id="{1E34C405-0B5A-4698-B16D-4F81802912EC}" Name="Small" IsExternalReference="True" />
+        <Folder Id="{2C943633-ABC0-464A-AB17-7713D2DC15DA}" Name="Normal" IsExternalReference="True" />
+        <Folder Id="{F1B3E946-4AF0-44B5-9F38-5F86DC6C7382}" Name="Medium" IsExternalReference="True" />
+        <Folder Id="{33B2522C-CAF3-4E0E-90D7-1A2A2B640026}" Name="Large" IsExternalReference="True" />
+        <Folder Id="{A49FE557-01E6-495F-AE1F-281D07968581}" Name="ExtraLarge" IsExternalReference="True" />
+      </Folder>
+    </Folder>
+    <Folder Id="{CA1B721B-2C48-4D45-A4EE-921D2B065FDB}" Name="ControlRenderer" IsExternalReference="True" />
+    <Folder Id="{3A1DE984-170F-4B8D-89B5-893430CB3B63}" Name="Icons" IsExternalReference="True">
+      <Folder Id="{39FD0035-1538-4B17-BF8F-BD28970C8E70}" Name="Dimensions" IsExternalReference="True">
+        <Node Id="{D160752D-4BA8-463A-89EE-091DF6A151D3}" Name="id16x16" IsExternalReference="True">
+          <Image Id="{C2D806C7-6EA9-4DEE-940A-E949D9AFD77A}" Name="glyphicons-halflings" IsExternalReference="True" />
+        </Node>
+        <Node Id="{9F7C680D-B270-41A2-A875-7801D07A4DB6}" Name="id24x24" IsExternalReference="True" />
+        <Node Id="{C90C6BAE-CC13-4463-97A0-11B17E67FC5A}" Name="id32x32" IsExternalReference="True" />
+        <Node Id="{7560A8AB-364F-4864-8971-475B26713458}" Name="id48x48" IsExternalReference="True">
+          <Image Id="{FCD9E739-E66F-4625-B4C7-A15615BA0DC7}" Name="flash" IsExternalReference="True" />
+        </Node>
+      </Folder>
+    </Folder>
+    <Folder Id="{244952B0-7535-462B-AE68-729836BF18B9}" Name="Orientation" IsExternalReference="True">
+      <Folder Id="{32479D16-75ED-4821-8417-4207BEA96E49}" Name="Horizontal" IsExternalReference="True" />
+      <Folder Id="{E9E413F3-104E-440E-8B83-BD114E1620BF}" Name="Vertical" IsExternalReference="True" />
+    </Folder>
+    <Folder Id="{7B67CF53-D41A-4D71-9C3A-06722E3E2EDA}" Name="Search" IsExternalReference="True">
+      <Folder Id="{648CE334-864D-4373-A632-CD0DCA4E00B9}" Name="Search Types" IsExternalReference="True">
+        <SearchPanel--Config Id="{4A931EDB-E806-4B87-A28B-3E99AF10AA4D}" Name="AllImageFiles" IsExternalReference="True" />
+        <SearchPanel--Config Id="{56A04961-F8A0-45BC-A870-D7371FD09F47}" Name="AllItems" IsExternalReference="True" />
+        <SearchPanel--Config Id="{E5972935-568D-4281-955E-442B045E2831}" Name="AllVideoFiles" IsExternalReference="True" />
+        <SearchPanel--Config Id="{FD62DB6E-96A9-4931-9940-CB749769671A}" Name="MyMedia" IsExternalReference="True" />
+        <SearchPanel--Config Id="{52AAA184-3BCC-42DB-A0B1-1DD8D2F5F4AE}" Name="RecentMedia" IsExternalReference="True" />
+      </Folder>
+    </Folder>
+    <Folder Id="{C2D2630A-C21F-4844-8561-226053DF5038}" Name="Subthemes" IsExternalReference="True">
+      <Speak-Theme Id="{F69304BA-2B80-4555-96DD-6F08559405E1}" Name="Dialogs" IsExternalReference="True" />
+    </Folder>
+    <Folder Id="{E3FE5748-570E-42A4-931D-B2C2FA497508}" Name="Texts" IsExternalReference="True">
+      <Folder Id="{50EF0A16-2DC7-462A-8CE3-C53467FDEA66}" Name="Buttons" IsExternalReference="True">
+        <Text Id="{0040D00C-EC60-421D-A1BE-975DA9931B35}" Name="Back" IsExternalReference="True" />
+        <Text Id="{19368E65-1660-408C-AFA8-0986E7203858}" Name="Cancel" IsExternalReference="True" />
+        <Text Id="{D819D106-97EB-4247-8597-62A35F642CF4}" Name="OK" IsExternalReference="True" />
+      </Folder>
+      <Folder Id="{3E31387A-AD38-40E1-84E9-912EFB633E9E}" Name="Labels" IsExternalReference="True">
+        <Text Id="{47C8D83E-F678-4EC5-8BB7-30506B77D454}" Name="AlternateText" IsExternalReference="True" />
+        <Text Id="{4356CD88-1EE7-4CFE-A852-94AF8FEB7713}" Name="Anchor" IsExternalReference="True" />
+        <Text Id="{161831F1-3F7B-4B6F-8E15-9D0F521F63E8}" Name="DiplayedText" IsExternalReference="True" />
+        <Text Id="{158E0E2D-B1E5-42F1-AD82-BB27B6B9B56E}" Name="Email" IsExternalReference="True" />
+        <Text Id="{80E8D773-ADFB-4D1F-89E8-D0D062775736}" Name="Style" IsExternalReference="True" />
+        <Text Id="{29643003-6652-4899-91B8-9A54C95E73AD}" Name="Subject" IsExternalReference="True" />
+        <Text Id="{A0FBE4FA-2530-4A0E-B5DC-6723955D54F3}" Name="Target" IsExternalReference="True" />
+        <Text Id="{1F526E33-18AD-419C-8669-3D54FE94CCE6}" Name="Text" IsExternalReference="True" />
+      </Folder>
+      <Folder Id="{72E62416-6996-4A19-B9FE-C4650B51CE5E}" Name="Targets" IsExternalReference="True">
+        <Text Id="{A3C9DB39-1D1B-4AA1-8C68-7B9674D055EE}" Name="SelectTarget" IsExternalReference="True" />
+        <Text Id="{FBC64F5C-BE88-4D76-ADEB-BFEEBAD6B01B}" Name="_blank" IsExternalReference="True" />
+        <Text Id="{21E8FEC9-4FB7-4B08-8649-DB8870F33E80}" Name="_parent" IsExternalReference="True" />
+        <Text Id="{8CEC76AC-2B59-421B-ACFF-271773F5F2C2}" Name="_top" IsExternalReference="True" />
+      </Folder>
+    </Folder>
+    <Folder Id="{4B577362-E873-4695-91EF-EB30DC3EA7FC}" Name="Themes" IsExternalReference="True">
+      <Speak-Theme Id="{D7686948-A4F1-41B6-94A0-3E1B3FC15F71}" Name="Harvard" IsExternalReference="True" />
+      <Speak-Theme Id="{F5A11F23-F8B3-45CE-BF85-0803854AC256}" Name="Oxford" IsExternalReference="True" />
+    </Folder>
+  </Folder>
+  <Template--Folder Id="{7C68A3FD-6544-4068-A804-9C9F8FD2E4D2}" Name="Templates" IsExternalReference="True">
+    <Folder Id="{8F029518-5451-4E3C-8342-7CA4A5957846}" Name="Applications" IsExternalReference="True">
+      <Template Id="{E20487F1-5558-41F8-B92B-5B57A1491E99}" Name="Speak-AppShortcut" IsExternalReference="True">
+        <Section Id="{4362A1BA-4F56-419D-85D3-D089BFA54A7C}" Name="Data">
+          <Field Id="{3EF4C3B3-7DB3-4E35-B017-28CE9BEF450D}" Name="Icon" />
+          <Field Id="{9D74244B-6D0B-4689-9FB7-C914F34059E1}" Name="Tooltip" />
+          <Field Id="{DDC2F665-6FA1-40A0-A36D-E4CA86B90759}" Name="Title" />
+          <Field Id="{4AA4A141-36A6-44F8-947D-952027D1723B}" Name="Starting Page Id" />
+          <Field Id="{803A0815-B39B-47C0-B727-58E3C8912C8D}" Name="Database" />
+        </Section>
+      </Template>
+    </Folder>
+    <Master--folder Id="{B8AE2215-E4F5-406D-B849-DDEC840009A2}" Name="Branches" IsExternalReference="True">
+      <Master--folder Id="{58D9D78A-07EE-4FA8-ACE7-43E2DA06F6BA}" Name="Applications" IsExternalReference="True">
+        <Master Id="{2D3A619A-0FFB-4EE4-88F6-D66673049CA2}" Name="Application Shortcut" IsExternalReference="True">
+          <Speak-AppShortcut Id="{76E303F1-712F-49BF-90B2-9FDBDA2299F7}" Name="$name" IsExternalReference="True" />
+        </Master>
+        <Master Id="{BE42F637-4596-4FA6-AC95-5FF431320454}" Name="DashboardPage" IsExternalReference="True">
+          <Speak-DashboardPage Id="{B22A6209-8076-42B2-A3E4-44ED4F6A5569}" Name="$name" IsExternalReference="True">
+            <PageSettings Id="{8A6A327C-6BE3-43CE-99CD-F1459EDBF92A}" Name="PageSettings" IsExternalReference="True" />
+          </Speak-DashboardPage>
+        </Master>
+        <Master Id="{EF643281-0F7F-41F0-9AF3-93E2DA21A9A6}" Name="ListPage" IsExternalReference="True">
+          <Speak-ListPage Id="{F66768B4-C463-40EC-8D93-EA04A7CAA2BD}" Name="$name" IsExternalReference="True">
+            <PageSettings Id="{06F455A7-F703-4E2A-8F04-27C62CDD4157}" Name="PageSettings" IsExternalReference="True" />
+          </Speak-ListPage>
+        </Master>
+        <Master Id="{997B7345-919E-4D6A-828C-4DD8541E9D3B}" Name="TaskPage" IsExternalReference="True">
+          <Speak-TaskPage Id="{8EFDE374-4561-4A51-939A-DB1CFF7E7AEF}" Name="$name" IsExternalReference="True">
+            <PageSettings Id="{6DA35998-AA78-4419-B4FA-575610B8EE49}" Name="PageSettings" IsExternalReference="True" />
+          </Speak-TaskPage>
+        </Master>
+      </Master--folder>
+      <Master--folder Id="{9DF54577-378F-482D-8607-5E41CACF4CBD}" Name="Dialogs" IsExternalReference="True">
+        <Master Id="{AD881EC1-7B28-4813-8A88-31D29D96E85A}" Name="ListPage" IsExternalReference="True">
+          <Speak-DialogPage Id="{C248D1E0-1D56-469D-8F33-DF112B1DA10F}" Name="$name" IsExternalReference="True">
+            <PageSettings Id="{B56A954E-8EAF-4E60-8F62-DDCE79EB76A5}" Name="PageSettings" IsExternalReference="True" />
+          </Speak-DialogPage>
+        </Master>
+      </Master--folder>
+    </Master--folder>
+    <Folder Id="{A8191293-7EDD-46F1-8F95-AE401759EB64}" Name="Charting" IsExternalReference="True">
+      <Template Id="{57B679F8-C3F4-44B5-9BF6-85AB1840C3E2}" Name="Axis" IsExternalReference="True">
+        <Section Id="{20C2F7CF-1AB5-4513-9F5B-67C42EE440BB}" Name="Appearance">
+          <Field Id="{E0007292-BA2F-4DE9-8A04-721A9D5885CC}" Name="ShowAxis" />
+        </Section>
+      </Template>
+      <Template Id="{A9AD99DE-7A80-45CE-9A63-409390E4A98B}" Name="JourneyDuration" IsExternalReference="True">
+        <Section Id="{AE7B24E3-A105-446D-9F71-57749ABBCF9E}" Name="Behavior">
+          <Field Id="{CC2DD475-D946-4D96-BDFC-BE429D706F25}" Name="Duration" />
+          <Field Id="{198091CE-C765-481F-8478-905DD5FB16BE}" Name="Unit" />
+          <Field Id="{F9F7B2EC-C34F-4BD3-8DA9-8430BF5374A8}" Name="UnitStep" />
+          <Field Id="{DA5A0721-8454-4E2A-8332-0598D9E9B57F}" Name="CanDrillUp" />
+          <Field Id="{CE35C377-D48A-402F-9F2F-F3F325E98AFA}" Name="CanDrillDown" />
+        </Section>
+      </Template>
+      <Template Id="{CBA8AA48-A2FE-40DE-93F4-5E44D8148C07}" Name="Chart" IsExternalReference="True">
+        <Section Id="{085BC878-E174-4D90-8556-5A4CA391AADB}" Name="Data">
+          <Field Id="{100733AC-5304-4905-9AB5-DD96957D85D3}" Name="Data" />
+        </Section>
+        <Section Id="{BD0B6DD7-5AB7-4594-BE05-31E4ABA3054D}" Name="DataMapping">
+          <Field Id="{7C3B2AFE-7A86-4FAC-A99E-A416AF883720}" Name="CategoryChartField" />
+          <Field Id="{43EA440F-09C3-4F1B-9288-504BDAF2F659}" Name="CategoryFilter" />
+          <Field Id="{18F374EB-7EE4-4998-8A16-5D810CCAB395}" Name="ValueChartFields" />
+        </Section>
+        <Section Id="{A4773AFD-46D8-49A9-BD30-6F4D882FBC00}" Name="Appearance">
+          <Field Id="{4B03912F-CC0B-491A-BD8F-A0062409FBAA}" Name="SingleChartWidth" />
+          <Field Id="{6AC5AAA2-FE37-4E29-9934-BCA5936F0C81}" Name="ShowLegend" />
+          <Field Id="{3D05AA71-CF9F-48E8-A3D9-346A14062A58}" Name="ShowValues" />
+          <Field Id="{6668B1F4-A1B4-47BE-9731-10B6ACFFB435}" Name="SingleChartHeight" />
+          <Field Id="{811B1ADB-0BC8-451A-A57A-570442160FCB}" Name="EnableAnimation" />
+          <Field Id="{BE1428AD-C84C-4A89-9545-EF47074E1810}" Name="DisableSelection" />
+          <Field Id="{3B6E8FC0-F513-432F-A81E-161C65F73E41}" Name="ShowPointMarker" />
+        </Section>
+      </Template>
+      <Template Id="{ECD7D8B0-B6CE-4DEB-8994-A51674A03887}" Name="ChartField" IsExternalReference="True">
+        <Section Id="{B0B25730-3A5B-48BA-A62C-C77D6D3C21E7}" Name="Appearance">
+          <Field Id="{B4929234-6DCC-4ADB-827E-CDCDC128B8AF}" Name="HeaderText" />
+        </Section>
+        <Section Id="{D880165F-E582-436E-AC3A-F8BD7295C8D4}" Name="DataBinding">
+          <Field Id="{29B1C584-0F87-49A2-BE09-EA4FB0A0ABF1}" Name="DataField" />
+        </Section>
+        <Section Id="{EE07DD4E-83E6-4F32-8E60-095781CBD0A8}" Name="Value">
+          <Field Id="{11E2EA30-AAB3-45A5-A279-21370B0F006C}" Name="MultiAxisChartPosition" />
+          <Field Id="{B1451B65-CD0F-4F7E-A1BE-43EF442CCC09}" Name="CombinationChartRenderAs" />
+          <Field Id="{C4A809E0-BCE6-4170-BFB2-D540E1E7F865}" Name="Prefix" />
+          <Field Id="{CD2D3B71-3294-4603-8244-AE24DA51D88A}" Name="Suffix" />
+          <Field Id="{1349C42B-35A9-418F-BED5-693CF8913467}" Name="NumberScale" />
+          <Field Id="{1AC76313-EFE3-4CDA-BBA8-D24B26B12371}" Name="ScaleRecursively" />
+        </Section>
+      </Template>
+      <Template Id="{B070668D-388C-4A3B-B3C6-32AEA8E57943}" Name="NumberScale" IsExternalReference="True">
+        <Section Id="{172369DA-3A2F-4863-89AB-230DE2F99F1E}" Name="Appearance">
+          <Field Id="{2AAF9353-A614-4BEC-9E36-D0AA64A5E1E1}" Name="ScaleUnit" />
+          <Field Id="{789F3C50-084D-4921-B6DD-E4A09F7C7D85}" Name="ScaleValue" />
+        </Section>
+      </Template>
+      <Template Id="{C6BDDE38-C772-452A-8217-8CE8DB7FA545}" Name="Mapping" IsExternalReference="True">
+        <Section Id="{DBE73355-EC66-4CD3-98E5-697942C49A48}" Name="DataMapping">
+          <Field Id="{51711645-4BB4-41D8-BE76-80B9C81EF2B1}" Name="Region" />
+        </Section>
+      </Template>
+      <Template Id="{4B252990-8277-4EEE-9C0B-A6A47641486B}" Name="MappingRegion" IsExternalReference="True">
+        <Section Id="{529115F4-7D9C-4AA1-A975-6FB33723CB42}" Name="DataMapping">
+          <Field Id="{82F713EF-9803-4EFD-879D-A0621E1BC0E4}" Name="RegionAlias" />
+        </Section>
+      </Template>
+      <Template Id="{5DC05E28-3457-4049-8821-5D292965DF5A}" Name="MultiSeries" IsExternalReference="True">
+        <Section Id="{2CB2B43A-0D90-4611-AAD7-EDE50218906E}" Name="DataMapping">
+          <Field Id="{DD51450F-476C-4670-AF02-8D67FF8DE168}" Name="SeriesChartField" />
+          <Field Id="{30B225E8-9A05-4992-8B92-34EC604B248E}" Name="SeriesFilter" />
+        </Section>
+      </Template>
+      <Template Id="{EFCC81DD-ED0F-4FBE-84A1-EB3EA80EB5F2}" Name="NameValue" IsExternalReference="True">
+        <Section Id="{7111B805-3C8F-4FAA-AE9F-5F84736A1F92}" Name="Appearance">
+          <Field Id="{86075339-2DDD-4C0E-AA93-02A74B12DE75}" Name="Value" />
+        </Section>
+      </Template>
+      <Template Id="{EF0729F8-056D-4DCC-8A01-DD5F547DF5CC}" Name="Scrolling" IsExternalReference="True">
+        <Section Id="{0568506F-F835-402D-B721-C47478F6082B}" Name="Appearance">
+          <Field Id="{2AF5D2DD-BC14-4CE2-AC6D-4CB707496CCD}" Name="VisibleCategoriesRange" />
+        </Section>
+      </Template>
+      <Template Id="{D33B9975-86AB-4CFE-AB4A-9911137AD37C}" Name="Stacking" IsExternalReference="True">
+        <Section Id="{BE3BB54E-0392-487C-989E-E86B17825B5F}" Name="Appearance">
+          <Field Id="{69DB7A4C-8D3F-418D-A634-1296C01F4BCB}" Name="StackSeries" />
+        </Section>
+      </Template>
+    </Folder>
+    <Folder Id="{ADE8F374-40BC-4AB4-96F7-52534C267E6A}" Name="Common" IsExternalReference="True">
+      <Template Id="{45CCA0B7-1BA8-4723-B6FB-3AC90C4818AD}" Name="Breadcrumb" IsExternalReference="True">
+        <Section Id="{2A1E11F8-089A-4750-8F4E-2EEAFF59693F}" Name="Data">
+          <Field Id="{B556A23E-B27E-466D-BC2E-43FAD19798B4}" Name="Page" />
+        </Section>
+      </Template>
+      <Template Id="{841CAEDF-9162-447F-8F54-B878E2AB1C50}" Name="Hyperlink" IsExternalReference="True">
+        <Section Id="{CE916F4F-967B-42E7-9426-8FDC8CEC905B}" Name="Data">
+          <Field Id="{E4BCB2C7-7290-483A-B787-A389D0C37318}" Name="Text" />
+        </Section>
+        <Section Id="{0F871866-7AD2-4BCC-B2A6-1AF563BBDDEF}" Name="Action">
+          <Field Id="{86EDE2FF-2260-4290-86B8-0ED74DEB9D68}" Name="Click" />
+          <Field Id="{96606662-F877-4B62-8385-996558B2B49B}" Name="Command" />
+          <Field Id="{0E9B93FD-6AE8-4FCE-B1AC-E36CE2D406A5}" Name="ServerClick" />
+          <Field Id="{D4237EE7-D640-4B3D-8E21-D5D3F3D0D44A}" Name="Trigger" />
+        </Section>
+      </Template>
+      <Template Id="{F0CA5A06-4F51-4EDC-88C4-555504F0831F}" Name="Section" IsExternalReference="True">
+        <Section Id="{7CC862FA-28D8-402E-92D3-20C088653801}" Name="Data">
+          <Field Id="{AD17C7A4-F75D-4E7C-BCFF-19764AC3068D}" Name="Title" />
+          <Field Id="{6A381761-5C6E-4BFC-A046-95B9B21C2AA7}" Name="Subtitle" />
+          <Field Id="{D5943879-BCDD-4059-8C02-901F63A09991}" Name="Content" />
+        </Section>
+      </Template>
+      <Template Id="{C2805657-6AFF-4808-BB51-19FA52D1F01D}" Name="Submenu" IsExternalReference="True">
+        <Section Id="{5082D77E-D966-4DAB-AEED-8AE2D9FD1FDA}" Name="Data">
+          <Field Id="{5D4E7F81-2E06-449E-9881-3461BEB78B37}" Name="Title" />
+        </Section>
+      </Template>
+      <Template Id="{F62B4CD7-754C-4461-810F-2B6BD2C92A0D}" Name="Tab" IsExternalReference="True">
+        <Section Id="{9EE81180-16EA-461F-A50A-15496C27B6B0}" Name="Appearance">
+          <Field Id="{3C386BCC-A573-4589-B1BD-EDACE83DD69D}" Name="Tooltip" />
+          <Field Id="{C8503EF2-0FD2-43C2-BE3E-C08CBA915CC9}" Name="IsHidden" />
+        </Section>
+        <Section Id="{973F8024-6D0D-484E-8659-DAF484FA8DD5}" Name="Data">
+          <Field Id="{AEA872FB-AA91-4D1A-B877-3CA6FBBB4FD4}" Name="Header" />
+          <Field Id="{FADD4553-BC08-4CBB-8099-5BC2C1F8A892}" Name="Is Active" />
+          <Field Id="{DEAB3795-056F-4421-ADF0-758844461B72}" Name="Placeholder Name" />
+        </Section>
+      </Template>
+      <Template Id="{76F63DF7-0235-4164-86AB-84B5EC48CB2A}" Name="Text" IsExternalReference="True">
+        <Section Id="{BD716C1F-9E21-4AD2-BE59-50540DA7352B}" Name="Data">
+          <Field Id="{B3F89D3B-FC37-4699-860E-DB8FB37323C1}" Name="Text" />
+        </Section>
+      </Template>
+    </Folder>
+    <Template--Folder Id="{A891432F-EA2E-4FC4-AF0E-C0242F525927}" Name="Controls" IsExternalReference="True">
+      <Template--Folder Id="{4BCC8462-C42D-4F82-A071-F6D72E3928C5}" Name="ColumnFields" IsExternalReference="True">
+        <Template Id="{D3CEFE6E-E51B-4A84-B92E-AAF8AA8E8DC8}" Name="ColumnField" IsExternalReference="True">
+          <Section Id="{12CCDE6B-95F3-48DC-ABA3-19952A750AC4}" Name="Data">
+            <Field Id="{2E9FD749-0F47-4397-8BA2-C56C65366BF0}" Name="HeaderText" />
+            <Field Id="{E67F1B1F-3488-4CF4-80AE-BE285C918C2E}" Name="DataField" />
+            <Field Id="{B2A46AE4-38F9-4538-A2B3-8021083E0E40}" Name="Sortable" />
+            <Field Id="{75388012-D191-4561-8074-5340E149C0A5}" Name="SortField" />
+            <Field Id="{AB947466-C30D-4ED4-AB9E-11E35E34BFBD}" Name="Formatter" />
+            <Field Id="{35E827FF-BB6C-4ED6-B79F-C41750EA5D46}" Name="HTMLTemplate" />
+            <Field Id="{7AD5458F-19C3-4173-AD67-3BFAF7CD3C7F}" Name="HeaderAlignment" />
+            <Field Id="{876D7F97-DCFF-4A17-B1CC-7D127A273489}" Name="ContentAlignment" />
+            <Field Id="{1C50EFBE-47CD-4A9B-9EEF-A466E75C4977}" Name="Width" />
+          </Section>
+        </Template>
+      </Template--Folder>
+      <Template Id="{871931B2-7ECE-4B24-B7D4-3474EB7EAA13}" Name="ListControl" IsExternalReference="True">
+        <Section Id="{C8517A4E-5572-4829-B6DC-E3C04DC4964E}" Name="Data">
+          <Field Id="{63939EEC-9BAC-4717-A286-AA072C5CA1F5}" Name="DefaultView" />
+        </Section>
+        <Section Id="{AF8CB1C5-B596-4C67-8416-2F32B785F03F}" Name="Appearance">
+          <Field Id="{D3C94C90-88E8-4F33-8EFD-286450BCF880}" Name="EmptyText" />
+        </Section>
+      </Template>
+      <Template Id="{EA70E00F-FE0F-460C-9426-8D7BE2860616}" Name="Speak-BaseComponent" IsExternalReference="True">
+        <Section Id="{6C298758-5FFA-4A2C-810A-C3BC82372A39}" Name="View">
+          <Field Id="{3FC3CC61-F3EE-4953-9270-264E6724952E}" Name="View" />
+        </Section>
+        <Section Id="{41CDB305-F787-4209-8DF7-23B9A1D809D4}" Name="Stylesheet">
+          <Field Id="{0039152E-B046-456A-99C0-9DFF325D4483}" Name="Stylesheet" />
+        </Section>
+        <Section Id="{5E9457EE-1B15-4DF4-90A0-E38F269F0FE6}" Name="Script">
+          <Field Id="{59A60DEF-8566-484E-A572-6E7B51909073}" Name="GenerateScript" />
+          <Field Id="{0CB41E8C-2742-41FC-9ADF-82AEA6E5927D}" Name="Base" />
+          <Field Id="{E6247F72-183A-4331-B3E4-901588148888}" Name="Script" />
+        </Section>
+      </Template>
+    </Template--Folder>
+    <Folder Id="{2DFF5043-4155-4C0E-BB90-5C4D5C5FD2AA}" Name="Pages" IsExternalReference="True">
+      <Template Id="{B11AFCCD-C286-4384-B694-4465D6C605DE}" Name="Speak-DashboardPage" IsExternalReference="True" />
+      <Template Id="{8152CF09-9DD0-40C0-B806-6E91FDF389BC}" Name="Speak-DialogPage" IsExternalReference="True" />
+      <Template Id="{D7CF8B7E-083D-4351-AEF2-2BCD2D794826}" Name="Speak-ListPage" IsExternalReference="True" />
+      <Template Id="{3DF10AD2-B456-407E-8C44-5056E58AA50C}" Name="Speak-SearchResultsPage" IsExternalReference="True" />
+      <Template Id="{1DF51DCB-0EE6-43B1-AE61-54480C5A85AD}" Name="Speak-StartPage" IsExternalReference="True" />
+      <Template Id="{C63C943A-CB4D-45D6-880C-208BD29DAE1A}" Name="Speak-TaskPage" IsExternalReference="True" />
+      <Template Id="{F7203057-DD66-43CF-ABB7-3FD483410902}" Name="Speak-Theme" IsExternalReference="True">
+        <Section Id="{4CB4FDBA-9988-4449-A02E-FA3590733D54}" Name="Data">
+          <Field Id="{483E061B-5157-451C-9DB0-621C6916CDAB}" Name="Stylesheet" />
+        </Section>
+      </Template>
+    </Folder>
+    <Folder Id="{DE96AB82-28D9-4961-96FC-DE7F54C2ABE9}" Name="Rendering Parameters" IsExternalReference="True">
+      <Template Id="{E19FFEDA-4505-4A2F-921A-0125D4B4A50A}" Name="BehaviorBase" IsExternalReference="True">
+        <Section Id="{C3C7641E-3A22-46E3-B71D-4862DB7CBC90}" Name="Data">
+          <Field Id="{B5077812-5551-4C46-9BBA-4CB190CCF253}" Name="Name" />
+          <Field Id="{8B400719-B932-4230-B5F9-6E9BA2CA07A7}" Name="PageScriptFileName" />
+        </Section>
+      </Template>
+      <Template Id="{E34A6AE8-83EE-4D9D-BF1C-34DC85FB0C81}" Name="BlockControlBase" IsExternalReference="True" />
+      <Template Id="{52A5A8DD-CE8F-462B-83FE-B225EFA52C6A}" Name="ItemDataSourceBase" IsExternalReference="True">
+        <Section Id="{049E39FC-5698-4B5A-B67D-270CAAD011C4}" Name="Data">
+          <Field Id="{21AC3DB5-ECEA-4E93-B352-3A1D209607C4}" Name="Language" />
+          <Field Id="{4433D828-34E5-426A-BC03-EEEB979D666F}" Name="Database" />
+          <Field Id="{D0A5E5A8-3D02-4B64-82CD-21E84FB97776}" Name="Fields" />
+        </Section>
+        <Section Id="{A305FE60-5333-45AA-AAF6-3F8B84810E3B}" Name="Paging">
+          <Field Id="{E2CAC5C9-4C3A-4FCC-9D7A-7491A70D1FAC}" Name="PageSize" />
+          <Field Id="{6CF9745D-7608-4FAC-A06D-E15C04ECFB7C}" Name="PageIndex" />
+        </Section>
+      </Template>
+      <Template Id="{13F4F706-7185-47FD-B7E3-1C1C86761EB0}" Name="ItemsControlBase" IsExternalReference="True">
+        <Section Id="{F9192A01-631B-464F-84AC-84421A8F3681}" Name="Data">
+          <Field Id="{C685DC38-F7DD-4B6C-BC97-7711C21DE556}" Name="Items" />
+        </Section>
+        <Section Id="{532E779B-F3F4-44CF-962A-0D6B340A34A6}" Name="Appearance">
+          <Field Id="{26ADBC2A-E383-4209-9877-4898B68FFEB2}" Name="WidthPolicy" />
+        </Section>
+      </Template>
+      <Template Id="{889A1B26-FC27-4CD7-9E0F-1682668883FB}" Name="MultiSelectControlBase" IsExternalReference="True">
+        <Section Id="{78A68CB8-626E-477C-9450-6EC8752931F8}" Name="Data">
+          <Field Id="{CD040CE8-D102-4CC3-AFEB-39E5808AB2B9}" Name="SelectedItems" />
+          <Field Id="{06E09CB4-4EFE-4BAB-B796-66B6F33A7A47}" Name="SelectedValues" />
+          <Field Id="{07C35B54-CF33-4DB0-AD1C-8573C700B166}" Name="Multiple" />
+        </Section>
+      </Template>
+      <Template Id="{6018B3D2-983A-4F8B-9E52-446DD23BEB48}" Name="SelectControlBase" IsExternalReference="True">
+        <Section Id="{8F56B9C9-1ACD-4691-88BD-D90B63F7BE5B}" Name="Data">
+          <Field Id="{9ABED80D-44C0-41CF-96CC-035FFDFE977E}" Name="SelectedItem" />
+          <Field Id="{B7FEDC57-F289-487B-9AE0-2667BBB99B94}" Name="SelectedValue" />
+          <Field Id="{4563A48E-D639-410B-A265-1547ACC18579}" Name="ValueFieldName" />
+          <Field Id="{BEDCFFE7-1F81-4D37-A929-BA7A3C8C8FA8}" Name="DisplayFieldName" />
+        </Section>
+      </Template>
+    </Folder>
+  </Template--Folder>
+</Folder>

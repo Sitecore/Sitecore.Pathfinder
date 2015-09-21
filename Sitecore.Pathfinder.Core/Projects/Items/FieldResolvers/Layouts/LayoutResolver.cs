@@ -236,10 +236,11 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
 
         protected virtual void WriteLayout([NotNull] LayoutResolveContext context, [NotNull] XmlTextWriter output, [NotNull] ITextNode layoutTextNode)
         {
-            // todo: cache this in the build context
-            // todo: use better search
-            // todo: add renderings from project
-            var renderingItems = context.Field.Item.Project.Items.OfType<Rendering>().Select(r => r.Item).ToList();
+            var databaseName = context.Field.Item.DatabaseName;
+
+            // todo: identify renderings by fully qualifying the template name or use the id
+            var renderingItems = context.Field.Item.Project.Items.OfType<Rendering>().Where(r => string.Equals(r.Item.DatabaseName, databaseName, StringComparison.OrdinalIgnoreCase)).Select(r => r.Item).ToList();
+            renderingItems.AddRange(context.Field.Item.Project.Items.OfType<Item>().Where(r => r.IsExternalReference && string.Equals(r.DatabaseName, databaseName, StringComparison.OrdinalIgnoreCase) && string.Equals(r.TemplateIdOrPath, "View rendering", StringComparison.OrdinalIgnoreCase)));
 
             output.WriteStartElement("r");
 

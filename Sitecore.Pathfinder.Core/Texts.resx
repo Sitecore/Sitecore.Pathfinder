@@ -229,7 +229,7 @@
     <value>{1}: Parameter "{0}" is not defined in the parameters template.</value>
   </data>
   <data name="_2___Placeholder___0___is_not_defined_in_the_parent_rendering__Parent_rendering_has_these_placeholders___1__" xml:space="preserve">
-    <value>{2}: Placeholder "{0}" is not defined in the parent rendering. Parent rendering has these placeholders: {1}.</value>
+    <value>{2}: Placeholder "{0}" is not defined in the parent rendering. Parent rendering has these placeholders: {1}</value>
   </data>
   <data name="__Boolean_parameter_must_have_value__True__or__False_" xml:space="preserve">
     <value>: Boolean parameter must have value "True" or "False"</value>

@@ -88,7 +88,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {2}: Placeholder &quot;{0}&quot; is not defined in the parent rendering. Parent rendering has these placeholders: {1}..
+        ///   Looks up a localized string similar to {2}: Placeholder &quot;{0}&quot; is not defined in the parent rendering. Parent rendering has these placeholders: {1}.
         /// </summary>
         public static string _2___Placeholder___0___is_not_defined_in_the_parent_rendering__Parent_rendering_has_these_placeholders___1__ {
             get {
@@ -197,7 +197,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copying dependencies....
+        ///   Looks up a localized string similar to Copying dependency packages....
         /// </summary>
         public static string Copying_dependencies___ {
             get {
@@ -206,7 +206,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copying dependency.
+        ///   Looks up a localized string similar to Copying.
         /// </summary>
         public static string Copying_dependency {
             get {
@@ -305,7 +305,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dependencies directory not found. Skipping.
+        ///   Looks up a localized string similar to Packages directory not found. Skipping.
         /// </summary>
         public static string Dependencies_directory_not_found__Skipping {
             get {

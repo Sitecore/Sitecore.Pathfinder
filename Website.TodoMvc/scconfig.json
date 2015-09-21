@@ -1,0 +1,86 @@
+{
+    // every project must have a unique id, since the project-unique-id is used to
+    // calculate item ids.
+    "project-unique-id": "Sitecore.Pathfinder.TodoMvc",
+
+    // wwwroot points to the base directory of the website
+    // The wwwroot directory must contain a 'Data' and a 'Website' folder
+    "wwwroot": "e:\\inetpub\\wwwroot\\Pathfinder",
+    "host-name": "http://pathfinder",
+
+    // user name and password
+    "user-name": "sitecore\\admin",
+    "password": "b",
+
+    // Sitecore database name (master, core, or web)
+    "database": "master",
+
+    // build pipeline
+    "pipeline": "check-project pack-nuget copy-dependencies copy-package install-package publish-database show-metrics",
+
+
+    // mapping of files between local path and server path and item path
+    "files": {
+        //     "html": {
+        //         "project-directory": "",
+        //         "include": "**/*.html",
+        //         "website-directory": "/layout/renderings",
+        //         "item-path": "/sitecore/layout/renderings",
+        //         "database": "master"
+        //     },
+        //     "img": {
+        //         "project-directory": "/img",
+        //         "include": "**",
+        //         "website-directory": "",
+        //         "item-path": "/sitecore/media library"
+        //     }
+    },
+    "sync": {
+        "master layout schema json": {
+            "file": "sitecore.project/schemas/master.layout.schema.json",
+            "database": "master"
+        },
+        "core layout schema json": {
+            "file": "sitecore.project/schemas/core.layout.schema.json",
+            "database": "core"
+        },
+        "master content schema json": {
+            "file": "sitecore.project/schemas/master.content.schema.json",
+            "database": "master"
+        },
+        "core content schema json": {
+            "file": "sitecore.project/schemas/core.content.schema.json",
+            "database": "core"
+        },
+        "master layout xsd": {
+            "file": "sitecore.project/schemas/master.layout.xsd",
+            "database": "master",
+            "namespace": "http://www.sitecore.net/pathfinder/layouts/master"
+        },
+        "core layout xsd": {
+            "file": "sitecore.project/schemas/core.layout.xsd",
+            "database": "core",
+            "namespace": "http://www.sitecore.net/pathfinder/layouts/core"
+        },
+        "master content xsd": {
+            "file": "sitecore.project/schemas/master.content.xsd",
+            "database": "master",
+            "namespace": "http://www.sitecore.net/pathfinder/content/master"
+        },                                                                             
+        "core content xsd": {
+            "file": "sitecore.project/schemas/core.content.xsd",
+            "database": "core",
+            "namespace": "http://www.sitecore.net/pathfinder/content/core"
+        },
+        "speak core content xml": {
+             "file": "sitecore.project/external/speak.core.content.xml",
+             "database": "core",
+             "path": "/sitecore/client/Speak"
+         },
+         "bcl core content xml": {
+             "file": "sitecore.project/external/bcl.core.content.xml",
+             "database": "core",
+             "path": "/sitecore/client/Business Component Library"
+         }
+    }
+}

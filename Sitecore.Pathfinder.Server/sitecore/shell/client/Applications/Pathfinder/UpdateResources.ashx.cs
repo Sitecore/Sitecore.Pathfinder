@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Shell.Client.Applications.Pathfinder
         {
             var synchronizationManager = new SynchronizationManager();
 
-            var fileName = synchronizationManager.BuildResourceFile();
+            var fileName = synchronizationManager.BuildZipFile();
 
             context.Response.ContentType = "application/zip";
             context.Response.WriteFile(fileName);
