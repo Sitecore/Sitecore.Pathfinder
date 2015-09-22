@@ -2,6 +2,7 @@
 
 using System.ComponentModel.Composition;
 using System.Linq;
+using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Pathfinder.Snapshots.Json;
 
@@ -36,6 +37,12 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers.Json
                     }
                 }
             }
+        }
+
+        protected override void ParseLayoutTextNode(ItemParseContext context, Item item, ITextNode textNode)
+        {
+            var parser = new JsonLayoutParser();
+            parser.Parse(context, textNode, item);
         }
     }
 }

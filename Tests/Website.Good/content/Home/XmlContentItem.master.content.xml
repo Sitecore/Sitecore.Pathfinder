@@ -1,1 +1,14 @@
-﻿<Sample--Item xmlns="http://www.sitecore.net/pathfinder/content/master/test" Text="Hello World" ParentItemPath="/sitecore/content" />
+﻿<Sample--Item xmlns="http://www.sitecore.net/pathfinder/content/master" Text="Hello World" ParentItemPath="/sitecore/content">
+    <Fields.Unversioned Language="en-US" Text="Hello" />
+    <Fields.Versioned Language="da-DK" Version="1" Text="Hello world"/>
+    <Fields.Versioned Language="da-DK" Version="2" Text="Hello friend" />
+    <Fields.Layout>
+        <Layout xmlns="http://www.sitecore.net/pathfinder/layouts/master">
+            <Device Name="Default" Layout="/sitecore/layout/Layouts/MvcLayout">
+                <HelloWorld DataSource="/sitecore" />
+                <HelloWorld />
+                <HelloWorld />
+            </Device>
+        </Layout>
+    </Fields.Layout>                                  
+</Sample--Item>

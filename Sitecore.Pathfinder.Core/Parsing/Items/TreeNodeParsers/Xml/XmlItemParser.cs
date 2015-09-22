@@ -1,9 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.ComponentModel.Composition;
-using System.Linq;
-using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Pathfinder.Snapshots.Xml;
@@ -22,78 +19,36 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers.Xml
             return textNode.Name == "Item" && textNode.Snapshot is XmlTextSnapshot;
         }
 
-        protected override void ParseChildNodes(ItemParseContext context, Item item, ITextNode textNode)
+        protected override void ParseLayoutTextNode(ItemParseContext context, Item item, ITextNode textNode)
         {
-            foreach (var childTreeNode in textNode.ChildNodes)
-            {
-                if (childTreeNode.Name == "Fields")
-                {
-                    ParseFieldsTreeNode(context, item, childTreeNode);
-                }
-                else if (childTreeNode.Name == "Layout")
-                {
-                    ParseLayoutTreeNode(context, item, childTreeNode);
-                }
-                else
-                {
-                    var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, PathHelper.CombineItemPath(context.ParentItemPath, item.ItemName));
-                    context.Parser.ParseTextNode(newContext, childTreeNode);
-                }
-            }
+            var parser = new XmlLayoutParser();
+            parser.Parse(context, textNode, item);
         }
 
-        protected virtual void ParseFieldsTreeNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode fieldsTextNode)
+        protected override void ParseUnversionedTextNode(ItemParseContext context, Item item, ITextNode textNode)
         {
             var fieldContext = new FieldContext();
+            fieldContext.LanguageProperty.Parse(textNode);
 
-            foreach (var childNode in fieldsTextNode.ChildNodes)
+            foreach (var unversionedChildNode in textNode.ChildNodes)
             {
-                switch (childNode.Name)
-                {
-                    case "Field":
-                        ParseFieldTreeNode(context, item, fieldContext, childNode);
-                        break;
-
-                    case "Unversioned":
-                        fieldContext = new FieldContext();
-                        fieldContext.LanguageProperty.Parse(childNode);
-
-                        foreach (var unversionedChildNode in childNode.ChildNodes)
-                        {
-                            ParseFieldTreeNode(context, item, fieldContext, unversionedChildNode);
-                        }
-
-                        break;
-
-                    case "Versioned":
-                        foreach (var versionChildNode in childNode.ChildNodes)
-                        {
-                            fieldContext = new FieldContext();
-                            fieldContext.LanguageProperty.Parse(childNode);
-                            fieldContext.VersionProperty.Parse(versionChildNode);
-
-                            foreach (var versionedChildNode in versionChildNode.ChildNodes)
-                            {
-                                ParseFieldTreeNode(context, item, fieldContext, versionedChildNode);
-                            }
-                        }
-
-                        break;
-                }
+                ParseFieldTextNode(context, item, fieldContext, unversionedChildNode);
             }
         }
 
-        protected void ParseLayoutTreeNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode textNode)
+        protected override void ParseVersionedTextNode(ItemParseContext context, Item item, ITextNode textNode)
         {
-            var layoutTextNode = textNode.ChildNodes.FirstOrDefault();
-            if (layoutTextNode == null)
+            foreach (var versionChildNode in textNode.ChildNodes)
             {
-                context.ParseContext.Trace.TraceWarning("There is no layout", textNode);
-                return;
-            }
+                var fieldContext = new FieldContext();
+                fieldContext.LanguageProperty.Parse(textNode);
+                fieldContext.VersionProperty.Parse(versionChildNode);
 
-            var parser = new XmlLayoutParser();
-            parser.Parse(context, layoutTextNode, item);
+                foreach (var versionedChildNode in versionChildNode.ChildNodes)
+                {
+                    ParseFieldTextNode(context, item, fieldContext, versionedChildNode);
+                }
+            }
         }
     }
 }

@@ -1,24 +1,26 @@
 ﻿{
     "$schema": "../../../../sitecore.pathfinder.console/files/project/sitecore.project/schemas/item.schema.json#",
     "Item": {
-        "Layout": {
-            "Devices": [
-                {
-                    "Name": "Default",
-                    "Layout": "/sitecore/layout/Layouts/MvcLayout",
-                    "Renderings": [
-                        {
-                            "HelloWorld": { "DataSource": "/sitecore" }
-                        },
-                        {
-                            "HelloWorld": { }
-                        },
-                        {
-                            "HelloWorld": { }
-                        }
-                    ]
-                }
-            ]
+        "Fields": {
+            "Layout": {
+                "Devices": [
+                    {
+                        "Name": "Default",
+                        "Layout": "/sitecore/layout/Layouts/MvcLayout",
+                        "Renderings": [
+                            {
+                                "HelloWorld": { "DataSource": "/sitecore" }
+                            },
+                            {
+                                "HelloWorld": { }
+                            },
+                            {
+                                "HelloWorld": { }
+                            }
+                        ]
+                    }
+                ]
+            }
         }
     }
 }

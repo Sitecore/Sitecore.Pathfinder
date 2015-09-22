@@ -106,6 +106,7 @@
     <Compile Include="Parsing\Builders\FieldBuilder.cs" />
     <Compile Include="Parsing\Builders\ItemBuilder.cs" />
     <Compile Include="Parsing\Builders\LanguageVersionBuilder.cs" />
+    <Compile Include="Parsing\Items\TreeNodeParsers\FieldContext.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\Yaml\YamlContentParser.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\Yaml\YamlLayoutParser.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\Yaml\YamlItemParser.cs" />
@@ -162,7 +163,6 @@
     <Compile Include="Parsing\Items\TreeNodeParsers\TextNodeParserBase.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\ITextNodeParser.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\Json\JsonLayoutParser.cs" />
-    <Compile Include="Parsing\Items\TreeNodeParsers\Json\JsonContentParser.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\Xml\XmContentParser.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\Xml\XmlItemParser.cs" />
     <Compile Include="Parsing\Items\TreeNodeParsers\Xml\XmlLayoutParser.cs" />

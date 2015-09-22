@@ -37,48 +37,40 @@
     },
 
     "sync": {
-        "master layout schema json": {
+        "Json schema for layouts in Master database": {
             "file": "sitecore.project/schemas/master.layout.schema.json",
             "database": "master"
         },
-        "core layout schema json": {
+        "Json schema for layouts in Core database": {
             "file": "sitecore.project/schemas/core.layout.schema.json",
             "database": "core"
         },
-        "master content schema json": {
-            "file": "sitecore.project/schemas/master.content.schema.json",
-            "database": "master"
-        },
-        "core content schema json": {
-            "file": "sitecore.project/schemas/core.content.schema.json",
-            "database": "core"
-        },
-        "master layout xsd": {
+        "Xml schema for layouts in Master database": {
             "file": "sitecore.project/schemas/master.layout.xsd",
             "database": "master",
             "namespace": "http://www.sitecore.net/pathfinder/layouts/master"
         },
-        "core layout xsd": {
+        "Xml schema for layouts in Core database": {
             "file": "sitecore.project/schemas/core.layout.xsd",
             "database": "core",
             "namespace": "http://www.sitecore.net/pathfinder/layouts/core"
         },
-        "master content xsd": {
+        "Xml schema for content in Master database": {
             "file": "sitecore.project/schemas/master.content.xsd",
             "database": "master",
             "namespace": "http://www.sitecore.net/pathfinder/content/master"
         },
-        "core content xsd": {
+        "Xml schema for content in Core database": {
             "file": "sitecore.project/schemas/core.content.xsd",
             "database": "core",
             "namespace": "http://www.sitecore.net/pathfinder/content/core"
         }
-        // "speak core content xml": {
+        // "Xml schema for Speak": {
         //     "file": "sitecore.project/external/speak.core.content.xml",
         //     "database": "core",
         //     "path": "/sitecore/client/Speak"
         // },
-        // "bcl core content xml": {
+        // "Xml schema for Business Component Library": {
         //     "file": "sitecore.project/external/bcl.core.content.xml",
         //     "database": "core",
         //     "path": "/sitecore/client/Business Component Library"

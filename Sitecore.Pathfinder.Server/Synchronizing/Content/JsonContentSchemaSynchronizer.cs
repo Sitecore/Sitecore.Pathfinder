@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,6 +12,7 @@ using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Data.Templates;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Rocks.Server.Extensibility.Composition;
 using Sitecore.SecurityModel;
 using Sitecore.Web.UI.HtmlControls.Data;
 using Sitecore.Zip;
@@ -20,7 +20,7 @@ using Sitecore.Zip;
 namespace Sitecore.Pathfinder.Synchronizing.Content
 {
     [Export(typeof(ISynchronizer))]
-    public class JsonTemplateSchemaExporter : ISynchronizer
+    public class JsonContentSchemaSynchronizer : ISynchronizer
     {
         protected static readonly ID InsertOptionsFieldId = new ID(Constants.Fields.InsertOptionsFieldId);
 

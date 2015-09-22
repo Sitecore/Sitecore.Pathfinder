@@ -19,7 +19,7 @@ using Sitecore.Zip;
 namespace Sitecore.Pathfinder.Synchronizing.Content
 {
     [Export(typeof(ISynchronizer))]
-    public class XsdTemplateSchemaSynchronizer : ISynchronizer
+    public class XsdContentSchemaSynchronizer : ISynchronizer
     {
         public const string Namespace = "http://www.w3.org/2001/XMLSchema";
 
@@ -233,6 +233,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
 
             WriteBoolSimpleType(output);
             WriteStandardAttributes(output);
+            WriteFields(output);
 
             WriteTemplatesGroup(output, templates);
             WriteTemplates(output, database, templates);
@@ -330,11 +331,17 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
                 output.WriteStartElement(Xs, "complexType", Namespace);
 
                 output.WriteStartElement(Xs, "sequence", Namespace);
+
+                output.WriteStartElement(Xs, "group", Namespace);
+                output.WriteAttributeString("ref", "Fields");
                 output.WriteAttributeString("minOccurs", "0");
-                output.WriteAttributeString("maxOccurs", "unbounded");
+                output.WriteAttributeString("maxOccurs", "1");
+                output.WriteEndElement();
 
                 output.WriteStartElement(Xs, "group", Namespace);
                 output.WriteAttributeString("ref", "Templates");
+                output.WriteAttributeString("minOccurs", "0");
+                output.WriteAttributeString("maxOccurs", "unbounded");
                 output.WriteEndElement();
 
                 output.WriteEndElement(); // sequence
@@ -353,6 +360,88 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
                 output.WriteEndElement(); // complexType
                 output.WriteEndElement();
             }
+        }
+
+        protected virtual void WriteFields([Diagnostics.NotNull] XmlTextWriter output)
+        {
+            output.WriteStartElement(Xs, "group", Namespace);
+            output.WriteAttributeString("name", "Fields");
+            output.WriteStartElement(Xs, "sequence", Namespace);
+
+            output.WriteStartElement(Xs, "element", Namespace);
+            output.WriteAttributeString("name", "Fields.Unversioned");
+            output.WriteAttributeString("minOccurs", "0");
+            output.WriteAttributeString("maxOccurs", "unbounded");
+
+            output.WriteStartElement(Xs, "complexType", Namespace);
+
+            output.WriteStartElement(Xs, "attribute", Namespace);
+            output.WriteAttributeString("name", "Language");
+            output.WriteAttributeString("type", "xs:string");
+            output.WriteEndElement();
+
+            output.WriteStartElement(Xs, "anyAttribute", Namespace);
+            output.WriteAttributeString("processContents", "lax");
+            output.WriteEndElement(); 
+
+            output.WriteEndElement(); // complexType
+            output.WriteEndElement(); // element
+
+            output.WriteStartElement(Xs, "element", Namespace);
+            output.WriteAttributeString("name", "Fields.Versioned");
+            output.WriteAttributeString("minOccurs", "0");
+            output.WriteAttributeString("maxOccurs", "unbounded");
+
+            output.WriteStartElement(Xs, "complexType", Namespace);
+
+            output.WriteStartElement(Xs, "attribute", Namespace);
+            output.WriteAttributeString("name", "Language");
+            output.WriteAttributeString("type", "xs:string");
+            output.WriteEndElement();
+
+            output.WriteStartElement(Xs, "attribute", Namespace);
+            output.WriteAttributeString("name", "Version");
+            output.WriteAttributeString("type", "xs:integer");
+            output.WriteEndElement();
+
+            output.WriteStartElement(Xs, "anyAttribute", Namespace);
+            output.WriteAttributeString("processContents", "lax");
+            output.WriteEndElement(); 
+
+            output.WriteEndElement(); // complexType
+            output.WriteEndElement(); // element
+
+
+            output.WriteStartElement(Xs, "element", Namespace);
+            output.WriteAttributeString("name", "Fields.Layout");
+            output.WriteAttributeString("minOccurs", "0");
+            output.WriteAttributeString("maxOccurs", "1");
+
+            output.WriteStartElement(Xs, "complexType", Namespace);
+
+            output.WriteStartElement(Xs, "choice", Namespace);
+
+            output.WriteStartElement(Xs, "any", Namespace);
+            output.WriteAttributeString("minOccurs", "0");
+            output.WriteAttributeString("maxOccurs", "1");
+            output.WriteAttributeString("processContents", "lax");
+            output.WriteAttributeString("namespace", "http://www.sitecore.net/pathfinder/layouts/master");
+            output.WriteEndElement(); 
+
+            output.WriteStartElement(Xs, "any", Namespace);
+            output.WriteAttributeString("minOccurs", "0");
+            output.WriteAttributeString("maxOccurs", "1");
+            output.WriteAttributeString("processContents", "lax");
+            output.WriteAttributeString("namespace", "http://www.sitecore.net/pathfinder/layouts/core");
+            output.WriteEndElement(); 
+
+            output.WriteEndElement(); // choice
+            output.WriteEndElement(); // complexType
+            output.WriteEndElement(); // element
+
+            output.WriteEndElement(); // sequence
+
+            output.WriteEndElement(); // group
         }
 
         protected virtual void WriteTemplatesGroup([NotNull] XmlTextWriter output, [NotNull] IEnumerable<Template> templates)

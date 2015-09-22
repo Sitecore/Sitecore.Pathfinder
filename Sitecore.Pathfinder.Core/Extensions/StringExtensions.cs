@@ -154,7 +154,7 @@ namespace Sitecore.Pathfinder.Extensions
 
             text = new string(chars);
 
-            var result = Regex.Replace(text, @"\W", "-").Replace(@" ", "-");
+            var result = Regex.Replace(text, "[^\\w ]", "-").Replace(@" ", "--");
             if (!char.IsLetter(result[0]))
             {
                 result = @"-" + result;

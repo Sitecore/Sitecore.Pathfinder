@@ -62,25 +62,76 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             context.ParseContext.Project.AddOrMerge(context.ParseContext, item);
         }
 
-        protected abstract void ParseChildNodes([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode textNode);
-
-        protected virtual void ParseFieldTreeNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] FieldContext fieldContext, [NotNull] ITextNode fieldTextNode)
+        protected virtual void ParseChildNodes(ItemParseContext context, Item item, ITextNode textNode)
         {
-            var fieldNameTextNode = fieldTextNode.GetAttributeTextNode("Name");
+            foreach (var childNode in textNode.ChildNodes)
+            {
+                switch (childNode.Name)
+                {
+                    case "Fields":
+                        ParseFieldsTextNode(context, item, childNode);
+                        break;
+
+                    default:
+                        var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, PathHelper.CombineItemPath(context.ParentItemPath, item.ItemName));
+                        context.Parser.ParseTextNode(newContext, childNode);
+                        break;
+                }
+            }
+        }
+
+        protected virtual void ParseUnknownTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] FieldContext fieldContext, [NotNull] ITextNode textNode)
+        {
+        }
+
+        protected virtual void ParseFieldsTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode textNode)
+        {
+            var fieldContext = new FieldContext();
+
+            foreach (var childNode in textNode.ChildNodes)
+            {
+                switch (childNode.Name)
+                {
+                    case "Field":
+                        ParseFieldTextNode(context, item, fieldContext, childNode);
+                        break;
+
+                    case "Unversioned":
+                        ParseUnversionedTextNode(context, item, childNode);
+                        break;
+
+                    case "Versioned":
+                        ParseVersionedTextNode(context, item, childNode);
+                        break;
+
+                    case "Layout":
+                        ParseLayoutTextNode(context, item, childNode);
+                        break;
+
+                    default:
+                        ParseUnknownTextNode(context, item, fieldContext, childNode);
+                        break;
+                }
+            }
+        }
+
+        protected virtual void ParseFieldTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] FieldContext fieldContext, [NotNull] ITextNode textNode)
+        {
+            var fieldNameTextNode = textNode.GetAttributeTextNode("Name");
             if (fieldNameTextNode == null || string.IsNullOrEmpty(fieldNameTextNode.Value))
             {
-                context.ParseContext.Trace.TraceError(Texts._Field__element_must_have_a__Name__attribute, fieldTextNode);
+                context.ParseContext.Trace.TraceError(Texts._Field__element_must_have_a__Name__attribute, textNode);
                 return;
             }
 
-            ParseFieldTreeNode(context, item, fieldContext, fieldTextNode, fieldNameTextNode);
+            ParseFieldTextNode(context, item, fieldContext, textNode, fieldNameTextNode);
         }
 
-        protected virtual void ParseFieldTreeNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] FieldContext fieldContext, [NotNull] ITextNode fieldTextNode, [NotNull] ITextNode fieldNameTextNode)
+        protected virtual void ParseFieldTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] FieldContext fieldContext, [NotNull] ITextNode textNode, [NotNull] ITextNode fieldNameTextNode)
         {
             // get field value either from Value attribute or from inner text
-            var innerTextNode = fieldTextNode.GetInnerTextNode();
-            var attributeTextNode = fieldTextNode.GetAttributeTextNode("Value");
+            var innerTextNode = textNode.GetInnerTextNode();
+            var attributeTextNode = textNode.GetAttributeTextNode("Value");
 
             // todo: fix this
             /*
@@ -91,16 +142,16 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             */
             var valueTextNode = attributeTextNode ?? innerTextNode;
 
-            ParseFieldTreeNode(context, item, fieldContext, fieldTextNode, fieldNameTextNode, valueTextNode);
+            ParseFieldTextNode(context, item, fieldContext, textNode, fieldNameTextNode, valueTextNode);
         }
 
-        protected virtual void ParseFieldTreeNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] FieldContext fieldContext, [NotNull] ITextNode fieldTextNode, [NotNull] ITextNode fieldNameTextNode, [CanBeNull] ITextNode valueTextNode)
+        protected virtual void ParseFieldTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] FieldContext fieldContext, [NotNull] ITextNode textNode, [NotNull] ITextNode fieldNameTextNode, [CanBeNull] ITextNode valueTextNode)
         {
-            var field = context.ParseContext.Factory.Field(item, fieldTextNode);
+            var field = context.ParseContext.Factory.Field(item, textNode);
             field.FieldNameProperty.SetValue(fieldNameTextNode);
             field.LanguageProperty.SetValue(fieldContext.LanguageProperty, SetValueOptions.DisableUpdates);
             field.VersionProperty.SetValue(fieldContext.VersionProperty, SetValueOptions.DisableUpdates);
-            field.ValueHintProperty.Parse(fieldTextNode);
+            field.ValueHintProperty.Parse(textNode);
 
             if (valueTextNode != null)
             {
@@ -109,18 +160,22 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
             // check if field is already defined
             var duplicate = item.Fields.FirstOrDefault(f => string.Equals(f.FieldName, field.FieldName, StringComparison.OrdinalIgnoreCase) && string.Equals(f.Language, field.Language, StringComparison.OrdinalIgnoreCase) && f.Version == field.Version);
-            if (duplicate != null)
+            if (duplicate == null)
             {
-                context.ParseContext.Trace.TraceError(Texts.Field_is_already_defined, fieldTextNode, duplicate.FieldName);
+                item.Fields.Add(field);
             }
-
-            item.Fields.Add(field);
+            else
+            {
+                context.ParseContext.Trace.TraceError(Texts.Field_is_already_defined, textNode, duplicate.FieldName);
+            }
 
             if (!item.IsExternalReference && !field.ValueHint.Contains("NoReference"))
             {
                 item.References.AddRange(ParseReferences(context, item, field.ValueProperty));
             }
         }
+
+        protected abstract void ParseLayoutTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode textNode);
 
         [NotNull]
         protected virtual Template ParseTemplate([NotNull] ItemParseContext context, [NotNull] Item item, [CanBeNull] ITextNode templateIdOrPathTextNode)
@@ -200,13 +255,8 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             return context.ParseContext.Project.AddOrMerge(context.ParseContext, template);
         }
 
-        protected class FieldContext
-        {
-            [NotNull]
-            public SourceProperty<string> LanguageProperty { get; } = new SourceProperty<string>("Language", string.Empty);
+        protected abstract void ParseUnversionedTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode textNode);
 
-            [NotNull]
-            public SourceProperty<int> VersionProperty { get; } = new SourceProperty<int>("Number", 0);
-        }
+        protected abstract void ParseVersionedTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode textNode);
     }
 }

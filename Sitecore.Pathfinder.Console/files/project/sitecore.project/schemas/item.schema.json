@@ -30,8 +30,6 @@
                                     ]
                                 },
                                 "Value.Hint": { "$ref": "#/definitions/FieldValueHint" },
-                                "Language": { "type": "string" },
-                                "Version": { "type": "integer" },
                                 "Field.Type": { "$ref": "#/definitions/FieldType" },
                                 "Field.ShortHelp": { "type": "string" },
                                 "Field.LongHelp": { "type": "string" },
@@ -57,7 +55,6 @@
                 "Template.ShortHelp": { "type": "string" },
                 "Template.LongHelp": { "type": "string" },
                 "Template.Icon": { "type": "string" },
-                "Layout": { "type": "object" },
                 "Layout.HtmlFile": { "type": "string" },
 
                 "Fields": {
@@ -90,7 +87,15 @@
                             }
                         },
 
-                        "^((?!(Versioned|Unversioned)).)*$": {
+                        "Layout": {
+                            "type": "object",
+                            "oneOf": [
+                                { "$ref": "master.layout.schema.json#/definitions/Layout" }
+                                // { "$ref": "core.layout.schema.json#/definitions/Layout" }
+                            ]
+                        },
+
+                        "^((?!(Versioned|Unversioned|Layout)).)*$": {
                             "oneOf": [
                                 { "type": "string" },
                                 { "type": "integer" },
@@ -107,8 +112,6 @@
                                             ]
                                         },
                                         "Value.Hint": { "$ref": "#/definitions/FieldValueHint" },
-                                        "Language": { "type": "string" },
-                                        "Version": { "type": "integer" },
                                         "Field.Type": { "$ref": "#/definitions/FieldType" },
                                         "Field.ShortHelp": { "type": "string" },
                                         "Field.LongHelp": { "type": "string" },
@@ -120,7 +123,6 @@
                         }
                     }
                 },
-
 
                 "Item": { "$ref": "#/definitions/Item" },
                 "template": { "$ref": "#/definitions/Template" }

@@ -1,4 +1,5 @@
-﻿<Item xmlns="http://www.sitecore.net/pathfinder/item" Template="/sitecore/templates/Sample/XmlItemTemplate" Template.CreateFromFields="True" Template.ShortHelp="Hello World."
+﻿<Item xmlns="http://www.sitecore.net/pathfinder/item" Template="/sitecore/templates/Sample/XmlItemTemplate" 
+    Template.CreateFromFields="True" Template.ShortHelp="Hello World."
     Template.LongHelp="Hello World." Template.Icon="Applications/16x16/about.png">
 
     <Fields>
@@ -22,16 +23,14 @@
                 <Field Name="VersionedField">Version 2</Field>
             </Version>
         </Versioned>
-    </Fields>
 
-    <Layout>
         <Layout xmlns="http://www.sitecore.net/pathfinder/layouts/master">
             <Device Name="Default" Layout="/sitecore/layout/Layouts/MvcLayout">
                 <HelloWorld DataSource="/sitecore" />
             </Device>
         </Layout>
-    </Layout>
-
+    </Fields>
+    
     <Item Name="XmlSubitem" Template="/sitecore/templates/Sample/XmlItemTemplate">
         <Fields>
             <Field Name="Title">Hello</Field>

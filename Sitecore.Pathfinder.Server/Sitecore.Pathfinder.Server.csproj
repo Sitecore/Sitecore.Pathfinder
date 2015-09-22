@@ -202,11 +202,10 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Synchronizing\Content\ContentXmlSynchronizer.cs" />
     <Compile Include="Synchronizing\ISynchronizer.cs" />
-    <Compile Include="Synchronizing\Content\JsonLayoutSchemaExporter.cs" />
-    <Compile Include="Synchronizing\Content\JsonTemplateSchemaExporter.cs" />
+    <Compile Include="Synchronizing\Content\JsonLayoutSchemaSynchronizer.cs" />
     <Compile Include="Synchronizing\SynchronizationManager.cs" />
-    <Compile Include="Synchronizing\Content\XsdLayoutSchemaExporter.cs" />
-    <Compile Include="Synchronizing\Content\XsdTemplateSchemaSynchronizer.cs" />
+    <Compile Include="Synchronizing\Content\XsdLayoutSchemaSynchronizer.cs" />
+    <Compile Include="Synchronizing\Content\XsdContentSchemaSynchronizer.cs" />
     <Compile Include="Testing\UnitTestRunner.cs" />
   </ItemGroup>
   <ItemGroup>

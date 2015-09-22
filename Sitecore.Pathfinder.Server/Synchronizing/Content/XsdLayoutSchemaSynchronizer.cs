@@ -21,7 +21,7 @@ using Sitecore.Zip;
 namespace Sitecore.Pathfinder.Synchronizing.Content
 {
     [Export(typeof(ISynchronizer))]
-    public class XsdLayoutSchemaExporter : ISynchronizer
+    public class XsdLayoutSchemaSynchronizer : ISynchronizer
     {
         public const string Namespace = "http://www.w3.org/2001/XMLSchema";
 

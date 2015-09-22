@@ -67,7 +67,6 @@
                       Field.ShortHelp : Short Help. 
                       Field.LongHelp  : Long help.
                       Value           : Version 2
-    - Layout :
         - Layout :
             - Device :
                 Name : Default

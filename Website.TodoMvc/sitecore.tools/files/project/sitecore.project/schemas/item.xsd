@@ -55,12 +55,13 @@
                                 <xs:attribute name="Language" type="xs:string" use="required" />
                             </xs:complexType>
                         </xs:element>
+
+                        <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="http://www.sitecore.net/pathfinder/layouts/master" />
+                        <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="http://www.sitecore.net/pathfinder/layouts/core" />
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
 
-            <xs:element name="Layout" type="Layout" minOccurs="0" maxOccurs="1" />
-            
             <xs:group minOccurs="0" maxOccurs="unbounded" ref="ItemGroup" />
         </xs:sequence>
 
@@ -108,9 +109,10 @@
     </xs:complexType>
 
     <xs:complexType name="Layout">
-        <xs:sequence minOccurs="0" maxOccurs="unbounded">
-            <xs:any />
-        </xs:sequence>
+        <xs:choice>
+            <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="http://www.sitecore.net/pathfinder/layouts/master" />
+            <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="http://www.sitecore.net/pathfinder/layouts/core" />
+        </xs:choice>
     </xs:complexType>
 
     <xs:group name="ItemGroup">

@@ -226,6 +226,9 @@
     <Content Include="files\project\sitecore.filetemplates\Layout.master.layout.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="files\project\sitecore.project\schemas\core.content.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="files\starterkits\SitecorePathfinderCleanBlog.nupkg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

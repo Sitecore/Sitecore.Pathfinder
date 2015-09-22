@@ -14,13 +14,15 @@ namespace Sitecore.Pathfinder.Parsing.Items
     [Export(typeof(IParser))]
     public class ItemParser : ParserBase
     {
+        [NotNull]
+        [ItemNotNull]
         private static readonly string[] FileExtensions =
         {
             ".item.xml",
             ".content.xml",
             ".layout.xml",
             ".item.json",
-            ".content.json",
+            // ".content.json",
             ".layout.json",
             ".item.yaml",
             ".content.yaml",

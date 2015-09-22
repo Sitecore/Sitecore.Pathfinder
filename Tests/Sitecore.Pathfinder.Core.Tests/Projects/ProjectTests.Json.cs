@@ -10,6 +10,7 @@ namespace Sitecore.Pathfinder.Projects
     [TestFixture]
     public partial class ProjectTests
     {
+        /*
         [Test]
         public void JsonContentItemTest()
         {
@@ -36,7 +37,7 @@ namespace Sitecore.Pathfinder.Projects
             var textDocument = projectItem.Snapshots.First() as ITextSnapshot;
             Assert.IsNotNull(textDocument);
         }
-
+        */
         [Test]
         public void JsonItemTest()
         {

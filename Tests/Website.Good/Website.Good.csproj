@@ -80,45 +80,47 @@
     <Content Include="content\Home\YamlLayout.item.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="content\Home\YamlItem.item.yaml">
+    <None Include="..\..\Sitecore.Pathfinder.Console\files\project\sitecore.project\schemas\core.content.xsd">
+      <Link>sitecore.tools\schemas\core.content.xsd</Link>
+      <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="packages.config" />
-    <Content Include="..\..\sitecore.pathfinder.console\files\project\sitecore.project\schemas\core.layout.schema.json">
+    <Content Include="..\..\Sitecore.Pathfinder.Console\files\project\sitecore.project\schemas\core.layout.schema.json">
       <Link>sitecore.tools\schemas\core.layout.schema.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="..\..\sitecore.pathfinder.console\files\project\sitecore.project\schemas\core.layout.xsd">
+    <None Include="..\..\Sitecore.Pathfinder.Console\files\project\sitecore.project\schemas\core.layout.xsd">
       <Link>sitecore.tools\schemas\core.layout.xsd</Link>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="..\..\sitecore.pathfinder.console\files\project\sitecore.project\schemas\item.schema.json">
+    <Content Include="..\..\Sitecore.Pathfinder.Console\files\project\sitecore.project\schemas\item.schema.json">
       <Link>sitecore.tools\schemas\item.schema.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="..\..\sitecore.pathfinder.console\files\project\sitecore.project\schemas\item.xsd">
+    <None Include="..\..\Sitecore.Pathfinder.Console\files\project\sitecore.project\schemas\item.xsd">
       <Link>sitecore.tools\schemas\item.xsd</Link>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="..\..\sitecore.pathfinder.console\files\project\sitecore.project\schemas\master.content.xsd">
+    <None Include="..\..\Sitecore.Pathfinder.Console\files\project\sitecore.project\schemas\master.content.xsd">
       <Link>sitecore.tools\schemas\master.content.xsd</Link>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="..\..\sitecore.pathfinder.console\files\project\sitecore.project\schemas\master.layout.schema.json">
+    <Content Include="..\..\Sitecore.Pathfinder.Console\files\project\sitecore.project\schemas\master.layout.schema.json">
       <Link>sitecore.tools\schemas\master.layout.schema.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="..\..\sitecore.pathfinder.console\files\project\sitecore.project\schemas\master.layout.xsd">
+    <None Include="..\..\Sitecore.Pathfinder.Console\files\project\sitecore.project\schemas\master.layout.xsd">
       <Link>sitecore.tools\schemas\master.layout.xsd</Link>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="content\Home\JsonContentItem.master.content.json">
+    <None Include="content\Home\YamlItem.item.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
+    <Content Include="packages.config" />
     <Content Include="content\Home\JsonItem.item.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -36,7 +36,13 @@ namespace Sitecore.Pathfinder.Projects
         [Test]
         public void DiagnosticsTests()
         {
-            Assert.AreEqual(1, Project.Diagnostics.Count);
+            foreach (var diagnostic in Project.Diagnostics)
+            {
+                Console.WriteLine($"{diagnostic.Severity} ({diagnostic.Span.LineNumber}, {diagnostic.Span.LinePosition}, {diagnostic.Span.LineLength}): {diagnostic.Text} [{diagnostic.FileName}]");
+                Console.WriteLine();
+            }
+
+            Assert.AreEqual(0, Project.Diagnostics.Count);
         }
 
         [Test]

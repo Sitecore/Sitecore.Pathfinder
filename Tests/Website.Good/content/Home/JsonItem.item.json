@@ -71,6 +71,20 @@
                         "VersionedField": "Version 2"
                     }
                 }
+            },
+
+            "Layout": {
+                "Devices": [
+                    {
+                        "Name": "Default",
+                        "Layout": "/sitecore/layout/Layouts/MvcLayout",
+                        "Renderings": [
+                            {          
+                                "HelloWorld": { "DataSource": "/sitecore" }
+                            }
+                        ]                      
+                    }
+                ]
             }
         },
 
@@ -81,20 +95,6 @@
                 "Title": "Subitem Title",
                 "Text": { "Value": "Subitem Text" }
             }
-        },
-
-        "Layout": {
-            "Devices": [
-                {
-                    "Name": "Default",
-                    "Layout": "/sitecore/layout/Layouts/MvcLayout",
-                    "Renderings": [
-                        {
-                            "HelloWorld": { "DataSource": "/sitecore" }
-                        }
-                    ]
-                }
-            ]
         }
     }
 }

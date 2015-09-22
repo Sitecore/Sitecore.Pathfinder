@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Pathfinder.Text;
@@ -36,52 +37,101 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
                 item.References.AddRange(ParseReferences(context, item, item.TemplateIdOrPathProperty));
             }
 
-            ParseAttributes(context, item, textNode);
+            var fieldContext = new FieldContext();
+            ParseAttributes(context, item, fieldContext, textNode);
 
             ParseChildNodes(context, item, textNode);
 
             context.ParseContext.Project.AddOrMerge(context.ParseContext, item);
         }
 
-        protected virtual void ParseAttributes([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode textNode)
+        protected virtual void ParseAttributes([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] FieldContext fieldContext, [NotNull] ITextNode textNode)
         {
-            foreach (var childTreeNode in textNode.Attributes)
+            foreach (var childNode in textNode.Attributes)
             {
-                ParseFieldTreeNode(context, item, childTreeNode);
+                if (childNode.Name == "Language")
+                {
+                    continue;
+                }
+
+                if (childNode.Name == "Version")
+                {
+                    continue;
+                }
+
+                ParseFieldTextNode(context, item, fieldContext, childNode);
             }
         }
 
         protected virtual void ParseChildNodes([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode textNode)
         {
-            foreach (var childTreeNode in textNode.ChildNodes)
+            foreach (var childNode in textNode.ChildNodes)
             {
-                var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, item.ItemIdOrPath);
-                context.Parser.ParseTextNode(newContext, childTreeNode);
+                switch (childNode.Name)
+                {
+                    case "Fields.Unversioned":
+                        ParseUnversionedTextNode(context, item, childNode);
+                        break;
+
+                    case "Fields.Versioned":
+                        ParseVersionedTextNode(context, item, childNode);
+                        break;
+
+                    case "Fields.Layout":
+                        ParseLayoutTextNode(context, item, childNode);
+                        break;
+
+                    default:
+                        var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, item.ItemIdOrPath);
+                        context.Parser.ParseTextNode(newContext, childNode);
+                        break;
+                }
             }
         }
 
-        protected virtual void ParseFieldTreeNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode fieldTextNode)
-        {
-            var fieldName = StringHelper.UnescapeXmlNodeName(fieldTextNode.Name);
+        protected abstract void ParseLayoutTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode textNode);
 
+        protected virtual void ParseUnversionedTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode childNode)
+        {
+            var fieldContext = new FieldContext();
+            fieldContext.LanguageProperty.Parse(childNode);
+
+            ParseAttributes(context, item, fieldContext, childNode);
+        }
+
+        protected virtual void ParseVersionedTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode childNode)
+        {
+            var fieldContext = new FieldContext();
+            fieldContext.LanguageProperty.Parse(childNode);
+            fieldContext.VersionProperty.Parse("Version", childNode);
+
+            ParseAttributes(context, item, fieldContext, childNode);
+        }
+
+        protected virtual void ParseFieldTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] FieldContext fieldContext, [NotNull] ITextNode textNode)
+        {
+            var fieldName = StringHelper.UnescapeXmlNodeName(textNode.Name);
             if (fieldName == "Name" || fieldName == "Id" || fieldName == "ParentItemPath" || fieldName == "IsEmittable" || fieldName == "IsExternalReference" || fieldName == "Database")
             {
                 return;
             }
 
+            var field = context.ParseContext.Factory.Field(item, textNode);
+            field.FieldNameProperty.SetValue(new AttributeNameTextNode(textNode));
+            field.LanguageProperty.SetValue(fieldContext.LanguageProperty, SetValueOptions.DisableUpdates);
+            field.VersionProperty.SetValue(fieldContext.VersionProperty, SetValueOptions.DisableUpdates);
+            field.ValueProperty.SetValue(textNode);
+
             // check if field is already defined
-            var field = item.Fields.FirstOrDefault(f => string.Compare(f.FieldName, fieldName, StringComparison.OrdinalIgnoreCase) == 0);
-            if (field != null)
+            var duplicate = item.Fields.FirstOrDefault(f => string.Equals(f.FieldName, field.FieldName, StringComparison.OrdinalIgnoreCase) && string.Equals(f.Language, field.Language, StringComparison.OrdinalIgnoreCase) && f.Version == field.Version);
+            if (duplicate == null)
             {
-                context.ParseContext.Trace.TraceError(Texts.Field_is_already_defined, fieldTextNode.Snapshot.SourceFile.FileName, fieldTextNode.Span, fieldName);
+                item.Fields.Add(field);
             }
-
-            // todo: support language and version
-            field = context.ParseContext.Factory.Field(item, fieldTextNode);
-            field.FieldNameProperty.SetValue(new AttributeNameTextNode(fieldTextNode));
-            field.ValueProperty.SetValue(fieldTextNode);
-
-            item.Fields.Add(field);
+            else
+            {
+                context.ParseContext.Trace.TraceError(Texts.Field_is_already_defined, textNode, duplicate.FieldName);
+            }
 
             if (!item.IsExternalReference)
             {

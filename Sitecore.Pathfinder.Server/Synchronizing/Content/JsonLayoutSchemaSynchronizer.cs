@@ -19,7 +19,7 @@ using Sitecore.Zip;
 namespace Sitecore.Pathfinder.Synchronizing.Content
 {
     [Export(typeof(ISynchronizer))]
-    public class JsonLayoutSchemaExporter : ISynchronizer
+    public class JsonLayoutSchemaSynchronizer : ISynchronizer
     {
         public bool CanSynchronize(Microsoft.Framework.ConfigurationModel.Configuration configuration, string fileName)
         {

@@ -3,7 +3,6 @@
 using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Pathfinder.Snapshots.Json;
@@ -22,100 +21,77 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers.Json
             return textNode.Name == "Item" && textNode.Snapshot is JsonTextSnapshot;
         }
 
-        protected override void ParseChildNodes(ItemParseContext context, Item item, ITextNode textNode)
+        protected override void ParseUnknownTextNode(ItemParseContext context, Item item, FieldContext fieldContext, ITextNode textNode)
         {
-            foreach (var childTreeNode in textNode.ChildNodes)
-            {
-                if (childTreeNode.Name == "Fields")
-                {
-                    ParseFieldsTreeNode(context, item, childTreeNode);
-                }
-                else if (childTreeNode.Name == "Layout")
-                {
-                    ParseLayoutTreeNode(context, item, childTreeNode);
-                }
-                else
-                {
-                    var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, PathHelper.CombineItemPath(context.ParentItemPath, item.ItemName));
-                    context.Parser.ParseTextNode(newContext, childTreeNode);
-                }
-            }
+            ParseFieldTextNode(context, item, fieldContext, textNode);
         }
 
-        protected virtual void ParseFieldsTreeNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode fieldsTextNode)
+        protected override void ParseFieldsTextNode(ItemParseContext context, Item item, ITextNode textNode)
         {
             var fieldContext = new FieldContext();
 
-            foreach (var attribute in fieldsTextNode.Attributes)
+            foreach (var attribute in textNode.Attributes)
             {
-                ParseFieldTreeNode(context, item, fieldContext, attribute);
+                ParseFieldTextNode(context, item, fieldContext, attribute);
             }
 
-            foreach (var childNode in fieldsTextNode.ChildNodes)
-            {
-                switch (childNode.Name)
-                {
-                    case "Unversioned":
-                        foreach (var languageChildNode in childNode.ChildNodes)
-                        {
-                            fieldContext = new FieldContext();
-                            fieldContext.LanguageProperty.SetValue(new AttributeNameTextNode(languageChildNode));
-                            ParseFieldsTreeNode(context, item, fieldContext, languageChildNode);
-                        }
-
-                        break;
-
-                    case "Versioned":
-                        foreach (var languageChildNode in childNode.ChildNodes)
-                        {
-                            foreach (var versionChildNode in languageChildNode.ChildNodes)
-                            {
-                                fieldContext = new FieldContext();
-                                fieldContext.LanguageProperty.SetValue(new AttributeNameTextNode(languageChildNode));
-                                fieldContext.VersionProperty.SetValue(new AttributeNameTextNode(versionChildNode));
-                                ParseFieldsTreeNode(context, item, fieldContext, versionChildNode);
-                            }
-                        }
-
-                        break;
-
-                    default:
-                        ParseFieldTreeNode(context, item, fieldContext, childNode);
-                        break;
-                }
-            }
+            base.ParseFieldsTextNode(context, item, textNode);
         }
 
-        protected override void ParseFieldTreeNode(ItemParseContext context, Item item, FieldContext fieldContext, ITextNode fieldTextNode)
+        protected override void ParseFieldTextNode(ItemParseContext context, Item item, FieldContext fieldContext, ITextNode textNode)
         {
-            var fieldNameTextNode = new AttributeNameTextNode(fieldTextNode);
+            var fieldNameTextNode = new AttributeNameTextNode(textNode);
 
-            if (fieldTextNode.Attributes.Any() || fieldTextNode.ChildNodes.Any())
+            if (textNode.Attributes.Any() || textNode.ChildNodes.Any())
             {
-                base.ParseFieldTreeNode(context, item, fieldContext, fieldTextNode, fieldNameTextNode);
+                base.ParseFieldTextNode(context, item, fieldContext, textNode, fieldNameTextNode);
                 return;
             }
 
-            base.ParseFieldTreeNode(context, item, fieldContext, fieldTextNode, fieldNameTextNode, fieldTextNode);
+            base.ParseFieldTextNode(context, item, fieldContext, textNode, fieldNameTextNode, textNode);
         }
 
-        protected void ParseLayoutTreeNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode textNode)
+        protected override void ParseLayoutTextNode(ItemParseContext context, Item item, ITextNode textNode)
         {
             var parser = new JsonLayoutParser();
             parser.Parse(context, textNode, item);
         }
 
-        private void ParseFieldsTreeNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] FieldContext fieldContext, [NotNull] ITextNode languageChildNode)
+        protected override void ParseUnversionedTextNode(ItemParseContext context, Item item, ITextNode textNode)
+        {
+            foreach (var languageChildNode in textNode.ChildNodes)
+            {
+                var fieldContext = new FieldContext();
+                fieldContext.LanguageProperty.SetValue(new AttributeNameTextNode(languageChildNode));
+                ParseUnversionedOrVersionedTreeNode(context, item, fieldContext, languageChildNode);
+            }
+        }
+
+        protected override void ParseVersionedTextNode(ItemParseContext context, Item item, ITextNode textNode)
+        {
+            foreach (var languageChildNode in textNode.ChildNodes)
+            {
+                foreach (var versionChildNode in languageChildNode.ChildNodes)
+                {
+                    var fieldContext = new FieldContext();
+                    fieldContext.LanguageProperty.SetValue(new AttributeNameTextNode(languageChildNode));
+                    fieldContext.VersionProperty.SetValue(new AttributeNameTextNode(versionChildNode));
+                    ParseUnversionedOrVersionedTreeNode(context, item, fieldContext, versionChildNode);
+                }
+            }
+        }
+
+        private void ParseUnversionedOrVersionedTreeNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] FieldContext fieldContext, [NotNull] ITextNode languageChildNode)
         {
             // todo: preserve order of nodes in the original snapshot
             foreach (var fieldChildNode in languageChildNode.Attributes)
             {
-                ParseFieldTreeNode(context, item, fieldContext, fieldChildNode);
+                ParseFieldTextNode(context, item, fieldContext, fieldChildNode);
             }
 
             foreach (var fieldChildNode in languageChildNode.ChildNodes)
             {
-                ParseFieldTreeNode(context, item, fieldContext, fieldChildNode);
+                ParseFieldTextNode(context, item, fieldContext, fieldChildNode);
             }
         }
     }
