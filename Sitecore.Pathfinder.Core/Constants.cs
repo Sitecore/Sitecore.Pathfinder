@@ -35,33 +35,35 @@ namespace Sitecore.Pathfinder
 
         public static class Configuration
         {
-            public const string CheckBinFileVersion = "deploying:check-bin-file-version";
+            public const string BuildProject = "build-project:tasks";
+
+            public const string CheckBinFileVersion = "install-package:check-bin-file-version";
 
             public const string CodeGen = "codegen";
 
-            public const string ContentFiles = "content-files";
+            public const string ContentFiles = "build-project:content-files";
 
             public const string Database = "database";
 
-            public const string DataDirectoryName = "data-directory-name";
+            public const string DataDirectoryName = "copy-package:data-directory-name";
 
             public const string Debug = "system:debug";
 
-            public const string ExternalDirectory = "external-directory";
+            public const string ExternalDirectory = "build-project:external-directory";
 
             public const string HostName = "host-name";
 
-            public const string IgnoreDirectories = "ignore-directories";
+            public const string IgnoreDirectories = "build-project:ignore-directories";
 
-            public const string IgnoreFileNames = "ignore-filenames";
+            public const string IgnoreFileNames = "build-project:ignore-filenames";
 
-            public const string InstallUrl = "deploying:installurl";
+            public const string InstallUrl = "install-package:install-url";
 
-            public const string LocalTestDirectory = "local-test-directory";
+            public const string LocalTestDirectory = "run-unittests:local-test-directory";
 
-            public const string PackageDirectory = "deploying:packagedirectory";
+            public const string PackageDirectory = "copy-package:package-directory";
 
-            public const string PackagesDirectory = "packages-directory";
+            public const string PackagesDirectory = "copy-dependencies:packages-directory";
 
             public const string Password = "password";
 
@@ -73,7 +75,7 @@ namespace Sitecore.Pathfinder
 
             public const string ProjectUniqueId = "project-unique-id";
 
-            public const string PublishUrl = "deploying:publishurl";
+            public const string PublishUrl = "publish-databases:publish-url";
 
             public const string RemapFileDirectories = "remap-file-directories";
 
@@ -85,19 +87,21 @@ namespace Sitecore.Pathfinder
 
             public const string ToolsDirectory = "system:toolspath";
 
-            public const string UninstallDirectory = "deploying:uninstall-directory";
+            public const string UninstallDirectory = "install-package:uninstall-directory";
 
-            public const string UpdateResourcesUrl = "update-resources-url";
+            public const string UpdateResourcesUrl = "sync-website:sync-url";
 
             public const string UserName = "user-name";
 
-            public const string WebsiteDirectoryName = "website-directory-name";
+            public const string WebsiteDirectoryName = "run-unittests:website-directory-name";
 
-            public const string WebTestRunnerName = "web-test-runner-name";
+            public const string WebTestRunnerName = "run-unittests:web-test-runner-name";
 
-            public const string WebTestRunnerUrl = "web-test-runner-url";
+            public const string WebTestRunnerUrl = "run-unittests:web-test-runner-url";
 
             public const string Wwwroot = "wwwroot";
+
+            public const string Files = "build-project:files";
 
             public static class ValidateWebsite
             {

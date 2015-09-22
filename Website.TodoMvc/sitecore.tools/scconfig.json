@@ -15,36 +15,74 @@
     // project configuration file
     "project": "scconfig.json",
 
-    // default pipeline
-    "pipeline": "init",
+    // =====
+    // TASKS
+    // =====
 
-    // init pipeline
-    "init": {
-        "pipeline": "init"
+    // init task
+    "init-task": {
+        "tasks": "init-project"
     },
 
-    // NuGet settings
-    "nuget": {
-        "filename": "sitecore.project\\sitecore.nuspec"
+    "build-project": {
+        // default build pipeline
+        "tasks": "init-task",
+
+        // files to copy to website
+        "content-files": ".js .css .config .htm .ashx .asmx",
+
+        // directory that holds external external references
+        "external-directory": "sitecore.project/external",
+
+        // mapping of files between local path and server path and item path
+        "files": {
+        },
+
+        // files and directories to ignore
+        "ignore-directories": ".vscode sitecore.filetemplates sitecore.project sitecore.tools node_modules roslyn",
+        "ignore-filenames": "scc.cmd sitecore.nuspec sitecore.nupkg project.json readme.txt"
     },
 
-    // directory for dependency packages
-    "packages-directory": "sitecore.project\\packages",
+    "copy-dependencies": {
+        // directory for dependency packages
+        "packages-directory": "sitecore.project/packages"
+    },
 
-    // directory that holds external external references
-    "external-directory": "sitecore.project\\external",
+    "copy-package": {
+        "data-directory-name": "Data",
+        "package-directory": "packages"
+    },
 
-    // deploying URLs
-    "deploying": {
-        "packagedirectory": "packages",
-        "installurl": "/sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx",
-        "publishurl": "/sitecore/shell/client/Applications/Pathfinder/Publish.aspx",
-
+    "install-package": {
         // checks that the version of the source bin file is larger than the destination before copying.
         // when developing this should probably be combined with auto-incrementing the file version of the assembly.
         // see http://stackoverflow.com/questions/356543/can-i-automatically-increment-the-file-build-version-when-using-visual-studio
         "check-bin-file-version": false,
-        "uninstall-directory": "..\\.uninstall"
+
+        "install-url": "/sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx",
+        "uninstall-directory": "../.uninstall"
+    },
+
+    "pack-nuget": {
+        // NuSpec file name
+        "filename": "sitecore.project/sitecore.nuspec"
+    },
+
+    "sync-website": {
+        "sync-url": "/sitecore/shell/client/Applications/Pathfinder/UpdateResources.ashx"
+    },
+
+    "publish-databases": {
+        "publish-url": "/sitecore/shell/client/Applications/Pathfinder/Publish.aspx"
+    },
+
+    "run-unittests": {
+        "local-test-directory": "Tests",
+
+        "website-directory-name": "Website",
+
+        "web-test-runner-url": "/sitecore/shell/client/Applications/Pathfinder/WebTestRunner.ashx",
+        "web-test-runner-name": "NUnit"
     },
 
     "validate-website": {
@@ -56,18 +94,6 @@
         "site": "Site",
         "timeout": "600"
     },
-
-    "update-resources-url": "/sitecore/shell/client/Applications/Pathfinder/UpdateResources.ashx",
-
-    "web-test-runner-url": "/sitecore/shell/client/Applications/Pathfinder/WebTestRunner.ashx",
-    "web-test-runner-name": "NUnit",
-
-    // files and directories to ignore
-    "ignore-directories": ".vscode sitecore.filetemplates sitecore.project sitecore.tools node_modules roslyn",
-    "ignore-filenames": "scc.cmd sitecore.nuspec sitecore.nupkg project.json readme.txt",
-
-    // files to copy to website
-    "content-files": ".js .css .config .htm .ashx .asmx",
 
     "standard-template-fields": {
         "{56C15C6D-FD5A-40CA-BB37-64CEEC6A9BD5}": "__Archive date",
@@ -141,12 +167,5 @@
         "{A4F985D9-98B3-4B52-AAAF-4344F6E747C6}": "__Workflow",
         "{3E431DE1-525E-47A3-B6B0-1CCBEC3A8C98}": "__Workflow state",
         "{86B52EEF-078E-4D9E-80BF-888287070E6C}": "__Workflow Validation Rules"
-    },
-
-    "local-test-directory": "Tests",
-    "website-directory-name": "Website",
-    "data-directory-name": "Data",
-
-    "error-messages-language": "en-US",
-    "ignore-blank-error-messages": false
+    }
 }

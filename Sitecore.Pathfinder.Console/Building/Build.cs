@@ -86,11 +86,11 @@ namespace Sitecore.Pathfinder.Building
                     };
                 }
 
-                pipeline = context.Configuration.GetString(pipelineName + ":pipeline");
+                pipeline = context.Configuration.GetString(pipelineName + ":tasks");
             }
             else
             {
-                pipeline = context.Configuration.GetString("pipeline");
+                pipeline = context.Configuration.GetString(Constants.Configuration.BuildProject);
             }
 
             var taskNames = pipeline.Split(Constants.Space, StringSplitOptions.RemoveEmptyEntries).Select(t => t.Trim()).ToList();

@@ -154,7 +154,7 @@
     <Compile Include="Building\Initializing\BeforeBuilds\BeforeBuildPipeline.cs" />
     <Compile Include="Building\Initializing\Help.cs" />
     <Compile Include="Building\Deploying\CopyDependencies.cs" />
-    <Compile Include="Building\Initializing\Init.cs" />
+    <Compile Include="Building\Initializing\InitProject.cs" />
     <Compile Include="Building\Initializing\InitAtom.cs" />
     <Compile Include="Building\Initializing\InitVisualStudio.cs" />
     <Compile Include="Building\Initializing\InitVsCode.cs" />

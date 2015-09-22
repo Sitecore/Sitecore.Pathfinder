@@ -48,7 +48,7 @@ namespace Sitecore.Pathfinder.Synchronizing
             var syncFileName = FileUtil.MapPath(TempFolder.GetFilename("Pathfinder.Sync.zip"));
             using (var zip = new ZipWriter(syncFileName))
             {
-                foreach (var pair in configuration.GetSubKeys("sync"))
+                foreach (var pair in configuration.GetSubKeys("sync-website:files"))
                 {
                     foreach (var exporter in ContentExporters)
                     {

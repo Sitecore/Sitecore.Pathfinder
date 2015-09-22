@@ -7,9 +7,9 @@ using Sitecore.Pathfinder.Diagnostics;
 namespace Sitecore.Pathfinder.Building.Initializing
 {
     [Export(typeof(ITask))]
-    public class Init : TaskBase
+    public class InitProject : TaskBase
     {
-        public Init() : base("init")
+        public InitProject() : base("init-project")
         {
         }
 
