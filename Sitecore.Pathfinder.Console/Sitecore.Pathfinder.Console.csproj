@@ -226,8 +226,20 @@
     <Content Include="files\project\sitecore.filetemplates\Layout.master.layout.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="files\project\sitecore.project\external\readme.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\project\sitecore.project\packages\readme.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\project\sitecore.project\readme.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="files\project\sitecore.project\schemas\core.content.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="files\project\sitecore.project\schemas\readme.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="files\starterkits\SitecorePathfinderCleanBlog.nupkg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -297,6 +309,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\app.manifest" />
+    <None Include="readme.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Sitecore.Pathfinder.Console_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -326,21 +341,21 @@
     <Content Include="files\vscode\.vscode\tasks.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="files\project\layout\layouts\readme.txt">
+    <None Include="files\project\layout\layouts\readme.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\project\layout\renderings\readme.txt">
+    </None>
+    <None Include="files\project\layout\renderings\readme.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\project\media library\readme.txt">
+    </None>
+    <None Include="files\project\media library\readme.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\project\system\readme.txt">
+    </None>
+    <None Include="files\project\system\readme.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\project\templates\readme.txt">
+    </None>
+    <None Include="files\project\templates\readme.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
     <Content Include="files\project\sitecore.filetemplates\htmltemplate.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

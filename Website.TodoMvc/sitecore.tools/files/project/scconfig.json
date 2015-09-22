@@ -65,12 +65,12 @@
             "database": "core",
             "namespace": "http://www.sitecore.net/pathfinder/content/core"
         }
-        // "Xml schema for Speak": {
+        // "External references for Speak": {
         //     "file": "sitecore.project/external/speak.core.content.xml",
         //     "database": "core",
         //     "path": "/sitecore/client/Speak"
         // },
-        // "Xml schema for Business Component Library": {
+        // "External references for Business Component Library": {
         //     "file": "sitecore.project/external/bcl.core.content.xml",
         //     "database": "core",
         //     "path": "/sitecore/client/Business Component Library"

@@ -403,8 +403,6 @@ Extension            | Description
 .item.json           | Item in Json format
 .item.yaml           | Item in Yaml format
 .item.xml            | Item in Xml format
-.master.content.json | Item in Json content format (master database)
-.core.content.json   | Item in Json content format (core database)
 .master.content.yaml | Item in Yaml content format (master database)
 .core.content.yaml   | Item in Yaml content format (core database)
 .master.content.xml  | Item in Xml content format (master database)
@@ -424,6 +422,67 @@ Extension            | Description
 .js                  | JavaScript content file
 .css                 | Stylesheet content file
 .config              | Config content file
+
+
+## Synchronizing project and website
+In Pathfinder the project contains the whole truth. However a project may need to use items, template, renderings from a standard 
+Sitecore website. A good example is a SPEAK based module.
+
+These external references can be imported into the project by using the ``sync-website`` task. This task makes a request to the website
+to collect the needed information. The information is downloaded as a zip file and unpacked in the project directory.
+
+The sync-website task is configured on the 'sync' section of the scconfig.json.
+
+```js
+"sync": {
+    "Json schema for layouts in Master database": {
+        "file": "sitecore.project/schemas/master.layout.schema.json",
+        "database": "master"
+    },
+    "Json schema for layouts in Core database": {
+        "file": "sitecore.project/schemas/core.layout.schema.json",
+        "database": "core"
+    },
+    "Xml schema for layouts in Master database": {
+        "file": "sitecore.project/schemas/master.layout.xsd",
+        "database": "master",
+        "namespace": "http://www.sitecore.net/pathfinder/layouts/master"
+    },
+    "Xml schema for layouts in Core database": {
+        "file": "sitecore.project/schemas/core.layout.xsd",
+        "database": "core",
+        "namespace": "http://www.sitecore.net/pathfinder/layouts/core"
+    },
+    "Xml schema for content in Master database": {
+        "file": "sitecore.project/schemas/master.content.xsd",
+        "database": "master",
+        "namespace": "http://www.sitecore.net/pathfinder/content/master"
+    },
+    "Xml schema for content in Core database": {
+        "file": "sitecore.project/schemas/core.content.xsd",
+        "database": "core",
+        "namespace": "http://www.sitecore.net/pathfinder/content/core"
+    }
+}
+```
+
+By default various schema files for Json and Xml are generated and downloaded. The ``file`` property determines where the generated
+is unpack in the project directory.
+
+It is possible to add additional resources to the list. To add SPEAK items as external references add the following lines.
+
+```js
+"External references for Speak": {
+    "file": "sitecore.project/external/speak.core.content.xml",
+    "database": "core",
+    "path": "/sitecore/client/Speak"
+},
+"External references for Business Component Library": {
+    "file": "sitecore.project/external/bcl.core.content.xml",
+    "database": "core",
+    "path": "/sitecore/client/Business Component Library"
+}
+```
 
 ## Deploying
 By default Pathfinder copies the build package to a website and installs it. The package is copied to the 

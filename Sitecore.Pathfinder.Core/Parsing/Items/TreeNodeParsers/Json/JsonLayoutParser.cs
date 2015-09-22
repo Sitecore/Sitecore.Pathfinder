@@ -10,7 +10,7 @@ using Sitecore.Pathfinder.Snapshots.Json;
 
 namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers.Json
 {
-    [Export(typeof(ITextNodeParser))]
+    // [Export(typeof(ITextNodeParser))]
     public class JsonLayoutParser : LayoutParserBase
     {
         public JsonLayoutParser() : base(Constants.TextNodeParsers.Layouts)

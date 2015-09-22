@@ -99,7 +99,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="sitecore.project\schemas\core.layout.schema.json" />
-    <Content Include="sitecore.project\schemas\core.content.schema.json" />
     <None Include="sitecore.project\schemas\core.content.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -110,7 +109,6 @@
     <None Include="sitecore.project\schemas\item.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="sitecore.project\schemas\master.content.schema.json" />
     <Content Include="sitecore.project\schemas\master.layout.schema.json" />
     <None Include="sitecore.project\schemas\master.content.xsd">
       <SubType>Designer</SubType>

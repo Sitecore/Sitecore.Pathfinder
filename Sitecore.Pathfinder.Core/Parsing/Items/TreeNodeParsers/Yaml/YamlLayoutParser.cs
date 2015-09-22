@@ -6,7 +6,7 @@ using Sitecore.Pathfinder.Snapshots.Yaml;
 
 namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers.Yaml
 {
-    [Export(typeof(ITextNodeParser))]
+    // [Export(typeof(ITextNodeParser))]
     public class YamlLayoutParser : LayoutParserBase
     {
         public YamlLayoutParser() : base(Constants.TextNodeParsers.Layouts)

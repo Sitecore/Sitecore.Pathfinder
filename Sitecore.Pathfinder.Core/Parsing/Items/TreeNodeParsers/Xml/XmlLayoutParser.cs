@@ -6,7 +6,7 @@ using Sitecore.Pathfinder.Snapshots.Xml;
 
 namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers.Xml
 {
-    [Export(typeof(ITextNodeParser))]
+    // [Export(typeof(ITextNodeParser))]
     public class XmlLayoutParser : LayoutParserBase
     {
         public XmlLayoutParser() : base(Constants.TextNodeParsers.Layouts)
