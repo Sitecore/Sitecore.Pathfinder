@@ -19,14 +19,9 @@
     // TASKS
     // =====
 
-    // init task
-    "init-task": {
-        "tasks": "init-project"
-    },
-
     "build-project": {
         // default build pipeline
-        "tasks": "init-task",
+        "tasks": "init-project",
 
         // files to copy to website
         "content-files": ".js .css .config .htm .ashx .asmx",
