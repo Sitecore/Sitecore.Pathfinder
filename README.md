@@ -6,7 +6,7 @@ Sitecore Pathfinder is a personal side project. It is not endorsed or supported 
 ## Get Started
 Get started, get far, get happy!
 
-![Sitecore Pathfinder](docs/img/SitecorePathfinder.PNG)
+![Sitecore Pathfinder](docs/img/SitecorePathfinder.png)
  
 Watch the videos on YouTube:
 * [01 - Idea and concepts](https://www.youtube.com/watch?v=TcJ0IoI7sVM)
@@ -49,7 +49,7 @@ In step 3 Pathfinder creates a blank project for you. It consists of a number of
 including an scc.cmd file which is a shortcut to the sitecore.tools\scc.exe file.
 
 ### Compiling the Pathfinder project
-Before compiling, you need to copy the following assemblies to the /Components directory.
+Before compiling, you need to copy the following assemblies to the /components directory.
 
 * Sitecore.ContentSearch.dll
 * Sitecore.ContentSearch.Linq.dll
