@@ -6,7 +6,7 @@ Sitecore Pathfinder is a personal side project. It is not endorsed or supported 
 ## Get Started
 Get started, get far, get happy!
 
-![Sitecore Pathfinder](.docs/img/SitecorePathfinder.PNG)
+![Sitecore Pathfinder](docs/img/SitecorePathfinder.PNG)
  
 Watch the videos on YouTube:
 * [01 - Idea and concepts](https://www.youtube.com/watch?v=TcJ0IoI7sVM)
@@ -36,7 +36,6 @@ the package to a website where an installer installs the new files and Sitecore 
 The developer process is familiar; edit source files, build and install the package, review the changes on website, repeat.
 
 ## Getting started
-
 Pathfinder makes it easy to start working with Sitecore.
 
 1. Install a clean Sitecore (e.g. using [SIM (Sitecore Instance Manager](https://marketplace.sitecore.net/modules/sitecore_instance_manager.aspx))
@@ -48,6 +47,18 @@ Pathfinder makes it easy to start working with Sitecore.
 
 In step 3 Pathfinder creates a blank project for you. It consists of a number of directories and files, 
 including an scc.cmd file which is a shortcut to the sitecore.tools\scc.exe file.
+
+### Compiling the Pathfinder project
+Before compiling, you need to copy the following assemblies to the /Components directory.
+
+* Sitecore.ContentSearch.dll
+* Sitecore.ContentSearch.Linq.dll
+* Sitecore.Kernel.dll
+* Sitecore.Mvc.dll
+* Sitecore.Zip.dll 
+
+You will probably see a lot of warnings from the CodeContractNullability (which checks that you decorate every field, parameter, parameter and method
+return with [NotNull], [CanBeNull], [ItemNotNull] or [ItemCanBeNull] attributes). This is expected.
 
 ## How does Pathfinder make Sitecore easier
 * Familiar developer experience: Edit source files, build project, test website, repeat.
@@ -68,7 +79,7 @@ To get help, you can execute the Help task by entering `scc help`.
 
 To get help about a specific task, execute the Help task with the name of the task as a parameter: `scc help [task name]`
 
-![Command Line Help](.docs/img/CommandLineHelp.PNG)
+![Command Line Help](docs/img/CommandLineHelp.PNG)
 
 # Features
 
@@ -568,8 +579,8 @@ This makes it easy to write server-side unit tests in you project and execute th
 Pathfinder integrates with the Sitecore Rocks SitecoreCop feature. SitecoreCop examines the website and can identify
 over 70 different types of issues. To validate the website, run the task `validate-website`.
 
-![SitecoreCop validations 1](.docs/img/SitecoreCop2.png)
-![SitecoreCop validations 2](.docs/img/SitecoreCop3.png)
+![SitecoreCop validations 1](docs/img/SitecoreCop2.png)
+![SitecoreCop validations 2](docs/img/SitecoreCop3.png)
 
 ## Layout Engines
 

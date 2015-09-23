@@ -204,3 +204,4 @@ ModelManifest.xml
 
 # Specific files
 /Sitecore.Pathfinder.Console/Nuget/*.nupkg
+/src/Sitecore.Pathfinder.Console/Nuget/SitecorePathfinder.0.2.0-Developing.nupkg
