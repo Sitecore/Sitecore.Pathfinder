@@ -118,6 +118,46 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\Components\Microsoft.Framework.ConfigurationModel.dll">
+      <Link>files\website\bin\Microsoft.Framework.ConfigurationModel.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Components\Microsoft.Framework.ConfigurationModel.Interfaces.dll">
+      <Link>files\website\bin\Microsoft.Framework.ConfigurationModel.Interfaces.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Components\Microsoft.Framework.ConfigurationModel.Json.dll">
+      <Link>files\website\bin\Microsoft.Framework.ConfigurationModel.Json.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Components\Microsoft.Framework.ConfigurationModel.Xml.dll">
+      <Link>files\website\bin\Microsoft.Framework.ConfigurationModel.Xml.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Components\NuGet.Core.dll">
+      <Link>files\website\bin\NuGet.Core.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Components\nunit.core.dll">
+      <Link>files\website\bin\nunit.core.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Components\nunit.core.interfaces.dll">
+      <Link>files\website\bin\nunit.core.interfaces.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Components\nunit.framework.dll">
+      <Link>files\website\bin\nunit.framework.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Components\Sitecore.Rocks.Server.Core.dll">
+      <Link>files\website\bin\Sitecore.Rocks.Server.Core.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Components\Sitecore.Rocks.Server.Validation.dll">
+      <Link>files\website\bin\Sitecore.Rocks.Server.Validation.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\ReferenceChecker.cs">
       <Link>files\extensions\checkers\ReferenceChecker.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -265,36 +305,6 @@
     <Content Include="files\visualstudio\Sitecore.Website.csproj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="files\website\bin\Microsoft.Framework.ConfigurationModel.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\website\bin\Microsoft.Framework.ConfigurationModel.Interfaces.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\website\bin\Microsoft.Framework.ConfigurationModel.Json.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\website\bin\Microsoft.Framework.ConfigurationModel.Xml.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\website\bin\NuGet.Core.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\website\bin\nunit.core.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\website\bin\nunit.core.interfaces.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\website\bin\nunit.framework.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\website\bin\Sitecore.Rocks.Server.Core.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\website\bin\Sitecore.Rocks.Server.Validation.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="files\website\sitecore\shell\client\Applications\Pathfinder\packageDefaultIcon-50x50.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -400,14 +410,14 @@
     <Content Include="files\project\sitecore.project\sitecore.nuspec">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="..\Sitecore.Pathfinder.Server\bin\Sitecore.Pathfinder.Core.dll">
+    <Content Include="..\Sitecore.Pathfinder.Server\bin\Sitecore.Pathfinder.Core.dll">
       <Link>files\website\bin\Sitecore.Pathfinder.Core.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\Sitecore.Pathfinder.Server\bin\Sitecore.Pathfinder.Server.dll">
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Server\bin\Sitecore.Pathfinder.Server.dll">
       <Link>files\website\bin\Sitecore.Pathfinder.Server.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="files\project\scconfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
