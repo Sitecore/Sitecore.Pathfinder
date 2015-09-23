@@ -60,6 +60,8 @@ Before compiling, you need to copy the following assemblies to the /components d
 You will probably see a lot of warnings from the CodeContractNullability (which checks that you decorate every field, parameter, parameter and method
 return with [NotNull], [CanBeNull], [ItemNotNull] or [ItemCanBeNull] attributes). This is expected.
 
+The Sitecore.Pathfinder.Console project the default project and you should set it as StartUp Project. 
+
 ## How does Pathfinder make Sitecore easier
 * Familiar developer experience: Edit source files, build project, test website, repeat.
 * Text editor agnostic (Visual Studio not required - use Notepad, Notepad++, SublimeText, Atom, VS Code etc.)
