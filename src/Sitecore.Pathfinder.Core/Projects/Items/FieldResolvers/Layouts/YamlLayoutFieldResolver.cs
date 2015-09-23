@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
     public class YamlLayoutFieldResolver : FieldResolverBase
     {
         [ImportingConstructor]
-        public YamlLayoutFieldResolver(IFileSystemService fileSystem) : base(Constants.FieldResolvers.Normal)
+        public YamlLayoutFieldResolver([NotNull] IFileSystemService fileSystem) : base(Constants.FieldResolvers.Normal)
         {
             FileSystem = fileSystem;
         }

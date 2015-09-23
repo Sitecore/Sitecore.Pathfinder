@@ -464,7 +464,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
 
         [ItemNotNull]
         [NotNull]
-        private IEnumerable<string> AnalyzeWebFormsFile(string source)
+        private IEnumerable<string> AnalyzeWebFormsFile([NotNull] string source)
         {
             var matches = Regex.Matches(source, "<[^>]*Placeholder[^>]*Key=\"([^\"]*)\"[^>]*>", RegexOptions.IgnoreCase);
 

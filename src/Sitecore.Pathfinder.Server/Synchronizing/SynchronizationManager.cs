@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Synchronizing
         public string BuildZipFile()
         {
             var toolsDirectory = WebUtil.GetQueryString("t");
-            if (string.IsNullOrEmpty(toolsDirectory))
+            if (string.IsNullOrEmpty(toolsDirectory))                     
             {
                 return string.Empty;
             }
@@ -54,8 +54,13 @@ namespace Sitecore.Pathfinder.Synchronizing
                 {
                     foreach (var exporter in ContentExporters)
                     {
-                        var key = "sync:" + pair.Key + ":";
+                        var key = "sync-website:files:" + pair.Key + ":";
                         var fileName = configuration.Get(key + "file");
+
+                        if (string.IsNullOrEmpty(fileName))
+                        {
+                            continue;
+                        }
 
                         if (exporter.CanSynchronize(configuration, fileName))
                         {

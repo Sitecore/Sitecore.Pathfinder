@@ -99,7 +99,7 @@ namespace Sitecore.Pathfinder.Snapshots.Json
         }
 
         [NotNull]
-        protected virtual ITextNode Parse([NotNull] string name, [NotNull] JObject jobject, [CanBeNull] JsonTextNode parent)
+        protected virtual ITextNode Parse([NotNull] string name, [NotNull][ItemNotNull] JObject jobject, [CanBeNull] JsonTextNode parent)
         {
             var treeNode = new JsonTextNode(this, name, jobject, parent);
             (parent?.ChildNodes as ICollection<ITextNode>)?.Add(treeNode);

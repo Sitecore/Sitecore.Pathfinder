@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Extensibility.Pipelines
 {
@@ -18,7 +19,8 @@ namespace Sitecore.Pathfinder.Extensibility.Pipelines
             return PopulateProcessors(result);
         }
 
-        protected virtual T PopulateProcessors<T>(T result) where T : IPipeline<T>
+        [NotNull]
+        protected virtual T PopulateProcessors<T>([NotNull] T result) where T : IPipeline<T>
         {
             var processorType = typeof(IPipelineProcessor<T>);
 

@@ -72,7 +72,7 @@ namespace Sitecore.Pathfinder.Projects
             return $"{FileOrDatabaseName}:{Guid.ToString("B").ToUpperInvariant()}";
         }
 
-        private bool Equals(ProjectItemUri other)
+        private bool Equals([NotNull] ProjectItemUri other)
         {
             return Guid == other.Guid && string.Equals(FileOrDatabaseName, other.FileOrDatabaseName, StringComparison.OrdinalIgnoreCase);
         }

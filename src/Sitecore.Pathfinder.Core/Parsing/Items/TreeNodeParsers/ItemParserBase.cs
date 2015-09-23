@@ -62,7 +62,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             context.ParseContext.Project.AddOrMerge(context.ParseContext, item);
         }
 
-        protected virtual void ParseChildNodes(ItemParseContext context, Item item, ITextNode textNode)
+        protected virtual void ParseChildNodes([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode textNode)
         {
             foreach (var childNode in textNode.ChildNodes)
             {

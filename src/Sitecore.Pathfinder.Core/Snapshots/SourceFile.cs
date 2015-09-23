@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Snapshots
     [DebuggerDisplay("{GetType().Name}: FileName={FileName}")]
     public class SourceFile : ISourceFile
     {
-        public SourceFile([NotNull] IFileSystemService fileSystem, [NotNull] string fileName, string projectFileName)
+        public SourceFile([NotNull] IFileSystemService fileSystem, [NotNull] string fileName, [NotNull] string projectFileName)
         {
             FileSystem = fileSystem;
             FileName = fileName;

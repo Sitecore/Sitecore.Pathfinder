@@ -41,7 +41,7 @@ namespace Sitecore.Pathfinder.Projects
         private string _projectUniqueId;
 
         [ImportingConstructor]
-        public Project([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService, [NotNull] ICheckerService checker, IPipelineService pipelineService)
+        public Project([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService, [NotNull] ICheckerService checker, [NotNull] IPipelineService pipelineService)
         {
             CompositionService = compositionService;
             Configuration = configuration;
