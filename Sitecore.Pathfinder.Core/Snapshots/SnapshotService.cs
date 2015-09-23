@@ -24,13 +24,14 @@ namespace Sitecore.Pathfinder.Snapshots
         }
 
         [NotNull]
-        protected IConfiguration Configuration { get;  }
+        protected IConfiguration Configuration { get; }
 
         [NotNull]
         protected IFactoryService Factory { get; }
 
         [NotNull]
         [ImportMany]
+        [ItemNotNull]
         protected IEnumerable<ISnapshotLoader> Loaders { get; private set; }
 
         [NotNull]

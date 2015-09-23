@@ -9,9 +9,11 @@
 .vs/
 *.ncrunchsolution
 *.ncrunchsolution.user
+*.
 *.DotSettings.user
 Components/Sitecore.Kernel.dll
 Components/Sitecore.Zip.dll
+Components/Sitecore.Mvc.dll
 Components/Sitecore.ContentSearch.dll
 Components/Sitecore.ContentSearch.Linq.dll
 *.csproj.sitecore
@@ -199,6 +201,6 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
-/Components/Sitecore.Mvc.dll
 
-/Sitecore.Pathfinder.Console/Nuget/SitecorePathfinder.0.2.0-Developing.nupkg
+# Specific files
+/Sitecore.Pathfinder.Console/Nuget/*.nupkg

@@ -16,6 +16,7 @@ namespace Sitecore.Pathfinder.Snapshots.Xml
         [NotNull]
         protected static readonly Dictionary<string, XmlSchemaSet> Schemas = new Dictionary<string, XmlSchemaSet>();
 
+        [CanBeNull]
         private ITextNode _root;
 
         public XmlTextSnapshot([NotNull] ISourceFile sourceFile, [NotNull] string contents, [NotNull] string schemaNamespace, [NotNull] string schemaFileName) : base(sourceFile)

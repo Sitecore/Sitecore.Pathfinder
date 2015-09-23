@@ -8,6 +8,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
 {
     public class TemplateField : IHasSourceTextNodes
     {
+        [NotNull]
         public static readonly TemplateField Empty = new TemplateField(Template.Empty, TextNode.Empty);
 
         public TemplateField([NotNull] Template template, [NotNull] ITextNode textNode)

@@ -26,12 +26,18 @@ namespace Sitecore.Pathfinder.Projects
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class Project : IProject
     {
+        [NotNull]
         public static readonly IProject Empty = new Project();
 
+        [NotNull]
+        [ItemNotNull]
         private readonly List<Diagnostic> _diagnostics = new List<Diagnostic>();
 
+        [NotNull]
+        [ItemNotNull]
         private readonly List<IProjectItem> _items = new List<IProjectItem>();
 
+        [CanBeNull]
         private string _projectUniqueId;
 
         [ImportingConstructor]

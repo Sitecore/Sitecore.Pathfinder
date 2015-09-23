@@ -51,7 +51,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             item.Fields.Add(field);
         }
 
-        protected virtual void ParseDeviceReferences([NotNull] ItemParseContext context, [NotNull] ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode deviceTextNode)
+        protected virtual void ParseDeviceReferences([NotNull] ItemParseContext context, [NotNull][ItemNotNull] ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode deviceTextNode)
         {
             var deviceNameProperty = new SourceProperty<string>("Name", string.Empty, SourcePropertyFlags.IsShort);
             deviceNameProperty.Parse(deviceTextNode);
@@ -91,7 +91,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             return result;
         }
 
-        protected virtual void ParseRenderingReferences([NotNull] ItemParseContext context, [NotNull] ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode renderingTextNode)
+        protected virtual void ParseRenderingReferences([NotNull] ItemParseContext context, [NotNull][ItemNotNull] ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode renderingTextNode)
         {
             if (!string.IsNullOrEmpty(renderingTextNode.Name))
             {
@@ -106,7 +106,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             {
                 foreach (var reference in base.ParseReferences(context, projectItem, attributeTextNode))
                 {
-                  references.Add(reference);
+                    references.Add(reference);
                 }
             }
 

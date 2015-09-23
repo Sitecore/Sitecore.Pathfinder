@@ -7,13 +7,13 @@ namespace Sitecore.Pathfinder
 {
     internal class Program
     {
-        private static int Main([NotNull] string[] args)
+        private static int Main([NotNull][ItemNotNull] string[] args)
         {
             Trace.Listeners.Add(new ConsoleTraceListener());
 
             var errorCode = new Startup().Start();
 
-            return errorCode;       
+            return errorCode;
         }
     }
 }

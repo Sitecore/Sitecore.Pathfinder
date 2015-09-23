@@ -12,6 +12,7 @@ namespace Sitecore.Pathfinder.Snapshots.Json
 {
     public class JsonTextSnapshot : TextSnapshot
     {
+        [CanBeNull]
         private ITextNode _root;
 
         public JsonTextSnapshot([NotNull] ISourceFile sourceFile, [NotNull] string contents) : base(sourceFile)
@@ -35,6 +36,7 @@ namespace Sitecore.Pathfinder.Snapshots.Json
         public override ITextNode Root => _root ?? (_root = (RootToken != null ? Parse() : TextNode.Empty));
 
         [CanBeNull]
+        [ItemNotNull]
         protected JToken RootToken { get; }
 
         public override ITextNode GetJsonChildTextNode(ITextNode textNode, string name)

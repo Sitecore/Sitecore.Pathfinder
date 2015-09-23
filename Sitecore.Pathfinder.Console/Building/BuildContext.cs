@@ -15,6 +15,7 @@ namespace Sitecore.Pathfinder.Building
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class BuildContext : IBuildContext
     {
+        [CanBeNull]
         private IProject _project;
 
         [ImportingConstructor]

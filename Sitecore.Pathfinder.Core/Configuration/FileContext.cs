@@ -12,6 +12,7 @@ namespace Sitecore.Pathfinder.Configuration
 {
     public class FileContext
     {
+        [NotNull]
         public static readonly FileContext Empty = new FileContext(string.Empty, string.Empty, string.Empty, string.Empty);
 
         public FileContext([NotNull] string itemName, [NotNull] string itemPath, [NotNull] string filePath, [NotNull] string databaseName)

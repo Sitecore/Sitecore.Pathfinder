@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using Sitecore.Pathfinder.Diagnostics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -25,6 +26,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
 
         public const string Xs = "xs";
 
+        [Diagnostics.NotNull]
         protected static readonly ID InsertOptionsFieldId = new ID(Constants.Fields.InsertOptionsFieldId);
 
         public bool CanSynchronize(Microsoft.Framework.ConfigurationModel.Configuration configuration, string fileName)
@@ -40,7 +42,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
             Synchronize(zip, fileName, databaseName, schemaNamespace);
         }
 
-        protected virtual void Synchronize([Diagnostics.NotNull] ZipWriter zip, string fileName, [Diagnostics.NotNull] string databaseName, [Diagnostics.NotNull] string schemaNamespace)
+        protected virtual void Synchronize([Diagnostics.NotNull] ZipWriter zip, [Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] string databaseName, [Diagnostics.NotNull] string schemaNamespace)
         {
             var schema = Synchronize(databaseName, schemaNamespace);
             zip.AddEntry(fileName, Encoding.UTF8.GetBytes(schema));
@@ -217,7 +219,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
             output.WriteEndElement();
         }
 
-        protected virtual void WriteSchema([NotNull] XmlTextWriter output, [Diagnostics.NotNull] Database database, [Diagnostics.NotNull] string nameSpace, [Diagnostics.NotNull] IEnumerable<Template> templates)
+        protected virtual void WriteSchema([NotNull] XmlTextWriter output, [Diagnostics.NotNull] Database database, [Diagnostics.NotNull] string nameSpace, [Diagnostics.NotNull][ItemNotNull] IEnumerable<Template> templates)
         {
             output.WriteProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\"");
             output.WriteStartElement(Xs, "schema", Namespace);
@@ -321,7 +323,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
             }
         }
 
-        protected virtual void WriteTemplates([Diagnostics.NotNull] XmlTextWriter output, [Diagnostics.NotNull] Database database, [Diagnostics.NotNull] IEnumerable<Template> templates)
+        protected virtual void WriteTemplates([Diagnostics.NotNull] XmlTextWriter output, [Diagnostics.NotNull] Database database, [Diagnostics.NotNull][ItemNotNull] IEnumerable<Template> templates)
         {
             foreach (var template in templates)
             {
@@ -382,7 +384,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
 
             output.WriteStartElement(Xs, "anyAttribute", Namespace);
             output.WriteAttributeString("processContents", "lax");
-            output.WriteEndElement(); 
+            output.WriteEndElement();
 
             output.WriteEndElement(); // complexType
             output.WriteEndElement(); // element
@@ -406,7 +408,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
 
             output.WriteStartElement(Xs, "anyAttribute", Namespace);
             output.WriteAttributeString("processContents", "lax");
-            output.WriteEndElement(); 
+            output.WriteEndElement();
 
             output.WriteEndElement(); // complexType
             output.WriteEndElement(); // element
@@ -426,14 +428,14 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
             output.WriteAttributeString("maxOccurs", "1");
             output.WriteAttributeString("processContents", "lax");
             output.WriteAttributeString("namespace", "http://www.sitecore.net/pathfinder/layouts/master");
-            output.WriteEndElement(); 
+            output.WriteEndElement();
 
             output.WriteStartElement(Xs, "any", Namespace);
             output.WriteAttributeString("minOccurs", "0");
             output.WriteAttributeString("maxOccurs", "1");
             output.WriteAttributeString("processContents", "lax");
             output.WriteAttributeString("namespace", "http://www.sitecore.net/pathfinder/layouts/core");
-            output.WriteEndElement(); 
+            output.WriteEndElement();
 
             output.WriteEndElement(); // choice
             output.WriteEndElement(); // complexType
@@ -444,7 +446,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
             output.WriteEndElement(); // group
         }
 
-        protected virtual void WriteTemplatesGroup([NotNull] XmlTextWriter output, [NotNull] IEnumerable<Template> templates)
+        protected virtual void WriteTemplatesGroup([NotNull] XmlTextWriter output, [NotNull][ItemNotNull] IEnumerable<Template> templates)
         {
             output.WriteStartElement(Xs, "group", Namespace);
             output.WriteAttributeString("name", "Templates");

@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
     [DebuggerDisplay("\\{{GetType().FullName,nq}\\}: {Name,nq}={Value}")]
     public class TextNode : ITextNode
     {
+        [NotNull]
         public static readonly ITextNode Empty = new SnapshotTextNode(Snapshots.Snapshot.Empty);
 
         public TextNode([NotNull] ISnapshot snapshot, TextSpan span, [NotNull] string name, [NotNull] string value, [CanBeNull] ITextNode parent)

@@ -20,12 +20,16 @@ namespace Sitecore.Pathfinder.Mvc.Presentation
 {
     public class HtmlTemplateRenderer : Renderer
     {
+        [Diagnostics.NotNull]
         private static readonly Regex Contexts = new Regex("\\{\\{=([^\\}]*)\\}\\}([\\S\\W]*)\\{\\{/\\1\\}\\}", RegexOptions.Compiled);
 
+        [Diagnostics.NotNull]
         private static readonly Regex Inverted = new Regex("\\{\\{\\^([^\\}]*)\\}\\}([\\S\\W]*)\\{\\{/\\1\\}\\}", RegexOptions.Compiled);
 
+        [Diagnostics.NotNull]
         private static readonly Regex Lists = new Regex("\\{\\{#([^\\}]*)\\}\\}([\\S\\W]*)\\{\\{/\\1\\}\\}", RegexOptions.Compiled);
 
+        [Diagnostics.NotNull]
         private static readonly Regex Mustaches = new Regex("\\{\\{([^\\}]*)\\}\\}", RegexOptions.Compiled);
 
         [Diagnostics.NotNull]

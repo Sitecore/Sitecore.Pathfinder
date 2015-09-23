@@ -14,9 +14,11 @@ namespace Sitecore.Pathfinder.Emitters
     public interface IEmitContext
     {
         [Diagnostics.NotNull]
+        [ItemNotNull]
         ICollection<string> AddedFiles { get; }
 
         [Diagnostics.NotNull]
+        [ItemNotNull]
         ICollection<string> AddedItems { get; }
 
         [Diagnostics.NotNull]
@@ -26,9 +28,11 @@ namespace Sitecore.Pathfinder.Emitters
         IDataService DataService { get; }
 
         [Diagnostics.NotNull]
+        [ItemNotNull]
         ICollection<string> DeletedFiles { get; }
 
         [Diagnostics.NotNull]
+        [ItemNotNull]
         ICollection<string> DeletedItems { get; }
 
         [Diagnostics.NotNull]
@@ -44,9 +48,11 @@ namespace Sitecore.Pathfinder.Emitters
         string UninstallDirectory { get; }
 
         [Diagnostics.NotNull]
+        [ItemNotNull]
         ICollection<string> UpdatedFiles { get; }
 
         [Diagnostics.NotNull]
+        [ItemNotNull]
         ICollection<string> UpdatedItems { get; }
 
         void RegisterAddedFile([Diagnostics.NotNull] File projectItem, [Diagnostics.NotNull] string destinationFileName);

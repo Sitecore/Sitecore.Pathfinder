@@ -1,6 +1,5 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
@@ -75,7 +74,7 @@ namespace Sitecore.Pathfinder.Projects
             }
         }
 
-        protected virtual void LoadSourceFileNames([NotNull] ProjectOptions projectOptions, [NotNull] ICollection<string> sourceFileNames)
+        protected virtual void LoadSourceFileNames([NotNull] ProjectOptions projectOptions, [NotNull][ItemNotNull] ICollection<string> sourceFileNames)
         {
             var ignoreFileNames = Configuration.GetList(Constants.Configuration.IgnoreFileNames).ToList();
             var ignoreDirectories = Configuration.GetList(Constants.Configuration.IgnoreDirectories).ToList();

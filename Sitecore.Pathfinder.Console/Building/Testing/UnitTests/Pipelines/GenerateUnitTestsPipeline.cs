@@ -19,6 +19,7 @@ namespace Sitecore.Pathfinder.Building.Testing.UnitTests.Pipelines
         public StreamWriter Stream { get; private set; }
 
         [NotNull]
+        [ItemNotNull]
         public ICollection<string> Tests { get; } = new List<string>();
 
         [NotNull]

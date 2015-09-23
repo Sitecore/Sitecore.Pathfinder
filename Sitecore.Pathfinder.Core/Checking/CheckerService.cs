@@ -19,6 +19,7 @@ namespace Sitecore.Pathfinder.Checking
 
         [NotNull]
         [ImportMany]
+        [ItemNotNull]
         protected IEnumerable<IChecker> Checkers { get; private set; }
 
         [NotNull]

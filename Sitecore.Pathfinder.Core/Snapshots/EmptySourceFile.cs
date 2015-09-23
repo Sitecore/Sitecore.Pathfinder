@@ -2,14 +2,13 @@
 
 using System;
 using System.Xml.Linq;
-using Newtonsoft.Json.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
     public class EmptySourceFile : ISourceFile
     {
+        [NotNull]
         private readonly string _fileNameWithoutExtensions = string.Empty;
 
         public string FileName { get; } = string.Empty;
@@ -24,18 +23,7 @@ namespace Sitecore.Pathfinder.Snapshots
         {
             return _fileNameWithoutExtensions;
         }
-
-        public string GetProjectPath(IProject project)
-        {
-            return string.Empty;
-        }
-
         [NotNull]
-        public JObject ReadAsJson()
-        {
-            throw new InvalidOperationException("Cannot read from empty source file");
-        }
-
         public string[] ReadAsLines()
         {
             throw new InvalidOperationException("Cannot read from empty source file");

@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Configuration
             AddCommandLine(configurationSourceRoot, commandLineArgs);
         }
 
-        public virtual void AddCommandLine([NotNull] IConfigurationSourceRoot configurationSourceRoot, [NotNull] IEnumerable<string> commandLineArgs)
+        public virtual void AddCommandLine([NotNull] IConfigurationSourceRoot configurationSourceRoot, [NotNull][ItemNotNull] IEnumerable<string> commandLineArgs)
         {
             var args = new List<string>();
 

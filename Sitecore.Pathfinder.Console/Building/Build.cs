@@ -24,7 +24,8 @@ namespace Sitecore.Pathfinder.Building
 
         [NotNull]
         [ImportMany]
-        public IEnumerable<ITask> Tasks { get; [UsedImplicitly] private set; }
+        [ItemNotNull]
+        public IEnumerable<ITask> Tasks { get;[UsedImplicitly] private set; }
 
         [NotNull]
         protected ICompositionService CompositionService { get; }
@@ -63,6 +64,7 @@ namespace Sitecore.Pathfinder.Building
         }
 
         [NotNull]
+        [ItemNotNull]
         protected virtual IEnumerable<string> GetPipeline([NotNull] IBuildContext context)
         {
             string pipeline;

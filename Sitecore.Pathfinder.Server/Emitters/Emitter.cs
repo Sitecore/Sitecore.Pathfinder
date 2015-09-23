@@ -33,6 +33,7 @@ namespace Sitecore.Pathfinder.Emitters
         protected IConfigurationService ConfigurationService { get; set; }
 
         [Diagnostics.NotNull]
+        [ItemNotNull]
         [ImportMany]
         protected IEnumerable<IEmitter> Emitters { get; private set; }
 
@@ -86,7 +87,7 @@ namespace Sitecore.Pathfinder.Emitters
             EmitRetry(context, emitters, retries);
         }
 
-        protected virtual void Emit([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] List<IEmitter> emitters, [Diagnostics.NotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
+        protected virtual void Emit([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] IProject project, [Diagnostics.NotNull][ItemNotNull] List<IEmitter> emitters, [Diagnostics.NotNull][ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
         {
             foreach (var projectItem in project.Items)
             {
@@ -94,7 +95,7 @@ namespace Sitecore.Pathfinder.Emitters
             }
         }
 
-        protected virtual void EmitProjectItem([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] IProjectItem projectItem, [Diagnostics.NotNull] List<IEmitter> emitters, [Diagnostics.NotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
+        protected virtual void EmitProjectItem([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] IProjectItem projectItem, [Diagnostics.NotNull][ItemNotNull] List<IEmitter> emitters, [Diagnostics.NotNull][ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
         {
             foreach (var emitter in emitters)
             {
@@ -122,7 +123,7 @@ namespace Sitecore.Pathfinder.Emitters
             }
         }
 
-        protected virtual void EmitRetry([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] List<IEmitter> emitters, [Diagnostics.NotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
+        protected virtual void EmitRetry([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull][ItemNotNull] List<IEmitter> emitters, [Diagnostics.NotNull][ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
         {
             while (true)
             {

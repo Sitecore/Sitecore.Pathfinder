@@ -15,6 +15,7 @@ using Sitecore.Install.Metadata;
 using Sitecore.Install.Utils;
 using Sitecore.Install.Zip;
 using Sitecore.IO;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitters;
 using Sitecore.Pathfinder.Packages.Packages;
 using Sitecore.SecurityModel;
@@ -53,7 +54,8 @@ namespace Sitecore.Pathfinder.Packages
         public string InstalledRepository { get; }
 
         [NotNull]
-        public virtual IEnumerable<PackageBase> CheckForAvailableUpdates([NotNull] IEnumerable<PackageBase> availablePackages)
+        [ItemNotNull]
+        public virtual IEnumerable<PackageBase> CheckForAvailableUpdates([Diagnostics.NotNull][ItemNotNull] IEnumerable<PackageBase> availablePackages)
         {
             var installedPackages = GetInstalledPackages();
 
@@ -80,7 +82,8 @@ namespace Sitecore.Pathfinder.Packages
         }
 
         [NotNull]
-        public virtual IEnumerable<PackageBase> CheckForInstalledUpdates([NotNull] IEnumerable<PackageBase> installedPackages)
+        [ItemNotNull]
+        public virtual IEnumerable<PackageBase> CheckForInstalledUpdates([NotNull] [ItemNotNull] IEnumerable<PackageBase> installedPackages)
         {
             var availablePackages = GetAvailablePackages(string.Empty, string.Empty, string.Empty);
 
@@ -119,6 +122,7 @@ namespace Sitecore.Pathfinder.Packages
         }
 
         [Diagnostics.NotNull]
+        [ItemNotNull]
         public virtual IEnumerable<NugetPackage> FindPackagesById([NotNull] string packageId)
         {
             var availableRepository = GetAvailableRepository();
@@ -133,6 +137,7 @@ namespace Sitecore.Pathfinder.Packages
         }
 
         [NotNull]
+        [ItemNotNull]
         public virtual IEnumerable<PackageBase> GetAvailablePackages([Diagnostics.NotNull] string queryText, [Diagnostics.NotNull] string author, [Diagnostics.NotNull] string tags, int skip = -1)
         {
             var query = GetAvailablePackagesQuery(queryText, author, tags);
@@ -146,6 +151,7 @@ namespace Sitecore.Pathfinder.Packages
         }
 
         [NotNull]
+        [ItemNotNull]
         public virtual IEnumerable<PackageBase> GetInstalledPackages()
         {
             var installedRepository = GetInstalledRepository();
@@ -163,6 +169,7 @@ namespace Sitecore.Pathfinder.Packages
         }
 
         [NotNull]
+        [ItemNotNull]
         public virtual IEnumerable<PackageBase> GetUpdatePackages(bool includePrerelease)
         {
             var repository = GetAvailableRepository();
@@ -255,6 +262,7 @@ namespace Sitecore.Pathfinder.Packages
         }
 
         [NotNull]
+        [ItemNotNull]
         protected virtual IEnumerable<IPackage> GetAvailablePackagesQuery([Diagnostics.NotNull] string queryText, [Diagnostics.NotNull] string author, [Diagnostics.NotNull] string tags)
         {
             var availableRepository = GetAvailableRepository();
@@ -331,7 +339,7 @@ namespace Sitecore.Pathfinder.Packages
             }
         }
 
-        protected virtual void InstallPackageDirectory(string packagesDirectory)
+        protected virtual void InstallPackageDirectory([Diagnostics.NotNull] string packagesDirectory)
         {
             if (!Directory.Exists(packagesDirectory))
             {
@@ -344,7 +352,7 @@ namespace Sitecore.Pathfinder.Packages
             }
         }
 
-        private void InstallSitecorePackage(string fileName)
+        private void InstallSitecorePackage([Diagnostics.NotNull] string fileName)
         {
             Context.SetActiveSite("shell");
             using (new SecurityDisabler())

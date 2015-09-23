@@ -9,8 +9,10 @@ namespace Sitecore.Pathfinder.Snapshots.Xml
 {
     public class XmlTextNode : TextNode
     {
+        [NotNull]
         private XObject _node;
 
+        [CanBeNull]
         private ITextNode _innerText;
 
         public XmlTextNode([NotNull] ITextSnapshot snapshot, [NotNull] XElement element, [CanBeNull] ITextNode parent = null) : base(snapshot, GetPosition(element, element.Name.LocalName.Length), element.Name.LocalName, string.Empty, parent)

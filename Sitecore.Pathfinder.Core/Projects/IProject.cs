@@ -12,11 +12,13 @@ namespace Sitecore.Pathfinder.Projects
     public interface IProject
     {
         [NotNull]
+        [ItemNotNull]
         ICollection<Diagnostic> Diagnostics { get; }
 
         long Ducats { get; set; }
 
         [NotNull]
+        [ItemNotNull]
         IEnumerable<IFieldResolver> FieldResolvers { get; }
 
         [NotNull]
@@ -25,6 +27,7 @@ namespace Sitecore.Pathfinder.Projects
         bool HasErrors { get; }
 
         [NotNull]
+        [ItemNotNull]
         IEnumerable<IProjectItem> Items { get; }
 
         [NotNull]
@@ -34,6 +37,7 @@ namespace Sitecore.Pathfinder.Projects
         string ProjectUniqueId { get; }
 
         [NotNull]
+        [ItemNotNull]
         ICollection<ISourceFile> SourceFiles { get; }
 
         void Add([NotNull] string sourceFileName);
@@ -53,7 +57,7 @@ namespace Sitecore.Pathfinder.Projects
         IProjectItem FindQualifiedItem([NotNull] ProjectItemUri uri);
 
         [NotNull]
-        IProject Load([NotNull] ProjectOptions projectOptions, [NotNull] IEnumerable<string> sourceFileNames);
+        IProject Load([NotNull] ProjectOptions projectOptions, [NotNull][ItemNotNull] IEnumerable<string> sourceFileNames);
 
         void Remove([NotNull] IProjectItem projectItem);
 

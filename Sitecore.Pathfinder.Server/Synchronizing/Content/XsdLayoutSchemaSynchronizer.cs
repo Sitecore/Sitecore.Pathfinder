@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using Sitecore.Pathfinder.Diagnostics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -73,7 +74,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
         }
 
         [NotNull]
-        protected virtual string GetUniqueRenderingName([NotNull] IEnumerable<Item> renderings, [NotNull] Item rendering)
+        protected virtual string GetUniqueRenderingName([NotNull][ItemNotNull] IEnumerable<Item> renderings, [NotNull] Item rendering)
         {
             var paths = renderings.Where(r => r.Name == rendering.Name && r != rendering).Select(r => r.Paths.Path).ToList();
             var parts = rendering.Paths.Path.Split('/');
@@ -186,7 +187,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
             output.WriteEndElement(); // simpletype
         }
 
-        protected virtual void WriteDevices([NotNull] XmlTextWriter output, [Diagnostics.NotNull] List<string> deviceNames)
+        protected virtual void WriteDevices([NotNull] XmlTextWriter output, [Diagnostics.NotNull][ItemNotNull] List<string> deviceNames)
         {
             output.WriteStartElement(Xs, "element", Namespace);
             output.WriteAttributeString("name", "Device");
@@ -216,7 +217,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
             output.WriteEndElement();
         }
 
-        private void WriteEnumeration([Diagnostics.NotNull] XmlTextWriter output, [Diagnostics.NotNull] string attributeName, [Diagnostics.NotNull] string help, [Diagnostics.NotNull] IEnumerable<string> items)
+        private void WriteEnumeration([Diagnostics.NotNull] XmlTextWriter output, [Diagnostics.NotNull] string attributeName, [Diagnostics.NotNull] string help, [Diagnostics.NotNull][ItemNotNull] IEnumerable<string> items)
         {
             if (!items.Any())
             {
@@ -367,7 +368,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
             output.WriteEndElement(); // simpletype
         }
 
-        protected virtual void WriteLayout([NotNull] XmlTextWriter output, [Diagnostics.NotNull] List<string> deviceNames)
+        protected virtual void WriteLayout([NotNull] XmlTextWriter output, [Diagnostics.NotNull][ItemNotNull] List<string> deviceNames)
         {
             output.WriteStartElement(Xs, "element", Namespace);
             output.WriteAttributeString("name", "Layout");
@@ -389,7 +390,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
             output.WriteEndElement();
         }
 
-        protected virtual void WriteRendering([NotNull] XmlTextWriter output, [NotNull] IEnumerable<Item> renderingItems, [NotNull] Item rendering)
+        protected virtual void WriteRendering([NotNull] XmlTextWriter output, [NotNull][ItemNotNull] IEnumerable<Item> renderingItems, [NotNull] Item rendering)
         {
             var name = rendering.Name;
             if (renderingItems.Any(r => r.Name == name && r != rendering))
@@ -501,7 +502,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
             return true;
         }
 
-        protected virtual void WriteRenderings([NotNull] XmlTextWriter output, [NotNull] IEnumerable<Item> renderingItems)
+        protected virtual void WriteRenderings([NotNull] XmlTextWriter output, [NotNull][ItemNotNull] IEnumerable<Item> renderingItems)
         {
             output.WriteStartElement(Xs, "group", Namespace);
             output.WriteAttributeString("name", "rendering");
@@ -532,7 +533,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
             output.WriteEndElement();
         }
 
-        protected virtual void WriteSchema([NotNull] XmlTextWriter output, [NotNull] string nameSpace, [Diagnostics.NotNull] List<string> deviceNames, [NotNull] IEnumerable<Item> renderingItems)
+        protected virtual void WriteSchema([NotNull] XmlTextWriter output, [NotNull] string nameSpace, [Diagnostics.NotNull][ItemNotNull] List<string> deviceNames, [NotNull][ItemNotNull] IEnumerable<Item> renderingItems)
         {
             output.WriteProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\"");
             output.WriteStartElement(Xs, "schema", Namespace);

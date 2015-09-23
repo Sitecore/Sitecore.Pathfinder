@@ -18,6 +18,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers.Templates
     public class TemplateWriter
     {
         [Diagnostics.CanBeNull]
+        [ItemNotNull]
         private IEnumerable<TemplateSectionWriter> _sectionBuilders;
 
         public TemplateWriter([Diagnostics.NotNull] Template template)
@@ -29,12 +30,10 @@ namespace Sitecore.Pathfinder.Emitters.Writers.Templates
         public Item Item { get; set; }
 
         [Diagnostics.NotNull]
+        [ItemNotNull]
         public IEnumerable<TemplateSectionWriter> Sections
         {
-            get
-            {
-                return _sectionBuilders ?? (_sectionBuilders = Template.Sections.Select(s => new TemplateSectionWriter(s)).ToList());
-            }
+            get { return _sectionBuilders ?? (_sectionBuilders = Template.Sections.Select(s => new TemplateSectionWriter(s)).ToList()); }
         }
 
         [Diagnostics.NotNull]
@@ -69,58 +68,6 @@ namespace Sitecore.Pathfinder.Emitters.Writers.Templates
             SortSections(context, this);
 
             return Item;
-        }
-
-        protected virtual void WriteNewTemplate([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] IEnumerable<Sitecore.Data.Templates.TemplateField> inheritedFields)
-        {
-            var database = context.DataService.GetDatabase(Template.DatabaseName);
-            if (database == null)
-            {
-                return;
-            }
-
-            var parentItem = GetParentItem(context, database);
-            if (parentItem == null)
-            {
-                throw new RetryableEmitException(Texts.Failed_to_create_template, Template.Snapshots.First());
-            }
-
-            var item = ItemManager.AddFromTemplate(Template.ItemName, new TemplateID(TemplateIDs.Template), parentItem, new ID(Template.Uri.Guid));
-            if (item == null)
-            {
-                throw new EmitException(Texts.Failed_to_add_new_template, Template.Snapshots.First());
-            }
-
-            Item = item;
-            using (new EditContext(item))
-            {
-                if (!string.IsNullOrEmpty(Template.BaseTemplates))
-                {
-                    item[FieldIDs.BaseTemplate] = Template.BaseTemplates;
-                }
-
-                if (!string.IsNullOrEmpty(Template.Icon))
-                {
-                    item.Appearance.Icon = Template.Icon;
-                }
-
-                if (!string.IsNullOrEmpty(Template.ShortHelp))
-                {
-                    item.Help.ToolTip = Template.ShortHelp;
-                }
-
-                if (!string.IsNullOrEmpty(Template.LongHelp))
-                {
-                    item.Help.Text = Template.LongHelp;
-                }
-
-                item[FieldIDs.StandardValues] = Template.StandardValuesItem?.Uri.Guid.Format() ?? string.Empty;
-            }
-
-            foreach (var section in Sections)
-            {
-                WriteSection(context, section, inheritedFields);
-            }
         }
 
         protected virtual void DeleteFields([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] TemplateSectionWriter templateSectionWriter)
@@ -201,6 +148,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers.Templates
         }
 
         [Diagnostics.NotNull]
+        [ItemNotNull]
         protected IEnumerable<Sitecore.Data.Templates.TemplateField> GetInheritedFields([Diagnostics.NotNull] Template template)
         {
             var fields = new List<Sitecore.Data.Templates.TemplateField>();
@@ -380,7 +328,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers.Templates
             }
         }
 
-        protected virtual void WriteField([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] TemplateSectionWriter templateSectionWriter, [Diagnostics.NotNull] TemplateFieldWriter templateFieldWriter, [Diagnostics.NotNull] IEnumerable<Sitecore.Data.Templates.TemplateField> inheritedFields)
+        protected virtual void WriteField([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] TemplateSectionWriter templateSectionWriter, [Diagnostics.NotNull] TemplateFieldWriter templateFieldWriter, [Diagnostics.NotNull] [ItemNotNull] IEnumerable<Sitecore.Data.Templates.TemplateField> inheritedFields)
         {
             if (inheritedFields.Any(f => string.Compare(f.Name, templateFieldWriter.TemplateField.FieldName, StringComparison.OrdinalIgnoreCase) == 0))
             {
@@ -449,7 +397,59 @@ namespace Sitecore.Pathfinder.Emitters.Writers.Templates
             }
         }
 
-        protected virtual void WriteSection([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] TemplateSectionWriter templateSectionWriter, [Diagnostics.NotNull] IEnumerable<Sitecore.Data.Templates.TemplateField> inheritedFields)
+        protected virtual void WriteNewTemplate([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] [ItemNotNull] IEnumerable<Sitecore.Data.Templates.TemplateField> inheritedFields)
+        {
+            var database = context.DataService.GetDatabase(Template.DatabaseName);
+            if (database == null)
+            {
+                return;
+            }
+
+            var parentItem = GetParentItem(context, database);
+            if (parentItem == null)
+            {
+                throw new RetryableEmitException(Texts.Failed_to_create_template, Template.Snapshots.First());
+            }
+
+            var item = ItemManager.AddFromTemplate(Template.ItemName, new TemplateID(TemplateIDs.Template), parentItem, new ID(Template.Uri.Guid));
+            if (item == null)
+            {
+                throw new EmitException(Texts.Failed_to_add_new_template, Template.Snapshots.First());
+            }
+
+            Item = item;
+            using (new EditContext(item))
+            {
+                if (!string.IsNullOrEmpty(Template.BaseTemplates))
+                {
+                    item[FieldIDs.BaseTemplate] = Template.BaseTemplates;
+                }
+
+                if (!string.IsNullOrEmpty(Template.Icon))
+                {
+                    item.Appearance.Icon = Template.Icon;
+                }
+
+                if (!string.IsNullOrEmpty(Template.ShortHelp))
+                {
+                    item.Help.ToolTip = Template.ShortHelp;
+                }
+
+                if (!string.IsNullOrEmpty(Template.LongHelp))
+                {
+                    item.Help.Text = Template.LongHelp;
+                }
+
+                item[FieldIDs.StandardValues] = Template.StandardValuesItem?.Uri.Guid.Format() ?? string.Empty;
+            }
+
+            foreach (var section in Sections)
+            {
+                WriteSection(context, section, inheritedFields);
+            }
+        }
+
+        protected virtual void WriteSection([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] TemplateSectionWriter templateSectionWriter, [Diagnostics.NotNull] [ItemNotNull] IEnumerable<Sitecore.Data.Templates.TemplateField> inheritedFields)
         {
             if (Item == null)
             {
@@ -499,7 +499,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers.Templates
             }
         }
 
-        protected virtual void WriteTemplate([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] IEnumerable<Sitecore.Data.Templates.TemplateField> inheritedFields)
+        protected virtual void WriteTemplate([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] [ItemNotNull] IEnumerable<Sitecore.Data.Templates.TemplateField> inheritedFields)
         {
             var item = Item;
             if (item == null)

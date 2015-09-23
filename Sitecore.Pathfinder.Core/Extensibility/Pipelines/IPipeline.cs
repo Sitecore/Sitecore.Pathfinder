@@ -1,7 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
-using System.ComponentModel;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Extensibility.Pipelines
@@ -11,6 +10,7 @@ namespace Sitecore.Pathfinder.Extensibility.Pipelines
         bool IsAborted { get; }
 
         [NotNull]
+        [ItemNotNull]
         IList<IPipelineProcessor<T>> Processors { get; }
 
         [NotNull]

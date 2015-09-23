@@ -9,6 +9,7 @@ using System.Xml;
 using Sitecore.Configuration;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.SecurityModel;
 using Sitecore.Zip;
@@ -19,6 +20,8 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
     public class ContentXmlSynchronizer : ISynchronizer
     {
         // todo: make configurable
+        [Diagnostics.NotNull]
+        [ItemNotNull]
         private static readonly List<string> FieldsToWrite = new List<string>
         {
             "place holders"
@@ -56,7 +59,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
             }
         }
 
-        private void WriteItem(XmlTextWriter output, Item item, bool writeParentItemPath)
+        private void WriteItem([Diagnostics.NotNull] XmlTextWriter output, [Diagnostics.NotNull] Item item, bool writeParentItemPath)
         {
             if (item.TemplateID == TemplateIDs.Template)
             {
@@ -102,7 +105,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
             output.WriteEndElement();
         }
 
-        private void WriteTemplate(XmlTextWriter output, Item item, bool writeParentItemPath)
+        private void WriteTemplate([Diagnostics.NotNull] XmlTextWriter output, [Diagnostics.NotNull] Item item, bool writeParentItemPath)
         {
             output.WriteStartElement("Template");
             output.WriteAttributeString("Id", item.ID.ToString());

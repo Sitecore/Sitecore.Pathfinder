@@ -8,6 +8,7 @@ namespace Sitecore.Pathfinder.Snapshots
     public interface IHasSourceTextNodes
     {
         [NotNull]
+        [ItemNotNull]
         ICollection<ITextNode> SourceTextNodes { get; }
     }
 }

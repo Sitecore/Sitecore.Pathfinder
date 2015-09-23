@@ -8,6 +8,7 @@ namespace Sitecore.Pathfinder.Snapshots
 {
     public class AttributeNameTextNode : ITextNode
     {
+        [NotNull]
         private string _name;
 
         public AttributeNameTextNode([NotNull] ITextNode textNode)

@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using Sitecore.Pathfinder.Diagnostics;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Microsoft.Framework.ConfigurationModel;
@@ -23,6 +24,7 @@ namespace Sitecore.Pathfinder.Synchronizing
         [Diagnostics.NotNull]
         [Diagnostics.UsedImplicitly]
         [ImportMany(typeof(ISynchronizer))]
+        [ItemNotNull]
         public IEnumerable<ISynchronizer> ContentExporters { get; protected set; }
 
         [Diagnostics.NotNull]

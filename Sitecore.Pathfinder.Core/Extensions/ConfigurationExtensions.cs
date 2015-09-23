@@ -29,9 +29,9 @@ namespace Sitecore.Pathfinder.Extensions
                     configuration.AddJsonFile(path);
                     break;
 
-                // case ".xml":
-                // configuration.AddXmlFile(path);
-                // break;
+                    // case ".xml":
+                    // configuration.AddXmlFile(path);
+                    // break;
             }
 
             return configuration;
@@ -50,6 +50,7 @@ namespace Sitecore.Pathfinder.Extensions
         }
 
         [NotNull]
+        [ItemNotNull]
         public static IEnumerable<string> GetList([NotNull] this IConfiguration configuration, [NotNull] string key)
         {
             var value = configuration.Get(key) ?? string.Empty;

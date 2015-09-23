@@ -10,10 +10,13 @@ namespace Sitecore.Pathfinder.Snapshots.Xml
 {
     public class XmlInnerTextNode : ITextNode
     {
+        [NotNull]
         private static readonly Regex RemoveNamespaces = new Regex("\\sxmlns[^\"]+\"[^\"]+\"", RegexOptions.Compiled);
 
+        [NotNull]
         private readonly XElement _element;
 
+        [CanBeNull]
         private string _value;
 
         public XmlInnerTextNode([NotNull] XmlTextNode textNode, [NotNull] XElement element)

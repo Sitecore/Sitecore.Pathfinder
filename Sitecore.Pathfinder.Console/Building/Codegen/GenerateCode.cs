@@ -20,6 +20,7 @@ namespace Sitecore.Pathfinder.Building.Codegen
 
         [NotNull]
         [ImportMany(typeof(ICodeGenerator))]
+        [ItemNotNull]
         public IEnumerable<ICodeGenerator> CodeGenerators { get; protected set; }
 
         public override void Run(IBuildContext context)

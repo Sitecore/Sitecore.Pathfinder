@@ -56,6 +56,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="App_Config\Commands.config" />
     <None Include="App_Config\ConnectionStrings.config" />
     <None Include="App_Config\ConnectionStringsOracle.config" />

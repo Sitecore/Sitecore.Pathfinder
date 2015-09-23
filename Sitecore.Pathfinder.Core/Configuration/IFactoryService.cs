@@ -1,6 +1,5 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using Sitecore.Pathfinder.Diagnostics;
 using System;
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
@@ -56,7 +55,7 @@ namespace Sitecore.Pathfinder.Configuration
         MediaFile MediaFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath, [NotNull] ProjectItemUri mediaItemUri);
 
         [NotNull]
-        IProject Project([NotNull] ProjectOptions projectOptions, [NotNull][ItemNotNull] List<string> sourceFileNames);
+        IProject Project([NotNull] ProjectOptions projectOptions, [NotNull] [ItemNotNull] List<string> sourceFileNames);
 
         [NotNull]
         ProjectOptions ProjectOptions([NotNull] string projectDirectory, [NotNull] string databaseName);

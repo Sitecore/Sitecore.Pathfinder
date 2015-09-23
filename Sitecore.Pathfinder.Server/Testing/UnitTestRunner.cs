@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Sitecore.IO;
+using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Testing
 {
@@ -14,6 +15,7 @@ namespace Sitecore.Pathfinder.Testing
     {
         private static DateTime _lastCompile = DateTime.MinValue;
 
+        [Diagnostics.NotNull]
         private static Assembly _testAssembly;
 
         public UnitTestRunner()
@@ -26,6 +28,7 @@ namespace Sitecore.Pathfinder.Testing
 
         [ImportMany]
         [Diagnostics.NotNull]
+        [ItemNotNull]
         public IEnumerable<ITestRunner> TestRunners { get; protected set; }
 
         public void RunTests([Diagnostics.NotNull] string testRunnerName)

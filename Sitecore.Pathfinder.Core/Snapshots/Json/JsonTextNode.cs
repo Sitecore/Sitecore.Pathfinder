@@ -8,19 +8,21 @@ namespace Sitecore.Pathfinder.Snapshots.Json
 {
     public class JsonTextNode : TextNode
     {
+        [NotNull]
+        [ItemCanBeNull]
         private JToken _jtoken;
 
-        public JsonTextNode([NotNull] ITextSnapshot snapshot, [NotNull] string name, [NotNull] JObject jobject, [CanBeNull] ITextNode parent = null) : base(snapshot, GetPosition(jobject), name, string.Empty, parent)
+        public JsonTextNode([NotNull] ITextSnapshot snapshot, [NotNull] string name, [NotNull][ItemCanBeNull] JObject jobject, [CanBeNull] ITextNode parent = null) : base(snapshot, GetPosition(jobject), name, string.Empty, parent)
         {
             _jtoken = jobject;
         }
 
-        public JsonTextNode([NotNull] ITextSnapshot snapshot, [NotNull] string name, [NotNull] JArray jarray, [CanBeNull] ITextNode parent = null) : base(snapshot, GetPosition(jarray), name, string.Empty, parent)
+        public JsonTextNode([NotNull] ITextSnapshot snapshot, [NotNull] string name, [NotNull][ItemCanBeNull] JArray jarray, [CanBeNull] ITextNode parent = null) : base(snapshot, GetPosition(jarray), name, string.Empty, parent)
         {
             _jtoken = jarray;
         }
 
-        public JsonTextNode([NotNull] ITextSnapshot snapshot, [NotNull] string name, [NotNull] JProperty jproperty, [CanBeNull] ITextNode parent = null) : base(snapshot, GetPosition(jproperty), name, jproperty.Value?.ToString() ?? string.Empty, parent)
+        public JsonTextNode([NotNull] ITextSnapshot snapshot, [NotNull] string name, [NotNull][ItemCanBeNull] JProperty jproperty, [CanBeNull] ITextNode parent = null) : base(snapshot, GetPosition(jproperty), name, jproperty.Value?.ToString() ?? string.Empty, parent)
         {
             _jtoken = jproperty;
         }

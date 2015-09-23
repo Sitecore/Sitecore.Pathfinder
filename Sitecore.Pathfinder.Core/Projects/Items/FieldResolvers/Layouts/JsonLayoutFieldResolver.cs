@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
     public class JsonLayoutFieldResolver : FieldResolverBase
     {
         [ImportingConstructor]
-        public JsonLayoutFieldResolver(IFileSystemService fileSystem) : base(Constants.FieldResolvers.Normal)
+        public JsonLayoutFieldResolver([NotNull] IFileSystemService fileSystem) : base(Constants.FieldResolvers.Normal)
         {
             FileSystem = fileSystem;
         }

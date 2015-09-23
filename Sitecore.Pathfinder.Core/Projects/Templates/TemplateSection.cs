@@ -16,6 +16,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         }
 
         [NotNull]
+        [ItemNotNull]
         public IList<TemplateField> Fields { get; } = new List<TemplateField>();
 
         [NotNull]

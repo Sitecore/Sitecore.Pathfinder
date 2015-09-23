@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Data.Items;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.Emitters.Writers.Templates
@@ -10,6 +11,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers.Templates
     public class TemplateSectionWriter
     {
         [CanBeNull]
+        [ItemNotNull]
         private IEnumerable<TemplateFieldWriter> _fieldBuilders;
 
         public TemplateSectionWriter([NotNull] TemplateSection templateSection)
@@ -18,12 +20,10 @@ namespace Sitecore.Pathfinder.Emitters.Writers.Templates
         }
 
         [NotNull]
+        [ItemNotNull]
         public IEnumerable<TemplateFieldWriter> Fields
         {
-            get
-            {
-                return _fieldBuilders ?? (_fieldBuilders = TemplateSection.Fields.Select(f => new TemplateFieldWriter(f)).ToList());
-            }
+            get { return _fieldBuilders ?? (_fieldBuilders = TemplateSection.Fields.Select(f => new TemplateFieldWriter(f)).ToList()); }
         }
 
         [CanBeNull]

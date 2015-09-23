@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using Sitecore.Pathfinder.Diagnostics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -116,7 +117,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
             return true;
         }
 
-        protected virtual void WriteLayout([NotNull] JsonTextWriter output, List<string> deviceNames)
+        protected virtual void WriteLayout([NotNull] JsonTextWriter output, [ItemNotNull] [Diagnostics.NotNull] List<string> deviceNames)
         {
             output.WriteStartObject("Layout");
             output.WritePropertyString("type", "object");
@@ -222,7 +223,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
             }
         }
 
-        protected virtual void WriteRenderings([Diagnostics.NotNull] JsonTextWriter output, [Diagnostics.NotNull] IEnumerable<Item> renderingItems)
+        protected virtual void WriteRenderings([Diagnostics.NotNull] JsonTextWriter output, [Diagnostics.NotNull][ItemNotNull] IEnumerable<Item> renderingItems)
         {
             foreach (var rendering in renderingItems)
             {
@@ -269,7 +270,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
             }
         }
 
-        protected virtual void WriteRenderingsDefinition([NotNull] JsonTextWriter output, [NotNull] IEnumerable<Item> renderingItems)
+        protected virtual void WriteRenderingsDefinition([NotNull] JsonTextWriter output, [NotNull][ItemNotNull] IEnumerable<Item> renderingItems)
         {
             output.WriteStartObject("Renderings");
             output.WritePropertyString("type", "array");
@@ -292,7 +293,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
             output.WriteEndObject(); // Renderings
         }
 
-        protected virtual void WriteSchema([NotNull] JsonTextWriter output, List<string> deviceNames, [NotNull] IEnumerable<Item> renderingItems)
+        protected virtual void WriteSchema([NotNull] JsonTextWriter output, [ItemNotNull] [Diagnostics.NotNull] List<string> deviceNames, [NotNull][ItemNotNull] IEnumerable<Item> renderingItems)
         {
             output.WriteStartObject();
 

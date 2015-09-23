@@ -23,6 +23,7 @@ namespace Sitecore.Pathfinder.Parsing
 
         [NotNull]
         [ImportMany]
+        [ItemNotNull]
         public IEnumerable<IParser> Parsers { get; private set; }
 
         [NotNull]

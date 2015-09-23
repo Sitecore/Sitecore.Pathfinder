@@ -13,6 +13,7 @@ namespace Sitecore.Pathfinder.Querying
         IProjectItem FindProjectItem([NotNull] IProject project, [NotNull] string qualifiedName);
 
         [NotNull]
+        [ItemNotNull]
         IEnumerable<IReference> FindUsages([NotNull] IProject project, [NotNull] string qualifiedName);
     }
 }

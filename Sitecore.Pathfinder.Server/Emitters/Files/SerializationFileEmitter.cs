@@ -14,6 +14,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
     [Export(typeof(IEmitter))]
     public class SerializationFileEmitter : EmitterBase
     {
+        [Diagnostics.NotNull]
         private static readonly LoadOptions LoadOptions = new LoadOptions
         {
             ForceUpdate = true

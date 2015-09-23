@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Projects.Files
     [DebuggerDisplay("{GetType().Name,nq}: {FilePath}")]
     public class File : ProjectItem
     {
-        [NotNull]
+        [CanBeNull]
         private string _shortName;
 
         public File([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath) : base(project, GetUri(project, snapshot), snapshot)

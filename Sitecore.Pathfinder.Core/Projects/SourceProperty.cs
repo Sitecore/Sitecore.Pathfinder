@@ -44,6 +44,7 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         private readonly T _defaultValue;
 
+        [CanBeNull]
         private T _value;
 
         public SourceProperty([NotNull] string name, [NotNull] T defaultValue)

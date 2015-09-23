@@ -218,6 +218,7 @@ namespace Sitecore.Pathfinder.Extensions
         }
 
         [NotNull]
+        [ItemNotNull]
         public static string[] Split([NotNull] this string text, char separator, StringSplitOptions options)
         {
             var s = new[]
@@ -229,6 +230,7 @@ namespace Sitecore.Pathfinder.Extensions
         }
 
         [NotNull]
+        [ItemNotNull]
         public static IEnumerable<string> SplitEscaped([CanBeNull] this string str, char separator, StringSplitOptions options = StringSplitOptions.None, char escapeCharacter = '\\')
         {
             if (str == null)

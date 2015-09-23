@@ -60,6 +60,7 @@ namespace Sitecore.Pathfinder.Parsing.Layouts
         }
 
         [NotNull]
+        [ItemNotNull]
         protected abstract IEnumerable<string> GetPlaceholders([NotNull] string contents);
 
         private void AddPlaceholdersField([NotNull] IParseContext context, [NotNull] Item item)

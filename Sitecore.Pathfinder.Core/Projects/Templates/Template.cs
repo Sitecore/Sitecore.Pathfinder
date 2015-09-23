@@ -12,6 +12,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
 {
     public class Template : ItemBase
     {
+        [NotNull]
         public static readonly Template Empty = new Template(Projects.Project.Empty, new Guid("{7A3E077F-D985-453F-8773-348ADFEAF2FD}"), TextNode.Empty, string.Empty, string.Empty, string.Empty);
 
         public Template([NotNull] IProject project, Guid guid, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, guid, textNode, databaseName, itemName, itemIdOrPath)
@@ -39,6 +40,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         public SourceProperty<string> LongHelpProperty { get; } = new SourceProperty<string>("LongHelp", string.Empty);
 
         [NotNull]
+        [ItemNotNull]
         public IList<TemplateSection> Sections { get; } = new List<TemplateSection>();
 
         [NotNull]

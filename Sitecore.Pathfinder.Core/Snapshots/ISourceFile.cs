@@ -22,6 +22,7 @@ namespace Sitecore.Pathfinder.Snapshots
         string GetFileNameWithoutExtensions();
 
         [NotNull]
+        [ItemNotNull]
         string[] ReadAsLines();
 
         [NotNull]

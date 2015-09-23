@@ -12,8 +12,11 @@ namespace Sitecore.Pathfinder.Text
 {
     public class UrlString
     {
+        [NotNull]
+        [ItemNotNull]
         private readonly NameValueCollection _parameters = new NameValueCollection();
 
+        [NotNull]
         private string _protocol = string.Empty;
 
         public UrlString()
@@ -25,7 +28,7 @@ namespace Sitecore.Pathfinder.Text
             Parse(url);
         }
 
-        public UrlString([NotNull] NameValueCollection parameters)
+        public UrlString([NotNull][ItemNotNull] NameValueCollection parameters)
         {
             _parameters.Add(parameters);
         }
@@ -63,6 +66,7 @@ namespace Sitecore.Pathfinder.Text
         }
 
         [NotNull]
+        [ItemNotNull]
         public NameValueCollection Parameters => _parameters;
 
         [NotNull]
@@ -116,7 +120,7 @@ namespace Sitecore.Pathfinder.Text
             _parameters[key] = HttpUtility.UrlEncode(value);
         }
 
-        public void Append([NotNull] NameValueCollection arguments)
+        public void Append([NotNull][ItemNotNull] NameValueCollection arguments)
         {
             foreach (string key in arguments.Keys)
             {

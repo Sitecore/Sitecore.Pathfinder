@@ -59,6 +59,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         }
 
         [NotNull]
+        [ItemNotNull]
         protected virtual IEnumerable<IReference> ParseReferences<T>([NotNull] ItemParseContext context, [NotNull] IProjectItem projectItem, [NotNull] SourceProperty<T> sourceProperty)
         {
             var sourceTextNode = sourceProperty.SourceTextNode;
@@ -71,6 +72,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         }
 
         [NotNull]
+        [ItemNotNull]
         protected virtual IEnumerable<IReference> ParseReferences([NotNull] ItemParseContext context, [NotNull] IProjectItem projectItem, [NotNull] ITextNode textNode)
         {
             var text = textNode.Value;

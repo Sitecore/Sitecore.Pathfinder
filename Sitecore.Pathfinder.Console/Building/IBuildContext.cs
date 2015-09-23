@@ -26,9 +26,11 @@ namespace Sitecore.Pathfinder.Building
         bool IsAborted { get; set; }
 
         [NotNull]
+        [ItemNotNull]
         IList<IProjectItem> ModifiedProjectItems { get; }
 
         [NotNull]
+        [ItemNotNull]
         IList<string> OutputFiles { get; }
 
         [NotNull]

@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Testing
         string Name { get; }
 
         [CanBeNull]
-        Assembly CompileAssembly([NotNull] ICollection<string> references, [NotNull] IEnumerable<string> fileNames);
+        Assembly CompileAssembly([NotNull][ItemNotNull] ICollection<string> references, [NotNull][ItemNotNull] IEnumerable<string> fileNames);
 
         void RunTests([NotNull] Assembly testAssembly);
     }

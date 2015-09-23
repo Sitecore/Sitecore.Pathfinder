@@ -17,9 +17,11 @@ namespace Sitecore.Pathfinder.IO
         }
 
         [NotNull]
+        [ItemNotNull]
         protected List<Regex> Excludes { get; }
 
         [NotNull]
+        [ItemNotNull]
         protected List<Regex> Includes { get; }
 
         public bool IsMatch([NotNull] string fileName)

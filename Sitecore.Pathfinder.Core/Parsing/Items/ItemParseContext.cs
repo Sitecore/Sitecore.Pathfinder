@@ -7,7 +7,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
 {
     public class ItemParseContext
     {
-        public ItemParseContext([NotNull] IParseContext parseContext, [NotNull] ItemParser parser, string databaseName, [NotNull] string parentItemPath)
+        public ItemParseContext([NotNull] IParseContext parseContext, [NotNull] ItemParser parser, [NotNull] string databaseName, [NotNull] string parentItemPath)
         {
             ParseContext = parseContext;
             Parser = parser;

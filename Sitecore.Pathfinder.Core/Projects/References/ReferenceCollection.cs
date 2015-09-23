@@ -8,6 +8,8 @@ namespace Sitecore.Pathfinder.Projects.References
 {
     public class ReferenceCollection : ICollection<IReference>
     {
+        [NotNull]
+        [ItemNotNull]
         private readonly List<IReference> _references = new List<IReference>();
 
         public ReferenceCollection([NotNull] ProjectItem projectItem)
@@ -27,7 +29,7 @@ namespace Sitecore.Pathfinder.Projects.References
             _references.Add(item);
         }
 
-        public void AddRange([NotNull] IEnumerable<IReference> items)
+        public void AddRange([NotNull][ItemNotNull] IEnumerable<IReference> items)
         {
             _references.AddRange(items);
         }

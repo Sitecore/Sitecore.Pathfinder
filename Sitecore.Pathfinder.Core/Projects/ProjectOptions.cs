@@ -1,6 +1,5 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
 
@@ -8,6 +7,7 @@ namespace Sitecore.Pathfinder.Projects
 {
     public class ProjectOptions
     {
+        [NotNull]
         public static readonly ProjectOptions Empty = new ProjectOptions(string.Empty, string.Empty);
 
         public ProjectOptions([NotNull] string projectDirectory, [NotNull] string databaseName)
@@ -23,6 +23,7 @@ namespace Sitecore.Pathfinder.Projects
         public string ProjectDirectory { get; }
 
         [NotNull]
+        [ItemNotNull]
         public ICollection<string> StandardTemplateFields { get; } = new List<string>();
     }
 }

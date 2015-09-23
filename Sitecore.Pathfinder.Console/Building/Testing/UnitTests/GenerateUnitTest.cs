@@ -33,7 +33,7 @@ namespace Sitecore.Pathfinder.Building.Testing.UnitTests
             helpWriter.Summary.Write("Generates basic unit tests for the project.");
         }
 
-        private void GenerateLocalTestRunnerFile([NotNull] IBuildContext context, [NotNull] string directory, [NotNull] List<string> tests)
+        private void GenerateLocalTestRunnerFile([NotNull] IBuildContext context, [NotNull] string directory, [NotNull][ItemNotNull] List<string> tests)
         {
             var localDirectory = Path.Combine(directory, "local");
             context.FileSystem.CreateDirectory(localDirectory);
@@ -113,7 +113,7 @@ namespace Sitecore.Pathfinder.Building.Testing.UnitTests
             }
         }
 
-        private void GenerateUnitTestFile([NotNull] IBuildContext context, [NotNull] string directory, [NotNull] List<string> tests)
+        private void GenerateUnitTestFile([NotNull] IBuildContext context, [NotNull] string directory, [NotNull][ItemNotNull] List<string> tests)
         {
             var serverDirectory = Path.Combine(directory, "server");
             context.FileSystem.CreateDirectory(serverDirectory);

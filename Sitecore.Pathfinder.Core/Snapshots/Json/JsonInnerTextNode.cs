@@ -10,14 +10,16 @@ namespace Sitecore.Pathfinder.Snapshots.Json
     public class JsonInnerTextNode : ITextNode
     {
         [NotNull]
+        [ItemNotNull]
         private readonly JToken _token;
 
+        [CanBeNull]
         private string _value;
 
         public JsonInnerTextNode([NotNull] JsonTextNode textNode, [NotNull] JToken token)
         {
             Parent = textNode;
-            _token = token; 
+            _token = token;
         }
 
         public IEnumerable<ITextNode> Attributes => Enumerable.Empty<ITextNode>();

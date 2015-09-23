@@ -27,12 +27,14 @@ namespace Sitecore.Pathfinder.Projects
         protected IFileSystemService FileSystem { get; }
 
         [NotNull]
+        [ItemNotNull]
         protected IEnumerable<string> IgnoreDirectories { get; set; }
 
         [NotNull]
+        [ItemNotNull]
         protected IEnumerable<string> IgnoreFileNames { get; set; }
 
-        public virtual void Visit([NotNull] ProjectOptions projectOptions, [NotNull] ICollection<string> sourceFileNames)
+        public virtual void Visit([NotNull] ProjectOptions projectOptions, [NotNull] [ItemNotNull] ICollection<string> sourceFileNames)
         {
             if (!FileSystem.DirectoryExists(projectOptions.ProjectDirectory))
             {
@@ -43,7 +45,7 @@ namespace Sitecore.Pathfinder.Projects
         }
 
         [NotNull]
-        public ProjectDirectoryVisitor With([NotNull] IEnumerable<string> ignoreDirectories, [NotNull] IEnumerable<string> ignoreFileNames)
+        public ProjectDirectoryVisitor With([NotNull] [ItemNotNull] IEnumerable<string> ignoreDirectories, [NotNull] [ItemNotNull] IEnumerable<string> ignoreFileNames)
         {
             IgnoreDirectories = ignoreDirectories;
             IgnoreFileNames = ignoreFileNames;
@@ -64,7 +66,7 @@ namespace Sitecore.Pathfinder.Projects
             return IgnoreFileNames.Contains(name, StringComparer.OrdinalIgnoreCase);
         }
 
-        protected virtual void Visit([NotNull] ProjectOptions projectOptions, [NotNull] ICollection<string> sourceFileNames, [NotNull] string directory)
+        protected virtual void Visit([NotNull] ProjectOptions projectOptions, [NotNull] [ItemNotNull] ICollection<string> sourceFileNames, [NotNull] string directory)
         {
             var fileNames = FileSystem.GetFiles(directory);
             foreach (var fileName in fileNames)

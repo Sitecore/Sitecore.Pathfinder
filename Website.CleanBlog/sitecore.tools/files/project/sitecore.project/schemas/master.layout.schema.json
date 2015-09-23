@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "$type": "object",
+  "type": "object",
   "additionalProperties": false,
   "properties": {
     "$schema": {
@@ -25,7 +25,13 @@
             "$ref": "#/definitions/__Xsl Rendering"
           },
           {
+            "$ref": "#/definitions/about"
+          },
+          {
             "$ref": "#/definitions/AppEditor"
+          },
+          {
+            "$ref": "#/definitions/contact"
           },
           {
             "$ref": "#/definitions/FeedRenderer"
@@ -47,6 +53,9 @@
           },
           {
             "$ref": "#/definitions/HiddenComponentsHead"
+          },
+          {
+            "$ref": "#/definitions/index"
           },
           {
             "$ref": "#/definitions/ItemRenderer"
@@ -74,6 +83,9 @@
           },
           {
             "$ref": "#/definitions/Placeholder"
+          },
+          {
+            "$ref": "#/definitions/post"
           },
           {
             "$ref": "#/definitions/Sample Datasource Sublayout"
@@ -258,12 +270,118 @@
         }
       }
     },
+    "about": {
+      "type": "object",
+      "additionalProperties": false,
+      "additionalItems": false,
+      "properties": {
+        "about": {
+          "type": "object",
+          "additionalProperties": false,
+          "additionalItems": false,
+          "properties": {
+            "Placeholder": {
+              "type": "string",
+              "description": "The place holder where this rendering will be rendered."
+            },
+            "DataSource": {
+              "type": "string",
+              "description": "The data source."
+            },
+            "Cacheable": {
+              "type": "boolean",
+              "description": "Indicates if the output will be cached."
+            },
+            "VaryByData": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the data source."
+            },
+            "VaryByDevice": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the current device."
+            },
+            "VaryByLogin": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the login."
+            },
+            "VaryByParameters": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the parameters."
+            },
+            "VaryByQueryString": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the query string."
+            },
+            "VaryByUser": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the user."
+            },
+            "Renderings": {
+              "$ref": "#/definitions/Renderings"
+            }
+          }
+        }
+      }
+    },
     "AppEditor": {
       "type": "object",
       "additionalProperties": false,
       "additionalItems": false,
       "properties": {
         "AppEditor": {
+          "type": "object",
+          "additionalProperties": false,
+          "additionalItems": false,
+          "properties": {
+            "Placeholder": {
+              "type": "string",
+              "description": "The place holder where this rendering will be rendered."
+            },
+            "DataSource": {
+              "type": "string",
+              "description": "The data source."
+            },
+            "Cacheable": {
+              "type": "boolean",
+              "description": "Indicates if the output will be cached."
+            },
+            "VaryByData": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the data source."
+            },
+            "VaryByDevice": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the current device."
+            },
+            "VaryByLogin": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the login."
+            },
+            "VaryByParameters": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the parameters."
+            },
+            "VaryByQueryString": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the query string."
+            },
+            "VaryByUser": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the user."
+            },
+            "Renderings": {
+              "$ref": "#/definitions/Renderings"
+            }
+          }
+        }
+      }
+    },
+    "contact": {
+      "type": "object",
+      "additionalProperties": false,
+      "additionalItems": false,
+      "properties": {
+        "contact": {
           "type": "object",
           "additionalProperties": false,
           "additionalItems": false,
@@ -673,6 +791,59 @@
       "additionalItems": false,
       "properties": {
         "HiddenComponentsHead": {
+          "type": "object",
+          "additionalProperties": false,
+          "additionalItems": false,
+          "properties": {
+            "Placeholder": {
+              "type": "string",
+              "description": "The place holder where this rendering will be rendered."
+            },
+            "DataSource": {
+              "type": "string",
+              "description": "The data source."
+            },
+            "Cacheable": {
+              "type": "boolean",
+              "description": "Indicates if the output will be cached."
+            },
+            "VaryByData": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the data source."
+            },
+            "VaryByDevice": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the current device."
+            },
+            "VaryByLogin": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the login."
+            },
+            "VaryByParameters": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the parameters."
+            },
+            "VaryByQueryString": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the query string."
+            },
+            "VaryByUser": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the user."
+            },
+            "Renderings": {
+              "$ref": "#/definitions/Renderings"
+            }
+          }
+        }
+      }
+    },
+    "index": {
+      "type": "object",
+      "additionalProperties": false,
+      "additionalItems": false,
+      "properties": {
+        "index": {
           "type": "object",
           "additionalProperties": false,
           "additionalItems": false,
@@ -1335,6 +1506,59 @@
         }
       }
     },
+    "post": {
+      "type": "object",
+      "additionalProperties": false,
+      "additionalItems": false,
+      "properties": {
+        "post": {
+          "type": "object",
+          "additionalProperties": false,
+          "additionalItems": false,
+          "properties": {
+            "Placeholder": {
+              "type": "string",
+              "description": "The place holder where this rendering will be rendered."
+            },
+            "DataSource": {
+              "type": "string",
+              "description": "The data source."
+            },
+            "Cacheable": {
+              "type": "boolean",
+              "description": "Indicates if the output will be cached."
+            },
+            "VaryByData": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the data source."
+            },
+            "VaryByDevice": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the current device."
+            },
+            "VaryByLogin": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the login."
+            },
+            "VaryByParameters": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the parameters."
+            },
+            "VaryByQueryString": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the query string."
+            },
+            "VaryByUser": {
+              "type": "boolean",
+              "description": "Indicates if the cached output will vary by the user."
+            },
+            "Renderings": {
+              "$ref": "#/definitions/Renderings"
+            }
+          }
+        }
+      }
+    },
     "Sample Datasource Sublayout": {
       "type": "object",
       "additionalProperties": false,
@@ -1738,7 +1962,13 @@
             "additionalProperties": false,
             "properties": {
               "Name": {
-                "type": "string"
+                "description": "The name of the device.",
+                "enum": [
+                  "Default",
+                  "Print",
+                  "App Center Placeholder",
+                  "Feed"
+                ]
               },
               "Layout": {
                 "type": "string"
