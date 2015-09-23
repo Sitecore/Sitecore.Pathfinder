@@ -9,13 +9,14 @@ Get started, get far, get happy!
 ![Sitecore Pathfinder](docs/img/SitecorePathfinder.png)
  
 Watch the videos on YouTube:
+
 * [01 - Idea and concepts](https://www.youtube.com/watch?v=TcJ0IoI7sVM)
 * [02 - HelloWorld](https://www.youtube.com/watch?v=jQz5hAVOTzU)
 * [03 - Unit Testing](https://www.youtube.com/watch?v=DWU6D7L8ykg)
 * [04 - Html Templates](https://www.youtube.com/watch?v=9aTGhW6ErYM)
 * [05 - Code Generation, Visual Studio and Grunt](http://youtu.be/ZM3ve1WhwwQ)
 
-Then download [Sitecore Pathfinder](Sitecore.Pathfinder.zip) to try it out.
+Then download [Sitecore Pathfinder 0.4.0-Alpha](http://vsplugins.sitecore.net/Pathfinder/Sitecore.Pathfinder.0.4.0.zip) to try it out.
 
 # Status
 
