@@ -189,15 +189,6 @@
           <xs:anyAttribute processContents="lax" />
         </xs:complexType>
       </xs:element>
-      <xs:element name="ItemRenderer">
-        <xs:complexType>
-          <xs:sequence minOccurs="0" maxOccurs="unbounded">
-            <xs:group ref="rendering" />
-          </xs:sequence>
-          <xs:attributeGroup ref="stdattr" />
-          <xs:anyAttribute processContents="lax" />
-        </xs:complexType>
-      </xs:element>
       <xs:element name="MvcLayout">
         <xs:complexType>
           <xs:sequence minOccurs="0" maxOccurs="unbounded">

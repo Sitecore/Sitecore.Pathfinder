@@ -180,8 +180,8 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
         {
             output.WriteStartElement("d");
 
-            var deviceName = deviceTextNode.GetAttributeValue("Name");
-            if (string.IsNullOrEmpty(deviceName))
+            var deviceNameTextNode = deviceTextNode.GetAttributeTextNode("Name");
+            if (deviceNameTextNode == null)
             {
                 context.Trace.TraceError(Texts.Device_element_is_missing__Name__attribute_, deviceTextNode);
             }
@@ -191,14 +191,15 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
                 var devices = context.Field.Item.Project.Items.OfType<Item>().Where(i => i.TemplateIdOrPath == "Device").ToList();
                 if (!devices.Any())
                 {
-                    context.Trace.TraceError(Texts.Device_item_not_found, deviceTextNode);
+                    context.Trace.TraceError(Texts.Device_item_not_found, deviceNameTextNode);
                 }
                 else
                 {
+                    var deviceName = deviceNameTextNode.Value;
                     var device = devices.FirstOrDefault(d => string.Compare(d.ItemName, deviceName, StringComparison.OrdinalIgnoreCase) == 0);
                     if (device == null)
                     {
-                        context.Trace.TraceError(Texts.Device_not_found, deviceTextNode, deviceName);
+                        context.Trace.TraceError(Texts.Device_not_found, deviceNameTextNode, deviceName);
                     }
                     else
                     {
@@ -264,8 +265,10 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
 
         protected virtual void WritePlaceholder([NotNull] LayoutResolveContext context, [NotNull] XmlTextWriter output, [NotNull] ITextNode renderingTextNode, [NotNull] string id, [NotNull] string placeholders)
         {
-            var placeholder = renderingTextNode.GetAttributeValue("Placeholder");
+            var placeholderTextNode = renderingTextNode.GetAttributeTextNode("Placeholder");
+            var placeholder = placeholderTextNode?.Value ?? string.Empty;
 
+            // get the first placeholder from the parent rendering
             if (string.IsNullOrEmpty(placeholder) && !string.IsNullOrEmpty(placeholders))
             {
                 var n = placeholders.IndexOf(",", 1, StringComparison.InvariantCultureIgnoreCase);
@@ -279,12 +282,18 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
             {
                 return;
             }
-
-            if (!string.IsNullOrEmpty(placeholders))
+                                                                 
+            if (placeholderTextNode != null && !string.IsNullOrEmpty(placeholders))
             {
                 if (placeholders.IndexOf("," + placeholder + ",", StringComparison.InvariantCultureIgnoreCase) < 0)
                 {
-                    context.Trace.TraceWarning(string.Format(Texts._2___Placeholder___0___is_not_defined_in_the_parent_rendering__Parent_rendering_has_these_placeholders___1__, placeholder, placeholders.Mid(1, placeholders.Length - 2), id), renderingTextNode, "Placeholder");
+                    var text = placeholders.Mid(1, placeholders.Length - 2);
+                    if (string.IsNullOrEmpty(text))
+                    {
+                        text = "[None]";
+                    }
+
+                    context.Trace.TraceWarning(string.Format(Texts._2___Placeholder___0___is_not_defined_in_the_parent_rendering__Parent_rendering_has_these_placeholders___1__, placeholder, text, id), placeholderTextNode);
                 }
             }
 
@@ -384,14 +393,22 @@ namespace Sitecore.Pathfinder.Projects.Items.FieldResolvers.Layouts
             }
             */
 
-            foreach (var child in renderingTextNode.ChildNodes)
+            var renderingsTextNode = context.Snapshot.GetJsonChildTextNode(renderingTextNode, "Renderings");
+            if (renderingsTextNode == null)
             {
-                if (IsContentProperty(renderingTextNode, child))
+                // silent
+                return;
+            }
+
+            foreach (var childNode in renderingsTextNode.ChildNodes)
+            {
+                if (IsContentProperty(renderingTextNode, childNode))
                 {
                     continue;
                 }
 
-                WriteRendering(context, output, renderingItems, child, GetPlaceholders(context, renderingTextNode, renderingItem));
+                var renderingPlaceholders = GetPlaceholders(context, childNode, renderingItem);
+                WriteRendering(context, output, renderingItems, childNode, renderingPlaceholders);
             }
         }
 

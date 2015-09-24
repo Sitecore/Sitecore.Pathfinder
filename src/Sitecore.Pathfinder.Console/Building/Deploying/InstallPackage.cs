@@ -26,7 +26,7 @@ namespace Sitecore.Pathfinder.Building.Deploying
 
             context.Trace.TraceInformation(Texts.Installing___);
 
-            var packageId = Path.GetFileNameWithoutExtension(context.Configuration.Get("nuget:filename"));
+            var packageId = Path.GetFileNameWithoutExtension(context.Configuration.Get(Constants.Configuration.PackNugetFileName));
             if (string.IsNullOrEmpty(packageId))
             {
                 return;

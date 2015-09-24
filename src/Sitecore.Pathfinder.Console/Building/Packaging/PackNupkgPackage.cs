@@ -27,7 +27,7 @@ namespace Sitecore.Pathfinder.Building.Packaging
 
             context.Trace.TraceInformation(Texts.Creating_Nupkg_file___);
 
-            var packageFileName = context.Configuration.Get("pack-nuget:filename");
+            var packageFileName = context.Configuration.Get(Constants.Configuration.PackNugetFileName);
             var nuspecFileName = PathHelper.Combine(context.SolutionDirectory, packageFileName);
             if (string.IsNullOrEmpty(nuspecFileName))
             {

@@ -1,7 +1,14 @@
 ﻿<Root Id="{11111111-1111-1111-1111-111111111111}" Database="core" Name="sitecore" ParentItemPath="/" IsExternalReference="True">
     <Main--Section Id="{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}" Name="content" IsExternalReference="True" />
 
-    <Main--Section Id="{EB2E4FFD-2761-4653-B052-26A64D385227}" Name="layout" IsExternalReference="True" />
+    <Main--Section Id="{EB2E4FFD-2761-4653-B052-26A64D385227}" Name="layout" IsExternalReference="True">
+        <Main--Section Id="{EB2E4FFD-2761-4653-B052-26A64D385227}" Name="layout" IsExternalReference="True">
+            <Node Id="{E18F4BC6-46A2-4842-898B-B6613733F06F}" Name="Devices" IsExternalReference="True">
+                <Device Id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}" Name="Internet Explorer" IsExternalReference="True" />
+                <Device Id="{3AC0D3A4-D6AE-429F-A79C-F42157D0004E}" Name="Firefox" IsExternalReference="True" />
+            </Node>
+        </Main--Section>
+    </Main--Section>
 
     <Main--Section Id="{3C1715FE-6A13-4FCF-845F-DE308BA9741D}" Name="templates" IsExternalReference="True">
         <Template--Folder Id="{4BF98EF5-1D09-4DD1-9AFE-795F9829FD44}" Name="System" IsExternalReference="True">

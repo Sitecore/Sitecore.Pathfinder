@@ -58,6 +58,8 @@ namespace Sitecore.Pathfinder
 
             public const string ExternalDirectory = "build-project:external-directory";
 
+            public const string Files = "build-project:files";
+
             public const string HostName = "host-name";
 
             public const string IgnoreDirectories = "build-project:ignore-directories";
@@ -71,6 +73,8 @@ namespace Sitecore.Pathfinder
             public const string PackageDirectory = "copy-package:package-directory";
 
             public const string PackagesDirectory = "copy-dependencies:packages-directory";
+
+            public const string PackNugetFileName = "pack-nuget:filename";
 
             public const string Password = "password";
 
@@ -107,8 +111,6 @@ namespace Sitecore.Pathfinder
             public const string WebTestRunnerUrl = "run-unittests:web-test-runner-url";
 
             public const string Wwwroot = "wwwroot";
-
-            public const string Files = "build-project:files";
 
             public static class ValidateWebsite
             {

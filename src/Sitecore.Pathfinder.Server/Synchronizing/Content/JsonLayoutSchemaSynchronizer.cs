@@ -10,6 +10,7 @@ using System.Text;
 using Newtonsoft.Json;
 using Sitecore.Configuration;
 using Sitecore.ContentSearch;
+using Sitecore.ContentSearch.SearchTypes;
 using Sitecore.ContentSearch.Utilities;
 using Sitecore.Data;
 using Sitecore.Data.Items;
@@ -53,9 +54,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
 
             using (new SecurityDisabler())
             {
-                // todo: replace SelectItems as it is limited to 100 items by default
-                var renderingItems = database.SelectItems("//*[" + Constants.RenderingIdsFastQuery + "]").GroupBy(r => r.Name).Select(group => group.First()).OrderBy(r => r.Name).ToList();
-                renderingItems.RemoveAll(r => StandardValuesManager.IsStandardValuesHolder(r) || r.Name == "$name");
+                var renderingItems = database.GetItemsByTemplate(ServerConstants.Renderings.ViewRenderingId, TemplateIDs.XSLRendering, TemplateIDs.Sublayout, ServerConstants.Renderings.WebcontrolRendering, ServerConstants.Renderings.UrlRendering, ServerConstants.Renderings.MethodRendering).GroupBy(i => i.Name).Select(i => i.First()).OrderBy(i => i.Name).ToList();
                 var deviceNames = database.GetItem(ItemIDs.DevicesRoot)?.Children.Select(i => i.Name).ToList() ?? new List<string>();
 
                 var writer = new StringWriter();

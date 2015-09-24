@@ -58,7 +58,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
 
             using (new SecurityDisabler())
             {
-                var renderingItems = database.SelectItems("//*[" + Constants.RenderingIdsFastQuery + "]").OrderBy(r => r.Name).ToList();
+                var renderingItems = database.GetItemsByTemplate(ServerConstants.Renderings.ViewRenderingId, TemplateIDs.XSLRendering, TemplateIDs.Sublayout, ServerConstants.Renderings.WebcontrolRendering, ServerConstants.Renderings.UrlRendering, ServerConstants.Renderings.MethodRendering).GroupBy(i => i.Name).Select(i => i.First()).OrderBy(i => i.Name).ToList();
                 var deviceNames = database.GetItem(ItemIDs.DevicesRoot)?.Children.Select(i => i.Name).ToList() ?? new List<string>();
 
                 var writer = new StringWriter();
