@@ -67,7 +67,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public IFileSystemService FileSystem { get; }
 
-        public bool HasErrors => Diagnostics.Any(m => m.Severity == Severity.Error);
+        public bool HasErrors => Diagnostics.Any(d => d.Severity == Severity.Error);
 
         public IEnumerable<IProjectItem> Items => _items;
 
@@ -89,7 +89,7 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         protected IPipelineService PipelineService { get; }
 
-        public virtual void Add(string sourceFileName)
+        public virtual IProject Add(string sourceFileName)
         {
             if (string.IsNullOrEmpty(Options.ProjectDirectory))
             {
@@ -107,6 +107,8 @@ namespace Sitecore.Pathfinder.Projects
             SourceFiles.Add(sourceFile);
 
             ParseService.Parse(this, sourceFile);
+
+            return this;
         }
 
         public virtual T AddOrMerge<T>(T projectItem) where T : IProjectItem
@@ -127,11 +129,13 @@ namespace Sitecore.Pathfinder.Projects
             return projectItem;
         }
 
-        public virtual void Compile()
+        public virtual IProject Compile()
         {
             var context = CompositionService.Resolve<ICompileContext>();
 
             PipelineService.Resolve<CompilePipeline>().Execute(context, this);
+
+            return this;
         }
 
         public IProjectItem FindQualifiedItem(string qualifiedName)
@@ -230,7 +234,7 @@ namespace Sitecore.Pathfinder.Projects
             }
         }
 
-        public virtual void SaveChanges()
+        public virtual IProject SaveChanges()
         {
             foreach (var snapshot in Items.SelectMany(i => i.Snapshots))
             {
@@ -239,6 +243,8 @@ namespace Sitecore.Pathfinder.Projects
                     snapshot.SaveChanges();
                 }
             }
+
+            return this;
         }
 
         protected virtual void AddExternals([NotNull] IParseContext context)

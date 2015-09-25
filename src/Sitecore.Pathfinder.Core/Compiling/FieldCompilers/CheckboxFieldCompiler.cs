@@ -22,7 +22,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         {
             var value = field.Value.Trim();
 
-            if (string.Compare(value, "True", StringComparison.OrdinalIgnoreCase) != 0 && string.Compare(value, "False", StringComparison.OrdinalIgnoreCase) != 0)
+            if (string.Compare(value, "true", StringComparison.OrdinalIgnoreCase) != 0 && string.Compare(value, "false", StringComparison.OrdinalIgnoreCase) != 0)
             {
                 context.Trace.TraceError("Checkbox field value must be 'true' or 'false'.", value);
             }

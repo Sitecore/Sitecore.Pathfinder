@@ -34,29 +34,32 @@ namespace Sitecore.Pathfinder.Projects
         [ItemNotNull]
         ICollection<ISourceFile> SourceFiles { get; }
 
-        void Add([NotNull] string sourceFileName);
+        [NotNull]
+        IProject Add([NotNull] string sourceFileName);
 
         [NotNull]
         T AddOrMerge<T>([NotNull] T projectItem) where T : IProjectItem;
 
-        void Compile();
+        [NotNull]
+        IProject Compile();
 
         [CanBeNull]
         IProjectItem FindQualifiedItem([NotNull] string qualifiedName);
 
         [CanBeNull]
-        IProjectItem FindQualifiedItem([NotNull] string qualifiedName, [NotNull] string databaseName);
+        IProjectItem FindQualifiedItem([NotNull] string databaseName, [NotNull] string qualifiedName);
 
         [CanBeNull]
         IProjectItem FindQualifiedItem([NotNull] ProjectItemUri uri);
 
         [NotNull]
-        IProject Load([NotNull] ProjectOptions projectOptions, [NotNull][ItemNotNull] IEnumerable<string> sourceFileNames);
+        IProject Load([NotNull] ProjectOptions projectOptions, [NotNull] [ItemNotNull] IEnumerable<string> sourceFileNames);
 
         void Remove([NotNull] IProjectItem projectItem);
 
         void Remove([NotNull] string sourceFileName);
 
-        void SaveChanges();
+        [NotNull]
+        IProject SaveChanges();
     }
 }
