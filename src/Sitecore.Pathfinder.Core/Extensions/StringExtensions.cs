@@ -133,7 +133,7 @@ namespace Sitecore.Pathfinder.Extensions
         }
 
         [NotNull]
-        public static string GetSafeXmlIdentifier([NotNull] this string text)
+        public static string EscapeXmlElementName([NotNull] this string text)
         {
             if (string.IsNullOrEmpty(text))
             {
@@ -154,11 +154,30 @@ namespace Sitecore.Pathfinder.Extensions
 
             text = new string(chars);
 
-            var result = Regex.Replace(text, "[^\\w ]", "-").Replace(@" ", "--");
-            if (!char.IsLetter(result[0]))
+            var result = Regex.Replace(text, "[^\\w_-]", ".");
+
+            if (!char.IsLetter(result[0]) && result[0] != '_')
             {
-                result = @"-" + result;
+                result = @"_-" + result;
             }
+
+            return result;
+        }
+
+        [NotNull]
+        public static string UnescapeXmlElementName([NotNull] this string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return string.Empty;
+            }
+
+            if (text.StartsWith("_-"))
+            {
+                text = text.Mid(2);
+            }
+
+            var result = text.Replace(".", " ").Replace(@"_-", "-");
 
             return result;
         }

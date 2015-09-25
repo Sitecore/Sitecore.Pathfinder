@@ -3,6 +3,7 @@
 using System;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
@@ -24,7 +25,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             var itemIdOrPath = PathHelper.CombineItemPath(parentItemPath, itemNameTextNode.Value);
             var guid = StringHelper.GetGuid(context.ParseContext.Project, textNode.GetAttributeValue("Id", itemIdOrPath));
             var databaseName = textNode.GetAttributeValue("Database", context.DatabaseName);
-            var templateIdOrPath = StringHelper.UnescapeXmlNodeName(textNode.Name);
+            var templateIdOrPath = textNode.Name.UnescapeXmlElementName();
 
             var item = context.ParseContext.Factory.Item(context.ParseContext.Project, guid, textNode, databaseName, itemNameTextNode.Value, itemIdOrPath, templateIdOrPath);
             item.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
@@ -110,7 +111,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
         protected virtual void ParseFieldTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] FieldContext fieldContext, [NotNull] ITextNode textNode)
         {
-            var fieldName = StringHelper.UnescapeXmlNodeName(textNode.Name);
+            var fieldName = textNode.Name.UnescapeXmlElementName();
             if (fieldName == "Name" || fieldName == "Id" || fieldName == "ParentItemPath" || fieldName == "IsEmittable" || fieldName == "IsExternalReference" || fieldName == "Database")
             {
                 return;

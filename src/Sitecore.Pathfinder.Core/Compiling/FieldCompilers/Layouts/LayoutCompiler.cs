@@ -316,7 +316,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers.Layouts
             }
             else
             {
-                renderingItemId = StringHelper.UnescapeXmlNodeName(renderingTextNode.Name);
+                renderingItemId = renderingTextNode.Name.UnescapeXmlElementName();
             }
 
             var id = renderingTextNode.GetAttributeValue("Id");

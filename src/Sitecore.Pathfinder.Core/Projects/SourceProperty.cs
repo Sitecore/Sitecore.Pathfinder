@@ -191,7 +191,7 @@ namespace Sitecore.Pathfinder.Projects
 
             if ((SourcePropertyFlags & SourcePropertyFlags.ConvertToXmlIdentifier) == SourcePropertyFlags.ConvertToXmlIdentifier)
             {
-                value = value.GetSafeXmlIdentifier();
+                value = value.EscapeXmlElementName();
             }
 
             if ((SourcePropertyFlags & SourcePropertyFlags.ConvertToCodelIdentifier) == SourcePropertyFlags.ConvertToCodelIdentifier)

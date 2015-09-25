@@ -1,5 +1,6 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
@@ -10,7 +11,7 @@ using Sitecore.Pathfinder.Snapshots.Json;
 
 namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers.Json
 {
-    // [Export(typeof(ITextNodeParser))]
+    [Export(typeof(ITextNodeParser))]
     public class JsonLayoutParser : LayoutParserBase
     {
         public JsonLayoutParser() : base(Constants.TextNodeParsers.Layouts)
@@ -19,7 +20,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers.Json
 
         public override bool CanParse(ItemParseContext context, ITextNode textNode)
         {
-            return textNode.Name == "Layout" && textNode.Snapshot is JsonTextSnapshot;
+            return textNode.Name == "Layout" && textNode.Snapshot is JsonTextSnapshot && textNode.Snapshot.SourceFile.FileName.EndsWith(".layout.json", StringComparison.OrdinalIgnoreCase);
         }
 
         protected override void ParseRenderingReferences(ItemParseContext context, ICollection<IReference> references, IProjectItem projectItem, ITextNode renderingTextNode)

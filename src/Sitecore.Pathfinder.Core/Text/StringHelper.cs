@@ -36,11 +36,5 @@ namespace Sitecore.Pathfinder.Text
             var hash = Md5Hash.ComputeHash(bytes);
             return new Guid(hash);
         }
-
-        [NotNull]
-        public static string UnescapeXmlNodeName([NotNull] string nodeName)
-        {
-            return nodeName.Replace("--", " ");
-        }
     }
 }

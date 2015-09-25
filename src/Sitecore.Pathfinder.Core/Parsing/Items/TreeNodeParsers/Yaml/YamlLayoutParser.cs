@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.ComponentModel.Composition;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Pathfinder.Snapshots.Yaml;
@@ -15,7 +16,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers.Yaml
 
         public override bool CanParse(ItemParseContext context, ITextNode textNode)
         {
-            return textNode.Name == "Layout" && textNode.Snapshot is YamlTextSnapshot;
+            return textNode.Name == "Layout" && textNode.Snapshot is YamlTextSnapshot && textNode.Snapshot.SourceFile.FileName.EndsWith(".layout.yaml", StringComparison.OrdinalIgnoreCase);
         }
     }
 }

@@ -10,7 +10,7 @@
         <Field Name="ItemPath" Field.ShortHelp="Path field." Field.LongHelp="Path field.">/sitecore/media library/mushrooms</Field>
         <Field Name="TrueCheckbox" Field.Type="Checkbox" Field.ShortHelp="Checkbox field." Field.LongHelp="Checkbox field.">True</Field>
         <Field Name="FalseCheckbox" Field.Type="Checkbox" Field.ShortHelp="Checkbox field." Field.LongHelp="Checkbox field.">False</Field>
-
+        
         <Unversioned Language="da-DK">
             <Field Name="UnversionedField" Field.ShortHelp="Title field." Field.LongHelp="Title field.">Hello</Field>
         </Unversioned>

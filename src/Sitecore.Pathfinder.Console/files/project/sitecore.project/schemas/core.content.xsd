@@ -54,268 +54,268 @@
       <xs:element ref="Action" />
       <xs:element ref="ActionColumn" />
       <xs:element ref="ActionControl" />
-      <xs:element ref="ActionControl--Parameters" />
+      <xs:element ref="ActionControl.Parameters" />
       <xs:element ref="ActionGroup" />
       <xs:element ref="ActionLink" />
-      <xs:element ref="ActiveUsersDataSource--Parameters" />
+      <xs:element ref="ActiveUsersDataSource.Parameters" />
       <xs:element ref="ActivityDataSource-Parameters" />
-      <xs:element ref="AddComponent--Parameters" />
+      <xs:element ref="AddComponent.Parameters" />
       <xs:element ref="Advanced" />
-      <xs:element ref="AdvancedComboBox--Parameters" />
-      <xs:element ref="AdvancedExpander--Parameters" />
+      <xs:element ref="AdvancedComboBox.Parameters" />
+      <xs:element ref="AdvancedExpander.Parameters" />
       <xs:element ref="Alias" />
       <xs:element ref="AnalyticsItemPicker-Parameters" />
-      <xs:element ref="API--Field" />
+      <xs:element ref="API.Field" />
       <xs:element ref="Appearance" />
       <xs:element ref="Application" />
-      <xs:element ref="Application--Folder" />
-      <xs:element ref="Application--Shortcut" />
-      <xs:element ref="ApplicationHeader--Parameters" />
-      <xs:element ref="Archived--Item" />
-      <xs:element ref="AreaChart--Parameters" />
-      <xs:element ref="ArrowIndicator-----Parameters" />
+      <xs:element ref="Application.Folder" />
+      <xs:element ref="Application.Shortcut" />
+      <xs:element ref="ApplicationHeader.Parameters" />
+      <xs:element ref="Archived.Item" />
+      <xs:element ref="AreaChart.Parameters" />
+      <xs:element ref="ArrowIndicator.-.Parameters" />
       <xs:element ref="Audio" />
       <xs:element ref="Axis" />
-      <xs:element ref="BackButton--Parameters" />
+      <xs:element ref="BackButton.Parameters" />
       <xs:element ref="Badge" />
-      <xs:element ref="BarChart--Parameters" />
+      <xs:element ref="BarChart.Parameters" />
       <xs:element ref="BaseDataProvider" />
       <xs:element ref="BaseRibbonComponent" />
       <xs:element ref="BaseSection" />
       <xs:element ref="BehaviorBase" />
       <xs:element ref="Big" />
       <xs:element ref="BlockControlBase" />
-      <xs:element ref="Boosting--Rule" />
-      <xs:element ref="Border--Parameters" />
+      <xs:element ref="Boosting.Rule" />
+      <xs:element ref="Border.Parameters" />
       <xs:element ref="Breadcrumb" />
-      <xs:element ref="Breadcrumb--Parameters" />
+      <xs:element ref="Breadcrumb.Parameters" />
       <xs:element ref="Breadcrumb-Parameters" />
       <xs:element ref="Bucket" />
-      <xs:element ref="Bundled--Mode" />
-      <xs:element ref="Button--Parameters" />
+      <xs:element ref="Bundled.Mode" />
+      <xs:element ref="Button.Parameters" />
       <xs:element ref="ButtonControlBase" />
-      <xs:element ref="ButtonGroup--Parameters" />
-      <xs:element ref="ButtonTextBox--Parameters" />
+      <xs:element ref="ButtonGroup.Parameters" />
+      <xs:element ref="ButtonTextBox.Parameters" />
       <xs:element ref="Caching" />
-      <xs:element ref="Carousel--Parameters" />
-      <xs:element ref="Carousel--Tile" />
-      <xs:element ref="CarouselImage--Parameters" />
-      <xs:element ref="CDN--Mode" />
+      <xs:element ref="Carousel.Parameters" />
+      <xs:element ref="Carousel.Tile" />
+      <xs:element ref="CarouselImage.Parameters" />
+      <xs:element ref="CDN.Mode" />
       <xs:element ref="Chart" />
       <xs:element ref="ChartCompositeBase" />
-      <xs:element ref="ChartDataProvider--Parameters" />
+      <xs:element ref="ChartDataProvider.Parameters" />
       <xs:element ref="ChartField" />
-      <xs:element ref="CheckBox--Parameters" />
-      <xs:element ref="Child--Sorting" />
-      <xs:element ref="ChildRenderer--Parameters" />
+      <xs:element ref="CheckBox.Parameters" />
+      <xs:element ref="Child.Sorting" />
+      <xs:element ref="ChildRenderer.Parameters" />
       <xs:element ref="Chunk" />
       <xs:element ref="Click" />
-      <xs:element ref="Clientside--Hook" />
-      <xs:element ref="ColumnChart--Parameters" />
+      <xs:element ref="Clientside.Hook" />
+      <xs:element ref="ColumnChart.Parameters" />
       <xs:element ref="ColumnField" />
-      <xs:element ref="ColumnPanel--Parameters" />
-      <xs:element ref="ComboBox--Parameters" />
+      <xs:element ref="ColumnPanel.Parameters" />
+      <xs:element ref="ComboBox.Parameters" />
       <xs:element ref="Command" />
-      <xs:element ref="Command--Parameters" />
+      <xs:element ref="Command.Parameters" />
       <xs:element ref="CommandRibbonComponent" />
       <xs:element ref="CompareImage-Parameters" />
       <xs:element ref="ComponentBase" />
       <xs:element ref="Condition" />
-      <xs:element ref="Conditional--Rendering--Rule" />
-      <xs:element ref="ContactsDataSource--Parameters" />
-      <xs:element ref="Content--Editor--Application" />
-      <xs:element ref="Content--Editor--Warning--Rule" />
+      <xs:element ref="Conditional.Rendering.Rule" />
+      <xs:element ref="ContactsDataSource.Parameters" />
+      <xs:element ref="Content.Editor.Application" />
+      <xs:element ref="Content.Editor.Warning.Rule" />
       <xs:element ref="ContentTestingDataRepeater-Parameters" />
       <xs:element ref="ContextItem" />
       <xs:element ref="ContextSwitcher-Parameters" />
       <xs:element ref="ControlBase" />
       <xs:element ref="Controller" />
-      <xs:element ref="Controller--Rendering" />
+      <xs:element ref="Controller.Rendering" />
       <xs:element ref="ConversionRateDataSource" />
       <xs:element ref="CreateListsOption" />
       <xs:element ref="CreateListType" />
-      <xs:element ref="Custom--Control" />
-      <xs:element ref="CustomSearchDataSource--Parameters" />
-      <xs:element ref="Dashboard--Parameters" />
+      <xs:element ref="Custom.Control" />
+      <xs:element ref="CustomSearchDataSource.Parameters" />
+      <xs:element ref="Dashboard.Parameters" />
       <xs:element ref="DashboardMenu-Parameters" />
       <xs:element ref="DataCompositeBase" />
-      <xs:element ref="DataRepeater--Parameters" />
-      <xs:element ref="DatePicker--Parameters" />
-      <xs:element ref="DateRangeFilter--Parameters" />
+      <xs:element ref="DataRepeater.Parameters" />
+      <xs:element ref="DatePicker.Parameters" />
+      <xs:element ref="DateRangeFilter.Parameters" />
       <xs:element ref="DeployMarketingDefinitions-Parameters" />
-      <xs:element ref="Development--Mode" />
+      <xs:element ref="Development.Mode" />
       <xs:element ref="Device" />
-      <xs:element ref="DeviceSimulatorsButton--Parameters" />
-      <xs:element ref="DialogM--Parameters" />
-      <xs:element ref="DialogMI--Parameters" />
+      <xs:element ref="DeviceSimulatorsButton.Parameters" />
+      <xs:element ref="DialogM.Parameters" />
+      <xs:element ref="DialogMI.Parameters" />
       <xs:element ref="DialogMockupBase" />
-      <xs:element ref="DialogWindow--Parameters" />
+      <xs:element ref="DialogWindow.Parameters" />
       <xs:element ref="Dictionary" />
-      <xs:element ref="Dictionary--Domain" />
-      <xs:element ref="Dictionary--Entry" />
-      <xs:element ref="Dictionary--Folder" />
+      <xs:element ref="Dictionary.Domain" />
+      <xs:element ref="Dictionary.Entry" />
+      <xs:element ref="Dictionary.Folder" />
       <xs:element ref="Dimensions" />
       <xs:element ref="Doc" />
       <xs:element ref="Document" />
       <xs:element ref="Docx" />
-      <xs:element ref="DoughnutChart--Parameters" />
-      <xs:element ref="Dropdown--List" />
-      <xs:element ref="DropDownButton--Parameters" />
+      <xs:element ref="DoughnutChart.Parameters" />
+      <xs:element ref="Dropdown.List" />
+      <xs:element ref="DropDownButton.Parameters" />
       <xs:element ref="DurationDataSource-Parameters" />
-      <xs:element ref="Edit--Frame--Button--Folder" />
-      <xs:element ref="Edit--Frame--Small--Button" />
+      <xs:element ref="Edit.Frame.Button.Folder" />
+      <xs:element ref="Edit.Frame.Small.Button" />
       <xs:element ref="EditClientActionControl-Parameters" />
       <xs:element ref="EditElementReplacerControl-Parameters" />
       <xs:element ref="Editor" />
       <xs:element ref="EditPageMatcherControl-Parameters" />
-      <xs:element ref="Element--Folder" />
-      <xs:element ref="Email--Action" />
-      <xs:element ref="EntityDataSource--Parameters" />
-      <xs:element ref="Error--Message" />
+      <xs:element ref="Element.Folder" />
+      <xs:element ref="Email.Action" />
+      <xs:element ref="EntityDataSource.Parameters" />
+      <xs:element ref="Error.Message" />
       <xs:element ref="Expander" />
-      <xs:element ref="ExpectedChangeSliderDataSource--Parameters" />
-      <xs:element ref="ExperienceAnalyticsAreaChart--Parameters" />
-      <xs:element ref="ExperienceAnalyticsBarChart--Parameters" />
+      <xs:element ref="ExpectedChangeSliderDataSource.Parameters" />
+      <xs:element ref="ExperienceAnalyticsAreaChart.Parameters" />
+      <xs:element ref="ExperienceAnalyticsBarChart.Parameters" />
       <xs:element ref="ExperienceAnalyticsColumnField" />
-      <xs:element ref="ExperienceAnalyticsDialogWindow--Parameters" />
-      <xs:element ref="ExperienceAnalyticsFilters--Parameters" />
-      <xs:element ref="ExperienceAnalyticsLineChart--Parameters" />
-      <xs:element ref="ExperienceAnalyticsListControl--Parameters" />
-      <xs:element ref="ExperienceEngagementDataSource--Parameters" />
-      <xs:element ref="ExperienceIndicator--Parameters" />
-      <xs:element ref="ExperienceKPIDataSource--Parameters" />
+      <xs:element ref="ExperienceAnalyticsDialogWindow.Parameters" />
+      <xs:element ref="ExperienceAnalyticsFilters.Parameters" />
+      <xs:element ref="ExperienceAnalyticsLineChart.Parameters" />
+      <xs:element ref="ExperienceAnalyticsListControl.Parameters" />
+      <xs:element ref="ExperienceEngagementDataSource.Parameters" />
+      <xs:element ref="ExperienceIndicator.Parameters" />
+      <xs:element ref="ExperienceKPIDataSource.Parameters" />
       <xs:element ref="Facet" />
       <xs:element ref="Favorite" />
       <xs:element ref="Feed" />
-      <xs:element ref="Field--Editor--Button" />
-      <xs:element ref="Field--Search--Type" />
-      <xs:element ref="Field--Type--Validation--Rules" />
+      <xs:element ref="Field.Editor.Button" />
+      <xs:element ref="Field.Search.Type" />
+      <xs:element ref="Field.Type.Validation.Rules" />
       <xs:element ref="File" />
-      <xs:element ref="FilterControl--Parameters" />
-      <xs:element ref="FilteredComboBox--Parameters" />
-      <xs:element ref="FilteredTreeview--Parameters" />
-      <xs:element ref="FiltersBar--Parameters" />
+      <xs:element ref="FilterControl.Parameters" />
+      <xs:element ref="FilteredComboBox.Parameters" />
+      <xs:element ref="FilteredTreeview.Parameters" />
+      <xs:element ref="FiltersBar.Parameters" />
       <xs:element ref="Flash" />
       <xs:element ref="Folder" />
-      <xs:element ref="Frame--Parameters" />
-      <xs:element ref="FxmDataSource--Parameters" />
-      <xs:element ref="GenericDataProvider--Parameters" />
-      <xs:element ref="Global--Validation--Rules" />
+      <xs:element ref="Frame.Parameters" />
+      <xs:element ref="FxmDataSource.Parameters" />
+      <xs:element ref="GenericDataProvider.Parameters" />
+      <xs:element ref="Global.Validation.Rules" />
       <xs:element ref="GlobalLogo" />
       <xs:element ref="Group" />
       <xs:element ref="GroupedCheckboxList-Parameters" />
-      <xs:element ref="Gutter--Renderer" />
+      <xs:element ref="Gutter.Renderer" />
       <xs:element ref="Help" />
-      <xs:element ref="Help--Text" />
+      <xs:element ref="Help.Text" />
       <xs:element ref="Home" />
-      <xs:element ref="HTML--Class" />
-      <xs:element ref="Html--Custom--Button" />
-      <xs:element ref="Html--Editor--Button" />
-      <xs:element ref="Html--Editor--Class--Translation" />
-      <xs:element ref="Html--Editor--Configuration--Type" />
-      <xs:element ref="Html--Editor--Custom--Drop--Down" />
-      <xs:element ref="Html--Editor--Custom--Drop--Down--Button" />
-      <xs:element ref="Html--Editor--Divider" />
-      <xs:element ref="Html--Editor--Drop--Down" />
-      <xs:element ref="Html--Editor--Drop--Down--Button" />
-      <xs:element ref="Html--Editor--Html--Item" />
-      <xs:element ref="Html--Editor--List--Item" />
-      <xs:element ref="Html--Editor--Snippet" />
-      <xs:element ref="Html--Editor--Tidy" />
-      <xs:element ref="Html--Editor--Toolbar" />
-      <xs:element ref="HTML--Font" />
-      <xs:element ref="HTML--Size" />
-      <xs:element ref="HTML--Tidy" />
-      <xs:element ref="HTML--Translation" />
+      <xs:element ref="HTML.Class" />
+      <xs:element ref="Html.Custom.Button" />
+      <xs:element ref="Html.Editor.Button" />
+      <xs:element ref="Html.Editor.Class.Translation" />
+      <xs:element ref="Html.Editor.Configuration.Type" />
+      <xs:element ref="Html.Editor.Custom.Drop.Down" />
+      <xs:element ref="Html.Editor.Custom.Drop.Down.Button" />
+      <xs:element ref="Html.Editor.Divider" />
+      <xs:element ref="Html.Editor.Drop.Down" />
+      <xs:element ref="Html.Editor.Drop.Down.Button" />
+      <xs:element ref="Html.Editor.Html.Item" />
+      <xs:element ref="Html.Editor.List.Item" />
+      <xs:element ref="Html.Editor.Snippet" />
+      <xs:element ref="Html.Editor.Tidy" />
+      <xs:element ref="Html.Editor.Toolbar" />
+      <xs:element ref="HTML.Font" />
+      <xs:element ref="HTML.Size" />
+      <xs:element ref="HTML.Tidy" />
+      <xs:element ref="HTML.Translation" />
       <xs:element ref="Hyperlink" />
-      <xs:element ref="HyperlinkButton--Parameters" />
-      <xs:element ref="HyperlinkButtonGroup--Parameters" />
-      <xs:element ref="IconButton--Parameters" />
-      <xs:element ref="IconHyperlinkButton--Parameters" />
+      <xs:element ref="HyperlinkButton.Parameters" />
+      <xs:element ref="HyperlinkButtonGroup.Parameters" />
+      <xs:element ref="IconButton.Parameters" />
+      <xs:element ref="IconHyperlinkButton.Parameters" />
       <xs:element ref="Image" />
-      <xs:element ref="Image--Parameters" />
+      <xs:element ref="Image.Parameters" />
       <xs:element ref="ImageSrc-Parameters" />
-      <xs:element ref="ImportMapTo--Parameter" />
+      <xs:element ref="ImportMapTo.Parameter" />
       <xs:element ref="ImportModelField" />
       <xs:element ref="Indexing" />
       <xs:element ref="Information" />
       <xs:element ref="InputControlBase" />
-      <xs:element ref="Insert--Options--Rule" />
-      <xs:element ref="Insert--Rule" />
-      <xs:element ref="Installer--Object" />
+      <xs:element ref="Insert.Options.Rule" />
+      <xs:element ref="Insert.Rule" />
+      <xs:element ref="Installer.Object" />
       <xs:element ref="Item" />
-      <xs:element ref="Item--Buckets" />
-      <xs:element ref="Item--Buckets--Settings" />
-      <xs:element ref="Item--Rendering" />
-      <xs:element ref="Item--Section" />
+      <xs:element ref="Item.Buckets" />
+      <xs:element ref="Item.Buckets.Settings" />
+      <xs:element ref="Item.Rendering" />
+      <xs:element ref="Item.Section" />
       <xs:element ref="ItemCallMetricBaseDataSourceParameters" />
       <xs:element ref="ItemDataSourceBase" />
       <xs:element ref="ItemFromQueryString-Parameters" />
       <xs:element ref="ItemInfoDataSource-Parameters" />
-      <xs:element ref="ItemRenderer--Parameters" />
+      <xs:element ref="ItemRenderer.Parameters" />
       <xs:element ref="ItemsControlBase" />
-      <xs:element ref="ItemTreeView--Parameters" />
+      <xs:element ref="ItemTreeView.Parameters" />
       <xs:element ref="JourneyDuration" />
-      <xs:element ref="JourneyFCChart--Parameters" />
+      <xs:element ref="JourneyFCChart.Parameters" />
       <xs:element ref="Jpeg" />
-      <xs:element ref="Key--Group" />
-      <xs:element ref="Key--Map" />
+      <xs:element ref="Key.Group" />
+      <xs:element ref="Key.Map" />
       <xs:element ref="KPIDataSource-Parameters" />
-      <xs:element ref="KPISpot--Parameters" />
-      <xs:element ref="Label--Parameters" />
+      <xs:element ref="KPISpot.Parameters" />
+      <xs:element ref="Label.Parameters" />
       <xs:element ref="Language" />
-      <xs:element ref="Large--Button" />
-      <xs:element ref="Large--Combo--Button" />
-      <xs:element ref="Large--Gallery--Button" />
-      <xs:element ref="Large--Menu--Combo--Button" />
-      <xs:element ref="LargeButton--Parameters" />
-      <xs:element ref="LargeDropDownButton--Parameters" />
-      <xs:element ref="LargeGalleryButton--Parameters" />
+      <xs:element ref="Large.Button" />
+      <xs:element ref="Large.Combo.Button" />
+      <xs:element ref="Large.Gallery.Button" />
+      <xs:element ref="Large.Menu.Combo.Button" />
+      <xs:element ref="LargeButton.Parameters" />
+      <xs:element ref="LargeDropDownButton.Parameters" />
+      <xs:element ref="LargeGalleryButton.Parameters" />
       <xs:element ref="LaunchBar-Parameters" />
       <xs:element ref="LaunchPad-Button" />
       <xs:element ref="LaunchPad-Group" />
       <xs:element ref="LaunchPad-Tile" />
       <xs:element ref="LaunchTiles-Parameters" />
       <xs:element ref="Layout" />
-      <xs:element ref="Layout--Folder" />
-      <xs:element ref="Layout--Group" />
-      <xs:element ref="Layout--Preset" />
-      <xs:element ref="Layouter--File--Type" />
+      <xs:element ref="Layout.Folder" />
+      <xs:element ref="Layout.Group" />
+      <xs:element ref="Layout.Preset" />
+      <xs:element ref="Layouter.File.Type" />
       <xs:element ref="LicenseOption" />
       <xs:element ref="Lifetime" />
-      <xs:element ref="LineChart--Parameters" />
-      <xs:element ref="List--Entry" />
-      <xs:element ref="List--Parameters" />
-      <xs:element ref="ListBox--Parameters" />
+      <xs:element ref="LineChart.Parameters" />
+      <xs:element ref="List.Entry" />
+      <xs:element ref="List.Parameters" />
+      <xs:element ref="ListBox.Parameters" />
       <xs:element ref="ListControl" />
-      <xs:element ref="ListControl--Parameters" />
-      <xs:element ref="Listmanagement--TreeView--Parameters" />
-      <xs:element ref="ListManagementUploader--Parameter" />
+      <xs:element ref="ListControl.Parameters" />
+      <xs:element ref="Listmanagement.TreeView.Parameters" />
+      <xs:element ref="ListManagementUploader.Parameter" />
       <xs:element ref="ListPage" />
       <xs:element ref="ListPath-Parameters" />
-      <xs:element ref="ListsDataSource--Parameters" />
+      <xs:element ref="ListsDataSource.Parameters" />
       <xs:element ref="ListsWithDataSource" />
       <xs:element ref="ListTaskPage" />
-      <xs:element ref="LoadOnDemandPanel--Parameters" />
+      <xs:element ref="LoadOnDemandPanel.Parameters" />
       <xs:element ref="Login" />
       <xs:element ref="Macro" />
-      <xs:element ref="Main--Section" />
+      <xs:element ref="Main.Section" />
       <xs:element ref="Mapping" />
       <xs:element ref="MappingRegion" />
-      <xs:element ref="MapSelector--Parameters" />
+      <xs:element ref="MapSelector.Parameters" />
       <xs:element ref="Master" />
-      <xs:element ref="Master--Folder" />
+      <xs:element ref="Master.Folder" />
       <xs:element ref="Masters" />
-      <xs:element ref="Media--Folder" />
-      <xs:element ref="Menu--Divider" />
-      <xs:element ref="Menu--Header" />
-      <xs:element ref="Menu--Item" />
-      <xs:element ref="Menu--Parameters" />
+      <xs:element ref="Media.Folder" />
+      <xs:element ref="Menu.Divider" />
+      <xs:element ref="Menu.Header" />
+      <xs:element ref="Menu.Item" />
+      <xs:element ref="Menu.Parameters" />
       <xs:element ref="Message" />
-      <xs:element ref="MessageBar--Parameters" />
-      <xs:element ref="Method--Rendering" />
+      <xs:element ref="MessageBar.Parameters" />
+      <xs:element ref="Method.Rendering" />
       <xs:element ref="Middle" />
-      <xs:element ref="Minified--Mode" />
+      <xs:element ref="Minified.Mode" />
       <xs:element ref="Model" />
       <xs:element ref="Movie" />
       <xs:element ref="Mp3" />
@@ -327,17 +327,17 @@
       <xs:element ref="NavigationPanelTogglerButtonParameters" />
       <xs:element ref="Node" />
       <xs:element ref="Notification" />
-      <xs:element ref="Notification--Message" />
+      <xs:element ref="Notification.Message" />
       <xs:element ref="NumberScale" />
-      <xs:element ref="Open--Result--Type" />
+      <xs:element ref="Open.Result.Type" />
       <xs:element ref="OptimizationBaseDataSource-Parameters" />
       <xs:element ref="OptimizationEntriesBaseDataSource-Parameters" />
       <xs:element ref="OptionsFolder" />
       <xs:element ref="OptionsMapper" />
       <xs:element ref="OverallPerformanceDataSource-Parameters" />
-      <xs:element ref="Package--Registration" />
-      <xs:element ref="Page--Designer--Predefined--Grid" />
-      <xs:element ref="PageCode--Parameters" />
+      <xs:element ref="Package.Registration" />
+      <xs:element ref="Page.Designer.Predefined.Grid" />
+      <xs:element ref="PageCode.Parameters" />
       <xs:element ref="Page-Script-File" />
       <xs:element ref="Page-Script-Folder" />
       <xs:element ref="PageSettings" />
@@ -345,12 +345,12 @@
       <xs:element ref="Page-Stylesheet-Folder" />
       <xs:element ref="PageThumbnailParameters" />
       <xs:element ref="Panel" />
-      <xs:element ref="Panel--Parameters" />
+      <xs:element ref="Panel.Parameters" />
       <xs:element ref="Parameters" />
-      <xs:element ref="Password--Recovery--Email" />
+      <xs:element ref="Password.Recovery.Email" />
       <xs:element ref="Pdf" />
       <xs:element ref="PersonalizationRule-Parameters" />
-      <xs:element ref="PieChart--Parameters" />
+      <xs:element ref="PieChart.Parameters" />
       <xs:element ref="Pipeline" />
       <xs:element ref="Pipeline-Parameters" />
       <xs:element ref="PipelineProcessor" />
@@ -358,96 +358,96 @@
       <xs:element ref="Portal" />
       <xs:element ref="Portlet" />
       <xs:element ref="Primary" />
-      <xs:element ref="ProgressBarCustom--Parameters" />
+      <xs:element ref="ProgressBarCustom.Parameters" />
       <xs:element ref="ProgressBar-Parameters" />
-      <xs:element ref="ProgressIndicator--Parameters" />
+      <xs:element ref="ProgressIndicator.Parameters" />
       <xs:element ref="Property" />
-      <xs:element ref="ProtectedBorder--Parameters" />
+      <xs:element ref="ProtectedBorder.Parameters" />
       <xs:element ref="Proxy" />
       <xs:element ref="Publishing" />
-      <xs:element ref="Publishing--Target" />
-      <xs:element ref="QueryDataSource--Parameters" />
-      <xs:element ref="QueryStringParameterResolver--Parameters" />
-      <xs:element ref="Quick--Action" />
-      <xs:element ref="QuickBar--Parameters" />
-      <xs:element ref="QuickbarButton--Parameters" />
-      <xs:element ref="RadarChart--Parameters" />
-      <xs:element ref="RadioButton--Parameters" />
-      <xs:element ref="ReachDataSource--Parameters" />
+      <xs:element ref="Publishing.Target" />
+      <xs:element ref="QueryDataSource.Parameters" />
+      <xs:element ref="QueryStringParameterResolver.Parameters" />
+      <xs:element ref="Quick.Action" />
+      <xs:element ref="QuickBar.Parameters" />
+      <xs:element ref="QuickbarButton.Parameters" />
+      <xs:element ref="RadarChart.Parameters" />
+      <xs:element ref="RadioButton.Parameters" />
+      <xs:element ref="ReachDataSource.Parameters" />
       <xs:element ref="Reference" />
       <xs:element ref="Rendering" />
-      <xs:element ref="Rendering--Folder" />
-      <xs:element ref="Rendering--Group" />
-      <xs:element ref="Rendering--Options" />
-      <xs:element ref="RenderView--Parameters" />
-      <xs:element ref="Repeater--Parameters" />
-      <xs:element ref="Report--Schedule" />
+      <xs:element ref="Rendering.Folder" />
+      <xs:element ref="Rendering.Group" />
+      <xs:element ref="Rendering.Options" />
+      <xs:element ref="RenderView.Parameters" />
+      <xs:element ref="Repeater.Parameters" />
+      <xs:element ref="Report.Schedule" />
       <xs:element ref="Reporter" />
-      <xs:element ref="Reporter--Report" />
+      <xs:element ref="Reporter.Report" />
       <xs:element ref="ReportingDatesDataSource-Parameters" />
       <xs:element ref="ResizableFrameGrip" />
       <xs:element ref="Role" />
       <xs:element ref="Root" />
-      <xs:element ref="RowPanel--Parameters" />
+      <xs:element ref="RowPanel.Parameters" />
       <xs:element ref="Rule" />
-      <xs:element ref="Rule--Elements--Visibility--Rule" />
-      <xs:element ref="Rule--Parameters" />
+      <xs:element ref="Rule.Elements.Visibility.Rule" />
+      <xs:element ref="Rule.Parameters" />
       <xs:element ref="RuleBase" />
       <xs:element ref="RuleDefinition" />
       <xs:element ref="RulePerformanceDataSource-Parameters" />
-      <xs:element ref="Rules--Context--Folder" />
-      <xs:element ref="Rules--Folder" />
+      <xs:element ref="Rules.Context.Folder" />
+      <xs:element ref="Rules.Folder" />
       <xs:element ref="RulesDataSource-Parameters" />
       <xs:element ref="RuleSetPerformanceDataSource-Parameters" />
-      <xs:element ref="Sample--Item" />
-      <xs:element ref="Save--Parameters" />
-      <xs:element ref="Saved--Search" />
+      <xs:element ref="Sample.Item" />
+      <xs:element ref="Save.Parameters" />
+      <xs:element ref="Saved.Search" />
       <xs:element ref="Schedule" />
-      <xs:element ref="ScoreGainedSpot--Parameters" />
+      <xs:element ref="ScoreGainedSpot.Parameters" />
       <xs:element ref="Script" />
       <xs:element ref="Scrollbar" />
       <xs:element ref="Scrolling" />
       <xs:element ref="Search" />
-      <xs:element ref="Search--Control--Type" />
-      <xs:element ref="Search--Data--Source--Parameters" />
-      <xs:element ref="SearchDataSource--Parameters" />
-      <xs:element ref="SearchPanel--Config" />
-      <xs:element ref="SearchPanel--Parameters" />
+      <xs:element ref="Search.Control.Type" />
+      <xs:element ref="Search.Data.Source.Parameters" />
+      <xs:element ref="SearchDataSource.Parameters" />
+      <xs:element ref="SearchPanel.Config" />
+      <xs:element ref="SearchPanel.Parameters" />
       <xs:element ref="Section" />
-      <xs:element ref="Section--Parameters" />
+      <xs:element ref="Section.Parameters" />
       <xs:element ref="Security" />
-      <xs:element ref="Security--Folder" />
-      <xs:element ref="Security--Preset" />
-      <xs:element ref="SegmentBuilder--Parameter" />
+      <xs:element ref="Security.Folder" />
+      <xs:element ref="Security.Preset" />
+      <xs:element ref="SegmentBuilder.Parameter" />
       <xs:element ref="SelectControlBase" />
       <xs:element ref="Separator" />
-      <xs:element ref="Separator--Parameters" />
-      <xs:element ref="Setting--Group" />
-      <xs:element ref="SettingsDictionary--Parameters" />
-      <xs:element ref="Shared--List--Entry" />
+      <xs:element ref="Separator.Parameters" />
+      <xs:element ref="Setting.Group" />
+      <xs:element ref="SettingsDictionary.Parameters" />
+      <xs:element ref="Shared.List.Entry" />
       <xs:element ref="SheerUI-Parameters" />
-      <xs:element ref="SilverlightFrame--Parameters" />
+      <xs:element ref="SilverlightFrame.Parameters" />
       <xs:element ref="SingleMetric" />
       <xs:element ref="SitecoreQueryDataSource-Parameters" />
       <xs:element ref="SiteUsageDataSource-Parameters" />
-      <xs:element ref="Slider--Parameters" />
-      <xs:element ref="Slider--Step" />
-      <xs:element ref="SliderAdvanced-----Parameters" />
+      <xs:element ref="Slider.Parameters" />
+      <xs:element ref="Slider.Step" />
+      <xs:element ref="SliderAdvanced.-.Parameters" />
       <xs:element ref="SliderStep" />
       <xs:element ref="Small" />
-      <xs:element ref="Small--Button" />
-      <xs:element ref="Small--Check--Button" />
-      <xs:element ref="Small--Combo--Button" />
-      <xs:element ref="Small--Drop--Down--Box" />
-      <xs:element ref="Small--Gallery--Button" />
-      <xs:element ref="Small--Input--Box" />
-      <xs:element ref="Small--Menu--Combo--Button" />
-      <xs:element ref="SmallButton--Parameters" />
-      <xs:element ref="SmallCheckButton--Parameters" />
-      <xs:element ref="SmartPanel--Parameters" />
+      <xs:element ref="Small.Button" />
+      <xs:element ref="Small.Check.Button" />
+      <xs:element ref="Small.Combo.Button" />
+      <xs:element ref="Small.Drop.Down.Box" />
+      <xs:element ref="Small.Gallery.Button" />
+      <xs:element ref="Small.Input.Box" />
+      <xs:element ref="Small.Menu.Combo.Button" />
+      <xs:element ref="SmallButton.Parameters" />
+      <xs:element ref="SmallCheckButton.Parameters" />
+      <xs:element ref="SmartPanel.Parameters" />
       <xs:element ref="Snippet" />
-      <xs:element ref="Speak--Core--1-1" />
-      <xs:element ref="Speak--Core--1-3" />
+      <xs:element ref="Speak.Core.1-1" />
+      <xs:element ref="Speak.Core.1-3" />
       <xs:element ref="Speak-AppShortcut" />
       <xs:element ref="Speak-BaseComponent" />
       <xs:element ref="Speak-BasePage" />
@@ -460,48 +460,48 @@
       <xs:element ref="Speak-TaskPage" />
       <xs:element ref="Speak-Theme" />
       <xs:element ref="Stacking" />
-      <xs:element ref="Standard--Template" />
-      <xs:element ref="Start--Menu--Action" />
-      <xs:element ref="Start--Menu--Divider" />
-      <xs:element ref="Start--Menu--Folder" />
+      <xs:element ref="Standard.Template" />
+      <xs:element ref="Start.Menu.Action" />
+      <xs:element ref="Start.Menu.Divider" />
+      <xs:element ref="Start.Menu.Folder" />
       <xs:element ref="State" />
-      <xs:element ref="StateChangeList--Parameters" />
+      <xs:element ref="StateChangeList.Parameters" />
       <xs:element ref="Stateful" />
       <xs:element ref="StateListControl" />
       <xs:element ref="Statistics" />
-      <xs:element ref="StoredQueryDataSource--Parameters" />
-      <xs:element ref="StringDictionary--Parameters" />
-      <xs:element ref="StringDictionaryDomain--Parameters" />
+      <xs:element ref="StoredQueryDataSource.Parameters" />
+      <xs:element ref="StringDictionary.Parameters" />
+      <xs:element ref="StringDictionaryDomain.Parameters" />
       <xs:element ref="Strip" />
-      <xs:element ref="Strip--Parameters" />
+      <xs:element ref="Strip.Parameters" />
       <xs:element ref="Stylesheet" />
-      <xs:element ref="SubAppRenderer--Parameters" />
+      <xs:element ref="SubAppRenderer.Parameters" />
       <xs:element ref="Sublayout" />
       <xs:element ref="Submenu" />
-      <xs:element ref="SubPageCode--Parameters" />
-      <xs:element ref="SubsiteFilter--Parameters" />
-      <xs:element ref="Summary--Control" />
+      <xs:element ref="SubPageCode.Parameters" />
+      <xs:element ref="SubsiteFilter.Parameters" />
+      <xs:element ref="Summary.Control" />
       <xs:element ref="Tab" />
-      <xs:element ref="Tab--Option" />
-      <xs:element ref="TabControl--Parameters" />
+      <xs:element ref="Tab.Option" />
+      <xs:element ref="TabControl.Parameters" />
       <xs:element ref="Tag" />
-      <xs:element ref="Tag--Repository" />
+      <xs:element ref="Tag.Repository" />
       <xs:element ref="Tagging" />
-      <xs:element ref="Tags--Definition" />
-      <xs:element ref="Tags--Definitions--Folder" />
-      <xs:element ref="Task--Link" />
-      <xs:element ref="Task--Option" />
-      <xs:element ref="Task--Page" />
-      <xs:element ref="Task--Parameters" />
+      <xs:element ref="Tags.Definition" />
+      <xs:element ref="Tags.Definitions.Folder" />
+      <xs:element ref="Task.Link" />
+      <xs:element ref="Task.Option" />
+      <xs:element ref="Task.Page" />
+      <xs:element ref="Task.Parameters" />
       <xs:element ref="Tasks" />
       <xs:element ref="Template" />
-      <xs:element ref="Template--Field" />
-      <xs:element ref="Template--Field--Type" />
-      <xs:element ref="Template--Folder" />
-      <xs:element ref="Template--Section" />
-      <xs:element ref="TestActions--Parameters" />
+      <xs:element ref="Template.Field" />
+      <xs:element ref="Template.Field.Type" />
+      <xs:element ref="Template.Folder" />
+      <xs:element ref="Template.Section" />
+      <xs:element ref="TestActions.Parameters" />
       <xs:element ref="TestCandidatesDataSource-Parameters" />
-      <xs:element ref="TestDefinitionDataSource--Parameters" />
+      <xs:element ref="TestDefinitionDataSource.Parameters" />
       <xs:element ref="TestDurationDataSourceParameters" />
       <xs:element ref="TestExpectationsDataSource-Parameters" />
       <xs:element ref="TestObjectivesDataSource-Parameters" />
@@ -512,57 +512,57 @@
       <xs:element ref="TestVariablesDataSource-Parameters" />
       <xs:element ref="TestVariationsDataSource-Parameters" />
       <xs:element ref="Text" />
-      <xs:element ref="Text--Parameters" />
-      <xs:element ref="TextArea--Parameters" />
-      <xs:element ref="TextBox--Parameters" />
+      <xs:element ref="Text.Parameters" />
+      <xs:element ref="TextArea.Parameters" />
+      <xs:element ref="TextBox.Parameters" />
       <xs:element ref="Timeline-Parameters" />
-      <xs:element ref="TimePicker--Parameters" />
+      <xs:element ref="TimePicker.Parameters" />
       <xs:element ref="TimeResolutionBase" />
       <xs:element ref="Tip" />
       <xs:element ref="TodoMvcApp" />
-      <xs:element ref="ToggleButton--Parameters" />
-      <xs:element ref="ToggleShow--Parameters" />
-      <xs:element ref="Tool--Button" />
-      <xs:element ref="Tool--Button--Group" />
-      <xs:element ref="Tool--Button--New--Line" />
-      <xs:element ref="Tool--Option" />
+      <xs:element ref="ToggleButton.Parameters" />
+      <xs:element ref="ToggleShow.Parameters" />
+      <xs:element ref="Tool.Button" />
+      <xs:element ref="Tool.Button.Group" />
+      <xs:element ref="Tool.Button.New.Line" />
+      <xs:element ref="Tool.Option" />
       <xs:element ref="Toolbar" />
-      <xs:element ref="Toolbar--Divider" />
+      <xs:element ref="Toolbar.Divider" />
       <xs:element ref="Toolbutton" />
       <xs:element ref="Toolmenu" />
       <xs:element ref="Toolmenubutton" />
-      <xs:element ref="ToolTip--Parameters" />
+      <xs:element ref="ToolTip.Parameters" />
       <xs:element ref="Toolwindow" />
       <xs:element ref="TopClicksToPagesDataSource-Parameters" />
-      <xs:element ref="TopGoalsDataSource--Parameters" />
-      <xs:element ref="TreeDefinitionFilter--Parameters" />
+      <xs:element ref="TopGoalsDataSource.Parameters" />
+      <xs:element ref="TreeDefinitionFilter.Parameters" />
       <xs:element ref="TreeGridColumn" />
-      <xs:element ref="UnorderedList--Parameters" />
-      <xs:element ref="Uploader--Parameter" />
-      <xs:element ref="UploaderInfo--Parameter" />
-      <xs:element ref="Url--Rendering" />
+      <xs:element ref="UnorderedList.Parameters" />
+      <xs:element ref="Uploader.Parameter" />
+      <xs:element ref="UploaderInfo.Parameter" />
+      <xs:element ref="Url.Rendering" />
       <xs:element ref="User" />
-      <xs:element ref="Validation--Result" />
-      <xs:element ref="Validation--Rule" />
-      <xs:element ref="Validation--Rules" />
+      <xs:element ref="Validation.Result" />
+      <xs:element ref="Validation.Rule" />
+      <xs:element ref="Validation.Rules" />
       <xs:element ref="ValueBar-Parameters" />
-      <xs:element ref="ValueLabel-----Parameters" />
+      <xs:element ref="ValueLabel.-.Parameters" />
       <xs:element ref="VariablesDataSource-Parameters" />
       <xs:element ref="View" />
-      <xs:element ref="View--Rendering" />
+      <xs:element ref="View.Rendering" />
       <xs:element ref="Viewer" />
       <xs:element ref="Visibility" />
       <xs:element ref="Warning" />
-      <xs:element ref="Warning--Message" />
+      <xs:element ref="Warning.Message" />
       <xs:element ref="Webcontrol" />
-      <xs:element ref="WebEdit--Button" />
-      <xs:element ref="WebEdit--Texts" />
-      <xs:element ref="WebServiceDataSource--Parameters" />
+      <xs:element ref="WebEdit.Button" />
+      <xs:element ref="WebEdit.Texts" />
+      <xs:element ref="WebServiceDataSource.Parameters" />
       <xs:element ref="Workflow" />
       <xs:element ref="WrappingLink-Parameters" />
-      <xs:element ref="Xml--Layout" />
+      <xs:element ref="Xml.Layout" />
       <xs:element ref="XmlControl" />
-      <xs:element ref="Xsl--Rendering" />
+      <xs:element ref="Xsl.Rendering" />
       <xs:element ref="Zip" />
       <xs:element ref="ZoomFrame-Parameters" />
     </xs:choice>
@@ -632,7 +632,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ActionControl--Parameters">
+  <xs:element name="ActionControl.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -713,7 +713,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ActiveUsersDataSource--Parameters">
+  <xs:element name="ActiveUsersDataSource.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -769,7 +769,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="AddComponent--Parameters">
+  <xs:element name="AddComponent.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -799,7 +799,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="AdvancedComboBox--Parameters">
+  <xs:element name="AdvancedComboBox.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -872,7 +872,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="AdvancedExpander--Parameters">
+  <xs:element name="AdvancedExpander.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1000,7 +1000,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="API--Field">
+  <xs:element name="API.Field">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1070,7 +1070,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Application--Folder">
+  <xs:element name="Application.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1080,7 +1080,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Application--Shortcut">
+  <xs:element name="Application.Shortcut">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1095,7 +1095,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ApplicationHeader--Parameters">
+  <xs:element name="ApplicationHeader.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1106,7 +1106,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Archived--Item">
+  <xs:element name="Archived.Item">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1123,7 +1123,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="AreaChart--Parameters">
+  <xs:element name="AreaChart.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1181,7 +1181,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ArrowIndicator-----Parameters">
+  <xs:element name="ArrowIndicator.-.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1329,7 +1329,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="BackButton--Parameters">
+  <xs:element name="BackButton.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1387,7 +1387,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="BarChart--Parameters">
+  <xs:element name="BarChart.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1582,7 +1582,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Boosting--Rule">
+  <xs:element name="Boosting.Rule">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1605,7 +1605,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Border--Parameters">
+  <xs:element name="Border.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1693,7 +1693,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Breadcrumb--Parameters">
+  <xs:element name="Breadcrumb.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1772,7 +1772,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Bundled--Mode">
+  <xs:element name="Bundled.Mode">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1782,7 +1782,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Button--Parameters">
+  <xs:element name="Button.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1900,7 +1900,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ButtonGroup--Parameters">
+  <xs:element name="ButtonGroup.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1931,7 +1931,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ButtonTextBox--Parameters">
+  <xs:element name="ButtonTextBox.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2057,7 +2057,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Carousel--Parameters">
+  <xs:element name="Carousel.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2128,7 +2128,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Carousel--Tile">
+  <xs:element name="Carousel.Tile">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2141,7 +2141,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="CarouselImage--Parameters">
+  <xs:element name="CarouselImage.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2177,7 +2177,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="CDN--Mode">
+  <xs:element name="CDN.Mode">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2308,7 +2308,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ChartDataProvider--Parameters">
+  <xs:element name="ChartDataProvider.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2401,7 +2401,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="CheckBox--Parameters">
+  <xs:element name="CheckBox.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2451,7 +2451,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Child--Sorting">
+  <xs:element name="Child.Sorting">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2466,7 +2466,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ChildRenderer--Parameters">
+  <xs:element name="ChildRenderer.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2519,7 +2519,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Clientside--Hook">
+  <xs:element name="Clientside.Hook">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2539,7 +2539,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ColumnChart--Parameters">
+  <xs:element name="ColumnChart.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2636,7 +2636,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ColumnPanel--Parameters">
+  <xs:element name="ColumnPanel.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2700,7 +2700,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ComboBox--Parameters">
+  <xs:element name="ComboBox.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2780,7 +2780,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Command--Parameters">
+  <xs:element name="Command.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2909,7 +2909,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Conditional--Rendering--Rule">
+  <xs:element name="Conditional.Rendering.Rule">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2920,7 +2920,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ContactsDataSource--Parameters">
+  <xs:element name="ContactsDataSource.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3035,7 +3035,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Content--Editor--Application">
+  <xs:element name="Content.Editor.Application">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3047,7 +3047,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Content--Editor--Warning--Rule">
+  <xs:element name="Content.Editor.Warning.Rule">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3222,7 +3222,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Controller--Rendering">
+  <xs:element name="Controller.Rendering">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3310,7 +3310,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Custom--Control">
+  <xs:element name="Custom.Control">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3321,7 +3321,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="CustomSearchDataSource--Parameters">
+  <xs:element name="CustomSearchDataSource.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3364,7 +3364,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Dashboard--Parameters">
+  <xs:element name="Dashboard.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3471,7 +3471,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="DataRepeater--Parameters">
+  <xs:element name="DataRepeater.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3504,7 +3504,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="DatePicker--Parameters">
+  <xs:element name="DatePicker.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3602,7 +3602,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="DateRangeFilter--Parameters">
+  <xs:element name="DateRangeFilter.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3663,7 +3663,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Development--Mode">
+  <xs:element name="Development.Mode">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3697,7 +3697,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="DeviceSimulatorsButton--Parameters">
+  <xs:element name="DeviceSimulatorsButton.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3738,7 +3738,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="DialogM--Parameters">
+  <xs:element name="DialogM.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3749,7 +3749,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="DialogMI--Parameters">
+  <xs:element name="DialogMI.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3794,7 +3794,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="DialogWindow--Parameters">
+  <xs:element name="DialogWindow.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3878,7 +3878,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Dictionary--Domain">
+  <xs:element name="Dictionary.Domain">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3895,7 +3895,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Dictionary--Entry">
+  <xs:element name="Dictionary.Entry">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3917,7 +3917,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Dictionary--Folder">
+  <xs:element name="Dictionary.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4019,7 +4019,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="DoughnutChart--Parameters">
+  <xs:element name="DoughnutChart.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4072,7 +4072,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Dropdown--List">
+  <xs:element name="Dropdown.List">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4099,7 +4099,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="DropDownButton--Parameters">
+  <xs:element name="DropDownButton.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4195,7 +4195,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Edit--Frame--Button--Folder">
+  <xs:element name="Edit.Frame.Button.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4217,7 +4217,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Edit--Frame--Small--Button">
+  <xs:element name="Edit.Frame.Small.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4368,7 +4368,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Element--Folder">
+  <xs:element name="Element.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4383,7 +4383,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Email--Action">
+  <xs:element name="Email.Action">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4399,7 +4399,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="EntityDataSource--Parameters">
+  <xs:element name="EntityDataSource.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4432,7 +4432,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Error--Message">
+  <xs:element name="Error.Message">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4490,7 +4490,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ExpectedChangeSliderDataSource--Parameters">
+  <xs:element name="ExpectedChangeSliderDataSource.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4508,7 +4508,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ExperienceAnalyticsAreaChart--Parameters">
+  <xs:element name="ExperienceAnalyticsAreaChart.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4626,7 +4626,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ExperienceAnalyticsBarChart--Parameters">
+  <xs:element name="ExperienceAnalyticsBarChart.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4799,7 +4799,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ExperienceAnalyticsDialogWindow--Parameters">
+  <xs:element name="ExperienceAnalyticsDialogWindow.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4829,7 +4829,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ExperienceAnalyticsFilters--Parameters">
+  <xs:element name="ExperienceAnalyticsFilters.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4859,7 +4859,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ExperienceAnalyticsLineChart--Parameters">
+  <xs:element name="ExperienceAnalyticsLineChart.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4971,7 +4971,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ExperienceAnalyticsListControl--Parameters">
+  <xs:element name="ExperienceAnalyticsListControl.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5055,7 +5055,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ExperienceEngagementDataSource--Parameters">
+  <xs:element name="ExperienceEngagementDataSource.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5077,7 +5077,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ExperienceIndicator--Parameters">
+  <xs:element name="ExperienceIndicator.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5104,7 +5104,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ExperienceKPIDataSource--Parameters">
+  <xs:element name="ExperienceKPIDataSource.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5174,7 +5174,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Field--Editor--Button">
+  <xs:element name="Field.Editor.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5204,7 +5204,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Field--Search--Type">
+  <xs:element name="Field.Search.Type">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5254,7 +5254,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Field--Type--Validation--Rules">
+  <xs:element name="Field.Type.Validation.Rules">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5301,7 +5301,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="FilterControl--Parameters">
+  <xs:element name="FilterControl.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5341,7 +5341,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="FilteredComboBox--Parameters">
+  <xs:element name="FilteredComboBox.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5381,7 +5381,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="FilteredTreeview--Parameters">
+  <xs:element name="FilteredTreeview.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5469,7 +5469,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="FiltersBar--Parameters">
+  <xs:element name="FiltersBar.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5556,7 +5556,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Frame--Parameters">
+  <xs:element name="Frame.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5602,7 +5602,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="FxmDataSource--Parameters">
+  <xs:element name="FxmDataSource.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5637,7 +5637,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="GenericDataProvider--Parameters">
+  <xs:element name="GenericDataProvider.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5681,7 +5681,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Global--Validation--Rules">
+  <xs:element name="Global.Validation.Rules">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5789,7 +5789,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Gutter--Renderer">
+  <xs:element name="Gutter.Renderer">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5812,7 +5812,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Help--Text">
+  <xs:element name="Help.Text">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5843,7 +5843,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="HTML--Class">
+  <xs:element name="HTML.Class">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5855,7 +5855,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Html--Custom--Button">
+  <xs:element name="Html.Custom.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5868,7 +5868,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Html--Editor--Button">
+  <xs:element name="Html.Editor.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5880,7 +5880,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Html--Editor--Class--Translation">
+  <xs:element name="Html.Editor.Class.Translation">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5892,7 +5892,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Html--Editor--Configuration--Type">
+  <xs:element name="Html.Editor.Configuration.Type">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5903,7 +5903,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Html--Editor--Custom--Drop--Down">
+  <xs:element name="Html.Editor.Custom.Drop.Down">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5918,7 +5918,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Html--Editor--Custom--Drop--Down--Button">
+  <xs:element name="Html.Editor.Custom.Drop.Down.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5930,7 +5930,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Html--Editor--Divider">
+  <xs:element name="Html.Editor.Divider">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5940,7 +5940,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Html--Editor--Drop--Down">
+  <xs:element name="Html.Editor.Drop.Down">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5955,7 +5955,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Html--Editor--Drop--Down--Button">
+  <xs:element name="Html.Editor.Drop.Down.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5967,7 +5967,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Html--Editor--Html--Item">
+  <xs:element name="Html.Editor.Html.Item">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5979,7 +5979,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Html--Editor--List--Item">
+  <xs:element name="Html.Editor.List.Item">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5991,7 +5991,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Html--Editor--Snippet">
+  <xs:element name="Html.Editor.Snippet">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6003,7 +6003,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Html--Editor--Tidy">
+  <xs:element name="Html.Editor.Tidy">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6018,7 +6018,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Html--Editor--Toolbar">
+  <xs:element name="Html.Editor.Toolbar">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6028,7 +6028,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="HTML--Font">
+  <xs:element name="HTML.Font">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6040,7 +6040,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="HTML--Size">
+  <xs:element name="HTML.Size">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6052,7 +6052,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="HTML--Tidy">
+  <xs:element name="HTML.Tidy">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6075,7 +6075,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="HTML--Translation">
+  <xs:element name="HTML.Translation">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6101,7 +6101,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="HyperlinkButton--Parameters">
+  <xs:element name="HyperlinkButton.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6161,7 +6161,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="HyperlinkButtonGroup--Parameters">
+  <xs:element name="HyperlinkButtonGroup.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6201,7 +6201,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="IconButton--Parameters">
+  <xs:element name="IconButton.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6264,7 +6264,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="IconHyperlinkButton--Parameters">
+  <xs:element name="IconHyperlinkButton.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6356,7 +6356,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Image--Parameters">
+  <xs:element name="Image.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6438,7 +6438,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ImportMapTo--Parameter">
+  <xs:element name="ImportMapTo.Parameter">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6536,7 +6536,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Insert--Options--Rule">
+  <xs:element name="Insert.Options.Rule">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6547,7 +6547,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Insert--Rule">
+  <xs:element name="Insert.Rule">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6568,7 +6568,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Installer--Object">
+  <xs:element name="Installer.Object">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6592,7 +6592,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Item--Buckets">
+  <xs:element name="Item.Buckets">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6602,7 +6602,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Item--Buckets--Settings">
+  <xs:element name="Item.Buckets.Settings">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6622,7 +6622,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Item--Rendering">
+  <xs:element name="Item.Rendering">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6658,7 +6658,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Item--Section">
+  <xs:element name="Item.Section">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6815,7 +6815,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ItemRenderer--Parameters">
+  <xs:element name="ItemRenderer.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6853,7 +6853,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ItemTreeView--Parameters">
+  <xs:element name="ItemTreeView.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7022,7 +7022,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="JourneyFCChart--Parameters">
+  <xs:element name="JourneyFCChart.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7126,7 +7126,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Key--Group">
+  <xs:element name="Key.Group">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7137,7 +7137,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Key--Map">
+  <xs:element name="Key.Map">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7180,7 +7180,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="KPISpot--Parameters">
+  <xs:element name="KPISpot.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7199,7 +7199,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Label--Parameters">
+  <xs:element name="Label.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7266,7 +7266,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Large--Button">
+  <xs:element name="Large.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7283,7 +7283,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Large--Combo--Button">
+  <xs:element name="Large.Combo.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7304,7 +7304,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Large--Gallery--Button">
+  <xs:element name="Large.Gallery.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7324,7 +7324,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Large--Menu--Combo--Button">
+  <xs:element name="Large.Menu.Combo.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7342,7 +7342,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="LargeButton--Parameters">
+  <xs:element name="LargeButton.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7381,7 +7381,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="LargeDropDownButton--Parameters">
+  <xs:element name="LargeDropDownButton.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7429,7 +7429,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="LargeGalleryButton--Parameters">
+  <xs:element name="LargeGalleryButton.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7600,7 +7600,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Layout--Folder">
+  <xs:element name="Layout.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7610,7 +7610,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Layout--Group">
+  <xs:element name="Layout.Group">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7620,7 +7620,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Layout--Preset">
+  <xs:element name="Layout.Preset">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7631,7 +7631,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Layouter--File--Type">
+  <xs:element name="Layouter.File.Type">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7667,7 +7667,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="LineChart--Parameters">
+  <xs:element name="LineChart.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7724,7 +7724,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="List--Entry">
+  <xs:element name="List.Entry">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7736,7 +7736,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="List--Parameters">
+  <xs:element name="List.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7747,7 +7747,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ListBox--Parameters">
+  <xs:element name="ListBox.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7842,7 +7842,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ListControl--Parameters">
+  <xs:element name="ListControl.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7965,7 +7965,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Listmanagement--TreeView--Parameters">
+  <xs:element name="Listmanagement.TreeView.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -8038,7 +8038,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ListManagementUploader--Parameter">
+  <xs:element name="ListManagementUploader.Parameter">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -8139,7 +8139,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ListsDataSource--Parameters">
+  <xs:element name="ListsDataSource.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -8293,7 +8293,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="LoadOnDemandPanel--Parameters">
+  <xs:element name="LoadOnDemandPanel.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -8342,7 +8342,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Main--Section">
+  <xs:element name="Main.Section">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -8421,7 +8421,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="MapSelector--Parameters">
+  <xs:element name="MapSelector.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -8483,7 +8483,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Master--Folder">
+  <xs:element name="Master.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -8503,7 +8503,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Media--Folder">
+  <xs:element name="Media.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -8513,7 +8513,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Menu--Divider">
+  <xs:element name="Menu.Divider">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -8536,7 +8536,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Menu--Header">
+  <xs:element name="Menu.Header">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -8560,7 +8560,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Menu--Item">
+  <xs:element name="Menu.Item">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -8592,7 +8592,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Menu--Parameters">
+  <xs:element name="Menu.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -8652,7 +8652,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="MessageBar--Parameters">
+  <xs:element name="MessageBar.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -8687,7 +8687,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Method--Rendering">
+  <xs:element name="Method.Rendering">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -8726,7 +8726,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Minified--Mode">
+  <xs:element name="Minified.Mode">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -9008,7 +9008,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Notification--Message">
+  <xs:element name="Notification.Message">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -9039,7 +9039,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Open--Result--Type">
+  <xs:element name="Open.Result.Type">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -9198,7 +9198,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Package--Registration">
+  <xs:element name="Package.Registration">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -9215,7 +9215,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Page--Designer--Predefined--Grid">
+  <xs:element name="Page.Designer.Predefined.Grid">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -9229,7 +9229,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="PageCode--Parameters">
+  <xs:element name="PageCode.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -9363,7 +9363,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Panel--Parameters">
+  <xs:element name="Panel.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -9399,7 +9399,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Password--Recovery--Email">
+  <xs:element name="Password.Recovery.Email">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -9470,7 +9470,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="PieChart--Parameters">
+  <xs:element name="PieChart.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -9692,7 +9692,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ProgressBarCustom--Parameters">
+  <xs:element name="ProgressBarCustom.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -9769,7 +9769,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ProgressIndicator--Parameters">
+  <xs:element name="ProgressIndicator.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -9845,7 +9845,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ProtectedBorder--Parameters">
+  <xs:element name="ProtectedBorder.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -9972,7 +9972,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Publishing--Target">
+  <xs:element name="Publishing.Target">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -9983,7 +9983,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="QueryDataSource--Parameters">
+  <xs:element name="QueryDataSource.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -10058,7 +10058,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="QueryStringParameterResolver--Parameters">
+  <xs:element name="QueryStringParameterResolver.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -10074,7 +10074,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Quick--Action">
+  <xs:element name="Quick.Action">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -10095,7 +10095,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="QuickBar--Parameters">
+  <xs:element name="QuickBar.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -10115,7 +10115,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="QuickbarButton--Parameters">
+  <xs:element name="QuickbarButton.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -10153,7 +10153,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="RadarChart--Parameters">
+  <xs:element name="RadarChart.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -10209,7 +10209,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="RadioButton--Parameters">
+  <xs:element name="RadioButton.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -10264,7 +10264,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ReachDataSource--Parameters">
+  <xs:element name="ReachDataSource.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -10323,7 +10323,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Rendering--Folder">
+  <xs:element name="Rendering.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -10333,7 +10333,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Rendering--Group">
+  <xs:element name="Rendering.Group">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -10343,7 +10343,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Rendering--Options">
+  <xs:element name="Rendering.Options">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -10363,7 +10363,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="RenderView--Parameters">
+  <xs:element name="RenderView.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -10394,7 +10394,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Repeater--Parameters">
+  <xs:element name="Repeater.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -10434,7 +10434,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Report--Schedule">
+  <xs:element name="Report.Schedule">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -10456,7 +10456,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Reporter--Report">
+  <xs:element name="Reporter.Report">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -10570,7 +10570,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="RowPanel--Parameters">
+  <xs:element name="RowPanel.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -10631,7 +10631,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Rule--Elements--Visibility--Rule">
+  <xs:element name="Rule.Elements.Visibility.Rule">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -10642,7 +10642,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Rule--Parameters">
+  <xs:element name="Rule.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -10749,7 +10749,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Rules--Context--Folder">
+  <xs:element name="Rules.Context.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -10759,7 +10759,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Rules--Folder">
+  <xs:element name="Rules.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -10848,7 +10848,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Sample--Item">
+  <xs:element name="Sample.Item">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -10860,7 +10860,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Save--Parameters">
+  <xs:element name="Save.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -10880,7 +10880,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Saved--Search">
+  <xs:element name="Saved.Search">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -10906,7 +10906,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ScoreGainedSpot--Parameters">
+  <xs:element name="ScoreGainedSpot.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -11022,7 +11022,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Search--Control--Type">
+  <xs:element name="Search.Control.Type">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -11043,7 +11043,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Search--Data--Source--Parameters">
+  <xs:element name="Search.Data.Source.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -11067,7 +11067,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="SearchDataSource--Parameters">
+  <xs:element name="SearchDataSource.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -11173,7 +11173,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="SearchPanel--Config">
+  <xs:element name="SearchPanel.Config">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -11206,7 +11206,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="SearchPanel--Parameters">
+  <xs:element name="SearchPanel.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -11257,7 +11257,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Section--Parameters">
+  <xs:element name="Section.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -11297,7 +11297,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Security--Folder">
+  <xs:element name="Security.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -11307,7 +11307,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Security--Preset">
+  <xs:element name="Security.Preset">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -11325,7 +11325,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="SegmentBuilder--Parameter">
+  <xs:element name="SegmentBuilder.Parameter">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -11395,7 +11395,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Separator--Parameters">
+  <xs:element name="Separator.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -11425,7 +11425,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Setting--Group">
+  <xs:element name="Setting.Group">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -11436,7 +11436,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="SettingsDictionary--Parameters">
+  <xs:element name="SettingsDictionary.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -11456,7 +11456,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Shared--List--Entry">
+  <xs:element name="Shared.List.Entry">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -11498,7 +11498,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="SilverlightFrame--Parameters">
+  <xs:element name="SilverlightFrame.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -11645,7 +11645,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Slider--Parameters">
+  <xs:element name="Slider.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -11761,7 +11761,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Slider--Step">
+  <xs:element name="Slider.Step">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -11774,7 +11774,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="SliderAdvanced-----Parameters">
+  <xs:element name="SliderAdvanced.-.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -11859,7 +11859,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Small--Button">
+  <xs:element name="Small.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -11876,7 +11876,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Small--Check--Button">
+  <xs:element name="Small.Check.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -11892,7 +11892,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Small--Combo--Button">
+  <xs:element name="Small.Combo.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -11913,7 +11913,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Small--Drop--Down--Box">
+  <xs:element name="Small.Drop.Down.Box">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -11931,7 +11931,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Small--Gallery--Button">
+  <xs:element name="Small.Gallery.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -11952,7 +11952,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Small--Input--Box">
+  <xs:element name="Small.Input.Box">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -11969,7 +11969,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Small--Menu--Combo--Button">
+  <xs:element name="Small.Menu.Combo.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -11987,7 +11987,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="SmallButton--Parameters">
+  <xs:element name="SmallButton.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -12025,7 +12025,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="SmallCheckButton--Parameters">
+  <xs:element name="SmallCheckButton.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -12065,7 +12065,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="SmartPanel--Parameters">
+  <xs:element name="SmartPanel.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -12148,7 +12148,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Speak--Core--1-1">
+  <xs:element name="Speak.Core.1-1">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -12158,7 +12158,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Speak--Core--1-3">
+  <xs:element name="Speak.Core.1-3">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -12429,7 +12429,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Standard--Template">
+  <xs:element name="Standard.Template">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -12439,7 +12439,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Start--Menu--Action">
+  <xs:element name="Start.Menu.Action">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -12453,7 +12453,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Start--Menu--Divider">
+  <xs:element name="Start.Menu.Divider">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -12463,7 +12463,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Start--Menu--Folder">
+  <xs:element name="Start.Menu.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -12486,7 +12486,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="StateChangeList--Parameters">
+  <xs:element name="StateChangeList.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -12662,7 +12662,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="StoredQueryDataSource--Parameters">
+  <xs:element name="StoredQueryDataSource.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -12714,7 +12714,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="StringDictionary--Parameters">
+  <xs:element name="StringDictionary.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -12739,7 +12739,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="StringDictionaryDomain--Parameters">
+  <xs:element name="StringDictionaryDomain.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -12781,7 +12781,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Strip--Parameters">
+  <xs:element name="Strip.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -12827,7 +12827,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="SubAppRenderer--Parameters">
+  <xs:element name="SubAppRenderer.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -12876,7 +12876,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="SubPageCode--Parameters">
+  <xs:element name="SubPageCode.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -12896,7 +12896,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="SubsiteFilter--Parameters">
+  <xs:element name="SubsiteFilter.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -12926,7 +12926,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Summary--Control">
+  <xs:element name="Summary.Control">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -12970,7 +12970,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Tab--Option">
+  <xs:element name="Tab.Option">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -12990,7 +12990,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="TabControl--Parameters">
+  <xs:element name="TabControl.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -13059,7 +13059,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Tag--Repository">
+  <xs:element name="Tag.Repository">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -13091,7 +13091,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Tags--Definition">
+  <xs:element name="Tags.Definition">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -13102,7 +13102,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Tags--Definitions--Folder">
+  <xs:element name="Tags.Definitions.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -13112,7 +13112,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Task--Link">
+  <xs:element name="Task.Link">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -13125,7 +13125,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Task--Option">
+  <xs:element name="Task.Option">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -13139,7 +13139,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Task--Page">
+  <xs:element name="Task.Page">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -13151,7 +13151,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Task--Parameters">
+  <xs:element name="Task.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -13194,7 +13194,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Template--Field">
+  <xs:element name="Template.Field">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -13229,7 +13229,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Template--Field--Type">
+  <xs:element name="Template.Field.Type">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -13243,7 +13243,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Template--Folder">
+  <xs:element name="Template.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -13263,7 +13263,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Template--Section">
+  <xs:element name="Template.Section">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -13274,7 +13274,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="TestActions--Parameters">
+  <xs:element name="TestActions.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -13328,7 +13328,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="TestDefinitionDataSource--Parameters">
+  <xs:element name="TestDefinitionDataSource.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -13657,7 +13657,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Text--Parameters">
+  <xs:element name="Text.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -13723,7 +13723,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="TextArea--Parameters">
+  <xs:element name="TextArea.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -13799,7 +13799,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="TextBox--Parameters">
+  <xs:element name="TextBox.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -13896,7 +13896,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="TimePicker--Parameters">
+  <xs:element name="TimePicker.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -14022,7 +14022,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ToggleButton--Parameters">
+  <xs:element name="ToggleButton.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -14110,7 +14110,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ToggleShow--Parameters">
+  <xs:element name="ToggleShow.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -14150,7 +14150,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Tool--Button">
+  <xs:element name="Tool.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -14166,7 +14166,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Tool--Button--Group">
+  <xs:element name="Tool.Button.Group">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -14176,7 +14176,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Tool--Button--New--Line">
+  <xs:element name="Tool.Button.New.Line">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -14186,7 +14186,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Tool--Option">
+  <xs:element name="Tool.Option">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -14209,7 +14209,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Toolbar--Divider">
+  <xs:element name="Toolbar.Divider">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -14291,7 +14291,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ToolTip--Parameters">
+  <xs:element name="ToolTip.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -14416,7 +14416,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="TopGoalsDataSource--Parameters">
+  <xs:element name="TopGoalsDataSource.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -14439,7 +14439,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="TreeDefinitionFilter--Parameters">
+  <xs:element name="TreeDefinitionFilter.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -14481,7 +14481,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="UnorderedList--Parameters">
+  <xs:element name="UnorderedList.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -14499,7 +14499,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Uploader--Parameter">
+  <xs:element name="Uploader.Parameter">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -14545,7 +14545,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="UploaderInfo--Parameter">
+  <xs:element name="UploaderInfo.Parameter">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -14590,7 +14590,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Url--Rendering">
+  <xs:element name="Url.Rendering">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -14631,7 +14631,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Validation--Result">
+  <xs:element name="Validation.Result">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -14641,7 +14641,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Validation--Rule">
+  <xs:element name="Validation.Rule">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -14652,7 +14652,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Validation--Rules">
+  <xs:element name="Validation.Rules">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -14695,7 +14695,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ValueLabel-----Parameters">
+  <xs:element name="ValueLabel.-.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -14838,7 +14838,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="View--Rendering">
+  <xs:element name="View.Rendering">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -14913,7 +14913,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Warning--Message">
+  <xs:element name="Warning.Message">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -14959,7 +14959,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="WebEdit--Button">
+  <xs:element name="WebEdit.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -14983,7 +14983,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="WebEdit--Texts">
+  <xs:element name="WebEdit.Texts">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -14995,7 +14995,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="WebServiceDataSource--Parameters">
+  <xs:element name="WebServiceDataSource.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -15122,7 +15122,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Xml--Layout">
+  <xs:element name="Xml.Layout">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -15160,7 +15160,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Xsl--Rendering">
+  <xs:element name="Xsl.Rendering">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />

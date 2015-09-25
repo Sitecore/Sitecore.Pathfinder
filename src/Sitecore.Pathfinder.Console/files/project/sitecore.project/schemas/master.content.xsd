@@ -53,334 +53,334 @@
       <xs:element ref="About" />
       <xs:element ref="Accordion" />
       <xs:element ref="Account" />
-      <xs:element ref="Account--Folder" />
-      <xs:element ref="Account--Posting--Configuration" />
+      <xs:element ref="Account.Folder" />
+      <xs:element ref="Account.Posting.Configuration" />
       <xs:element ref="Action" />
       <xs:element ref="Advanced" />
       <xs:element ref="Alias" />
       <xs:element ref="Appearance" />
       <xs:element ref="Application" />
-      <xs:element ref="Archived--Item" />
+      <xs:element ref="Archived.Item" />
       <xs:element ref="Asset" />
-      <xs:element ref="Asset--Group" />
-      <xs:element ref="Asset--Taxonomy" />
+      <xs:element ref="Asset.Group" />
+      <xs:element ref="Asset.Taxonomy" />
       <xs:element ref="AssetMap" />
       <xs:element ref="Audio" />
-      <xs:element ref="Auto--Submit--Action" />
-      <xs:element ref="Base--Login--Button--Parameters" />
+      <xs:element ref="Auto.Submit.Action" />
+      <xs:element ref="Base.Login.Button.Parameters" />
       <xs:element ref="BaseDimension" />
       <xs:element ref="BaseMap" />
       <xs:element ref="BaseSection" />
       <xs:element ref="BaseSegment" />
       <xs:element ref="Behavior" />
-      <xs:element ref="Boosting--Rule" />
+      <xs:element ref="Boosting.Rule" />
       <xs:element ref="Branch" />
-      <xs:element ref="Branch--Folder" />
+      <xs:element ref="Branch.Folder" />
       <xs:element ref="Bucket" />
       <xs:element ref="Caching" />
       <xs:element ref="Campaign" />
-      <xs:element ref="Campaign--Category" />
-      <xs:element ref="Campaign--Classification" />
-      <xs:element ref="Campaign--Group" />
-      <xs:element ref="Campaign--Group--Taxonomy" />
+      <xs:element ref="Campaign.Category" />
+      <xs:element ref="Campaign.Classification" />
+      <xs:element ref="Campaign.Group" />
+      <xs:element ref="Campaign.Group.Taxonomy" />
       <xs:element ref="CampaignMap" />
       <xs:element ref="Channel" />
-      <xs:element ref="Channel--Group" />
-      <xs:element ref="Channel--Taxonomy" />
-      <xs:element ref="Channel--Type" />
-      <xs:element ref="Child--Sorting" />
+      <xs:element ref="Channel.Group" />
+      <xs:element ref="Channel.Taxonomy" />
+      <xs:element ref="Channel.Type" />
+      <xs:element ref="Child.Sorting" />
       <xs:element ref="Chunk" />
       <xs:element ref="CleanBlog" />
-      <xs:element ref="Click--Action" />
-      <xs:element ref="Client--Action" />
-      <xs:element ref="Clientside--Hook" />
+      <xs:element ref="Click.Action" />
+      <xs:element ref="Client.Action" />
+      <xs:element ref="Clientside.Hook" />
       <xs:element ref="Command" />
-      <xs:element ref="Command--Template" />
+      <xs:element ref="Command.Template" />
       <xs:element ref="Condition" />
-      <xs:element ref="Conditional--Rendering--Rule" />
+      <xs:element ref="Conditional.Rendering.Rule" />
       <xs:element ref="Contact" />
-      <xs:element ref="Contact--List" />
-      <xs:element ref="Container--Posting--Configuration" />
-      <xs:element ref="Content--Editor--Warning--Rule" />
-      <xs:element ref="Content--Posting--Configuration" />
+      <xs:element ref="Contact.List" />
+      <xs:element ref="Container.Posting.Configuration" />
+      <xs:element ref="Content.Editor.Warning.Rule" />
+      <xs:element ref="Content.Posting.Configuration" />
       <xs:element ref="Control" />
       <xs:element ref="Controller" />
-      <xs:element ref="Controller--Rendering" />
+      <xs:element ref="Controller.Rendering" />
       <xs:element ref="Country" />
-      <xs:element ref="Custom--Control" />
-      <xs:element ref="Custom--Group" />
-      <xs:element ref="Custom--Taxon" />
-      <xs:element ref="Custom--Taxonomy" />
-      <xs:element ref="Dashboard--Report" />
-      <xs:element ref="Deploy--Associated--Tests--Action" />
-      <xs:element ref="Designer--Item--Parameters" />
+      <xs:element ref="Custom.Control" />
+      <xs:element ref="Custom.Group" />
+      <xs:element ref="Custom.Taxon" />
+      <xs:element ref="Custom.Taxonomy" />
+      <xs:element ref="Dashboard.Report" />
+      <xs:element ref="Deploy.Associated.Tests.Action" />
+      <xs:element ref="Designer.Item.Parameters" />
       <xs:element ref="Device" />
-      <xs:element ref="Dictionary--Domain" />
-      <xs:element ref="Dictionary--Entry" />
-      <xs:element ref="Dictionary--Folder" />
+      <xs:element ref="Dictionary.Domain" />
+      <xs:element ref="Dictionary.Entry" />
+      <xs:element ref="Dictionary.Folder" />
       <xs:element ref="Dimension" />
       <xs:element ref="DimensionFolder" />
       <xs:element ref="Doc" />
       <xs:element ref="Document" />
       <xs:element ref="Docx" />
-      <xs:element ref="Domain--Matcher" />
-      <xs:element ref="Dropdown--List" />
-      <xs:element ref="Element--Folder" />
-      <xs:element ref="Element--Placeholder" />
-      <xs:element ref="Email--Action" />
-      <xs:element ref="Engagement--Automation--Action" />
-      <xs:element ref="Engagement--Plan" />
-      <xs:element ref="Engagement--Plan--Condition" />
-      <xs:element ref="Engagement--Plan--State" />
-      <xs:element ref="Facebook--Message" />
-      <xs:element ref="Facebook--Share--Button--Parameters" />
+      <xs:element ref="Domain.Matcher" />
+      <xs:element ref="Dropdown.List" />
+      <xs:element ref="Element.Folder" />
+      <xs:element ref="Element.Placeholder" />
+      <xs:element ref="Email.Action" />
+      <xs:element ref="Engagement.Automation.Action" />
+      <xs:element ref="Engagement.Plan" />
+      <xs:element ref="Engagement.Plan.Condition" />
+      <xs:element ref="Engagement.Plan.State" />
+      <xs:element ref="Facebook.Message" />
+      <xs:element ref="Facebook.Share.Button.Parameters" />
       <xs:element ref="Facet" />
       <xs:element ref="FDAMediaFolder" />
-      <xs:element ref="Feed--Rendering--Parameters" />
-      <xs:element ref="Field--Search--Type" />
-      <xs:element ref="Field--Type--Validation--Rules" />
+      <xs:element ref="Feed.Rendering.Parameters" />
+      <xs:element ref="Field.Search.Type" />
+      <xs:element ref="Field.Type.Validation.Rules" />
       <xs:element ref="File" />
       <xs:element ref="Filter" />
       <xs:element ref="Flash" />
       <xs:element ref="Folder" />
-      <xs:element ref="Fragment--Action" />
-      <xs:element ref="Global--Validation--Rules" />
+      <xs:element ref="Fragment.Action" />
+      <xs:element ref="Global.Validation.Rules" />
       <xs:element ref="Goal" />
-      <xs:element ref="Goal--Category" />
-      <xs:element ref="Goal--Classification" />
-      <xs:element ref="Goal--Posting--Configuration" />
+      <xs:element ref="Goal.Category" />
+      <xs:element ref="Goal.Classification" />
+      <xs:element ref="Goal.Posting.Configuration" />
       <xs:element ref="GoalMap" />
-      <xs:element ref="Google--Plus--Share--Button--Parameters" />
+      <xs:element ref="Google.Plus.Share.Button.Parameters" />
       <xs:element ref="Group" />
-      <xs:element ref="Head--Placeholder--Setting" />
+      <xs:element ref="Head.Placeholder.Setting" />
       <xs:element ref="Help" />
-      <xs:element ref="HTML--Class" />
-      <xs:element ref="Html--Custom--Button" />
-      <xs:element ref="Html--Editor--Button" />
-      <xs:element ref="Html--Editor--Class--Translation" />
-      <xs:element ref="Html--Editor--Divider" />
-      <xs:element ref="Html--Editor--Drop--Down" />
-      <xs:element ref="Html--Editor--Drop--Down--Button" />
-      <xs:element ref="Html--Editor--Html--Item" />
-      <xs:element ref="Html--Editor--List--Item" />
-      <xs:element ref="Html--Editor--Snippet" />
-      <xs:element ref="Html--Editor--Tidy" />
-      <xs:element ref="Html--Editor--Toolbar" />
-      <xs:element ref="HTML--Font" />
-      <xs:element ref="HTML--Size" />
-      <xs:element ref="HTML--Tidy" />
-      <xs:element ref="HTML--Translation" />
+      <xs:element ref="HTML.Class" />
+      <xs:element ref="Html.Custom.Button" />
+      <xs:element ref="Html.Editor.Button" />
+      <xs:element ref="Html.Editor.Class.Translation" />
+      <xs:element ref="Html.Editor.Divider" />
+      <xs:element ref="Html.Editor.Drop.Down" />
+      <xs:element ref="Html.Editor.Drop.Down.Button" />
+      <xs:element ref="Html.Editor.Html.Item" />
+      <xs:element ref="Html.Editor.List.Item" />
+      <xs:element ref="Html.Editor.Snippet" />
+      <xs:element ref="Html.Editor.Tidy" />
+      <xs:element ref="Html.Editor.Toolbar" />
+      <xs:element ref="HTML.Font" />
+      <xs:element ref="HTML.Size" />
+      <xs:element ref="HTML.Tidy" />
+      <xs:element ref="HTML.Translation" />
       <xs:element ref="Image" />
       <xs:element ref="Indexing" />
-      <xs:element ref="Insert--Options" />
-      <xs:element ref="Insert--Options--Rule" />
-      <xs:element ref="Insert--Rule" />
+      <xs:element ref="Insert.Options" />
+      <xs:element ref="Insert.Options.Rule" />
+      <xs:element ref="Insert.Rule" />
       <xs:element ref="Item" />
-      <xs:element ref="Item--Buckets" />
-      <xs:element ref="Item--Buckets--Settings" />
-      <xs:element ref="Item--Rendering" />
-      <xs:element ref="Item--Section" />
+      <xs:element ref="Item.Buckets" />
+      <xs:element ref="Item.Buckets.Settings" />
+      <xs:element ref="Item.Rendering" />
+      <xs:element ref="Item.Section" />
       <xs:element ref="Jpeg" />
-      <xs:element ref="Klout--Application" />
+      <xs:element ref="Klout.Application" />
       <xs:element ref="Language" />
-      <xs:element ref="Large--Button" />
-      <xs:element ref="Large--Combo--Button" />
-      <xs:element ref="Large--Gallery--Button" />
-      <xs:element ref="Launch--Create--Test--Dialog--Action" />
+      <xs:element ref="Large.Button" />
+      <xs:element ref="Large.Combo.Button" />
+      <xs:element ref="Large.Gallery.Button" />
+      <xs:element ref="Launch.Create.Test.Dialog.Action" />
       <xs:element ref="Layout" />
-      <xs:element ref="Layout--Folder" />
-      <xs:element ref="Layout--Group" />
-      <xs:element ref="Layout--Preset" />
-      <xs:element ref="Layout--To--Append" />
+      <xs:element ref="Layout.Folder" />
+      <xs:element ref="Layout.Group" />
+      <xs:element ref="Layout.Preset" />
+      <xs:element ref="Layout.To.Append" />
       <xs:element ref="Lifetime" />
-      <xs:element ref="LinkedIn--Share--Button--Parameters" />
-      <xs:element ref="List--Folder" />
-      <xs:element ref="Login--Button--Parameters--For--Klout" />
-      <xs:element ref="Login--With--Facebook--Button--Parameters" />
-      <xs:element ref="Login--With--Google--Button--Parameters" />
-      <xs:element ref="Login--With--LinkedIn--Button--Parameters" />
-      <xs:element ref="Login--With--Twitter--Button--Parameters" />
+      <xs:element ref="LinkedIn.Share.Button.Parameters" />
+      <xs:element ref="List.Folder" />
+      <xs:element ref="Login.Button.Parameters.For.Klout" />
+      <xs:element ref="Login.With.Facebook.Button.Parameters" />
+      <xs:element ref="Login.With.Google.Button.Parameters" />
+      <xs:element ref="Login.With.LinkedIn.Button.Parameters" />
+      <xs:element ref="Login.With.Twitter.Button.Parameters" />
       <xs:element ref="Macro" />
-      <xs:element ref="Main--Section" />
+      <xs:element ref="Main.Section" />
       <xs:element ref="Map" />
-      <xs:element ref="Map--Provider" />
-      <xs:element ref="Map--Settings" />
+      <xs:element ref="Map.Provider" />
+      <xs:element ref="Map.Settings" />
       <xs:element ref="MapGroup" />
       <xs:element ref="MapGroupFolder" />
       <xs:element ref="MapType" />
-      <xs:element ref="Markup--Rendering" />
-      <xs:element ref="Markup--Rendering--Parameters" />
-      <xs:element ref="Media--Classification" />
-      <xs:element ref="Media--Folder" />
-      <xs:element ref="Menu--Divider" />
-      <xs:element ref="Menu--Header" />
-      <xs:element ref="Menu--Item" />
+      <xs:element ref="Markup.Rendering" />
+      <xs:element ref="Markup.Rendering.Parameters" />
+      <xs:element ref="Media.Classification" />
+      <xs:element ref="Media.Folder" />
+      <xs:element ref="Menu.Divider" />
+      <xs:element ref="Menu.Header" />
+      <xs:element ref="Menu.Item" />
       <xs:element ref="Message" />
-      <xs:element ref="Method--Rendering" />
+      <xs:element ref="Method.Rendering" />
       <xs:element ref="Model" />
       <xs:element ref="Movie" />
       <xs:element ref="Mp3" />
-      <xs:element ref="Multivariate--Test--Definition" />
-      <xs:element ref="Multivariate--Test--Strategy" />
-      <xs:element ref="Multivariate--Test--Value" />
-      <xs:element ref="Multivariate--Test--Variable" />
+      <xs:element ref="Multivariate.Test.Definition" />
+      <xs:element ref="Multivariate.Test.Strategy" />
+      <xs:element ref="Multivariate.Test.Value" />
+      <xs:element ref="Multivariate.Test.Variable" />
       <xs:element ref="Network" />
-      <xs:element ref="Network--Account" />
-      <xs:element ref="No--Flash--Support--Trait" />
-      <xs:element ref="No--Silverlight--Support--Trait" />
+      <xs:element ref="Network.Account" />
+      <xs:element ref="No.Flash.Support.Trait" />
+      <xs:element ref="No.Silverlight.Support.Trait" />
       <xs:element ref="Node" />
-      <xs:element ref="Not--Enough--Versions--Execute--Command--Action" />
+      <xs:element ref="Not.Enough.Versions.Execute.Command.Action" />
       <xs:element ref="Notification" />
-      <xs:element ref="Open--Result--Type" />
-      <xs:element ref="Organic--Branded--Keywords" />
-      <xs:element ref="Outcome--Definition" />
-      <xs:element ref="Outcome--Type" />
-      <xs:element ref="Package--Registration" />
-      <xs:element ref="Page--Event" />
-      <xs:element ref="Page--Event--Category" />
-      <xs:element ref="Page--Filter" />
-      <xs:element ref="Page--Level--Test--Definition" />
-      <xs:element ref="Page--Level--Test--Value" />
-      <xs:element ref="Page--Level--Test--Variable" />
+      <xs:element ref="Open.Result.Type" />
+      <xs:element ref="Organic.Branded.Keywords" />
+      <xs:element ref="Outcome.Definition" />
+      <xs:element ref="Outcome.Type" />
+      <xs:element ref="Package.Registration" />
+      <xs:element ref="Page.Event" />
+      <xs:element ref="Page.Event.Category" />
+      <xs:element ref="Page.Filter" />
+      <xs:element ref="Page.Level.Test.Definition" />
+      <xs:element ref="Page.Level.Test.Value" />
+      <xs:element ref="Page.Level.Test.Variable" />
       <xs:element ref="Panel" />
-      <xs:element ref="Pattern--Card" />
-      <xs:element ref="Pattern--Cards" />
+      <xs:element ref="Pattern.Card" />
+      <xs:element ref="Pattern.Cards" />
       <xs:element ref="Pdf" />
-      <xs:element ref="Personalization--Test--Variable" />
+      <xs:element ref="Personalization.Test.Variable" />
       <xs:element ref="Placeholder" />
-      <xs:element ref="Placeholder--Settings--Folder" />
+      <xs:element ref="Placeholder.Settings.Folder" />
       <xs:element ref="Portal" />
       <xs:element ref="Portlet" />
       <xs:element ref="Post" />
-      <xs:element ref="Posting--Configuration" />
-      <xs:element ref="PowerShell--Console--Settings" />
-      <xs:element ref="PowerShell--Script" />
-      <xs:element ref="PowerShell--Script--Library" />
-      <xs:element ref="PowerShell--Script--Module" />
-      <xs:element ref="PowerShell--Script--Workflow--Action" />
-      <xs:element ref="Predefined--Filter--Value" />
+      <xs:element ref="Posting.Configuration" />
+      <xs:element ref="PowerShell.Console.Settings" />
+      <xs:element ref="PowerShell.Script" />
+      <xs:element ref="PowerShell.Script.Library" />
+      <xs:element ref="PowerShell.Script.Module" />
+      <xs:element ref="PowerShell.Script.Workflow.Action" />
+      <xs:element ref="Predefined.Filter.Value" />
       <xs:element ref="Preset" />
-      <xs:element ref="Preset--Folder" />
-      <xs:element ref="Preset--Persona" />
+      <xs:element ref="Preset.Folder" />
+      <xs:element ref="Preset.Persona" />
       <xs:element ref="Presets" />
       <xs:element ref="Profile" />
-      <xs:element ref="Profile--Card" />
-      <xs:element ref="Profile--Card-----Persona" />
-      <xs:element ref="Profile--Cards" />
-      <xs:element ref="Profile--Key" />
-      <xs:element ref="Profile--Key--Control" />
+      <xs:element ref="Profile.Card" />
+      <xs:element ref="Profile.Card.-.Persona" />
+      <xs:element ref="Profile.Cards" />
+      <xs:element ref="Profile.Key" />
+      <xs:element ref="Profile.Key.Control" />
       <xs:element ref="Property" />
       <xs:element ref="Proxy" />
       <xs:element ref="Publishing" />
-      <xs:element ref="Publishing--Target" />
-      <xs:element ref="Query--Definition" />
-      <xs:element ref="Query--Folder" />
-      <xs:element ref="Quick--Action" />
-      <xs:element ref="Rebuild--Index--Command" />
+      <xs:element ref="Publishing.Target" />
+      <xs:element ref="Query.Definition" />
+      <xs:element ref="Query.Folder" />
+      <xs:element ref="Quick.Action" />
+      <xs:element ref="Rebuild.Index.Command" />
       <xs:element ref="Reference" />
-      <xs:element ref="Remove--Tests--Action" />
+      <xs:element ref="Remove.Tests.Action" />
       <xs:element ref="Rendering" />
-      <xs:element ref="Rendering--Folder" />
-      <xs:element ref="Rendering--Group" />
-      <xs:element ref="Rendering--Options" />
+      <xs:element ref="Rendering.Folder" />
+      <xs:element ref="Rendering.Group" />
+      <xs:element ref="Rendering.Options" />
       <xs:element ref="Report" />
-      <xs:element ref="Report--Schedule" />
+      <xs:element ref="Report.Schedule" />
       <xs:element ref="ReportQuery" />
       <xs:element ref="Role" />
       <xs:element ref="Root" />
-      <xs:element ref="RSS--Feed" />
+      <xs:element ref="RSS.Feed" />
       <xs:element ref="Rule" />
-      <xs:element ref="Rule--Container" />
-      <xs:element ref="Rule--Elements--Visibility--Rule" />
+      <xs:element ref="Rule.Container" />
+      <xs:element ref="Rule.Elements.Visibility.Rule" />
       <xs:element ref="RuleBase" />
-      <xs:element ref="Rules--Context--Folder" />
-      <xs:element ref="Rules--Folder" />
-      <xs:element ref="Rules--Validation--Rule" />
-      <xs:element ref="Sample--Item" />
-      <xs:element ref="Saved--Search" />
+      <xs:element ref="Rules.Context.Folder" />
+      <xs:element ref="Rules.Folder" />
+      <xs:element ref="Rules.Validation.Rule" />
+      <xs:element ref="Sample.Item" />
+      <xs:element ref="Saved.Search" />
       <xs:element ref="Schedule" />
       <xs:element ref="Script" />
-      <xs:element ref="Search--Control--Type" />
-      <xs:element ref="Search--Definition" />
-      <xs:element ref="Search--Folder" />
+      <xs:element ref="Search.Control.Type" />
+      <xs:element ref="Search.Definition" />
+      <xs:element ref="Search.Folder" />
       <xs:element ref="Security" />
-      <xs:element ref="Security--Folder" />
-      <xs:element ref="Security--Preset" />
+      <xs:element ref="Security.Folder" />
+      <xs:element ref="Security.Preset" />
       <xs:element ref="Segment" />
-      <xs:element ref="Segmented--List" />
+      <xs:element ref="Segmented.List" />
       <xs:element ref="Separator" />
-      <xs:element ref="Session--End--Rule" />
-      <xs:element ref="Setting--Group" />
+      <xs:element ref="Session.End.Rule" />
+      <xs:element ref="Setting.Group" />
       <xs:element ref="SharingControlParameters" />
       <xs:element ref="Simulator" />
-      <xs:element ref="Simulator--Appearance" />
-      <xs:element ref="Simulator--Rotated--State" />
-      <xs:element ref="Small--Button" />
-      <xs:element ref="Small--Check--Button" />
-      <xs:element ref="Small--Combo--Button" />
-      <xs:element ref="Small--Drop--Down--Box" />
-      <xs:element ref="Small--Gallery--Button" />
-      <xs:element ref="Small--Input--Box" />
+      <xs:element ref="Simulator.Appearance" />
+      <xs:element ref="Simulator.Rotated.State" />
+      <xs:element ref="Small.Button" />
+      <xs:element ref="Small.Check.Button" />
+      <xs:element ref="Small.Combo.Button" />
+      <xs:element ref="Small.Drop.Down.Box" />
+      <xs:element ref="Small.Gallery.Button" />
+      <xs:element ref="Small.Input.Box" />
       <xs:element ref="Snippet" />
-      <xs:element ref="Social--Marketer--Account" />
-      <xs:element ref="Social--Marketer--Message" />
-      <xs:element ref="Standard--Comment--Template" />
-      <xs:element ref="Standard--Rendering--Parameters" />
-      <xs:element ref="Standard--Template" />
+      <xs:element ref="Social.Marketer.Account" />
+      <xs:element ref="Social.Marketer.Message" />
+      <xs:element ref="Standard.Comment.Template" />
+      <xs:element ref="Standard.Rendering.Parameters" />
+      <xs:element ref="Standard.Template" />
       <xs:element ref="State" />
       <xs:element ref="Statistics" />
       <xs:element ref="Strip" />
       <xs:element ref="Stylesheet" />
       <xs:element ref="Sublayout" />
-      <xs:element ref="Sublayout--Folder" />
-      <xs:element ref="Submit--Action" />
-      <xs:element ref="Suggested--Test" />
-      <xs:element ref="Tab--Option" />
+      <xs:element ref="Sublayout.Folder" />
+      <xs:element ref="Submit.Action" />
+      <xs:element ref="Suggested.Test" />
+      <xs:element ref="Tab.Option" />
       <xs:element ref="Tag" />
-      <xs:element ref="Tag--Repository" />
+      <xs:element ref="Tag.Repository" />
       <xs:element ref="Tagging" />
-      <xs:element ref="Tags--Definition" />
-      <xs:element ref="Tags--Definitions--Folder" />
+      <xs:element ref="Tags.Definition" />
+      <xs:element ref="Tags.Definitions.Folder" />
       <xs:element ref="Tasks" />
-      <xs:element ref="Taxon--Definition" />
+      <xs:element ref="Taxon.Definition" />
       <xs:element ref="Taxonomy" />
       <xs:element ref="Template" />
-      <xs:element ref="Template--Field" />
-      <xs:element ref="Template--Field--Type" />
-      <xs:element ref="Template--Folder" />
-      <xs:element ref="Template--Section" />
-      <xs:element ref="Test--Candidate--Check--Action" />
-      <xs:element ref="Test--Definition" />
-      <xs:element ref="Test--Type" />
-      <xs:element ref="Test--Value" />
-      <xs:element ref="Test--Variable" />
-      <xs:element ref="Test--Winner--Strategy" />
-      <xs:element ref="Tool--Button" />
-      <xs:element ref="Tool--Button--Group" />
-      <xs:element ref="Tool--Button--New--Line" />
+      <xs:element ref="Template.Field" />
+      <xs:element ref="Template.Field.Type" />
+      <xs:element ref="Template.Folder" />
+      <xs:element ref="Template.Section" />
+      <xs:element ref="Test.Candidate.Check.Action" />
+      <xs:element ref="Test.Definition" />
+      <xs:element ref="Test.Type" />
+      <xs:element ref="Test.Value" />
+      <xs:element ref="Test.Variable" />
+      <xs:element ref="Test.Winner.Strategy" />
+      <xs:element ref="Tool.Button" />
+      <xs:element ref="Tool.Button.Group" />
+      <xs:element ref="Tool.Button.New.Line" />
       <xs:element ref="Toolbar" />
-      <xs:element ref="Traffic--Type" />
+      <xs:element ref="Traffic.Type" />
       <xs:element ref="Trait" />
-      <xs:element ref="Twitter--Message" />
-      <xs:element ref="Twitter--Share--Button--Parameters" />
-      <xs:element ref="Unsupported--Content" />
-      <xs:element ref="Url--Rendering" />
+      <xs:element ref="Twitter.Message" />
+      <xs:element ref="Twitter.Share.Button.Parameters" />
+      <xs:element ref="Unsupported.Content" />
+      <xs:element ref="Url.Rendering" />
       <xs:element ref="User" />
-      <xs:element ref="Validation--Action" />
-      <xs:element ref="Validation--Result" />
-      <xs:element ref="Validation--Rule" />
+      <xs:element ref="Validation.Action" />
+      <xs:element ref="Validation.Result" />
+      <xs:element ref="Validation.Rule" />
       <xs:element ref="Validators" />
-      <xs:element ref="Vendor--Specific--Filter" />
+      <xs:element ref="Vendor.Specific.Filter" />
       <xs:element ref="View" />
-      <xs:element ref="View--Rendering" />
+      <xs:element ref="View.Rendering" />
       <xs:element ref="Visibility" />
       <xs:element ref="VisitMap" />
-      <xs:element ref="Visitor--Identification" />
+      <xs:element ref="Visitor.Identification" />
       <xs:element ref="Webcontrol" />
       <xs:element ref="Workflow" />
-      <xs:element ref="Xml--Layout" />
+      <xs:element ref="Xml.Layout" />
       <xs:element ref="XmlControl" />
-      <xs:element ref="Xsl--Rendering" />
+      <xs:element ref="Xsl.Rendering" />
       <xs:element ref="Zip" />
     </xs:choice>
   </xs:group>
@@ -450,7 +450,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Account--Folder">
+  <xs:element name="Account.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -461,7 +461,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Account--Posting--Configuration">
+  <xs:element name="Account.Posting.Configuration">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -560,7 +560,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Archived--Item">
+  <xs:element name="Archived.Item">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -590,7 +590,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Asset--Group">
+  <xs:element name="Asset.Group">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -603,7 +603,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Asset--Taxonomy">
+  <xs:element name="Asset.Taxonomy">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -691,7 +691,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Auto--Submit--Action">
+  <xs:element name="Auto.Submit.Action">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -715,7 +715,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Base--Login--Button--Parameters">
+  <xs:element name="Base.Login.Button.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -823,7 +823,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Boosting--Rule">
+  <xs:element name="Boosting.Rule">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -855,7 +855,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Branch--Folder">
+  <xs:element name="Branch.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -948,7 +948,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Campaign--Category">
+  <xs:element name="Campaign.Category">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -958,7 +958,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Campaign--Classification">
+  <xs:element name="Campaign.Classification">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -978,7 +978,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Campaign--Group">
+  <xs:element name="Campaign.Group">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -991,7 +991,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Campaign--Group--Taxonomy">
+  <xs:element name="Campaign.Group.Taxonomy">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1075,7 +1075,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Channel--Group">
+  <xs:element name="Channel.Group">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1098,7 +1098,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Channel--Taxonomy">
+  <xs:element name="Channel.Taxonomy">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1108,7 +1108,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Channel--Type">
+  <xs:element name="Channel.Type">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1121,7 +1121,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Child--Sorting">
+  <xs:element name="Child.Sorting">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1196,7 +1196,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Click--Action">
+  <xs:element name="Click.Action">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1218,7 +1218,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Client--Action">
+  <xs:element name="Client.Action">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1230,7 +1230,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Clientside--Hook">
+  <xs:element name="Clientside.Hook">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1272,7 +1272,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Command--Template">
+  <xs:element name="Command.Template">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1315,7 +1315,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Conditional--Rendering--Rule">
+  <xs:element name="Conditional.Rendering.Rule">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1367,7 +1367,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Contact--List">
+  <xs:element name="Contact.List">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1386,7 +1386,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Container--Posting--Configuration">
+  <xs:element name="Container.Posting.Configuration">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1398,7 +1398,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Content--Editor--Warning--Rule">
+  <xs:element name="Content.Editor.Warning.Rule">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1419,7 +1419,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Content--Posting--Configuration">
+  <xs:element name="Content.Posting.Configuration">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1470,7 +1470,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Controller--Rendering">
+  <xs:element name="Controller.Rendering">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1519,7 +1519,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Custom--Control">
+  <xs:element name="Custom.Control">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1530,7 +1530,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Custom--Group">
+  <xs:element name="Custom.Group">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1553,7 +1553,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Custom--Taxon">
+  <xs:element name="Custom.Taxon">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1576,7 +1576,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Custom--Taxonomy">
+  <xs:element name="Custom.Taxonomy">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1596,7 +1596,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Dashboard--Report">
+  <xs:element name="Dashboard.Report">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1610,7 +1610,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Deploy--Associated--Tests--Action">
+  <xs:element name="Deploy.Associated.Tests.Action">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1629,7 +1629,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Designer--Item--Parameters">
+  <xs:element name="Designer.Item.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1694,7 +1694,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Dictionary--Domain">
+  <xs:element name="Dictionary.Domain">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1709,7 +1709,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Dictionary--Entry">
+  <xs:element name="Dictionary.Entry">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1732,7 +1732,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Dictionary--Folder">
+  <xs:element name="Dictionary.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1863,7 +1863,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Domain--Matcher">
+  <xs:element name="Domain.Matcher">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1886,7 +1886,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Dropdown--List">
+  <xs:element name="Dropdown.List">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1913,7 +1913,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Element--Folder">
+  <xs:element name="Element.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1928,7 +1928,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Element--Placeholder">
+  <xs:element name="Element.Placeholder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1959,7 +1959,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Email--Action">
+  <xs:element name="Email.Action">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -1986,7 +1986,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Engagement--Automation--Action">
+  <xs:element name="Engagement.Automation.Action">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2025,7 +2025,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Engagement--Plan">
+  <xs:element name="Engagement.Plan">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2055,7 +2055,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Engagement--Plan--Condition">
+  <xs:element name="Engagement.Plan.Condition">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2108,7 +2108,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Engagement--Plan--State">
+  <xs:element name="Engagement.Plan.State">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2145,7 +2145,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Facebook--Message">
+  <xs:element name="Facebook.Message">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2171,7 +2171,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Facebook--Share--Button--Parameters">
+  <xs:element name="Facebook.Share.Button.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2245,7 +2245,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Feed--Rendering--Parameters">
+  <xs:element name="Feed.Rendering.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2260,7 +2260,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Field--Search--Type">
+  <xs:element name="Field.Search.Type">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2310,7 +2310,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Field--Type--Validation--Rules">
+  <xs:element name="Field.Type.Validation.Rules">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2510,7 +2510,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Fragment--Action">
+  <xs:element name="Fragment.Action">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2532,7 +2532,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Global--Validation--Rules">
+  <xs:element name="Global.Validation.Rules">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2591,7 +2591,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Goal--Category">
+  <xs:element name="Goal.Category">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2601,7 +2601,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Goal--Classification">
+  <xs:element name="Goal.Classification">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2615,7 +2615,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Goal--Posting--Configuration">
+  <xs:element name="Goal.Posting.Configuration">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2677,7 +2677,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Google--Plus--Share--Button--Parameters">
+  <xs:element name="Google.Plus.Share.Button.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2719,7 +2719,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Head--Placeholder--Setting">
+  <xs:element name="Head.Placeholder.Setting">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2747,7 +2747,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="HTML--Class">
+  <xs:element name="HTML.Class">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2759,7 +2759,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Html--Custom--Button">
+  <xs:element name="Html.Custom.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2772,7 +2772,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Html--Editor--Button">
+  <xs:element name="Html.Editor.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2784,7 +2784,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Html--Editor--Class--Translation">
+  <xs:element name="Html.Editor.Class.Translation">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2796,7 +2796,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Html--Editor--Divider">
+  <xs:element name="Html.Editor.Divider">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2806,19 +2806,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Html--Editor--Drop--Down">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
-        <xs:group ref="Templates" minOccurs="0" maxOccurs="unbounded" />
-      </xs:sequence>
-      <xs:attribute name="Click" type="xs:string" />
-      <xs:attribute name="Shortcut" type="xs:string" />
-      <xs:attributeGroup ref="stdattr" />
-      <xs:anyAttribute processContents="lax" />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="Html--Editor--Drop--Down--Button">
+  <xs:element name="Html.Editor.Drop.Down">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2830,7 +2818,19 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Html--Editor--Html--Item">
+  <xs:element name="Html.Editor.Drop.Down.Button">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
+        <xs:group ref="Templates" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+      <xs:attribute name="Click" type="xs:string" />
+      <xs:attribute name="Shortcut" type="xs:string" />
+      <xs:attributeGroup ref="stdattr" />
+      <xs:anyAttribute processContents="lax" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Html.Editor.Html.Item">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2842,7 +2842,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Html--Editor--List--Item">
+  <xs:element name="Html.Editor.List.Item">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2854,7 +2854,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Html--Editor--Snippet">
+  <xs:element name="Html.Editor.Snippet">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2866,7 +2866,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Html--Editor--Tidy">
+  <xs:element name="Html.Editor.Tidy">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2881,7 +2881,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Html--Editor--Toolbar">
+  <xs:element name="Html.Editor.Toolbar">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2891,7 +2891,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="HTML--Font">
+  <xs:element name="HTML.Font">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2903,7 +2903,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="HTML--Size">
+  <xs:element name="HTML.Size">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2915,7 +2915,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="HTML--Tidy">
+  <xs:element name="HTML.Tidy">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2938,7 +2938,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="HTML--Translation">
+  <xs:element name="HTML.Translation">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -2991,7 +2991,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Insert--Options">
+  <xs:element name="Insert.Options">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3001,7 +3001,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Insert--Options--Rule">
+  <xs:element name="Insert.Options.Rule">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3022,7 +3022,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Insert--Rule">
+  <xs:element name="Insert.Rule">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3053,7 +3053,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Item--Buckets">
+  <xs:element name="Item.Buckets">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3063,7 +3063,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Item--Buckets--Settings">
+  <xs:element name="Item.Buckets.Settings">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3084,7 +3084,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Item--Rendering">
+  <xs:element name="Item.Rendering">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3120,7 +3120,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Item--Section">
+  <xs:element name="Item.Section">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3171,7 +3171,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Klout--Application">
+  <xs:element name="Klout.Application">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3214,7 +3214,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Large--Button">
+  <xs:element name="Large.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3231,7 +3231,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Large--Combo--Button">
+  <xs:element name="Large.Combo.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3252,7 +3252,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Large--Gallery--Button">
+  <xs:element name="Large.Gallery.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3272,7 +3272,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Launch--Create--Test--Dialog--Action">
+  <xs:element name="Launch.Create.Test.Dialog.Action">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3297,7 +3297,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Layout--Folder">
+  <xs:element name="Layout.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3318,7 +3318,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Layout--Group">
+  <xs:element name="Layout.Group">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3328,7 +3328,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Layout--Preset">
+  <xs:element name="Layout.Preset">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3349,7 +3349,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Layout--To--Append">
+  <xs:element name="Layout.To.Append">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3369,7 +3369,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="LinkedIn--Share--Button--Parameters">
+  <xs:element name="LinkedIn.Share.Button.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3391,7 +3391,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="List--Folder">
+  <xs:element name="List.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3401,7 +3401,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Login--Button--Parameters--For--Klout">
+  <xs:element name="Login.Button.Parameters.For.Klout">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3422,7 +3422,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Login--With--Facebook--Button--Parameters">
+  <xs:element name="Login.With.Facebook.Button.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3448,7 +3448,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Login--With--Google--Button--Parameters">
+  <xs:element name="Login.With.Google.Button.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3475,7 +3475,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Login--With--LinkedIn--Button--Parameters">
+  <xs:element name="Login.With.LinkedIn.Button.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3501,7 +3501,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Login--With--Twitter--Button--Parameters">
+  <xs:element name="Login.With.Twitter.Button.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3552,7 +3552,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Main--Section">
+  <xs:element name="Main.Section">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3597,7 +3597,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Map--Provider">
+  <xs:element name="Map.Provider">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3613,7 +3613,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Map--Settings">
+  <xs:element name="Map.Settings">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3706,7 +3706,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Markup--Rendering">
+  <xs:element name="Markup.Rendering">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3746,7 +3746,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Markup--Rendering--Parameters">
+  <xs:element name="Markup.Rendering.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3775,7 +3775,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Media--Classification">
+  <xs:element name="Media.Classification">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3789,7 +3789,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Media--Folder">
+  <xs:element name="Media.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3810,7 +3810,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Menu--Divider">
+  <xs:element name="Menu.Divider">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3820,7 +3820,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Menu--Header">
+  <xs:element name="Menu.Header">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3831,7 +3831,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Menu--Item">
+  <xs:element name="Menu.Item">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -3894,7 +3894,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Method--Rendering">
+  <xs:element name="Method.Rendering">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4012,7 +4012,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Multivariate--Test--Definition">
+  <xs:element name="Multivariate.Test.Definition">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4071,7 +4071,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Multivariate--Test--Strategy">
+  <xs:element name="Multivariate.Test.Strategy">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4095,7 +4095,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Multivariate--Test--Value">
+  <xs:element name="Multivariate.Test.Value">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4113,7 +4113,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Multivariate--Test--Variable">
+  <xs:element name="Multivariate.Test.Variable">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4163,7 +4163,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Network--Account">
+  <xs:element name="Network.Account">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4181,7 +4181,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="No--Flash--Support--Trait">
+  <xs:element name="No.Flash.Support.Trait">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4213,7 +4213,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="No--Silverlight--Support--Trait">
+  <xs:element name="No.Silverlight.Support.Trait">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4255,7 +4255,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Not--Enough--Versions--Execute--Command--Action">
+  <xs:element name="Not.Enough.Versions.Execute.Command.Action">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4282,7 +4282,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Open--Result--Type">
+  <xs:element name="Open.Result.Type">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4292,7 +4292,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Organic--Branded--Keywords">
+  <xs:element name="Organic.Branded.Keywords">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4303,7 +4303,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Outcome--Definition">
+  <xs:element name="Outcome.Definition">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4327,7 +4327,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Outcome--Type">
+  <xs:element name="Outcome.Type">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4347,7 +4347,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Package--Registration">
+  <xs:element name="Package.Registration">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4364,7 +4364,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Page--Event">
+  <xs:element name="Page.Event">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4405,7 +4405,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Page--Event--Category">
+  <xs:element name="Page.Event.Category">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4415,7 +4415,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Page--Filter">
+  <xs:element name="Page.Filter">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4440,7 +4440,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Page--Level--Test--Definition">
+  <xs:element name="Page.Level.Test.Definition">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4494,7 +4494,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Page--Level--Test--Value">
+  <xs:element name="Page.Level.Test.Value">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4510,7 +4510,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Page--Level--Test--Variable">
+  <xs:element name="Page.Level.Test.Variable">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4551,7 +4551,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Pattern--Card">
+  <xs:element name="Pattern.Card">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4574,7 +4574,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Pattern--Cards">
+  <xs:element name="Pattern.Cards">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4614,7 +4614,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Personalization--Test--Variable">
+  <xs:element name="Personalization.Test.Variable">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4663,7 +4663,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Placeholder--Settings--Folder">
+  <xs:element name="Placeholder.Settings.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4750,7 +4750,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Posting--Configuration">
+  <xs:element name="Posting.Configuration">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4760,7 +4760,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="PowerShell--Console--Settings">
+  <xs:element name="PowerShell.Console.Settings">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4832,7 +4832,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="PowerShell--Script">
+  <xs:element name="PowerShell.Script">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4859,7 +4859,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="PowerShell--Script--Library">
+  <xs:element name="PowerShell.Script.Library">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4883,7 +4883,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="PowerShell--Script--Module">
+  <xs:element name="PowerShell.Script.Module">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4915,7 +4915,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="PowerShell--Script--Workflow--Action">
+  <xs:element name="PowerShell.Script.Workflow.Action">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -4928,7 +4928,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Predefined--Filter--Value">
+  <xs:element name="Predefined.Filter.Value">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5013,7 +5013,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Preset--Folder">
+  <xs:element name="Preset.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5034,7 +5034,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Preset--Persona">
+  <xs:element name="Preset.Persona">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5137,7 +5137,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Profile--Card">
+  <xs:element name="Profile.Card">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5151,7 +5151,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Profile--Card-----Persona">
+  <xs:element name="Profile.Card.-.Persona">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5176,7 +5176,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Profile--Cards">
+  <xs:element name="Profile.Cards">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5195,7 +5195,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Profile--Key">
+  <xs:element name="Profile.Key">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5208,7 +5208,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Profile--Key--Control">
+  <xs:element name="Profile.Key.Control">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5296,7 +5296,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Publishing--Target">
+  <xs:element name="Publishing.Target">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5322,7 +5322,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Query--Definition">
+  <xs:element name="Query.Definition">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5334,7 +5334,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Query--Folder">
+  <xs:element name="Query.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5344,7 +5344,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Quick--Action">
+  <xs:element name="Quick.Action">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5365,7 +5365,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Rebuild--Index--Command">
+  <xs:element name="Rebuild.Index.Command">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5389,7 +5389,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Remove--Tests--Action">
+  <xs:element name="Remove.Tests.Action">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5439,7 +5439,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Rendering--Folder">
+  <xs:element name="Rendering.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5460,7 +5460,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Rendering--Group">
+  <xs:element name="Rendering.Group">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5470,7 +5470,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Rendering--Options">
+  <xs:element name="Rendering.Options">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5505,7 +5505,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Report--Schedule">
+  <xs:element name="Report.Schedule">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5551,7 +5551,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="RSS--Feed">
+  <xs:element name="RSS.Feed">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5607,7 +5607,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Rule--Container">
+  <xs:element name="Rule.Container">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5628,7 +5628,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Rule--Elements--Visibility--Rule">
+  <xs:element name="Rule.Elements.Visibility.Rule">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5649,7 +5649,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Rules--Context--Folder">
+  <xs:element name="Rules.Context.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5659,7 +5659,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Rules--Folder">
+  <xs:element name="Rules.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5669,7 +5669,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Rules--Validation--Rule">
+  <xs:element name="Rules.Validation.Rule">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5689,7 +5689,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Sample--Item">
+  <xs:element name="Sample.Item">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5720,7 +5720,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Saved--Search">
+  <xs:element name="Saved.Search">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5770,7 +5770,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Search--Control--Type">
+  <xs:element name="Search.Control.Type">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5791,7 +5791,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Search--Definition">
+  <xs:element name="Search.Definition">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5807,7 +5807,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Search--Folder">
+  <xs:element name="Search.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5827,7 +5827,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Security--Folder">
+  <xs:element name="Security.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5837,7 +5837,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Security--Preset">
+  <xs:element name="Security.Preset">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5870,7 +5870,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Segmented--List">
+  <xs:element name="Segmented.List">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5900,7 +5900,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Session--End--Rule">
+  <xs:element name="Session.End.Rule">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5921,7 +5921,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Setting--Group">
+  <xs:element name="Setting.Group">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -5995,7 +5995,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Simulator--Appearance">
+  <xs:element name="Simulator.Appearance">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6025,7 +6025,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Simulator--Rotated--State">
+  <xs:element name="Simulator.Rotated.State">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6055,7 +6055,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Small--Button">
+  <xs:element name="Small.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6072,7 +6072,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Small--Check--Button">
+  <xs:element name="Small.Check.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6088,7 +6088,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Small--Combo--Button">
+  <xs:element name="Small.Combo.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6109,7 +6109,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Small--Drop--Down--Box">
+  <xs:element name="Small.Drop.Down.Box">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6127,7 +6127,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Small--Gallery--Button">
+  <xs:element name="Small.Gallery.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6148,7 +6148,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Small--Input--Box">
+  <xs:element name="Small.Input.Box">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6178,7 +6178,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Social--Marketer--Account">
+  <xs:element name="Social.Marketer.Account">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6192,7 +6192,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Social--Marketer--Message">
+  <xs:element name="Social.Marketer.Message">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6216,7 +6216,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Standard--Comment--Template">
+  <xs:element name="Standard.Comment.Template">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6227,7 +6227,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Standard--Rendering--Parameters">
+  <xs:element name="Standard.Rendering.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6247,7 +6247,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Standard--Template">
+  <xs:element name="Standard.Template">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6369,7 +6369,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Sublayout--Folder">
+  <xs:element name="Sublayout.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6390,7 +6390,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Submit--Action">
+  <xs:element name="Submit.Action">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6412,7 +6412,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Suggested--Test">
+  <xs:element name="Suggested.Test">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6423,7 +6423,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Tab--Option">
+  <xs:element name="Tab.Option">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6463,7 +6463,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Tag--Repository">
+  <xs:element name="Tag.Repository">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6495,7 +6495,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Tags--Definition">
+  <xs:element name="Tags.Definition">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6506,7 +6506,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Tags--Definitions--Folder">
+  <xs:element name="Tags.Definitions.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6526,7 +6526,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Taxon--Definition">
+  <xs:element name="Taxon.Definition">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6570,7 +6570,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Template--Field">
+  <xs:element name="Template.Field">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6617,7 +6617,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Template--Field--Type">
+  <xs:element name="Template.Field.Type">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6632,7 +6632,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Template--Folder">
+  <xs:element name="Template.Folder">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6653,7 +6653,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Template--Section">
+  <xs:element name="Template.Section">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6676,7 +6676,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Test--Candidate--Check--Action">
+  <xs:element name="Test.Candidate.Check.Action">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6690,7 +6690,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Test--Definition">
+  <xs:element name="Test.Definition">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6734,7 +6734,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Test--Type">
+  <xs:element name="Test.Type">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6754,7 +6754,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Test--Value">
+  <xs:element name="Test.Value">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6769,7 +6769,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Test--Variable">
+  <xs:element name="Test.Variable">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6789,7 +6789,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Test--Winner--Strategy">
+  <xs:element name="Test.Winner.Strategy">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6810,7 +6810,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Tool--Button">
+  <xs:element name="Tool.Button">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6826,7 +6826,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Tool--Button--Group">
+  <xs:element name="Tool.Button.Group">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6836,7 +6836,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Tool--Button--New--Line">
+  <xs:element name="Tool.Button.New.Line">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6857,7 +6857,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Traffic--Type">
+  <xs:element name="Traffic.Type">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6914,7 +6914,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Twitter--Message">
+  <xs:element name="Twitter.Message">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6937,7 +6937,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Twitter--Share--Button--Parameters">
+  <xs:element name="Twitter.Share.Button.Parameters">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6959,7 +6959,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Unsupported--Content">
+  <xs:element name="Unsupported.Content">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -6975,7 +6975,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Url--Rendering">
+  <xs:element name="Url.Rendering">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7036,7 +7036,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Validation--Action">
+  <xs:element name="Validation.Action">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7064,7 +7064,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Validation--Result">
+  <xs:element name="Validation.Result">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7084,7 +7084,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Validation--Rule">
+  <xs:element name="Validation.Rule">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7115,7 +7115,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Vendor--Specific--Filter">
+  <xs:element name="Vendor.Specific.Filter">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7163,7 +7163,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="View--Rendering">
+  <xs:element name="View.Rendering">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7242,7 +7242,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Visitor--Identification">
+  <xs:element name="Visitor.Identification">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7339,7 +7339,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Xml--Layout">
+  <xs:element name="Xml.Layout">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />
@@ -7387,7 +7387,7 @@
       <xs:anyAttribute processContents="lax" />
     </xs:complexType>
   </xs:element>
-  <xs:element name="Xsl--Rendering">
+  <xs:element name="Xsl.Rendering">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="Fields" minOccurs="0" maxOccurs="1" />

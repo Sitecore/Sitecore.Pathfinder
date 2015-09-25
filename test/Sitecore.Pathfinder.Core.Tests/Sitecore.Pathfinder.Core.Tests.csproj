@@ -93,6 +93,7 @@
     <Compile Include="Configuration\ConfigurationServicesTests.cs" />
     <Compile Include="Helpers\Services.cs" />
     <Compile Include="IO\MockedFileSystemService.cs" />
+    <Compile Include="Extensions\StringExtensionsTests.cs" />
     <Compile Include="Projects\ProjectTests.Json.cs" />
     <Compile Include="Projects\ProjectTests.Yaml.cs" />
     <Compile Include="Projects\ProjectTests.Xml.cs" />

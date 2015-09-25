@@ -76,7 +76,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
         [Diagnostics.NotNull]
         protected virtual string GetTemplateName([Diagnostics.NotNull] Template template)
         {
-            return template.Name.GetSafeXmlIdentifier();
+            return template.Name.EscapeXmlElementName();
         }
 
         protected virtual void WriteAttributeString([Diagnostics.NotNull] XmlTextWriter output, [Diagnostics.NotNull] string name, [Diagnostics.NotNull] string type, [Diagnostics.NotNull] string help)

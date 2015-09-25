@@ -53,7 +53,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
                 if (templateIdOrPath.Contains('/') || templateIdOrPath.Contains('{'))
                 {
-                    return Project.FindQualifiedItem(templateIdOrPath, DatabaseName) as Template ?? Template.Empty;
+                    return Project.FindQualifiedItem(DatabaseName, templateIdOrPath) as Template ?? Template.Empty;
                 }
 
                 // resolve by short name

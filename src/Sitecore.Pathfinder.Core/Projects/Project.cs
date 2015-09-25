@@ -134,7 +134,24 @@ namespace Sitecore.Pathfinder.Projects
             PipelineService.Resolve<CompilePipeline>().Execute(context, this);
         }
 
-        public IProjectItem FindQualifiedItem(string qualifiedName, string databaseName)
+        public IProjectItem FindQualifiedItem(string qualifiedName)
+        {
+            if (!qualifiedName.StartsWith("{") || !qualifiedName.EndsWith("}"))
+            {
+                return Items.FirstOrDefault(i => string.Equals(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase));
+            }
+
+            Guid guid;
+            if (Guid.TryParse(qualifiedName, out guid))
+            {
+                return Items.FirstOrDefault(i => i.Uri.Guid == guid);
+            }
+
+            guid = StringHelper.ToGuid(qualifiedName);
+            return Items.FirstOrDefault(i => i.Uri.Guid == guid);
+        }
+
+        public IProjectItem FindQualifiedItem(string databaseName, string qualifiedName)
         {
             Guid guid;
             if (Guid.TryParse(qualifiedName, out guid))
@@ -156,29 +173,11 @@ namespace Sitecore.Pathfinder.Projects
             return Items.FirstOrDefault(i => i.Uri == uri);
         }
 
-        public IProjectItem FindQualifiedItem(string qualifiedName)
-        {
-            Guid guid;
-            if (Guid.TryParse(qualifiedName, out guid))
-            {
-                return Items.FirstOrDefault(i => i.Uri.Guid == guid);
-            }
-
-            if (qualifiedName.StartsWith("{") && qualifiedName.EndsWith("}"))
-            {
-                guid = StringHelper.ToGuid(qualifiedName);
-                return Items.FirstOrDefault(i => i.Uri.Guid == guid);
-            }
-
-            return Items.FirstOrDefault(i => string.Equals(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase));
-        }
-
         public virtual IProject Load(ProjectOptions projectOptions, IEnumerable<string> sourceFileNames)
         {
             Options = projectOptions;
 
             var context = CompositionService.Resolve<IParseContext>().With(this, Snapshot.Empty);
-
             AddExternals(context);
 
             foreach (var sourceFileName in sourceFileNames)

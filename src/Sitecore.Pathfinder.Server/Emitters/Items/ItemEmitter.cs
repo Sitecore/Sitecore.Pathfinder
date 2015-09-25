@@ -102,7 +102,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
             }
 
             // try matching by Xml safe name
-            template = templates.FirstOrDefault(t => string.Compare(t.Name.GetSafeXmlIdentifier(), templateIdOrPath, StringComparison.OrdinalIgnoreCase) == 0);
+            template = templates.FirstOrDefault(t => string.Compare(t.Name.EscapeXmlElementName(), templateIdOrPath, StringComparison.OrdinalIgnoreCase) == 0);
             if (template != null)
             {
                 return database.GetItem(template.ID)?.Paths.Path;

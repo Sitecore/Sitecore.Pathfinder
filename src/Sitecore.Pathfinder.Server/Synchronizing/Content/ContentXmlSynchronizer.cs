@@ -67,7 +67,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
                 return;
             }
 
-            var templateName = item.TemplateName.Replace(" ", "--");
+            var templateName = item.TemplateName.EscapeXmlElementName();
 
             output.WriteStartElement(templateName);
             output.WriteAttributeString("Id", item.ID.ToString());
@@ -93,7 +93,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
                     continue;
                 }
 
-                var fieldName = field.Name.Replace(" ", "--");
+                var fieldName = field.Name.EscapeXmlElementName();
                 output.WriteAttributeString(fieldName, field.Value);
             }
 
