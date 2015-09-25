@@ -26,12 +26,12 @@ namespace Sitecore.Pathfinder.Emitters.Files
 
         public override bool CanEmit(IEmitContext context, IProjectItem projectItem)
         {
-            return projectItem is YamlItemFile;
+            return projectItem is SerializationFile;
         }
 
         public override void Emit(IEmitContext context, IProjectItem projectItem)
         {
-            var itemModel = (YamlItemFile)projectItem;
+            var itemModel = (SerializationFile)projectItem;
 
             try
             {

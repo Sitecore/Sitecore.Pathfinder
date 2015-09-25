@@ -39,7 +39,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             template.IsEmittable = string.Compare(textNode.GetAttributeValue("IsEmittable"), "False", StringComparison.OrdinalIgnoreCase) != 0;
             template.IsExternalReference = string.Compare(textNode.GetAttributeValue("IsExternalReference"), "True", StringComparison.OrdinalIgnoreCase) == 0;
 
-            template.References.AddRange(ParseReferences(context, template, template.BaseTemplatesProperty));
+            template.References.AddRange(context.ParseContext.ReferenceParser.ParseReferences(template, template.BaseTemplatesProperty));
 
             // create standard values item
             var standardValuesItemIdOrPath = itemIdOrPath + "/__Standard Values";
@@ -69,8 +69,8 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
                 template.StandardValuesItem.Fields.Add(field);
             }
 
-            context.ParseContext.Project.AddOrMerge(context.ParseContext, template);
-            context.ParseContext.Project.AddOrMerge(context.ParseContext, standardValuesItem);
+            context.ParseContext.Project.AddOrMerge(template);
+            context.ParseContext.Project.AddOrMerge(standardValuesItem);
         }
 
         protected virtual void ParseField([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] TemplateSection templateSection, [NotNull] ITextNode templateFieldTextNode, ref int nextSortOrder)
@@ -118,7 +118,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
                 }
             }
 
-              template.References.AddRange(ParseReferences(context, template, templateField.SourceProperty));
+              template.References.AddRange(context.ParseContext.ReferenceParser.ParseReferences(template, templateField.SourceProperty));
         }
 
         protected virtual void ParseSection([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] ITextNode templateSectionTextNode)

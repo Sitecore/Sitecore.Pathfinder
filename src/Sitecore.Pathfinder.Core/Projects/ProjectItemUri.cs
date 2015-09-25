@@ -8,6 +8,9 @@ namespace Sitecore.Pathfinder.Projects
 {
     public sealed class ProjectItemUri
     {
+        [NotNull]
+        public static readonly ProjectItemUri Empty = new ProjectItemUri();
+
         public ProjectItemUri([NotNull] IProject project, [NotNull] string filePath)
         {
             // guids exclude typeOrDatabase, so items have same id across databases
@@ -22,6 +25,12 @@ namespace Sitecore.Pathfinder.Projects
         {
             FileOrDatabaseName = databaseName;
             Guid = guid;
+        }
+
+        private ProjectItemUri()
+        {
+            FileOrDatabaseName = string.Empty;
+            Guid = Guid.Empty;
         }
 
         [NotNull]

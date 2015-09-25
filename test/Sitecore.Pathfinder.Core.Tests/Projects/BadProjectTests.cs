@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Projects
             var linkField = item.Fields.FirstOrDefault(f => f.FieldName == "BadLink");
             Assert.IsNotNull(linkField);
             Assert.AreEqual("/sitecore/media library/badlink", linkField.Value);
-            Assert.AreEqual(string.Empty, linkField.ResolvedValue);
+            Assert.AreEqual(string.Empty, linkField.CompiledValue);
             diagnostic = Project.Diagnostics.FirstOrDefault(d => d.Text == "Link field reference not found: /sitecore/media library/badlink");
             Assert.IsNotNull(diagnostic);
 
@@ -45,25 +45,25 @@ namespace Sitecore.Pathfinder.Projects
             linkField = item.Fields.FirstOrDefault(f => f.FieldName == "BadLink1");
             Assert.IsNotNull(linkField);
             Assert.AreEqual("/sitecore/media library/badlink", linkField.Value);
-            Assert.AreEqual(string.Empty, linkField.ResolvedValue);
+            Assert.AreEqual(string.Empty, linkField.CompiledValue);
 
             // link field
             linkField = item.Fields.FirstOrDefault(f => f.FieldName == "BadLink2");
             Assert.IsNotNull(linkField);
             Assert.AreEqual("", linkField.Value);
-            Assert.AreEqual(string.Empty, linkField.ResolvedValue);
+            Assert.AreEqual(string.Empty, linkField.CompiledValue);
           
             // multiple links field
             linkField = item.Fields.FirstOrDefault(f => f.FieldName == "Multiple");
             Assert.IsNotNull(linkField);
             Assert.AreEqual("/sitecore/media library/badlink|/sitecore/media library/badlink", linkField.Value);
-            Assert.AreEqual(string.Empty, linkField.ResolvedValue);
+            Assert.AreEqual(string.Empty, linkField.CompiledValue);
           
             // image field
             var imageField = item.Fields.FirstOrDefault(f => f.FieldName == "BadImage");
             Assert.IsNotNull(imageField);
             Assert.AreEqual("/sitecore/media library/badlink", imageField.Value);
-            Assert.AreEqual(string.Empty, imageField.ResolvedValue);
+            Assert.AreEqual(string.Empty, imageField.CompiledValue);
             diagnostic = Project.Diagnostics.FirstOrDefault(d => d.Text == "Image reference not found: /sitecore/media library/badlink");
             Assert.IsNotNull(diagnostic);
 
@@ -71,7 +71,7 @@ namespace Sitecore.Pathfinder.Projects
             imageField = item.Fields.FirstOrDefault(f => f.FieldName == "BadImage2");
             Assert.IsNotNull(imageField);
             Assert.AreEqual(string.Empty, imageField.Value);
-            Assert.AreEqual(string.Empty, imageField.ResolvedValue);
+            Assert.AreEqual(string.Empty, imageField.CompiledValue);
         }
     }
 }

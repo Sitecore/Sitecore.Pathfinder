@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Microsoft.Framework.ConfigurationModel;
-using Sitecore.Pathfinder.Checking;
+using Sitecore.Pathfinder.Compiling.Compilers;
+using Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
@@ -13,8 +14,6 @@ using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects.Items;
-using Sitecore.Pathfinder.Projects.Items.FieldResolvers;
-using Sitecore.Pathfinder.Projects.Pipelines.CompilePipelines;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Pathfinder.Text;
@@ -41,14 +40,13 @@ namespace Sitecore.Pathfinder.Projects
         private string _projectUniqueId;
 
         [ImportingConstructor]
-        public Project([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService, [NotNull] ICheckerService checker, [NotNull] IPipelineService pipelineService)
+        public Project([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService, [NotNull] IPipelineService pipelineService)
         {
             CompositionService = compositionService;
             Configuration = configuration;
             Factory = factory;
             FileSystem = fileSystem;
             ParseService = parseService;
-            Checker = checker;
             PipelineService = pipelineService;
 
             Options = ProjectOptions.Empty;
@@ -67,9 +65,6 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         public IFactoryService Factory { get; }
 
-        [ImportMany]
-        public IEnumerable<IFieldResolver> FieldResolvers { get; private set; }
-
         public IFileSystemService FileSystem { get; }
 
         public bool HasErrors => Diagnostics.Any(m => m.Severity == Severity.Error);
@@ -81,9 +76,6 @@ namespace Sitecore.Pathfinder.Projects
         public string ProjectUniqueId => _projectUniqueId ?? (_projectUniqueId = Configuration.Get(Constants.Configuration.ProjectUniqueId));
 
         public ICollection<ISourceFile> SourceFiles { get; } = new List<ISourceFile>();
-
-        [NotNull]
-        protected ICheckerService Checker { get; }
 
         [NotNull]
         protected ICompositionService CompositionService { get; }
@@ -117,18 +109,18 @@ namespace Sitecore.Pathfinder.Projects
             ParseService.Parse(this, sourceFile);
         }
 
-        public virtual T AddOrMerge<T>(IParseContext context, T projectItem) where T : IProjectItem
+        public virtual T AddOrMerge<T>(T projectItem) where T : IProjectItem
         {
             var newItem = projectItem as Item;
             if (newItem != null)
             {
-                return (T)MergeItem(context, newItem);
+                return (T)MergeItem(newItem);
             }
 
             var newTemplate = projectItem as Template;
             if (newTemplate != null)
             {
-                return (T)MergeTemplate(context, newTemplate);
+                return (T)MergeTemplate(newTemplate);
             }
 
             _items.Add(projectItem);
@@ -137,34 +129,9 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual void Compile()
         {
-            // compile new files
-            var uncompiledProjectItem = Items.FirstOrDefault(i => i.State == ProjectItemState.CompilationPending);
-            while (uncompiledProjectItem != null)
-            {
-                PipelineService.Resolve<CompilePipeline>().Execute(uncompiledProjectItem);
-                uncompiledProjectItem.State = ProjectItemState.Compiled;
+            var context = CompositionService.Resolve<ICompileContext>();
 
-                uncompiledProjectItem = Items.FirstOrDefault(i => i.State == ProjectItemState.CompilationPending);
-            }
-
-            // resolve field values
-            var trace = new ProjectDiagnosticTraceService(Configuration, Factory).With(this);
-            foreach (var field in Items.OfType<Item>().SelectMany(item => item.Fields))
-            {
-                field.ResolveValue(trace);
-            }
-
-            // resolve refernces
-            foreach (var projectItem in Items)
-            {
-                foreach (var reference in projectItem.References)
-                {
-                    reference.Resolve();
-                }
-            }
-
-            // run checkers
-            Checker.CheckProject(this);
+            PipelineService.Resolve<CompilePipeline>().Execute(context, this);
         }
 
         public IProjectItem FindQualifiedItem(string qualifiedName, string databaseName)
@@ -290,7 +257,7 @@ namespace Sitecore.Pathfinder.Projects
         }
 
         [NotNull]
-        protected virtual IProjectItem MergeItem<T>([NotNull] IParseContext context, [NotNull] T newItem) where T : Item
+        protected virtual IProjectItem MergeItem<T>([NotNull] T newItem) where T : Item
         {
             Item item = null;
             if (newItem.MergingMatch == MergingMatch.MatchUsingSourceFile)
@@ -314,12 +281,12 @@ namespace Sitecore.Pathfinder.Projects
                 return newItem;
             }
 
-            item.Merge(context, newItem);
+            item.Merge(newItem);
             return item;
         }
 
         [NotNull]
-        protected virtual IProjectItem MergeTemplate<T>([NotNull] IParseContext context, [NotNull] T newTemplate) where T : Template
+        protected virtual IProjectItem MergeTemplate<T>([NotNull] T newTemplate) where T : Template
         {
             var template = Items.OfType<Template>().FirstOrDefault(i => string.Equals(i.ItemIdOrPath, newTemplate.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) && string.Equals(i.DatabaseName, newTemplate.DatabaseName, StringComparison.OrdinalIgnoreCase));
             if (template == null)
@@ -328,7 +295,7 @@ namespace Sitecore.Pathfinder.Projects
                 return newTemplate;
             }
 
-            template.Merge(context, newTemplate);
+            template.Merge(newTemplate);
             return template;
         }
     }

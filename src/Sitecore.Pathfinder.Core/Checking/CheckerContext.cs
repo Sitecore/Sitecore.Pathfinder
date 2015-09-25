@@ -12,13 +12,16 @@ namespace Sitecore.Pathfinder.Checking
     public class CheckerContext : ICheckerContext
     {
         [ImportingConstructor]
-        public CheckerContext([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory)
+        public CheckerContext([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] IFactoryService factory)
         {
             Configuration = configuration;
+            CompositionService = compositionService;
             Factory = factory;
 
             IsDeployable = true;
         }
+
+        public ICompositionService CompositionService { get; }
 
         public bool IsDeployable { get; set; }
 

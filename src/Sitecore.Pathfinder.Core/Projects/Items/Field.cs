@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using Sitecore.Pathfinder.Compiling.FieldCompilers;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -34,7 +35,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public SourceProperty<string> FieldNameProperty { get; } = new SourceProperty<string>("Name", string.Empty);
 
-        public bool IsResolved { get; set; }
+        public bool IsCompiled { get; set; }
 
         public bool IsTestable { get; set; } = true;
 
@@ -52,7 +53,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         public SourceProperty<string> LanguageProperty { get; } = new SourceProperty<string>("Language", string.Empty);
 
         [NotNull]
-        public string ResolvedValue { get; private set; }
+        public string CompiledValue { get; private set; }
 
         [NotNull]
         [ItemNotNull]
@@ -92,24 +93,24 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         public void Invalidate()
         {
-            IsResolved = false;
+            IsCompiled = false;
         }
 
-        public void ResolveValue([NotNull] ITraceService trace)
+        public void Compile([NotNull] IFieldCompileContext context)
         {
-            if (IsResolved)
+            if (IsCompiled)
             {
                 return;
             }
 
-            IsResolved = true;
-            ResolvedValue = Value;
+            IsCompiled = true;
+            CompiledValue = Value;
 
-            foreach (var fieldResolver in Item.Project.FieldResolvers.OrderBy(r => r.Priority))
+            foreach (var compiler in context.FieldCompilers.OrderBy(r => r.Priority))
             {
-                if (fieldResolver.CanResolve(this))
+                if (compiler.CanCompile(context, this))
                 {
-                    ResolvedValue = fieldResolver.Resolve(trace, this);
+                    CompiledValue = compiler.Compile(context, this);
                     break;
                 }
             }

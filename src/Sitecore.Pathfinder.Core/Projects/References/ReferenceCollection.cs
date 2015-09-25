@@ -44,7 +44,7 @@ namespace Sitecore.Pathfinder.Projects.References
             return _references.Contains(item);
         }
 
-        public void CopyTo([CanBeNull] IReference[] array, int arrayIndex)
+        public void CopyTo([ItemNotNull] IReference[] array, int arrayIndex)
         {
             _references.CopyTo(array, arrayIndex);
         }

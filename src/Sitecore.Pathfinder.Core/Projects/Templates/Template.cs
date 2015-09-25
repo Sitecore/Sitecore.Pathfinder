@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -56,14 +55,14 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [CanBeNull]
         public Item StandardValuesItem { get; set; }
 
-        public void Merge([NotNull] IParseContext context, [NotNull] Template newTemplate)
+        public void Merge([NotNull] Template newTemplate)
         {
-            Merge(context, newTemplate, true);
+            Merge(newTemplate, true);
         }
 
-        protected override void Merge(IParseContext context, IProjectItem newProjectItem, bool overwrite)
+        protected override void Merge(IProjectItem newProjectItem, bool overwrite)
         {
-            base.Merge(context, newProjectItem, overwrite);
+            base.Merge(newProjectItem, overwrite);
 
             var newTemplate = newProjectItem as Template;
             if (newTemplate == null)

@@ -3,8 +3,6 @@
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
-using Sitecore.Pathfinder.Parsing;
-using Sitecore.Pathfinder.Projects.Items.FieldResolvers;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects
@@ -16,10 +14,6 @@ namespace Sitecore.Pathfinder.Projects
         ICollection<Diagnostic> Diagnostics { get; }
 
         long Ducats { get; set; }
-
-        [NotNull]
-        [ItemNotNull]
-        IEnumerable<IFieldResolver> FieldResolvers { get; }
 
         [NotNull]
         IFileSystemService FileSystem { get; }
@@ -43,7 +37,7 @@ namespace Sitecore.Pathfinder.Projects
         void Add([NotNull] string sourceFileName);
 
         [NotNull]
-        T AddOrMerge<T>([NotNull] IParseContext context, [NotNull] T projectItem) where T : IProjectItem;
+        T AddOrMerge<T>([NotNull] T projectItem) where T : IProjectItem;
 
         void Compile();
 

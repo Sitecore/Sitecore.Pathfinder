@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -73,6 +74,16 @@ namespace Sitecore.Pathfinder.Configuration
             return new Item(project, guid, textNode, databaseName, itemName, itemIdOrPath, templateIdOrPath);
         }
 
+        public ItemBuilder ItemBuilder()
+        {
+            return CompositionService.Resolve<ItemBuilder>();
+        }
+
+        public FieldBuilder FieldBuilder()
+        {
+            return CompositionService.Resolve<FieldBuilder>();
+        }
+
         public virtual ItemParseContext ItemParseContext(IParseContext context, ItemParser itemParser, string databaseName, string parentItemPath)
         {
             return new ItemParseContext(context, itemParser, databaseName, parentItemPath);
@@ -88,9 +99,9 @@ namespace Sitecore.Pathfinder.Configuration
             return new LayoutRenderingReference(projectItem, renderingTextNode);
         }
 
-        public virtual MediaFile MediaFile(IProject project, ISnapshot snapshot, string filePath, ProjectItemUri mediaItemUri)
+        public virtual MediaFile MediaFile(IProject project, ISnapshot snapshot, string databaseName, string itemName, string itemPath, string filePath)
         {
-            return new MediaFile(project, snapshot, filePath, mediaItemUri);
+            return new MediaFile(project, snapshot, databaseName, itemName, itemPath, filePath);
         }
 
         public virtual IProject Project(ProjectOptions projectOptions, List<string> sourceFileNames)
@@ -108,14 +119,14 @@ namespace Sitecore.Pathfinder.Configuration
             return new Reference(projectItem, sourceSourceProperty);
         }
 
-        public virtual Rendering Rendering(IProject project, ISnapshot snapshot, string filePath, Item item)
+        public virtual Rendering Rendering(IProject project, ISnapshot snapshot, string databaseName, string itemPath, string itemName, string filePath, string templateIdOrPath)
         {
-            return new Rendering(project, snapshot, filePath, item);
+            return new Rendering(project, snapshot, databaseName, itemPath, itemName, filePath, templateIdOrPath);
         }
 
-        public virtual YamlItemFile SerializationFile(IProject project, ISnapshot snapshot, ProjectItemUri uri, string filePath)
+        public virtual SerializationFile SerializationFile(IProject project, ISnapshot snapshot, string filePath)
         {
-            return new YamlItemFile(project, snapshot, uri, filePath);
+            return new SerializationFile(project, snapshot, filePath);
         }
 
         public virtual ISnapshot Snapshot(ISourceFile sourceFile)

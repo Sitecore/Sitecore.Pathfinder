@@ -94,8 +94,8 @@ namespace Sitecore.Pathfinder.Projects
             var projectItem1 = new Item(project, sameGuid, TextNode.Empty, string.Empty, "SameId", string.Empty, string.Empty);
             var projectItem2 = new Item(project, sameGuid, TextNode.Empty, string.Empty, "SameId", string.Empty, string.Empty);
 
-            project.AddOrMerge(context, projectItem1);
-            project.AddOrMerge(context, projectItem2);
+            project.AddOrMerge(projectItem1);
+            project.AddOrMerge(projectItem2);
 
             Assert.AreEqual(1, project.Items.Count());
         }
@@ -143,7 +143,7 @@ namespace Sitecore.Pathfinder.Projects
             Assert.IsNotNull(field);
             Assert.AreEqual("Title", field.FieldName);
             Assert.AreEqual("Pip 1", field.Value);
-            Assert.AreEqual("Pip 1", field.ResolvedValue);
+            Assert.AreEqual("Pip 1", field.CompiledValue);
             Assert.AreEqual("en", field.Language);
             Assert.AreEqual(1, field.Version);
         }

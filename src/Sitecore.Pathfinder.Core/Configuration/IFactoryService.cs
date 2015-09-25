@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing;
@@ -43,6 +44,12 @@ namespace Sitecore.Pathfinder.Configuration
         Item Item([NotNull] IProject project, Guid guid, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath);
 
         [NotNull]
+        ItemBuilder ItemBuilder();
+
+        [NotNull]
+        FieldBuilder FieldBuilder();
+
+        [NotNull]
         ItemParseContext ItemParseContext([NotNull] IParseContext context, [NotNull] ItemParser itemParser, [NotNull] string databaseName, [NotNull] string parentItemPath);
 
         [NotNull]
@@ -52,7 +59,7 @@ namespace Sitecore.Pathfinder.Configuration
         LayoutRenderingReference LayoutRenderingReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> layoutTextNode);
 
         [NotNull]
-        MediaFile MediaFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath, [NotNull] ProjectItemUri mediaItemUri);
+        MediaFile MediaFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemPath, [NotNull] string filePath);
 
         [NotNull]
         IProject Project([NotNull] ProjectOptions projectOptions, [NotNull] [ItemNotNull] List<string> sourceFileNames);
@@ -64,10 +71,10 @@ namespace Sitecore.Pathfinder.Configuration
         IReference Reference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> sourceSourceProperty);
 
         [NotNull]
-        Rendering Rendering([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath, [NotNull] Item item);
+        Rendering Rendering([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string databaseName, [NotNull] string itemPath, [NotNull] string itemName, [NotNull] string filePath, [NotNull] string templateIdOrPath);
 
         [NotNull]
-        YamlItemFile SerializationFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] ProjectItemUri uri, [NotNull] string filePath);
+        SerializationFile SerializationFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath);
 
         [NotNull]
         ISnapshot Snapshot([NotNull] ISourceFile sourceFile);

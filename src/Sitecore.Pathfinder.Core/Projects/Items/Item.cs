@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -73,14 +72,14 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public SourceProperty<string> TemplateIdOrPathProperty { get; } = new SourceProperty<string>("Template", string.Empty, SourcePropertyFlags.IsQualified);
 
-        public void Merge([NotNull] IParseContext context, [NotNull] Item newProjectItem)
+        public void Merge([NotNull] Item newProjectItem)
         {
-            Merge(context, newProjectItem, OverwriteWhenMerging);
+            Merge(newProjectItem, OverwriteWhenMerging);
         }
 
-        protected override void Merge(IParseContext context, IProjectItem newProjectItem, bool overwrite)
+        protected override void Merge(IProjectItem newProjectItem, bool overwrite)
         {
-            base.Merge(context, newProjectItem, overwrite);
+            base.Merge(newProjectItem, overwrite);
 
             var newItem = newProjectItem as Item;
             if (newItem == null)
@@ -106,10 +105,13 @@ namespace Sitecore.Pathfinder.Projects.Items
                     continue;
                 }
 
+                /*
+                // todo: enable this check
                 if (field.Value != newField.Value)
                 {
                     context.Trace.TraceError(Texts.Field_is_being_assigned_two_different_values, field.FieldName);
                 }
+                */
 
                 field.ValueProperty.SetValue(newField.ValueProperty, SetValueOptions.DisableUpdates);
                 field.IsTestable = field.IsTestable || newField.IsTestable;

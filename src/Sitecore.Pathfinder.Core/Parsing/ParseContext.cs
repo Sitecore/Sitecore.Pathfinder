@@ -5,6 +5,7 @@ using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
+using Sitecore.Pathfinder.Parsing.References;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -15,11 +16,12 @@ namespace Sitecore.Pathfinder.Parsing
     public class ParseContext : IParseContext
     {
         [ImportingConstructor]
-        public ParseContext([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IPipelineService pipelineService)
+        public ParseContext([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IPipelineService pipelineService, [NotNull] IReferenceParserService referenceParser)
         {
             Configuration = configuration;
             Factory = factory;
             PipelineService = pipelineService;
+            ReferenceParser = referenceParser;
             Snapshot = Snapshots.Snapshot.Empty;
         }
 
@@ -38,6 +40,8 @@ namespace Sitecore.Pathfinder.Parsing
         public IPipelineService PipelineService { get; }
 
         public IProject Project { get; private set; }
+
+        public IReferenceParserService ReferenceParser { get; set; }
 
         public ISnapshot Snapshot { get; private set; }
 

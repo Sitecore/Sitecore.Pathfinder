@@ -2,6 +2,8 @@
 
 using System.ComponentModel.Composition;
 using System.Linq;
+using Sitecore.Pathfinder.Compiling.FieldCompilers;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Checking.Checkers.Items
@@ -11,11 +13,13 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
     {
         public override void Check(ICheckerContext context)
         {
+            var fieldCompileContext = context.CompositionService.Resolve<IFieldCompileContext>();
+
             foreach (var item in context.Project.Items.OfType<Item>().Where(i => !i.IsExternalReference))
             {
                 foreach (var field in item.Fields)
                 {
-                    field.ResolveValue(context.Trace);
+                    field.Compile(fieldCompileContext);
                 }
             }
         }

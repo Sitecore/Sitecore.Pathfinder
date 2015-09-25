@@ -34,7 +34,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
             if (!item.IsExternalReference)
             {
-                item.References.AddRange(ParseReferences(context, item, item.TemplateIdOrPathProperty));
+                item.References.AddRange(context.ParseContext.ReferenceParser.ParseReferences(item, item.TemplateIdOrPathProperty));
             }
 
             var fieldContext = new FieldContext();
@@ -42,7 +42,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
             ParseChildNodes(context, item, textNode);
 
-            context.ParseContext.Project.AddOrMerge(context.ParseContext, item);
+            context.ParseContext.Project.AddOrMerge(item);
         }
 
         protected virtual void ParseAttributes([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] FieldContext fieldContext, [NotNull] ITextNode textNode)
@@ -135,7 +135,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
             if (!item.IsExternalReference)
             {
-                item.References.AddRange(ParseReferences(context, item, field.ValueProperty));
+                item.References.AddRange(context.ParseContext.ReferenceParser.ParseReferences(item, field.ValueProperty));
             }
         }
     }

@@ -75,7 +75,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
                     throw new RetryableEmitException(Texts.Template_field_missing, TraceHelper.GetTextNode(field.FieldNameProperty, item.ItemNameProperty), field.FieldName);
                 }
 
-                var fieldWriter = new FieldWriter(field.FieldNameProperty, field.Language, field.Version, field.ResolvedValue);
+                var fieldWriter = new FieldWriter(field.FieldNameProperty, field.Language, field.Version, field.CompiledValue);
                 itemWriter.Fields.Add(fieldWriter);
             }
 

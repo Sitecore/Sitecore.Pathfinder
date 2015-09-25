@@ -30,12 +30,13 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
 
             Parse(context, textNode, item);
 
-            context.ParseContext.Project.AddOrMerge(context.ParseContext, item);
+            context.ParseContext.Project.AddOrMerge(item);
         }
 
         public virtual void Parse([NotNull] ItemParseContext context, [NotNull] ITextNode textNode, [NotNull] Item item)
         {
             var field = context.ParseContext.Factory.Field(item, textNode, "__Renderings", string.Empty);
+
             // todo: set template field
 
             var innerTextNode = textNode.GetInnerTextNode();
@@ -51,7 +52,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             item.Fields.Add(field);
         }
 
-        protected virtual void ParseDeviceReferences([NotNull] ItemParseContext context, [NotNull][ItemNotNull] ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode deviceTextNode)
+        protected virtual void ParseDeviceReferences([NotNull] ItemParseContext context, [NotNull] [ItemNotNull] ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode deviceTextNode)
         {
             var deviceNameProperty = new SourceProperty<string>("Name", string.Empty, SourcePropertyFlags.IsShort);
             deviceNameProperty.Parse(deviceTextNode);
@@ -73,9 +74,11 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             }
         }
 
-        protected override IEnumerable<IReference> ParseReferences(ItemParseContext context, IProjectItem projectItem, ITextNode layoutTextNode)
+        [NotNull]
+        [ItemNotNull]
+        protected virtual IEnumerable<IReference> ParseReferences([NotNull] ItemParseContext context, [NotNull] IProjectItem projectItem, [NotNull] ITextNode layoutTextNode)
         {
-            var result = base.ParseReferences(context, projectItem, layoutTextNode).ToList();
+            var result = context.ParseContext.ReferenceParser.ParseReferences(projectItem, layoutTextNode).ToList();
 
             var devicesTextNode = layoutTextNode.Snapshot.GetJsonChildTextNode(layoutTextNode, "Devices");
             if (devicesTextNode == null)
@@ -91,7 +94,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             return result;
         }
 
-        protected virtual void ParseRenderingReferences([NotNull] ItemParseContext context, [NotNull][ItemNotNull] ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode renderingTextNode)
+        protected virtual void ParseRenderingReferences([NotNull] ItemParseContext context, [NotNull] [ItemNotNull] ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode renderingTextNode)
         {
             if (!string.IsNullOrEmpty(renderingTextNode.Name))
             {
@@ -104,7 +107,7 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
             // parse references for rendering properties
             foreach (var attributeTextNode in renderingTextNode.Attributes)
             {
-                foreach (var reference in base.ParseReferences(context, projectItem, attributeTextNode))
+                foreach (var reference in context.ParseContext.ReferenceParser.ParseReferences(projectItem, attributeTextNode))
                 {
                     references.Add(reference);
                 }
@@ -117,4 +120,3 @@ namespace Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers
         }
     }
 }
-

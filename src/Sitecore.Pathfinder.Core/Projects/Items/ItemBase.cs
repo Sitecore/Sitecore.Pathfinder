@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects.Items
@@ -66,9 +65,9 @@ namespace Sitecore.Pathfinder.Projects.Items
             ItemName = itemIdOrPath;
         }
 
-        protected override void Merge(IParseContext context, IProjectItem newProjectItem, bool overwrite)
+        protected override void Merge(IProjectItem newProjectItem, bool overwrite)
         {
-            base.Merge(context, newProjectItem, overwrite);
+            base.Merge(newProjectItem, overwrite);
 
             var newItemBase = newProjectItem as ItemBase;
             if (newItemBase == null)

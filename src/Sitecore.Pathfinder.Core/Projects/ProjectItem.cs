@@ -43,7 +43,7 @@ namespace Sitecore.Pathfinder.Projects
             return Uri.ToString();
         }
 
-        protected virtual void Merge([NotNull] IParseContext context, [NotNull] IProjectItem newProjectItem, bool overwrite)
+        protected virtual void Merge([NotNull] IProjectItem newProjectItem, bool overwrite)
         {
             foreach (var snapshot in newProjectItem.Snapshots)
             {

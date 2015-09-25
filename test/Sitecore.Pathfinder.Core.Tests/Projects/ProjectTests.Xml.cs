@@ -94,27 +94,27 @@ namespace Sitecore.Pathfinder.Projects
             var linkField = item.Fields.FirstOrDefault(f => f.FieldName == "Link");
             Assert.IsNotNull(linkField);
             Assert.AreEqual("/sitecore/media library/mushrooms", linkField.Value);
-            Assert.AreEqual("<link text=\"\" linktype=\"internal\" url=\"\" anchor=\"\" title=\"\" class=\"\" target=\"\" querystring=\"\" id=\"{62A9DD2C-72FC-F9FF-B9B8-9FC477002D0D}\" />", linkField.ResolvedValue);
+            Assert.AreEqual("<link text=\"\" linktype=\"internal\" url=\"\" anchor=\"\" title=\"\" class=\"\" target=\"\" querystring=\"\" id=\"{62A9DD2C-72FC-F9FF-B9B8-9FC477002D0D}\" />", linkField.CompiledValue);
 
             // image field
             var imageField = item.Fields.FirstOrDefault(f => f.FieldName == "Image");
             Assert.IsNotNull(imageField);
             Assert.AreEqual("/sitecore/media library/mushrooms", imageField.Value);
-            Assert.AreEqual("<image mediapath=\"\" alt=\"\" width=\"\" height=\"\" hspace=\"\" vspace=\"\" showineditor=\"\" usethumbnail=\"\" src=\"\" mediaid=\"{62A9DD2C-72FC-F9FF-B9B8-9FC477002D0D}\" />", imageField.ResolvedValue);
+            Assert.AreEqual("<image mediapath=\"\" alt=\"\" width=\"\" height=\"\" hspace=\"\" vspace=\"\" showineditor=\"\" usethumbnail=\"\" src=\"\" mediaid=\"{62A9DD2C-72FC-F9FF-B9B8-9FC477002D0D}\" />", imageField.CompiledValue);
 
             // implicit link field
             var itemPathField = item.Fields.FirstOrDefault(f => f.FieldName == "ItemPath");
             Assert.IsNotNull(itemPathField);
             Assert.AreEqual("/sitecore/media library/mushrooms", itemPathField.Value);
-            Assert.AreEqual("{62A9DD2C-72FC-F9FF-B9B8-9FC477002D0D}", itemPathField.ResolvedValue);
+            Assert.AreEqual("{62A9DD2C-72FC-F9FF-B9B8-9FC477002D0D}", itemPathField.CompiledValue);
 
             // checkbox fields
             var checkBoxField = item.Fields.FirstOrDefault(f => f.FieldName == "TrueCheckbox");
             Assert.IsNotNull(checkBoxField);
-            Assert.AreEqual("1", checkBoxField.ResolvedValue);
+            Assert.AreEqual("1", checkBoxField.CompiledValue);
             checkBoxField = item.Fields.FirstOrDefault(f => f.FieldName == "FalseCheckbox");
             Assert.IsNotNull(checkBoxField);
-            Assert.AreEqual(string.Empty, checkBoxField.ResolvedValue);
+            Assert.AreEqual(string.Empty, checkBoxField.CompiledValue);
 
             // layout field
             var layout = item.Fields.FirstOrDefault(f => f.FieldName == "__Renderings");
@@ -123,7 +123,7 @@ namespace Sitecore.Pathfinder.Projects
   <d id=""{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}"" l=""{1A5A92AD-D537-7E87-FB00-A39BFDE2538B}"">
     <r id=""{663E1E86-C959-7A70-8945-CFCEA79AFAC2}"" ds=""{11111111-1111-1111-1111-111111111111}"" par="""" ph=""Page.Body"" />
   </d>
-</r>", layout.ResolvedValue);
+</r>", layout.CompiledValue);
 
             // unversioned field
             var unversionedFields = item.Fields.Where(f => f.FieldName == "UnversionedField").ToList();
@@ -165,7 +165,7 @@ namespace Sitecore.Pathfinder.Projects
     <r id=""{663E1E86-C959-7A70-8945-CFCEA79AFAC2}"" par="""" ph=""Page.Body"" />
     <r id=""{663E1E86-C959-7A70-8945-CFCEA79AFAC2}"" par="""" ph=""Page.Body"" />
   </d>
-</r>", layout.ResolvedValue);
+</r>", layout.CompiledValue);
         }
     }
 }
