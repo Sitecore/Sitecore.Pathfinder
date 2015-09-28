@@ -55,7 +55,7 @@ namespace Sitecore.Pathfinder.Projects
         private Project()
         {
             Options = ProjectOptions.Empty;
-            _projectUniqueId = "{00000000-0000-0000-0000-000000000000}";
+            _projectUniqueId = Guid.Empty.Format();
         }
 
         public ICollection<Diagnostic> Diagnostics => _diagnostics;
@@ -157,19 +157,19 @@ namespace Sitecore.Pathfinder.Projects
 
         public IProjectItem FindQualifiedItem(string databaseName, string qualifiedName)
         {
+            if (!qualifiedName.StartsWith("{") || !qualifiedName.EndsWith("}"))
+            {
+                return Items.FirstOrDefault(i => string.Equals(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase) && i.Uri.FileOrDatabaseName == databaseName);
+            }
+
             Guid guid;
             if (Guid.TryParse(qualifiedName, out guid))
             {
                 return Items.FirstOrDefault(i => i.Uri.Guid == guid && i.Uri.FileOrDatabaseName == databaseName);
             }
 
-            if (qualifiedName.StartsWith("{") && qualifiedName.EndsWith("}"))
-            {
-                guid = StringHelper.ToGuid(qualifiedName);
-                return Items.FirstOrDefault(i => i.Uri.Guid == guid && i.Uri.FileOrDatabaseName == databaseName);
-            }
-
-            return Items.FirstOrDefault(i => string.Equals(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase) && i.Uri.FileOrDatabaseName == databaseName);
+            guid = StringHelper.ToGuid(qualifiedName);
+            return Items.FirstOrDefault(i => i.Uri.Guid == guid && i.Uri.FileOrDatabaseName == databaseName);
         }
 
         public IProjectItem FindQualifiedItem(ProjectItemUri uri)

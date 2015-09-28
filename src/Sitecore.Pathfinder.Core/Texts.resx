@@ -420,4 +420,16 @@
     <data name="Image_reference_not_found" xml:space="preserve">
     <value>Image reference not found</value>
   </data>
+    <data name="Link_field_reference_not_found" xml:space="preserve">
+    <value>Link field reference not found</value>
+  </data>
+    <data name="Rendering_reference_not_found" xml:space="preserve">
+    <value>Rendering reference not found</value>
+  </data>
+    <data name="Layout_reference_not_found" xml:space="preserve">
+    <value>Layout reference not found</value>
+  </data>
+    <data name="Item_path_reference_not_found" xml:space="preserve">
+    <value>Item path reference not found</value>
+  </data>
 </root>

@@ -16,7 +16,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
         public override bool CanCompile(IFieldCompileContext context, Field field)
         {
-            return string.Compare(field.TemplateField.Type, "general link", StringComparison.OrdinalIgnoreCase) == 0 || string.Compare(field.TemplateField.Type, "link", StringComparison.OrdinalIgnoreCase) == 0;
+            return string.Equals(field.TemplateField.Type, "general link", StringComparison.OrdinalIgnoreCase) || string.Equals(field.TemplateField.Type, "link", StringComparison.OrdinalIgnoreCase);
         }
 
         public override string Compile(IFieldCompileContext context, Field field)
@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             var item = field.Item.Project.FindQualifiedItem(qualifiedName);
             if (item == null)
             {
-                context.Trace.TraceError("Link field reference not found", qualifiedName);
+                context.Trace.TraceError(Texts.Link_field_reference_not_found, qualifiedName);
                 return string.Empty;
             }
 

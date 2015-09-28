@@ -28,7 +28,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 var item = field.Item.Project.FindQualifiedItem(value);
                 if (item == null)
                 {
-                    context.Trace.TraceError("Item path reference not found", value);
+                    context.Trace.TraceError(Texts.Item_path_reference_not_found, value);
                     return string.Empty;
                 }
 
@@ -41,7 +41,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 var item = field.Item.Project.FindQualifiedItem(itemPath);
                 if (item == null)
                 {
-                    context.Trace.TraceError("Item path reference not found", itemPath);
+                    context.Trace.TraceError(Texts.Item_path_reference_not_found, itemPath);
                 }
                 else
                 {

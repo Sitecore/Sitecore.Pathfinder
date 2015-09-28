@@ -558,6 +558,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item path reference not found.
+        /// </summary>
+        public static string Item_path_reference_not_found {
+            get {
+                return ResourceManager.GetString("Item_path_reference_not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Json file is not valid.
         /// </summary>
         public static string Json_file_is_not_valid {
@@ -619,6 +628,24 @@ namespace Sitecore.Pathfinder {
         public static string Layout_not_found_ {
             get {
                 return ResourceManager.GetString("Layout_not_found_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Layout reference not found.
+        /// </summary>
+        public static string Layout_reference_not_found {
+            get {
+                return ResourceManager.GetString("Layout_reference_not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Link field reference not found.
+        /// </summary>
+        public static string Link_field_reference_not_found {
+            get {
+                return ResourceManager.GetString("Link_field_reference_not_found", resourceCulture);
             }
         }
         
@@ -709,6 +736,15 @@ namespace Sitecore.Pathfinder {
         public static string Rendering_not_found {
             get {
                 return ResourceManager.GetString("Rendering_not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rendering reference not found.
+        /// </summary>
+        public static string Rendering_reference_not_found {
+            get {
+                return ResourceManager.GetString("Rendering_reference_not_found", resourceCulture);
             }
         }
         

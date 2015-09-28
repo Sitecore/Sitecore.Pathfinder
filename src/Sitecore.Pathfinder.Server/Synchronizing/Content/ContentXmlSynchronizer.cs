@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml;
 using Sitecore.Configuration;
@@ -19,14 +20,6 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
     [Export(typeof(ISynchronizer))]
     public class ContentXmlSynchronizer : ISynchronizer
     {
-        // todo: make configurable
-        [Diagnostics.NotNull]
-        [ItemNotNull]
-        private static readonly List<string> FieldsToWrite = new List<string>
-        {
-            "place holders"
-        };
-
         public bool CanSynchronize(Microsoft.Framework.ConfigurationModel.Configuration configuration, string fileName)
         {
             return fileName.EndsWith(".content.xml", StringComparison.OrdinalIgnoreCase);
@@ -36,6 +29,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
         {
             var databaseName = configuration.GetString(configKey + "database");
             var itemPath = configuration.GetString(configKey + "path");
+            var fieldsToWrite = configuration.GetString(configKey + "fields").Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(f => f.Trim().ToLowerInvariant()).ToList();
 
             var database = Factory.GetDatabase(databaseName);
 
@@ -53,13 +47,13 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
                     Formatting = Formatting.Indented
                 };
 
-                WriteItem(output, item, true);
+                WriteItem(output, item, fieldsToWrite, true);
 
                 zip.AddEntry(fileName, Encoding.UTF8.GetBytes(writer.ToString()));
             }
         }
 
-        private void WriteItem([Diagnostics.NotNull] XmlTextWriter output, [Diagnostics.NotNull] Item item, bool writeParentItemPath)
+        private void WriteItem([Diagnostics.NotNull] XmlTextWriter output, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull][ItemNotNull] IEnumerable<string> fieldsToWrite, bool writeParentItemPath)
         {
             if (item.TemplateID == TemplateIDs.Template)
             {
@@ -81,16 +75,15 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
 
             output.WriteAttributeString("IsExternalReference", "True");
 
+            var writeAll = fieldsToWrite.Count() == 1 && fieldsToWrite.ElementAt(0) == "*";
             foreach (Field field in item.Fields)
             {
-                if (!FieldsToWrite.Contains(field.Name.ToLowerInvariant()))
+                if (!writeAll)
                 {
-                    continue;
-                }
-
-                if (string.IsNullOrEmpty(field.Value))
-                {
-                    continue;
+                    if (!fieldsToWrite.Contains(field.Name.ToLowerInvariant()))
+                    {
+                        continue;
+                    }
                 }
 
                 var fieldName = field.Name.EscapeXmlElementName();
@@ -99,7 +92,7 @@ namespace Sitecore.Pathfinder.Synchronizing.Content
 
             foreach (Item child in item.Children)
             {
-                WriteItem(output, child, false);
+                WriteItem(output, child, fieldsToWrite, false);
             }
 
             output.WriteEndElement();

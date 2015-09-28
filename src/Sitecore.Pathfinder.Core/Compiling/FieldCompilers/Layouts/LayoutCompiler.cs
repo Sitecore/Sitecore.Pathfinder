@@ -546,7 +546,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers.Layouts
                                     context.CompileContext.Trace.TraceError($"{id}: Boolean parameter must have value \"True\", \"False\", \"{{Binding ... }}\" or \"{{@ ... }}\".", renderingTextNode, attributeName);
                                 }
 
-                                value = value == "1" || string.Compare(value, "true", StringComparison.OrdinalIgnoreCase) == 0 ? "1" : "0";
+                                value = value == "1" || string.Equals(value, "true", StringComparison.OrdinalIgnoreCase) ? "1" : "0";
                             }
 
                             break;

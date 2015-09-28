@@ -48,18 +48,18 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
             serializationFile.SerializationItemUri = addedItem.Uri;
         }
 
-        protected virtual int ParseField([NotNull] ICompileContext context, [NotNull] ITextSnapshot textSnapshot, [NotNull] ItemBuilder itemBuilder, [NotNull] VersionContext versionContext, [NotNull] [ItemNotNull] string[] lines, int lineNumber)
+        protected virtual int ParseField([NotNull] ICompileContext context, [NotNull] ITextSnapshot textSnapshot, [NotNull] ItemBuilder itemBuilder, [NotNull] LanguageVersionBuilder languageVersionBuilder, [NotNull] [ItemNotNull] string[] lines, int lineNumber)
         {
             var textNode = context.Factory.TextNode(textSnapshot, new TextSpan(lineNumber, 0, 0), string.Empty, string.Empty, null);
 
             var fieldBuilder = context.Factory.FieldBuilder().With(itemBuilder, textNode);
             itemBuilder.Fields.Add(fieldBuilder);
 
-            fieldBuilder.Language = versionContext.Language;
-            fieldBuilder.LanguageTextNode = versionContext.LanguageTextNode;
+            fieldBuilder.Language = languageVersionBuilder.Language;
+            fieldBuilder.LanguageTextNode = languageVersionBuilder.LanguageTextNode;
 
-            fieldBuilder.Version = versionContext.Version;
-            fieldBuilder.VersionTextNode = versionContext.VersionTextNode;
+            fieldBuilder.Version = languageVersionBuilder.Version;
+            fieldBuilder.VersionTextNode = languageVersionBuilder.VersionTextNode;
 
             var lineLength = 0;
 
@@ -142,7 +142,7 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
 
         protected virtual int ParseItem([NotNull] ICompileContext context, [NotNull] ITextSnapshot textSnapshot, [NotNull] ItemBuilder itemBuilder, [NotNull] [ItemNotNull] string[] lines, int lineNumber)
         {
-            var versionContext = new VersionContext();
+            var languageVersionBuilder = new LanguageVersionBuilder();
 
             for (var n = lineNumber; n < lines.Length; n++)
             {
@@ -154,13 +154,13 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
 
                 if (line == "----field----")
                 {
-                    n = ParseField(context, textSnapshot, itemBuilder, versionContext, lines, n + 1);
+                    n = ParseField(context, textSnapshot, itemBuilder, languageVersionBuilder, lines, n + 1);
                     continue;
                 }
 
                 if (line == "----version----")
                 {
-                    n = ParseVersion(context, textSnapshot, versionContext, lines, n + 1);
+                    n = ParseVersion(context, textSnapshot, languageVersionBuilder, lines, n + 1);
                     continue;
                 }
 
@@ -211,7 +211,7 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
             return lines.Length;
         }
 
-        protected virtual int ParseVersion([NotNull] ICompileContext context, [NotNull] ITextSnapshot textSnapshot, [NotNull] VersionContext versionContext, [NotNull] [ItemNotNull] string[] lines, int lineNumber)
+        protected virtual int ParseVersion([NotNull] ICompileContext context, [NotNull] ITextSnapshot textSnapshot, [NotNull] LanguageVersionBuilder languageVersionBuilder, [NotNull] [ItemNotNull] string[] lines, int lineNumber)
         {
             for (var n = lineNumber; n < lines.Length; n++)
             {
@@ -233,12 +233,12 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
                 switch (name)
                 {
                     case "language":
-                        versionContext.Language = value;
-                        versionContext.LanguageTextNode = context.Factory.TextNode(textSnapshot, new TextSpan(n, 0, line.Length), "language", value, null);
+                        languageVersionBuilder.Language = value;
+                        languageVersionBuilder.LanguageTextNode = context.Factory.TextNode(textSnapshot, new TextSpan(n, 0, line.Length), "language", value, null);
                         break;
                     case "version":
-                        versionContext.Version = int.Parse(value);
-                        versionContext.VersionTextNode = context.Factory.TextNode(textSnapshot, new TextSpan(n, 0, line.Length), "version", value, null);
+                        languageVersionBuilder.Version = int.Parse(value);
+                        languageVersionBuilder.VersionTextNode = context.Factory.TextNode(textSnapshot, new TextSpan(n, 0, line.Length), "version", value, null);
                         break;
                     case "revision":
                         break;
@@ -246,20 +246,6 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
             }
 
             return lines.Length;
-        }
-
-        protected class VersionContext
-        {
-            [NotNull]
-            public string Language { get; set; } = string.Empty;
-
-            [NotNull]
-            public ITextNode LanguageTextNode { get; set; } = TextNode.Empty;
-
-            public int Version { get; set; }
-
-            [NotNull]
-            public ITextNode VersionTextNode { get; set; } = TextNode.Empty;
         }
     }
 }

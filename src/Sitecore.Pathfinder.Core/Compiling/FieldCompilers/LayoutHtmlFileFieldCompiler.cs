@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Layouts;
 
@@ -36,13 +37,13 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             var rendering = field.Item.Project.Items.OfType<Rendering>().FirstOrDefault(i => string.Compare(i.FilePath, value, StringComparison.OrdinalIgnoreCase) == 0);
             if (rendering == null)
             {
-                context.Trace.TraceError("Rendering reference not found", value);
+                context.Trace.TraceError(Texts.Rendering_reference_not_found, value);
             }
 
             var layoutItem = field.Item.Project.Items.OfType<Item>().FirstOrDefault(i => i.ItemIdOrPath == "/sitecore/layout/Layouts/MvcLayout");
             if (layoutItem == null)
             {
-                context.Trace.TraceError("Layout reference not found", "/sitecore/layout/Layouts/MvcLayout");
+                context.Trace.TraceError(Texts.Layout_reference_not_found, "/sitecore/layout/Layouts/MvcLayout");
             }
 
             if (rendering == null || layoutItem == null)
@@ -51,7 +52,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             }
 
             var renderingItemUri = rendering.RenderingItemUri;
-            if (renderingItemUri == null)
+            if (renderingItemUri == ProjectItemUri.Empty)
             {
                 return string.Empty;
             }
