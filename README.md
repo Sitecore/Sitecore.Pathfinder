@@ -185,15 +185,15 @@ Xml format (extension .item.xml) - please notice the namespace, which indicates 
 ```
 
 Content Xml format (extension .content.xml) - please notice that the element names spelcifies the template and fields are attributes. Spaces
-in template or field names are replaced by 2 dashes '--'. 
+in template or field names are replaced by a dot '.'. 
 ```xml
 <Root Id="{11111111-1111-1111-1111-111111111111}" Database="master" Name="sitecore" ParentItemPath="/">
-    <Main--Section Id="{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}" Name="content"/>
+    <Main.Section Id="{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}" Name="content"/>
 
-    <Main--Section Id="{EB2E4FFD-2761-4653-B052-26A64D385227}" Name="layout">
+    <Main.Section Id="{EB2E4FFD-2761-4653-B052-26A64D385227}" Name="layout">
         <!-- /sitecore/layout/Layouts -->
         <Node Id="{75CC5CE4-8979-4008-9D3C-806477D57619}" Name="Layouts">
-            <View--Rendering Id="{5E9D5374-E00A-4053-9127-EBC96A02C721}" Name="MvcLayout" Path="/layout/layouts/MvcLayout.cshtml" Place--Holders="Page.Body"/>
+            <View.Rendering Id="{5E9D5374-E00A-4053-9127-EBC96A02C721}" Name="MvcLayout" Path="/layout/layouts/MvcLayout.cshtml" Place--Holders="Page.Body"/>
         </Node>
 
         <!-- /sitecore/layout/Devices -->
@@ -203,23 +203,23 @@ in template or field names are replaced by 2 dashes '--'.
             <Device Id="{207131FA-F6B2-4488-BCB3-3BF70100B9B8}" Name="App Center Placeholder" />
             <Device Id="{73966209-F1B6-43CA-853A-F1DB1C9A654B}" Name="Feed" />
         </Node>
-    </Main--Section>
+    </Main.Section>
 
-    <Main--Section Id="{3C1715FE-6A13-4FCF-845F-DE308BA9741D}" Name="templates">
+    <Main.Section Id="{3C1715FE-6A13-4FCF-845F-DE308BA9741D}" Name="templates">
         <!-- /sitecore/templates/Sample -->
-        <Template--Folder Id="{73BAECEB-744D-4D4A-A7A5-7A935638643F}" Name="Sample">
+        <Template.Folder Id="{73BAECEB-744D-4D4A-A7A5-7A935638643F}" Name="Sample">
             <Template Id="{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}" Name="Sample Item"/>
-        </Template--Folder>
+        </Template.Folder>
 
         <!-- /sitecore/templates/System -->
-        <Template--Folder Id="{4BF98EF5-1D09-4DD1-9AFE-795F9829FD44}" Name="System">
+        <Template.Folder Id="{4BF98EF5-1D09-4DD1-9AFE-795F9829FD44}" Name="System">
             <Folder Id="{FB6B721E-D64D-4392-A1F0-A15194CBFAD9}" Name="Layout">
                 <Folder Id="{531BF4A2-C3B2-4EB9-89D0-FA30C82AB33B}" Name="Renderings">
                     <Template Id="{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}" Name="View Rendering"/>
                 </Folder>
             </Folder>
-        </Template--Folder>
-    </Main--Section>
+        </Template.Folder>
+    </Main.Section>
 </Root>
 ```
 
@@ -353,11 +353,11 @@ website, if you change a template.
 
 ```xml
 <Root Database="master" Name="sitecore" ParentItemPath="/">
-    <Main--Section Name="layout">
+    <Main.Section Name="layout">
         <Node Name="Layouts">
-            <View--Rendering Name="MvcLayout" Path="/layout/layouts/MvcLayout.cshtml" Place--Holders="Page.Body"/>
+            <View.Rendering Name="MvcLayout" Path="/layout/layouts/MvcLayout.cshtml" Place--Holders="Page.Body"/>
         </Node>
-    </Main--Section>
+    </Main.Section>
 </Root>
 ```
 
@@ -668,6 +668,85 @@ Code generators are simply extensions that are located in the /sitecore.tools/ex
 
 Normally you want to run the `generate-code` task before building an assembly, so the C# source files are up-to-date.
 
+# Architecture
+
+## Project overview
+Pathfinder consists of two parts - a part that runs on a development machine and a part that runs inside a Sitecore website.
+The development (client) part is responsible for building the deployment package and the Sitecore (server) part is responsible 
+for installing the package. Both parts share the Pathfinder compiler which loads the projects and compiles it.
+
+### Client  
+The client is the command line tool. It provides a number of tasks that can be executed, like building the project or 
+initializing the development folder. Some tasks communicate with the server. 
+
+### Server 
+The server responds to any requests that the client might make. It has access to the Sitecore API. It's primary task is to
+install deployment packages.
+
+## Pathfinder compiler
+The Pathfinder compiler loads and compiles a project from a list of source files while collecting diagnostics. 
+
+Internally the compiler goes through a number of steps. 
+
+* Initializing
+* Parsing
+* Compiling
+* Checking
+* Emitting
+
+
+#### Initializing
+During initialization the compiler loads external references located in the /sitecore.project/external directory. The external
+references are needed because the project must hold the whole truth. 
+
+#### Parsing
+The compiler accepts a list of source files to be compiled. For each file the compiler determines the appropriate loader
+and parser. The loader loads the file (if need be) and passes it to parsing which creates in-memory objects that represent
+the contents of the file. When all files have been loaded the project contains a in-memory model of all the source files. 
+
+#### Compiling
+The model is then passed to compiling which transforms the model into objects that are appropriate for Sitecore, for
+instance for each media file, an appropriate media item model is created. 
+
+When all files have been processed, the compiler processes the item models and for each field, compiles it. This typically 
+transforms the field from a user inputted value to a value that is appropriate for Sitecore, for instance Link fields are 
+usually inputted as "/sitecore/content/home" and the compiled value is 
+'&lt;link ... id="{98E48AE6-9997-4BFA-AFAB-862B3E6EC486}" ... />'. 
+
+Once the fields have been compiled, the compiler processes the item model and for each field, looks for references to other
+project items. A references is typically a Guid or a value that starts with "/sitecore".
+
+#### Checking
+The compiler collects diagnostics throughout the entire parsing and compiling processes. The checking step validates the
+entire project. The executes the dynamically compiled checkers and checks that all references are valid.
+
+Checks:
+
+* The project item has a unique Guid
+* Reference not found
+* The size of media file does not exceed 5MB.
+* Item name does not contain spaces.
+* Item must have a template.
+* Item field is not defined in the template.
+* Empty templates should be avoided. Consider using the Folder template instead.
+* Template should have a short help text.
+* Template short help text should end with '.'
+* Template short help text should end with a capital letter.
+* Template should should have a long help text.
+* Template long help text should end with '.'.
+* Template long help text should end with a capital letter.
+* Template should should have an icon.
+* Template field should have a short help text.
+* Template field short help text should end with '.'.
+* Template field short help text should end with a capital letter.
+* Template field should should have a long help text.
+* Template field long help text should end with '.'.
+* Template field long help text should end with a capital letter.
+* Template section is empty.
+
+## Emitting
+On the server, the final step is emitting the project model to Sitecore. This step copies files to the website directory and
+create or modifies any items in Sitecore.
 
 # Environment
 
