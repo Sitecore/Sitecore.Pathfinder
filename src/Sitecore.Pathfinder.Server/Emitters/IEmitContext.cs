@@ -3,7 +3,6 @@
 using System.Collections.Generic;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Data.Items;
-using Sitecore.Pathfinder.Data;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
@@ -23,9 +22,6 @@ namespace Sitecore.Pathfinder.Emitters
 
         [Diagnostics.NotNull]
         IConfiguration Configuration { get; }
-
-        [Diagnostics.NotNull]
-        IDataService DataService { get; }
 
         [Diagnostics.NotNull]
         [ItemNotNull]

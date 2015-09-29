@@ -46,10 +46,10 @@ namespace Sitecore.Pathfinder.Building.Deploying
         {
             foreach (var sourceFileName in context.FileSystem.GetFiles(sourceDirectory, "*.nupkg", SearchOption.AllDirectories))
             {
-                var destinationFileName = Path.Combine(destinationDirectory, Path.GetFileName(sourceFileName) ?? string.Empty);
+                var destinationFileName = Path.Combine(destinationDirectory, Path.GetFileName(sourceFileName));
                 if (!context.FileSystem.FileExists(destinationFileName) || context.FileSystem.GetLastWriteTimeUtc(sourceFileName) > context.FileSystem.GetLastWriteTimeUtc(destinationFileName))
                 {
-                    context.Trace.TraceInformation(Texts.Copying_dependency, Path.GetFileName(sourceFileName) ?? string.Empty);
+                    context.Trace.TraceInformation(Texts.Copying_dependency, Path.GetFileName(sourceFileName));
                     context.FileSystem.Copy(sourceFileName, destinationFileName);
                 }
             }

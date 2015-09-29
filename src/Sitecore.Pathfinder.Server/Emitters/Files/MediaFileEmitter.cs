@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
             var mediaItem = context.Project.FindQualifiedItem(mediaFile.MediaItemUri) as Projects.Items.Item;
             if (mediaItem == null)
             {
-                context.Trace.TraceError("Media item not found", new SnapshotTextNode(mediaFile.Snapshots.First()), mediaFile.MediaItemUri.Guid.Format());
+                context.Trace.TraceError(Texts.Media_item_not_found, new SnapshotTextNode(mediaFile.Snapshots.First()), mediaFile.MediaItemUri.Guid.Format());
                 return;
             }
 
@@ -78,9 +78,9 @@ namespace Sitecore.Pathfinder.Emitters.Files
                 ItemManager.AddFromTemplate(name, TemplateIDs.Folder, parent, new ID(mediaItem.Uri.Guid));
             }
 
-            using (var stream = new FileStream(projectItem.Snapshots.First().SourceFile.FileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (var stream = new FileStream(projectItem.Snapshots.First().SourceFile.AbsoluteFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                var item = MediaManager.Creator.CreateFromStream(stream, "/upload/" + Path.GetFileName(projectItem.Snapshots.First().SourceFile.FileName), options);
+                var item = MediaManager.Creator.CreateFromStream(stream, "/upload/" + Path.GetFileName(projectItem.Snapshots.First().SourceFile.AbsoluteFileName), options);
                 if (item == null)
                 {
                     throw new EmitException(Texts.Failed_to_upload_media, projectItem.Snapshots.First());

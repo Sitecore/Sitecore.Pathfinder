@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
         {
             var fieldCompileContext = context.CompositionService.Resolve<IFieldCompileContext>();
 
-            foreach (var item in context.Project.Items.OfType<Item>().Where(i => !i.IsExternalReference))
+            foreach (var item in context.Project.Items.OfType<Item>().Where(i => !i.IsExtern))
             {
                 foreach (var field in item.Fields)
                 {

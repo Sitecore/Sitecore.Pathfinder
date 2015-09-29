@@ -21,12 +21,10 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.ItemParserPipelines
                 return;
             }
 
-            /*
             if (!fieldValue.StartsWith("~/"))
             {
-                pipeline.Context.ParseContext.Trace.TraceWarning(Texts.File_path_must_start_with____, pipeline.Item.LayoutHtmlFile.Source ?? pipeline.TextNode, fieldValue);
+                pipeline.Context.ParseContext.Trace.TraceWarning(Texts.File_path_must_start_with____, TraceHelper.GetTextNode(pipeline.Item.LayoutHtmlFileProperty), fieldValue);
             }
-            */
 
             var field = pipeline.Context.ParseContext.Factory.Field(pipeline.Item, TextNode.Empty, "__Renderings", fieldValue);
             field.ValueHintProperty.SetValue("HtmlTemplate");

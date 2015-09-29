@@ -2,6 +2,7 @@
 
 using System.Linq;
 using NUnit.Framework;
+using Sitecore.Pathfinder.Languages.Xml;
 
 namespace Sitecore.Pathfinder.Snapshots.Xml
 {
@@ -50,21 +51,21 @@ namespace Sitecore.Pathfinder.Snapshots.Xml
             var doc = new XmlTextSnapshot(sourceFile, "<Item><Field Name=\"Text\" Value=\"123\" /></Item>", string.Empty, string.Empty);
             var root = doc.Root;
             Assert.IsNotNull(root);
-            Assert.AreEqual("Item", root.Name);
+            Assert.AreEqual("Item", root.Key);
             Assert.AreEqual(1, root.ChildNodes.Count());
 
             var field = root.ChildNodes.First();
-            Assert.AreEqual("Field", field.Name);
+            Assert.AreEqual("Field", field.Key);
             Assert.AreEqual("Text", field.GetAttributeValue("Name"));
             Assert.AreEqual("123", field.GetAttributeValue("Value"));
             Assert.AreEqual(0, field.ChildNodes.Count());
 
-            var attribute = field.GetAttributeTextNode("Name");
+            var attribute = field.GetAttribute("Name");
             Assert.IsNotNull(attribute);
             Assert.AreEqual("Text", attribute.Value);
             Assert.AreEqual(0, attribute.Attributes.Count());
             Assert.AreEqual(0, attribute.ChildNodes.Count());
-            Assert.AreEqual(field, attribute.Parent);
+            Assert.AreEqual(field, attribute.ParentNode);
             Assert.AreEqual(field.Snapshot, attribute.Snapshot);
             Assert.AreEqual(doc, attribute.Snapshot);
         }
@@ -77,7 +78,7 @@ namespace Sitecore.Pathfinder.Snapshots.Xml
             var doc = new XmlTextSnapshot(sourceFile, "<Item><Field Name=\"Text\">123</Field></Item>", string.Empty, string.Empty);
             var root = doc.Root;
             var field = root.ChildNodes.First();
-            Assert.AreEqual("Field", field.Name);
+            Assert.AreEqual("Field", field.Key);
             Assert.AreEqual("Text", field.GetAttributeValue("Name"));
             Assert.AreEqual("123", field.GetInnerTextNode()?.Value);
             Assert.AreEqual(string.Empty, field.Value);

@@ -77,7 +77,7 @@ namespace Sitecore.Pathfinder.IO
             {
                 StartInfo =
                 {
-                    Arguments = string.Format("\"{0}\" \"{1}\" /mir /njh /njs /ndl /nc /ns /np", sourceDirectory.TrimEnd('\\'), destinationDirectory.TrimEnd('\\')),
+                    Arguments = $"\"{sourceDirectory.TrimEnd('\\')}\" \"{destinationDirectory.TrimEnd('\\')}\" /mir /njh /njs /ndl /nc /ns /np",
                     CreateNoWindow = true,
                     UseShellExecute = false,
                     WindowStyle = ProcessWindowStyle.Hidden,

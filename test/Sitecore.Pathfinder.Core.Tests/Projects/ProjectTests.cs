@@ -28,7 +28,7 @@ namespace Sitecore.Pathfinder.Projects
 
             foreach (var diagnostic in Project.Diagnostics)
             {
-                Console.WriteLine($"{diagnostic.Severity} ({diagnostic.Span.LineNumber}, {diagnostic.Span.LinePosition}, {diagnostic.Span.LineLength}): {diagnostic.Text} [{diagnostic.FileName}]");
+                Console.WriteLine($"{diagnostic.Severity} ({diagnostic.Span.LineNumber}, {diagnostic.Span.LinePosition}, {diagnostic.Span.Length}): {diagnostic.Text} [{diagnostic.FileName}]");
                 Console.WriteLine();
             }
         }
@@ -38,7 +38,7 @@ namespace Sitecore.Pathfinder.Projects
         {
             foreach (var diagnostic in Project.Diagnostics)
             {
-                Console.WriteLine($"{diagnostic.Severity} ({diagnostic.Span.LineNumber}, {diagnostic.Span.LinePosition}, {diagnostic.Span.LineLength}): {diagnostic.Text} [{diagnostic.FileName}]");
+                Console.WriteLine($"{diagnostic.Severity} ({diagnostic.Span.LineNumber}, {diagnostic.Span.LinePosition}, {diagnostic.Span.Length}): {diagnostic.Text} [{diagnostic.FileName}]");
                 Console.WriteLine();
             }
 
@@ -55,7 +55,7 @@ namespace Sitecore.Pathfinder.Projects
 
             project.Add(fileName);
             Assert.AreEqual(count + 1, project.SourceFiles.Count);
-            Assert.AreEqual(fileName, project.SourceFiles.Last().FileName);
+            Assert.AreEqual(fileName, project.SourceFiles.Last().AbsoluteFileName);
 
             project.Remove(fileName);
             Assert.AreEqual(count, project.SourceFiles.Count);

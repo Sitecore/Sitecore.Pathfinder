@@ -63,7 +63,7 @@ namespace Sitecore.Pathfinder.Extensibility.Pipelines
             }
 
             index++;
-            if (index >= processors.Count())
+            if (index >= processors.Count)
             {
                 return null;
             }

@@ -1,7 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.ComponentModel.Composition;
-using Sitecore.Pathfinder.Emitters.Writers.Templates;
+using Sitecore.Pathfinder.Emitters.Writers;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Templates;
 
@@ -22,7 +22,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
         public override void Emit(IEmitContext context, IProjectItem projectItem)
         {
             var template = (Template)projectItem;
-            if (!template.IsEmittable || template.IsExternalReference)
+            if (!template.IsEmittable || template.IsExtern)
             {
                 return;
             }

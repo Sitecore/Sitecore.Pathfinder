@@ -138,7 +138,7 @@ namespace Sitecore.Pathfinder.IO
         [NotNull]
         public static string GetFilePath([NotNull] IProject project, [NotNull] ISourceFile sourceFile, [NotNull] string localFileDirectory, [NotNull] string serverFileDirectory)
         {
-            var filePath = "/" + NormalizeItemPath(UnmapPath(project.Options.ProjectDirectory, sourceFile.FileName)).TrimStart('/');
+            var filePath = "/" + NormalizeItemPath(UnmapPath(project.Options.ProjectDirectory, sourceFile.AbsoluteFileName)).TrimStart('/');
 
             localFileDirectory = "/" + NormalizeItemPath(localFileDirectory).Trim('/');
             serverFileDirectory = "/" + NormalizeItemPath(serverFileDirectory).Trim('/');
@@ -154,7 +154,7 @@ namespace Sitecore.Pathfinder.IO
         [NotNull]
         public static string GetItemName([NotNull] ISourceFile sourceFile)
         {
-            var fileName = NormalizeItemPath(sourceFile.FileName);
+            var fileName = NormalizeItemPath(sourceFile.AbsoluteFileName);
 
             var s = fileName.LastIndexOf('/') + 1;
             var e = fileName.IndexOf('.', s);
@@ -180,7 +180,7 @@ namespace Sitecore.Pathfinder.IO
         [NotNull]
         public static string GetItemPath([NotNull] IProject project, [NotNull] ISourceFile sourceFile, [NotNull] string localFileDirectory, [NotNull] string itemPath)
         {
-            var result = "/" + NormalizeItemPath(UnmapPath(project.Options.ProjectDirectory, sourceFile.FileName)).TrimStart('/');
+            var result = "/" + NormalizeItemPath(UnmapPath(project.Options.ProjectDirectory, sourceFile.AbsoluteFileName)).TrimStart('/');
 
             result = NormalizeItemPath(GetDirectoryAndFileNameWithoutExtensions(result));
 

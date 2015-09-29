@@ -38,7 +38,7 @@ namespace Sitecore.Pathfinder.Configuration
         [NotNull]
         public static FileContext GetFileContext([NotNull] IProject project, [NotNull] IConfiguration configuration, [NotNull] ISourceFile sourceFile)
         {
-            var localFileName = "/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(project.Options.ProjectDirectory, sourceFile.FileName)).TrimStart('/');
+            var localFileName = "/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(project.Options.ProjectDirectory, sourceFile.AbsoluteFileName)).TrimStart('/');
 
             string database = null;
             var itemPathConfig = string.Empty;

@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
                 return false;
             }
 
-            return item.SourceTextNodes.Select(n => n.GetAttributeValue("Template.CreateFromFields")).Any(createTemplate => string.Equals(createTemplate, "true", StringComparison.OrdinalIgnoreCase));
+            return item.SourceTextNodes.Select(n => n.GetAttributeValue("Template.CreateFromFields")).Any(value => string.Equals(value, "true", StringComparison.OrdinalIgnoreCase));
         }
 
         public override void Compile(ICompileContext context, IProjectItem projectItem)
@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
                 return;
             }
 
-            var templateIdOrPathTextNode = item.SourceTextNodes.Select(n => n.GetAttributeTextNode("Template")).FirstOrDefault(t => t != null);
+            var templateIdOrPathTextNode = item.SourceTextNodes.Select(n => n.GetAttribute("Template")).FirstOrDefault(t => t != null);
             if (templateIdOrPathTextNode == null)
             {
                 context.Trace.TraceError(Texts.The__Template__attribute_must_be_specified_when__Template_CreateFromFields__equals_true_, TraceHelper.GetTextNode(item));
@@ -44,18 +44,17 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
             var guid = StringHelper.GetGuid(item.Project, itemTextNode.GetAttributeValue("Template.Id", itemIdOrPath));
             var template = context.Factory.Template(item.Project, guid, itemTextNode, item.DatabaseName, itemName, itemIdOrPath);
 
-            template.ItemName = itemName;
             template.ItemNameProperty.AddSourceTextNode(templateIdOrPathTextNode);
-            template.ItemNameProperty.SourcePropertyFlags = SourcePropertyFlags.IsQualified;
+            template.ItemNameProperty.Flags = SourcePropertyFlags.IsQualified;
 
             template.IconProperty.Parse("Template.Icon", itemTextNode);
             template.BaseTemplatesProperty.Parse("Template.BaseTemplates", itemTextNode, Constants.Templates.StandardTemplate);
             template.ShortHelpProperty.Parse("Template.ShortHelp", itemTextNode);
             template.LongHelpProperty.Parse("Template.LongHelp", itemTextNode);
-            template.IsEmittable = string.Compare(itemTextNode.GetAttributeValue("IsEmittable"), "False", StringComparison.OrdinalIgnoreCase) != 0;
-            template.IsExternalReference = string.Compare(itemTextNode.GetAttributeValue("IsExternalReference"), "True", StringComparison.OrdinalIgnoreCase) == 0;
+            template.IsEmittable = !string.Equals(itemTextNode.GetAttributeValue("IsEmittable"), "False", StringComparison.OrdinalIgnoreCase);
+            template.IsExtern = string.Equals(itemTextNode.GetAttributeValue("IsExternalReference"), "True", StringComparison.OrdinalIgnoreCase);
 
-            if (!template.IsExternalReference)
+            if (!template.IsExtern)
             {
                 template.References.AddRange(context.ReferenceParser.ParseReferences(template, template.BaseTemplatesProperty));
             }
@@ -72,7 +71,7 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
                 var nextSortOrder = 0;
                 foreach (var field in item.Fields)
                 {
-                    var child = field.SourceTextNodes.First();
+                    var childNode = field.SourceTextNodes.First();
 
                     // ignore standard fields
                     if (item.Project.Options.StandardTemplateFields.Contains(field.FieldName, StringComparer.OrdinalIgnoreCase))
@@ -83,24 +82,26 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
                     var templateField = template.Sections.SelectMany(s => s.Fields).FirstOrDefault(f => f.FieldName == field.FieldName);
                     if (templateField == null)
                     {
-                        templateField = context.Factory.TemplateField(template, child);
+                        templateField = context.Factory.TemplateField(template, childNode);
                         templateSection.Fields.Add(templateField);
 
                         templateField.FieldNameProperty.SetValue(field.FieldNameProperty);
+                        templateField.TypeProperty.Parse("Field.Type", childNode, "Single-Line Text");
+                        templateField.SortOrderProperty.Parse("Field.SortOrder", childNode, nextSortOrder);
                     }
                     else
                     {
                         // todo: multiple sources?
                         templateField.FieldNameProperty.AddSourceTextNode(field.FieldNameProperty.SourceTextNode);
+                        templateField.TypeProperty.ParseIfHasAttribute("Field.Type", childNode);
+                        templateField.SortOrderProperty.ParseIfHasAttribute("Field.SortOrder", childNode);
                     }
 
-                    templateField.TypeProperty.TryParse("Field.Type", child, "Single-Line Text");
-                    templateField.Shared |= string.Equals(child.GetAttributeValue("Field.Sharing"), "Shared", StringComparison.OrdinalIgnoreCase);
-                    templateField.Unversioned |= string.Equals(child.GetAttributeValue("Field.Sharing"), "Unversioned", StringComparison.OrdinalIgnoreCase);
-                    templateField.SourceProperty.TryParse("Field.Source", child);
-                    templateField.ShortHelpProperty.TryParse("Field.ShortHelp", child);
-                    templateField.LongHelpProperty.TryParse("Field.LongHelp", child);
-                    templateField.SortOrderProperty.TryParse("Field.SortOrder", child, nextSortOrder);
+                    templateField.Shared |= string.Equals(childNode.GetAttributeValue("Field.Sharing"), "Shared", StringComparison.OrdinalIgnoreCase);
+                    templateField.Unversioned |= string.Equals(childNode.GetAttributeValue("Field.Sharing"), "Unversioned", StringComparison.OrdinalIgnoreCase);
+                    templateField.SourceProperty.ParseIfHasAttribute("Field.Source", childNode);
+                    templateField.ShortHelpProperty.ParseIfHasAttribute("Field.ShortHelp", childNode);
+                    templateField.LongHelpProperty.ParseIfHasAttribute("Field.LongHelp", childNode);
 
                     nextSortOrder = templateField.SortOrder + 100;
 

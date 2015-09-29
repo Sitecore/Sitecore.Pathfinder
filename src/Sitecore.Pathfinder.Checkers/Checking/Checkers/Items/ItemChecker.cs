@@ -16,7 +16,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
     {
         public override void Check(ICheckerContext context)
         {
-            foreach (var item in context.Project.Items.OfType<Item>().Where(i => !i.IsExternalReference))
+            foreach (var item in context.Project.Items.OfType<Item>().Where(i => !i.IsExtern))
             {
                 CheckTemplate(context, item);
             }

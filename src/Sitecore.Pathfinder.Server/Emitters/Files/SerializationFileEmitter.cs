@@ -35,7 +35,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
 
             try
             {
-                var item = DoLoadItem(itemModel.Snapshots.First().SourceFile.FileName, LoadOptions);
+                var item = DoLoadItem(itemModel.Snapshots.First().SourceFile.AbsoluteFileName, LoadOptions);
                 if (item == null)
                 {
                     throw new RetryableEmitException(Texts.Failed_to_deserialize_item, itemModel.Snapshots.First(), "Item not created");
@@ -48,7 +48,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
         }
 
         [Diagnostics.CanBeNull]
-        protected virtual Sitecore.Data.Items.Item DoLoadItem([Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] LoadOptions options)
+        protected virtual Data.Items.Item DoLoadItem([Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] LoadOptions options)
         {
             using (var reader = new StreamReader(File.Open(fileName, FileMode.Open, FileAccess.Read, FileShare.Read)))
             {

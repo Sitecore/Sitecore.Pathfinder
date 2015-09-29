@@ -3,7 +3,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Snapshots;
 

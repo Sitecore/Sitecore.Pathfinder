@@ -32,7 +32,7 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
             var guid = StringHelper.GetGuid(project, mediaFile.ItemPath);
             var item = context.Factory.Item(project, guid, new SnapshotTextNode(snapshot), mediaFile.DatabaseName, mediaFile.ItemName, mediaFile.ItemPath, string.Empty);
             item.ItemNameProperty.AddSourceTextNode(new FileNameTextNode(mediaFile.ItemName, snapshot));
-            item.TemplateIdOrPath = "/sitecore/templates/System/Media/Unversioned/File";
+            item.TemplateIdOrPathProperty.SetValue("/sitecore/templates/System/Media/Unversioned/File");
             item.IsEmittable = false;
             item.OverwriteWhenMerging = true;
             item.MergingMatch = MergingMatch.MatchUsingSourceFile;

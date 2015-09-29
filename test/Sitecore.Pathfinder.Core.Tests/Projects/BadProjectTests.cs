@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Projects
             Assert.AreEqual(Severity.Warning, diagnostic.Severity);
             Assert.AreEqual(3, diagnostic.Span.LineNumber);
             Assert.AreEqual(10, diagnostic.Span.LinePosition);
-            Assert.AreEqual(5, diagnostic.Span.LineLength);
+            Assert.AreEqual(5, diagnostic.Span.Length);
 
             // link field
             var linkField = item.Fields.FirstOrDefault(f => f.FieldName == "BadLink");

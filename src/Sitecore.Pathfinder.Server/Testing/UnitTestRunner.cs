@@ -13,9 +13,7 @@ namespace Sitecore.Pathfinder.Testing
 {
     public class UnitTestRunner
     {
-        private static DateTime _lastCompile = DateTime.MinValue;
-
-        [Diagnostics.NotNull]
+        [Diagnostics.CanBeNull]
         private static Assembly _testAssembly;
 
         public UnitTestRunner()
@@ -36,14 +34,14 @@ namespace Sitecore.Pathfinder.Testing
             var testRunner = TestRunners.FirstOrDefault(t => string.Compare(t.Name, testRunnerName, StringComparison.OrdinalIgnoreCase) == 0);
             if (testRunner == null)
             {
-                Console.WriteLine("Test Runner not found: " + testRunnerName);
+                Console.WriteLine(Texts.Test_Runner_not_found__ + testRunnerName);
                 return;
             }
 
             var testDirectory = FileUtil.MapPath("/sitecore/shell/client/Applications/Pathfinder/Tests");
             if (!Directory.Exists(testDirectory))
             {
-                Console.WriteLine("No tests were found");
+                Console.WriteLine(Texts.No_tests_were_found);
                 return;
             }
 
@@ -61,23 +59,12 @@ namespace Sitecore.Pathfinder.Testing
         {
             var fileNames = Directory.GetFiles(testDirectory, "*.cs", SearchOption.AllDirectories).ToList();
 
-            /*
-            if (_testAssembly != null)
-            {
-                if (fileNames.All(f => File.GetLastWriteTimeUtc(f) < _lastCompile))
-                {
-                    return _testAssembly;
-                }
-            }
-            */
-
             var references = new List<string>
             {
                 FileUtil.MapPath("/bin/nunit.framework.dll")
             };
 
             _testAssembly = testRunner.CompileAssembly(references, fileNames);
-            _lastCompile = DateTime.UtcNow;
 
             return _testAssembly;
         }

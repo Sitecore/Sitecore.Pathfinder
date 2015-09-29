@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Building.Querying
 
             Display(context, references);
 
-            context.Trace.Writeline(Texts.Found__ + references.Count());
+            context.Trace.Writeline(Texts.Found__ + references.Count);
         }
 
         public override void WriteHelp(HelpWriter helpWriter)

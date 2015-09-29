@@ -3,41 +3,40 @@
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
     public class AttributeNameTextNode : ITextNode
     {
         [NotNull]
-        private string _name;
+        private string _key;
 
         public AttributeNameTextNode([NotNull] ITextNode textNode)
         {
             TextNode = textNode;
-            _name = textNode.Name.UnescapeXmlElementName();
+            _key = textNode.Key.UnescapeXmlElementName();
         }
 
         public IEnumerable<ITextNode> Attributes => TextNode.Attributes;
 
         public IEnumerable<ITextNode> ChildNodes => TextNode.ChildNodes;
 
-        public string Name => _name;
+        public string Key => _key;
 
-        public ITextNode Parent => TextNode.Parent;
+        public ITextNode ParentNode => TextNode.ParentNode;
 
-        public TextSpan Span => TextNode.Span;
+        public TextSpan TextSpan => TextNode.TextSpan;
 
         public ISnapshot Snapshot => TextNode.Snapshot;
 
-        public string Value => _name;
+        public string Value => _key;
 
         [NotNull]
         protected ITextNode TextNode { get; }
 
-        public ITextNode GetAttributeTextNode(string attributeName)
+        public ITextNode GetAttribute(string attributeName)
         {
-            return TextNode.GetAttributeTextNode(attributeName);
+            return TextNode.GetAttribute(attributeName);
         }
 
         public string GetAttributeValue(string attributeName, string defaultValue = "")
@@ -50,16 +49,16 @@ namespace Sitecore.Pathfinder.Snapshots
             return null;
         }
 
-        public bool SetName(string newName)
+        public bool SetKey(string newKey)
         {
-            _name = newName.UnescapeXmlElementName();
-            return TextNode.SetName(newName);
+            _key = newKey.UnescapeXmlElementName();
+            return TextNode.SetKey(newKey);
         }
 
-        public bool SetValue(string value)
+        public bool SetValue(string newValue)
         {
-            _name = value.UnescapeXmlElementName();
-            return TextNode.SetName(value);
+            _key = newValue.UnescapeXmlElementName();
+            return TextNode.SetKey(newValue);
         }
     }
 }

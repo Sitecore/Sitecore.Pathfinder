@@ -17,17 +17,17 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public IEnumerable<ITextNode> ChildNodes => Enumerable.Empty<ITextNode>();
 
-        public string Name { get; } = string.Empty;
+        public string Key { get; } = string.Empty;
 
-        public ITextNode Parent { get; } = null;
+        public ITextNode ParentNode { get; } = null;
 
-        public TextSpan Span { get; } = TextSpan.Empty;
+        public TextSpan TextSpan { get; } = TextSpan.Empty;
 
         public ISnapshot Snapshot { get; }
 
         public string Value => Snapshot.SourceFile.ProjectFileName;
 
-        public ITextNode GetAttributeTextNode(string attributeName)
+        public ITextNode GetAttribute(string attributeName)
         {
             return null;
         }
@@ -42,12 +42,12 @@ namespace Sitecore.Pathfinder.Snapshots
             return null;
         }
 
-        public bool SetName(string newName)
+        public bool SetKey(string newKey)
         {
             return false;
         }
 
-        public bool SetValue(string value)
+        public bool SetValue(string newValue)
         {
             return false;
         }

@@ -21,7 +21,7 @@ namespace Sitecore.Pathfinder.Building.Querying
                 string line = $"{reference.Owner.Snapshots.First().SourceFile.ProjectFileName}";
 
                 var textNode = TraceHelper.GetTextNode(reference.SourceProperty);
-                line += $"({textNode.Span.LineNumber},{textNode.Span.LineNumber})";
+                line += $"({textNode.TextSpan.LineNumber},{textNode.TextSpan.LineNumber})";
 
                 context.Trace.Writeline(line);
             }

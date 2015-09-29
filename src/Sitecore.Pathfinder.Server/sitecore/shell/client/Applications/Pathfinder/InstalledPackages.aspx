@@ -1,5 +1,4 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true"  %>
-<%@ Import Namespace="Sitecore.Pathfinder.Packages" %>
 <!DOCTYPE html>      
 <%
     var packageService = new PackageService();

@@ -28,17 +28,15 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
 
             var project = rendering.Project;
             var snapshot = rendering.Snapshots.First();
-
             var path = rendering.FilePath;
             var snapshotTextNode = new SnapshotTextNode(snapshot);
-
             var guid = StringHelper.GetGuid(project, rendering.ItemPath);
             var item = context.Factory.Item(project, guid, snapshotTextNode, rendering.DatabaseName, rendering.ItemName, rendering.ItemPath, rendering.TemplateIdOrPath);
             item.ItemNameProperty.AddSourceTextNode(new FileNameTextNode(rendering.ItemName, snapshot));
             item.OverwriteWhenMerging = true;
 
             var field = context.Factory.Field(item, snapshotTextNode, "Path", path);
-            field.ValueProperty.SourcePropertyFlags = SourcePropertyFlags.IsFileName;
+            field.ValueProperty.Flags = SourcePropertyFlags.IsFileName;
             item.Fields.Add(field);
             item.References.Add(new FileReference(item, field.ValueProperty));
 

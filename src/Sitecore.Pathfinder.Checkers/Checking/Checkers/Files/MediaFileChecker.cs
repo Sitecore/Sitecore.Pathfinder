@@ -22,11 +22,11 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Files
 
         private void CheckTemplate([NotNull] ICheckerContext context, [NotNull] MediaFile mediaFile)
         {
-            var fileInfo = new FileInfo(mediaFile.Snapshots.First().SourceFile.FileName);
+            var fileInfo = new FileInfo(mediaFile.Snapshots.First().SourceFile.AbsoluteFileName);
 
             if (fileInfo.Length > 5 * 1025 * 1025)
             {
-                context.Trace.TraceWarning("Media file size exceeds 5MB. Consider reducing the size of the file", mediaFile.Snapshots.First().SourceFile.FileName, TextSpan.Empty);
+                context.Trace.TraceWarning("Media file size exceeds 5MB. Consider reducing the size of the file", mediaFile.Snapshots.First().SourceFile.AbsoluteFileName, TextSpan.Empty);
             }
         }
     }

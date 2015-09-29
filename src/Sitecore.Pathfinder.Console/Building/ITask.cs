@@ -9,8 +9,8 @@ namespace Sitecore.Pathfinder.Building
         [NotNull]
         string TaskName { get; }
 
-        void WriteHelp([NotNull] HelpWriter helpWriter);
-
         void Run([NotNull] IBuildContext context);
+
+        void WriteHelp([NotNull] HelpWriter helpWriter);
     }
 }

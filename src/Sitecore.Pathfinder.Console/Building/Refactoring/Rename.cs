@@ -1,6 +1,5 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Building.Querying;
@@ -61,13 +60,10 @@ namespace Sitecore.Pathfinder.Building.Refactoring
 
             foreach (var reference in references)
             {
-                if (reference.SourceProperty != null)
-                {
-                    reference.SourceProperty.SetValue(value);
-                }
+                reference.SourceProperty.SetValue(value);
             }
 
-            var changedFileNames = context.Project.Items.SelectMany(i => i.Snapshots).Where(s => s.IsModified).Select(s => s.SourceFile.FileName).ToList();
+            var changedFileNames = context.Project.Items.SelectMany(i => i.Snapshots).Where(s => s.IsModified).Select(s => s.SourceFile.AbsoluteFileName).ToList();
 
             projectItem.Rename(newShortName);
             context.Project.SaveChanges();

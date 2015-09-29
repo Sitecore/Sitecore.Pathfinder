@@ -1,8 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.Diagnostics;
-using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Projects.References

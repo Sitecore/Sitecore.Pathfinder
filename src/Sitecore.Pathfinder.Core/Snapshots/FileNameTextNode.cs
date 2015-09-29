@@ -20,17 +20,17 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public IEnumerable<ITextNode> ChildNodes { get; } = Enumerable.Empty<ITextNode>();
 
-        public string Name => Value;
+        public string Key => Value;
 
-        public ITextNode Parent { get; } = null;
+        public ITextNode ParentNode { get; } = null;
 
-        public TextSpan Span { get; } = TextSpan.Empty;
+        public TextSpan TextSpan { get; } = TextSpan.Empty;
 
         public ISnapshot Snapshot { get; }
 
         public string Value { get; }
 
-        public ITextNode GetAttributeTextNode(string attributeName)
+        public ITextNode GetAttribute(string attributeName)
         {
             return null;
         }
@@ -45,17 +45,17 @@ namespace Sitecore.Pathfinder.Snapshots
             return null;
         }
 
-        public bool SetName(string newName)
+        public bool SetKey(string newKey)
         {
-            return SetValue(newName);
+            return SetValue(newKey);
         }
 
-        public bool SetValue(string value)
+        public bool SetValue(string newValue)
         {
-            var fileName = Snapshot.SourceFile.FileName;
-            var extension = PathHelper.GetExtension(Snapshot.SourceFile.FileName);
+            var fileName = Snapshot.SourceFile.AbsoluteFileName;
+            var extension = PathHelper.GetExtension(Snapshot.SourceFile.AbsoluteFileName);
 
-            var newFileName = Path.Combine(Path.GetDirectoryName(fileName) ?? string.Empty, value + extension);
+            var newFileName = Path.Combine(Path.GetDirectoryName(fileName) ?? string.Empty, newValue + extension);
 
             // todo: use FileSystemService
             File.Move(fileName, newFileName);

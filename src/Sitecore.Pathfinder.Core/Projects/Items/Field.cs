@@ -55,7 +55,6 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public string CompiledValue { get; private set; }
 
-        [NotNull]
         [ItemNotNull]
         public ICollection<ITextNode> SourceTextNodes { get; } = new List<ITextNode>();
 

@@ -98,11 +98,7 @@ namespace Sitecore.Pathfinder.Compiling.Builders
                 item.TemplateIdOrPathProperty.AddSourceTextNode(TemplateIdOrPathTextNode);
             }
 
-            item.Icon = Icon;
-            if (IconTextNode != TextNode.Empty)
-            {
-                item.IconProperty.AddSourceTextNode(IconTextNode);
-            }
+            item.IconProperty.SetValue(IconTextNode);
 
             foreach (var fieldBuilder in Fields)
             {

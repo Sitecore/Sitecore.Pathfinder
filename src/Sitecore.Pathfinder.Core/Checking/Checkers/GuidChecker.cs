@@ -14,7 +14,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
             foreach (var projectItem1 in context.Project.Items)
             {
                 var item1 = projectItem1 as ItemBase;
-                if (item1 != null && item1.IsExternalReference)
+                if (item1 != null && item1.IsExtern)
                 {
                     continue;
                 }
@@ -27,7 +27,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                     }
 
                     var item2 = projectItem2 as ItemBase;
-                    if (item2 != null && item2.IsExternalReference)
+                    if (item2 != null && item2.IsExtern)
                     {
                         continue;
                     }

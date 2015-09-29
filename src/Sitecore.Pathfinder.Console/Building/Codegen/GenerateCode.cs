@@ -53,7 +53,7 @@ Normally you want to run the `generate-code` task before building an assembly, s
 
         protected virtual void Generate([NotNull] IBuildContext context, [NotNull] ICodeGenerator codeGenerator, [NotNull] IProjectItem projectItem)
         {
-            var baseFileName = Path.GetDirectoryName(projectItem.Snapshots.First().SourceFile.FileName) ?? string.Empty;
+            var baseFileName = Path.GetDirectoryName(projectItem.Snapshots.First().SourceFile.AbsoluteFileName) ?? string.Empty;
             baseFileName = Path.Combine(baseFileName, projectItem.ShortName);
 
             context.FileSystem.CreateDirectory(Path.GetDirectoryName(baseFileName) ?? string.Empty);

@@ -96,7 +96,7 @@ namespace Sitecore.Pathfinder.Projects
                 throw new InvalidOperationException(Texts.Project_has_not_been_loaded__Call_Load___first);
             }
 
-            if (SourceFiles.Any(s => string.Compare(s.FileName, sourceFileName, StringComparison.OrdinalIgnoreCase) == 0))
+            if (SourceFiles.Any(s => string.Compare(s.AbsoluteFileName, sourceFileName, StringComparison.OrdinalIgnoreCase) == 0))
             {
                 Remove(sourceFileName);
             }
@@ -182,7 +182,7 @@ namespace Sitecore.Pathfinder.Projects
             Options = projectOptions;
 
             var context = CompositionService.Resolve<IParseContext>().With(this, Snapshot.Empty);
-            AddExternals(context);
+            AddExterns(context);
 
             foreach (var sourceFileName in sourceFileNames)
             {
@@ -206,14 +206,14 @@ namespace Sitecore.Pathfinder.Projects
                 throw new InvalidOperationException(Texts.Project_has_not_been_loaded__Call_Load___first);
             }
 
-            SourceFiles.Remove(SourceFiles.FirstOrDefault(s => string.Compare(s.FileName, sourceFileName, StringComparison.OrdinalIgnoreCase) == 0));
+            SourceFiles.Remove(SourceFiles.FirstOrDefault(s => string.Compare(s.AbsoluteFileName, sourceFileName, StringComparison.OrdinalIgnoreCase) == 0));
 
             _diagnostics.RemoveAll(d => string.Compare(d.FileName, sourceFileName, StringComparison.OrdinalIgnoreCase) == 0);
 
             foreach (var projectItem in Items.ToList())
             {
                 // todo: not working
-                if (string.Compare(projectItem.Snapshots.First().SourceFile.FileName, sourceFileName, StringComparison.OrdinalIgnoreCase) != 0)
+                if (string.Compare(projectItem.Snapshots.First().SourceFile.AbsoluteFileName, sourceFileName, StringComparison.OrdinalIgnoreCase) != 0)
                 {
                     continue;
                 }
@@ -247,7 +247,7 @@ namespace Sitecore.Pathfinder.Projects
             return this;
         }
 
-        protected virtual void AddExternals([NotNull] IParseContext context)
+        protected virtual void AddExterns([NotNull] IParseContext context)
         {
             var externalDirectory = PathHelper.Combine(context.Configuration.GetString(Constants.Configuration.SolutionDirectory), context.Configuration.GetString(Constants.Configuration.ExternalDirectory));
             if (!FileSystem.DirectoryExists(externalDirectory))
@@ -264,28 +264,36 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         protected virtual IProjectItem MergeItem<T>([NotNull] T newItem) where T : Item
         {
-            Item item = null;
+            var fileNameWithoutExtensions = newItem.Snapshots.First().SourceFile.GetFileNameWithoutExtensions();
+
+            List<Item> items = null;
             if (newItem.MergingMatch == MergingMatch.MatchUsingSourceFile)
             {
-                item = Items.OfType<Item>().FirstOrDefault(i => string.Equals(i.Snapshots.First().SourceFile.GetFileNameWithoutExtensions(), newItem.Snapshots.First().SourceFile.GetFileNameWithoutExtensions(), StringComparison.OrdinalIgnoreCase));
+                items = Items.OfType<Item>().Where(i => i.Snapshots.Any(s => string.Equals(s.SourceFile.GetFileNameWithoutExtensions(), fileNameWithoutExtensions, StringComparison.OrdinalIgnoreCase))).ToList();
             }
 
-            if (item == null)
+            if (items == null)
             {
-                item = Items.OfType<Item>().FirstOrDefault(i => i.MergingMatch == MergingMatch.MatchUsingSourceFile && string.Equals(i.Snapshots.First().SourceFile.GetFileNameWithoutExtensions(), newItem.Snapshots.First().SourceFile.GetFileNameWithoutExtensions(), StringComparison.OrdinalIgnoreCase));
+                items = Items.OfType<Item>().Where(i => i.MergingMatch == MergingMatch.MatchUsingSourceFile && i.Snapshots.Any(s => string.Equals(s.SourceFile.GetFileNameWithoutExtensions(), fileNameWithoutExtensions, StringComparison.OrdinalIgnoreCase))).ToList();
             }
 
-            if (item == null)
+            if (!items.Any())
             {
-                item = Items.OfType<Item>().FirstOrDefault(i => string.Equals(i.ItemIdOrPath, newItem.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) && string.Equals(i.DatabaseName, newItem.DatabaseName, StringComparison.OrdinalIgnoreCase));
+                items = Items.OfType<Item>().Where(i => string.Equals(i.ItemIdOrPath, newItem.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) && string.Equals(i.DatabaseName, newItem.DatabaseName, StringComparison.OrdinalIgnoreCase)).ToList();
             }
 
-            if (item == null)
+            if (!items.Any())
             {
                 _items.Add(newItem);
                 return newItem;
             }
 
+            if (items.Count > 1)
+            {
+              throw new InvalidOperationException("Trying to merge multiple items");
+            }
+
+            var item = items.First();
             item.Merge(newItem);
             return item;
         }
@@ -293,13 +301,19 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         protected virtual IProjectItem MergeTemplate<T>([NotNull] T newTemplate) where T : Template
         {
-            var template = Items.OfType<Template>().FirstOrDefault(i => string.Equals(i.ItemIdOrPath, newTemplate.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) && string.Equals(i.DatabaseName, newTemplate.DatabaseName, StringComparison.OrdinalIgnoreCase));
-            if (template == null)
+            var templates = Items.OfType<Template>().Where(i => string.Equals(i.ItemIdOrPath, newTemplate.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) && string.Equals(i.DatabaseName, newTemplate.DatabaseName, StringComparison.OrdinalIgnoreCase)).ToList();
+            if (!templates.Any())
             {
                 _items.Add(newTemplate);
                 return newTemplate;
             }
 
+            if (templates.Count > 1)
+            {
+                throw new InvalidOperationException("Trying to merge multiple templates");
+            }
+
+            var template = templates.First();
             template.Merge(newTemplate);
             return template;
         }

@@ -35,7 +35,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         public bool IsEmittable { get; set; } = true;
 
-        public bool IsExternalReference { get; set; }
+        public bool IsExtern { get; set; }
 
         [NotNull]
         public string ItemIdOrPath { get; private set; }
@@ -94,7 +94,7 @@ namespace Sitecore.Pathfinder.Projects.Items
             }
 
             IsEmittable = IsEmittable || newItemBase.IsEmittable;
-            IsExternalReference = IsExternalReference || newItemBase.IsExternalReference;
+            IsExtern = IsExtern || newItemBase.IsExtern;
 
             References.AddRange(newItemBase.References);
         }

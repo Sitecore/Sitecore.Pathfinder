@@ -6,7 +6,7 @@ namespace Sitecore.Pathfinder.Parsing
 {
     public interface IParser
     {
-        double Sortorder { get; }
+        double Priority { get; }
 
         bool CanParse([NotNull] IParseContext context);
 

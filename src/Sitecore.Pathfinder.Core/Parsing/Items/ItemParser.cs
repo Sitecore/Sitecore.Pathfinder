@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.IO;
-using Sitecore.Pathfinder.Parsing.Items.TreeNodeParsers;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Parsing.Items
@@ -40,7 +39,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
         public override bool CanParse(IParseContext context)
         {
-            var fileName = context.Snapshot.SourceFile.FileName;
+            var fileName = context.Snapshot.SourceFile.AbsoluteFileName;
             return FileExtensions.Any(extension => fileName.EndsWith(extension, StringComparison.OrdinalIgnoreCase)) && context.Snapshot is ITextSnapshot;
         }
 
@@ -51,9 +50,9 @@ namespace Sitecore.Pathfinder.Parsing.Items
             var textNode = textDocument.Root;
             if (textNode == TextNode.Empty)
             {
-                var textSpan = textDocument.ParseErrorTextSpan != TextSpan.Empty ? textDocument.ParseErrorTextSpan : textDocument.Root.Span;
+                var textSpan = textDocument.ParseErrorTextSpan != TextSpan.Empty ? textDocument.ParseErrorTextSpan : textDocument.Root.TextSpan;
                 var text = !string.IsNullOrEmpty(textDocument.ParseError) ? textDocument.ParseError : Texts.Source_file_is_empty;
-                context.Trace.TraceWarning(text, textDocument.SourceFile.FileName, textSpan);
+                context.Trace.TraceWarning(text, textDocument.SourceFile.AbsoluteFileName, textSpan);
                 return;
             }
 
@@ -88,7 +87,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             }
             catch (Exception ex)
             {
-                context.ParseContext.Trace.TraceError(string.Empty, context.ParseContext.Snapshot.SourceFile.FileName, TextSpan.Empty, ex.Message);
+                context.ParseContext.Trace.TraceError(string.Empty, context.ParseContext.Snapshot.SourceFile.AbsoluteFileName, TextSpan.Empty, ex.Message);
             }
         }
     }

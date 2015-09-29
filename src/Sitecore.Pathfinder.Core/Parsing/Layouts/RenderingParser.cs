@@ -22,7 +22,7 @@ namespace Sitecore.Pathfinder.Parsing.Layouts
 
         public override bool CanParse(IParseContext context)
         {
-            return context.Snapshot.SourceFile.FileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
+            return context.Snapshot.SourceFile.AbsoluteFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
         }
 
         public override void Parse(IParseContext context)

@@ -156,7 +156,7 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual TextNode TextNode(ISnapshot snapshot, TextSpan span, string name, string value, ITextNode parent)
         {
-            return new TextNode(snapshot, span, name, value, parent);
+            return new TextNode(snapshot, name, value, span, parent);
         }
     }
 }

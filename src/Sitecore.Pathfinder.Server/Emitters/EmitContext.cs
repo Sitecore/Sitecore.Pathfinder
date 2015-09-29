@@ -6,7 +6,6 @@ using System.IO;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Data.Items;
 using Sitecore.Data.Serialization;
-using Sitecore.Pathfinder.Data;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -19,11 +18,10 @@ namespace Sitecore.Pathfinder.Emitters
     public class EmitContext : IEmitContext
     {
         [ImportingConstructor]
-        public EmitContext([Diagnostics.NotNull] IConfiguration configuration, [Diagnostics.NotNull] ITraceService traceService, [Diagnostics.NotNull] IDataService dataService, [Diagnostics.NotNull] IFileSystemService fileSystemService)
+        public EmitContext([Diagnostics.NotNull] IConfiguration configuration, [Diagnostics.NotNull] ITraceService traceService, [Diagnostics.NotNull] IFileSystemService fileSystemService)
         {
             Configuration = configuration;
             Trace = traceService;
-            DataService = dataService;
             FileSystem = fileSystemService;
 
             var solutionDirectory = Configuration.GetString(Constants.Configuration.SolutionDirectory);
@@ -35,8 +33,6 @@ namespace Sitecore.Pathfinder.Emitters
         public ICollection<string> AddedItems { get; } = new List<string>();
 
         public IConfiguration Configuration { get; }
-
-        public IDataService DataService { get; }
 
         public ICollection<string> DeletedFiles { get; } = new List<string>();
 

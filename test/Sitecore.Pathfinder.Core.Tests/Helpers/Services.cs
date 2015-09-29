@@ -4,7 +4,6 @@ using System;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
-using System.Reflection;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Checking;
 using Sitecore.Pathfinder.Configuration;

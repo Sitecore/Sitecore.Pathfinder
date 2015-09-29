@@ -47,7 +47,7 @@ namespace Sitecore.Pathfinder.Diagnostics
 
         public void TraceError(string text, ISourceFile sourceFile, string details = "")
         {
-            Write(text, Severity.Error, sourceFile.FileName, TextSpan.Empty, details);
+            Write(text, Severity.Error, sourceFile.AbsoluteFileName, TextSpan.Empty, details);
 
             if (Configuration.GetBool(Constants.Configuration.Debug))
             {
@@ -57,7 +57,7 @@ namespace Sitecore.Pathfinder.Diagnostics
 
         public void TraceError(string text, ITextNode textNode, string details = "")
         {
-            Write(text, Severity.Error, textNode.Snapshot.SourceFile.FileName, textNode.Span, details);
+            Write(text, Severity.Error, textNode.Snapshot.SourceFile.AbsoluteFileName, textNode.TextSpan, details);
 
             if (Configuration.GetBool(Constants.Configuration.Debug))
             {
@@ -82,7 +82,7 @@ namespace Sitecore.Pathfinder.Diagnostics
 
         public void TraceInformation(string text, ITextNode textNode, string details = "")
         {
-            Write(text, Severity.Information, textNode.Snapshot.SourceFile.FileName, textNode.Span, details);
+            Write(text, Severity.Information, textNode.Snapshot.SourceFile.AbsoluteFileName, textNode.TextSpan, details);
         }
 
         public void TraceWarning(string text, string details = "")
@@ -97,7 +97,7 @@ namespace Sitecore.Pathfinder.Diagnostics
 
         public void TraceWarning(string text, ITextNode textNode, string details = "")
         {
-            Write(text, Severity.Warning, textNode.Snapshot.SourceFile.FileName, textNode.Span, details);
+            Write(text, Severity.Warning, textNode.Snapshot.SourceFile.AbsoluteFileName, textNode.TextSpan, details);
         }
 
         public void Writeline(string text, string details = "")
@@ -128,7 +128,7 @@ namespace Sitecore.Pathfinder.Diagnostics
                 }
             }
 
-            var lineInfo = span.LineLength == 0 ? $"({span.LineNumber},{span.LinePosition})" : $"({span.LineNumber},{span.LinePosition},{span.LineNumber},{span.LinePosition + span.LineLength})";
+            var lineInfo = span.Length == 0 ? $"({span.LineNumber},{span.LinePosition})" : $"({span.LineNumber},{span.LinePosition},{span.LineNumber},{span.LinePosition + span.Length})";
 
             Console.WriteLine($"{fileInfo}{lineInfo}: {severity.ToString().ToLowerInvariant()} SCC0000: {text}");
         }

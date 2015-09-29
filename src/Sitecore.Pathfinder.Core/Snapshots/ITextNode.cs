@@ -16,12 +16,12 @@ namespace Sitecore.Pathfinder.Snapshots
         IEnumerable<ITextNode> ChildNodes { get; }
 
         [NotNull]
-        string Name { get; }
+        string Key { get; }
 
         [CanBeNull]
-        ITextNode Parent { get; }
+        ITextNode ParentNode { get; }
 
-        TextSpan Span { get; }
+        TextSpan TextSpan { get; }
 
         [NotNull]
         ISnapshot Snapshot { get; }
@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Snapshots
         string Value { get; }
 
         [CanBeNull]
-        ITextNode GetAttributeTextNode([NotNull] string attributeName);
+        ITextNode GetAttribute([NotNull] string attributeName);
 
         [NotNull]
         string GetAttributeValue([NotNull] string attributeName, [NotNull] string defaultValue = "");
@@ -38,8 +38,8 @@ namespace Sitecore.Pathfinder.Snapshots
         [CanBeNull]
         ITextNode GetInnerTextNode();
 
-        bool SetName([NotNull] string newName);
+        bool SetKey([NotNull] string newKey);
 
-        bool SetValue([NotNull] string value);
+        bool SetValue([NotNull] string newValue);
     }
 }

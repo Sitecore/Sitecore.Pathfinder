@@ -432,4 +432,13 @@
     <data name="Item_path_reference_not_found" xml:space="preserve">
     <value>Item path reference not found</value>
   </data>
+    <data name="Checkbox_field_value_must_be__true__or__false__" xml:space="preserve">
+    <value>Checkbox field value must be 'true' or 'false'.</value>
+  </data>
+    <data name="Test_Runner_not_found__" xml:space="preserve">
+    <value>Test Runner not found: </value>
+  </data>
+    <data name="No_tests_were_found" xml:space="preserve">
+    <value>No tests were found</value>
+  </data>
 </root>

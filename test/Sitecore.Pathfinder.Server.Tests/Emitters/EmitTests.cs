@@ -2,7 +2,6 @@
 
 using System.IO;
 using System.Reflection;
-using NUnit.Framework;
 using Sitecore.Pathfinder.Emitters;
 using Sitecore.Pathfinder.IO;
 

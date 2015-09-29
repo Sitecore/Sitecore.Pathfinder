@@ -170,6 +170,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Checkbox field value must be &apos;true&apos; or &apos;false&apos;..
+        /// </summary>
+        public static string Checkbox_field_value_must_be__true__or__false__ {
+            get {
+                return ResourceManager.GetString("Checkbox_field_value_must_be__true__or__false__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Checking project....
         /// </summary>
         public static string Checking___ {
@@ -677,6 +686,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No tests were found.
+        /// </summary>
+        public static string No_tests_were_found {
+            get {
+                return ResourceManager.GetString("No_tests_were_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to NuGet file size.
         /// </summary>
         public static string NuGet_file_size {
@@ -835,6 +853,15 @@ namespace Sitecore.Pathfinder {
         public static string Template_missing {
             get {
                 return ResourceManager.GetString("Template_missing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test Runner not found: .
+        /// </summary>
+        public static string Test_Runner_not_found__ {
+            get {
+                return ResourceManager.GetString("Test_Runner_not_found__", resourceCulture);
             }
         }
         

@@ -21,7 +21,7 @@ namespace Sitecore.Pathfinder.Diagnostics
         public EmitException([Localizable(true)] [NotNull] string text, [NotNull] ISnapshot snapshot, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
         {
             Text = text;
-            FileName = snapshot.SourceFile.FileName;
+            FileName = snapshot.SourceFile.AbsoluteFileName;
             Span = TextSpan.Empty;
             Details = details;
         }
@@ -29,8 +29,8 @@ namespace Sitecore.Pathfinder.Diagnostics
         public EmitException([Localizable(true)] [NotNull] string text, [NotNull] ITextNode textNode, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
         {
             Text = text;
-            FileName = textNode.Snapshot.SourceFile.FileName;
-            Span = textNode.Span;
+            FileName = textNode.Snapshot.SourceFile.AbsoluteFileName;
+            Span = textNode.TextSpan;
             Details = details;
         }
 

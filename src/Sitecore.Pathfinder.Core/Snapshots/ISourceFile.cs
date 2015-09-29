@@ -1,7 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.Xml.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Snapshots
@@ -9,7 +8,7 @@ namespace Sitecore.Pathfinder.Snapshots
     public interface ISourceFile
     {
         [NotNull]
-        string FileName { get; }
+        string AbsoluteFileName { get; }
 
         bool IsModified { get; set; }
 
@@ -27,8 +26,5 @@ namespace Sitecore.Pathfinder.Snapshots
 
         [NotNull]
         string ReadAsText();
-
-        [CanBeNull]
-        XElement ReadAsXml();
     }
 }

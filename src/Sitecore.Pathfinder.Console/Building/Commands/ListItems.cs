@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Building.Commands
 
         public override void Run(IBuildContext context)
         {
-            foreach (var item in context.Project.Items.OfType<ItemBase>().Where(i => !i.IsExternalReference).OrderBy(i => i.ItemIdOrPath))
+            foreach (var item in context.Project.Items.OfType<ItemBase>().Where(i => !i.IsExtern).OrderBy(i => i.ItemIdOrPath))
             {
                 context.Trace.Writeline(item.ItemIdOrPath);
             }

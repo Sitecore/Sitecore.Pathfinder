@@ -1,8 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" %>
 
 <%@ Import Namespace="NuGet" %>
-<%@ Import Namespace="Sitecore.Pathfinder.Packages" %>
-<%@ Import Namespace="Sitecore.Pathfinder.Packages.Packages" %>
 <!DOCTYPE html>
 <%                                          
     var packageId = Request.QueryString["id"] ?? string.Empty;

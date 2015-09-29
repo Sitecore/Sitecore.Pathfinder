@@ -38,36 +38,36 @@ namespace Sitecore.Pathfinder.Projects
         EnableUpdates
     }
 
-    [DebuggerDisplay("\\{{GetType().Name,nq}\\}: {Name,nq} = {GetValue()}")]
+    [DebuggerDisplay("\\{{GetType().Name,nq}\\}: {Key,nq} = {GetValue()}")]
     public class SourceProperty<T> : INotifyPropertyChanged, IHasSourceTextNodes
     {
         [NotNull]
         private readonly T _defaultValue;
 
-        [CanBeNull]
+        [NotNull]
         private T _value;
 
-        public SourceProperty([NotNull] string name, [NotNull] T defaultValue)
+        public SourceProperty([NotNull] string key, [NotNull] T defaultValue)
         {
-            Name = name;
+            Key = key;
 
             _value = defaultValue;
             _defaultValue = defaultValue;
         }
 
-        public SourceProperty([NotNull] string name, [NotNull] T defaultValue, SourcePropertyFlags sourcePropertyFlags)
+        public SourceProperty([NotNull] string key, [NotNull] T defaultValue, SourcePropertyFlags flags)
         {
-            Name = name;
-            SourcePropertyFlags = sourcePropertyFlags;
+            Key = key;
+            Flags = flags;
 
             _value = defaultValue;
             _defaultValue = defaultValue;
         }
+
+        public SourcePropertyFlags Flags { get; set; }
 
         [NotNull]
-        public string Name { get; private set; }
-
-        public SourcePropertyFlags SourcePropertyFlags { get; set; }
+        public string Key { get; private set; }
 
         [CanBeNull]
         public ITextNode SourceTextNode => SourceTextNodes.LastOrDefault();
@@ -76,6 +76,16 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual bool AddSourceTextNode([CanBeNull] ITextNode textNode)
         {
+            if (textNode == TextNode.Empty)
+            {
+                return true;
+            }
+
+            if (SourceTextNodes.Contains(textNode))
+            {
+                return true;
+            }
+
             SourceTextNodes.Add(textNode);
             return true;
         }
@@ -85,28 +95,43 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual void Parse([NotNull] ITextNode textNode, [CanBeNull] T defaultValue = default(T))
         {
-            var source = textNode.GetAttributeTextNode(Name);
-
-            if (source != null)
+            var attribute = textNode.GetAttribute(Key);
+            if (attribute != null)
             {
-                SetValue((T)Convert.ChangeType(source.Value, typeof(T)), SetValueOptions.DisableUpdates);
-                AddSourceTextNode(source);
-                return;
+                SetValue(attribute, SetValueOptions.DisableUpdates);
             }
-
-            if (defaultValue != null)
+            else if (defaultValue != null)
             {
                 SetValue(defaultValue, SetValueOptions.DisableUpdates);
-                return;
             }
-
-            SetValue(_defaultValue, SetValueOptions.DisableUpdates);
+            else
+            {
+                SetValue(_defaultValue, SetValueOptions.DisableUpdates);
+            }
         }
 
-        public virtual void Parse([NotNull] string newName, [NotNull] ITextNode textNode, [CanBeNull] T defaultValue = default(T))
+        public virtual void Parse([NotNull] string newKey, [NotNull] ITextNode textNode, [CanBeNull] T defaultValue = default(T))
         {
-            Name = newName;
+            Key = newKey;
             Parse(textNode, defaultValue);
+        }
+
+        public virtual bool ParseIfHasAttribute([NotNull] ITextNode textNode)
+        {
+            var attribute = textNode.GetAttribute(Key);
+            if (attribute == null)
+            {
+                return false;
+            }
+
+            Parse(textNode);
+            return true;
+        }
+
+        public virtual bool ParseIfHasAttribute([NotNull] string newKey, [NotNull] ITextNode textNode)
+        {
+            Key = newKey;
+            return ParseIfHasAttribute(textNode);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -156,24 +181,6 @@ namespace Sitecore.Pathfinder.Projects
             return GetValue().ToString();
         }
 
-        public virtual bool TryParse([NotNull] ITextNode textNode, [CanBeNull] T defaultValue = default(T))
-        {
-            var source = textNode.GetAttributeTextNode(Name);
-            if (source == null)
-            {
-                return false;
-            }
-
-            Parse(textNode, defaultValue);
-            return true;
-        }
-
-        public virtual bool TryParse([NotNull] string newName, [NotNull] ITextNode textNode, [CanBeNull] T defaultValue = default(T))
-        {
-            Name = newName;
-            return TryParse(textNode, defaultValue);
-        }
-
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CanBeNull] string propertyName = null)
         {
@@ -183,18 +190,18 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         protected virtual string ToSourceValue([NotNull] string value)
         {
-            if ((SourcePropertyFlags & SourcePropertyFlags.IsShort) == SourcePropertyFlags.IsShort)
+            if ((Flags & SourcePropertyFlags.IsShort) == SourcePropertyFlags.IsShort)
             {
                 var n = value.LastIndexOf('/');
                 value = n < 0 ? value : value.Mid(n + 1);
             }
 
-            if ((SourcePropertyFlags & SourcePropertyFlags.ConvertToXmlIdentifier) == SourcePropertyFlags.ConvertToXmlIdentifier)
+            if ((Flags & SourcePropertyFlags.ConvertToXmlIdentifier) == SourcePropertyFlags.ConvertToXmlIdentifier)
             {
                 value = value.EscapeXmlElementName();
             }
 
-            if ((SourcePropertyFlags & SourcePropertyFlags.ConvertToCodelIdentifier) == SourcePropertyFlags.ConvertToCodelIdentifier)
+            if ((Flags & SourcePropertyFlags.ConvertToCodelIdentifier) == SourcePropertyFlags.ConvertToCodelIdentifier)
             {
                 value = value.GetSafeCodeIdentifier();
             }

@@ -44,7 +44,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
             }
 
             context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName) ?? string.Empty);
-            context.FileSystem.Copy(projectItem.Snapshots.First().SourceFile.FileName, destinationFileName);
+            context.FileSystem.Copy(projectItem.Snapshots.First().SourceFile.AbsoluteFileName, destinationFileName);
         }
 
         private bool CanCopyBinFile([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] IProjectItem projectItem, [Diagnostics.NotNull] string destinationFileName)
@@ -60,7 +60,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
             }
 
             var destinationVersion = GetFileVersion(destinationFileName);
-            var sourceVersion = GetFileVersion(projectItem.Snapshots.First().SourceFile.FileName);
+            var sourceVersion = GetFileVersion(projectItem.Snapshots.First().SourceFile.AbsoluteFileName);
 
             return sourceVersion > destinationVersion;
         }

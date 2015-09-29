@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using NUnit.Framework;
-using Sitecore.Pathfinder.Snapshots.Xml;
+using Sitecore.Pathfinder.Languages.Xml;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
@@ -19,20 +19,20 @@ namespace Sitecore.Pathfinder.Snapshots
             var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt");
 
             var snapshot = new XmlTextSnapshot(sourceFile, "<Item><Field Name=\"Text\" Value=\"123\" /></Item>", string.Empty, string.Empty);
-            Assert.AreEqual("Item", snapshot.Root.Name);
+            Assert.AreEqual("Item", snapshot.Root.Key);
 
             var field = snapshot.Root.ChildNodes.First();
             
             var fileNameTextNode = new FileNameTextNode("test", snapshot);
             Assert.AreEqual(0, fileNameTextNode.Attributes.Count());
             Assert.AreEqual(0, fileNameTextNode.ChildNodes.Count());
-            Assert.AreEqual("test", fileNameTextNode.Name);
-            Assert.AreEqual(null, fileNameTextNode.Parent);
-            Assert.AreEqual(0, fileNameTextNode.Span.LineNumber);
-            Assert.AreEqual(0, fileNameTextNode.Span.LinePosition);
+            Assert.AreEqual("test", fileNameTextNode.Key);
+            Assert.AreEqual(null, fileNameTextNode.ParentNode);
+            Assert.AreEqual(0, fileNameTextNode.TextSpan.LineNumber);
+            Assert.AreEqual(0, fileNameTextNode.TextSpan.LinePosition);
             Assert.AreEqual(field.Snapshot, fileNameTextNode.Snapshot);
 
-            Assert.AreEqual(null, fileNameTextNode.GetAttributeTextNode("None"));
+            Assert.AreEqual(null, fileNameTextNode.GetAttribute("None"));
             Assert.AreEqual(string.Empty, fileNameTextNode.GetAttributeValue("None"));
             Assert.AreEqual(null, fileNameTextNode.GetInnerTextNode());
         }

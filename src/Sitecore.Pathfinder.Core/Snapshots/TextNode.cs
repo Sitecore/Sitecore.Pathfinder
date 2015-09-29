@@ -7,38 +7,43 @@ using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
-    [DebuggerDisplay("\\{{GetType().FullName,nq}\\}: {Name,nq}={Value}")]
+    [DebuggerDisplay("\\{{GetType().FullName,nq}\\}: {Key,nq}={Value}")]
     public class TextNode : ITextNode
     {
         [NotNull]
         public static readonly ITextNode Empty = new SnapshotTextNode(Snapshots.Snapshot.Empty);
 
-        public TextNode([NotNull] ISnapshot snapshot, TextSpan span, [NotNull] string name, [NotNull] string value, [CanBeNull] ITextNode parent)
+        public TextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull] string value, TextSpan textSpan, [CanBeNull] ITextNode parentNode)
         {
             Snapshot = snapshot;
-            Span = span;
-            Name = name;
+            Key = key;
             Value = value;
-            Parent = parent;
+            TextSpan = textSpan;
+            ParentNode = parentNode;
         }
 
         public IEnumerable<ITextNode> Attributes { get; } = new List<ITextNode>();
 
         public IEnumerable<ITextNode> ChildNodes { get; } = new List<ITextNode>();
 
-        public string Name { get; protected set; }
+        public string Key { get; protected set; }
 
-        public ITextNode Parent { get; }
-
-        public TextSpan Span { get; }
+        public ITextNode ParentNode { get; }
 
         public ISnapshot Snapshot { get; }
 
+        public TextSpan TextSpan { get; }
+
         public string Value { get; protected set; }
+
+        public virtual ITextNode GetAttribute(string attributeName)
+        {
+            return Attributes.FirstOrDefault(a => a.Key == attributeName);
+        }
 
         public virtual string GetAttributeValue(string attributeName, string defaultValue = "")
         {
-            var value = GetAttributeTextNode(attributeName)?.Value;
+            var value = GetAttribute(attributeName)?.Value;
             return !string.IsNullOrEmpty(value) ? value : defaultValue;
         }
 
@@ -47,17 +52,12 @@ namespace Sitecore.Pathfinder.Snapshots
             return null;
         }
 
-        public virtual bool SetName(string newName)
+        public virtual bool SetKey(string newKey)
         {
             return false;
         }
 
-        public virtual ITextNode GetAttributeTextNode(string attributeName)
-        {
-            return Attributes.FirstOrDefault(a => a.Name == attributeName);
-        }
-
-        public virtual bool SetValue(string value)
+        public virtual bool SetValue(string newValue)
         {
             return false;
         }

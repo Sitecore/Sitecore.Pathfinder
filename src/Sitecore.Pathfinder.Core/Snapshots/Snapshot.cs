@@ -29,7 +29,7 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public virtual void SaveChanges()
         {
-            throw new InvalidOperationException("Cannot save file: " + SourceFile.FileName);
+            throw new InvalidOperationException("Cannot save file: " + SourceFile.AbsoluteFileName);
         }
     }
 }

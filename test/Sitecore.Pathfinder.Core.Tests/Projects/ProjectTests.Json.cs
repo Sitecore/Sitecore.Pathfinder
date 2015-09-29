@@ -58,15 +58,15 @@ namespace Sitecore.Pathfinder.Projects
             Assert.IsNotNull(textDocument);
 
             var treeNode = textDocument.Root;
-            Assert.AreEqual("Item", treeNode.Name);
+            Assert.AreEqual("Item", treeNode.Key);
             Assert.AreEqual(5, treeNode.Attributes.Count());
 
             var attr = treeNode.Attributes.First();
-            Assert.AreEqual("Template", attr.Name);
+            Assert.AreEqual("Template", attr.Key);
             Assert.AreEqual("/sitecore/templates/Sample/JsonItem", attr.Value);
 
             attr = treeNode.Attributes.ElementAt(1);
-            Assert.AreEqual("Template.CreateFromFields", attr.Name);
+            Assert.AreEqual("Template.CreateFromFields", attr.Key);
             Assert.AreEqual("True", attr.Value);
 
             // text field

@@ -24,7 +24,7 @@ namespace Sitecore.Pathfinder.Parsing
         [NotNull]
         [ImportMany]
         [ItemNotNull]
-        public IEnumerable<IParser> Parsers { get; private set; }
+        protected IEnumerable<IParser> Parsers { get; private set; }
 
         [NotNull]
         protected ICompositionService CompositionService { get; }
@@ -38,7 +38,7 @@ namespace Sitecore.Pathfinder.Parsing
 
             var parseContext = CompositionService.Resolve<IParseContext>().With(project, snapshot);
 
-            foreach (var parser in Parsers.OrderBy(c => c.Sortorder))
+            foreach (var parser in Parsers.OrderBy(p => p.Priority))
             {
                 try
                 {
@@ -49,7 +49,7 @@ namespace Sitecore.Pathfinder.Parsing
                 }
                 catch (Exception ex)
                 {
-                    parseContext.Trace.TraceError(ex.Message, sourceFile.FileName, TextSpan.Empty);
+                    parseContext.Trace.TraceError(ex.Message, sourceFile.AbsoluteFileName, TextSpan.Empty);
                 }
             }
         }

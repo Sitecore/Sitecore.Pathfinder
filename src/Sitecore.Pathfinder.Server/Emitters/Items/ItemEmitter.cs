@@ -8,7 +8,7 @@ using Sitecore.Data;
 using Sitecore.Data.Managers;
 using Sitecore.Data.Templates;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Emitters.Writers.Items;
+using Sitecore.Pathfinder.Emitters.Writers;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
         public override void Emit(IEmitContext context, IProjectItem projectItem)
         {
             var item = (Item)projectItem;
-            if (!item.IsEmittable || item.IsExternalReference)
+            if (!item.IsEmittable || item.IsExtern)
             {
                 return;
             }

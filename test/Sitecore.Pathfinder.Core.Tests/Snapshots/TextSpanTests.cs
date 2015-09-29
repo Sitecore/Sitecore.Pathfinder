@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
@@ -13,7 +11,7 @@ namespace Sitecore.Pathfinder.Snapshots
             var position = new TextSpan(1, 2, 3);
             Assert.AreEqual(1, position.LineNumber);
             Assert.AreEqual(2, position.LinePosition);
-            Assert.AreEqual(3, position.LineLength);
+            Assert.AreEqual(3, position.Length);
             Assert.AreEqual(472428, position.GetHashCode());
             Assert.IsFalse(position.Equals(null));
 

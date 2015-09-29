@@ -1,5 +1,4 @@
 using System.ComponentModel.Composition;
-using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;

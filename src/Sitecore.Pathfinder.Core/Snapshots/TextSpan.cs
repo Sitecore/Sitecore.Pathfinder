@@ -5,19 +5,19 @@ using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
-    [DebuggerDisplay("{GetType().Name,nq}: ({LineNumber,nq}, {LinePosition,nq}, {LineLength,nq})")]
+    [DebuggerDisplay("{GetType().Name,nq}: ({LineNumber,nq}, {LinePosition,nq}, {Length,nq})")]
     public struct TextSpan
     {
         public static readonly TextSpan Empty = new TextSpan(0, 0, 0);
 
-        public TextSpan(int lineNumber, int linePosition, int lineLength)
+        public TextSpan(int lineNumber, int linePosition, int length)
         {
             LineNumber = lineNumber;
             LinePosition = linePosition;
-            LineLength = lineLength;
+            Length = length;
         }
 
-        public int LineLength { get; }
+        public int Length { get; }
 
         public int LineNumber { get; }
 
@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public bool Equals(TextSpan other)
         {
-            return LineLength == other.LineLength && LineNumber == other.LineNumber && LinePosition == other.LinePosition;
+            return Length == other.Length && LineNumber == other.LineNumber && LinePosition == other.LinePosition;
         }
 
         public override bool Equals([CanBeNull] object obj)
@@ -42,7 +42,7 @@ namespace Sitecore.Pathfinder.Snapshots
         {
             unchecked
             {
-                var hashCode = LineLength;
+                var hashCode = Length;
                 hashCode = (hashCode * 397) ^ LineNumber;
                 hashCode = (hashCode * 397) ^ LinePosition;
                 return hashCode;

@@ -162,11 +162,11 @@ namespace Sitecore.Pathfinder.Emitters
                 }
                 else if (exception != null)
                 {
-                    Trace.TraceError(exception.Message, projectItem.Snapshots.First().SourceFile.FileName, TextSpan.Empty);
+                    Trace.TraceError(exception.Message, projectItem.Snapshots.First().SourceFile.AbsoluteFileName, TextSpan.Empty);
                 }
                 else
                 {
-                    Trace.TraceError(Texts.An_error_occured, projectItem.Snapshots.First().SourceFile.FileName, TextSpan.Empty);
+                    Trace.TraceError(Texts.An_error_occured, projectItem.Snapshots.First().SourceFile.AbsoluteFileName, TextSpan.Empty);
                 }
             }
         }

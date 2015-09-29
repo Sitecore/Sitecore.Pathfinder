@@ -33,13 +33,13 @@ namespace Sitecore.Pathfinder.Projects
             Assert.AreEqual("Hello World", field.Value);
             Assert.IsInstanceOf<TextNode>(field.ValueProperty.SourceTextNode);
             Assert.AreEqual("Hello World", field.ValueProperty.SourceTextNode?.Value);
-            Assert.AreEqual("Text", field.ValueProperty.SourceTextNode?.Name);
+            Assert.AreEqual("Text", field.ValueProperty.SourceTextNode?.Key);
 
             var textDocument = projectItem.Snapshots.First() as ITextSnapshot;
             Assert.IsNotNull(textDocument);
 
             var treeNode = textDocument.Root;
-            Assert.AreEqual("Sample Item", treeNode.Name);
+            Assert.AreEqual("Sample Item", treeNode.Key);
             Assert.AreEqual(2, treeNode.Attributes.Count());
         }
 
@@ -90,21 +90,21 @@ namespace Sitecore.Pathfinder.Projects
             Assert.IsInstanceOf<FileNameTextNode>(item.ItemNameProperty.SourceTextNode);
             Assert.IsInstanceOf<TextNode>(item.TemplateIdOrPathProperty.SourceTextNode);
             Assert.AreEqual("/sitecore/templates/Sample/YamlItemTemplate", item.TemplateIdOrPathProperty.SourceTextNode?.Value);
-            Assert.AreEqual("Template", item.TemplateIdOrPathProperty.SourceTextNode?.Name);
+            Assert.AreEqual("Template", item.TemplateIdOrPathProperty.SourceTextNode?.Key);
 
             var textDocument = projectItem.Snapshots.First() as ITextSnapshot;
             Assert.IsNotNull(textDocument);
 
             var treeNode = textDocument.Root;
-            Assert.AreEqual("Item", treeNode.Name);
+            Assert.AreEqual("Item", treeNode.Key);
             Assert.AreEqual(5, treeNode.Attributes.Count());
 
             var attr = treeNode.Attributes.First();
-            Assert.AreEqual("Template", attr.Name);
+            Assert.AreEqual("Template", attr.Key);
             Assert.AreEqual("/sitecore/templates/Sample/YamlItemTemplate", attr.Value);
 
             attr = treeNode.Attributes.ElementAt(1);
-            Assert.AreEqual("Template.CreateFromFields", attr.Name);
+            Assert.AreEqual("Template.CreateFromFields", attr.Key);
             Assert.AreEqual("True", attr.Value);
 
             // text field

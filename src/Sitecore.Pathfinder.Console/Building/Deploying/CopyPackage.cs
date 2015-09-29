@@ -33,7 +33,7 @@ namespace Sitecore.Pathfinder.Building.Deploying
 
             foreach (var fileName in context.OutputFiles)
             {
-                var destinationFileName = PathHelper.Combine(destinationDirectory, Path.GetFileName(fileName) ?? string.Empty);
+                var destinationFileName = PathHelper.Combine(destinationDirectory, Path.GetFileName(fileName));
 
                 context.FileSystem.Copy(fileName, destinationFileName);
             }

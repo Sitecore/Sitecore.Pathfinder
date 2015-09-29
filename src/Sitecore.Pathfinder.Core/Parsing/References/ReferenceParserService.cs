@@ -29,7 +29,7 @@ namespace Sitecore.Pathfinder.Parsing.References
         {
             if (text.StartsWith("/sitecore/", StringComparison.OrdinalIgnoreCase))
             {
-                var sourceProperty = new SourceProperty<string>(source.Name, string.Empty, SourcePropertyFlags.IsQualified);
+                var sourceProperty = new SourceProperty<string>(source.Key, string.Empty, SourcePropertyFlags.IsQualified);
                 sourceProperty.SetValue(source);
                 return Factory.Reference(projectItem, sourceProperty);
             }
@@ -37,14 +37,14 @@ namespace Sitecore.Pathfinder.Parsing.References
             Guid guid;
             if (Guid.TryParse(text, out guid))
             {
-                var sourceProperty = new SourceProperty<string>(source.Name, string.Empty, SourcePropertyFlags.IsGuid);
+                var sourceProperty = new SourceProperty<string>(source.Key, string.Empty, SourcePropertyFlags.IsGuid);
                 sourceProperty.SetValue(source);
                 return Factory.Reference(projectItem, sourceProperty);
             }
 
             if (text.StartsWith("{") && text.EndsWith("}"))
             {
-                var sourceProperty = new SourceProperty<string>(source.Name, string.Empty, SourcePropertyFlags.IsSoftGuid);
+                var sourceProperty = new SourceProperty<string>(source.Key, string.Empty, SourcePropertyFlags.IsSoftGuid);
                 sourceProperty.SetValue(source);
                 return Factory.Reference(projectItem, sourceProperty);
             }

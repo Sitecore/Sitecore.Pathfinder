@@ -33,7 +33,7 @@ namespace Sitecore.Pathfinder.Parsing.Files
 
         public override bool CanParse(IParseContext context)
         {
-            var fileExtension = Path.GetExtension(context.Snapshot.SourceFile.FileName);
+            var fileExtension = Path.GetExtension(context.Snapshot.SourceFile.AbsoluteFileName);
             return FileExtensions.Contains(fileExtension, StringComparer.OrdinalIgnoreCase);
         }
 

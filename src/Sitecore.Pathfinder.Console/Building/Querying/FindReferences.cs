@@ -40,7 +40,7 @@ namespace Sitecore.Pathfinder.Building.Querying
                 string line = $"{reference.Owner.Snapshots.First().SourceFile.ProjectFileName}";
 
                 var textNode = TraceHelper.GetTextNode(reference.SourceProperty);
-                line += $"({textNode.Span.LineNumber},{textNode.Span.LineNumber})";
+                line += $"({textNode.TextSpan.LineNumber},{textNode.TextSpan.LineNumber})";
 
                 line += ": " + reference.SourceProperty.GetValue();
 
@@ -52,7 +52,7 @@ namespace Sitecore.Pathfinder.Building.Querying
                 context.Trace.Writeline(line);
             }
 
-            context.Trace.Writeline(Texts.Found__ + projectItem.References.Count());
+            context.Trace.Writeline(Texts.Found__ + projectItem.References.Count);
         }
 
         public override void WriteHelp(HelpWriter helpWriter)

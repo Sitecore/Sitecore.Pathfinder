@@ -24,11 +24,11 @@ namespace Sitecore.Pathfinder.Projects.References
                     continue;
                 }
 
-                var templateIdOrPath = item.TemplateIdOrPath;
-                //if (templateIdOrPath != Constants.Templates.ViewRendering && templateIdOrPath != Constants.Templates.Sublayout)
-                //{
-                //    continue;
-                //}
+                // var templateIdOrPath = item.TemplateIdOrPath;
+                // if (templateIdOrPath != Constants.Templates.ViewRendering && templateIdOrPath != Constants.Templates.Sublayout)
+                // {
+                //     continue;
+                // }
 
                 IsResolved = true;
                 IsValid = true;

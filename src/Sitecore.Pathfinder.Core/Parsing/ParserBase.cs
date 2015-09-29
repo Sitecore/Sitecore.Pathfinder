@@ -4,12 +4,12 @@ namespace Sitecore.Pathfinder.Parsing
 {
     public abstract class ParserBase : IParser
     {
-        protected ParserBase(double sortorder)
+        protected ParserBase(double priority)
         {
-            Sortorder = sortorder;
+            Priority = priority;
         }
 
-        public double Sortorder { get; }
+        public double Priority { get; }
 
         public abstract bool CanParse(IParseContext context);
 
