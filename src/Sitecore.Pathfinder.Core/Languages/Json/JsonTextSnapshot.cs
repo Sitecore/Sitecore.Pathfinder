@@ -40,7 +40,7 @@ namespace Sitecore.Pathfinder.Languages.Json
         [ItemNotNull]
         protected JToken RootToken { get; }
 
-        public override ITextNode GetJsonChildTextNode(ITextNode textNode, string name)
+        public override ITextNode GetJsonChildNode(ITextNode textNode, string name)
         {
             return textNode.ChildNodes.FirstOrDefault(n => n.Key == name);
         }

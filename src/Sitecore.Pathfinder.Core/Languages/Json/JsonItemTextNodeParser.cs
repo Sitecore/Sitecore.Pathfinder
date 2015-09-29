@@ -21,11 +21,6 @@ namespace Sitecore.Pathfinder.Languages.Json
             return textNode.Key == "Item" && textNode.Snapshot is JsonTextSnapshot;
         }
 
-        protected override void ParseUnknownTextNode(ItemParseContext context, Item item, LanguageVersionContext languageVersionContext, ITextNode textNode)
-        {
-            ParseFieldTextNode(context, item, languageVersionContext, textNode);
-        }
-
         protected override void ParseFieldsTextNode(ItemParseContext context, Item item, ITextNode textNode)
         {
             var fieldContext = new LanguageVersionContext();
@@ -33,7 +28,7 @@ namespace Sitecore.Pathfinder.Languages.Json
             foreach (var attribute in textNode.Attributes)
             {
                 ParseFieldTextNode(context, item, fieldContext, attribute);
-            }                                                
+            }
 
             base.ParseFieldsTextNode(context, item, textNode);
         }
@@ -55,6 +50,11 @@ namespace Sitecore.Pathfinder.Languages.Json
         {
             var parser = new JsonLayoutTextNodeParser();
             parser.Parse(context, textNode, item);
+        }
+
+        protected override void ParseUnknownTextNode(ItemParseContext context, Item item, LanguageVersionContext languageVersionContext, ITextNode textNode)
+        {
+            ParseFieldTextNode(context, item, languageVersionContext, textNode);
         }
 
         protected override void ParseUnversionedTextNode(ItemParseContext context, Item item, ITextNode textNode)

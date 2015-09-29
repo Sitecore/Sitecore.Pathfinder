@@ -46,10 +46,11 @@ namespace Sitecore.Pathfinder.Parsing.Items
             var standardValuesGuid = StringHelper.GetGuid(context.ParseContext.Project, standardValuesItemIdOrPath);
             var standardValuesItem = context.ParseContext.Factory.Item(context.ParseContext.Project, standardValuesGuid, textNode, databaseName, "__Standard Values", standardValuesItemIdOrPath, itemIdOrPath);
 
+            // todo: should be Uri
             template.StandardValuesItem = standardValuesItem;
 
             // parse fields and sections
-            var sections = context.Snapshot.GetJsonChildTextNode(textNode, "Sections");
+            var sections = context.Snapshot.GetJsonChildNode(textNode, "Sections");
             if (sections != null)
             {
                 foreach (var sectionTreeNode in sections.ChildNodes)
@@ -59,12 +60,12 @@ namespace Sitecore.Pathfinder.Parsing.Items
             }
 
             // setup HtmlTemplate
-            var htmlTemplateTextNode = textNode.GetAttribute("Layout.HtmlFile");
-            if (htmlTemplateTextNode != null && !string.IsNullOrEmpty(htmlTemplateTextNode.Value))
+            var htmlFileTextNode = textNode.GetAttribute("Layout.HtmlFile");
+            if (htmlFileTextNode != null && !string.IsNullOrEmpty(htmlFileTextNode.Value))
             {
-                var field = context.ParseContext.Factory.Field(template.StandardValuesItem, htmlTemplateTextNode);
+                var field = context.ParseContext.Factory.Field(template.StandardValuesItem, htmlFileTextNode);
                 field.FieldNameProperty.SetValue("__Renderings");
-                field.ValueProperty.SetValue(htmlTemplateTextNode.Value);
+                field.ValueProperty.SetValue(htmlFileTextNode.Value);
                 field.ValueHintProperty.SetValue("HtmlTemplate");
                 template.StandardValuesItem.Fields.Add(field);
             }
@@ -82,7 +83,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 return;
             }
 
-            var templateField = templateSection.Fields.FirstOrDefault(f => string.Compare(f.FieldName, fieldName.Value, StringComparison.OrdinalIgnoreCase) == 0);
+            var templateField = templateSection.Fields.FirstOrDefault(f => string.Equals(f.FieldName, fieldName.Value, StringComparison.OrdinalIgnoreCase));
             if (templateField == null)
             {
                 templateField = context.ParseContext.Factory.TemplateField(template, templateFieldTextNode);
@@ -91,8 +92,8 @@ namespace Sitecore.Pathfinder.Parsing.Items
             }
 
             templateField.TypeProperty.Parse(templateFieldTextNode, "Single-Line Text");
-            templateField.Shared = string.Compare(templateFieldTextNode.GetAttributeValue("Sharing"), "Shared", StringComparison.OrdinalIgnoreCase) == 0;
-            templateField.Unversioned = string.Compare(templateFieldTextNode.GetAttributeValue("Sharing"), "Unversioned", StringComparison.OrdinalIgnoreCase) == 0;
+            templateField.Shared = string.Equals(templateFieldTextNode.GetAttributeValue("Sharing"), "Shared", StringComparison.OrdinalIgnoreCase);
+            templateField.Unversioned = string.Equals(templateFieldTextNode.GetAttributeValue("Sharing"), "Unversioned", StringComparison.OrdinalIgnoreCase);
             templateField.SourceProperty.Parse(templateFieldTextNode);
             templateField.ShortHelpProperty.Parse(templateFieldTextNode);
             templateField.LongHelpProperty.Parse(templateFieldTextNode);
@@ -141,7 +142,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
             templateSection.IconProperty.Parse(templateSectionTextNode);
 
-            var fieldsTextNode = context.Snapshot.GetJsonChildTextNode(templateSectionTextNode, "Fields");
+            var fieldsTextNode = context.Snapshot.GetJsonChildNode(templateSectionTextNode, "Fields");
             if (fieldsTextNode == null)
             {
                 return;

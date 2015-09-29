@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Snapshots.Xml
             var doc = new XmlTextSnapshot(sourceFile, "<Item><Field Name=\"Text\">123</Field></Item>", string.Empty, string.Empty);
             var root = doc.Root;
 
-            var fields = doc.GetJsonChildTextNode(root, "Fields");
+            var fields = doc.GetJsonChildNode(root, "Fields");
             Assert.IsNotNull(fields);
 
             var field = fields.ChildNodes.First();

@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" %>
-
+<%@ Import Namespace="Sitecore.Pathfinder.Packages" %>
 <%@ Import Namespace="NuGet" %>
 <!DOCTYPE html>
 <%                                          

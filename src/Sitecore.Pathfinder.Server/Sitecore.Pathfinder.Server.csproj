@@ -162,6 +162,7 @@
     <Content Include="sitecore\shell\client\Applications\Pathfinder\InstallPackage.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\WebTestRunnerController.cs" />
     <Compile Include="Emitters\Writers\FieldWriter.cs" />
     <Compile Include="Configuration\PathfinderSettings.cs" />
     <Compile Include="Diagnostics\EmitException.cs" />
@@ -188,17 +189,13 @@
     <Compile Include="Packages\PackageService.cs" />
     <Compile Include="Packages\Packages\NugetPackage.cs" />
     <Compile Include="Packages\Packages\PackageBase.cs" />
+    <Compile Include="Pipelines\Loader\MapRoutes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerConstants.cs" />
     <Compile Include="sitecore\shell\client\Applications\Pathfinder\SitecoreRocksValidation.ashx.cs">
       <DependentUpon>SitecoreRocksValidation.ashx</DependentUpon>
     </Compile>
-    <Compile Include="sitecore\shell\client\Applications\Pathfinder\UpdateResources.ashx.cs">
-      <DependentUpon>UpdateResources.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="sitecore\shell\client\Applications\Pathfinder\WebTestRunner.ashx.cs">
-      <DependentUpon>WebTestRunner.ashx</DependentUpon>
-    </Compile>
+    <Compile Include="Controllers\SyncWebsiteController.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Synchronizing\ContentXmlSynchronizer.cs" />
     <Compile Include="Synchronizing\ISynchronizer.cs" />
@@ -225,10 +222,6 @@
     <Content Include="sitecore\shell\client\Applications\Pathfinder\SitecoreRocksValidation.ashx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="sitecore\shell\client\Applications\Pathfinder\UpdateResources.ashx" />
-    <Content Include="sitecore\shell\client\Applications\Pathfinder\WebTestRunner.ashx" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="web.config" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
@@ -240,6 +233,7 @@
   <ItemGroup>
     <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.2\analyzers\dotnet\cs\CodeContractNullability.dll" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

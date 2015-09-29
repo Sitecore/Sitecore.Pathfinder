@@ -64,7 +64,7 @@
     },
 
     "sync-website": {
-        "sync-url": "/sitecore/shell/client/Applications/Pathfinder/UpdateResources.ashx"
+        "sync-url": "/sitecore/shell/client/Applications/Pathfinder/SyncWebsite"
     },
 
     "publish-databases": {
@@ -76,7 +76,7 @@
 
         "website-directory-name": "Website",
 
-        "web-test-runner-url": "/sitecore/shell/client/Applications/Pathfinder/WebTestRunner.ashx",
+        "web-test-runner-url": "/sitecore/shell/client/Applications/Pathfinder/WebTestRunner",
         "web-test-runner-name": "NUnit"
     },
 

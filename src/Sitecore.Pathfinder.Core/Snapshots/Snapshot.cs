@@ -21,7 +21,7 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public ISourceFile SourceFile { get; }
 
-        public virtual ITextNode GetJsonChildTextNode(ITextNode textNode, string name)
+        public virtual ITextNode GetJsonChildNode(ITextNode textNode, string name)
         {
             // overwritten in JsonTextSnapshot to find the appropriate text node
             return textNode;

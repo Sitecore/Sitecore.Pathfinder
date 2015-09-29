@@ -1,4 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" %>
+<%@ Import Namespace="Sitecore.Pathfinder.Packages" %>
+<%@ Import Namespace="Sitecore.Pathfinder.Packages.Packages" %>
 <%@ Import Namespace="Sitecore.Pathfinder.Text" %>
 <!DOCTYPE html>
 <%

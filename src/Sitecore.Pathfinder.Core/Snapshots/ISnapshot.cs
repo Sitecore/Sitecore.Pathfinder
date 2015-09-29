@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Snapshots
         ISourceFile SourceFile { get; }
 
         [CanBeNull]
-        ITextNode GetJsonChildTextNode([NotNull] ITextNode textNode, [NotNull] string name);
+        ITextNode GetJsonChildNode([NotNull] ITextNode textNode, [NotNull] string name);
 
         void SaveChanges();
     }

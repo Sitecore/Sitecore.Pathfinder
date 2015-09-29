@@ -316,14 +316,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\UpdateResources.ashx">
-      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\UpdateResources.ashx</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\WebTestRunner.ashx">
-      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\WebTestRunner.ashx</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="files\project\sitecore.filetemplates\Item.master.content.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

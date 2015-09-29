@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Snapshots.Json
             var doc = new JsonTextSnapshot(sourceFile, "{ \"Item\": { \"Fields\": [ { \"Name\": \"Text\", \"Value\": \"123\" } ] } }");
             var root = doc.Root;
 
-            var fields = doc.GetJsonChildTextNode(root, "Fields");
+            var fields = doc.GetJsonChildNode(root, "Fields");
             Assert.IsNotNull(fields);
 
             var field = fields.ChildNodes.FirstOrDefault();
