@@ -7,7 +7,7 @@ using Sitecore.Pathfinder.Testing;
 
 namespace Sitecore.Pathfinder.Controllers
 {
-    public class WebTestRunnerController : Controller
+    public class PathfinderWebTestRunnerController : Controller
     {
         [Diagnostics.NotNull]
         public ActionResult Index()

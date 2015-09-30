@@ -1,28 +1,21 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-namespace Sitecore.Pathfinder.Shell.Client.Applications.Pathfinder
+using System;
+using System.IO;
+using System.Linq;
+using System.Web.Mvc;
+using System.Xml;
+using Sitecore.Rocks.Server.Extensibility;
+using Sitecore.Rocks.Server.Validations;
+using Sitecore.Security.Authentication;
+using Sitecore.Web;
+
+namespace Sitecore.Pathfinder.Controllers
 {
-    using System;
-    using System.IO;
-    using System.Linq;
-    using System.Web;
-    using System.Xml;
-    using Sitecore.Rocks.Server.Extensibility;
-    using Sitecore.Rocks.Server.Validations;
-    using Sitecore.Security.Authentication;
-    using Sitecore.Web;
-
-    public class SitecoreRocksValidation : IHttpHandler
+    public class PathfinderSitecoreCopController : Controller
     {
-        public bool IsReusable
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        public void ProcessRequest([NotNull] HttpContext context)
+        [Diagnostics.NotNull]
+        public ActionResult Index()
         {
             ExtensibilityLoader.Initialize();
 
@@ -39,7 +32,7 @@ namespace Sitecore.Pathfinder.Shell.Client.Applications.Pathfinder
                 timeout = 600;
             }
 
-            context.Server.ScriptTimeout = timeout; // 10 minutes
+            Server.ScriptTimeout = timeout; // 10 minutes
 
             var contextName = GetParameter("c", "Site");
             var databasesAndLanguages = GetParameter("d", "master^en");
@@ -49,8 +42,7 @@ namespace Sitecore.Pathfinder.Shell.Client.Applications.Pathfinder
 
             var content = Process(contextName, databasesAndLanguages, inactiveValidations, rootItemPath, string.Compare(processSiteValidations, "True", StringComparison.InvariantCultureIgnoreCase) == 0);
 
-            context.Response.ContentType = "text/xml";
-            context.Response.Write(content);
+            return Content(content, "text/xml");
         }
 
         [NotNull]
@@ -77,7 +69,7 @@ namespace Sitecore.Pathfinder.Shell.Client.Applications.Pathfinder
             {
                 var output = new XmlTextWriter(writer)
                 {
-                    Formatting = Formatting.Indented,
+                    Formatting = Formatting.Indented
                 };
 
                 var options = new ValidationAnalyzerOptions

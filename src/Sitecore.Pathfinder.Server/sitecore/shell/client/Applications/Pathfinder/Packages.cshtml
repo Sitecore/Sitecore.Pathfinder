@@ -1,9 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" %>
-<%@ Import Namespace="Sitecore.Pathfinder.Packages" %>
-<%@ Import Namespace="Sitecore.Pathfinder.Packages.Packages" %>
-<%@ Import Namespace="Sitecore.Pathfinder.Text" %>
+﻿@using Sitecore.Pathfinder.Packages
+@using Sitecore.Pathfinder.Packages.Packages
+@using Sitecore.Pathfinder.Text
 <!DOCTYPE html>
-<%
+@{
     var queryText = Request.QueryString["q"] ?? string.Empty;
     var author = Request.QueryString["author"] ?? string.Empty;
     var tags = Request.QueryString["tags"] ?? string.Empty;
@@ -33,7 +32,7 @@
     {
         nextUrl["i"] = (skip + 10).ToString();
     }
-%>
+}
 <html class="fuelux">
 <head>
     <meta charset="utf-8" />
@@ -69,7 +68,7 @@
                                     <a class="logout" href="/api/sitecore/Authentication/Logout?sc_database=master">Logout</a>
                                 </li>
                                 <li>
-                                    <%= Sitecore.Context.User.Profile.FullName %>
+                                    @Sitecore.Context.User.Profile.FullName
                                 </li>
                             </ul>
                         </div>
@@ -94,7 +93,7 @@
                                         <div class="itemRow menuItem depth2">
                                             <div class="leftcolumn">&nbsp;</div>
                                             <div class="rightcolumn">
-                                                <!-- <a href="/sitecore/shell/client/Applications/Pathfinder/InstalledPackages.aspx" class="sc-hyperlinkbutton">Installed Packages</a> -->
+                                                <!-- <a href="/sitecore/shell/client/Applications/Pathfinder/InstalledPackages" class="sc-hyperlinkbutton">Installed Packages</a> -->
                                             </div>
                                         </div>
                                     </div>
@@ -121,7 +120,7 @@
                         <div class="sc-breadcrumb">
                             <ul>
                                 <li>
-                                    <a href="/sitecore/shell/client/Applications/Pathfinder/Packages.aspx">Pathfinder</a>
+                                    <a href="/sitecore/shell/client/Applications/Pathfinder/Packages">Pathfinder</a>
                                 </li>
                             </ul>
                         </div>
@@ -131,13 +130,13 @@
 
             <div class="sc-applicationHeader-row2">
                 <div class="sc-applicationHeader-back">
-                    <p style="font-size: 24px">There are <% =totalPackageCount.ToString("#,##0") %> packages</p>
+                    <p style="font-size: 24px">There are @totalPackageCount.ToString("#,##0") packages</p>
                 </div>
                 <div class="sc-applicationHeader-contextSwitcher">
                 </div>
                 <div class="sc-applicationHeader-actions">
-                    <a href="<% =previousUrl.ToString() %>" class="btn btn-default" <% =previousButton %>>Previous</a>
-                    <a href="<% =nextUrl.ToString() %>" class="btn btn-default" <% =@nextButton %>>Next</a>
+                    <a href="@previousUrl.ToString()" class="btn btn-default" @previousButton>Previous</a>
+                    <a href="@nextUrl.ToString()" class="btn btn-default" @@nextButton>Next</a>
                 </div>
             </div>
         </header>
@@ -146,108 +145,108 @@
             <div class="sc-border">
                 <p></p>
                 <form>
-                    <div class="sc-buttontextbox input-group">                                  
-	                    <input class="form-control" type="text" placeholder="Search" name="q" id="q" value="<% =queryText %>"><span class="input-group-btn"><button class="btn btn-default"><img src="/sitecore/shell/client/Speak/Assets/img/Speak/Common/16x16/dark_gray/search.png"></button></span>
+                    <div class="sc-buttontextbox input-group">
+                        <input class="form-control" type="text" placeholder="Search" name="q" id="q" value="@queryText"><span class="input-group-btn"><button class="btn btn-default"><img src="/sitecore/shell/client/Speak/Assets/img/Speak/Common/16x16/dark_gray/search.png"></button></span>
                     </div>
-                </form>               
+                </form>
                 <p></p>
                 <table class="table">
                     <tr>
                         <th colspan="2">Package</th>
                     </tr>
 
-                    <% if (!packages.Any())
-                        { %>
-                    <tr>
-                        <td colspan="3">
-                            <i>There is nothing to show.</i>
-                        </td>
-                    </tr>
-                    <% }
-                        else
-                        { %>
-
-                    <% foreach (var package in packages.OrderBy(p => p.Name).ThenByDescending(p => p.Version))
+                    @if (!packages.Any())
+                    {
+                        <tr>
+                            <td colspan="3">
+                                <i>There is nothing to show.</i>
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var package in packages.OrderBy(p => p.Name).ThenByDescending(p => p.Version))
                         {
                             var nuget = (NugetPackage)package;
                             var packageName = nuget.Package.Title ?? nuget.Package.Id;
                             var version = package.Version;
-                            var installHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx?ins=" + HttpUtility.UrlEncode(package.PackageId);
-                            var updateHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx?upd=" + HttpUtility.UrlEncode(package.PackageId);
-                            var uninstallHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx?rem=" + HttpUtility.UrlEncode(package.PackageId);
+                            var installHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage?ins=" + HttpUtility.UrlEncode(package.PackageId);
+                            var updateHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage?upd=" + HttpUtility.UrlEncode(package.PackageId);
+                            var uninstallHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage?rem=" + HttpUtility.UrlEncode(package.PackageId);
                             var iconUrl = nuget.Package.IconUrl != null ? nuget.Package.IconUrl.ToString() : "packageDefaultIcon-50x50.png";
-                            var packageUrl = "/sitecore/shell/client/Applications/Pathfinder/Package.aspx?id=" + package.PackageId;
-                    %>
-                    <tr>
-                        <td class="sc-package-icon">
-                            <img src="<% =iconUrl %>" width="50" height="50" />
-                        </td>
-                        <td>
-                            <p>
-                                <a href="<% =packageUrl %>" style="font-size: 24px">
-                                    <% = packageName %>
-                                </a>
-                                <span>by </span>
-                                <% foreach (var a in nuget.Package.Authors)
-                                    {
-                                        var authorUrl = "/sitecore/shell/client/Applications/Pathfinder/Packages.aspx?author=" + a; %>
-                                <a href="<%= authorUrl %>"><% = a %></a>
-                                <% } %>
-                            </p>
-                            <p>
-                                <% = nuget.Package.Description %>
-                            </p>
+                            var packageUrl = "/sitecore/shell/client/Applications/Pathfinder/Package/" + package.PackageId;
 
-                            <p>
-                                <strong style="font-size: 17px">Version <% = version %></strong>
-                                <% if (package.HasUpdate)
-                                    { %>
-                                <span class="text-muted">- Version <% = package.UpdateVersion %> is installed</span>
-                                <% } %>
-                                <% if (nuget.Package.Tags != null)
-                                    { %>
-                                <span style="font-size: 17px">| Tags</span>
-                                <% foreach (var tag in nuget.Package.Tags.Split(' '))
-                                    {
-                                        var tagUrl = "/sitecore/shell/client/Applications/Pathfinder/Packages.aspx?tags=" + tag; %>
-                                <a href="<% = tagUrl %>"><% = tag %></a>
-                                <% } %>
-                                <% } %>
-                            </p>
-                            <p>
-                            <% if (package.IsInstalled)
-                                { %> 
-                                <span>Installed</span>
-                            <% } %>
+                            <tr>
+                                <td class="sc-package-icon">
+                                    <img src="@iconUrl" width="50" height="50" />
+                                </td>
+                                <td>
+                                    <p>
+                                        <a href="@packageUrl" style="font-size: 24px">
+                                            @packageName
+                                        </a>
+                                        <span>by </span>
+                                        @foreach (var a in nuget.Package.Authors)
+                                        {
+                                            var authorUrl = "/sitecore/shell/client/Applications/Pathfinder/Packages?author=" + a;
+                                            <a href="@authorUrl">@a</a>
+                                        }
+                                    </p>
+                                    <p>
+                                        @nuget.Package.Description
+                                    </p>
 
-                            <% if (package.IsInstalled && package.HasUpdate)
-                                { %> 
-                                | <a href="<% = updateHref %>">Update</a>
-                            <% } %>
+                                    <p>
+                                        <strong style="font-size: 17px">Version @version </strong>
+                                        @if (package.HasUpdate)
+                                        {
+                                            <span class="text-muted">- Version @package.UpdateVersion  is installed</span>
+                                        }
+                                        @if (nuget.Package.Tags != null)
+                                        {
+                                            <span style="font-size: 17px">| Tags</span>
+                                            foreach (var tag in nuget.Package.Tags.Split(' '))
+                                            {
+                                                var tagUrl = "/sitecore/shell/client/Applications/Pathfinder/Packages?tags=" + tag;
+                                                <a href="@tagUrl">@tag</a>
+                                            }
+                                        }
+                                    </p>
+                                    <p>
+                                        @if (package.IsInstalled)
+                                        {
+                                            <span>Installed</span>
+                                        }
 
-                            <% if (package.IsInstalled)
-                                { %> 
-                                | <a href="<% = uninstallHref %>">Uninstall</a>
-                            <% } %>
+                                        @if (package.IsInstalled && package.HasUpdate)
+                                        {
+                                            @(Html.Raw("|")) <a href="@updateHref">Update</a>
+                                        }
 
-                            <% if (!package.IsInstalled)
-                                { %>
-                                 <a href="<% = installHref %>">Install</a>
-                            <% } %>
-                            </p>
-                        </td>
-                    </tr>
-                    <% } %>
+                                        @if (package.IsInstalled)
+                                        {
+                                            @(Html.Raw("|")) <a href="@uninstallHref">Uninstall</a>
+                                        }
 
-                    <% } %>
+                                        @if (!package.IsInstalled)
+                                        {
+                                            <a href="@installHref">Install</a>
+                                        }
+                                    </p>
+                                </td>
+
+                            </tr>
+                        }
+
+                    }
                 </table>
-            </div>  
+            </div>
 
             <div>
-                <a href="<% =previousUrl.ToString() %>" class="btn btn-default" <% =previousButton %>>Previous</a>
-                <a href="<% =nextUrl.ToString() %>" class="btn btn-default" <% =@nextButton %>>Next</a>
+                <a href="@previousUrl.ToString()" class="btn btn-default" @previousButton>Previous</a>
+                <a href="@nextUrl.ToString()" class="btn btn-default" @nextButton>Next</a>
             </div>
-                   
+
         </section>
     </div>
 </body>

@@ -223,32 +223,35 @@
       <Link>files\website\bin\Sitecore.Pathfinder.Core.NUnit.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\InstalledPackages.aspx">
-      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\InstalledPackages.aspx</Link>
+    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\packageDefaultIcon-50x50.png">
+      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\packageDefaultIcon-50x50.png</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\InstallPackage.aspx">
-      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\InstallPackage.aspx</Link>
+    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\Packages.css">
+      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\Packages.css</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\Package.aspx">
-      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\Package.aspx</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\Packages.aspx">
-      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\Packages.aspx</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\Publish.aspx">
-      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\Publish.aspx</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\SitecoreRocksValidation.ashx">
-      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\SitecoreRocksValidation.ashx</Link>
+    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\PackageSources.txt">
+      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\PackageSources.txt</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="files\project\sitecore.filetemplates\Item.master.content.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\Packages.cshtml">
+      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\Packages.cshtml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\web.config">
+      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\web.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\InstalledPackages.cshtml">
+      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\InstalledPackages.cshtml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\Package.cshtml">
+      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\Package.cshtml</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="files\atom\.atom-build.json" />
@@ -299,15 +302,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="files\visualstudio\Sitecore.Website.csproj">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\website\sitecore\shell\client\Applications\Pathfinder\packageDefaultIcon-50x50.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\website\sitecore\shell\client\Applications\Pathfinder\Packages.css">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\website\sitecore\shell\client\Applications\Pathfinder\PackageSources.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\app.manifest" />

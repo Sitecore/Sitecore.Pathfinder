@@ -1,1 +1,1 @@
-﻿http://nuget1dk1:8181/feeds/Development
+﻿

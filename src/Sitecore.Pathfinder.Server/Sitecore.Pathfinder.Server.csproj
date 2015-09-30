@@ -96,7 +96,7 @@
     </Reference>
     <Reference Include="Sitecore.Mvc">
       <HintPath>..\..\components\Sitecore.Mvc.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Sitecore.Rocks.Server.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -153,16 +153,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="sitecore\shell\client\Applications\Pathfinder\packageDefaultIcon-50x50.png" />
-    <Content Include="sitecore\shell\client\Applications\Pathfinder\Package.aspx" />
-    <Content Include="sitecore\shell\client\Applications\Pathfinder\Packages.aspx" />
-    <Content Include="sitecore\shell\client\Applications\Pathfinder\InstalledPackages.aspx" />
     <Content Include="sitecore\shell\client\Applications\Pathfinder\Packages.css" />
     <Content Include="sitecore\shell\client\Applications\Pathfinder\PackageSources.txt" />
-    <Content Include="sitecore\shell\client\Applications\Pathfinder\Publish.aspx" />
-    <Content Include="sitecore\shell\client\Applications\Pathfinder\InstallPackage.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\WebTestRunnerController.cs" />
+    <Compile Include="Controllers\PathfinderInstalledController.cs" />
+    <Compile Include="Controllers\PathfinderInstallPackageController.cs" />
+    <Compile Include="Controllers\PathfinderPackageController.cs" />
+    <Compile Include="Controllers\PathfinderPackagesController.cs" />
+    <Compile Include="Controllers\PathfinderPublishController.cs" />
+    <Compile Include="Controllers\PathfinderSitecoreCopController.cs" />
+    <Compile Include="Controllers\PathfinderWebTestRunnerController.cs" />
     <Compile Include="Emitters\Writers\FieldWriter.cs" />
     <Compile Include="Configuration\PathfinderSettings.cs" />
     <Compile Include="Diagnostics\EmitException.cs" />
@@ -192,10 +193,7 @@
     <Compile Include="Pipelines\Loader\MapRoutes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerConstants.cs" />
-    <Compile Include="sitecore\shell\client\Applications\Pathfinder\SitecoreRocksValidation.ashx.cs">
-      <DependentUpon>SitecoreRocksValidation.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\SyncWebsiteController.cs" />
+    <Compile Include="Controllers\PathfinderSyncWebsiteController.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Synchronizing\ContentXmlSynchronizer.cs" />
     <Compile Include="Synchronizing\ISynchronizer.cs" />
@@ -219,10 +217,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="sitecore\shell\client\Applications\Pathfinder\SitecoreRocksValidation.ashx" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="web.config" />
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\InstalledPackages.cshtml" />
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\Packages.cshtml" />
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\web.config" />
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\Package.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

@@ -54,7 +54,7 @@
         // see http://stackoverflow.com/questions/356543/can-i-automatically-increment-the-file-build-version-when-using-visual-studio
         "check-bin-file-version": false,
 
-        "install-url": "/sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx",
+        "install-url": "/sitecore/shell/client/Applications/Pathfinder/InstallPackage",
         "uninstall-directory": "../.uninstall"
     },
 
@@ -68,7 +68,7 @@
     },
 
     "publish-databases": {
-        "publish-url": "/sitecore/shell/client/Applications/Pathfinder/Publish.aspx"
+        "publish-url": "/sitecore/shell/client/Applications/Pathfinder/Publish"
     },
 
     "run-unittests": {
@@ -81,7 +81,7 @@
     },
 
     "validate-website": {
-        "url": "/sitecore/shell/client/Applications/Pathfinder/SitecoreRocksValidation.ashx",
+        "url": "/sitecore/shell/client/Applications/Pathfinder/SitecoreCop",
         "inactive-validations": "",
         "languages": "en",
         "process-site-validations": "True",
