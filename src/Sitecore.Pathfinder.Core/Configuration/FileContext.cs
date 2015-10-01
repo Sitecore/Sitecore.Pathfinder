@@ -47,7 +47,7 @@ namespace Sitecore.Pathfinder.Configuration
 
             foreach (var pair in configuration.GetSubKeys(Constants.Configuration.Files))
             {
-                var key = "files:" + pair.Key;
+                var key = Constants.Configuration.Files + ":" + pair.Key;
                 var localDirectory = PathHelper.NormalizeItemPath(configuration.GetString(key + ":project-directory")).TrimStart('\\');
 
                 if (!localFileName.StartsWith(localDirectory, StringComparison.OrdinalIgnoreCase))

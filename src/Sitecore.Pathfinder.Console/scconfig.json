@@ -35,7 +35,7 @@
 
         // files and directories to ignore
         "ignore-directories": ".vscode sitecore.filetemplates sitecore.project sitecore.tools node_modules roslyn",
-        "ignore-filenames": "scc.cmd sitecore.nuspec sitecore.nupkg project.json readme.txt"
+        "ignore-filenames": "scc.cmd sitecore.nuspec sitecore.nupkg project.json readme.md"
     },
 
     "copy-dependencies": {
@@ -53,7 +53,6 @@
         // when developing this should probably be combined with auto-incrementing the file version of the assembly.
         // see http://stackoverflow.com/questions/356543/can-i-automatically-increment-the-file-build-version-when-using-visual-studio
         "check-bin-file-version": false,
-
         "install-url": "/sitecore/shell/client/Applications/Pathfinder/InstallPackage",
         "uninstall-directory": "../.uninstall"
     },
