@@ -25,28 +25,28 @@ namespace Sitecore.Pathfinder.Parsing.References
         [NotNull]
         protected IFactoryService Factory { get; }
 
-        public virtual IReference ParseReference(IProjectItem projectItem, ITextNode source, string text)
+        public virtual IReference ParseReference(IProjectItem projectItem, ITextNode sourceTextNode, string referenceText)
         {
-            if (text.StartsWith("/sitecore/", StringComparison.OrdinalIgnoreCase))
+            if (referenceText.StartsWith("/sitecore/", StringComparison.OrdinalIgnoreCase))
             {
-                var sourceProperty = new SourceProperty<string>(source.Key, string.Empty, SourcePropertyFlags.IsQualified);
-                sourceProperty.SetValue(source);
-                return Factory.Reference(projectItem, sourceProperty);
+                var sourceProperty = new SourceProperty<string>(sourceTextNode.Key, string.Empty, SourcePropertyFlags.IsQualified);
+                sourceProperty.SetValue(sourceTextNode);
+                return Factory.Reference(projectItem, sourceProperty, referenceText);
             }
 
             Guid guid;
-            if (Guid.TryParse(text, out guid))
+            if (Guid.TryParse(referenceText, out guid))
             {
-                var sourceProperty = new SourceProperty<string>(source.Key, string.Empty, SourcePropertyFlags.IsGuid);
-                sourceProperty.SetValue(source);
-                return Factory.Reference(projectItem, sourceProperty);
+                var sourceProperty = new SourceProperty<string>(sourceTextNode.Key, string.Empty, SourcePropertyFlags.IsGuid);
+                sourceProperty.SetValue(sourceTextNode);
+                return Factory.Reference(projectItem, sourceProperty, referenceText);
             }
 
-            if (text.StartsWith("{") && text.EndsWith("}"))
+            if (referenceText.StartsWith("{") && referenceText.EndsWith("}"))
             {
-                var sourceProperty = new SourceProperty<string>(source.Key, string.Empty, SourcePropertyFlags.IsSoftGuid);
-                sourceProperty.SetValue(source);
-                return Factory.Reference(projectItem, sourceProperty);
+                var sourceProperty = new SourceProperty<string>(sourceTextNode.Key, string.Empty, SourcePropertyFlags.IsSoftGuid);
+                sourceProperty.SetValue(sourceTextNode);
+                return Factory.Reference(projectItem, sourceProperty, referenceText);
             }
 
             return null;
@@ -69,13 +69,7 @@ namespace Sitecore.Pathfinder.Parsing.References
         {
             var text = textNode.Value;
 
-            var reference = ParseReference(projectItem, textNode, text);
-            if (reference != null)
-            {
-                yield return reference;
-                yield break;
-            }
-
+            IReference reference;
             if (text.IndexOf('|') >= 0)
             {
                 var parts = text.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries);
@@ -91,27 +85,33 @@ namespace Sitecore.Pathfinder.Parsing.References
                 yield break;
             }
 
-            if (text.IndexOf('&') < 0 && text.IndexOf('=') < 0)
+            if (text.IndexOf('&') >= 0 || text.IndexOf('=') >= 0)
             {
+                var urlString = new UrlString(text);
+
+                foreach (string key in urlString.Parameters)
+                {
+                    if (string.IsNullOrEmpty(key))
+                    {
+                        continue;
+                    }
+
+                    var parameterValue = urlString.Parameters[key];
+
+                    reference = ParseReference(projectItem, textNode, parameterValue);
+                    if (reference != null)
+                    {
+                        yield return reference;
+                    }
+                }
+
                 yield break;
             }
 
-            var urlString = new UrlString(text);
-
-            foreach (string key in urlString.Parameters)
+            reference = ParseReference(projectItem, textNode, text);
+            if (reference != null)
             {
-                if (string.IsNullOrEmpty(key))
-                {
-                    continue;
-                }
-
-                var parameterValue = urlString.Parameters[key];
-
-                reference = ParseReference(projectItem, textNode, parameterValue);
-                if (reference != null)
-                {
-                    yield return reference;
-                }
+                yield return reference;
             }
         }
     }

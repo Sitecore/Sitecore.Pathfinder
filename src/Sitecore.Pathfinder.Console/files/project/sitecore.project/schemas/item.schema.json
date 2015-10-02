@@ -31,6 +31,7 @@
                                 },
                                 "Value.Hint": { "$ref": "#/definitions/FieldValueHint" },
                                 "Field.Type": { "$ref": "#/definitions/FieldType" },
+                                "Field.Sharing": { "$ref": "#/definitions/Sharing" },
                                 "Field.ShortHelp": { "type": "string" },
                                 "Field.LongHelp": { "type": "string" },
                                 "Field.SortOrder": { "type": "integer" }
@@ -135,6 +136,7 @@
             "properties": {
                 "Id": { "type": "string" },
                 "Name": { "type": "string" },
+                "Database": { "type": "string" },
                 "BaseTemplates": { "type": "string" },
                 "Icon": { "type": "string" },
                 "ShortHelp": { "type": "string" },

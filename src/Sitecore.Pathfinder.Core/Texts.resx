@@ -226,7 +226,7 @@
     <value>Devices not found in database.</value>
   </data>
   <data name="_1___Parameter___0___is_not_defined_in_the_parameters_template_" xml:space="preserve">
-    <value>{1}: Parameter "{0}" is not defined in the parameters template.</value>
+    <value>Parameter is not defined in the parameters template</value>
   </data>
   <data name="_2___Placeholder___0___is_not_defined_in_the_parent_rendering__Parent_rendering_has_these_placeholders___1__" xml:space="preserve">
     <value>{2}: Placeholder "{0}" is not defined in the parent rendering. Parent rendering has these placeholders: {1}</value>

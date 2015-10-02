@@ -402,15 +402,14 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 return;
             }
 
+            var renderingPlaceholders = GetPlaceholders(context, renderingTextNode, renderingItem);
+
             foreach (var childNode in renderingsTextNode.ChildNodes)
             {
-                if (IsContentProperty(renderingTextNode, childNode))
+                if (!IsContentProperty(renderingTextNode, childNode))
                 {
-                    continue;
+                    WriteRendering(context, output, renderingItems, childNode, renderingPlaceholders);
                 }
-
-                var renderingPlaceholders = GetPlaceholders(context, childNode, renderingItem);
-                WriteRendering(context, output, renderingItems, childNode, renderingPlaceholders);
             }
         }
 
@@ -498,7 +497,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             var parametersTemplateItem = context.Field.Item.Project.FindQualifiedItem(parametersTemplateItemId) as Template;
             if (parametersTemplateItem != null)
             {
-                foreach (var field in parametersTemplateItem.Sections.SelectMany(s => s.Fields))
+                foreach (var field in parametersTemplateItem.GetAllFields())
                 {
                     fields[field.FieldName.ToLowerInvariant()] = field.Type;
                 }
@@ -554,7 +553,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 }
                 else
                 {
-                    context.CompileContext.Trace.TraceWarning(string.Format(Texts._1___Parameter___0___is_not_defined_in_the_parameters_template_, attributeName, id), renderingTextNode, attributeName);
+                    context.CompileContext.Trace.TraceWarning(Texts._1___Parameter___0___is_not_defined_in_the_parameters_template_, renderingTextNode, id + "." + attributeName);
                 }
 
                 if (value.StartsWith("/sitecore", StringComparison.InvariantCultureIgnoreCase))

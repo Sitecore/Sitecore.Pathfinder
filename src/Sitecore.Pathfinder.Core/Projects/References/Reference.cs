@@ -12,8 +12,20 @@ namespace Sitecore.Pathfinder.Projects.References
 
         public Reference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceProperty)
         {
+            // the reference text might be different from the source property value. 
+            // e.g. the source property value might be a list of guids while the reference text is a single Guid.
             Owner = owner;
             SourceProperty = sourceProperty;
+            ReferenceText = sourceProperty.GetValue();
+        }
+
+        public Reference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceProperty, [NotNull] string referenceText)
+        {
+            // the reference text might be different from the source property value. 
+            // e.g. the source property value might be a list of guids while the reference text is a single Guid.
+            Owner = owner;
+            SourceProperty = sourceProperty;
+            ReferenceText = referenceText;
         }
 
         public bool IsResolved { get; set; }
@@ -40,6 +52,9 @@ namespace Sitecore.Pathfinder.Projects.References
 
         public SourceProperty<string> SourceProperty { get; set; }
 
+        [NotNull]
+        public string ReferenceText { get; }
+
         [CanBeNull]
         protected ProjectItemUri ResolvedUri { get; set; }
 
@@ -52,7 +67,7 @@ namespace Sitecore.Pathfinder.Projects.References
 
         public virtual IProjectItem Resolve()
         {
-            if (IsResolved)
+            if (IsResolved && ResolvedUri != null)
             {
                 if (!IsValid)
                 {
@@ -71,7 +86,7 @@ namespace Sitecore.Pathfinder.Projects.References
 
             IsResolved = true;
 
-            var projectItem = Owner.Project.FindQualifiedItem(SourceProperty.GetValue());
+            var projectItem = Owner.Project.FindQualifiedItem(ReferenceText);
             if (projectItem == null)
             {
                 IsValid = false;

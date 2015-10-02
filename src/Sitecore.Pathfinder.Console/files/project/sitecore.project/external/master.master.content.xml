@@ -41,6 +41,7 @@
                     <Template Id="{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}" Name="View Rendering" IsExternalReference="True">
                         <Section Id="{CBA7C9A0-B79F-464F-8661-23D6A9B6E1BB}" Name="Data" IsExternalReference="True">
                             <Field Id="{51B435BC-F7B9-478A-9C51-52916AF96FF5}" Name="Path" IsExternalReference="True" />
+                            <Field Id="{7D24E54F-5C16-4314-90C9-6051AA1A7DA1}" Name="Parameters Template" IsExternalReference="True" />
                         </Section>
                     </Template>
                 </Folder>

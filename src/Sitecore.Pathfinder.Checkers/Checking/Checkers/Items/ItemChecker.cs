@@ -50,15 +50,17 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
                 return;
             }
 
+            var templateFields = template.GetAllFields();
+
             foreach (var field in item.Fields)
             {
-                var standardField = context.Project.Options.StandardTemplateFields.FirstOrDefault(f => string.Compare(f, field.FieldName, StringComparison.OrdinalIgnoreCase) == 0);
+                var standardField = context.Project.Options.StandardTemplateFields.FirstOrDefault(f => string.Equals(f, field.FieldName, StringComparison.OrdinalIgnoreCase));
                 if (standardField != null)
                 {
                     continue;
                 }
 
-                var templateField = template.Sections.SelectMany(i => i.Fields).FirstOrDefault(f => string.Compare(f.FieldName, field.FieldName, StringComparison.OrdinalIgnoreCase) == 0);
+                var templateField = templateFields.FirstOrDefault(f => string.Equals(f.FieldName, field.FieldName, StringComparison.OrdinalIgnoreCase));
                 if (templateField == null)
                 {
                     context.Trace.TraceWarning("Field is not defined in the template", TraceHelper.GetTextNode(field.FieldNameProperty, field.Item), field.FieldName);

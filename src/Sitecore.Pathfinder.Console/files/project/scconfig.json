@@ -74,12 +74,14 @@
             // "External references for Speak": {
             //     "file": "sitecore.project/external/speak.core.content.xml",
             //     "database": "core",
-            //     "path": "/sitecore/client/Speak"
+            //     "path": "/sitecore/client/Speak",
+            //     "fields": "place holders, parameters template, __base template"
             // },
             // "External references for Business Component Library": {
             //     "file": "sitecore.project/external/bcl.core.content.xml",
             //     "database": "core",
-            //     "path": "/sitecore/client/Business Component Library"
+            //     "path": "/sitecore/client/Business Component Library",
+            //     "fields": "place holders, parameters template, __base template"
             // }
         }
     }

@@ -103,5 +103,47 @@ namespace Sitecore.Pathfinder.Projects.Templates
                 section.Merge(newSection, overwrite);
             }
         }
+
+        [NotNull]
+        [ItemNotNull]
+        public IEnumerable<TemplateField> GetAllFields()
+        {
+            var fields = new List<TemplateField>();
+            var templates = new List<ProjectItemUri>();
+
+            GetAllFields(fields, templates, this);
+
+            return fields;
+        }
+
+        private void GetAllFields([NotNull][ItemNotNull] ICollection<TemplateField> fields, [NotNull][ItemNotNull] ICollection<ProjectItemUri> templates, [NotNull] Template template)
+        {
+            templates.Add(template.Uri);
+
+            foreach (var field in template.Sections.SelectMany(s => s.Fields))
+            {
+                if (fields.All(f => !string.Equals(f.FieldName, field.FieldName, StringComparison.OrdinalIgnoreCase)))
+                {
+                    fields.Add(field);
+                }
+            }
+
+            var baseTemplates = template.BaseTemplates.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var baseTemplateId in baseTemplates)
+            {
+                var baseTemplate = Project.FindQualifiedItem(baseTemplateId) as Template;
+                if (baseTemplate == null)
+                {
+                    continue;
+                }
+
+                if (templates.Contains(baseTemplate.Uri))
+                {
+                    continue;
+                }
+
+                GetAllFields(fields, templates, baseTemplate);
+            }
+        }
     }
 }

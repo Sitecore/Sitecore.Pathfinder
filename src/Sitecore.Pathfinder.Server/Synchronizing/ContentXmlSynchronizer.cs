@@ -105,6 +105,12 @@ namespace Sitecore.Pathfinder.Synchronizing
             output.WriteAttributeString("Id", item.ID.ToString());
             output.WriteAttributeString("Name", item.Name);
 
+            var baseTemplates = item[FieldIDs.BaseTemplate];
+            if (!string.IsNullOrEmpty(baseTemplates) && baseTemplates != "{1930BBEB-7805-471A-A3BE-4858AC7CF696}")
+            {
+                output.WriteAttributeString("BaseTemplates", baseTemplates);
+            }
+
             if (writeParentItemPath)
             {
                 output.WriteAttributeString("Database", item.Database.Name);

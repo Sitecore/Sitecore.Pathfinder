@@ -668,6 +668,22 @@ Code generators are simply extensions that are located in the /sitecore.tools/ex
 
 Normally you want to run the `generate-code` task before building an assembly, so the C# source files are up-to-date.
 
+# Starter kits
+Pathfinder comes with 2 starter kits to get you started easily. Starter kits are located in the sitecore.tools/files/starterkits
+directory. 
+
+To install a starter kit, simple unpack the Nuget package in the root of your project.
+
+## CleanBlog
+Clean Blog is a read-only blog website based on the [Start Bootstrap](http://startbootstrap.com/) - 
+[Clean Blog](http://startbootstrap.com/template-overviews/clean-blog/) template. It is very basic and uses Html Template files
+instead of Sitecore Renderings.
+
+## TodoMVC
+The TodoMvc starter kit is a SPEAK based application that implements a Todo application similar to [TodoMVC](http://todomvc.com/).
+It uses Sitecore renderings and shows how to implement a new SPEAK rendering (TodoMvcList). It also uses an ASP.NET handler to
+create, update and delete todo items.
+
 # Architecture
 
 ## Project overview

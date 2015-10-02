@@ -119,6 +119,11 @@ namespace Sitecore.Pathfinder.Configuration
             return new Reference(projectItem, sourceSourceProperty);
         }
 
+        public virtual IReference Reference(IProjectItem projectItem, SourceProperty<string> sourceSourceProperty, string referenceText)
+        {
+            return new Reference(projectItem, sourceSourceProperty, referenceText);
+        }
+
         public virtual Rendering Rendering(IProject project, ISnapshot snapshot, string databaseName, string itemPath, string itemName, string filePath, string templateIdOrPath)
         {
             return new Rendering(project, snapshot, databaseName, itemPath, itemName, filePath, templateIdOrPath);

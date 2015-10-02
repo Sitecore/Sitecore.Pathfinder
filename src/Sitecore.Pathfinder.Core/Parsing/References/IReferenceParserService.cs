@@ -11,7 +11,7 @@ namespace Sitecore.Pathfinder.Parsing.References
     public interface IReferenceParserService
     {
         [CanBeNull]
-        IReference ParseReference([NotNull] IProjectItem projectItem, [NotNull] ITextNode source, [NotNull] string text);
+        IReference ParseReference([NotNull] IProjectItem projectItem, [NotNull] ITextNode sourceTextNode, [NotNull] string referenceText);
 
         [NotNull]
         [ItemNotNull]
