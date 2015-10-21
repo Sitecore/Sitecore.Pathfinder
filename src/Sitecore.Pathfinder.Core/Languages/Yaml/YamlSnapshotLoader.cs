@@ -1,42 +1,40 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Yaml
 {
     [Export(typeof(ISnapshotLoader))]
-    public class YamlSnapshotLoader : ISnapshotLoader
+    public class YamlSnapshotLoader : SnapshotLoaderBase
     {
-        public YamlSnapshotLoader()
+        [ImportingConstructor]
+        public YamlSnapshotLoader([NotNull] ICompositionService compositionService)
         {
+            CompositionService = compositionService;
             Priority = 1000;
         }
 
-        public double Priority { get; protected set; }
-
         [NotNull]
-        public string SchemaFileName { get; protected set; } = string.Empty;
+        protected ICompositionService CompositionService { get; }
 
-        [NotNull]
-        public string SchemaNamespace { get; protected set; } = string.Empty;
-
-        public virtual bool CanLoad(ISnapshotService snapshotService, IProject project, ISourceFile sourceFile)
+        public override bool CanLoad(ISourceFile sourceFile)
         {
-            return string.Compare(Path.GetExtension(sourceFile.AbsoluteFileName), ".yaml", StringComparison.OrdinalIgnoreCase) == 0;
+            return string.Equals(Path.GetExtension(sourceFile.AbsoluteFileName), ".yaml", StringComparison.OrdinalIgnoreCase);
         }
 
-        public virtual ISnapshot Load(ISnapshotService snapshotService, IProject project, ISourceFile sourceFile)
+        public override ISnapshot Load(ISourceFile sourceFile, IDictionary<string, string> tokens)
         {
-            var text = sourceFile.ReadAsText();
+            var contents = sourceFile.ReadAsText(tokens);
 
-            text = snapshotService.ReplaceTokens(project, sourceFile, text);
+            var yamlTextSnapshot = CompositionService.Resolve<YamlTextSnapshot>().With(sourceFile, contents, tokens);
 
-            return new YamlTextSnapshot(sourceFile, text);
+            return yamlTextSnapshot;
         }
     }
 }

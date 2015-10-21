@@ -11,9 +11,6 @@ namespace Sitecore.Pathfinder.Snapshots
         [NotNull]
         ISourceFile SourceFile { get; }
 
-        [CanBeNull]
-        ITextNode GetJsonChildNode([NotNull] ITextNode textNode, [NotNull] string name);
-
         void SaveChanges();
     }
 }

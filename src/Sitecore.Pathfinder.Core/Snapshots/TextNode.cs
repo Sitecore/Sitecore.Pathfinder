@@ -52,6 +52,12 @@ namespace Sitecore.Pathfinder.Snapshots
             return null;
         }
 
+        public virtual ITextNode GetLogicalChildNode(string name)
+        {
+            // overwritten in JsonTextNode to find the appropriate text node
+            return this;
+        }
+
         public virtual bool SetKey(string newKey)
         {
             return false;

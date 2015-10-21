@@ -28,8 +28,15 @@
         <xs:sequence>
             <xs:element name="Fields" minOccurs="0" maxOccurs="1">
                 <xs:complexType>
-                    <xs:sequence>
+                    <xs:choice maxOccurs="unbounded">
                         <xs:element name="Field" type="Field" minOccurs="0" maxOccurs="unbounded" />
+
+                        <xs:element name="Include" minOccurs="0" maxOccurs="unbounded" >
+                            <xs:complexType>
+                                <xs:attribute name="File" type="xs:string" use="required" />
+                                <xs:anyAttribute processContents="lax" />
+                            </xs:complexType>
+                        </xs:element>
 
                         <xs:element name="Unversioned" minOccurs="0" maxOccurs="1" >
                             <xs:complexType>
@@ -58,7 +65,7 @@
 
                         <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="http://www.sitecore.net/pathfinder/layouts/master" />
                         <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="http://www.sitecore.net/pathfinder/layouts/core" />
-                    </xs:sequence>
+                    </xs:choice>
                 </xs:complexType>
             </xs:element>
 

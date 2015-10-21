@@ -2,7 +2,7 @@
 
 using System;
 using System.ComponentModel.Composition;
-using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Xml
@@ -10,14 +10,15 @@ namespace Sitecore.Pathfinder.Languages.Xml
     [Export(typeof(ISnapshotLoader))]
     public class ItemXmlSnapshotLoader : XmlSnapshotLoader
     {
-        public ItemXmlSnapshotLoader()
+        [ImportingConstructor]
+        public ItemXmlSnapshotLoader([NotNull] ICompositionService compositionService) : base(compositionService)
         {
             Priority = 500;
             SchemaNamespace = "http://www.sitecore.net/pathfinder/item";
             SchemaFileName = "item.xsd";
         }
 
-        public override bool CanLoad(ISnapshotService snapshotService, IProject project, ISourceFile sourceFile)
+        public override bool CanLoad(ISourceFile sourceFile)
         {
             return sourceFile.AbsoluteFileName.EndsWith(".item.xml", StringComparison.OrdinalIgnoreCase);
         }

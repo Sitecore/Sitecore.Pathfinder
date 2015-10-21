@@ -441,4 +441,13 @@
     <data name="No_tests_were_found" xml:space="preserve">
     <value>No tests were found</value>
   </data>
+    <data name="Packing_dependency_Sitecore_packages_in_Nuget_packages___" xml:space="preserve">
+    <value>Packing dependency Sitecore packages in Nuget packages...</value>
+  </data>
+    <data name="Packing" xml:space="preserve">
+    <value>Packing</value>
+  </data>
+    <data name="Nuspec_file_not_found" xml:space="preserve">
+    <value>Nuspec file not found</value>
+  </data>
 </root>

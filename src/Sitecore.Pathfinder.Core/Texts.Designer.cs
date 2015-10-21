@@ -79,7 +79,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {1}: Parameter &quot;{0}&quot; is not defined in the parameters template..
+        ///   Looks up a localized string similar to Parameter is not defined in the parameters template.
         /// </summary>
         public static string _1___Parameter___0___is_not_defined_in_the_parameters_template_ {
             get {
@@ -704,11 +704,38 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nuspec file not found.
+        /// </summary>
+        public static string Nuspec_file_not_found {
+            get {
+                return ResourceManager.GetString("Nuspec_file_not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Package contains errors and will not be deployed.
         /// </summary>
         public static string Package_contains_errors_and_will_not_be_deployed {
             get {
                 return ResourceManager.GetString("Package_contains_errors_and_will_not_be_deployed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packing.
+        /// </summary>
+        public static string Packing {
+            get {
+                return ResourceManager.GetString("Packing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packing dependency Sitecore packages in Nuget packages....
+        /// </summary>
+        public static string Packing_dependency_Sitecore_packages_in_Nuget_packages___ {
+            get {
+                return ResourceManager.GetString("Packing_dependency_Sitecore_packages_in_Nuget_packages___", resourceCulture);
             }
         }
         

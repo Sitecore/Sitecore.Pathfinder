@@ -1,7 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
@@ -9,9 +9,9 @@ namespace Sitecore.Pathfinder.Snapshots
     {
         double Priority { get; }
 
-        bool CanLoad([NotNull] ISnapshotService snapshotService, [NotNull] IProject project, [NotNull] ISourceFile sourceFile);
+        bool CanLoad([NotNull] ISourceFile sourceFile);
 
         [NotNull]
-        ISnapshot Load([NotNull] ISnapshotService snapshotService, [NotNull] IProject project, [NotNull] ISourceFile sourceFile);
+        ISnapshot Load([NotNull] ISourceFile sourceFile, [NotNull] IDictionary<string, string> tokens);
     }
 }

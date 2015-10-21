@@ -19,6 +19,12 @@ namespace Sitecore.Pathfinder.Languages.Xml
             return textNode.Key == "Item" && textNode.Snapshot is XmlTextSnapshot;
         }
 
+        protected override void ParseUnknownTextNode(ItemParseContext context, Item item, LanguageVersionContext languageVersionContext, ITextNode textNode)
+        {
+            var fieldNameTextNode = new AttributeNameTextNode(textNode);
+            ParseFieldTextNode(context, item, languageVersionContext, textNode, fieldNameTextNode);
+        }
+
         protected override void ParseLayoutTextNode(ItemParseContext context, Item item, ITextNode textNode)
         {
             var parser = new XmlLayoutTextNodeParser();

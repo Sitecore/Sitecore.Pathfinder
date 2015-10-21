@@ -41,7 +41,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
         private void WriteCommandHelp([NotNull] IBuildContext context, [NotNull] string taskName)
         {
             var build = context.CompositionService.Resolve<Build>();
-            var task = build.Tasks.FirstOrDefault(t => string.Compare(t.TaskName, taskName, StringComparison.OrdinalIgnoreCase) == 0);
+            var task = build.Tasks.FirstOrDefault(t => string.Equals(t.TaskName, taskName, StringComparison.OrdinalIgnoreCase));
             if (task == null)
             {
                 context.Trace.Writeline($"Task not found: {taskName}");

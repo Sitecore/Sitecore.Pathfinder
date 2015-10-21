@@ -11,7 +11,10 @@
         <Field Name="TrueCheckbox" Field.Type="Checkbox" Field.ShortHelp="Checkbox field." Field.LongHelp="Checkbox field.">True</Field>
         <Field Name="FalseCheckbox" Field.Type="Checkbox" Field.ShortHelp="Checkbox field." Field.LongHelp="Checkbox field.">False</Field>
         
-        <Unversioned Language="da-DK">
+        <Include File="~/includes/Field.include.item.json" />
+        <Include File="~/includes/ParameterizedField.include.item.xml" Name="ParameterizedField" Value="Parameterized Value"/>
+                                                                   
+        <Unversioned Language="da-DK">                     
             <Field Name="UnversionedField" Field.ShortHelp="Title field." Field.LongHelp="Title field.">Hello</Field>
         </Unversioned>
 

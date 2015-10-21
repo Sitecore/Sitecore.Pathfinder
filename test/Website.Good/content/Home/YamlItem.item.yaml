@@ -47,6 +47,12 @@
           Field.Type      : Checkbox
           Value           : False
 
+        - Include : ~/includes/Field.include.item.json
+        
+        - Include : ~/includes/ParameterizedField.include.item.xml
+          Name  : ParameterizedField
+          Value : Parameterized Value
+
         - Unversioned :
             - da-DK :
                 - Field : UnversionedField

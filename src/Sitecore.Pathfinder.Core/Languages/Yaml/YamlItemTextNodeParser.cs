@@ -20,9 +20,22 @@ namespace Sitecore.Pathfinder.Languages.Yaml
             return textNode.Key == "Item" && textNode.Snapshot is YamlTextSnapshot;
         }
 
+        protected override void ParseUnknownTextNode(ItemParseContext context, Item item, LanguageVersionContext languageVersionContext, ITextNode textNode)
+        {
+            var fieldNameTextNode = new AttributeNameTextNode(textNode);
+            ParseFieldTextNode(context, item, languageVersionContext, textNode, fieldNameTextNode);
+        }
+
         protected override void ParseFieldTextNode(ItemParseContext context, Item item, LanguageVersionContext languageVersionContext, ITextNode textNode)
         {
-            ParseFieldTextNode(context, item, languageVersionContext, textNode, textNode);
+            var fieldNameTextNode = string.IsNullOrEmpty(textNode.Value) ? textNode.GetAttribute("Name") : textNode;
+            if (fieldNameTextNode == null)
+            {
+                context.ParseContext.Trace.TraceError("Expected 'Name' attribute", textNode);
+                return;
+            }
+
+            ParseFieldTextNode(context, item, languageVersionContext, textNode, fieldNameTextNode);
         }
 
         protected override void ParseLayoutTextNode(ItemParseContext context, Item item, ITextNode textNode)

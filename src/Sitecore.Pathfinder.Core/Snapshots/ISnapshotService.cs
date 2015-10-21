@@ -1,16 +1,16 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
     public interface ISnapshotService
     {
         [NotNull]
-        ISnapshot LoadSnapshot([NotNull] IProject project, [NotNull] ISourceFile sourceFile);
+        ITextNode LoadIncludeFile([NotNull] ISnapshot snapshot, [NotNull] string includeFileName, [NotNull] IDictionary<string, string> tokens);
 
         [NotNull]
-        string ReplaceTokens([NotNull] IProject project, [NotNull] ISourceFile sourceFile, [NotNull] string contents);
+        ISnapshot LoadSnapshot([NotNull] ISourceFile sourceFile, [NotNull] IDictionary<string, string> tokens);
     }
 }

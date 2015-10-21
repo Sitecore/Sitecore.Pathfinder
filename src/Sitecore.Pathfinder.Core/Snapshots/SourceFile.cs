@@ -1,6 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
@@ -24,28 +25,58 @@ namespace Sitecore.Pathfinder.Snapshots
         [NotNull]
         public static ISourceFile Empty { get; } = new EmptySourceFile();
 
+        public IFileSystemService FileSystem { get; }
+
         public bool IsModified { get; set; }
 
         public DateTime LastWriteTimeUtc { get; }
 
         public string ProjectFileName { get; }
 
-        [NotNull]
-        protected IFileSystemService FileSystem { get; }
-
-        public string GetFileNameWithoutExtensions()
+        public virtual string GetFileNameWithoutExtensions()
         {
             return PathHelper.GetDirectoryAndFileNameWithoutExtensions(AbsoluteFileName);
         }
 
-        public string[] ReadAsLines()
+        public virtual string[] ReadAsLines()
         {
             return FileSystem.ReadAllLines(AbsoluteFileName);
         }
 
-        public string ReadAsText()
+        public virtual string[] ReadAsLines(IDictionary<string, string> tokens)
+        {
+            var lines = ReadAsLines();
+
+            for (var index = 0; index < lines.Length; index++)
+            {
+                lines[index] = ReplaceTokens(lines[index], tokens);
+            }
+
+            return lines;
+        }
+
+        public virtual string ReadAsText()
         {
             return FileSystem.ReadAllText(AbsoluteFileName);
+        }
+
+        public virtual string ReadAsText(IDictionary<string, string> tokens)
+        {
+            var contents = ReadAsText();
+
+            return ReplaceTokens(contents, tokens);
+        }
+
+        [NotNull]
+        protected virtual string ReplaceTokens([NotNull] string text, [NotNull] IDictionary<string, string> tokens)
+        {
+            foreach (var token in tokens)
+            {
+                var tokenName = "$" + token.Key;
+                text = text.Replace(tokenName, token.Value);
+            }
+
+            return text;
         }
     }
 }

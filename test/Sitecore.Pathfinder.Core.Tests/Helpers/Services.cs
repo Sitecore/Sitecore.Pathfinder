@@ -45,9 +45,6 @@ namespace Sitecore.Pathfinder.Helpers
         public ISnapshotService SnapshotService { get; set; }
 
         [NotNull]
-        public ITextTokenService TextTokenService { get; set; }
-
-        [NotNull]
         public IQueryService QueryService { get; set; }
 
         [NotNull]
@@ -104,7 +101,6 @@ namespace Sitecore.Pathfinder.Helpers
             ProjectService = CompositionService.Resolve<IProjectService>();
             ConfigurationService = CompositionService.Resolve<IConfigurationService>();
             SnapshotService = CompositionService.Resolve<ISnapshotService>();
-            TextTokenService = CompositionService.Resolve<ITextTokenService>();
             CheckerService = CompositionService.Resolve<ICheckerService>();
             QueryService = CompositionService.Resolve<IQueryService>();
         }

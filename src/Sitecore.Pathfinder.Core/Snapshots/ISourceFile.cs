@@ -1,7 +1,9 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
@@ -9,6 +11,9 @@ namespace Sitecore.Pathfinder.Snapshots
     {
         [NotNull]
         string AbsoluteFileName { get; }
+
+        [NotNull]
+        IFileSystemService FileSystem { get; }
 
         bool IsModified { get; set; }
 
@@ -25,6 +30,13 @@ namespace Sitecore.Pathfinder.Snapshots
         string[] ReadAsLines();
 
         [NotNull]
+        [ItemNotNull]
+        string[] ReadAsLines([NotNull] IDictionary<string, string> tokens);
+
+        [NotNull]
         string ReadAsText();
+
+        [NotNull]
+        string ReadAsText([NotNull] IDictionary<string, string> tokens);
     }
 }

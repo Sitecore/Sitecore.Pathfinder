@@ -114,6 +114,7 @@
     <Compile Include="Compiling\Pipelines\CompilePipelines\3000 - ResolveReferences.cs" />
     <Compile Include="Compiling\Pipelines\CompilePipelines\4000 - CheckProject.cs" />
     <Compile Include="Configuration\FileContext.cs" />
+    <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\GuidExtensions.cs" />
     <Compile Include="Compiling\Builders\FieldBuilder.cs" />
     <Compile Include="Compiling\Builders\ItemBuilder.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="Configuration\IFactoryService.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Snapshots\FileNameTextNode.cs" />
+    <Compile Include="Snapshots\SnapshotLoaderBase.cs" />
     <Compile Include="Snapshots\SnapshotTextNode.cs" />
     <Compile Include="Extensibility\Pipelines\IPipeline.cs" />
     <Compile Include="Extensibility\Pipelines\IPipelineService.cs" />
@@ -208,7 +210,6 @@
     <Compile Include="Projects\IProjectService.cs" />
     <Compile Include="Projects\Items\Item.cs" />
     <Compile Include="Snapshots\ISnapshot.cs" />
-    <Compile Include="Snapshots\ITextTokenService.cs" />
     <Compile Include="Projects\Layouts\Rendering.cs" />
     <Compile Include="Projects\IProject.cs" />
     <Compile Include="Snapshots\ISourceFile.cs" />
@@ -241,7 +242,6 @@
     <Compile Include="Diagnostics\ConfigurationException.cs" />
     <Compile Include="Diagnostics\ITraceService.cs" />
     <Compile Include="Snapshots\TextSpan.cs" />
-    <Compile Include="Snapshots\TextTokenService.cs" />
     <Compile Include="Diagnostics\TraceService.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\XElementExtensions.cs" />

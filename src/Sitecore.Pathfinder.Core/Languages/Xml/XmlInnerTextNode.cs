@@ -55,6 +55,11 @@ namespace Sitecore.Pathfinder.Languages.Xml
             return null;
         }
 
+        public ITextNode GetLogicalChildNode(string name)
+        {
+            return null;
+        }
+
         public bool SetKey(string newKey)
         {
             return false;

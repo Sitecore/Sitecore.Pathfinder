@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Languages.Xml;
 
 namespace Sitecore.Pathfinder.Snapshots
@@ -18,7 +20,7 @@ namespace Sitecore.Pathfinder.Snapshots
         {
             var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt");
 
-            var snapshot = new XmlTextSnapshot(sourceFile, "<Item><Field Name=\"Text\" Value=\"123\" /></Item>", string.Empty, string.Empty);
+            var snapshot = Services.CompositionService.Resolve<XmlTextSnapshot>().With(sourceFile, "<Item><Field Name=\"Text\" Value=\"123\" /></Item>", new Dictionary<string, string>(), string.Empty, string.Empty);
             Assert.AreEqual("Item", snapshot.Root.Key);
 
             var field = snapshot.Root.ChildNodes.First();

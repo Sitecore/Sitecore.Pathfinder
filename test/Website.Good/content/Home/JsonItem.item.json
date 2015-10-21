@@ -48,45 +48,56 @@
                 "Field.LongHelp": "Long help."
             },
 
-            "Unversioned": {
-                "da-DK": {
-                    "UnversionedField": {
-                        "Value": "Hello",
+            "Include": [
+                {
+                    "File": "~/includes/Field.include.item.json" 
+                },
+                {
+                    "File": "~/includes/ParameterizedField.include.item.xml",
+                    "Name": "ParameterizedField",
+                    "Value": "Parameterized Value"
+                }
+            ],
+            
+        "Unversioned": {
+            "da-DK": {
+                "UnversionedField": {
+                    "Value": "Hello",
+                    "Field.ShortHelp": "Short help.",
+                    "Field.LongHelp": "Long help."
+                }
+            }
+        },
+
+        "Versioned": {
+            "da-DK": {
+                "1": {
+                    "VersionedField": {
+                        "Value": "Version 1",
                         "Field.ShortHelp": "Short help.",
                         "Field.LongHelp": "Long help."
                     }
+                },
+                "2": {
+                    "VersionedField": "Version 2"
                 }
-            },
-
-            "Versioned": {
-                "da-DK": {
-                    "1": {
-                        "VersionedField": {
-                            "Value": "Version 1",
-                            "Field.ShortHelp": "Short help.",
-                            "Field.LongHelp": "Long help."
-                        }
-                    },
-                    "2": {
-                        "VersionedField": "Version 2"
-                    }
-                }
-            },
-
-            "Layout": {
-                "Devices": [
-                    {
-                        "Name": "Default",
-                        "Layout": "/sitecore/layout/Layouts/MvcLayout",
-                        "Renderings": [
-                            {          
-                                "HelloWorld": { "DataSource": "/sitecore" }
-                            }
-                        ]                      
-                    }
-                ]
             }
         },
+
+        "Layout": {
+            "Devices": [
+                {
+                    "Name": "Default",
+                    "Layout": "/sitecore/layout/Layouts/MvcLayout",
+                    "Renderings": [
+                        {
+                            "HelloWorld": { "DataSource": "/sitecore" }
+                        }
+                    ]
+                }
+            ]
+        }
+    },
 
         "Item": {
             "Name": "JsonSubitem",

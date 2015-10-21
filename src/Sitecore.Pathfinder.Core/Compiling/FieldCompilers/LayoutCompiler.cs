@@ -78,7 +78,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             var id = renderingTextNode.GetAttributeValue("Id");
             var result = ",";
 
-            var placeHoldersField = item.Fields.FirstOrDefault(f => string.Compare(f.FieldName, "Place Holders", StringComparison.OrdinalIgnoreCase) == 0);
+            var placeHoldersField = item.Fields.FirstOrDefault(f => string.Equals(f.FieldName, "Place Holders", StringComparison.OrdinalIgnoreCase));
             if (placeHoldersField != null)
             {
                 foreach (var s in placeHoldersField.Value.Split(','))
@@ -151,7 +151,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 value = "False";
             }
 
-            var b = string.Compare(value, "True", StringComparison.OrdinalIgnoreCase) == 0;
+            var b = string.Equals(value, "True", StringComparison.OrdinalIgnoreCase);
             if (b == ignoreValue)
             {
                 return;
@@ -198,7 +198,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 else
                 {
                     var deviceName = deviceNameTextNode.Value;
-                    var device = devices.FirstOrDefault(d => string.Compare(d.ItemName, deviceName, StringComparison.OrdinalIgnoreCase) == 0);
+                    var device = devices.FirstOrDefault(d => string.Equals(d.ItemName, deviceName, StringComparison.OrdinalIgnoreCase));
                     if (device == null)
                     {
                         context.CompileContext.Trace.TraceError(Texts.Device_not_found, deviceNameTextNode, deviceName);
@@ -225,7 +225,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 layoutPlaceholders = GetPlaceholders(context, deviceTextNode, l);
             }
 
-            var renderings = context.Snapshot.GetJsonChildNode(deviceTextNode, "Renderings");
+            var renderings = deviceTextNode.GetLogicalChildNode("Renderings");
             if (renderings == null)
             {
                 // silent
@@ -250,7 +250,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
             output.WriteStartElement("r");
 
-            var devices = context.Snapshot.GetJsonChildNode(layoutTextNode, "Devices");
+            var devices = layoutTextNode.GetLogicalChildNode("Devices");
             if (devices == null)
             {
                 // silent
@@ -395,7 +395,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             }
             */
 
-            var renderingsTextNode = context.Snapshot.GetJsonChildNode(renderingTextNode, "Renderings");
+            var renderingsTextNode = renderingTextNode.GetLogicalChildNode("Renderings");
             if (renderingsTextNode == null)
             {
                 // silent
@@ -417,7 +417,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         [ItemNotNull]
         private IEnumerable<string> AnalyzeFile([NotNull] LayoutCompileContext context, [NotNull] Item item, bool includeDynamicPlaceholders)
         {
-            var pathField = item.Fields.FirstOrDefault(f => string.Compare(f.FieldName, "Path", StringComparison.OrdinalIgnoreCase) == 0);
+            var pathField = item.Fields.FirstOrDefault(f => string.Equals(f.FieldName, "Path", StringComparison.OrdinalIgnoreCase));
             if (pathField == null)
             {
                 return Enumerable.Empty<string>();

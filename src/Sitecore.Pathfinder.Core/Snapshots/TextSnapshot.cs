@@ -1,25 +1,31 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using Sitecore.Pathfinder.Diagnostics;
+using System.ComponentModel.Composition;
 using Sitecore.Pathfinder.Parsing;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
+    [Export]
+    [PartCreationPolicy(CreationPolicy.NonShared)]
     public class TextSnapshot : Snapshot, ITextSnapshot
     {
-        public TextSnapshot([NotNull] ISourceFile sourceFile) : base(sourceFile)
-        {
-            Root = new SnapshotTextNode(this);
-        }
-
         public string ParseError { get; protected set; } = string.Empty;
 
         public TextSpan ParseErrorTextSpan { get; protected set; } = TextSpan.Empty;
 
-        public virtual ITextNode Root { get; }
+        public virtual ITextNode Root { get; protected set; }
 
         public virtual void ValidateSchema(IParseContext context)
         {
+        }
+
+        public override ISnapshot With(ISourceFile sourceFile)
+        {
+            base.With(sourceFile);
+
+            Root = new SnapshotTextNode(this);
+
+            return this;
         }
     }
 }

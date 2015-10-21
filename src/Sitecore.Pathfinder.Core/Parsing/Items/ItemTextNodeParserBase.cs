@@ -69,14 +69,14 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
         protected virtual void ParseFieldsTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode textNode)
         {
-            var fieldContext = new LanguageVersionContext();
+            var languageVersionContext = new LanguageVersionContext();
 
             foreach (var childNode in textNode.ChildNodes)
             {
                 switch (childNode.Key)
                 {
                     case "Field":
-                        ParseFieldTextNode(context, item, fieldContext, childNode);
+                        ParseFieldTextNode(context, item, languageVersionContext, childNode);
                         break;
 
                     case "Unversioned":
@@ -92,7 +92,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
                         break;
 
                     default:
-                        ParseUnknownTextNode(context, item, fieldContext, childNode);
+                        ParseUnknownTextNode(context, item, languageVersionContext, childNode);
                         break;
                 }
             }

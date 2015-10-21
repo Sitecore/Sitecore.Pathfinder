@@ -38,7 +38,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
             }
 
             var projectUniqueId = context.Configuration.Get(Constants.Configuration.ProjectUniqueId);
-            if (string.Compare(projectUniqueId, "{project-unique-id}", StringComparison.OrdinalIgnoreCase) == 0)
+            if (string.Equals(projectUniqueId, "{project-unique-id}", StringComparison.OrdinalIgnoreCase))
             {
                 context.Trace.Writeline(Texts.Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in_the___0___configuration_file_, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
                 context.IsAborted = true;
@@ -46,7 +46,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
             }
 
             var hostName = context.Configuration.Get(Constants.Configuration.HostName);
-            if (string.Compare(hostName, "http://sitecore.default", StringComparison.OrdinalIgnoreCase) == 0)
+            if (string.Equals(hostName, "http://sitecore.default", StringComparison.OrdinalIgnoreCase))
             {
                 context.Trace.Writeline(Texts.Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in_the___0___configuration_file_, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
                 context.IsAborted = true;
@@ -54,7 +54,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
             }
 
             var wwwroot = context.Configuration.Get(Constants.Configuration.Wwwroot);
-            if (string.Compare(wwwroot, "c:\\inetpub\\wwwroot\\Sitecore.Default", StringComparison.OrdinalIgnoreCase) == 0)
+            if (string.Equals(wwwroot, "c:\\inetpub\\wwwroot\\Sitecore.Default", StringComparison.OrdinalIgnoreCase))
             {
                 context.Trace.Writeline(Texts.Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in_the___0___configuration_file_, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
                 context.IsAborted = true;
@@ -110,7 +110,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
                     continue;
                 }
 
-                if (string.Compare(Path.GetExtension(sourceFileName), ".dll", StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(Path.GetExtension(sourceFileName), ".dll", StringComparison.OrdinalIgnoreCase))
                 {
                     var sourceVersion = new Version(FileVersionInfo.GetVersionInfo(sourceFileName).FileVersion);
                     var targetVersion = new Version(FileVersionInfo.GetVersionInfo(targetFileName).FileVersion);

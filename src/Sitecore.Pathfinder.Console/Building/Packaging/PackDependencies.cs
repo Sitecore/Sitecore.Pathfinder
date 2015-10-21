@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Building.Packaging
 
         public override void Run(IBuildContext context)
         {
-            context.Trace.TraceInformation("Packing dependency Sitecore packages in Nuget packages...");
+            context.Trace.TraceInformation(Texts.Packing_dependency_Sitecore_packages_in_Nuget_packages___);
 
             var packagesDirectory = context.Configuration.Get(Constants.Configuration.PackagesDirectory);
             var sourceDirectory = Path.Combine(context.SolutionDirectory, packagesDirectory);
@@ -50,7 +50,7 @@ namespace Sitecore.Pathfinder.Building.Packaging
             var srcFileName = PathHelper.UnmapPath(context.SolutionDirectory, zipFileName);
             var targetFileName = "content\\packages\\" + Path.GetFileName(zipFileName);
 
-            context.Trace.TraceInformation("Packing", packageName);
+            context.Trace.TraceInformation(Texts.Packing, packageName);
 
             var nuspec = new StringWriter();
             nuspec.WriteLine("<package xmlns=\"http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd\">");

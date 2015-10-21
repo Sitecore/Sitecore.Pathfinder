@@ -1,6 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Languages.Xml;
+using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
@@ -16,9 +19,10 @@ namespace Sitecore.Pathfinder.Snapshots
         [Test]
         public void ItemTests()
         {
+
             var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt");
 
-            var doc = new XmlTextSnapshot(sourceFile, "<Item><Field Name=\"Text\" Value=\"123\" /></Item>", string.Empty, string.Empty);
+            var doc = Services.CompositionService.Resolve<XmlTextSnapshot>().With(sourceFile, "<Item><Field Name=\"Text\" Value=\"123\" /></Item>", new Dictionary<string, string>(), string.Empty, string.Empty);
             Assert.AreEqual("Item", doc.Root.Key);
 
             var field = doc.Root.ChildNodes.First();

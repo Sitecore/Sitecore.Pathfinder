@@ -136,7 +136,8 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual ISnapshot Snapshot(ISourceFile sourceFile)
         {
-            return new Snapshot(sourceFile);
+            var snapshot = CompositionService.Resolve<Snapshot>().With(sourceFile);
+            return snapshot;
         }
 
         public virtual ISourceFile SourceFile(IFileSystemService fileSystem, string sourceFileName, string projectFileName)

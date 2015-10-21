@@ -3,9 +3,13 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.IO;
 using System.Linq;
+using Microsoft.Framework.ConfigurationModel;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -15,11 +19,18 @@ namespace Sitecore.Pathfinder.Parsing
     public class ParseService : IParseService
     {
         [ImportingConstructor]
-        public ParseService([NotNull] ICompositionService compositionService, [NotNull] ISnapshotService snapshotService)
+        public ParseService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ISnapshotService snapshotService)
         {
             CompositionService = compositionService;
+            Configuration = configuration;
             SnapshotService = snapshotService;
         }
+
+        [NotNull]
+        protected ICompositionService CompositionService { get; }
+
+        [NotNull]
+        protected IConfiguration Configuration { get; }
 
         [NotNull]
         [ImportMany]
@@ -27,14 +38,32 @@ namespace Sitecore.Pathfinder.Parsing
         protected IEnumerable<IParser> Parsers { get; private set; }
 
         [NotNull]
-        protected ICompositionService CompositionService { get; }
-
-        [NotNull]
         protected ISnapshotService SnapshotService { get; }
 
         public virtual void Parse(IProject project, ISourceFile sourceFile)
         {
-            var snapshot = SnapshotService.LoadSnapshot(project, sourceFile);
+            var itemName = PathHelper.GetItemName(sourceFile);
+
+            var fileContext = FileContext.GetFileContext(project, Configuration, sourceFile);
+
+            var filePath = fileContext.FilePath;
+            var filePathWithExtensions = PathHelper.NormalizeItemPath(PathHelper.GetDirectoryAndFileNameWithoutExtensions(filePath));
+            var fileName = Path.GetFileName(filePath);
+            var fileNameWithoutExtensions = PathHelper.GetFileNameWithoutExtensions(fileName);
+            var directoryName = string.IsNullOrEmpty(filePath) ? string.Empty : PathHelper.NormalizeFilePath(Path.GetDirectoryName(filePath) ?? string.Empty);
+
+            var tokens = new Dictionary<string, string>
+            {
+                ["ItemPath"] = itemName,
+                ["FilePathWithoutExtensions"] = filePathWithExtensions,
+                ["FilePath"] = filePath,
+                ["Database"] = project.Options.DatabaseName,
+                ["FileNameWithoutExtensions"] = fileNameWithoutExtensions,
+                ["FileName"] = fileName,
+                ["DirectoryName"] = directoryName
+            };
+
+            var snapshot = SnapshotService.LoadSnapshot(sourceFile, tokens);
 
             var parseContext = CompositionService.Resolve<IParseContext>().With(project, snapshot);
 

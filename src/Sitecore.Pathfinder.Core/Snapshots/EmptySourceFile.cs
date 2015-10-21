@@ -1,7 +1,9 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
@@ -11,6 +13,8 @@ namespace Sitecore.Pathfinder.Snapshots
         private readonly string _fileNameWithoutExtensions = string.Empty;
 
         public string AbsoluteFileName { get; } = string.Empty;
+
+        public IFileSystemService FileSystem { get; }
 
         public bool IsModified { get; set; } = false;
 
@@ -28,7 +32,17 @@ namespace Sitecore.Pathfinder.Snapshots
             throw new InvalidOperationException("Cannot read from empty source file");
         }
 
+        public string[] ReadAsLines(IDictionary<string, string> tokens)
+        {
+            throw new InvalidOperationException("Cannot read from empty source file");
+        }
+
         public string ReadAsText()
+        {
+            throw new InvalidOperationException("Cannot read from empty source file");
+        }
+
+        public string ReadAsText(IDictionary<string, string> tokens)
         {
             throw new InvalidOperationException("Cannot read from empty source file");
         }

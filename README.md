@@ -229,31 +229,7 @@ as item name.
 Likewise the directory path is used as item path. The root of the project corresponds to /sitecore, so having the item file
 "[Project]\content\Home\HelloWorld.item.xml" will create the item "/sitecore/content/Home/HelloWorld".
 
-### File system mapping
-The filesystem structure of the project does not necessary corresponds to the desired structure on the website.
-
-In the scconfig.json file, you can map files and items to different locations on the website.
-
-```js
-"files": {
-    "html": {
-        "project-directory": "",
-        "include": "/*.html",
-        "website-directory": "/MyProject/layout/renderings",
-        "item-path": "/sitecore/layout/renderings/MyProject",
-        "database": "master"
-    },
-    "img": {
-        "project-directory": "/img",
-        "include": "**",
-        "website-directory": "",
-        "item-path": "/sitecore/media library/MyProject"
-    }
-}
-```
-
-
-#### Nested items
+### Nested items
 An item file can contain multiple nested items. Below is an example:
 
 ```xml
@@ -296,6 +272,80 @@ Template can be defined in items files using a special schema. Below is an examp
 ```
 
 Templates can be nested in the same way that multiple items can be nested inside an item file.
+
+### Advanced 
+
+#### Include files
+Item files can include other files. This allows parts of items files to be shared among multiple items. 
+
+Below is how to include other files in an item file.
+
+Json:
+```js
+{
+    "Item": {
+        "Template": "/sitecore/templates/Sample/JsonItem",
+        "Fields": {
+            "Include": [
+                {
+                    "File": "~/includes/Field.include.item.json" 
+                },
+                {
+                    "File": "~/includes/ParameterizedField.include.item.xml",
+                    "Name": "ParameterizedField",
+                    "Value": "Parameterized Value"
+                }
+            ]
+        }
+    }
+}
+```
+
+Xml:
+```xml
+<Item xmlns="http://www.sitecore.net/pathfinder/item">
+    <Fields>
+        <Include File="~/includes/Field.include.item.json" />
+        <Include File="~/includes/ParameterizedField.include.item.xml" Name="ParameterizedField" Value="Parameterized Value"/>
+    </Fields>
+</Item>
+```
+
+Yaml:
+```yaml
+Item :
+    - Fields :
+        - Include : ~/includes/Field.include.item.json
+        
+        - Include : ~/includes/ParameterizedField.include.item.xml
+          Name  : ParameterizedField
+          Value : Parameterized Value
+
+```
+
+The first included file looks like this:
+
+```js
+{
+    "IncludeField": {
+        "Value": "Included field."
+    }
+}
+```
+
+Include files are not simple text subsitutions, but are resolved at the lexing level of the compiler (before parsing), which allows Json 
+files to include Xml or Yaml files and vice versa. The Include tag is also part of the item schemas, which means that include files cannot 
+be included at arbitrary positions. This is to ensure Syntax Highlighting and IntelliSense still work.
+
+Include files can be parameterized as can be seen in the second include file above. Parameters are simple text substitions. Parameter 
+tokens are prefxied with '$' in the include file. Below is the second include file from the example above.
+
+```xml
+<Field Name="$Name" Field.ShortHelp="Include field." Field.LongHelp="Include field.">$Value</Field>
+```
+
+Please notice: Include files do not work everywhere and including files in a different format is not currently fully supported.
+
 
 #### Inferred templates
 If you have a template that is used by a single item, you can have Pathfinder automatically create the template from the fields in the
@@ -436,6 +486,30 @@ Extension            | Description
 .js                  | JavaScript content file
 .css                 | Stylesheet content file
 .config              | Config content file
+
+
+### File system mapping
+The filesystem structure of the project does not necessary corresponds to the desired structure on the website.
+
+In the scconfig.json file, you can map files and items to different locations on the website.
+
+```js
+"files": {
+    "html": {
+        "project-directory": "",
+        "include": "/*.html",
+        "website-directory": "/MyProject/layout/renderings",
+        "item-path": "/sitecore/layout/renderings/MyProject",
+        "database": "master"
+    },
+    "img": {
+        "project-directory": "/img",
+        "include": "**",
+        "website-directory": "",
+        "item-path": "/sitecore/media library/MyProject"
+    }
+}
+```
 
 
 ## Synchronizing project and website

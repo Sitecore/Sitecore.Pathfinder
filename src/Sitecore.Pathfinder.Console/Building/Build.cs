@@ -25,7 +25,12 @@ namespace Sitecore.Pathfinder.Building
         [NotNull]
         [ImportMany]
         [ItemNotNull]
-        public IEnumerable<ITask> Tasks { get;[UsedImplicitly] private set; }
+        public IEnumerable<ITask> Tasks
+        {
+            get;
+            [UsedImplicitly]
+            private set;
+        }
 
         [NotNull]
         protected ICompositionService CompositionService { get; }
@@ -51,7 +56,7 @@ namespace Sitecore.Pathfinder.Building
 
             var context = CompositionService.Resolve<IBuildContext>();
 
-            Run(context);
+            RunTasks(context);
 
             if (context.DisplayDoneMessage)
             {
@@ -65,66 +70,43 @@ namespace Sitecore.Pathfinder.Building
 
         [NotNull]
         [ItemNotNull]
-        protected virtual IEnumerable<string> GetPipeline([NotNull] IBuildContext context)
+        protected virtual IEnumerable<string> GetTaskNames([NotNull] IBuildContext context)
         {
-            string pipeline;
+            string taskList;
 
             // get first positional command line argument or the run parameter
-            var pipelineName = context.Configuration.GetCommandLineArg(0);
-            if (string.IsNullOrEmpty(pipelineName))
+            var tasks = context.Configuration.GetCommandLineArg(0);
+            if (string.IsNullOrEmpty(tasks))
             {
-                pipelineName = context.Configuration.GetString("run");
+                tasks = context.Configuration.GetString("run");
             }
 
-            if (!string.IsNullOrEmpty(pipelineName) && pipelineName != "build")
+            if (!string.IsNullOrEmpty(tasks) && tasks != "build")
             {
                 // look for named task
-                var task = Tasks.FirstOrDefault(t => string.Compare(t.TaskName, pipelineName, StringComparison.OrdinalIgnoreCase) == 0);
+                var task = Tasks.FirstOrDefault(t => string.Equals(t.TaskName, tasks, StringComparison.OrdinalIgnoreCase));
                 if (task != null)
                 {
                     return new[]
                     {
-                        pipelineName
+                        tasks
                     };
                 }
 
-                pipeline = context.Configuration.GetString(pipelineName + ":tasks");
+                taskList = context.Configuration.GetString(tasks + ":tasks");
             }
             else
             {
-                pipeline = context.Configuration.GetString(Constants.Configuration.BuildProject);
+                taskList = context.Configuration.GetString(Constants.Configuration.BuildProject);
             }
 
-            var taskNames = pipeline.Split(Constants.Space, StringSplitOptions.RemoveEmptyEntries).Select(t => t.Trim()).ToList();
+            var taskNames = taskList.Split(Constants.Space, StringSplitOptions.RemoveEmptyEntries).Select(t => t.Trim()).ToList();
             return taskNames;
-        }
-
-        protected virtual void Run([NotNull] IBuildContext context)
-        {
-            var pipeline = GetPipeline(context);
-            if (!pipeline.Any())
-            {
-                context.Trace.TraceWarning(Texts.Pipeline_is_empty__There_are_no_tasks_to_execute_);
-                return;
-            }
-
-            // always run the before-build task
-            RunTask(context, "before-build");
-
-            foreach (var taskName in pipeline)
-            {
-                RunTask(context, taskName);
-
-                if (context.IsAborted)
-                {
-                    break;
-                }
-            }
         }
 
         protected virtual void RunTask([NotNull] IBuildContext context, [NotNull] string taskName)
         {
-            var task = Tasks.FirstOrDefault(t => string.Compare(t.TaskName, taskName, StringComparison.OrdinalIgnoreCase) == 0);
+            var task = Tasks.FirstOrDefault(t => string.Equals(t.TaskName, taskName, StringComparison.OrdinalIgnoreCase));
             if (task == null)
             {
                 context.Trace.TraceError(Texts.Task_not_found__Skipping, taskName);
@@ -143,6 +125,29 @@ namespace Sitecore.Pathfinder.Building
                 if (context.Configuration.GetBool(Constants.Configuration.Debug))
                 {
                     Debugger.Launch();
+                }
+            }
+        }
+
+        protected virtual void RunTasks([NotNull] IBuildContext context)
+        {
+            var tasks = GetTaskNames(context);
+            if (!tasks.Any())
+            {
+                context.Trace.TraceWarning(Texts.Pipeline_is_empty__There_are_no_tasks_to_execute_);
+                return;
+            }
+
+            // always run the before-build task
+            RunTask(context, "before-build");
+
+            foreach (var taskName in tasks)
+            {
+                RunTask(context, taskName);
+
+                if (context.IsAborted)
+                {
+                    break;
                 }
             }
         }

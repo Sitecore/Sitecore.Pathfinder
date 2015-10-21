@@ -1,35 +1,40 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
-using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Json
 {
     [Export(typeof(ISnapshotLoader))]
-    public class JsonSnapshotLoader : ISnapshotLoader
+    public class JsonSnapshotLoader : SnapshotLoaderBase
     {
-        public JsonSnapshotLoader()
+        [ImportingConstructor]
+        public JsonSnapshotLoader([NotNull] ICompositionService compositionService)
         {
+            CompositionService = compositionService;
             Priority = 1000;
         }
 
-        public double Priority { get; }
+        [NotNull]
+        protected ICompositionService CompositionService { get; }
 
-        public virtual bool CanLoad(ISnapshotService snapshotService, IProject project, ISourceFile sourceFile)
+        public override bool CanLoad(ISourceFile sourceFile)
         {
-            return string.Compare(Path.GetExtension(sourceFile.AbsoluteFileName), ".json", StringComparison.OrdinalIgnoreCase) == 0;
+            return string.Equals(Path.GetExtension(sourceFile.AbsoluteFileName), ".json", StringComparison.OrdinalIgnoreCase);
         }
 
-        public virtual ISnapshot Load(ISnapshotService snapshotService, IProject project, ISourceFile sourceFile)
+        public override ISnapshot Load(ISourceFile sourceFile, IDictionary<string, string> tokens)
         {
-            var contents = sourceFile.ReadAsText();
+            var contents = sourceFile.ReadAsText(tokens);
 
-            contents = snapshotService.ReplaceTokens(project, sourceFile, contents);
+            var jsonTextSnapshot = CompositionService.Resolve<JsonTextSnapshot>().With(sourceFile, contents, tokens);
 
-            return new JsonTextSnapshot(sourceFile, contents);
+            return jsonTextSnapshot;
         }
     }
 }

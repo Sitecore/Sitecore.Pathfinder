@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Sitecore.Pathfinder.Diagnostics;
@@ -13,17 +14,17 @@ namespace Sitecore.Pathfinder.Languages.Json
         [ItemCanBeNull]
         private JToken _jtoken;
 
-        public JsonTextNode([NotNull] ITextSnapshot snapshot, [NotNull] string key, [NotNull] [ItemCanBeNull] JObject jobject, [CanBeNull] ITextNode parentNode = null) : base(snapshot, key, string.Empty, GetTextSpan(jobject), parentNode)
+        public JsonTextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull] [ItemCanBeNull] JObject jobject, [CanBeNull] ITextNode parentNode = null) : base(snapshot, key, string.Empty, GetTextSpan(jobject), parentNode)
         {
             _jtoken = jobject;
         }
 
-        public JsonTextNode([NotNull] ITextSnapshot snapshot, [NotNull] string key, [NotNull] [ItemCanBeNull] JArray jarray, [CanBeNull] ITextNode parentNode = null) : base(snapshot, key, string.Empty, GetTextSpan(jarray), parentNode)
+        public JsonTextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull] [ItemCanBeNull] JArray jarray, [CanBeNull] ITextNode parentNode = null) : base(snapshot, key, string.Empty, GetTextSpan(jarray), parentNode)
         {
             _jtoken = jarray;
         }
 
-        public JsonTextNode([NotNull] ITextSnapshot snapshot, [NotNull] string key, [NotNull] [ItemCanBeNull] JProperty jproperty, [CanBeNull] ITextNode parentNode = null) : base(snapshot, key, jproperty.Value?.ToString() ?? string.Empty, GetTextSpan(jproperty), parentNode)
+        public JsonTextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull] [ItemCanBeNull] JProperty jproperty, [CanBeNull] ITextNode parentNode = null) : base(snapshot, key, jproperty.Value?.ToString() ?? string.Empty, GetTextSpan(jproperty), parentNode)
         {
             _jtoken = jproperty;
         }
@@ -31,6 +32,11 @@ namespace Sitecore.Pathfinder.Languages.Json
         public override ITextNode GetInnerTextNode()
         {
             return new JsonInnerTextNode(this, _jtoken);
+        }
+
+        public override ITextNode GetLogicalChildNode(string name)
+        {
+            return ChildNodes.FirstOrDefault(n => n.Key == name);
         }
 
         public override bool SetKey(string newKey)

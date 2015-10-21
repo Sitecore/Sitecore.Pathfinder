@@ -96,13 +96,12 @@ namespace Sitecore.Pathfinder.Projects
                 throw new InvalidOperationException(Texts.Project_has_not_been_loaded__Call_Load___first);
             }
 
-            if (SourceFiles.Any(s => string.Compare(s.AbsoluteFileName, sourceFileName, StringComparison.OrdinalIgnoreCase) == 0))
+            if (SourceFiles.Any(s => string.Equals(s.AbsoluteFileName, sourceFileName, StringComparison.OrdinalIgnoreCase)))
             {
                 Remove(sourceFileName);
             }
 
             var projectFileName = "~/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(Options.ProjectDirectory, PathHelper.GetDirectoryAndFileNameWithoutExtensions(sourceFileName))).TrimStart('/');
-
             var sourceFile = Factory.SourceFile(FileSystem, sourceFileName, projectFileName);
             SourceFiles.Add(sourceFile);
 

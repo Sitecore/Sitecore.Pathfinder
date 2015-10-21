@@ -1,7 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using Sitecore.Pathfinder.Diagnostics;
 using System.Collections.Generic;
+using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
@@ -21,10 +21,10 @@ namespace Sitecore.Pathfinder.Snapshots
         [CanBeNull]
         ITextNode ParentNode { get; }
 
-        TextSpan TextSpan { get; }
-
         [NotNull]
         ISnapshot Snapshot { get; }
+
+        TextSpan TextSpan { get; }
 
         [NotNull]
         string Value { get; }
@@ -37,6 +37,9 @@ namespace Sitecore.Pathfinder.Snapshots
 
         [CanBeNull]
         ITextNode GetInnerTextNode();
+
+        [CanBeNull]
+        ITextNode GetLogicalChildNode([NotNull] string name);
 
         bool SetKey([NotNull] string newKey);
 

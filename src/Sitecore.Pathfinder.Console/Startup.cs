@@ -28,7 +28,7 @@ namespace Sitecore.Pathfinder
                 errorCode = build.Start();
             }
 
-            if (string.Compare(configuration.Get("pause"), "true", StringComparison.OrdinalIgnoreCase) == 0)
+            if (string.Equals(configuration.Get("pause"), "true", StringComparison.OrdinalIgnoreCase))
             {
                 Console.ReadLine();
             }

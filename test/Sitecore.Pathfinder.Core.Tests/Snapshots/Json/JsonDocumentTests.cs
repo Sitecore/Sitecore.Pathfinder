@@ -1,7 +1,9 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Languages.Json;
 
 namespace Sitecore.Pathfinder.Snapshots.Json
@@ -20,10 +22,10 @@ namespace Sitecore.Pathfinder.Snapshots.Json
         {
             var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt");
 
-            var doc = new JsonTextSnapshot(sourceFile, "{ \"Item\": { \"Fields\": [ { \"Name\": \"Text\", \"Value\": \"123\" } ] } }");
+            var doc = Services.CompositionService.Resolve<JsonTextSnapshot>().With(sourceFile, "{ \"Item\": { \"Fields\": [ { \"Name\": \"Text\", \"Value\": \"123\" } ] } }", new Dictionary<string, string>());
             var root = doc.Root;
 
-            var fields = doc.GetJsonChildNode(root, "Fields");
+            var fields = root.GetLogicalChildNode("Fields");
             Assert.IsNotNull(fields);
 
             var field = fields.ChildNodes.FirstOrDefault();
@@ -36,10 +38,10 @@ namespace Sitecore.Pathfinder.Snapshots.Json
         {
             var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt");
 
-            var doc = new JsonTextSnapshot(sourceFile, "\"Item\": { }");
+            var doc = Services.CompositionService.Resolve<JsonTextSnapshot>().With(sourceFile, "\"Item\": { }", new Dictionary<string, string>());
             Assert.AreEqual(TextNode.Empty, doc.Root);
 
-            doc = new JsonTextSnapshot(sourceFile, string.Empty);
+            doc = Services.CompositionService.Resolve<JsonTextSnapshot>().With(sourceFile, string.Empty, new Dictionary<string, string>());
             Assert.AreEqual(TextNode.Empty, doc.Root);
         }
 
@@ -48,7 +50,7 @@ namespace Sitecore.Pathfinder.Snapshots.Json
         {
             var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt");
 
-            var doc = new JsonTextSnapshot(sourceFile, "{ \"Item\": { \"Fields\": [ { \"Name\": \"Text\", \"Value\": \"123\" } ] } }");
+            var doc = Services.CompositionService.Resolve<JsonTextSnapshot>().With(sourceFile, "{ \"Item\": { \"Fields\": [ { \"Name\": \"Text\", \"Value\": \"123\" } ] } }", new Dictionary<string, string>());
             var root = doc.Root;
             Assert.IsNotNull(root);
             Assert.AreEqual("Item", root.Key);

@@ -50,7 +50,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             template.StandardValuesItem = standardValuesItem;
 
             // parse fields and sections
-            var sections = context.Snapshot.GetJsonChildNode(textNode, "Sections");
+            var sections = textNode.GetLogicalChildNode("Sections");
             if (sections != null)
             {
                 foreach (var sectionTreeNode in sections.ChildNodes)
@@ -131,7 +131,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 return;
             }
 
-            var templateSection = template.Sections.FirstOrDefault(s => string.Compare(s.SectionName, sectionName.Value, StringComparison.OrdinalIgnoreCase) == 0);
+            var templateSection = template.Sections.FirstOrDefault(s => string.Equals(s.SectionName, sectionName.Value, StringComparison.OrdinalIgnoreCase));
             if (templateSection == null)
             {
                 templateSection = context.ParseContext.Factory.TemplateSection(templateSectionTextNode);
@@ -142,7 +142,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
             templateSection.IconProperty.Parse(templateSectionTextNode);
 
-            var fieldsTextNode = context.Snapshot.GetJsonChildNode(templateSectionTextNode, "Fields");
+            var fieldsTextNode = templateSectionTextNode.GetLogicalChildNode("Fields");
             if (fieldsTextNode == null)
             {
                 return;

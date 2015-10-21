@@ -166,6 +166,18 @@ namespace Sitecore.Pathfinder.Projects
             Assert.AreEqual("Version 2", versionedField1.Value);
             Assert.AreEqual("da-DK", versionedField1.Language);
             Assert.AreEqual(2, versionedField1.Version);
+
+            // included field
+            var includedFields = item.Fields.Where(f => f.FieldName == "IncludeField").ToList();
+            Assert.AreEqual(1, includedFields.Count);
+            var includedField = includedFields.First();
+            Assert.AreEqual("Included field.", includedField.Value);
+
+            // parameterized field
+            var parameterizedFields = item.Fields.Where(f => f.FieldName == "ParameterizedField").ToList();
+            Assert.AreEqual(1, parameterizedFields.Count);
+            var parameterizedField = parameterizedFields.First();
+            Assert.AreEqual("Parameterized Value", parameterizedField.Value);
         }
     }
 }

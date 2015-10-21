@@ -35,7 +35,12 @@ namespace Sitecore.Pathfinder.Languages.Json
 
         protected override void ParseFieldTextNode(ItemParseContext context, Item item, LanguageVersionContext languageVersionContext, ITextNode textNode)
         {
-            var fieldNameTextNode = new AttributeNameTextNode(textNode);
+            var fieldNameTextNode = textNode.Key == "Field" ? textNode.GetAttribute("Name") : new AttributeNameTextNode(textNode);
+            if (fieldNameTextNode == null)
+            {
+                context.ParseContext.Trace.TraceError("Expected 'Name' attribute", textNode);
+                return;
+            }
 
             if (textNode.Attributes.Any() || textNode.ChildNodes.Any())
             {

@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Building.Deploying
 
             context.Trace.TraceInformation(Texts.Publishing___);
 
-            if (string.Compare(context.Project.Options.DatabaseName, "core", StringComparison.OrdinalIgnoreCase) == 0)
+            if (string.Equals(context.Project.Options.DatabaseName, "core", StringComparison.OrdinalIgnoreCase))
             {
                 context.Trace.TraceInformation(Texts.Database_is__core___Skipping_);
                 return;

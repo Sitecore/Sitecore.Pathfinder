@@ -2,48 +2,41 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Json
 {
+    [Export]
+    [PartCreationPolicy(CreationPolicy.NonShared)]
     public class JsonTextSnapshot : TextSnapshot
     {
         [CanBeNull]
         private ITextNode _root;
 
-        public JsonTextSnapshot([NotNull] ISourceFile sourceFile, [NotNull] string contents) : base(sourceFile)
+        [ImportingConstructor]
+        public JsonTextSnapshot([NotNull] ISnapshotService snapshotService)
         {
-            try
-            {
-                RootToken = JToken.Parse(contents);
-            }
-            catch (JsonException ex)
-            {
-                ParseError = ex.Message;
-                RootToken = null;
-            }
-            catch (Exception ex)
-            {
-                ParseError = ex.Message;
-                RootToken = null;
-            }
+            SnapshotService = snapshotService;
         }
 
         public override ITextNode Root => _root ?? (_root = (RootToken != null ? Parse() : TextNode.Empty));
 
         [CanBeNull]
         [ItemNotNull]
-        protected JToken RootToken { get; }
+        protected JToken RootToken { get; private set; }
 
-        public override ITextNode GetJsonChildNode(ITextNode textNode, string name)
-        {
-            return textNode.ChildNodes.FirstOrDefault(n => n.Key == name);
-        }
+        [NotNull]
+        protected ISnapshotService SnapshotService { get; }
+
+        [NotNull]
+        protected IDictionary<string, string> Tokens { get; private set; }
 
         public override void SaveChanges()
         {
@@ -61,6 +54,31 @@ namespace Sitecore.Pathfinder.Languages.Json
                     RootToken.WriteTo(writer);
                 }
             }
+        }
+
+        [NotNull]
+        public virtual JsonTextSnapshot With([NotNull] ISourceFile sourceFile, [NotNull] string contents, [NotNull] IDictionary<string, string> tokens)
+        {
+            base.With(sourceFile);
+
+            Tokens = tokens;
+
+            try
+            {
+                RootToken = JToken.Parse(contents);
+            }
+            catch (JsonException ex)
+            {
+                ParseError = ex.Message;
+                RootToken = null;
+            }
+            catch (Exception ex)
+            {
+                ParseError = ex.Message;
+                RootToken = null;
+            }
+
+            return this;
         }
 
         [NotNull]
@@ -100,10 +118,17 @@ namespace Sitecore.Pathfinder.Languages.Json
         }
 
         [NotNull]
-        protected virtual ITextNode Parse([NotNull] string name, [NotNull][ItemNotNull] JObject jobject, [CanBeNull] JsonTextNode parent)
+        protected virtual ITextNode Parse([NotNull] string name, [NotNull] [ItemNotNull] JObject jobject, [CanBeNull] JsonTextNode parent)
         {
+            var textNodes = (parent?.ChildNodes as ICollection<ITextNode>);
+
+            if (name == "Include")
+            {
+                return textNodes == null ? TextNode.Empty : ParseIncludeFile(jobject, textNodes);
+            }
+
             var treeNode = new JsonTextNode(this, name, jobject, parent);
-            (parent?.ChildNodes as ICollection<ITextNode>)?.Add(treeNode);
+            textNodes?.Add(treeNode);
 
             var childNodes = (ICollection<ITextNode>)treeNode.ChildNodes;
             var attributes = (ICollection<ITextNode>)treeNode.Attributes;
@@ -118,11 +143,22 @@ namespace Sitecore.Pathfinder.Languages.Json
 
                     case JTokenType.Array:
                         var array = property.Value.Value<JArray>();
+
+                        if (property.Name == "Include")
+                        {
+                            foreach (var element in array.OfType<JObject>())
+                            {
+                                ParseIncludeFile(element, childNodes);
+                            }
+
+                            continue;
+                        }
+
                         var arrayTreeNode = new JsonTextNode(this, property.Name, array, parent);
 
-                        foreach (var o in array.OfType<JObject>())
+                        foreach (var element in array.OfType<JObject>())
                         {
-                            Parse(string.Empty, o, arrayTreeNode);
+                            Parse(string.Empty, element, arrayTreeNode);
                         }
 
                         childNodes.Add(arrayTreeNode);
@@ -140,6 +176,26 @@ namespace Sitecore.Pathfinder.Languages.Json
             }
 
             return treeNode;
+        }
+
+        [NotNull]
+        private ITextNode ParseIncludeFile([NotNull][ItemNotNull] JObject jobject, [NotNull] [ItemNotNull] ICollection<ITextNode> childNodes)
+        {
+            var fileName = jobject.Property("File")?.Value?.ToString() ?? string.Empty;
+            if (string.IsNullOrEmpty(fileName))
+            {
+                throw new InvalidOperationException("'File' attribute expected");
+            }
+
+            var tokens = new Dictionary<string, string>(Tokens).AddRange(jobject.Properties().ToDictionary(a => a.Name, a => a.Value.ToString()));
+
+            var textNode = SnapshotService.LoadIncludeFile(this, fileName, tokens);
+            if (textNode != TextNode.Empty)
+            {
+                childNodes.Add(textNode);
+            }
+
+            return textNode;
         }
     }
 }
