@@ -45,7 +45,7 @@ namespace Sitecore.Pathfinder.Snapshots
             return null;
         }
 
-        public ITextNode GetLogicalChildNode(string name)
+        public ITextNode GetFormatSpecificChildNode(string name)
         {
             return null;
         }

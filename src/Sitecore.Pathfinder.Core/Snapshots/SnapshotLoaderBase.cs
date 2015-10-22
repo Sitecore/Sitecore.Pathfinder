@@ -10,6 +10,6 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public abstract bool CanLoad(ISourceFile sourceFile);
 
-        public abstract ISnapshot Load(ISourceFile sourceFile, IDictionary<string, string> tokens);
+        public abstract ISnapshot Load(ISourceFile sourceFile, SnapshotParseContext parseContext);
     }
 }

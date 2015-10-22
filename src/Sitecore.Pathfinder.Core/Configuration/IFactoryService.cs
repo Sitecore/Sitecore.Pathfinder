@@ -95,6 +95,6 @@ namespace Sitecore.Pathfinder.Configuration
         TemplateSection TemplateSection([NotNull] ITextNode templateSectionTextNode);
 
         [NotNull]
-        TextNode TextNode([NotNull] ISnapshot snapshot, TextSpan span, [NotNull] string name, [NotNull] string value, [CanBeNull] ITextNode parent);
+        TextNode TextNode([NotNull] ISnapshot snapshot, TextSpan span, [NotNull] string name, [NotNull] string value);
     }
 }

@@ -14,17 +14,17 @@ namespace Sitecore.Pathfinder.Languages.Json
         [ItemCanBeNull]
         private JToken _jtoken;
 
-        public JsonTextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull] [ItemCanBeNull] JObject jobject, [CanBeNull] ITextNode parentNode = null) : base(snapshot, key, string.Empty, GetTextSpan(jobject), parentNode)
+        public JsonTextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull] [ItemCanBeNull] JObject jobject) : base(snapshot, key, string.Empty, GetTextSpan(jobject))
         {
             _jtoken = jobject;
         }
 
-        public JsonTextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull] [ItemCanBeNull] JArray jarray, [CanBeNull] ITextNode parentNode = null) : base(snapshot, key, string.Empty, GetTextSpan(jarray), parentNode)
+        public JsonTextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull] [ItemCanBeNull] JArray jarray) : base(snapshot, key, string.Empty, GetTextSpan(jarray))
         {
             _jtoken = jarray;
         }
 
-        public JsonTextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull] [ItemCanBeNull] JProperty jproperty, [CanBeNull] ITextNode parentNode = null) : base(snapshot, key, jproperty.Value?.ToString() ?? string.Empty, GetTextSpan(jproperty), parentNode)
+        public JsonTextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull] [ItemCanBeNull] JProperty jproperty) : base(snapshot, key, jproperty.Value?.ToString() ?? string.Empty, GetTextSpan(jproperty))
         {
             _jtoken = jproperty;
         }
@@ -34,7 +34,7 @@ namespace Sitecore.Pathfinder.Languages.Json
             return new JsonInnerTextNode(this, _jtoken);
         }
 
-        public override ITextNode GetLogicalChildNode(string name)
+        public override ITextNode GetFormatSpecificChildNode(string name)
         {
             return ChildNodes.FirstOrDefault(n => n.Key == name);
         }

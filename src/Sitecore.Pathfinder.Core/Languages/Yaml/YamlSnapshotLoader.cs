@@ -1,7 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
@@ -28,11 +27,11 @@ namespace Sitecore.Pathfinder.Languages.Yaml
             return string.Equals(Path.GetExtension(sourceFile.AbsoluteFileName), ".yaml", StringComparison.OrdinalIgnoreCase);
         }
 
-        public override ISnapshot Load(ISourceFile sourceFile, IDictionary<string, string> tokens)
+        public override ISnapshot Load(ISourceFile sourceFile, SnapshotParseContext parseContext)
         {
-            var contents = sourceFile.ReadAsText(tokens);
+            var contents = sourceFile.ReadAsText(parseContext.Tokens);
 
-            var yamlTextSnapshot = CompositionService.Resolve<YamlTextSnapshot>().With(sourceFile, contents, tokens);
+            var yamlTextSnapshot = CompositionService.Resolve<YamlTextSnapshot>().With(sourceFile, contents, parseContext);
 
             return yamlTextSnapshot;
         }

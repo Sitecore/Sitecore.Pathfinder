@@ -4,12 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
-using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
@@ -27,12 +25,11 @@ namespace Sitecore.Pathfinder.Languages.Xml
         private ITextNode _root;
 
         [ImportingConstructor]
-        public XmlTextSnapshot([NotNull] ISnapshotService snapshotService)
+        public XmlTextSnapshot([NotNull] ISnapshotService snapshotService) : base(snapshotService)
         {
-            SnapshotService = snapshotService;
         }
 
-        public override ITextNode Root => _root ?? (_root = (RootElement != null ? Parse(null, RootElement) : TextNode.Empty));
+        public override ITextNode Root => _root ?? (_root = (RootElement != null ? ParseDirectives(ParseContext, Parse(null, RootElement)) : TextNode.Empty));
 
         [NotNull]
         public string SchemaFileName { get; private set; }
@@ -47,10 +44,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
         protected XElement RootElement { get; private set; }
 
         [NotNull]
-        protected ISnapshotService SnapshotService { get; }
-
-        [NotNull]
-        protected IDictionary<string, string> Tokens { get; private set; }
+        protected SnapshotParseContext ParseContext { get; private set; }
 
         public override void SaveChanges()
         {
@@ -121,13 +115,13 @@ namespace Sitecore.Pathfinder.Languages.Xml
         }
 
         [NotNull]
-        public virtual XmlTextSnapshot With([NotNull] ISourceFile sourceFile, [NotNull] string contents, [NotNull] IDictionary<string, string> tokens, [NotNull] string schemaNamespace, [NotNull] string schemaFileName)
+        public virtual XmlTextSnapshot With([NotNull] ISourceFile sourceFile, [NotNull] string contents, [NotNull] SnapshotParseContext parseContext, [NotNull] string schemaNamespace, [NotNull] string schemaFileName)
         {
             base.With(sourceFile);
 
             SchemaNamespace = schemaNamespace;
             SchemaFileName = schemaFileName;
-            Tokens = tokens;
+            ParseContext = parseContext;
 
             try
             {
@@ -169,12 +163,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
         {
             var childNodes = (ICollection<ITextNode>)parent?.ChildNodes;
 
-            if (element.Name.LocalName == "Include")
-            {
-                return childNodes == null ? TextNode.Empty : ParseIncludeFile(element, childNodes);
-            }
-
-            var treeNode = new XmlTextNode(this, element, parent);
+            var treeNode = new XmlTextNode(this, element);
             childNodes?.Add(treeNode);
 
             var attributes = (ICollection<ITextNode>)treeNode.Attributes;
@@ -186,7 +175,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
                     continue;
                 }
 
-                var attributeTreeNode = new XmlTextNode(this, attribute, treeNode);
+                var attributeTreeNode = new XmlTextNode(this, attribute);
                 attributes.Add(attributeTreeNode);
             }
 
@@ -196,26 +185,6 @@ namespace Sitecore.Pathfinder.Languages.Xml
             }
 
             return treeNode;
-        }
-
-        [NotNull]
-        protected virtual ITextNode ParseIncludeFile([NotNull] XElement element, [NotNull] [ItemNotNull] ICollection<ITextNode> childNodes)
-        {
-            var fileName = element.GetAttributeValue("File");
-            if (string.IsNullOrEmpty(fileName))
-            {
-                throw new InvalidOperationException("'File' attribute expected");
-            }
-
-            var tokens = new Dictionary<string, string>(Tokens).AddRange(element.Attributes().ToDictionary(a => a.Name.LocalName, a => a.Value));
-
-            var textNode = SnapshotService.LoadIncludeFile(this, fileName, tokens);
-            if (textNode != TextNode.Empty)
-            {
-                childNodes.Add(textNode);
-            }
-
-            return textNode;
         }
     }
 }

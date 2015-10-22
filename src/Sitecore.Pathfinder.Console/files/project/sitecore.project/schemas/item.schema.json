@@ -10,6 +10,17 @@
     },
 
     "definitions": {
+        "Include": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": true,
+                "properties": {
+                    "File": { "type": "string" }
+                }
+            }
+        },
+
         "Fields": {
             "type": "object",
             "patternProperties": {
@@ -96,6 +107,10 @@
                             ]
                         },
 
+                        "Include": {
+                            "$ref": "#/definitions/Include"
+                        },
+
                         "^((?!(Versioned|Unversioned|Layout)).)*$": {
                             "oneOf": [
                                 { "type": "string" },
@@ -126,6 +141,7 @@
                 },
 
                 "Item": { "$ref": "#/definitions/Item" },
+                "Include": { "$ref": "#/definitions/Include" },
                 "template": { "$ref": "#/definitions/Template" }
             }
         },
@@ -142,6 +158,7 @@
                 "ShortHelp": { "type": "string" },
                 "LongHelp": { "type": "string" },
                 "Layout.HtmlFile": { "type": "string" },
+                "Include": { "$ref": "#/definitions/Include" },
                 "Sections": {
                     "type": "array",
                     "items": {
@@ -171,6 +188,20 @@
                     }
                 }
             }
+        },
+
+        "DatabaseName": {
+            "enum": [
+                "master",
+                "core",
+                "web"
+            ]
+        },
+
+        "FieldValueHint": {
+            "enum": [
+                "Text"
+            ]
         },
 
         "FieldType": {
@@ -238,20 +269,7 @@
                 "Shared",
                 "Unversioned"
             ]
-        },
-
-        "DatabaseName": {
-            "enum": [
-                "master",
-                "core",
-                "web"
-            ]
-        },
-
-        "FieldValueHint": {
-            "enum": [
-                "Text"
-            ]
         }
+
     }
 }

@@ -160,9 +160,9 @@ namespace Sitecore.Pathfinder.Configuration
             return new TemplateSection(templateSectionTextNode);
         }
 
-        public virtual TextNode TextNode(ISnapshot snapshot, TextSpan span, string name, string value, ITextNode parent)
+        public virtual TextNode TextNode(ISnapshot snapshot, TextSpan span, string name, string value)
         {
-            return new TextNode(snapshot, name, value, span, parent);
+            return new TextNode(snapshot, name, value, span);
         }
     }
 }

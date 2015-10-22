@@ -15,7 +15,7 @@ using Sitecore.Pathfinder.IO;
 namespace Sitecore.Pathfinder
 {
     public class Startup
-    {
+    {                          
         public virtual int Start()
         {
             var configuration = RegisterConfiguration();

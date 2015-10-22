@@ -1,6 +1,5 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using Sitecore.Pathfinder.Extensions;
@@ -22,10 +21,10 @@ namespace Sitecore.Pathfinder.Snapshots.Json
         {
             var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt");
 
-            var doc = Services.CompositionService.Resolve<JsonTextSnapshot>().With(sourceFile, "{ \"Item\": { \"Fields\": [ { \"Name\": \"Text\", \"Value\": \"123\" } ] } }", new Dictionary<string, string>());
+            var doc = Services.CompositionService.Resolve<JsonTextSnapshot>().With(sourceFile, "{ \"Item\": { \"Fields\": [ { \"Name\": \"Text\", \"Value\": \"123\" } ] } }", SnapshotParseContext.Empty);
             var root = doc.Root;
 
-            var fields = root.GetLogicalChildNode("Fields");
+            var fields = root.GetFormatSpecificChildNode("Fields");
             Assert.IsNotNull(fields);
 
             var field = fields.ChildNodes.FirstOrDefault();
@@ -38,10 +37,10 @@ namespace Sitecore.Pathfinder.Snapshots.Json
         {
             var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt");
 
-            var doc = Services.CompositionService.Resolve<JsonTextSnapshot>().With(sourceFile, "\"Item\": { }", new Dictionary<string, string>());
+            var doc = Services.CompositionService.Resolve<JsonTextSnapshot>().With(sourceFile, "\"Item\": { }", SnapshotParseContext.Empty);
             Assert.AreEqual(TextNode.Empty, doc.Root);
 
-            doc = Services.CompositionService.Resolve<JsonTextSnapshot>().With(sourceFile, string.Empty, new Dictionary<string, string>());
+            doc = Services.CompositionService.Resolve<JsonTextSnapshot>().With(sourceFile, string.Empty, SnapshotParseContext.Empty);
             Assert.AreEqual(TextNode.Empty, doc.Root);
         }
 
@@ -50,7 +49,7 @@ namespace Sitecore.Pathfinder.Snapshots.Json
         {
             var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt");
 
-            var doc = Services.CompositionService.Resolve<JsonTextSnapshot>().With(sourceFile, "{ \"Item\": { \"Fields\": [ { \"Name\": \"Text\", \"Value\": \"123\" } ] } }", new Dictionary<string, string>());
+            var doc = Services.CompositionService.Resolve<JsonTextSnapshot>().With(sourceFile, "{ \"Item\": { \"Fields\": [ { \"Name\": \"Text\", \"Value\": \"123\" } ] } }", SnapshotParseContext.Empty);
             var root = doc.Root;
             Assert.IsNotNull(root);
             Assert.AreEqual("Item", root.Key);
@@ -69,7 +68,6 @@ namespace Sitecore.Pathfinder.Snapshots.Json
             Assert.AreEqual("Text", attribute.Value);
             Assert.AreEqual(0, attribute.Attributes.Count());
             Assert.AreEqual(0, attribute.ChildNodes.Count());
-            Assert.AreEqual(field, attribute.ParentNode);
             Assert.AreEqual(field.Snapshot, attribute.Snapshot);
             Assert.AreEqual(doc, attribute.Snapshot);
         }

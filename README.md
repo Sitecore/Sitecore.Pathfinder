@@ -273,6 +273,21 @@ Template can be defined in items files using a special schema. Below is an examp
 
 Templates can be nested in the same way that multiple items can be nested inside an item file.
 
+#### Inferred templates
+If you have a template that is used by a single item, you can have Pathfinder automatically create the template from the fields in the
+item - Pathfinder will infer the template fields from the fields you specify in the item.
+
+To infer and create the template add the "Template.CreateFromFields='true'" attribute.
+
+```xml
+<Item xmlns="http://www.sitecore.net/pathfinder/item" Template.Create="/sitecore/templates/Sample/InferredTemplate">
+    <Fields>
+        <Field Name="Text" Value="Hello" Field.Type="Rich Text" />
+    </Fields>
+</Item>
+```
+The example above creates the template "InferredTemplate" with a single template field "Text". The type of the field is "Rich Text".
+
 ### Advanced 
 
 #### Include files
@@ -291,7 +306,7 @@ Json:
                     "File": "~/includes/Field.include.item.json" 
                 },
                 {
-                    "File": "~/includes/ParameterizedField.include.item.xml",
+                    "File": "~/includes/ParameterizedField.include.item.json",
                     "Name": "ParameterizedField",
                     "Value": "Parameterized Value"
                 }
@@ -305,7 +320,7 @@ Xml:
 ```xml
 <Item xmlns="http://www.sitecore.net/pathfinder/item">
     <Fields>
-        <Include File="~/includes/Field.include.item.json" />
+        <Include File="~/includes/Field.include.item.xml" />
         <Include File="~/includes/ParameterizedField.include.item.xml" Name="ParameterizedField" Value="Parameterized Value"/>
     </Fields>
 </Item>
@@ -315,9 +330,9 @@ Yaml:
 ```yaml
 Item :
     - Fields :
-        - Include : ~/includes/Field.include.item.json
+        - Include : ~/includes/Field.include.item.yaml
         
-        - Include : ~/includes/ParameterizedField.include.item.xml
+        - Include : ~/includes/ParameterizedField.include.item.yaml
           Name  : ParameterizedField
           Value : Parameterized Value
 
@@ -333,9 +348,9 @@ The first included file looks like this:
 }
 ```
 
-Include files are not simple text subsitutions, but are resolved at the lexing level of the compiler (before parsing), which allows Json 
-files to include Xml or Yaml files and vice versa. The Include tag is also part of the item schemas, which means that include files cannot 
-be included at arbitrary positions. This is to ensure Syntax Highlighting and IntelliSense still work.
+Include files are not simple text subsitutions, but are resolved at the lexing level of the compiler (before parsing). The Include tag 
+is also part of the item schemas, which means that include files cannot be included at arbitrary positions. This is to ensure 
+Syntax Highlighting, Validation and IntelliSense still work.
 
 Include files can be parameterized as can be seen in the second include file above. Parameters are simple text substitions. Parameter 
 tokens are prefxied with '$' in the include file. Below is the second include file from the example above.
@@ -344,24 +359,19 @@ tokens are prefxied with '$' in the include file. Below is the second include fi
 <Field Name="$Name" Field.ShortHelp="Include field." Field.LongHelp="Include field.">$Value</Field>
 ```
 
-Please notice: Include files do not work everywhere and including files in a different format is not currently fully supported.
+##### Predefined parameters.
 
+Parameter Name             | Description 
+-------------------------- | ------------
+$ItemPath                  | The path of the item
+$FilePathWithoutExtensions | The file path without extensions
+$FilePath                  | The file path including extensions
+$Database                  | Database name
+$FileNameWithoutExtensions | The file name without extensions
+$FileName                  | The file name including extensions
+$DirectoryName             | The current directory name
 
-#### Inferred templates
-If you have a template that is used by a single item, you can have Pathfinder automatically create the template from the fields in the
-item - Pathfinder will infer the template fields from the fields you specify in the item.
-
-To infer and create the template add the "Template.CreateFromFields='true'" attribute.
-
-```xml
-<Item xmlns="http://www.sitecore.net/pathfinder/item" Template.Create="/sitecore/templates/Sample/InferredTemplate">
-    <Fields>
-        <Field Name="Text" Value="Hello" Field.Type="Rich Text" />
-    </Fields>
-</Item>
-```
-The example above creates the template "InferredTemplate" with a single template field "Text". The type of the field is "Rich Text".
-
+Please notice: Include files do not work everywhere yet.
 
 ### Item IDs
 Normally you do not need to specify the ID of an item, but in some case, it may be necessary. Pathfinder supports soft IDs meaning that the

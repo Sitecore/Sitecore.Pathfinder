@@ -1,7 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
@@ -28,7 +27,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
             return string.Equals(Path.GetExtension(sourceFile.AbsoluteFileName), ".item", StringComparison.OrdinalIgnoreCase);
         }
 
-        public override ISnapshot Load(ISourceFile sourceFile, IDictionary<string, string> tokens)
+        public override ISnapshot Load(ISourceFile sourceFile, SnapshotParseContext parseContext)
         {
             var textSnapshot = CompositionService.Resolve<TextSnapshot>().With(sourceFile);
 

@@ -8,9 +8,9 @@ namespace Sitecore.Pathfinder.Snapshots
     public interface ISnapshotService
     {
         [NotNull]
-        ITextNode LoadIncludeFile([NotNull] ISnapshot snapshot, [NotNull] string includeFileName, [NotNull] IDictionary<string, string> tokens);
+        ITextNode LoadIncludeFile([NotNull] ISnapshot snapshot, [NotNull] string includeFileName, [NotNull] SnapshotParseContext parseContext);
 
         [NotNull]
-        ISnapshot LoadSnapshot([NotNull] ISourceFile sourceFile, [NotNull] IDictionary<string, string> tokens);
+        ISnapshot LoadSnapshot([NotNull] ISourceFile sourceFile, [NotNull] SnapshotParseContext parseContext);
     }
 }

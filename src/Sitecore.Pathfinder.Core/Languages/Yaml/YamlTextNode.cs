@@ -7,7 +7,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
 {
     public class YamlTextNode : TextNode
     {
-        public YamlTextNode([NotNull] ISnapshot snapshot, TextSpan textSpan, [NotNull] string key, [NotNull] string value, [CanBeNull] ITextNode parentNode) : base(snapshot, key, value, textSpan, parentNode)
+        public YamlTextNode([NotNull] ISnapshot snapshot, TextSpan textSpan, [NotNull] string key, [NotNull] string value) : base(snapshot, key, value, textSpan)
         {
         }
     }

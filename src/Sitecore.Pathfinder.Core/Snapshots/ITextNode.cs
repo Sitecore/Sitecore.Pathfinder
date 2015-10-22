@@ -18,9 +18,6 @@ namespace Sitecore.Pathfinder.Snapshots
         [NotNull]
         string Key { get; }
 
-        [CanBeNull]
-        ITextNode ParentNode { get; }
-
         [NotNull]
         ISnapshot Snapshot { get; }
 
@@ -39,7 +36,7 @@ namespace Sitecore.Pathfinder.Snapshots
         ITextNode GetInnerTextNode();
 
         [CanBeNull]
-        ITextNode GetLogicalChildNode([NotNull] string name);
+        ITextNode GetFormatSpecificChildNode([NotNull] string name);
 
         bool SetKey([NotNull] string newKey);
 

@@ -50,7 +50,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             template.StandardValuesItem = standardValuesItem;
 
             // parse fields and sections
-            var sections = textNode.GetLogicalChildNode("Sections");
+            var sections = textNode.GetFormatSpecificChildNode("Sections");
             if (sections != null)
             {
                 foreach (var sectionTreeNode in sections.ChildNodes)
@@ -142,7 +142,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
             templateSection.IconProperty.Parse(templateSectionTextNode);
 
-            var fieldsTextNode = templateSectionTextNode.GetLogicalChildNode("Fields");
+            var fieldsTextNode = templateSectionTextNode.GetFormatSpecificChildNode("Fields");
             if (fieldsTextNode == null)
             {
                 return;

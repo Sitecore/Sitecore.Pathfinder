@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Snapshots
         {
             var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt");
 
-            var snapshot = Services.CompositionService.Resolve<XmlTextSnapshot>().With(sourceFile, "<Item><Field Name=\"Text\" Value=\"123\" /></Item>", new Dictionary<string, string>(), string.Empty, string.Empty);
+            var snapshot = Services.CompositionService.Resolve<XmlTextSnapshot>().With(sourceFile, "<Item><Field Name=\"Text\" Value=\"123\" /></Item>", SnapshotParseContext.Empty, string.Empty, string.Empty);
             Assert.AreEqual("Item", snapshot.Root.Key);
 
             var field = snapshot.Root.ChildNodes.First();

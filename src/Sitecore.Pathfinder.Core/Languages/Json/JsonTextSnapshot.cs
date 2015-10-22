@@ -21,22 +21,18 @@ namespace Sitecore.Pathfinder.Languages.Json
         private ITextNode _root;
 
         [ImportingConstructor]
-        public JsonTextSnapshot([NotNull] ISnapshotService snapshotService)
+        public JsonTextSnapshot([NotNull] ISnapshotService snapshotService) : base(snapshotService)
         {
-            SnapshotService = snapshotService;
         }
 
-        public override ITextNode Root => _root ?? (_root = (RootToken != null ? Parse() : TextNode.Empty));
+        public override ITextNode Root => _root ?? (_root = (RootToken != null ? ParseDirectives(ParseContext, Parse()) : TextNode.Empty));
 
         [CanBeNull]
         [ItemNotNull]
         protected JToken RootToken { get; private set; }
 
         [NotNull]
-        protected ISnapshotService SnapshotService { get; }
-
-        [NotNull]
-        protected IDictionary<string, string> Tokens { get; private set; }
+        protected SnapshotParseContext ParseContext { get; private set; }
 
         public override void SaveChanges()
         {
@@ -57,11 +53,11 @@ namespace Sitecore.Pathfinder.Languages.Json
         }
 
         [NotNull]
-        public virtual JsonTextSnapshot With([NotNull] ISourceFile sourceFile, [NotNull] string contents, [NotNull] IDictionary<string, string> tokens)
+        public virtual JsonTextSnapshot With([NotNull] ISourceFile sourceFile, [NotNull] string contents, [NotNull] SnapshotParseContext parseContext)
         {
             base.With(sourceFile);
 
-            Tokens = tokens;
+            ParseContext = parseContext;
 
             try
             {
@@ -122,12 +118,7 @@ namespace Sitecore.Pathfinder.Languages.Json
         {
             var textNodes = (parent?.ChildNodes as ICollection<ITextNode>);
 
-            if (name == "Include")
-            {
-                return textNodes == null ? TextNode.Empty : ParseIncludeFile(jobject, textNodes);
-            }
-
-            var treeNode = new JsonTextNode(this, name, jobject, parent);
+            var treeNode = new JsonTextNode(this, name, jobject);
             textNodes?.Add(treeNode);
 
             var childNodes = (ICollection<ITextNode>)treeNode.ChildNodes;
@@ -143,18 +134,7 @@ namespace Sitecore.Pathfinder.Languages.Json
 
                     case JTokenType.Array:
                         var array = property.Value.Value<JArray>();
-
-                        if (property.Name == "Include")
-                        {
-                            foreach (var element in array.OfType<JObject>())
-                            {
-                                ParseIncludeFile(element, childNodes);
-                            }
-
-                            continue;
-                        }
-
-                        var arrayTreeNode = new JsonTextNode(this, property.Name, array, parent);
+                        var arrayTreeNode = new JsonTextNode(this, property.Name, array);
 
                         foreach (var element in array.OfType<JObject>())
                         {
@@ -169,33 +149,13 @@ namespace Sitecore.Pathfinder.Languages.Json
                     case JTokenType.Float:
                     case JTokenType.Integer:
                     case JTokenType.String:
-                        var propertyTreeNode = new JsonTextNode(this, property.Name, property, treeNode);
+                        var propertyTreeNode = new JsonTextNode(this, property.Name, property);
                         attributes.Add(propertyTreeNode);
                         break;
                 }
             }
 
             return treeNode;
-        }
-
-        [NotNull]
-        private ITextNode ParseIncludeFile([NotNull][ItemNotNull] JObject jobject, [NotNull] [ItemNotNull] ICollection<ITextNode> childNodes)
-        {
-            var fileName = jobject.Property("File")?.Value?.ToString() ?? string.Empty;
-            if (string.IsNullOrEmpty(fileName))
-            {
-                throw new InvalidOperationException("'File' attribute expected");
-            }
-
-            var tokens = new Dictionary<string, string>(Tokens).AddRange(jobject.Properties().ToDictionary(a => a.Name, a => a.Value.ToString()));
-
-            var textNode = SnapshotService.LoadIncludeFile(this, fileName, tokens);
-            if (textNode != TextNode.Empty)
-            {
-                childNodes.Add(textNode);
-            }
-
-            return textNode;
         }
     }
 }

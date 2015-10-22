@@ -12,6 +12,6 @@ namespace Sitecore.Pathfinder.Snapshots
         bool CanLoad([NotNull] ISourceFile sourceFile);
 
         [NotNull]
-        ISnapshot Load([NotNull] ISourceFile sourceFile, [NotNull] IDictionary<string, string> tokens);
+        ISnapshot Load([NotNull] ISourceFile sourceFile, [NotNull] SnapshotParseContext parseContext);
     }
 }

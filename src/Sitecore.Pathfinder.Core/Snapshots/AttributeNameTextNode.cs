@@ -23,8 +23,6 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public string Key => _key;
 
-        public ITextNode ParentNode => TextNode.ParentNode;
-
         public TextSpan TextSpan => TextNode.TextSpan;
 
         public ISnapshot Snapshot => TextNode.Snapshot;
@@ -49,7 +47,7 @@ namespace Sitecore.Pathfinder.Snapshots
             return null;
         }
 
-        public ITextNode GetLogicalChildNode(string name)
+        public ITextNode GetFormatSpecificChildNode(string name)
         {
             return null;
         }

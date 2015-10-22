@@ -16,17 +16,17 @@ namespace Sitecore.Pathfinder.Languages.Xml
         [NotNull]
         private XObject _node;
 
-        public XmlTextNode([NotNull] ITextSnapshot snapshot, [NotNull] XElement element, [CanBeNull] ITextNode parentNode = null) : base(snapshot, element.Name.LocalName, string.Empty, GetTextSpan(element, element.Name.LocalName.Length), parentNode)
+        public XmlTextNode([NotNull] ITextSnapshot snapshot, [NotNull] XElement element) : base(snapshot, element.Name.LocalName, string.Empty, GetTextSpan(element, element.Name.LocalName.Length))
         {
             _node = element;
         }
 
-        public XmlTextNode([NotNull] ITextSnapshot snapshot, [NotNull] XAttribute attribute, [CanBeNull] ITextNode parentNode) : base(snapshot, attribute.Name.LocalName, attribute.Value, GetTextSpan(attribute, attribute.Name.LocalName.Length), parentNode)
+        public XmlTextNode([NotNull] ITextSnapshot snapshot, [NotNull] XAttribute attribute) : base(snapshot, attribute.Name.LocalName, attribute.Value, GetTextSpan(attribute, attribute.Name.LocalName.Length))
         {
             _node = attribute;
         }
 
-        public XmlTextNode([NotNull] ITextSnapshot snapshot, [NotNull] XNode node, [NotNull] string key, [NotNull] string value, [CanBeNull] ITextNode parentNode = null) : base(snapshot, key, value, GetTextSpan(node, value.Length), parentNode)
+        public XmlTextNode([NotNull] ITextSnapshot snapshot, [NotNull] XNode node, [NotNull] string key, [NotNull] string value) : base(snapshot, key, value, GetTextSpan(node, value.Length))
         {
             _node = node;
         }

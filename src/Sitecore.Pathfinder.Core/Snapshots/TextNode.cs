@@ -13,13 +13,12 @@ namespace Sitecore.Pathfinder.Snapshots
         [NotNull]
         public static readonly ITextNode Empty = new SnapshotTextNode(Snapshots.Snapshot.Empty);
 
-        public TextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull] string value, TextSpan textSpan, [CanBeNull] ITextNode parentNode)
+        public TextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull] string value, TextSpan textSpan)
         {
             Snapshot = snapshot;
             Key = key;
             Value = value;
             TextSpan = textSpan;
-            ParentNode = parentNode;
         }
 
         public IEnumerable<ITextNode> Attributes { get; } = new List<ITextNode>();
@@ -27,8 +26,6 @@ namespace Sitecore.Pathfinder.Snapshots
         public IEnumerable<ITextNode> ChildNodes { get; } = new List<ITextNode>();
 
         public string Key { get; protected set; }
-
-        public ITextNode ParentNode { get; }
 
         public ISnapshot Snapshot { get; }
 
@@ -52,7 +49,7 @@ namespace Sitecore.Pathfinder.Snapshots
             return null;
         }
 
-        public virtual ITextNode GetLogicalChildNode(string name)
+        public virtual ITextNode GetFormatSpecificChildNode(string name)
         {
             // overwritten in JsonTextNode to find the appropriate text node
             return this;

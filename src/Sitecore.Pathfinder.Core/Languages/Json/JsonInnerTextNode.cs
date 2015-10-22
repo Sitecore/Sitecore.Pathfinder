@@ -52,7 +52,7 @@ namespace Sitecore.Pathfinder.Languages.Json
             return null;
         }
 
-        public ITextNode GetLogicalChildNode(string name)
+        public ITextNode GetFormatSpecificChildNode(string name)
         {
             return null;
         }

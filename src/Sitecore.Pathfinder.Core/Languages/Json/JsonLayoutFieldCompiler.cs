@@ -62,6 +62,7 @@ namespace Sitecore.Pathfinder.Languages.Json
             protected override string GetPlaceholders(LayoutCompileContext context, ITextNode renderingTextNode, IProjectItem projectItem)
             {
                 var childTextNode = renderingTextNode;
+                /*
                 if (childTextNode.ParentNode != null && childTextNode.ParentNode.Key == "Renderings")
                 {
                     childTextNode = childTextNode.ChildNodes.FirstOrDefault();
@@ -70,7 +71,7 @@ namespace Sitecore.Pathfinder.Languages.Json
                         return string.Empty;
                     }
                 }
-
+                */
                 return base.GetPlaceholders(context, childTextNode, projectItem);
             }
 

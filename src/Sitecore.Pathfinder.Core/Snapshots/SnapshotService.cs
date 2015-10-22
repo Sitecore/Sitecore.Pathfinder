@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Snapshots
         [ItemNotNull]
         protected IEnumerable<ISnapshotLoader> Loaders { get; private set; }
 
-        public virtual ITextNode LoadIncludeFile(ISnapshot snapshot, string includeFileName, IDictionary<string, string> tokens)
+        public virtual ITextNode LoadIncludeFile(ISnapshot snapshot, string includeFileName, SnapshotParseContext parseContext)
         {
             var extension = PathHelper.GetExtension(snapshot.SourceFile.AbsoluteFileName);
             var projectDirectory = snapshot.SourceFile.AbsoluteFileName.Left(snapshot.SourceFile.AbsoluteFileName.Length - snapshot.SourceFile.ProjectFileName.Length - extension.Length + 1);
@@ -60,18 +60,18 @@ namespace Sitecore.Pathfinder.Snapshots
             var projectFileName = "~/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(projectDirectory, PathHelper.GetDirectoryAndFileNameWithoutExtensions(sourceFileName))).TrimStart('/');
             var sourceFile = Factory.SourceFile(FileSystem, sourceFileName, projectFileName);
 
-            var includeSnapshot = LoadSnapshot(sourceFile, tokens) as TextSnapshot;
+            var includeSnapshot = LoadSnapshot(sourceFile, parseContext) as TextSnapshot;
 
             return includeSnapshot?.Root ?? TextNode.Empty;
         }
 
-        public ISnapshot LoadSnapshot(ISourceFile sourceFile, IDictionary<string, string> tokens)
+        public ISnapshot LoadSnapshot(ISourceFile sourceFile, SnapshotParseContext parseContext)
         {
             foreach (var loader in Loaders.OrderBy(l => l.Priority))
             {
                 if (loader.CanLoad(sourceFile))
                 {
-                    return loader.Load(sourceFile, tokens);
+                    return loader.Load(sourceFile, parseContext);
                 }
             }
 

@@ -160,6 +160,7 @@
     <Compile Include="Configuration\IFactoryService.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Snapshots\FileNameTextNode.cs" />
+    <Compile Include="Snapshots\SnapshotParseContext.cs" />
     <Compile Include="Snapshots\SnapshotLoaderBase.cs" />
     <Compile Include="Snapshots\SnapshotTextNode.cs" />
     <Compile Include="Extensibility\Pipelines\IPipeline.cs" />
