@@ -6,7 +6,7 @@ using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
-    public class AttributeNameTextNode : ITextNode
+    public class AttributeNameTextNode : ITextNode, IMutableTextNode
     {
         [NotNull]
         private string _key;
@@ -23,14 +23,18 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public string Key => _key;
 
-        public TextSpan TextSpan => TextNode.TextSpan;
-
         public ISnapshot Snapshot => TextNode.Snapshot;
+
+        public TextSpan TextSpan => TextNode.TextSpan;
 
         public string Value => _key;
 
         [NotNull]
         protected ITextNode TextNode { get; }
+
+        IList<ITextNode> IMutableTextNode.AttributeList => (IList<ITextNode>)TextNode.Attributes;
+
+        IList<ITextNode> IMutableTextNode.ChildNodeCollection => (IList<ITextNode>)TextNode.ChildNodes;
 
         public ITextNode GetAttribute(string attributeName)
         {
@@ -42,26 +46,26 @@ namespace Sitecore.Pathfinder.Snapshots
             return TextNode.GetAttributeValue(attributeName, defaultValue);
         }
 
+        public ITextNode GetSnapshotFormatSpecificChildNode(string name)
+        {
+            return null;
+        }
+
         public ITextNode GetInnerTextNode()
         {
             return null;
         }
 
-        public ITextNode GetFormatSpecificChildNode(string name)
-        {
-            return null;
-        }
-
-        public bool SetKey(string newKey)
+        bool IMutableTextNode.SetKey(string newKey)
         {
             _key = newKey.UnescapeXmlElementName();
-            return TextNode.SetKey(newKey);
+            return ((IMutableTextNode)TextNode).SetKey(newKey);
         }
 
-        public bool SetValue(string newValue)
+        bool IMutableTextNode.SetValue(string newValue)
         {
             _key = newValue.UnescapeXmlElementName();
-            return TextNode.SetKey(newValue);
+            return ((IMutableTextNode)TextNode).SetKey(newValue);
         }
     }
 }

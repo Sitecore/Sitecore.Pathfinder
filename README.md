@@ -288,9 +288,10 @@ To infer and create the template add the "Template.CreateFromFields='true'" attr
 ```
 The example above creates the template "InferredTemplate" with a single template field "Text". The type of the field is "Rich Text".
 
-### Advanced 
+### Directives 
+Item files (Json, Xml and Yaml) may contain directives that affect the way the file is parsed. 
 
-#### Include files
+#### File.Include
 Item files can include other files. This allows parts of items files to be shared among multiple items. 
 
 Below is how to include other files in an item file.
@@ -301,7 +302,7 @@ Json:
     "Item": {
         "Template": "/sitecore/templates/Sample/JsonItem",
         "Fields": {
-            "Include": [
+            "File.Include": [
                 {
                     "File": "~/includes/Field.include.item.json" 
                 },
@@ -320,8 +321,8 @@ Xml:
 ```xml
 <Item xmlns="http://www.sitecore.net/pathfinder/item">
     <Fields>
-        <Include File="~/includes/Field.include.item.xml" />
-        <Include File="~/includes/ParameterizedField.include.item.xml" Name="ParameterizedField" Value="Parameterized Value"/>
+        <File.Include File="~/includes/Field.include.item.xml" />
+        <File.Include File="~/includes/ParameterizedField.include.item.xml" Name="ParameterizedField" Value="Parameterized Value"/>
     </Fields>
 </Item>
 ```
@@ -330,9 +331,9 @@ Yaml:
 ```yaml
 Item :
     - Fields :
-        - Include : ~/includes/Field.include.item.yaml
+        - File.Include : ~/includes/Field.include.item.yaml
         
-        - Include : ~/includes/ParameterizedField.include.item.yaml
+        - File.Include : ~/includes/ParameterizedField.include.item.yaml
           Name  : ParameterizedField
           Value : Parameterized Value
 
@@ -348,7 +349,7 @@ The first included file looks like this:
 }
 ```
 
-Include files are not simple text subsitutions, but are resolved at the lexing level of the compiler (before parsing). The Include tag 
+Include files are not simple text subsitutions, but are resolved at the lexing level of the compiler (before parsing). The File.Include tag 
 is also part of the item schemas, which means that include files cannot be included at arbitrary positions. This is to ensure 
 Syntax Highlighting, Validation and IntelliSense still work.
 

@@ -27,11 +27,11 @@ namespace Sitecore.Pathfinder.Languages.Yaml
             return string.Equals(Path.GetExtension(sourceFile.AbsoluteFileName), ".yaml", StringComparison.OrdinalIgnoreCase);
         }
 
-        public override ISnapshot Load(ISourceFile sourceFile, SnapshotParseContext parseContext)
+        public override ISnapshot Load(SnapshotParseContext snapshotParseContext, ISourceFile sourceFile)
         {
-            var contents = sourceFile.ReadAsText(parseContext.Tokens);
+            var contents = sourceFile.ReadAsText(snapshotParseContext.Tokens);
 
-            var yamlTextSnapshot = CompositionService.Resolve<YamlTextSnapshot>().With(sourceFile, contents, parseContext);
+            var yamlTextSnapshot = CompositionService.Resolve<YamlTextSnapshot>().With(snapshotParseContext, sourceFile, contents);
 
             return yamlTextSnapshot;
         }

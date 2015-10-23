@@ -159,6 +159,22 @@ namespace Sitecore.Pathfinder.Projects
         }
 
         [Test]
+        public void XmlIncludePlaceholderTest()
+        {
+            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/XmlItem/PlaceholderItem");
+            Assert.IsNotNull(projectItem);
+            Assert.AreEqual("PlaceholderItem", projectItem.ShortName);
+            Assert.AreEqual("/sitecore/content/Home/XmlItem/PlaceholderItem", projectItem.QualifiedName);
+
+            var item = projectItem as Item;
+            Assert.IsNotNull(item);
+
+            var field = item.Fields.FirstOrDefault(f => f.FieldName == "PlaceholderText");
+            Assert.IsNotNull(field);
+            Assert.AreEqual("Placeholder text.", field.Value);
+        }
+
+        [Test]
         public void XmlLayoutTest()
         {
             var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/XmlLayout");

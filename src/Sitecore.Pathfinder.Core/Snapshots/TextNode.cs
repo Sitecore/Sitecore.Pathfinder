@@ -44,25 +44,15 @@ namespace Sitecore.Pathfinder.Snapshots
             return !string.IsNullOrEmpty(value) ? value : defaultValue;
         }
 
-        public virtual ITextNode GetInnerTextNode()
-        {
-            return null;
-        }
-
-        public virtual ITextNode GetFormatSpecificChildNode(string name)
+        public virtual ITextNode GetSnapshotFormatSpecificChildNode(string name)
         {
             // overwritten in JsonTextNode to find the appropriate text node
             return this;
         }
 
-        public virtual bool SetKey(string newKey)
+        public virtual ITextNode GetInnerTextNode()
         {
-            return false;
-        }
-
-        public virtual bool SetValue(string newValue)
-        {
-            return false;
+            return null;
         }
     }
 }

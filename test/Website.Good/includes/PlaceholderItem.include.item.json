@@ -1,0 +1,15 @@
+﻿{
+    "$schema": "../../../../sitecore.pathfinder.console/files/project/sitecore.project/schemas/item.schema.json#",
+    "Item": {
+        "Name": "$ItemName",
+        "Template": "/sitecore/templates/Sample/JsonPlaceholderItem",
+        "Template.CreateFromFields": true,
+        "Template.ShortHelp": "Short help.",
+        "Template.LongHelp": "Long help.",
+        "Template.Icon": "Application/16x16/About.png",
+
+        "Fields": {
+            "File.Placeholder": { }
+        }
+    }
+}

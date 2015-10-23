@@ -33,11 +33,11 @@ namespace Sitecore.Pathfinder.Languages.Xml
             return string.Equals(Path.GetExtension(sourceFile.AbsoluteFileName), ".xml", StringComparison.OrdinalIgnoreCase);
         }
 
-        public override ISnapshot Load(ISourceFile sourceFile, SnapshotParseContext parseContext)
+        public override ISnapshot Load(SnapshotParseContext snapshotParseContext, ISourceFile sourceFile)
         {
-            var text = sourceFile.ReadAsText(parseContext.Tokens);
+            var text = sourceFile.ReadAsText(snapshotParseContext.Tokens);
 
-            var xmlTextSnapshot = CompositionService.Resolve<XmlTextSnapshot>().With(sourceFile, text, parseContext, SchemaNamespace, SchemaFileName);
+            var xmlTextSnapshot = CompositionService.Resolve<XmlTextSnapshot>().With(snapshotParseContext, sourceFile, text, SchemaNamespace, SchemaFileName);
 
             return xmlTextSnapshot;
         }

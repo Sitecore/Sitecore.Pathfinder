@@ -19,11 +19,9 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public string Key { get; } = string.Empty;
 
-        public ITextNode ParentNode { get; } = null;
+        public ISnapshot Snapshot { get; }
 
         public TextSpan TextSpan { get; } = TextSpan.Empty;
-
-        public ISnapshot Snapshot { get; }
 
         public string Value => Snapshot.SourceFile.ProjectFileName;
 
@@ -37,24 +35,14 @@ namespace Sitecore.Pathfinder.Snapshots
             return string.Empty;
         }
 
+        public ITextNode GetSnapshotFormatSpecificChildNode(string name)
+        {
+            return null;
+        }
+
         public ITextNode GetInnerTextNode()
         {
             return null;
-        }
-
-        public ITextNode GetFormatSpecificChildNode(string name)
-        {
-            return null;
-        }
-
-        public bool SetKey(string newKey)
-        {
-            return false;
-        }
-
-        public bool SetValue(string newValue)
-        {
-            return false;
         }
     }
 }

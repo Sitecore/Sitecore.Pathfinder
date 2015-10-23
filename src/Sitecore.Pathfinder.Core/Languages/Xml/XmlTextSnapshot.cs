@@ -115,7 +115,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
         }
 
         [NotNull]
-        public virtual XmlTextSnapshot With([NotNull] ISourceFile sourceFile, [NotNull] string contents, [NotNull] SnapshotParseContext parseContext, [NotNull] string schemaNamespace, [NotNull] string schemaFileName)
+        public virtual XmlTextSnapshot With([NotNull] SnapshotParseContext parseContext, [NotNull] ISourceFile sourceFile, [NotNull] string contents, [NotNull] string schemaNamespace, [NotNull] string schemaFileName)
         {
             base.With(sourceFile);
 

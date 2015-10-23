@@ -9,7 +9,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Xml
 {
-    public class XmlInnerTextNode : ITextNode
+    public class XmlInnerTextNode : ITextNode, IMutableTextNode
     {
         [NotNull]
         private static readonly Regex RemoveNamespaces = new Regex("\\sxmlns[^\"]+\"[^\"]+\"", RegexOptions.Compiled);
@@ -22,7 +22,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
 
         public XmlInnerTextNode([NotNull] XmlTextNode textNode, [NotNull] XElement element)
         {
-            ParentNode = textNode;
+            TextNode = textNode;
             _element = element;
         }
 
@@ -32,13 +32,18 @@ namespace Sitecore.Pathfinder.Languages.Xml
 
         public string Key { get; } = string.Empty;
 
-        public ITextNode ParentNode { get; }
+        public ISnapshot Snapshot => TextNode.Snapshot;
 
-        public TextSpan TextSpan => ParentNode?.TextSpan ?? TextSpan.Empty;
+        [NotNull]
+        public ITextNode TextNode { get; }
 
-        public ISnapshot Snapshot => ParentNode?.Snapshot ?? Snapshots.Snapshot.Empty;
+        public TextSpan TextSpan => TextNode.TextSpan;
 
         public string Value => _value ?? (_value = RemoveNamespaces.Replace(string.Join(string.Empty, _element.Nodes().Select(n => n.ToString(SaveOptions.OmitDuplicateNamespaces)).ToArray()).Trim(), string.Empty));
+
+        IList<ITextNode> IMutableTextNode.AttributeList { get; } = Constants.EmptyReadOnlyTextNodeCollection;
+
+        IList<ITextNode> IMutableTextNode.ChildNodeCollection { get; } = Constants.EmptyReadOnlyTextNodeCollection;
 
         public ITextNode GetAttribute(string attributeName)
         {
@@ -50,22 +55,22 @@ namespace Sitecore.Pathfinder.Languages.Xml
             return string.Empty;
         }
 
+        public ITextNode GetSnapshotFormatSpecificChildNode(string name)
+        {
+            return null;
+        }
+
         public ITextNode GetInnerTextNode()
         {
             return null;
         }
 
-        public ITextNode GetFormatSpecificChildNode(string name)
-        {
-            return null;
-        }
-
-        public bool SetKey(string newKey)
+        bool IMutableTextNode.SetKey(string newKey)
         {
             return false;
         }
 
-        public bool SetValue(string newValue)
+        bool IMutableTextNode.SetValue(string newValue)
         {
             _value = newValue;
             _element.Value = newValue;

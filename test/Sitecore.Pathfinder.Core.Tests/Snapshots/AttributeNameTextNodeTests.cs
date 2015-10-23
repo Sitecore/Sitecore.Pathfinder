@@ -22,7 +22,7 @@ namespace Sitecore.Pathfinder.Snapshots
 
             var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt");
 
-            var doc = Services.CompositionService.Resolve<XmlTextSnapshot>().With(sourceFile, "<Item><Field Name=\"Text\" Value=\"123\" /></Item>", SnapshotParseContext.Empty, string.Empty, string.Empty);
+            var doc = Services.CompositionService.Resolve<XmlTextSnapshot>().With(SnapshotParseContext.Empty, sourceFile, "<Item><Field Name=\"Text\" Value=\"123\" /></Item>", string.Empty, string.Empty);
             Assert.AreEqual("Item", doc.Root.Key);
 
             var field = doc.Root.ChildNodes.First();
@@ -39,11 +39,13 @@ namespace Sitecore.Pathfinder.Snapshots
             Assert.AreEqual(string.Empty, attributeNameTextNode.GetAttributeValue("None"));
             Assert.AreEqual(null, attributeNameTextNode.GetInnerTextNode());
 
-            attributeNameTextNode.SetKey("NewName");            
+            var mutableTextNode = (IMutableTextNode)attributeNameTextNode;
+
+            mutableTextNode.SetKey("NewName");            
             Assert.AreEqual("NewName", attributeNameTextNode.Key);
             Assert.AreEqual("NewName", attributeNameTextNode.Value);
 
-            attributeNameTextNode.SetValue("NewNameValue");
+            mutableTextNode.SetValue("NewNameValue");
             Assert.AreEqual("NewNameValue", attributeNameTextNode.Key);
             Assert.AreEqual("NewNameValue", attributeNameTextNode.Value);
         }

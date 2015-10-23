@@ -47,9 +47,9 @@
           Field.Type      : Checkbox
           Value           : False
 
-        - Include : ~/includes/Field.include.item.json
+        - File.Include : ~/includes/Field.include.item.json
         
-        - Include : ~/includes/ParameterizedField.include.item.xml
+        - File.Include : ~/includes/ParameterizedField.include.item.xml
           Name  : ParameterizedField
           Value : Parameterized Value
 

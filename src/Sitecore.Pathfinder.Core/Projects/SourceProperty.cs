@@ -166,7 +166,7 @@ namespace Sitecore.Pathfinder.Projects
 
             if (options == SetValueOptions.EnableUpdates)
             {
-                foreach (var sourceTextNode in SourceTextNodes)
+                foreach (var sourceTextNode in SourceTextNodes.OfType<IMutableTextNode>())
                 {
                     sourceTextNode.SetValue(ToSourceValue(_value.ToString()));
                 }

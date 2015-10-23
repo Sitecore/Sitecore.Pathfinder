@@ -119,6 +119,7 @@
     <Compile Include="Compiling\Builders\FieldBuilder.cs" />
     <Compile Include="Compiling\Builders\ItemBuilder.cs" />
     <Compile Include="Compiling\Builders\LanguageVersionBuilder.cs" />
+    <Compile Include="Snapshots\IMutableTextNode.cs" />
     <Compile Include="Languages\Yaml\YamlContentTextNodeParser.cs" />
     <Compile Include="Languages\Yaml\YamlLayoutTextNodeParser.cs" />
     <Compile Include="Languages\Yaml\YamlItemTextNodeParser.cs" />
@@ -150,6 +151,10 @@
     <Compile Include="Parsing\References\ReferenceParserService.cs" />
     <Compile Include="Projects\ProjectItemUri.cs" />
     <Compile Include="Snapshots\AttributeNameTextNode.cs" />
+    <Compile Include="Snapshots\Directives\IncludeDirective.cs" />
+    <Compile Include="Snapshots\Directives\ISnapshotDirective.cs" />
+    <Compile Include="Snapshots\Directives\PlaceholderDirective.cs" />
+    <Compile Include="Snapshots\Directives\SnapshotDirectiveBase.cs" />
     <Compile Include="Snapshots\IHasSourceTextNodes.cs" />
     <Compile Include="Languages\Json\JsonInnerTextNode.cs" />
     <Compile Include="Languages\Xml\XmlInnerTextNode.cs" />

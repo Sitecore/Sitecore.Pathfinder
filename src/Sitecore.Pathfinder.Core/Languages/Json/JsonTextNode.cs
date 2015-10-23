@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -8,7 +9,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Json
 {
-    public class JsonTextNode : TextNode
+    public class JsonTextNode : TextNode, IMutableTextNode
     {
         [NotNull]
         [ItemCanBeNull]
@@ -29,17 +30,37 @@ namespace Sitecore.Pathfinder.Languages.Json
             _jtoken = jproperty;
         }
 
+        IList<ITextNode> IMutableTextNode.AttributeList => (IList<ITextNode>)Attributes;
+
+        IList<ITextNode> IMutableTextNode.ChildNodeCollection => (IList<ITextNode>)ChildNodes;
+        
+        public override ITextNode GetSnapshotFormatSpecificChildNode(string name)
+        {
+            return ChildNodes.FirstOrDefault(n => n.Key == name);
+        }
+
         public override ITextNode GetInnerTextNode()
         {
             return new JsonInnerTextNode(this, _jtoken);
         }
 
-        public override ITextNode GetFormatSpecificChildNode(string name)
+        private static TextSpan GetTextSpan([NotNull] IJsonLineInfo lineInfo)
         {
-            return ChildNodes.FirstOrDefault(n => n.Key == name);
+            var lineLength = 0;
+
+            var jproperty = lineInfo as JProperty;
+            if (jproperty != null)
+            {
+                var value = jproperty.Value?.ToString() ?? string.Empty;
+
+                // include quotes
+                lineLength = string.IsNullOrEmpty(value) ? 0 : value.Length + 2;
+            }
+
+            return new TextSpan(lineInfo.LineNumber, lineInfo.LinePosition + 1, lineLength);
         }
 
-        public override bool SetKey(string newKey)
+        bool IMutableTextNode.SetKey(string newKey)
         {
             var property = _jtoken as JProperty;
             if (property != null)
@@ -70,7 +91,7 @@ namespace Sitecore.Pathfinder.Languages.Json
             return false;
         }
 
-        public override bool SetValue(string newValue)
+        bool IMutableTextNode.SetValue(string newValue)
         {
             var property = _jtoken as JProperty;
             if (property != null)
@@ -81,22 +102,6 @@ namespace Sitecore.Pathfinder.Languages.Json
             }
 
             return false;
-        }
-
-        private static TextSpan GetTextSpan([NotNull] IJsonLineInfo lineInfo)
-        {
-            var lineLength = 0;
-
-            var jproperty = lineInfo as JProperty;
-            if (jproperty != null)
-            {
-                var value = jproperty.Value?.ToString() ?? string.Empty;
-
-                // include quotes
-                lineLength = string.IsNullOrEmpty(value) ? 0 : value.Length + 2;
-            }
-
-            return new TextSpan(lineInfo.LineNumber, lineInfo.LinePosition + 1, lineLength);
         }
     }
 }

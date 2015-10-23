@@ -11,9 +11,9 @@
         <Field Name="TrueCheckbox" Field.Type="Checkbox" Field.ShortHelp="Checkbox field." Field.LongHelp="Checkbox field.">True</Field>
         <Field Name="FalseCheckbox" Field.Type="Checkbox" Field.ShortHelp="Checkbox field." Field.LongHelp="Checkbox field.">False</Field>
         
-        <Include File="~/includes/Field.include.item.json" />
-        <Include File="~/includes/ParameterizedField.include.item.xml" Name="ParameterizedField" Value="Parameterized Value"/>
-                                                                   
+        <File.Include File="~/includes/Field.include.item.json" />
+        <File.Include File="~/includes/ParameterizedField.include.item.xml" Name="ParameterizedField" Value="Parameterized Value"/>
+
         <Unversioned Language="da-DK">                     
             <Field Name="UnversionedField" Field.ShortHelp="Title field." Field.LongHelp="Title field.">Hello</Field>
         </Unversioned>
@@ -33,7 +33,13 @@
             </Device>
         </Layout>
     </Fields>
-    
+
+    <File.Include File="~/includes/PlaceholderItem.include.item.xml" ItemName="PlaceholderItem">
+        <Placeholder>
+            <Field Name="PlaceholderText" Field.ShortHelp="Placeholder Text." Field.LongHelp="Placeholder Text.">Placeholder text.</Field>
+        </Placeholder>
+    </File.Include>
+
     <Item Name="XmlSubitem" Template="/sitecore/templates/Sample/XmlItemTemplate">
         <Fields>
             <Field Name="Title">Hello</Field>

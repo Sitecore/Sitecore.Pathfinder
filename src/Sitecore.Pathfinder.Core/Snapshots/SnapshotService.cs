@@ -9,6 +9,7 @@ using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Snapshots.Directives;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
@@ -22,6 +23,9 @@ namespace Sitecore.Pathfinder.Snapshots
             Factory = factory;
             FileSystem = fileSystem;
         }
+
+        [ImportMany]
+        public IEnumerable<ISnapshotDirective> Directives { get; protected set; }
 
         [NotNull]
         public IFileSystemService FileSystem { get; }
@@ -37,14 +41,14 @@ namespace Sitecore.Pathfinder.Snapshots
         [ItemNotNull]
         protected IEnumerable<ISnapshotLoader> Loaders { get; private set; }
 
-        public virtual ITextNode LoadIncludeFile(ISnapshot snapshot, string includeFileName, SnapshotParseContext parseContext)
+        public virtual ITextNode LoadIncludeFile(SnapshotParseContext snapshotParseContext, ISnapshot snapshot, string includeFileName)
         {
             var extension = PathHelper.GetExtension(snapshot.SourceFile.AbsoluteFileName);
             var projectDirectory = snapshot.SourceFile.AbsoluteFileName.Left(snapshot.SourceFile.AbsoluteFileName.Length - snapshot.SourceFile.ProjectFileName.Length - extension.Length + 1);
 
             string sourceFileName;
             if (includeFileName.StartsWith("~/"))
-            {                                                    
+            {
                 sourceFileName = PathHelper.Combine(projectDirectory, includeFileName.Mid(2));
             }
             else
@@ -60,18 +64,18 @@ namespace Sitecore.Pathfinder.Snapshots
             var projectFileName = "~/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(projectDirectory, PathHelper.GetDirectoryAndFileNameWithoutExtensions(sourceFileName))).TrimStart('/');
             var sourceFile = Factory.SourceFile(FileSystem, sourceFileName, projectFileName);
 
-            var includeSnapshot = LoadSnapshot(sourceFile, parseContext) as TextSnapshot;
+            var includeSnapshot = LoadSnapshot(snapshotParseContext, sourceFile) as TextSnapshot;
 
             return includeSnapshot?.Root ?? TextNode.Empty;
         }
 
-        public ISnapshot LoadSnapshot(ISourceFile sourceFile, SnapshotParseContext parseContext)
+        public ISnapshot LoadSnapshot(SnapshotParseContext snapshotParseContext, ISourceFile sourceFile)
         {
             foreach (var loader in Loaders.OrderBy(l => l.Priority))
             {
                 if (loader.CanLoad(sourceFile))
                 {
-                    return loader.Load(sourceFile, parseContext);
+                    return loader.Load(snapshotParseContext, sourceFile);
                 }
             }
 

@@ -8,7 +8,7 @@ using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
-    public class FileNameTextNode : ITextNode
+    public class FileNameTextNode : ITextNode, IMutableTextNode
     {
         public FileNameTextNode([NotNull] string itemName, [NotNull] ISnapshot snapshot)
         {
@@ -22,13 +22,15 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public string Key => Value;
 
-        public ITextNode ParentNode { get; } = null;
+        public ISnapshot Snapshot { get; }
 
         public TextSpan TextSpan { get; } = TextSpan.Empty;
 
-        public ISnapshot Snapshot { get; }
-
         public string Value { get; }
+
+        IList<ITextNode> IMutableTextNode.AttributeList { get; } = Constants.EmptyReadOnlyTextNodeCollection;
+
+        IList<ITextNode> IMutableTextNode.ChildNodeCollection { get; } = Constants.EmptyReadOnlyTextNodeCollection;
 
         public ITextNode GetAttribute(string attributeName)
         {
@@ -40,22 +42,22 @@ namespace Sitecore.Pathfinder.Snapshots
             return string.Empty;
         }
 
+        public ITextNode GetSnapshotFormatSpecificChildNode(string name)
+        {
+            return null;
+        }
+
         public ITextNode GetInnerTextNode()
         {
             return null;
         }
 
-        public ITextNode GetFormatSpecificChildNode(string name)
+        bool IMutableTextNode.SetKey(string newKey)
         {
-            return null;
+            return ((IMutableTextNode)this).SetValue(newKey);
         }
 
-        public bool SetKey(string newKey)
-        {
-            return SetValue(newKey);
-        }
-
-        public bool SetValue(string newValue)
+        bool IMutableTextNode.SetValue(string newValue)
         {
             var fileName = Snapshot.SourceFile.AbsoluteFileName;
             var extension = PathHelper.GetExtension(Snapshot.SourceFile.AbsoluteFileName);

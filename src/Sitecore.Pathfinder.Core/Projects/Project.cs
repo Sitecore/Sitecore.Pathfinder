@@ -105,7 +105,14 @@ namespace Sitecore.Pathfinder.Projects
             var sourceFile = Factory.SourceFile(FileSystem, sourceFileName, projectFileName);
             SourceFiles.Add(sourceFile);
 
-            ParseService.Parse(this, sourceFile);
+            try
+            {
+                ParseService.Parse(this, sourceFile);
+            }
+            catch (Exception ex)
+            {
+                Diagnostics.Add(new Diagnostic(sourceFileName, TextSpan.Empty, Severity.Error, ex.Message));
+            }
 
             return this;
         }

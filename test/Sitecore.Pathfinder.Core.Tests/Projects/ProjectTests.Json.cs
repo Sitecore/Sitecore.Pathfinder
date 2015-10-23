@@ -143,6 +143,22 @@ namespace Sitecore.Pathfinder.Projects
         }
 
         [Test]
+        public void JsonIncludePlaceholderTest()
+        {
+            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/JsonItem/PlaceholderItem");
+            Assert.IsNotNull(projectItem);
+            Assert.AreEqual("PlaceholderItem", projectItem.ShortName);
+            Assert.AreEqual("/sitecore/content/Home/JsonItem/PlaceholderItem", projectItem.QualifiedName);
+
+            var item = projectItem as Item;
+            Assert.IsNotNull(item);
+
+            var field = item.Fields.FirstOrDefault(f => f.FieldName == "PlaceholderText");
+            Assert.IsNotNull(field);
+            Assert.AreEqual("Placeholder text.", field.Value);
+        }
+
+        [Test]
         public void JsonLayoutTest()
         {
             var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/JsonLayout");

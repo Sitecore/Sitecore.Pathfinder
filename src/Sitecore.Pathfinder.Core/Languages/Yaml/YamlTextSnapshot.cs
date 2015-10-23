@@ -24,7 +24,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
         }
 
         [NotNull]
-        public virtual YamlTextSnapshot With([NotNull] ISourceFile sourceFile, [NotNull] string contents, [NotNull] SnapshotParseContext parseContext)
+        public virtual YamlTextSnapshot With([NotNull] SnapshotParseContext parseContext, [NotNull] ISourceFile sourceFile, [NotNull] string contents)
         {
             base.With(sourceFile);
 

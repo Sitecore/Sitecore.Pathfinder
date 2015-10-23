@@ -1,6 +1,5 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using Sitecore.Pathfinder.Extensions;
@@ -22,10 +21,10 @@ namespace Sitecore.Pathfinder.Snapshots.Xml
         {
             var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt");
 
-            var doc = Services.CompositionService.Resolve<XmlTextSnapshot>().With(sourceFile, "<Item><Field Name=\"Text\">123</Field></Item>", SnapshotParseContext.Empty, string.Empty, string.Empty);
+            var doc = Services.CompositionService.Resolve<XmlTextSnapshot>().With(SnapshotParseContext.Empty, sourceFile, "<Item><Field Name=\"Text\">123</Field></Item>", string.Empty, string.Empty);
             var root = doc.Root;
 
-            var fields = root.GetFormatSpecificChildNode("Fields");
+            var fields = root.GetSnapshotFormatSpecificChildNode("Fields");
             Assert.IsNotNull(fields);
 
             var field = fields.ChildNodes.First();
@@ -38,10 +37,10 @@ namespace Sitecore.Pathfinder.Snapshots.Xml
         {
             var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt");
 
-            var doc = Services.CompositionService.Resolve<XmlTextSnapshot>().With(sourceFile, "<Item>", SnapshotParseContext.Empty, string.Empty, string.Empty);
+            var doc = Services.CompositionService.Resolve<XmlTextSnapshot>().With(SnapshotParseContext.Empty, sourceFile, "<Item>", string.Empty, string.Empty);
             Assert.AreEqual(TextNode.Empty, doc.Root);
 
-            doc = Services.CompositionService.Resolve<XmlTextSnapshot>().With(sourceFile, string.Empty, SnapshotParseContext.Empty, string.Empty, string.Empty);
+            doc = Services.CompositionService.Resolve<XmlTextSnapshot>().With(SnapshotParseContext.Empty, sourceFile, string.Empty, string.Empty, string.Empty);
             Assert.AreEqual(TextNode.Empty, doc.Root);
         }
 
@@ -50,7 +49,7 @@ namespace Sitecore.Pathfinder.Snapshots.Xml
         {
             var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt");
 
-            var doc = Services.CompositionService.Resolve<XmlTextSnapshot>().With(sourceFile, "<Item><Field Name=\"Text\" Value=\"123\" /></Item>", SnapshotParseContext.Empty, string.Empty, string.Empty);
+            var doc = Services.CompositionService.Resolve<XmlTextSnapshot>().With(SnapshotParseContext.Empty, sourceFile, "<Item><Field Name=\"Text\" Value=\"123\" /></Item>", string.Empty, string.Empty);
             var root = doc.Root;
             Assert.IsNotNull(root);
             Assert.AreEqual("Item", root.Key);
@@ -76,7 +75,7 @@ namespace Sitecore.Pathfinder.Snapshots.Xml
         {
             var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt");
 
-            var doc = Services.CompositionService.Resolve<XmlTextSnapshot>().With(sourceFile, "<Item><Field Name=\"Text\">123</Field></Item>", SnapshotParseContext.Empty, string.Empty, string.Empty);
+            var doc = Services.CompositionService.Resolve<XmlTextSnapshot>().With(SnapshotParseContext.Empty, sourceFile, "<Item><Field Name=\"Text\">123</Field></Item>", string.Empty, string.Empty);
             var root = doc.Root;
             var field = root.ChildNodes.First();
             Assert.AreEqual("Field", field.Key);

@@ -27,11 +27,11 @@ namespace Sitecore.Pathfinder.Languages.Json
             return string.Equals(Path.GetExtension(sourceFile.AbsoluteFileName), ".json", StringComparison.OrdinalIgnoreCase);
         }
 
-        public override ISnapshot Load(ISourceFile sourceFile, SnapshotParseContext parseContext)
+        public override ISnapshot Load(SnapshotParseContext snapshotParseContext, ISourceFile sourceFile)
         {
-            var contents = sourceFile.ReadAsText(parseContext.Tokens);
+            var contents = sourceFile.ReadAsText(snapshotParseContext.Tokens);
 
-            var jsonTextSnapshot = CompositionService.Resolve<JsonTextSnapshot>().With(sourceFile, contents, parseContext);
+            var jsonTextSnapshot = CompositionService.Resolve<JsonTextSnapshot>().With(snapshotParseContext, sourceFile, contents);
 
             return jsonTextSnapshot;
         }

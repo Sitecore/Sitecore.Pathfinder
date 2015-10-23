@@ -63,9 +63,9 @@ namespace Sitecore.Pathfinder.Parsing
                 ["DirectoryName"] = directoryName
             };
 
-            var loadContext = new SnapshotParseContext(tokens, new Dictionary<string, ITextNode>());
+            var snapshotParseContext = new SnapshotParseContext(SnapshotService, tokens, new Dictionary<string, List<ITextNode>>());
 
-            var snapshot = SnapshotService.LoadSnapshot(sourceFile, loadContext);
+            var snapshot = SnapshotService.LoadSnapshot(snapshotParseContext, sourceFile);
 
             var parseContext = CompositionService.Resolve<IParseContext>().With(project, snapshot);
 

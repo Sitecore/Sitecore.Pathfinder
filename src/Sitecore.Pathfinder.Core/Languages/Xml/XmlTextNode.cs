@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
@@ -8,7 +9,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Xml
 {
-    public class XmlTextNode : TextNode
+    public class XmlTextNode : TextNode, IMutableTextNode
     {
         [CanBeNull]
         private ITextNode _innerText;
@@ -31,6 +32,10 @@ namespace Sitecore.Pathfinder.Languages.Xml
             _node = node;
         }
 
+        IList<ITextNode> IMutableTextNode.AttributeList => (IList<ITextNode>)Attributes;
+
+        IList<ITextNode> IMutableTextNode.ChildNodeCollection => (IList<ITextNode>)ChildNodes;
+
         public override ITextNode GetInnerTextNode()
         {
             var element = _node as XElement;
@@ -42,7 +47,12 @@ namespace Sitecore.Pathfinder.Languages.Xml
             return null;
         }
 
-        public override bool SetKey(string newKey)
+        private static TextSpan GetTextSpan([NotNull] IXmlLineInfo lineInfo, int lineLength)
+        {
+            return new TextSpan(lineInfo.LineNumber, lineInfo.LinePosition, lineLength);
+        }
+
+        bool IMutableTextNode.SetKey(string newKey)
         {
             var element = _node as XElement;
             if (element != null)
@@ -81,7 +91,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
             return false;
         }
 
-        public override bool SetValue(string newValue)
+        bool IMutableTextNode.SetValue(string newValue)
         {
             var element = _node as XElement;
             if (element != null)
@@ -108,11 +118,6 @@ namespace Sitecore.Pathfinder.Languages.Xml
             }
 
             return false;
-        }
-
-        private static TextSpan GetTextSpan([NotNull] IXmlLineInfo lineInfo, int lineLength)
-        {
-            return new TextSpan(lineInfo.LineNumber, lineInfo.LinePosition, lineLength);
         }
     }
 }

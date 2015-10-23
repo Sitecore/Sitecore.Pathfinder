@@ -27,7 +27,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
             return string.Equals(Path.GetExtension(sourceFile.AbsoluteFileName), ".item", StringComparison.OrdinalIgnoreCase);
         }
 
-        public override ISnapshot Load(ISourceFile sourceFile, SnapshotParseContext parseContext)
+        public override ISnapshot Load(SnapshotParseContext snapshotParseContext, ISourceFile sourceFile)
         {
             var textSnapshot = CompositionService.Resolve<TextSnapshot>().With(sourceFile);
 

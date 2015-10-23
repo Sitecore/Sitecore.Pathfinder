@@ -48,9 +48,9 @@
                 "Field.LongHelp": "Long help."
             },
 
-            "Include": [
+            "File.Include": [
                 {
-                    "File": "~/includes/Field.include.item.json" 
+                    "File": "~/includes/Field.include.item.json"
                 },
                 {
                     "File": "~/includes/ParameterizedField.include.item.xml",
@@ -58,46 +58,77 @@
                     "Value": "Parameterized Value"
                 }
             ],
-            
-        "Unversioned": {
-            "da-DK": {
-                "UnversionedField": {
-                    "Value": "Hello",
-                    "Field.ShortHelp": "Short help.",
-                    "Field.LongHelp": "Long help."
-                }
-            }
-        },
 
-        "Versioned": {
-            "da-DK": {
-                "1": {
-                    "VersionedField": {
-                        "Value": "Version 1",
+            "Unversioned": {
+                "da-DK": {
+                    "UnversionedField": {
+                        "Value": "Hello",
                         "Field.ShortHelp": "Short help.",
                         "Field.LongHelp": "Long help."
                     }
-                },
-                "2": {
-                    "VersionedField": "Version 2"
                 }
+            },
+
+            "Versioned": {
+                "da-DK": {
+                    "1": {
+                        "VersionedField": {
+                            "Value": "Version 1",
+                            "Field.ShortHelp": "Short help.",
+                            "Field.LongHelp": "Long help."
+                        }
+                    },
+                    "2": {
+                        "VersionedField": "Version 2"
+                    }
+                }
+            },
+
+            "Layout": {
+                "Devices": [
+                    {
+                        "Name": "Default",
+                        "Layout": "/sitecore/layout/Layouts/MvcLayout",
+                        "Renderings": [
+                            {
+                                "HelloWorld": { "DataSource": "/sitecore" }
+                            }
+                        ]
+                    }
+                ]
             }
         },
 
-        "Layout": {
-            "Devices": [
-                {
-                    "Name": "Default",
-                    "Layout": "/sitecore/layout/Layouts/MvcLayout",
-                    "Renderings": [
-                        {
-                            "HelloWorld": { "DataSource": "/sitecore" }
-                        }
-                    ]
+        "File.Include": {
+            "File": "~/includes/PlaceholderItem.include.item.json",
+            "ItemName": "PlaceholderItem",
+            "Placeholders": {
+                "": {
+                    "PlaceholderText": {
+                        "Value": "Placeholder text.",
+                        "Field.ShortHelp": "Placeholder Text.",
+                        "Field.LongHelp": "Placeholder Text."
+                    },
+                    "PlaceholderText2": {
+                        "Value": "Placeholder text.",
+                        "Field.ShortHelp": "Placeholder Text.",
+                        "Field.LongHelp": "Placeholder Text."
+                    }
+                },
+                "Inner": {
+                    "PlaceholderText": {
+                        "Value": "Placeholder text.",
+                        "Field.ShortHelp": "Placeholder Text.",
+                        "Field.LongHelp": "Placeholder Text."
+                    },
+                    "PlaceholderText2": {
+                        "Value": "Placeholder text.",
+                        "Field.ShortHelp": "Placeholder Text.",
+                        "Field.LongHelp": "Placeholder Text."
+                    }
                 }
-            ]
-        }
-    },
+            }
+        },
 
         "Item": {
             "Name": "JsonSubitem",

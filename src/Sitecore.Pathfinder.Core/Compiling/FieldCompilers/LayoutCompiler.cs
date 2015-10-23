@@ -225,7 +225,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 layoutPlaceholders = GetPlaceholders(context, deviceTextNode, l);
             }
 
-            var renderings = deviceTextNode.GetFormatSpecificChildNode("Renderings");
+            var renderings = deviceTextNode.GetSnapshotFormatSpecificChildNode("Renderings");
             if (renderings == null)
             {
                 // silent
@@ -250,7 +250,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
             output.WriteStartElement("r");
 
-            var devices = layoutTextNode.GetFormatSpecificChildNode("Devices");
+            var devices = layoutTextNode.GetSnapshotFormatSpecificChildNode("Devices");
             if (devices == null)
             {
                 // silent
@@ -395,7 +395,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             }
             */
 
-            var renderingsTextNode = renderingTextNode.GetFormatSpecificChildNode("Renderings");
+            var renderingsTextNode = renderingTextNode.GetSnapshotFormatSpecificChildNode("Renderings");
             if (renderingsTextNode == null)
             {
                 // silent

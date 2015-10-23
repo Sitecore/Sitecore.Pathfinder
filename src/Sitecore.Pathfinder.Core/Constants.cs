@@ -1,6 +1,9 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder
 {
@@ -13,6 +16,10 @@ namespace Sitecore.Pathfinder
         {
             ','
         };
+
+        [NotNull]
+        [ItemNotNull]
+        public static readonly IList<ITextNode> EmptyReadOnlyTextNodeCollection = new ReadOnlyCollection<ITextNode>(new List<ITextNode>());
 
         [NotNull]
         public static readonly char[] Pipe =

@@ -53,11 +53,11 @@ namespace Sitecore.Pathfinder.Languages.Json
         }
 
         [NotNull]
-        public virtual JsonTextSnapshot With([NotNull] ISourceFile sourceFile, [NotNull] string contents, [NotNull] SnapshotParseContext parseContext)
+        public virtual JsonTextSnapshot With([NotNull] SnapshotParseContext snapshotParseContext, [NotNull] ISourceFile sourceFile, [NotNull] string contents)
         {
             base.With(sourceFile);
 
-            ParseContext = parseContext;
+            ParseContext = snapshotParseContext;
 
             try
             {

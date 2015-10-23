@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Snapshots
         {
             var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt");
 
-            var snapshot = Services.CompositionService.Resolve<XmlTextSnapshot>().With(sourceFile, "<Item><Field Name=\"Text\" Value=\"123\" /></Item>", SnapshotParseContext.Empty, string.Empty, string.Empty);
+            var snapshot = Services.CompositionService.Resolve<XmlTextSnapshot>().With(SnapshotParseContext.Empty, sourceFile, "<Item><Field Name=\"Text\" Value=\"123\" /></Item>", string.Empty, string.Empty);
             Assert.AreEqual("Item", snapshot.Root.Key);
 
             var field = snapshot.Root.ChildNodes.First();
@@ -29,7 +29,6 @@ namespace Sitecore.Pathfinder.Snapshots
             Assert.AreEqual(0, fileNameTextNode.Attributes.Count());
             Assert.AreEqual(0, fileNameTextNode.ChildNodes.Count());
             Assert.AreEqual("test", fileNameTextNode.Key);
-            Assert.AreEqual(null, fileNameTextNode.ParentNode);
             Assert.AreEqual(0, fileNameTextNode.TextSpan.LineNumber);
             Assert.AreEqual(0, fileNameTextNode.TextSpan.LinePosition);
             Assert.AreEqual(field.Snapshot, fileNameTextNode.Snapshot);

@@ -2,15 +2,20 @@
 
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Snapshots.Directives;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
     public interface ISnapshotService
     {
         [NotNull]
-        ITextNode LoadIncludeFile([NotNull] ISnapshot snapshot, [NotNull] string includeFileName, [NotNull] SnapshotParseContext parseContext);
+        [ItemNotNull]
+        IEnumerable<ISnapshotDirective> Directives { get; }
 
         [NotNull]
-        ISnapshot LoadSnapshot([NotNull] ISourceFile sourceFile, [NotNull] SnapshotParseContext parseContext);
+        ITextNode LoadIncludeFile([NotNull] SnapshotParseContext snapshotParseContext, [NotNull] ISnapshot snapshot, [NotNull] string includeFileName);
+
+        [NotNull]
+        ISnapshot LoadSnapshot([NotNull] SnapshotParseContext snapshotParseContext, [NotNull] ISourceFile sourceFile);
     }
 }

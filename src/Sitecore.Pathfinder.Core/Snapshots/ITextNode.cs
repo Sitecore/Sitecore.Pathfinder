@@ -36,10 +36,6 @@ namespace Sitecore.Pathfinder.Snapshots
         ITextNode GetInnerTextNode();
 
         [CanBeNull]
-        ITextNode GetFormatSpecificChildNode([NotNull] string name);
-
-        bool SetKey([NotNull] string newKey);
-
-        bool SetValue([NotNull] string newValue);
+        ITextNode GetSnapshotFormatSpecificChildNode([NotNull] string name);
     }
 }
