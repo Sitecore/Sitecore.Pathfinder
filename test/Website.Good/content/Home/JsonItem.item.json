@@ -108,25 +108,8 @@
                         "Value": "Placeholder text.",
                         "Field.ShortHelp": "Placeholder Text.",
                         "Field.LongHelp": "Placeholder Text."
-                    },
-                    "PlaceholderText2": {
-                        "Value": "Placeholder text.",
-                        "Field.ShortHelp": "Placeholder Text.",
-                        "Field.LongHelp": "Placeholder Text."
                     }
-                },
-                "Inner": {
-                    "PlaceholderText": {
-                        "Value": "Placeholder text.",
-                        "Field.ShortHelp": "Placeholder Text.",
-                        "Field.LongHelp": "Placeholder Text."
-                    },
-                    "PlaceholderText2": {
-                        "Value": "Placeholder text.",
-                        "Field.ShortHelp": "Placeholder Text.",
-                        "Field.LongHelp": "Placeholder Text."
-                    }
-                }
+               }
             }
         },
 

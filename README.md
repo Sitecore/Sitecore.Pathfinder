@@ -1,14 +1,16 @@
-# Sitecore Pathfinder
+# Pathfinder
 
 ### Disclaimer
-Sitecore Pathfinder is a personal side project. It is not endorsed or supported by Sitecore in any way.
+Pathfinder is a personal side project. It is not endorsed or supported by Sitecore in any way.
 
 ## Get Started
 Get started, get far, get happy!
 
-![Sitecore Pathfinder](docs/img/SitecorePathfinder.png)
+An experimental tool chain for Sitecore.
+
+![Pathfinder](docs/img/SitecorePathfinder.png)
  
-Watch the videos on YouTube:
+Watch the videos on YouTube (please notice that some of details in the videos are out of date):
 
 * [01 - Idea and concepts](https://www.youtube.com/watch?v=TcJ0IoI7sVM)
 * [02 - HelloWorld](https://www.youtube.com/watch?v=jQz5hAVOTzU)
@@ -16,59 +18,48 @@ Watch the videos on YouTube:
 * [04 - Html Templates](https://www.youtube.com/watch?v=9aTGhW6ErYM)
 * [05 - Code Generation, Visual Studio and Grunt](http://youtu.be/ZM3ve1WhwwQ)
 
-Then download [Sitecore Pathfinder 0.4.0-Alpha](http://vsplugins.sitecore.net/Pathfinder/Sitecore.Pathfinder.0.4.0.zip) to try it out.
+Then download [Pathfinder 0.4.0-Alpha](http://vsplugins.sitecore.net/Pathfinder/Sitecore.Pathfinder.0.4.0.zip) to try it out.
 
-# Status
-
-After giving Pathfinder some serious thought, I have come to this conclusion:
-
-![Standard](http://imgs.xkcd.com/comics/standards.png)
+# Pathfinder Status
+Pathfinder is yet another tool for Sitecore, so... obligatory Xkcd:
+                
+![Standards](http://imgs.xkcd.com/comics/standards.png)
                                                           
-As such Pathfinder will continue as mostly an academic exercise. The emphasis will be on bringing the many Sitecore tools 
+Pathfinder is experimental and mostly an academic exercise. The emphasis is on bringing the many Sitecore tools 
 developed by the Sitecore community together in a cohesive manner.
                                                                
 # Introduction
-Sitecore Pathfinder is a toolchain for Sitecore, that allows developers to use their favorite tools 
+Pathfinder is an experimental toolchain for Sitecore, that allows developers to use their favorite tools 
 in a familiar fashion to develop Sitecore websites.
 
 The toolchain creates a deliverable package from the source files in a project directory and deploys 
-the package to a website where an installer installs the new files and Sitecore items into the website.
+the package to a website where an installer installs the new files and Sitecore items.
 
-The developer process is familiar; edit source files, build and install the package, review the changes on website, repeat.
+The developer process is familiar; edit source files, build and install the package, run tests or review the changes on website, repeat.
 
 ## Getting started
-Pathfinder makes it easy to start working with Sitecore.
+The goal of Pathfinder is to make it easy to start working with Sitecore.
 
 1. Install a clean Sitecore (e.g. using [SIM (Sitecore Instance Manager](https://marketplace.sitecore.net/modules/sitecore_instance_manager.aspx))
-2. Create an empty folder and xcopy the Pathfinder files to the sitecore.tools subfolder
-3. Execute the scc.exe in the sitecore.tools folder
+2. Create an empty folder and xcopy the Pathfinder files to the /sitecore.tools subfolder
+3. Execute the scc.exe in the /sitecore.tools folder
 4. Edit the scconfig.json file to setup 'project-unique-id', 'wwwroot' and 'host-name'
 5. Done - you are now ready
-6. Copy a starter kit to your project directory. Starter kits are located in the sitecore.tools/files/starterkits/ directory.
+6. *Optionally:* Configure your editor by executing:
+   * Atom: `scc init-atom`
+   * Visual Studio Code: `scc init-vscode` 
+   * Visual Studio: `scc init-visualstudio`
+7. *Optionally:* Copy a starter kit to your project directory. Starter kits are located in the /sitecore.tools/files/starterkits/ directory.
 
-In step 3 Pathfinder creates a blank project for you. It consists of a number of directories and files, 
-including an scc.cmd file which is a shortcut to the sitecore.tools\scc.exe file.
+In step 3 Pathfinder creates a blank project for you. It consists of a number of directories and files, including an scc.cmd file which is a 
+shortcut to the /sitecore.tools\scc.exe file.
 
-### Compiling the Pathfinder project
-Before compiling, you need to copy the following assemblies to the /components directory.
-
-* Sitecore.ContentSearch.dll
-* Sitecore.ContentSearch.Linq.dll
-* Sitecore.Kernel.dll
-* Sitecore.Mvc.dll
-* Sitecore.Zip.dll 
-
-You will probably see a lot of warnings from the CodeContractNullability (which checks that you decorate every field, parameter, parameter and method
-return with [NotNull], [CanBeNull], [ItemNotNull] or [ItemCanBeNull] attributes). This is expected.
-
-The Sitecore.Pathfinder.Console project the default project and you should set it as StartUp Project. 
-
-## How does Pathfinder make Sitecore easier
+## How does Pathfinder make Sitecore development easier
 * Familiar developer experience: Edit source files, build project, test website, repeat.
 * Text editor agnostic (Visual Studio not required - use Notepad, Notepad++, SublimeText, Atom, VS Code etc.)
 * Build process agnostic (command-line tool, so it integrates easily with Grunt, Gulp, MSBuild etc.)
 * Everything is a file (easy to edit, source control friendly)
-* Project directory has whole and single truth (source is not spead across development projects, databases and websites, contineous integration friendly) 
+* Project directory has whole and single truth (source is not spead across development projects, databases and websites) (contineous integration friendly) 
 * Project is packaged into a NuGet package and deployed to the website
   * Dependency tracking through NuGet dependencies
   * NuGet package installer on Sitecore website
@@ -83,6 +74,84 @@ To get help, you can execute the Help task by entering `scc help`.
 To get help about a specific task, execute the Help task with the name of the task as a parameter: `scc help [task name]`
 
 ![Command Line Help](docs/img/CommandLineHelp.PNG)
+
+### Pathfinder is open source
+Pathfinder is open source and you can freely make changes. To do so, clone the project from 
+[GitHub](https://github.com/JakobChristensen/Sitecore.Pathfinder), and copy the following assemblies to the /components directory.
+
+* Sitecore.ContentSearch.dll
+* Sitecore.ContentSearch.Linq.dll
+* Sitecore.Kernel.dll
+* Sitecore.Mvc.dll
+* Sitecore.Zip.dll 
+
+The Sitecore.Pathfinder.Console project the default project and you should set it as StartUp Project. 
+
+## Basic concepts
+
+### Tasks
+The Pathfinder compiler supports a number of tasks. These tasks make up the tool chain. While most tasks provide functionality for compiling and 
+deploying a package, other tasks simply implement funtionality.
+
+To execute a task run `scc [task name]` from the command line.
+
+Task Name | Description
+----------|------------
+check-project | Checks the project for warnings and errors.
+copy-dependencies | Copies the dependency packages to the website.
+copy-package | Copies the project output to the website.
+find-references | Finds all project items that the specified project item references.
+find-usages | Finds all project items that references the specified project item.
+generate-code | Generates code from items and files in the project.
+generate-unittests | Generates basic unit tests for the project.
+help | Displays version information and a list of commands.
+init-atom | Creates a new Atom project.
+init-project | Initializes the project.
+init-visualstudio | Creates a new Visual Studio project.
+init-vscode | Creates a new Visual Studio Code project.
+install-package | Unpacks and installs the project package (including dependencies) in the website.
+list-items | Lists the Sitecore items in the project.
+list-project | Lists the project items (Sitecore items and files).
+pack-dependencies | Creates a Nuget package for Sitecore package in the /sitecore.tools/packages directory.
+pack-nuget | Creates a Nuget package from the project.
+publish-database | Publishes a Sitecore database (usually the master database).
+rename | Finds all project items that references the specified project item.
+run-unittests | Runs the Unit Test Runner on the website.
+show-metrics | Shows various information about the project.
+sync-website | Synchronizes project and the website.
+validate-website | Runs the Sitecore Rocks SitecoreCop on the website.
+
+### Building
+The build tool chain is specified in the build-project/tasks configuration setting. The default value is 
+``"check-project pack-nuget copy-dependencies copy-package install-package publish-database show-metrics"``.
+
+1. Check the project for warnings and errors. Any errors will stop the build.
+2. Create a Nuget package from the project.
+3. Copy dependency files from the /sitecore.project/packages directory to the website ([DataFolder]/Pathfinder/Available).
+4. Copy package /sitecore.project/Sitecore.nupkg to the website ([DateFolder]/Pathfinder/Available).
+5. Install the package by making a request to the website: /sitecore/shell/client/Applications/Pathfinder/InstallPackage
+6. Publish the Master database by making a request to the website: /sitecore/shell/client/Applications/Pathfinder/Publish
+7. Show project metrics.
+
+### Configuration
+Pathfinder is configured using a global configuration file and a project configuration file. The project configuration file can overwrite
+any settings in the global configuration file.
+
+The global configuration is located in the /sitecore.tools/sccconfig.json. You should never change this file. Instead overwrite settings in 
+the project configuration file.
+
+The project configuration file is located in the root of the project: /scconfig.json.
+
+### Extensibility
+Pathfinder uses [MEF](https://msdn.microsoft.com/en-us/library/dd460648(v=vs.110).aspx) internally and is fully plugable. See section on 
+extensions.
+
+### Cross platform
+Pathfinder is envisioned to become fully cross platform at some point. Currently Pathfinder is implemented in C# which binds it to the 
+Windows platform. 
+
+Pathfinder may take advantage of the upcoming .NET Core framework to support other platform or it may be rewritten in TypeScript
+and run using NodeJS.
 
 # Features
 
@@ -184,7 +253,7 @@ Xml format (extension .item.xml) - please notice the namespace, which indicates 
 </Item>
 ```
 
-Content Xml format (extension .content.xml) - please notice that the element names spelcifies the template and fields are attributes. Spaces
+Content Xml format (extension .content.xml) - please notice that the element names specifies the template and fields are attributes. Spaces
 in template or field names are replaced by a dot '.'. 
 ```xml
 <Root Id="{11111111-1111-1111-1111-111111111111}" Database="master" Name="sitecore" ParentItemPath="/">
@@ -193,7 +262,7 @@ in template or field names are replaced by a dot '.'.
     <Main.Section Id="{EB2E4FFD-2761-4653-B052-26A64D385227}" Name="layout">
         <!-- /sitecore/layout/Layouts -->
         <Node Id="{75CC5CE4-8979-4008-9D3C-806477D57619}" Name="Layouts">
-            <View.Rendering Id="{5E9D5374-E00A-4053-9127-EBC96A02C721}" Name="MvcLayout" Path="/layout/layouts/MvcLayout.cshtml" Place--Holders="Page.Body"/>
+            <View.Rendering Id="{5E9D5374-E00A-4053-9127-EBC96A02C721}" Name="MvcLayout" Path="/layout/layouts/MvcLayout.cshtml" Place.Holders="Page.Body"/>
         </Node>
 
         <!-- /sitecore/layout/Devices -->
@@ -291,6 +360,14 @@ The example above creates the template "InferredTemplate" with a single template
 ### Directives 
 Item files (Json, Xml and Yaml) may contain directives that affect the way the file is parsed. 
 
+Supported directives:
+
+Directive        | Description
+-----------------|-------------
+File.Include     | Includes another file (specified by the Key attribute)
+File.Placeholder | In an included file, specifies location where the inner content of the File.Include directive is injected.
+
+
 #### File.Include
 Item files can include other files. This allows parts of items files to be shared among multiple items. 
 
@@ -317,16 +394,6 @@ Json:
 }
 ```
 
-Xml:
-```xml
-<Item xmlns="http://www.sitecore.net/pathfinder/item">
-    <Fields>
-        <File.Include File="~/includes/Field.include.item.xml" />
-        <File.Include File="~/includes/ParameterizedField.include.item.xml" Name="ParameterizedField" Value="Parameterized Value"/>
-    </Fields>
-</Item>
-```
-
 Yaml:
 ```yaml
 Item :
@@ -339,6 +406,16 @@ Item :
 
 ```
 
+Xml:
+```xml
+<Item xmlns="http://www.sitecore.net/pathfinder/item">
+    <Fields>
+        <File.Include File="~/includes/Field.include.item.xml" />
+        <File.Include File="~/includes/ParameterizedField.include.item.xml" Name="ParameterizedField" Value="Parameterized Value"/>
+    </Fields>
+</Item>
+```
+
 The first included file looks like this:
 
 ```js
@@ -349,7 +426,7 @@ The first included file looks like this:
 }
 ```
 
-Include files are not simple text subsitutions, but are resolved at the lexing level of the compiler (before parsing). The File.Include tag 
+Include files are not simple text subsitutions, but are resolved at the lexing level of the compiler (before parsing). The File.Include directive 
 is also part of the item schemas, which means that include files cannot be included at arbitrary positions. This is to ensure 
 Syntax Highlighting, Validation and IntelliSense still work.
 
@@ -374,11 +451,56 @@ $DirectoryName             | The current directory name
 
 Please notice: Include files do not work everywhere yet.
 
+#### File.Placeholder
+A File.Include directive may contain additional content to be injected into the included file (if you are a Sitecore veteran, think Xml Controls and Xaml#).
+The injected content is placed inside a Placeholder element. An include file can specify multiple placeholders - each identified by a key. The default key
+is empty (or blank).
+
+Below is an example of an include directive with inner content. The content is specified under the Placeholders element and the "" specifies the empty key.
+In the example the content is a field named "PlaceholderText" with the value "Placeholder text.".
+
+```js
+"File.Include": {
+    "File": "~/includes/PlaceholderItem.include.item.json",
+    "ItemName": "PlaceholderItem",
+    "Placeholders": {
+        "": {
+            "PlaceholderText": {
+                "Value": "Placeholder text.",
+                "Field.ShortHelp": "Placeholder Text.",
+                "Field.LongHelp": "Placeholder Text."
+            }
+        }
+    }
+}
+```
+
+The include file looks like this:
+```js
+{
+    "$schema": "../../../../sitecore.pathfinder.console/files/project/sitecore.project/schemas/item.schema.json#",
+    "Item": {
+        "Name": "$ItemName",
+        "Template": "/sitecore/templates/Sample/JsonPlaceholderItem",
+        "Template.CreateFromFields": true,
+        "Template.ShortHelp": "Short help.",
+        "Template.LongHelp": "Long help.",
+        "Template.Icon": "Application/16x16/About.png",
+
+        "Fields": {
+            "File.Placeholder": { }
+        }
+    }
+}
+```
+
+The element "File.Placeholder" specifies that the Placeholder with the empty key should be inserted here.
+
 ### Item IDs
-Normally you do not need to specify the ID of an item, but in some case, it may be necessary. Pathfinder supports soft IDs meaning that the
+Normally you do not need to specify the ID of an item, but in some cases, it may be necessary. Pathfinder supports soft IDs meaning that the
 item ID does not have to be a Guid (but it can be).
 
-By default Pathfinder calculates the ID of an item hashing the project unique ID and the file path (without file extensions), like this 
+By default Pathfinder calculates the ID of an item hashing the project unique ID and the file path (without file extensions) like this 
 `item.Guid = MD5((Project_Unique_ID + item.FilePath).ToUpperInvariant())`. This means that the item ID is always the same, as long as the 
 file path remains the same.
 
@@ -396,7 +518,7 @@ If you rename an item, but want to keep the original item ID, specify the ID as 
     Template="/sitecore/templates/Sample/Sample Item">
     <Fields>
         <Field Name="Title">Pathfinder</Field>
-        <Field Name="Text">Welcome to Sitecore Pathfinder</Field>
+        <Field Name="Text">Welcome to Pathfinder</Field>
     </Fields>
 </Item>
 ```
@@ -406,7 +528,7 @@ Content item files also contain items, but the schema is different. When you syn
 schema, that contains all templates in the database (master and core database). If you change a template, you will have to synchronize the
 website again.
 
-The schema of content files ensures, that you can only specify fields that appear in the template, and provide some nice Intellisense in most 
+The schema of content files ensures, that you can only specify fields that appear in the template, and provide some nice Intellisense in many
 code editors. The format of content item files is also more compact than other types of item files.
 
 So the advantages of content item files are validation against the template and a more compact format, but you have to synchronize the 
@@ -416,11 +538,13 @@ website, if you change a template.
 <Root Database="master" Name="sitecore" ParentItemPath="/">
     <Main.Section Name="layout">
         <Node Name="Layouts">
-            <View.Rendering Name="MvcLayout" Path="/layout/layouts/MvcLayout.cshtml" Place--Holders="Page.Body"/>
+            <View.Rendering Name="MvcLayout" Path="/layout/layouts/MvcLayout.cshtml" Place.Holders="Page.Body"/>
         </Node>
     </Main.Section>
 </Root>
 ```
+
+If the item contains characters, that are not allowed in Xml item names (including spaces), the characters are replaced by a dot (.).
 
 ### Media files
 If you drop a media file (.gif, .png, .jpg, .bmp, .pdf, .docx) into your project folder, Pathfinder will upload the file to the Media Library.
@@ -461,8 +585,8 @@ To specify a layout in Json, use the format below.
 ```
 
 ### Populating additional fields for implicitly created items
-Supposed you have an MVC View rendering HelloWorld.cshtml and want to set the Parameters field. Simply create a HelloWorld.item.xml (or 
-HelloWorld.item.json) next to the HelloWorld.cshtml file.
+Supposed you have an MVC View rendering HelloWorld.cshtml and want to set the Parameters field, simply create a HelloWorld.item.json (or 
+HelloWorld.item.xml or HelloWorld.item.yaml) next to the HelloWorld.cshtml file.
 
 * HelloWorld.cshtml
 * HelloWorld.item.json
@@ -498,6 +622,8 @@ Extension            | Description
 .css                 | Stylesheet content file
 .config              | Config content file
 
+You can control which types of files are included in the deployment package by override in the build-package/ignore-directories and 
+build-package/ignore-filenames settings from the global scconfig.json (located in the /sitecore.tools/scconfig.json file).
 
 ### File system mapping
 The filesystem structure of the project does not necessary corresponds to the desired structure on the website.
@@ -522,7 +648,6 @@ In the scconfig.json file, you can map files and items to different locations on
 }
 ```
 
-
 ## Synchronizing project and website
 In Pathfinder the project contains the whole truth. However a project may need to use items, template, renderings from a standard 
 Sitecore website. A good example is a SPEAK based module.
@@ -530,7 +655,7 @@ Sitecore website. A good example is a SPEAK based module.
 These external references can be imported into the project by using the ``sync-website`` task. This task makes a request to the website
 to collect the needed information. The information is downloaded as a zip file and unpacked in the project directory.
 
-The sync-website task is configured on the 'sync' section of the scconfig.json.
+The sync-website task is configured on the 'sync-website' section in the scconfig.json configuration file.
 
 ```js
 "sync": {
@@ -589,15 +714,15 @@ By default Pathfinder copies the build package to a website and installs it. The
 this directory.
 
 ### Installation
-The package is installed by making a request to the /sitecore/shell/client/Applications/Pathfinder/InstallPackage.aspx with the name of the 
-package on the query string. This webpage uses Nuget to unpack the files to the /Data/Pathfinder/Installed directory. Once the files 
+The package is installed by making a request to the /sitecore/shell/client/Applications/Pathfinder/InstallPackage with the name of the 
+package on the query string. This webpage uses Nuget to unpack the files to the [DataFolder]/Pathfinder/Installed directory. Once the files 
 are available, Pathfinder rebuilds the project and emits items and files to the website.
 
 Any dependency packages are unpacked before the package and are processed in the same way.
 
 ### Dependency packages
 A project can depend on other Nuget packages using the standard Nuget dependency mechanism. Dependency packages are located in the
-sitecore.project/packages directory. As part of deploying these packages are copied to the website and installed.
+/sitecore.project/packages directory. As part of deploying these packages are copied to the website and installed.
 
 To add a new dependency package, copy the file (.nupkg) to the sitecore.project/packages directory. In the Nuspec file sitecore.project/sitecore.nuspec
 add the filename to the ``dependencies`` tag like this (see [Nuspec Reference](https://docs.nuget.org/create/nuspec-reference)):
@@ -611,14 +736,14 @@ add the filename to the ``dependencies`` tag like this (see [Nuspec Reference](h
 
 The SitecorePowerShellExtensions32ForSitecore8.nupkg will be copied to the [DataFolder]/Pathfinder/Available directory.
 
-Standard Sitecore Packages cannot be used directly as dependencies since Nuget does not understand Sitecore Packages. Instead you have to wrap
+Standard Sitecore Packages cannot be used directly as dependencies since Nuget does not understand Sitecore packages. Instead you have to wrap
 a Sitecore Package in a Nuget package. There are different way to do this. 
 
 First of all you can convert the Sitecore Package to a Nuget package using a community tool like this
 
 * [CreateSitecoreNugetPackage](http://hermanussen.eu/sitecore/wordpress/2013/05/turn----any----sitecore----package----into----a----nuget----package/) by Robin Hermanussen
 
-Alternatively Pathfinder contains the 'pack-dependencies' task that simply converts all *.zip files in the sitecore.project/packages directory 
+Alternatively Pathfinder contains the 'pack-dependencies' task that simply converts all *.zip files in the /sitecore.project/packages directory 
 to Nuget packages. For each zip file it creates a Nuget package where the zip files is located in the content/packages directory in the .nupkg file. 
 Pathfinder understands, that any zip files in the content/packages directory is a Sitecore Package and installs it.
 
@@ -661,7 +786,7 @@ requires you to make a request to a Sitecore website and run the tests.
 Pathfinder installs a Web Test Runner in your Sitecore website. When you run the `run-unittests` task, Pathfinder
 copies the unit test C# files to the server, compiles them and runs the tests.
 
-This makes it easy to write server-side unit tests in you project and execute the in a Sitecore web context.
+This makes it easier to write server-side unit tests in you project and execute the in a Sitecore web context.
 
 ## Website validation
 Pathfinder integrates with the Sitecore Rocks SitecoreCop feature. SitecoreCop examines the website and can identify
@@ -759,6 +884,11 @@ directory.
 
 To install a starter kit, simple unpack the Nuget package in the root of your project.
 
+Starter Kit | Description
+------------|------------
+Clean Blog  | A simple blogging website.
+TodoMVC     | A SPEAK based Todo list.
+
 ## CleanBlog
 Clean Blog is a read-only blog website based on the [Start Bootstrap](http://startbootstrap.com/) - 
 [Clean Blog](http://startbootstrap.com/template-overviews/clean-blog/) template. It is very basic and uses Html Template files
@@ -810,7 +940,7 @@ The model is then passed to compiling which transforms the model into objects th
 instance for each media file, an appropriate media item model is created. 
 
 When all files have been processed, the compiler processes the item models and for each field, compiles it. This typically 
-transforms the field from a user inputted value to a value that is appropriate for Sitecore, for instance Link fields are 
+transforms the field from a user inputed value to a value that is appropriate for Sitecore, for instance Link fields are 
 usually inputted as "/sitecore/content/home" and the compiled value is 
 '&lt;link ... id="{98E48AE6-9997-4BFA-AFAB-862B3E6EC486}" ... />'. 
 
@@ -854,7 +984,7 @@ create or modifies any items in Sitecore.
 ## Notepad
 Everything in Pathfinder is a file, so you can use Notepad to edit any file.
 
-To build the project, simply run the ``scc.cmd`` file.
+To build the project, simply run the ``scc.cmd`` file from the command-line.
 
 ## Atom 
 
@@ -895,7 +1025,7 @@ To manually create a Visual Studio project:
 
 1. Create a web project in Visual Studio
 1. Add a reference to Sitecore.Kernel
-1. Install the Sitecore Pathfinder Nuget package
+1. Install the Pathfinder Nuget package
 1. Install GruntJS. Run installgrunt.cmd or
    1. Install GruntJS in the project: npm install grunt --save-dev
    1. Install grunt-shell: npm install --save-dev grunt-shell
@@ -941,8 +1071,52 @@ module.exports = function (grunt) {
 10. In Task Runner Explorer, right-click 'build-project' and select Bindings | After Build. This will run Pathfinder after each build.
 10. If you want to use code generate, right-click 'generate-code' and select Binding | Before Build.
 
+# External tools
+There are many good 3. party tools for Sitecore. These are some of my personal thoughts on how to use/integrate these tools with Pathfinder. Please notice
+that these thoughts do not reflect the official Sitecore opinions on the various tools. I do apologies in advance for misunderstanding or not knowing 
+any of the tools in depth.
 
-## Using SQL LocalDb
+Many tools are available as either Sitecore Packages or Nuget packages.
+
+Sitecore Packages can be installed by downloading the package to /sitecore.tools/packages, wrapping it in a Nuget
+package (using the ``pack-dependencies`` task) and making it a dependency. 
+
+Nuget Packages can be installed by downloading the package to /sitecore.tools/packages,  and making it a dependency. 
+
+### TDS
+[TDS](https://www.hhogdev.com/Downloads/Team-Development-for-Sitecore.aspx) is a commercial Visual Studio plugin that primarily implements 
+good serialization/deserialization functionality in Sitecore. Over time TDS has grown and support many additional features like best practices 
+and code generation. TDS is battle proven and robust.
+
+There is some overlap in functionality between Pathfinder and TDS. It could be interesting to have TDS support the Pathfinder compiler, but that is 
+probably unlikely to happen.
+
+### Razl
+[Razl](https://www.hhogdev.com/products/razl.aspx) is another tool from Hedgehog that allows you to compare the items in two Sitecore websites.
+Razl is very useful.
+
+There is no overlap between Razl and Pathfinder and I see no obvious integration.
+
+### Visual Studio Online
+[Visual Studio Online](https://www.visualstudio.com/en-us/products/what-is-visual-studio-online-vs.aspx): Services for teams to share code, 
+track work, and ship software – for any language, all in a single package. It's the perfect complement to your IDE.
+
+It is a goal that Pathfinder integrates with Visual Studio Online. Pathfinder fits in Build part of Visual Studio Online and it is pretty easy to 
+setup.
+
+![Pathfinder](docs/img/VisualStudioOnline1.png)
+
+1. Add a Batch Script build task and set the Path to "scc.cmd".
+2. *Optional:* Add a Visual Studio Build build task and set the Solution to **/*.sln.
+3. *Optional:* Add a Visual Studio Test build task and set the Test Assembly to your output assembly.
+
+This will execute Pathfinder whenever Visual Studio Online builds your project.
+
+If Visual Studio Online does not have access to your website, you should probably remove the deployment tasks from the build-project/tasks settings.
+
+### SQL LocalDb
+Sitecore requires a SQL Server and it can be a hassle to setup. Consider using LocalDB instead.
+
 See [http://sitecoresupport.blogspot.dk/2012/03/sitecore-on-sql-2012-denali-with.html](http://sitecoresupport.blogspot.dk/2012/03/sitecore-on-sql-2012-denali-with.html)
 
 1. Install SQL Server LocalDB using Web Platform Installer.
@@ -950,20 +1124,104 @@ See [http://sitecoresupport.blogspot.dk/2012/03/sitecore-on-sql-2012-denali-with
 1. Change the AppPool Identity of the IIS Website to "LocalSystem"
 1. Start SQL LocalDB service using "sqllocaldb.exe start v11.0"
 
-## Using IIS Express
+## IIS Express
+Sitecore requires IIS to run. Consider using IIS Express.
+
 See [http://chrismcleod.me/2011/01/14/iis-express-website-here-shell-extension/](http://chrismcleod.me/2011/01/14/iis-express-website-here-shell-extension/)
 
 1. Install IIS Express Website Here
 
-## Sitecore toolbox
-As a Sitecore developer, what should be in your development toolbox? 
+### Sitecore Powershell Extensions
+[Powershell Extensions](https://marketplace.sitecore.net/en/Modules/Sitecore_PowerShell_console.aspx) adds Powershell capabilities to Sitecore. 
+You can open a Powershell window in the Sitecore desktop and execute Powershell scripts. Powershell Extensions are very well documented and very
+popular.
 
-Application   | Description | Difficulty
-------------- | ------------| ----------
-[SIM (Sitecore Instance Manager](https://marketplace.sitecore.net/modules/sitecore_instance_manager.aspx) | Sitecore website installer and more | Low to medium
-[Sitecore Powershell Extensions](https://marketplace.sitecore.net/en/Modules/Sitecore_PowerShell_console.aspx) | Run Powershell scripts in a Sitecore website | High
-[Sitecore Rocks Visual Studio](https://visualstudiogallery.msdn.microsoft.com/44a26c88-83a7-46f6-903c-5c59bcd3d35b/) | Visual Studio plugin for working with Sitecore | Low to high
-[Sitecore Rocks Windows](https://github.com/JakobChristensen/Sitecore.Rocks.Docs) | Sitecore Rocks version that does not require Visual Studio | Low to high
-[Sitecore Pathfinder](https://github.com/JakobChristensen/Sitecore.Pathfinder) | Sitecore build toolchain | Low
+Powershell Extensions is a Sitecore package and can be installed as such. 
 
+It could be interesting to have Pathfinder be able to execute Powershell scripts on the website. Pathfinder could contain a Powershell task that
+sends a Powershell script to Powershell Extensions which executes it and returns the result. The question is if developer would prefer this approach
+over opening a Powershell Extensions window in the Sitecore desktop.
 
+### Sitecore Rocks
+[Sitecore Rocks](https://github.com/JakobChristensen/Sitecore.Rocks.Docs) is both a Visual Studio plugin (Sitecore Rocks Visual Studio) and 
+a stand-alone Windows application (Sitecore Rocks Windows), which is installed using Click-Once. Sitecore Rocks is both a development and an 
+administration tool. It is big and somewhat bloated, but popular. Sitecore developer training uses Sitecore Rocks.
+
+Sitecore Rocks allows you to edit items directly on the website which Pathfinder discourages.
+
+The Sitecore Rocks and Pathfinder can probably be integrated in numereous ways. Sitecore Rocks does not implement a deployment mechanism and 
+serialization support is very basic. Sitecore Rocks could contain a Visual Studio project template for Pathfinder.
+
+### Sitecore Habitat
+[Sitecore Habitat](https://github.com/Sitecore/Habitat) is a solution framework focusing on three aspects:
+
+* Simplicity - A consistent and discoverable architecture
+* Flexibility - Change and add quickly and without worry
+* Extensibility - Simply add new features without steep learning curve
+
+Sitecore Habitat could be a fantastic solution on top of Pathfinder. It describes how to architect a good Sitecore website which is a goal
+of Pathfinder. 
+
+It would be great if Pathfinder could build a Habitat-based website out of the box. The developer would get a tool chain and a website 
+framework as a starting point.
+
+Pathfinder and Habitat must be integrated.
+
+### FakeDB
+[FakeDb](https://github.com/sergeyshushlyapin/Sitecore.FakeDb) is the unit testing framework for Sitecore that enables creation and manipulation 
+of Sitecore content in memory. It is designed to minimize efforts for the test content initialization keeping focus on the minimal test 
+data rather than comprehensive content tree representation.  
+
+FakeDB is available as a Nuget package and can be installed as such. 
+
+FakeDB and Pathfinder could be integrated in a number of ways. Pathfinder could generate code that exposes the items in the project to FakeDB, so
+developers do not have to do this manually. Also if the items change, it is easy to update the FakeDB code. 
+
+It would be really nice if Pathfinder could execute tests against FakeDB. It is not clear to me, if FakeDB requires a HttpContext - if not, this
+could be a good way to executes locally.
+
+### JsonDataProvider
+[JsonDataProvider](https://github.com/Sitecore/Sitecore.JsonDataProvider) allows storing parts of content tree in separate *.json files.
+Unlike serialization, items exist only in *.json files which makes synchronization unnecessary.
+Single *.json file stores all descendant items of the specific item that exists in a SQL database.
+
+The JsonDataProvider could be very valuable for Pathfinder if it could handle any item changes by the Pathfinder installer. That way the items in 
+original website are not touched and the website remains clean. To remove any installed items, simply remove the JsonDataProvider Json file.
+
+This is one to keep an eye on.
+
+### Unicorn
+[Unicorn](https://github.com/kamsar/Unicorn) is a utility for Sitecore that solves the issue of moving templates, renderings, and other database 
+items between Sitecore instances. The default Sitecore data provider is extended to automatically serialize item changes as they are made to 
+Sitecore. This means that at any given time, what's serialized is the "master copy."  
+
+Unicorn removes the manual process of serializing items which solves a lot of issues and it can be used for CI.
+
+Unicorn can be installed as a Nuget package.
+
+Unicorn could be interesting for Pathfinder if it can update files in the project when the website is changed. Suppose items are create on the website
+in a custom manner. Unicorn could feed these items back to the project.
+
+Unicorn also supports the [Rainbow](https://github.com/kamsar/Rainbow) project which changes the serialization format to Yaml which Pathfinder supports. 
+(Rainbow was the inspiration for supporting Yaml in Pathfinder).
+
+### Sitecore Courier
+[Sitecore Courier](https://github.com/adoprog/Sitecore-Courier) lets you build Sitecore Update packages automatically, by analyzing serialized 
+Sitecore items and packaging only changed items. Packages will be generated automatically, by comparing serialization from TAG (source) to the 
+TRUNK (target). Incremental package will contain only changed items.
+
+This is a cool idea. It can build update packages by comparing item in a source folder with a tag in source control. This should scale well
+for website with lots of content.
+
+Pathfinder works a bit differently by defining that the project must contain all assets used by the project. However Sitecore Courier could be 
+use to create an update package for a new version of a project. 
+
+Pathfinder could also use Sitecore Courier internally to deploy the package instead of using Nuget. It might be faster.
+
+### Sitecore Ship
+[Sitecore Ship](https://github.com/kevinobee/Sitecore.Ship) is a lightweight means to install Sitecore Update packages via HTTP requests.
+
+There is a big overlap between Sitecore Ship and Pathfinder, but Sitecore Ship does one thing and probably does it very well. Since it is developed
+by Kevin Obee, it is probably very secure.
+
+Pathfinder could use Sitecore Ship internally to deploy update packages. It might be faster.
