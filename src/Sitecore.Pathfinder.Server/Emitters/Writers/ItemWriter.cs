@@ -101,7 +101,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
         {
             var field = item.Fields[fieldName];
 
-            if (string.Compare(field.Type, "layout", StringComparison.OrdinalIgnoreCase) != 0)
+            if (!string.Equals(field.Type, "layout", StringComparison.OrdinalIgnoreCase))
             {
                 field.Value = fieldValue.Trim();
                 return;
@@ -128,7 +128,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
         protected virtual void UpdateItem([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] Item templateItem)
         {
             // move
-            if (string.Compare(item.Paths.Path, ItemIdOrPath, StringComparison.OrdinalIgnoreCase) != 0 && string.Compare(item.ID.ToString(), ItemIdOrPath, StringComparison.OrdinalIgnoreCase) != 0)
+            if (!string.Equals(item.Paths.Path, ItemIdOrPath, StringComparison.OrdinalIgnoreCase) && !string.Equals(item.ID.ToString(), ItemIdOrPath, StringComparison.OrdinalIgnoreCase))
             {
                 var parentItemPath = PathHelper.GetItemParentPath(ItemIdOrPath);
 
@@ -157,7 +157,14 @@ namespace Sitecore.Pathfinder.Emitters.Writers
 
                 if (item.TemplateID != templateItem.ID)
                 {
-                    item.ChangeTemplate(new TemplateItem(templateItem));
+                    try
+                    {
+                        item.ChangeTemplate(new TemplateItem(templateItem));
+                    }
+                    catch (Exception ex)
+                    {
+                       context.Trace.TraceError("Could not change template", ex.Message);
+                    }
                 }
 
                 foreach (var field in Fields.Where(i => string.IsNullOrEmpty(i.Language) && i.Version == 0))

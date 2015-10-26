@@ -67,7 +67,7 @@ namespace Sitecore.Pathfinder.Emitters
                 {
                     packageBuilder.Save(nupkg);
                 }
-            }
+            }                        
             catch (Exception ex)
             {
                 Trace.TraceError(ex.Message);
