@@ -18,7 +18,7 @@ Watch the videos on YouTube (please notice that some of details in the videos ar
 * [04 - Html Templates](https://www.youtube.com/watch?v=9aTGhW6ErYM)
 * [05 - Code Generation, Visual Studio and Grunt](http://youtu.be/ZM3ve1WhwwQ)
 
-Then download [Pathfinder 0.4.0-Alpha](http://vsplugins.sitecore.net/Pathfinder/Sitecore.Pathfinder.0.4.0.zip) to try it out.
+Then download [Pathfinder 0.4.2-Alpha](http://vsplugins.sitecore.net/Pathfinder/Sitecore.Pathfinder.0.4.2.zip) to try it out.
 
 # Pathfinder Status
 Pathfinder is yet another tool for Sitecore, so... obligatory Xkcd:
