@@ -75,7 +75,7 @@ To get help about a specific task, execute the Help task with the name of the ta
 
 ![Command Line Help](docs/img/CommandLineHelp.PNG)
 
-### Pathfinder is open source
+### Open source
 Pathfinder is open source and you can freely make changes. To do so, clone the project from 
 [GitHub](https://github.com/JakobChristensen/Sitecore.Pathfinder), and copy the following assemblies to the /components directory.
 
@@ -115,7 +115,7 @@ list-project | Lists the project items (Sitecore items and files).
 pack-dependencies | Creates a Nuget package for Sitecore package in the /sitecore.tools/packages directory.
 pack-nuget | Creates a Nuget package from the project.
 publish-database | Publishes a Sitecore database (usually the master database).
-rename | Finds all project items that references the specified project item.
+rename | Finds all project items that references the specified project item (EXPERIMENTAL).
 run-unittests | Runs the Unit Test Runner on the website.
 show-metrics | Shows various information about the project.
 sync-website | Synchronizes project and the website.
@@ -140,7 +140,11 @@ any settings in the global configuration file.
 The global configuration is located in the /sitecore.tools/sccconfig.json. You should never change this file. Instead overwrite settings in 
 the project configuration file.
 
+[Global configuration: /sitecore.tools/scconfig.json](src/console/scconfig.json)
+
 The project configuration file is located in the root of the project: /scconfig.json.
+
+[Project configuration: /scconfig.json](src/console/files/project/scconfig.json)
 
 ### Extensibility
 Pathfinder uses [MEF](https://msdn.microsoft.com/en-us/library/dd460648(v=vs.110).aspx) internally and is fully plugable. See section on 
@@ -889,15 +893,26 @@ Starter Kit | Description
 Clean Blog  | A simple blogging website.
 TodoMVC     | A SPEAK based Todo list.
 
-## CleanBlog
+### CleanBlog
 Clean Blog is a read-only blog website based on the [Start Bootstrap](http://startbootstrap.com/) - 
 [Clean Blog](http://startbootstrap.com/template-overviews/clean-blog/) template. It is very basic and uses Html Template files
 instead of Sitecore Renderings.
 
-## TodoMVC
+### TodoMVC
 The TodoMvc starter kit is a SPEAK based application that implements a Todo application similar to [TodoMVC](http://todomvc.com/).
 It uses Sitecore renderings and shows how to implement a new SPEAK rendering (TodoMvcList). It also uses an ASP.NET handler to
 create, update and delete todo items.
+
+# Package User interface
+Pathfinder installs a UI for managing packages on the website. While the Package Manager can uninstall Nuget packages, it
+does not (yet) remove files are items from the website - only the installed Nuget package is removed.
+
+The Package Manager is located at the Url: /sitecore/shell/client/Applications/Pathfinder/Packages
+
+![Package Manager](docs/img/PackageManager1.png)
+
+![Package Manager](docs/img/PackageManager2.png)
+
 
 # Architecture
 
@@ -1099,9 +1114,9 @@ There is no overlap between Razl and Pathfinder and I see no obvious integration
 
 ### Visual Studio Online
 [Visual Studio Online](https://www.visualstudio.com/en-us/products/what-is-visual-studio-online-vs.aspx): Services for teams to share code, 
-track work, and ship software – for any language, all in a single package. It's the perfect complement to your IDE.
+track work, and ship software - for any language, all in a single package. It's the perfect complement to your IDE.
 
-It is a goal that Pathfinder integrates with Visual Studio Online. Pathfinder fits in Build part of Visual Studio Online and it is pretty easy to 
+It is a goal that Pathfinder integrates with Visual Studio Online. Pathfinder fits in the Build part of Visual Studio Online and it is pretty easy to 
 setup.
 
 ![Pathfinder](docs/img/VisualStudioOnline1.png)
@@ -1124,7 +1139,7 @@ See [http://sitecoresupport.blogspot.dk/2012/03/sitecore-on-sql-2012-denali-with
 1. Change the AppPool Identity of the IIS Website to "LocalSystem"
 1. Start SQL LocalDB service using "sqllocaldb.exe start v11.0"
 
-## IIS Express
+### IIS Express
 Sitecore requires IIS to run. Consider using IIS Express.
 
 See [http://chrismcleod.me/2011/01/14/iis-express-website-here-shell-extension/](http://chrismcleod.me/2011/01/14/iis-express-website-here-shell-extension/)
@@ -1178,7 +1193,7 @@ FakeDB and Pathfinder could be integrated in a number of ways. Pathfinder could 
 developers do not have to do this manually. Also if the items change, it is easy to update the FakeDB code. 
 
 It would be really nice if Pathfinder could execute tests against FakeDB. It is not clear to me, if FakeDB requires a HttpContext - if not, this
-could be a good way to executes locally.
+could be a good way to execute tests locally.
 
 ### JsonDataProvider
 [JsonDataProvider](https://github.com/Sitecore/Sitecore.JsonDataProvider) allows storing parts of content tree in separate *.json files.
@@ -1225,3 +1240,25 @@ There is a big overlap between Sitecore Ship and Pathfinder, but Sitecore Ship d
 by Kevin Obee, it is probably very secure.
 
 Pathfinder could use Sitecore Ship internally to deploy update packages. It might be faster.
+
+# Roadmap
+
+Short term
+
+* Exclude images from uploading
+* Use Sitecore renderings in Html Templates
+
+Medium term
+
+* More starter kits
+* More documentation
+
+Long term
+
+* Make documents (Json, Xml, Yaml) editable, so that the project can be refactored (e.g. the Rename task).
+* Uninstall package (possible use Sitecore Rocks Anti-Packages).
+* Some sort of UI for editing item files in a graphical manner. Should probably be webpages on the website.
+* JsonDataProvider document - support JsonDataProvider files for editing
+* Continuous Integration/Delivery - how?
+* Live Update - update browser when project is built
+* Consider moving tasks to NPM
