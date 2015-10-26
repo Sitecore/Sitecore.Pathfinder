@@ -1245,13 +1245,16 @@ Pathfinder could use Sitecore Ship internally to deploy update packages. It migh
 
 Short term
 
-* Exclude images from uploading
+* Exclude specified images from uploading
 * Use Sitecore renderings in Html Templates
+* Fix bugs and do enhancements
 
 Medium term
 
 * More starter kits
 * More documentation
+* Support for Sitecore Habitat
+* Support for Visual Studio Online
 
 Long term
 

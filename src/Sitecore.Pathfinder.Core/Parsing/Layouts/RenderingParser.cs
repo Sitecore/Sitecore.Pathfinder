@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Parsing.Layouts
             context.Project.AddOrMerge(rendering);
 
             // todo: make this configurable
-            if (string.Compare(rendering.DatabaseName, "core", StringComparison.OrdinalIgnoreCase) == 0)
+            if (string.Equals(rendering.DatabaseName, "core", StringComparison.OrdinalIgnoreCase))
             {
                 var contents = context.Snapshot.SourceFile.ReadAsText();
 

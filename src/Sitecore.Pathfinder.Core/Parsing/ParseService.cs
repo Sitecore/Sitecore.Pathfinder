@@ -47,10 +47,15 @@ namespace Sitecore.Pathfinder.Parsing
             var fileContext = FileContext.GetFileContext(project, Configuration, sourceFile);
 
             var filePath = fileContext.FilePath;
+            if (filePath.StartsWith("~/"))
+            {
+                filePath = filePath.Mid(1);
+            }
+
             var filePathWithExtensions = PathHelper.NormalizeItemPath(PathHelper.GetDirectoryAndFileNameWithoutExtensions(filePath));
             var fileName = Path.GetFileName(filePath);
             var fileNameWithoutExtensions = PathHelper.GetFileNameWithoutExtensions(fileName);
-            var directoryName = string.IsNullOrEmpty(filePath) ? string.Empty : PathHelper.NormalizeFilePath(Path.GetDirectoryName(filePath) ?? string.Empty);
+            var directoryName = string.IsNullOrEmpty(filePath) ? string.Empty : PathHelper.NormalizeItemPath(Path.GetDirectoryName(filePath) ?? string.Empty);
 
             var tokens = new Dictionary<string, string>
             {

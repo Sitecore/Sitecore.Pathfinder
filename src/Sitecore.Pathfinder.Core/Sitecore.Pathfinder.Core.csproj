@@ -219,7 +219,6 @@
     <Compile Include="Projects\Layouts\Rendering.cs" />
     <Compile Include="Projects\IProject.cs" />
     <Compile Include="Snapshots\ISourceFile.cs" />
-    <Compile Include="Projects\Layouts\Layout.cs" />
     <Compile Include="Projects\References\Reference.cs" />
     <Compile Include="Projects\Project.cs" />
     <Compile Include="Projects\ProjectDirectoryVisitor.cs" />
