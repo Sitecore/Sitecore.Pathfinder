@@ -1,13 +1,11 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
 using System.IO;
 using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Parsing.Files
 {
-    [Export(typeof(IParser))]
     public class ContentFileParser : ParserBase
     {
         public ContentFileParser() : base(Constants.Parsers.ContentFiles)

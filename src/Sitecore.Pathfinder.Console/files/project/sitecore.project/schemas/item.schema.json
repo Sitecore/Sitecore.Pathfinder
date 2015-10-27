@@ -10,14 +10,32 @@
     },
 
     "definitions": {
-        "Include": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "additionalProperties": true,
-                "properties": {
-                    "File": { "type": "string" }
+        "File.Include": {
+            "oneOf": [
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "properties": {
+                            "File": { "type": "string" }
+                        }
+                    }
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                        "File": { "type": "string" }
+                    }
                 }
+            ]
+        },
+
+        "File.Placeholder": {
+            "type": "object",
+            "properties": {
+                "Key": { "type": "string" }
             }
         },
 
@@ -107,9 +125,8 @@
                             ]
                         },
 
-                        "Include": {
-                            "$ref": "#/definitions/Include"
-                        },
+                        "File.Include": { "$ref": "#/definitions/File.Include" },
+                        "File.Placeholder": { "$ref": "#/definitions/File.Placeholder" },
 
                         "^((?!(Versioned|Unversioned|Layout)).)*$": {
                             "oneOf": [
@@ -140,9 +157,16 @@
                     }
                 },
 
-                "Item": { "$ref": "#/definitions/Item" },
-                "Include": { "$ref": "#/definitions/Include" },
-                "template": { "$ref": "#/definitions/Template" }
+                "Children": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "Item": { "$ref": "#/definitions/Item" },
+                        "Template": { "$ref": "#/definitions/Template" },
+                        "File.Include": { "$ref": "#/definitions/File.Include" },
+                        "File.Placeholder": { "$ref": "#/definitions/File.Placeholder" }
+                    }
+                }
             }
         },
 
@@ -158,7 +182,8 @@
                 "ShortHelp": { "type": "string" },
                 "LongHelp": { "type": "string" },
                 "Layout.HtmlFile": { "type": "string" },
-                "Include": { "$ref": "#/definitions/Include" },
+                "File.Include": { "$ref": "#/definitions/File.Include" },
+                "File.Placeholder": { "$ref": "#/definitions/File.Placeholder" },
                 "Sections": {
                     "type": "array",
                     "items": {

@@ -12,18 +12,18 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
     public class CompileContext : ICompileContext
     {
         [ImportingConstructor]
-        public CompileContext([NotNull] ICompositionService compositionService, [NotNull] IFactoryService factory, [NotNull] ITraceService trace, [NotNull] IReferenceParserService referenceParser)
+        public CompileContext([NotNull] ICompositionService compositionService, [NotNull] IFactoryService factory, [NotNull] ITraceService trace, [NotNull] IReferenceParserService referenceParser, [ImportMany] [NotNull] [ItemNotNull] IEnumerable<ICompiler> compilers)
         {
             CompositionService = compositionService;
             Factory = factory;
             Trace = trace;
             ReferenceParser = referenceParser;
+            Compilers = compilers;
         }
 
-        [ImportMany(typeof(ICompiler))]
-        public IEnumerable<ICompiler> Compilers { get; protected set; }
+        public IEnumerable<ICompiler> Compilers { get; }
 
-        public ICompositionService CompositionService { get; set; }
+        public ICompositionService CompositionService { get; }
 
         public IFactoryService Factory { get; }
 

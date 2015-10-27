@@ -1,7 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -12,7 +11,6 @@ using Sitecore.Pathfinder.Projects.Files;
 
 namespace Sitecore.Pathfinder.Emitters.Files
 {
-    [Export(typeof(IEmitter))]
     public class BinFileEmitter : EmitterBase
     {
         public BinFileEmitter() : base(Constants.Emitters.BinFiles)

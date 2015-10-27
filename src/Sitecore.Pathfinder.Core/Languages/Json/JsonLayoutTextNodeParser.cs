@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Parsing.Items;
 using Sitecore.Pathfinder.Projects;
@@ -11,7 +10,6 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Json
 {
-    [Export(typeof(ITextNodeParser))]
     public class JsonLayoutTextNodeParser : LayoutTextNodeParserBase
     {
         public JsonLayoutTextNodeParser() : base(Constants.TextNodeParsers.Layouts)

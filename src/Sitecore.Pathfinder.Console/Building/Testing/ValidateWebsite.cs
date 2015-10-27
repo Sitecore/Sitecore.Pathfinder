@@ -2,14 +2,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.IO;
 using System.Xml.Linq;
 using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Building.Testing
 {
-    [Export(typeof(ITask))]
     public class ValidateWebsite : RequestTaskBase
     {
         public ValidateWebsite() : base("validate-website")

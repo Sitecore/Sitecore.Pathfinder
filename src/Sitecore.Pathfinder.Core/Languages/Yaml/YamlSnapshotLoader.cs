@@ -9,7 +9,6 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Yaml
 {
-    [Export(typeof(ISnapshotLoader))]
     public class YamlSnapshotLoader : SnapshotLoaderBase
     {
         [ImportingConstructor]

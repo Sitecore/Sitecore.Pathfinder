@@ -70,9 +70,11 @@ namespace Sitecore.Pathfinder.Helpers
                 return null;
             }
 
-            var coreExportProvider = new CatalogExportProvider(new AssemblyCatalog(typeof(Constants).Assembly));
-            var applicationExportProvider = new CatalogExportProvider(new AssemblyCatalog(typeof(Services).Assembly));
-            var extensionsExportProvider = new CatalogExportProvider(new AssemblyCatalog(extensionsAssembly));
+            var conventions = new ExtensibilityConventions().GetConventions();
+
+            var coreExportProvider = new CatalogExportProvider(new AssemblyCatalog(typeof(Constants).Assembly, conventions));
+            var applicationExportProvider = new CatalogExportProvider(new AssemblyCatalog(typeof(Services).Assembly, conventions));
+            var extensionsExportProvider = new CatalogExportProvider(new AssemblyCatalog(extensionsAssembly, conventions));
 
             // plugin directory exports takes precedence over application exports
             var compositionContainer = new CompositionContainer(extensionsExportProvider, applicationExportProvider, coreExportProvider);

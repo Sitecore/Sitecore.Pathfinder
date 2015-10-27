@@ -1,14 +1,12 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Building.Deploying
 {
-    [Export(typeof(ITask))]
     public class InstallPackage : RequestTaskBase
     {
         public InstallPackage() : base("install-package")

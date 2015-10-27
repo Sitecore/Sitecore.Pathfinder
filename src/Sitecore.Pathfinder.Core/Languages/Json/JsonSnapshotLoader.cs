@@ -9,7 +9,6 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Json
 {
-    [Export(typeof(ISnapshotLoader))]
     public class JsonSnapshotLoader : SnapshotLoaderBase
     {
         [ImportingConstructor]

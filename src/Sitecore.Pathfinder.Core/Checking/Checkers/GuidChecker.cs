@@ -1,12 +1,10 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
 using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Checking.Checkers
 {
-    [Export(typeof(IChecker))]
     public class GuidChecker : CheckerBase
     {
         public override void Check(ICheckerContext context)

@@ -1,13 +1,11 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.Files;
 
 namespace Sitecore.Pathfinder.Building.Commands
 {
-    [Export(typeof(ITask))]
     public class ListProject : TaskBase
     {
         public ListProject() : base("list-project")

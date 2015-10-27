@@ -1,6 +1,5 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Files;
@@ -10,7 +9,6 @@ using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Compiling.Compilers
 {
-    [Export(typeof(ICompiler))]
     public class MediaFileCompiler : CompilerBase
     {
         public override bool CanCompile(ICompileContext context, IProjectItem projectItem)

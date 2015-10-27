@@ -2,13 +2,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Snapshots.Directives
 {
-    [Export(typeof(ISnapshotDirective))]
     public class IncludeDirective : SnapshotDirectiveBase
     {
         public override bool CanParse(ITextNode textNode)
@@ -59,7 +57,7 @@ namespace Sitecore.Pathfinder.Snapshots.Directives
             }
             */
 
-            var innerTextNodes = new Dictionary<string, List<ITextNode>>(snapshotParseContext.InnerTextNodes);
+            var placeholderTextNodes = new Dictionary<string, List<ITextNode>>(snapshotParseContext.PlaceholderTextNodes);
 
             var placeholdersTextNode = textNode.GetSnapshotFormatSpecificChildNode("Placeholders");
             if (placeholdersTextNode != null)
@@ -67,14 +65,14 @@ namespace Sitecore.Pathfinder.Snapshots.Directives
                 foreach (var childNode in placeholdersTextNode.ChildNodes)
                 {
                     var placeholderKey = childNode.GetAttributeValue("Key");
-                    innerTextNodes[placeholderKey] = childNode.ChildNodes.ToList();
+                    placeholderTextNodes[placeholderKey] = childNode.ChildNodes.ToList();
                 }
             }
 
             mutableTextNode.ChildNodeCollection.Clear();
 
             var tokens = new Dictionary<string, string>(snapshotParseContext.Tokens).AddRange(textNode.Attributes.ToDictionary(a => a.Key, a => a.Value));
-            var context = new SnapshotParseContext(snapshotParseContext.SnapshotService, tokens, innerTextNodes);
+            var context = new SnapshotParseContext(snapshotParseContext.SnapshotService, tokens, placeholderTextNodes);
 
             textNodes.Add(snapshotParseContext.SnapshotService.LoadIncludeFile(context, textNode.Snapshot, fileName));
 

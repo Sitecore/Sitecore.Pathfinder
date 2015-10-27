@@ -7,7 +7,6 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Xml
 {
-    [Export(typeof(ISnapshotLoader))]
     public class ItemXmlSnapshotLoader : XmlSnapshotLoader
     {
         [ImportingConstructor]

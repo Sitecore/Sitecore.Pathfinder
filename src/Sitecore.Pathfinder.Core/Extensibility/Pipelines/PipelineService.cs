@@ -10,8 +10,15 @@ namespace Sitecore.Pathfinder.Extensibility.Pipelines
     [Export(typeof(IPipelineService))]
     public class PipelineService : IPipelineService
     {
-        [ImportMany(typeof(IPipelineProcessor))]
-        public IEnumerable<IPipelineProcessor> PipelineProcessors { get; private set; }
+        [ImportingConstructor]
+        public PipelineService([ImportMany] [NotNull] [ItemNotNull] IEnumerable<IPipelineProcessor> pipelineProcessors)
+        {
+            PipelineProcessors = pipelineProcessors;
+        }
+
+        [NotNull]
+        [ItemNotNull]
+        protected IEnumerable<IPipelineProcessor> PipelineProcessors { get; }
 
         public virtual T Resolve<T>() where T : IPipeline<T>, new()
         {

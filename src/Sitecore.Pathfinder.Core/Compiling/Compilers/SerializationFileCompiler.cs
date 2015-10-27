@@ -1,6 +1,5 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using Sitecore.Pathfinder.Compiling.Builders;
@@ -12,7 +11,6 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Compiling.Compilers
 {
-    [Export(typeof(ICompiler))]
     public class SerializationFileCompiler : CompilerBase
     {
         public override bool CanCompile(ICompileContext context, IProjectItem projectItem)

@@ -2,13 +2,11 @@
 
 using Sitecore.Pathfinder.Diagnostics;
 using System;
-using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 
 namespace Sitecore.Pathfinder.Parsing.Files
 {
-    [Export(typeof(IParser))]
     public class MediaFileParser : ParserBase
     {
         // todo: make this configurable

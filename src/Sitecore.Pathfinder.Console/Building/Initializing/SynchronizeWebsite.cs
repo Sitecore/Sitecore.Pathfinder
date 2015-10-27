@@ -1,14 +1,12 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.IO;
 using System.IO.Compression;
 using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Building.Initializing
 {
-    [Export(typeof(ITask))]
     public class SynchronizeWebsite : RequestTaskBase
     {
         public SynchronizeWebsite() : base("sync-website")

@@ -1,7 +1,6 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -10,7 +9,6 @@ using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Building.Initializing
 {
-    [Export(typeof(ITask))]
     public class Help : TaskBase
     {
         public Help() : base("help")

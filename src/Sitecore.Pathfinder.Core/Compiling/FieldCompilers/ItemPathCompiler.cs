@@ -1,14 +1,12 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
 using System.Text;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 {
-    [Export(typeof(IFieldCompiler))]
     public class ItemPathCompiler : FieldCompilerBase
     {
         public ItemPathCompiler() : base(Constants.FieldResolvers.Normal + 10)

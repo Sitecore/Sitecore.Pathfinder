@@ -1,7 +1,5 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.Collections.Generic;
-
 namespace Sitecore.Pathfinder.Snapshots
 {
     public abstract class SnapshotLoaderBase : ISnapshotLoader

@@ -1,13 +1,11 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
 using Sitecore.Pathfinder.Emitters.Writers;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.Emitters.Items
 {
-    [Export(typeof(IEmitter))]
     public class TemplateEmitter : EmitterBase
     {
         public TemplateEmitter() : base(Constants.Emitters.Templates)

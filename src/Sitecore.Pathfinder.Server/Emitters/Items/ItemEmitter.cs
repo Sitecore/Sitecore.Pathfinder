@@ -1,7 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Configuration;
 using Sitecore.Data;
@@ -16,7 +15,6 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Emitters.Items
 {
-    [Export(typeof(IEmitter))]
     public class ItemEmitter : EmitterBase
     {
         public ItemEmitter() : base(Constants.Emitters.Items)

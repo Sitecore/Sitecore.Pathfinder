@@ -1,11 +1,9 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
 using System.IO;
 
 namespace Sitecore.Pathfinder.Building.Initializing
 {
-    [Export(typeof(ITask))]
     public class InitAtom : TaskBase
     {
         public InitAtom() : base("init-atom")

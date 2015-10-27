@@ -1,7 +1,6 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -12,7 +11,6 @@ using Sitecore.Pathfinder.Projects.Layouts;
 
 namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 {
-    [Export(typeof(IFieldCompiler))]
     public class LayoutHtmlFileFieldCompiler : FieldCompilerBase
     {
         public LayoutHtmlFileFieldCompiler() : base(Constants.FieldResolvers.Normal)

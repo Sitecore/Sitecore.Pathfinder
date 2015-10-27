@@ -15,22 +15,17 @@ namespace Sitecore.Pathfinder.Building
     public class Build
     {
         [ImportingConstructor]
-        public Build([NotNull] ICompositionService compositionService, [NotNull] IConfigurationService configurationService, [NotNull] ITraceService trace)
+        public Build([NotNull] ICompositionService compositionService, [NotNull] IConfigurationService configurationService, [NotNull] ITraceService trace, [ImportMany] [NotNull] [ItemNotNull] IEnumerable<ITask> tasks)
         {
             CompositionService = compositionService;
             ConfigurationService = configurationService;
             Trace = trace;
+            Tasks = tasks;
         }
 
         [NotNull]
-        [ImportMany]
         [ItemNotNull]
-        public IEnumerable<ITask> Tasks
-        {
-            get;
-            [UsedImplicitly]
-            private set;
-        }
+        public IEnumerable<ITask> Tasks { get; }
 
         [NotNull]
         protected ICompositionService CompositionService { get; }

@@ -7,6 +7,7 @@ using System.Reflection;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.IO;
 using Sitecore.Pathfinder.Emitters;
+using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Parsing;
 
 namespace Sitecore.Pathfinder
@@ -28,10 +29,12 @@ namespace Sitecore.Pathfinder
         {
             var directory = FileUtil.MapPath("/bin");
 
-            var applicationExportProvider = new CatalogExportProvider(new AssemblyCatalog(Assembly.GetExecutingAssembly()));
-            var coreExportProvider = new CatalogExportProvider(new AssemblyCatalog(typeof(ParseService).Assembly));
-            var serverAssembliesExportProvider = new CatalogExportProvider(new DirectoryCatalog(directory, "Sitecore.Pathfinder.Server.*.dll"));
-            var coreAssembliesExportProvider = new CatalogExportProvider(new DirectoryCatalog(directory, "Sitecore.Pathfinder.Core.*.dll"));
+            var conventions = new ExtensibilityConventions().GetConventions();
+
+            var applicationExportProvider = new CatalogExportProvider(new AssemblyCatalog(Assembly.GetExecutingAssembly(), conventions));
+            var coreExportProvider = new CatalogExportProvider(new AssemblyCatalog(typeof(ParseService).Assembly, conventions));
+            var serverAssembliesExportProvider = new CatalogExportProvider(new DirectoryCatalog(directory, "Sitecore.Pathfinder.Server.*.dll", conventions));
+            var coreAssembliesExportProvider = new CatalogExportProvider(new DirectoryCatalog(directory, "Sitecore.Pathfinder.Core.*.dll", conventions));
 
             // directory exports takes precedence over application exports
             var compositionContainer = new CompositionContainer(serverAssembliesExportProvider, coreAssembliesExportProvider, applicationExportProvider, coreExportProvider);

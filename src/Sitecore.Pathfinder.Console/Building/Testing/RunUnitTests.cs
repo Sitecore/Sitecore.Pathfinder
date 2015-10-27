@@ -1,6 +1,5 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
@@ -11,7 +10,6 @@ namespace Sitecore.Pathfinder.Building.Testing
 {
     using System.Collections.Generic;
 
-    [Export(typeof(ITask))]
     public class RunUnitTests : RequestTaskBase
     {
         public RunUnitTests() : base("run-unittests")

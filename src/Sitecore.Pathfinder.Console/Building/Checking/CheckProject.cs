@@ -1,12 +1,10 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Building.Checking
 {
-    [Export(typeof(ITask))]
     public class CheckProject : TaskBase
     {
         public CheckProject() : base("check-project")

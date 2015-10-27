@@ -1,11 +1,9 @@
-using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.Building.Initializing
 {
-    [Export(typeof(ITask))]
     public class ShowMetrics : TaskBase
     {
         public ShowMetrics() : base("show-metrics")

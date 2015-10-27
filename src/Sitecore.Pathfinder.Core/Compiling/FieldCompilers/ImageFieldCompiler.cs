@@ -1,13 +1,11 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 {
-    [Export(typeof(IFieldCompiler))]
     public class ImageFieldCompiler : FieldCompilerBase
     {
         public ImageFieldCompiler() : base(Constants.FieldResolvers.Normal)
@@ -16,7 +14,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
         public override bool CanCompile(IFieldCompileContext context, Field field)
         {
-            return string.Compare(field.TemplateField.Type, "image", StringComparison.OrdinalIgnoreCase) == 0;
+            return string.Equals(field.TemplateField.Type, "image", StringComparison.OrdinalIgnoreCase);
         }
 
         public override string Compile(IFieldCompileContext context, Field field)

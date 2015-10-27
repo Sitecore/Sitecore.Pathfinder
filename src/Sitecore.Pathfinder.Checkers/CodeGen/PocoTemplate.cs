@@ -1,7 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
 using System.IO;
 using System.Text;
 using Sitecore.Pathfinder.CodeGeneration;
@@ -11,7 +10,6 @@ using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.CodeGen
 {
-    [Export(typeof(ICodeGenerator))]
     public class PocoTemplate : ICodeGenerator
     {
         public bool CanGenerate(object instance)

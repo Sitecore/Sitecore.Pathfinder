@@ -10,7 +10,6 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Xml
 {
-    [Export(typeof(IFieldCompiler))]
     public class XmlLayoutFieldCompiler : FieldCompilerBase
     {
         [ImportingConstructor]

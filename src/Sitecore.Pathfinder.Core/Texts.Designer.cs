@@ -395,6 +395,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to change template of the item.
+        /// </summary>
+        public static string Failed_to_change_template_of_the_item {
+            get {
+                return ResourceManager.GetString("Failed_to_change_template_of_the_item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to create item path.
         /// </summary>
         public static string Failed_to_create_item_path {

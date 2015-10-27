@@ -9,7 +9,6 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Serialization
 {
-    [Export(typeof(ISnapshotLoader))]
     public class SerializationSnapshotLoader : SnapshotLoaderBase
     {
         [ImportingConstructor]

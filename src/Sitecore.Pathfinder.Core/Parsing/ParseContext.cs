@@ -41,7 +41,7 @@ namespace Sitecore.Pathfinder.Parsing
 
         public IProject Project { get; private set; }
 
-        public IReferenceParserService ReferenceParser { get; set; }
+        public IReferenceParserService ReferenceParser { get; }
 
         public ISnapshot Snapshot { get; private set; }
 

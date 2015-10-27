@@ -2,12 +2,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Building.Deploying
 {
-    [Export(typeof(ITask))]
     public class PublishDatabase : RequestTaskBase
     {
         public PublishDatabase() : base("publish-database")

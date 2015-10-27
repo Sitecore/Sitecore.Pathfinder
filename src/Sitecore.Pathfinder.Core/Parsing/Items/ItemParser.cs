@@ -1,16 +1,15 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using Sitecore.Pathfinder.Diagnostics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Parsing.Items
 {
-    [Export(typeof(IParser))]
     public class ItemParser : ParserBase
     {
         [NotNull]
@@ -21,6 +20,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             ".content.xml",
             ".layout.xml",
             ".item.json",
+
             // ".content.json",
             ".layout.json",
             ".item.yaml",
@@ -28,14 +28,15 @@ namespace Sitecore.Pathfinder.Parsing.Items
             ".layout.yaml"
         };
 
-        public ItemParser() : base(Constants.Parsers.Items)
+        [ImportingConstructor]
+        public ItemParser([ImportMany] [NotNull] [ItemNotNull] IEnumerable<ITextNodeParser> textNodeParsers) : base(Constants.Parsers.Items)
         {
+            TextNodeParsers = textNodeParsers;
         }
 
         [NotNull]
-        [ImportMany]
         [ItemNotNull]
-        public IEnumerable<ITextNodeParser> TextNodeParsers { get;[UsedImplicitly] private set; }
+        public IEnumerable<ITextNodeParser> TextNodeParsers { get; }
 
         public override bool CanParse(IParseContext context)
         {

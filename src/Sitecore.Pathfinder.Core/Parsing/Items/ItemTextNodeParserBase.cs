@@ -29,8 +29,8 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
             var item = context.ParseContext.Factory.Item(context.ParseContext.Project, guid, textNode, databaseName, itemNameTextNode.Value, itemIdOrPath, templateIdOrPath);
             item.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
-            item.IsEmittable = string.Compare(textNode.GetAttributeValue("IsEmittable"), "False", StringComparison.OrdinalIgnoreCase) != 0;
-            item.IsExtern = string.Compare(textNode.GetAttributeValue("IsExternalReference"), "True", StringComparison.OrdinalIgnoreCase) == 0;
+            item.IsEmittable = !string.Equals(textNode.GetAttributeValue("IsEmittable"), "False", StringComparison.OrdinalIgnoreCase);
+            item.IsExtern = string.Equals(textNode.GetAttributeValue("IsExternalReference"), "True", StringComparison.OrdinalIgnoreCase);
 
             if (templateIdOrPathTextNode != null)
             {
@@ -59,11 +59,24 @@ namespace Sitecore.Pathfinder.Parsing.Items
                         ParseFieldsTextNode(context, item, childNode);
                         break;
 
+                    case "Children":
+                        ParseChildrenTextNodes(context, item, childNode);
+                        break;
+
                     default:
                         var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, PathHelper.CombineItemPath(context.ParentItemPath, item.ItemName));
                         context.Parser.ParseTextNode(newContext, childNode);
                         break;
                 }
+            }
+        }
+
+        protected virtual void ParseChildrenTextNodes([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode textNode)
+        {
+            foreach (var childNode in textNode.ChildNodes)
+            {
+                var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, PathHelper.CombineItemPath(context.ParentItemPath, item.ItemName));
+                context.Parser.ParseTextNode(newContext, childNode);
             }
         }
 

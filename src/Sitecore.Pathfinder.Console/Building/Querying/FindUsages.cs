@@ -1,13 +1,11 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Querying;
 
 namespace Sitecore.Pathfinder.Building.Querying
 {
-    [Export(typeof(ITask))]
     public class FindUsages : QueryTaskBase
     {
         public FindUsages() : base("find-usages")

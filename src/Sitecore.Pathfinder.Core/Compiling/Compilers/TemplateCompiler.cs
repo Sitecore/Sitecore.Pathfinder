@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
@@ -9,7 +8,6 @@ using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Compiling.Compilers
 {
-    [Export(typeof(ICompiler))]
     public class TemplateCompiler : CompilerBase
     {
         public override bool CanCompile(ICompileContext context, IProjectItem projectItem)

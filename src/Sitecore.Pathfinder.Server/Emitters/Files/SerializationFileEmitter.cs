@@ -1,7 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using Sitecore.Data.Serialization;
@@ -11,7 +10,6 @@ using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Emitters.Files
 {
-    [Export(typeof(IEmitter))]
     public class SerializationFileEmitter : EmitterBase
     {
         [Diagnostics.NotNull]

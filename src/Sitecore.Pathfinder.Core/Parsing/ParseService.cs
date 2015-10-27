@@ -19,11 +19,12 @@ namespace Sitecore.Pathfinder.Parsing
     public class ParseService : IParseService
     {
         [ImportingConstructor]
-        public ParseService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ISnapshotService snapshotService)
+        public ParseService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ISnapshotService snapshotService, [ImportMany] [NotNull] [ItemNotNull] IEnumerable<IParser> parsers)
         {
             CompositionService = compositionService;
             Configuration = configuration;
             SnapshotService = snapshotService;
+            Parsers = parsers;
         }
 
         [NotNull]
@@ -33,9 +34,8 @@ namespace Sitecore.Pathfinder.Parsing
         protected IConfiguration Configuration { get; }
 
         [NotNull]
-        [ImportMany]
         [ItemNotNull]
-        protected IEnumerable<IParser> Parsers { get; private set; }
+        protected IEnumerable<IParser> Parsers { get; }
 
         [NotNull]
         protected ISnapshotService SnapshotService { get; }

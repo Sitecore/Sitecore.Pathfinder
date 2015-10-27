@@ -1,13 +1,11 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Sitecore.Pathfinder.Parsing.Layouts
 {
-    [Export(typeof(IParser))]
     public class HtmlTemplateRenderingParser : RenderingParser
     {
         public HtmlTemplateRenderingParser() : base(".html", Constants.Templates.ViewRendering)

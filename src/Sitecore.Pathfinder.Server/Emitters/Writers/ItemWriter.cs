@@ -163,7 +163,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                     }
                     catch (Exception ex)
                     {
-                       context.Trace.TraceError("Could not change template", ex.Message);
+                        throw new RetryableEmitException(Texts.Failed_to_change_template_of_the_item, Snapshot, ex.Message);
                     }
                 }
 

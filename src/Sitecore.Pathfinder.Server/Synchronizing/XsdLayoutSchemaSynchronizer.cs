@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -22,7 +21,6 @@ using Sitecore.Zip;
 
 namespace Sitecore.Pathfinder.Synchronizing
 {
-    [Export(typeof(ISynchronizer))]
     public class XsdLayoutSchemaSynchronizer : ISynchronizer
     {
         public const string Namespace = "http://www.w3.org/2001/XMLSchema";

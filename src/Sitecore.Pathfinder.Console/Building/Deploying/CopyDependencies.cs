@@ -1,13 +1,11 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Building.Deploying
 {
-    [Export(typeof(ITask))]
     public class CopyDependencies : TaskBase
     {
         public CopyDependencies() : base("copy-dependencies")

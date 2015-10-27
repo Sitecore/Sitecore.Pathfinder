@@ -1,6 +1,5 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Building.Querying;
 using Sitecore.Pathfinder.Extensions;
@@ -9,7 +8,6 @@ using Sitecore.Pathfinder.Querying;
 
 namespace Sitecore.Pathfinder.Building.Refactoring
 {
-    [Export(typeof(ITask))]
     public class Rename : QueryTaskBase
     {
         public Rename() : base("rename")

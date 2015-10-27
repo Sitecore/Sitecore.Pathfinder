@@ -12,15 +12,15 @@ namespace Sitecore.Pathfinder.Checking
     public class CheckerService : ICheckerService
     {
         [ImportingConstructor]
-        public CheckerService([NotNull] ICompositionService compositionService)
+        public CheckerService([NotNull] ICompositionService compositionService, [NotNull] [ImportMany] [ItemNotNull] IEnumerable<IChecker> checkers)
         {
             CompositionService = compositionService;
+            Checkers = checkers;
         }
 
         [NotNull]
-        [ImportMany]
         [ItemNotNull]
-        protected IEnumerable<IChecker> Checkers { get; private set; }
+        protected IEnumerable<IChecker> Checkers { get; }
 
         [NotNull]
         protected ICompositionService CompositionService { get; }

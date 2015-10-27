@@ -1,6 +1,5 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Parsing.Items;
@@ -9,7 +8,6 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Json
 {
-    [Export(typeof(ITextNodeParser))]
     public class JsonItemTextNodeParser : ItemTextNodeParserBase
     {
         public JsonItemTextNodeParser() : base(Constants.TextNodeParsers.Items)

@@ -1,12 +1,10 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Building.Initializing
 {
-    [Export(typeof(ITask))]
     public class InitProject : TaskBase
     {
         public InitProject() : base("init-project")

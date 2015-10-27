@@ -1,12 +1,10 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checking.Checkers
 {
-    [Export(typeof(IChecker))]
     public class ReferenceChecker : CheckerBase
     {
         public override void Check(ICheckerContext context)

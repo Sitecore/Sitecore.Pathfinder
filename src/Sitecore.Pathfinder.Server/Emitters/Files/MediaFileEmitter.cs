@@ -1,6 +1,5 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using Sitecore.Configuration;
@@ -18,7 +17,6 @@ using Sitecore.Resources.Media;
 
 namespace Sitecore.Pathfinder.Emitters.Files
 {
-    [Export(typeof(IEmitter))]
     public class MediaFileEmitter : EmitterBase
     {
         public MediaFileEmitter() : base(Constants.Emitters.MediaFiles)

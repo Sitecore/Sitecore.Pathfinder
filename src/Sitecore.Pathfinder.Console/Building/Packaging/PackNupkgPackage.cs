@@ -1,7 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
 using System.IO;
 using NuGet;
 using Sitecore.Pathfinder.Diagnostics;
@@ -9,7 +8,6 @@ using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Building.Packaging
 {
-    [Export(typeof(ITask))]
     public class PackNupkgPackage : TaskBase
     {
         public PackNupkgPackage() : base("pack-nuget")

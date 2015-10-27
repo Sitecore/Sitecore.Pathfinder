@@ -11,7 +11,6 @@ using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
 {
-    [Export(typeof(ITask))]
     public class BeforeBuild : TaskBase
     {
         [ImportingConstructor]

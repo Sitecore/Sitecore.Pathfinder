@@ -1,14 +1,12 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.IO;
 using Sitecore.Pathfinder.Building.Testing.UnitTests.Pipelines;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Building.Testing.UnitTests
 {
-    [Export(typeof(ITask))]
     public class GenerateUnitTest : TaskBase
     {
         public GenerateUnitTest() : base("generate-unittests")

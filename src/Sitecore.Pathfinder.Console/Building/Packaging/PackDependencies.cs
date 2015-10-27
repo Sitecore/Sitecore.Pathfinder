@@ -1,7 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
 using System.IO;
 using System.Text;
 using NuGet;
@@ -11,7 +10,6 @@ using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Building.Packaging
 {
-    [Export(typeof(ITask))]
     public class PackDependencies : TaskBase
     {
         public PackDependencies() : base("pack-dependencies")

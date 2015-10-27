@@ -11,17 +11,17 @@ using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Building.Codegen
 {
-    [Export(typeof(ITask))]
     public class GenerateCode : TaskBase
     {
-        public GenerateCode() : base("generate-code")
+        [ImportingConstructor]
+        public GenerateCode([NotNull] [ImportMany] [ItemNotNull] IEnumerable<ICodeGenerator> codeGenerators) : base("generate-code")
         {
+            CodeGenerators = codeGenerators;
         }
 
         [NotNull]
-        [ImportMany(typeof(ICodeGenerator))]
         [ItemNotNull]
-        public IEnumerable<ICodeGenerator> CodeGenerators { get; protected set; }
+        protected IEnumerable<ICodeGenerator> CodeGenerators { get; }
 
         public override void Run(IBuildContext context)
         {

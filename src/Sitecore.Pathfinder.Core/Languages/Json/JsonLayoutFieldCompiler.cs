@@ -14,7 +14,6 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Json
 {
-    [Export(typeof(IFieldCompiler))]
     public class JsonLayoutFieldCompiler : FieldCompilerBase
     {
         [ImportingConstructor]

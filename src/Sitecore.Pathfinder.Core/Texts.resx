@@ -450,4 +450,7 @@
     <data name="Nuspec_file_not_found" xml:space="preserve">
     <value>Nuspec file not found</value>
   </data>
+    <data name="Failed_to_change_template_of_the_item" xml:space="preserve">
+    <value>Failed to change template of the item</value>
+  </data>
 </root>

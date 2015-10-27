@@ -6,7 +6,6 @@ using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 {
-    [Export(typeof(IFieldCompiler))]
     public class CheckboxFieldCompiler : FieldCompilerBase
     {
         public CheckboxFieldCompiler() : base(Constants.FieldResolvers.Normal)
@@ -15,24 +14,24 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
         public override bool CanCompile(IFieldCompileContext context, Field field)
         {
-            return string.Compare(field.TemplateField.Type, "checkbox", StringComparison.OrdinalIgnoreCase) == 0;
+            return string.Equals(field.TemplateField.Type, "checkbox", StringComparison.OrdinalIgnoreCase);
         }
 
         public override string Compile(IFieldCompileContext context, Field field)
         {
             var value = field.Value.Trim();
 
-            if (string.Compare(value, "true", StringComparison.OrdinalIgnoreCase) != 0 && string.Compare(value, "false", StringComparison.OrdinalIgnoreCase) != 0)
+            if (!string.Equals(value, "true", StringComparison.OrdinalIgnoreCase) && string.Compare(value, "false", StringComparison.OrdinalIgnoreCase) != 0)
             {
                 context.Trace.TraceError(Texts.Checkbox_field_value_must_be__true__or__false__, value);
             }
 
-            if (string.Compare(value, "true", StringComparison.OrdinalIgnoreCase) == 0)
+            if (string.Equals(value, "true", StringComparison.OrdinalIgnoreCase))
             {
                 return "1";
             }
 
-            if (string.Compare(value, "1", StringComparison.OrdinalIgnoreCase) == 0)
+            if (string.Equals(value, "1", StringComparison.OrdinalIgnoreCase))
             {
                 return "1";
             }

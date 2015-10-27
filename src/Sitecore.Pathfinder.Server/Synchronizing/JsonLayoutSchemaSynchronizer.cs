@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -20,7 +19,6 @@ using Sitecore.Zip;
 
 namespace Sitecore.Pathfinder.Synchronizing
 {
-    [Export(typeof(ISynchronizer))]
     public class JsonLayoutSchemaSynchronizer : ISynchronizer
     {
         public bool CanSynchronize(IConfiguration configuration, string fileName)

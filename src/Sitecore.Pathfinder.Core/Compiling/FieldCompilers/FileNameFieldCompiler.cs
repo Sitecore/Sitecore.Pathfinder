@@ -1,13 +1,11 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 {
-    [Export(typeof(IFieldCompiler))]
     public class FileNameFieldCompiler : FieldCompilerBase
     {
         public FileNameFieldCompiler() : base(Constants.FieldResolvers.Normal)

@@ -1,7 +1,6 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
@@ -11,7 +10,6 @@ using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Parsing.Items
 {
-    [Export(typeof(ITextNodeParser))]
     public class TemplateTextNodeParser : TextNodeParserBase
     {
         public TemplateTextNodeParser() : base(Constants.TextNodeParsers.Templates)

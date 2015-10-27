@@ -10,7 +10,6 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Yaml
 {
-    [Export(typeof(IFieldCompiler))]
     public class YamlLayoutFieldCompiler : FieldCompilerBase
     {
         [ImportingConstructor]
@@ -30,7 +29,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
                 return false;
             }
 
-            return string.Compare(field.TemplateField.Type, "layout", StringComparison.OrdinalIgnoreCase) == 0 || field.ValueHint.Contains("Layout");
+            return string.Equals(field.TemplateField.Type, "layout", StringComparison.OrdinalIgnoreCase) || field.ValueHint.Contains("Layout");
         }
 
         public override string Compile(IFieldCompileContext context, Field field)
