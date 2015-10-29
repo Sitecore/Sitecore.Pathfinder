@@ -134,8 +134,8 @@ The build tool chain is specified in the build-project/tasks configuration setti
 7. Show project metrics.
 
 ### Configuration
-Pathfinder is configured using a global configuration file and a project configuration file. The project configuration file can overwrite
-any settings in the global configuration file.
+Pathfinder is configured using a global configuration file, a project configuration file and optionally a user configuration file. The user and project 
+configuration files can overwrite any settings in the global configuration file.
 
 The global configuration is located in the /sitecore.tools/sccconfig.json. You should never change this file. Instead overwrite settings in 
 the project configuration file.
@@ -145,6 +145,12 @@ the project configuration file.
 The project configuration file is located in the root of the project: /scconfig.json.
 
 [Project configuration: /scconfig.json](src/console/files/project/scconfig.json)
+
+The user configuration file is options and is located next to the project configuration file. It has the extension .user.
+
+/sitecore.tools/scconfig.json (global configuration)
+/scconfig.json (project configuration)
+/scconfig.json.user (user configuration)
 
 ### Extensibility
 Pathfinder uses [MEF](https://msdn.microsoft.com/en-us/library/dd460648(v=vs.110).aspx) internally and is fully plugable. See section on 

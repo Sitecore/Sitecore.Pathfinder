@@ -11,7 +11,9 @@ namespace Sitecore.Pathfinder.Configuration
     {
         None = 0,
 
-        IncludeCommandLine = 1
+        IncludeCommandLine = 1,
+
+        IncludeUserConfig = 2
     }
 
     public interface IConfigurationService

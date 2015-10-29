@@ -100,11 +100,21 @@ namespace Sitecore.Pathfinder.Configuration
 
             configurationSourceRoot.Set(Constants.Configuration.SolutionDirectory, solutionDirectory);
 
-            // add solution config file
+            // add project config file
             var projectConfigFileName = PathHelper.Combine(solutionDirectory, configurationSourceRoot.Get(Constants.Configuration.ProjectConfigFileName));
             if (File.Exists(projectConfigFileName))
             {
                 configurationSourceRoot.AddFile(projectConfigFileName);
+            }
+
+            // add user config file
+            if ((options & LoadConfigurationOptions.IncludeUserConfig) == LoadConfigurationOptions.IncludeUserConfig)
+            {
+                var userConfigFileName = projectConfigFileName + ".user";
+                if (File.Exists(userConfigFileName))
+                {
+                    configurationSourceRoot.AddFile(userConfigFileName);
+                }
             }
 
             // set project directory
