@@ -9,7 +9,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 {
     public class ItemPathCompiler : FieldCompilerBase
     {
-        public ItemPathCompiler() : base(Constants.FieldResolvers.Normal + 10)
+        public ItemPathCompiler() : base(Constants.FieldCompilers.Normal + 10)
         {
         }
 

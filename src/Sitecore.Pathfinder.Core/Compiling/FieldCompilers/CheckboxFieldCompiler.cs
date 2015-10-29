@@ -8,7 +8,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 {
     public class CheckboxFieldCompiler : FieldCompilerBase
     {
-        public CheckboxFieldCompiler() : base(Constants.FieldResolvers.Normal)
+        public CheckboxFieldCompiler() : base(Constants.FieldCompilers.Normal)
         {
         }
 

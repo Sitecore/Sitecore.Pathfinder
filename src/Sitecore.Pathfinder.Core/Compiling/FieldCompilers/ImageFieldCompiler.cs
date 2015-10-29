@@ -8,7 +8,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 {
     public class ImageFieldCompiler : FieldCompilerBase
     {
-        public ImageFieldCompiler() : base(Constants.FieldResolvers.Normal)
+        public ImageFieldCompiler() : base(Constants.FieldCompilers.Normal)
         {
         }
 

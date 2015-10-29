@@ -33,6 +33,8 @@ namespace Sitecore.Pathfinder.Parsing
 
         public virtual string FilePath { get; private set; }
 
+        public virtual bool IsExtern { get; private set; }
+
         public virtual string ItemName { get; private set; }
 
         public virtual string ItemPath { get; private set; }
@@ -58,6 +60,7 @@ namespace Sitecore.Pathfinder.Parsing
             ItemName = fileContext.ItemName;
             ItemPath = fileContext.ItemPath;
             DatabaseName = fileContext.DatabaseName;
+            IsExtern = fileContext.IsExtern;
 
             return this;
         }

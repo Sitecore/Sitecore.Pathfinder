@@ -1,36 +1,36 @@
 ﻿<Root Id="{11111111-1111-1111-1111-111111111111}" Database="core" Name="sitecore" ParentItemPath="/" IsExternalReference="True">
-    <Main.Section Id="{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}" Name="content" IsExternalReference="True" />
+    <Main.Section Id="{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}" Name="content" />
 
-    <Main.Section Id="{EB2E4FFD-2761-4653-B052-26A64D385227}" Name="layout" IsExternalReference="True">
-        <Main.Section Id="{EB2E4FFD-2761-4653-B052-26A64D385227}" Name="layout" IsExternalReference="True">
-            <Node Id="{E18F4BC6-46A2-4842-898B-B6613733F06F}" Name="Devices" IsExternalReference="True">
-                <Device Id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}" Name="Internet Explorer" IsExternalReference="True" />
-                <Device Id="{3AC0D3A4-D6AE-429F-A79C-F42157D0004E}" Name="Firefox" IsExternalReference="True" />
+    <Main.Section Id="{EB2E4FFD-2761-4653-B052-26A64D385227}" Name="layout">
+        <Main.Section Id="{EB2E4FFD-2761-4653-B052-26A64D385227}" Name="layout">
+            <Node Id="{E18F4BC6-46A2-4842-898B-B6613733F06F}" Name="Devices">
+                <Device Id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}" Name="Internet Explorer" />
+                <Device Id="{3AC0D3A4-D6AE-429F-A79C-F42157D0004E}" Name="Firefox" />
             </Node>
         </Main.Section>
     </Main.Section>
 
-    <Main.Section Id="{3C1715FE-6A13-4FCF-845F-DE308BA9741D}" Name="templates" IsExternalReference="True">
-        <Template.Folder Id="{4BF98EF5-1D09-4DD1-9AFE-795F9829FD44}" Name="System" IsExternalReference="True">
-            <Folder Id="{FB6B721E-D64D-4392-A1F0-A15194CBFAD9}" Name="Layout" IsExternalReference="True">
-                <Folder Id="{531BF4A2-C3B2-4EB9-89D0-FA30C82AB33B}" Name="Renderings" IsExternalReference="True">
-                    <Template Id="{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}" Name="View Rendering" IsExternalReference="True">
-                        <Section Id="{CBA7C9A0-B79F-464F-8661-23D6A9B6E1BB}" Name="Data" IsExternalReference="True">
-                            <Field Id="{51B435BC-F7B9-478A-9C51-52916AF96FF5}" Name="Path" IsExternalReference="True" />
-                            <Field Id="{7D24E54F-5C16-4314-90C9-6051AA1A7DA1}" Name="Parameters Template" IsExternalReference="True" />
+    <Main.Section Id="{3C1715FE-6A13-4FCF-845F-DE308BA9741D}" Name="templates">
+        <Template.Folder Id="{4BF98EF5-1D09-4DD1-9AFE-795F9829FD44}" Name="System">
+            <Folder Id="{FB6B721E-D64D-4392-A1F0-A15194CBFAD9}" Name="Layout">
+                <Folder Id="{531BF4A2-C3B2-4EB9-89D0-FA30C82AB33B}" Name="Renderings">
+                    <Template Id="{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}" Name="View Rendering">
+                        <Section Id="{CBA7C9A0-B79F-464F-8661-23D6A9B6E1BB}" Name="Data">
+                            <Field Id="{51B435BC-F7B9-478A-9C51-52916AF96FF5}" Name="Path" />
+                            <Field Id="{7D24E54F-5C16-4314-90C9-6051AA1A7DA1}" Name="Parameters Template" />
                         </Section>
                     </Template>
                 </Folder>
             </Folder>
 
-            <Folder Id="{D150DF1B-01BA-45B7-AEB1-4CA5C2F20A64}" Name="Media" IsExternalReference="True">
-                <Folder Id="{00373F71-5D08-4E9A-840F-9BB3C8193518}" Name="Unversioned" IsExternalReference="True">
-                    <Template Id="{962B53C4-F93B-4DF9-9821-415C867B8903}" Name="File" IsExternalReference="True"/>
+            <Folder Id="{D150DF1B-01BA-45B7-AEB1-4CA5C2F20A64}" Name="Media">
+                <Folder Id="{00373F71-5D08-4E9A-840F-9BB3C8193518}" Name="Unversioned">
+                    <Template Id="{962B53C4-F93B-4DF9-9821-415C867B8903}" Name="File"/>
                 </Folder>
             </Folder>
             
-            <Folder Id="{633549D3-4B7D-40EB-B58F-EDA50BA5F7F0}" Name="Templates" IsExternalReference="True">
-                <Template Id="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" Name="Standard template" IsExternalReference="True"/>
+            <Folder Id="{633549D3-4B7D-40EB-B58F-EDA50BA5F7F0}" Name="Templates">
+                <Template Id="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" Name="Standard template"/>
             </Folder>
         </Template.Folder>
     </Main.Section>

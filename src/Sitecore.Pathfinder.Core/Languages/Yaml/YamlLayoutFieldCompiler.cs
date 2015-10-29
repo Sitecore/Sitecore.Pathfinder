@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
     public class YamlLayoutFieldCompiler : FieldCompilerBase
     {
         [ImportingConstructor]
-        public YamlLayoutFieldCompiler([NotNull] IFileSystemService fileSystem) : base(Constants.FieldResolvers.Normal)
+        public YamlLayoutFieldCompiler([NotNull] IFileSystemService fileSystem) : base(Constants.FieldCompilers.Normal)
         {
             FileSystem = fileSystem;
         }

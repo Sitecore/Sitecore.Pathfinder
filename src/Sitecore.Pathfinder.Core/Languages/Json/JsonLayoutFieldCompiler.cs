@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Languages.Json
     public class JsonLayoutFieldCompiler : FieldCompilerBase
     {
         [ImportingConstructor]
-        public JsonLayoutFieldCompiler([NotNull] IFileSystemService fileSystem) : base(Constants.FieldResolvers.Normal)
+        public JsonLayoutFieldCompiler([NotNull] IFileSystemService fileSystem) : base(Constants.FieldCompilers.Normal)
         {
             FileSystem = fileSystem;
         }

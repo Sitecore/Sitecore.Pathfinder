@@ -21,9 +21,9 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
         IFactoryService Factory { get; }
 
         [NotNull]
-        ITraceService Trace { get; }
+        IReferenceParserService ReferenceParser { get; }
 
         [NotNull]
-        IReferenceParserService ReferenceParser { get; }
+        ITraceService Trace { get; }
     }
 }

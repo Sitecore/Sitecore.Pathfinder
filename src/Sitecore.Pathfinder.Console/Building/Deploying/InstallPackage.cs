@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Building.Deploying
 {
@@ -24,20 +25,35 @@ namespace Sitecore.Pathfinder.Building.Deploying
 
             context.Trace.TraceInformation(Texts.Installing___);
 
-            var packageId = Path.GetFileNameWithoutExtension(context.Configuration.Get(Constants.Configuration.PackNugetFileName));
-            if (string.IsNullOrEmpty(packageId))
+            var failed = false;
+
+            foreach (var fileName in context.OutputFiles)
             {
-                return;
+                var packageId = Path.GetFileNameWithoutExtension(fileName);
+                if (string.IsNullOrEmpty(packageId))
+                {
+                    continue;
+                }
+
+                var queryStringParameters = new Dictionary<string, string>
+                {
+                    ["w"] = "0",
+                    ["rep"] = packageId
+                };
+
+
+                var url = MakeUrl(context, context.Configuration.GetString(Constants.Configuration.InstallUrl), queryStringParameters);
+                if (!Request(context, url))
+                {
+                    failed = true;
+                }
+                else
+                {
+                    context.Trace.TraceInformation("Installed", Path.GetFileName(fileName));
+                }
             }
 
-            var queryStringParameters = new Dictionary<string, string>
-            {
-                ["w"] = "0",
-                ["rep"] = packageId
-            };
-
-            var url = MakeUrl(context, context.Configuration.GetString(Constants.Configuration.InstallUrl), queryStringParameters);
-            if (!Request(context, url))
+            if (failed)
             {
                 return;
             }

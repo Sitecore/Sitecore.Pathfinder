@@ -84,9 +84,9 @@ namespace Sitecore.Pathfinder.Configuration
             return CompositionService.Resolve<FieldBuilder>();
         }
 
-        public virtual ItemParseContext ItemParseContext(IParseContext context, ItemParser itemParser, string databaseName, string parentItemPath)
+        public virtual ItemParseContext ItemParseContext(IParseContext context, ItemParser itemParser, string databaseName, string parentItemPath, bool isExtern)
         {
-            return new ItemParseContext(context, itemParser, databaseName, parentItemPath);
+            return new ItemParseContext(context, itemParser, databaseName, parentItemPath, isExtern);
         }
 
         public virtual LayoutReference LayoutReference(IProjectItem projectItem, SourceProperty<string> layoutSourceProperty)

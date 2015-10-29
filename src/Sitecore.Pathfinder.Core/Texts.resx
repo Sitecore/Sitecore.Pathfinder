@@ -172,16 +172,16 @@
     <value>Package contains errors and will not be deployed</value>
   </data>
   <data name="Copying_package_to_website___" xml:space="preserve">
-    <value>Copying package to website...</value>
+    <value>Copying packages to website...</value>
   </data>
   <data name="Creating_Nupkg_file___" xml:space="preserve">
-    <value>Creating Nupkg file...</value>
+    <value>Creating packages...</value>
   </data>
   <data name="Publishing___" xml:space="preserve">
     <value>Publishing database...</value>
   </data>
   <data name="Installing___" xml:space="preserve">
-    <value>Installing package...</value>
+    <value>Installing packages...</value>
   </data>
   <data name="Text_document_expected" xml:space="preserve">
     <value>Text document expected</value>
@@ -265,7 +265,7 @@
     <value>Database is 'core'. Skipping.</value>
   </data>
   <data name="NuGet_file_size" xml:space="preserve">
-    <value>NuGet file size</value>
+    <value>Created</value>
   </data>
   <data name="Failed_to_create_the_Nupkg_file" xml:space="preserve">
     <value>Failed to create the Nupkg file</value>

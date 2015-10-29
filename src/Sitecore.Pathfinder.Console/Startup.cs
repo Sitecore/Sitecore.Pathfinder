@@ -3,7 +3,6 @@
 using System;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using System.ComponentModel.Composition.Registration;
 using System.IO;
 using System.Reflection;
 using Microsoft.Framework.ConfigurationModel;
@@ -12,7 +11,6 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
-using Sitecore.Pathfinder.Parsing;
 
 namespace Sitecore.Pathfinder
 {
@@ -63,7 +61,7 @@ namespace Sitecore.Pathfinder
             var applicationExportProvider = new CatalogExportProvider(new ApplicationCatalog(conventions));
             var extensionsExportProvider = new CatalogExportProvider(new AssemblyCatalog(extensionsAssembly, conventions));
 
-            // plugin directory exports takes precedence over application exports
+            // extensions directory exports takes precedence over application exports
             var compositionContainer = new CompositionContainer(extensionsExportProvider, applicationExportProvider);
 
             applicationExportProvider.SourceProvider = compositionContainer;

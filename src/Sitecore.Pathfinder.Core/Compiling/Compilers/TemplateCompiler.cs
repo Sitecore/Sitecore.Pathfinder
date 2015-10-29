@@ -49,8 +49,8 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
             template.BaseTemplatesProperty.Parse("Template.BaseTemplates", itemTextNode, Constants.Templates.StandardTemplate);
             template.ShortHelpProperty.Parse("Template.ShortHelp", itemTextNode);
             template.LongHelpProperty.Parse("Template.LongHelp", itemTextNode);
-            template.IsEmittable = !string.Equals(itemTextNode.GetAttributeValue("IsEmittable"), "False", StringComparison.OrdinalIgnoreCase);
-            template.IsExtern = string.Equals(itemTextNode.GetAttributeValue("IsExternalReference"), "True", StringComparison.OrdinalIgnoreCase);
+            template.IsEmittable = !string.Equals(itemTextNode.GetAttributeValue(Constants.Fields.IsEmittable), "False", StringComparison.OrdinalIgnoreCase);
+            template.IsExtern = item.IsExtern || string.Equals(itemTextNode.GetAttributeValue(Constants.Fields.IsExtern), "True", StringComparison.OrdinalIgnoreCase);
 
             if (!template.IsExtern)
             {

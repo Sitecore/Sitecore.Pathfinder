@@ -50,7 +50,7 @@ namespace Sitecore.Pathfinder.Configuration
         FieldBuilder FieldBuilder();
 
         [NotNull]
-        ItemParseContext ItemParseContext([NotNull] IParseContext context, [NotNull] ItemParser itemParser, [NotNull] string databaseName, [NotNull] string parentItemPath);
+        ItemParseContext ItemParseContext([NotNull] IParseContext context, [NotNull] ItemParser itemParser, [NotNull] string databaseName, [NotNull] string parentItemPath, bool isExtern);
 
         [NotNull]
         LayoutReference LayoutReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> layoutSourceProperty);

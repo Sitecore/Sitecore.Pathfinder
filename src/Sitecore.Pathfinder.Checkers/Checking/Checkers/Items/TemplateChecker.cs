@@ -82,32 +82,32 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
 
             if (string.IsNullOrEmpty(field.ShortHelp))
             {
-                context.Trace.TraceWarning("Template field should have a short help text", TraceHelper.GetTextNode(field), field.FieldName);
+                context.Trace.TraceWarning("Template field should have a short help text", TraceHelper.GetTextNode(field.ShortHelpProperty, field), field.FieldName);
             }
 
             if (!string.IsNullOrEmpty(field.ShortHelp) && !field.ShortHelp.EndsWith("."))
             {
-                context.Trace.TraceWarning("Template field short help text should end with '.'", TraceHelper.GetTextNode(field), field.FieldName);
+                context.Trace.TraceWarning("Template field short help text should end with '.'", TraceHelper.GetTextNode(field.ShortHelpProperty, field), field.FieldName);
             }
 
             if (!string.IsNullOrEmpty(field.ShortHelp) && !char.IsUpper(field.ShortHelp[0]))
             {
-                context.Trace.TraceWarning("Template field short help text should end with a capital letter", TraceHelper.GetTextNode(field), field.FieldName);
+                context.Trace.TraceWarning("Template field short help text should end with a capital letter", TraceHelper.GetTextNode(field.ShortHelpProperty, field), field.FieldName);
             }
 
             if (string.IsNullOrEmpty(field.LongHelp))
             {
-                context.Trace.TraceWarning("Template field should should have a long help text", TraceHelper.GetTextNode(field), field.FieldName);
+                context.Trace.TraceWarning("Template field should should have a long help text", TraceHelper.GetTextNode(field.LongHelpProperty, field), field.FieldName);
             }
 
             if (!string.IsNullOrEmpty(field.LongHelp) && !field.LongHelp.EndsWith("."))
             {
-                context.Trace.TraceWarning("Template field long help text should end with '.'", TraceHelper.GetTextNode(field), field.FieldName);
+                context.Trace.TraceWarning("Template field long help text should end with '.'", TraceHelper.GetTextNode(field.LongHelpProperty, field), field.FieldName);
             }                                                                                                                                                                   
 
             if (!string.IsNullOrEmpty(field.LongHelp) && !char.IsUpper(field.LongHelp[0]))
             {
-                context.Trace.TraceWarning("Template field long help text should end with a capital letter", TraceHelper.GetTextNode(field), field.FieldName);
+                context.Trace.TraceWarning("Template field long help text should end with a capital letter", TraceHelper.GetTextNode(field.LongHelpProperty, field), field.FieldName);
             }
         }
 

@@ -29,8 +29,8 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
             var item = context.ParseContext.Factory.Item(context.ParseContext.Project, guid, textNode, databaseName, itemNameTextNode.Value, itemIdOrPath, templateIdOrPath);
             item.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
-            item.IsEmittable = !string.Equals(textNode.GetAttributeValue("IsEmittable"), "False", StringComparison.OrdinalIgnoreCase);
-            item.IsExtern = string.Equals(textNode.GetAttributeValue("IsExternalReference"), "True", StringComparison.OrdinalIgnoreCase);
+            item.IsEmittable = !string.Equals(textNode.GetAttributeValue(Constants.Fields.IsEmittable), "False", StringComparison.OrdinalIgnoreCase);
+            item.IsExtern = string.Equals(textNode.GetAttributeValue(Constants.Fields.IsExtern, context.IsExtern.ToString()), "True", StringComparison.OrdinalIgnoreCase);
 
             if (templateIdOrPathTextNode != null)
             {
@@ -64,7 +64,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
                         break;
 
                     default:
-                        var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, PathHelper.CombineItemPath(context.ParentItemPath, item.ItemName));
+                        var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, PathHelper.CombineItemPath(context.ParentItemPath, item.ItemName), item.IsExtern);
                         context.Parser.ParseTextNode(newContext, childNode);
                         break;
                 }
@@ -75,7 +75,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
         {
             foreach (var childNode in textNode.ChildNodes)
             {
-                var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, PathHelper.CombineItemPath(context.ParentItemPath, item.ItemName));
+                var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, PathHelper.CombineItemPath(context.ParentItemPath, item.ItemName), item.IsExtern);
                 context.Parser.ParseTextNode(newContext, childNode);
             }
         }

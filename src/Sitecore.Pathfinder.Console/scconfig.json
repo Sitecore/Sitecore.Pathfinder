@@ -58,8 +58,9 @@
     },
 
     "pack-nuget": {
-        // NuSpec file name
-        "filename": "sitecore.project/sitecore.nuspec"
+        "directory": "sitecore.project",
+        "include":  "**/*.nuspec",
+        "exclude": ""
     },
 
     "sync-website": {

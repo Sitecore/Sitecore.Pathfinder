@@ -60,7 +60,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             textDocument.ValidateSchema(context);
 
             var parentItemPath = PathHelper.GetItemParentPath(context.ItemPath);
-            var itemParseContext = context.Factory.ItemParseContext(context, this, context.DatabaseName, parentItemPath);
+            var itemParseContext = context.Factory.ItemParseContext(context, this, context.DatabaseName, parentItemPath, false);
 
             ParseTextNode(itemParseContext, textNode);
         }

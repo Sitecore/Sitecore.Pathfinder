@@ -8,7 +8,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 {
     public class LinkFieldCompiler : FieldCompilerBase
     {
-        public LinkFieldCompiler() : base(Constants.FieldResolvers.Normal)
+        public LinkFieldCompiler() : base(Constants.FieldCompilers.Normal)
         {
         }
 

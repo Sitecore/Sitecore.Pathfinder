@@ -34,8 +34,8 @@ namespace Sitecore.Pathfinder.Parsing.Items
             template.IconProperty.Parse(textNode);
             template.ShortHelpProperty.Parse(textNode);
             template.LongHelpProperty.Parse(textNode);
-            template.IsEmittable = !string.Equals(textNode.GetAttributeValue("IsEmittable"), "False", StringComparison.OrdinalIgnoreCase);
-            template.IsExtern = string.Equals(textNode.GetAttributeValue("IsExternalReference"), "True", StringComparison.OrdinalIgnoreCase);
+            template.IsEmittable = !string.Equals(textNode.GetAttributeValue(Constants.Fields.IsEmittable), "False", StringComparison.OrdinalIgnoreCase);
+            template.IsExtern = string.Equals(textNode.GetAttributeValue(Constants.Fields.IsExtern, context.IsExtern.ToString()), "True", StringComparison.OrdinalIgnoreCase);
 
             template.References.AddRange(context.ParseContext.ReferenceParser.ParseReferences(template, template.BaseTemplatesProperty));
 

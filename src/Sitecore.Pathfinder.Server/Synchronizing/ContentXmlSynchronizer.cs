@@ -70,9 +70,8 @@ namespace Sitecore.Pathfinder.Synchronizing
             {
                 output.WriteAttributeString("Database", item.Database.Name);
                 output.WriteAttributeString("ParentItemPath", item.Parent == null ? "/" : item.Parent.Paths.Path);
+                output.WriteAttributeString(Constants.Fields.IsExtern, "True");
             }
-
-            output.WriteAttributeString("IsExternalReference", "True");
 
             var writeAll = fieldsToWrite.Count() == 1 && fieldsToWrite.ElementAt(0) == "*";
             foreach (Field field in item.Fields)
@@ -114,8 +113,6 @@ namespace Sitecore.Pathfinder.Synchronizing
                 output.WriteAttributeString("Database", item.Database.Name);
                 output.WriteAttributeString("ParentItemPath", item.Parent == null ? "/" : item.Parent.Paths.Path);
             }
-
-            output.WriteAttributeString("IsExternalReference", "True");
 
             var templateItem = new TemplateItem(item);
             foreach (var templateSectionItem in templateItem.GetSections())

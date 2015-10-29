@@ -21,7 +21,7 @@ Watch the videos on YouTube (please notice that some of details in the videos ar
 Then download [Pathfinder 0.4.2-Alpha](http://vsplugins.sitecore.net/Pathfinder/Sitecore.Pathfinder.0.4.2.zip) to try it out.
 
 # Pathfinder Status
-Pathfinder is yet another tool for Sitecore, so... obligatory Xkcd:
+Pathfinder is yet another tool for Sitecore, so... obligatory xkcd:
                 
 ![Standards](http://imgs.xkcd.com/comics/standards.png)
                                                           
@@ -1156,6 +1156,25 @@ Powershell Extensions is a Sitecore package and can be installed as such.
 It could be interesting to have Pathfinder be able to execute Powershell scripts on the website. Pathfinder could contain a Powershell task that
 sends a Powershell script to Powershell Extensions which executes it and returns the result. The question is if developer would prefer this approach
 over opening a Powershell Extensions window in the Sitecore desktop.
+
+### Glass.Mapper
+[Glass.Mapper](http://www.glass.lu/) is the only ORM you will need to improve your Sitecore and Umbraco development. It only takes a few minutes to 
+setup and then you are ready to start using classes and interfaces in your project.
+
+Glass.Mapper is popular and battle proven.
+
+Pathfinder could work with Glass.Mapper by having Pathfinder generate classes for Glass.Mapper using the 'generate-code' task. 
+
+### Zen Garden
+[Zen Garden](https://www.cognifide.com/accelerators/zen-garden-sitecore) accelerates deployment of responsive websites quickly and cost effectively, 
+minimising reliance on technical skills while improving maintenance of governance standards. 
+
+Zen Garden is a full fletched framework and I don't see any obvious integrations with Pathfinder.
+
+### BrainJocks SCORE
+[BrainJocks SCORE](http://www.brainjocks.com/company/score) is a comprehensive development framework that will transform your Sitecore experience.
+
+SCORE seems like a full fletched framework and I don't see any obvious integrations with Pathfinder.
 
 ### Sitecore Rocks
 [Sitecore Rocks](https://github.com/JakobChristensen/Sitecore.Rocks.Docs) is both a Visual Studio plugin (Sitecore Rocks Visual Studio) and 

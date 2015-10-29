@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 {
     public class LayoutHtmlFileFieldCompiler : FieldCompilerBase
     {
-        public LayoutHtmlFileFieldCompiler() : base(Constants.FieldResolvers.Normal)
+        public LayoutHtmlFileFieldCompiler() : base(Constants.FieldCompilers.Normal)
         {
         }
 

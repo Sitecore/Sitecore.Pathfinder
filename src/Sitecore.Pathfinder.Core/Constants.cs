@@ -79,7 +79,11 @@ namespace Sitecore.Pathfinder
 
             public const string PackagesDirectory = "copy-dependencies:packages-directory";
 
-            public const string PackNugetFileName = "pack-nuget:filename";
+            public const string PackNugetDirectory = "pack-nuget:directory";
+
+            public const string PackNugetExclude = "pack-nuget:exclude";
+
+            public const string PackNugetInclude = "pack-nuget:include";
 
             public const string Password = "password";
 
@@ -150,7 +154,7 @@ namespace Sitecore.Pathfinder
             public const double Templates = 1000;
         }
 
-        public static class FieldResolvers
+        public static class FieldCompilers
         {
             public const double High = 500;
 
@@ -162,6 +166,10 @@ namespace Sitecore.Pathfinder
         public static class Fields
         {
             public const string InsertOptionsFieldId = "{1172F251-DAD4-4EFB-A329-0C63500E4F1E}";
+
+            public const string IsEmittable = "IsEmittable";
+
+            public const string IsExtern = "IsExternalReference";
         }
 
         public static class Parsers

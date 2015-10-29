@@ -8,7 +8,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 {
     public class FileNameFieldCompiler : FieldCompilerBase
     {
-        public FileNameFieldCompiler() : base(Constants.FieldResolvers.Normal)
+        public FileNameFieldCompiler() : base(Constants.FieldCompilers.Normal)
         {
         }
 

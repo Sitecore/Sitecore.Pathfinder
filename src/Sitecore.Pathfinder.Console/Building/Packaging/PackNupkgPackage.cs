@@ -25,13 +25,27 @@ namespace Sitecore.Pathfinder.Building.Packaging
 
             context.Trace.TraceInformation(Texts.Creating_Nupkg_file___);
 
-            var packageFileName = context.Configuration.Get(Constants.Configuration.PackNugetFileName);
-            var nuspecFileName = PathHelper.Combine(context.SolutionDirectory, packageFileName);
-            if (string.IsNullOrEmpty(nuspecFileName))
-            {
-                return;
-            }
+            var packageFileName = context.Configuration.Get(Constants.Configuration.PackNugetDirectory);
+            var directory = PathHelper.Combine(context.SolutionDirectory, packageFileName);
+            var pathMatcher = new PathMatcher(context.Configuration.Get(Constants.Configuration.PackNugetInclude), context.Configuration.Get(Constants.Configuration.PackNugetExclude));
 
+            foreach (var fileName in context.FileSystem.GetFiles(directory, "*", SearchOption.AllDirectories))
+            {
+                if (pathMatcher.IsMatch(fileName))
+                {
+                    Pack(context, fileName);
+                }
+            }
+        }
+
+        public override void WriteHelp(HelpWriter helpWriter)
+        {
+            helpWriter.Summary.Write("Creates packages from the project.");
+            helpWriter.Remarks.Write("The Nuget specifications and Nuget packages are located in the /sitecore.project folder.");
+        }
+
+        protected virtual void Pack([NotNull] IBuildContext context, [NotNull] string nuspecFileName)
+        {
             var nupkgFileName = Path.ChangeExtension(nuspecFileName, ".nupkg");
 
             if (context.FileSystem.FileExists(nupkgFileName))
@@ -39,27 +53,14 @@ namespace Sitecore.Pathfinder.Building.Packaging
                 context.FileSystem.DeleteFile(nupkgFileName);
             }
 
-            if (!context.FileSystem.FileExists(nuspecFileName))
-            {
-                context.Trace.TraceError(Texts.Nuspec_file_not_found, nuspecFileName);
-                context.IsAborted = true;
-                return;
-            }
-
             BuildNupkgFile(context, nuspecFileName, nupkgFileName);
 
             context.OutputFiles.Add(nupkgFileName);
 
-            context.Trace.TraceInformation(Texts.NuGet_file_size, new FileInfo(nupkgFileName).Length.ToString("#,##0 bytes"));
+            context.Trace.TraceInformation(Texts.NuGet_file_size, $"{PathHelper.UnmapPath(context.SolutionDirectory, nupkgFileName)} ({new FileInfo(nupkgFileName).Length.ToString("#,##0 bytes")})");
         }
 
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.Write("Creates a Nuget package from the project.");
-            helpWriter.Remarks.Write("The Nuget specification and Nuget package are located in the /sitecore.project folder.");
-        }
-
-        private void BuildNupkgFile([NotNull] IBuildContext context, [NotNull] string nuspecFileName, [NotNull] string nupkgFileName)
+        protected virtual void BuildNupkgFile([NotNull] IBuildContext context, [NotNull] string nuspecFileName, [NotNull] string nupkgFileName)
         {
             try
             {

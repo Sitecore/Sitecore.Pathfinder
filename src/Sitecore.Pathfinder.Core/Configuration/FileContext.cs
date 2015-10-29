@@ -13,15 +13,18 @@ namespace Sitecore.Pathfinder.Configuration
     public class FileContext
     {
         [NotNull]
-        public static readonly FileContext Empty = new FileContext(string.Empty, string.Empty, string.Empty, string.Empty);
+        public static readonly FileContext Empty = new FileContext(string.Empty, string.Empty, string.Empty, string.Empty, false);
 
-        public FileContext([NotNull] string itemName, [NotNull] string itemPath, [NotNull] string filePath, [NotNull] string databaseName)
+        public FileContext([NotNull] string itemName, [NotNull] string itemPath, [NotNull] string filePath, [NotNull] string databaseName, bool isExtern)
         {
             ItemName = itemName;
             ItemPath = itemPath;
             FilePath = filePath;
             DatabaseName = databaseName;
+            IsExtern = isExtern;
         }
+
+        public bool IsExtern { get; }
 
         [NotNull]
         public string DatabaseName { get; }
@@ -41,6 +44,7 @@ namespace Sitecore.Pathfinder.Configuration
             var localFileName = "/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(project.Options.ProjectDirectory, sourceFile.AbsoluteFileName)).TrimStart('/');
 
             string database = null;
+            var isExtern = false;
             var itemPathConfig = string.Empty;
             var localFileDirectory = string.Empty;
             var serverFileDirectory = string.Empty;
@@ -70,6 +74,7 @@ namespace Sitecore.Pathfinder.Configuration
                 serverFileDirectory = configuration.GetString(key + ":website-directory");
                 itemPathConfig = configuration.GetString(key + ":item-path");
                 database = configuration.Get(key + ":database");
+                isExtern = configuration.GetBool(key + ":external-references");
 
                 break;
             }
@@ -79,7 +84,7 @@ namespace Sitecore.Pathfinder.Configuration
             var itemPath = PathHelper.GetItemPath(project, sourceFile, localFileDirectory, itemPathConfig);
             var databaseName = !string.IsNullOrEmpty(database) ? database : project.Options.DatabaseName;
 
-            return new FileContext(itemName, itemPath, filePath, databaseName);
+            return new FileContext(itemName, itemPath, filePath, databaseName, isExtern);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
     public class XmlLayoutFieldCompiler : FieldCompilerBase
     {
         [ImportingConstructor]
-        public XmlLayoutFieldCompiler([NotNull] IFileSystemService fileSystem) : base(Constants.FieldResolvers.Normal)
+        public XmlLayoutFieldCompiler([NotNull] IFileSystemService fileSystem) : base(Constants.FieldCompilers.Normal)
         {
             FileSystem = fileSystem;
         }
