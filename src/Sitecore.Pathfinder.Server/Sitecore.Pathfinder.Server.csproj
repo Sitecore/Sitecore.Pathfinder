@@ -165,6 +165,7 @@
     <Compile Include="Controllers\PathfinderPackagesController.cs" />
     <Compile Include="Controllers\PathfinderPublishController.cs" />
     <Compile Include="Controllers\PathfinderSitecoreCopController.cs" />
+    <Compile Include="Controllers\PathfinderUploadController.cs" />
     <Compile Include="Controllers\PathfinderWebTestRunnerController.cs" />
     <Compile Include="Emitters\Writers\FieldWriter.cs" />
     <Compile Include="Configuration\PathfinderSettings.cs" />
