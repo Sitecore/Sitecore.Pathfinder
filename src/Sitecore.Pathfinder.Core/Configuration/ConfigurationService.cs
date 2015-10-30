@@ -92,6 +92,12 @@ namespace Sitecore.Pathfinder.Configuration
                 AddCommandLine(configurationSourceRoot);
             }
 
+            // add environment variables
+            if ((options & LoadConfigurationOptions.IncludeEnvironment) == LoadConfigurationOptions.IncludeEnvironment)
+            {
+                configurationSourceRoot.AddEnvironmentVariables();
+            }
+
             // set solution directory
             if (solutionDirectory == null)
             {
@@ -107,13 +113,49 @@ namespace Sitecore.Pathfinder.Configuration
                 configurationSourceRoot.AddFile(projectConfigFileName);
             }
 
+            // add machine level config file
+            if ((options & LoadConfigurationOptions.IncludeMachineConfig) == LoadConfigurationOptions.IncludeMachineConfig)
+            {
+                var machineConfigFileName = Path.GetFileNameWithoutExtension(projectConfigFileName) + "." + Environment.MachineName + ".json";
+                if (File.Exists(machineConfigFileName))
+                {
+                    configurationSourceRoot.AddFile(machineConfigFileName);
+                }
+            }
+
             // add user config file
             if ((options & LoadConfigurationOptions.IncludeUserConfig) == LoadConfigurationOptions.IncludeUserConfig)
             {
                 var userConfigFileName = projectConfigFileName + ".user";
                 if (File.Exists(userConfigFileName))
                 {
-                    configurationSourceRoot.AddFile(userConfigFileName);
+                    configurationSourceRoot.AddFile(userConfigFileName, ".json");
+                }
+            }
+
+            // add config file specified on the command line: /config qa - loads scconfig.qa.json 
+            if ((options & LoadConfigurationOptions.IncludeCommandLineConfig) == LoadConfigurationOptions.IncludeCommandLineConfig)
+            {
+                var configName = configurationSourceRoot.Get(Constants.Configuration.CommandLineConfig);
+
+                if (!string.IsNullOrEmpty(configName))
+                {
+                    var configFileName = PathHelper.Combine(solutionDirectory, configName);
+
+                    if (!string.IsNullOrEmpty(configFileName) && !configFileName.StartsWith("scconfig.", StringComparison.OrdinalIgnoreCase))
+                    {
+                        configFileName = "scconfig." + configFileName;
+                    }
+
+                    if (!string.IsNullOrEmpty(configFileName) && !configFileName.EndsWith(".json", StringComparison.OrdinalIgnoreCase))
+                    {
+                        configFileName += ".json";
+                    }
+
+                    if (File.Exists(configFileName))
+                    {
+                        configurationSourceRoot.AddFile(configFileName);
+                    }
                 }
             }
 

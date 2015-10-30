@@ -74,7 +74,7 @@ namespace Sitecore.Pathfinder.Synchronizing
             configuration.Set(Constants.Configuration.SystemConfigFileName, "scconfig.json");
 
             var configurationService = new ConfigurationService(configuration);
-            configurationService.Load(LoadConfigurationOptions.None);
+            configurationService.Load(LoadConfigurationOptions.Noninteractive);
             return configuration;
         }
     }

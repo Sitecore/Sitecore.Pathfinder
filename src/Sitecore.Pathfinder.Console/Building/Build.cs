@@ -40,7 +40,7 @@ namespace Sitecore.Pathfinder.Building
         {
             try
             {
-                ConfigurationService.Load(LoadConfigurationOptions.IncludeCommandLine | LoadConfigurationOptions.IncludeUserConfig);
+                ConfigurationService.Load(LoadConfigurationOptions.Interactive);
             }
             catch (Exception ex)
             {

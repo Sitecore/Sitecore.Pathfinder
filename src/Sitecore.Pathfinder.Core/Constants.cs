@@ -53,6 +53,8 @@ namespace Sitecore.Pathfinder
 
             public const string CodeGen = "codegen";
 
+            public const string CommandLineConfig = "config";
+
             public const string ContentFiles = "build-project:content-files";
 
             public const string Database = "database";

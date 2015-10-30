@@ -183,7 +183,7 @@ ITraceService           | Tracing.
 
 ### Command pattern
 Pathfinder usually uses the Command pattern to provide functionality that can be extended. It also has the benefit of encapsulating
-functionaly in a single class which makes the system more robust.
+functionality in a single class which makes the system more robust.
 
 ```cs
 [InheritedExport]

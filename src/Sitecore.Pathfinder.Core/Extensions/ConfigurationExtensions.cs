@@ -11,27 +11,32 @@ namespace Sitecore.Pathfinder.Extensions
     public static class ConfigurationExtensions
     {
         [NotNull]
-        public static IConfigurationSourceRoot AddFile([NotNull] this IConfigurationSourceRoot configuration, [NotNull] string path)
+        public static IConfigurationSourceRoot AddFile([NotNull] this IConfigurationSourceRoot configuration, [NotNull] string path, [NotNull] string extension = "")
         {
             if (!File.Exists(path))
             {
                 return configuration;
             }
 
-            var extension = Path.GetExtension(path).ToLowerInvariant();
-            switch (extension)
+            if (string.IsNullOrEmpty(extension))
+            {
+                extension = Path.GetExtension(path);
+            }
+
+            switch (extension.ToLowerInvariant())
             {
                 case ".ini":
                     configuration.AddIniFile(path);
                     break;
+
                 case ".json":
                 case ".js":
                     configuration.AddJsonFile(path);
                     break;
 
-                    // case ".xml":
-                    // configuration.AddXmlFile(path);
-                    // break;
+                case ".xml":
+                    configuration.AddXmlFile(path);
+                    break;
             }
 
             return configuration;
@@ -40,7 +45,7 @@ namespace Sitecore.Pathfinder.Extensions
         public static bool GetBool([NotNull] this IConfiguration configuration, [NotNull] string key, bool defaultValue = false)
         {
             string value;
-            return configuration.TryGet(key, out value) ? string.Compare(value, "true", StringComparison.OrdinalIgnoreCase) == 0 : defaultValue;
+            return configuration.TryGet(key, out value) ? string.Equals(value, "true", StringComparison.OrdinalIgnoreCase) : defaultValue;
         }
 
         [NotNull]
