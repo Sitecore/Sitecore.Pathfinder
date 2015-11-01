@@ -3,12 +3,6 @@
     "wwwroot": "",
     "hostname": "",
 
-    // solution directory relative to tools path
-    "solutiondirectory": "..",
-
-    // project directory relative to solution directory
-    "projectdirectory": "",
-
     // default database name (master, core or web)
     "database": "master",
 
@@ -35,7 +29,7 @@
 
         // files and directories to ignore
         "ignore-directories": ".vscode sitecore.filetemplates sitecore.project sitecore.tools node_modules roslyn includes",
-        "ignore-filenames": "scc.cmd sitecore.nuspec sitecore.nupkg project.json readme.md"
+        "ignore-filenames": "scc.cmd project.json readme.md"
     },
 
     "copy-dependencies": {

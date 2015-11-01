@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Building.Testing.UnitTests
         {
             context.Trace.TraceInformation(Texts.Generating_unit_tests___);
 
-            var directory = Path.Combine(context.SolutionDirectory, context.Configuration.Get(Constants.Configuration.LocalTestDirectory));
+            var directory = Path.Combine(context.ProjectDirectory, context.Configuration.Get(Constants.Configuration.LocalTestDirectory));
             context.FileSystem.CreateDirectory(directory);
 
             var tests = new List<string>();

@@ -93,15 +93,13 @@ namespace Sitecore.Pathfinder
 
             public const string ProjectConfigFileName = "project";
 
-            public const string ProjectDirectory = "projectdirectory";
-
             public const string ProjectUniqueId = "project-unique-id";
 
             public const string PublishUrl = "publish-databases:publish-url";
 
             public const string RemapFileDirectories = "remap-file-directories";
 
-            public const string SolutionDirectory = "solutiondirectory";
+            public const string ProjectDirectory = "project-directory";
 
             public const string StandardTemplateFields = "standard-template-fields";
 

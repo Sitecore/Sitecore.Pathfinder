@@ -119,12 +119,12 @@ namespace Sitecore.Pathfinder.Diagnostics
 
             var fileInfo = !string.IsNullOrEmpty(fileName) ? fileName : "scc.cmd";
 
-            var solutionDirectory = Configuration.Get(Constants.Configuration.SolutionDirectory);
-            if (!string.IsNullOrEmpty(solutionDirectory))
+            var projectDirectory = Configuration.Get(Constants.Configuration.ProjectDirectory);
+            if (!string.IsNullOrEmpty(projectDirectory))
             {
-                if (fileInfo.StartsWith(solutionDirectory, StringComparison.OrdinalIgnoreCase))
+                if (fileInfo.StartsWith(projectDirectory, StringComparison.OrdinalIgnoreCase))
                 {
-                    fileInfo = fileInfo.Mid(solutionDirectory.Length + 1);
+                    fileInfo = fileInfo.Mid(projectDirectory.Length + 1);
                 }
             }
 

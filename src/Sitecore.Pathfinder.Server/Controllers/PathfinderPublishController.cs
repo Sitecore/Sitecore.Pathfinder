@@ -17,6 +17,8 @@ namespace Sitecore.Pathfinder.Controllers
             var output = new StringWriter();
             Console.SetOut(output);
 
+
+
             var databaseName = WebUtil.GetQueryString("db", "master");
             var mode = WebUtil.GetQueryString("m", "i");
 

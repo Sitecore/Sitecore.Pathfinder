@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
 
         public override void Run(IBuildContext context)
         {
-            var projectDirectory = context.SolutionDirectory;
+            var projectDirectory = context.ProjectDirectory;
             if (!context.FileSystem.DirectoryExists(projectDirectory))
             {
                 CreateProjectDirectory(context, projectDirectory);

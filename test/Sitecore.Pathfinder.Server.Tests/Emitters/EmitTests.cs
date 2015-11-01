@@ -23,8 +23,8 @@ namespace Sitecore.Pathfinder.Server.Tests.Emitters
             {
             }
 
-            var solutionDirectory = PathHelper.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, GoodWebsite);
-            var emitService = new EmitService(solutionDirectory, EmitSource.Directory);
+            var projectDirectory = PathHelper.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, GoodWebsite);
+            var emitService = new EmitService(projectDirectory, EmitSource.Directory);
 
             emitService.Start();
         }

@@ -40,7 +40,7 @@ namespace Sitecore.Pathfinder.Building
         IProject Project { get; }
 
         [NotNull]
-        string SolutionDirectory { get; }
+        string ProjectDirectory { get; }
 
         [NotNull]
         ITraceService Trace { get; }

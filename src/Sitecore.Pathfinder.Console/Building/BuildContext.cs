@@ -47,7 +47,7 @@ namespace Sitecore.Pathfinder.Building
 
         public IProject Project => _project ?? (_project = ProjectService.LoadProjectFromConfiguration());
 
-        public string SolutionDirectory => Configuration.GetString(Constants.Configuration.SolutionDirectory);
+        public string ProjectDirectory => Configuration.GetString(Constants.Configuration.ProjectDirectory);
 
         public ITraceService Trace { get; }
 

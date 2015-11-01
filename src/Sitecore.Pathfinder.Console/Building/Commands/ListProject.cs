@@ -21,7 +21,7 @@ namespace Sitecore.Pathfinder.Building.Commands
                 var file = projectItem as File;
                 if (file != null)
                 {
-                    qualifiedName = "\\" + PathHelper.UnmapPath(context.SolutionDirectory, qualifiedName);
+                    qualifiedName = "\\" + PathHelper.UnmapPath(context.ProjectDirectory, qualifiedName);
                 }
 
                 context.Trace.Writeline($"{qualifiedName} ({projectItem.GetType().Name})");

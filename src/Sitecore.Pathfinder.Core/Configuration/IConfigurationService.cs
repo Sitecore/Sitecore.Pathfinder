@@ -31,6 +31,6 @@ namespace Sitecore.Pathfinder.Configuration
         [NotNull]
         IConfiguration Configuration { get; }
 
-        void Load(LoadConfigurationOptions options, [CanBeNull] string solutionDirectory = null);
+        void Load(LoadConfigurationOptions options, [CanBeNull] string projectDirectory = null);
     }
 }

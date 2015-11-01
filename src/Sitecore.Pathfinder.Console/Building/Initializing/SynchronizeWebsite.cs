@@ -36,7 +36,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
                 foreach (var entry in zip.Entries)
                 {
                     context.Trace.TraceInformation(entry.FullName);
-                    entry.ExtractToFile(Path.Combine(context.SolutionDirectory, entry.FullName), true);
+                    entry.ExtractToFile(Path.Combine(context.ProjectDirectory, entry.FullName), true);
                 }
             }
 

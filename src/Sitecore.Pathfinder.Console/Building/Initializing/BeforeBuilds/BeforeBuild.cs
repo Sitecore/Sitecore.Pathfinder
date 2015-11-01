@@ -24,9 +24,16 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
 
         public override void Run(IBuildContext context)
         {
-            var projectDirectory = context.SolutionDirectory;
+            var projectDirectory = context.ProjectDirectory;
             if (!context.FileSystem.DirectoryExists(projectDirectory))
             {
+                return;
+            }
+
+            if (string.Equals(projectDirectory, context.Configuration.GetString(Constants.Configuration.ToolsDirectory), StringComparison.OrdinalIgnoreCase))
+            {
+                context.Trace.Writeline("Whoops! You must run the scc.exe from a different directory.", context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
+                context.IsAborted = true;
                 return;
             }
 

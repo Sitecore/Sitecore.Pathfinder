@@ -11,14 +11,14 @@ namespace Sitecore.Pathfinder.Emitters
 
     public class EmitService
     {
-        public EmitService([NotNull] string solutionDirectory, EmitSource emitSource)
+        public EmitService([NotNull] string projectDirectory, EmitSource emitSource)
         {
-            SolutionDirectory = solutionDirectory;
+            ProjectDirectory = projectDirectory;
             EmitSource = emitSource;
         }
 
         [NotNull]
-        public string SolutionDirectory { get; }
+        public string ProjectDirectory { get; }
 
         public EmitSource EmitSource { get; }
 
@@ -26,7 +26,7 @@ namespace Sitecore.Pathfinder.Emitters
         {
             var startup = new Startup();
 
-            var configuration = startup.RegisterConfiguration(SolutionDirectory, EmitSource);
+            var configuration = startup.RegisterConfiguration(ProjectDirectory, EmitSource);
             var compositionService = startup.RegisterCompositionService(configuration);
 
             var emitter = compositionService.GetExportedValue<Emitter>();

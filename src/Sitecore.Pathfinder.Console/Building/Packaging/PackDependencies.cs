@@ -21,7 +21,7 @@ namespace Sitecore.Pathfinder.Building.Packaging
             context.Trace.TraceInformation(Texts.Packing_dependency_Sitecore_packages_in_Nuget_packages___);
 
             var packagesDirectory = context.Configuration.Get(Constants.Configuration.PackagesDirectory);
-            var sourceDirectory = Path.Combine(context.SolutionDirectory, packagesDirectory);
+            var sourceDirectory = Path.Combine(context.ProjectDirectory, packagesDirectory);
             if (!context.FileSystem.DirectoryExists(sourceDirectory))
             {
                 context.Trace.TraceInformation(Texts.Dependencies_directory_not_found__Skipping, packagesDirectory);
@@ -45,7 +45,7 @@ namespace Sitecore.Pathfinder.Building.Packaging
             var packageName = Path.GetFileNameWithoutExtension(zipFileName);
             var packageId = packageName.GetSafeCodeIdentifier();
 
-            var srcFileName = PathHelper.UnmapPath(context.SolutionDirectory, zipFileName);
+            var srcFileName = PathHelper.UnmapPath(context.ProjectDirectory, zipFileName);
             var targetFileName = "content\\packages\\" + Path.GetFileName(zipFileName);
 
             context.Trace.TraceInformation(Texts.Packing, packageName);
@@ -72,7 +72,7 @@ namespace Sitecore.Pathfinder.Building.Packaging
                 var byteArray = Encoding.UTF8.GetBytes(nuspec.ToString());
                 using (var nuspecStream = new MemoryStream(byteArray))
                 {
-                    var packageBuilder = new PackageBuilder(nuspecStream, context.SolutionDirectory);
+                    var packageBuilder = new PackageBuilder(nuspecStream, context.ProjectDirectory);
 
                     using (var nupkg = new FileStream(nupkgFileName, FileMode.Create))
                     {

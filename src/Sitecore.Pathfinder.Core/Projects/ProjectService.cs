@@ -54,7 +54,7 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         protected virtual ProjectOptions CreateProjectOptions()
         {
-            var projectDirectory = PathHelper.Combine(Configuration.GetString(Constants.Configuration.SolutionDirectory), Configuration.GetString(Constants.Configuration.ProjectDirectory));
+            var projectDirectory = Configuration.GetString(Constants.Configuration.ProjectDirectory);
             var databaseName = Configuration.GetString(Constants.Configuration.Database);
 
             return Factory.ProjectOptions(projectDirectory, databaseName);

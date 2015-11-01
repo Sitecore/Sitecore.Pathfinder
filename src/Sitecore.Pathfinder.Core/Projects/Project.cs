@@ -212,14 +212,14 @@ namespace Sitecore.Pathfinder.Projects
                 throw new InvalidOperationException(Texts.Project_has_not_been_loaded__Call_Load___first);
             }
 
-            SourceFiles.Remove(SourceFiles.FirstOrDefault(s => string.Compare(s.AbsoluteFileName, sourceFileName, StringComparison.OrdinalIgnoreCase) == 0));
+            SourceFiles.Remove(SourceFiles.FirstOrDefault(s => string.Equals(s.AbsoluteFileName, sourceFileName, StringComparison.OrdinalIgnoreCase)));
 
-            _diagnostics.RemoveAll(d => string.Compare(d.FileName, sourceFileName, StringComparison.OrdinalIgnoreCase) == 0);
+            _diagnostics.RemoveAll(d => string.Equals(d.FileName, sourceFileName, StringComparison.OrdinalIgnoreCase));
 
             foreach (var projectItem in Items.ToList())
             {
                 // todo: not working
-                if (string.Compare(projectItem.Snapshots.First().SourceFile.AbsoluteFileName, sourceFileName, StringComparison.OrdinalIgnoreCase) != 0)
+                if (!string.Equals(projectItem.Snapshots.First().SourceFile.AbsoluteFileName, sourceFileName, StringComparison.OrdinalIgnoreCase))
                 {
                     continue;
                 }
@@ -255,7 +255,7 @@ namespace Sitecore.Pathfinder.Projects
 
         protected virtual void AddExterns([NotNull] IParseContext context)
         {
-            var externalDirectory = PathHelper.Combine(context.Configuration.GetString(Constants.Configuration.SolutionDirectory), context.Configuration.GetString(Constants.Configuration.ExternalDirectory));
+            var externalDirectory = PathHelper.Combine(context.Configuration.GetString(Constants.Configuration.ProjectDirectory), context.Configuration.GetString(Constants.Configuration.ExternalDirectory));
             if (!FileSystem.DirectoryExists(externalDirectory))
             {
                 return;

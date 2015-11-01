@@ -2,8 +2,10 @@
 
 using System;
 using System.IO;
+using System.Text;
 using NuGet;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Building.Packaging
@@ -26,7 +28,7 @@ namespace Sitecore.Pathfinder.Building.Packaging
             context.Trace.TraceInformation(Texts.Creating_Nupkg_file___);
 
             var packageFileName = context.Configuration.Get(Constants.Configuration.PackNugetDirectory);
-            var directory = PathHelper.Combine(context.SolutionDirectory, packageFileName);
+            var directory = PathHelper.Combine(context.ProjectDirectory, packageFileName);
             var pathMatcher = new PathMatcher(context.Configuration.Get(Constants.Configuration.PackNugetInclude), context.Configuration.Get(Constants.Configuration.PackNugetExclude));
 
             foreach (var fileName in context.FileSystem.GetFiles(directory, "*", SearchOption.AllDirectories))
@@ -57,21 +59,24 @@ namespace Sitecore.Pathfinder.Building.Packaging
 
             context.OutputFiles.Add(nupkgFileName);
 
-            context.Trace.TraceInformation(Texts.NuGet_file_size, $"{PathHelper.UnmapPath(context.SolutionDirectory, nupkgFileName)} ({new FileInfo(nupkgFileName).Length.ToString("#,##0 bytes")})");
+            context.Trace.TraceInformation(Texts.NuGet_file_size, $"{PathHelper.UnmapPath(context.ProjectDirectory, nupkgFileName)} ({new FileInfo(nupkgFileName).Length.ToString("#,##0 bytes")})");
         }
 
         protected virtual void BuildNupkgFile([NotNull] IBuildContext context, [NotNull] string nuspecFileName, [NotNull] string nupkgFileName)
         {
+            var configFileName = Path.Combine(context.Configuration.GetString(Constants.Configuration.ToolsDirectory), context.Configuration.GetString(Constants.Configuration.ProjectConfigFileName));
+
+            var nuspec = context.FileSystem.ReadAllText(nuspecFileName);
+            nuspec = nuspec.Replace("$global.scconfig.json$", configFileName);
+
+            var stream = new MemoryStream(Encoding.UTF8.GetBytes(nuspec));
             try
             {
-                using (var nuspec = new FileStream(nuspecFileName, FileMode.Open, FileAccess.Read))
-                {
-                    var packageBuilder = new PackageBuilder(nuspec, context.SolutionDirectory);
+                var packageBuilder = new PackageBuilder(stream, context.ProjectDirectory);
 
-                    using (var nupkg = new FileStream(nupkgFileName, FileMode.Create))
-                    {
-                        packageBuilder.Save(nupkg);
-                    }
+                using (var nupkg = new FileStream(nupkgFileName, FileMode.Create))
+                {
+                    packageBuilder.Save(nupkg);
                 }
             }
             catch (Exception ex)

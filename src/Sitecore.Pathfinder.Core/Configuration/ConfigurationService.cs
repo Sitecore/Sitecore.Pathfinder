@@ -67,7 +67,7 @@ namespace Sitecore.Pathfinder.Configuration
             configurationSourceRoot.AddCommandLine(args.ToArray());
         }
 
-        public virtual void Load(LoadConfigurationOptions options, string solutionDirectory = null)
+        public virtual void Load(LoadConfigurationOptions options, string projectDirectory = null)
         {
             var configurationSourceRoot = Configuration as IConfigurationSourceRoot;
             if (configurationSourceRoot == null)
@@ -98,16 +98,18 @@ namespace Sitecore.Pathfinder.Configuration
                 configurationSourceRoot.AddEnvironmentVariables();
             }
 
-            // set solution directory
-            if (solutionDirectory == null)
+            // set project directory
+            if (projectDirectory != null)
             {
-                solutionDirectory = PathHelper.Combine(toolsDirectory, configurationSourceRoot.GetString(Constants.Configuration.SolutionDirectory));
+                configurationSourceRoot.Set(Constants.Configuration.ProjectDirectory, projectDirectory);
+            }
+            else
+            {
+                projectDirectory = configurationSourceRoot.GetString(Constants.Configuration.ProjectDirectory);
             }
 
-            configurationSourceRoot.Set(Constants.Configuration.SolutionDirectory, solutionDirectory);
-
             // add project config file
-            var projectConfigFileName = PathHelper.Combine(solutionDirectory, configurationSourceRoot.Get(Constants.Configuration.ProjectConfigFileName));
+            var projectConfigFileName = PathHelper.Combine(projectDirectory, configurationSourceRoot.Get(Constants.Configuration.ProjectConfigFileName));
             if (File.Exists(projectConfigFileName))
             {
                 configurationSourceRoot.AddFile(projectConfigFileName);
@@ -140,7 +142,7 @@ namespace Sitecore.Pathfinder.Configuration
 
                 if (!string.IsNullOrEmpty(configName))
                 {
-                    var configFileName = PathHelper.Combine(solutionDirectory, configName);
+                    var configFileName = PathHelper.Combine(projectDirectory, configName);
 
                     if (!string.IsNullOrEmpty(configFileName) && !configFileName.StartsWith("scconfig.", StringComparison.OrdinalIgnoreCase))
                     {
@@ -158,10 +160,6 @@ namespace Sitecore.Pathfinder.Configuration
                     }
                 }
             }
-
-            // set project directory
-            var projectDirectory = PathHelper.NormalizeFilePath(configurationSourceRoot.GetString(Constants.Configuration.ProjectDirectory)).TrimStart('\\');
-            configurationSourceRoot.Set(Constants.Configuration.ProjectDirectory, projectDirectory);
         }
     }
 }

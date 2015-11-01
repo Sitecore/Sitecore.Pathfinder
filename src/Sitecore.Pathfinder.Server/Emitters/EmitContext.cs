@@ -24,8 +24,8 @@ namespace Sitecore.Pathfinder.Emitters
             Trace = traceService;
             FileSystem = fileSystemService;
 
-            var solutionDirectory = Configuration.GetString(Constants.Configuration.SolutionDirectory);
-            UninstallDirectory = PathHelper.Combine(solutionDirectory, Configuration.GetString(Constants.Configuration.UninstallDirectory, "..\\.uninstall"));
+            var projectDirectory = Configuration.GetString(Constants.Configuration.ProjectDirectory);
+            UninstallDirectory = PathHelper.Combine(projectDirectory, Configuration.GetString(Constants.Configuration.UninstallDirectory, "..\\.uninstall"));
         }
 
         public ICollection<string> AddedFiles { get; } = new List<string>();

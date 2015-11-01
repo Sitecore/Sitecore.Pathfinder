@@ -14,7 +14,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
         {
             var sourceDirectory = Path.Combine(context.Configuration.Get(Constants.Configuration.ToolsDirectory), "files\\vscode\\*");
 
-            context.FileSystem.XCopy(sourceDirectory, context.SolutionDirectory);
+            context.FileSystem.XCopy(sourceDirectory, context.ProjectDirectory);
         }
 
         public override void WriteHelp(HelpWriter helpWriter)

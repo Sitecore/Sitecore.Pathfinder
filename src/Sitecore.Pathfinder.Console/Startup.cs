@@ -81,8 +81,10 @@ namespace Sitecore.Pathfinder
             configuration.Add(new MemoryConfigurationSource());
 
             var toolsDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
+            var projectDirectory = Directory.GetCurrentDirectory();
 
             configuration.Set(Constants.Configuration.ToolsDirectory, toolsDirectory);
+            configuration.Set(Constants.Configuration.ProjectDirectory, projectDirectory);
             configuration.Set(Constants.Configuration.SystemConfigFileName, "scconfig.json");
 
             return configuration;

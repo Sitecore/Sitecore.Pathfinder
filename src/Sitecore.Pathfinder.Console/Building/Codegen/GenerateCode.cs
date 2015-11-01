@@ -60,7 +60,7 @@ Normally you want to run the `generate-code` task before building an assembly, s
 
             codeGenerator.Generate(baseFileName, projectItem);
 
-            context.Trace.TraceInformation(PathHelper.UnmapPath(context.SolutionDirectory, baseFileName));
+            context.Trace.TraceInformation(PathHelper.UnmapPath(context.ProjectDirectory, baseFileName));
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Building.Testing
         {
             context.Trace.TraceInformation(Texts.Running_unit_tests___);
 
-            var directory = Path.Combine(context.SolutionDirectory, context.Configuration.Get(Constants.Configuration.LocalTestDirectory));
+            var directory = Path.Combine(context.ProjectDirectory, context.Configuration.Get(Constants.Configuration.LocalTestDirectory));
             context.FileSystem.CreateDirectory(directory);
 
             CopyTestFilesToWebsite(context, directory);
