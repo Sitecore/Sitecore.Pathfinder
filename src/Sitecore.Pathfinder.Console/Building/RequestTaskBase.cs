@@ -66,7 +66,7 @@ namespace Sitecore.Pathfinder.Building
         }
 
         [NotNull]
-        protected virtual string MakeUrl([NotNull] IBuildContext context, [NotNull] string path, [NotNull] Dictionary<string, string> queryStringParameters, bool includeUserNameAndPassword = true)
+        protected virtual string MakeUrl([NotNull] IBuildContext context, [NotNull] string path, [NotNull] Dictionary<string, string> queryStringParameters)
         {
             var result = context.Configuration.GetString(Constants.Configuration.HostName).TrimEnd('/') + "/" + path.TrimStart('/');
             var parameters = string.Empty;
@@ -88,28 +88,25 @@ namespace Sitecore.Pathfinder.Building
                 parameters += HttpUtility.UrlEncode(pair.Value);
             }
 
-            if (includeUserNameAndPassword)
+            if (queryStringParameters.ContainsKey("u"))
             {
-                if (queryStringParameters.ContainsKey("u"))
-                {
-                    throw new InvalidOperationException("Querystring parameter 'u' has already been specified");
-                }
-
-                if (queryStringParameters.ContainsKey("p"))
-                {
-                    throw new InvalidOperationException("Querystring parameter 'p' has already been specified");
-                }
-
-                if (!string.IsNullOrEmpty(parameters))
-                {
-                    parameters += "&";
-                }
-
-                parameters += "u=";
-                parameters += HttpUtility.UrlEncode(context.Configuration.GetString(Constants.Configuration.UserName));
-                parameters += "&p=";
-                parameters += HttpUtility.UrlEncode(context.Configuration.GetString(Constants.Configuration.Password));
+                throw new InvalidOperationException("Querystring parameter 'u' has already been specified");
             }
+
+            if (queryStringParameters.ContainsKey("p"))
+            {
+                throw new InvalidOperationException("Querystring parameter 'p' has already been specified");
+            }
+
+            if (!string.IsNullOrEmpty(parameters))
+            {
+                parameters += "&";
+            }
+
+            parameters += "u=";
+            parameters += HttpUtility.UrlEncode(context.Configuration.GetString(Constants.Configuration.UserName));
+            parameters += "&p=";
+            parameters += HttpUtility.UrlEncode(context.Configuration.GetString(Constants.Configuration.Password));
 
             if (!string.IsNullOrEmpty(parameters))
             {
@@ -117,6 +114,12 @@ namespace Sitecore.Pathfinder.Building
             }
 
             return result;
+        }
+
+        [NotNull]
+        protected virtual string MakeWebApiUrl([NotNull] IBuildContext context, [NotNull] string typeName, [NotNull] Dictionary<string, string> queryStringParameters)
+        {
+            return MakeUrl(context, "sitecore/shell/client/Applications/Pathfinder/WebApi/" + typeName, queryStringParameters);
         }
 
         protected virtual bool Request([NotNull] IBuildContext context, [NotNull] string url)

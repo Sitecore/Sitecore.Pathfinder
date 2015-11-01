@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Extensions
 
             if (Context.IsLoggedIn)
             {
-                if (Context.User.Name.Equals(userName, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(Context.User.Name, userName, StringComparison.OrdinalIgnoreCase))
                 {
                     return null;
                 }

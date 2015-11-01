@@ -166,6 +166,7 @@
     <Compile Include="Controllers\PathfinderPublishController.cs" />
     <Compile Include="Controllers\PathfinderSitecoreCopController.cs" />
     <Compile Include="Controllers\PathfinderUploadController.cs" />
+    <Compile Include="Controllers\PathfinderWebApiController.cs" />
     <Compile Include="Controllers\PathfinderWebTestRunnerController.cs" />
     <Compile Include="Emitters\Writers\FieldWriter.cs" />
     <Compile Include="Configuration\PathfinderSettings.cs" />
@@ -189,6 +190,7 @@
     <Compile Include="Emitters\Items\TemplateEmitter.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="Extensions\DatabaseExtensions.cs" />
+    <Compile Include="Jobs\BackgroundJob.cs" />
     <Compile Include="Mvc\Presentation\HtmlTemplateRenderer.cs" />
     <Compile Include="Mvc\Response\GetRenderer\GetHtmlTemplateRenderer.cs" />
     <Compile Include="Packages\PackageService.cs" />
@@ -206,6 +208,8 @@
     <Compile Include="Synchronizing\XsdLayoutSchemaSynchronizer.cs" />
     <Compile Include="Synchronizing\XsdContentSchemaSynchronizer.cs" />
     <Compile Include="Testing\UnitTestRunner.cs" />
+    <Compile Include="WebApi\IWebApi.cs" />
+    <Compile Include="WebApi\TroubleshootWebsite.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

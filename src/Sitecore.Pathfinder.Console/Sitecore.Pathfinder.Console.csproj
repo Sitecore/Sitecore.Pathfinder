@@ -183,6 +183,7 @@
     <Compile Include="Building\Codegen\GenerateCode.cs" />
     <Compile Include="Building\Commands\ListItems.cs" />
     <Compile Include="Building\Commands\ListProject.cs" />
+    <Compile Include="Building\Commands\TroubleshootWebsite.cs" />
     <Compile Include="Building\Deploying\CopyPackage.cs" />
     <Compile Include="Building\Deploying\InstallPackage.cs" />
     <Compile Include="Building\Deploying\PublishDatabase.cs" />

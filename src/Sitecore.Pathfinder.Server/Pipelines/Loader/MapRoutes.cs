@@ -64,7 +64,13 @@ namespace Sitecore.Pathfinder.Pipelines.Loader
             {
                 controller = "PathfinderUpload",
                 action = "Index",
-                packageId = ""
+            });
+
+            RouteTable.Routes.MapRoute("Sitecore.Pathfinder.WebApi", "sitecore/shell/client/Applications/Pathfinder/WebApi/{typeName}", new
+            {
+                controller = "PathfinderWebApi",
+                action = "Index",
+                typeName = ""
             });
         }
     }

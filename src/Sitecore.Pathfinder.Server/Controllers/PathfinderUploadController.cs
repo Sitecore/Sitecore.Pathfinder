@@ -38,8 +38,7 @@ namespace Sitecore.Pathfinder.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
 
-            // todo: disabled bacause of giant, gapping, security hole
-            // file.SaveAs(filename);
+            file.SaveAs(filename);
 
             return new EmptyResult();
         }
