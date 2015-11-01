@@ -4,8 +4,8 @@ using System;
 using System.IO;
 using System.Web.Mvc;
 using NuGet;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Packages;
-using Sitecore.Security.Authentication;
 using Sitecore.Web;
 
 namespace Sitecore.Pathfinder.Controllers
@@ -18,14 +18,10 @@ namespace Sitecore.Pathfinder.Controllers
             var output = new StringWriter();
             Console.SetOut(output);
 
-            var userName = WebUtil.GetQueryString("u");
-            if (!string.IsNullOrEmpty(userName))
+            var authenticateResult = this.AuthenticateUser();
+            if (authenticateResult != null)
             {
-                var password = WebUtil.GetQueryString("p");
-                if (!AuthenticationManager.Login(userName, password))
-                {
-                    return new HttpUnauthorizedResult("Failed to login");
-                }
+                return authenticateResult;
             }
 
             var packageService = new PackageService();

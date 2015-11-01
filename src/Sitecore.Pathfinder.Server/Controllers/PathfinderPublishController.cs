@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Sitecore.Configuration;
 using Sitecore.Data.Managers;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Publishing;
 using Sitecore.Web;
 
@@ -17,7 +18,11 @@ namespace Sitecore.Pathfinder.Controllers
             var output = new StringWriter();
             Console.SetOut(output);
 
-
+            var authenticateResult = this.AuthenticateUser();
+            if (authenticateResult != null)
+            {
+                return authenticateResult;
+            }
 
             var databaseName = WebUtil.GetQueryString("db", "master");
             var mode = WebUtil.GetQueryString("m", "i");

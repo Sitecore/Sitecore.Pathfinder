@@ -5,9 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using System.Xml;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Rocks.Server.Extensibility;
 using Sitecore.Rocks.Server.Validations;
-using Sitecore.Security.Authentication;
 using Sitecore.Web;
 
 namespace Sitecore.Pathfinder.Controllers
@@ -19,12 +19,12 @@ namespace Sitecore.Pathfinder.Controllers
         {
             ExtensibilityLoader.Initialize();
 
-            var userName = GetParameter("u");
-            if (!string.IsNullOrEmpty(userName))
+            var authenticateResult = this.AuthenticateUser();
+            if (authenticateResult != null)
             {
-                var password = GetParameter("p");
-                AuthenticationManager.Login(userName, password);
+                return authenticateResult;
             }
+
 
             int timeout;
             if (!int.TryParse(GetParameter("t", "600"), out timeout))

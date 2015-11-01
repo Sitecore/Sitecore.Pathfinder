@@ -3,6 +3,7 @@
 using System;
 using System.IO;
 using System.Web.Mvc;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Testing;
 
 namespace Sitecore.Pathfinder.Controllers
@@ -12,6 +13,12 @@ namespace Sitecore.Pathfinder.Controllers
         [Diagnostics.NotNull]
         public ActionResult Index()
         {
+            var authenticateResult = this.AuthenticateUser();
+            if (authenticateResult != null)
+            {
+                return authenticateResult;
+            }
+
             var testRunnerName = Request["n"] ?? "NUnit";
 
             var output = new StringWriter();

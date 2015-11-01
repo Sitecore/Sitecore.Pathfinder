@@ -187,7 +187,7 @@
     <Compile Include="Emitters\Files\MediaFileEmitter.cs" />
     <Compile Include="Emitters\Files\SerializationFileEmitter.cs" />
     <Compile Include="Emitters\Items\TemplateEmitter.cs" />
-    <Compile Include="Extensions\Controller.cs" />
+    <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="Extensions\DatabaseExtensions.cs" />
     <Compile Include="Mvc\Presentation\HtmlTemplateRenderer.cs" />
     <Compile Include="Mvc\Response\GetRenderer\GetHtmlTemplateRenderer.cs" />
