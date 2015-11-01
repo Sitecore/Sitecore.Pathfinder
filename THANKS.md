@@ -17,6 +17,7 @@
 * Jacob Surland
 * Kern Herskin
 * Kerry Bellerose
+* Kevin Obee
 * Kieran Marron
 * Lars Fløe Nielsen
 * Max Reimer-Nielsen
