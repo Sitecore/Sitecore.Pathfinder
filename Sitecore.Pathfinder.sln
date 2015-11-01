@@ -8,6 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Changes.md = Changes.md
 		CONTRIBUTING.md = CONTRIBUTING.md
 		README.md = README.md
+		THANKS.md = THANKS.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.Server", "src\Sitecore.Pathfinder.Server\Sitecore.Pathfinder.Server.csproj", "{42808013-7A25-4C07-91FA-BE4F7AA8E0B1}"

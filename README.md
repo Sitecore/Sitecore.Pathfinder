@@ -1193,7 +1193,7 @@ Medium term
 * More starter kits
 * More documentation
 * Support for Sitecore Habitat
-* Support for Visual Studio Online
+* More support for Visual Studio Online
 
 Long term
 
@@ -1204,3 +1204,6 @@ Long term
 * Continuous Integration/Delivery - how?
 * Live Update - update browser when project is built
 * Consider moving tasks to NPM
+
+# Thanks
+See [Thanks](THANKS.md).
