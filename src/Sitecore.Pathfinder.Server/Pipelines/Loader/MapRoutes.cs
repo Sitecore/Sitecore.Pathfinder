@@ -60,7 +60,7 @@ namespace Sitecore.Pathfinder.Pipelines.Loader
                 packageId = ""
             });
 
-            RouteTable.Routes.MapRoute("Sitecore.Pathfinder.Package", "sitecore/shell/client/Applications/Pathfinder/Upload", new
+            RouteTable.Routes.MapRoute("Sitecore.Pathfinder.Upload", "sitecore/shell/client/Applications/Pathfinder/Upload", new
             {
                 controller = "PathfinderUpload",
                 action = "Index",

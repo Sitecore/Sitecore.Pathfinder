@@ -130,7 +130,29 @@ namespace Sitecore.Pathfinder.Diagnostics
 
             var lineInfo = span.Length == 0 ? $"({span.LineNumber},{span.LinePosition})" : $"({span.LineNumber},{span.LinePosition},{span.LineNumber},{span.LinePosition + span.Length})";
 
-            Console.WriteLine($"{fileInfo}{lineInfo}: {severity.ToString().ToLowerInvariant()} SCC0000: {text}");
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write($"{fileInfo}{lineInfo}: ");
+
+            switch (severity)
+            {
+                case Severity.Warning:
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    break;
+                case Severity.Error:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    break;
+                default:
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    break;
+            }
+
+            Console.Write(severity.ToString().ToLowerInvariant());
+
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write(" SCC0000: ");
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(text);
         }
     }
 }
