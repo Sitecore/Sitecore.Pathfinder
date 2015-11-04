@@ -56,9 +56,10 @@ namespace Sitecore.Pathfinder
             var configuration = new Microsoft.Framework.ConfigurationModel.Configuration();
             configuration.Add(new MemoryConfigurationSource());
 
-            var toolsDirectory = emitSource == EmitSource.NugetPackage ? Path.Combine(projectDirectory, "content\\sitecore.tools") : Path.Combine(projectDirectory, "sitecore.tools");
+            var toolsDirectory = Path.Combine(projectDirectory, "sitecore.tools");
 
             configuration.Set(Constants.Configuration.ToolsDirectory, toolsDirectory);
+            configuration.Set(Constants.Configuration.ProjectDirectory, projectDirectory);
             configuration.Set(Constants.Configuration.SystemConfigFileName, "scconfig.json");
 
             return configuration;

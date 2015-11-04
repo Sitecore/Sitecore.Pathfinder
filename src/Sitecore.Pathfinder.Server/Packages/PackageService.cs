@@ -328,7 +328,7 @@ namespace Sitecore.Pathfinder.Packages
             var configFileName = Path.Combine(e.InstallPath, "content\\sitecore.tools\\scconfig.json");
             if (File.Exists(configFileName))
             {
-                var emitService = new EmitService(e.InstallPath, EmitSource.NugetPackage);
+                var emitService = new EmitService(Path.Combine(e.InstallPath, "content"), EmitSource.NugetPackage);
                 emitService.Start();
             }
 

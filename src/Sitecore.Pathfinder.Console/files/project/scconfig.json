@@ -31,12 +31,39 @@
             //         "item-path": "/sitecore/layout/renderings",
             //         "database": "master"
             //     },
-            //     "img": {
-            //         "project-directory": "/img",
-            //         "include": "**",
-            //         "website-directory": "",
-            //         "item-path": "/sitecore/media library"
-            //     }
+            "master": {
+                "project-directory": "content/master/sitecore",
+                "include": "**",
+                "website-directory": "",
+                "item-path": "/sitecore",
+                "database": "master"
+            },
+            "core": {
+                "project-directory": "content/core/sitecore",
+                "include": "**",
+                "website-directory": "",
+                "item-path": "/sitecore",
+                "database": "core"
+            },
+            "Views": {
+                "project-directory": "Views",
+                "include": "Views/**",
+                "website-directory": "Views",
+                "item-path": "/sitecore/layout/renderings"
+            },
+            "wwwroot": {
+                "project-directory": "wwwroot",
+                "include": "**",
+                "exclude": "img/**",
+                "website-directory": "",
+                "item-path": ""
+            },
+            "img": {
+                "project-directory": "wwwroot/img",
+                "include": "**",
+                "website-directory": "",
+                "item-path": "/sitecore/media library"
+            }
         }
     },                                                           
 

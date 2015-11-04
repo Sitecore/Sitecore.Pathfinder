@@ -143,9 +143,9 @@ namespace Sitecore.Pathfinder.IO
             localFileDirectory = "/" + NormalizeItemPath(localFileDirectory).Trim('/');
             serverFileDirectory = "/" + NormalizeItemPath(serverFileDirectory).Trim('/');
 
-            if (filePath.StartsWith(localFileDirectory, StringComparison.OrdinalIgnoreCase))
+            if (filePath.StartsWith(localFileDirectory, StringComparison.OrdinalIgnoreCase))                                
             {
-                filePath = serverFileDirectory.TrimEnd('/') + "/" + filePath.Mid(localFileDirectory.Length);
+                filePath = serverFileDirectory.TrimEnd('/') + "/" + filePath.Mid(localFileDirectory.Length).TrimStart('/');
             }
 
             return "~" + filePath;
@@ -188,7 +188,7 @@ namespace Sitecore.Pathfinder.IO
 
             if (result.StartsWith(localFileDirectory, StringComparison.OrdinalIgnoreCase))
             {
-                result = itemPath.TrimEnd('/') + "/" + result.Mid(localFileDirectory.Length);
+                result = itemPath.TrimEnd('/') + "/" + result.Mid(localFileDirectory.Length).TrimStart('/');
             }
 
             if (!result.StartsWith("/sitecore/", StringComparison.OrdinalIgnoreCase))

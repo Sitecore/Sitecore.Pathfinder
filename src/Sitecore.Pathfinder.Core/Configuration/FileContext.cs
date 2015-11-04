@@ -13,24 +13,27 @@ namespace Sitecore.Pathfinder.Configuration
     public class FileContext
     {
         [NotNull]
-        public static readonly FileContext Empty = new FileContext(string.Empty, string.Empty, string.Empty, string.Empty, false);
+        public static readonly FileContext Empty = new FileContext(string.Empty, string.Empty, string.Empty, string.Empty, false, true);
 
-        public FileContext([NotNull] string itemName, [NotNull] string itemPath, [NotNull] string filePath, [NotNull] string databaseName, bool isExtern)
+        public FileContext([NotNull] string itemName, [NotNull] string itemPath, [NotNull] string filePath, [NotNull] string databaseName, bool isExtern, bool isParsingDisabled)
         {
             ItemName = itemName;
             ItemPath = itemPath;
             FilePath = filePath;
             DatabaseName = databaseName;
             IsExtern = isExtern;
+            IsParsingDisabled = isParsingDisabled;
         }
-
-        public bool IsExtern { get; }
 
         [NotNull]
         public string DatabaseName { get; }
 
         [NotNull]
         public string FilePath { get; }
+
+        public bool IsExtern { get; }
+
+        public bool IsParsingDisabled { get; }
 
         [NotNull]
         public string ItemName { get; }
@@ -48,11 +51,12 @@ namespace Sitecore.Pathfinder.Configuration
             var itemPathConfig = string.Empty;
             var localFileDirectory = string.Empty;
             var serverFileDirectory = string.Empty;
+            var isParsingDisabled = false;
 
             foreach (var pair in configuration.GetSubKeys(Constants.Configuration.Files))
             {
                 var key = Constants.Configuration.Files + ":" + pair.Key;
-                var localDirectory = PathHelper.NormalizeItemPath(configuration.GetString(key + ":project-directory")).TrimStart('\\');
+                var localDirectory = PathHelper.NormalizeItemPath(configuration.GetString(key + ":project-directory"));
 
                 if (!localFileName.StartsWith(localDirectory, StringComparison.OrdinalIgnoreCase))
                 {
@@ -71,10 +75,11 @@ namespace Sitecore.Pathfinder.Configuration
                 }
 
                 localFileDirectory = localDirectory;
-                serverFileDirectory = configuration.GetString(key + ":website-directory");
+                serverFileDirectory = PathHelper.NormalizeItemPath(configuration.GetString(key + ":website-directory"));
                 itemPathConfig = configuration.GetString(key + ":item-path");
                 database = configuration.Get(key + ":database");
                 isExtern = configuration.GetBool(key + ":external-references");
+                isParsingDisabled = configuration.GetBool(key + ":disable-parsing");
 
                 break;
             }
@@ -84,7 +89,7 @@ namespace Sitecore.Pathfinder.Configuration
             var itemPath = PathHelper.GetItemPath(project, sourceFile, localFileDirectory, itemPathConfig);
             var databaseName = !string.IsNullOrEmpty(database) ? database : project.Options.DatabaseName;
 
-            return new FileContext(itemName, itemPath, filePath, databaseName, isExtern);
+            return new FileContext(itemName, itemPath, filePath, databaseName, isExtern, isParsingDisabled);
         }
     }
 }

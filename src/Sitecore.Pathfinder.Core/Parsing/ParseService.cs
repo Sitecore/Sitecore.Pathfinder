@@ -45,6 +45,10 @@ namespace Sitecore.Pathfinder.Parsing
             var itemName = PathHelper.GetItemName(sourceFile);
 
             var fileContext = FileContext.GetFileContext(project, Configuration, sourceFile);
+            if (fileContext.IsParsingDisabled)
+            {
+                return;
+            }
 
             var filePath = fileContext.FilePath;
             if (filePath.StartsWith("~/"))
