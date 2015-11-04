@@ -35,6 +35,8 @@ namespace Sitecore.Pathfinder.Parsing
 
         public virtual bool IsExtern { get; private set; }
 
+        public bool UploadMedia { get; private set; }
+
         public virtual string ItemName { get; private set; }
 
         public virtual string ItemPath { get; private set; }
@@ -61,6 +63,7 @@ namespace Sitecore.Pathfinder.Parsing
             ItemPath = fileContext.ItemPath;
             DatabaseName = fileContext.DatabaseName;
             IsExtern = fileContext.IsExtern;
+            UploadMedia = fileContext.UploadMedia;
 
             return this;
         }

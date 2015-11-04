@@ -6,6 +6,7 @@ using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
+using Sitecore.IO;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitters.Items;
 using Sitecore.Pathfinder.Extensions;
@@ -39,6 +40,34 @@ namespace Sitecore.Pathfinder.Emitters.Files
                 return;
             }
 
+            if (mediaFile.UploadMedia)
+            {
+                UploadFile(context, mediaItem, mediaFile);
+                return;
+            }
+
+            CopyFile(context, mediaFile);
+        }
+
+        protected virtual void CopyFile([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] MediaFile mediaFile)
+        {
+            var destinationFileName = FileUtil.MapPath(mediaFile.FilePath);
+
+            if (context.FileSystem.FileExists(destinationFileName))
+            {
+                context.RegisterUpdatedFile(mediaFile, destinationFileName);
+            }
+            else
+            {
+                context.RegisterAddedFile(mediaFile, destinationFileName);
+            }
+
+            context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName) ?? string.Empty);
+            context.FileSystem.Copy(mediaFile.Snapshots.First().SourceFile.AbsoluteFileName, destinationFileName);
+        }
+
+        protected virtual void UploadFile([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] Projects.Items.Item mediaItem, [Diagnostics.NotNull] MediaFile mediaFile)
+        {
             var database = Factory.GetDatabase(mediaItem.DatabaseName);
             var name = mediaItem.ItemName;
 
@@ -76,12 +105,12 @@ namespace Sitecore.Pathfinder.Emitters.Files
                 ItemManager.AddFromTemplate(name, TemplateIDs.Folder, parent, new ID(mediaItem.Uri.Guid));
             }
 
-            using (var stream = new FileStream(projectItem.Snapshots.First().SourceFile.AbsoluteFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (var stream = new FileStream(mediaFile.Snapshots.First().SourceFile.AbsoluteFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                var item = MediaManager.Creator.CreateFromStream(stream, "/upload/" + Path.GetFileName(projectItem.Snapshots.First().SourceFile.AbsoluteFileName), options);
+                var item = MediaManager.Creator.CreateFromStream(stream, "/upload/" + Path.GetFileName(mediaFile.Snapshots.First().SourceFile.AbsoluteFileName), options);
                 if (item == null)
                 {
-                    throw new EmitException(Texts.Failed_to_upload_media, projectItem.Snapshots.First());
+                    throw new EmitException(Texts.Failed_to_upload_media, mediaFile.Snapshots.First());
                 }
 
                 if (mediaItem.Uri.Guid != item.ID.ToGuid())

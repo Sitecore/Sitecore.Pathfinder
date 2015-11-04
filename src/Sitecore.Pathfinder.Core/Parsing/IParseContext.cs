@@ -1,6 +1,5 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.Collections.Generic;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
@@ -25,6 +24,8 @@ namespace Sitecore.Pathfinder.Parsing
         [NotNull]
         string FilePath { get; }
 
+        bool IsExtern { get; }
+
         [NotNull]
         string ItemName { get; }
 
@@ -45,6 +46,8 @@ namespace Sitecore.Pathfinder.Parsing
 
         [NotNull]
         ITraceService Trace { get; }
+
+        bool UploadMedia { get; }
 
         [NotNull]
         IParseContext With([NotNull] IProject project, [NotNull] ISnapshot snapshot);

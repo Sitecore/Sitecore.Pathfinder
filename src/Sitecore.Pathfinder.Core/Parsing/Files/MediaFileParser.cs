@@ -38,6 +38,7 @@ namespace Sitecore.Pathfinder.Parsing.Files
         public override void Parse(IParseContext context)
         {
             var mediaFile = context.Factory.MediaFile(context.Project, context.Snapshot, context.DatabaseName, context.ItemName, context.ItemPath, context.FilePath);
+            mediaFile.UploadMedia = context.UploadMedia;
             context.Project.AddOrMerge(mediaFile);
 
             context.Project.Ducats += 100;

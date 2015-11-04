@@ -15,14 +15,14 @@ namespace Sitecore.Pathfinder.Configuration
         [NotNull]
         public static readonly FileContext Empty = new FileContext(string.Empty, string.Empty, string.Empty, string.Empty, false, true);
 
-        public FileContext([NotNull] string itemName, [NotNull] string itemPath, [NotNull] string filePath, [NotNull] string databaseName, bool isExtern, bool isParsingDisabled)
+        public FileContext([NotNull] string itemName, [NotNull] string itemPath, [NotNull] string filePath, [NotNull] string databaseName, bool isExtern, bool uploadMedia)
         {
             ItemName = itemName;
             ItemPath = itemPath;
             FilePath = filePath;
             DatabaseName = databaseName;
             IsExtern = isExtern;
-            IsParsingDisabled = isParsingDisabled;
+            UploadMedia = uploadMedia;
         }
 
         [NotNull]
@@ -33,13 +33,13 @@ namespace Sitecore.Pathfinder.Configuration
 
         public bool IsExtern { get; }
 
-        public bool IsParsingDisabled { get; }
-
         [NotNull]
         public string ItemName { get; }
 
         [NotNull]
         public string ItemPath { get; }
+
+        public bool UploadMedia { get; }
 
         [NotNull]
         public static FileContext GetFileContext([NotNull] IProject project, [NotNull] IConfiguration configuration, [NotNull] ISourceFile sourceFile)
@@ -51,7 +51,7 @@ namespace Sitecore.Pathfinder.Configuration
             var itemPathConfig = string.Empty;
             var localFileDirectory = string.Empty;
             var serverFileDirectory = string.Empty;
-            var isParsingDisabled = false;
+            var uploadMedia = true;
 
             foreach (var pair in configuration.GetSubKeys(Constants.Configuration.Files))
             {
@@ -79,7 +79,7 @@ namespace Sitecore.Pathfinder.Configuration
                 itemPathConfig = configuration.GetString(key + ":item-path");
                 database = configuration.Get(key + ":database");
                 isExtern = configuration.GetBool(key + ":external-references");
-                isParsingDisabled = configuration.GetBool(key + ":disable-parsing");
+                uploadMedia = configuration.GetBool(key + ":upload-media", true);
 
                 break;
             }
@@ -89,7 +89,7 @@ namespace Sitecore.Pathfinder.Configuration
             var itemPath = PathHelper.GetItemPath(project, sourceFile, localFileDirectory, itemPathConfig);
             var databaseName = !string.IsNullOrEmpty(database) ? database : project.Options.DatabaseName;
 
-            return new FileContext(itemName, itemPath, filePath, databaseName, isExtern, isParsingDisabled);
+            return new FileContext(itemName, itemPath, filePath, databaseName, isExtern, uploadMedia);
         }
     }
 }

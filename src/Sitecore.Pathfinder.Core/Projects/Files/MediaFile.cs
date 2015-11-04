@@ -12,9 +12,9 @@ namespace Sitecore.Pathfinder.Projects.Files
             DatabaseName = databaseName;
             ItemName = itemName;
             ItemPath = itemPath;
-        }
 
-        // todo: disable upload
+            UploadMedia = true;
+        }
 
         [NotNull]
         public string DatabaseName { get; }
@@ -27,5 +27,7 @@ namespace Sitecore.Pathfinder.Projects.Files
 
         [NotNull]
         public ProjectItemUri MediaItemUri { get; set; } = ProjectItemUri.Empty;
+
+        public bool UploadMedia { get; set; }
     }
 }

@@ -24,13 +24,6 @@
 
         // mapping of files between local path and server path and item path
         "files": {
-            //     "html": {
-            //         "project-directory": "",
-            //         "include": "**/*.html",
-            //         "website-directory": "/layout/renderings",
-            //         "item-path": "/sitecore/layout/renderings",
-            //         "database": "master"
-            //     },
             "master": {
                 "project-directory": "content/master/sitecore",
                 "include": "**",
@@ -45,7 +38,7 @@
                 "item-path": "/sitecore",
                 "database": "core"
             },
-            "Views": {
+            "views": {
                 "project-directory": "Views",
                 "include": "Views/**",
                 "website-directory": "Views",
@@ -54,15 +47,9 @@
             "wwwroot": {
                 "project-directory": "wwwroot",
                 "include": "**",
-                "exclude": "img/**",
                 "website-directory": "",
-                "item-path": ""
-            },
-            "img": {
-                "project-directory": "wwwroot/img",
-                "include": "**",
-                "website-directory": "",
-                "item-path": "/sitecore/media library"
+                "item-path": "",
+                "upload-media": false
             }
         }
     },                                                           
