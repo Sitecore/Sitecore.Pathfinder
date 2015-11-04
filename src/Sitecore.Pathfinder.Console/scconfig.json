@@ -1,6 +1,6 @@
 {
-    // "$schema": "sitecore.project/schemas/config.json",
-    "wwwroot": "",
+    "website-directory": "",
+    "data-folder-directory": "",
     "hostname": "",
 
     // default database name (master, core or web)
@@ -15,7 +15,7 @@
 
     "build-project": {
         // default build pipeline
-        "tasks": "init-project",
+        "tasks": "help",
 
         // files to copy to website
         "content-files": ".js .css .config .htm .ashx .asmx",
@@ -38,7 +38,6 @@
     },
 
     "copy-package": {
-        "data-directory-name": "Data",
         "package-directory": "packages"
     },
 
@@ -67,8 +66,6 @@
 
     "run-unittests": {
         "local-test-directory": "Tests",
-
-        "website-directory-name": "Website",
 
         "web-test-runner-url": "/sitecore/shell/client/Applications/Pathfinder/WebTestRunner",
         "web-test-runner-name": "NUnit"

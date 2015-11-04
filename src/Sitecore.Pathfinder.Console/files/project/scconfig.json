@@ -3,9 +3,8 @@
     // calculate item ids.
     "project-unique-id": "{project-unique-id}",
 
-    // wwwroot points to the base directory of the website
-    // The wwwroot directory must contain a 'Data' and a 'Website' folder
-    "wwwroot": "c:\\inetpub\\wwwroot\\Sitecore.Default",
+    "website-directory": "c:\\inetpub\\wwwroot\\Sitecore.Default\\Website",
+    "data-folder-directory": "c:\\inetpub\\wwwroot\\Sitecore.Default\\Data",
     "host-name": "http://sitecore.default",
 
     // user name and password
@@ -39,7 +38,7 @@
             //         "item-path": "/sitecore/media library"
             //     }
         }
-    },
+    },                                                           
 
     "sync-website": {
         "files": {

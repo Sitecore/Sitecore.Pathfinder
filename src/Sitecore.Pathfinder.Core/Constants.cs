@@ -59,7 +59,7 @@ namespace Sitecore.Pathfinder
 
             public const string Database = "database";
 
-            public const string DataDirectoryName = "copy-package:data-directory-name";
+            public const string DataFolderDirectory = "data-folder-directory";
 
             public const string Debug = "system:debug";
 
@@ -93,13 +93,13 @@ namespace Sitecore.Pathfinder
 
             public const string ProjectConfigFileName = "project";
 
+            public const string ProjectDirectory = "project-directory";
+
             public const string ProjectUniqueId = "project-unique-id";
 
             public const string PublishUrl = "publish-databases:publish-url";
 
             public const string RemapFileDirectories = "remap-file-directories";
-
-            public const string ProjectDirectory = "project-directory";
 
             public const string StandardTemplateFields = "standard-template-fields";
 
@@ -113,13 +113,11 @@ namespace Sitecore.Pathfinder
 
             public const string UserName = "user-name";
 
-            public const string WebsiteDirectoryName = "run-unittests:website-directory-name";
+            public const string WebsiteDirectory = "website-directory";
 
             public const string WebTestRunnerName = "run-unittests:web-test-runner-name";
 
             public const string WebTestRunnerUrl = "run-unittests:web-test-runner-url";
-
-            public const string Wwwroot = "wwwroot";
 
             public static class ValidateWebsite
             {

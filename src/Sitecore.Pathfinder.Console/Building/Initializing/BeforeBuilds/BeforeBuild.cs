@@ -32,7 +32,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
 
             if (string.Equals(projectDirectory, context.Configuration.GetString(Constants.Configuration.ToolsDirectory), StringComparison.OrdinalIgnoreCase))
             {
-                context.Trace.Writeline("Whoops! You must run the scc.exe from a different directory.", context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
+                context.Trace.Writeline("Whoops! scc.exe cannot run in is own directory.", context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
                 context.IsAborted = true;
                 return;
             }
@@ -59,26 +59,10 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
                 return;
             }
 
-            var wwwroot = context.Configuration.Get(Constants.Configuration.Wwwroot);
-            if (string.Equals(wwwroot, "c:\\inetpub\\wwwroot\\Sitecore.Default", StringComparison.OrdinalIgnoreCase))
+            var websiteDirectory = context.Configuration.Get(Constants.Configuration.WebsiteDirectory);
+            if (string.Equals(websiteDirectory, "c:\\inetpub\\wwwroot\\Sitecore.Default\\Website", StringComparison.OrdinalIgnoreCase))
             {
                 context.Trace.Writeline(Texts.Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in_the___0___configuration_file_, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
-                context.IsAborted = true;
-                return;
-            }
-
-            var dataFolder = PathHelper.Combine(wwwroot, "Data");
-            if (!context.FileSystem.DirectoryExists(dataFolder))
-            {
-                context.Trace.Writeline(Texts.There_Is_No_Data_Directory, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
-                context.IsAborted = true;
-                return;
-            }
-
-            var websiteDirectory = PathHelper.Combine(wwwroot, "Website");
-            if (!context.FileSystem.DirectoryExists(websiteDirectory))
-            {
-                context.Trace.Writeline(Texts.There_Is_No_Website_Directory, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
                 context.IsAborted = true;
                 return;
             }

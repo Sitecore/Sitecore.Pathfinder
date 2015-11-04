@@ -48,6 +48,8 @@ namespace Sitecore.Pathfinder.IO
 
         void Rename([NotNull] string oldFileName, [NotNull] string newFileName);
 
+        void Unzip([NotNull] string zipFileName, [NotNull] string destinationDirectory);
+
         void WriteAllText([NotNull] string fileName, [NotNull] string contents);
 
         void XCopy([NotNull] string sourceDirectory, [NotNull] string destinationDirectory);

@@ -22,8 +22,7 @@ namespace Sitecore.Pathfinder.Building.Deploying
 
             context.Trace.TraceInformation(Texts.Copying_package_to_website___);
 
-            var destinationDirectory = context.Configuration.Get(Constants.Configuration.Wwwroot);
-            destinationDirectory = PathHelper.Combine(destinationDirectory, context.Configuration.Get(Constants.Configuration.DataDirectoryName));
+            var destinationDirectory = context.Configuration.Get(Constants.Configuration.DataFolderDirectory);
             destinationDirectory = PathHelper.Combine(destinationDirectory, Constants.Configuration.Pathfinder);
             destinationDirectory = PathHelper.Combine(destinationDirectory, context.Configuration.Get(Constants.Configuration.PackageDirectory));
 

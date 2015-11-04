@@ -24,8 +24,7 @@ namespace Sitecore.Pathfinder.Building.Deploying
                 return;
             }
 
-            var destinationDirectory = context.Configuration.Get(Constants.Configuration.Wwwroot);
-            destinationDirectory = PathHelper.Combine(destinationDirectory, context.Configuration.Get(Constants.Configuration.DataDirectoryName));
+            var destinationDirectory = context.Configuration.Get(Constants.Configuration.DataFolderDirectory);
             destinationDirectory = PathHelper.Combine(destinationDirectory, Constants.Configuration.Pathfinder);
             destinationDirectory = PathHelper.Combine(destinationDirectory, context.Configuration.Get(Constants.Configuration.PackageDirectory));
 

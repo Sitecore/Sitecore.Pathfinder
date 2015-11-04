@@ -10,7 +10,7 @@ An experimental tool chain for Sitecore.
 
 ![Pathfinder](docs/img/SitecorePathfinder.png)
  
-Watch the videos on YouTube (please notice that some of details in the videos are out of date):
+Watch the videos on YouTube (please notice that some details in the videos are out of date):
 
 * [01 - Idea and concepts](https://www.youtube.com/watch?v=TcJ0IoI7sVM)
 * [02 - HelloWorld](https://www.youtube.com/watch?v=jQz5hAVOTzU)
@@ -20,14 +20,6 @@ Watch the videos on YouTube (please notice that some of details in the videos ar
 
 Then download [Pathfinder 0.4.2-Alpha](http://vsplugins.sitecore.net/Pathfinder/Sitecore.Pathfinder.0.4.2.zip) to try it out.
 
-# Pathfinder Status
-Pathfinder is yet another tool for Sitecore, so... obligatory xkcd:
-                
-![Standards](http://imgs.xkcd.com/comics/standards.png)
-                                                          
-Pathfinder is experimental and mostly an academic exercise. The emphasis is on bringing the many Sitecore tools 
-developed by the Sitecore community together in a cohesive manner.
-                                                               
 # Introduction
 Pathfinder is an experimental toolchain for Sitecore, that allows developers to use their favorite tools 
 in a familiar fashion to develop Sitecore websites.
@@ -40,19 +32,11 @@ The developer process is familiar; edit source files, build and install the pack
 ## Getting started
 The goal of Pathfinder is to make it easy to start working with Sitecore.
 
-1. Install a clean Sitecore (e.g. using [SIM (Sitecore Instance Manager](https://marketplace.sitecore.net/modules/sitecore_instance_manager.aspx))
-2. Create an empty folder and xcopy the Pathfinder files to the /sitecore.tools subfolder
-3. Execute the scc.exe in the /sitecore.tools folder
-4. Edit the scconfig.json file to setup 'project-unique-id', 'wwwroot' and 'host-name'
-5. Done - you are now ready
-6. *Optionally:* Configure your editor by executing:
-   * Atom: `scc init-atom`
-   * Visual Studio Code: `scc init-vscode` 
-   * Visual Studio: `scc init-visualstudio`
-7. *Optionally:* Copy a starter kit to your project directory. Starter kits are located in the /sitecore.tools/files/starterkits/ directory.
-
-In step 3 Pathfinder creates a blank project for you. It consists of a number of directories and files, including an scc.cmd file which is a 
-shortcut to the /sitecore.tools\scc.exe file.
+1. Install a Sitecore website (e.g. using [SIM (Sitecore Instance Manager](https://marketplace.sitecore.net/modules/sitecore_instance_manager.aspx))
+2. Create an empty directory (seperate from the Sitecore website directory)
+3. Run `scc.exe new-project` in the directory
+4. Enter Project Unique ID, Website directory, Data Folder directory and hostname
+5. Done
 
 ## How does Pathfinder make Sitecore development easier
 * Familiar developer experience: Edit source files, build project, test website, repeat.
@@ -100,12 +84,12 @@ generate-code | Generates code from items and files in the project.
 generate-unittests | Generates basic unit tests for the project.
 help | Displays version information and a list of commands.
 init-atom | Creates a new Atom project.
-init-project | Initializes the project.
 init-visualstudio | Creates a new Visual Studio project.
 init-vscode | Creates a new Visual Studio Code project.
 install-package | Unpacks and installs the project package (including dependencies) in the website.
 list-items | Lists the Sitecore items in the project.
 list-project | Lists the project items (Sitecore items and files).
+new-project | Initializes the project.
 pack-dependencies | Creates a Nuget package for Sitecore package in the /sitecore.tools/packages directory.
 pack-nuget | Creates a Nuget package from the project.
 publish-database | Publishes a Sitecore database (usually the master database).
@@ -919,7 +903,7 @@ The Package Manager is located at the Url: /sitecore/shell/client/Applications/P
 ## Notepad
 Everything in Pathfinder is a file, so you can use Notepad to edit any file.
 
-To build the project, simply run the ``scc.cmd`` file from the command-line.
+To build the project, simply run the ``scc`` file from the command-line.
 
 ## Atom 
 
@@ -937,7 +921,7 @@ To run Pathfinder as a Build System in Sublime Text 3, configure it like this:
 
 ```js
 {
-	"shell_cmd": "scc.cmd",
+	"shell_cmd": "scc.exe",
     "working_dir": "${project_path:${folder}}"
 }
 ```
@@ -972,22 +956,22 @@ module.exports = function (grunt) {
     grunt.initConfig({
         shell: {
             "build-project": {
-                command: "scc.cmd"
+                command: "scc.exe"
             },
             "run-unittests": {
-                command: "scc.cmd run-unittests"
+                command: "scc.exe run-unittests"
             },
             "generate-unittests": {
-                command: "scc.cmd generate-unittests"
+                command: "scc.exe generate-unittests"
             },
             "generate-code": {
-                command: "scc.cmd generate-code"
+                command: "scc.exe generate-code"
             },
             "sync-website": {
-                command: "scc.cmd sync-website"
+                command: "scc.exe sync-website"
             },
             "validate-website": {
-                command: "scc.cmd validate-website"
+                command: "scc.exe validate-website"
             }
         }
     });
@@ -1041,7 +1025,7 @@ setup.
 
 ![Pathfinder](docs/img/VisualStudioOnline1.png)
 
-1. Add a Batch Script build task and set the Path to "scc.cmd".
+1. Add a Batch Script build task and set the Path to "scc.exe".
 2. *Optional:* Add a Visual Studio Build build task and set the Solution to **/*.sln.
 3. *Optional:* Add a Visual Studio Test build task and set the Test Assembly to your output assembly.
 

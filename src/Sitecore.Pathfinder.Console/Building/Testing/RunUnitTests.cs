@@ -35,8 +35,7 @@ namespace Sitecore.Pathfinder.Building.Testing
 
         private void CopyTestFilesToWebsite([NotNull] IBuildContext context, [NotNull] string directory)
         {
-            var targetDirectory = context.Configuration.Get(Constants.Configuration.Wwwroot);
-            targetDirectory = PathHelper.Combine(targetDirectory, context.Configuration.Get(Constants.Configuration.WebsiteDirectoryName));
+            var targetDirectory = context.Configuration.Get(Constants.Configuration.WebsiteDirectory);
             targetDirectory = PathHelper.Combine(targetDirectory, "sitecore\\shell\\client\\Applications\\Pathfinder\\Tests");
             context.FileSystem.CreateDirectory(targetDirectory);
 

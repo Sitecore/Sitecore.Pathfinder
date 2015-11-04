@@ -4,6 +4,7 @@
 * Jakob Christensen
 
 ## Testers
+* Dmitry Konstenko
 * Martin Svarrer Christensen
 
 ## Feedback providers

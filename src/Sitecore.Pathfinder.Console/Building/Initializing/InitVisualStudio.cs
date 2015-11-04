@@ -12,14 +12,14 @@ namespace Sitecore.Pathfinder.Building.Initializing
 
         public override void Run(IBuildContext context)
         {
-            var sourceDirectory = Path.Combine(context.Configuration.Get(Constants.Configuration.ToolsDirectory), "files\\visualstudio\\*");
+            var zipFileName = Path.Combine(context.Configuration.Get(Constants.Configuration.ToolsDirectory), "files\\editors\\VisualStudio.zip");
 
             if (!Directory.Exists(Path.Combine(context.ProjectDirectory, "node_modules\\grunt")))
             {
                 context.Trace.Writeline("Hey, GruntJS has not yet been installed. Run the installgrunt.cmd file to install it.");
             }
 
-            context.FileSystem.XCopy(sourceDirectory, context.ProjectDirectory);
+            context.FileSystem.Unzip(zipFileName, context.ProjectDirectory);
         }
 
         public override void WriteHelp(HelpWriter helpWriter)

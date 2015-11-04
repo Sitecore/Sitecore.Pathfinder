@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Net;
 using System.Text;
 using Sitecore.Pathfinder.Extensions;
@@ -121,6 +122,24 @@ namespace Sitecore.Pathfinder.IO
         public void Rename(string oldFileName, string newFileName)
         {
             File.Move(oldFileName, newFileName);
+        }
+
+        public void Unzip(string zipFileName, string destinationDirectory)
+        {
+            using (var zip = ZipFile.OpenRead(zipFileName))
+            {
+                foreach (var entry in zip.Entries)
+                {
+                    if (entry.FullName.EndsWith("/"))
+                    {
+                        Directory.CreateDirectory(Path.Combine(destinationDirectory, entry.FullName));
+                    }
+                    else
+                    {
+                        entry.ExtractToFile(Path.Combine(destinationDirectory, entry.FullName), true);
+                    }
+                }
+            }
         }
 
         public virtual void WriteAllText(string fileName, string contents)
