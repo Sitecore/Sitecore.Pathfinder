@@ -42,6 +42,11 @@ namespace Sitecore.Pathfinder.Building
 
             RunTasks(context);
 
+            if (context.IsAborted)
+            {
+                return 0;
+            }
+
             if (context.DisplayDoneMessage)
             {
                 context.Trace.Writeline(string.Format(Texts.Ducats___0_, context.Project.Ducats.ToString("#,##0")));

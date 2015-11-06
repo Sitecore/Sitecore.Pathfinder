@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Building.Deploying
 {

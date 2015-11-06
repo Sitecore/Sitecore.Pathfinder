@@ -35,6 +35,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
         public override void Run(IBuildContext context)
         {
             var console = new ConsoleService();
+            context.IsAborted = true;
 
             var projectDirectory = context.ProjectDirectory;
             if (!context.FileSystem.DirectoryExists(projectDirectory))

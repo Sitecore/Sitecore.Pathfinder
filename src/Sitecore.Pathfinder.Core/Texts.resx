@@ -453,4 +453,7 @@
     <data name="Failed_to_change_template_of_the_item" xml:space="preserve">
     <value>Failed to change template of the item</value>
   </data>
+    <data name="Installing_project___" xml:space="preserve">
+    <value>Installing project...</value>
+  </data>
 </root>

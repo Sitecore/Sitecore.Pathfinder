@@ -224,7 +224,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copying package to website....
+        ///   Looks up a localized string similar to Copying packages to website....
         /// </summary>
         public static string Copying_package_to_website___ {
             get {
@@ -269,7 +269,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Creating Nupkg file....
+        ///   Looks up a localized string similar to Creating packages....
         /// </summary>
         public static string Creating_Nupkg_file___ {
             get {
@@ -558,11 +558,20 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Installing package....
+        ///   Looks up a localized string similar to Installing packages....
         /// </summary>
         public static string Installing___ {
             get {
                 return ResourceManager.GetString("Installing___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installing project....
+        /// </summary>
+        public static string Installing_project___ {
+            get {
+                return ResourceManager.GetString("Installing_project___", resourceCulture);
             }
         }
         
@@ -704,7 +713,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NuGet file size.
+        ///   Looks up a localized string similar to Created.
         /// </summary>
         public static string NuGet_file_size {
             get {

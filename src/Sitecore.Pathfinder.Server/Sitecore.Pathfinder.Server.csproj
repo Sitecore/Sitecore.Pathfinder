@@ -208,6 +208,7 @@
     <Compile Include="Synchronizing\XsdLayoutSchemaSynchronizer.cs" />
     <Compile Include="Synchronizing\XsdContentSchemaSynchronizer.cs" />
     <Compile Include="Testing\UnitTestRunner.cs" />
+    <Compile Include="WebApi\InstallProject.cs" />
     <Compile Include="WebApi\IWebApi.cs" />
     <Compile Include="WebApi\ResetWebsite.cs" />
     <Compile Include="WebApi\TroubleshootWebsite.cs" />

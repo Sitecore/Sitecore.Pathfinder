@@ -66,6 +66,7 @@ namespace Sitecore.Pathfinder.Controllers
             {
                 return Content(System.Web.HttpUtility.HtmlEncode(response));
             }
+
             var urlReferrer = Request.UrlReferrer;
             if (urlReferrer == null)
             {

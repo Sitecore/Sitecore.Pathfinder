@@ -1,35 +1,28 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.IO;
 using Sitecore.Pathfinder.Configuration;
 
 namespace Sitecore.Pathfinder.Emitters
 {
-    public enum EmitSource
-    {
-        NugetPackage,
-
-        Directory
-    }
-
     public class EmitService
     {
-        public EmitService([NotNull] string projectDirectory, EmitSource emitSource)
+        public EmitService(string toolsDirectory, [NotNull] string projectDirectory)
         {
             ProjectDirectory = projectDirectory;
-            EmitSource = emitSource;
+            ToolsDirectory = toolsDirectory;
         }
-
-        public EmitSource EmitSource { get; }
 
         [NotNull]
         public string ProjectDirectory { get; }
+
+        [Diagnostics.NotNull]
+        public string ToolsDirectory { get; }
 
         public virtual void Start()
         {
             var startup = new Startup();
 
-            var configuration = ConfigurationStartup.RegisterConfiguration(ProjectDirectory, ConfigurationOptions.Noninteractive);
+            var configuration = ConfigurationStartup.RegisterConfiguration(ToolsDirectory, ProjectDirectory, ConfigurationOptions.Noninteractive);
             if (configuration == null)
             {
                 return;

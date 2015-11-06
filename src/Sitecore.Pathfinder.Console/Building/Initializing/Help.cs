@@ -17,6 +17,9 @@ namespace Sitecore.Pathfinder.Building.Initializing
 
         public override void Run(IBuildContext context)
         {
+            context.IsAborted = true;
+            context.DisplayDoneMessage = false;
+
             var taskName = context.Configuration.GetCommandLineArg(1);
             if (!string.IsNullOrEmpty(taskName))
             {
@@ -26,8 +29,6 @@ namespace Sitecore.Pathfinder.Building.Initializing
             {
                 WriteGeneralHelp(context);
             }
-
-            context.DisplayDoneMessage = false;
         }
 
         public override void WriteHelp(HelpWriter helpWriter)

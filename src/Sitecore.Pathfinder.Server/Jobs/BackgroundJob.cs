@@ -8,6 +8,7 @@ namespace Sitecore.Pathfinder.Jobs
 {
     public class BackgroundJob
     {
+        [Diagnostics.NotNull]
         private readonly Action action;
 
         private BackgroundJob([NotNull] Action action)

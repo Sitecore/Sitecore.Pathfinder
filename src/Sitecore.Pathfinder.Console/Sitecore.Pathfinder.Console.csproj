@@ -186,6 +186,7 @@
     <Compile Include="Building\Commands\TroubleshootWebsite.cs" />
     <Compile Include="Building\Deploying\CopyPackage.cs" />
     <Compile Include="Building\Deploying\InstallPackage.cs" />
+    <Compile Include="Building\Deploying\InstallProject.cs" />
     <Compile Include="Building\Deploying\PublishDatabase.cs" />
     <Compile Include="Building\HelpWriter.cs" />
     <Compile Include="Building\Initializing\BeforeBuilds\BeforeBuild.cs" />

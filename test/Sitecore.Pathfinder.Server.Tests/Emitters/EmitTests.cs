@@ -24,7 +24,8 @@ namespace Sitecore.Pathfinder.Server.Tests.Emitters
             }
 
             var projectDirectory = PathHelper.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, GoodWebsite);
-            var emitService = new EmitService(projectDirectory, EmitSource.Directory);
+            var toolsDirectory = Path.Combine(projectDirectory, "sitecore.tools");
+            var emitService = new EmitService(toolsDirectory, projectDirectory);
 
             emitService.Start();
         }
