@@ -51,6 +51,8 @@ namespace Sitecore.Pathfinder.Emitters
         [ItemNotNull]
         ICollection<string> UpdatedItems { get; }
 
+        bool ForceUpdate { get; }
+
         void RegisterAddedFile([Diagnostics.NotNull] File projectItem, [Diagnostics.NotNull] string destinationFileName);
 
         void RegisterAddedItem([Diagnostics.NotNull] Item newItem);

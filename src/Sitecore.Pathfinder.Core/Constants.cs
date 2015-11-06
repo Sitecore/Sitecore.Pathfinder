@@ -57,6 +57,10 @@ namespace Sitecore.Pathfinder
 
             public const string ContentFiles = "build-project:content-files";
 
+            public const string ForceUpdate = "build-project:force-update";
+
+            public const string FileSearchPattern = "build-project:file-search-pattern";
+
             public const string Database = "database";
 
             public const string DataFolderDirectory = "data-folder-directory";

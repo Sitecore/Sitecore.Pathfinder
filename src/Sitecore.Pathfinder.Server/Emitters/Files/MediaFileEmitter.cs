@@ -63,7 +63,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
             }
 
             context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName) ?? string.Empty);
-            context.FileSystem.Copy(mediaFile.Snapshots.First().SourceFile.AbsoluteFileName, destinationFileName);
+            context.FileSystem.Copy(mediaFile.Snapshots.First().SourceFile.AbsoluteFileName, destinationFileName, context.ForceUpdate);
         }
 
         protected virtual void UploadFile([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] Projects.Items.Item mediaItem, [Diagnostics.NotNull] MediaFile mediaFile)
@@ -94,6 +94,15 @@ namespace Sitecore.Pathfinder.Emitters.Files
                 destinationItem = null;
             }
 
+            var uploadMedia = true;
+            if (!context.ForceUpdate && destinationItem != null)
+            {
+                var item = new MediaItem(destinationItem);
+                var fileInfo = new FileInfo(mediaFile.Snapshots.First().SourceFile.AbsoluteFileName);
+
+                uploadMedia = (item.Size != fileInfo.Length);
+            }
+
             if (destinationItem == null)
             {
                 // create parent path of media folders before uploading
@@ -105,17 +114,20 @@ namespace Sitecore.Pathfinder.Emitters.Files
                 ItemManager.AddFromTemplate(name, TemplateIDs.Folder, parent, new ID(mediaItem.Uri.Guid));
             }
 
-            using (var stream = new FileStream(mediaFile.Snapshots.First().SourceFile.AbsoluteFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+            if (uploadMedia)
             {
-                var item = MediaManager.Creator.CreateFromStream(stream, "/upload/" + Path.GetFileName(mediaFile.Snapshots.First().SourceFile.AbsoluteFileName), options);
-                if (item == null)
+                using (var stream = new FileStream(mediaFile.Snapshots.First().SourceFile.AbsoluteFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
-                    throw new EmitException(Texts.Failed_to_upload_media, mediaFile.Snapshots.First());
-                }
+                    var item = MediaManager.Creator.CreateFromStream(stream, "/upload/" + Path.GetFileName(mediaFile.Snapshots.First().SourceFile.AbsoluteFileName), options);
+                    if (item == null)
+                    {
+                        throw new EmitException(Texts.Failed_to_upload_media, mediaFile.Snapshots.First());
+                    }
 
-                if (mediaItem.Uri.Guid != item.ID.ToGuid())
-                {
-                    context.Trace.TraceError(Texts.Media_item_created_with_wrong_ID, new SnapshotTextNode(mediaFile.Snapshots.First()), $"{item.ID} != {mediaItem.Uri.Guid.Format()}");
+                    if (mediaItem.Uri.Guid != item.ID.ToGuid())
+                    {
+                        context.Trace.TraceError(Texts.Media_item_created_with_wrong_ID, new SnapshotTextNode(mediaFile.Snapshots.First()), $"{item.ID} != {mediaItem.Uri.Guid.Format()}");
+                    }
                 }
             }
 

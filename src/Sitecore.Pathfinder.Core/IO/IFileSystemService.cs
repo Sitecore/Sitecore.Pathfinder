@@ -9,7 +9,7 @@ namespace Sitecore.Pathfinder.IO
 {
     public interface IFileSystemService
     {
-        void Copy([NotNull] string sourceFileName, [NotNull] string destinationFileName);
+        void Copy([NotNull] string sourceFileName, [NotNull] string destinationFileName, bool forceUpdate = true);
 
         void CreateDirectory([NotNull] string directory);
 

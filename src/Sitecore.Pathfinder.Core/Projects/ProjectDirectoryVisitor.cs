@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
+using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Projects
@@ -15,13 +17,17 @@ namespace Sitecore.Pathfinder.Projects
     public class ProjectDirectoryVisitor
     {
         [ImportingConstructor]
-        public ProjectDirectoryVisitor([NotNull] IFileSystemService fileSystem)
+        public ProjectDirectoryVisitor([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem)
         {
             FileSystem = fileSystem;
 
+            FileSearchPattern = configuration.GetString(Constants.Configuration.FileSearchPattern, "*");
             IgnoreDirectories = Enumerable.Empty<string>();
             IgnoreFileNames = Enumerable.Empty<string>();
         }
+
+        [NotNull]
+        public string FileSearchPattern { get; }
 
         [NotNull]
         protected IFileSystemService FileSystem { get; }
@@ -68,7 +74,7 @@ namespace Sitecore.Pathfinder.Projects
 
         protected virtual void Visit([NotNull] ProjectOptions projectOptions, [NotNull] [ItemNotNull] ICollection<string> sourceFileNames, [NotNull] string directory)
         {
-            var fileNames = FileSystem.GetFiles(directory);
+            var fileNames = FileSystem.GetFiles(directory, FileSearchPattern);
             foreach (var fileName in fileNames)
             {
                 if (!IgnoreFileName(fileName))

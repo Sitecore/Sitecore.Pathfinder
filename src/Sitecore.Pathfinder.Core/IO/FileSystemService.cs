@@ -15,8 +15,19 @@ namespace Sitecore.Pathfinder.IO
     [Export(typeof(IFileSystemService))]
     public class FileSystemService : IFileSystemService
     {
-        public virtual void Copy(string sourceFileName, string destinationFileName)
+        public virtual void Copy(string sourceFileName, string destinationFileName, bool forceUpdate = true)
         {
+            if (!forceUpdate)
+            {
+                var fileInfo1 = new FileInfo(sourceFileName);
+                var fileInfo2 = new FileInfo(destinationFileName);
+
+                if (fileInfo1.Exists && fileInfo2.Exists && fileInfo1.LastWriteTimeUtc == fileInfo2.LastWriteTimeUtc && fileInfo1.Length == fileInfo2.Length)
+                {
+                    return;
+                }
+            }
+
             var directoryName = Path.GetDirectoryName(destinationFileName);
             if (string.IsNullOrEmpty(directoryName))
             {

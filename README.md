@@ -753,6 +753,13 @@ Finally you can create the Nuget package manually by creating a Nuspec file like
 </package>
 ```
 
+### Bypassing package creation
+The `install-project` installs the project directly from the project directory. This skips the package creation and package copying (both
+project packages and dependency packages). This saves a bit of time.
+
+### Watching a project
+The `watch-project` watches a project for changes and installs the project when a changes occurs. 
+
 ## Extensions
 Pathfinder includes the Roslyn compiler to compile extensions on the fly. Extensions are C# files that are compiled and loaded dynamically through 
 [MEF](https://msdn.microsoft.com/en-us/library/dd460648(v=vs.110).aspx). This allows you to extend Pathfinder with new tasks, checkers, code 

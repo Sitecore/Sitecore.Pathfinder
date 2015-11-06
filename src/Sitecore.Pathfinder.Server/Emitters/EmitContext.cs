@@ -24,6 +24,8 @@ namespace Sitecore.Pathfinder.Emitters
             Trace = traceService;
             FileSystem = fileSystemService;
 
+            ForceUpdate = Configuration.GetBool(Constants.Configuration.ForceUpdate, true);
+
             var projectDirectory = Configuration.GetString(Constants.Configuration.ProjectDirectory);
             UninstallDirectory = PathHelper.Combine(projectDirectory, Configuration.GetString(Constants.Configuration.UninstallDirectory, "..\\.uninstall"));
         }
@@ -49,6 +51,8 @@ namespace Sitecore.Pathfinder.Emitters
         public ICollection<string> UpdatedFiles { get; } = new List<string>();
 
         public ICollection<string> UpdatedItems { get; } = new List<string>();
+
+        public bool ForceUpdate { get; }
 
         public virtual void RegisterAddedFile(Projects.Files.File projectItem, string destinationFileName)
         {
