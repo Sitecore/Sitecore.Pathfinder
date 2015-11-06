@@ -46,10 +46,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             }
 
             var item = database.GetItem(new ID(Guid));
-            if (item != null)
-            {
-                ItemIdOrPath = item.Paths.Path;
-            }
+            var existingItem = database.GetItem(ItemIdOrPath);
 
             var templateItem = database.GetItem(TemplateIdOrPath);
             if (templateItem == null && item != null)
@@ -73,6 +70,16 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             }
 
             UpdateItem(context, item, templateItem);
+
+            if (existingItem != null && existingItem.ID != item.ID)
+            {
+                foreach (Item child in existingItem.Children)
+                {
+                    child.MoveTo(item);
+                }
+
+                existingItem.Recycle();
+            }
         }
 
         [Diagnostics.NotNull]

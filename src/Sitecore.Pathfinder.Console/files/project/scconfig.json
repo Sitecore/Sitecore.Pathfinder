@@ -25,27 +25,27 @@
         // mapping of files between local path and server path and item path
         "files": {
             "master": {
-                "project-directory": "content/master/sitecore",
+                "project-directory": "/content/master/sitecore",
                 "include": "**",
                 "website-directory": "",
                 "item-path": "/sitecore",
                 "database": "master"
             },
             "core": {
-                "project-directory": "content/core/sitecore",
+                "project-directory": "/content/core/sitecore",
                 "include": "**",
                 "website-directory": "",
                 "item-path": "/sitecore",
                 "database": "core"
             },
             "views": {
-                "project-directory": "Views",
-                "include": "Views/**",
+                "project-directory": "/Views",
+                "include": "**",
                 "website-directory": "Views",
                 "item-path": "/sitecore/layout/renderings"
             },
             "wwwroot": {
-                "project-directory": "wwwroot",
+                "project-directory": "/wwwroot",
                 "include": "**",
                 "website-directory": "",
                 "item-path": "",

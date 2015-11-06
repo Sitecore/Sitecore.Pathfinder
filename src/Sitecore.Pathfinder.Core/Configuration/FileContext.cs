@@ -65,6 +65,17 @@ namespace Sitecore.Pathfinder.Configuration
 
                 var includes = configuration.GetString(key + ":include");
                 var excludes = configuration.GetString(key + ":exclude");
+
+                if (!string.IsNullOrEmpty(includes) && !string.IsNullOrEmpty(localDirectory))
+                {
+                    includes = PathHelper.NormalizeItemPath(localDirectory).TrimEnd('/') + "/" + PathHelper.NormalizeItemPath(includes).TrimStart('/');
+                }
+
+                if (!string.IsNullOrEmpty(excludes) && !string.IsNullOrEmpty(localDirectory))
+                {
+                    includes = PathHelper.NormalizeItemPath(localDirectory).TrimEnd('/') + "/" + PathHelper.NormalizeItemPath(excludes).TrimStart('/');
+                }
+
                 if (!string.IsNullOrEmpty(includes) || !string.IsNullOrEmpty(excludes))
                 {
                     var pathMatcher = new PathMatcher(includes, excludes);
