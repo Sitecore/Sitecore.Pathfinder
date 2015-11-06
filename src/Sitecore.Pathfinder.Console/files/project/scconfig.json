@@ -52,7 +52,18 @@
                 "upload-media": false
             }
         }
-    },                                                           
+    },
+
+    "reset-website": {
+        "master": {
+            "/sitecore/*" : ""
+        },
+        "core": {
+        },
+        "files": {
+            "/sitecore" : "*.aspx"
+        }
+    },
 
     "sync-website": {
         "files": {

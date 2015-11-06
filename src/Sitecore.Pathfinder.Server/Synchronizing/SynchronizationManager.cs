@@ -2,7 +2,8 @@
 
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using Microsoft.Framework.ConfigurationModel;
+using System.Net;
+using System.Web.Mvc;
 using Sitecore.IO;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
@@ -29,13 +30,24 @@ namespace Sitecore.Pathfinder.Synchronizing
         [Diagnostics.NotNull]
         public virtual string BuildSyncFile()
         {
-            var toolsDirectory = WebUtil.GetQueryString("t");
+            var toolsDirectory = WebUtil.GetQueryString("td");
             if (string.IsNullOrEmpty(toolsDirectory))
             {
                 return string.Empty;
             }
 
-            var configuration = LoadProjectConfiguration(toolsDirectory);
+            var projectDirectory = WebUtil.GetQueryString("pd");
+            if (string.IsNullOrEmpty(projectDirectory))
+            {
+                return string.Empty;
+            }
+
+
+            var configuration = ConfigurationStartup.RegisterConfiguration(toolsDirectory, projectDirectory, ConfigurationOptions.Noninteractive);
+            if (configuration == null)
+            {
+                return string.Empty;
+            }
 
             TempFolder.EnsureFolder();
 
@@ -63,19 +75,6 @@ namespace Sitecore.Pathfinder.Synchronizing
             }
 
             return syncFileName;
-        }
-
-        [Diagnostics.NotNull]
-        protected virtual IConfiguration LoadProjectConfiguration([Diagnostics.NotNull] string toolsDirectory)
-        {
-            var configuration = new Microsoft.Framework.ConfigurationModel.Configuration();
-            configuration.Add(new MemoryConfigurationSource());
-            configuration.Set(Constants.Configuration.ToolsDirectory, toolsDirectory);
-            configuration.Set(Constants.Configuration.SystemConfigFileName, "scconfig.json");
-
-            var configurationService = new ConfigurationService(configuration);
-            configurationService.Load(LoadConfigurationOptions.Noninteractive);
-            return configuration;
         }
     }
 }

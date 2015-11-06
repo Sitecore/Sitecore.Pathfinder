@@ -42,10 +42,10 @@ namespace Sitecore.Pathfinder.Helpers
         public IProjectService ProjectService { get; private set; }
 
         [NotNull]
-        public ISnapshotService SnapshotService { get; set; }
+        public IQueryService QueryService { get; set; }
 
         [NotNull]
-        public IQueryService QueryService { get; set; }
+        public ISnapshotService SnapshotService { get; set; }
 
         [NotNull]
         public ITraceService Trace { get; private set; }
@@ -59,8 +59,8 @@ namespace Sitecore.Pathfinder.Helpers
             var projectExtensionsDirectory = PathHelper.Combine(configuration.Get(Constants.Configuration.ToolsDirectory), "..\\sitecore.project\\extensions");
             var directories = new[]
             {
-               extensionsDirectory,
-               projectExtensionsDirectory
+                extensionsDirectory,
+                projectExtensionsDirectory
             };
 
             var extensionsAssembly = extensionCompiler.GetExtensionsAssembly(extensionsDirectory, directories);
@@ -92,7 +92,13 @@ namespace Sitecore.Pathfinder.Helpers
 
         public void Start(string projectDirectory, [CanBeNull] Action mock = null)
         {
-            Configuration = RegisterConfiguration(projectDirectory);
+            var configuration = ConfigurationStartup.RegisterConfiguration(projectDirectory, ConfigurationOptions.Noninteractive);
+            if (configuration == null)
+            {
+                throw new ConfigurationException("Configuration failed");
+            }
+
+            Configuration = configuration;
             CompositionService = RegisterCompositionService(Configuration);
 
             mock?.Invoke();
@@ -105,19 +111,6 @@ namespace Sitecore.Pathfinder.Helpers
             SnapshotService = CompositionService.Resolve<ISnapshotService>();
             CheckerService = CompositionService.Resolve<ICheckerService>();
             QueryService = CompositionService.Resolve<IQueryService>();
-        }
-
-        [NotNull]
-        protected IConfigurationSourceRoot RegisterConfiguration(string projectDirectory)
-        {
-            var configuration = new Microsoft.Framework.ConfigurationModel.Configuration();
-            configuration.Add(new MemoryConfigurationSource());
-
-            var toolsDirectory = Path.Combine(projectDirectory, "sitecore.tools");
-            configuration.Set(Constants.Configuration.ToolsDirectory, toolsDirectory);
-            configuration.Set(Constants.Configuration.SystemConfigFileName, "scconfig.json");
-
-            return configuration;
         }
     }
 }

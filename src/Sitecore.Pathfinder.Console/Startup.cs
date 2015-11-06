@@ -7,6 +7,7 @@ using System.IO;
 using System.Reflection;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Building;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
@@ -18,17 +19,34 @@ namespace Sitecore.Pathfinder
     {                          
         public virtual int Start()
         {
-            var configuration = RegisterConfiguration();
-            var compositionService = RegisterCompositionService(configuration);
             var errorCode = 0;
 
-            if (compositionService != null)
+            var toolsDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
+            var projectDirectory = Directory.GetCurrentDirectory();
+
+            var configuration = ConfigurationStartup.RegisterConfiguration(toolsDirectory, projectDirectory, ConfigurationOptions.Interactive);
+            if (configuration == null)
+            {
+                errorCode = -1;
+            }
+
+            CompositionContainer compositionService = null;
+            if (errorCode == 0 && configuration != null)
+            {
+                compositionService = RegisterCompositionService(configuration);
+                if (compositionService == null)
+                {
+                    errorCode = -2;
+                }
+            }
+
+            if (errorCode == 0 && compositionService != null)
             {
                 var build = compositionService.Resolve<Build>();
                 errorCode = build.Start();
             }
 
-            if (string.Equals(configuration.Get("pause"), "true", StringComparison.OrdinalIgnoreCase))
+            if (configuration != null && string.Equals(configuration.Get("pause"), "true", StringComparison.OrdinalIgnoreCase))
             {
                 Console.ReadLine();
             }
@@ -72,22 +90,6 @@ namespace Sitecore.Pathfinder
             compositionContainer.ComposeExportedValue(configuration);
 
             return compositionContainer;
-        }
-
-        [NotNull]
-        protected virtual IConfigurationSourceRoot RegisterConfiguration()
-        {
-            var configuration = new Microsoft.Framework.ConfigurationModel.Configuration();
-            configuration.Add(new MemoryConfigurationSource());
-
-            var toolsDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
-            var projectDirectory = Directory.GetCurrentDirectory();
-
-            configuration.Set(Constants.Configuration.ToolsDirectory, toolsDirectory);
-            configuration.Set(Constants.Configuration.ProjectDirectory, projectDirectory);
-            configuration.Set(Constants.Configuration.SystemConfigFileName, "scconfig.json");
-
-            return configuration;
         }
     }
 }

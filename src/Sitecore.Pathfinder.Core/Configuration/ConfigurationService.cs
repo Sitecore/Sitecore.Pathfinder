@@ -67,7 +67,7 @@ namespace Sitecore.Pathfinder.Configuration
             configurationSourceRoot.AddCommandLine(args.ToArray());
         }
 
-        public virtual void Load(LoadConfigurationOptions options, string projectDirectory = null)
+        public virtual void Load(ConfigurationOptions options, string projectDirectory = null)
         {
             var configurationSourceRoot = Configuration as IConfigurationSourceRoot;
             if (configurationSourceRoot == null)
@@ -87,13 +87,13 @@ namespace Sitecore.Pathfinder.Configuration
             configurationSourceRoot.AddJsonFile(fileName);
 
             // add command line
-            if ((options & LoadConfigurationOptions.IncludeCommandLine) == LoadConfigurationOptions.IncludeCommandLine)
+            if ((options & ConfigurationOptions.IncludeCommandLine) == ConfigurationOptions.IncludeCommandLine)
             {
                 AddCommandLine(configurationSourceRoot);
             }
 
             // add environment variables
-            if ((options & LoadConfigurationOptions.IncludeEnvironment) == LoadConfigurationOptions.IncludeEnvironment)
+            if ((options & ConfigurationOptions.IncludeEnvironment) == ConfigurationOptions.IncludeEnvironment)
             {
                 configurationSourceRoot.AddEnvironmentVariables();
             }
@@ -116,7 +116,7 @@ namespace Sitecore.Pathfinder.Configuration
             }
 
             // add machine level config file
-            if ((options & LoadConfigurationOptions.IncludeMachineConfig) == LoadConfigurationOptions.IncludeMachineConfig)
+            if ((options & ConfigurationOptions.IncludeMachineConfig) == ConfigurationOptions.IncludeMachineConfig)
             {
                 var machineConfigFileName = Path.GetFileNameWithoutExtension(projectConfigFileName) + "." + Environment.MachineName + ".json";
                 if (File.Exists(machineConfigFileName))
@@ -126,7 +126,7 @@ namespace Sitecore.Pathfinder.Configuration
             }
 
             // add user config file
-            if ((options & LoadConfigurationOptions.IncludeUserConfig) == LoadConfigurationOptions.IncludeUserConfig)
+            if ((options & ConfigurationOptions.IncludeUserConfig) == ConfigurationOptions.IncludeUserConfig)
             {
                 var userConfigFileName = projectConfigFileName + ".user";
                 if (File.Exists(userConfigFileName))
@@ -136,7 +136,7 @@ namespace Sitecore.Pathfinder.Configuration
             }
 
             // add config file specified on the command line: /config qa - loads scconfig.qa.json 
-            if ((options & LoadConfigurationOptions.IncludeCommandLineConfig) == LoadConfigurationOptions.IncludeCommandLineConfig)
+            if ((options & ConfigurationOptions.IncludeCommandLineConfig) == ConfigurationOptions.IncludeCommandLineConfig)
             {
                 var configName = configurationSourceRoot.Get(Constants.Configuration.CommandLineConfig);
 

@@ -17,9 +17,11 @@ namespace Sitecore.Pathfinder.Building.Initializing
         {
             context.Trace.TraceInformation(Texts.SynchronizingWebsite);
 
-            var queryStringParameters = new Dictionary<string, string>();
-
-            queryStringParameters["t"] = context.Configuration.Get(Constants.Configuration.ToolsDirectory);
+            var queryStringParameters = new Dictionary<string, string>
+            {
+                ["td"] = context.Configuration.GetString(Constants.Configuration.ToolsDirectory),
+                ["pd"] = context.ProjectDirectory
+            };
 
             var url = MakeUrl(context, context.Configuration.GetString(Constants.Configuration.UpdateResourcesUrl), queryStringParameters);
             var targetFileName = Path.GetTempFileName();

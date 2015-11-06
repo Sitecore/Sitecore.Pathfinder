@@ -7,3 +7,4 @@ Version next
 * Add: Allows sitecore.tools to be added to the PATH environment variable (2015-11-01) - Martin Svarrer Christensen
 * Add: Troubleshooting task; republish, rebuild search indexes, rebuild link database (2015-11-01) - SPEAK team
 * Add: Revamped the entire process for creating a new project (2015-11-04) - Martin Svarrer Christensen
+* Add: reset-website for deleting items and files from the website (2015-11-06) - SPEAK team

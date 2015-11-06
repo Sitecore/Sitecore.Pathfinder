@@ -38,17 +38,6 @@ namespace Sitecore.Pathfinder.Building
 
         public virtual int Start()
         {
-            try
-            {
-                ConfigurationService.Load(LoadConfigurationOptions.Interactive);
-            }
-            catch (Exception ex)
-            {
-                Trace.Writeline(ex.Message);
-                DisplayHelp();
-                return 0;
-            }
-
             var context = CompositionService.Resolve<IBuildContext>();
 
             RunTasks(context);

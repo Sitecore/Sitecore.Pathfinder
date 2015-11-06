@@ -39,7 +39,7 @@ namespace Sitecore.Pathfinder
             Services = new Services();
             Services.Start(ProjectDirectory, mock);
 
-            Services.ConfigurationService.Load(LoadConfigurationOptions.None, ProjectDirectory);
+            Services.ConfigurationService.Load(ConfigurationOptions.None, ProjectDirectory);
         }
     }
 }

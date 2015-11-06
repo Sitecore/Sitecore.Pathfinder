@@ -2,11 +2,9 @@
 
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using System.IO;
 using System.Reflection;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.IO;
-using Sitecore.Pathfinder.Emitters;
 using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Parsing;
 
@@ -48,21 +46,6 @@ namespace Sitecore.Pathfinder
             compositionContainer.ComposeExportedValue<ICompositionService>(compositionContainer);
 
             return compositionContainer;
-        }
-
-        [Diagnostics.NotNull]
-        public virtual IConfigurationSourceRoot RegisterConfiguration([Diagnostics.NotNull] string projectDirectory, EmitSource emitSource)
-        {
-            var configuration = new Microsoft.Framework.ConfigurationModel.Configuration();
-            configuration.Add(new MemoryConfigurationSource());
-
-            var toolsDirectory = Path.Combine(projectDirectory, "sitecore.tools");
-
-            configuration.Set(Constants.Configuration.ToolsDirectory, toolsDirectory);
-            configuration.Set(Constants.Configuration.ProjectDirectory, projectDirectory);
-            configuration.Set(Constants.Configuration.SystemConfigFileName, "scconfig.json");
-
-            return configuration;
         }
     }
 }

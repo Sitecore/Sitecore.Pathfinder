@@ -117,6 +117,7 @@
     <Compile Include="Compiling\Pipelines\CompilePipelines\2000 - CompileFields.cs" />
     <Compile Include="Compiling\Pipelines\CompilePipelines\3000 - ResolveReferences.cs" />
     <Compile Include="Compiling\Pipelines\CompilePipelines\4000 - CheckProject.cs" />
+    <Compile Include="Configuration\ConfigurationStartup.cs" />
     <Compile Include="Configuration\FileContext.cs" />
     <Compile Include="Extensibility\ExtensibilityConventions.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />

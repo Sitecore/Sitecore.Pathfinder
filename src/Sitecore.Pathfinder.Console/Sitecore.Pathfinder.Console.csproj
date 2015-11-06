@@ -196,6 +196,7 @@
     <Compile Include="Building\Initializing\InitAtom.cs" />
     <Compile Include="Building\Initializing\InitVisualStudio.cs" />
     <Compile Include="Building\Initializing\InitVsCode.cs" />
+    <Compile Include="Building\Initializing\ResetWebsite.cs" />
     <Compile Include="Building\Initializing\ShowMetrics.cs" />
     <Compile Include="Building\Initializing\SynchronizeWebsite.cs" />
     <Compile Include="Building\Packaging\PackDependencies.cs" />

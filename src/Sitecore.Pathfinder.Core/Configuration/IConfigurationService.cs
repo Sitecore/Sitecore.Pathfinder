@@ -7,7 +7,7 @@ using Sitecore.Pathfinder.Diagnostics;
 namespace Sitecore.Pathfinder.Configuration
 {
     [Flags]
-    public enum LoadConfigurationOptions
+    public enum ConfigurationOptions
     {
         None = 0,
 
@@ -31,6 +31,6 @@ namespace Sitecore.Pathfinder.Configuration
         [NotNull]
         IConfiguration Configuration { get; }
 
-        void Load(LoadConfigurationOptions options, [CanBeNull] string projectDirectory = null);
+        void Load(ConfigurationOptions options, [CanBeNull] string projectDirectory = null);
     }
 }

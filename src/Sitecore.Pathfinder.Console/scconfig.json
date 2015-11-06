@@ -64,6 +64,15 @@
         "publish-url": "/sitecore/shell/client/Applications/Pathfinder/Publish"
     },
 
+    "reset-website": {
+        "master": {
+        },
+        "core": {
+        },
+        "files": {
+        }
+    },
+
     "run-unittests": {
         "local-test-directory": "Tests",
 
