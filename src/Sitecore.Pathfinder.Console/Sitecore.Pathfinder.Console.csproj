@@ -202,7 +202,6 @@
     <Compile Include="Building\Initializing\ShowMetrics.cs" />
     <Compile Include="Building\Initializing\SynchronizeWebsite.cs" />
     <Compile Include="Building\Packaging\PackDependencies.cs" />
-    <Compile Include="Building\ConsoleService.cs" />
     <Compile Include="Building\Testing\UnitTests\GenerateUnitTest.cs" />
     <Compile Include="Building\Querying\FindReferences.cs" />
     <Compile Include="Building\Querying\FindUsages.cs" />

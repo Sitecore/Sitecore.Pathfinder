@@ -975,6 +975,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Type &apos;q&apos; to quit....
+        /// </summary>
+        public static string Type__q__to_quit___ {
+            get {
+                return ResourceManager.GetString("Type__q__to_quit___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Type not found.
         /// </summary>
         public static string Type_not_found {

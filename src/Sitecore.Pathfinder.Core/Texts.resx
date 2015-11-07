@@ -456,4 +456,7 @@
     <data name="Installing_project___" xml:space="preserve">
     <value>Installing project...</value>
   </data>
+    <data name="Type__q__to_quit___" xml:space="preserve">
+    <value>Type 'q' to quit...</value>
+  </data>
 </root>

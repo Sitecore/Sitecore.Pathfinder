@@ -12,16 +12,20 @@ namespace Sitecore.Pathfinder.Checking
     public class CheckerContext : ICheckerContext
     {
         [ImportingConstructor]
-        public CheckerContext([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] IFactoryService factory)
+        public CheckerContext([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] IConsoleService console, [NotNull] IFactoryService factory)
         {
             Configuration = configuration;
             CompositionService = compositionService;
+            Console = console;
             Factory = factory;
 
             IsDeployable = true;
         }
 
         public ICompositionService CompositionService { get; }
+
+        [NotNull]
+        protected IConsoleService Console { get; }
 
         public bool IsDeployable { get; set; }
 
@@ -38,7 +42,7 @@ namespace Sitecore.Pathfinder.Checking
         public ICheckerContext With(IProject project)
         {
             Project = project;
-            Trace = new ProjectDiagnosticTraceService(Configuration, Factory).With(Project);
+            Trace = new ProjectDiagnosticTraceService(Configuration, Console, Factory).With(Project);
 
             return this;
         }

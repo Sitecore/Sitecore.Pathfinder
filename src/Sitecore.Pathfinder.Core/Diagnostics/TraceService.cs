@@ -22,13 +22,17 @@ namespace Sitecore.Pathfinder.Diagnostics
     public class TraceService : ITraceService
     {
         [ImportingConstructor]
-        public TraceService([NotNull] IConfiguration configuration)
+        public TraceService([NotNull] IConfiguration configuration, [NotNull] IConsoleService console)
         {
             Configuration = configuration;
+            Console = console;
         }
 
         [NotNull]
         protected IConfiguration Configuration { get; }
+
+        [NotNull]
+        protected IConsoleService Console { get; }
 
         public void TraceError(string text, string details = "")
         {

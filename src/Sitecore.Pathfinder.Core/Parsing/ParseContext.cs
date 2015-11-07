@@ -16,9 +16,10 @@ namespace Sitecore.Pathfinder.Parsing
     public class ParseContext : IParseContext
     {
         [ImportingConstructor]
-        public ParseContext([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IPipelineService pipelineService, [NotNull] IReferenceParserService referenceParser)
+        public ParseContext([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] IFactoryService factory, [NotNull] IPipelineService pipelineService, [NotNull] IReferenceParserService referenceParser)
         {
             Configuration = configuration;
+            Console = console;
             Factory = factory;
             PipelineService = pipelineService;
             ReferenceParser = referenceParser;
@@ -26,6 +27,9 @@ namespace Sitecore.Pathfinder.Parsing
         }
 
         public IConfiguration Configuration { get; }
+
+        [NotNull]
+        protected IConsoleService Console { get; }
 
         public virtual string DatabaseName { get; private set; }
 
@@ -55,7 +59,7 @@ namespace Sitecore.Pathfinder.Parsing
         {
             Project = project;
             Snapshot = snapshot;
-            Trace = new ProjectDiagnosticTraceService(Configuration, Factory).With(Project);
+            Trace = new ProjectDiagnosticTraceService(Configuration, Console, Factory).With(Project);
 
             var fileContext = FileContext.GetFileContext(Project, Configuration, snapshot.SourceFile);
             FilePath = fileContext.FilePath;

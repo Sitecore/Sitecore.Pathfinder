@@ -13,10 +13,11 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
     public class FieldCompileContext : IFieldCompileContext
     {
         [ImportingConstructor]
-        public FieldCompileContext([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] IFactoryService factory, [NotNull] [ImportMany] [ItemNotNull] IEnumerable<IFieldCompiler> fieldCompilers)
+        public FieldCompileContext([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] IConsoleService console, [NotNull] IFactoryService factory, [NotNull] [ImportMany] [ItemNotNull] IEnumerable<IFieldCompiler> fieldCompilers)
         {
             Configuration = configuration;
             CompositionService = compositionService;
+            Console = console;
             Factory = factory;
             FieldCompilers = fieldCompilers;
         }
@@ -31,9 +32,12 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
         public ITraceService Trace { get; private set; }
 
+        [NotNull]
+        protected IConsoleService Console { get; }
+
         public IFieldCompileContext With(IProject project)
         {
-            Trace = new ProjectDiagnosticTraceService(Configuration, Factory).With(project);
+            Trace = new ProjectDiagnosticTraceService(Configuration, Console, Factory).With(project);
 
             return this;
         }

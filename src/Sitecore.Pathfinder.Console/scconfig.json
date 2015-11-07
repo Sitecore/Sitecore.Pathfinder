@@ -57,7 +57,7 @@
 
     "pack-nuget": {
         "directory": "sitecore.project",
-        "include":  "**/*.nuspec",
+        "include": "**/*.nuspec",
         "exclude": ""
     },
 
@@ -93,6 +93,15 @@
         "root-item-path": "",
         "site": "Site",
         "timeout": "600"
+    },
+
+    "watch-project": {
+        // specifies which files to watch for
+        "exclude": "**/*.nupkg",
+        "include": "**/*",
+
+        // specifies if the database should be published
+        "publish-database": true
     },
 
     "standard-template-fields": {

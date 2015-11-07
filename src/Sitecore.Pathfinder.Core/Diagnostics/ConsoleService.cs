@@ -2,29 +2,41 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
-using Sitecore.Pathfinder.Diagnostics;
 
-namespace Sitecore.Pathfinder.Building
+namespace Sitecore.Pathfinder.Diagnostics
 {
-    public class ConsoleService
+    [Export(typeof(IConsoleService))]
+    public class ConsoleService : IConsoleService
     {
         public ConsoleColor BackgroundColor
         {
-            get { return Console.BackgroundColor; }
-            set { Console.BackgroundColor = value; }
+            get
+            {
+                return Console.BackgroundColor;
+            }
+            set
+            {
+                Console.BackgroundColor = value;
+            }
         }
 
         public ConsoleColor ForegroundColor
         {
-            get { return Console.ForegroundColor; }
-            set { Console.ForegroundColor = value; }
+            get
+            {
+                return Console.ForegroundColor;
+            }
+            set
+            {
+                Console.ForegroundColor = value;
+            }
         }
 
         public bool IsInteractive { get; set; } = true;
 
-        [NotNull]
-        public string Pick([NotNull] string promptText, [NotNull] Dictionary<string, string> options)
+        public string Pick(string promptText, Dictionary<string, string> options)
         {
             Console.WriteLine();
 
@@ -70,8 +82,12 @@ namespace Sitecore.Pathfinder.Building
             }
         }
 
-        [NotNull]
-        public string ReadLine([NotNull] string promptText, [NotNull] string defaultValue)
+        public string ReadLine()
+        {
+            return Console.ReadLine();
+        }
+
+        public string ReadLine(string promptText, string defaultValue)
         {
             if (!IsInteractive)
             {
@@ -89,12 +105,12 @@ namespace Sitecore.Pathfinder.Building
             return input;
         }
 
-        public void Write([NotNull] string format, [NotNull] params object[] arg)
+        public void Write(string format, params object[] arg)
         {
             Console.Write(format, arg);
         }
 
-        public void WriteLine([NotNull] string format, [NotNull] params object[] arg)
+        public void WriteLine(string format, params object[] arg)
         {
             Console.WriteLine(format, arg);
         }
@@ -104,8 +120,7 @@ namespace Sitecore.Pathfinder.Building
             Console.WriteLine();
         }
 
-        [CanBeNull]
-        public bool? YesNo([NotNull] string promptText, [CanBeNull] bool? defaultValue)
+        public bool? YesNo(string promptText, bool? defaultValue)
         {
             if (!IsInteractive)
             {

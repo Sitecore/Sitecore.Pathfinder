@@ -57,10 +57,6 @@ namespace Sitecore.Pathfinder
 
             public const string ContentFiles = "build-project:content-files";
 
-            public const string ForceUpdate = "build-project:force-update";
-
-            public const string FileSearchPattern = "build-project:file-search-pattern";
-
             public const string Database = "database";
 
             public const string DataFolderDirectory = "data-folder-directory";
@@ -70,6 +66,10 @@ namespace Sitecore.Pathfinder
             public const string ExternalDirectory = "build-project:external-directory";
 
             public const string Files = "build-project:files";
+
+            public const string FileSearchPattern = "build-project:file-search-pattern";
+
+            public const string ForceUpdate = "build-project:force-update";
 
             public const string HostName = "host-name";
 
@@ -116,6 +116,12 @@ namespace Sitecore.Pathfinder
             public const string UpdateResourcesUrl = "sync-website:sync-url";
 
             public const string UserName = "user-name";
+
+            public const string WatchProjectExclude = "watch-project:exclude";
+
+            public const string WatchProjectInclude = "watch-project:include";
+
+            public const string WatchProjectPublishDatabase = "watch-project:publish-database";
 
             public const string WebsiteDirectory = "website-directory";
 

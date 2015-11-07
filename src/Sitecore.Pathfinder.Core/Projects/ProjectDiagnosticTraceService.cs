@@ -9,7 +9,7 @@ namespace Sitecore.Pathfinder.Projects
 {
     public class ProjectDiagnosticTraceService : TraceService
     {
-        public ProjectDiagnosticTraceService([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory) : base(configuration)
+        public ProjectDiagnosticTraceService([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] IFactoryService factory) : base(configuration, console)
         {
             Factory = factory;
         }

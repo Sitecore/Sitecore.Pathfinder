@@ -2,10 +2,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.IO;
 using System.Threading;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Building.Deploying
 {
@@ -15,15 +17,26 @@ namespace Sitecore.Pathfinder.Building.Deploying
         private static readonly object _syncObject = new object();
 
         [NotNull]
+        private readonly Timer _timer;
+
+        [NotNull]
         private FileSystemWatcher _fileWatcher;
 
         [NotNull]
-        Timer _timer;
+        private PathMatcher _pathMatcher;
 
-        public WatchProject() : base("watch-project")
+        private bool _publishDatabase;
+
+        [ImportingConstructor]
+        public WatchProject([NotNull] IConsoleService console) : base("watch-project")
         {
+            Console = console;
+
             _timer = new Timer(InstallProject, null, Timeout.Infinite, Timeout.Infinite);
         }
+
+        [NotNull]
+        protected IConsoleService Console { get; }
 
         [NotNull]
         protected IBuildContext Context { get; set; }
@@ -36,6 +49,12 @@ namespace Sitecore.Pathfinder.Building.Deploying
         {
             Context = context;
             Context.IsAborted = true;
+
+            var include = context.Configuration.GetString(Constants.Configuration.WatchProjectInclude, "**");
+            var exclude = context.Configuration.GetString(Constants.Configuration.WatchProjectExclude, "**");
+            _pathMatcher = new PathMatcher(include, exclude);
+
+            _publishDatabase = context.Configuration.GetBool(Constants.Configuration.WatchProjectPublishDatabase, true);
 
             _fileWatcher = new FileSystemWatcher(context.ProjectDirectory)
             {
@@ -51,7 +70,7 @@ namespace Sitecore.Pathfinder.Building.Deploying
 
             _fileWatcher.EnableRaisingEvents = true;
 
-            Console.WriteLine("Type 'q' to quit...");
+            Console.WriteLine(Texts.Type__q__to_quit___);
 
             string input;
             do
@@ -64,11 +83,18 @@ namespace Sitecore.Pathfinder.Building.Deploying
         public override void WriteHelp(HelpWriter helpWriter)
         {
             helpWriter.Summary.Write("Watches the project directory and install changes immediately.");
+            helpWriter.Remarks.WriteLine("Settings:");
+            helpWriter.Remarks.WriteLine("  watch-project:include - Specifies which files to look for");
+            helpWriter.Remarks.WriteLine("  watch-project:exclude - Specifies which files to ignore");
+            helpWriter.Remarks.WriteLine("  watch-project:publish-databaasebase - Indicates if the database should published after installing the project");
         }
 
         protected virtual void FileChanged([NotNull] object sender, [NotNull] FileSystemEventArgs fileSystemEventArgs)
         {
-            StartTimer();
+            if (_pathMatcher.IsMatch(fileSystemEventArgs.FullPath))
+            {
+                StartTimer();
+            }
         }
 
         protected virtual void InstallProject([CanBeNull] object state)
@@ -82,7 +108,10 @@ namespace Sitecore.Pathfinder.Building.Deploying
 
                 InstallProject();
 
-                PublishDatabase();
+                if (_publishDatabase)
+                {
+                    PublishDatabase();
+                }
 
                 Console.WriteLine(Texts.Done);
             }

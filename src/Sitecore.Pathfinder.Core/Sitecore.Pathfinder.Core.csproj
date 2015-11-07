@@ -119,6 +119,8 @@
     <Compile Include="Compiling\Pipelines\CompilePipelines\4000 - CheckProject.cs" />
     <Compile Include="Configuration\ConfigurationStartup.cs" />
     <Compile Include="Configuration\FileContext.cs" />
+    <Compile Include="Diagnostics\ConsoleService.cs" />
+    <Compile Include="Diagnostics\IConsoleService.cs" />
     <Compile Include="Extensibility\ExtensibilityConventions.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\GuidExtensions.cs" />
