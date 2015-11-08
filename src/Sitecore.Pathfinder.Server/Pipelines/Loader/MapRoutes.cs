@@ -11,12 +11,6 @@ namespace Sitecore.Pathfinder.Pipelines.Loader
     {
         public void Process([NotNull] PipelineArgs args)
         {
-            RouteTable.Routes.MapRoute("Sitecore.Pathfinder.SyncWebsite", "sitecore/shell/client/Applications/Pathfinder/SyncWebsite", new
-            {
-                controller = "PathfinderSyncWebsite",
-                action = "Index"
-            });
-
             RouteTable.Routes.MapRoute("Sitecore.Pathfinder.WebTestRunner", "sitecore/shell/client/Applications/Pathfinder/WebTestRunner", new
             {
                 controller = "PathfinderWebTestRunner",

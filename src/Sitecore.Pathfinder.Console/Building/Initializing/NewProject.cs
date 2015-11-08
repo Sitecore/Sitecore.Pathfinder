@@ -3,8 +3,10 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Building.Initializing
 {
@@ -79,9 +81,12 @@ namespace Sitecore.Pathfinder.Building.Initializing
                 projectName = _projectUniqueId;
             }
 
+            var wwwrootDirectory = context.Configuration.GetString(Constants.Configuration.WwwrootDirectory, "c:\\inetpub\\wwwroot").TrimEnd('\\');
+            var defaultProjectDirectory = $"{wwwrootDirectory}\\{projectName}\\Website";
             do
             {
-                _websiteDirectory = console.ReadLine($"Enter the directory of the Website [c:\\inetpub\\wwwroot\\{projectName}\\Website]: ", $"c:\\inetpub\\wwwroot\\{projectName}\\Website");
+                var website = console.ReadLine($"Enter the directory of the Website [{defaultProjectDirectory}: ", defaultProjectDirectory);
+                _websiteDirectory = PathHelper.Combine(defaultProjectDirectory, website);
             }
             while (!ValidateWebsiteDirectory(context, console));
 
@@ -97,7 +102,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
             console.WriteLine("Finally Pathfinder requires the hostname of the Sitecore website.");
             console.WriteLine();
 
-            _hostName = console.ReadLine($"Enter the hostname of the website [http://{projectName}]: ", $"http://{projectName}");
+            _hostName = console.ReadLine($"Enter the hostname of the website [http://{projectName.ToLowerInvariant()}]: ", $"http://{projectName.ToLowerInvariant()}");
             if (!_hostName.StartsWith("https:") && !_hostName.StartsWith("https:"))
             {
                 _hostName = "http://" + _hostName.TrimStart('/');
@@ -124,25 +129,38 @@ namespace Sitecore.Pathfinder.Building.Initializing
             console.WriteLine();
             console.WriteLine("Creating project...");
 
-            var sourceDirectory = Path.Combine(context.Configuration.Get(Constants.Configuration.ToolsDirectory), "files\\project\\*");
-            context.FileSystem.XCopy(sourceDirectory, projectDirectory);
-
-            if (!string.IsNullOrEmpty(_starterKitFileName))
-            {
-                context.FileSystem.Unzip(_starterKitFileName, projectDirectory);
-            }
-
-            if (!string.IsNullOrEmpty(_editorFileName))
-            {
-                context.FileSystem.Unzip(_editorFileName, projectDirectory);
-            }
-
+            CopyProjectTemplate(context, projectDirectory);
+            UpdateSccCmd(context, projectDirectory);
+            CopyStarterKit(context, projectDirectory);
+            CopyEditor(context, projectDirectory);
             UpdateConfigFile(context, projectDirectory);
         }
 
         public override void WriteHelp(HelpWriter helpWriter)
         {
             helpWriter.Summary.Write("Creates a new Pathfinder project.");
+        }
+
+        protected virtual void CopyEditor([NotNull] IBuildContext context, [NotNull] string projectDirectory)
+        {
+            if (!string.IsNullOrEmpty(_editorFileName))
+            {
+                context.FileSystem.Unzip(_editorFileName, projectDirectory);
+            }
+        }
+
+        protected virtual void CopyProjectTemplate([NotNull] IBuildContext context, [NotNull] string projectDirectory)
+        {
+            var sourceDirectory = Path.Combine(context.Configuration.Get(Constants.Configuration.ToolsDirectory), "files\\project\\*");
+            context.FileSystem.XCopy(sourceDirectory, projectDirectory);
+        }
+
+        protected virtual void CopyStarterKit([NotNull] IBuildContext context, [NotNull] string projectDirectory)
+        {
+            if (!string.IsNullOrEmpty(_starterKitFileName))
+            {
+                context.FileSystem.Unzip(_starterKitFileName, projectDirectory);
+            }
         }
 
         protected virtual void UpdateConfigFile([NotNull] IBuildContext context, [NotNull] string projectDirectory)
@@ -156,6 +174,16 @@ namespace Sitecore.Pathfinder.Building.Initializing
             config = config.Replace("http://sitecore.default", _hostName);
 
             context.FileSystem.WriteAllText(projectConfigFileName, config);
+        }
+
+        protected virtual void UpdateSccCmd([NotNull] IBuildContext context, [NotNull] string projectDirectory)
+        {
+            var fileName = Path.Combine(projectDirectory, "scc.cmd");
+            var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+            var contents = "@" + directory + "\\scc.exe %*";
+
+            context.FileSystem.WriteAllText(fileName, contents);
         }
 
         protected virtual bool ValidateDataFolderDirectory([NotNull] IBuildContext context, [NotNull] ConsoleService console)

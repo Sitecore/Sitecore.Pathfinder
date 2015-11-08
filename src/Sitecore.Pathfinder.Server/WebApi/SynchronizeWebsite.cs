@@ -7,47 +7,43 @@ using System.Web.Mvc;
 using Sitecore.IO;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.WebApi.SynchronizeWebsites;
 using Sitecore.Web;
 using Sitecore.Zip;
 
-namespace Sitecore.Pathfinder.Synchronizing
+namespace Sitecore.Pathfinder.WebApi
 {
-    public class SynchronizationManager
+    public class SynchronizeWebsite : IWebApi
     {
-        public SynchronizationManager()
-        {
-            var startup = new Startup();
-            var compositionContainer = startup.RegisterCompositionService();
-
-            compositionContainer.SatisfyImportsOnce(this);
-        }
-
         [Diagnostics.NotNull]
         [ItemNotNull]
         [ImportMany(typeof(ISynchronizer))]
         public IEnumerable<ISynchronizer> Synchronizers { get; protected set; }
 
-        [Diagnostics.NotNull]
-        public virtual string BuildSyncFile()
+        public ActionResult Execute()
         {
             var toolsDirectory = WebUtil.GetQueryString("td");
             if (string.IsNullOrEmpty(toolsDirectory))
             {
-                return string.Empty;
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Project Directory not specified");
             }
 
             var projectDirectory = WebUtil.GetQueryString("pd");
             if (string.IsNullOrEmpty(projectDirectory))
             {
-                return string.Empty;
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Tools Directory not specified");
             }
-
 
             var configuration = ConfigurationStartup.RegisterConfiguration(toolsDirectory, projectDirectory, ConfigurationOptions.Noninteractive);
             if (configuration == null)
             {
-                return string.Empty;
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Configuration failed");
             }
+
+            var startup = new Startup();
+            var compositionContainer = startup.RegisterCompositionService();
+
+            compositionContainer.SatisfyImportsOnce(this);
 
             TempFolder.EnsureFolder();
 
@@ -74,7 +70,7 @@ namespace Sitecore.Pathfinder.Synchronizing
                 }
             }
 
-            return syncFileName;
+            return new FilePathResult(syncFileName, "application/zip");
         }
     }
 }

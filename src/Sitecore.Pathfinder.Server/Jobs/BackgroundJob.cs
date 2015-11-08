@@ -1,7 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using Sitecore.Diagnostics;
 using Sitecore.Jobs;
 
 namespace Sitecore.Pathfinder.Jobs
@@ -13,18 +12,12 @@ namespace Sitecore.Pathfinder.Jobs
 
         private BackgroundJob([NotNull] Action action)
         {
-            Debug.ArgumentNotNull(action, nameof(action));
-
             this.action = action;
         }
 
         [NotNull]
         public static string Run([NotNull] string jobName, [NotNull] string category, [NotNull] Action action)
         {
-            Assert.ArgumentNotNull(jobName, nameof(jobName));
-            Assert.ArgumentNotNull(category, nameof(category));
-            Assert.ArgumentNotNull(action, nameof(action));
-
             var jobOptions = new JobOptions(jobName, category, Client.Site.Name, new BackgroundJob(action), "RunJob")
             {
                 AfterLife = TimeSpan.FromMinutes(1),

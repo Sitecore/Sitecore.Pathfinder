@@ -17,7 +17,7 @@ using Sitecore.SecurityModel;
 using Sitecore.Web.UI.HtmlControls.Data;
 using Sitecore.Zip;
 
-namespace Sitecore.Pathfinder.Synchronizing
+namespace Sitecore.Pathfinder.WebApi.SynchronizeWebsites
 {
     public class XsdContentSchemaSynchronizer : ISynchronizer
     {

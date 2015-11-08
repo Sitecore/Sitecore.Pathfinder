@@ -55,14 +55,14 @@
         "uninstall-directory": "../.uninstall"
     },
 
+    "new-project": {
+        "wwwroot-directory": "c:\\inetpub\\wwwroot"
+    },
+
     "pack-nuget": {
         "directory": "sitecore.project",
         "include": "**/*.nuspec",
         "exclude": ""
-    },
-
-    "sync-website": {
-        "sync-url": "/sitecore/shell/client/Applications/Pathfinder/SyncWebsite"
     },
 
     "publish-databases": {

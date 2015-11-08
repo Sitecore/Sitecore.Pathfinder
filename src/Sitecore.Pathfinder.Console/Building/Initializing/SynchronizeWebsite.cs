@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
                 ["pd"] = context.ProjectDirectory
             };
 
-            var url = MakeUrl(context, context.Configuration.GetString(Constants.Configuration.UpdateResourcesUrl), queryStringParameters);
+            var url = MakeWebApiUrl(context, "SynchronizeWebsite", queryStringParameters);
             var targetFileName = Path.GetTempFileName();
 
             if (!DownloadFile(context, url, targetFileName))

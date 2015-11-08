@@ -15,7 +15,7 @@ using Sitecore.Pathfinder.Extensions;
 using Sitecore.SecurityModel;
 using Sitecore.Zip;
 
-namespace Sitecore.Pathfinder.Synchronizing
+namespace Sitecore.Pathfinder.WebApi.SynchronizeWebsites
 {
     public class ContentXmlSynchronizer : ISynchronizer
     {

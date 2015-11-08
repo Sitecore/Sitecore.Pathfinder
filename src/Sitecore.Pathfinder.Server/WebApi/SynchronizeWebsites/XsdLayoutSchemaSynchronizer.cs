@@ -19,7 +19,7 @@ using Sitecore.SecurityModel;
 using Sitecore.Text;
 using Sitecore.Zip;
 
-namespace Sitecore.Pathfinder.Synchronizing
+namespace Sitecore.Pathfinder.WebApi.SynchronizeWebsites
 {
     public class XsdLayoutSchemaSynchronizer : ISynchronizer
     {

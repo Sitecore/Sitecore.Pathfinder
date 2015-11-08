@@ -199,18 +199,17 @@
     <Compile Include="Pipelines\Loader\MapRoutes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerConstants.cs" />
-    <Compile Include="Controllers\PathfinderSyncWebsiteController.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Synchronizing\ContentXmlSynchronizer.cs" />
-    <Compile Include="Synchronizing\ISynchronizer.cs" />
-    <Compile Include="Synchronizing\JsonLayoutSchemaSynchronizer.cs" />
-    <Compile Include="Synchronizing\SynchronizationManager.cs" />
-    <Compile Include="Synchronizing\XsdLayoutSchemaSynchronizer.cs" />
-    <Compile Include="Synchronizing\XsdContentSchemaSynchronizer.cs" />
+    <Compile Include="WebApi\SynchronizeWebsites\ContentXmlSynchronizer.cs" />
+    <Compile Include="WebApi\SynchronizeWebsites\ISynchronizer.cs" />
+    <Compile Include="WebApi\SynchronizeWebsites\JsonLayoutSchemaSynchronizer.cs" />
+    <Compile Include="WebApi\SynchronizeWebsites\XsdLayoutSchemaSynchronizer.cs" />
+    <Compile Include="WebApi\SynchronizeWebsites\XsdContentSchemaSynchronizer.cs" />
     <Compile Include="Testing\UnitTestRunner.cs" />
     <Compile Include="WebApi\InstallProject.cs" />
     <Compile Include="WebApi\IWebApi.cs" />
     <Compile Include="WebApi\ResetWebsite.cs" />
+    <Compile Include="WebApi\SynchronizeWebsite.cs" />
     <Compile Include="WebApi\TroubleshootWebsite.cs" />
   </ItemGroup>
   <ItemGroup>

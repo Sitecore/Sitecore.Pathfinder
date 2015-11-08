@@ -44,9 +44,16 @@ namespace Sitecore.Pathfinder.Building.Deploying
         public override void WriteHelp(HelpWriter helpWriter)
         {
             helpWriter.Summary.Write("Publishes a Sitecore database (usually the master database).");
-            helpWriter.Parameters.Write("database - name of the database (master, core)");
+
+            helpWriter.Parameters.Write("    database - name of the database (master, core)");
+
             helpWriter.Examples.WriteLine($"scc {TaskName}");
             helpWriter.Examples.WriteLine($"scc {TaskName} --database master");
+
+            helpWriter.Summary.Write("Settings:");
+            helpWriter.Summary.Write("    database");
+            helpWriter.Summary.Write("        The name of the database to publish.");
+
         }
     }
 }

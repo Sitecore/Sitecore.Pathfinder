@@ -45,6 +45,8 @@ namespace Sitecore.Pathfinder.Building.Deploying
         public override void WriteHelp(HelpWriter helpWriter)
         {
             helpWriter.Summary.Write("Installs the project directly from the project directory.");
+            helpWriter.Summary.Write("Settings:");
+            helpWriter.Summary.Write("    None.");
         }
     }
 }

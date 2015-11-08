@@ -129,6 +129,8 @@ namespace Sitecore.Pathfinder
 
             public const string WebTestRunnerUrl = "run-unittests:web-test-runner-url";
 
+            public const string WwwrootDirectory = "new-project:wwwroot-repository";
+
             public static class ValidateWebsite
             {
                 public const string InactiveValidations = "validate-website:inactive-validations";

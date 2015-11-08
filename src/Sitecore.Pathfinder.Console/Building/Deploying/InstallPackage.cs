@@ -66,6 +66,12 @@ namespace Sitecore.Pathfinder.Building.Deploying
         public override void WriteHelp(HelpWriter helpWriter)
         {
             helpWriter.Summary.Write("Unpacks and installs the project package (including dependencies) in the website.");
+
+            helpWriter.Remarks.Write("Settings:");
+            helpWriter.Remarks.Write("    install-package:check-bin-file-version");
+            helpWriter.Remarks.Write("        If true, check the versions of assemblies in /bin before copying.");
+            helpWriter.Remarks.Write("    install-package:install-url");
+            helpWriter.Remarks.Write("        The URL for installing a package.");
         }
     }
 }
