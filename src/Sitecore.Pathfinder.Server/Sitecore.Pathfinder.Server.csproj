@@ -209,7 +209,7 @@
     <Compile Include="WebApi\InstallProject.cs" />
     <Compile Include="WebApi\IWebApi.cs" />
     <Compile Include="WebApi\ResetWebsite.cs" />
-    <Compile Include="WebApi\SynchronizeWebsite.cs" />
+    <Compile Include="WebApi\WriteWebsiteExports.cs" />
     <Compile Include="WebApi\TroubleshootWebsite.cs" />
   </ItemGroup>
   <ItemGroup>

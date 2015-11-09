@@ -6,7 +6,7 @@ namespace Sitecore.Pathfinder.Emitters
 {
     public class EmitService
     {
-        public EmitService(string toolsDirectory, [NotNull] string projectDirectory)
+        public EmitService([Diagnostics.NotNull] string toolsDirectory, [NotNull] string projectDirectory)
         {
             ProjectDirectory = projectDirectory;
             ToolsDirectory = toolsDirectory;

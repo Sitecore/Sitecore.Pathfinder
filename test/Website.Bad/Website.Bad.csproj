@@ -66,14 +66,6 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\src\Sitecore.Pathfinder.Console\files\project\sitecore.project\external\core.core.content.xml">
-      <Link>sitecore.project\external\core.core.content.xml</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\src\Sitecore.Pathfinder.Console\files\project\sitecore.project\external\master.master.content.xml">
-      <Link>sitecore.project\external\master.master.content.xml</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="packages.config" />
     <Content Include="scconfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -160,6 +152,7 @@
     <Folder Include="layout\layouts\" />
     <Folder Include="layout\renderings\" />
     <Folder Include="media library\" />
+    <Folder Include="sitecore.project\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

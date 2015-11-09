@@ -190,7 +190,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             else
             {
                 // todo: use proper template id or item path
-                var devices = context.Field.Item.Project.Items.OfType<Item>().Where(i => i.TemplateIdOrPath == "Device").ToList();
+                var devices = context.Field.Item.Project.Items.OfType<Item>().Where(i => i.TemplateIdOrPath == "/sitecore/templates/System/Layout/Device").ToList();
                 if (!devices.Any())
                 {
                     context.CompileContext.Trace.TraceError(Texts.Device_item_not_found, deviceNameTextNode);
@@ -244,9 +244,8 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         {
             var databaseName = context.Field.Item.DatabaseName;
 
-            // todo: identify renderings by fully qualifying the template name or use the id
             var renderingItems = context.Field.Item.Project.Items.OfType<Rendering>().Where(r => string.Equals(r.RenderingItemUri.FileOrDatabaseName, databaseName, StringComparison.OrdinalIgnoreCase)).Select(r => context.Field.Item.Project.FindQualifiedItem(r.RenderingItemUri)).OfType<Item>().ToList();
-            renderingItems.AddRange(context.Field.Item.Project.Items.OfType<Item>().Where(r => r.IsExtern && string.Equals(r.DatabaseName, databaseName, StringComparison.OrdinalIgnoreCase) && string.Equals(r.TemplateIdOrPath, "View rendering", StringComparison.OrdinalIgnoreCase)));
+            renderingItems.AddRange(context.Field.Item.Project.Items.OfType<Item>().Where(r => r.IsExtern && string.Equals(r.DatabaseName, databaseName, StringComparison.OrdinalIgnoreCase) && string.Equals(r.TemplateIdOrPath, "/sitecore/templates/System/Layout/Renderings/View rendering", StringComparison.OrdinalIgnoreCase)));
 
             output.WriteStartElement("r");
 

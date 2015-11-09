@@ -16,7 +16,7 @@ namespace Sitecore.Pathfinder.Building.Deploying
         {
             context.Trace.TraceInformation(Texts.Copying_dependencies___);
 
-            var packagesDirectory = context.Configuration.Get(Constants.Configuration.PackagesDirectory);
+            var packagesDirectory = context.Configuration.Get(Constants.Configuration.CopyDependenciesPackagesDirectory);
             var sourceDirectory = Path.Combine(context.ProjectDirectory, packagesDirectory);
             if (!context.FileSystem.DirectoryExists(sourceDirectory))
             {

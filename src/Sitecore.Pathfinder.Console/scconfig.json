@@ -20,9 +20,6 @@
         // files to copy to website
         "content-files": ".js .css .config .htm .ashx .asmx",
 
-        // directory that holds external external references
-        "external-directory": "sitecore.project/external",
-
         // mapping of files between local path and server path and item path
         "files": {
         },
@@ -102,6 +99,79 @@
 
         // specifies if the database should be published
         "publish-database": true
+    },
+
+    "write-exports": {
+        "filename": "sitecore.project\\exports.xml",
+        "fields-to-write": "Place Holders"
+    },
+
+    "write-website-exports": {
+        "1": {
+            "filename": "sitecore.project/repository/Sitecore.Master.8.0.nupkg",
+            "queries": {
+                "1": {
+                    "query": "/sitecore/templates/System//*[@@templatekey='template']",
+                    "database": "master"
+                },
+                "2": {
+                    "query": "/sitecore/templates/Sample/Sample Item",
+                    "database": "master"
+                },
+                "3": {
+                    "query": "/sitecore/layout//*[@@templatekey='view rendering' or @@templatekey='xsl rendering' or @@templatekey='sublayout' or @@templatekey='layout' or @@templatekey='device']",
+                    "database": "master",
+                    "fields": "Path, Place Holders, Parameters Template"
+                }
+            }
+        },
+
+        "2": {
+            "filename": "sitecore.project/repository/Sitecore.Core.8.0.nupkg",
+            "queries": {
+                "1": {
+                    "query": "/sitecore/templates/System//*[@@templatekey='template']",
+                    "database": "core"
+                },
+                "2": {
+                    "query": "/sitecore/layout//*[@@templatekey='device']",
+                    "database": "core"
+                }
+            }
+        },
+
+        "3": {
+            "filename": "sitecore.project/repository/Sitecore.Speak.8.0.nupkg",
+            "queries": {
+                "1": {
+                    "query": "/sitecore/client/Speak//*[@@templatekey='template' or @@templatekey='view rendering' or @@templatekey='layout']",
+                    "database": "core",
+                    "fields": "Path, Place Holders, Parameters Template"
+                }
+            }
+        },
+
+        "4": {
+            "filename": "sitecore.project/repository/Sitecore.BusinessComponentLibrary.nupkg",
+            "queries": {
+                "1": {
+                    "query": "/sitecore/client/Business Component Library//*[@@templatekey='template' or @@templatekey='view rendering' or @@templatekey='layout']",
+                    "database": "core",
+                    "fields": "Path, Place Holders, Parameters Template"
+                }
+            }
+        },
+
+        "5": {
+            "filename": "sitecore.project/repository/Sitecore.Launchpad.nupkg",
+            "queries": {
+                "1": {
+                    "query": "/sitecore/client/Applications/Launchpad//*[@@templatekey='template' or @@templatekey='view rendering' or @@templatekey='layout']",
+                    "database": "core",
+                    "fields": "Path, Place Holders, Parameters Template"
+                }
+            }
+        }
     },
 
     "standard-template-fields": {

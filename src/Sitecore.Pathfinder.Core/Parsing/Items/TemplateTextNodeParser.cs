@@ -43,6 +43,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             var standardValuesItemIdOrPath = itemIdOrPath + "/__Standard Values";
             var standardValuesGuid = StringHelper.GetGuid(context.ParseContext.Project, standardValuesItemIdOrPath);
             var standardValuesItem = context.ParseContext.Factory.Item(context.ParseContext.Project, standardValuesGuid, textNode, databaseName, "__Standard Values", standardValuesItemIdOrPath, itemIdOrPath);
+            standardValuesItem.IsExtern = template.IsExtern;
 
             // todo: should be Uri
             template.StandardValuesItem = standardValuesItem;

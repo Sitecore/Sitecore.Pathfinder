@@ -63,8 +63,6 @@ namespace Sitecore.Pathfinder
 
             public const string Debug = "system:debug";
 
-            public const string ExternalDirectory = "build-project:external-directory";
-
             public const string Files = "build-project:files";
 
             public const string FileSearchPattern = "build-project:file-search-pattern";
@@ -83,7 +81,7 @@ namespace Sitecore.Pathfinder
 
             public const string PackageDirectory = "copy-package:package-directory";
 
-            public const string PackagesDirectory = "copy-dependencies:packages-directory";
+            public const string CopyDependenciesPackagesDirectory = "copy-dependencies:packages-directory";
 
             public const string PackNugetDirectory = "pack-nuget:directory";
 
@@ -128,6 +126,10 @@ namespace Sitecore.Pathfinder
             public const string WebTestRunnerName = "run-unittests:web-test-runner-name";
 
             public const string WebTestRunnerUrl = "run-unittests:web-test-runner-url";
+
+            public const string WriteExportsFileName = "write-exports:filename";
+
+            public const string WriteExportsFieldsToWrite = "write-exports:fields";
 
             public const string WwwrootDirectory = "new-project:wwwroot-repository";
 

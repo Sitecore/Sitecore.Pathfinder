@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
         public override bool CanCompile(IFieldCompileContext context, Field field)
         {
-            return field.Value.IndexOf("/sitecore", StringComparison.OrdinalIgnoreCase) >= 0;
+            return field.Value.IndexOf("/sitecore", StringComparison.OrdinalIgnoreCase) >= 0 && !field.Item.IsExtern;
         }
 
         public override string Compile(IFieldCompileContext context, Field field)

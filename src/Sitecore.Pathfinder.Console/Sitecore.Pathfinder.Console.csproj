@@ -185,6 +185,7 @@
     <Compile Include="Building\Commands\ListProject.cs" />
     <Compile Include="Building\Commands\TroubleshootWebsite.cs" />
     <Compile Include="Building\Deploying\CopyPackage.cs" />
+    <Compile Include="Building\Deploying\WriteExports.cs" />
     <Compile Include="Building\Deploying\InstallPackage.cs" />
     <Compile Include="Building\Deploying\InstallProject.cs" />
     <Compile Include="Building\Deploying\PublishDatabase.cs" />
@@ -194,6 +195,8 @@
     <Compile Include="Building\Initializing\BeforeBuilds\BeforeBuildPipeline.cs" />
     <Compile Include="Building\Initializing\Help.cs" />
     <Compile Include="Building\Deploying\CopyDependencies.cs" />
+    <Compile Include="Building\Initializing\InstallRepository.cs" />
+    <Compile Include="Building\Initializing\ListRepository.cs" />
     <Compile Include="Building\Initializing\NewProject.cs" />
     <Compile Include="Building\Initializing\InitAtom.cs" />
     <Compile Include="Building\Initializing\InitVisualStudio.cs" />
@@ -201,6 +204,7 @@
     <Compile Include="Building\Initializing\ResetWebsite.cs" />
     <Compile Include="Building\Initializing\ShowMetrics.cs" />
     <Compile Include="Building\Initializing\SynchronizeWebsite.cs" />
+    <Compile Include="Building\Initializing\WriteWebsiteExports.cs" />
     <Compile Include="Building\Packaging\PackDependencies.cs" />
     <Compile Include="Building\Testing\UnitTests\GenerateUnitTest.cs" />
     <Compile Include="Building\Querying\FindReferences.cs" />
@@ -290,7 +294,25 @@
     <Content Include="files\project\sitecore.filetemplates\Layout.master.layout.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="files\project\sitecore.project\external\readme.md">
+    <None Include="files\project\sitecore.project\packages\Sitecore.Master.8.0.nupkg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\repository\sitecore.project\packages\Sitecore.BusinessComponentLibrary.nupkg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\repository\sitecore.project\packages\Sitecore.Core.8.0.nupkg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\repository\sitecore.project\packages\Sitecore.Launchpad.nupkg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\repository\sitecore.project\packages\Sitecore.Master.8.0.nupkg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\repository\sitecore.project\packages\Sitecore.Speak.8.0.nupkg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\repository\sitecore.project\packages\SitecorePathfinderCore.nupkg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="files\project\sitecore.project\packages\readme.md">
@@ -313,12 +335,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="files\project\sitecore.filetemplates\Layout.master.layout.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\project\sitecore.project\external\core.core.content.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\project\sitecore.project\external\master.master.content.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="files\project\views\readme.md">
@@ -421,7 +437,7 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="files\project\sitecore.project\sitecore.nuspec">
+    <Content Include="files\project\sitecore.project\Sitecore.nuspec">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Sitecore.Pathfinder.Server\bin\Sitecore.Pathfinder.Core.dll">

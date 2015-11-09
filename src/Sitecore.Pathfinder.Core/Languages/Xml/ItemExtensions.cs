@@ -1,56 +1,67 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Xml;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.Languages.Xml
 {
     public static class ItemExtensions
     {
-        public static void WriteAsContentXml([NotNull] this Item item, [NotNull] TextWriter output, [CanBeNull] [ItemNotNull] IEnumerable<string> fieldsToWrite = null, [CanBeNull] Action<XmlTextWriter, Item, IEnumerable<string>> writeInner = null)
+        public static void WriteAsExport([NotNull] this Item item, [NotNull] XmlTextWriter output, [ItemNotNull] [NotNull] IEnumerable<string> fieldsToWrite)
         {
-            using (var writer = new XmlTextWriter(output))
+            output.WriteStartElement("Item");
+            output.WriteAttributeString("Id", item.Uri.Guid.Format());
+            output.WriteAttributeString("Database", item.DatabaseName);
+            output.WriteAttributeString("Name", item.ItemName);
+            output.WriteAttributeString("Path", item.ItemIdOrPath);
+            output.WriteAttributeString("Template", item.TemplateIdOrPath);
+
+            foreach (var field in item.Fields)
             {
-                var templateName = item.Template.ItemName.EscapeXmlElementName();
-
-                var parentItemPath = string.Empty;
-                if (!item.ItemIdOrPath.IsGuid())
+                if (!fieldsToWrite.Contains(field.FieldName.ToLowerInvariant()))
                 {
-                    parentItemPath = PathHelper.GetItemParentPath(item.ItemIdOrPath);
+                    continue;
                 }
 
-                writer.WriteStartElement(templateName);
-                writer.WriteAttributeString("Id", item.ItemIdOrPath);
-                writer.WriteAttributeString("Name", item.ItemName);
-                writer.WriteAttributeString("Database", item.DatabaseName);
-                writer.WriteAttributeString("ParentItemPath", parentItemPath);
-
-                var writeAll = fieldsToWrite == null || (fieldsToWrite.Count() == 1 && fieldsToWrite.ElementAt(0) == "*");
-                foreach (var field in item.Fields)
-                {
-                    if (!writeAll && !fieldsToWrite.Contains(field.FieldName.ToLowerInvariant()))
-                    {
-                        continue;
-                    }
-
-                    var fieldName = field.FieldName.EscapeXmlElementName();
-                    writer.WriteAttributeString(fieldName, field.Value);
-                }
-
-                if (writeInner != null)
-                {
-                    writeInner(writer, item, fieldsToWrite);
-                }
-
-                writer.WriteEndElement();
+                output.WriteStartElement("Field");
+                output.WriteAttributeString("Name", field.FieldName);
+                output.WriteAttributeString("Value", field.Value);
+                output.WriteEndElement();
             }
+
+            output.WriteEndElement();
+        }
+
+        public static void WriteAsExport([NotNull] this Template template, [NotNull] XmlTextWriter output)
+        {
+            output.WriteStartElement("Template");
+            output.WriteAttributeString("Id", template.Uri.Guid.Format());
+            output.WriteAttributeString("Database", template.DatabaseName);
+            output.WriteAttributeString("Name", template.ItemName);
+            output.WriteAttributeString("Path", template.ItemIdOrPath);
+
+            foreach (var section in template.Sections)
+            {
+                output.WriteStartElement("Section");
+                output.WriteAttributeString("Name", section.SectionName);
+
+                foreach (var field in section.Fields)
+                {
+                    output.WriteStartElement("Field");
+                    output.WriteAttributeString("Name", field.FieldName);
+                    output.WriteAttributeString("Type", field.Type);
+                    output.WriteEndElement();
+                }
+
+                output.WriteEndElement();
+            }
+
+            output.WriteEndElement();
         }
     }
 }

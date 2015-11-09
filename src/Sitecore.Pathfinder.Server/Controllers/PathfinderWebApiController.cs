@@ -14,7 +14,7 @@ namespace Sitecore.Pathfinder.Controllers
     public class PathfinderWebApiController : Controller
     {
         [Diagnostics.NotNull]
-        public ActionResult Index([Diagnostics.NotNull] string typeName)
+        public ActionResult Index([Diagnostics.NotNull] string route)
         {
             var actionResult = this.AuthenticateUser();
             if (actionResult != null)
@@ -24,11 +24,11 @@ namespace Sitecore.Pathfinder.Controllers
 
             var assemblyName = string.Empty;
 
-            var n = typeName.IndexOf(",", StringComparison.Ordinal);
+            var n = route.IndexOf(",", StringComparison.Ordinal);
             if (n >= 0)
             {
-                assemblyName = typeName.Mid(n + 1).Trim();
-                typeName = typeName.Left(n);
+                assemblyName = route.Mid(n + 1).Trim();
+                route = route.Left(n);
 
                 if (!assemblyName.StartsWith("/bin/", StringComparison.InvariantCultureIgnoreCase))
                 {
@@ -41,9 +41,9 @@ namespace Sitecore.Pathfinder.Controllers
                 }
             }
 
-            if (!typeName.StartsWith("Sitecore.Pathfinder.WebApi"))
+            if (!route.StartsWith("Sitecore.Pathfinder.WebApi"))
             {
-                typeName = "Sitecore.Pathfinder.WebApi." + typeName;
+                route = "Sitecore.Pathfinder.WebApi." + route;
             }
 
             Type type;
@@ -56,16 +56,16 @@ namespace Sitecore.Pathfinder.Controllers
                     throw new Exception($"Cannot find assembly '{assemblyName}'.");
                 }
 
-                type = assembly.GetType(typeName);
+                type = assembly.GetType(route);
             }
             else
             {
-                type = Type.GetType(typeName) ?? GetTypeFromAssemblies(typeName);
+                type = Type.GetType(route) ?? GetTypeFromAssemblies(route);
             }
 
             if (type == null)
             {
-                throw new Exception($"Cannot find type '{typeName}'.");
+                throw new Exception($"Cannot find type '{route}'.");
             }
 
             var output = new StringWriter();
@@ -74,7 +74,7 @@ namespace Sitecore.Pathfinder.Controllers
             var instance = Activator.CreateInstance(type) as IWebApi;
             if (instance == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "WebApi not found: " + typeName);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "WebApi not found: " + route);
             }
 
             var result = instance.Execute();

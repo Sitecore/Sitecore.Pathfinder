@@ -24,7 +24,11 @@ namespace Sitecore.Pathfinder.Diagnostics
 
         void Write([NotNull] string format, [NotNull] [ItemCanBeNull] params object[] arg);
 
+        void Write([NotNull] string text);
+
         void WriteLine([NotNull] string format, [NotNull] [ItemCanBeNull] params object[] arg);
+
+        void WriteLine([NotNull] string text);
 
         void WriteLine();
 

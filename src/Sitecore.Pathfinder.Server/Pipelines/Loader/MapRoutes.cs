@@ -60,11 +60,11 @@ namespace Sitecore.Pathfinder.Pipelines.Loader
                 action = "Index",
             });
 
-            RouteTable.Routes.MapRoute("Sitecore.Pathfinder.WebApi", "sitecore/shell/client/Applications/Pathfinder/WebApi/{typeName}", new
+            RouteTable.Routes.MapRoute("Sitecore.Pathfinder.WebApi", "sitecore/shell/client/Applications/Pathfinder/WebApi/{route}", new
             {
                 controller = "PathfinderWebApi",
                 action = "Index",
-                typeName = ""
+                route = ""
             });
         }
     }

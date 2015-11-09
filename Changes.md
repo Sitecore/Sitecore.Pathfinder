@@ -12,3 +12,5 @@ Version next
 * Add: watch-project task for watching a project for changes and installing the project (2015-11-06)
 * Add: build-project:force-update setting which indicates if media and files are always overwritten (2015-11-06)
 * Add: build-project:file-search-pattern sets the file search pattern for project directory visitor (2015-11-06)
+* Add: Replaced externals with projects. Exports are now defined in a standard NuGet package (2015-11-09) - Dmitry Kostenko
+* Add: Repository directory for installable files. list-repository and install-repository tasks (2015-11-09)

@@ -20,7 +20,7 @@
 
     "build-project": {
         // build tasks
-        "tasks": "check-project pack-nuget copy-dependencies copy-package install-package publish-database show-metrics",
+        "tasks": "check-project write-exports pack-nuget copy-dependencies copy-package install-package publish-database show-metrics",
 
         // mapping of files between local path and server path and item path
         "files": {

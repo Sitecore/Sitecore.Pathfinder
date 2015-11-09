@@ -12,26 +12,14 @@ namespace Sitecore.Pathfinder.Diagnostics
     {
         public ConsoleColor BackgroundColor
         {
-            get
-            {
-                return Console.BackgroundColor;
-            }
-            set
-            {
-                Console.BackgroundColor = value;
-            }
+            get { return Console.BackgroundColor; }
+            set { Console.BackgroundColor = value; }
         }
 
         public ConsoleColor ForegroundColor
         {
-            get
-            {
-                return Console.ForegroundColor;
-            }
-            set
-            {
-                Console.ForegroundColor = value;
-            }
+            get { return Console.ForegroundColor; }
+            set { Console.ForegroundColor = value; }
         }
 
         public bool IsInteractive { get; set; } = true;
@@ -110,9 +98,19 @@ namespace Sitecore.Pathfinder.Diagnostics
             Console.Write(format, arg);
         }
 
+        public void Write(string text)
+        {
+            Console.Write(text);
+        }
+
         public void WriteLine(string format, params object[] arg)
         {
             Console.WriteLine(format, arg);
+        }
+
+        public void WriteLine(string text)
+        {
+            Console.WriteLine(text);
         }
 
         public void WriteLine()

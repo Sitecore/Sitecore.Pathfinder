@@ -29,6 +29,8 @@ the package to a website where an installer installs the new files and Sitecore 
 
 The developer process is familiar; edit source files, build and install the package, run tests or review the changes on website, repeat.
 
+*Please notice that this document is a brain dump from the developers, so concepts are probably not explained in a friendly manner.*
+
 ## Getting started
 The goal of Pathfinder is to make it easy to start working with Sitecore.
 
@@ -67,6 +69,10 @@ Also see [How to contribute](CONTRIBUTING.md).
 
 ## Basic concepts
 
+In the following:
+* [Tools] refers to the directory where scc.exe is located.
+* [Project] refers to the directory where the project is located.
+
 ### Tasks
 The Pathfinder compiler supports a number of tasks. These tasks make up the tool chain. While most tasks provide functionality for compiling and 
 deploying a package, other tasks simply implement funtionality.
@@ -90,7 +96,7 @@ install-package | Unpacks and installs the project package (including dependenci
 list-items | Lists the Sitecore items in the project.
 list-project | Lists the project items (Sitecore items and files).
 new-project | Initializes the project.
-pack-dependencies | Creates a Nuget package for Sitecore package in the /sitecore.tools/packages directory.
+pack-dependencies | Creates a Nuget package for Sitecore package in the [Project]/sitecore.project/packages directory.
 pack-nuget | Creates a Nuget package from the project.
 publish-database | Publishes a Sitecore database (usually the master database).
 rename | Finds all project items that references the specified project item (EXPERIMENTAL).
@@ -105,18 +111,18 @@ The build tool chain is specified in the build-project/tasks configuration setti
 
 1. Check the project for warnings and errors. Any errors will stop the build.
 2. Create a Nuget package from the project.
-3. Copy dependency files from the /sitecore.project/packages directory to the website ([DataFolder]/Pathfinder/Available).
-4. Copy package /sitecore.project/Sitecore.nupkg to the website ([DateFolder]/Pathfinder/Available).
-5. Install the package by making a request to the website: /sitecore/shell/client/Applications/Pathfinder/InstallPackage
-6. Publish the Master database by making a request to the website: /sitecore/shell/client/Applications/Pathfinder/Publish
+3. Copy dependency files from the [Project]/sitecore.project/packages directory to the website ([DataFolder]/Pathfinder/Available).
+4. Copy package [Project]/sitecore.project/Sitecore.nupkg to the website ([DateFolder]/Pathfinder/Available).
+5. Install the package by making a request to the website: [Website]/sitecore/shell/client/Applications/Pathfinder/InstallPackage
+6. Publish the Master database by making a request to the website: [Website]/sitecore/shell/client/Applications/Pathfinder/Publish
 7. Show project metrics.
 
 ### Configuration
 Pathfinder is configured using a global configuration file, a project configuration file and optionally a user configuration file. The user and project 
 configuration files can overwrite any settings in the global configuration file.
 
-The global configuration is located in the /sitecore.tools/sccconfig.json. You should never change this file. Instead overwrite settings in 
-the project configuration file.
+The global configuration is located in the tools directory. You should never change this file. Instead overwrite settings in 
+the project or user configuration files.
 
 [Global configuration: /sitecore.tools/scconfig.json](src/console/scconfig.json)
 
@@ -126,9 +132,24 @@ The project configuration file is located in the root of the project: /scconfig.
 
 The user configuration file is options and is located next to the project configuration file. It has the extension .user.
 
-/sitecore.tools/scconfig.json (global configuration)
+[Tools]/scconfig.json (global configuration)
 /scconfig.json (project configuration)
+/scconfig.[MachineName].json (machine/project configuration)
 /scconfig.json.user (user configuration)
+
+### Dependencies and exports
+A project can declare items and resources that are used by other projects. The `write-export` task write a export declaration of all
+items and templates in the project to the [Project]/sitecore.project/exports.xml file.
+
+When a project is being compiled, Pathfinder will look for [Project]/sitecore.project/exports.xml files in all Nuget packages in the 
+[Project]/sitecore.project/packages directory. All declared items and templates are added to the project as external references.
+
+The repository (located in [Tools]/files/repository) contains a number of packages with external references to the master and core databases 
+and various SPEAK packages.
+
+To list the contents of the repository, use the `scc list-repository` task.
+
+To install a files from the repository  use the `scc install-repository [file name]` task.
 
 ### Extensibility
 Pathfinder uses [MEF](https://msdn.microsoft.com/en-us/library/dd460648(v=vs.110).aspx) internally and is fully plugable. See section on 
@@ -283,8 +304,8 @@ in template or field names are replaced by a dot '.'.
 You will notice that the examples above do not specify the name of the item. By default the name of the file (without extensions) is used
 as item name.
 
-Likewise the directory path is used as item path. The root of the project corresponds to /sitecore, so having the item file
-"[Project]\content\Home\HelloWorld.item.xml" will create the item "/sitecore/content/Home/HelloWorld".
+Likewise the directory path is used as item path. The [Project]/content directory of project corresponds to [Database]/sitecore, so having the item file
+"[Project]\content\master\sitecore\content\Home\HelloWorld.item.xml" will create the item "/sitecore/content/Home/HelloWorld".
 
 ### Nested items
 An item file can contain multiple nested items. Below is an example:
@@ -611,7 +632,7 @@ Extension            | Description
 .config              | Config content file
 
 You can control which types of files are included in the deployment package by override in the build-package/ignore-directories and 
-build-package/ignore-filenames settings from the global scconfig.json (located in the /sitecore.tools/scconfig.json file).
+build-package/ignore-filenames settings from the global scconfig.json (located in the [Tools]/scconfig.json file).
 
 ### File system mapping
 The filesystem structure of the project does not necessary corresponds to the desired structure on the website.
@@ -640,7 +661,7 @@ In the scconfig.json file, you can map files and items to different locations on
 In Pathfinder the project contains the whole truth. However a project may need to use items, template, renderings from a standard 
 Sitecore website. A good example is a SPEAK based module.
 
-These external references can be imported into the project by using the ``sync-website`` task. This task makes a request to the website
+These external resources can be imported into the project by using the ``sync-website`` task. This task makes a request to the website
 to collect the needed information. The information is downloaded as a zip file and unpacked in the project directory.
 
 The sync-website task is configured on the 'sync-website' section in the scconfig.json configuration file.
@@ -681,28 +702,13 @@ The sync-website task is configured on the 'sync-website' section in the scconfi
 By default various schema files for Json and Xml are generated and downloaded. The ``file`` property determines where the generated
 is unpack in the project directory.
 
-It is possible to add additional resources to the list. To add SPEAK items as external references add the following lines.
-
-```js
-"External references for Speak": {
-    "file": "sitecore.project/external/speak.core.content.xml",
-    "database": "core",
-    "path": "/sitecore/client/Speak"
-},
-"External references for Business Component Library": {
-    "file": "sitecore.project/external/bcl.core.content.xml",
-    "database": "core",
-    "path": "/sitecore/client/Business Component Library"
-}
-```
-
 ## Deploying
 By default Pathfinder copies the build package to a website and installs it. The package is copied to the 
 [DataFolder]/Data/Pathfinder/Available directory. Any dependencies from the sitecore.project/packages directory are also copied to
 this directory.
 
 ### Installation
-The package is installed by making a request to the /sitecore/shell/client/Applications/Pathfinder/InstallPackage with the name of the 
+The package is installed by making a request to the [Website]/sitecore/shell/client/Applications/Pathfinder/InstallPackage with the name of the 
 package on the query string. This webpage uses Nuget to unpack the files to the [DataFolder]/Pathfinder/Installed directory. Once the files 
 are available, Pathfinder rebuilds the project and emits items and files to the website.
 
@@ -710,9 +716,9 @@ Any dependency packages are unpacked before the package and are processed in the
 
 ### Dependency packages
 A project can depend on other Nuget packages using the standard Nuget dependency mechanism. Dependency packages are located in the
-/sitecore.project/packages directory. As part of deploying these packages are copied to the website and installed.
+[Project]/sitecore.project/packages directory. As part of deploying these packages are copied to the website and installed.
 
-To add a new dependency package, copy the file (.nupkg) to the sitecore.project/packages directory. In the Nuspec file sitecore.project/sitecore.nuspec
+To add a new dependency package, copy the file (.nupkg) to the sitecore.project/packages directory. In the Nuspec file [Project]/sitecore.project/sitecore.nuspec
 add the filename to the ``dependencies`` tag like this (see [Nuspec Reference](https://docs.nuget.org/create/nuspec-reference)):
 
 ```xml
@@ -765,10 +771,10 @@ Pathfinder includes the Roslyn compiler to compile extensions on the fly. Extens
 [MEF](https://msdn.microsoft.com/en-us/library/dd460648(v=vs.110).aspx). This allows you to extend Pathfinder with new tasks, checkers, code 
 generation handler and much more. 
 
-When Pathfinder starts it looks through the /sitecore.tools/files/extensions directory to find any extension files, and if any file is newer than the
+When Pathfinder starts it looks through the [Tools]/files/extensions directory to find any extension files, and if any file is newer than the
 Sitecore.Pathfinder.Extensions.dll assembly, it recompiles the files and saves the output as Sitecore.Pathfinder.Extensions.dll.
 
-For instance to make a new checker, duplicate a file in /sitecore.tools/files/extensions/checkers and start Pathfinder. Pathfinder will detect the
+For instance to make a new checker, duplicate a file in [Tools]/files/extensions/checkers and start Pathfinder. Pathfinder will detect the
 new file and recompile the assembly.
 
 ## Unit testing
@@ -869,12 +875,12 @@ the project.
 To generate code, execute the task `generate-code`. This wil iterate through the elements in the project and check if
 a code generator is available for that item. If so, the code generator is executed.
 
-Code generators are simply extensions that are located in the /sitecore.tools/extensions/codegen directory.
+Code generators are simply extensions that are located in the [Tools]/extensions/codegen directory.
 
 Normally you want to run the `generate-code` task before building an assembly, so the C# source files are up-to-date.
 
 # Starter kits
-Pathfinder comes with 2 starter kits to get you started easily. Starter kits are located in the sitecore.tools/files/starterkits
+Pathfinder comes with 2 starter kits to get you started easily. Starter kits are located in the [Tools]/files/starterkits
 directory. 
 
 To install a starter kit, simple unpack the Nuget package in the root of your project.
@@ -1004,10 +1010,10 @@ any of the tools in depth.
 
 Many tools are available as either Sitecore Packages or Nuget packages.
 
-Sitecore Packages can be installed by downloading the package to /sitecore.tools/packages, wrapping it in a Nuget
+Sitecore Packages can be installed by downloading the package to [Project]/sitecore.project/packages, wrapping it in a Nuget
 package (using the ``pack-dependencies`` task) and making it a dependency. 
 
-Nuget Packages can be installed by downloading the package to /sitecore.tools/packages,  and making it a dependency. 
+Nuget Packages can be installed by downloading the package to [Project]/sitecore.project/packages,  and making it a dependency. 
 
 ### TDS
 [TDS](https://www.hhogdev.com/Downloads/Team-Development-for-Sitecore.aspx) is a commercial Visual Studio plugin that primarily implements 
@@ -1175,7 +1181,6 @@ Pathfinder could use Sitecore Ship internally to deploy update packages. It migh
 
 Short term
 
-* Exclude specified images from uploading
 * Use Sitecore renderings in Html Templates
 * Fix bugs and do enhancements
 

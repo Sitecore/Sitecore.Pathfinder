@@ -6,9 +6,9 @@ using System.Net;
 using System.Web.Mvc;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Configuration;
-using Sitecore.Data.Query;
 using Sitecore.IO;
 using Sitecore.Pathfinder.Configuration;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Web;
 
@@ -86,28 +86,9 @@ namespace Sitecore.Pathfinder.WebApi
 
             foreach (var pair in configuration.GetSubKeys("reset-website:" + databaseName))
             {
-                var query = new Query(pair.Key)
+                foreach (var item in database.Query(pair.Key))
                 {
-                    Max = int.MaxValue
-                };
-
-                var result = query.Execute(database.GetRootItem());
-
-                var queryContext = result as QueryContext;
-                if (queryContext != null)
-                {
-                    var item = database.GetItem(queryContext.ID);
-                    item?.Recycle();
-                }
-
-                var queryContextArray = result as QueryContext[];
-                if (queryContextArray != null)
-                {
-                    foreach (var i in queryContextArray)
-                    {
-                        var item = database.GetItem(i.ID);
-                        item?.Recycle();
-                    }
+                    item.Recycle();
                 }
             }
         }

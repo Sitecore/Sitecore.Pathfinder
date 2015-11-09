@@ -42,6 +42,11 @@ namespace Sitecore.Pathfinder.IO
 
         public virtual void CreateDirectory(string directory)
         {
+            if (string.IsNullOrEmpty(directory))
+            {
+                return;
+            }
+
             Directory.CreateDirectory(directory);
         }
 

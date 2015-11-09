@@ -3,7 +3,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Xml.Linq;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines;
@@ -188,7 +191,7 @@ namespace Sitecore.Pathfinder.Projects
             Options = projectOptions;
 
             var context = CompositionService.Resolve<IParseContext>().With(this, Snapshot.Empty);
-            AddExterns(context);
+            AddDependencyPackages(context);
 
             foreach (var sourceFileName in sourceFileNames)
             {
@@ -253,17 +256,97 @@ namespace Sitecore.Pathfinder.Projects
             return this;
         }
 
-        protected virtual void AddExterns([NotNull] IParseContext context)
+        protected virtual void AddDependencies([NotNull] XElement root)
         {
-            var externalDirectory = PathHelper.Combine(context.Configuration.GetString(Constants.Configuration.ProjectDirectory), context.Configuration.GetString(Constants.Configuration.ExternalDirectory));
-            if (!FileSystem.DirectoryExists(externalDirectory))
+            foreach (var element in root.Elements())
+            {
+                Guid guid;
+                Guid.TryParse(element.GetAttributeValue("Id"), out guid);
+
+                var databaseName = element.GetAttributeValue("Database");
+                var itemName = element.GetAttributeValue("Name");
+                var itemIdOrPath = element.GetAttributeValue("Path");
+
+                switch (element.Name.LocalName)
+                {
+                    case "Item":
+                        var item = Factory.Item(this, guid, TextNode.Empty, databaseName, itemName, itemIdOrPath, element.GetAttributeValue("Template"));
+                        item.IsExtern = true;
+                        item.IsEmittable = false;
+
+                        foreach (var field in element.Elements())
+                        {
+                            item.Fields.Add(Factory.Field(item, TextNode.Empty, field.GetAttributeValue("Name"), field.GetAttributeValue("Value")));
+                        }
+
+                        AddOrMerge(item);
+                        break;
+
+                    case "Template":
+                        var template = Factory.Template(this, guid, TextNode.Empty, databaseName, itemName, itemIdOrPath);
+                        template.IsExtern = true;
+                        template.IsEmittable = false;
+
+                        foreach (var sectionElement in element.Elements())
+                        {
+                            var templateSection = Factory.TemplateSection(TextNode.Empty);
+                            templateSection.SectionName = sectionElement.GetAttributeValue("Name");
+                            template.Sections.Add(templateSection);
+
+                            foreach (var field in sectionElement.Elements())
+                            {
+                                var templateField = Factory.TemplateField(template, TextNode.Empty);
+                                templateField.FieldName = field.GetAttributeValue("Name");
+                                templateField.Type = field.GetAttributeValue("Type");
+                                templateSection.Fields.Add(templateField);
+                            }
+                        }
+
+                        AddOrMerge(template);
+                        break;
+                }
+            }
+        }
+
+        protected virtual void AddDependencyPackages([NotNull] IParseContext context)
+        {
+            var packagesDirectory = PathHelper.NormalizeFilePath(context.Configuration.Get(Constants.Configuration.CopyDependenciesPackagesDirectory));
+
+            packagesDirectory = Path.Combine(Options.ProjectDirectory, packagesDirectory);
+            if (!FileSystem.DirectoryExists(packagesDirectory))
             {
                 return;
             }
 
-            foreach (var fileName in FileSystem.GetFiles(externalDirectory))
+            foreach (var fileName in FileSystem.GetFiles(packagesDirectory, "*.nupkg", SearchOption.AllDirectories))
             {
-                Add(fileName);
+                using (var zip = ZipFile.OpenRead(fileName))
+                {
+                    var entry = zip.GetEntry("content/sitecore.project/exports.xml");
+                    if (entry == null)
+                    {
+                        continue;
+                    }
+
+                    var reader = new StreamReader(entry.Open());
+                    try
+                    {
+                        var doc = XDocument.Load(reader);
+
+                        var root = doc.Root;
+                        if (root == null)
+                        {
+                            context.Trace.TraceError("Could not read exports.xml in dependency package", fileName);
+                            continue;
+                        }
+
+                        AddDependencies(root);
+                    }
+                    catch
+                    {
+                        context.Trace.TraceError("Could not read exports.xml in dependency package", fileName);
+                    }
+                }
             }
         }
 
@@ -296,7 +379,7 @@ namespace Sitecore.Pathfinder.Projects
 
             if (items.Count > 1)
             {
-              throw new InvalidOperationException("Trying to merge multiple items");
+                throw new InvalidOperationException("Trying to merge multiple items");
             }
 
             var item = items.First();

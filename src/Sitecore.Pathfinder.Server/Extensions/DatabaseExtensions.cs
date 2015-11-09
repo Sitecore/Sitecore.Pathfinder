@@ -6,6 +6,7 @@ using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.SearchTypes;
 using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Data.Query;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Extensions
@@ -27,5 +28,41 @@ namespace Sitecore.Pathfinder.Extensions
             }
         }
 
+        [ItemNotNull]
+        [Diagnostics.NotNull]
+        public static IEnumerable<Item> Query([Diagnostics.NotNull] this Database database, [Diagnostics.NotNull] string queryText)
+        {
+            var query = new Query(queryText)
+            {
+                Max = int.MaxValue
+            };
+
+            var result = query.Execute(database.GetRootItem());
+
+            var queryContext = result as QueryContext;
+            if (queryContext != null)
+            {
+                var item = database.GetItem(queryContext.ID);
+                if (item != null)
+                {
+                    yield return item;
+                }
+            }
+
+            var queryContextArray = result as QueryContext[];
+            if (queryContextArray == null)
+            {
+                yield break;
+            }
+
+            foreach (var i in queryContextArray)
+            {
+                var item = database.GetItem(i.ID);
+                if (item != null)
+                {
+                    yield return item;
+                }
+            }
+    }
     }
 }
