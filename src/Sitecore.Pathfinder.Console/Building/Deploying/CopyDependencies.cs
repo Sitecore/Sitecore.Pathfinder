@@ -38,10 +38,9 @@ namespace Sitecore.Pathfinder.Building.Deploying
             helpWriter.Summary.Write("Copies the dependency packages to the website.");
             helpWriter.Remarks.Write("The packages dependencies are Nuget packages. The packages are located in the sitecore.project/packages directory. To wrap a Sitecore package (.zip) in a Nuget package use the 'pack-dependencies' task.");
 
-            helpWriter.Summary.Write("Settings:");
-            helpWriter.Summary.Write("    copy-dependencies:package-directory");
-            helpWriter.Summary.Write("        The directory that contains the packages to copy to the website.");
-
+            helpWriter.Remarks.Write("Settings:");
+            helpWriter.Remarks.Write("    copy-dependencies:package-directory");
+            helpWriter.Remarks.Write("        The directory that contains the packages to copy to the website.");
         }
 
         private void CopyNuGetPackages([NotNull] IBuildContext context, [NotNull] string sourceDirectory, [NotNull] string destinationDirectory)

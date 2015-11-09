@@ -614,7 +614,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Just so you know, I have updated the Pathfinder assemblies in the &apos;/bin&apos; directory in the website and the Pathfinder &apos;.aspx&apos; files in the &apos;/sitecore/shell/client/Applications/Pathfinder&apos; directory to the latest version..
+        ///   Looks up a localized string similar to Just so you know, I have updated the Pathfinder assemblies in the &apos;/bin&apos; directory in the website and the files in the &apos;/sitecore/shell/client/Applications/Pathfinder&apos; directory to the latest version..
         /// </summary>
         public static string Just_so_you_know__I_have_updated_the__Sitecore_Pathfinder_Server_dll__and__NuGet_Core_dll__assemblies_in_the___bin__directory_in_the_website_and_a_number_of___aspx__files_in_the___sitecore_shell_client_Applications_Pathfinder__directory_to_the_latest_version {
             get {
@@ -1044,6 +1044,15 @@ namespace Sitecore.Pathfinder {
             get {
                 return ResourceManager.GetString("Value_is_specified_in_both__Value__attribute_and_in_element__Using_value_from_att" +
                         "ribute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Whoops! scc.exe cannot run in is own directory..
+        /// </summary>
+        public static string Whoops__scc_exe_cannot_run_in_is_own_directory_ {
+            get {
+                return ResourceManager.GetString("Whoops__scc_exe_cannot_run_in_is_own_directory_", resourceCulture);
             }
         }
         

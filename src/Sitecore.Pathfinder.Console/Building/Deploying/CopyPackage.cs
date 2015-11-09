@@ -39,9 +39,9 @@ namespace Sitecore.Pathfinder.Building.Deploying
         public override void WriteHelp(HelpWriter helpWriter)
         {
             helpWriter.Summary.Write("Copies the project output to the website.");
-            helpWriter.Summary.Write("Settings:");
-            helpWriter.Summary.Write("    copy-package:package-directory");
-            helpWriter.Summary.Write("        The directory under the website Data Folder to copy to.");
+            helpWriter.Remarks.Write("Settings:");
+            helpWriter.Remarks.Write("    copy-package:package-directory");
+            helpWriter.Remarks.Write("        The directory under the website Data Folder to copy to.");
         }
     }
 }

@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.IO
@@ -51,6 +52,8 @@ namespace Sitecore.Pathfinder.IO
         void Unzip([NotNull] string zipFileName, [NotNull] string destinationDirectory);
 
         void WriteAllText([NotNull] string fileName, [NotNull] string contents);
+
+        void WriteAllText([NotNull] string fileName, [NotNull] string contents, [NotNull] Encoding encoding);
 
         void XCopy([NotNull] string sourceDirectory, [NotNull] string destinationDirectory);
 

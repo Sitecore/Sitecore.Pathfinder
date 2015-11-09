@@ -30,9 +30,10 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
                 return;
             }
 
-            if (string.Equals(projectDirectory, context.Configuration.GetString(Constants.Configuration.ToolsDirectory), StringComparison.OrdinalIgnoreCase))
+            var toolsDirectory = context.Configuration.GetString(Constants.Configuration.ToolsDirectory);
+            if (string.Equals(projectDirectory, toolsDirectory, StringComparison.OrdinalIgnoreCase))
             {
-                context.Trace.Writeline("Whoops! scc.exe cannot run in is own directory.", context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
+                context.Trace.Writeline(Texts.Whoops__scc_exe_cannot_run_in_is_own_directory_, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
                 context.IsAborted = true;
                 return;
             }
@@ -79,11 +80,29 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
                 UpdateFiles(context, sourceDirectory, websiteDirectory);
             }
 
+            UpdateConfigFile(context, toolsDirectory, websiteDirectory);
+
             PipelineService.Resolve<BeforeBuildPipeline>().Execute(context);
         }
 
         public override void WriteHelp(HelpWriter helpWriter)
         {
+        }
+
+        protected virtual void UpdateConfigFile([NotNull] IBuildContext context, [NotNull] string toolsDirectory, [NotNull] string websiteDirectory)
+        {
+            var projectConfigFileName = context.Configuration.GetString(Constants.Configuration.ProjectConfigFileName);
+
+            var sourceFileName = Path.Combine(toolsDirectory, projectConfigFileName);
+            var targetFileName = Path.Combine(websiteDirectory, "bin\\" + projectConfigFileName);
+
+            var sourceFileInfo = new FileInfo(sourceFileName);
+            var targetFileInfo = new FileInfo(targetFileName);
+
+            if (!targetFileInfo.Exists || sourceFileInfo.Length != targetFileInfo.Length)
+            {
+                context.FileSystem.Copy(sourceFileName, targetFileName);
+            }
         }
 
         protected virtual void UpdateFiles([NotNull] IBuildContext context, [NotNull] string sourceDirectory, [NotNull] string websiteDirectory)

@@ -158,6 +158,11 @@ namespace Sitecore.Pathfinder.IO
             File.WriteAllText(fileName, contents, Encoding.UTF8);
         }
 
+        public virtual void WriteAllText(string fileName, string contents, Encoding encoding)
+        {
+            File.WriteAllText(fileName, contents, encoding);
+        }
+
         public virtual void XCopy(string sourceDirectory, string destinationDirectory)
         {
             var proc = new Process

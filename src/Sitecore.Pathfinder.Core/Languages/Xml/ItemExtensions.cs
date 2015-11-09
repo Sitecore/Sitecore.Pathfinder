@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml;
 using Sitecore.Pathfinder.Diagnostics;
@@ -13,40 +14,43 @@ namespace Sitecore.Pathfinder.Languages.Xml
 {
     public static class ItemExtensions
     {
-        public static void WriteAsContentXml([NotNull] this Item item, [NotNull] XmlTextWriter output, [CanBeNull] [ItemNotNull] IEnumerable<string> fieldsToWrite = null, [CanBeNull] Action<XmlTextWriter, Item, IEnumerable<string>> writeInner = null)
+        public static void WriteAsContentXml([NotNull] this Item item, [NotNull] TextWriter output, [CanBeNull] [ItemNotNull] IEnumerable<string> fieldsToWrite = null, [CanBeNull] Action<XmlTextWriter, Item, IEnumerable<string>> writeInner = null)
         {
-            var templateName = item.Template.ItemName.EscapeXmlElementName();
-
-            var parentItemPath = string.Empty;
-            if (!item.ItemIdOrPath.IsGuid())
+            using (var writer = new XmlTextWriter(output))
             {
-                parentItemPath = PathHelper.GetItemParentPath(item.ItemIdOrPath);
-            }
+                var templateName = item.Template.ItemName.EscapeXmlElementName();
 
-            output.WriteStartElement(templateName);
-            output.WriteAttributeString("Id", item.ItemIdOrPath);
-            output.WriteAttributeString("Name", item.ItemName);
-            output.WriteAttributeString("Database", item.DatabaseName);
-            output.WriteAttributeString("ParentItemPath", parentItemPath);
-
-            var writeAll = fieldsToWrite == null || (fieldsToWrite.Count() == 1 && fieldsToWrite.ElementAt(0) == "*");
-            foreach (var field in item.Fields)
-            {
-                if (!writeAll && !fieldsToWrite.Contains(field.FieldName.ToLowerInvariant()))
+                var parentItemPath = string.Empty;
+                if (!item.ItemIdOrPath.IsGuid())
                 {
-                    continue;
+                    parentItemPath = PathHelper.GetItemParentPath(item.ItemIdOrPath);
                 }
 
-                var fieldName = field.FieldName.EscapeXmlElementName();
-                output.WriteAttributeString(fieldName, field.Value);
-            }
+                writer.WriteStartElement(templateName);
+                writer.WriteAttributeString("Id", item.ItemIdOrPath);
+                writer.WriteAttributeString("Name", item.ItemName);
+                writer.WriteAttributeString("Database", item.DatabaseName);
+                writer.WriteAttributeString("ParentItemPath", parentItemPath);
 
-            if (writeInner != null)
-            {
-                writeInner(output, item, fieldsToWrite);
-            }
+                var writeAll = fieldsToWrite == null || (fieldsToWrite.Count() == 1 && fieldsToWrite.ElementAt(0) == "*");
+                foreach (var field in item.Fields)
+                {
+                    if (!writeAll && !fieldsToWrite.Contains(field.FieldName.ToLowerInvariant()))
+                    {
+                        continue;
+                    }
 
-            output.WriteEndElement();
+                    var fieldName = field.FieldName.EscapeXmlElementName();
+                    writer.WriteAttributeString(fieldName, field.Value);
+                }
+
+                if (writeInner != null)
+                {
+                    writeInner(writer, item, fieldsToWrite);
+                }
+
+                writer.WriteEndElement();
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -183,7 +184,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
 
             var contents = "@" + directory + "\\scc.exe %*";
 
-            context.FileSystem.WriteAllText(fileName, contents);
+            context.FileSystem.WriteAllText(fileName, contents, Encoding.ASCII);
         }
 
         protected virtual bool ValidateDataFolderDirectory([NotNull] IBuildContext context, [NotNull] ConsoleService console)

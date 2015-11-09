@@ -50,9 +50,9 @@ namespace Sitecore.Pathfinder.Building.Deploying
             helpWriter.Examples.WriteLine($"scc {TaskName}");
             helpWriter.Examples.WriteLine($"scc {TaskName} --database master");
 
-            helpWriter.Summary.Write("Settings:");
-            helpWriter.Summary.Write("    database");
-            helpWriter.Summary.Write("        The name of the database to publish.");
+            helpWriter.Remarks.Write("Settings:");
+            helpWriter.Remarks.Write("    database");
+            helpWriter.Remarks.Write("        The name of the database to publish.");
 
         }
     }

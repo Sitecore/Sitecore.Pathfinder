@@ -86,15 +86,17 @@ namespace Sitecore.Pathfinder.Building.Initializing
             var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
             var version = fvi.FileVersion;
 
+            context.Trace.Writeline("");
             context.Trace.Writeline("Welcome to Sitecore Pathfinder.");
-            context.Trace.Writeline("To create a new Sitecore Pathfinder project, run 'scc init-project' command in an empty directory.");
+            context.Trace.Writeline("");
+            context.Trace.Writeline("To create a new Sitecore Pathfinder project, run 'scc new-project' command in an empty directory.");
             context.Trace.Writeline(string.Empty);
             context.Trace.Writeline($"Version: {version}");
             context.Trace.Writeline(string.Empty);
             context.Trace.Writeline("SYNTAX: scc [task name] [options]");
             context.Trace.Writeline(string.Empty);
             context.Trace.Writeline("EXAMPLES: scc");
-            context.Trace.Writeline("          scc init-project");
+            context.Trace.Writeline("          scc new-project");
             context.Trace.Writeline("          scc check-project");
             context.Trace.Writeline(string.Empty);
 
