@@ -24,7 +24,7 @@ namespace Sitecore.Pathfinder.Snapshots.Json
             var doc = Services.CompositionService.Resolve<JsonTextSnapshot>().With(SnapshotParseContext.Empty, sourceFile, "{ \"Item\": { \"Fields\": [ { \"Name\": \"Text\", \"Value\": \"123\" } ] } }");
             var root = doc.Root;
 
-            var fields = root.GetSnapshotFormatSpecificChildNode("Fields");
+            var fields = root.GetSnapshotLanguageSpecificChildNode("Fields");
             Assert.IsNotNull(fields);
 
             var field = fields.ChildNodes.FirstOrDefault();

@@ -34,7 +34,7 @@ namespace Sitecore.Pathfinder.Languages.Json
 
         IList<ITextNode> IMutableTextNode.ChildNodeCollection => (IList<ITextNode>)ChildNodes;
         
-        public override ITextNode GetSnapshotFormatSpecificChildNode(string name)
+        public override ITextNode GetSnapshotLanguageSpecificChildNode(string name)
         {
             return ChildNodes.FirstOrDefault(n => n.Key == name);
         }

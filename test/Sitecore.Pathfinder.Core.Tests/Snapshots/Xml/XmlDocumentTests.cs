@@ -24,7 +24,7 @@ namespace Sitecore.Pathfinder.Snapshots.Xml
             var doc = Services.CompositionService.Resolve<XmlTextSnapshot>().With(SnapshotParseContext.Empty, sourceFile, "<Item><Field Name=\"Text\">123</Field></Item>", string.Empty, string.Empty);
             var root = doc.Root;
 
-            var fields = root.GetSnapshotFormatSpecificChildNode("Fields");
+            var fields = root.GetSnapshotLanguageSpecificChildNode("Fields");
             Assert.IsNotNull(fields);
 
             var field = fields.ChildNodes.First();

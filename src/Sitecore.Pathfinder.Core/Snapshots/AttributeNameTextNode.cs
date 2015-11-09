@@ -46,7 +46,7 @@ namespace Sitecore.Pathfinder.Snapshots
             return TextNode.GetAttributeValue(attributeName, defaultValue);
         }
 
-        public ITextNode GetSnapshotFormatSpecificChildNode(string name)
+        public ITextNode GetSnapshotLanguageSpecificChildNode(string name)
         {
             return null;
         }

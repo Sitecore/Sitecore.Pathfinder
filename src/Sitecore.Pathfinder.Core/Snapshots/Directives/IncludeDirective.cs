@@ -59,7 +59,7 @@ namespace Sitecore.Pathfinder.Snapshots.Directives
 
             var placeholderTextNodes = new Dictionary<string, List<ITextNode>>(snapshotParseContext.PlaceholderTextNodes);
 
-            var placeholdersTextNode = textNode.GetSnapshotFormatSpecificChildNode("Placeholders");
+            var placeholdersTextNode = textNode.GetSnapshotLanguageSpecificChildNode("Placeholders");
             if (placeholdersTextNode != null)
             {
                 foreach (var childNode in placeholdersTextNode.ChildNodes)

@@ -62,7 +62,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             layoutProperty.Parse(deviceTextNode);
             references.Add(context.ParseContext.Factory.LayoutReference(projectItem, layoutProperty));
 
-            var renderingsTextNode = deviceTextNode.GetSnapshotFormatSpecificChildNode("Renderings");
+            var renderingsTextNode = deviceTextNode.GetSnapshotLanguageSpecificChildNode("Renderings");
             if (renderingsTextNode == null)
             {
                 return;
@@ -80,7 +80,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
         {
             var result = context.ParseContext.ReferenceParser.ParseReferences(projectItem, layoutTextNode).ToList();
 
-            var devicesTextNode = layoutTextNode.GetSnapshotFormatSpecificChildNode("Devices");
+            var devicesTextNode = layoutTextNode.GetSnapshotLanguageSpecificChildNode("Devices");
             if (devicesTextNode == null)
             {
                 return result;

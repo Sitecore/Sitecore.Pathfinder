@@ -44,7 +44,7 @@ namespace Sitecore.Pathfinder.Snapshots
             return !string.IsNullOrEmpty(value) ? value : defaultValue;
         }
 
-        public virtual ITextNode GetSnapshotFormatSpecificChildNode(string name)
+        public virtual ITextNode GetSnapshotLanguageSpecificChildNode(string name)
         {
             // overwritten in JsonTextNode to find the appropriate text node
             return this;

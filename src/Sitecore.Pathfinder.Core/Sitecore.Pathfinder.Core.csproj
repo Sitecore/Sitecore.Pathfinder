@@ -127,6 +127,7 @@
     <Compile Include="Compiling\Builders\FieldBuilder.cs" />
     <Compile Include="Compiling\Builders\ItemBuilder.cs" />
     <Compile Include="Compiling\Builders\LanguageVersionBuilder.cs" />
+    <Compile Include="Languages\Xml\ItemExtensions.cs" />
     <Compile Include="Snapshots\IMutableTextNode.cs" />
     <Compile Include="Languages\Yaml\YamlContentTextNodeParser.cs" />
     <Compile Include="Languages\Yaml\YamlLayoutTextNodeParser.cs" />
