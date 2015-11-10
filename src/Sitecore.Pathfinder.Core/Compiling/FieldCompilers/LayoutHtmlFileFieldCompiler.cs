@@ -63,8 +63,8 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
             output.WriteStartElement("r");
 
-            // todo: use proper template id or item path
-            foreach (var deviceItem in field.Item.Project.Items.OfType<Item>().Where(i => i.TemplateIdOrPath == "Device"))
+            var deviceItems = field.Item.Project.Items.OfType<Item>().Where(i => string.Equals(i.TemplateIdOrPath, "/sitecore/templates/System/Layout/Device", StringComparison.OrdinalIgnoreCase) || string.Equals(i.TemplateIdOrPath, "{B6F7EEB4-E8D7-476F-8936-5ACE6A76F20B}", StringComparison.OrdinalIgnoreCase));
+            foreach (var deviceItem in deviceItems)
             {
                 if (!deviceItem.ItemIdOrPath.StartsWith("/sitecore/layout/Devices/"))
                 {

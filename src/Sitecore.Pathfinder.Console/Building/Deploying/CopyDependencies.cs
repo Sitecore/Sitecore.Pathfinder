@@ -2,6 +2,7 @@
 
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Building.Deploying
@@ -16,21 +17,32 @@ namespace Sitecore.Pathfinder.Building.Deploying
         {
             context.Trace.TraceInformation(Texts.Copying_dependencies___);
 
-            var packagesDirectory = context.Configuration.Get(Constants.Configuration.CopyDependenciesPackagesDirectory);
-            var sourceDirectory = Path.Combine(context.ProjectDirectory, packagesDirectory);
+            var sourceDirectory = context.Configuration.Get(Constants.Configuration.CopyDependenciesSourceDirectory);
+            sourceDirectory = Path.Combine(context.ProjectDirectory, sourceDirectory);
             if (!context.FileSystem.DirectoryExists(sourceDirectory))
             {
-                context.Trace.TraceInformation(Texts.Dependencies_directory_not_found__Skipping, packagesDirectory);
+                context.Trace.TraceInformation(Texts.Dependencies_directory_not_found__Skipping, sourceDirectory);
                 return;
             }
 
-            var destinationDirectory = context.Configuration.Get(Constants.Configuration.DataFolderDirectory);
-            destinationDirectory = PathHelper.Combine(destinationDirectory, Constants.Configuration.Pathfinder);
-            destinationDirectory = PathHelper.Combine(destinationDirectory, context.Configuration.Get(Constants.Configuration.PackageDirectory));
+            foreach (var pair in context.Configuration.GetSubKeys("copy-package"))
+            {
+                var key = "copy-package:" + pair.Key;
 
-            context.FileSystem.CreateDirectory(destinationDirectory);
+                var destinationDirectory = context.Configuration.GetString(key + ":copy-to-directory");
+                if (string.IsNullOrEmpty(destinationDirectory))
+                {
+                    context.Trace.TraceError("Destination directory not found", key + ":copy-to-directory");
+                    continue;
+                }
 
-            CopyNuGetPackages(context, sourceDirectory, destinationDirectory);
+                destinationDirectory = PathHelper.NormalizeFilePath(destinationDirectory).TrimStart('\\');
+                destinationDirectory = PathHelper.Combine(context.Configuration.Get(Constants.Configuration.DataFolderDirectory), destinationDirectory);
+
+                context.FileSystem.CreateDirectory(destinationDirectory);
+
+                CopyNuGetPackages(context, sourceDirectory, destinationDirectory);
+            }
         }
 
         public override void WriteHelp(HelpWriter helpWriter)
@@ -39,7 +51,7 @@ namespace Sitecore.Pathfinder.Building.Deploying
             helpWriter.Remarks.Write("The packages dependencies are Nuget packages. The packages are located in the sitecore.project/packages directory. To wrap a Sitecore package (.zip) in a Nuget package use the 'pack-dependencies' task.");
 
             helpWriter.Remarks.Write("Settings:");
-            helpWriter.Remarks.Write("    copy-dependencies:package-directory");
+            helpWriter.Remarks.Write("    copy-dependencies:source-directory");
             helpWriter.Remarks.Write("        The directory that contains the packages to copy to the website.");
         }
 
@@ -48,11 +60,13 @@ namespace Sitecore.Pathfinder.Building.Deploying
             foreach (var sourceFileName in context.FileSystem.GetFiles(sourceDirectory, "*.nupkg", SearchOption.AllDirectories))
             {
                 var destinationFileName = Path.Combine(destinationDirectory, Path.GetFileName(sourceFileName));
-                if (!context.FileSystem.FileExists(destinationFileName) || context.FileSystem.GetLastWriteTimeUtc(sourceFileName) > context.FileSystem.GetLastWriteTimeUtc(destinationFileName))
+                if (context.FileSystem.FileExists(destinationFileName) && context.FileSystem.GetLastWriteTimeUtc(sourceFileName) <= context.FileSystem.GetLastWriteTimeUtc(destinationFileName))
                 {
-                    context.Trace.TraceInformation(Texts.Copying_dependency, Path.GetFileName(sourceFileName));
-                    context.FileSystem.Copy(sourceFileName, destinationFileName);
+                    continue;
                 }
+
+                context.Trace.TraceInformation(Texts.Copying_dependency, Path.GetFileName(sourceFileName));
+                context.FileSystem.Copy(sourceFileName, destinationFileName);
             }
         }
     }

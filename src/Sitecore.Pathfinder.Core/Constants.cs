@@ -81,7 +81,7 @@ namespace Sitecore.Pathfinder
 
             public const string PackageDirectory = "copy-package:package-directory";
 
-            public const string CopyDependenciesPackagesDirectory = "copy-dependencies:packages-directory";
+            public const string CopyDependenciesSourceDirectory = "copy-dependencies:source-directory";
 
             public const string PackNugetDirectory = "pack-nuget:directory";
 

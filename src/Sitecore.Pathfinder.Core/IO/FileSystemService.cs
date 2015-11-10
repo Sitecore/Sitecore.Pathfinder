@@ -60,23 +60,6 @@ namespace Sitecore.Pathfinder.IO
             File.Delete(fileName);
         }
 
-        public virtual void Deploy(string sourceDirectory, string destination)
-        {
-            if (destination.StartsWith("http:", StringComparison.OrdinalIgnoreCase))
-            {
-                XCopyOverHttp(sourceDirectory, destination);
-                return;
-            }
-
-            if (destination.StartsWith("https:", StringComparison.OrdinalIgnoreCase))
-            {
-                XCopyOverHttp(sourceDirectory, destination);
-                return;
-            }
-
-            XCopy(sourceDirectory, destination);
-        }
-
         public virtual bool DirectoryExists(string directory)
         {
             return Directory.Exists(directory);
@@ -184,25 +167,6 @@ namespace Sitecore.Pathfinder.IO
 
             proc.Start();
             proc.WaitForExit();
-        }
-
-        public void XCopyOverHttp(string sourceDirectory, string destination)
-        {
-            // todo: replace with Uri class
-            var n = destination.IndexOf("//", StringComparison.Ordinal);
-            n = destination.IndexOf('/', n + 2);
-            var host = destination.Left(n);
-            destination = destination.Mid(n);
-
-            var webClient = new WebClient();
-            foreach (var fileName in GetFiles(sourceDirectory, "*", SearchOption.AllDirectories))
-            {
-                var destinationFileName = destination + "/" + PathHelper.NormalizeItemPath(fileName.Mid(sourceDirectory.Length).TrimStart('\\'));
-
-                var url = host + "/sitecore/shell/client/Applications/Pathfinder/Upload?f=" + destinationFileName;
-
-                webClient.UploadFile(url, fileName);
-            }
         }
     }
 }

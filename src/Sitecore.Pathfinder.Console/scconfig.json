@@ -31,16 +31,19 @@
         "ignore-directories": ".vscode sitecore.filetemplates sitecore.project sitecore.tools node_modules roslyn includes",
         "ignore-filenames": "scc.cmd project.json readme.md",
 
+        // default search pattern
         "search-pattern": "*"
     },
 
     "copy-dependencies": {
-        // directory for dependency packages
-        "packages-directory": "sitecore.project/packages"
+        // source directory for dependency packages
+        "source-directory": "sitecore.project/packages"
     },
 
     "copy-package": {
-        "package-directory": "packages"
+        "0": {
+            "copy-to-directory": "/Pathfinder/packages"
+        }
     },
 
     "install-package": {

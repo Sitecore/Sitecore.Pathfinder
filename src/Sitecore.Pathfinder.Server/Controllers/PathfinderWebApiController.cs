@@ -65,7 +65,7 @@ namespace Sitecore.Pathfinder.Controllers
 
             if (type == null)
             {
-                throw new Exception($"Cannot find type '{route}'.");
+                throw new Exception($"Cannot find route '{route}'.");
             }
 
             var output = new StringWriter();
@@ -74,10 +74,11 @@ namespace Sitecore.Pathfinder.Controllers
             var instance = Activator.CreateInstance(type) as IWebApi;
             if (instance == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "WebApi not found: " + route);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Route not found: " + route);
             }
 
             var result = instance.Execute();
+
             return result ?? Content(output.ToString(), "text/plain");
         }
 

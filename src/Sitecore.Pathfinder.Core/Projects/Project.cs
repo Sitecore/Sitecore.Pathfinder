@@ -310,7 +310,7 @@ namespace Sitecore.Pathfinder.Projects
 
         protected virtual void AddDependencyPackages([NotNull] IParseContext context)
         {
-            var packagesDirectory = PathHelper.NormalizeFilePath(context.Configuration.Get(Constants.Configuration.CopyDependenciesPackagesDirectory));
+            var packagesDirectory = PathHelper.NormalizeFilePath(context.Configuration.Get(Constants.Configuration.CopyDependenciesSourceDirectory));
 
             packagesDirectory = Path.Combine(Options.ProjectDirectory, packagesDirectory);
             if (!FileSystem.DirectoryExists(packagesDirectory))

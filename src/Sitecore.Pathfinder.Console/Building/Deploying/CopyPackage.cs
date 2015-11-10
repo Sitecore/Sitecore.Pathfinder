@@ -1,6 +1,8 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.IO;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Building.Deploying
@@ -22,17 +24,27 @@ namespace Sitecore.Pathfinder.Building.Deploying
 
             context.Trace.TraceInformation(Texts.Copying_package_to_website___);
 
-            var destinationDirectory = context.Configuration.Get(Constants.Configuration.DataFolderDirectory);
-            destinationDirectory = PathHelper.Combine(destinationDirectory, Constants.Configuration.Pathfinder);
-            destinationDirectory = PathHelper.Combine(destinationDirectory, context.Configuration.Get(Constants.Configuration.PackageDirectory));
-
-            context.FileSystem.CreateDirectory(destinationDirectory);
-
-            foreach (var fileName in context.OutputFiles)
+            foreach (var pair in context.Configuration.GetSubKeys("copy-package"))
             {
-                var destinationFileName = PathHelper.Combine(destinationDirectory, Path.GetFileName(fileName));
+                var key = "copy-package:" + pair.Key;
 
-                context.FileSystem.Copy(fileName, destinationFileName);
+                var destinationDirectory = context.Configuration.GetString(key + ":copy-to-directory");
+                if (string.IsNullOrEmpty(destinationDirectory))
+                {
+                    context.Trace.TraceError("Destination directory not found", key + ":copy-to-directory");
+                    continue;
+                }
+
+                destinationDirectory = PathHelper.NormalizeFilePath(destinationDirectory).TrimStart('\\');
+                destinationDirectory = PathHelper.Combine(context.Configuration.Get(Constants.Configuration.DataFolderDirectory), destinationDirectory);
+
+                context.FileSystem.CreateDirectory(destinationDirectory);
+
+                foreach (var fileName in context.OutputFiles)
+                {
+                    var destinationFileName = PathHelper.Combine(destinationDirectory, Path.GetFileName(fileName));
+                    context.FileSystem.Copy(fileName, destinationFileName);
+                }
             }
         }
 

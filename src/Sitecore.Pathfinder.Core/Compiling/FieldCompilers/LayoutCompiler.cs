@@ -190,7 +190,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             else
             {
                 // todo: use proper template id or item path
-                var devices = context.Field.Item.Project.Items.OfType<Item>().Where(i => i.TemplateIdOrPath == "/sitecore/templates/System/Layout/Device").ToList();
+                var devices = context.Field.Item.Project.Items.OfType<Item>().Where(i => string.Equals(i.TemplateIdOrPath, "/sitecore/templates/System/Layout/Device", StringComparison.OrdinalIgnoreCase) || string.Equals(i.TemplateIdOrPath, "{B6F7EEB4-E8D7-476F-8936-5ACE6A76F20B}", StringComparison.OrdinalIgnoreCase)).ToList();
                 if (!devices.Any())
                 {
                     context.CompileContext.Trace.TraceError(Texts.Device_item_not_found, deviceNameTextNode);

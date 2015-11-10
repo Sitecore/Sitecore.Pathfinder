@@ -18,8 +18,6 @@ namespace Sitecore.Pathfinder.IO
 
         void DeleteFile([NotNull] string fileName);
 
-        void Deploy([NotNull] string sourceDirectory, [NotNull] string destination);
-
         bool DirectoryExists([NotNull] string directory);
 
         bool FileExists([NotNull] string fileName);
@@ -56,7 +54,5 @@ namespace Sitecore.Pathfinder.IO
         void WriteAllText([NotNull] string fileName, [NotNull] string contents, [NotNull] Encoding encoding);
 
         void XCopy([NotNull] string sourceDirectory, [NotNull] string destinationDirectory);
-
-        void XCopyOverHttp([NotNull] string sourceDirectory, [NotNull] string destination);
     }
 }

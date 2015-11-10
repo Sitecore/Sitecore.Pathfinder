@@ -69,15 +69,6 @@ namespace Sitecore.Pathfinder.Projects
         }
 
         [Test]
-        public void ExternalReferencesTest()
-        {
-            var projectItems = Project.Items.Where(i => i.QualifiedName == "/sitecore").ToList();
-            Assert.AreEqual(2, projectItems.Count);
-            Assert.IsTrue(projectItems.OfType<Item>().Any(i => i.DatabaseName == "master"));
-            Assert.IsTrue(projectItems.OfType<Item>().Any(i => i.DatabaseName == "core"));
-        }
-
-        [Test]
         public void LoadProjectTests()
         {
             Assert.IsTrue(Project.Items.Any());
