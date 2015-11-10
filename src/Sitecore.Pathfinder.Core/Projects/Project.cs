@@ -191,6 +191,7 @@ namespace Sitecore.Pathfinder.Projects
             Options = projectOptions;
 
             var context = CompositionService.Resolve<IParseContext>().With(this, Snapshot.Empty);
+
             AddDependencyPackages(context);
 
             foreach (var sourceFileName in sourceFileNames)
@@ -320,6 +321,7 @@ namespace Sitecore.Pathfinder.Projects
 
             foreach (var fileName in FileSystem.GetFiles(packagesDirectory, "*.nupkg", SearchOption.AllDirectories))
             {
+                // todo: consider caching this
                 using (var zip = ZipFile.OpenRead(fileName))
                 {
                     var entry = zip.GetEntry("content/sitecore.project/exports.xml");

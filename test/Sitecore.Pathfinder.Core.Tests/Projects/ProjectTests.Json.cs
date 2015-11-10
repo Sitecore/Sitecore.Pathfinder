@@ -104,7 +104,7 @@ namespace Sitecore.Pathfinder.Projects
             var layout = item.Fields.FirstOrDefault(f => f.FieldName == "__Renderings");
             Assert.IsNotNull(layout);
             Assert.AreEqual(@"<r>
-  <d id=""{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}"" l=""{1A5A92AD-D537-7E87-FB00-A39BFDE2538B}"">
+  <d id=""{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}"" l=""{5B2B5845-4D8A-FBB3-08D3-9A6065C35D1E}"">
     <r id=""{663E1E86-C959-7A70-8945-CFCEA79AFAC2}"" ds=""{11111111-1111-1111-1111-111111111111}"" par="""" ph=""Page.Body"" />
   </d>
 </r>", layout.CompiledValue);
@@ -172,7 +172,7 @@ namespace Sitecore.Pathfinder.Projects
             var layout = item.Fields.FirstOrDefault(f => f.FieldName == "__Renderings");
             Assert.IsNotNull(layout);
             Assert.AreEqual(@"<r>
-  <d id=""{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}"" l=""{1A5A92AD-D537-7E87-FB00-A39BFDE2538B}"">
+  <d id=""{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}"" l=""{5B2B5845-4D8A-FBB3-08D3-9A6065C35D1E}"">
     <r id=""{663E1E86-C959-7A70-8945-CFCEA79AFAC2}"" ds=""{11111111-1111-1111-1111-111111111111}"" par="""" ph=""Page.Body"" />
     <r id=""{663E1E86-C959-7A70-8945-CFCEA79AFAC2}"" par="""" ph=""Page.Body"" />
     <r id=""{663E1E86-C959-7A70-8945-CFCEA79AFAC2}"" par="""" ph=""Page.Body"" />

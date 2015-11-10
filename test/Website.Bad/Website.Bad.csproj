@@ -70,45 +70,25 @@
     <Content Include="scconfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="templates\JsonTemplate.item.json">
+    <Content Include="content\master\sitecore\content\templates\JsonTemplate.item.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\src\Sitecore.Pathfinder.Console\scconfig.json">
       <Link>sitecore.tools\scconfig.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\src\Sitecore.Pathfinder.Console\files\project\sitecore.project\schemas\core.layout.schema.json">
-      <Link>sitecore.tools\schemas\core.layout.schema.json</Link>
+    <Content Include="..\..\src\Sitecore.Pathfinder.Console\files\project\sitecore.project\packages\readme.md">
+      <Link>sitecore.project\packages\readme.md</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="..\..\src\Sitecore.Pathfinder.Console\files\project\sitecore.project\schemas\core.layout.xsd">
-      <Link>sitecore.tools\schemas\core.layout.xsd</Link>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <Content Include="..\..\src\Sitecore.Pathfinder.Console\files\project\sitecore.project\schemas\item.schema.json">
-      <Link>sitecore.tools\schemas\item.schema.json</Link>
+    <Content Include="..\..\src\Sitecore.Pathfinder.Console\files\project\sitecore.project\packages\Sitecore.Master.8.0.nupkg">
+      <Link>sitecore.project\packages\Sitecore.Master.8.0.nupkg</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="..\..\src\Sitecore.Pathfinder.Console\files\project\sitecore.project\schemas\item.xsd">
-      <Link>sitecore.tools\schemas\item.xsd</Link>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\src\Sitecore.Pathfinder.Console\files\project\sitecore.project\schemas\master.content.xsd">
-      <Link>sitecore.tools\schemas\master.content.xsd</Link>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <Content Include="..\..\src\Sitecore.Pathfinder.Console\files\project\sitecore.project\schemas\master.layout.schema.json">
-      <Link>sitecore.tools\schemas\master.layout.schema.json</Link>
+    <Content Include="..\..\src\Sitecore.Pathfinder.Console\files\project\sitecore.project\packages\SitecorePathfinderCore.nupkg">
+      <Link>sitecore.project\packages\SitecorePathfinderCore.nupkg</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="..\..\src\Sitecore.Pathfinder.Console\files\project\sitecore.project\schemas\master.layout.xsd">
-      <Link>sitecore.tools\schemas\master.layout.xsd</Link>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -117,10 +97,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="content\Home\XmlItem.item.xml">
+    <Content Include="content\master\sitecore\content\Home\XmlItem.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="templates\XmlTemplate.item.xml">
+    <Content Include="content\master\sitecore\content\templates\XmlTemplate.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Web.config" />
@@ -149,10 +129,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="layout\layouts\" />
-    <Folder Include="layout\renderings\" />
-    <Folder Include="media library\" />
-    <Folder Include="sitecore.project\" />
+    <Folder Include="content\master\sitecore\content\layout\layouts\" />
+    <Folder Include="content\master\sitecore\content\layout\renderings\" />
+    <Folder Include="content\master\sitecore\content\media library\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

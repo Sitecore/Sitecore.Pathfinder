@@ -1,7 +1,8 @@
 {
     // wwwroot points to the base directory of the website
     // The wwwroot directory must contain a 'Data' and a 'Website' folder
-    "wwwroot": "c:\\inetpub\\wwwroot\\Sitecore.Default",
+    "website-directory": "c:\\inetpub\\wwwroot\\Sitecore.Default\\Website",
+    "data-folder-directory": "c:\\inetpub\\wwwroot\\Sitecore.Default\\Data",
     "hostname": "http://sitecore.default",
 
     // relative project directory to solution directory
@@ -10,7 +11,44 @@
     // Sitecore database name (master, core, or web)
     "database": "master",
 
-    // build pipeline
-    "pipeline": "lint nuget-pack"
+    // =====
+    // TASKS
+    // =====
+
+    "build-project": {
+        // build tasks
+        "tasks": "check-project write-exports",
+
+        // mapping of files between project paths and website paths and item paths
+        "files": {
+            "master": {
+                "project-directory": "/content/master/sitecore",
+                "include": "**",
+                "website-directory": "/",
+                "item-path": "/sitecore",
+                "database": "master"
+            },
+            "core": {
+                "project-directory": "/content/core/sitecore",
+                "include": "**",
+                "website-directory": "/",
+                "item-path": "/sitecore",
+                "database": "core"
+            },
+            "views": {
+                "project-directory": "/Views",
+                "include": "**",
+                "website-directory": "/Views",
+                "item-path": "/sitecore/layout/renderings"
+            },
+            "wwwroot": {
+                "project-directory": "/wwwroot",
+                "include": "**",
+                "website-directory": "/",
+                "item-path": "/",
+                "upload-media": false
+            }
+        }
+    }
 }
                                        

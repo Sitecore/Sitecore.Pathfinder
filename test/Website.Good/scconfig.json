@@ -11,24 +11,44 @@
     // Sitecore database name (master, core, or web)
     "database": "master",
 
-    // build pipeline
-    "pipeline": "lint nuget-pack",
+    // =====
+    // TASKS
+    // =====
 
-    // mapping of files between local path and server path and item path
-    "files": {
-         "html": {
-             "project-directory": "",
-             "include": "/*.html",
-             "website-directory": "/CleanBlog/layout/renderings",
-             "item-path": "/sitecore/layout/renderings/CleanBlog",
-             "database": "master"
-         },
-         "img": {
-             "project-directory": "/img",
-             "include": "**",
-             "website-directory": "",
-             "item-path": "/sitecore/media library/CleanBlog"
-         }
+    "build-project": {
+        // build tasks
+        "tasks": "check-project write-exports",
+
+        // mapping of files between project paths and website paths and item paths
+        "files": {
+            "master": {
+                "project-directory": "/content/master/sitecore",
+                "include": "**",
+                "website-directory": "/",
+                "item-path": "/sitecore",
+                "database": "master"
+            },
+            "core": {
+                "project-directory": "/content/core/sitecore",
+                "include": "**",
+                "website-directory": "/",
+                "item-path": "/sitecore",
+                "database": "core"
+            },
+            "views": {
+                "project-directory": "/Views",
+                "include": "**",
+                "website-directory": "/Views",
+                "item-path": "/sitecore/layout/renderings"
+            },
+            "wwwroot": {
+                "project-directory": "/wwwroot",
+                "include": "**",
+                "website-directory": "/",
+                "item-path": "/",
+                "upload-media": false
+            }
+        }
     }
 }
                                        
