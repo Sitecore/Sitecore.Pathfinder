@@ -22,91 +22,35 @@
         // build tasks
         "tasks": "check-project write-exports pack-nuget copy-dependencies copy-package install-package publish-database show-metrics",
 
-        // mapping of files between local path and server path and item path
+        // mapping of files between project paths and website paths and item paths
         "files": {
             "master": {
                 "project-directory": "/content/master/sitecore",
                 "include": "**",
-                "website-directory": "",
+                "website-directory": "/",
                 "item-path": "/sitecore",
                 "database": "master"
             },
             "core": {
                 "project-directory": "/content/core/sitecore",
                 "include": "**",
-                "website-directory": "",
+                "website-directory": "/",
                 "item-path": "/sitecore",
                 "database": "core"
             },
             "views": {
                 "project-directory": "/Views",
                 "include": "**",
-                "website-directory": "Views",
+                "website-directory": "/Views",
                 "item-path": "/sitecore/layout/renderings"
             },
             "wwwroot": {
                 "project-directory": "/wwwroot",
                 "include": "**",
-                "website-directory": "",
-                "item-path": "",
+                "website-directory": "/",
+                "item-path": "/",
                 "upload-media": false
             }
-        }
-    },
-
-    "reset-website": {
-        "master": {
-            "/sitecore/*" : ""
-        },
-        "core": {
-        },
-        "files": {
-            "/sitecore" : "*.aspx"
-        }
-    },
-
-    "sync-website": {
-        "files": {
-            "Json schema for layouts in Master database": {
-                "file": "sitecore.project/schemas/master.layout.schema.json",
-                "database": "master"
-            },
-            "Json schema for layouts in Core database": {
-                "file": "sitecore.project/schemas/core.layout.schema.json",
-                "database": "core"
-            },
-            "Xml schema for layouts in Master database": {
-                "file": "sitecore.project/schemas/master.layout.xsd",
-                "database": "master",
-                "namespace": "http://www.sitecore.net/pathfinder/layouts/master"
-            },
-            "Xml schema for layouts in Core database": {
-                "file": "sitecore.project/schemas/core.layout.xsd",
-                "database": "core",
-                "namespace": "http://www.sitecore.net/pathfinder/layouts/core"
-            },
-            "Xml schema for content in Master database": {
-                "file": "sitecore.project/schemas/master.content.xsd",
-                "database": "master",
-                "namespace": "http://www.sitecore.net/pathfinder/content/master"
-            },
-            "Xml schema for content in Core database": {
-                "file": "sitecore.project/schemas/core.content.xsd",
-                "database": "core",
-                "namespace": "http://www.sitecore.net/pathfinder/content/core"
-            }
-            // "External references for Speak": {
-            //     "file": "sitecore.project/external/speak.core.content.xml",
-            //     "database": "core",
-            //     "path": "/sitecore/client/Speak",
-            //     "fields": "place holders, parameters template, __base template"
-            // },
-            // "External references for Business Component Library": {
-            //     "file": "sitecore.project/external/bcl.core.content.xml",
-            //     "database": "core",
-            //     "path": "/sitecore/client/Business Component Library",
-            //     "fields": "place holders, parameters template, __base template"
-            // }
         }
     }
 }

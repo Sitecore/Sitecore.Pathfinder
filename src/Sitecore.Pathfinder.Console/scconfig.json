@@ -82,6 +82,39 @@
         "web-test-runner-name": "NUnit"
     },
 
+    "sync-website": {
+        "files": {
+            "0": {
+                "file": "sitecore.project/schemas/master.layout.schema.json",
+                "database": "master"
+            },
+            "1": {
+                "file": "sitecore.project/schemas/core.layout.schema.json",
+                "database": "core"
+            },
+            "2": {
+                "file": "sitecore.project/schemas/master.layout.xsd",
+                "database": "master",
+                "namespace": "http://www.sitecore.net/pathfinder/layouts/master"
+            },
+            "3": {
+                "file": "sitecore.project/schemas/core.layout.xsd",
+                "database": "core",
+                "namespace": "http://www.sitecore.net/pathfinder/layouts/core"
+            },
+            "4": {
+                "file": "sitecore.project/schemas/master.content.xsd",
+                "database": "master",
+                "namespace": "http://www.sitecore.net/pathfinder/content/master"
+            },
+            "5": {
+                "file": "sitecore.project/schemas/core.content.xsd",
+                "database": "core",
+                "namespace": "http://www.sitecore.net/pathfinder/content/core"
+            }
+        }
+    },
+
     "validate-website": {
         "url": "/sitecore/shell/client/Applications/Pathfinder/SitecoreCop",
         "inactive-validations": "",
@@ -107,7 +140,7 @@
     },
 
     "write-website-exports": {
-        "1": {
+        "0": {
             "filename": "sitecore.project/repository/Sitecore.Master.8.0.nupkg",
             "queries": {
                 "1": {
@@ -126,7 +159,7 @@
             }
         },
 
-        "2": {
+        "1": {
             "filename": "sitecore.project/repository/Sitecore.Core.8.0.nupkg",
             "queries": {
                 "1": {
@@ -140,7 +173,7 @@
             }
         },
 
-        "3": {
+        "2": {
             "filename": "sitecore.project/repository/Sitecore.Speak.8.0.nupkg",
             "queries": {
                 "1": {
@@ -151,7 +184,7 @@
             }
         },
 
-        "4": {
+        "3": {
             "filename": "sitecore.project/repository/Sitecore.BusinessComponentLibrary.nupkg",
             "queries": {
                 "1": {
@@ -162,7 +195,7 @@
             }
         },
 
-        "5": {
+        "4": {
             "filename": "sitecore.project/repository/Sitecore.Launchpad.nupkg",
             "queries": {
                 "1": {

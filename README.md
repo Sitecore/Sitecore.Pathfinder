@@ -34,6 +34,16 @@ The developer process is familiar; edit source files, build and install the pack
 ## Getting started
 The goal of Pathfinder is to make it easy to start working with Sitecore.
 
+### Installing Pathfinder
+
+1. Download [Pathfinder 0.5.0-Alpha](http://vsplugins.sitecore.net/Pathfinder/Sitecore.Pathfinder.0.5.0.zip)
+2. Unzip the sitecore.tools directory in the zip file into an empty directory, e.g. c:\Program Files (x86)\Sitecore\Pathfinder 
+(the path to scc.exe should now be c:\Program Files (x86)\Sitecore\Pathfinder\scc.exe)
+3. Optional: Add the directory to your Path environment variable
+4. Done
+
+### Creating a new project
+
 1. Install a Sitecore website (e.g. using [SIM (Sitecore Instance Manager](https://marketplace.sitecore.net/modules/sitecore_instance_manager.aspx))
 2. Create an empty directory (seperate from the Sitecore website directory)
 3. Run `scc.exe new-project` in the directory
@@ -69,6 +79,7 @@ Also see [How to contribute](CONTRIBUTING.md).
 ## Basic concepts
 
 In the following:
+
 * [Tools] refers to the directory where scc.exe is located.
 * [Project] refers to the directory where the project is located.
 * [Website] refers to the directory where the website is located.
