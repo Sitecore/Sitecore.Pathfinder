@@ -146,15 +146,23 @@
         "0": {
             "filename": "sitecore.project/repository/Sitecore.Master.8.0.nupkg",
             "queries": {
+                "0": {
+                    "query": "/sitecore",
+                    "database": "master"
+                },
                 "1": {
-                    "query": "/sitecore/templates/System//*[@@templatekey='template']",
+                    "query": "/sitecore/*",
                     "database": "master"
                 },
                 "2": {
-                    "query": "/sitecore/templates/Sample/Sample Item",
+                    "query": "/sitecore/templates/System//*[@@templatekey='template']",
                     "database": "master"
                 },
                 "3": {
+                    "query": "/sitecore/templates/Sample/Sample Item",
+                    "database": "master"
+                },
+                "4": {
                     "query": "/sitecore/layout//*[@@templatekey='view rendering' or @@templatekey='xsl rendering' or @@templatekey='sublayout' or @@templatekey='layout' or @@templatekey='device']",
                     "database": "master",
                     "fields": "Path, Place Holders, Parameters Template"
@@ -165,11 +173,19 @@
         "1": {
             "filename": "sitecore.project/repository/Sitecore.Core.8.0.nupkg",
             "queries": {
+                "0": {
+                    "query": "/sitecore",
+                    "database": "master"
+                },
                 "1": {
+                    "query": "/sitecore/*",
+                    "database": "master"
+                },
+                "2": {
                     "query": "/sitecore/templates/System//*[@@templatekey='template']",
                     "database": "core"
                 },
-                "2": {
+                "3": {
                     "query": "/sitecore/layout//*[@@templatekey='device']",
                     "database": "core"
                 }
