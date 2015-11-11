@@ -44,6 +44,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
             output.WriteAttributeString("Database", template.DatabaseName);
             output.WriteAttributeString("Name", template.ItemName);
             output.WriteAttributeString("Path", template.ItemIdOrPath);
+            output.WriteAttributeString("BaseTemplates", template.BaseTemplates);
 
             foreach (var section in template.Sections)
             {
