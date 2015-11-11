@@ -74,14 +74,14 @@ namespace Sitecore.Pathfinder
                 return null;
             }
 
-            var conventions = new ExtensibilityConventions().GetConventions();
-
-            var applicationExportProvider = new CatalogExportProvider(new ApplicationCatalog(conventions));
-            var extensionsExportProvider = new CatalogExportProvider(new AssemblyCatalog(extensionsAssembly, conventions));
+            var coreExportProvider = new CatalogExportProvider(new AssemblyCatalog(typeof(Constants).Assembly));
+            var applicationExportProvider = new CatalogExportProvider(new AssemblyCatalog(typeof(Startup).Assembly));
+            var extensionsExportProvider = new CatalogExportProvider(new AssemblyCatalog(extensionsAssembly));
 
             // extensions directory exports takes precedence over application exports
-            var compositionContainer = new CompositionContainer(extensionsExportProvider, applicationExportProvider);
+            var compositionContainer = new CompositionContainer(extensionsExportProvider, applicationExportProvider, coreExportProvider);
 
+            coreExportProvider.SourceProvider = compositionContainer;
             applicationExportProvider.SourceProvider = compositionContainer;
             extensionsExportProvider.SourceProvider = compositionContainer;
 

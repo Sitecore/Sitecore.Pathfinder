@@ -25,7 +25,7 @@
         },
 
         // if force-update is true, media will always be uploaded and files always copied during emitting
-        "force-update": true,
+        "force-update": false,
 
         // files and directories to ignore
         "ignore-directories": ".vscode sitecore.filetemplates sitecore.project sitecore.tools node_modules roslyn includes",
