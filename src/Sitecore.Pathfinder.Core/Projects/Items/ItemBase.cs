@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Snapshots;
@@ -63,6 +64,16 @@ namespace Sitecore.Pathfinder.Projects.Items
 
             ItemIdOrPath = itemIdOrPath;
             ItemName = itemIdOrPath;
+        }
+
+        [NotNull]
+        [ItemNotNull]
+        public virtual IEnumerable<Item> GetChildren()
+        {
+            var itemIdOrPath = ItemIdOrPath + "/";
+            var index = itemIdOrPath.Length;
+
+            return Project.Items.OfType<Item>().Where(i => i.ItemIdOrPath.StartsWith(itemIdOrPath, StringComparison.OrdinalIgnoreCase) && i.ItemIdOrPath.IndexOf('/', index) < 0);
         }
 
         protected override void Merge(IProjectItem newProjectItem, bool overwrite)

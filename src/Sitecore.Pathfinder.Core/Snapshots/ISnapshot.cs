@@ -6,6 +6,8 @@ namespace Sitecore.Pathfinder.Snapshots
 {
     public interface ISnapshot
     {
+        SnapshotCapabilities Capabilities { get; }
+
         bool IsModified { get; set; }
 
         [NotNull]

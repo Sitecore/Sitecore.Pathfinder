@@ -93,14 +93,14 @@ namespace Sitecore.Pathfinder.Emitters.Items
             var templates = TemplateManager.GetTemplates(database).Values.ToList();
 
             // try matching by name only
-            var template = templates.FirstOrDefault(t => string.Compare(t.Name, templateIdOrPath, StringComparison.OrdinalIgnoreCase) == 0);
+            var template = templates.FirstOrDefault(t => string.Equals(t.Name, templateIdOrPath, StringComparison.OrdinalIgnoreCase));
             if (template != null)
             {
                 return database.GetItem(template.ID)?.Paths.Path;
             }
 
             // try matching by Xml safe name
-            template = templates.FirstOrDefault(t => string.Compare(t.Name.EscapeXmlElementName(), templateIdOrPath, StringComparison.OrdinalIgnoreCase) == 0);
+            template = templates.FirstOrDefault(t => string.Equals(t.Name.EscapeXmlElementName(), templateIdOrPath, StringComparison.OrdinalIgnoreCase));
             if (template != null)
             {
                 return database.GetItem(template.ID)?.Paths.Path;
@@ -122,7 +122,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
 
             foreach (var field in projectItem.Fields)
             {
-                if (templateFields.All(f => string.Compare(f.Name, field.FieldName, StringComparison.OrdinalIgnoreCase) != 0))
+                if (templateFields.All(f => !string.Equals(f.Name, field.FieldName, StringComparison.OrdinalIgnoreCase)))
                 {
                     throw new RetryableEmitException(Texts.Field_is_not_defined_in_the_template, TraceHelper.GetTextNode(field.FieldNameProperty), field.FieldName);
                 }

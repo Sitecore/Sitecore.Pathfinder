@@ -8,6 +8,7 @@ using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Layouts;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 {
@@ -32,16 +33,16 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
             var value = htmlTemplate;
 
-            var rendering = field.Item.Project.Items.OfType<Rendering>().FirstOrDefault(i => string.Compare(i.FilePath, value, StringComparison.OrdinalIgnoreCase) == 0);
+            var rendering = field.Item.Project.Items.OfType<Rendering>().FirstOrDefault(i => string.Equals(i.FilePath, value, StringComparison.OrdinalIgnoreCase));
             if (rendering == null)
             {
-                context.Trace.TraceError(Texts.Rendering_reference_not_found, value);
+                context.Trace.TraceError(Texts.Rendering_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), value);
             }
 
             var layoutItem = field.Item.Project.Items.OfType<Item>().FirstOrDefault(i => i.ItemIdOrPath == "/sitecore/layout/Layouts/MvcLayout");
             if (layoutItem == null)
             {
-                context.Trace.TraceError(Texts.Layout_reference_not_found, "/sitecore/layout/Layouts/MvcLayout");
+                context.Trace.TraceError(Texts.Layout_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), "/sitecore/layout/Layouts/MvcLayout");
             }
 
             if (rendering == null || layoutItem == null)

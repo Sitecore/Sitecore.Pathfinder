@@ -3,6 +3,7 @@
 using System;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 {
@@ -28,7 +29,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             var item = field.Item.Project.FindQualifiedItem(qualifiedName);
             if (item == null)
             {
-                context.Trace.TraceError(Texts.Link_field_reference_not_found, qualifiedName);
+                context.Trace.TraceError(Texts.Link_field_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), qualifiedName);
                 return string.Empty;
             }
 

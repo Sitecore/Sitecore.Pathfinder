@@ -28,7 +28,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
 
         public override ISnapshot Load(SnapshotParseContext snapshotParseContext, ISourceFile sourceFile)
         {
-            var textSnapshot = CompositionService.Resolve<TextSnapshot>().With(sourceFile);
+            var textSnapshot = CompositionService.Resolve<SerializationTextSnapshot>().With(sourceFile);
 
             return textSnapshot;
         }

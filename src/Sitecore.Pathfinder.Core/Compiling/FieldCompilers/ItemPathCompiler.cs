@@ -4,6 +4,7 @@ using System;
 using System.Text;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 {
@@ -15,7 +16,8 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
         public override bool CanCompile(IFieldCompileContext context, Field field)
         {
-            return field.Value.IndexOf("/sitecore", StringComparison.OrdinalIgnoreCase) >= 0 && !field.Item.IsExtern;
+            // if the value contains a dot (.) it is probably a file name
+            return field.Value.IndexOf("/sitecore", StringComparison.OrdinalIgnoreCase) >= 0 && field.Value.IndexOf('.') < 0 && !field.Item.IsExtern;
         }
 
         public override string Compile(IFieldCompileContext context, Field field)
@@ -26,7 +28,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 var item = field.Item.Project.FindQualifiedItem(value);
                 if (item == null)
                 {
-                    context.Trace.TraceError(Texts.Item_path_reference_not_found, value);
+                    context.Trace.TraceError(Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), value);
                     return string.Empty;
                 }
 
@@ -39,7 +41,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 var item = field.Item.Project.FindQualifiedItem(itemPath);
                 if (item == null)
                 {
-                    context.Trace.TraceError(Texts.Item_path_reference_not_found, itemPath);
+                    context.Trace.TraceError(Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), itemPath);
                 }
                 else
                 {

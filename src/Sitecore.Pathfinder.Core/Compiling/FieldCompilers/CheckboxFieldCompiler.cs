@@ -1,8 +1,11 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
+using System.IO;
+using System.Linq;
+using Sitecore.Pathfinder.Languages.Serialization;
 using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 {
@@ -21,9 +24,10 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         {
             var value = field.Value.Trim();
 
-            if (!string.Equals(value, "true", StringComparison.OrdinalIgnoreCase) && string.Compare(value, "false", StringComparison.OrdinalIgnoreCase) != 0)
+            if (!string.Equals(value, "true", StringComparison.OrdinalIgnoreCase) && !string.Equals(value, "false", StringComparison.OrdinalIgnoreCase) && 
+                field.Item.Snapshots.All(s => s.Capabilities.HasFlag(SnapshotCapabilities.SupportsTrueAndFalseForBooleanFields)))
             {
-                context.Trace.TraceError(Texts.Checkbox_field_value_must_be__true__or__false__, value);
+                context.Trace.TraceError(Texts.Checkbox_field_value_must_be__true__or__false__, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), value);
             }
 
             if (string.Equals(value, "true", StringComparison.OrdinalIgnoreCase))
@@ -31,7 +35,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 return "1";
             }
 
-            if (string.Equals(value, "1", StringComparison.OrdinalIgnoreCase))
+            if (value == "1")
             {
                 return "1";
             }

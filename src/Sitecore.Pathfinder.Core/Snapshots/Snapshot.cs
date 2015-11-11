@@ -7,6 +7,18 @@ using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
+    [Flags]
+    public enum SnapshotCapabilities
+    {
+        None = 0x00,
+
+        SupportTildeInFileNames = 0x01,
+
+        SupportsTrueAndFalseForBooleanFields = 0x02,
+
+        All = SupportTildeInFileNames | SupportsTrueAndFalseForBooleanFields
+    }
+
     [Export]
     [PartCreationPolicy(CreationPolicy.NonShared)]
     [DebuggerDisplay("\\{{GetType().Name,nq}\\}: ProjectFileName: {SourceFile.ProjectFileName}")]
@@ -14,6 +26,13 @@ namespace Sitecore.Pathfinder.Snapshots
     {
         [NotNull]
         public static readonly ISnapshot Empty = new Snapshot().With(Snapshots.SourceFile.Empty);
+
+        public Snapshot()
+        {
+            Capabilities = SnapshotCapabilities.All;
+        }
+
+        public SnapshotCapabilities Capabilities { get; protected set; }
 
         public bool IsModified { get; set; }
 

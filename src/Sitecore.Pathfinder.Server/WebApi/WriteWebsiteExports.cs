@@ -183,10 +183,11 @@ namespace Sitecore.Pathfinder.WebApi
             output.WriteAttributeString("Database", templateItem.Database.Name);
             output.WriteAttributeString("Name", templateItem.Name);
             output.WriteAttributeString("Path", templateItem.Paths.Path);
+            output.WriteAttributeString("BaseTemplates", templateItem[FieldIDs.BaseTemplate]);
 
             var template = TemplateManager.GetTemplate(templateItem.ID, templateItem.Database);
 
-            var templateFields = template.GetFields(true).Where(f => !f.Name.StartsWith("__")).ToList();
+            var templateFields = template.GetFields(false).ToList();
 
             foreach (var section in templateFields.Select(f => f.Section).Distinct().OrderBy(i => i.Sortorder).ThenBy(i => i.Key))
             {

@@ -10,7 +10,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checking.Checkers.Items
 {
-    public class ItemChecker : CheckerBase
+    public class ItemChecker2 : CheckerBase
     {
         public override void Check(ICheckerContext context)
         {

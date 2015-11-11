@@ -287,6 +287,7 @@ namespace Sitecore.Pathfinder.Projects
                         var template = Factory.Template(this, guid, TextNode.Empty, databaseName, itemName, itemIdOrPath);
                         template.IsExtern = true;
                         template.IsEmittable = false;
+                        template.BaseTemplates = element.GetAttributeValue("BaseTemplates");
 
                         foreach (var sectionElement in element.Elements())
                         {

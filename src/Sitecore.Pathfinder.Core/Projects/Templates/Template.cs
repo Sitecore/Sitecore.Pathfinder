@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -93,7 +94,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
             foreach (var newSection in newTemplate.Sections)
             {
-                var section = Sections.FirstOrDefault(s => string.Compare(s.SectionName, newSection.SectionName, StringComparison.OrdinalIgnoreCase) == 0);
+                var section = Sections.FirstOrDefault(s => string.Equals(s.SectionName, newSection.SectionName, StringComparison.OrdinalIgnoreCase));
                 if (section == null)
                 {
                     Sections.Add(newSection);
@@ -128,9 +129,16 @@ namespace Sitecore.Pathfinder.Projects.Templates
                 }
             }
 
+            var nullGuid = Guid.Empty.Format();
+
             var baseTemplates = template.BaseTemplates.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries);
             foreach (var baseTemplateId in baseTemplates)
             {
+                if (baseTemplateId == nullGuid)
+                {
+                    continue;
+                }
+
                 var baseTemplate = Project.FindQualifiedItem(baseTemplateId) as Template;
                 if (baseTemplate == null)
                 {

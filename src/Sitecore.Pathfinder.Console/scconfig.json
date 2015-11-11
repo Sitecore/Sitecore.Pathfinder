@@ -156,13 +156,20 @@
                 },
                 "2": {
                     "query": "/sitecore/templates/System//*[@@templatekey='template']",
-                    "database": "master"
+                    "database": "master",
+                    "fields": "__Base template"
                 },
                 "3": {
-                    "query": "/sitecore/templates/Sample/Sample Item",
-                    "database": "master"
+                    "query": "/sitecore/templates/Common//*[@@templatekey='template']",
+                    "database": "master",
+                    "fields": "__Base template"
                 },
                 "4": {
+                    "query": "/sitecore/templates/Sample/Sample Item",
+                    "database": "master",
+                    "fields": "__Base template"
+                },
+                "5": {
                     "query": "/sitecore/layout//*[@@templatekey='view rendering' or @@templatekey='xsl rendering' or @@templatekey='sublayout' or @@templatekey='layout' or @@templatekey='device']",
                     "database": "master",
                     "fields": "Path, Place Holders, Parameters Template"
@@ -182,8 +189,9 @@
                     "database": "master"
                 },
                 "2": {
-                    "query": "/sitecore/templates/System//*[@@templatekey='template']",
-                    "database": "core"
+                    "query": "/sitecore/templates//*[@@templatekey='template']",
+                    "database": "core",
+                    "fields": "__Base template"
                 },
                 "3": {
                     "query": "/sitecore/layout//*[@@templatekey='device']",

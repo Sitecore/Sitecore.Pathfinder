@@ -15,6 +15,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
 
         public override void Run(IBuildContext context)
         {
+            context.IsAborted = true;
             context.Trace.TraceInformation("Writing website exports...");
 
             var queryStringParameters = new Dictionary<string, string>

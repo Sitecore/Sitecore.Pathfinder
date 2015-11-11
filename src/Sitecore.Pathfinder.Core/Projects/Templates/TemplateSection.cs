@@ -50,7 +50,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
             foreach (var newField in newSection.Fields)
             {
-                var field = Fields.FirstOrDefault(f => string.Compare(f.FieldName, newField.FieldName, StringComparison.OrdinalIgnoreCase) == 0);
+                var field = Fields.FirstOrDefault(f => string.Equals(f.FieldName, newField.FieldName, StringComparison.OrdinalIgnoreCase));
                 if (field == null)
                 {
                     Fields.Add(newField);
