@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
@@ -18,24 +19,25 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
         {
             var context = pipeline.Context.CompositionService.Resolve<ICompileContext>();
 
+            List<IProjectItem> items;
             do
             {
-                var projectItem = pipeline.Project.Items.FirstOrDefault(i => i.State == ProjectItemState.CompilationPending);
-                if (projectItem == null)
-                {
-                    break;
-                }
+                items = pipeline.Project.Items.Where(i => i.State == ProjectItemState.CompilationPending).ToList();
 
-                projectItem.State = ProjectItemState.Compiled;
-                foreach (var compiler in pipeline.Context.Compilers)
+                foreach (var projectItem in items)
                 {
-                    if (compiler.CanCompile(context, projectItem))
+                    projectItem.State = ProjectItemState.Compiled;
+
+                    foreach (var compiler in pipeline.Context.Compilers)
                     {
-                        compiler.Compile(context, projectItem);
+                        if (compiler.CanCompile(context, projectItem))
+                        {
+                            compiler.Compile(context, projectItem);
+                        }
                     }
                 }
             }
-            while (true);
+            while (items.Any());
         }
     }
 }

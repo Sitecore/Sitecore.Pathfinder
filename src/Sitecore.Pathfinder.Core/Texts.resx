@@ -124,7 +124,7 @@
     <value>Task not found. Skipping</value>
   </data>
   <data name="Pipeline_is_empty__There_are_no_tasks_to_execute_" xml:space="preserve">
-    <value>Pipeline is empty. There are no tasks to execute.</value>
+    <value>There are no tasks to execute.</value>
   </data>
   <data name="An_error_occured" xml:space="preserve">
     <value>An error occured</value>

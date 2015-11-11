@@ -21,6 +21,9 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public static readonly Item Empty = new Item(Projects.Project.Empty, new Guid("{935B8D6C-D25A-48B8-8167-2C0443D77027}"), TextNode.Empty, "emptydatabase", string.Empty, string.Empty, string.Empty);
 
+        [CanBeNull]
+        private Template _template;
+
         public Item([NotNull] IProject project, Guid guid, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath) : base(project, guid, textNode, databaseName, itemName, itemIdOrPath)
         {
             TemplateIdOrPath = templateIdOrPath;
@@ -49,16 +52,23 @@ namespace Sitecore.Pathfinder.Projects.Items
         {
             get
             {
-                var templateIdOrPath = TemplateIdOrPath;
-
-                if (templateIdOrPath.Contains('/') || templateIdOrPath.Contains('{'))
+                if (_template == null)
                 {
-                    return Project.FindQualifiedItem(DatabaseName, templateIdOrPath) as Template ?? Template.Empty;
+                    var templateIdOrPath = TemplateIdOrPath;
+
+                    if (templateIdOrPath.Contains('/') || templateIdOrPath.Contains('{'))
+                    {
+                        _template = Project.FindQualifiedItem(DatabaseName, templateIdOrPath) as Template ?? Template.Empty;
+                    }
+                    else
+                    {
+                        // resolve by short name
+                        var templates = Project.Items.OfType<Template>().Where(t => t.ShortName == templateIdOrPath && string.Equals(t.DatabaseName, DatabaseName, StringComparison.OrdinalIgnoreCase)).ToList();
+                        _template = templates.Count == 1 ? templates.First() : Template.Empty;
+                    }
                 }
 
-                // resolve by short name
-                var templates = Project.Items.OfType<Template>().Where(t => t.ShortName == templateIdOrPath && string.Equals(t.DatabaseName, DatabaseName, StringComparison.OrdinalIgnoreCase)).ToList();
-                return templates.Count == 1 ? templates.First() : Template.Empty;
+                return _template ?? Template.Empty;
             }
         }
 
@@ -66,7 +76,9 @@ namespace Sitecore.Pathfinder.Projects.Items
         public string TemplateIdOrPath
         {
             get { return TemplateIdOrPathProperty.GetValue(); }
-            set { TemplateIdOrPathProperty.SetValue(value); }
+            set { TemplateIdOrPathProperty.SetValue(value);
+                _template = Template.Empty;
+            }
         }
 
         [NotNull]
@@ -97,7 +109,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
             foreach (var newField in newItem.Fields)
             {
-                var field = Fields.FirstOrDefault(f => string.Compare(f.FieldName, newField.FieldName, StringComparison.OrdinalIgnoreCase) == 0 && string.Compare(f.Language, newField.Language, StringComparison.OrdinalIgnoreCase) == 0 && f.Version == newField.Version);
+                var field = Fields.FirstOrDefault(f => string.Equals(f.FieldName, newField.FieldName, StringComparison.OrdinalIgnoreCase) && string.Equals(f.Language, newField.Language, StringComparison.OrdinalIgnoreCase) && f.Version == newField.Version);
                 if (field == null)
                 {
                     newField.Item = this;

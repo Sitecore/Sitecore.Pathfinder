@@ -15,7 +15,8 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
         public override bool CanCompile(IFieldCompileContext context, Field field)
         {
-            return string.Equals(field.TemplateField.Type, "general link", StringComparison.OrdinalIgnoreCase) || string.Equals(field.TemplateField.Type, "link", StringComparison.OrdinalIgnoreCase);
+            var type = field.TemplateField.Type;
+            return string.Equals(type, "general link", StringComparison.OrdinalIgnoreCase) || string.Equals(type, "link", StringComparison.OrdinalIgnoreCase);
         }
 
         public override string Compile(IFieldCompileContext context, Field field)

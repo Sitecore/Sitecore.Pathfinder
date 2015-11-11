@@ -758,7 +758,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pipeline is empty. There are no tasks to execute..
+        ///   Looks up a localized string similar to There are no tasks to execute..
         /// </summary>
         public static string Pipeline_is_empty__There_are_no_tasks_to_execute_ {
             get {
