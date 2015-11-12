@@ -812,6 +812,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Resetting website....
+        /// </summary>
+        public static string Resetting_website___ {
+            get {
+                return ResourceManager.GetString("Resetting_website___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Running unit tests....
         /// </summary>
         public static string Running_unit_tests___ {

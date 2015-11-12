@@ -220,7 +220,6 @@
     <Compile Include="Building\Testing\UnitTests\Pipelines\GenerateUnitTestsPipeline.cs" />
     <Compile Include="Building\Testing\RunUnitTests.cs" />
     <Compile Include="Building\Testing\ValidateWebsite.cs" />
-    <Compile Include="Startup.cs" />
     <Compile Include="Building\BuildContext.cs" />
     <Compile Include="Building\IBuildContext.cs" />
     <Compile Include="Program.cs" />

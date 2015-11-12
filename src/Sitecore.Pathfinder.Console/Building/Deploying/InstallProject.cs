@@ -23,13 +23,7 @@ namespace Sitecore.Pathfinder.Building.Deploying
 
             context.Trace.TraceInformation(Texts.Installing_project___);
 
-            var queryStringParameters = new Dictionary<string, string>
-            {
-                ["td"] = context.Configuration.GetString(Constants.Configuration.ToolsDirectory),
-                ["pd"] = context.ProjectDirectory
-            };
-
-            var url = MakeWebApiUrl(context, "InstallProject", queryStringParameters);
+            var url = MakeWebApiUrl(context, "InstallProject");
 
             var success = Request(context, url);
 

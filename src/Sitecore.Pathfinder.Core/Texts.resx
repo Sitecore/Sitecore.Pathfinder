@@ -462,4 +462,7 @@
     <data name="Whoops__scc_exe_cannot_run_in_is_own_directory_" xml:space="preserve">
     <value>Whoops! scc.exe cannot run in is own directory.</value>
   </data>
+    <data name="Resetting_website___" xml:space="preserve">
+    <value>Resetting website...</value>
+  </data>
 </root>

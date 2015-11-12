@@ -96,6 +96,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppService.cs" />
     <Compile Include="Checking\CheckerBase.cs" />
     <Compile Include="Checking\CheckerContext.cs" />
     <Compile Include="Checking\CheckerService.cs" />
@@ -116,15 +117,17 @@
     <Compile Include="Compiling\Pipelines\CompilePipelines\3000 - ResolveReferences.cs" />
     <Compile Include="Compiling\Pipelines\CompilePipelines\4000 - CheckProject.cs" />
     <Compile Include="Compiling\Pipelines\CompilePipelines\CreateTemplatesFromItems.cs" />
-    <Compile Include="Configuration\ConfigurationStartup.cs" />
+    <Compile Include="Configuration\StartupExtensions.cs" />
     <Compile Include="Configuration\FileContext.cs" />
     <Compile Include="Diagnostics\ConsoleService.cs" />
     <Compile Include="Diagnostics\IConsoleService.cs" />
+    <Compile Include="Extensibility\StartupExtensions.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\GuidExtensions.cs" />
     <Compile Include="Compiling\Builders\FieldBuilder.cs" />
     <Compile Include="Compiling\Builders\ItemBuilder.cs" />
     <Compile Include="Compiling\Builders\LanguageVersionBuilder.cs" />
+    <Compile Include="IAppService.cs" />
     <Compile Include="Languages\Serialization\SerializationTextSnapshot.cs" />
     <Compile Include="Languages\Xml\ItemExtensions.cs" />
     <Compile Include="Snapshots\IMutableTextNode.cs" />
@@ -166,7 +169,7 @@
     <Compile Include="Snapshots\IHasSourceTextNodes.cs" />
     <Compile Include="Languages\Json\JsonInnerTextNode.cs" />
     <Compile Include="Languages\Xml\XmlInnerTextNode.cs" />
-    <Compile Include="Extensibility\CsharpCompiler.cs" />
+    <Compile Include="Extensibility\CsharpCompilerService.cs" />
     <Compile Include="Configuration\ConfigurationService.cs" />
     <Compile Include="Configuration\FactoryService.cs" />
     <Compile Include="Configuration\IConfigurationService.cs" />
@@ -280,6 +283,7 @@
     <Compile Include="Languages\Yaml\YamlTextSnapshot.Token.cs" />
     <Compile Include="Languages\Yaml\YamlTextSnapshot.Tokenizer.cs" />
     <Compile Include="Languages\Yaml\YamlTextSnapshot.cs" />
+    <Compile Include="Startup.cs" />
     <Compile Include="Testing\ITestRunner.cs" />
     <Compile Include="Texts.Designer.cs">
       <AutoGen>True</AutoGen>

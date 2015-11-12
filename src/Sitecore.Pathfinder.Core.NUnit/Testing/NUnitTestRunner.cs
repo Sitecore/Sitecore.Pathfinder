@@ -24,7 +24,7 @@ namespace Sitecore.Pathfinder.Testing
 
         public Assembly CompileAssembly(ICollection<string> references, IEnumerable<string> fileNames)
         {
-            var compiler = new CsharpCompiler();
+            var compiler = new CsharpCompilerService();
 
             references.Add(typeof(HttpUtility).Assembly.Location);
 

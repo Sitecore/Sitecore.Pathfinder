@@ -117,8 +117,17 @@ namespace Sitecore.Pathfinder.Building
         }
 
         [NotNull]
+        protected virtual string MakeWebApiUrl([NotNull] IBuildContext context, [NotNull] string route)
+        {
+            return MakeWebApiUrl(context, route, new Dictionary<string, string>());
+        }
+
+        [NotNull]
         protected virtual string MakeWebApiUrl([NotNull] IBuildContext context, [NotNull] string route, [NotNull] Dictionary<string, string> queryStringParameters)
         {
+            queryStringParameters["td"] = context.Configuration.GetString(Constants.Configuration.ToolsDirectory);
+            queryStringParameters["pd"] = context.ProjectDirectory;
+
             return MakeUrl(context, "sitecore/shell/client/Applications/Pathfinder/WebApi/" + route, queryStringParameters);
         }
 

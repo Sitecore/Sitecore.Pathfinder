@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.WebApi
 {
     public class TroubleshootWebsite : IWebApi
     {
-        public ActionResult Execute()
+        public ActionResult Execute(IAppService app)
         {
             Console.WriteLine("Republishing master database...");
             BackgroundJob.Run("Pathfinder Republish", "Publishing", Republish);

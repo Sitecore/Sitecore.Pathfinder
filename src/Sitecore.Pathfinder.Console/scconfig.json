@@ -9,9 +9,9 @@
     // project configuration file
     "project": "scconfig.json",
 
-    // =====
+    // ======
     // TASKS
-    // =====
+    // ======
 
     "build-project": {
         // default build pipeline
@@ -138,7 +138,7 @@
     },
 
     "write-exports": {
-        "filename": "sitecore.project\\exports.xml",
+        "filename": "sitecore.project/exports.xml",
         "fields-to-write": "Place Holders"
     },
 
@@ -232,6 +232,15 @@
                 }
             }
         }
+    },
+
+    // =========
+    // SETTINGS
+    // =========
+
+    "extensions": {
+        "project-extensions-directory": "sitecore.project/extensions",
+        "project-extensions-assembly-filename": "Sitecore.Pathfinder.Extensions.dll"
     },
 
     "standard-template-fields": {

@@ -15,8 +15,10 @@ using Sitecore.Install.Metadata;
 using Sitecore.Install.Utils;
 using Sitecore.Install.Zip;
 using Sitecore.IO;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitters;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Packages.Packages;
 using Sitecore.SecurityModel;
 
@@ -194,7 +196,7 @@ namespace Sitecore.Pathfinder.Packages
             var packageManager = new PackageManager(availableRepository, InstalledRepository);
             packageManager.PackageInstalled += InstallPackage;
 
-            var installedPackage = installedPackages.FirstOrDefault(i => string.Compare(i.Id, packageId, StringComparison.OrdinalIgnoreCase) == 0);
+            var installedPackage = installedPackages.FirstOrDefault(i => string.Equals(i.Id, packageId, StringComparison.OrdinalIgnoreCase));
             if (installedPackage != null)
             {
                 if (installedPackage.Version == availablePackage.Version)
@@ -331,8 +333,17 @@ namespace Sitecore.Pathfinder.Packages
                 var projectDirectory = Path.Combine(e.InstallPath, "content");
                 var toolsDirectory = Path.Combine(projectDirectory, "sitecore.tools");
 
-                var emitService = new EmitService(toolsDirectory, projectDirectory);
-                emitService.Start();
+                var binDirectory = FileUtil.MapPath("/bin");
+                var assemblyFileNames = Directory.Exists(binDirectory) ? Directory.GetFiles(binDirectory, "Sitecore.Pathfinder.Server.*.dll") : Enumerable.Empty<string>();
+
+                var app = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(projectDirectory).WithAssemblies(assemblyFileNames).Start();
+                if (app == null)
+                {
+                    return;
+                }
+
+                var emitter = app.CompositionService.Resolve<Emitter>();
+                emitter.Start();
             }
 
             var packagesDirectory = Path.Combine(e.InstallPath, "content\\packages");

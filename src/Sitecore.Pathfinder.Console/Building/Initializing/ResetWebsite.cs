@@ -13,15 +13,9 @@ namespace Sitecore.Pathfinder.Building.Initializing
 
         public override void Run(IBuildContext context)
         {
-            context.Trace.TraceInformation("Resetting website...");
+            context.Trace.TraceInformation(Texts.Resetting_website___);
 
-            var queryStringParameters = new Dictionary<string, string>
-            {
-                ["td"] = context.Configuration.GetString(Constants.Configuration.ToolsDirectory),
-                ["pd"] = context.ProjectDirectory
-            };
-
-            var url = MakeWebApiUrl(context, "ResetWebsite", queryStringParameters);
+            var url = MakeWebApiUrl(context, "ResetWebsite");
 
             Request(context, url);
         }

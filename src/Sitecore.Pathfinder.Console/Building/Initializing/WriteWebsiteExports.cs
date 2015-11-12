@@ -18,13 +18,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
             context.IsAborted = true;
             context.Trace.TraceInformation("Writing website exports...");
 
-            var queryStringParameters = new Dictionary<string, string>
-            {
-                ["td"] = context.Configuration.GetString(Constants.Configuration.ToolsDirectory),
-                ["pd"] = context.ProjectDirectory
-            };
-
-            var url = MakeWebApiUrl(context, "WriteWebsiteExports", queryStringParameters);
+            var url = MakeWebApiUrl(context, "WriteWebsiteExports");
             var targetFileName = Path.GetTempFileName();
 
             if (!DownloadFile(context, url, targetFileName))

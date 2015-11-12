@@ -2,7 +2,10 @@
 
 using System.IO;
 using System.Reflection;
+using Sitecore.Exceptions;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Emitters;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Server.Tests.Emitters
@@ -19,15 +22,21 @@ namespace Sitecore.Pathfinder.Server.Tests.Emitters
             {
                 Context.IsUnitTesting = true;
             }
-            catch 
+            catch
             {
             }
 
             var projectDirectory = PathHelper.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, GoodWebsite);
             var toolsDirectory = Path.Combine(projectDirectory, "sitecore.tools");
-            var emitService = new EmitService(toolsDirectory, projectDirectory);
 
-            emitService.Start();
+            var app = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(projectDirectory).Start();
+            if (app == null)
+            {
+                throw new ConfigurationException("Oh no, nothing works!");
+            }
+
+            var emitter = app.CompositionService.Resolve<Emitter>();
+            emitter.Start();
         }
     }
 }

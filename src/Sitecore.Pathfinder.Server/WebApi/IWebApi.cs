@@ -7,6 +7,6 @@ namespace Sitecore.Pathfinder.WebApi
     public interface IWebApi
     {
         [Diagnostics.CanBeNull]
-        ActionResult Execute();
+        ActionResult Execute([Diagnostics.NotNull] IAppService app);
     }
 }

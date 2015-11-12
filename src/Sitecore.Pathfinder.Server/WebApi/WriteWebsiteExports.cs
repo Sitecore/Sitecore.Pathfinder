@@ -15,38 +15,18 @@ using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.IO;
-using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.SecurityModel;
-using Sitecore.Web;
 using Sitecore.Zip;
 
 namespace Sitecore.Pathfinder.WebApi
 {
     public class WriteWebsiteExports : IWebApi
     {
-        public ActionResult Execute()
+        public ActionResult Execute(IAppService app)
         {
-            var toolsDirectory = WebUtil.GetQueryString("td");
-            if (string.IsNullOrEmpty(toolsDirectory))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Project Directory not specified");
-            }
-
-            var projectDirectory = WebUtil.GetQueryString("pd");
-            if (string.IsNullOrEmpty(projectDirectory))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Tools Directory not specified");
-            }
-
-            var configuration = ConfigurationStartup.RegisterConfiguration(toolsDirectory, projectDirectory, ConfigurationOptions.Noninteractive);
-            if (configuration == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Configuration failed");
-            }
-
             TempFolder.EnsureFolder();
 
             var tempDirectory = Path.Combine(FileUtil.MapPath(TempFolder.Folder), "Pathfinder.Exports");
@@ -60,16 +40,16 @@ namespace Sitecore.Pathfinder.WebApi
             var exportFileName = Path.Combine(FileUtil.MapPath(tempDirectory), "Pathfinder.Exports.zip");
             using (var zip = new ZipWriter(exportFileName))
             {
-                foreach (var index in configuration.GetSubKeys("write-website-exports"))
+                foreach (var index in app.Configuration.GetSubKeys("write-website-exports"))
                 {
-                    var entryName = configuration.GetString("write-website-exports:" + index.Key + ":filename");
+                    var entryName = app.Configuration.GetString("write-website-exports:" + index.Key + ":filename");
                     var fileKey = "write-website-exports:" + index.Key + ":";
 
                     var fileName = Path.Combine(tempDirectory, PathHelper.NormalizeFilePath(entryName).TrimStart('\\'));
 
                     Directory.CreateDirectory(Path.GetDirectoryName(fileName) ?? string.Empty);
 
-                    WriteFile(configuration, tempDirectory, fileName, fileKey);
+                    WriteFile(app.Configuration, tempDirectory, fileName, fileKey);
 
                     zip.AddEntry(entryName, fileName);
                 }
@@ -106,7 +86,7 @@ namespace Sitecore.Pathfinder.WebApi
             }
         }
 
-        protected virtual void WriteFile([Diagnostics.NotNull] IConfigurationSourceRoot configuration, [Diagnostics.NotNull] string tempDirectory, [Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] string fileKey)
+        protected virtual void WriteFile([Diagnostics.NotNull] IConfiguration configuration, [Diagnostics.NotNull] string tempDirectory, [Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] string fileKey)
         {
             var sourceFileName = Path.ChangeExtension(fileName, ".xml");
             using (var writer = new StreamWriter(sourceFileName))

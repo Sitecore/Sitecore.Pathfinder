@@ -18,10 +18,13 @@ namespace Sitecore.Pathfinder.Testing
 
         public UnitTestRunner()
         {
-            var startup = new Startup();
-            var compositionContainer = startup.RegisterCompositionService();
+            var startup = new Startup().Start();
+            if (startup == null)
+            {
+                throw new ConfigurationException("Oh no, nothing works");
+            }
 
-            compositionContainer.SatisfyImportsOnce(this);
+            startup.CompositionService.SatisfyImportsOnce(this);
         }
 
         [ImportMany]
@@ -31,7 +34,7 @@ namespace Sitecore.Pathfinder.Testing
 
         public void RunTests([Diagnostics.NotNull] string testRunnerName)
         {
-            var testRunner = TestRunners.FirstOrDefault(t => string.Compare(t.Name, testRunnerName, StringComparison.OrdinalIgnoreCase) == 0);
+            var testRunner = TestRunners.FirstOrDefault(t => string.Equals(t.Name, testRunnerName, StringComparison.OrdinalIgnoreCase));
             if (testRunner == null)
             {
                 Console.WriteLine(Texts.Test_Runner_not_found__ + testRunnerName);

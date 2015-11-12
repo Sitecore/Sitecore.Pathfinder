@@ -14,7 +14,7 @@ namespace Sitecore.Pathfinder.Building.Deploying
     public class WatchProject : RequestTaskBase
     {
         [NotNull]
-        private static readonly object _syncObject = new object();
+        private static readonly object SyncObject = new object();
 
         [NotNull]
         private readonly Timer _timer;
@@ -134,7 +134,7 @@ namespace Sitecore.Pathfinder.Building.Deploying
                 return;
             }
 
-            lock (_syncObject)
+            lock (SyncObject)
             {
                 _timer.Change(TimeSpan.FromMilliseconds(400), TimeSpan.FromMilliseconds(-1));
             }
@@ -142,7 +142,7 @@ namespace Sitecore.Pathfinder.Building.Deploying
 
         protected virtual void StopTimer()
         {
-            lock (_syncObject)
+            lock (SyncObject)
             {
                 _timer.Change(Timeout.Infinite, Timeout.Infinite);
             }
@@ -152,13 +152,7 @@ namespace Sitecore.Pathfinder.Building.Deploying
         {
             Console.WriteLine("Installing project...");
 
-            var queryStringParameters = new Dictionary<string, string>
-            {
-                ["td"] = Context.Configuration.GetString(Constants.Configuration.ToolsDirectory),
-                ["pd"] = Context.ProjectDirectory
-            };
-
-            var url = MakeWebApiUrl(Context, "InstallProject", queryStringParameters);
+            var url = MakeWebApiUrl(Context, "InstallProject");
             Request(Context, url);
         }
 

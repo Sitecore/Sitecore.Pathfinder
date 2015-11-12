@@ -2,53 +2,32 @@
 
 using System;
 using System.IO;
-using System.Net;
 using System.Web.Mvc;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Configuration;
 using Sitecore.IO;
-using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
-using Sitecore.Web;
 
 namespace Sitecore.Pathfinder.WebApi
 {
     public class ResetWebsite : IWebApi
     {
-        public ActionResult Execute()
+        public ActionResult Execute(IAppService app)
         {
-            var toolsDirectory = WebUtil.GetQueryString("td");
-            if (string.IsNullOrEmpty(toolsDirectory))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Project Directory not specified");
-            }
-
-            var projectDirectory = WebUtil.GetQueryString("pd");
-            if (string.IsNullOrEmpty(projectDirectory))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Tools Directory not specified");
-            }
-
-            var configuration = ConfigurationStartup.RegisterConfiguration(toolsDirectory, projectDirectory, ConfigurationOptions.Noninteractive);
-            if (configuration == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Configuration failed");
-            }
-
-            foreach (var pair in configuration.GetSubKeys("reset-website"))
+            foreach (var pair in app.Configuration.GetSubKeys("reset-website"))
             {
                 if (pair.Key == "website")
                 {
-                    DeleteFiles(configuration, "website", FileUtil.MapPath("/"));
+                    DeleteFiles(app.Configuration, "website", FileUtil.MapPath("/"));
                 }
                 else if (pair.Key == "data")
                 {
-                    DeleteFiles(configuration, "data", FileUtil.MapPath(Settings.DataFolder));
+                    DeleteFiles(app.Configuration, "data", FileUtil.MapPath(Settings.DataFolder));
                 }
                 else
                 {
-                    DeleteItems(configuration, pair.Key);
+                    DeleteItems(app.Configuration, pair.Key);
                 }
             }
 
@@ -108,7 +87,7 @@ namespace Sitecore.Pathfinder.WebApi
             }
         }
 
-        protected virtual void DeleteItems([Diagnostics.NotNull] IConfigurationSourceRoot configuration, [Diagnostics.NotNull] string databaseName)
+        protected virtual void DeleteItems([Diagnostics.NotNull] IConfiguration configuration, [Diagnostics.NotNull] string databaseName)
         {
             var database = Factory.GetDatabase(databaseName);
 

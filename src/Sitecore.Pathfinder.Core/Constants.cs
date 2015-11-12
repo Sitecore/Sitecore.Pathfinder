@@ -57,6 +57,8 @@ namespace Sitecore.Pathfinder
 
             public const string ContentFiles = "build-project:content-files";
 
+            public const string CopyDependenciesSourceDirectory = "copy-dependencies:source-directory";
+
             public const string Database = "database";
 
             public const string DataFolderDirectory = "data-folder-directory";
@@ -81,8 +83,6 @@ namespace Sitecore.Pathfinder
 
             public const string PackageDirectory = "copy-package:package-directory";
 
-            public const string CopyDependenciesSourceDirectory = "copy-dependencies:source-directory";
-
             public const string PackNugetDirectory = "pack-nuget:directory";
 
             public const string PackNugetExclude = "pack-nuget:exclude";
@@ -96,6 +96,10 @@ namespace Sitecore.Pathfinder
             public const string ProjectConfigFileName = "project";
 
             public const string ProjectDirectory = "project-directory";
+
+            public const string ProjectExtensionsAssemblyFileName = "extensions:project-extensions-assembly-filename";
+
+            public const string ProjectExtensionsDirectory = "extensions:project-extensions-directory";
 
             public const string ProjectUniqueId = "project-unique-id";
 
@@ -127,9 +131,9 @@ namespace Sitecore.Pathfinder
 
             public const string WebTestRunnerUrl = "run-unittests:web-test-runner-url";
 
-            public const string WriteExportsFileName = "write-exports:filename";
-
             public const string WriteExportsFieldsToWrite = "write-exports:fields";
+
+            public const string WriteExportsFileName = "write-exports:filename";
 
             public const string WwwrootDirectory = "new-project:wwwroot-repository";
 

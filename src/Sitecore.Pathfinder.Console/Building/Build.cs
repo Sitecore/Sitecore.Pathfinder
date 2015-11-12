@@ -14,6 +14,9 @@ namespace Sitecore.Pathfinder.Building
     [Export]
     public class Build
     {
+        [CanBeNull]
+        private Stopwatch _stopwatch;
+
         [ImportingConstructor]
         public Build([NotNull] ICompositionService compositionService, [NotNull] IConfigurationService configurationService, [NotNull] ITraceService trace, [ImportMany] [NotNull] [ItemNotNull] IEnumerable<ITask> tasks)
         {
@@ -47,13 +50,23 @@ namespace Sitecore.Pathfinder.Building
                 return 0;
             }
 
+            var errorCode = context.Project.Diagnostics.Any(d => d.Severity == Severity.Warning || d.Severity == Severity.Error) ? 1 : 0;
+
+            _stopwatch?.Stop();
+
             if (context.DisplayDoneMessage)
             {
-                context.Trace.Writeline(string.Format(Texts.Ducats___0_, context.Project.Ducats.ToString("#,##0")));
-                context.Trace.Writeline(Texts.Done);
+                Console.Write(Texts.Ducats___0_, context.Project.Ducats.ToString("#,##0"));
+
+                if (_stopwatch != null)
+                {
+                    Console.Write(". Time: {0}ms", _stopwatch.Elapsed.TotalMilliseconds.ToString("#,##0"));
+                }
+
+                Console.WriteLine();
+                Console.WriteLine(Texts.Done);
             }
 
-            var errorCode = context.Project.Diagnostics.Any(d => d.Severity == Severity.Warning || d.Severity == Severity.Error) ? 1 : 0;
             return errorCode;
         }
 
@@ -145,6 +158,12 @@ namespace Sitecore.Pathfinder.Building
         private void DisplayHelp()
         {
             Trace.Writeline(Texts.Usage__scc_exe__run__task_);
+        }
+
+        public Build With([NotNull] Stopwatch stopwatch)
+        {
+            _stopwatch = stopwatch;
+            return this;
         }
     }
 }

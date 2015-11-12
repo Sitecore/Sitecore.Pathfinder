@@ -12,51 +12,41 @@ using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Extensibility
 {
-    public class CsharpCompiler
+    public class CsharpCompilerService
     {
         [CanBeNull]
-        public Assembly GetExtensionsAssembly([NotNull] string extensionsDirectory, [NotNull][ItemNotNull] IEnumerable<string> directories)
+        public Assembly Compile([NotNull] string assemblyFileName, [NotNull] [ItemNotNull] IEnumerable<string> sourceFileNames)
         {
-            var fileNames = new List<string>();
-            foreach (var directory in directories)
-            {
-                if (Directory.Exists(directory))
-                {
-                    fileNames.AddRange(Directory.GetFiles(directory, "*.cs", SearchOption.AllDirectories));
-                }
-            }
-
             // check if assembly is newer than all checkers
-            var extensionsAssemblyFileName = Path.Combine(extensionsDirectory, Constants.ExtensionsAssemblyFileName);
-            if (File.Exists(extensionsAssemblyFileName))
+            if (File.Exists(assemblyFileName))
             {
-                var writeTime = File.GetLastWriteTimeUtc(extensionsAssemblyFileName);
-                if (fileNames.All(f => File.GetLastWriteTimeUtc(f) < writeTime))
+                var writeTime = File.GetLastWriteTimeUtc(assemblyFileName);
+                if (sourceFileNames.All(f => File.GetLastWriteTimeUtc(f) < writeTime))
                 {
-                    return Assembly.LoadFrom(extensionsAssemblyFileName);
+                    return Assembly.LoadFrom(assemblyFileName);
                 }
             }
 
             // compile extensions
             Console.WriteLine(Texts.scc_cmd_0_0___information_SCC0000__Compiling_checkers___);
 
-            var syntaxTrees = fileNames.Select(File.ReadAllText).Select(code => CSharpSyntaxTree.ParseText(code)).ToList();
+            var syntaxTrees = sourceFileNames.Select(File.ReadAllText).Select(code => CSharpSyntaxTree.ParseText(code)).ToList();
             var references = AppDomain.CurrentDomain.GetAssemblies().Select(assembly => MetadataReference.CreateFromFile(assembly.Location)).ToList();
             var options = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary);
 
-            var compilation = CSharpCompilation.Create("Sitecore.Pathfinder.Extensions", syntaxTrees, references, options);
+            Directory.CreateDirectory(Path.GetDirectoryName(assemblyFileName) ?? string.Empty);
 
-            Directory.CreateDirectory(Path.GetDirectoryName(extensionsAssemblyFileName) ?? string.Empty);
+            var compilation = CSharpCompilation.Create(Path.GetFileNameWithoutExtension(assemblyFileName), syntaxTrees, references, options);
 
             EmitResult result;
-            using (var stream = new FileStream(extensionsAssemblyFileName, FileMode.Create))
+            using (var stream = new FileStream(assemblyFileName, FileMode.Create))
             {
                 result = compilation.Emit(stream);
             }
 
             if (result.Success)
             {
-                return Assembly.LoadFrom(extensionsAssemblyFileName);
+                return Assembly.LoadFrom(assemblyFileName);
             }
 
             var failures = result.Diagnostics.Where(diagnostic => diagnostic.IsWarningAsError || diagnostic.Severity == DiagnosticSeverity.Error);
@@ -69,7 +59,7 @@ namespace Sitecore.Pathfinder.Extensibility
         }
 
         [CanBeNull]
-        public Assembly GetUnitTestAssembly([NotNull][ItemNotNull] IEnumerable<string> references, [NotNull][ItemNotNull] IEnumerable<string> fileNames)
+        public Assembly GetUnitTestAssembly([NotNull] [ItemNotNull] IEnumerable<string> references, [NotNull] [ItemNotNull] IEnumerable<string> fileNames)
         {
             var assemblyFileName = Path.ChangeExtension(Path.GetTempFileName(), ".dll");
             var assemblyName = Path.GetFileNameWithoutExtension(assemblyFileName) ?? string.Empty;

@@ -6,7 +6,6 @@ using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using NuGet;
-using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
@@ -18,10 +17,9 @@ namespace Sitecore.Pathfinder.Emitters
     public class Emitter
     {
         [ImportingConstructor]
-        public Emitter([Diagnostics.NotNull] ICompositionService compositionService, [Diagnostics.NotNull] IConfigurationService configurationService, [Diagnostics.NotNull] ITraceService traceService, [Diagnostics.NotNull] IProjectService projectService, [ImportMany] [Diagnostics.NotNull] [ItemNotNull] IEnumerable<IEmitter> emitters)
+        public Emitter([Diagnostics.NotNull] ICompositionService compositionService, [Diagnostics.NotNull] ITraceService traceService, [Diagnostics.NotNull] IProjectService projectService, [ImportMany] [Diagnostics.NotNull] [ItemNotNull] IEnumerable<IEmitter> emitters)
         {
             CompositionService = compositionService;
-            ConfigurationService = configurationService;
             Trace = traceService;
             ProjectService = projectService;
             Emitters = emitters;
@@ -29,9 +27,6 @@ namespace Sitecore.Pathfinder.Emitters
 
         [Diagnostics.NotNull]
         protected ICompositionService CompositionService { get; }
-
-        [Diagnostics.NotNull]
-        protected IConfigurationService ConfigurationService { get; }
 
         [Diagnostics.NotNull]
         [ItemNotNull]
@@ -43,14 +38,14 @@ namespace Sitecore.Pathfinder.Emitters
         [Diagnostics.NotNull]
         protected ITraceService Trace { get; }
 
-        public virtual void Start()
+        public virtual int Start()
         {
             // todo: support installation without configuration files
-            ConfigurationService.Load(ConfigurationOptions.Noninteractive);
-
             var project = ProjectService.LoadProjectFromConfiguration();
 
             Emit(project);
+
+            return 0;
         }
 
         protected virtual void BuildNupkgFile([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] string nuspecFileName)

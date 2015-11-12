@@ -7,18 +7,18 @@ using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Configuration
 {
-    public static class ConfigurationStartup
+    public static class StartupExtensions
     {
         [CanBeNull]
-        public static IConfigurationSourceRoot RegisterConfiguration([NotNull] string projectDirectory, ConfigurationOptions options)
+        public static IConfigurationSourceRoot RegisterConfiguration([NotNull] this Startup startup, [NotNull] string projectDirectory, ConfigurationOptions options)
         {
             var toolsDirectory = Path.Combine(projectDirectory, "sitecore.tools");
 
-            return RegisterConfiguration(toolsDirectory, projectDirectory, options);
+            return RegisterConfiguration(startup, toolsDirectory, projectDirectory, options);
         }
 
         [CanBeNull]
-        public static IConfigurationSourceRoot RegisterConfiguration([NotNull] string toolsDirectory, [NotNull] string projectDirectory, ConfigurationOptions options)
+        public static IConfigurationSourceRoot RegisterConfiguration([NotNull] this Startup startup, [NotNull] string toolsDirectory, [NotNull] string projectDirectory, ConfigurationOptions options)
         {
             var configuration = new Microsoft.Framework.ConfigurationModel.Configuration();
             configuration.Add(new MemoryConfigurationSource());

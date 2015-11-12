@@ -180,7 +180,6 @@
     <Compile Include="Emitters\Writers\TemplateFieldWriter.cs" />
     <Compile Include="Emitters\Writers\TemplateSectionWriter.cs" />
     <Compile Include="Emitters\IEmitter.cs" />
-    <Compile Include="Emitters\EmitService.cs" />
     <Compile Include="Emitters\EmitterBase.cs" />
     <Compile Include="Emitters\Files\MediaFileEmitter.cs" />
     <Compile Include="Emitters\Files\SerializationFileEmitter.cs" />
@@ -196,7 +195,6 @@
     <Compile Include="Pipelines\Loader\MapRoutes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerConstants.cs" />
-    <Compile Include="Startup.cs" />
     <Compile Include="WebApi\SynchronizeWebsites\ContentXmlSynchronizer.cs" />
     <Compile Include="WebApi\SynchronizeWebsites\ISynchronizer.cs" />
     <Compile Include="WebApi\SynchronizeWebsites\JsonLayoutSchemaSynchronizer.cs" />
