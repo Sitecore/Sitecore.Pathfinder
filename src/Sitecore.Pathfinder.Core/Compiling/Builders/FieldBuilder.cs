@@ -1,6 +1,5 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.Items;
@@ -8,11 +7,8 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Compiling.Builders
 {
-    [Export]
-    [PartCreationPolicy(CreationPolicy.NonShared)]
     public class FieldBuilder
     {
-        [ImportingConstructor]
         public FieldBuilder([NotNull] IFactoryService factory)
         {
             Factory = factory;

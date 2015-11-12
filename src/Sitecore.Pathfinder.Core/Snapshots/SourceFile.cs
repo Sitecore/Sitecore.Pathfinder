@@ -11,6 +11,9 @@ namespace Sitecore.Pathfinder.Snapshots
     [DebuggerDisplay("{GetType().Name}: FileName={AbsoluteFileName}")]
     public class SourceFile : ISourceFile
     {
+        [CanBeNull]
+        private string _fileNameWithoutExtensions;
+
         public SourceFile([NotNull] IFileSystemService fileSystem, [NotNull] string absoluteFileName, [NotNull] string projectFileName)
         {
             FileSystem = fileSystem;
@@ -35,7 +38,7 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public virtual string GetFileNameWithoutExtensions()
         {
-            return PathHelper.GetDirectoryAndFileNameWithoutExtensions(AbsoluteFileName);
+            return _fileNameWithoutExtensions ?? (_fileNameWithoutExtensions = PathHelper.GetDirectoryAndFileNameWithoutExtensions(AbsoluteFileName));
         }
 
         public virtual string[] ReadAsLines()

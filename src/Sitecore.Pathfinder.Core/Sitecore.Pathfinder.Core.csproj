@@ -116,7 +116,7 @@
     <Compile Include="Compiling\Pipelines\CompilePipelines\2000 - CompileFields.cs" />
     <Compile Include="Compiling\Pipelines\CompilePipelines\3000 - ResolveReferences.cs" />
     <Compile Include="Compiling\Pipelines\CompilePipelines\4000 - CheckProject.cs" />
-    <Compile Include="Compiling\Pipelines\CompilePipelines\CreateTemplatesFromItems.cs" />
+    <Compile Include="Compiling\Pipelines\CompilePipelines\10 - CreateTemplatesFromItems.cs" />
     <Compile Include="Configuration\StartupExtensions.cs" />
     <Compile Include="Configuration\FileContext.cs" />
     <Compile Include="Diagnostics\ConsoleService.cs" />

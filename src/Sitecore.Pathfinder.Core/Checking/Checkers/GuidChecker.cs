@@ -1,6 +1,7 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Linq;
 using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Checking.Checkers
@@ -9,33 +10,24 @@ namespace Sitecore.Pathfinder.Checking.Checkers
     {
         public override void Check(ICheckerContext context)
         {
-            foreach (var projectItem1 in context.Project.Items)
+            var items = context.Project.Items.Where(i => !(i is ItemBase) || !((ItemBase)i).IsExtern).ToArray();
+
+            for (var i = 0; i < items.Length; i++)
             {
+                var projectItem1 = items[i];
                 var item1 = projectItem1 as ItemBase;
-                if (item1 != null && item1.IsExtern)
-                {
-                    continue;
-                }
 
-                foreach (var projectItem2 in context.Project.Items)
+                for (var j = i + 1; j < items.Length; j++)
                 {
-                    if (projectItem1 == projectItem2)
-                    {
-                        continue;
-                    }
-
-                    var item2 = projectItem2 as ItemBase;
-                    if (item2 != null && item2.IsExtern)
-                    {
-                        continue;
-                    }
+                    var projectItem2 = items[j];
+                    var item2 = items[j] as ItemBase;
 
                     if (projectItem1.Uri.Guid != projectItem2.Uri.Guid)
                     {
                         continue;
                     }
 
-                    if (item1 != null && item2 != null && string.Compare(item1.DatabaseName, item2.DatabaseName, StringComparison.OrdinalIgnoreCase) != 0)
+                    if (item1 != null && item2 != null && !string.Equals(item1.DatabaseName, item2.DatabaseName, StringComparison.OrdinalIgnoreCase))
                     {
                         continue;
                     }

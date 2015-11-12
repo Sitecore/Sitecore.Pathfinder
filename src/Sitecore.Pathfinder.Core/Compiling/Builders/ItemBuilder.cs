@@ -1,7 +1,6 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
@@ -11,11 +10,8 @@ using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Compiling.Builders
 {
-    [Export]
-    [PartCreationPolicy(CreationPolicy.NonShared)]
     public class ItemBuilder
     {
-        [ImportingConstructor]
         public ItemBuilder([NotNull] IFactoryService factory)
         {
             Factory = factory;

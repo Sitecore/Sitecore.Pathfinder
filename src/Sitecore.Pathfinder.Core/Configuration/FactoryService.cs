@@ -76,12 +76,12 @@ namespace Sitecore.Pathfinder.Configuration
 
         public ItemBuilder ItemBuilder()
         {
-            return CompositionService.Resolve<ItemBuilder>();
+            return new ItemBuilder(this);
         }
 
         public FieldBuilder FieldBuilder()
         {
-            return CompositionService.Resolve<FieldBuilder>();
+            return new FieldBuilder(this);
         }
 
         public virtual ItemParseContext ItemParseContext(IParseContext context, ItemParser itemParser, string databaseName, string parentItemPath, bool isExtern)

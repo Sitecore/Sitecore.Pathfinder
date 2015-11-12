@@ -52,19 +52,24 @@ namespace Sitecore.Pathfinder.Projects.Items
         {
             get
             {
-                if (_template == null)
+                if (_template == null || _template == Template.Empty)
                 {
                     var templateIdOrPath = TemplateIdOrPath;
 
                     if (templateIdOrPath.Contains('/') || templateIdOrPath.Contains('{'))
                     {
-                        _template = Project.FindQualifiedItem(DatabaseName, templateIdOrPath) as Template ?? Template.Empty;
+                        _template = Project.FindQualifiedItem(DatabaseName, templateIdOrPath) as Template;
                     }
                     else
                     {
                         // resolve by short name
                         var templates = Project.Items.OfType<Template>().Where(t => t.ShortName == templateIdOrPath && string.Equals(t.DatabaseName, DatabaseName, StringComparison.OrdinalIgnoreCase)).ToList();
-                        _template = templates.Count == 1 ? templates.First() : Template.Empty;
+                        _template = templates.Count == 1 ? templates.First() : null;
+                    }
+
+                    if (_template == null)
+                    {
+                        _template = Template.Empty;
                     }
                 }
 

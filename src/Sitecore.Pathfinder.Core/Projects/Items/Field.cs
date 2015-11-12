@@ -59,7 +59,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         public ICollection<ITextNode> SourceTextNodes { get; } = new List<ITextNode>();
 
         [NotNull]
-        public TemplateField TemplateField => Item.Template.Sections.SelectMany(s => s.Fields).FirstOrDefault(f => string.Compare(f.FieldName, FieldName, StringComparison.OrdinalIgnoreCase) == 0) ?? TemplateField.Empty;
+        public TemplateField TemplateField => Item.Template.Sections.SelectMany(s => s.Fields).FirstOrDefault(f => string.Equals(f.FieldName, FieldName, StringComparison.OrdinalIgnoreCase)) ?? TemplateField.Empty;
 
         [NotNull]
         public string Value

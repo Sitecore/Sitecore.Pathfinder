@@ -358,20 +358,22 @@ namespace Sitecore.Pathfinder.Projects
         {
             var fileNameWithoutExtensions = newItem.Snapshots.First().SourceFile.GetFileNameWithoutExtensions();
 
+            var itemList = Items.OfType<Item>().ToList();
+
             List<Item> items = null;
             if (newItem.MergingMatch == MergingMatch.MatchUsingSourceFile)
             {
-                items = Items.OfType<Item>().Where(i => i.Snapshots.Any(s => string.Equals(s.SourceFile.GetFileNameWithoutExtensions(), fileNameWithoutExtensions, StringComparison.OrdinalIgnoreCase))).ToList();
+                items = itemList.Where(i => i.Snapshots.Any(s => string.Equals(s.SourceFile.GetFileNameWithoutExtensions(), fileNameWithoutExtensions, StringComparison.OrdinalIgnoreCase))).ToList();
             }
 
             if (items == null)
             {
-                items = Items.OfType<Item>().Where(i => i.MergingMatch == MergingMatch.MatchUsingSourceFile && i.Snapshots.Any(s => string.Equals(s.SourceFile.GetFileNameWithoutExtensions(), fileNameWithoutExtensions, StringComparison.OrdinalIgnoreCase))).ToList();
+                items = itemList.Where(i => i.MergingMatch == MergingMatch.MatchUsingSourceFile && i.Snapshots.Any(s => string.Equals(s.SourceFile.GetFileNameWithoutExtensions(), fileNameWithoutExtensions, StringComparison.OrdinalIgnoreCase))).ToList();
             }
 
             if (!items.Any())
             {
-                items = Items.OfType<Item>().Where(i => string.Equals(i.ItemIdOrPath, newItem.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) && string.Equals(i.DatabaseName, newItem.DatabaseName, StringComparison.OrdinalIgnoreCase)).ToList();
+                items = itemList.Where(i => string.Equals(i.ItemIdOrPath, newItem.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) && string.Equals(i.DatabaseName, newItem.DatabaseName, StringComparison.OrdinalIgnoreCase)).ToList();
             }
 
             if (!items.Any())

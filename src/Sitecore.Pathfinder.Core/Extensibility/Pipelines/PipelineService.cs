@@ -31,7 +31,8 @@ namespace Sitecore.Pathfinder.Extensibility.Pipelines
         {
             var processorType = typeof(IPipelineProcessor<T>);
 
-            foreach (var processor in PipelineProcessors.Where(p => processorType.IsInstanceOfType(p)))
+            var processors = PipelineProcessors.Where(p => processorType.IsInstanceOfType(p)).OrderBy(p => p.Sortorder).ToList();
+            foreach (var processor in processors)
             {
                 result.Processors.Add((IPipelineProcessor<T>)processor);
             }
