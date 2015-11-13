@@ -211,7 +211,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sitecore.Pathfinder.Core.NUnit\Sitecore.Pathfinder.Core.NUnit.csproj">
+    <ProjectReference Include="..\Features\Sitecore.Pathfinder.Core.NUnit\Sitecore.Pathfinder.Core.NUnit.csproj">
       <Project>{9a1ac69f-d401-45d6-bcfa-53732ea8ebd4}</Project>
       <Name>Sitecore.Pathfinder.Core.NUnit</Name>
     </ProjectReference>

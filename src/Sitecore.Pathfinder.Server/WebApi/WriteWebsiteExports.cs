@@ -78,11 +78,14 @@ namespace Sitecore.Pathfinder.WebApi
             sb.AppendLine("    </files>");
             sb.AppendLine("</package>");
 
-            var stream = new MemoryStream(Encoding.UTF8.GetBytes(sb.ToString()));
-            var packageBuilder = new PackageBuilder(stream, tempDirectory);
-            using (var nupkg = new FileStream(fileName, FileMode.Create))
+            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(sb.ToString())))
             {
-                packageBuilder.Save(nupkg);
+                var packageBuilder = new PackageBuilder(stream, tempDirectory);
+
+                using (var nupkg = new FileStream(fileName, FileMode.Create))
+                {
+                    packageBuilder.Save(nupkg);
+                }
             }
         }
 

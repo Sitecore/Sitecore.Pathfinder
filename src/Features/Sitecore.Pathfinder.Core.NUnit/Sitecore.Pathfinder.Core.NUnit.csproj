@@ -49,12 +49,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="nunit.core">
-      <HintPath>..\..\components\nunit.core.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\components\nunit.core.dll</HintPath>
     </Reference>
     <Reference Include="nunit.core.interfaces">
-      <HintPath>..\..\components\nunit.core.interfaces.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\components\nunit.core.interfaces.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -72,7 +70,7 @@
     <Compile Include="Testing\NUnitTestRunner.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sitecore.Pathfinder.Core\Sitecore.Pathfinder.Core.csproj">
+    <ProjectReference Include="..\..\Sitecore.Pathfinder.Core\Sitecore.Pathfinder.Core.csproj">
       <Project>{c674eebf-bbf6-4eda-af5b-a4d58d0be986}</Project>
       <Name>Sitecore.Pathfinder.Core</Name>
     </ProjectReference>

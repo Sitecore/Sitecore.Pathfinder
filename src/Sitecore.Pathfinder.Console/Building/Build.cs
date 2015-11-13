@@ -160,6 +160,7 @@ namespace Sitecore.Pathfinder.Building
             Trace.Writeline(Texts.Usage__scc_exe__run__task_);
         }
 
+        [NotNull]
         public Build With([NotNull] Stopwatch stopwatch)
         {
             _stopwatch = stopwatch;
