@@ -179,6 +179,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Compile Include="Building\Codegen\GenerateCode.cs" />
+    <Compile Include="Building\Commands\ListFiles.cs" />
     <Compile Include="Building\Commands\ListItems.cs" />
     <Compile Include="Building\Commands\ListProject.cs" />
     <Compile Include="Building\Commands\TroubleshootWebsite.cs" />

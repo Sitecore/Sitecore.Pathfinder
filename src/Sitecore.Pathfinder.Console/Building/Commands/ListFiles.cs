@@ -1,13 +1,13 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Linq;
-using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Projects.Files;
 
 namespace Sitecore.Pathfinder.Building.Commands
 {
-    public class ListItems : TaskBase
+    public class ListFiles : TaskBase
     {
-        public ListItems() : base("list-items")
+        public ListFiles() : base("list-files")
         {
         }
 
@@ -15,9 +15,9 @@ namespace Sitecore.Pathfinder.Building.Commands
         {
             context.IsAborted = true;
 
-            foreach (var item in context.Project.Items.OfType<ItemBase>().Where(i => !i.IsExtern).OrderBy(i => i.ItemIdOrPath))
+            foreach (var item in context.Project.Items.OfType<File>().OrderBy(file => file.FilePath))
             {
-                context.Trace.Writeline(item.ItemIdOrPath);
+                context.Trace.Writeline(item.FilePath);
             }
 
             context.DisplayDoneMessage = false;
@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Building.Commands
 
         public override void WriteHelp(HelpWriter helpWriter)
         {
-            helpWriter.Summary.Write("Lists the Sitecore items in the project.");
+            helpWriter.Summary.Write("Lists the files in the project.");
         }
     }
 }
