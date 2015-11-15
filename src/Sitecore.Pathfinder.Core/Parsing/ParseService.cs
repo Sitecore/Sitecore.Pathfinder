@@ -19,10 +19,11 @@ namespace Sitecore.Pathfinder.Parsing
     public class ParseService : IParseService
     {
         [ImportingConstructor]
-        public ParseService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ISnapshotService snapshotService, [ImportMany] [NotNull] [ItemNotNull] IEnumerable<IParser> parsers)
+        public ParseService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] ISnapshotService snapshotService, [ImportMany] [NotNull] [ItemNotNull] IEnumerable<IParser> parsers)
         {
             CompositionService = compositionService;
             Configuration = configuration;
+            Factory = factory;
             SnapshotService = snapshotService;
             Parsers = parsers;
         }
@@ -32,6 +33,9 @@ namespace Sitecore.Pathfinder.Parsing
 
         [NotNull]
         protected IConfiguration Configuration { get; }
+
+        [NotNull]
+        protected IFactoryService Factory { get; }
 
         [NotNull]
         [ItemNotNull]
@@ -72,7 +76,7 @@ namespace Sitecore.Pathfinder.Parsing
 
             var snapshot = SnapshotService.LoadSnapshot(snapshotParseContext, sourceFile);
 
-            var parseContext = CompositionService.Resolve<IParseContext>().With(project, snapshot);
+            var parseContext = Factory.ParseContext(project, snapshot);
 
             foreach (var parser in Parsers.OrderBy(p => p.Priority))
             {

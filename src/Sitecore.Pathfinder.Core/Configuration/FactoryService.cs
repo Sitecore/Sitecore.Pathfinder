@@ -3,12 +3,15 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Parsing.Items;
+using Sitecore.Pathfinder.Parsing.References;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Files;
 using Sitecore.Pathfinder.Projects.Items;
@@ -23,13 +26,37 @@ namespace Sitecore.Pathfinder.Configuration
     public class FactoryService : IFactoryService
     {
         [ImportingConstructor]
-        public FactoryService([NotNull] ICompositionService compositionService)
+        public FactoryService([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] IConsoleService console, [NotNull] IPipelineService pipelineService, [NotNull] IParseService parseService, [NotNull] IReferenceParserService referenceParser, [NotNull] IFileSystemService fileSystem)
         {
+            Configuration = configuration;
             CompositionService = compositionService;
+            Console = console;
+            PipelineService = pipelineService;
+            ParseService = parseService;
+            ReferenceParser = referenceParser;
+            FileSystem = fileSystem;
         }
 
         [NotNull]
         protected ICompositionService CompositionService { get; }
+
+        [NotNull]
+        protected IConfiguration Configuration { get; }
+
+        [NotNull]
+        protected IConsoleService Console { get; }
+
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
+
+        [NotNull]
+        protected IParseService ParseService { get; }
+
+        [NotNull]
+        protected IPipelineService PipelineService { get; }
+
+        [NotNull]
+        protected IReferenceParserService ReferenceParser { get; }
 
         public virtual BinFile BinFile(IProject project, ISnapshot snapshot, string filePath)
         {
@@ -64,6 +91,11 @@ namespace Sitecore.Pathfinder.Configuration
             return field;
         }
 
+        public FieldBuilder FieldBuilder()
+        {
+            return new FieldBuilder(this);
+        }
+
         public virtual FileReference FileReference(IProjectItem owner, SourceProperty<string> sourceSourceProperty)
         {
             return new FileReference(owner, sourceSourceProperty);
@@ -77,11 +109,6 @@ namespace Sitecore.Pathfinder.Configuration
         public ItemBuilder ItemBuilder()
         {
             return new ItemBuilder(this);
-        }
-
-        public FieldBuilder FieldBuilder()
-        {
-            return new FieldBuilder(this);
         }
 
         public virtual ItemParseContext ItemParseContext(IParseContext context, ItemParser itemParser, string databaseName, string parentItemPath, bool isExtern)
@@ -104,9 +131,14 @@ namespace Sitecore.Pathfinder.Configuration
             return new MediaFile(project, snapshot, databaseName, itemName, itemPath, filePath);
         }
 
+        public virtual IParseContext ParseContext(IProject project, ISnapshot snapshot)
+        {
+            return new ParseContext(Configuration, Console, this, PipelineService, ReferenceParser).With(project, snapshot);
+        }
+
         public virtual IProject Project(ProjectOptions projectOptions, List<string> sourceFileNames)
         {
-            return CompositionService.Resolve<IProject>().Load(projectOptions, sourceFileNames);
+            return new Project(CompositionService, Configuration, this, FileSystem, ParseService, PipelineService).Load(projectOptions, sourceFileNames);
         }
 
         public virtual ProjectOptions ProjectOptions(string projectDirectory, string databaseName)
@@ -136,8 +168,7 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual ISnapshot Snapshot(ISourceFile sourceFile)
         {
-            var snapshot = CompositionService.Resolve<Snapshot>().With(sourceFile);
-            return snapshot;
+            return new Snapshot().With(sourceFile);
         }
 
         public virtual ISourceFile SourceFile(IFileSystemService fileSystem, string sourceFileName, string projectFileName)

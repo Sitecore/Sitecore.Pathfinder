@@ -3,12 +3,10 @@
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Text;
-using Rainbow.Storage.Sc.Deserialization;
 using Rainbow.Storage.Yaml;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
-using Unicorn.Data.DataProvider;
 
 namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
 {
@@ -38,11 +36,14 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
         {
             base.With(sourceFile);
 
+            var formatter = new YamlSerializationFormatter(null, null);
+
             using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(contents)))
             {
-                using (var reader = new YamlReader(stream, 4096, false))
-                {
-                }
+                var metadata = formatter.ReadSerializedItemMetadata(stream, "unittest.yml");
+                var item = formatter.ReadSerializedItem(stream, "unittest.yml");
+
+                var i = item.Name;
             }
 
             return this;

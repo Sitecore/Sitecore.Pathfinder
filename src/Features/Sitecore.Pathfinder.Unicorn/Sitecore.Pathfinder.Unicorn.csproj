@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Languages\Unicorn\UnicornSnapshotLoader.cs" />
     <Compile Include="Languages\Unicorn\UnicornTextSnapshot.cs" />
+    <Compile Include="Parsing\Files\UnicornFileParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
