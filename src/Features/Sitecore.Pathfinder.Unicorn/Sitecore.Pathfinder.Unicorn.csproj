@@ -61,9 +61,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Languages\Unicorn\UnicornSnapshotLoader.cs" />
-    <Compile Include="Languages\Unicorn\UnicornTextSnapshot.cs" />
-    <Compile Include="Parsing\Files\UnicornFileParser.cs" />
+    <Compile Include="Languages\Unicorn\UnicornFileCompiler.cs" />
+    <Compile Include="Languages\Unicorn\UnicornFileEmitter.cs" />
+    <Compile Include="Languages\Unicorn\UnicornFileParser.cs" />
+    <Compile Include="Languages\Unicorn\UnicornFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -74,7 +75,12 @@
       <Project>{c674eebf-bbf6-4eda-af5b-a4d58d0be986}</Project>
       <Name>Sitecore.Pathfinder.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Sitecore.Pathfinder.Server\Sitecore.Pathfinder.Server.csproj">
+      <Project>{42808013-7a25-4c07-91fa-be4f7aa8e0b1}</Project>
+      <Name>Sitecore.Pathfinder.Server</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
