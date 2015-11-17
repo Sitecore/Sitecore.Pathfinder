@@ -1,9 +1,11 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.IO;
 using System.Linq;
 using Rainbow.Storage.Sc.Deserialization;
 using Rainbow.Storage.Yaml;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Projects;
 using Unicorn.Deserialization;
@@ -48,7 +50,15 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
                     serializedItem.DatabaseName = unicornFile.DatabaseName;
                 }
 
-                defaultDeserializer.Deserialize(serializedItem);
+                try
+                {
+                    defaultDeserializer.Deserialize(serializedItem);
+                }
+                catch (Exception ex)
+                {
+                    throw new RetryableEmitException(Texts.Failed_to_deserialize_item, unicornFile.Snapshots.First(), ex.Message);
+                }
+
             }
         }
     }

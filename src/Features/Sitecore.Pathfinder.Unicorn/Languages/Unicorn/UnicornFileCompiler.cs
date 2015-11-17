@@ -48,27 +48,33 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
                 foreach (var sharedField in serializedItem.SharedFields)
                 {
                     var field = context.Factory.Field(item);
-                    field.FieldName = sharedField.NameHint;
+
+                    if (!string.IsNullOrEmpty(sharedField.NameHint))
+                    {
+                        field.FieldName = sharedField.NameHint;
+                    }
+
+                    field.FieldId = sharedField.FieldId;
                     field.Value = sharedField.Value;
 
                     context.ReferenceParser.ParseReferences(item, field.ValueProperty);
                 }
 
-                foreach (var itemVersion in serializedItem.Versions)
+                foreach (var version in serializedItem.Versions)
                 {
-                    foreach (var fieldVersion in itemVersion.Fields)
+                    foreach (var versionedField in version.Fields)
                     {
                         var field = context.Factory.Field(item);
 
-                        if (!string.IsNullOrEmpty(fieldVersion.NameHint))
+                        if (!string.IsNullOrEmpty(versionedField.NameHint))
                         {
-                            field.FieldNameProperty.SetValue(fieldVersion.NameHint);
+                            field.FieldName = versionedField.NameHint;
                         }
 
-                        field.FieldId = fieldVersion.FieldId;
-                        field.Value = fieldVersion.Value;
-                        field.Language = itemVersion.Language.ToString();
-                        field.Version = itemVersion.VersionNumber;
+                        field.FieldId = versionedField.FieldId;
+                        field.Value = versionedField.Value;
+                        field.Language = version.Language.ToString();
+                        field.Version = version.VersionNumber;
 
                         context.ReferenceParser.ParseReferences(item, field.ValueProperty);
                     }
