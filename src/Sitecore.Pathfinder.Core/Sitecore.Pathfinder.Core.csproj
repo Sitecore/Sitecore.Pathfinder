@@ -121,6 +121,8 @@
     <Compile Include="Emitting\IEmitter.cs" />
     <Compile Include="Extensibility\ExtensionBase.cs" />
     <Compile Include="Extensibility\IExtension.cs" />
+    <Compile Include="Languages\Bin\BinFile.cs" />
+    <Compile Include="Languages\Bin\BinFileParser.cs" />
     <Compile Include="Languages\Templates\TemplateCompiler.cs" />
     <Compile Include="Compiling\FieldCompilers\FieldCompileContext.cs" />
     <Compile Include="Compiling\Compilers\CompilerBase.cs" />
@@ -254,14 +256,12 @@
     <Compile Include="Snapshots\SourceFile.cs" />
     <Compile Include="Parsing\ParseService.cs" />
     <Compile Include="Parsing\ParseContext.cs" />
-    <Compile Include="Languages\Bin\BinFileParser.cs" />
     <Compile Include="Parsing\ParserBase.cs" />
     <Compile Include="Languages\Content\ContentFileParser.cs" />
     <Compile Include="Parsing\IParser.cs" />
     <Compile Include="Parsing\IParseContext.cs" />
     <Compile Include="Projects\Items\SerializationFile.cs" />
     <Compile Include="Projects\Files\File.cs" />
-    <Compile Include="Languages\Bin\BinFile.cs" />
     <Compile Include="Languages\Content\ContentFile.cs" />
     <Compile Include="Projects\Items\Field.cs" />
     <Compile Include="Projects\Items\ItemBase.cs" />
