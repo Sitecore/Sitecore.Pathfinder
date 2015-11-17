@@ -11,7 +11,7 @@ using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Building.Deploying
 {
-    public class WatchProject : RequestTaskBase
+    public class WatchProject : RequestBuildTaskBase
     {
         [NotNull]
         private static readonly object SyncObject = new object();

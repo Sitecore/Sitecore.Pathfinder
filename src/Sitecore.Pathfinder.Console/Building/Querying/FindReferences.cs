@@ -7,7 +7,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Building.Querying
 {
-    public class FindReferences : QueryTaskBase
+    public class FindReferences : QueryBuildTaskBase
     {
         public FindReferences() : base("find-references")
         {

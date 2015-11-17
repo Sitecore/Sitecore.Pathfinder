@@ -5,7 +5,7 @@ using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Building.Commands
 {
-    public class ListItems : TaskBase
+    public class ListItems : BuildTaskBase
     {
         public ListItems() : base("list-items")
         {

@@ -9,7 +9,7 @@ using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Building.Initializing
 {
-    public class Help : TaskBase
+    public class Help : BuildTaskBase
     {
         public Help() : base("help")
         {

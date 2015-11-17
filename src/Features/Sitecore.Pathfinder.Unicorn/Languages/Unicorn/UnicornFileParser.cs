@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
 
         public override void Parse(IParseContext context)
         {
-            var unicornFile = new UnicornFile(context.Project, context.Snapshot, context.FilePath);
+            var unicornFile = new UnicornFile(context.Project, context.Snapshot, context.FilePath, context.DatabaseName);
             context.Project.AddOrMerge(unicornFile);
         }
     }

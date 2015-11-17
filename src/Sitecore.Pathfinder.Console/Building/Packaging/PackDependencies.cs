@@ -10,7 +10,7 @@ using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Building.Packaging
 {
-    public class PackDependencies : TaskBase
+    public class PackDependencies : BuildTaskBase
     {
         public PackDependencies() : base("pack-dependencies")
         {

@@ -1,12 +1,12 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using Sitecore.Pathfinder.Diagnostics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using Sitecore.Pathfinder.Compiling.FieldCompilers;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -24,6 +24,18 @@ namespace Sitecore.Pathfinder.Projects.Items
 
             ValueProperty.PropertyChanged += HandlePropertyChanged;
         }
+
+        [NotNull]
+        public string CompiledValue { get; private set; }
+
+        public Guid FieldId
+        {
+            get { return FieldIdProperty.GetValue(); }
+            set { FieldIdProperty.SetValue(value); }
+        }
+
+        [NotNull]
+        public SourceProperty<Guid> FieldIdProperty { get; } = new SourceProperty<Guid>("Id", Guid.Empty);
 
         [NotNull]
         public string FieldName
@@ -51,9 +63,6 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         [NotNull]
         public SourceProperty<string> LanguageProperty { get; } = new SourceProperty<string>("Language", string.Empty);
-
-        [NotNull]
-        public string CompiledValue { get; private set; }
 
         [ItemNotNull]
         public ICollection<ITextNode> SourceTextNodes { get; } = new List<ITextNode>();
@@ -90,11 +99,6 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public SourceProperty<int> VersionProperty { get; } = new SourceProperty<int>("Version", 0);
 
-        public void Invalidate()
-        {
-            IsCompiled = false;
-        }
-
         public void Compile([NotNull] IFieldCompileContext context)
         {
             if (IsCompiled)
@@ -113,6 +117,11 @@ namespace Sitecore.Pathfinder.Projects.Items
                     break;
                 }
             }
+        }
+
+        public void Invalidate()
+        {
+            IsCompiled = false;
         }
 
         private void HandlePropertyChanged([NotNull] object sender, [NotNull] PropertyChangedEventArgs e)

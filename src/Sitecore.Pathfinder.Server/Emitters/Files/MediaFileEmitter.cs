@@ -9,10 +9,11 @@ using Sitecore.Data.Managers;
 using Sitecore.IO;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitters.Items;
+using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Languages.Media;
 using Sitecore.Pathfinder.Projects;
-using Sitecore.Pathfinder.Projects.Files;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Resources.Media;
 
@@ -52,15 +53,6 @@ namespace Sitecore.Pathfinder.Emitters.Files
         protected virtual void CopyFile([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] MediaFile mediaFile)
         {
             var destinationFileName = FileUtil.MapPath(mediaFile.FilePath);
-
-            if (context.FileSystem.FileExists(destinationFileName))
-            {
-                context.RegisterUpdatedFile(mediaFile, destinationFileName);
-            }
-            else
-            {
-                context.RegisterAddedFile(mediaFile, destinationFileName);
-            }
 
             context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName) ?? string.Empty);
             context.FileSystem.Copy(mediaFile.Snapshots.First().SourceFile.AbsoluteFileName, destinationFileName, context.ForceUpdate);

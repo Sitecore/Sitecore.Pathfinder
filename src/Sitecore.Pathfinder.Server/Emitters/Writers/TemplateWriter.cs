@@ -8,6 +8,7 @@ using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.Templates;
@@ -56,8 +57,6 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                 {
                     return null;
                 }
-
-                context.RegisterAddedItem(Item);
             }
             else
             {
@@ -102,7 +101,6 @@ namespace Sitecore.Pathfinder.Emitters.Writers
 
                 if (!found)
                 {
-                    context.RegisterDeletedItem(child);
                     child.Recycle();
                 }
             }
@@ -141,7 +139,6 @@ namespace Sitecore.Pathfinder.Emitters.Writers
 
                 if (!found)
                 {
-                    context.RegisterDeletedItem(child);
                     child.Recycle();
                 }
             }
@@ -268,8 +265,6 @@ namespace Sitecore.Pathfinder.Emitters.Writers
 
                     sortorder = lastSortorder + ((nextSortorder - lastSortorder) / 2);
 
-                    context.RegisterUpdatedItem(field.Item);
-
                     using (new EditContext(field.Item))
                     {
                         field.Item.Editing.EndEdit();
@@ -314,8 +309,6 @@ namespace Sitecore.Pathfinder.Emitters.Writers
 
                     sortorder = lastSortorder + ((nextSortorder - lastSortorder) / 2);
 
-                    context.RegisterUpdatedItem(section.Item);
-
                     using (new EditContext(section.Item))
                     {
                         section.Item.Appearance.Sortorder = sortorder;
@@ -330,7 +323,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
 
         protected virtual void WriteField([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] TemplateSectionWriter templateSectionWriter, [Diagnostics.NotNull] TemplateFieldWriter templateFieldWriter, [Diagnostics.NotNull] [ItemNotNull] IEnumerable<Data.Templates.TemplateField> inheritedFields)
         {
-            if (inheritedFields.Any(f => string.Compare(f.Name, templateFieldWriter.TemplateField.FieldName, StringComparison.OrdinalIgnoreCase) == 0))
+            if (inheritedFields.Any(f => string.Equals(f.Name, templateFieldWriter.TemplateField.FieldName, StringComparison.OrdinalIgnoreCase)))
             {
                 return;
             }
@@ -347,10 +340,6 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                 }
 
                 templateFieldWriter.Item = item;
-            }
-            else
-            {
-                context.RegisterUpdatedItem(item);
             }
 
             if (templateSectionWriter.Item != null && item.ParentID != templateSectionWriter.Item.ID)
@@ -389,11 +378,6 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                 }
 
                 item.Appearance.Sortorder = templateFieldWriter.TemplateField.SortOrder;
-            }
-
-            if (isNew)
-            {
-                context.RegisterAddedItem(item);
             }
         }
 
@@ -465,10 +449,6 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                     throw new EmitException(Texts.Could_not_create_section_item, TraceHelper.GetTextNode(Template.ItemNameProperty));
                 }
             }
-            else
-            {
-                context.RegisterUpdatedItem(templateSectionWriter.Item);
-            }
 
             if (Item != null && templateSectionWriter.Item.ParentID != Item.ID)
             {
@@ -492,11 +472,6 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             {
                 WriteField(context, templateSectionWriter, fieldWriter, inheritedFields);
             }
-
-            if (isNew)
-            {
-                context.RegisterAddedItem(templateSectionWriter.Item);
-            }
         }
 
         protected virtual void WriteTemplate([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] [ItemNotNull] IEnumerable<Data.Templates.TemplateField> inheritedFields)
@@ -507,10 +482,8 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                 return;
             }
 
-            context.RegisterUpdatedItem(item);
-
             // move
-            if (string.Compare(item.Paths.Path, Template.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) != 0 && string.Compare(item.ID.ToString(), Template.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) != 0)
+            if (!string.Equals(item.Paths.Path, Template.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) && !string.Equals(item.ID.ToString(), Template.ItemIdOrPath, StringComparison.OrdinalIgnoreCase))
             {
                 var parentItemPath = PathHelper.GetItemParentPath(Template.ItemIdOrPath);
 

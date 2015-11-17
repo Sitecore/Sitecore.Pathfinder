@@ -66,6 +66,22 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\src\Features\Sitecore.Pathfinder.Unicorn\bin\Debug\Rainbow.dll">
+      <Link>sitecore.tools\files\extensions\unicorn\Rainbow.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\src\Features\Sitecore.Pathfinder.Unicorn\bin\Debug\Rainbow.Storage.Sc.dll">
+      <Link>sitecore.tools\files\extensions\unicorn\Rainbow.Storage.Sc.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\src\Features\Sitecore.Pathfinder.Unicorn\bin\Debug\Rainbow.Storage.Yaml.dll">
+      <Link>sitecore.tools\files\extensions\unicorn\Rainbow.Storage.Yaml.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\src\Features\Sitecore.Pathfinder.Unicorn\bin\Debug\Sitecore.Pathfinder.Unicorn.dll">
+      <Link>sitecore.tools\files\extensions\unicorn\Sitecore.Pathfinder.Unicorn.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="content\master\sitecore\content\Home\YamlContentItem.master.content.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -98,6 +114,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="includes\PlaceholderItem.include.item.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="content\master\sitecore\content\Home\YmlItem.yml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="includes\Field.include.item.json">

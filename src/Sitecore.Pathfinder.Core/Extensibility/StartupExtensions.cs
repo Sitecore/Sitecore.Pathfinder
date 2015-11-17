@@ -17,17 +17,25 @@ namespace Sitecore.Pathfinder.Extensibility
 {
     public static class StartupExtensions
     {
-        [CanBeNull]
-        public static CompositionContainer RegisterCompositionService([NotNull] this Startup startup, [NotNull] IConfiguration configuration, [NotNull] string projectDirectory, [NotNull] Assembly callingAssembly)
+        [Flags]
+        public enum CompositionOptions
         {
-            return RegisterCompositionService(startup, configuration, projectDirectory, callingAssembly, Enumerable.Empty<string>());
+            None = 0x0,
+
+            AddWebsiteAssemblyResolver = 0x01
         }
 
         [CanBeNull]
-        public static CompositionContainer RegisterCompositionService([NotNull] this Startup startup, [NotNull] IConfiguration configuration, [NotNull] string projectDirectory, [NotNull] Assembly callingAssembly, [NotNull][ItemNotNull] IEnumerable<string> additionalAssemblyFileNames)
+        public static CompositionContainer RegisterCompositionService([NotNull] this Startup startup, [NotNull] IConfiguration configuration, [NotNull] string projectDirectory, [NotNull] Assembly callingAssembly, [NotNull] [ItemNotNull] IEnumerable<string> additionalAssemblyFileNames, CompositionOptions options)
         {
             var toolsDirectory = configuration.GetString(Constants.Configuration.ToolsDirectory);
-            
+
+            if (options.HasFlag(CompositionOptions.AddWebsiteAssemblyResolver))
+            {
+                // add an assembly resolver that points to the website/bin directory - this will load files like Sitecore.Kernel.dll
+                AppDomain.CurrentDomain.AssemblyResolve += (sender, args) => ResolveAssembly(args, configuration);
+            }
+
             // add application assemblies
             var coreAssembly = typeof(Constants).Assembly;
 
@@ -37,23 +45,27 @@ namespace Sitecore.Pathfinder.Extensibility
                 new AssemblyCatalog(callingAssembly)
             };
 
-            // add additional assemblies - this is used in Sitecore.Pathfinder.Server to load assemblies from the /bin folder
-            foreach (var additionalAssemblyFileName in additionalAssemblyFileNames)
+            var disableExtensions = configuration.GetBool("disable-extensions");
+            if (!disableExtensions)
             {
-                catalogs.Add(new AssemblyCatalog(additionalAssemblyFileName));
+                // add additional assemblies - this is used in Sitecore.Pathfinder.Server to load assemblies from the /bin folder
+                foreach (var additionalAssemblyFileName in additionalAssemblyFileNames)
+                {
+                    catalogs.Add(new AssemblyCatalog(additionalAssemblyFileName));
+                }
+
+                // add core extensions
+                var coreExtensionsDirectory = Path.Combine(toolsDirectory, "files\\extensions");
+                var coreAssemblyFileName = Path.Combine(coreExtensionsDirectory, "Sitecore.Pathfinder.Core.Extensions.dll");
+                AddAssembliesFromDirectory(catalogs, coreAssemblyFileName, coreExtensionsDirectory);
+                AddDynamicAssembly(catalogs, toolsDirectory, coreAssemblyFileName, coreExtensionsDirectory);
+
+                // add projects extensions
+                var projectExtensionsDirectory = PathHelper.Combine(projectDirectory, configuration.GetString(Constants.Configuration.ProjectExtensionsDirectory));
+                var projectAssemblyFileName = Path.Combine(projectExtensionsDirectory, configuration.GetString(Constants.Configuration.ProjectExtensionsAssemblyFileName));
+                AddAssembliesFromDirectory(catalogs, projectAssemblyFileName, projectExtensionsDirectory);
+                AddDynamicAssembly(catalogs, toolsDirectory, projectAssemblyFileName, projectExtensionsDirectory);
             }
-
-            // add core extensions
-            var coreExtensionsDirectory = Path.Combine(toolsDirectory, "files\\extensions");
-            var coreAssemblyFileName = Path.Combine(coreExtensionsDirectory, "Sitecore.Pathfinder.Core.Extensions.dll");
-            AddAssembliesFromDirectory(catalogs, coreAssemblyFileName, coreExtensionsDirectory);
-            AddDynamicAssembly(catalogs, toolsDirectory, coreAssemblyFileName, coreExtensionsDirectory);
-
-            // add projects extensions
-            var projectExtensionsDirectory = PathHelper.Combine(projectDirectory, configuration.GetString(Constants.Configuration.ProjectExtensionsDirectory));
-            var projectAssemblyFileName = Path.Combine(projectExtensionsDirectory, configuration.GetString(Constants.Configuration.ProjectExtensionsAssemblyFileName));
-            AddAssembliesFromDirectory(catalogs, projectAssemblyFileName, projectExtensionsDirectory);
-            AddDynamicAssembly(catalogs, toolsDirectory, projectAssemblyFileName, projectExtensionsDirectory);
 
             // build composition graph
             var exportProvider = new CatalogExportProvider(new AggregateCatalog(catalogs));
@@ -74,7 +86,7 @@ namespace Sitecore.Pathfinder.Extensibility
                 return;
             }
 
-            foreach (var fileName in Directory.GetFiles(directory, "*.dll", SearchOption.AllDirectories))
+            foreach (var fileName in Directory.GetFiles(directory, "Sitecore.Pathfinder.*.dll", SearchOption.AllDirectories))
             {
                 if (!string.Equals(fileName, assemblyFileName, StringComparison.OrdinalIgnoreCase))
                 {
@@ -93,12 +105,14 @@ namespace Sitecore.Pathfinder.Extensibility
             var collectionsFileName = Path.Combine(toolsDirectory, "System.Collections.Immutable");
             if (!File.Exists(collectionsFileName))
             {
+                // todo: report missing assembly
                 return;
             }
 
             var codeAnalysisFileName = Path.Combine(toolsDirectory, "Microsoft.CodeAnalysis.dll");
             if (!File.Exists(codeAnalysisFileName))
             {
+                // todo: report missing assembly
                 return;
             }
 
@@ -115,6 +129,27 @@ namespace Sitecore.Pathfinder.Extensibility
             {
                 catalogs.Add(new AssemblyCatalog(assembly));
             }
+        }
+
+        [CanBeNull]
+        private static Assembly ResolveAssembly([NotNull] ResolveEventArgs args, [NotNull] IConfiguration configuration)
+        {
+            var websiteDirectory = configuration.GetString(Constants.Configuration.WebsiteDirectory);
+
+            var fileName = args.Name;
+            var n = fileName.IndexOf(',');
+            if (n >= 0)
+            {
+                fileName = fileName.Left(n).Trim();
+            }
+
+            if (!fileName.EndsWith(".dll", StringComparison.OrdinalIgnoreCase))
+            {
+                fileName += ".dll";
+            }
+
+            fileName = Path.Combine(websiteDirectory, "bin\\" + fileName);
+            return File.Exists(fileName) ? Assembly.LoadFrom(fileName) : null;
         }
     }
 }

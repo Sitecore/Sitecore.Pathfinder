@@ -5,6 +5,7 @@ using System.Reflection;
 using Sitecore.Exceptions;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Emitters;
+using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 

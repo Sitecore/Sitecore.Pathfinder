@@ -7,7 +7,7 @@ using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Building.Deploying
 {
-    public class CopyDependencies : TaskBase
+    public class CopyDependencies : BuildTaskBase
     {
         public CopyDependencies() : base("copy-dependencies")
         {

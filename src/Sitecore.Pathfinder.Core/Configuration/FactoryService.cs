@@ -9,13 +9,15 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Languages.Bin;
+using Sitecore.Pathfinder.Languages.Content;
+using Sitecore.Pathfinder.Languages.Media;
+using Sitecore.Pathfinder.Languages.Renderings;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Parsing.Items;
 using Sitecore.Pathfinder.Parsing.References;
 using Sitecore.Pathfinder.Projects;
-using Sitecore.Pathfinder.Projects.Files;
 using Sitecore.Pathfinder.Projects.Items;
-using Sitecore.Pathfinder.Projects.Layouts;
 using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
@@ -25,15 +27,19 @@ namespace Sitecore.Pathfinder.Configuration
     [Export(typeof(IFactoryService))]
     public class FactoryService : IFactoryService
     {
+        [CanBeNull]
+        private IParseService _parseService;
+
+        [CanBeNull]
+        private IReferenceParserService _referenceParser;
+
         [ImportingConstructor]
-        public FactoryService([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] IConsoleService console, [NotNull] IPipelineService pipelineService, [NotNull] IParseService parseService, [NotNull] IReferenceParserService referenceParser, [NotNull] IFileSystemService fileSystem)
+        public FactoryService([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] IConsoleService console, [NotNull] IPipelineService pipelineService, [NotNull] IFileSystemService fileSystem)
         {
             Configuration = configuration;
             CompositionService = compositionService;
             Console = console;
             PipelineService = pipelineService;
-            ParseService = parseService;
-            ReferenceParser = referenceParser;
             FileSystem = fileSystem;
         }
 
@@ -50,13 +56,13 @@ namespace Sitecore.Pathfinder.Configuration
         protected IFileSystemService FileSystem { get; }
 
         [NotNull]
-        protected IParseService ParseService { get; }
+        protected IParseService ParseService => _parseService ?? (_parseService = CompositionService.Resolve<IParseService>());
 
         [NotNull]
         protected IPipelineService PipelineService { get; }
 
         [NotNull]
-        protected IReferenceParserService ReferenceParser { get; }
+        protected IReferenceParserService ReferenceParser => _referenceParser ?? (_referenceParser = CompositionService.Resolve<IReferenceParserService>());
 
         public virtual BinFile BinFile(IProject project, ISnapshot snapshot, string filePath)
         {
@@ -83,6 +89,11 @@ namespace Sitecore.Pathfinder.Configuration
             return new Field(item, textNode);
         }
 
+        public Field Field(Item item)
+        {
+            return new Field(item, Snapshots.TextNode.Empty);
+        }
+
         public Field Field(Item item, ITextNode textNode, string fieldName, string fieldValue)
         {
             var field = new Field(item, textNode);
@@ -101,9 +112,14 @@ namespace Sitecore.Pathfinder.Configuration
             return new FileReference(owner, sourceSourceProperty);
         }
 
-        public virtual Item Item(IProject project, Guid guid, ITextNode textNode, string databaseName, string itemName, string itemIdOrPath, string templateIdOrPath)
+        public virtual Item Item(IProject project, ITextNode textNode, Guid guid, string databaseName, string itemName, string itemIdOrPath, string templateIdOrPath)
         {
-            return new Item(project, guid, textNode, databaseName, itemName, itemIdOrPath, templateIdOrPath);
+            return new Item(project, textNode, guid, databaseName, itemName, itemIdOrPath, templateIdOrPath);
+        }
+
+        public Item Item(IProject project, ISnapshot snapshot, Guid guid, string databaseName, string itemName, string itemIdOrPath, string templateIdOrPath)
+        {
+            return new Item(project, new SnapshotTextNode(snapshot), guid, databaseName, itemName, itemIdOrPath, templateIdOrPath);
         }
 
         public ItemBuilder ItemBuilder()
@@ -178,7 +194,7 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual Template Template(IProject project, Guid guid, ITextNode textNode, string databaseName, string itemName, string itemIdOrPath)
         {
-            return new Template(project, guid, textNode, databaseName, itemName, itemIdOrPath);
+            return new Template(project, textNode, guid, databaseName, itemName, itemIdOrPath);
         }
 
         public virtual TemplateField TemplateField(Template template, ITextNode templateFieldTextNode)

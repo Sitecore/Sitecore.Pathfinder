@@ -6,7 +6,6 @@ using Rainbow.Storage.Yaml;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
-using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
 {
@@ -25,23 +24,22 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
                 return;
             }
 
-            var formatter = new YamlSerializationFormatter(null, null);
+            var snapshot = unicornFile.Snapshots.First();
 
-            using (var stream = new FileStream(unicornFile.FilePath, FileMode.Open))
+            // todo: use real Unicorn configuration instead of hacking it
+            var formatter = new YamlSerializationFormatter(null, new AllFieldFilter());
+            using (var stream = new FileStream(snapshot.SourceFile.AbsoluteFileName, FileMode.Open))
             {
                 var serializedItem = formatter.ReadSerializedItem(stream, unicornFile.ShortName);
 
-                var snapshot = unicornFile.Snapshots.First();
-                var snapshotTextNode = new SnapshotTextNode(snapshot);
-
                 var guid = serializedItem.Id;
-                var databaseName = serializedItem.DatabaseName;
+                var databaseName = serializedItem.DatabaseName ?? unicornFile.DatabaseName;
                 var itemIdOrPath = serializedItem.Path;
                 var itemName = serializedItem.Name;
                 var templateIdOrPath = serializedItem.TemplateId.Format();
 
-                var item = context.Factory.Item(unicornFile.Project, guid, snapshotTextNode, databaseName, itemName, itemIdOrPath, templateIdOrPath);
-                item.ItemNameProperty.AddSourceTextNode(new FileNameTextNode(itemName, snapshot));
+                var item = context.Factory.Item(unicornFile.Project, snapshot, guid, databaseName, itemName, itemIdOrPath, templateIdOrPath);
+                item.ItemNameProperty.AddSourceTextNode(snapshot);
                 item.IsEmittable = false;
                 item.IsExtern = false;
 
@@ -49,9 +47,9 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
 
                 foreach (var sharedField in serializedItem.SharedFields)
                 {
-                    var field = context.Factory.Field(item, TextNode.Empty);
-                    field.FieldNameProperty.SetValue(sharedField.NameHint);
-                    field.ValueProperty.SetValue(sharedField.Value);
+                    var field = context.Factory.Field(item);
+                    field.FieldName = sharedField.NameHint;
+                    field.Value = sharedField.Value;
 
                     context.ReferenceParser.ParseReferences(item, field.ValueProperty);
                 }
@@ -60,11 +58,17 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
                 {
                     foreach (var fieldVersion in itemVersion.Fields)
                     {
-                        var field = context.Factory.Field(item, TextNode.Empty);
-                        field.FieldNameProperty.SetValue(fieldVersion.NameHint);
-                        field.ValueProperty.SetValue(fieldVersion.Value);
-                        field.LanguageProperty.SetValue(itemVersion.Language.ToString());
-                        field.VersionProperty.SetValue(itemVersion.VersionNumber);
+                        var field = context.Factory.Field(item);
+
+                        if (!string.IsNullOrEmpty(fieldVersion.NameHint))
+                        {
+                            field.FieldNameProperty.SetValue(fieldVersion.NameHint);
+                        }
+
+                        field.FieldId = fieldVersion.FieldId;
+                        field.Value = fieldVersion.Value;
+                        field.Language = itemVersion.Language.ToString();
+                        field.Version = itemVersion.VersionNumber;
 
                         context.ReferenceParser.ParseReferences(item, field.ValueProperty);
                     }

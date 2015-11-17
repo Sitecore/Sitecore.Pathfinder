@@ -4,9 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects
@@ -88,6 +90,11 @@ namespace Sitecore.Pathfinder.Projects
 
             SourceTextNodes.Add(textNode);
             return true;
+        }
+
+        public virtual bool AddSourceTextNode([NotNull] ISnapshot snapshot)
+        {
+            return AddSourceTextNode(new FileNameTextNode(PathHelper.GetFileNameWithoutExtensions(snapshot.SourceFile.AbsoluteFileName), snapshot));
         }
 
         [NotNull]

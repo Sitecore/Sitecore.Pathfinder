@@ -18,7 +18,7 @@ namespace Sitecore.Pathfinder.Building
         private Stopwatch _stopwatch;
 
         [ImportingConstructor]
-        public Build([NotNull] ICompositionService compositionService, [NotNull] IConfigurationService configurationService, [NotNull] ITraceService trace, [ImportMany] [NotNull] [ItemNotNull] IEnumerable<ITask> tasks)
+        public Build([NotNull] ICompositionService compositionService, [NotNull] IConfigurationService configurationService, [NotNull] ITraceService trace, [ImportMany] [NotNull] [ItemNotNull] IEnumerable<IBuildTask> tasks)
         {
             CompositionService = compositionService;
             ConfigurationService = configurationService;
@@ -28,7 +28,7 @@ namespace Sitecore.Pathfinder.Building
 
         [NotNull]
         [ItemNotNull]
-        public IEnumerable<ITask> Tasks { get; }
+        public IEnumerable<IBuildTask> Tasks { get; }
 
         [NotNull]
         protected ICompositionService CompositionService { get; }

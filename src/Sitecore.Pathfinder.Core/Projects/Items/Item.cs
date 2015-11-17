@@ -19,12 +19,12 @@ namespace Sitecore.Pathfinder.Projects.Items
     public class Item : ItemBase
     {
         [NotNull]
-        public static readonly Item Empty = new Item(Projects.Project.Empty, new Guid("{935B8D6C-D25A-48B8-8167-2C0443D77027}"), TextNode.Empty, "emptydatabase", string.Empty, string.Empty, string.Empty);
+        public static readonly Item Empty = new Item(Projects.Project.Empty, TextNode.Empty, new Guid("{935B8D6C-D25A-48B8-8167-2C0443D77027}"), "emptydatabase", string.Empty, string.Empty, string.Empty);
 
         [CanBeNull]
         private Template _template;
 
-        public Item([NotNull] IProject project, Guid guid, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath) : base(project, guid, textNode, databaseName, itemName, itemIdOrPath)
+        public Item([NotNull] IProject project, [NotNull] ITextNode textNode, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath) : base(project, textNode, guid, databaseName, itemName, itemIdOrPath)
         {
             TemplateIdOrPath = templateIdOrPath;
         }

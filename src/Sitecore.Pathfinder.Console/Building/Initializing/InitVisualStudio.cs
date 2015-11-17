@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Sitecore.Pathfinder.Building.Initializing
 {
-    public class InitVisualStudio : TaskBase
+    public class InitVisualStudio : BuildTaskBase
     {
         public InitVisualStudio() : base("init-visualstudio")
         {

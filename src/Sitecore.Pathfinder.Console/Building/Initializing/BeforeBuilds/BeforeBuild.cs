@@ -1,23 +1,30 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
 {
-    public class BeforeBuild : TaskBase
+    public class BeforeBuild : BuildTaskBase
     {
         [ImportingConstructor]
-        public BeforeBuild([NotNull] IPipelineService pipelineService) : base("before-build")
+        public BeforeBuild([NotNull] IPipelineService pipelineService, [ImportMany] [NotNull] [ItemNotNull] IEnumerable<IExtension> extensions) : base("before-build")
         {
             PipelineService = pipelineService;
+            Extensions = extensions;
         }
+
+        [NotNull]
+        [ItemNotNull]
+        protected IEnumerable<IExtension> Extensions { get; }
 
         [NotNull]
         protected IPipelineService PipelineService { get; }
@@ -82,6 +89,8 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
 
             UpdateConfigFile(context, toolsDirectory, websiteDirectory);
 
+            UpdateExtensions(context);
+
             PipelineService.Resolve<BeforeBuildPipeline>().Execute(context);
         }
 
@@ -102,6 +111,14 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
             if (!targetFileInfo.Exists || sourceFileInfo.Length != targetFileInfo.Length)
             {
                 context.FileSystem.Copy(sourceFileName, targetFileName);
+            }
+        }
+
+        protected virtual void UpdateExtensions([NotNull] IBuildContext context)
+        {
+            foreach (var extension in Extensions)
+            {
+                extension.UpdateWebsiteFiles(context);
             }
         }
 

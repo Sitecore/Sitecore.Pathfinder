@@ -1,7 +1,7 @@
 {
     // wwwroot points to the base directory of the website
     // The wwwroot directory must contain a 'Data' and a 'Website' folder
-    "website-directory": "c:\\inetpub\\wwwroot\\Sitecore.Default\\Website",
+    "website-directory": "e:\\inetpub\\wwwroot\\Pathfinder\\Website",
     "data-folder-directory": "c:\\inetpub\\wwwroot\\Sitecore.Default\\Data",
     "hostname": "http://sitecore.default",
 

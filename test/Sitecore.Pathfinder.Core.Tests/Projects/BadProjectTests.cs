@@ -26,9 +26,9 @@ namespace Sitecore.Pathfinder.Projects
             var item = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/XmlItem") as Item;
             Assert.IsNotNull(item);
 
-            var diagnostic = Project.Diagnostics.FirstOrDefault(d => d.Text == "Reference not found: /sitecore/media library/badlink");
+            var diagnostic = Project.Diagnostics.FirstOrDefault(d => d.Text == "Item path reference not found: /sitecore/media library/badlink");
             Assert.IsNotNull(diagnostic);
-            Assert.AreEqual(Severity.Warning, diagnostic.Severity);
+            Assert.AreEqual(Severity.Error, diagnostic.Severity);
             Assert.AreEqual(3, diagnostic.Span.LineNumber);
             Assert.AreEqual(10, diagnostic.Span.LinePosition);
             Assert.AreEqual(5, diagnostic.Span.Length);

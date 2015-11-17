@@ -7,7 +7,7 @@ using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Building.Initializing
 {
-    public class SynchronizeWebsite : RequestTaskBase
+    public class SynchronizeWebsite : RequestBuildTaskBase
     {
         public SynchronizeWebsite() : base("sync-website")
         {

@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Sitecore.Pathfinder.Building.Initializing
 {
-    public class InitAtom : TaskBase
+    public class InitAtom : BuildTaskBase
     {
         public InitAtom() : base("init-atom")
         {

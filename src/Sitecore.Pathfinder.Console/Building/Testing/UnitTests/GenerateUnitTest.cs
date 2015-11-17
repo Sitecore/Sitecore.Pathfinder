@@ -7,7 +7,7 @@ using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Building.Testing.UnitTests
 {
-    public class GenerateUnitTest : TaskBase
+    public class GenerateUnitTest : BuildTaskBase
     {
         public GenerateUnitTest() : base("generate-unittests")
         {

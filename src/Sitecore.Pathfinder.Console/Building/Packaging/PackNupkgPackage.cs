@@ -10,7 +10,7 @@ using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Building.Packaging
 {
-    public class PackNupkgPackage : TaskBase
+    public class PackNupkgPackage : BuildTaskBase
     {
         public PackNupkgPackage() : base("pack-nuget")
         {

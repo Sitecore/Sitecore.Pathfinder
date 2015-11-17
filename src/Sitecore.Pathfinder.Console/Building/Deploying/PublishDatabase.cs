@@ -6,7 +6,7 @@ using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Building.Deploying
 {
-    public class PublishDatabase : RequestTaskBase
+    public class PublishDatabase : RequestBuildTaskBase
     {
         public PublishDatabase() : base("publish-database")
         {

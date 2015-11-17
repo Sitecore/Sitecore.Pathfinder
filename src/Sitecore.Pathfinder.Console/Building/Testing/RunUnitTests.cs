@@ -10,7 +10,7 @@ namespace Sitecore.Pathfinder.Building.Testing
 {
     using System.Collections.Generic;
 
-    public class RunUnitTests : RequestTaskBase
+    public class RunUnitTests : RequestBuildTaskBase
     {
         public RunUnitTests() : base("run-unittests")
         {

@@ -5,9 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Languages.Renderings;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
-using Sitecore.Pathfinder.Projects.Layouts;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Compiling.FieldCompilers

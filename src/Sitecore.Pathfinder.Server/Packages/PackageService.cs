@@ -18,6 +18,7 @@ using Sitecore.IO;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitters;
+using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Packages.Packages;
 using Sitecore.SecurityModel;

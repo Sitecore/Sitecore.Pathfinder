@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Projects.Items
     [DebuggerDisplay("{GetType().Name,nq}: {ItemIdOrPath}")]
     public abstract class ItemBase : ProjectItem, IHasSourceTextNodes
     {
-        protected ItemBase([NotNull] IProject project, Guid guid, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, new ProjectItemUri(databaseName, guid), textNode.Snapshot)
+        protected ItemBase([NotNull] IProject project, [NotNull] ITextNode textNode, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, textNode.Snapshot, new ProjectItemUri(databaseName, guid))
         {
             DatabaseName = databaseName;
             ItemName = itemName;

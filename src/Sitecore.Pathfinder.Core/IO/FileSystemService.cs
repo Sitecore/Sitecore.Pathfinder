@@ -129,13 +129,22 @@ namespace Sitecore.Pathfinder.IO
             {
                 foreach (var entry in zip.Entries)
                 {
-                    if (entry.FullName.EndsWith("/"))
+                    try
                     {
-                        Directory.CreateDirectory(Path.Combine(destinationDirectory, entry.FullName));
+                        if (entry.FullName.EndsWith("/"))
+                        {
+                            Directory.CreateDirectory(Path.Combine(destinationDirectory, entry.FullName));
+                        }
+                        else
+                        {
+                            var fileName = Path.Combine(destinationDirectory, entry.FullName);
+                            Directory.CreateDirectory(Path.GetDirectoryName(fileName) ?? string.Empty);
+                            entry.ExtractToFile(fileName, true);
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        entry.ExtractToFile(Path.Combine(destinationDirectory, entry.FullName), true);
+                        Console.WriteLine(ex.Message);
                     }
                 }
             }

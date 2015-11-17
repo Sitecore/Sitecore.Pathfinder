@@ -9,6 +9,8 @@ using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Emitting;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -62,11 +64,6 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             if (item == null)
             {
                 item = CreateNewItem(context, database, templateItem);
-                context.RegisterAddedItem(item);
-            }
-            else
-            {
-                context.RegisterUpdatedItem(item);
             }
 
             UpdateItem(context, item, templateItem);
@@ -176,7 +173,13 @@ namespace Sitecore.Pathfinder.Emitters.Writers
 
                 foreach (var field in Fields.Where(i => string.IsNullOrEmpty(i.Language) && i.Version == 0))
                 {
-                    SetFieldValue(item, field.FieldName, field.DatabaseValue);
+                    var fieldName = field.FieldName;
+                    if (string.IsNullOrEmpty(fieldName))
+                    {
+                        fieldName = field.FieldId.Format();
+                    }
+
+                    SetFieldValue(item, fieldName, field.DatabaseValue);
                 }
             }
 
@@ -203,7 +206,13 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                     versionedItem.Fields.ReadAll();
                 }
 
-                SetFieldValue(versionedItem, field.FieldName, field.DatabaseValue);
+                var fieldName = field.FieldName;
+                if (string.IsNullOrEmpty(fieldName))
+                {
+                    fieldName = field.FieldId.Format();
+                }
+                                                      
+                SetFieldValue(versionedItem, fieldName, field.DatabaseValue);
             }
 
             foreach (var i in versionedItems)

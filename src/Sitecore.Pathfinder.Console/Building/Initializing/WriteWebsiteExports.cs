@@ -7,7 +7,7 @@ using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Building.Initializing
 {
-    public class WriteWebsiteExports : RequestTaskBase
+    public class WriteWebsiteExports : RequestBuildTaskBase
     {
         public WriteWebsiteExports() : base("write-website-exports")
         {

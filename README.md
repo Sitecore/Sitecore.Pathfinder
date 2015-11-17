@@ -158,13 +158,17 @@ items and templates in the project to the [Project]/sitecore.project/exports.xml
 When a project is being compiled, Pathfinder will look for Nuget packages in the [Project]/sitecore.project/packages directory and 
 extract any exports.xml files. All declared items and templates are added to the project as external references.
 
-#### Repository
-The repository (located in [Tools]/files/repository) contains a number of packages with external references to the master and core databases 
-and various SPEAK packages.
+#### Add-ins and Repository
+The repository (located in [Tools]/files/repository) contains a number of packages and files that can be added to the project.
+Soecifically there are Nuget packages with external references to the master and core databases and various SPEAK packages.
 
-To list the contents of the repository, use the `scc list-repository` task.
+To list the add-ins in the repository, use the `scc list-addin` task.
 
-To install a files from the repository  use the `scc install-repository [file name]` task.
+To install an add-in from the repository  use the `scc install-addin [file name]` task. This will create the file 
+[Project]\sitecore.project\addins.xml which contains a list of all installed add-ins.
+
+To update all installed add-ins in a project, use `scc update-addins` task. This will reinstall all add-ins that are listed in the
+[Project]\sitecore.project\addins.xml file.
 
 ### Extensibility
 Pathfinder uses [MEF](https://msdn.microsoft.com/en-us/library/dd460648(v=vs.110).aspx) internally and is fully plugable. See section on 
@@ -1170,7 +1174,8 @@ Sitecore. This means that at any given time, what's serialized is the "master co
 
 Unicorn removes the manual process of serializing items which solves a lot of issues and it can be used for CI.
 
-Unicorn can be installed as a Nuget package.
+Pathfinder has a Unicorn add-in that parses and installs Unicorn files (*.yml). To install the Unicorn add-in, use the 
+`scc install-addin Unicorn.zip` command.
 
 Unicorn could be interesting for Pathfinder if it can update files in the project when the website is changed. Suppose items are create on the website
 in a custom manner. Unicorn could feed these items back to the project.

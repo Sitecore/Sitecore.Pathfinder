@@ -5,7 +5,7 @@ using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Building.Initializing
 {
-    public class ResetWebsite : RequestTaskBase
+    public class ResetWebsite : RequestBuildTaskBase
     {
         public ResetWebsite() : base("reset-website")
         {

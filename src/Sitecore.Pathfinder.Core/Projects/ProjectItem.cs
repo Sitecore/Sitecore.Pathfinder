@@ -11,7 +11,7 @@ namespace Sitecore.Pathfinder.Projects
     [DebuggerDisplay("{GetType().Name,nq}: {Uri}")]
     public abstract class ProjectItem : IProjectItem
     {
-        protected ProjectItem([NotNull] IProject project, [NotNull] ProjectItemUri uri, [NotNull] ISnapshot snapshot)
+        protected ProjectItem([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] ProjectItemUri uri)
         {
             Project = project;
             Uri = uri;

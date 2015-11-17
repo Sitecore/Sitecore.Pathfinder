@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder
 
             Trace.Listeners.Add(new ConsoleTraceListener());
 
-            var app = new Startup().AsInteractive().Start();
+            var app = new Startup().AsInteractive().WithWebsiteAssemblyResolver().Start();
             if (app == null)
             {
                 return -1;

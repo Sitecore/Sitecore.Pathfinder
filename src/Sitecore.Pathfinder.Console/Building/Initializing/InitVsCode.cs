@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Sitecore.Pathfinder.Building.Initializing
 {
-    public class InitVsCode : TaskBase
+    public class InitVsCode : BuildTaskBase
     {
         public InitVsCode() : base("init-vscode")
         {

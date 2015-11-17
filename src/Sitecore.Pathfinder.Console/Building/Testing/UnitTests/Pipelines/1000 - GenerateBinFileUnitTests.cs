@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
+using Sitecore.Pathfinder.Languages.Bin;
 using Sitecore.Pathfinder.Projects.Files;
 
 namespace Sitecore.Pathfinder.Building.Testing.UnitTests.Pipelines

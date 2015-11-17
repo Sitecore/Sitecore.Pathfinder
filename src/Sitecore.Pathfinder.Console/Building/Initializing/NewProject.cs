@@ -11,7 +11,7 @@ using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Building.Initializing
 {
-    public class NewProject : TaskBase
+    public class NewProject : BuildTaskBase
     {
         [NotNull]
         private string _dataFolderDirectory = string.Empty;

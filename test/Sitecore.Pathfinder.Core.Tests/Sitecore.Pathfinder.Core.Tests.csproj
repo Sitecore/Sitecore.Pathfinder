@@ -91,11 +91,13 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Building\HelpWriterTests.cs" />
     <Compile Include="Configuration\ConfigurationServicesTests.cs" />
     <Compile Include="Helpers\Services.cs" />
     <Compile Include="IO\MockedFileSystemService.cs" />
     <Compile Include="Extensions\StringExtensionsTests.cs" />
     <Compile Include="Projects\ProjectTests.Json.cs" />
+    <Compile Include="Projects\ProjectTests.Unicorn.cs" />
     <Compile Include="Projects\ProjectTests.Yaml.cs" />
     <Compile Include="Projects\ProjectTests.Xml.cs" />
     <Compile Include="Snapshots\FileNameTextNodeTests.cs" />
@@ -118,6 +120,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Features\Sitecore.Pathfinder.Unicorn\Sitecore.Pathfinder.Unicorn.csproj">
+      <Project>{e707e44a-9f34-41e2-90e2-7065ef60cb03}</Project>
+      <Name>Sitecore.Pathfinder.Unicorn</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Sitecore.Pathfinder.Core\Sitecore.Pathfinder.Core.csproj">
       <Project>{c674eebf-bbf6-4eda-af5b-a4d58d0be986}</Project>
       <Name>Sitecore.Pathfinder.Core</Name>

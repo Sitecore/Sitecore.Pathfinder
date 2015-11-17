@@ -3,8 +3,9 @@
 using System.IO;
 using System.Linq;
 using Sitecore.IO;
+using Sitecore.Pathfinder.Emitting;
+using Sitecore.Pathfinder.Languages.Content;
 using Sitecore.Pathfinder.Projects;
-using Sitecore.Pathfinder.Projects.Files;
 
 namespace Sitecore.Pathfinder.Emitters.Files
 {
@@ -24,15 +25,6 @@ namespace Sitecore.Pathfinder.Emitters.Files
             var contentFile = (ContentFile)projectItem;
 
             var destinationFileName = FileUtil.MapPath(contentFile.FilePath);
-
-            if (context.FileSystem.FileExists(destinationFileName))
-            {
-                context.RegisterUpdatedFile(contentFile, destinationFileName);
-            }
-            else
-            {
-                context.RegisterAddedFile(contentFile, destinationFileName);
-            }
 
             context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName) ?? string.Empty);
             context.FileSystem.Copy(projectItem.Snapshots.First().SourceFile.AbsoluteFileName, destinationFileName, context.ForceUpdate);

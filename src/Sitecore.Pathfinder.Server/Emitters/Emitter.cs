@@ -3,10 +3,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.IO;
 using System.Linq;
-using NuGet;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
@@ -17,7 +16,7 @@ namespace Sitecore.Pathfinder.Emitters
     public class Emitter
     {
         [ImportingConstructor]
-        public Emitter([Diagnostics.NotNull] ICompositionService compositionService, [Diagnostics.NotNull] ITraceService traceService, [Diagnostics.NotNull] IProjectService projectService, [ImportMany] [Diagnostics.NotNull] [ItemNotNull] IEnumerable<IEmitter> emitters)
+        public Emitter([NotNull] ICompositionService compositionService, [NotNull] ITraceService traceService, [NotNull] IProjectService projectService, [ImportMany] [NotNull] [ItemNotNull] IEnumerable<IEmitter> emitters)
         {
             CompositionService = compositionService;
             Trace = traceService;
@@ -25,17 +24,17 @@ namespace Sitecore.Pathfinder.Emitters
             Emitters = emitters;
         }
 
-        [Diagnostics.NotNull]
+        [NotNull]
         protected ICompositionService CompositionService { get; }
 
-        [Diagnostics.NotNull]
+        [NotNull]
         [ItemNotNull]
         protected IEnumerable<IEmitter> Emitters { get; }
 
-        [Diagnostics.NotNull]
+        [NotNull]
         protected IProjectService ProjectService { get; }
 
-        [Diagnostics.NotNull]
+        [NotNull]
         protected ITraceService Trace { get; }
 
         public virtual int Start()
@@ -48,28 +47,7 @@ namespace Sitecore.Pathfinder.Emitters
             return 0;
         }
 
-        protected virtual void BuildNupkgFile([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] string nuspecFileName)
-        {
-            var nupkgFileName = Path.ChangeExtension(nuspecFileName, "nupkg");
-
-            try
-            {
-                context.FileSystem.DeleteFile(nupkgFileName);
-
-                var packageBuilder = new PackageBuilder(nuspecFileName, Path.GetDirectoryName(nupkgFileName), NullPropertyProvider.Instance, false);
-
-                using (var nupkg = new FileStream(nupkgFileName, FileMode.Create))
-                {
-                    packageBuilder.Save(nupkg);
-                }
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(ex.Message);
-            }
-        }
-
-        protected virtual void Emit([Diagnostics.NotNull] IProject project)
+        protected virtual void Emit([NotNull] IProject project)
         {
             var context = CompositionService.Resolve<IEmitContext>().With(project);
 
@@ -82,7 +60,7 @@ namespace Sitecore.Pathfinder.Emitters
             EmitRetry(context, emitters, retries);
         }
 
-        protected virtual void Emit([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] [ItemNotNull] List<IEmitter> emitters, [Diagnostics.NotNull] [ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
+        protected virtual void Emit([NotNull] IEmitContext context, [NotNull] IProject project, [NotNull] [ItemNotNull] List<IEmitter> emitters, [NotNull] [ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
         {
             foreach (var projectItem in project.Items)
             {
@@ -90,7 +68,7 @@ namespace Sitecore.Pathfinder.Emitters
             }
         }
 
-        protected virtual void EmitProjectItem([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] IProjectItem projectItem, [Diagnostics.NotNull] [ItemNotNull] List<IEmitter> emitters, [Diagnostics.NotNull] [ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
+        protected virtual void EmitProjectItem([NotNull] IEmitContext context, [NotNull] IProjectItem projectItem, [NotNull] [ItemNotNull] List<IEmitter> emitters, [NotNull] [ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
         {
             foreach (var emitter in emitters)
             {
@@ -118,7 +96,7 @@ namespace Sitecore.Pathfinder.Emitters
             }
         }
 
-        protected virtual void EmitRetry([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] [ItemNotNull] List<IEmitter> emitters, [Diagnostics.NotNull] [ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
+        protected virtual void EmitRetry([NotNull] IEmitContext context, [NotNull] [ItemNotNull] List<IEmitter> emitters, [NotNull] [ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
         {
             while (true)
             {
@@ -166,7 +144,7 @@ namespace Sitecore.Pathfinder.Emitters
             }
         }
 
-        protected virtual void TraceProjectDiagnostics([Diagnostics.NotNull] IEmitContext context)
+        protected virtual void TraceProjectDiagnostics([NotNull] IEmitContext context)
         {
             foreach (var diagnostic in context.Project.Diagnostics)
             {

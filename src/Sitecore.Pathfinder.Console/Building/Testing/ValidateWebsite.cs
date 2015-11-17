@@ -8,7 +8,7 @@ using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Building.Testing
 {
-    public class ValidateWebsite : RequestTaskBase
+    public class ValidateWebsite : RequestBuildTaskBase
     {
         public ValidateWebsite() : base("validate-website")
         {

@@ -82,8 +82,8 @@ namespace Sitecore.Pathfinder.Projects
             var context = Services.CompositionService.Resolve<IParseContext>().With(project, Snapshot.Empty);
 
             var sameGuid = new Guid("{11CDDC59-0F73-4A6E-90E2-6614418F173E}");
-            var projectItem1 = new Item(project, sameGuid, TextNode.Empty, string.Empty, "SameId", string.Empty, string.Empty);
-            var projectItem2 = new Item(project, sameGuid, TextNode.Empty, string.Empty, "SameId", string.Empty, string.Empty);
+            var projectItem1 = new Item(project, TextNode.Empty, sameGuid, string.Empty, "SameId", string.Empty, string.Empty);
+            var projectItem2 = new Item(project, TextNode.Empty, sameGuid, string.Empty, "SameId", string.Empty, string.Empty);
 
             project.AddOrMerge(projectItem1);
             project.AddOrMerge(projectItem2);

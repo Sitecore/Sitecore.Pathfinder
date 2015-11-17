@@ -22,7 +22,9 @@ namespace Sitecore.Pathfinder
         [ItemNotNull]
         public IEnumerable<string> AssemblyFileNames { get; private set; }
 
-        public ConfigurationOptions Options { get; private set; } = ConfigurationOptions.Noninteractive;
+        public Extensibility.StartupExtensions.CompositionOptions CompositionOptions { get; private set; } = Extensibility.StartupExtensions.CompositionOptions.None;
+
+        public ConfigurationOptions ConfigurationOptions { get; private set; } = ConfigurationOptions.Noninteractive;
 
         [NotNull]
         public string ProjectDirectory { get; private set; }
@@ -31,23 +33,30 @@ namespace Sitecore.Pathfinder
         public string ToolsDirectory { get; private set; }
 
         [NotNull]
+        public virtual Startup WithWebsiteAssemblyResolver()
+        {
+            CompositionOptions = CompositionOptions | Extensibility.StartupExtensions.CompositionOptions.AddWebsiteAssemblyResolver;
+            return this;
+        }
+
+        [NotNull]
         public virtual Startup AsInteractive()
         {
-            Options = ConfigurationOptions.Interactive;
+            ConfigurationOptions = ConfigurationOptions.Interactive;
             return this;
         }
 
         [NotNull]
         public virtual Startup AsNoninteractive()
         {
-            Options = ConfigurationOptions.Noninteractive;
+            ConfigurationOptions = ConfigurationOptions.Noninteractive;
             return this;
         }
 
         [CanBeNull]
         public IAppService Start()
         {
-            var configuration = this.RegisterConfiguration(ToolsDirectory, ProjectDirectory, Options);
+            var configuration = this.RegisterConfiguration(ToolsDirectory, ProjectDirectory, ConfigurationOptions);
             if (configuration == null)
             {
                 return null;
@@ -55,7 +64,7 @@ namespace Sitecore.Pathfinder
 
             var assemblyFileNames = AssemblyFileNames ?? Enumerable.Empty<string>();
 
-            var compositionService = this.RegisterCompositionService(configuration, ProjectDirectory, Assembly.GetCallingAssembly(), assemblyFileNames);
+            var compositionService = this.RegisterCompositionService(configuration, ProjectDirectory, Assembly.GetCallingAssembly(), assemblyFileNames, CompositionOptions);
             if (compositionService == null)
             {
                 return null;

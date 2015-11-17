@@ -1,6 +1,7 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using Sitecore.Data.Items;
+using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.Emitters.Writers

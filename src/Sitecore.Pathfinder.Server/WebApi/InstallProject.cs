@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using System.Web.Mvc;
 using Sitecore.Pathfinder.Emitters;
+using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.WebApi

@@ -1,0 +1,13 @@
+﻿---
+ID: 5bb2b5f4-0abb-486e-902c-1d9e0fa60e58
+Parent: 110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9
+Template: 76036F5E-CBCE-46D1-AF0A-4143F9B557AA
+Path: /sitecore/content/Home/YmlItem
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: 75577384-3C97-45DA-A847-81B00500E250
+      # Title
+      Value: Yml Item  

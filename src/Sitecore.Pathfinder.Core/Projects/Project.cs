@@ -271,7 +271,7 @@ namespace Sitecore.Pathfinder.Projects
                 switch (element.Name.LocalName)
                 {
                     case "Item":
-                        var item = Factory.Item(this, guid, TextNode.Empty, databaseName, itemName, itemIdOrPath, element.GetAttributeValue("Template"));
+                        var item = Factory.Item(this, TextNode.Empty, guid, databaseName, itemName, itemIdOrPath, element.GetAttributeValue("Template"));
                         item.IsExtern = true;
                         item.IsEmittable = false;
 

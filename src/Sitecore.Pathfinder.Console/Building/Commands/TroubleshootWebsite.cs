@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Sitecore.Pathfinder.Building.Commands
 {
-    public class TroubleshootWebsite : RequestTaskBase
+    public class TroubleshootWebsite : RequestBuildTaskBase
     {
         public TroubleshootWebsite() : base("troubleshoot-website")
         {

@@ -8,7 +8,7 @@ using Sitecore.Pathfinder.Querying;
 
 namespace Sitecore.Pathfinder.Building.Refactoring
 {
-    public class Rename : QueryTaskBase
+    public class Rename : QueryBuildTaskBase
     {
         public Rename() : base("rename")
         {

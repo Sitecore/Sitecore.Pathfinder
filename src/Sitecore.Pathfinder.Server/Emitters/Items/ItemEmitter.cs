@@ -8,6 +8,7 @@ using Sitecore.Data.Managers;
 using Sitecore.Data.Templates;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitters.Writers;
+using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
@@ -73,7 +74,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
                     throw new RetryableEmitException(Texts.Template_field_missing, TraceHelper.GetTextNode(field.FieldNameProperty, item.ItemNameProperty), field.FieldName);
                 }
 
-                var fieldWriter = new FieldWriter(field.FieldNameProperty, field.Language, field.Version, field.CompiledValue);
+                var fieldWriter = new FieldWriter(field.FieldIdProperty, field.FieldNameProperty, field.Language, field.Version, field.CompiledValue);
                 itemWriter.Fields.Add(fieldWriter);
             }
 

@@ -1,0 +1,23 @@
+// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using Sitecore.Pathfinder.Languages.Renderings;
+
+namespace Sitecore.Pathfinder.Languages.HtmlTemplates
+{
+    public class HtmlTemplateRenderingParser : RenderingParser
+    {
+        public HtmlTemplateRenderingParser() : base(".html", Constants.Templates.ViewRendering)
+        {
+        }
+
+        protected override IEnumerable<string> GetPlaceholders(string contents)
+        {
+            var matches = Regex.Matches(contents, "\\{\\{\\%([^\\}]*)\\}\\}", RegexOptions.IgnoreCase);
+
+            return matches.OfType<Match>().Select(i => i.Groups[1].ToString().Trim());
+        }
+    }
+}

@@ -5,12 +5,14 @@ using System.Collections.Generic;
 using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Languages.Bin;
+using Sitecore.Pathfinder.Languages.Media;
+using Sitecore.Pathfinder.Languages.Renderings;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Parsing.Items;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Files;
 using Sitecore.Pathfinder.Projects.Items;
-using Sitecore.Pathfinder.Projects.Layouts;
 using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
@@ -35,13 +37,19 @@ namespace Sitecore.Pathfinder.Configuration
         Field Field([NotNull] Item item, [NotNull] ITextNode textNode);
 
         [NotNull]
+        Field Field([NotNull] Item item);
+
+        [NotNull]
         Field Field([NotNull] Item item, [NotNull] ITextNode textNode, [NotNull] string fieldName, [NotNull] string fieldValue);
 
         [NotNull]
         FileReference FileReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceSourceProperty);
 
         [NotNull]
-        Item Item([NotNull] IProject project, Guid guid, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath);
+        Item Item([NotNull] IProject project, [NotNull] ITextNode textNode, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath);
+
+        [NotNull]
+        Item Item([NotNull] IProject project, [NotNull] ISnapshot snapshot, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath);
 
         [NotNull]
         ItemBuilder ItemBuilder();

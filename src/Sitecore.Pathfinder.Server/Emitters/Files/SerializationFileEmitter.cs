@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using Sitecore.Data.Serialization;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 

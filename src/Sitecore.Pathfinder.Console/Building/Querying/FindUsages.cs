@@ -6,7 +6,7 @@ using Sitecore.Pathfinder.Querying;
 
 namespace Sitecore.Pathfinder.Building.Querying
 {
-    public class FindUsages : QueryTaskBase
+    public class FindUsages : QueryBuildTaskBase
     {
         public FindUsages() : base("find-usages")
         {

@@ -5,9 +5,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Sitecore.IO;
+using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Languages.Bin;
 using Sitecore.Pathfinder.Projects;
-using Sitecore.Pathfinder.Projects.Files;
 
 namespace Sitecore.Pathfinder.Emitters.Files
 {
@@ -30,15 +31,6 @@ namespace Sitecore.Pathfinder.Emitters.Files
             if (!CanCopyBinFile(context, binFile, destinationFileName))
             {
                 return;
-            }
-
-            if (context.FileSystem.FileExists(destinationFileName))
-            {
-                context.RegisterUpdatedFile(binFile, destinationFileName);
-            }
-            else
-            {
-                context.RegisterAddedFile(binFile, destinationFileName);
             }
 
             context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName) ?? string.Empty);

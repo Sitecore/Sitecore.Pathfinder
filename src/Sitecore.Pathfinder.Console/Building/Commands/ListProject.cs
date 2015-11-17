@@ -6,7 +6,7 @@ using Sitecore.Pathfinder.Projects.Files;
 
 namespace Sitecore.Pathfinder.Building.Commands
 {
-    public class ListProject : TaskBase
+    public class ListProject : BuildTaskBase
     {
         public ListProject() : base("list-project")
         {

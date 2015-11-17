@@ -6,7 +6,7 @@ using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Building.Deploying
 {
-    public class InstallProject : RequestTaskBase
+    public class InstallProject : RequestBuildTaskBase
     {
         public InstallProject() : base("install-project")
         {

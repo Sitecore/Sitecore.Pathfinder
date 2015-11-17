@@ -5,7 +5,7 @@ using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Building.Checking
 {
-    public class CheckProject : TaskBase
+    public class CheckProject : BuildTaskBase
     {
         public CheckProject() : base("check-project")
         {

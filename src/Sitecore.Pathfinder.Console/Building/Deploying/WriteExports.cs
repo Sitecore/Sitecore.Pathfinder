@@ -12,7 +12,7 @@ using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.Building.Deploying
 {
-    public class WriteExports : TaskBase
+    public class WriteExports : BuildTaskBase
     {
         public WriteExports() : base("write-exports")
         {

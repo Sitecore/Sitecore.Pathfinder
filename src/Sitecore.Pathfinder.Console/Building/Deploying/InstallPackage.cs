@@ -7,7 +7,7 @@ using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Building.Deploying
 {
-    public class InstallPackage : RequestTaskBase
+    public class InstallPackage : RequestBuildTaskBase
     {
         public InstallPackage() : base("install-package")
         {

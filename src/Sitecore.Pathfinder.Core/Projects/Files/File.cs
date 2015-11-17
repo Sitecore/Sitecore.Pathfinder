@@ -16,7 +16,7 @@ namespace Sitecore.Pathfinder.Projects.Files
         [CanBeNull]
         private string _shortName;
 
-        public File([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath) : base(project, GetUri(project, snapshot), snapshot)
+        public File([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath) : base(project, snapshot, GetUri(project, snapshot))
         {
             FilePath = filePath;
         }

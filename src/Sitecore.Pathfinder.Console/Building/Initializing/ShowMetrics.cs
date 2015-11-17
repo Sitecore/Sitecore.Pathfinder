@@ -4,7 +4,7 @@ using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.Building.Initializing
 {
-    public class ShowMetrics : TaskBase
+    public class ShowMetrics : BuildTaskBase
     {
         public ShowMetrics() : base("show-metrics")
         {
