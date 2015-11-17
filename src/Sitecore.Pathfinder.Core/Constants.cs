@@ -47,6 +47,11 @@ namespace Sitecore.Pathfinder
 
         public static class Configuration
         {
+            public const string GenerateCodeRefs = "generate-code:t4-refs";
+            public const string GenerateCodeImports = "generate-code:t4-imports";
+            public const string GenerateCodeIncludePaths = "generate-code:t4-include-paths";
+            public const string GenerateCodeReferencePaths = "generate-code:t4-reference-paths";
+
             public const string BuildProject = "build-project:tasks";
 
             public const string CheckBinFileVersion = "install-package:check-bin-file-version";
@@ -63,7 +68,7 @@ namespace Sitecore.Pathfinder
 
             public const string DataFolderDirectory = "data-folder-directory";
 
-            public const string Debug = "system:debug";
+            public const string Debug = "debug";
 
             public const string Files = "build-project:files";
 

@@ -58,10 +58,21 @@ namespace Sitecore.Pathfinder.Configuration
                 }
 
                 n++;
-                if (n < commandLineArgs.Count())
+                if (n >= commandLineArgs.Count())
                 {
-                    args.Add(commandLineArgs.ElementAt(n));
+                    args.Add("true");
+                    continue;
                 }
+
+                arg = commandLineArgs.ElementAt(n);
+                if (arg.StartsWith("-") || arg.StartsWith("/"))
+                {
+                    args.Add("true");
+                    n--;
+                    continue;
+                }
+
+                args.Add(commandLineArgs.ElementAt(n));
             }
 
             configurationSourceRoot.AddCommandLine(args.ToArray());

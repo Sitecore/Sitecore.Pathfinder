@@ -1,12 +1,21 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System;
+using System.CodeDom.Compiler;
+using System.ComponentModel.Composition;
 using System.IO;
-using Microsoft.VisualStudio.TextTemplating;
-using Mono.TextTemplating;
+using System.Linq;
+using System.Web;
+using System.Xml;
+using System.Xml.Linq;
+using Newtonsoft.Json;
 using Sitecore.Pathfinder.Building;
 using Sitecore.Pathfinder.CodeGeneration;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Snapshots;
+using T4;
 
 namespace Sitecore.Pathfinder.T4.CodeGeneration
 {
@@ -14,21 +23,33 @@ namespace Sitecore.Pathfinder.T4.CodeGeneration
     {
         public override void Generate(IBuildContext context, IProject project)
         {
-            var templateDirectory = Path.Combine(context.ProjectDirectory, "sitecore.project\\extensions\\codegen");
+            var host = new Host(context, project);
 
-            var engine = new Engine();
+            host.Refs.Add(typeof(Enumerable).Assembly.Location); // System.Core
+            host.Refs.Add(typeof(HttpContext).Assembly.Location); // System.Web
+            host.Refs.Add(typeof(ICompositionService).Assembly.Location); // System.ComponentModel.Composition
+            host.Refs.Add(typeof(XmlDocument).Assembly.Location); // System.Xml
+            host.Refs.Add(typeof(XElement).Assembly.Location); // System.Xml.Linq
+            host.Refs.Add(typeof(JsonReader).Assembly.Location); // Sitecore.Pathfinder.Core
+            host.Refs.Add(typeof(Constants).Assembly.Location); // Sitecore.Pathfinder.Core
+            host.Refs.Add(typeof(Host).Assembly.Location); // Sitecore.Pathfinder.T4
 
-            foreach (var fileName in context.FileSystem.GetFiles(templateDirectory, "*.tt", SearchOption.AllDirectories))
+            host.Refs.AddRange(context.Configuration.GetString(Constants.Configuration.GenerateCodeRefs).Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(r => r.Trim()));
+            host.Imports.AddRange(context.Configuration.GetString(Constants.Configuration.GenerateCodeImports).Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(r => r.Trim()));
+            host.IncludePaths.AddRange(context.Configuration.GetString(Constants.Configuration.GenerateCodeIncludePaths).Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(r => r.Trim()));
+            host.ReferencePaths.AddRange(context.Configuration.GetString(Constants.Configuration.GenerateCodeReferencePaths).Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(r => r.Trim()));
+
+            foreach (var fileName in context.FileSystem.GetFiles(context.ProjectDirectory, "*.project.tt", SearchOption.AllDirectories))
             {
-                var templateText = context.FileSystem.ReadAllText(fileName);
+                if (host.ProcessTemplate(fileName, fileName.Left(fileName.Length - 11)))
+                {
+                    continue;
+                }
 
-                var host = new TemplateGenerator();
-
-                var output = engine.ProcessTemplate(templateText, host);
-
-                var targetFileName = fileName.Left(fileName.Length - 3);
-
-                context.FileSystem.WriteAllText(targetFileName, output);
+                foreach (CompilerError error in host.Errors)
+                {
+                    context.Trace.TraceError(error.ErrorText, PathHelper.UnmapPath(context.ProjectDirectory, fileName), new TextSpan(error.Line, error.Column, 0));
+                }
             }
         }
     }

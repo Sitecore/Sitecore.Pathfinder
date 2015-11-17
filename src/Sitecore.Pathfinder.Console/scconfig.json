@@ -55,6 +55,17 @@
         "uninstall-directory": "../.uninstall"
     },
 
+    "generate-code": {
+        // comma separated list of absolute assembly filenames to add as references (https://msdn.microsoft.com/en-us/library/gg586946.aspx)
+        "t4-refs": "",
+        // comma separated list of namespaces to import (https://msdn.microsoft.com/en-us/library/gg586948.aspx)
+        "t4-imports": "",
+        // comma separated list of filepaths to search for include files
+        "t4-include-paths": "",
+        // comma separated list of filepaths to search for reference files
+        "t4-reference-paths": ""
+    },
+
     "new-project": {
         "wwwroot-directory": "c:\\inetpub\\wwwroot"
     },

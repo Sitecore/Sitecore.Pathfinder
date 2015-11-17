@@ -1,7 +1,10 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 using Sitecore.Pathfinder.Building;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -17,10 +20,10 @@ namespace Sitecore.Pathfinder
 
             Trace.Listeners.Add(new ConsoleTraceListener());
 
-            // List<string> assemblies = new List<string>();
-            // assemblies.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Sitecore.Pathfinder.T4.dll"));
-            // var app = new Startup().AsInteractive().WithAssemblies(assemblies).WithWebsiteAssemblyResolver().Start();
-            var app = new Startup().AsInteractive().WithWebsiteAssemblyResolver().Start();
+            var assemblies = new List<string>();
+            assemblies.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "Sitecore.Pathfinder.T4.dll"));
+            var app = new Startup().AsInteractive().WithAssemblies(assemblies).WithWebsiteAssemblyResolver().Start();
+            // var app = new Startup().AsInteractive().WithWebsiteAssemblyResolver().Start();
             if (app == null)
             {
                 return -1;
