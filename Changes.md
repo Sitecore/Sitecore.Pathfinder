@@ -14,3 +14,7 @@ Version next
 * Add: build-project:file-search-pattern sets the file search pattern for project directory visitor (2015-11-06)
 * Add: Replaced externals with projects. Exports are now defined in a standard NuGet package (2015-11-09) - Dmitry Kostenko
 * Add: Repository directory for installable files. list-repository and install-repository tasks (2015-11-09)
+* Add: Support for Unicorn files (2015-11-17) - Emil Okkels Klein
+* Changed: Renamed list-repository to list-addins and install-repository to install-addin (2015-11-17)
+* Add: Added update-addins task to update installed add-ins (2015-11-17)
+* Add: Added /disable-extensions=true switch to prevent extensions from loading (2015-11-17)

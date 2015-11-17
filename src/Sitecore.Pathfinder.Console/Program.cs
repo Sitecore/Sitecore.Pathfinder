@@ -17,6 +17,9 @@ namespace Sitecore.Pathfinder
 
             Trace.Listeners.Add(new ConsoleTraceListener());
 
+            // List<string> assemblies = new List<string>();
+            // assemblies.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Sitecore.Pathfinder.T4.dll"));
+            // var app = new Startup().AsInteractive().WithAssemblies(assemblies).WithWebsiteAssemblyResolver().Start();
             var app = new Startup().AsInteractive().WithWebsiteAssemblyResolver().Start();
             if (app == null)
             {

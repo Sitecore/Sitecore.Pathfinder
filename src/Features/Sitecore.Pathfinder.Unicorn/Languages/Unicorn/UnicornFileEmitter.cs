@@ -58,7 +58,6 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
                 {
                     throw new RetryableEmitException(Texts.Failed_to_deserialize_item, unicornFile.Snapshots.First(), ex.Message);
                 }
-
             }
         }
     }

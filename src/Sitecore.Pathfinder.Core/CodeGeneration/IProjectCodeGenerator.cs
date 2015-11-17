@@ -1,15 +1,15 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.ComponentModel.Composition;
+using Sitecore.Pathfinder.Building;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.CodeGeneration
 {
     [InheritedExport]
-    public interface ICodeGenerator
+    public interface IProjectCodeGenerator
     {
-        bool CanGenerate([NotNull] object instance);
-
-        void Generate([NotNull] string baseFileName, [NotNull] object instance);
+        void Generate([NotNull] IBuildContext context, [NotNull] IProject project);
     }
 }

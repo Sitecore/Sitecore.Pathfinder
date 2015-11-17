@@ -14,26 +14,36 @@ namespace Sitecore.Pathfinder.Building.Codegen
     public class GenerateCode : BuildTaskBase
     {
         [ImportingConstructor]
-        public GenerateCode([NotNull] [ImportMany] [ItemNotNull] IEnumerable<ICodeGenerator> codeGenerators) : base("generate-code")
+        public GenerateCode([NotNull] [ImportMany] [ItemNotNull] IEnumerable<IProjectCodeGenerator> projectCodeGenerators, [NotNull] [ImportMany] [ItemNotNull] IEnumerable<IProjectItemCodeGenerator> projectItemCodeGenerators) : base("generate-code")
         {
-            CodeGenerators = codeGenerators;
+            ProjectCodeGenerators = projectCodeGenerators;
+            ProjectItemCodeGenerators = projectItemCodeGenerators;
         }
 
         [NotNull]
         [ItemNotNull]
-        protected IEnumerable<ICodeGenerator> CodeGenerators { get; }
+        public IEnumerable<IProjectCodeGenerator> ProjectCodeGenerators { get; }
+
+        [NotNull]
+        [ItemNotNull]
+        protected IEnumerable<IProjectItemCodeGenerator> ProjectItemCodeGenerators { get; }
 
         public override void Run(IBuildContext context)
         {
             context.Trace.TraceInformation(Texts.Generating_code___);
 
+            foreach (var projectCodeGenerator in ProjectCodeGenerators)
+            {
+                projectCodeGenerator.Generate(context, context.Project);
+            }
+
             foreach (var projectItem in context.Project.Items)
             {
-                foreach (var codeGenerator in CodeGenerators)
+                foreach (var projectItemCodeGenerator in ProjectItemCodeGenerators)
                 {
-                    if (codeGenerator.CanGenerate(projectItem))
+                    if (projectItemCodeGenerator.CanGenerate(projectItem))
                     {
-                        Generate(context, codeGenerator, projectItem);
+                        Generate(context, projectItemCodeGenerator, projectItem);
                     }
                 }
             }
@@ -46,19 +56,19 @@ namespace Sitecore.Pathfinder.Building.Codegen
 
 To generate code, execute the task `generate-code`. This wil iterate through the elements in the project and check if a code generator is available for that item. If so, the code generator is executed.
 
-Code generators are simply extensions that are located in the /sitecore.tools/extensions/codegen directory.
+Code generators are simply extensions that are located in the /sitecore.project/extensions/codegen directory.
 
 Normally you want to run the `generate-code` task before building an assembly, so the C# source files are up-to-date.");
         }
 
-        protected virtual void Generate([NotNull] IBuildContext context, [NotNull] ICodeGenerator codeGenerator, [NotNull] IProjectItem projectItem)
+        protected virtual void Generate([NotNull] IBuildContext context, [NotNull] IProjectItemCodeGenerator projectItemCodeGenerator, [NotNull] IProjectItem projectItem)
         {
             var baseFileName = Path.GetDirectoryName(projectItem.Snapshots.First().SourceFile.AbsoluteFileName) ?? string.Empty;
             baseFileName = Path.Combine(baseFileName, projectItem.ShortName);
 
             context.FileSystem.CreateDirectory(Path.GetDirectoryName(baseFileName) ?? string.Empty);
 
-            codeGenerator.Generate(baseFileName, projectItem);
+            projectItemCodeGenerator.Generate(baseFileName, projectItem);
 
             context.Trace.TraceInformation(PathHelper.UnmapPath(context.ProjectDirectory, baseFileName));
         }

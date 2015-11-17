@@ -10,7 +10,7 @@ using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.CodeGen
 {
-    public class PocoTemplate : ICodeGenerator
+    public class PocoTemplate : IProjectItemCodeGenerator
     {
         public bool CanGenerate(object instance)
         {

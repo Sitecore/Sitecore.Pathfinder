@@ -6,5 +6,5 @@ del Sitecore.Pathfinder.Unicorn.zip
 xcopy /Y /S /Q bin\debug\*.* building\sitecore.project\extensions\unicorn\
 
 powershell.exe -nologo -noprofile -command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::CreateFromDirectory('building', 'Unicorn.zip'); }"
-mkdir ..\..\Sitecore.Pathfinder.Console\files\repository\sitecore.project\extensions\unicorn > nul
+mkdir ..\..\Sitecore.Pathfinder.Console\files\repository\sitecore.project\extensions\unicorn 
 copy /Y Unicorn.zip ..\..\Sitecore.Pathfinder.Console\files\repository\sitecore.project\extensions\unicorn\

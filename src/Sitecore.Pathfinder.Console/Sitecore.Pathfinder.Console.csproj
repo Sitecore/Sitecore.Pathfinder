@@ -472,6 +472,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Features\Sitecore.Pathfinder.T4\Sitecore.Pathfinder.T4.csproj">
+      <Project>{bc0ec297-60e6-4d8f-a846-e1da920cfc26}</Project>
+      <Name>Sitecore.Pathfinder.T4</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sitecore.Pathfinder.Core\Sitecore.Pathfinder.Core.csproj">
       <Project>{c674eebf-bbf6-4eda-af5b-a4d58d0be986}</Project>
       <Name>Sitecore.Pathfinder.Core</Name>

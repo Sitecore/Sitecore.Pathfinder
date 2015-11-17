@@ -110,7 +110,9 @@
     <Compile Include="Checking\IChecker.cs" />
     <Compile Include="Checking\ICheckerContext.cs" />
     <Compile Include="Checking\ICheckerService.cs" />
-    <Compile Include="CodeGeneration\ICodeGenerator.cs" />
+    <Compile Include="CodeGeneration\IProjectCodeGenerator.cs" />
+    <Compile Include="CodeGeneration\IProjectItemCodeGenerator.cs" />
+    <Compile Include="CodeGeneration\ProjectCodeGeneratorBase.cs" />
     <Compile Include="Diagnostics\EmitException.cs" />
     <Compile Include="Diagnostics\RetryableEmitException.cs" />
     <Compile Include="Emitting\EmitContext.cs" />
