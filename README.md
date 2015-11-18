@@ -60,7 +60,6 @@ The goal of Pathfinder is to make it easy to start working with Sitecore.
   * Dependency tracking through NuGet dependencies
   * NuGet package installer on Sitecore website
   * SitecorePathfinderCore NuGet package tweaks Sitecore defaults to be easier to work with (e.g. removes initial workflow)
-* Web Test Runner for running unit tests inside Sitecore website (supports dynamic compilation of C# source files)
 * Support for Html Templates (with [Mustache](https://mustache.github.io/mustache.5.html) tags) makes getting started with the Sitecore Rendering Engine easier
 * Validate a Sitecore website against 70 rules using Sitecore Rocks SitecoreCop
 
