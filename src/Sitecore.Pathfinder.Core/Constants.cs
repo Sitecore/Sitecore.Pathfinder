@@ -42,17 +42,11 @@ namespace Sitecore.Pathfinder
         [NotNull]
         public static readonly char[] Space =
         {
-            ' '
+            ' '                          
         };
 
         public static class Configuration
         {
-            public const string GenerateCodeRefs = "generate-code:t4-refs";
-            public const string GenerateCodeNameToken = "generate-code:name-replacement-token";
-            public const string GenerateCodeImports = "generate-code:t4-imports";
-            public const string GenerateCodeIncludePaths = "generate-code:t4-include-paths";
-            public const string GenerateCodeReferencePaths = "generate-code:t4-reference-paths";
-
             public const string BuildProject = "build-project:tasks";
 
             public const string CheckBinFileVersion = "install-package:check-bin-file-version";
@@ -76,6 +70,16 @@ namespace Sitecore.Pathfinder
             public const string FileSearchPattern = "build-project:file-search-pattern";
 
             public const string ForceUpdate = "build-project:force-update";
+
+            public const string GenerateCodeImports = "generate-code:t4-imports";
+
+            public const string GenerateCodeIncludePaths = "generate-code:t4-include-paths";
+
+            public const string GenerateCodeNameToken = "generate-code:name-replacement-token";
+
+            public const string GenerateCodeReferencePaths = "generate-code:t4-reference-paths";
+
+            public const string GenerateCodeRefs = "generate-code:t4-refs";
 
             public const string HostName = "host-name";
 

@@ -19,3 +19,4 @@ Version next
 * Add: Added update-addins task to update installed add-ins (2015-11-17)
 * Add: Added /disable-extensions=true switch to prevent extensions from loading (2015-11-17)
 * Add: Added support for T4 templates (2015-11-18) - Emil Okkels Klein
+* Removed: run-unittests and generate-unittests tasks. These have been replaced with generate-code and T4 templates (2015-11-18)

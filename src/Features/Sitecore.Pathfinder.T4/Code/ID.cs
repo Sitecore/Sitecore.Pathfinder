@@ -19,7 +19,7 @@ namespace Sitecore.Pathfinder.T4.Code
             Guid.TryParse(id, out _guid);
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals([CanBeNull] object obj)
         {
             if (ReferenceEquals(null, obj))
             {
@@ -41,12 +41,12 @@ namespace Sitecore.Pathfinder.T4.Code
             return _guid.GetHashCode();
         }
 
-        public static bool operator ==(ID left, ID right)
+        public static bool operator ==([CanBeNull] ID left, [CanBeNull] ID right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(ID left, ID right)
+        public static bool operator !=([CanBeNull] ID left, [CanBeNull] ID right)
         {
             return !Equals(left, right);
         }
@@ -56,7 +56,7 @@ namespace Sitecore.Pathfinder.T4.Code
             return _guid.ToString("B").ToUpperInvariant();
         }
 
-        protected bool Equals(ID other)
+        protected bool Equals([NotNull] ID other)
         {
             return _guid.Equals(other._guid);
         }

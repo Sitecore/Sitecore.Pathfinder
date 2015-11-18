@@ -5,8 +5,6 @@ This directory should contain the following files:
 * Microsoft.Framework.ConfigurationModel.Json.dll
 * Microsoft.Framework.ConfigurationModel.Xml.dll
 * NuGet.Core.dll
-* nunit.core.dll
-* nunit.core.interfaces.dll
 * Sitecore.ContentSearch.dll
 * Sitecore.ContentSearch.Linq.dll
 * Sitecore.Kernel.dll

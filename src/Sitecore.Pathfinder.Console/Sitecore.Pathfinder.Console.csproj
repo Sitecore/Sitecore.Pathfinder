@@ -134,18 +134,6 @@
       <Link>files\website\bin\NuGet.Core.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\components\nunit.core.dll">
-      <Link>files\website\bin\nunit.core.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\components\nunit.core.interfaces.dll">
-      <Link>files\website\bin\nunit.core.interfaces.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\components\nunit.framework.dll">
-      <Link>files\website\bin\nunit.framework.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\..\components\Sitecore.Rocks.Server.Core.dll">
       <Link>files\website\bin\Sitecore.Rocks.Server.Core.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -160,10 +148,6 @@
     </Content>
     <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Files\MediaFileChecker.cs">
       <Link>files\extensions\checkers\files\MediaFileChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\CodeGen\PocoTemplate.cs">
-      <Link>files\extensions\codegen\PocoTemplate.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\ItemChecker.cs">
@@ -205,7 +189,6 @@
     <Compile Include="Building\Initializing\SynchronizeWebsite.cs" />
     <Compile Include="Building\Initializing\WriteWebsiteExports.cs" />
     <Compile Include="Building\Packaging\PackDependencies.cs" />
-    <Compile Include="Building\Testing\UnitTests\GenerateUnitTest.cs" />
     <Compile Include="Building\Querying\FindReferences.cs" />
     <Compile Include="Building\Querying\FindUsages.cs" />
     <Compile Include="Building\Packaging\PackNupkgPackage.cs" />
@@ -213,19 +196,9 @@
     <Compile Include="Building\Build.cs" />
     <Compile Include="Building\Querying\QueryBuildTaskBase.cs" />
     <Compile Include="Building\Refactoring\Rename.cs" />
-    <Compile Include="Building\Testing\UnitTests\Pipelines\1000 - GenerateBinFileUnitTests.cs" />
-    <Compile Include="Building\Testing\UnitTests\Pipelines\2000 - GenerateContentFileUnitTests.cs" />
-    <Compile Include="Building\Testing\UnitTests\Pipelines\3000 - GenerateTemplateUnitTests.cs" />
-    <Compile Include="Building\Testing\UnitTests\Pipelines\4000 - GenerateItemUnitTests.cs" />
-    <Compile Include="Building\Testing\UnitTests\Pipelines\GenerateUnitTestsPipeline.cs" />
-    <Compile Include="Building\Testing\RunUnitTests.cs" />
     <Compile Include="Building\Testing\ValidateWebsite.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Content Include="..\Sitecore.Pathfinder.Server\bin\Sitecore.Pathfinder.Core.NUnit.dll">
-      <Link>files\website\bin\Sitecore.Pathfinder.Core.NUnit.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\packageDefaultIcon-50x50.png">
       <Link>files\website\sitecore\shell\client\Applications\Pathfinder\packageDefaultIcon-50x50.png</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

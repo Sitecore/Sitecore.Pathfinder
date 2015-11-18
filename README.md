@@ -14,7 +14,7 @@ Watch the videos on YouTube (please notice that some details in the videos are o
 
 * [01 - Idea and concepts](https://www.youtube.com/watch?v=TcJ0IoI7sVM)
 * [02 - HelloWorld](https://www.youtube.com/watch?v=jQz5hAVOTzU)
-* [03 - Unit Testing](https://www.youtube.com/watch?v=DWU6D7L8ykg)
+* [03 - Unit Testing](https://www.youtube.com/watch?v=DWU6D7L8ykg) (Functionality removed) 
 * [04 - Html Templates](https://www.youtube.com/watch?v=9aTGhW6ErYM)
 * [05 - Code Generation, Visual Studio and Grunt](http://youtu.be/ZM3ve1WhwwQ)
 
@@ -99,7 +99,6 @@ copy-package | Copies the project output to the website.
 find-references | Finds all project items that the specified project item references.
 find-usages | Finds all project items that references the specified project item.
 generate-code | Generates code from items and files in the project.
-generate-unittests | Generates basic unit tests for the project.
 help | Displays version information and a list of commands.
 init-atom | Creates a new Atom project.
 init-visualstudio | Creates a new Visual Studio project.
@@ -112,7 +111,6 @@ pack-dependencies | Creates a Nuget package for Sitecore package in the [Project
 pack-nuget | Creates a Nuget package from the project.
 publish-database | Publishes a Sitecore database (usually the master database).
 rename | Finds all project items that references the specified project item (EXPERIMENTAL).
-run-unittests | Runs the Unit Test Runner on the website.
 show-metrics | Shows various information about the project.
 sync-website | Synchronizes project and the website.
 validate-website | Runs the Sitecore Rocks SitecoreCop on the website.
@@ -799,18 +797,6 @@ output as Sitecore.Pathfinder.Extensions.dll.
 For instance to make a new checker, duplicate a file in [Tools]/files/extensions/checkers and start Pathfinder. Pathfinder will detect the
 new file and recompile the assembly.
 
-## Unit testing
-[Watch the video](https://www.youtube.com/watch?v=DWU6D7L8ykg)
-
-Unit testing in Sitecore can be tricky for a number of reasons. One reason is that sometimes you want your 
-unit test to be executed within the Sitecore web context. Unless you have advanced mocking capabilities, this
-requires you to make a request to a Sitecore website and run the tests.
-
-Pathfinder installs a Web Test Runner in your Sitecore website. When you run the `run-unittests` task, Pathfinder
-copies the unit test C# files to the server, compiles them and runs the tests.
-
-This makes it easier to write server-side unit tests in you project and execute the in a Sitecore web context.
-
 ## Website validation
 Pathfinder integrates with the Sitecore Rocks SitecoreCop feature. SitecoreCop examines the website and can identify
 over 70 different types of issues. To validate the website, run the task `validate-website`.
@@ -997,12 +983,6 @@ module.exports = function (grunt) {
             "build-project": {
                 command: "scc.exe"
             },
-            "run-unittests": {
-                command: "scc.exe run-unittests"
-            },
-            "generate-unittests": {
-                command: "scc.exe generate-unittests"
-            },
             "generate-code": {
                 command: "scc.exe generate-code"
             },
@@ -1016,8 +996,6 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask("build-project", ["shell:build-project"]);
-    grunt.registerTask("run-unittests", ["shell:run-unittests"]);
-    grunt.registerTask("generate-unittests", ["shell:generate-unittests"]);
     grunt.registerTask("generate-code", ["shell:generate-code"]);
     grunt.registerTask("sync-website", ["shell:sync-website"]);
     grunt.registerTask("validate-website", ["shell:validate-website"]);

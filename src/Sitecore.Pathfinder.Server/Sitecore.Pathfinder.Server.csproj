@@ -82,10 +82,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\components\NuGet.Core.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.core.interfaces, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\components\nunit.core.interfaces.dll</HintPath>
-    </Reference>
     <Reference Include="Sitecore.ContentSearch">
       <HintPath>..\..\components\Sitecore.ContentSearch.dll</HintPath>
       <Private>False</Private>
@@ -164,7 +160,6 @@
     <Compile Include="Controllers\PathfinderPublishController.cs" />
     <Compile Include="Controllers\PathfinderSitecoreCopController.cs" />
     <Compile Include="Controllers\PathfinderWebApiController.cs" />
-    <Compile Include="Controllers\PathfinderWebTestRunnerController.cs" />
     <Compile Include="Emitters\Emitter.cs" />
     <Compile Include="Emitters\Writers\FieldWriter.cs" />
     <Compile Include="Configuration\PathfinderSettings.cs" />
@@ -194,7 +189,6 @@
     <Compile Include="WebApi\SynchronizeWebsites\JsonLayoutSchemaSynchronizer.cs" />
     <Compile Include="WebApi\SynchronizeWebsites\XsdLayoutSchemaSynchronizer.cs" />
     <Compile Include="WebApi\SynchronizeWebsites\XsdContentSchemaSynchronizer.cs" />
-    <Compile Include="Testing\UnitTestRunner.cs" />
     <Compile Include="WebApi\InstallProject.cs" />
     <Compile Include="WebApi\IWebApi.cs" />
     <Compile Include="WebApi\ResetWebsite.cs" />
@@ -205,10 +199,6 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Features\Sitecore.Pathfinder.Core.NUnit\Sitecore.Pathfinder.Core.NUnit.csproj">
-      <Project>{9a1ac69f-d401-45d6-bcfa-53732ea8ebd4}</Project>
-      <Name>Sitecore.Pathfinder.Core.NUnit</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Sitecore.Pathfinder.Core\Sitecore.Pathfinder.Core.csproj">
       <Project>{c674eebf-bbf6-4eda-af5b-a4d58d0be986}</Project>
       <Name>Sitecore.Pathfinder.Core</Name>
