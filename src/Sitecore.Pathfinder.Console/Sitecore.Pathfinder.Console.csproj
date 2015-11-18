@@ -290,9 +290,6 @@
     <None Include="files\project\sitecore.project\packages\Sitecore.Master.8.0.nupkg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\project\sitecore.project\sitecore\readme.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="files\repository\sitecore.project\extensions\unicorn\Unicorn.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -378,6 +375,26 @@
     <None Include="files\project\sitecore.filetemplates\gulpfile.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Content Include="files\project\sitecore.filetemplates\t4\FakeDbFactory.cs.project.tt">
+      <LastGenOutput>FakeDbFactory.cs.project.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\project\sitecore.filetemplates\t4\NameFactory.cs.template.tt">
+      <LastGenOutput>NameFactory.cs.template.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\project\sitecore.filetemplates\t4\NameFactoryTests.cs.template.tt">
+      <LastGenOutput>NameFactoryTests.cs.template.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\project\sitecore.filetemplates\t4\NameItem.cs.template.tt">
+      <LastGenOutput>NameItem.cs.template.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\project\sitecore.filetemplates\t4\TemplateIds.cs.project.tt">
+      <LastGenOutput>TemplateIds.project1.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="files\project\sitecore.filetemplates\Template.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -484,7 +501,9 @@
   <ItemGroup>
     <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.2\analyzers\dotnet\cs\CodeContractNullability.dll" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions />
   <PropertyGroup>

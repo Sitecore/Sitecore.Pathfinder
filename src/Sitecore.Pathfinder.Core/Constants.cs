@@ -48,6 +48,7 @@ namespace Sitecore.Pathfinder
         public static class Configuration
         {
             public const string GenerateCodeRefs = "generate-code:t4-refs";
+            public const string GenerateCodeNameToken = "generate-code:name-replacement-token";
             public const string GenerateCodeImports = "generate-code:t4-imports";
             public const string GenerateCodeIncludePaths = "generate-code:t4-include-paths";
             public const string GenerateCodeReferencePaths = "generate-code:t4-reference-paths";

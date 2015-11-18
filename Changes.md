@@ -18,3 +18,4 @@ Version next
 * Changed: Renamed list-repository to list-addins and install-repository to install-addin (2015-11-17)
 * Add: Added update-addins task to update installed add-ins (2015-11-17)
 * Add: Added /disable-extensions=true switch to prevent extensions from loading (2015-11-17)
+* Add: Added support for T4 templates (2015-11-18) - Emil Okkels Klein

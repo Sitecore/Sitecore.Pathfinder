@@ -48,11 +48,11 @@ namespace Sitecore.Pathfinder.Extensibility
             var disableExtensions = configuration.GetBool("disable-extensions");
             if (!disableExtensions)
             {
+                // add assemblies from the tools directory
+                AddFeatureAssemblies(catalogs, toolsDirectory);
+
                 // add additional assemblies - this is used in Sitecore.Pathfinder.Server to load assemblies from the /bin folder
-                foreach (var additionalAssemblyFileName in additionalAssemblyFileNames)
-                {
-                    catalogs.Add(new AssemblyCatalog(additionalAssemblyFileName));
-                }
+                AddAdditionalAssemblies(catalogs, additionalAssemblyFileNames);
 
                 // add core extensions
                 var coreExtensionsDirectory = Path.Combine(toolsDirectory, "files\\extensions");
@@ -77,6 +77,14 @@ namespace Sitecore.Pathfinder.Extensibility
             compositionContainer.ComposeExportedValue(configuration);
 
             return compositionContainer;
+        }
+
+        private static void AddAdditionalAssemblies([NotNull] [ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] [ItemNotNull] IEnumerable<string> additionalAssemblyFileNames)
+        {
+            foreach (var additionalAssemblyFileName in additionalAssemblyFileNames)
+            {
+                catalogs.Add(new AssemblyCatalog(additionalAssemblyFileName));
+            }
         }
 
         private static void AddAssembliesFromDirectory([NotNull] [ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string assemblyFileName, [NotNull] string directory)
@@ -128,6 +136,20 @@ namespace Sitecore.Pathfinder.Extensibility
             if (assembly != null)
             {
                 catalogs.Add(new AssemblyCatalog(assembly));
+            }
+        }
+
+        private static void AddFeatureAssemblies([NotNull] [ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string toolsDirectory)
+        {
+            foreach (var fileName in Directory.GetFiles(toolsDirectory, "Sitecore.Pathfinder.*.dll", SearchOption.TopDirectoryOnly))
+            {
+                // already added
+                if (string.Equals(Path.GetFileName(fileName), "Sitecore.Pathfinder.Core.dll", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                catalogs.Add(new AssemblyCatalog(fileName));
             }
         }
 

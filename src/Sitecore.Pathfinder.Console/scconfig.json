@@ -56,6 +56,9 @@
     },
 
     "generate-code": {
+        // the token in the file name that will be replace by the ShortName of the project item
+        "name-replacement-token": "Name",
+
         // comma separated list of absolute assembly filenames to add as references (https://msdn.microsoft.com/en-us/library/gg586946.aspx)
         "t4-refs": "",
         // comma separated list of namespaces to import (https://msdn.microsoft.com/en-us/library/gg586948.aspx)
@@ -63,7 +66,14 @@
         // comma separated list of filepaths to search for include files
         "t4-include-paths": "",
         // comma separated list of filepaths to search for reference files
-        "t4-reference-paths": ""
+        "t4-reference-paths": "",
+
+        // mapping between T4 template extensions and project item types.
+        // eg. the T4 template file 'AllItem.cs.item.tt' will be generated for all project items with type "Sitecore.Pathfinder.Projects.Item"
+        "items": {
+            "item": "Sitecore.Pathfinder.Projects.Items.Item,Sitecore.Pathfinder.Core.dll",
+            "template": "Sitecore.Pathfinder.Projects.Templates.Template,Sitecore.Pathfinder.Core.dll"
+        }
     },
 
     "new-project": {

@@ -1,10 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Reflection;
 using Sitecore.Pathfinder.Building;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -20,10 +17,7 @@ namespace Sitecore.Pathfinder
 
             Trace.Listeners.Add(new ConsoleTraceListener());
 
-            var assemblies = new List<string>();
-            assemblies.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "Sitecore.Pathfinder.T4.dll"));
-            var app = new Startup().AsInteractive().WithAssemblies(assemblies).WithWebsiteAssemblyResolver().Start();
-            // var app = new Startup().AsInteractive().WithWebsiteAssemblyResolver().Start();
+            var app = new Startup().AsInteractive().WithWebsiteAssemblyResolver().Start();
             if (app == null)
             {
                 return -1;
@@ -32,7 +26,7 @@ namespace Sitecore.Pathfinder
             var build = app.CompositionService.Resolve<Build>().With(stopwatch);
             var errorCode = build.Start();
 
-            if (string.Equals(app.Configuration.Get("pause"), "true", StringComparison.OrdinalIgnoreCase))
+            if (app.Configuration.GetBool("pause"))
             {
                 Console.ReadLine();
             }

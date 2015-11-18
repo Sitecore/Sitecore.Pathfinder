@@ -4,8 +4,10 @@ using Mono.TextTemplating;
 using Sitecore.Pathfinder.Building;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.T4.Code;
 
 // ReSharper disable once CheckNamespace
+
 namespace T4
 {
     public class Host : TemplateGenerator
@@ -13,13 +15,16 @@ namespace T4
         public Host([NotNull] IBuildContext context, [NotNull] IProject project)
         {
             Context = context;
-            Project = project;
+            Project = new CodeProject(project);
         }
 
         [NotNull]
         public IBuildContext Context { get; }
 
+        [CanBeNull]
+        public IProjectItem Item { get; internal set; }
+
         [NotNull]
-        public IProject Project { get; }
+        public CodeProject Project { get; }
     }
 }
