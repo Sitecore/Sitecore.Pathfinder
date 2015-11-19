@@ -97,10 +97,9 @@ namespace Sitecore.Pathfinder.Building
             // check if the is a script task
             if (IsScriptTask(context, tasks))
             {
-                context.Script = tasks;
                 return new[]
                 {
-                    "run-script"
+                    tasks
                 };
             }
 
@@ -129,6 +128,11 @@ namespace Sitecore.Pathfinder.Building
         protected virtual bool IsScriptTask([NotNull] IBuildContext context, [NotNull] string taskName)
         {
             var extension = Path.GetExtension(taskName);
+            if (string.IsNullOrEmpty(extension))
+            {
+                return false;
+            }
+
             return context.Configuration.GetString(Constants.Configuration.ScriptExtensions).IndexOf(extension, StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
@@ -170,6 +174,13 @@ namespace Sitecore.Pathfinder.Building
 
         protected virtual void RunTask([NotNull] IBuildContext context, [NotNull] string taskName)
         {
+            // check if the is a script task
+            if (IsScriptTask(context, taskName))
+            {
+                context.Script = taskName;
+                taskName = "run-script";
+            }
+
             var task = Tasks.FirstOrDefault(t => string.Equals(t.TaskName, taskName, StringComparison.OrdinalIgnoreCase));
             if (task == null)
             {
@@ -188,7 +199,7 @@ namespace Sitecore.Pathfinder.Building
 
                 if (context.Configuration.GetBool(Constants.Configuration.Debug))
                 {
-                    context.Trace.Writeline(ex.StackTrace);
+                    context.Trace.WriteLine(ex.StackTrace);
                     Debugger.Launch();
                 }
             }
@@ -219,7 +230,7 @@ namespace Sitecore.Pathfinder.Building
 
         private void DisplayHelp()
         {
-            Trace.Writeline(Texts.Usage__scc_exe__run__task_);
+            Trace.WriteLine(Texts.Usage__scc_exe__run__task_);
         }
     }
 }

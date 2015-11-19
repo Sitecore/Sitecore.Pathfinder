@@ -26,7 +26,7 @@ namespace Sitecore.Pathfinder.Building.Refactoring
 
             if (string.IsNullOrEmpty(qualifiedName))
             {
-                context.Trace.Writeline(Texts.You_must_specific_the___name_argument);
+                context.Trace.WriteLine(Texts.You_must_specific_the___name_argument);
                 return;
             }
 
@@ -38,14 +38,14 @@ namespace Sitecore.Pathfinder.Building.Refactoring
 
             if (string.IsNullOrEmpty(newShortName))
             {
-                context.Trace.Writeline(Texts.You_must_specific_the___to_argument);
+                context.Trace.WriteLine(Texts.You_must_specific_the___to_argument);
                 return;
             }
 
             var projectItem = context.Project.FindQualifiedItem(qualifiedName);
             if (projectItem == null)
             {
-                context.Trace.Writeline(Texts.Item_not_found, qualifiedName);
+                context.Trace.WriteLine(Texts.Item_not_found, qualifiedName);
                 return;
             }
 

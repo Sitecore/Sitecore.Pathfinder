@@ -104,7 +104,7 @@ namespace Sitecore.Pathfinder.Diagnostics
             Write(text, Severity.Warning, textNode.Snapshot.SourceFile.AbsoluteFileName, textNode.TextSpan, details);
         }
 
-        public void Writeline(string text, string details = "")
+        public void WriteLine(string text, string details = "")
         {
             if (!string.IsNullOrEmpty(details))
             {

@@ -1,7 +1,9 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Sitecore.Pathfinder.Diagnostics;
@@ -43,8 +45,8 @@ namespace Sitecore.Pathfinder.Building.Initializing
             var task = build.Tasks.FirstOrDefault(t => string.Equals(t.TaskName, taskName, StringComparison.OrdinalIgnoreCase));
             if (task == null)
             {
-                context.Trace.Writeline($"Task not found: {taskName}");
-                context.Trace.Writeline(string.Empty);
+                context.Trace.WriteLine($"Task not found: {taskName}");
+                context.Trace.WriteLine(string.Empty);
                 WriteListOfTasks(context);
                 return;
             }
@@ -52,31 +54,31 @@ namespace Sitecore.Pathfinder.Building.Initializing
             var helpWriter = new HelpWriter();
             task.WriteHelp(helpWriter);
 
-            context.Trace.Writeline("TASK:");
-            context.Trace.Writeline($"  {task.TaskName}");
-            context.Trace.Writeline(string.Empty);
+            context.Trace.WriteLine("TASK:");
+            context.Trace.WriteLine($"  {task.TaskName}");
+            context.Trace.WriteLine(string.Empty);
 
-            context.Trace.Writeline("SUMMARY:");
-            context.Trace.Writeline($"{helpWriter.GetSummary()}");
-            context.Trace.Writeline(string.Empty);
+            context.Trace.WriteLine("SUMMARY:");
+            context.Trace.WriteLine($"{helpWriter.GetSummary()}");
+            context.Trace.WriteLine(string.Empty);
 
-            context.Trace.Writeline("PARAMETERS:");
-            context.Trace.Writeline($"{helpWriter.GetParameters()}");
-            context.Trace.Writeline(string.Empty);
+            context.Trace.WriteLine("PARAMETERS:");
+            context.Trace.WriteLine($"{helpWriter.GetParameters()}");
+            context.Trace.WriteLine(string.Empty);
 
-            context.Trace.Writeline("REMARKS:");
-            context.Trace.Writeline($"{helpWriter.GetRemarks()}");
-            context.Trace.Writeline(string.Empty);
+            context.Trace.WriteLine("REMARKS:");
+            context.Trace.WriteLine($"{helpWriter.GetRemarks()}");
+            context.Trace.WriteLine(string.Empty);
 
-            context.Trace.Writeline("EXAMPLES:");
+            context.Trace.WriteLine("EXAMPLES:");
             var examples = helpWriter.GetExamples();
             if (!string.IsNullOrEmpty(examples))
             {
-                context.Trace.Writeline(examples);
+                context.Trace.WriteLine(examples);
             }
             else
             {
-                context.Trace.Writeline($"  scc {task.TaskName}");
+                context.Trace.WriteLine($"  scc {task.TaskName}");
             }
         }
 
@@ -86,26 +88,26 @@ namespace Sitecore.Pathfinder.Building.Initializing
             var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
             var version = fvi.FileVersion;
 
-            context.Trace.Writeline("");
-            context.Trace.Writeline("Welcome to Sitecore Pathfinder.");
-            context.Trace.Writeline("");
-            context.Trace.Writeline("To create a new Sitecore Pathfinder project, run 'scc new-project' command in an empty directory.");
-            context.Trace.Writeline(string.Empty);
-            context.Trace.Writeline($"Version: {version}");
-            context.Trace.Writeline(string.Empty);
-            context.Trace.Writeline("SYNTAX: scc [task name] [options]");
-            context.Trace.Writeline(string.Empty);
-            context.Trace.Writeline("EXAMPLES: scc");
-            context.Trace.Writeline("          scc new-project");
-            context.Trace.Writeline("          scc check-project");
-            context.Trace.Writeline(string.Empty);
+            context.Trace.WriteLine("");
+            context.Trace.WriteLine("Welcome to Sitecore Pathfinder.");
+            context.Trace.WriteLine("");
+            context.Trace.WriteLine("To create a new Sitecore Pathfinder project, run 'scc new-project' command in an empty directory.");
+            context.Trace.WriteLine(string.Empty);
+            context.Trace.WriteLine($"Version: {version}");
+            context.Trace.WriteLine(string.Empty);
+            context.Trace.WriteLine("SYNTAX: scc [task name] [options]");
+            context.Trace.WriteLine(string.Empty);
+            context.Trace.WriteLine("EXAMPLES: scc");
+            context.Trace.WriteLine("          scc new-project");
+            context.Trace.WriteLine("          scc check-project");
+            context.Trace.WriteLine(string.Empty);
 
-            context.Trace.Writeline("REMARKS:");
-            context.Trace.Writeline("To get additional help for a task, use: ");
-            context.Trace.Writeline("    scc help [task]");
+            context.Trace.WriteLine("REMARKS:");
+            context.Trace.WriteLine("To get additional help for a task, use: ");
+            context.Trace.WriteLine("    scc help [task]");
 
-            context.Trace.Writeline(string.Empty);
-            context.Trace.Writeline("TASKS:");
+            context.Trace.WriteLine(string.Empty);
+            context.Trace.WriteLine("TASKS:");
             WriteListOfTasks(context);
         }
 
@@ -124,7 +126,33 @@ namespace Sitecore.Pathfinder.Building.Initializing
                     continue;
                 }
 
-                context.Trace.Writeline($"{task.TaskName} - {summary}");
+                context.Trace.WriteLine($"{task.TaskName} - {summary}");
+            }
+
+            var scripts = new List<string>();
+            var scriptDirectory = Path.Combine(context.ToolsDirectory, "files\\scripts");
+            if (context.FileSystem.DirectoryExists(scriptDirectory))
+            {
+                scripts = context.FileSystem.GetFiles(scriptDirectory).Select(Path.GetFileName).ToList();
+            }
+
+            scriptDirectory = Path.Combine(context.ProjectDirectory, "sitecore.project\\scripts");
+            if (context.FileSystem.DirectoryExists(scriptDirectory))
+            {
+                scripts.AddRange(context.FileSystem.GetFiles(scriptDirectory).Select(Path.GetFileName));
+            }
+
+            if (!scripts.Any())
+            {
+                return;
+            }
+
+            context.Trace.WriteLine("");
+            context.Trace.WriteLine("SCRIPTS:");
+
+            foreach (var script in scripts.OrderBy(t => t))
+            {
+                context.Trace.WriteLine(script);
             }
         }
     }

@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Building.Commands
 
             foreach (var item in context.Project.Items.OfType<ItemBase>().Where(i => !i.IsExtern).OrderBy(i => i.ItemIdOrPath))
             {
-                context.Trace.Writeline(item.ItemIdOrPath);
+                context.Trace.WriteLine(item.ItemIdOrPath);
             }
 
             context.DisplayDoneMessage = false;

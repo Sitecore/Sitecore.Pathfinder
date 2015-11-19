@@ -145,7 +145,7 @@ namespace Sitecore.Pathfinder.Building
 
                 if (!string.IsNullOrEmpty(output))
                 {
-                    context.Trace.Writeline(output);
+                    context.Trace.WriteLine(output);
                 }
 
                 return true;

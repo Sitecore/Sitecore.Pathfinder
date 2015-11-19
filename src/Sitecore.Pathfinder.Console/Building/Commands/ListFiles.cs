@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Building.Commands
 
             foreach (var item in context.Project.Items.OfType<File>().OrderBy(file => file.FilePath))
             {
-                context.Trace.Writeline(item.FilePath);
+                context.Trace.WriteLine(item.FilePath);
             }
 
             context.DisplayDoneMessage = false;

@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Building.Querying
                 var textNode = TraceHelper.GetTextNode(reference.SourceProperty);
                 line += $"({textNode.TextSpan.LineNumber},{textNode.TextSpan.LineNumber})";
 
-                context.Trace.Writeline(line);
+                context.Trace.WriteLine(line);
             }
         }
     }

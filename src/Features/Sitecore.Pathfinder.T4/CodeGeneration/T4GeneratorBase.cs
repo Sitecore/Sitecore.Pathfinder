@@ -49,7 +49,7 @@ namespace Sitecore.Pathfinder.T4.CodeGeneration
 
         protected virtual bool Ignore([NotNull] string fileName)
         {
-            return fileName.IndexOf("\\sitecore.templates\\", StringComparison.OrdinalIgnoreCase) >= 0;
+            return fileName.IndexOf("\\sitecore.filetemplates\\", StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         protected virtual void TraceErrors([NotNull] IBuildContext context, [NotNull] Host host, [NotNull] string fileName)

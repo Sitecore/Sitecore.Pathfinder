@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Building.Querying
             var qualifiedName = context.Configuration.GetCommandLineArg(0);
             if (string.IsNullOrEmpty(qualifiedName))
             {
-                context.Trace.Writeline(Texts.You_must_specific_the___name_argument);
+                context.Trace.WriteLine(Texts.You_must_specific_the___name_argument);
                 return;
             }
 
@@ -29,7 +29,7 @@ namespace Sitecore.Pathfinder.Building.Querying
             var projectItem = queryService.FindProjectItem(context.Project, qualifiedName);
             if (projectItem == null)
             {
-                context.Trace.Writeline(Texts.Project_item_not_found__ + qualifiedName);
+                context.Trace.WriteLine(Texts.Project_item_not_found__ + qualifiedName);
                 return;
             }
 
@@ -47,10 +47,10 @@ namespace Sitecore.Pathfinder.Building.Querying
                     line += " (not valid)";
                 }
 
-                context.Trace.Writeline(line);
+                context.Trace.WriteLine(line);
             }
 
-            context.Trace.Writeline(Texts.Found__ + projectItem.References.Count);
+            context.Trace.WriteLine(Texts.Found__ + projectItem.References.Count);
         }
 
         public override void WriteHelp(HelpWriter helpWriter)

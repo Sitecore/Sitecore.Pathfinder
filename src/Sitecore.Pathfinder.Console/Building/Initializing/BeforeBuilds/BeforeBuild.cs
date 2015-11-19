@@ -40,7 +40,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
             var toolsDirectory = context.ToolsDirectory;
             if (string.Equals(projectDirectory, toolsDirectory, StringComparison.OrdinalIgnoreCase))
             {
-                context.Trace.Writeline(Texts.Whoops__scc_exe_cannot_run_in_is_own_directory_, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
+                context.Trace.WriteLine(Texts.Whoops__scc_exe_cannot_run_in_is_own_directory_, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
                 context.IsAborted = true;
                 return;
             }
@@ -54,7 +54,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
             var projectUniqueId = context.Configuration.Get(Constants.Configuration.ProjectUniqueId);
             if (string.Equals(projectUniqueId, "{project-unique-id}", StringComparison.OrdinalIgnoreCase))
             {
-                context.Trace.Writeline(Texts.Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in_the___0___configuration_file_, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
+                context.Trace.WriteLine(Texts.Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in_the___0___configuration_file_, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
                 context.IsAborted = true;
                 return;
             }
@@ -62,7 +62,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
             var hostName = context.Configuration.Get(Constants.Configuration.HostName);
             if (string.Equals(hostName, "http://sitecore.default", StringComparison.OrdinalIgnoreCase))
             {
-                context.Trace.Writeline(Texts.Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in_the___0___configuration_file_, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
+                context.Trace.WriteLine(Texts.Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in_the___0___configuration_file_, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
                 context.IsAborted = true;
                 return;
             }
@@ -70,7 +70,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
             var websiteDirectory = context.Configuration.Get(Constants.Configuration.WebsiteDirectory);
             if (string.Equals(websiteDirectory, "c:\\inetpub\\wwwroot\\Sitecore.Default\\Website", StringComparison.OrdinalIgnoreCase))
             {
-                context.Trace.Writeline(Texts.Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in_the___0___configuration_file_, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
+                context.Trace.WriteLine(Texts.Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in_the___0___configuration_file_, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
                 context.IsAborted = true;
                 return;
             }
@@ -80,7 +80,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
             if (!context.FileSystem.FileExists(coreServerAssemblyFileName))
             {
                 context.FileSystem.XCopy(sourceDirectory, websiteDirectory);
-                context.Trace.Writeline(Texts.Just_so_you_know__I_have_copied_the__Sitecore_Pathfinder_Server_dll__and__NuGet_Core_dll__assemblies_to_the___bin__directory_in_the_website_and_a_number_of___aspx__files_to_the___sitecore_shell_client_Applications_Pathfinder__directory);
+                context.Trace.WriteLine(Texts.Just_so_you_know__I_have_copied_the__Sitecore_Pathfinder_Server_dll__and__NuGet_Core_dll__assemblies_to_the___bin__directory_in_the_website_and_a_number_of___aspx__files_to_the___sitecore_shell_client_Applications_Pathfinder__directory);
             }
             else
             {
@@ -160,7 +160,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
 
             if (writeMessage)
             {
-                context.Trace.Writeline(Texts.Just_so_you_know__I_have_updated_the__Sitecore_Pathfinder_Server_dll__and__NuGet_Core_dll__assemblies_in_the___bin__directory_in_the_website_and_a_number_of___aspx__files_in_the___sitecore_shell_client_Applications_Pathfinder__directory_to_the_latest_version);
+                context.Trace.WriteLine(Texts.Just_so_you_know__I_have_updated_the__Sitecore_Pathfinder_Server_dll__and__NuGet_Core_dll__assemblies_in_the___bin__directory_in_the_website_and_a_number_of___aspx__files_in_the___sitecore_shell_client_Applications_Pathfinder__directory_to_the_latest_version);
             }
         }
     }

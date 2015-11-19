@@ -24,7 +24,7 @@ namespace Sitecore.Pathfinder.Building.Commands
                     qualifiedName = "\\" + PathHelper.UnmapPath(context.ProjectDirectory, qualifiedName);
                 }
 
-                context.Trace.Writeline($"{qualifiedName} ({projectItem.GetType().Name})");
+                context.Trace.WriteLine($"{qualifiedName} ({projectItem.GetType().Name})");
             }
 
             context.DisplayDoneMessage = false;

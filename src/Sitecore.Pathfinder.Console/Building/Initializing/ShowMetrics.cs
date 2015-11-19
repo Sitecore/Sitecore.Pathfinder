@@ -12,11 +12,11 @@ namespace Sitecore.Pathfinder.Building.Initializing
 
         public override void Run(IBuildContext context)
         {
-            context.Trace.Writeline("Project Metrics");
-            context.Trace.Writeline("---------------");
-            context.Trace.Writeline("Items", context.Project.Items.OfType<Item>().Count().ToString());
-            context.Trace.Writeline("Templates", context.Project.Items.OfType<Template>().Count().ToString());
-            context.Trace.Writeline("Files", context.Project.Items.OfType<Projects.Files.File>().Count().ToString());
+            context.Trace.WriteLine("Project Metrics");
+            context.Trace.WriteLine("---------------");
+            context.Trace.WriteLine("Items", context.Project.Items.OfType<Item>().Count().ToString());
+            context.Trace.WriteLine("Templates", context.Project.Items.OfType<Template>().Count().ToString());
+            context.Trace.WriteLine("Files", context.Project.Items.OfType<Projects.Files.File>().Count().ToString());
         }
 
         public override void WriteHelp(HelpWriter helpWriter)

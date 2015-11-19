@@ -19,7 +19,7 @@ namespace Sitecore.Pathfinder.Building.Querying
             var qualifiedName = context.Configuration.GetCommandLineArg(0);
             if (string.IsNullOrEmpty(qualifiedName))
             {
-                context.Trace.Writeline(Texts.You_must_specific_the___name_argument);
+                context.Trace.WriteLine(Texts.You_must_specific_the___name_argument);
                 return;
             }
 
@@ -29,7 +29,7 @@ namespace Sitecore.Pathfinder.Building.Querying
 
             Display(context, references);
 
-            context.Trace.Writeline(Texts.Found__ + references.Count);
+            context.Trace.WriteLine(Texts.Found__ + references.Count);
         }
 
         public override void WriteHelp(HelpWriter helpWriter)

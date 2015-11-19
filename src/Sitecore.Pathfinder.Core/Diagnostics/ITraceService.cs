@@ -27,6 +27,6 @@ namespace Sitecore.Pathfinder.Diagnostics
 
         void TraceWarning([Localizable(true)] [NotNull] string text, [NotNull] ITextNode textNode, [NotNull] string details = "");
 
-        void Writeline([Localizable(true)] [NotNull] string text, [NotNull] string details = "");
+        void WriteLine([Localizable(true)] [NotNull] string text, [NotNull] string details = "");
     }
 }
