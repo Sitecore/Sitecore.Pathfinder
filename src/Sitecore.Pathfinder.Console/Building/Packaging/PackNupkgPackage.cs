@@ -64,7 +64,7 @@ namespace Sitecore.Pathfinder.Building.Packaging
 
         protected virtual void BuildNupkgFile([NotNull] IBuildContext context, [NotNull] string nuspecFileName, [NotNull] string nupkgFileName)
         {
-            var configFileName = Path.Combine(context.Configuration.GetString(Constants.Configuration.ToolsDirectory), context.Configuration.GetString(Constants.Configuration.ProjectConfigFileName));
+            var configFileName = Path.Combine(context.ToolsDirectory, context.Configuration.GetString(Constants.Configuration.ProjectConfigFileName));
 
             var nuspec = context.FileSystem.ReadAllText(nuspecFileName);
             nuspec = nuspec.Replace("$global.scconfig.json$", configFileName);

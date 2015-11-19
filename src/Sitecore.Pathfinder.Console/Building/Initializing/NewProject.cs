@@ -112,7 +112,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
             console.WriteLine();
             if (console.YesNo("Do you want to install an editor configuration [Y]: ", true) == true)
             {
-                var editorsDirectory = Path.Combine(context.Configuration.GetString(Constants.Configuration.ToolsDirectory), "files\\editors");
+                var editorsDirectory = Path.Combine(context.ToolsDirectory, "files\\editors");
                 var editors = Directory.GetFiles(editorsDirectory, "*.zip", SearchOption.AllDirectories).ToDictionary(Path.GetFileNameWithoutExtension, e => e);
 
                 _editorFileName = console.Pick("Select editor [1]: ", editors);
@@ -121,7 +121,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
             console.WriteLine();
             if (console.YesNo("Do you want to install a starter kit [Y]: ", true) == true)
             {
-                var starterKitDirectory = Path.Combine(context.Configuration.GetString(Constants.Configuration.ToolsDirectory), "files\\starterkits");
+                var starterKitDirectory = Path.Combine(context.ToolsDirectory, "files\\starterkits");
                 var starterKits = Directory.GetFiles(starterKitDirectory, "*.zip", SearchOption.AllDirectories).ToDictionary(Path.GetFileNameWithoutExtension, e => e);
 
                 _starterKitFileName = console.Pick("Select starter kit [1]: ", starterKits);
@@ -152,7 +152,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
 
         protected virtual void CopyProjectTemplate([NotNull] IBuildContext context, [NotNull] string projectDirectory)
         {
-            var sourceDirectory = Path.Combine(context.Configuration.Get(Constants.Configuration.ToolsDirectory), "files\\project\\*");
+            var sourceDirectory = Path.Combine(context.ToolsDirectory, "files\\project\\*");
             context.FileSystem.XCopy(sourceDirectory, projectDirectory);
         }
 

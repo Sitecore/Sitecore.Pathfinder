@@ -49,6 +49,10 @@ namespace Sitecore.Pathfinder.Building
 
         public string ProjectDirectory => Configuration.GetString(Constants.Configuration.ProjectDirectory);
 
+        public string Script { get; set; }
+
+        public string ToolsDirectory => Configuration.GetString(Constants.Configuration.ToolsDirectory);
+
         public ITraceService Trace { get; }
 
         [NotNull]

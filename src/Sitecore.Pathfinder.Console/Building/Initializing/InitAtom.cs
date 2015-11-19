@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
 
         public override void Run(IBuildContext context)
         {
-            var zipFileName = Path.Combine(context.Configuration.Get(Constants.Configuration.ToolsDirectory), "files\\editors\\Atom.zip");
+            var zipFileName = Path.Combine(context.ToolsDirectory, "files\\editors\\Atom.zip");
 
             context.FileSystem.Unzip(zipFileName, context.ProjectDirectory);
         }

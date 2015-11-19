@@ -4,7 +4,6 @@ using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Building.Addins
@@ -24,8 +23,7 @@ namespace Sitecore.Pathfinder.Building.Addins
         {
             context.IsAborted = true;
 
-            var toolsDirectory = context.Configuration.GetString(Constants.Configuration.ToolsDirectory);
-            var repositoryDirectory = PathHelper.Combine(toolsDirectory, "files\\repository");
+            var repositoryDirectory = PathHelper.Combine(context.ToolsDirectory, "files\\repository");
 
             foreach (var fileName in context.FileSystem.GetFiles(repositoryDirectory, "*", SearchOption.AllDirectories).Select(f => PathHelper.UnmapPath(repositoryDirectory, f)).OrderBy(f => f))
             {

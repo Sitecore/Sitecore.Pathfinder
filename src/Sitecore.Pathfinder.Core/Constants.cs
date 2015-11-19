@@ -48,6 +48,7 @@ namespace Sitecore.Pathfinder
         public static class Configuration
         {
             public const string BuildProject = "build-project:tasks";
+            public const string ScriptExtensions = "scripts:file-extensions";
 
             public const string CheckBinFileVersion = "install-package:check-bin-file-version";
 
@@ -100,8 +101,6 @@ namespace Sitecore.Pathfinder
             public const string PackNugetInclude = "pack-nuget:include";
 
             public const string Password = "password";
-
-            public const string Pathfinder = "Pathfinder";
 
             public const string ProjectConfigFileName = "project";
 

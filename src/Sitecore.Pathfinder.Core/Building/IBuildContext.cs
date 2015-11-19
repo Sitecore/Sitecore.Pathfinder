@@ -42,6 +42,12 @@ namespace Sitecore.Pathfinder.Building
         [NotNull]
         string ProjectDirectory { get; }
 
+        [CanBeNull]
+        string Script { get; set; }
+
+        [NotNull]
+        string ToolsDirectory { get; }
+
         [NotNull]
         ITraceService Trace { get; }
     }

@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
                 return;
             }
 
-            var toolsDirectory = context.Configuration.GetString(Constants.Configuration.ToolsDirectory);
+            var toolsDirectory = context.ToolsDirectory;
             if (string.Equals(projectDirectory, toolsDirectory, StringComparison.OrdinalIgnoreCase))
             {
                 context.Trace.Writeline(Texts.Whoops__scc_exe_cannot_run_in_is_own_directory_, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
@@ -75,7 +75,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
                 return;
             }
 
-            var sourceDirectory = Path.Combine(context.Configuration.Get(Constants.Configuration.ToolsDirectory), "files\\website");
+            var sourceDirectory = Path.Combine(context.ToolsDirectory, "files\\website");
             var coreServerAssemblyFileName = Path.Combine(websiteDirectory, "bin\\Sitecore.Pathfinder.Core.dll");
             if (!context.FileSystem.FileExists(coreServerAssemblyFileName))
             {

@@ -7,8 +7,8 @@ using System.Net;
 using System.Reflection;
 using System.Web.Mvc;
 using Sitecore.IO;
-using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.WebApi;
 using Sitecore.Web;
 

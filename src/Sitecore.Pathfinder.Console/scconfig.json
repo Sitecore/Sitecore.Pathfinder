@@ -264,6 +264,10 @@
         "project-extensions-assembly-filename": "Sitecore.Pathfinder.Extensions.dll"
     },
 
+    "scripts": {
+        "file-extensions": ".ps1 .cmd .bat"
+    },
+
     "standard-template-fields": {
         "{56C15C6D-FD5A-40CA-BB37-64CEEC6A9BD5}": "__Archive date",
         "{1D99005E-65CA-45CA-9D9A-FD7016E23F1E}": "__Archive Version date",

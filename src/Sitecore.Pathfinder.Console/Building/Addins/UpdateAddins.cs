@@ -26,8 +26,7 @@ namespace Sitecore.Pathfinder.Building.Addins
 
             Console.WriteLine("Updating add-ins...");
 
-            var toolsDirectory = context.Configuration.GetString(Constants.Configuration.ToolsDirectory);
-            var repositoryDirectory = PathHelper.Combine(toolsDirectory, "files\\repository");
+            var repositoryDirectory = PathHelper.Combine(context.ToolsDirectory, "files\\repository");
 
             var fileName = Path.Combine(context.ProjectDirectory, "sitecore.project\\addins.xml");
             if (!context.FileSystem.FileExists(fileName))

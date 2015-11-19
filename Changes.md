@@ -20,3 +20,5 @@ Version next
 * Add: Added /disable-extensions=true switch to prevent extensions from loading (2015-11-17)
 * Add: Added support for T4 templates (2015-11-18) - Emil Okkels Klein
 * Removed: run-unittests and generate-unittests tasks. These have been replaced with generate-code and T4 templates (2015-11-18)
+* Add: scc can now run scripts files (PowerShell, .cmd and -bat) (2015-11-19)
+* Add: Script files for installing FakeDb and NUnit-Runners (2015-11-19)

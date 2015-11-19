@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Xml.Linq;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -43,6 +45,8 @@ namespace Sitecore.Pathfinder.Building
         {
             var context = CompositionService.Resolve<IBuildContext>();
 
+            RegisterProjectDirectory(context);
+
             RunTasks(context);
 
             if (context.IsAborted)
@@ -71,6 +75,13 @@ namespace Sitecore.Pathfinder.Building
         }
 
         [NotNull]
+        public Build With([NotNull] Stopwatch stopwatch)
+        {
+            _stopwatch = stopwatch;
+            return this;
+        }
+
+        [NotNull]
         [ItemNotNull]
         protected virtual IEnumerable<string> GetTaskNames([NotNull] IBuildContext context)
         {
@@ -81,6 +92,16 @@ namespace Sitecore.Pathfinder.Building
             if (string.IsNullOrEmpty(tasks))
             {
                 tasks = context.Configuration.GetString("run");
+            }
+
+            // check if the is a script task
+            if (IsScriptTask(context, tasks))
+            {
+                context.Script = tasks;
+                return new[]
+                {
+                    "run-script"
+                };
             }
 
             if (!string.IsNullOrEmpty(tasks) && tasks != "build")
@@ -102,8 +123,49 @@ namespace Sitecore.Pathfinder.Building
                 taskList = context.Configuration.GetString(Constants.Configuration.BuildProject);
             }
 
-            var taskNames = taskList.Split(Constants.Space, StringSplitOptions.RemoveEmptyEntries).Select(t => t.Trim()).ToList();
-            return taskNames;
+            return taskList.Split(Constants.Space, StringSplitOptions.RemoveEmptyEntries).Select(t => t.Trim()).ToList();
+        }
+
+        protected virtual bool IsScriptTask([NotNull] IBuildContext context, [NotNull] string taskName)
+        {
+            var extension = Path.GetExtension(taskName);
+            return context.Configuration.GetString(Constants.Configuration.ScriptExtensions).IndexOf(extension, StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        protected virtual void RegisterProjectDirectory([NotNull] IBuildContext context)
+        {
+            // registering a project directory in the website Data Folder allows the website and other tools
+            // to locate the project 
+            var dataFolder = context.Configuration.GetString(Constants.Configuration.DataFolderDirectory);
+            if (!context.FileSystem.DirectoryExists(dataFolder))
+            {
+                return;
+            }
+
+            var pathfinderFolder = Path.Combine(dataFolder, "Pathfinder");
+            context.FileSystem.CreateDirectory(pathfinderFolder);
+
+            var fileName = Path.Combine(pathfinderFolder, "projects." + Environment.MachineName + ".xml");
+
+            var xml = context.FileSystem.FileExists(fileName) ? context.FileSystem.ReadAllText(fileName) : "<projects />";
+
+            var root = xml.ToXElement() ?? "<projects />".ToXElement();
+            if (root == null)
+            {
+                return;
+            }
+
+            if (root.Elements().Any(e => string.Equals(e.GetAttributeValue("projectdirectory"), context.ProjectDirectory, StringComparison.OrdinalIgnoreCase)))
+            {
+                return;
+            }
+
+            root.Add(new XElement("project", new XAttribute("toolsdirectory", context.ToolsDirectory), new XAttribute("projectdirectory", context.ProjectDirectory)));
+
+            if (root.Document != null)
+            {
+                root.Document.Save(fileName);
+            }
         }
 
         protected virtual void RunTask([NotNull] IBuildContext context, [NotNull] string taskName)
@@ -158,13 +220,6 @@ namespace Sitecore.Pathfinder.Building
         private void DisplayHelp()
         {
             Trace.Writeline(Texts.Usage__scc_exe__run__task_);
-        }
-
-        [NotNull]
-        public Build With([NotNull] Stopwatch stopwatch)
-        {
-            _stopwatch = stopwatch;
-            return this;
         }
     }
 }

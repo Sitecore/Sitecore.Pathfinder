@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
 
         public override void Run(IBuildContext context)
         {
-            var sourceFileName = Path.Combine(context.Configuration.Get(Constants.Configuration.ToolsDirectory), "files\\editors\\VSCode.zip");
+            var sourceFileName = Path.Combine(context.ToolsDirectory, "files\\editors\\VSCode.zip");
 
             context.FileSystem.Unzip(sourceFileName, context.ProjectDirectory);
         }

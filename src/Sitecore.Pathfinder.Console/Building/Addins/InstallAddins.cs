@@ -26,8 +26,7 @@ namespace Sitecore.Pathfinder.Building.Addins
         {
             context.IsAborted = true;
 
-            var toolsDirectory = context.Configuration.GetString(Constants.Configuration.ToolsDirectory);
-            var repositoryDirectory = PathHelper.Combine(toolsDirectory, "files\\repository");
+            var repositoryDirectory = PathHelper.Combine(context.ToolsDirectory, "files\\repository");
 
             var fileNameToInstall = context.Configuration.GetString("arg1");
             if (string.IsNullOrEmpty(fileNameToInstall))
