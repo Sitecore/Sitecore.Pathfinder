@@ -98,6 +98,7 @@
     <Compile Include="Extensions\StringExtensionsTests.cs" />
     <Compile Include="Projects\ProjectTests.Json.cs" />
     <Compile Include="Projects\ProjectTests.Unicorn.cs" />
+    <Compile Include="Projects\ProjectTests.SerializedItem.cs" />
     <Compile Include="Projects\ProjectTests.Yaml.cs" />
     <Compile Include="Projects\ProjectTests.Xml.cs" />
     <Compile Include="Snapshots\FileNameTextNodeTests.cs" />

@@ -1,7 +1,11 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System.IO;
 using System.Linq;
+using System.Xml;
 using NUnit.Framework;
+using Sitecore.Pathfinder.Languages.Xml;
+using Sitecore.Pathfinder.Languages.Yaml;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -178,6 +182,21 @@ namespace Sitecore.Pathfinder.Projects
             Assert.AreEqual(1, parameterizedFields.Count);
             var parameterizedField = parameterizedFields.First();
             Assert.AreEqual("Parameterized Value", parameterizedField.Value);
+        }
+
+        [Test]
+        public void WriteAsYamlTest()
+        {
+            var item = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/YamlItem") as Item;
+            Assert.IsNotNull(item);
+
+            var writer = new StringWriter();
+
+            item.WriteAsYaml(writer);
+
+            var result = writer.ToString();
+
+            Assert.IsNotNullOrEmpty(result);
         }
     }
 }

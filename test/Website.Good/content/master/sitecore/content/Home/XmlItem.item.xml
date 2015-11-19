@@ -4,7 +4,7 @@
 
     <Fields>
         <Field Name="Title" Field.ShortHelp="Title field." Field.LongHelp="Title field.">Hello</Field>
-        <Field Name="Text" Field.ShortHelp="Text field." Field.LongHelp="Text field.">Hello World</Field>
+        <Field Name="Text"  Field.ShortHelp="Text field." Field.LongHelp="Text field.">Hello World</Field>
         <Field Name="Image" Field.Type="Image" Field.ShortHelp="Image field." Field.LongHelp="Image field.">/sitecore/media library/mushrooms</Field>
         <Field Name="Link" Field.Type="General Link" Field.ShortHelp="Link field." Field.LongHelp="Link field.">/sitecore/media library/mushrooms</Field>
         <Field Name="ItemPath" Field.ShortHelp="Path field." Field.LongHelp="Path field.">/sitecore/media library/mushrooms</Field>

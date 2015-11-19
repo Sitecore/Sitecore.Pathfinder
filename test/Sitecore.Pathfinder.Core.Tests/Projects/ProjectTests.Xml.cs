@@ -1,6 +1,8 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System.IO;
 using System.Linq;
+using System.Xml;
 using NUnit.Framework;
 using Sitecore.Pathfinder.Languages.Xml;
 using Sitecore.Pathfinder.Projects.Items;
@@ -172,6 +174,40 @@ namespace Sitecore.Pathfinder.Projects
             var field = item.Fields.FirstOrDefault(f => f.FieldName == "PlaceholderText");
             Assert.IsNotNull(field);
             Assert.AreEqual("Placeholder text.", field.Value);
+        }
+
+        [Test]
+        public void WriteXmlItemTest()
+        {
+            var item = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/XmlItem") as Item;
+            Assert.IsNotNull(item);
+
+            var writer = new StringWriter();
+            var output = new XmlTextWriter(writer);
+            output.Formatting = Formatting.Indented;
+
+            item.WriteAsXml(output);
+
+            var result = writer.ToString();
+
+            Assert.IsNotNullOrEmpty(result);
+        }
+
+        [Test]
+        public void WriteXmlContentItemTest()
+        {
+            var item = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/XmlItem") as Item;
+            Assert.IsNotNull(item);
+
+            var writer = new StringWriter();
+            var output = new XmlTextWriter(writer);
+            output.Formatting = Formatting.Indented;
+
+            item.WriteAsContentXml(output);
+
+            var result = writer.ToString();
+
+            Assert.IsNotNullOrEmpty(result);
         }
 
         [Test]

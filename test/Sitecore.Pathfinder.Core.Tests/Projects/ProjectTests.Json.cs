@@ -1,7 +1,11 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 using NUnit.Framework;
+using Sitecore.Pathfinder.Languages.Json;
+using Sitecore.Pathfinder.Languages.Xml;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -140,6 +144,23 @@ namespace Sitecore.Pathfinder.Projects
             Assert.AreEqual(1, parameterizedFields.Count);
             var parameterizedField = parameterizedFields.First();
             Assert.AreEqual("Parameterized Value", parameterizedField.Value);
+        }
+
+        [Test]
+        public void WriteJsonItemTest()
+        {
+            var item = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/JsonItem") as Item;
+            Assert.IsNotNull(item);
+
+            var writer = new StringWriter();
+            var output = new JsonTextWriter(writer);
+            output.Formatting = Formatting.Indented;
+
+            item.WriteAsJson(output);
+
+            var result = writer.ToString();
+
+            Assert.IsNotNullOrEmpty(result);
         }
 
         [Test]

@@ -123,6 +123,8 @@
     <Compile Include="Extensibility\IExtension.cs" />
     <Compile Include="Languages\Bin\BinFile.cs" />
     <Compile Include="Languages\Bin\BinFileParser.cs" />
+    <Compile Include="Languages\Json\ItemExtensions.cs" />
+    <Compile Include="Languages\Serialization\ItemExtensions.cs" />
     <Compile Include="Languages\Templates\TemplateCompiler.cs" />
     <Compile Include="Compiling\FieldCompilers\FieldCompileContext.cs" />
     <Compile Include="Compiling\Compilers\CompilerBase.cs" />
@@ -148,6 +150,7 @@
     <Compile Include="IAppService.cs" />
     <Compile Include="Languages\Serialization\SerializationTextSnapshot.cs" />
     <Compile Include="Languages\Xml\ItemExtensions.cs" />
+    <Compile Include="Languages\Yaml\ItemExtensions.cs" />
     <Compile Include="Snapshots\IMutableTextNode.cs" />
     <Compile Include="Languages\Yaml\YamlContentTextNodeParser.cs" />
     <Compile Include="Languages\Yaml\YamlLayoutTextNodeParser.cs" />
