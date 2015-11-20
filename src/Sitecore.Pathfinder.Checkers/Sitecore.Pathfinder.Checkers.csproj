@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Checking\Checkers\Items\FieldIdTemplateFieldIdChecker.cs" />
     <Compile Include="Checking\Checkers\Items\ItemChecker.cs" />
     <Compile Include="Checking\Checkers\Files\MediaFileChecker.cs" />
     <Compile Include="Checking\Checkers\Items\FieldValueChecker.cs" />

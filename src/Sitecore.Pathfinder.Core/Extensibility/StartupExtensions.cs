@@ -110,17 +110,17 @@ namespace Sitecore.Pathfinder.Extensibility
                 return;
             }
 
-            var collectionsFileName = Path.Combine(toolsDirectory, "System.Collections.Immutable");
+            var collectionsFileName = Path.Combine(toolsDirectory, "System.Collections.Immutable.dll");
             if (!File.Exists(collectionsFileName))
             {
-                // todo: report missing assembly
+                Console.WriteLine("System.Collections.Immutable.dll is missing. Extensions will not be loaded.");
                 return;
             }
 
             var codeAnalysisFileName = Path.Combine(toolsDirectory, "Microsoft.CodeAnalysis.dll");
             if (!File.Exists(codeAnalysisFileName))
             {
-                // todo: report missing assembly
+                Console.WriteLine("Microsoft.CodeAnalysis.dll is missing. Extensions will not be loaded.");
                 return;
             }
 
