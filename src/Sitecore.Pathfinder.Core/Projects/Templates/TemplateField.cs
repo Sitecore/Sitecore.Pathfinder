@@ -1,5 +1,6 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Snapshots;
@@ -9,12 +10,14 @@ namespace Sitecore.Pathfinder.Projects.Templates
     public class TemplateField : IHasSourceTextNodes
     {
         [NotNull]
-        public static readonly TemplateField Empty = new TemplateField(Template.Empty, TextNode.Empty);
+        public static readonly TemplateField Empty = new TemplateField(Template.Empty, new Guid("{D269BE69-A982-4415-ABC6-A870F286435A}"), TextNode.Empty);
 
-        public TemplateField([NotNull] Template template, [NotNull] ITextNode textNode)
+        public TemplateField([NotNull] Template template, Guid guid, [NotNull] ITextNode templateFieldTextNode)
         {
             Template = template;
-            SourceTextNodes.Add(textNode);
+            SourceTextNodes.Add(templateFieldTextNode);
+
+            Uri = new ProjectItemUri(template.DatabaseName, guid);
         }
 
         [NotNull]
@@ -85,6 +88,9 @@ namespace Sitecore.Pathfinder.Projects.Templates
         public SourceProperty<string> TypeProperty { get; } = new SourceProperty<string>("Type", string.Empty);
 
         public bool Unversioned { get; set; }
+
+        [NotNull]
+        public ProjectItemUri Uri { get; private set; }
 
         public void Merge([NotNull] TemplateField newField, bool overwrite)
         {

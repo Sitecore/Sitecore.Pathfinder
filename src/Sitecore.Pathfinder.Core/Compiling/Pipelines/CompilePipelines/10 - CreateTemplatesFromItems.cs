@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Linq;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Diagnostics;
@@ -44,7 +45,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
             foreach (var sectionItem in templateItem.GetChildren())
             {
-                var templateSection = context.Factory.TemplateSection(sectionItem.SourceTextNodes.First());
+                var templateSection = context.Factory.TemplateSection(template, sectionItem.Uri.Guid, sectionItem.SourceTextNodes.First());
                 template.Sections.Add(templateSection);
                 templateSection.SectionNameProperty.SetValue(sectionItem.ItemNameProperty);
 
@@ -56,7 +57,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
                 foreach (var fieldItem in sectionItem.GetChildren())
                 {
-                    var templateField = context.Factory.TemplateField(template, fieldItem.SourceTextNodes.First());
+                    var templateField = context.Factory.TemplateField(template, fieldItem.Uri.Guid, fieldItem.SourceTextNodes.First());
                     templateSection.Fields.Add(templateField);
                     templateField.FieldNameProperty.SetValue(fieldItem.ItemNameProperty);
 

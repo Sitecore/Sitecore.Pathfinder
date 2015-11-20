@@ -97,10 +97,10 @@ namespace Sitecore.Pathfinder.Configuration
         Template Template([NotNull] IProject project, Guid guid, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath);
 
         [NotNull]
-        TemplateField TemplateField([NotNull] Template template, [NotNull] ITextNode templateFieldTextNode);
+        TemplateField TemplateField([NotNull] Template template, Guid guid, [NotNull] ITextNode templateFieldTextNode);
 
         [NotNull]
-        TemplateSection TemplateSection([NotNull] ITextNode templateSectionTextNode);
+        TemplateSection TemplateSection([NotNull] Template template, Guid guid, [NotNull] ITextNode templateSectionTextNode);
 
         [NotNull]
         TextNode TextNode([NotNull] ISnapshot snapshot, TextSpan span, [NotNull] string name, [NotNull] string value);

@@ -1,5 +1,6 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.Items;
@@ -15,16 +16,10 @@ namespace Sitecore.Pathfinder.Compiling.Builders
         }
 
         [NotNull]
-        protected IFactoryService Factory { get; }
+        public string FieldId { get; set; } = string.Empty;
 
         [NotNull]
-        public FieldBuilder With([NotNull] ItemBuilder itemBuilder, [NotNull] ITextNode fieldTextNode)
-        {
-            ItemBuilder = itemBuilder;
-            FieldTextNode = fieldTextNode;
-
-            return this;
-        }
+        public ITextNode FieldIdTextNode { get; set; } = TextNode.Empty;
 
         [NotNull]
         public string FieldName { get; set; } = string.Empty;
@@ -45,6 +40,18 @@ namespace Sitecore.Pathfinder.Compiling.Builders
         public ITextNode LanguageTextNode { get; set; } = TextNode.Empty;
 
         [NotNull]
+        public string TemplateLongHelp { get; set; } = string.Empty;
+
+        [NotNull]
+        public ITextNode TemplateLongHelpTextNode { get; set; } = TextNode.Empty;
+
+        [NotNull]
+        public string TemplateShortHelp { get; set; } = string.Empty;
+
+        [NotNull]
+        public ITextNode TemplateShortHelpTextNode { get; set; } = TextNode.Empty;
+
+        [NotNull]
         public string Value { get; set; } = string.Empty;
 
         [NotNull]
@@ -62,21 +69,23 @@ namespace Sitecore.Pathfinder.Compiling.Builders
         public ITextNode VersionTextNode { get; set; } = TextNode.Empty;
 
         [NotNull]
-        public string TemplateLongHelp { get; set; } = string.Empty;
-
-        [NotNull]
-        public ITextNode TemplateLongHelpTextNode { get; set; } = TextNode.Empty;
-
-        [NotNull]
-        public string TemplateShortHelp { get; set; } = string.Empty;
-
-        [NotNull]
-        public ITextNode TemplateShortHelpTextNode { get; set; } = TextNode.Empty;
+        protected IFactoryService Factory { get; }
 
         [NotNull]
         public Field Build([NotNull] Item item)
         {
             var field = Factory.Field(item, FieldTextNode);
+
+            Guid fieldIdGuid;
+            if (Guid.TryParse(FieldId, out fieldIdGuid))
+            {
+                field.FieldId = fieldIdGuid;
+            }
+
+            if (FieldIdTextNode != TextNode.Empty)
+            {
+                field.FieldIdProperty.AddSourceTextNode(FieldIdTextNode);
+            }
 
             field.FieldName = FieldName;
             if (FieldNameTextNode != TextNode.Empty)
@@ -109,6 +118,15 @@ namespace Sitecore.Pathfinder.Compiling.Builders
             }
 
             return field;
+        }
+
+        [NotNull]
+        public FieldBuilder With([NotNull] ItemBuilder itemBuilder, [NotNull] ITextNode fieldTextNode)
+        {
+            ItemBuilder = itemBuilder;
+            FieldTextNode = fieldTextNode;
+
+            return this;
         }
     }
 }

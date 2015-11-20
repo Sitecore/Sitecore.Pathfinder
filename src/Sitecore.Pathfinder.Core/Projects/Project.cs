@@ -291,15 +291,21 @@ namespace Sitecore.Pathfinder.Projects
 
                         foreach (var sectionElement in element.Elements())
                         {
-                            var templateSection = Factory.TemplateSection(TextNode.Empty);
+                            Guid sectionGuid;
+                            Guid.TryParse(sectionElement.GetAttributeValue("Id"), out sectionGuid);
+
+                            var templateSection = Factory.TemplateSection(template, sectionGuid, TextNode.Empty);
                             templateSection.SectionName = sectionElement.GetAttributeValue("Name");
                             template.Sections.Add(templateSection);
 
-                            foreach (var field in sectionElement.Elements())
+                            foreach (var fieldElement in sectionElement.Elements())
                             {
-                                var templateField = Factory.TemplateField(template, TextNode.Empty);
-                                templateField.FieldName = field.GetAttributeValue("Name");
-                                templateField.Type = field.GetAttributeValue("Type");
+                                Guid fieldGuid;
+                                Guid.TryParse(fieldElement.GetAttributeValue("Id"), out fieldGuid);
+
+                                var templateField = Factory.TemplateField(template, fieldGuid, TextNode.Empty);
+                                templateField.FieldName = fieldElement.GetAttributeValue("Name");
+                                templateField.Type = fieldElement.GetAttributeValue("Type");
                                 templateSection.Fields.Add(templateField);
                             }
                         }

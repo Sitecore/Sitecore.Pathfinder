@@ -56,9 +56,70 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [CanBeNull]
         public Item StandardValuesItem { get; set; }
 
+        [NotNull]
+        [ItemNotNull]
+        public IEnumerable<TemplateField> GetAllFields()
+        {
+            var templates = new List<ProjectItemUri>();
+            return GetAllFields(templates, this);
+        }
+
+        [CanBeNull]
+        public virtual TemplateField GetField([NotNull] string fieldName)
+        {
+            foreach (var templateField in GetAllFields())
+            {
+                if (string.Equals(templateField.FieldName, fieldName, StringComparison.OrdinalIgnoreCase))
+                {
+                    return templateField;
+                }
+            }
+
+            return null;
+        }
+
         public void Merge([NotNull] Template newTemplate)
         {
             Merge(newTemplate, true);
+        }
+
+        [NotNull]
+        [ItemNotNull]
+        protected virtual IEnumerable<TemplateField> GetAllFields([NotNull] [ItemNotNull] ICollection<ProjectItemUri> templates, [NotNull] Template template)
+        {
+            templates.Add(template.Uri);
+
+            foreach (var field in template.Sections.SelectMany(s => s.Fields))
+            {
+                yield return field;
+            }
+
+            var nullGuid = Guid.Empty.Format();
+
+            var baseTemplates = template.BaseTemplates.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var baseTemplateId in baseTemplates)
+            {
+                if (baseTemplateId == nullGuid)
+                {
+                    continue;
+                }
+
+                var baseTemplate = Project.FindQualifiedItem(baseTemplateId) as Template;
+                if (baseTemplate == null)
+                {
+                    continue;
+                }
+
+                if (templates.Contains(baseTemplate.Uri))
+                {
+                    continue;
+                }
+
+                foreach (var templateField in GetAllFields(templates, baseTemplate))
+                {
+                    yield return templateField;
+                }
+            }
         }
 
         protected override void Merge(IProjectItem newProjectItem, bool overwrite)
@@ -102,55 +163,6 @@ namespace Sitecore.Pathfinder.Projects.Templates
                 }
 
                 section.Merge(newSection, overwrite);
-            }
-        }
-
-        [NotNull]
-        [ItemNotNull]
-        public IEnumerable<TemplateField> GetAllFields()
-        {
-            var fields = new List<TemplateField>();
-            var templates = new List<ProjectItemUri>();
-
-            GetAllFields(fields, templates, this);
-
-            return fields;
-        }
-
-        private void GetAllFields([NotNull][ItemNotNull] ICollection<TemplateField> fields, [NotNull][ItemNotNull] ICollection<ProjectItemUri> templates, [NotNull] Template template)
-        {
-            templates.Add(template.Uri);
-
-            foreach (var field in template.Sections.SelectMany(s => s.Fields))
-            {
-                if (fields.All(f => !string.Equals(f.FieldName, field.FieldName, StringComparison.OrdinalIgnoreCase)))
-                {
-                    fields.Add(field);
-                }
-            }
-
-            var nullGuid = Guid.Empty.Format();
-
-            var baseTemplates = template.BaseTemplates.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var baseTemplateId in baseTemplates)
-            {
-                if (baseTemplateId == nullGuid)
-                {
-                    continue;
-                }
-
-                var baseTemplate = Project.FindQualifiedItem(baseTemplateId) as Template;
-                if (baseTemplate == null)
-                {
-                    continue;
-                }
-
-                if (templates.Contains(baseTemplate.Uri))
-                {
-                    continue;
-                }
-
-                GetAllFields(fields, templates, baseTemplate);
             }
         }
     }

@@ -60,8 +60,10 @@ namespace Sitecore.Pathfinder.Languages.Templates
 
             if (item.Fields.Any())
             {
+                var templateSectionGuid = StringHelper.GetGuid(projectItem.Project, template.ItemIdOrPath + "/Fields");
+
                 // section
-                var templateSection = context.Factory.TemplateSection(TextNode.Empty);
+                var templateSection = context.Factory.TemplateSection(template, templateSectionGuid, TextNode.Empty);
                 template.Sections.Add(templateSection);
                 templateSection.SectionNameProperty.SetValue("Fields");
                 templateSection.IconProperty.SetValue("Applications/16x16/form_blue.png");
@@ -81,7 +83,8 @@ namespace Sitecore.Pathfinder.Languages.Templates
                     var templateField = template.Sections.SelectMany(s => s.Fields).FirstOrDefault(f => f.FieldName == field.FieldName);
                     if (templateField == null)
                     {
-                        templateField = context.Factory.TemplateField(template, childNode);
+                        var templateFieldGuid = StringHelper.GetGuid(projectItem.Project, template.ItemIdOrPath + "/Fields/" + field.FieldName);
+                        templateField = context.Factory.TemplateField(template, templateFieldGuid, childNode);
                         templateSection.Fields.Add(templateField);
 
                         templateField.FieldNameProperty.SetValue(field.FieldNameProperty);

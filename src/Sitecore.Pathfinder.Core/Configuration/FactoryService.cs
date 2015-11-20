@@ -197,14 +197,14 @@ namespace Sitecore.Pathfinder.Configuration
             return new Template(project, textNode, guid, databaseName, itemName, itemIdOrPath);
         }
 
-        public virtual TemplateField TemplateField(Template template, ITextNode templateFieldTextNode)
+        public virtual TemplateField TemplateField(Template template, Guid guid, ITextNode templateFieldTextNode)
         {
-            return new TemplateField(template, templateFieldTextNode);
+            return new TemplateField(template, guid, templateFieldTextNode);
         }
 
-        public virtual TemplateSection TemplateSection(ITextNode templateSectionTextNode)
+        public virtual TemplateSection TemplateSection(Template template, Guid guid, ITextNode templateSectionTextNode)
         {
-            return new TemplateSection(templateSectionTextNode);
+            return new TemplateSection(template, guid, templateSectionTextNode);
         }
 
         public virtual TextNode TextNode(ISnapshot snapshot, TextSpan span, string name, string value)

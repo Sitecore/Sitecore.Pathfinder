@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
 
                 if (parent != null)
                 {
-                    parentId = parent.Uri.Guid.ToString();
+                    parentId = parent.Uri.Guid.Format();
                 }
             }
 

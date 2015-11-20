@@ -90,6 +90,8 @@ namespace Sitecore.Pathfinder.Languages.Serialization
                 switch (name)
                 {
                     case "field":
+                        fieldBuilder.FieldId = value;
+                        fieldBuilder.FieldIdTextNode = context.Factory.TextNode(textSnapshot, GetTextSpan(lineNumber, 0, lineLength), "field", value);
                         break;
                     case "name":
                         fieldBuilder.FieldName = value;

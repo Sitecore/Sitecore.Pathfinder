@@ -151,6 +151,7 @@ namespace Sitecore.Pathfinder.WebApi
                 }
 
                 output.WriteStartElement("Field");
+                output.WriteAttributeString("Id", field.ID.ToString());
                 output.WriteAttributeString("Name", field.Name);
                 output.WriteAttributeString("Value", field.Value);
                 output.WriteEndElement();
@@ -175,11 +176,13 @@ namespace Sitecore.Pathfinder.WebApi
             foreach (var section in templateFields.Select(f => f.Section).Distinct().OrderBy(i => i.Sortorder).ThenBy(i => i.Key))
             {
                 output.WriteStartElement("Section");
+                output.WriteAttributeString("Id", section.ID.ToString());
                 output.WriteAttributeString("Name", section.Name);
 
                 foreach (var field in section.GetFields().ToList().OrderBy(i => i.Sortorder).ThenBy(i => i.Key))
                 {
                     output.WriteStartElement("Field");
+                    output.WriteAttributeString("Id", field.ID.ToString());
                     output.WriteAttributeString("Name", field.Name);
                     output.WriteAttributeString("Type", field.Type);
                     output.WriteEndElement();

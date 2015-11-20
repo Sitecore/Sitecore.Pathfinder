@@ -10,9 +10,12 @@ namespace Sitecore.Pathfinder.Projects.Templates
 {
     public class TemplateSection : IHasSourceTextNodes
     {
-        public TemplateSection([NotNull] ITextNode templateSectionTextNode)
+        public TemplateSection([NotNull] Template template, Guid guid, [NotNull] ITextNode templateSectionTextNode)
         {
+            Template = template;
             SourceTextNodes.Add(templateSectionTextNode);
+
+            Uri = new ProjectItemUri(template.DatabaseName, guid);
         }
 
         [NotNull]
@@ -40,6 +43,12 @@ namespace Sitecore.Pathfinder.Projects.Templates
         public SourceProperty<string> SectionNameProperty { get; } = new SourceProperty<string>("Name", string.Empty);
 
         public ICollection<ITextNode> SourceTextNodes { get; } = new List<ITextNode>();
+
+        [NotNull]
+        public Template Template { get; }
+
+        [NotNull]
+        public ProjectItemUri Uri { get; private set; }
 
         public void Merge([NotNull] TemplateSection newSection, bool overwrite)
         {

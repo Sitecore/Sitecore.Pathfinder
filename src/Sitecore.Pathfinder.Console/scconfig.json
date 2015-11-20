@@ -176,22 +176,26 @@
                     "database": "master"
                 },
                 "2": {
+                    "query": "/sitecore/content/Home",
+                    "database": "master"
+                },
+                "3": {
                     "query": "/sitecore/templates/System//*[@@templatekey='template']",
                     "database": "master",
                     "fields": "__Base template"
                 },
-                "3": {
+                "4": {
                     "query": "/sitecore/templates/Common//*[@@templatekey='template']",
                     "database": "master",
                     "fields": "__Base template"
                 },
-                "4": {
+                "5": {
                     "query": "/sitecore/templates/Sample/Sample Item",
                     "database": "master",
                     "fields": "__Base template"
                 },
-                "5": {
-                    "query": "/sitecore/layout//*[@@templatekey='view rendering' or @@templatekey='xsl rendering' or @@templatekey='sublayout' or @@templatekey='layout' or @@templatekey='device']",
+                "6": {
+                    "query": "/sitecore/layout//*[@@templatekey='view rendering' or @@templatekey='xsl rendering' or @@templatekey='sublayout' or @@templatekey='layout' or @@templatekey='device' or @@templatekey='webcontrol']",
                     "database": "master",
                     "fields": "Path, Place Holders, Parameters Template"
                 }
@@ -203,18 +207,22 @@
             "queries": {
                 "0": {
                     "query": "/sitecore",
-                    "database": "master"
+                    "database": "core"
                 },
                 "1": {
                     "query": "/sitecore/*",
-                    "database": "master"
+                    "database": "core"
                 },
                 "2": {
+                    "query": "/sitecore/client/Applications",
+                    "database": "core"
+                },
+                "3": {
                     "query": "/sitecore/templates//*[@@templatekey='template']",
                     "database": "core",
                     "fields": "__Base template"
                 },
-                "3": {
+                "4": {
                     "query": "/sitecore/layout//*[@@templatekey='device']",
                     "database": "core"
                 }

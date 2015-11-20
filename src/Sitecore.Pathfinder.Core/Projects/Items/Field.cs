@@ -30,7 +30,17 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         public Guid FieldId
         {
-            get { return FieldIdProperty.GetValue(); }
+            get
+            {
+                var guid = FieldIdProperty.GetValue();
+                if (guid != Guid.Empty)
+                {
+                    return guid;
+                }
+
+                var templateField = Item.Template.GetField(FieldName);
+                return templateField == null ? Guid.Empty : templateField.Uri.Guid;
+            }
             set { FieldIdProperty.SetValue(value); }
         }
 
