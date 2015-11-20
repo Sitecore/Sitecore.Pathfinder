@@ -10,9 +10,13 @@ An experimental tool chain for Sitecore.
 
 ![Pathfinder](docs/img/SitecorePathfinder.png)
  
-Watch the videos on YouTube (please notice that some details in the videos are out of date):
+Watch the videos on YouTube:
 
 * [01 - Idea and concepts](https://www.youtube.com/watch?v=TcJ0IoI7sVM)
+* [06 - Visual Studio, T4 templates, unit testing with FakeDB](https://youtu.be/_v6-1NKgxT0)
+
+Please notice that some details in these videos are out of date.
+
 * [02 - HelloWorld](https://www.youtube.com/watch?v=jQz5hAVOTzU)
 * [03 - Unit Testing](https://www.youtube.com/watch?v=DWU6D7L8ykg) (Functionality removed) 
 * [04 - Html Templates](https://www.youtube.com/watch?v=9aTGhW6ErYM)
@@ -894,6 +898,8 @@ Code generators are simply extensions that are located in the [Tools]/extensions
 Normally you want to run the `generate-code` task before building an assembly, so the C# source files are up-to-date.
 
 ### T4 Code Generation
+Watch the video: [06 - Visual Studio, T4 templates, unit testing with FakeDB](https://youtu.be/_v6-1NKgxT0)
+
 Pathfinder supports code generation using T4 text templating. Pathfinder uses the 
 [Mono Text Templating engine](https://github.com/mono/monodevelop/tree/master/main/src/addins/TextTemplating/Mono.TextTemplating) 
 (not the Visual Studio one).
@@ -1216,6 +1222,8 @@ framework as a starting point.
 Pathfinder support Unicorn, which is used by Habitat. It could be interesting to have a code generator for the TemplateIds file in Habitat.
 
 ### FakeDB
+Watch the video: [06 - Visual Studio, T4 templates, unit testing with FakeDB](https://youtu.be/_v6-1NKgxT0)
+
 [FakeDb](https://github.com/sergeyshushlyapin/Sitecore.FakeDb) is the unit testing framework for Sitecore that enables creation and manipulation 
 of Sitecore content in memory. It is designed to minimize efforts for the test content initialization keeping focus on the minimal test 
 data rather than comprehensive content tree representation.  
