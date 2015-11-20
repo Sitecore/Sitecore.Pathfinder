@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
-using Sitecore.Pathfinder.Languages.Bin;
+using Sitecore.Pathfinder.Languages.BinFiles;
 using Sitecore.Pathfinder.Languages.Media;
 using Sitecore.Pathfinder.Languages.Renderings;
 using Sitecore.Pathfinder.Parsing;

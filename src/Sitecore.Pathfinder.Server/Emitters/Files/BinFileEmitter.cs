@@ -7,7 +7,7 @@ using System.Linq;
 using Sitecore.IO;
 using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.Languages.Bin;
+using Sitecore.Pathfinder.Languages.BinFiles;
 using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Emitters.Files

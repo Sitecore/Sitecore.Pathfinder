@@ -121,8 +121,8 @@
     <Compile Include="Emitting\IEmitter.cs" />
     <Compile Include="Extensibility\ExtensionBase.cs" />
     <Compile Include="Extensibility\IExtension.cs" />
-    <Compile Include="Languages\Bin\BinFile.cs" />
-    <Compile Include="Languages\Bin\BinFileParser.cs" />
+    <Compile Include="Languages\BinFiles\BinFile.cs" />
+    <Compile Include="Languages\BinFiles\BinFileParser.cs" />
     <Compile Include="Languages\Json\ItemExtensions.cs" />
     <Compile Include="Languages\Serialization\ItemExtensions.cs" />
     <Compile Include="Languages\Templates\TemplateCompiler.cs" />
