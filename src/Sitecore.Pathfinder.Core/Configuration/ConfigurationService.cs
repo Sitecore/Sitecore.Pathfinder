@@ -119,24 +119,37 @@ namespace Sitecore.Pathfinder.Configuration
                 projectDirectory = configurationSourceRoot.GetString(Constants.Configuration.ProjectDirectory);
             }
 
-            // add project config file
+            // add project config file - scconfig.json
             var projectConfigFileName = PathHelper.Combine(projectDirectory, configurationSourceRoot.Get(Constants.Configuration.ProjectConfigFileName));
             if (File.Exists(projectConfigFileName))
             {
                 configurationSourceRoot.AddFile(projectConfigFileName);
             }
 
-            // add machine level config file
+            var machineConfigFileName = Path.GetFileNameWithoutExtension(projectConfigFileName) + "." + Environment.MachineName + ".json";
+
+            // add module configs (ignore machine config - it will be added last) - scconfig.[module].json 
+            if ((options & ConfigurationOptions.IncludeModuleConfig) == ConfigurationOptions.IncludeModuleConfig)
+            {
+                foreach (var moduleFileName in Directory.GetFiles(projectDirectory, "*scconfig.*.json").OrderBy(f => f))
+                {
+                    if (!string.Equals(moduleFileName, machineConfigFileName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        configurationSourceRoot.AddFile(moduleFileName);
+                    }
+                }
+            }
+
+            // add machine level config file - scconfig.[machine name].json
             if ((options & ConfigurationOptions.IncludeMachineConfig) == ConfigurationOptions.IncludeMachineConfig)
             {
-                var machineConfigFileName = Path.GetFileNameWithoutExtension(projectConfigFileName) + "." + Environment.MachineName + ".json";
                 if (File.Exists(machineConfigFileName))
                 {
                     configurationSourceRoot.AddFile(machineConfigFileName);
                 }
             }
 
-            // add user config file
+            // add user config file - scconfig.json.user
             if ((options & ConfigurationOptions.IncludeUserConfig) == ConfigurationOptions.IncludeUserConfig)
             {
                 var userConfigFileName = projectConfigFileName + ".user";
@@ -146,7 +159,7 @@ namespace Sitecore.Pathfinder.Configuration
                 }
             }
 
-            // add config file specified on the command line: /config qa - loads scconfig.qa.json 
+            // add config file specified on the command line: /config myconfig.xml
             if ((options & ConfigurationOptions.IncludeCommandLineConfig) == ConfigurationOptions.IncludeCommandLineConfig)
             {
                 var configName = configurationSourceRoot.Get(Constants.Configuration.CommandLineConfig);
@@ -154,20 +167,13 @@ namespace Sitecore.Pathfinder.Configuration
                 if (!string.IsNullOrEmpty(configName))
                 {
                     var configFileName = PathHelper.Combine(projectDirectory, configName);
-
-                    if (!string.IsNullOrEmpty(configFileName) && !configFileName.StartsWith("scconfig.", StringComparison.OrdinalIgnoreCase))
-                    {
-                        configFileName = "scconfig." + configFileName;
-                    }
-
-                    if (!string.IsNullOrEmpty(configFileName) && !configFileName.EndsWith(".json", StringComparison.OrdinalIgnoreCase))
-                    {
-                        configFileName += ".json";
-                    }
-
                     if (File.Exists(configFileName))
                     {
                         configurationSourceRoot.AddFile(configFileName);
+                    }
+                    else
+                    {
+                        throw new ConfigurationException("Config file not found: " + configFileName);
                     }
                 }
             }

@@ -14,13 +14,13 @@ namespace Sitecore.Pathfinder.Diagnostics
         bool IsInteractive { get; set; }
 
         [NotNull]
-        string Pick([NotNull] string promptText, [NotNull] Dictionary<string, string> options);
+        string Pick([NotNull] string promptText, [NotNull] Dictionary<string, string> options, [NotNull] string configName = "");
 
         [CanBeNull]
-        string ReadLine();
+        string ReadLine([NotNull] string configName = "");
 
         [NotNull]
-        string ReadLine([NotNull] string promptText, [NotNull] string defaultValue);
+        string ReadLine([NotNull] string promptText, [NotNull] string defaultValue, [NotNull] string configName = "");
 
         void Write([NotNull] string format, [NotNull] [ItemCanBeNull] params object[] arg);
 
@@ -33,6 +33,6 @@ namespace Sitecore.Pathfinder.Diagnostics
         void WriteLine();
 
         [CanBeNull]
-        bool? YesNo([NotNull] string promptText, [CanBeNull] bool? defaultValue);
+        bool? YesNo([NotNull] string promptText, [CanBeNull] bool? defaultValue, [NotNull] string configName = "");
     }
 }

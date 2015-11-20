@@ -333,6 +333,18 @@
     <None Include="files\project\wwwroot\readme.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="files\scripts\install-vs.cmd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\scripts\install-todomvc.cmd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\scripts\install-helloworld.cmd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\scripts\install-cleanblog.cmd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="files\scripts\install-grunt.cmd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -449,6 +461,7 @@
     </Content>
     <Content Include="files\project\sitecore.project\Sitecore.nuspec">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="..\Sitecore.Pathfinder.Server\bin\Sitecore.Pathfinder.Core.dll">
       <Link>files\website\bin\Sitecore.Pathfinder.Core.dll</Link>

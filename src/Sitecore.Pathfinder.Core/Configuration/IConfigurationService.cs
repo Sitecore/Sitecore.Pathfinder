@@ -21,9 +21,11 @@ namespace Sitecore.Pathfinder.Configuration
 
         IncludeCommandLineConfig = 16,
 
-        Interactive = IncludeCommandLine | IncludeEnvironment | IncludeMachineConfig | IncludeUserConfig | IncludeCommandLineConfig,
+        IncludeModuleConfig = 32,
 
-        Noninteractive = IncludeEnvironment | IncludeMachineConfig
+        Interactive = IncludeCommandLine | IncludeEnvironment | IncludeMachineConfig | IncludeUserConfig | IncludeCommandLineConfig | IncludeModuleConfig,
+
+        Noninteractive = IncludeEnvironment | IncludeMachineConfig | IncludeModuleConfig
     }
 
     public interface IConfigurationService

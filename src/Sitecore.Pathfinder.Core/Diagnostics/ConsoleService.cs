@@ -4,12 +4,23 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+using Microsoft.Framework.ConfigurationModel;
+using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Diagnostics
 {
     [Export(typeof(IConsoleService))]
     public class ConsoleService : IConsoleService
     {
+        [ImportingConstructor]
+        public ConsoleService([NotNull] IConfiguration configuration)
+        {
+            Configuration = configuration;
+
+            IsInteractive = configuration.GetBool("interactive", true);
+            IsSilent = configuration.GetBool("silent");
+        }
+
         public ConsoleColor BackgroundColor
         {
             get { return Console.BackgroundColor; }
@@ -24,20 +35,54 @@ namespace Sitecore.Pathfinder.Diagnostics
 
         public bool IsInteractive { get; set; } = true;
 
-        public string Pick(string promptText, Dictionary<string, string> options)
+        public bool IsSilent { get; set; }
+
+        [NotNull]
+        protected IConfiguration Configuration { get; }
+
+        public string Pick(string promptText, Dictionary<string, string> options, string configName = "")
         {
-            Console.WriteLine();
+            if (!string.IsNullOrEmpty(configName))
+            {
+                var configValue = Configuration.GetString(configName);
+                if (!string.IsNullOrEmpty(configValue))
+                {
+                    string value;
+                    if (options.TryGetValue(configValue, out value))
+                    {
+                        return value;
+                    }
+
+                    if (configValue == "0")
+                    {
+                        return string.Empty;
+                    }
+
+                    int selection;
+                    if (int.TryParse(configValue, out selection))
+                    {
+                        if (selection > 0 && selection <= options.Count)
+                        {
+                            return options.Values.ElementAt(selection - 1);
+                        }
+                    }
+
+                    throw new ConfigurationException("Input is not valid: " + configValue);
+                }
+            }
+
+            WriteLine();
 
             var index = 1;
             foreach (var option in options)
             {
-                Console.WriteLine($"{index}: {option.Key}");
+                WriteLine($"{index}: {option.Key}");
                 index++;
             }
 
             while (true)
             {
-                Console.Write(promptText);
+                Write(promptText);
                 var input = Console.ReadLine();
 
                 if (input == "0")
@@ -70,19 +115,37 @@ namespace Sitecore.Pathfinder.Diagnostics
             }
         }
 
-        public string ReadLine()
+        public string ReadLine(string configName = "")
         {
+            if (!string.IsNullOrEmpty(configName))
+            {
+                var configValue = Configuration.GetString(configName);
+                if (!string.IsNullOrEmpty(configValue))
+                {
+                    return configValue;
+                }
+            }
+
             return Console.ReadLine();
         }
 
-        public string ReadLine(string promptText, string defaultValue)
+        public string ReadLine(string promptText, string defaultValue, string configName = "")
         {
+            if (!string.IsNullOrEmpty(configName))
+            {
+                var configValue = Configuration.GetString(configName);
+                if (!string.IsNullOrEmpty(configValue))
+                {
+                    return configValue;
+                }
+            }
+
             if (!IsInteractive)
             {
                 return defaultValue;
             }
 
-            Console.Write(promptText);
+            Write(promptText);
 
             var input = Console.ReadLine() ?? string.Empty;
             if (string.IsNullOrEmpty(input))
@@ -95,31 +158,65 @@ namespace Sitecore.Pathfinder.Diagnostics
 
         public void Write(string format, params object[] arg)
         {
-            Console.Write(format, arg);
+            if (!IsSilent)
+            {
+                Console.Write(format, arg);
+            }
         }
 
         public void Write(string text)
         {
-            Console.Write(text);
+            if (!IsSilent)
+            {
+                Console.Write(text);
+            }
         }
 
         public void WriteLine(string format, params object[] arg)
         {
-            Console.WriteLine(format, arg);
+            if (!IsSilent)
+            {
+                Console.WriteLine(format, arg);
+            }
         }
 
         public void WriteLine(string text)
         {
-            Console.WriteLine(text);
+            if (!IsSilent)
+            {
+                Console.WriteLine(text);
+            }
         }
 
         public void WriteLine()
         {
-            Console.WriteLine();
+            if (!IsSilent)
+            {
+                Console.WriteLine();
+            }
         }
 
-        public bool? YesNo(string promptText, bool? defaultValue)
+        public bool? YesNo(string promptText, bool? defaultValue, string configName = "")
         {
+            if (!string.IsNullOrEmpty(configName))
+            {
+                var configValue = Configuration.GetString(configName);
+                if (!string.IsNullOrEmpty(configValue))
+                {
+                    if (string.Equals(configValue, "true", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return true;
+                    }
+
+                    if (string.Equals(configValue, "false", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return false;
+                    }
+
+                    throw new ConfigurationException("Input is not valid: " + configValue);
+                }
+            }
+
             if (!IsInteractive)
             {
                 return defaultValue;
@@ -127,7 +224,7 @@ namespace Sitecore.Pathfinder.Diagnostics
 
             while (true)
             {
-                Console.Write(promptText);
+                Write(promptText);
 
                 var input = Console.ReadLine();
                 if (string.IsNullOrEmpty(input))

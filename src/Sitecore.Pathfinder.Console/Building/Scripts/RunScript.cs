@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
+using System.Text;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 
@@ -68,28 +69,29 @@ namespace Sitecore.Pathfinder.Building.Scripts
 
         protected virtual void ExecuteCmdScript([NotNull] IBuildContext context, [NotNull] string fileName)
         {
-            var proc = new Process();
-            proc.StartInfo.FileName = fileName;
-            proc.StartInfo.RedirectStandardError = true;
-            proc.StartInfo.RedirectStandardOutput = true;
-            proc.StartInfo.UseShellExecute = false;
-            proc.StartInfo.CreateNoWindow = true;
+            var process = new Process();
+            process.StartInfo.FileName = fileName;
+            process.StartInfo.RedirectStandardError = true;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.StandardOutputEncoding = Encoding.UTF8;
+            process.StartInfo.StandardErrorEncoding = Encoding.UTF8;
 
-            proc.Start();
-
-            proc.WaitForExit();
-
-            var output = proc.StandardOutput.ReadToEnd();
-            if (!string.IsNullOrEmpty(output))
+            process.OutputDataReceived += delegate(object sender, DataReceivedEventArgs args)
             {
-                Console.WriteLine(output);
-            }
+                Console.WriteLine(args.Data);
+            };
 
-            var error = proc.StandardError.ReadToEnd();
-            if (!string.IsNullOrEmpty(error))
+            process.ErrorDataReceived += delegate(object sender, DataReceivedEventArgs args)
             {
-                Console.WriteLine(error);
-            }
+                Console.WriteLine(args.Data);
+            };
+
+            process.Start();
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+            process.WaitForExit();
         }
 
         protected virtual void ExecutePowerShellScript([NotNull] IBuildContext context, [NotNull] string scriptFileName)

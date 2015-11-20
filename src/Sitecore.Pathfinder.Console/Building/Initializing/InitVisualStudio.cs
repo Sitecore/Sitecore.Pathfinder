@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
 
         public override void Run(IBuildContext context)
         {
-            var zipFileName = Path.Combine(context.ToolsDirectory, "files\\editors\\VisualStudio.zip");
+            var zipFileName = Path.Combine(context.ToolsDirectory, "files\\editors\\VisualStudio.Website.zip");
 
             if (!Directory.Exists(Path.Combine(context.ProjectDirectory, "node_modules\\grunt")))
             {

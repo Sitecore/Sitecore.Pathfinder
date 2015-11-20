@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
 
         public override void Run(IBuildContext context)
         {
-            var console = new ConsoleService();
+            var console = new ConsoleService(context.Configuration);
             context.IsAborted = true;
 
             var projectDirectory = context.ProjectDirectory;
@@ -53,7 +53,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
                 console.WriteLine();
                 console.WriteLine("The current directory is not empty. It is recommended to create a new project in an empty directory.");
                 console.WriteLine();
-                if (console.YesNo("Are you sure you want to create the project in this directory [N]: ", false) != true)
+                if (console.YesNo("Are you sure you want to create the project in this directory [N]: ", false, "overwrite") != true)
                 {
                     context.IsAborted = true;
                     return;
@@ -69,7 +69,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
             console.WriteLine();
 
             _projectUniqueId = Guid.NewGuid().ToString("B").ToUpperInvariant();
-            _projectUniqueId = console.ReadLine("Enter the project unique ID [" + _projectUniqueId + "]: ", _projectUniqueId);
+            _projectUniqueId = console.ReadLine("Enter the project unique ID [" + _projectUniqueId + "]: ", _projectUniqueId, "projectid");
 
             console.WriteLine();
             console.WriteLine("Pathfinder requires physical access to both the Website and DataFolder directories to deploy packages.");
@@ -86,7 +86,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
             var defaultProjectDirectory = $"{wwwrootDirectory}\\{projectName}\\Website";
             do
             {
-                var website = console.ReadLine($"Enter the directory of the Website [{defaultProjectDirectory}: ", defaultProjectDirectory);
+                var website = console.ReadLine($"Enter the directory of the Website [{defaultProjectDirectory}: ", defaultProjectDirectory, "website");
                 _websiteDirectory = PathHelper.Combine(defaultProjectDirectory, website);
             }
             while (!ValidateWebsiteDirectory(context, console));
@@ -95,7 +95,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
             var defaultDataFolderDirectory = Path.Combine(Path.GetDirectoryName(_websiteDirectory) ?? string.Empty, "Data");
             do
             {
-                _dataFolderDirectory = console.ReadLine("Enter the directory of the DataFolder [" + defaultDataFolderDirectory + "]: ", defaultDataFolderDirectory);
+                _dataFolderDirectory = console.ReadLine("Enter the directory of the DataFolder [" + defaultDataFolderDirectory + "]: ", defaultDataFolderDirectory, "datafolder");
             }
             while (!ValidateDataFolderDirectory(context, console));
 
@@ -103,7 +103,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
             console.WriteLine("Finally Pathfinder requires the hostname of the Sitecore website.");
             console.WriteLine();
 
-            _hostName = console.ReadLine($"Enter the hostname of the website [http://{projectName.ToLowerInvariant()}]: ", $"http://{projectName.ToLowerInvariant()}");
+            _hostName = console.ReadLine($"Enter the hostname of the website [http://{projectName.ToLowerInvariant()}]: ", $"http://{projectName.ToLowerInvariant()}", "host");
             if (!_hostName.StartsWith("https:") && !_hostName.StartsWith("https:"))
             {
                 _hostName = "http://" + _hostName.TrimStart('/');
@@ -115,7 +115,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
                 var editorsDirectory = Path.Combine(context.ToolsDirectory, "files\\editors");
                 var editors = Directory.GetFiles(editorsDirectory, "*.zip", SearchOption.AllDirectories).ToDictionary(Path.GetFileNameWithoutExtension, e => e);
 
-                _editorFileName = console.Pick("Select editor [1]: ", editors);
+                _editorFileName = console.Pick("Select editor [1]: ", editors, "editor");
             }
 
             console.WriteLine();
@@ -124,7 +124,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
                 var starterKitDirectory = Path.Combine(context.ToolsDirectory, "files\\starterkits");
                 var starterKits = Directory.GetFiles(starterKitDirectory, "*.zip", SearchOption.AllDirectories).ToDictionary(Path.GetFileNameWithoutExtension, e => e);
 
-                _starterKitFileName = console.Pick("Select starter kit [1]: ", starterKits);
+                _starterKitFileName = console.Pick("Select starter kit [1]: ", starterKits, "starterkit");
             }
 
             console.WriteLine();
