@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
     public class Template : ItemBase
     {
         [NotNull]
-        public static readonly Template Empty = new Template(Projects.Project.Empty, TextNode.Empty, new Guid("{7A3E077F-D985-453F-8773-348ADFEAF2FD}"), string.Empty, string.Empty, string.Empty);
+        public static readonly Template Empty = new Template(Projects.Project.Empty, TextNode.Empty, new Guid("{00000000-0000-0000-0000-000000000000}"), string.Empty, string.Empty, string.Empty);
 
         [CanBeNull]
         [ItemNotNull]

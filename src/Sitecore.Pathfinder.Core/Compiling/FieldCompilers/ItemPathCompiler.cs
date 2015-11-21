@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         public override bool CanCompile(IFieldCompileContext context, Field field)
         {
             // if the value contains a dot (.) it is probably a file name
-            return field.Value.IndexOf("/sitecore", StringComparison.OrdinalIgnoreCase) >= 0 && field.Value.IndexOf('.') < 0 && !field.Item.IsExtern;
+            return field.Value.IndexOf("/sitecore", StringComparison.OrdinalIgnoreCase) >= 0 && field.Value.IndexOf('.') < 0 && !field.Item.IsImport;
         }
 
         public override string Compile(IFieldCompileContext context, Field field)

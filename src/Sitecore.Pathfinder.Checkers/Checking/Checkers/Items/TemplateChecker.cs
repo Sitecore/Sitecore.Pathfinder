@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
     {
         public override void Check(ICheckerContext context)
         {
-            foreach (var template in context.Project.ProjectItems.OfType<Template>().Where(i => !i.IsExtern))
+            foreach (var template in context.Project.ProjectItems.OfType<Template>().Where(i => !i.IsImport))
             {
                 CheckTemplate(context, template);
             }

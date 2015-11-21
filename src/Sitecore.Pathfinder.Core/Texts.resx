@@ -465,4 +465,7 @@
     <data name="Resetting_website___" xml:space="preserve">
     <value>Resetting website...</value>
   </data>
+    <data name="Could_not_read_exports_xml_in_dependency_package" xml:space="preserve">
+    <value>Could not read exports.xml in dependency package</value>
+  </data>
 </root>

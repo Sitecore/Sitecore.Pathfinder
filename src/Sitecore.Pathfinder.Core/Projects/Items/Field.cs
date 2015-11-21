@@ -16,9 +16,6 @@ namespace Sitecore.Pathfinder.Projects.Items
     [DebuggerDisplay("{GetType().Name,nq}: {FieldName,nq} = {Value}")]
     public class Field : IHasSourceTextNodes
     {
-        [CanBeNull]
-        private ID _id;
-
         public Field([NotNull] Item item, [NotNull] ITextNode textNode)
         {
             Item = item;
@@ -48,7 +45,13 @@ namespace Sitecore.Pathfinder.Projects.Items
                 }
 
                 var templateField = Item.Template.GetField(FieldName);
-                return templateField == null ? Guid.Empty : templateField.Uri.Guid;
+                if (templateField == null)
+                {
+                    return Guid.Empty;
+                }
+
+                FieldId = templateField.Uri.Guid;
+                return templateField.Uri.Guid;
             }
             set { FieldIdProperty.SetValue(value); }
         }
@@ -59,7 +62,23 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public string FieldName
         {
-            get { return FieldNameProperty.GetValue(); }
+            get
+            {
+                var fieldName = FieldNameProperty.GetValue();
+                if (!string.IsNullOrEmpty(fieldName))
+                {
+                    return fieldName;
+                }
+
+                var templateField = Item.Template.GetField(FieldName);
+                if (templateField == null)
+                {
+                    return string.Empty;
+                }
+
+                FieldName = templateField.FieldName;
+                return templateField.FieldName;
+            }
             set { FieldNameProperty.SetValue(value); }
         }
 
@@ -68,11 +87,9 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         [NotNull]
         [Obsolete("Use FieldId instead", false)]
-        public ID ID => _id ?? (_id = new ID(FieldId));
+        public ID ID => new ID(FieldId);
 
         public bool IsCompiled { get; set; }
-
-        public bool IsTestable { get; set; } = true;
 
         [NotNull]
         public Item Item { get; set; }

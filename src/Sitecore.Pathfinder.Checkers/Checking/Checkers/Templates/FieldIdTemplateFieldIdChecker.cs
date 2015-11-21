@@ -1,18 +1,16 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.Linq;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 
-namespace Sitecore.Pathfinder.Checking.Checkers.Items
+namespace Sitecore.Pathfinder.Checking.Checkers.Templates
 {
     public class FieldIdTemplateFieldIdChecker : CheckerBase
     {
         public override void Check(ICheckerContext context)
         {
-            foreach (var item in context.Project.ProjectItems.OfType<Item>().Where(i => !i.IsExtern))
+            foreach (var item in context.Project.Items)
             {
                 foreach (var field in item.Fields)
                 {

@@ -3,10 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.IO;
-using System.IO.Compression;
 using System.Linq;
-using System.Xml.Linq;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines;
@@ -16,6 +13,7 @@ using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing;
+using Sitecore.Pathfinder.Projects.Files;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
@@ -71,15 +69,13 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         public IFactoryService Factory { get; }
 
-        public IEnumerable<Files.File> Files => ProjectItems.OfType<Files.File>();
+        public IEnumerable<File> Files => ProjectItems.OfType<File>();
 
         public IFileSystemService FileSystem { get; }
 
         public bool HasErrors => Diagnostics.Any(d => d.Severity == Severity.Error);
 
-        [NotNull]
-        [ItemNotNull]
-        public IEnumerable<Item> Items => ProjectItems.OfType<Item>().Where(i => !i.IsExtern);
+        public IEnumerable<Item> Items => ProjectItems.OfType<Item>().Where(i => !i.IsImport);
 
         public ProjectOptions Options { get; private set; }
 
@@ -90,7 +86,7 @@ namespace Sitecore.Pathfinder.Projects
         public ICollection<ISourceFile> SourceFiles { get; } = new List<ISourceFile>();
 
         [ItemNotNull]
-        public IEnumerable<Template> Templates => ProjectItems.OfType<Template>().Where(t => !t.IsExtern);
+        public IEnumerable<Template> Templates => ProjectItems.OfType<Template>().Where(t => !t.IsImport);
 
         [NotNull]
         protected ICompositionService CompositionService { get; }
@@ -218,7 +214,8 @@ namespace Sitecore.Pathfinder.Projects
 
             var context = CompositionService.Resolve<IParseContext>().With(this, Snapshot.Empty);
 
-            AddDependencyPackages(context);
+            var projectImportService = CompositionService.Resolve<ProjectImportsService>();
+            projectImportService.Import(this, context);
 
             foreach (var sourceFileName in sourceFileNames)
             {
@@ -281,108 +278,6 @@ namespace Sitecore.Pathfinder.Projects
             }
 
             return this;
-        }
-
-        protected virtual void AddDependencies([NotNull] XElement root)
-        {
-            foreach (var element in root.Elements())
-            {
-                Guid guid;
-                Guid.TryParse(element.GetAttributeValue("Id"), out guid);
-
-                var databaseName = element.GetAttributeValue("Database");
-                var itemName = element.GetAttributeValue("Name");
-                var itemIdOrPath = element.GetAttributeValue("Path");
-
-                switch (element.Name.LocalName)
-                {
-                    case "Item":
-                        var item = Factory.Item(this, TextNode.Empty, guid, databaseName, itemName, itemIdOrPath, element.GetAttributeValue("Template"));
-                        item.IsExtern = true;
-                        item.IsEmittable = false;
-
-                        foreach (var field in element.Elements())
-                        {
-                            item.Fields.Add(Factory.Field(item, TextNode.Empty, field.GetAttributeValue("Name"), field.GetAttributeValue("Value")));
-                        }
-
-                        AddOrMerge(item);
-                        break;
-
-                    case "Template":
-                        var template = Factory.Template(this, guid, TextNode.Empty, databaseName, itemName, itemIdOrPath);
-                        template.IsExtern = true;
-                        template.IsEmittable = false;
-                        template.BaseTemplates = element.GetAttributeValue("BaseTemplates");
-
-                        foreach (var sectionElement in element.Elements())
-                        {
-                            Guid sectionGuid;
-                            Guid.TryParse(sectionElement.GetAttributeValue("Id"), out sectionGuid);
-
-                            var templateSection = Factory.TemplateSection(template, sectionGuid, TextNode.Empty);
-                            templateSection.SectionName = sectionElement.GetAttributeValue("Name");
-                            template.Sections.Add(templateSection);
-
-                            foreach (var fieldElement in sectionElement.Elements())
-                            {
-                                Guid fieldGuid;
-                                Guid.TryParse(fieldElement.GetAttributeValue("Id"), out fieldGuid);
-
-                                var templateField = Factory.TemplateField(template, fieldGuid, TextNode.Empty);
-                                templateField.FieldName = fieldElement.GetAttributeValue("Name");
-                                templateField.Type = fieldElement.GetAttributeValue("Type");
-                                templateSection.Fields.Add(templateField);
-                            }
-                        }
-
-                        AddOrMerge(template);
-                        break;
-                }
-            }
-        }
-
-        protected virtual void AddDependencyPackages([NotNull] IParseContext context)
-        {
-            var packagesDirectory = PathHelper.NormalizeFilePath(context.Configuration.Get(Constants.Configuration.CopyDependenciesSourceDirectory));
-
-            packagesDirectory = Path.Combine(Options.ProjectDirectory, packagesDirectory);
-            if (!FileSystem.DirectoryExists(packagesDirectory))
-            {
-                return;
-            }
-
-            foreach (var fileName in FileSystem.GetFiles(packagesDirectory, "*.nupkg", SearchOption.AllDirectories))
-            {
-                // todo: consider caching this
-                using (var zip = ZipFile.OpenRead(fileName))
-                {
-                    var entry = zip.GetEntry("content/sitecore.project/exports.xml");
-                    if (entry == null)
-                    {
-                        continue;
-                    }
-
-                    var reader = new StreamReader(entry.Open());
-                    try
-                    {
-                        var doc = XDocument.Load(reader);
-
-                        var root = doc.Root;
-                        if (root == null)
-                        {
-                            context.Trace.TraceError("Could not read exports.xml in dependency package", fileName);
-                            continue;
-                        }
-
-                        AddDependencies(root);
-                    }
-                    catch
-                    {
-                        context.Trace.TraceError("Could not read exports.xml in dependency package", fileName);
-                    }
-                }
-            }
         }
 
         [NotNull]

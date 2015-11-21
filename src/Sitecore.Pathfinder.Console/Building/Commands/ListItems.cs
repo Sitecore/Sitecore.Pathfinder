@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Building.Commands
         {
             context.IsAborted = true;
 
-            foreach (var item in context.Project.ProjectItems.OfType<ItemBase>().Where(i => !i.IsExtern).OrderBy(i => i.ItemIdOrPath))
+            foreach (var item in context.Project.ProjectItems.OfType<ItemBase>().Where(i => !i.IsImport).OrderBy(i => i.ItemIdOrPath))
             {
                 context.Trace.WriteLine(item.ItemIdOrPath);
             }

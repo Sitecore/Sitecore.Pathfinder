@@ -75,7 +75,7 @@ namespace Sitecore.Pathfinder.T4.CodeGeneration
                 foreach (var projectItem in project.ProjectItems.Where(i => i.GetType() == type || i.GetType().IsSubclassOf(type)))
                 {
                     var itemBase = projectItem as ItemBase;
-                    if (itemBase != null && itemBase.IsExtern)
+                    if (itemBase != null && itemBase.IsImport)
                     {
                         continue;
                     }

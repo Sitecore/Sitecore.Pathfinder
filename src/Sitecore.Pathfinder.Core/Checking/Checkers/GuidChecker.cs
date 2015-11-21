@@ -10,7 +10,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
     {
         public override void Check(ICheckerContext context)
         {
-            var items = context.Project.ProjectItems.Where(i => !(i is ItemBase) || !((ItemBase)i).IsExtern).ToArray();
+            var items = context.Project.ProjectItems.Where(i => !(i is ItemBase) || !((ItemBase)i).IsImport).ToArray();
 
             for (var i = 0; i < items.Length; i++)
             {

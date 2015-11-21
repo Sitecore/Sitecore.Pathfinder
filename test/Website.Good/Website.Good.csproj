@@ -66,22 +66,6 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\src\Features\Sitecore.Pathfinder.Unicorn\bin\Debug\Rainbow.dll">
-      <Link>sitecore.tools\files\extensions\unicorn\Rainbow.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\src\Features\Sitecore.Pathfinder.Unicorn\bin\Debug\Rainbow.Storage.Sc.dll">
-      <Link>sitecore.tools\files\extensions\unicorn\Rainbow.Storage.Sc.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\src\Features\Sitecore.Pathfinder.Unicorn\bin\Debug\Rainbow.Storage.Yaml.dll">
-      <Link>sitecore.tools\files\extensions\unicorn\Rainbow.Storage.Yaml.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\src\Features\Sitecore.Pathfinder.Unicorn\bin\Debug\Sitecore.Pathfinder.Unicorn.dll">
-      <Link>sitecore.tools\files\extensions\unicorn\Sitecore.Pathfinder.Unicorn.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="content\master\sitecore\content\Home\YamlContentItem.master.content.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -195,24 +179,76 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\src\Sitecore.Pathfinder.Checkers\Checking\Checkers\Files\MediaFileChecker.cs">
-      <Link>sitecore.tools\files\extensions\checkers\files\MediaFileChecker.cs</Link>
+    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\files\MediaFileChecker.cs">
+      <Link>sitecore.tools\files\extensions\checkers\Files\MediaFileChecker.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\src\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\FieldValueChecker.cs">
-      <Link>sitecore.tools\files\extensions\checkers\items\FieldValueChecker.cs</Link>
+    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\items\ArchiveReminderChecker.cs">
+      <Link>sitecore.tools\files\extensions\checkers\Items\ArchiveReminderChecker.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\src\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\ItemChecker.cs">
-      <Link>sitecore.tools\files\extensions\checkers\items\ItemChecker.cs</Link>
+    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\items\DateRangeCheckerBase.cs">
+      <Link>sitecore.tools\files\extensions\checkers\Items\DateRangeCheckerBase.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\src\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\TemplateChecker.cs">
-      <Link>sitecore.tools\files\extensions\checkers\items\TemplateChecker.cs</Link>
+    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\items\ItemChecker.cs">
+      <Link>sitecore.tools\files\extensions\checkers\Items\ItemChecker.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\src\Sitecore.Pathfinder.Checkers\Checking\Checkers\ReferenceChecker.cs">
+    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\items\ItemsWithSameDisplayNameChecker.cs">
+      <Link>sitecore.tools\files\extensions\checkers\Items\ItemsWithSameDisplayNameChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\items\ItemsWithSameNameChecker.cs">
+      <Link>sitecore.tools\files\extensions\checkers\Items\ItemsWithSameNameChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\items\LorumIpsumChecker.cs">
+      <Link>sitecore.tools\files\extensions\checkers\Items\LorumIpsumChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\items\ManyChildrenChecker.cs">
+      <Link>sitecore.tools\files\extensions\checkers\Items\ManyChildrenChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\items\ManyVersionsChecker.cs">
+      <Link>sitecore.tools\files\extensions\checkers\Items\ManyVersionsChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\items\PublishUnpublishChecker.cs">
+      <Link>sitecore.tools\files\extensions\checkers\Items\PublishUnpublishChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\items\TemplateChecker.cs">
+      <Link>sitecore.tools\files\extensions\checkers\Items\TemplateChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\items\ValidFromValidToChecker.cs">
+      <Link>sitecore.tools\files\extensions\checkers\Items\ValidFromValidToChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\ReferenceChecker.cs">
       <Link>sitecore.tools\files\extensions\checkers\ReferenceChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\templates\DeprecatedFieldTypeChecker.cs">
+      <Link>sitecore.tools\files\extensions\checkers\Templates\DeprecatedFieldTypeChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\templates\DuplicateTemplateFieldChecker.cs">
+      <Link>sitecore.tools\files\extensions\checkers\Templates\DuplicateTemplateFieldChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\templates\FieldIdTemplateFieldIdChecker.cs">
+      <Link>sitecore.tools\files\extensions\checkers\Templates\FieldIdTemplateFieldIdChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\templates\UnusedTemplateChecker.cs">
+      <Link>sitecore.tools\files\extensions\checkers\Templates\UnusedTemplateChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\templates\UseIdInsteadOfPathChecker.cs">
+      <Link>sitecore.tools\files\extensions\checkers\Templates\UseIdInsteadOfPathChecker.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Compile Include="Properties\AssemblyInfo.cs" />

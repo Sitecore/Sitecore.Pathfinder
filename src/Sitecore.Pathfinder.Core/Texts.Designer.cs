@@ -269,6 +269,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not read exports.xml in dependency package.
+        /// </summary>
+        public static string Could_not_read_exports_xml_in_dependency_package {
+            get {
+                return ResourceManager.GetString("Could_not_read_exports_xml_in_dependency_package", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Creating packages....
         /// </summary>
         public static string Creating_Nupkg_file___ {

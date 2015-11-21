@@ -1252,8 +1252,7 @@ Sitecore. This means that at any given time, what's serialized is the "master co
 
 Unicorn removes the manual process of serializing items which solves a lot of issues and it can be used for CI.
 
-Pathfinder has a Unicorn add-in that parses and installs Unicorn files (*.yml). To install the Unicorn add-in, use the 
-`scc install-addin Unicorn.zip` command.
+Pathfinder supports Unicorn.
 
 Unicorn could be interesting for Pathfinder if it can update files in the project when the website is changed. Suppose items are create on the website
 in a custom manner. Unicorn could feed these items back to the project.

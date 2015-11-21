@@ -51,9 +51,9 @@ namespace Sitecore.Pathfinder.Languages.Templates
             template.ShortHelpProperty.Parse("Template.ShortHelp", itemTextNode);
             template.LongHelpProperty.Parse("Template.LongHelp", itemTextNode);
             template.IsEmittable = !string.Equals(itemTextNode.GetAttributeValue(Constants.Fields.IsEmittable), "False", StringComparison.OrdinalIgnoreCase);
-            template.IsExtern = item.IsExtern || string.Equals(itemTextNode.GetAttributeValue(Constants.Fields.IsExtern), "True", StringComparison.OrdinalIgnoreCase);
+            template.IsImport = item.IsImport || string.Equals(itemTextNode.GetAttributeValue(Constants.Fields.IsExtern), "True", StringComparison.OrdinalIgnoreCase);
 
-            if (!template.IsExtern)
+            if (!template.IsImport)
             {
                 template.References.AddRange(context.ReferenceParser.ParseReferences(template, template.BaseTemplatesProperty));
             }

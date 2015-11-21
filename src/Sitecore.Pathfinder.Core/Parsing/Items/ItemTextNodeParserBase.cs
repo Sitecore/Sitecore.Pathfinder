@@ -30,13 +30,13 @@ namespace Sitecore.Pathfinder.Parsing.Items
             var item = context.ParseContext.Factory.Item(context.ParseContext.Project, textNode, guid, databaseName, itemNameTextNode.Value, itemIdOrPath, templateIdOrPath);
             item.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
             item.IsEmittable = !string.Equals(textNode.GetAttributeValue(Constants.Fields.IsEmittable), "False", StringComparison.OrdinalIgnoreCase);
-            item.IsExtern = string.Equals(textNode.GetAttributeValue(Constants.Fields.IsExtern, context.IsExtern.ToString()), "True", StringComparison.OrdinalIgnoreCase);
+            item.IsImport = string.Equals(textNode.GetAttributeValue(Constants.Fields.IsExtern, context.IsExtern.ToString()), "True", StringComparison.OrdinalIgnoreCase);
 
             if (templateIdOrPathTextNode != null)
             {
                 item.TemplateIdOrPathProperty.AddSourceTextNode(templateIdOrPathTextNode);
 
-                if (!item.IsExtern)
+                if (!item.IsImport)
                 {
                     item.References.AddRange(context.ParseContext.ReferenceParser.ParseReferences(item, item.TemplateIdOrPathProperty));
                 }
@@ -64,7 +64,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
                         break;
 
                     default:
-                        var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, PathHelper.CombineItemPath(context.ParentItemPath, item.ItemName), item.IsExtern);
+                        var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, PathHelper.CombineItemPath(context.ParentItemPath, item.ItemName), item.IsImport);
                         context.Parser.ParseTextNode(newContext, childNode);
                         break;
                 }
@@ -75,7 +75,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
         {
             foreach (var childNode in textNode.ChildNodes)
             {
-                var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, PathHelper.CombineItemPath(context.ParentItemPath, item.ItemName), item.IsExtern);
+                var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, PathHelper.CombineItemPath(context.ParentItemPath, item.ItemName), item.IsImport);
                 context.Parser.ParseTextNode(newContext, childNode);
             }
         }
@@ -165,7 +165,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 context.ParseContext.Trace.TraceError(Texts.Field_is_already_defined, textNode, duplicate.FieldName);
             }
 
-            if (!item.IsExtern && !field.ValueHint.Contains("NoReference"))
+            if (!item.IsImport && !field.ValueHint.Contains("NoReference"))
             {
                 item.References.AddRange(context.ParseContext.ReferenceParser.ParseReferences(item, field.ValueProperty));
             }

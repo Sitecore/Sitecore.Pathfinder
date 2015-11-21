@@ -39,12 +39,12 @@ namespace Sitecore.Pathfinder.Building.Deploying
 
                     output.WriteStartElement("Exports");
 
-                    foreach (var template in context.Project.ProjectItems.OfType<Template>().Where(template => !template.IsExtern))
+                    foreach (var template in context.Project.ProjectItems.OfType<Template>().Where(template => !template.IsImport))
                     {
                         template.WriteAsExport(output);
                     }
 
-                    foreach (var item in context.Project.ProjectItems.OfType<Item>().Where(item => !item.IsExtern))
+                    foreach (var item in context.Project.ProjectItems.OfType<Item>().Where(item => !item.IsImport))
                     {
                         item.WriteAsExport(output, fieldToWrite);
                     }

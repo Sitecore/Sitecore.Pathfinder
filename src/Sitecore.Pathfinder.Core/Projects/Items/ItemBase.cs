@@ -44,13 +44,16 @@ namespace Sitecore.Pathfinder.Projects.Items
         [Obsolete("Use Uri.Guid instead", false)]
         public ID ID => _id ?? (_id = new ID(Uri.Guid));
 
+        /// <summary>Indicates if the item or template will saved to the database during installation.</summary>
         public bool IsEmittable { get; set; } = true;
 
-        public bool IsExtern { get; set; }
+        /// <summary>Indicates if the item or template is imported from a packages. It will not be emitted.</summary>
+        public bool IsImport { get; set; }
 
         [NotNull]
         public string ItemIdOrPath { get; private set; }
 
+        /// <summary>The name of the item or template. Same as ShortName.</summary>
         [NotNull]
         public string ItemName
         {
@@ -61,6 +64,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public SourceProperty<string> ItemNameProperty { get; } = new SourceProperty<string>("ItemName", string.Empty, SourcePropertyFlags.IsShort);
 
+        /// <summary>The name of the item or template. Same as ItemName and ShortName.</summary>
         [NotNull]
         [Obsolete("Use ItemName instead", false)]
         public string Name => ItemName;
@@ -119,7 +123,7 @@ namespace Sitecore.Pathfinder.Projects.Items
             }
 
             IsEmittable = IsEmittable || newItemBase.IsEmittable;
-            IsExtern = IsExtern || newItemBase.IsExtern;
+            IsImport = IsImport || newItemBase.IsImport;
 
             References.AddRange(newItemBase.References);
         }

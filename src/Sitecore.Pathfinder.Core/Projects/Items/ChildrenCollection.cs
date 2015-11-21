@@ -5,9 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Projects.Items;
 
-namespace Sitecore.Pathfinder.Projects
+namespace Sitecore.Pathfinder.Projects.Items
 {
     public class ChildrenCollection : IEnumerable<Item>
     {

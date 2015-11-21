@@ -18,9 +18,21 @@ namespace Sitecore.Pathfinder.Projects.Items
         }
 
         [CanBeNull]
-        public Field this[[NotNull] string fieldName]
+        public Field this[[NotNull] string fieldName] => this.FirstOrDefault(f => string.Equals(f.FieldName, fieldName, StringComparison.OrdinalIgnoreCase));
+
+        [CanBeNull]
+        public Field this[Guid fieldId] => this.FirstOrDefault(f => f.FieldId == fieldId);
+
+        [NotNull]
+        public string GetFieldValue([NotNull] string fieldName, [NotNull] string language, int version)
         {
-            get { return this.FirstOrDefault(f => string.Equals(f.FieldName, fieldName, StringComparison.OrdinalIgnoreCase)); }
+            return this.FirstOrDefault(f => string.Compare(f.FieldName, fieldName, StringComparison.OrdinalIgnoreCase) == 0 && string.Compare(f.Language, language, StringComparison.OrdinalIgnoreCase) == 0 && f.Version == version)?.Value ?? string.Empty;
+        }
+
+        [NotNull]
+        public string GetFieldValue(Guid fieldId, [NotNull] string language, int version)
+        {
+            return this.FirstOrDefault(f => f.FieldId == fieldId && string.Compare(f.Language, language, StringComparison.OrdinalIgnoreCase) == 0 && f.Version == version)?.Value ?? string.Empty;
         }
     }
 }

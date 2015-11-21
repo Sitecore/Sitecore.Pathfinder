@@ -11,6 +11,16 @@ namespace Sitecore.Pathfinder.Extensions
 {
     public static class StringExtensions
     {
+        private const int IsoDateLength = 8;
+
+        private const int IsoDateTimeLength = 15;
+
+        private const int IsoDateTimeUtcLength = 16;
+
+        private const string IsoDateTimeUtcMarker = "Z";
+
+        private const int IsoDateUtcLength = 9;
+
         [NotNull]
         public static string Append([NotNull] this string str, [NotNull] string key, [NotNull] string value, char separator = '|', char equals = '=', char escapeCharacter = '\\')
         {
@@ -88,17 +98,93 @@ namespace Sitecore.Pathfinder.Extensions
             return str.Replace(es, es + es).Replace(c, es + character);
         }
 
-        public static int IndexOfNotWhitespace([NotNull] this string text, int startIndex = 0)
+        [NotNull]
+        public static string EscapeXmlElementName([NotNull] this string text)
         {
-            for (var index = startIndex; index < text.Length; index++)
+            if (string.IsNullOrEmpty(text))
             {
-                if (!char.IsWhiteSpace(text[index]))
+                return string.Empty;
+            }
+
+            var chars = text.ToCharArray();
+
+            for (var n = 1; n < chars.Length; n++)
+            {
+                var p = chars[n - 1];
+
+                if (char.IsWhiteSpace(p))
                 {
-                    return index;
+                    chars[n] = char.ToUpper(chars[n]);
                 }
             }
 
-            return 0;
+            text = new string(chars);
+
+            var result = Regex.Replace(text, "[^\\w_-]", ".");
+
+            if (!char.IsLetter(result[0]) && result[0] != '_')
+            {
+                result = @"_-" + result;
+            }
+
+            return result;
+        }
+
+        public static DateTime FromIsoToDateTime([CanBeNull] this string text)
+        {
+            return FromIsoToDateTime(text, DateTime.MinValue);
+        }
+
+        public static DateTime FromIsoToDateTime([CanBeNull] this string text, DateTime defaultValue)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return defaultValue;
+            }
+
+            try
+            {
+                bool isUtc;
+                if (text.Length > IsoDateTimeLength && text[IsoDateTimeLength] == ':')
+                {
+                    var ticks = text.Substring(IsoDateTimeLength + 1);
+
+                    if (ticks.Length > 0)
+                    {
+                        isUtc = ticks.EndsWith(IsoDateTimeUtcMarker, StringComparison.InvariantCultureIgnoreCase);
+                        if (isUtc)
+                        {
+                            ticks = ticks.Replace(IsoDateTimeUtcMarker, string.Empty);
+                            return new DateTime(GetLong(ticks, 0), DateTimeKind.Utc);
+                        }
+
+                        return new DateTime(GetLong(ticks, 0));
+                    }
+                }
+
+                var parts = GetIsoDateParts(text, out isUtc);
+
+                if (parts == null)
+                {
+                    return defaultValue;
+                }
+
+                if (parts.Length >= 6)
+                {
+                    return new DateTime(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], isUtc ? DateTimeKind.Utc : DateTimeKind.Unspecified);
+                }
+
+                if (parts.Length >= 3)
+                {
+                    return new DateTime(parts[0], parts[1], parts[2], 0, 0, 0, isUtc ? DateTimeKind.Utc : DateTimeKind.Unspecified);
+                }
+            }
+            catch
+            {
+                return defaultValue;
+            }
+
+            return defaultValue;
         }
 
         [NotNull]
@@ -132,54 +218,17 @@ namespace Sitecore.Pathfinder.Extensions
             return result;
         }
 
-        [NotNull]
-        public static string EscapeXmlElementName([NotNull] this string text)
+        public static int IndexOfNotWhitespace([NotNull] this string text, int startIndex = 0)
         {
-            if (string.IsNullOrEmpty(text))
+            for (var index = startIndex; index < text.Length; index++)
             {
-                return string.Empty;
-            }
-
-            var chars = text.ToCharArray();
-
-            for (var n = 1; n < chars.Length; n++)
-            {
-                var p = chars[n - 1];
-
-                if (char.IsWhiteSpace(p))
+                if (!char.IsWhiteSpace(text[index]))
                 {
-                    chars[n] = char.ToUpper(chars[n]);
+                    return index;
                 }
             }
 
-            text = new string(chars);
-
-            var result = Regex.Replace(text, "[^\\w_-]", ".");
-
-            if (!char.IsLetter(result[0]) && result[0] != '_')
-            {
-                result = @"_-" + result;
-            }
-
-            return result;
-        }
-
-        [NotNull]
-        public static string UnescapeXmlElementName([NotNull] this string text)
-        {
-            if (string.IsNullOrEmpty(text))
-            {
-                return string.Empty;
-            }
-
-            if (text.StartsWith("_-"))
-            {
-                text = text.Mid(2);
-            }
-
-            var result = text.Replace(".", " ").Replace(@"_-", "-");
-
-            return result;
+            return 0;
         }
 
         [NotNull]
@@ -302,6 +351,103 @@ namespace Sitecore.Pathfinder.Extensions
             var es = escapeCharacter.ToString(CultureInfo.CurrentCulture);
 
             return str.Replace(es + character, c).Replace(es + es, es);
+        }
+
+        [NotNull]
+        public static string UnescapeXmlElementName([NotNull] this string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return string.Empty;
+            }
+
+            if (text.StartsWith("_-"))
+            {
+                text = text.Mid(2);
+            }
+
+            var result = text.Replace(".", " ").Replace(@"_-", "-");
+
+            return result;
+        }
+
+        private static int GetInt([CanBeNull] object obj, int defaultValue)
+        {
+            if (obj == null)
+            {
+                return defaultValue;
+            }
+
+            if (obj is int)
+            {
+                return (int)obj;
+            }
+
+            try
+            {
+                return Convert.ToInt32(obj);
+            }
+            catch
+            {
+                return defaultValue;
+            }
+        }
+
+        [CanBeNull]
+        private static int[] GetIsoDateParts([NotNull] string isoDate, out bool isUtc)
+        {
+            isUtc = false;
+            if (isoDate.Length != IsoDateLength && isoDate.Length != IsoDateUtcLength && isoDate.Length != IsoDateTimeLength && isoDate.Length != IsoDateTimeUtcLength)
+            {
+                return null;
+            }
+
+            if (Regex.IsMatch(isoDate, @"[^0-9TZ]"))
+            {
+                return null;
+            }
+
+            int[] parts =
+            {
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            };
+
+            parts[0] = GetInt(isoDate.Substring(0, 4), 0);
+            parts[1] = GetInt(isoDate.Substring(4, 2), 0);
+            parts[2] = GetInt(isoDate.Substring(6, 2), 0);
+
+            if (isoDate.Length > IsoDateLength && isoDate[IsoDateLength] == 'T')
+            {
+                parts[3] = GetInt(isoDate.Substring(9, 2), 0);
+                parts[4] = GetInt(isoDate.Substring(11, 2), 0);
+                parts[5] = GetInt(isoDate.Substring(13, 2), 0);
+            }
+
+            isUtc = isoDate.EndsWith(IsoDateTimeUtcMarker, StringComparison.InvariantCultureIgnoreCase);
+
+            return parts;
+        }
+
+        private static long GetLong([CanBeNull] object obj, long defaultValue)
+        {
+            if (obj == null)
+            {
+                return defaultValue;
+            }
+
+            try
+            {
+                return Convert.ToInt64(obj);
+            }
+            catch
+            {
+                return defaultValue;
+            }
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             template.ShortHelpProperty.Parse(textNode);
             template.LongHelpProperty.Parse(textNode);
             template.IsEmittable = !string.Equals(textNode.GetAttributeValue(Constants.Fields.IsEmittable), "False", StringComparison.OrdinalIgnoreCase);
-            template.IsExtern = string.Equals(textNode.GetAttributeValue(Constants.Fields.IsExtern, context.IsExtern.ToString()), "True", StringComparison.OrdinalIgnoreCase);
+            template.IsImport = string.Equals(textNode.GetAttributeValue(Constants.Fields.IsExtern, context.IsExtern.ToString()), "True", StringComparison.OrdinalIgnoreCase);
 
             template.References.AddRange(context.ParseContext.ReferenceParser.ParseReferences(template, template.BaseTemplatesProperty));
 
@@ -43,7 +43,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             var standardValuesItemIdOrPath = itemIdOrPath + "/__Standard Values";
             var standardValuesGuid = StringHelper.GetGuid(context.ParseContext.Project, standardValuesItemIdOrPath);
             var standardValuesItem = context.ParseContext.Factory.Item(context.ParseContext.Project, textNode, standardValuesGuid, databaseName, "__Standard Values", standardValuesItemIdOrPath, itemIdOrPath);
-            standardValuesItem.IsExtern = template.IsExtern;
+            standardValuesItem.IsImport = template.IsImport;
 
             // todo: should be Uri
             template.StandardValuesItem = standardValuesItem;

@@ -21,7 +21,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
         public override void Emit(IEmitContext context, IProjectItem projectItem)
         {
             var template = (Template)projectItem;
-            if (!template.IsEmittable || template.IsExtern)
+            if (!template.IsEmittable || template.IsImport)
             {
                 return;
             }

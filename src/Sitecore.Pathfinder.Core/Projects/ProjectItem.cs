@@ -23,18 +23,22 @@ namespace Sitecore.Pathfinder.Projects
 
         public IProject Project { get; }
 
+        /// <summary>The qualified name of the project item. For items it is the path of the item.</summary>
         public abstract string QualifiedName { get; }
 
         public ReferenceCollection References { get; }
 
+        /// <summary>The unqualified name of the project item. For items it is the name of the item.</summary>
         public abstract string ShortName { get; }
 
         public ICollection<ISnapshot> Snapshots { get; } = new List<ISnapshot>();
 
         public ProjectItemState State { get; set; }
 
+        /// <summary>The unique identification of the project item. For items the Uri.Guid is the ID of the item.</summary>
         public ProjectItemUri Uri { get; private set; }
 
+        /// <summary>Expertimental. Do not use.</summary>
         public abstract void Rename(string newShortName);
 
         public override string ToString()

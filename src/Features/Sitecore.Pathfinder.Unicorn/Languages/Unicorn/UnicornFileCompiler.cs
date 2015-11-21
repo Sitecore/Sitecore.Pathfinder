@@ -41,7 +41,7 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
                 var item = context.Factory.Item(unicornFile.Project, snapshot, guid, databaseName, itemName, itemIdOrPath, templateIdOrPath);
                 item.ItemNameProperty.AddSourceTextNode(snapshot);
                 item.IsEmittable = false;
-                item.IsExtern = false;
+                item.IsImport = false;
 
                 item.References.AddRange(context.ReferenceParser.ParseReferences(item, item.TemplateIdOrPathProperty));
 

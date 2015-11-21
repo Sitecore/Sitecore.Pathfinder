@@ -1,8 +1,10 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -29,6 +31,9 @@ namespace Sitecore.Pathfinder.Projects.Items
         private FieldCollection _fields;
 
         [CanBeNull]
+        private ItemPublishing _publishing;
+
+        [CanBeNull]
         private Template _template;
 
         public Item([NotNull] IProject project, [NotNull] ITextNode textNode, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath) : base(project, textNode, guid, databaseName, itemName, itemIdOrPath)
@@ -49,7 +54,30 @@ namespace Sitecore.Pathfinder.Projects.Items
         {
             get
             {
-                var field = Fields.FirstOrDefault(f => string.Equals(f.FieldName, fieldName, StringComparison.OrdinalIgnoreCase));
+                // todo: handle languages and versions
+                Field field;
+                if (fieldName.StartsWith("{") && fieldName.StartsWith("}"))
+                {
+                    Guid guid;
+                    if (Guid.TryParse(fieldName, out guid))
+                    {
+                        field = Fields.FirstOrDefault(f => f.FieldId == guid);
+                        return field?.Value ?? string.Empty;
+                    }
+                }
+
+                field = Fields.FirstOrDefault(f => string.Equals(f.FieldName, fieldName, StringComparison.OrdinalIgnoreCase));
+                return field?.Value ?? string.Empty;
+            }
+        }
+
+        [NotNull]
+        public string this[Guid guid]
+        {
+            get
+            {
+                // todo: handle languages and versions
+                var field = Fields.FirstOrDefault(f => f.FieldId == guid);
                 return field?.Value ?? string.Empty;
             }
         }
@@ -68,11 +96,19 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         public bool OverwriteWhenMerging { get; set; }
 
+        [Obsolete("Use GetParent() instead", false)]
+        [CanBeNull]
+        public Item Parent => GetParent();
+
+        [NotNull]
+        public ItemPublishing Publishing => _publishing ?? (_publishing = new ItemPublishing(this));
+
         [NotNull]
         public Template Template
         {
             get
             {
+                // todo: dangereous cache - make template lookup faster im the project
                 if (_template == null || _template == Template.Empty)
                 {
                     var templateIdOrPath = TemplateIdOrPath;
@@ -119,6 +155,40 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public string TemplateName => Template.ItemName;
 
+        [NotNull]
+        public string GetDisplayName([NotNull] string language, int version)
+        {
+            var displayName = Fields.GetFieldValue("__Display Name", language, version);
+            return string.IsNullOrEmpty(displayName) ? ItemName : displayName;
+        }
+
+        [NotNull]
+        [ItemNotNull]
+        public IEnumerable<string> GetLanguages()
+        {
+            return Fields.Where(f => !string.IsNullOrEmpty(f.Language)).Select(f => f.Language).Distinct();
+        }
+
+        [CanBeNull]
+        public Item GetParent()
+        {
+            var n = ItemIdOrPath.LastIndexOf('/');
+            if (n < 0)
+            {
+                return null;
+            }
+
+            var parentItemPath = ItemIdOrPath.Left(n);
+            return Project.FindQualifiedItem(parentItemPath) as Item;
+        }
+
+        [NotNull]
+        [ItemNotNull]
+        public IEnumerable<int> GetVersions([NotNull] string language)
+        {
+            return Fields.Where(f => string.Equals(f.Language, language, StringComparison.OrdinalIgnoreCase) && f.Version != 0).Select(f => f.Version).Distinct();
+        }
+
         public void Merge([NotNull] Item newProjectItem)
         {
             Merge(newProjectItem, OverwriteWhenMerging);
@@ -161,7 +231,6 @@ namespace Sitecore.Pathfinder.Projects.Items
                 */
 
                 field.ValueProperty.SetValue(newField.ValueProperty, SetValueOptions.DisableUpdates);
-                field.IsTestable = field.IsTestable || newField.IsTestable;
             }
         }
     }

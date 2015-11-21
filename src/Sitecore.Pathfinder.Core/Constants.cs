@@ -201,6 +201,24 @@ namespace Sitecore.Pathfinder
             public const string IsEmittable = "IsEmittable";
 
             public const string IsExtern = "IsExternalReference";
+
+            public static readonly Guid ArchiveDate = new Guid("{56C15C6D-FD5A-40CA-BB37-64CEEC6A9BD5}");
+
+            public static readonly Guid NeverPublish = new Guid("{9135200A-5626-4DD8-AB9D-D665B8C11748}");
+
+            public static readonly Guid PublishDate = new Guid("{86FE4F77-4D9A-4EC3-9ED9-263D03BD1965}");
+
+            public static readonly Guid ReminderDate = new Guid("{ABE5D54C-59D7-41E6-8D3F-C1A3E4EC9B9E}");
+
+            public static readonly Guid UnpublishDate = new Guid("{7EAD6FD6-6CF1-4ACA-AC6B-B200E7BAFE88}");
+
+            public static readonly Guid Updated = new Guid("{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}");
+
+            public static readonly Guid UpdatedBy = new Guid("{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}");
+
+            public static readonly Guid ValidFrom = new Guid("{C8F93AFE-BFD4-4E8F-9C61-152559854661}");
+
+            public static readonly Guid ValidTo = new Guid("{4C346442-E859-4EFD-89B2-44AEDF467D21}");
         }
 
         public static class Parsers
