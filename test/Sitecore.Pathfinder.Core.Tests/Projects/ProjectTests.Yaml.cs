@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Projects
         [Test]
         public void YamlContentItemTest()
         {
-            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/YamlContentItem");
+            var projectItem = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/YamlContentItem");
             Assert.IsNotNull(projectItem);
             Assert.AreEqual("YamlContentItem", projectItem.ShortName);
             Assert.AreEqual("/sitecore/content/YamlContentItem", projectItem.QualifiedName);
@@ -50,14 +50,14 @@ namespace Sitecore.Pathfinder.Projects
         [Test]
         public void YamlSubitemTest()
         {
-            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/YamlItem/YamlSubitem");
+            var projectItem = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/YamlItem/YamlSubitem");
             Assert.IsNotNull(projectItem);
         }
 
         [Test]
         public void YamlLayoutTest()
         {
-            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/YamlLayout");
+            var projectItem = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/YamlLayout");
             Assert.IsNotNull(projectItem);
             Assert.AreEqual("YamlLayout", projectItem.ShortName);
             Assert.AreEqual("/sitecore/content/Home/YamlLayout", projectItem.QualifiedName);
@@ -80,7 +80,7 @@ namespace Sitecore.Pathfinder.Projects
         [Test]
         public void YamlItemTest()
         {
-            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/YamlItem");
+            var projectItem = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/YamlItem");
             Assert.IsNotNull(projectItem);
             Assert.AreEqual("YamlItem", projectItem.ShortName);
             Assert.AreEqual("/sitecore/content/Home/YamlItem", projectItem.QualifiedName);
@@ -187,7 +187,7 @@ namespace Sitecore.Pathfinder.Projects
         [Test]
         public void WriteAsYamlTest()
         {
-            var item = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/YamlItem") as Item;
+            var item = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/YamlItem") as Item;
             Assert.IsNotNull(item);
 
             var writer = new StringWriter();

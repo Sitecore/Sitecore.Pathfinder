@@ -9,7 +9,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
     {
         public override void Check(ICheckerContext context)
         {
-            foreach (var projectItem in context.Project.Items)
+            foreach (var projectItem in context.Project.ProjectItems)
             {
                 foreach (var reference in projectItem.References)
                 {

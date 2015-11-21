@@ -85,7 +85,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
         protected string ResolveTemplateIdOrPath([Diagnostics.NotNull] Item item)
         {
             var templateIdOrPath = item.TemplateIdOrPath;
-            if (ID.IsID(templateIdOrPath) || templateIdOrPath.StartsWith("/sitecore", StringComparison.OrdinalIgnoreCase))
+            if (Data.ID.IsID(templateIdOrPath) || templateIdOrPath.StartsWith("/sitecore", StringComparison.OrdinalIgnoreCase))
             {
                 return templateIdOrPath;
             }
@@ -117,7 +117,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
             return null;
         }
 
-        protected void ValidateFields([Diagnostics.NotNull] Database database, [Diagnostics.NotNull] Template template, [Diagnostics.NotNull] Item projectItem)
+        protected void ValidateFields([Diagnostics.NotNull] Data.Database database, [Diagnostics.NotNull] Template template, [Diagnostics.NotNull] Item projectItem)
         {
             var templateFields = template.GetFields(true);
 

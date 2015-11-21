@@ -33,13 +33,13 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
             var value = htmlTemplate;
 
-            var rendering = field.Item.Project.Items.OfType<Rendering>().FirstOrDefault(i => string.Equals(i.FilePath, value, StringComparison.OrdinalIgnoreCase));
+            var rendering = field.Item.Project.ProjectItems.OfType<Rendering>().FirstOrDefault(i => string.Equals(i.FilePath, value, StringComparison.OrdinalIgnoreCase));
             if (rendering == null)
             {
                 context.Trace.TraceError(Texts.Rendering_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), value);
             }
 
-            var layoutItem = field.Item.Project.Items.OfType<Item>().FirstOrDefault(i => i.ItemIdOrPath == "/sitecore/layout/Layouts/MvcLayout");
+            var layoutItem = field.Item.Project.ProjectItems.OfType<Item>().FirstOrDefault(i => i.ItemIdOrPath == "/sitecore/layout/Layouts/MvcLayout");
             if (layoutItem == null)
             {
                 context.Trace.TraceError(Texts.Layout_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), "/sitecore/layout/Layouts/MvcLayout");
@@ -64,7 +64,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
             output.WriteStartElement("r");
 
-            var deviceItems = field.Item.Project.Items.OfType<Item>().Where(i => string.Equals(i.TemplateIdOrPath, "/sitecore/templates/System/Layout/Device", StringComparison.OrdinalIgnoreCase) || string.Equals(i.TemplateIdOrPath, "{B6F7EEB4-E8D7-476F-8936-5ACE6A76F20B}", StringComparison.OrdinalIgnoreCase));
+            var deviceItems = field.Item.Project.ProjectItems.OfType<Item>().Where(i => string.Equals(i.TemplateIdOrPath, "/sitecore/templates/System/Layout/Device", StringComparison.OrdinalIgnoreCase) || string.Equals(i.TemplateIdOrPath, "{B6F7EEB4-E8D7-476F-8936-5ACE6A76F20B}", StringComparison.OrdinalIgnoreCase));
             foreach (var deviceItem in deviceItems)
             {
                 if (!deviceItem.ItemIdOrPath.StartsWith("/sitecore/layout/Devices/"))

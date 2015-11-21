@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
         protected override void Process(CompilePipeline pipeline)
         {
-            foreach (var projectItem in pipeline.Project.Items)
+            foreach (var projectItem in pipeline.Project.ProjectItems)
             {
                 foreach (var reference in projectItem.References)
                 {

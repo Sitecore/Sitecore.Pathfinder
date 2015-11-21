@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Building.Codegen
                 projectCodeGenerator.Generate(context, context.Project);
             }
 
-            foreach (var projectItem in context.Project.Items)
+            foreach (var projectItem in context.Project.ProjectItems)
             {
                 foreach (var projectItemCodeGenerator in ProjectItemCodeGenerators)
                 {

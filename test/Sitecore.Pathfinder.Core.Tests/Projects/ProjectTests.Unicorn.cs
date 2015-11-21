@@ -13,9 +13,9 @@ namespace Sitecore.Pathfinder.Projects
         [Test]
         public void UnicornItemTest()
         {
-            var unicornFile = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/YmlItem") as UnicornFile;
+            var unicornFile = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/YmlItem") as UnicornFile;
 
-            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/YmlItem");
+            var projectItem = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/YmlItem");
             Assert.IsNotNull(projectItem);
             Assert.AreEqual("YmlItem", projectItem.ShortName);
             Assert.AreEqual("/sitecore/content/Home/YmlItem", projectItem.QualifiedName);

@@ -61,7 +61,7 @@ namespace Sitecore.Pathfinder.Building.Refactoring
                 reference.SourceProperty.SetValue(value);
             }
 
-            var changedFileNames = context.Project.Items.SelectMany(i => i.Snapshots).Where(s => s.IsModified).Select(s => s.SourceFile.AbsoluteFileName).ToList();
+            var changedFileNames = context.Project.ProjectItems.SelectMany(i => i.Snapshots).Where(s => s.IsModified).Select(s => s.SourceFile.AbsoluteFileName).ToList();
 
             projectItem.Rename(newShortName);
             context.Project.SaveChanges();

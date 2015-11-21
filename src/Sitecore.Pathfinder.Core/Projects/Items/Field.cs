@@ -16,6 +16,9 @@ namespace Sitecore.Pathfinder.Projects.Items
     [DebuggerDisplay("{GetType().Name,nq}: {FieldName,nq} = {Value}")]
     public class Field : IHasSourceTextNodes
     {
+        [CanBeNull]
+        private ID _id;
+
         public Field([NotNull] Item item, [NotNull] ITextNode textNode)
         {
             Item = item;
@@ -27,6 +30,12 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         [NotNull]
         public string CompiledValue { get; private set; }
+
+        [NotNull]
+        public Database Database => Item.Database;
+
+        [NotNull]
+        public string DatabaseName => Item.DatabaseName;
 
         public Guid FieldId
         {
@@ -57,6 +66,10 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public SourceProperty<string> FieldNameProperty { get; } = new SourceProperty<string>("Name", string.Empty);
 
+        [NotNull]
+        [Obsolete("Use FieldId instead", false)]
+        public ID ID => _id ?? (_id = new ID(FieldId));
+
         public bool IsCompiled { get; set; }
 
         public bool IsTestable { get; set; } = true;
@@ -73,6 +86,10 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         [NotNull]
         public SourceProperty<string> LanguageProperty { get; } = new SourceProperty<string>("Language", string.Empty);
+
+        [NotNull]
+        [Obsolete("Use FieldName instead", false)]
+        public string Name => FieldName;
 
         [ItemNotNull]
         public ICollection<ITextNode> SourceTextNodes { get; } = new List<ITextNode>();

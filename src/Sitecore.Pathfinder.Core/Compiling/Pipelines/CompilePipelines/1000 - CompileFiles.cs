@@ -22,7 +22,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
             List<IProjectItem> items;
             do
             {
-                items = pipeline.Project.Items.Where(i => i.State == ProjectItemState.CompilationPending).ToList();
+                items = pipeline.Project.ProjectItems.Where(i => i.State == ProjectItemState.CompilationPending).ToList();
 
                 foreach (var projectItem in items)
                 {

@@ -22,7 +22,7 @@ namespace Sitecore.Pathfinder.Projects.References
                     return null;
                 }
 
-                var result = Owner.Project.Items.FirstOrDefault(i => i.Uri == ResolvedUri);
+                var result = Owner.Project.ProjectItems.FirstOrDefault(i => i.Uri == ResolvedUri);
                 if (result == null)
                 {
                     IsValid = false;
@@ -35,7 +35,7 @@ namespace Sitecore.Pathfinder.Projects.References
             IsResolved = true;
 
             var filePath = SourceProperty.GetValue();
-            var projectItem = Owner.Project.Items.OfType<File>().FirstOrDefault(i => string.Equals(i.FilePath, filePath, StringComparison.OrdinalIgnoreCase));
+            var projectItem = Owner.Project.ProjectItems.OfType<File>().FirstOrDefault(i => string.Equals(i.FilePath, filePath, StringComparison.OrdinalIgnoreCase));
             if (projectItem == null)
             {
                 IsValid = false;

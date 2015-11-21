@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Files
     {
         public override void Check(ICheckerContext context)
         {
-            foreach (var mediaFile in context.Project.Items.OfType<MediaFile>())
+            foreach (var mediaFile in context.Project.ProjectItems.OfType<MediaFile>())
             {
                 CheckTemplate(context, mediaFile);
             }

@@ -18,7 +18,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
         {
             var context = pipeline.Context.CompositionService.Resolve<IFieldCompileContext>().With(pipeline.Project);
 
-            foreach (var field in pipeline.Project.Items.OfType<Item>().SelectMany(item => item.Fields))
+            foreach (var field in pipeline.Project.ProjectItems.OfType<Item>().SelectMany(item => item.Fields))
             {
                 field.Compile(context);
             }

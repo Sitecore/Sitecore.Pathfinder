@@ -14,7 +14,7 @@ namespace Sitecore.Pathfinder.Building.Commands
 
         public override void Run(IBuildContext context)
         {
-            foreach (var projectItem in context.Project.Items.OrderBy(i => i.GetType().Name))
+            foreach (var projectItem in context.Project.ProjectItems.OrderBy(i => i.GetType().Name))
             {
                 var qualifiedName = projectItem.QualifiedName;
 

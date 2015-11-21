@@ -12,6 +12,9 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull]
         public static readonly TemplateField Empty = new TemplateField(Template.Empty, new Guid("{D269BE69-A982-4415-ABC6-A870F286435A}"), TextNode.Empty);
 
+        [CanBeNull]
+        private ID _id;
+
         public TemplateField([NotNull] Template template, Guid guid, [NotNull] ITextNode templateFieldTextNode)
         {
             Template = template;
@@ -19,6 +22,12 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
             Uri = new ProjectItemUri(template.DatabaseName, guid);
         }
+
+        [NotNull]
+        public Database Database => Template.Database;
+
+        [NotNull]
+        public string DatabaseName => Template.DatabaseName;
 
         [NotNull]
         public string FieldName
@@ -31,6 +40,10 @@ namespace Sitecore.Pathfinder.Projects.Templates
         public SourceProperty<string> FieldNameProperty { get; } = new SourceProperty<string>("Name", string.Empty);
 
         [NotNull]
+        [Obsolete("Use Uri.Guid instead", false)]
+        public ID ID => _id ?? (_id = new ID(Uri.Guid));
+
+        [NotNull]
         public string LongHelp
         {
             get { return LongHelpProperty.GetValue(); }
@@ -39,6 +52,10 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
         [NotNull]
         public SourceProperty<string> LongHelpProperty { get; } = new SourceProperty<string>("LongHelp", string.Empty);
+
+        [NotNull]
+        [Obsolete("Use FieldName instead", false)]
+        public string Name => FieldName;
 
         // todo: make shared and unversioned into attributes
         public bool Shared { get; set; }

@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -15,9 +14,18 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull]
         public static readonly Template Empty = new Template(Projects.Project.Empty, TextNode.Empty, new Guid("{7A3E077F-D985-453F-8773-348ADFEAF2FD}"), string.Empty, string.Empty, string.Empty);
 
+        [CanBeNull]
+        [ItemNotNull]
+        private ID[] _baseTemplates;
+
         public Template([NotNull] IProject project, [NotNull] ITextNode textNode, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, textNode, guid, databaseName, itemName, itemIdOrPath)
         {
         }
+
+        [NotNull]
+        [ItemNotNull]
+        [Obsolete("Use BaseTemplates instead", false)]
+        public ID[] BaseTemplateIDs => _baseTemplates ?? (_baseTemplates = BaseTemplates.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries).Select(id => new ID(id)).ToArray());
 
         [NotNull]
         public string BaseTemplates
@@ -28,6 +36,10 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
         [NotNull]
         public SourceProperty<string> BaseTemplatesProperty { get; } = new SourceProperty<string>("BaseTemplates", string.Empty);
+
+        [NotNull]
+        [ItemNotNull]
+        public IEnumerable<TemplateField> Fields => Sections.SelectMany(s => s.Fields);
 
         [NotNull]
         public string LongHelp
@@ -58,7 +70,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
         [NotNull]
         [ItemNotNull]
-        public IEnumerable<TemplateField> GetAllFields()
+        public virtual IEnumerable<TemplateField> GetAllFields()
         {
             var templates = new List<ProjectItemUri>();
             return GetAllFields(templates, this);
@@ -94,12 +106,10 @@ namespace Sitecore.Pathfinder.Projects.Templates
                 yield return field;
             }
 
-            var nullGuid = Guid.Empty.Format();
-
             var baseTemplates = template.BaseTemplates.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries);
             foreach (var baseTemplateId in baseTemplates)
             {
-                if (baseTemplateId == nullGuid)
+                if (baseTemplateId == Constants.NullGuidString)
                 {
                     continue;
                 }

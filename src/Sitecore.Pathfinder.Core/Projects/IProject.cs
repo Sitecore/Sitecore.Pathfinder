@@ -3,6 +3,9 @@
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Projects.Files;
+using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects
@@ -16,13 +19,21 @@ namespace Sitecore.Pathfinder.Projects
         long Ducats { get; set; }
 
         [NotNull]
+        [ItemNotNull]
+        IEnumerable<File> Files { get; }
+
+        [NotNull]
         IFileSystemService FileSystem { get; }
 
         bool HasErrors { get; }
 
         [NotNull]
         [ItemNotNull]
-        IEnumerable<IProjectItem> Items { get; }
+        IEnumerable<IProjectItem> ProjectItems { get; }
+
+        [NotNull]
+        [ItemNotNull]
+        IEnumerable<Item> Items { get; }
 
         [NotNull]
         ProjectOptions Options { get; }
@@ -33,6 +44,10 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         [ItemNotNull]
         ICollection<ISourceFile> SourceFiles { get; }
+
+        [NotNull]
+        [ItemNotNull]
+        IEnumerable<Template> Templates { get; }
 
         [NotNull]
         IProject Add([NotNull] string sourceFileName);
@@ -51,6 +66,9 @@ namespace Sitecore.Pathfinder.Projects
 
         [CanBeNull]
         IProjectItem FindQualifiedItem([NotNull] ProjectItemUri uri);
+
+        [NotNull]
+        Database GetDatabase([NotNull] string databaseName);
 
         [NotNull]
         IProject Load([NotNull] ProjectOptions projectOptions, [NotNull] [ItemNotNull] IEnumerable<string> sourceFileNames);

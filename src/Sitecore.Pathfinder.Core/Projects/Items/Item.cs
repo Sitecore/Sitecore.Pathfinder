@@ -1,7 +1,6 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.Templates;
@@ -22,6 +21,14 @@ namespace Sitecore.Pathfinder.Projects.Items
         public static readonly Item Empty = new Item(Projects.Project.Empty, TextNode.Empty, new Guid("{935B8D6C-D25A-48B8-8167-2C0443D77027}"), "emptydatabase", string.Empty, string.Empty, string.Empty);
 
         [CanBeNull]
+        [ItemNotNull]
+        private ChildrenCollection _children;
+
+        [CanBeNull]
+        [ItemNotNull]
+        private FieldCollection _fields;
+
+        [CanBeNull]
         private Template _template;
 
         public Item([NotNull] IProject project, [NotNull] ITextNode textNode, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath) : base(project, textNode, guid, databaseName, itemName, itemIdOrPath)
@@ -31,7 +38,21 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         [NotNull]
         [ItemNotNull]
-        public IList<Field> Fields { get; } = new List<Field>();
+        public ChildrenCollection Children => _children ?? (_children = new ChildrenCollection(this));
+
+        [NotNull]
+        [ItemNotNull]
+        public FieldCollection Fields => _fields ?? (_fields = new FieldCollection(this));
+
+        [NotNull]
+        public string this[[NotNull] string fieldName]
+        {
+            get
+            {
+                var field = Fields.FirstOrDefault(f => string.Equals(f.FieldName, fieldName, StringComparison.OrdinalIgnoreCase));
+                return field?.Value ?? string.Empty;
+            }
+        }
 
         [NotNull]
         public string LayoutHtmlFile
@@ -63,7 +84,7 @@ namespace Sitecore.Pathfinder.Projects.Items
                     else
                     {
                         // resolve by short name
-                        var templates = Project.Items.OfType<Template>().Where(t => t.ShortName == templateIdOrPath && string.Equals(t.DatabaseName, DatabaseName, StringComparison.OrdinalIgnoreCase)).ToList();
+                        var templates = Project.ProjectItems.OfType<Template>().Where(t => t.ShortName == templateIdOrPath && string.Equals(t.DatabaseName, DatabaseName, StringComparison.OrdinalIgnoreCase)).ToList();
                         _template = templates.Count == 1 ? templates.First() : null;
                     }
 
@@ -78,16 +99,25 @@ namespace Sitecore.Pathfinder.Projects.Items
         }
 
         [NotNull]
+        [Obsolete("Use Template.Uri.Guid instead")]
+        public ID TemplateID => Template.ID;
+
+        [NotNull]
         public string TemplateIdOrPath
         {
             get { return TemplateIdOrPathProperty.GetValue(); }
-            set { TemplateIdOrPathProperty.SetValue(value);
+            set
+            {
+                TemplateIdOrPathProperty.SetValue(value);
                 _template = Template.Empty;
             }
         }
 
         [NotNull]
         public SourceProperty<string> TemplateIdOrPathProperty { get; } = new SourceProperty<string>("Template", string.Empty, SourcePropertyFlags.IsQualified);
+
+        [NotNull]
+        public string TemplateName => Template.ItemName;
 
         public void Merge([NotNull] Item newProjectItem)
         {

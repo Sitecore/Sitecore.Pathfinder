@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Projects
         [Test]
         public void SerializedItemTest()
         {
-            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/SerializedItem");
+            var projectItem = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/SerializedItem");
             Assert.IsNotNull(projectItem);
             Assert.AreEqual("SerializedItem", projectItem.ShortName);
             Assert.AreEqual("/sitecore/content/Home/SerializedItem", projectItem.QualifiedName);
@@ -43,7 +43,7 @@ namespace Sitecore.Pathfinder.Projects
         [Test]
         public void WriteSerializedItemTest()
         {
-            var item = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/SerializedItem") as Item;
+            var item = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/SerializedItem") as Item;
             Assert.IsNotNull(item);
 
             var writer = new StringWriter();

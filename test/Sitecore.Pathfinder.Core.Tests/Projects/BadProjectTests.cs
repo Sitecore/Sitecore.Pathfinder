@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Projects
         [Test]
         public void XmlItemTest()
         {
-            var item = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/XmlItem") as Item;
+            var item = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/XmlItem") as Item;
             Assert.IsNotNull(item);
 
             var diagnostic = Project.Diagnostics.FirstOrDefault(d => d.Text == "Item path reference not found: /sitecore/media library/badlink");

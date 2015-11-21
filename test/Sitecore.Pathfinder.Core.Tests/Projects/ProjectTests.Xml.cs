@@ -16,7 +16,7 @@ namespace Sitecore.Pathfinder.Projects
         [Test]
         public void XmlContentItemTest()
         {
-            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/XmlContentItem");
+            var projectItem = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/XmlContentItem");
             Assert.IsNotNull(projectItem);
             Assert.AreEqual("XmlContentItem", projectItem.ShortName);
             Assert.AreEqual("/sitecore/content/XmlContentItem", projectItem.QualifiedName);
@@ -49,14 +49,14 @@ namespace Sitecore.Pathfinder.Projects
         [Test]
         public void XmlSubitemTest()
         {
-            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/XmlItem/XmlSubitem");
+            var projectItem = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/XmlItem/XmlSubitem");
             Assert.IsNotNull(projectItem);
         }
 
         [Test]
         public void XmlItemTest()
         {
-            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/XmlItem");
+            var projectItem = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/XmlItem");
             Assert.IsNotNull(projectItem);
             Assert.AreEqual("XmlItem", projectItem.ShortName);
             Assert.AreEqual("/sitecore/content/Home/XmlItem", projectItem.QualifiedName);
@@ -163,7 +163,7 @@ namespace Sitecore.Pathfinder.Projects
         [Test]
         public void XmlIncludePlaceholderTest()
         {
-            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/XmlItem/PlaceholderItem");
+            var projectItem = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/XmlItem/PlaceholderItem");
             Assert.IsNotNull(projectItem);
             Assert.AreEqual("PlaceholderItem", projectItem.ShortName);
             Assert.AreEqual("/sitecore/content/Home/XmlItem/PlaceholderItem", projectItem.QualifiedName);
@@ -179,7 +179,7 @@ namespace Sitecore.Pathfinder.Projects
         [Test]
         public void WriteXmlItemTest()
         {
-            var item = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/XmlItem") as Item;
+            var item = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/XmlItem") as Item;
             Assert.IsNotNull(item);
 
             var writer = new StringWriter();
@@ -196,7 +196,7 @@ namespace Sitecore.Pathfinder.Projects
         [Test]
         public void WriteXmlContentItemTest()
         {
-            var item = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/XmlItem") as Item;
+            var item = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/XmlItem") as Item;
             Assert.IsNotNull(item);
 
             var writer = new StringWriter();
@@ -213,7 +213,7 @@ namespace Sitecore.Pathfinder.Projects
         [Test]
         public void XmlLayoutTest()
         {
-            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/XmlLayout");
+            var projectItem = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/XmlLayout");
             Assert.IsNotNull(projectItem);
             Assert.AreEqual("XmlLayout", projectItem.ShortName);
             Assert.AreEqual("/sitecore/content/Home/XmlLayout", projectItem.QualifiedName);

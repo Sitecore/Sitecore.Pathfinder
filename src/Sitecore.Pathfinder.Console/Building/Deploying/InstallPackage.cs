@@ -57,7 +57,7 @@ namespace Sitecore.Pathfinder.Building.Deploying
                 return;
             }
 
-            foreach (var snapshot in context.Project.Items.SelectMany(i => i.Snapshots))
+            foreach (var snapshot in context.Project.ProjectItems.SelectMany(i => i.Snapshots))
             {
                 snapshot.SourceFile.IsModified = false;
             }

@@ -13,6 +13,9 @@ namespace Sitecore.Pathfinder.Projects.Items
     [DebuggerDisplay("{GetType().Name,nq}: {ItemIdOrPath}")]
     public abstract class ItemBase : ProjectItem, IHasSourceTextNodes
     {
+        [CanBeNull]
+        private ID _id;
+
         protected ItemBase([NotNull] IProject project, [NotNull] ITextNode textNode, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, textNode.Snapshot, new ProjectItemUri(databaseName, guid))
         {
             DatabaseName = databaseName;
@@ -20,6 +23,9 @@ namespace Sitecore.Pathfinder.Projects.Items
             ItemIdOrPath = itemIdOrPath;
             SourceTextNodes.Add(textNode);
         }
+
+        [NotNull]
+        public Database Database => Project.GetDatabase(DatabaseName);
 
         [NotNull]
         public string DatabaseName { get; private set; }
@@ -33,6 +39,10 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         [NotNull]
         public SourceProperty<string> IconProperty { get; } = new SourceProperty<string>("Icon", string.Empty);
+
+        [NotNull]
+        [Obsolete("Use Uri.Guid instead", false)]
+        public ID ID => _id ?? (_id = new ID(Uri.Guid));
 
         public bool IsEmittable { get; set; } = true;
 
@@ -51,20 +61,15 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public SourceProperty<string> ItemNameProperty { get; } = new SourceProperty<string>("ItemName", string.Empty, SourcePropertyFlags.IsShort);
 
+        [NotNull]
+        [Obsolete("Use ItemName instead", false)]
+        public string Name => ItemName;
+
         public override string QualifiedName => ItemIdOrPath;
 
         public override string ShortName => ItemName;
 
         public ICollection<ITextNode> SourceTextNodes { get; } = new List<ITextNode>();
-
-        public override void Rename(string newShortName)
-        {
-            var n = ItemIdOrPath.LastIndexOf('/');
-            var itemIdOrPath = (n >= 0 ? ItemIdOrPath.Left(n + 1) : string.Empty) + newShortName;
-
-            ItemIdOrPath = itemIdOrPath;
-            ItemName = itemIdOrPath;
-        }
 
         [NotNull]
         [ItemNotNull]
@@ -73,7 +78,16 @@ namespace Sitecore.Pathfinder.Projects.Items
             var itemIdOrPath = ItemIdOrPath + "/";
             var index = itemIdOrPath.Length;
 
-            return Project.Items.OfType<Item>().Where(i => i.ItemIdOrPath.StartsWith(itemIdOrPath, StringComparison.OrdinalIgnoreCase) && i.ItemIdOrPath.IndexOf('/', index) < 0);
+            return Project.ProjectItems.OfType<Item>().Where(i => i.ItemIdOrPath.StartsWith(itemIdOrPath, StringComparison.OrdinalIgnoreCase) && i.ItemIdOrPath.IndexOf('/', index) < 0);
+        }
+
+        public override void Rename(string newShortName)
+        {
+            var n = ItemIdOrPath.LastIndexOf('/');
+            var itemIdOrPath = (n >= 0 ? ItemIdOrPath.Left(n + 1) : string.Empty) + newShortName;
+
+            ItemIdOrPath = itemIdOrPath;
+            ItemName = itemIdOrPath;
         }
 
         protected override void Merge(IProjectItem newProjectItem, bool overwrite)

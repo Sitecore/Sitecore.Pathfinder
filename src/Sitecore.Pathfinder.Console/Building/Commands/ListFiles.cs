@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Building.Commands
         {
             context.IsAborted = true;
 
-            foreach (var item in context.Project.Items.OfType<File>().OrderBy(file => file.FilePath))
+            foreach (var item in context.Project.ProjectItems.OfType<File>().OrderBy(file => file.FilePath))
             {
                 context.Trace.WriteLine(item.FilePath);
             }

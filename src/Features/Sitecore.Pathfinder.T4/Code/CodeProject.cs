@@ -22,18 +22,18 @@ namespace Sitecore.Pathfinder.T4.Code
 
         [NotNull]
         [ItemNotNull]
-        public IEnumerable<File> Files => InnerProject.Items.OfType<File>();
+        public IEnumerable<File> Files => InnerProject.ProjectItems.OfType<File>();
 
         [NotNull]
         public IProject InnerProject { get; }
 
         [NotNull]
         [ItemNotNull]
-        public IEnumerable<CodeItem> Items => InnerProject.Items.OfType<Item>().Where(i => !i.IsExtern).Select(i => new CodeItem(this, i));
+        public IEnumerable<CodeItem> Items => InnerProject.ProjectItems.OfType<Item>().Where(i => !i.IsExtern).Select(i => new CodeItem(this, i));
 
         [NotNull]
         [ItemNotNull]
-        public IEnumerable<CodeTemplate> Templates => InnerProject.Items.OfType<Template>().Where(t => !t.IsExtern).Select(t => new CodeTemplate(this, t));
+        public IEnumerable<CodeTemplate> Templates => InnerProject.ProjectItems.OfType<Template>().Where(t => !t.IsExtern).Select(t => new CodeTemplate(this, t));
 
         [NotNull]
         public CodeDatabase GetDatabase([NotNull] string databaseName)

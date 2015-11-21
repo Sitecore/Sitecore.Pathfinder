@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Querying
                 yield break;
             }
 
-            foreach (var projectItem in project.Items)
+            foreach (var projectItem in project.ProjectItems)
             {
                 foreach (var reference in projectItem.References)
                 {

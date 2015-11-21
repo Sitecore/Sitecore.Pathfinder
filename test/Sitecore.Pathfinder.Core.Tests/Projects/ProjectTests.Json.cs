@@ -45,7 +45,7 @@ namespace Sitecore.Pathfinder.Projects
         [Test]
         public void JsonItemTest()
         {
-            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/JsonItem");
+            var projectItem = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/JsonItem");
             Assert.IsNotNull(projectItem);
             Assert.AreEqual("JsonItem", projectItem.ShortName);
             Assert.AreEqual("/sitecore/content/Home/JsonItem", projectItem.QualifiedName);
@@ -149,7 +149,7 @@ namespace Sitecore.Pathfinder.Projects
         [Test]
         public void WriteJsonItemTest()
         {
-            var item = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/JsonItem") as Item;
+            var item = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/JsonItem") as Item;
             Assert.IsNotNull(item);
 
             var writer = new StringWriter();
@@ -166,7 +166,7 @@ namespace Sitecore.Pathfinder.Projects
         [Test]
         public void JsonIncludePlaceholderTest()
         {
-            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/JsonItem/PlaceholderItem");
+            var projectItem = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/JsonItem/PlaceholderItem");
             Assert.IsNotNull(projectItem);
             Assert.AreEqual("PlaceholderItem", projectItem.ShortName);
             Assert.AreEqual("/sitecore/content/Home/JsonItem/PlaceholderItem", projectItem.QualifiedName);
@@ -182,7 +182,7 @@ namespace Sitecore.Pathfinder.Projects
         [Test]
         public void JsonLayoutTest()
         {
-            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/JsonLayout");
+            var projectItem = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/JsonLayout");
             Assert.IsNotNull(projectItem);
             Assert.AreEqual("JsonLayout", projectItem.ShortName);
             Assert.AreEqual("/sitecore/content/Home/JsonLayout", projectItem.QualifiedName);

@@ -18,7 +18,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
         protected override void Process(CompilePipeline pipeline)
         {
-            var templateItems = pipeline.Project.Items.OfType<Item>().Where(i => i.TemplateIdOrPath == "{AB86861A-6030-46C5-B394-E8F99E8B87DB}").ToList();
+            var templateItems = pipeline.Project.ProjectItems.OfType<Item>().Where(i => i.TemplateIdOrPath == "{AB86861A-6030-46C5-B394-E8F99E8B87DB}").ToList();
 
             foreach (var templateItem in templateItems)
             {

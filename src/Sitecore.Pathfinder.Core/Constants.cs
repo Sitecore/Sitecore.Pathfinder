@@ -1,8 +1,10 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder
@@ -20,6 +22,9 @@ namespace Sitecore.Pathfinder
         [NotNull]
         [ItemNotNull]
         public static readonly IList<ITextNode> EmptyReadOnlyTextNodeCollection = new ReadOnlyCollection<ITextNode>(new List<ITextNode>());
+
+        [NotNull]
+        public static string NullGuidString = Guid.Empty.Format();
 
         [NotNull]
         public static readonly char[] Pipe =
@@ -42,13 +47,12 @@ namespace Sitecore.Pathfinder
         [NotNull]
         public static readonly char[] Space =
         {
-            ' '                          
+            ' '
         };
 
         public static class Configuration
         {
             public const string BuildProject = "build-project:tasks";
-            public const string ScriptExtensions = "scripts:file-extensions";
 
             public const string CheckBinFileVersion = "install-package:check-bin-file-version";
 
@@ -115,6 +119,8 @@ namespace Sitecore.Pathfinder
             public const string PublishUrl = "publish-databases:publish-url";
 
             public const string RemapFileDirectories = "remap-file-directories";
+
+            public const string ScriptExtensions = "scripts:file-extensions";
 
             public const string StandardTemplateFields = "standard-template-fields";
 

@@ -189,7 +189,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             }
             else
             {
-                var devices = context.Field.Item.Project.Items.OfType<Item>().Where(i => string.Equals(i.TemplateIdOrPath, "/sitecore/templates/System/Layout/Device", StringComparison.OrdinalIgnoreCase) || string.Equals(i.TemplateIdOrPath, "{B6F7EEB4-E8D7-476F-8936-5ACE6A76F20B}", StringComparison.OrdinalIgnoreCase)).ToList();
+                var devices = context.Field.Item.Project.ProjectItems.OfType<Item>().Where(i => string.Equals(i.TemplateIdOrPath, "/sitecore/templates/System/Layout/Device", StringComparison.OrdinalIgnoreCase) || string.Equals(i.TemplateIdOrPath, "{B6F7EEB4-E8D7-476F-8936-5ACE6A76F20B}", StringComparison.OrdinalIgnoreCase)).ToList();
                 if (!devices.Any())
                 {
                     context.CompileContext.Trace.TraceError(Texts.Device_item_not_found, deviceNameTextNode);
@@ -243,8 +243,8 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         {
             var databaseName = context.Field.Item.DatabaseName;
 
-            var renderingItems = context.Field.Item.Project.Items.OfType<Rendering>().Where(r => string.Equals(r.RenderingItemUri.FileOrDatabaseName, databaseName, StringComparison.OrdinalIgnoreCase)).Select(r => context.Field.Item.Project.FindQualifiedItem(r.RenderingItemUri)).OfType<Item>().ToList();
-            renderingItems.AddRange(context.Field.Item.Project.Items.OfType<Item>().Where(r => r.IsExtern && string.Equals(r.DatabaseName, databaseName, StringComparison.OrdinalIgnoreCase) && string.Equals(r.TemplateIdOrPath, "/sitecore/templates/System/Layout/Renderings/View rendering", StringComparison.OrdinalIgnoreCase)));
+            var renderingItems = context.Field.Item.Project.ProjectItems.OfType<Rendering>().Where(r => string.Equals(r.RenderingItemUri.FileOrDatabaseName, databaseName, StringComparison.OrdinalIgnoreCase)).Select(r => context.Field.Item.Project.FindQualifiedItem(r.RenderingItemUri)).OfType<Item>().ToList();
+            renderingItems.AddRange(context.Field.Item.Project.ProjectItems.OfType<Item>().Where(r => r.IsExtern && string.Equals(r.DatabaseName, databaseName, StringComparison.OrdinalIgnoreCase) && string.Equals(r.TemplateIdOrPath, "/sitecore/templates/System/Layout/Renderings/View rendering", StringComparison.OrdinalIgnoreCase)));
 
             output.WriteStartElement("r");
 
@@ -332,7 +332,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             Item renderingItem;
             if (renderingItemId.IsGuid())
             {
-                renderingItem = context.Field.Item.Project.Items.OfType<Item>().FirstOrDefault(i => i.Uri.Guid.Format() == renderingItemId);
+                renderingItem = context.Field.Item.Project.ProjectItems.OfType<Item>().FirstOrDefault(i => i.Uri.Guid.Format() == renderingItemId);
             }
             else
             {

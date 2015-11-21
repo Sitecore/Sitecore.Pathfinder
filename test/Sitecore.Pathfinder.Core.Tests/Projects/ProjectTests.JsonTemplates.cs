@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Projects
         [Test]
         public void JsonTemplateTest()
         {
-            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/templates/Json-Template");
+            var projectItem = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/templates/Json-Template");
             Assert.IsNotNull(projectItem);
 
             var template = (Template)projectItem;
@@ -24,7 +24,7 @@ namespace Sitecore.Pathfinder.Projects
             Assert.AreEqual("Short Help.", template.ShortHelp);
             Assert.AreEqual("Long Help.", template.LongHelp);
 
-            var standardValuesItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/templates/Json-Template/__Standard Values") as Item;
+            var standardValuesItem = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/templates/Json-Template/__Standard Values") as Item;
             Assert.IsNotNull(standardValuesItem);
             Assert.AreEqual(template.StandardValuesItem, standardValuesItem);
 

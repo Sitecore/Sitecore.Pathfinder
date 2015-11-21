@@ -62,7 +62,7 @@ namespace Sitecore.Pathfinder.Emitters
 
         protected virtual void Emit([NotNull] IEmitContext context, [NotNull] IProject project, [NotNull] [ItemNotNull] List<IEmitter> emitters, [NotNull] [ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
         {
-            foreach (var projectItem in project.Items)
+            foreach (var projectItem in project.ProjectItems)
             {
                 EmitProjectItem(context, projectItem, emitters, retries);
             }

@@ -32,12 +32,15 @@ namespace Sitecore.Pathfinder.Projects
         public static readonly IProject Empty = new Project();
 
         [NotNull]
+        private readonly Dictionary<string, Database> _databases = new Dictionary<string, Database>();
+
+        [NotNull]
         [ItemNotNull]
         private readonly List<Diagnostic> _diagnostics = new List<Diagnostic>();
 
         [NotNull]
         [ItemNotNull]
-        private readonly List<IProjectItem> _items = new List<IProjectItem>();
+        private readonly List<IProjectItem> _projectItems = new List<IProjectItem>();
 
         [CanBeNull]
         private string _projectUniqueId;
@@ -68,17 +71,26 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         public IFactoryService Factory { get; }
 
+        public IEnumerable<Files.File> Files => ProjectItems.OfType<Files.File>();
+
         public IFileSystemService FileSystem { get; }
 
         public bool HasErrors => Diagnostics.Any(d => d.Severity == Severity.Error);
 
-        public IEnumerable<IProjectItem> Items => _items;
+        [NotNull]
+        [ItemNotNull]
+        public IEnumerable<Item> Items => ProjectItems.OfType<Item>().Where(i => !i.IsExtern);
 
         public ProjectOptions Options { get; private set; }
+
+        public IEnumerable<IProjectItem> ProjectItems => _projectItems;
 
         public string ProjectUniqueId => _projectUniqueId ?? (_projectUniqueId = Configuration.Get(Constants.Configuration.ProjectUniqueId));
 
         public ICollection<ISourceFile> SourceFiles { get; } = new List<ISourceFile>();
+
+        [ItemNotNull]
+        public IEnumerable<Template> Templates => ProjectItems.OfType<Template>().Where(t => !t.IsExtern);
 
         [NotNull]
         protected ICompositionService CompositionService { get; }
@@ -134,7 +146,7 @@ namespace Sitecore.Pathfinder.Projects
                 return (T)MergeTemplate(newTemplate);
             }
 
-            _items.Add(projectItem);
+            _projectItems.Add(projectItem);
             return projectItem;
         }
 
@@ -151,39 +163,53 @@ namespace Sitecore.Pathfinder.Projects
         {
             if (!qualifiedName.StartsWith("{") || !qualifiedName.EndsWith("}"))
             {
-                return Items.FirstOrDefault(i => string.Equals(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase));
+                return ProjectItems.FirstOrDefault(i => string.Equals(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase));
             }
 
             Guid guid;
             if (Guid.TryParse(qualifiedName, out guid))
             {
-                return Items.FirstOrDefault(i => i.Uri.Guid == guid);
+                return ProjectItems.FirstOrDefault(i => i.Uri.Guid == guid);
             }
 
             guid = StringHelper.ToGuid(qualifiedName);
-            return Items.FirstOrDefault(i => i.Uri.Guid == guid);
+            return ProjectItems.FirstOrDefault(i => i.Uri.Guid == guid);
         }
 
         public IProjectItem FindQualifiedItem(string databaseName, string qualifiedName)
         {
             if (!qualifiedName.StartsWith("{") || !qualifiedName.EndsWith("}"))
             {
-                return Items.FirstOrDefault(i => string.Equals(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase) && i.Uri.FileOrDatabaseName == databaseName);
+                return ProjectItems.FirstOrDefault(i => string.Equals(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase) && i.Uri.FileOrDatabaseName == databaseName);
             }
 
             Guid guid;
             if (Guid.TryParse(qualifiedName, out guid))
             {
-                return Items.FirstOrDefault(i => i.Uri.Guid == guid && i.Uri.FileOrDatabaseName == databaseName);
+                return ProjectItems.FirstOrDefault(i => i.Uri.Guid == guid && i.Uri.FileOrDatabaseName == databaseName);
             }
 
             guid = StringHelper.ToGuid(qualifiedName);
-            return Items.FirstOrDefault(i => i.Uri.Guid == guid && i.Uri.FileOrDatabaseName == databaseName);
+            return ProjectItems.FirstOrDefault(i => i.Uri.Guid == guid && i.Uri.FileOrDatabaseName == databaseName);
         }
 
         public IProjectItem FindQualifiedItem(ProjectItemUri uri)
         {
-            return Items.FirstOrDefault(i => i.Uri == uri);
+            return ProjectItems.FirstOrDefault(i => i.Uri == uri);
+        }
+
+        public Database GetDatabase(string databaseName)
+        {
+            var key = databaseName.ToLowerInvariant();
+
+            Database database;
+            if (!_databases.TryGetValue(key, out database))
+            {
+                database = new Database(this, databaseName);
+                _databases[key] = database;
+            }
+
+            return database;
         }
 
         public virtual IProject Load(ProjectOptions projectOptions, IEnumerable<string> sourceFileNames)
@@ -206,7 +232,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual void Remove(IProjectItem projectItem)
         {
-            _items.Remove(projectItem);
+            _projectItems.Remove(projectItem);
         }
 
         public virtual void Remove(string sourceFileName)
@@ -220,7 +246,7 @@ namespace Sitecore.Pathfinder.Projects
 
             _diagnostics.RemoveAll(d => string.Equals(d.FileName, sourceFileName, StringComparison.OrdinalIgnoreCase));
 
-            foreach (var projectItem in Items.ToList())
+            foreach (var projectItem in ProjectItems.ToList())
             {
                 // todo: not working
                 if (!string.Equals(projectItem.Snapshots.First().SourceFile.AbsoluteFileName, sourceFileName, StringComparison.OrdinalIgnoreCase))
@@ -228,7 +254,7 @@ namespace Sitecore.Pathfinder.Projects
                     continue;
                 }
 
-                foreach (var item in Items)
+                foreach (var item in ProjectItems)
                 {
                     foreach (var reference in item.References)
                     {
@@ -240,13 +266,13 @@ namespace Sitecore.Pathfinder.Projects
                     }
                 }
 
-                _items.Remove(projectItem);
+                _projectItems.Remove(projectItem);
             }
         }
 
         public virtual IProject SaveChanges()
         {
-            foreach (var snapshot in Items.SelectMany(i => i.Snapshots))
+            foreach (var snapshot in ProjectItems.SelectMany(i => i.Snapshots))
             {
                 if (snapshot.IsModified)
                 {
@@ -364,7 +390,7 @@ namespace Sitecore.Pathfinder.Projects
         {
             var fileNameWithoutExtensions = newItem.Snapshots.First().SourceFile.GetFileNameWithoutExtensions();
 
-            var itemList = Items.OfType<Item>().ToList();
+            var itemList = ProjectItems.OfType<Item>().ToList();
 
             List<Item> items = null;
             if (newItem.MergingMatch == MergingMatch.MatchUsingSourceFile)
@@ -384,7 +410,7 @@ namespace Sitecore.Pathfinder.Projects
 
             if (!items.Any())
             {
-                _items.Add(newItem);
+                _projectItems.Add(newItem);
                 return newItem;
             }
 
@@ -401,10 +427,10 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         protected virtual IProjectItem MergeTemplate<T>([NotNull] T newTemplate) where T : Template
         {
-            var templates = Items.OfType<Template>().Where(i => string.Equals(i.ItemIdOrPath, newTemplate.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) && string.Equals(i.DatabaseName, newTemplate.DatabaseName, StringComparison.OrdinalIgnoreCase)).ToList();
+            var templates = ProjectItems.OfType<Template>().Where(i => string.Equals(i.ItemIdOrPath, newTemplate.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) && string.Equals(i.DatabaseName, newTemplate.DatabaseName, StringComparison.OrdinalIgnoreCase)).ToList();
             if (!templates.Any())
             {
-                _items.Add(newTemplate);
+                _projectItems.Add(newTemplate);
                 return newTemplate;
             }
 

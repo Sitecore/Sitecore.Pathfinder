@@ -151,6 +151,10 @@
     <Compile Include="Languages\Serialization\SerializationTextSnapshot.cs" />
     <Compile Include="Languages\Xml\ItemExtensions.cs" />
     <Compile Include="Languages\Yaml\ItemExtensions.cs" />
+    <Compile Include="Projects\Items\FieldCollection.cs" />
+    <Compile Include="Projects\Database.cs" />
+    <Compile Include="Projects\Items\ChildrenCollection.cs" />
+    <Compile Include="Projects\ID.cs" />
     <Compile Include="Snapshots\IMutableTextNode.cs" />
     <Compile Include="Languages\Yaml\YamlContentTextNodeParser.cs" />
     <Compile Include="Languages\Yaml\YamlLayoutTextNodeParser.cs" />

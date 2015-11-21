@@ -71,7 +71,7 @@ namespace Sitecore.Pathfinder.Projects
         [Test]
         public void LoadProjectTests()
         {
-            Assert.IsTrue(Project.Items.Any());
+            Assert.IsTrue(Project.ProjectItems.Any());
             Assert.IsTrue(Project.SourceFiles.Any());
         }
 
@@ -88,13 +88,13 @@ namespace Sitecore.Pathfinder.Projects
             project.AddOrMerge(projectItem1);
             project.AddOrMerge(projectItem2);
 
-            Assert.AreEqual(1, project.Items.Count());
+            Assert.AreEqual(1, project.ProjectItems.Count());
         }
 
         [Test]
         public void MergeTest()
         {
-            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/media library/Mushrooms");
+            var projectItem = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/media library/Mushrooms");
             Assert.IsNotNull(projectItem);
             Assert.AreEqual("Mushrooms", projectItem.ShortName);
             Assert.AreEqual("/sitecore/media library/Mushrooms", projectItem.QualifiedName);
@@ -112,7 +112,7 @@ namespace Sitecore.Pathfinder.Projects
         [Test]
         public void SerializationItemTest()
         {
-            var projectItem = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/SerializedItem");
+            var projectItem = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/SerializedItem");
             Assert.IsNotNull(projectItem);
             Assert.AreEqual("SerializedItem", projectItem.ShortName);
             Assert.AreEqual("/sitecore/content/Home/SerializedItem", projectItem.QualifiedName);
@@ -142,7 +142,7 @@ namespace Sitecore.Pathfinder.Projects
         [Test]
         public void TemplateMergeTest()
         {
-            var template = Project.Items.FirstOrDefault(i => i.QualifiedName == "/sitecore/templates/Xml-Template-Merge") as Template;
+            var template = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/templates/Xml-Template-Merge") as Template;
             Assert.IsNotNull(template);
 
             Assert.AreEqual(2, template.Sections.Count);
