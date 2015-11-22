@@ -7,6 +7,10 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
 {
     public class PublishUnpublishChecker : CheckerBase
     {
+        public PublishUnpublishChecker() : base("Publish/Unpublish dates", Fields)
+        {
+        }
+
         public override void Check(ICheckerContext context)
         {
             foreach (var item in context.Project.Items)

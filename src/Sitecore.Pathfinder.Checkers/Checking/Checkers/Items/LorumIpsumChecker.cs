@@ -8,6 +8,10 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
 {
     public class LorumIpsumChecker : CheckerBase
     {
+        public LorumIpsumChecker() : base("Field containing Lorem Ipsum", Fields)
+        {
+        }
+
         public override void Check(ICheckerContext context)
         {
             foreach (var field in context.Project.Items.SelectMany(i => i.Fields))

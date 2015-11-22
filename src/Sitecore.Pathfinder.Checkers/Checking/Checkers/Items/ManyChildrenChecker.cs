@@ -6,6 +6,10 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
 {
     public class ManyChildrenChecker : CheckerBase
     {
+        public ManyChildrenChecker() : base("Items with many children", Items)
+        {
+        }
+
         public override void Check(ICheckerContext context)
         {
             foreach (var item in context.Project.Items)

@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder
         private static int Main([NotNull] [ItemNotNull] string[] args)
         {
             var stopwatch = new Stopwatch();             
-            stopwatch.Start();
+            stopwatch.Start();        
 
             Trace.Listeners.Add(new ConsoleTraceListener());
                                       

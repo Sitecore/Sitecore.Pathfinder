@@ -8,6 +8,10 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
 {
     public class ArchiveReminderChecker : CheckerBase
     {
+        public ArchiveReminderChecker() : base("Archive/Reminder Dates", Fields)
+        {
+        }
+
         public override void Check(ICheckerContext context)
         {
             foreach (var item in context.Project.Items)

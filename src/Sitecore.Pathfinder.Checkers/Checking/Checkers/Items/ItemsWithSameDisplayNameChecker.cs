@@ -10,6 +10,10 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
 {
     public class ItemsWithSameDisplayNameChecker : CheckerBase
     {
+        public ItemsWithSameDisplayNameChecker() : base("Items with same display names", Items)
+        {
+        }
+
         public override void Check(ICheckerContext context)
         {
             var parents = new HashSet<Item>();

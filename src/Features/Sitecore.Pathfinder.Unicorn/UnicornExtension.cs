@@ -9,11 +9,11 @@ namespace Sitecore.Pathfinder.Unicorn
     {
         public override void UpdateWebsiteFiles(IBuildContext context)
         {
-            CopyToWebsiteBinDirectory(context, "sitecore.project\\extensions\\unicorn\\Sitecore.Pathfinder.Unicorn.dll");
-            CopyToWebsiteBinDirectory(context, "sitecore.project\\extensions\\unicorn\\Unicorn.dll");
-            CopyToWebsiteBinDirectory(context, "sitecore.project\\extensions\\unicorn\\Rainbow.Storage.Sc.dll");
-            CopyToWebsiteBinDirectory(context, "sitecore.project\\extensions\\unicorn\\Rainbow.Storage.Yaml.dll");
-            CopyToWebsiteBinDirectory(context, "sitecore.project\\extensions\\unicorn\\Rainbow.dll");
+            CopyToolsFileToWebsiteBinDirectory(context, "Sitecore.Pathfinder.Unicorn.dll");
+            CopyToolsFileToWebsiteBinDirectory(context, "Unicorn.dll");
+            CopyToolsFileToWebsiteBinDirectory(context, "Rainbow.Storage.Sc.dll");
+            CopyToolsFileToWebsiteBinDirectory(context, "Rainbow.Storage.Yaml.dll");
+            CopyToolsFileToWebsiteBinDirectory(context, "Rainbow.dll");
         }                               
     }
 }

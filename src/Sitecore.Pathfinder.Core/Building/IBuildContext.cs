@@ -18,6 +18,9 @@ namespace Sitecore.Pathfinder.Building
         [NotNull]
         IConfiguration Configuration { get; }
 
+        [NotNull]
+        string DataFolderDirectory { get; }
+
         bool DisplayDoneMessage { get; set; }
 
         [NotNull]
@@ -50,5 +53,8 @@ namespace Sitecore.Pathfinder.Building
 
         [NotNull]
         ITraceService Trace { get; }
+
+        [NotNull]
+        string WebsiteDirectory { get; }
     }
 }

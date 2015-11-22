@@ -7,6 +7,10 @@ namespace Sitecore.Pathfinder.Checking.Checkers
 {
     public class ReferenceChecker : CheckerBase
     {
+        public ReferenceChecker() : base("Check references", Items + Fields + Templates)
+        {
+        }
+
         public override void Check(ICheckerContext context)
         {
             foreach (var projectItem in context.Project.ProjectItems)

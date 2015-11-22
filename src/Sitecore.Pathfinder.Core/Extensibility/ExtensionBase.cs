@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.IO;
 using Sitecore.Pathfinder.Building;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Extensibility
@@ -14,14 +13,30 @@ namespace Sitecore.Pathfinder.Extensibility
     {
         public abstract void UpdateWebsiteFiles(IBuildContext context);
 
-        protected virtual void CopyToWebsiteBinDirectory([NotNull] IBuildContext context, [NotNull] string fileName)
+        protected virtual void CopyProjectFileToWebsiteBinDirectory([NotNull] IBuildContext context, [NotNull] string fileName)
         {
             var projectDirectory = context.ProjectDirectory;
-            var websiteDirectory = context.Configuration.GetString(Constants.Configuration.WebsiteDirectory);
+            var websiteDirectory = context.WebsiteDirectory;
 
             var sourceFileName = PathHelper.Combine(projectDirectory, fileName);
             var targetFileName = PathHelper.Combine(PathHelper.Combine(websiteDirectory, "bin"), Path.GetFileName(fileName));
 
+            CopyAssemblyToWebsiteDirectory(context, sourceFileName, targetFileName);
+        }
+
+        protected virtual void CopyToolsFileToWebsiteBinDirectory([NotNull] IBuildContext context, [NotNull] string fileName)
+        {
+            var toolsDirectory = context.ToolsDirectory;
+            var websiteDirectory = context.WebsiteDirectory;
+
+            var sourceFileName = PathHelper.Combine(toolsDirectory, fileName);
+            var targetFileName = PathHelper.Combine(PathHelper.Combine(websiteDirectory, "bin"), Path.GetFileName(fileName));
+
+            CopyAssemblyToWebsiteDirectory(context, sourceFileName, targetFileName);
+        }
+
+        private void CopyAssemblyToWebsiteDirectory([NotNull] IBuildContext context, [NotNull] string sourceFileName, [NotNull] string targetFileName)
+        {
             if (!File.Exists(targetFileName))
             {
                 context.FileSystem.Copy(sourceFileName, targetFileName);
@@ -37,8 +52,10 @@ namespace Sitecore.Pathfinder.Extensibility
                 return;
             }
 
+            // check size
             var sourceFileInfo = new FileInfo(sourceFileName);
             var targetFileInfo = new FileInfo(targetFileName);
+
             if (sourceFileInfo.Length != targetFileInfo.Length)
             {
                 context.FileSystem.Copy(sourceFileName, targetFileName);

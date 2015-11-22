@@ -18,6 +18,7 @@ namespace Sitecore.Pathfinder.Projects
     [Export]
     public class ProjectImportsService
     {
+        [ImportingConstructor]
         public ProjectImportsService([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem)
         {
             Factory = factory;

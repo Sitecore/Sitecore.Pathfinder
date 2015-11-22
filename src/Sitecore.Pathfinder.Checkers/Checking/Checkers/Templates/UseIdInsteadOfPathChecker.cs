@@ -6,6 +6,10 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Templates
 {
     public class UseIdInsteadOfPathChecker : CheckerBase
     {
+        public UseIdInsteadOfPathChecker() : base("Use ID instead of path", TemplateFields)
+        {
+        }
+
         public override void Check(ICheckerContext context)
         {
             foreach (var template in context.Project.Templates)

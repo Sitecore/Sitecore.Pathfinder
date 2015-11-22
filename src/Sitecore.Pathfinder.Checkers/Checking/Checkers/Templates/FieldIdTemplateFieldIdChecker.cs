@@ -8,6 +8,10 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Templates
 {
     public class FieldIdTemplateFieldIdChecker : CheckerBase
     {
+        public FieldIdTemplateFieldIdChecker() : base("Field ID and Template Field ID must match", Fields + TemplateFields)
+        {
+        }
+
         public override void Check(ICheckerContext context)
         {
             foreach (var item in context.Project.Items)

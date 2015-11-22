@@ -12,6 +12,10 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
 {
     public class ItemChecker : CheckerBase
     {
+        public ItemChecker() : base("Item Checker", Items + Fields)
+        {
+        }
+
         public override void Check(ICheckerContext context)
         {
             foreach (var item in context.Project.Items)

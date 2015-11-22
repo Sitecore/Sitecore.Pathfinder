@@ -8,6 +8,12 @@ namespace Sitecore.Pathfinder.Checking
     [InheritedExport]
     public interface IChecker
     {
+        [NotNull]
+        string Name { get; }
+
+        [NotNull]
+        string Tags { get; }
+
         void Check([NotNull] ICheckerContext context);
     }
 }

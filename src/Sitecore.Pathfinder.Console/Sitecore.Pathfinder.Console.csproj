@@ -159,10 +159,6 @@
       <Link>files\extensions\checkers\Items\ArchiveReminderChecker.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\DateRangeCheckerBase.cs">
-      <Link>files\extensions\checkers\Items\DateRangeCheckerBase.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\ItemChecker.cs">
       <Link>files\extensions\checkers\Items\ItemChecker.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

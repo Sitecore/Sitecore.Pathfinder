@@ -10,6 +10,10 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
 {
     public class TemplateChecker : CheckerBase
     {
+        public TemplateChecker() : base("Template checker", Templates)
+        {
+        }
+
         public override void Check(ICheckerContext context)
         {
             foreach (var template in context.Project.ProjectItems.OfType<Template>().Where(i => !i.IsImport))
@@ -103,7 +107,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
             if (!string.IsNullOrEmpty(field.LongHelp) && !field.LongHelp.EndsWith("."))
             {
                 context.Trace.TraceWarning("Template field long help text should end with '.'", TraceHelper.GetTextNode(field.LongHelpProperty, field), field.FieldName);
-            }                                                                                                                                                                   
+            }
 
             if (!string.IsNullOrEmpty(field.LongHelp) && !char.IsUpper(field.LongHelp[0]))
             {

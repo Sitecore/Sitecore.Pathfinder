@@ -6,6 +6,10 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Templates
 {
     public class DeprecatedFieldTypeChecker : CheckerBase
     {
+        public DeprecatedFieldTypeChecker() : base("Deprecated field type", TemplateFields)
+        {
+        }
+
         public override void Check(ICheckerContext context)
         {
             foreach (var template in context.Project.Templates)

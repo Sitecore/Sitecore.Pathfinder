@@ -33,6 +33,8 @@ namespace Sitecore.Pathfinder.Building
 
         public IConfiguration Configuration { get; }
 
+        public string DataFolderDirectory => Configuration.GetString(Constants.Configuration.DataFolderDirectory);
+
         public bool DisplayDoneMessage { get; set; } = true;
 
         public IFileSystemService FileSystem { get; }
@@ -54,6 +56,8 @@ namespace Sitecore.Pathfinder.Building
         public string ToolsDirectory => Configuration.GetString(Constants.Configuration.ToolsDirectory);
 
         public ITraceService Trace { get; }
+
+        public string WebsiteDirectory => Configuration.GetString(Constants.Configuration.WebsiteDirectory);
 
         [NotNull]
         protected IProjectService ProjectService { get; }

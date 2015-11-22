@@ -8,6 +8,10 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Templates
 {
     public class DuplicateTemplateFieldChecker : CheckerBase
     {
+        public DuplicateTemplateFieldChecker() : base("Duplicate template field name", TemplateFields)
+        {
+        }
+
         public override void Check(ICheckerContext context)
         {
             foreach (var template in context.Project.Templates)
@@ -22,7 +26,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Templates
                     {
                         var field1 = fields[i1];
 
-                        if (string.Compare(field0.FieldName, field1.FieldName, StringComparison.OrdinalIgnoreCase) == 0)
+                        if (string.Equals(field0.FieldName, field1.FieldName, StringComparison.OrdinalIgnoreCase))
                         {
                             context.Trace.TraceWarning("Duplicate template field name", TraceHelper.GetTextNode(field0.FieldNameProperty, field1.FieldNameProperty, field0, field1), 
                                 $"The template contains two or more field with the same name \"{field0.FieldName}\". Even if these fields are located in different sections, it is still not recommended as the name is ambiguous. Rename one or more of the fields.");

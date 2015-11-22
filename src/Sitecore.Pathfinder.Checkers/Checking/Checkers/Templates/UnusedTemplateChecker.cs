@@ -9,6 +9,10 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Templates
 {
     public class UnusedTemplateChecker : CheckerBase
     {
+        public UnusedTemplateChecker() : base("Unused template", Templates)
+        {
+        }
+
         public override void Check(ICheckerContext context)
         {
             var queryService = context.CompositionService.Resolve<IQueryService>();

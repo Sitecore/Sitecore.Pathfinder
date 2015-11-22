@@ -8,6 +8,10 @@ namespace Sitecore.Pathfinder.Checking.Checkers
 {
     public class GuidChecker : CheckerBase
     {
+        public GuidChecker() : base("Duplicted ID checker", Items + Templates)
+        {
+        }
+
         public override void Check(ICheckerContext context)
         {
             var items = context.Project.ProjectItems.Where(i => !(i is ItemBase) || !((ItemBase)i).IsImport).ToArray();
