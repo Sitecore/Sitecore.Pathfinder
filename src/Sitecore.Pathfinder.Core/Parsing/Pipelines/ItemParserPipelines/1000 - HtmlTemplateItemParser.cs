@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.ItemParserPipelines
 
             if (!fieldValue.StartsWith("~/"))
             {
-                pipeline.Context.ParseContext.Trace.TraceWarning(Texts.File_path_must_start_with____, TraceHelper.GetTextNode(pipeline.Item.LayoutHtmlFileProperty), fieldValue);
+                pipeline.Context.ParseContext.Trace.TraceWarning(Msg.P1016, Texts.File_path_must_start_with____, TraceHelper.GetTextNode(pipeline.Item.LayoutHtmlFileProperty), fieldValue);
             }
 
             var field = pipeline.Context.ParseContext.Factory.Field(pipeline.Item, TextNode.Empty, "__Renderings", fieldValue);

@@ -86,32 +86,32 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
 
             if (string.IsNullOrEmpty(field.ShortHelp))
             {
-                context.Trace.TraceWarning("Template field should have a short help text", TraceHelper.GetTextNode(field.ShortHelpProperty, field), field.FieldName);
+                context.Trace.TraceWarning(Msg.P1017, "Template field should have a short help text", TraceHelper.GetTextNode(field.ShortHelpProperty, field), field.FieldName);
             }
 
             if (!string.IsNullOrEmpty(field.ShortHelp) && !field.ShortHelp.EndsWith("."))
             {
-                context.Trace.TraceWarning("Template field short help text should end with '.'", TraceHelper.GetTextNode(field.ShortHelpProperty, field), field.FieldName);
+                context.Trace.TraceWarning(Msg.P1018, "Template field short help text should end with '.'", TraceHelper.GetTextNode(field.ShortHelpProperty, field), field.FieldName);
             }
 
             if (!string.IsNullOrEmpty(field.ShortHelp) && !char.IsUpper(field.ShortHelp[0]))
             {
-                context.Trace.TraceWarning("Template field short help text should end with a capital letter", TraceHelper.GetTextNode(field.ShortHelpProperty, field), field.FieldName);
+                context.Trace.TraceWarning(Msg.P1019, "Template field short help text should end with a capital letter", TraceHelper.GetTextNode(field.ShortHelpProperty, field), field.FieldName);
             }
 
             if (string.IsNullOrEmpty(field.LongHelp))
             {
-                context.Trace.TraceWarning("Template field should should have a long help text", TraceHelper.GetTextNode(field.LongHelpProperty, field), field.FieldName);
+                context.Trace.TraceWarning(Msg.P1020, "Template field should should have a long help text", TraceHelper.GetTextNode(field.LongHelpProperty, field), field.FieldName);
             }
 
             if (!string.IsNullOrEmpty(field.LongHelp) && !field.LongHelp.EndsWith("."))
             {
-                context.Trace.TraceWarning("Template field long help text should end with '.'", TraceHelper.GetTextNode(field.LongHelpProperty, field), field.FieldName);
+                context.Trace.TraceWarning(Msg.P1021, "Template field long help text should end with '.'", TraceHelper.GetTextNode(field.LongHelpProperty, field), field.FieldName);
             }
 
             if (!string.IsNullOrEmpty(field.LongHelp) && !char.IsUpper(field.LongHelp[0]))
             {
-                context.Trace.TraceWarning("Template field long help text should end with a capital letter", TraceHelper.GetTextNode(field.LongHelpProperty, field), field.FieldName);
+                context.Trace.TraceWarning(Msg.P1022, "Template field long help text should end with a capital letter", TraceHelper.GetTextNode(field.LongHelpProperty, field), field.FieldName);
             }
         }
 
@@ -121,7 +121,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
 
             if (!templateSection.Fields.Any())
             {
-                context.Trace.TraceWarning("Template section is empty", TraceHelper.GetTextNode(templateSection), templateSection.SectionName);
+                context.Trace.TraceWarning(Msg.P1023, "Template section is empty", TraceHelper.GetTextNode(templateSection), templateSection.SectionName);
             }
 
             foreach (var field in templateSection.Fields)

@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
 
         public override void Run(IBuildContext context)
         {
-            context.Trace.TraceInformation(Texts.SynchronizingWebsite);
+            context.Trace.TraceInformation(Msg.S1000, Texts.SynchronizingWebsite);
 
             var url = MakeWebApiUrl(context, "SynchronizeWebsite");
             var targetFileName = Path.GetTempFileName();
@@ -25,13 +25,13 @@ namespace Sitecore.Pathfinder.Building.Initializing
                 return;
             }
 
-            context.Trace.TraceInformation(Texts.Updating_resources___);
+            context.Trace.TraceInformation(Msg.S1001, Texts.Updating_resources___);
 
             using (var zip = ZipFile.OpenRead(targetFileName))
             {
                 foreach (var entry in zip.Entries)
                 {
-                    context.Trace.TraceInformation(entry.FullName);
+                    context.Trace.TraceInformation(Msg.S1002, entry.FullName);
                     entry.ExtractToFile(Path.Combine(context.ProjectDirectory, entry.FullName), true);
                 }
             }

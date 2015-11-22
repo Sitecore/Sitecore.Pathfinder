@@ -16,8 +16,8 @@ namespace Sitecore.Pathfinder.Building.Testing
 
         public override void Run(IBuildContext context)
         {
-            context.Trace.TraceInformation(Texts.Validating_website___);
-            context.Trace.TraceInformation(Texts.Go_get_a_cup_of_coffee_or_read_some_emails___this_may_take_a_while___);
+            context.Trace.TraceInformation(Msg.M1019, Texts.Validating_website___);
+            context.Trace.TraceInformation(Msg.M1020, Texts.Go_get_a_cup_of_coffee_or_read_some_emails___this_may_take_a_while___);
 
             var queryStringParameters = new Dictionary<string, string>();
 

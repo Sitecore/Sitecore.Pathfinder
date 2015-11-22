@@ -16,7 +16,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
         public override void Run(IBuildContext context)
         {
             context.IsAborted = true;
-            context.Trace.TraceInformation("Writing website exports...");
+            context.Trace.TraceInformation(Msg.M1012, Texts.Writing_website_exports___);
 
             var url = MakeWebApiUrl(context, "WriteWebsiteExports");
             var targetFileName = Path.GetTempFileName();
@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
             {
                 foreach (var entry in zip.Entries)
                 {
-                    context.Trace.TraceInformation(entry.FullName);
+                    context.Trace.TraceInformation(Msg.M1013, entry.FullName);
 
                     var fileName = Path.Combine(context.ProjectDirectory, entry.FullName);
                     context.FileSystem.CreateDirectory(Path.GetDirectoryName(fileName) ?? string.Empty);

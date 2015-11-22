@@ -127,6 +127,16 @@ namespace Sitecore.Pathfinder
         public const int M1009 = M + 9;
         public const int M1010 = M + 10;
         public const int M1011 = M + 11;
+        public const int M1012 = M + 12;
+        public const int M1013 = M + 13;
+        public const int M1014 = M + 14;
+        public const int M1015 = M + 15;
+        public const int M1016 = M + 16;
+        public const int M1017 = M + 17;
+        public const int M1018 = M + 18;
+        public const int M1019 = M + 19;
+        public const int M1020 = M + 20;
+        public const int M1021 = M + 21;
 
         public const int P = 2000;
         public const int P1000 = P;
@@ -145,5 +155,19 @@ namespace Sitecore.Pathfinder
         public const int P1013 = P + 13;
         public const int P1014 = P + 14;
         public const int P1015 = P + 15;
+        public const int P1016 = P + 16;
+        public const int P1017 = P + 17;
+        public const int P1018 = P + 18;
+        public const int P1019 = P + 19;
+        public const int P1020 = P + 20;
+        public const int P1021 = P + 21;
+        public const int P1022 = P + 22;
+        public const int P1023 = P + 23;
+
+        public const int S = 6500;
+        public const int S1000 = S;
+        public const int S1001 = S + 1;
+        public const int S1002 = S + 2;
+
     }
 }

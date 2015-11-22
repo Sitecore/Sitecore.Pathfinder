@@ -1156,6 +1156,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Writing website exports....
+        /// </summary>
+        public static string Writing_website_exports___ {
+            get {
+                return ResourceManager.GetString("Writing_website_exports___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to XML file is not valid.
         /// </summary>
         public static string XML_file_is_not_valid {

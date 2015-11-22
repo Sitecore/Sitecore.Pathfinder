@@ -36,7 +36,7 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
 
         public void Info(string message)
         {
-            _trace.TraceInformation(message);
+            _trace.TraceInformation(Msg.M1021, message);
         }
 
         public void Warn(string message)

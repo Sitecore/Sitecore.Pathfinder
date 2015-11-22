@@ -68,10 +68,10 @@ namespace Sitecore.Pathfinder.Building.Refactoring
 
             foreach (var fileName in changedFileNames)
             {
-                context.Trace.TraceInformation(PathHelper.UnmapPath(context.ProjectDirectory, fileName));
+                context.Trace.TraceInformation(Msg.M1017, PathHelper.UnmapPath(context.ProjectDirectory, fileName));
             }
 
-            context.Trace.TraceInformation($"Changed files: {changedFileNames.Count}");
+            context.Trace.TraceInformation(Msg.M1018, $"Changed files: {changedFileNames.Count}");
         }
 
         public override void WriteHelp(HelpWriter helpWriter)
