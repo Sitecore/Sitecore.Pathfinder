@@ -43,14 +43,14 @@ namespace Sitecore.Pathfinder.Building.Testing
             }
             catch (Exception ex)
             {
-                context.Trace.TraceError(Texts.An_error_occured, ex.Message);
+                context.Trace.TraceError(Msg.M1005, Texts.An_error_occured, ex.Message);
                 return;
             }
 
             var root = doc.Root;
             if (root == null)
             {
-                context.Trace.TraceError(Texts.An_error_occured);
+                context.Trace.TraceError(Msg.M1006, Texts.An_error_occured);
                 return;
             }
 
@@ -67,11 +67,11 @@ namespace Sitecore.Pathfinder.Building.Testing
 
                 if (severity == "error")
                 {
-                    context.Trace.TraceError(problem + @" " + solution, itemPath);
+                    context.Trace.TraceError(Msg.M1007, problem + @" " + solution, itemPath);
                 }
                 else
                 {
-                    context.Trace.TraceWarning(problem + @" " + solution, itemPath);
+                    context.Trace.TraceWarning(Msg.M1008, problem + @" " + solution, itemPath);
                 }
             }
 

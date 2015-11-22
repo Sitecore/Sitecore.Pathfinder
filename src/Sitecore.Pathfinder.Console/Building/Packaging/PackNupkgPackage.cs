@@ -20,12 +20,12 @@ namespace Sitecore.Pathfinder.Building.Packaging
         {
             if (context.Project.HasErrors)
             {
-                context.Trace.TraceInformation(Texts.Package_contains_errors_and_will_not_be_deployed);
+                context.Trace.TraceInformation(Msg.D1017, Texts.Package_contains_errors_and_will_not_be_deployed);
                 context.IsAborted = true;
                 return;
             }
 
-            context.Trace.TraceInformation(Texts.Creating_Nupkg_file___);
+            context.Trace.TraceInformation(Msg.D1018, Texts.Creating_Nupkg_file___);
 
             var packageFileName = context.Configuration.Get(Constants.Configuration.PackNugetDirectory);
             var directory = PathHelper.Combine(context.ProjectDirectory, packageFileName);
@@ -59,7 +59,7 @@ namespace Sitecore.Pathfinder.Building.Packaging
 
             context.OutputFiles.Add(nupkgFileName);
 
-            context.Trace.TraceInformation(Texts.NuGet_file_size, $"{PathHelper.UnmapPath(context.ProjectDirectory, nupkgFileName)} ({new FileInfo(nupkgFileName).Length.ToString("#,##0 bytes")})");
+            context.Trace.TraceInformation(Msg.D1019, Texts.NuGet_file_size, $"{PathHelper.UnmapPath(context.ProjectDirectory, nupkgFileName)} ({new FileInfo(nupkgFileName).Length.ToString("#,##0 bytes")})");
         }
 
         protected virtual void BuildNupkgFile([NotNull] IBuildContext context, [NotNull] string nuspecFileName, [NotNull] string nupkgFileName)
@@ -81,7 +81,7 @@ namespace Sitecore.Pathfinder.Building.Packaging
             }
             catch (Exception ex)
             {
-                context.Trace.TraceError(Texts.Failed_to_create_the_Nupkg_file, ex.Message);
+                context.Trace.TraceError(Msg.D1020, Texts.Failed_to_create_the_Nupkg_file, ex.Message);
             }
         }
     }

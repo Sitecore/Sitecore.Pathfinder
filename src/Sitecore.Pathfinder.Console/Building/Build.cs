@@ -184,7 +184,7 @@ namespace Sitecore.Pathfinder.Building
             var task = Tasks.FirstOrDefault(t => string.Equals(t.TaskName, taskName, StringComparison.OrdinalIgnoreCase));
             if (task == null)
             {
-                context.Trace.TraceError(Texts.Task_not_found__Skipping, taskName);
+                context.Trace.TraceError(Msg.I1006, Texts.Task_not_found__Skipping, taskName);
                 return;
             }
 
@@ -194,7 +194,7 @@ namespace Sitecore.Pathfinder.Building
             }
             catch (Exception ex)
             {
-                context.Trace.TraceError(Texts.An_error_occured, ex.Message);
+                context.Trace.TraceError(Msg.I1007, Texts.An_error_occured, ex.Message);
                 context.IsAborted = true;
 
                 if (context.Configuration.GetBool(Constants.Configuration.Debug))
@@ -210,7 +210,7 @@ namespace Sitecore.Pathfinder.Building
             var tasks = GetTaskNames(context);
             if (!tasks.Any())
             {
-                context.Trace.TraceWarning(Texts.Pipeline_is_empty__There_are_no_tasks_to_execute_);
+                context.Trace.TraceWarning(Msg.I1008, Texts.Pipeline_is_empty__There_are_no_tasks_to_execute_);
                 return;
             }
 
@@ -226,11 +226,6 @@ namespace Sitecore.Pathfinder.Building
                     break;
                 }
             }
-        }
-
-        private void DisplayHelp()
-        {
-            Trace.WriteLine(Texts.Usage__scc_exe__run__task_);
         }
     }
 }

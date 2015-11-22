@@ -82,7 +82,7 @@ namespace Sitecore.Pathfinder.Building.Packaging
             }
             catch (Exception ex)
             {
-                context.Trace.TraceError(Texts.Failed_to_create_the_Nupkg_file, ex.Message);
+                context.Trace.TraceError(Msg.M1003, Texts.Failed_to_create_the_Nupkg_file, ex.Message);
             }
         }
     }

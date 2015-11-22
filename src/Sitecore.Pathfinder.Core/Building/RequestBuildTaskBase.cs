@@ -32,7 +32,7 @@ namespace Sitecore.Pathfinder.Building
             }
             catch (Exception ex)
             {
-                context.Trace.TraceError(Texts.The_server_returned_an_error, ex.Message);
+                context.Trace.TraceError(Msg.M1000, Texts.The_server_returned_an_error, ex.Message);
             }
 
             return false;
@@ -62,7 +62,7 @@ namespace Sitecore.Pathfinder.Building
                 message = Regex.Replace(message, @"^\s+", "    ", RegexOptions.Multiline);
             }
 
-            context.Trace.TraceError(Texts.The_server_returned_an_error, message);
+            context.Trace.TraceError(Msg.M1001, Texts.The_server_returned_an_error, message);
         }
 
         [NotNull]
@@ -156,7 +156,7 @@ namespace Sitecore.Pathfinder.Building
             }
             catch (Exception ex)
             {
-                context.Trace.TraceError(Texts.The_server_returned_an_error, ex.Message);
+                context.Trace.TraceError(Msg.M1002, Texts.The_server_returned_an_error, ex.Message);
             }
 
             return false;

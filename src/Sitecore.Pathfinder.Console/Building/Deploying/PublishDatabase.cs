@@ -16,20 +16,21 @@ namespace Sitecore.Pathfinder.Building.Deploying
         {
             if (context.Project.HasErrors)
             {
-                context.Trace.TraceInformation(Texts.Package_contains_errors_and_will_not_be_deployed);
+
+                context.Trace.TraceInformation(Msg.D1012, Texts.Package_contains_errors_and_will_not_be_deployed);
                 context.IsAborted = true;
                 return;
             }
 
-            context.Trace.TraceInformation(Texts.Publishing___);
+            context.Trace.TraceInformation(Msg.D1016, Texts.Publishing___);
 
             if (string.Equals(context.Project.Options.DatabaseName, "core", StringComparison.OrdinalIgnoreCase))
             {
-                context.Trace.TraceInformation(Texts.Database_is__core___Skipping_);
+                context.Trace.TraceInformation(Msg.D1013, Texts.Database_is__core___Skipping_);
                 return;
             }
 
-            context.Trace.TraceInformation(Texts.Database, context.Project.Options.DatabaseName);
+            context.Trace.TraceInformation(Msg.D1014, Texts.Database, context.Project.Options.DatabaseName);
 
             var queryStringParameters = new Dictionary<string, string>
             {

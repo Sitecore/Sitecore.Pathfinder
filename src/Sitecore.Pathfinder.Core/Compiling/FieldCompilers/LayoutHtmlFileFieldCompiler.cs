@@ -36,13 +36,13 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             var rendering = field.Item.Project.ProjectItems.OfType<Rendering>().FirstOrDefault(i => string.Equals(i.FilePath, value, StringComparison.OrdinalIgnoreCase));
             if (rendering == null)
             {
-                context.Trace.TraceError(Texts.Rendering_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), value);
+                context.Trace.TraceError(Msg.C1047, Texts.Rendering_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), value);
             }
 
             var layoutItem = field.Item.Project.ProjectItems.OfType<Item>().FirstOrDefault(i => i.ItemIdOrPath == "/sitecore/layout/Layouts/MvcLayout");
             if (layoutItem == null)
             {
-                context.Trace.TraceError(Texts.Layout_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), "/sitecore/layout/Layouts/MvcLayout");
+                context.Trace.TraceError(Msg.C1048, Texts.Layout_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), "/sitecore/layout/Layouts/MvcLayout");
             }
 
             if (rendering == null || layoutItem == null)

@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
                 var count = item.GetChildren().Count();
                 if (count > 100)
                 {
-                    context.Trace.TraceWarning("Item has many children", $"The item has {count} children. Items with more than 100 children decrease performance. Change the structure of the tree to reduce the number of children.");
+                    context.Trace.TraceWarning(Msg.C1009, "Item has many children", $"The item has {count} children. Items with more than 100 children decrease performance. Change the structure of the tree to reduce the number of children.");
                 }
             }
         }

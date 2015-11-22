@@ -468,4 +468,31 @@
     <data name="Could_not_read_exports_xml_in_dependency_package" xml:space="preserve">
     <value>Could not read exports.xml in dependency package</value>
   </data>
+    <data name="Destination_directory_not_found" xml:space="preserve">
+    <value>Destination directory not found</value>
+  </data>
+    <data name="Installed" xml:space="preserve">
+    <value>Installed</value>
+  </data>
+    <data name="Writing_package_exports___" xml:space="preserve">
+    <value>Writing package exports...</value>
+  </data>
+    <data name="T4_item_type_not_found_in_the_config_setting__generate_code_items_" xml:space="preserve">
+    <value>T4 item type not found in the config setting 'generate-code:items'</value>
+  </data>
+    <data name="T4_item_type_must_include_assembly_name" xml:space="preserve">
+    <value>T4 item type must include assembly name</value>
+  </data>
+    <data name="Assembly_not_found_in_T4_type_name_in_the_config_setting__generate_code_items_" xml:space="preserve">
+    <value>Assembly not found in T4 type name in the config setting 'generate-code:items'</value>
+  </data>
+    <data name="T4_type_name_not_found_in_the_config_setting__generate_code_items_" xml:space="preserve">
+    <value>T4 type name not found in the config setting 'generate-code:items'</value>
+  </data>
+    <data name="Generating_code" xml:space="preserve">
+    <value>Generating code</value>
+  </data>
+    <data name="Expected__Name__attribute" xml:space="preserve">
+    <value>Expected 'Name' attribute</value>
+  </data>
 </root>

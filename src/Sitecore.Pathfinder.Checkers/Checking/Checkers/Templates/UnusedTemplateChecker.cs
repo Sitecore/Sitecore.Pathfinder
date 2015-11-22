@@ -22,7 +22,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Templates
                 var references = queryService.FindUsages(context.Project, template.QualifiedName);
                 if (!references.Any())
                 {
-                    context.Trace.TraceWarning("Unused template", TraceHelper.GetTextNode(template), $"The template \"{template.ItemName}\" is not used by any items and can be deleted.");
+                    context.Trace.TraceWarning(Msg.C1025, "Unused template", TraceHelper.GetTextNode(template), $"The template \"{template.ItemName}\" is not used by any items and can be deleted.");
                 }
             }
         }

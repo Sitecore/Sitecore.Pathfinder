@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Building.Checking
 
         public override void Run(IBuildContext context)
         {
-            context.Trace.TraceInformation(Texts.Checking___);
+            context.Trace.TraceInformation(Msg.C1041, Texts.Checking___);
 
             TraceDiagnostics(context);
         }
@@ -30,13 +30,13 @@ namespace Sitecore.Pathfinder.Building.Checking
                 switch (diagnostic.Severity)
                 {
                     case Severity.Error:
-                        context.Trace.TraceError(diagnostic.Text, diagnostic.FileName, diagnostic.Span);
+                        context.Trace.TraceError(diagnostic.Msg, diagnostic.Text, diagnostic.FileName, diagnostic.Span);
                         break;
                     case Severity.Warning:
-                        context.Trace.TraceWarning(diagnostic.Text, diagnostic.FileName, diagnostic.Span);
+                        context.Trace.TraceWarning(diagnostic.Msg, diagnostic.Text, diagnostic.FileName, diagnostic.Span);
                         break;
                     default:
-                        context.Trace.TraceInformation(diagnostic.Text, diagnostic.FileName, diagnostic.Span);
+                        context.Trace.TraceInformation(diagnostic.Msg, diagnostic.Text, diagnostic.FileName, diagnostic.Span);
                         break;
                 }
             }
@@ -45,7 +45,7 @@ namespace Sitecore.Pathfinder.Building.Checking
             var warnings = context.Project.Diagnostics.Count(d => d.Severity == Severity.Warning);
             var messages = context.Project.Diagnostics.Count(d => d.Severity == Severity.Information);
 
-            context.Trace.TraceInformation($"Errors: {errors}, warnings: {warnings}, messages: {messages}");
+            context.Trace.TraceInformation(Msg.C1042, $"Errors: {errors}, warnings: {warnings}, messages: {messages}");
         }
     }
 }

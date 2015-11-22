@@ -63,7 +63,7 @@ namespace Sitecore.Pathfinder.Projects
                         var root = doc.Root;
                         if (root == null)
                         {
-                            context.Trace.TraceError(Texts.Could_not_read_exports_xml_in_dependency_package, fileName);
+                            context.Trace.TraceError(Msg.I1001, Texts.Could_not_read_exports_xml_in_dependency_package, fileName);
                             continue;
                         }
 
@@ -71,7 +71,7 @@ namespace Sitecore.Pathfinder.Projects
                     }
                     catch
                     {
-                        context.Trace.TraceError(Texts.Could_not_read_exports_xml_in_dependency_package, fileName);
+                        context.Trace.TraceError(Msg.I1002, Texts.Could_not_read_exports_xml_in_dependency_package, fileName);
                     }
                 }
             }
@@ -90,7 +90,7 @@ namespace Sitecore.Pathfinder.Projects
             Guid guid;
             if (!Guid.TryParse(element.GetAttributeValue("Id"), out guid))
             {
-                context.Trace.TraceError("Failed to parse Id.", fileName);
+                context.Trace.TraceError(Msg.I1003, "Failed to parse Id.", fileName);
                 return;
             }
 
@@ -124,7 +124,7 @@ namespace Sitecore.Pathfinder.Projects
                         Guid sectionGuid;
                         if (!Guid.TryParse(sectionElement.GetAttributeValue("Id"), out sectionGuid))
                         {
-                            context.Trace.TraceError("Failed to parse Id.", fileName);
+                            context.Trace.TraceError(Msg.I1004, "Failed to parse Id.", fileName);
                             return;
                         }
 
@@ -136,7 +136,7 @@ namespace Sitecore.Pathfinder.Projects
                             Guid fieldGuid;
                             if (!Guid.TryParse(fieldElement.GetAttributeValue("Id"), out fieldGuid))
                             {
-                                context.Trace.TraceError("Failed to parse Id.", fileName);
+                                context.Trace.TraceError(Msg.I1005, "Failed to parse Id.", fileName);
                                 return;
                             }
 

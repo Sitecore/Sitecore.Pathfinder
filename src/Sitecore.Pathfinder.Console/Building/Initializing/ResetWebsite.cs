@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
 
         public override void Run(IBuildContext context)
         {
-            context.Trace.TraceInformation(Texts.Resetting_website___);
+            context.Trace.TraceInformation(Msg.M1009, Texts.Resetting_website___);
 
             var url = MakeWebApiUrl(context, "ResetWebsite");
 

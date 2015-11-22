@@ -18,7 +18,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Templates
                 {
                     if (templateField.Source.IndexOf('/') >= 0)
                     {
-                        context.Trace.TraceWarning("Use IDs instead of paths in template fields", TraceHelper.GetTextNode(templateField.SourceProperty, templateField), $"The template field Source field contains the path \"{templateField.Source}\". It is recommended to use IDs instead.");
+                        context.Trace.TraceWarning(Msg.C1026, "Use IDs instead of paths in template fields", TraceHelper.GetTextNode(templateField.SourceProperty, templateField), $"The template field Source field contains the path \"{templateField.Source}\". It is recommended to use IDs instead.");
                     }
                 }
             }

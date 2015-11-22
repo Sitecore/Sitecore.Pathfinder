@@ -9,8 +9,9 @@ namespace Sitecore.Pathfinder.Projects
     [DebuggerDisplay("{GetType().Name,nq}: {Text}, {FileName}")]
     public class Diagnostic
     {
-        public Diagnostic([NotNull] string fileName, TextSpan span, Severity severity, [NotNull] string text)
+        public Diagnostic(int msg, [NotNull] string fileName, TextSpan span, Severity severity, [NotNull] string text)
         {
+            Msg = msg;
             FileName = fileName;
             Span = span;
             Severity = severity;
@@ -20,9 +21,11 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         public string FileName { get; }
 
-        public TextSpan Span { get; }
+        public int Msg { get; }
 
         public Severity Severity { get; }
+
+        public TextSpan Span { get; }
 
         [NotNull]
         public string Text { get; }

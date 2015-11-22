@@ -54,13 +54,27 @@ namespace Sitecore.Pathfinder
         {
             public const string BuildProject = "build-project:tasks";
 
+            public const string BuildProjectContentFiles = "build-project:content-files";
+
+            public const string BuildProjectFiles = "build-project:files";
+
+            public const string BuildProjectFileSearchPattern = "build-project:file-search-pattern";
+
+            public const string BuildProjectForceUpdate = "build-project:force-update";
+
+            public const string BuildProjectIgnoreDirectories = "build-project:ignore-directories";
+
+            public const string BuildProjectIgnoreFileNames = "build-project:ignore-filenames";
+
             public const string CheckBinFileVersion = "install-package:check-bin-file-version";
+
+            public const string CheckProjectDisabledCategories = "check-project:disabled-categories";
+
+            public const string CheckProjectDisabledCheckers = "check-project:disabled-checkers";
 
             public const string CodeGen = "codegen";
 
             public const string CommandLineConfig = "config";
-
-            public const string ContentFiles = "build-project:content-files";
 
             public const string CopyDependenciesSourceDirectory = "copy-dependencies:source-directory";
 
@@ -69,12 +83,6 @@ namespace Sitecore.Pathfinder
             public const string DataFolderDirectory = "data-folder-directory";
 
             public const string Debug = "debug";
-
-            public const string Files = "build-project:files";
-
-            public const string FileSearchPattern = "build-project:file-search-pattern";
-
-            public const string ForceUpdate = "build-project:force-update";
 
             public const string GenerateCodeImports = "generate-code:t4-imports";
 
@@ -88,13 +96,11 @@ namespace Sitecore.Pathfinder
 
             public const string HostName = "host-name";
 
-            public const string IgnoreDirectories = "build-project:ignore-directories";
-
-            public const string IgnoreFileNames = "build-project:ignore-filenames";
-
             public const string InstallUrl = "install-package:install-url";
 
             public const string LocalTestDirectory = "run-unittests:local-test-directory";
+
+            public const string MessagesDisabled = "messages:disabled";
 
             public const string PackageDirectory = "copy-package:package-directory";
 

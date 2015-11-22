@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 
@@ -59,7 +60,7 @@ namespace Sitecore.Pathfinder.Extensions
         public static IEnumerable<string> GetList([NotNull] this IConfiguration configuration, [NotNull] string key)
         {
             var value = configuration.Get(key) ?? string.Empty;
-            var parts = value.Split(Constants.Space, StringSplitOptions.RemoveEmptyEntries);
+            var parts = value.Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToList();
             return parts;
         }
 

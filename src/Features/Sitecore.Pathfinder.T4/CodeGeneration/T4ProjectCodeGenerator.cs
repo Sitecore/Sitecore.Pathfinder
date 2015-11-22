@@ -24,7 +24,7 @@ namespace Sitecore.Pathfinder.T4.CodeGeneration
                     continue;
                 }
 
-                context.Trace.TraceInformation("Generating code", PathHelper.UnmapPath(context.ProjectDirectory, fileName));
+                context.Trace.TraceInformation(Msg.G1008, Texts.Generating_code, PathHelper.UnmapPath(context.ProjectDirectory, fileName));
 
                 try
                 {
@@ -35,7 +35,7 @@ namespace Sitecore.Pathfinder.T4.CodeGeneration
                 }
                 catch (Exception ex)
                 {
-                    context.Trace.TraceError(ex.Message, fileName, TextSpan.Empty);
+                    context.Trace.TraceError(Msg.G1007, ex.Message, fileName, TextSpan.Empty);
                 }
             }
         }

@@ -116,7 +116,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             var fieldNameTextNode = textNode.GetAttribute("Name");
             if (fieldNameTextNode == null || string.IsNullOrEmpty(fieldNameTextNode.Value))
             {
-                context.ParseContext.Trace.TraceError(Texts._Field__element_must_have_a__Name__attribute, textNode);
+                context.ParseContext.Trace.TraceError(Msg.P1010, Texts._Field__element_must_have_a__Name__attribute, textNode);
                 return;
             }
 
@@ -162,7 +162,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             }
             else
             {
-                context.ParseContext.Trace.TraceError(Texts.Field_is_already_defined, textNode, duplicate.FieldName);
+                context.ParseContext.Trace.TraceError(Msg.P1011, Texts.Field_is_already_defined, textNode, duplicate.FieldName);
             }
 
             if (!item.IsImport && !field.ValueHint.Contains("NoReference"))

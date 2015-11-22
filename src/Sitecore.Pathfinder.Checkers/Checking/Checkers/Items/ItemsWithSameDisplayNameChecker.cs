@@ -53,7 +53,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
 
                             if (same.Any())
                             {
-                                context.Trace.TraceError("Items with same display name on same level", TraceHelper.GetTextNode(child0, child1), $"Two or more items have the same display name \"{displayNames0.First()}\" on the same level. Change the display name of one or more of the items.");
+                                context.Trace.TraceError(Msg.C1006, "Items with same display name on same level", TraceHelper.GetTextNode(child0, child1), $"Two or more items have the same display name \"{displayNames0.First()}\" on the same level. Change the display name of one or more of the items.");
                             }
                         }
                     }

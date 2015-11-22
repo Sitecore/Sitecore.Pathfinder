@@ -152,6 +152,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assembly not found in T4 type name in the config setting &apos;generate-code:items&apos;.
+        /// </summary>
+        public static string Assembly_not_found_in_T4_type_name_in_the_config_setting__generate_code_items_ {
+            get {
+                return ResourceManager.GetString("Assembly_not_found_in_T4_type_name_in_the_config_setting__generate_code_items_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Base Template missing.
         /// </summary>
         public static string Base_Template_missing {
@@ -332,6 +341,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Destination directory not found.
+        /// </summary>
+        public static string Destination_directory_not_found {
+            get {
+                return ResourceManager.GetString("Destination_directory_not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Device element is missing &quot;Name&quot; attribute..
         /// </summary>
         public static string Device_element_is_missing__Name__attribute_ {
@@ -391,6 +409,15 @@ namespace Sitecore.Pathfinder {
         public static string Ducats___0_ {
             get {
                 return ResourceManager.GetString("Ducats___0_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expected &apos;Name&apos; attribute.
+        /// </summary>
+        public static string Expected__Name__attribute {
+            get {
+                return ResourceManager.GetString("Expected__Name__attribute", resourceCulture);
             }
         }
         
@@ -503,6 +530,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Generating code.
+        /// </summary>
+        public static string Generating_code {
+            get {
+                return ResourceManager.GetString("Generating_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Generating code....
         /// </summary>
         public static string Generating_code___ {
@@ -563,6 +599,15 @@ namespace Sitecore.Pathfinder {
         public static string Incremental_build_started___ {
             get {
                 return ResourceManager.GetString("Incremental_build_started___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installed.
+        /// </summary>
+        public static string Installed {
+            get {
+                return ResourceManager.GetString("Installed", resourceCulture);
             }
         }
         
@@ -884,6 +929,33 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to T4 item type must include assembly name.
+        /// </summary>
+        public static string T4_item_type_must_include_assembly_name {
+            get {
+                return ResourceManager.GetString("T4_item_type_must_include_assembly_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to T4 item type not found in the config setting &apos;generate-code:items&apos;.
+        /// </summary>
+        public static string T4_item_type_not_found_in_the_config_setting__generate_code_items_ {
+            get {
+                return ResourceManager.GetString("T4_item_type_not_found_in_the_config_setting__generate_code_items_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to T4 type name not found in the config setting &apos;generate-code:items&apos;.
+        /// </summary>
+        public static string T4_type_name_not_found_in_the_config_setting__generate_code_items_ {
+            get {
+                return ResourceManager.GetString("T4_type_name_not_found_in_the_config_setting__generate_code_items_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Task not found. Skipping.
         /// </summary>
         public static string Task_not_found__Skipping {
@@ -1071,6 +1143,15 @@ namespace Sitecore.Pathfinder {
         public static string Whoops__scc_exe_cannot_run_in_is_own_directory_ {
             get {
                 return ResourceManager.GetString("Whoops__scc_exe_cannot_run_in_is_own_directory_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Writing package exports....
+        /// </summary>
+        public static string Writing_package_exports___ {
+            get {
+                return ResourceManager.GetString("Writing_package_exports___", resourceCulture);
             }
         }
         

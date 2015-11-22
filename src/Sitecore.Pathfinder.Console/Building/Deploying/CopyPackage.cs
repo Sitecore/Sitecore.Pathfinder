@@ -17,12 +17,12 @@ namespace Sitecore.Pathfinder.Building.Deploying
         {
             if (context.Project.HasErrors)
             {
-                context.Trace.TraceInformation(Texts.Package_contains_errors_and_will_not_be_deployed);
+                context.Trace.TraceInformation(Msg.D1004, Texts.Package_contains_errors_and_will_not_be_deployed);
                 context.IsAborted = true;
                 return;
             }
 
-            context.Trace.TraceInformation(Texts.Copying_package_to_website___);
+            context.Trace.TraceInformation(Msg.D1005, Texts.Copying_package_to_website___);
 
             foreach (var pair in context.Configuration.GetSubKeys("copy-package"))
             {
@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Building.Deploying
                 var destinationDirectory = context.Configuration.GetString(key + ":copy-to-directory");
                 if (string.IsNullOrEmpty(destinationDirectory))
                 {
-                    context.Trace.TraceError("Destination directory not found", key + ":copy-to-directory");
+                    context.Trace.TraceError(Msg.D1006, Texts.Destination_directory_not_found, key + ":copy-to-directory");
                     continue;
                 }
 

@@ -18,7 +18,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
             {
                 if (field.Value.IndexOf("Lorem Ipsum", StringComparison.InvariantCultureIgnoreCase) >= 0)
                 {
-                    context.Trace.TraceWarning("Lorem Ipsum text", TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), $"The field \"{field.FieldName}\" contains the test data text: \"Lorem Ipsum...\". Replace or remove the text data.");
+                    context.Trace.TraceWarning(Msg.C1008, "Lorem Ipsum text", TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), $"The field \"{field.FieldName}\" contains the test data text: \"Lorem Ipsum...\". Replace or remove the text data.");
                 }
             }
         }

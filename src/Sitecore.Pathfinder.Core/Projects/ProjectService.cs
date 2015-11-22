@@ -76,8 +76,8 @@ namespace Sitecore.Pathfinder.Projects
 
         protected virtual void LoadSourceFileNames([NotNull] ProjectOptions projectOptions, [NotNull][ItemNotNull] ICollection<string> sourceFileNames)
         {
-            var ignoreFileNames = Configuration.GetList(Constants.Configuration.IgnoreFileNames).ToList();
-            var ignoreDirectories = Configuration.GetList(Constants.Configuration.IgnoreDirectories).ToList();
+            var ignoreFileNames = Configuration.GetList(Constants.Configuration.BuildProjectIgnoreFileNames).ToList();
+            var ignoreDirectories = Configuration.GetList(Constants.Configuration.BuildProjectIgnoreDirectories).ToList();
             ignoreDirectories.Add(Path.GetFileName(Configuration.GetString(Constants.Configuration.ToolsDirectory)));
 
             var visitor = CompositionService.Resolve<ProjectDirectoryVisitor>().With(ignoreDirectories, ignoreFileNames);

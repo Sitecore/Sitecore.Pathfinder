@@ -78,7 +78,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             var fieldName = templateFieldTextNode.GetAttribute("Name");
             if (fieldName == null)
             {
-                context.ParseContext.Trace.TraceError(Texts._Field__element_must_have_a__Name__attribute, templateFieldTextNode.Snapshot.SourceFile.AbsoluteFileName, templateFieldTextNode.TextSpan);
+                context.ParseContext.Trace.TraceError(Msg.P1005, Texts._Field__element_must_have_a__Name__attribute, templateFieldTextNode.Snapshot.SourceFile.AbsoluteFileName, templateFieldTextNode.TextSpan);
                 return;
             }
 
@@ -109,7 +109,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             {
                 if (template.StandardValuesItem == null)
                 {
-                    context.ParseContext.Trace.TraceError(Texts.Template_does_not_a_standard_values_item, standardValueTextNode);
+                    context.ParseContext.Trace.TraceError(Msg.P1006, Texts.Template_does_not_a_standard_values_item, standardValueTextNode);
                 }
                 else
                 {
@@ -130,7 +130,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             var sectionName = templateSectionTextNode.GetAttribute("Name");
             if (sectionName == null)
             {
-                context.ParseContext.Trace.TraceError(Texts._Section__element_must_have_a__Name__attribute, templateSectionTextNode);
+                context.ParseContext.Trace.TraceError(Msg.P1007, Texts._Section__element_must_have_a__Name__attribute, templateSectionTextNode);
                 return;
             }
 

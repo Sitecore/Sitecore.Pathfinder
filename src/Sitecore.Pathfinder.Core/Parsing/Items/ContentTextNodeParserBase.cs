@@ -131,7 +131,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             }
             else
             {
-                context.ParseContext.Trace.TraceError(Texts.Field_is_already_defined, textNode, duplicate.FieldName);
+                context.ParseContext.Trace.TraceError(Msg.P1008, Texts.Field_is_already_defined, textNode, duplicate.FieldName);
             }
 
             if (!item.IsImport)

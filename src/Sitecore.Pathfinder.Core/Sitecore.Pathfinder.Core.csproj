@@ -309,6 +309,7 @@
     <Compile Include="Languages\Yaml\YamlTextSnapshot.Tokenizer.cs" />
     <Compile Include="Languages\Yaml\YamlTextSnapshot.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Msg.cs" />
     <Compile Include="Testing\ITestRunner.cs" />
     <Compile Include="Texts.Designer.cs">
       <AutoGen>True</AutoGen>

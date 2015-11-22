@@ -22,12 +22,12 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
 
         public void Error(string message)
         {
-            _trace.TraceError(message);
+            _trace.TraceError(Msg.M1004, message);
         }
 
         public void Error(Exception exception)
         {
-            _trace.TraceError(exception.Message);
+            _trace.TraceError(Msg.M1010, exception.Message);
         }
 
         public void Flush()
@@ -41,7 +41,7 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
 
         public void Warn(string message)
         {
-            _trace.TraceWarning(message);
+            _trace.TraceWarning(Msg.M1011, message);
         }
     }
 }

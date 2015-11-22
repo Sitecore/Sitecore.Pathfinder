@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Languages.Content
 
         public override bool CanParse(IParseContext context)
         {
-            var fileExtensions = " " + context.Configuration.GetString(Constants.Configuration.ContentFiles) + " ";
+            var fileExtensions = " " + context.Configuration.GetString(Constants.Configuration.BuildProjectContentFiles) + " ";
             var extension = " " + Path.GetExtension(context.Snapshot.SourceFile.AbsoluteFileName) + " ";
 
             return fileExtensions.IndexOf(extension, StringComparison.OrdinalIgnoreCase) >= 0;

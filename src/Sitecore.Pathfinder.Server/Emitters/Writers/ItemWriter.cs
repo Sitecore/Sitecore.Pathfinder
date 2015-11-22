@@ -197,7 +197,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                     if (versionedItem == null)
                     {
                         // todo: validate this before updating the item
-                        context.Trace.TraceError(Texts.Item_not_found, TraceHelper.GetTextNode(field.FieldNameProperty), $"language: {field.Language}, version; {field.Version}");
+                        context.Trace.TraceError(Msg.E1006, Texts.Item_not_found, TraceHelper.GetTextNode(field.FieldNameProperty), $"language: {field.Language}, version; {field.Version}");
                         continue;
                     }
 

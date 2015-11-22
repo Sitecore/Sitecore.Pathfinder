@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Checking
         string Name { get; }
 
         [NotNull]
-        string Tags { get; }
+        string Categories { get; }
 
         void Check([NotNull] ICheckerContext context);
     }

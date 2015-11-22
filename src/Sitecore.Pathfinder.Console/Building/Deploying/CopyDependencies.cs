@@ -15,13 +15,13 @@ namespace Sitecore.Pathfinder.Building.Deploying
 
         public override void Run(IBuildContext context)
         {
-            context.Trace.TraceInformation(Texts.Copying_dependencies___);
+            context.Trace.TraceInformation(Msg.D1000, Texts.Copying_dependencies___);
 
             var sourceDirectory = context.Configuration.Get(Constants.Configuration.CopyDependenciesSourceDirectory);
             sourceDirectory = Path.Combine(context.ProjectDirectory, sourceDirectory);
             if (!context.FileSystem.DirectoryExists(sourceDirectory))
             {
-                context.Trace.TraceInformation(Texts.Dependencies_directory_not_found__Skipping, sourceDirectory);
+                context.Trace.TraceInformation(Msg.D1003, Texts.Dependencies_directory_not_found__Skipping, sourceDirectory);
                 return;
             }
 
@@ -32,7 +32,7 @@ namespace Sitecore.Pathfinder.Building.Deploying
                 var destinationDirectory = context.Configuration.GetString(key + ":copy-to-directory");
                 if (string.IsNullOrEmpty(destinationDirectory))
                 {
-                    context.Trace.TraceError("Destination directory not found", key + ":copy-to-directory");
+                    context.Trace.TraceError(Msg.D1001, Texts.Destination_directory_not_found, key + ":copy-to-directory");
                     continue;
                 }
 
@@ -65,7 +65,7 @@ namespace Sitecore.Pathfinder.Building.Deploying
                     continue;
                 }
 
-                context.Trace.TraceInformation(Texts.Copying_dependency, Path.GetFileName(sourceFileName));
+                context.Trace.TraceInformation(Msg.D1002, Texts.Copying_dependency, Path.GetFileName(sourceFileName));
                 context.FileSystem.Copy(sourceFileName, destinationFileName);
             }
         }

@@ -1,8 +1,10 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
+using System.Linq;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Snapshots;
@@ -26,7 +28,12 @@ namespace Sitecore.Pathfinder.Diagnostics
         {
             Configuration = configuration;
             Console = console;
+
+            IgnoredMessages = configuration.GetList(Constants.Configuration.MessagesDisabled).Select(int.Parse).ToArray();
         }
+
+        [NotNull]
+        protected IEnumerable<int> IgnoredMessages { get; }
 
         [NotNull]
         protected IConfiguration Configuration { get; }
@@ -36,12 +43,22 @@ namespace Sitecore.Pathfinder.Diagnostics
 
         public void TraceError(string text, string details = "")
         {
-            Write(text, Severity.Error, string.Empty, TextSpan.Empty, details);
+            TraceError(0, text, details);
+        }
+
+        public void TraceError(int msg, string text, string details = "")
+        {
+            Write(msg, text, Severity.Error, string.Empty, TextSpan.Empty, details);
         }
 
         public void TraceError(string text, string fileName, TextSpan span, string details = "")
         {
-            Write(text, Severity.Error, fileName, span, details);
+            TraceError(0, text, fileName, span, details);
+        }
+
+        public void TraceError(int msg, string text, string fileName, TextSpan span, string details = "")
+        {
+            Write(msg, text, Severity.Error, fileName, span, details);
 
             if (Configuration.GetBool(Constants.Configuration.Debug))
             {
@@ -51,7 +68,12 @@ namespace Sitecore.Pathfinder.Diagnostics
 
         public void TraceError(string text, ISourceFile sourceFile, string details = "")
         {
-            Write(text, Severity.Error, sourceFile.AbsoluteFileName, TextSpan.Empty, details);
+            TraceError(0, text, sourceFile, details);
+        }
+
+        public void TraceError(int msg, string text, ISourceFile sourceFile, string details = "")
+        {
+            Write(msg, text, Severity.Error, sourceFile.AbsoluteFileName, TextSpan.Empty, details);
 
             if (Configuration.GetBool(Constants.Configuration.Debug))
             {
@@ -61,7 +83,12 @@ namespace Sitecore.Pathfinder.Diagnostics
 
         public void TraceError(string text, ITextNode textNode, string details = "")
         {
-            Write(text, Severity.Error, textNode.Snapshot.SourceFile.AbsoluteFileName, textNode.TextSpan, details);
+            TraceError(0, text, textNode, details);
+        }
+
+        public void TraceError(int msg, string text, ITextNode textNode, string details = "")
+        {
+            Write(msg, text, Severity.Error, textNode.Snapshot.SourceFile.AbsoluteFileName, textNode.TextSpan, details);
 
             if (Configuration.GetBool(Constants.Configuration.Debug))
             {
@@ -71,7 +98,12 @@ namespace Sitecore.Pathfinder.Diagnostics
 
         public void TraceInformation(string text, string details = "")
         {
-            Write(text, Severity.Information, string.Empty, TextSpan.Empty, details);
+            TraceInformation(0, text, details);
+        }
+
+        public void TraceInformation(int msg, string text, string details = "")
+        {
+            Write(msg, text, Severity.Information, string.Empty, TextSpan.Empty, details);
 
             if (Configuration.GetBool(Constants.Configuration.Debug))
             {
@@ -81,27 +113,52 @@ namespace Sitecore.Pathfinder.Diagnostics
 
         public void TraceInformation(string text, string fileName, TextSpan span, string details = "")
         {
-            Write(text, Severity.Information, fileName, span, details);
+            TraceInformation(0, text, fileName, span, details);
+        }
+
+        public void TraceInformation(int msg, string text, string fileName, TextSpan span, string details = "")
+        {
+            Write(msg, text, Severity.Information, fileName, span, details);
         }
 
         public void TraceInformation(string text, ITextNode textNode, string details = "")
         {
-            Write(text, Severity.Information, textNode.Snapshot.SourceFile.AbsoluteFileName, textNode.TextSpan, details);
+            TraceInformation(0, text, textNode, details);
+        }
+
+        public void TraceInformation(int msg, string text, ITextNode textNode, string details = "")
+        {
+            Write(msg, text, Severity.Information, textNode.Snapshot.SourceFile.AbsoluteFileName, textNode.TextSpan, details);
         }
 
         public void TraceWarning(string text, string details = "")
         {
-            Write(text, Severity.Warning, string.Empty, TextSpan.Empty, details);
+            TraceWarning(0, text, details);
+        }
+
+        public void TraceWarning(int msg, string text, string details = "")
+        {
+            Write(msg, text, Severity.Warning, string.Empty, TextSpan.Empty, details);
         }
 
         public void TraceWarning(string text, string fileName, TextSpan span, string details = "")
         {
-            Write(text, Severity.Warning, fileName, span, details);
+            TraceWarning(0, text, fileName, span, details);
+        }
+
+        public void TraceWarning(int msg, string text, string fileName, TextSpan span, string details = "")
+        {
+            Write(msg, text, Severity.Warning, fileName, span, details);
         }
 
         public void TraceWarning(string text, ITextNode textNode, string details = "")
         {
-            Write(text, Severity.Warning, textNode.Snapshot.SourceFile.AbsoluteFileName, textNode.TextSpan, details);
+            TraceWarning(0, text, textNode, details);
+        }
+
+        public void TraceWarning(int msg, string text, ITextNode textNode, string details = "")
+        {
+            Write(msg, text, Severity.Warning, textNode.Snapshot.SourceFile.AbsoluteFileName, textNode.TextSpan, details);
         }
 
         public void WriteLine(string text, string details = "")
@@ -114,8 +171,13 @@ namespace Sitecore.Pathfinder.Diagnostics
             Console.WriteLine(text);
         }
 
-        protected virtual void Write([NotNull] string text, Severity severity, [NotNull] string fileName, TextSpan span, [NotNull] string details)
+        protected virtual void Write(int msg, [NotNull] string text, Severity severity, [NotNull] string fileName, TextSpan textSpan, [NotNull] string details)
         {
+            if (IgnoredMessages.Contains(msg))
+            {
+                return;
+            }
+
             if (!string.IsNullOrEmpty(details))
             {
                 text += ": " + details;
@@ -132,7 +194,7 @@ namespace Sitecore.Pathfinder.Diagnostics
                 }
             }
 
-            var lineInfo = span.Length == 0 ? $"({span.LineNumber},{span.LinePosition})" : $"({span.LineNumber},{span.LinePosition},{span.LineNumber},{span.LinePosition + span.Length})";
+            var lineInfo = textSpan.Length == 0 ? $"({textSpan.LineNumber},{textSpan.LinePosition})" : $"({textSpan.LineNumber},{textSpan.LinePosition},{textSpan.LineNumber},{textSpan.LinePosition + textSpan.Length})";
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write($"{fileInfo}{lineInfo}: ");
@@ -153,7 +215,7 @@ namespace Sitecore.Pathfinder.Diagnostics
             Console.Write(severity.ToString().ToLowerInvariant());
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.Write(" SCC0000: ");
+            Console.Write(" SCC{0}: ", msg.ToString("0000"));
 
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(text);

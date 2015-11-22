@@ -17,12 +17,12 @@ namespace Sitecore.Pathfinder.Building.Deploying
         {
             if (context.Project.HasErrors)
             {
-                context.Trace.TraceInformation(Texts.Package_contains_errors_and_will_not_be_deployed);
+                context.Trace.TraceInformation(Msg.D1007, Texts.Package_contains_errors_and_will_not_be_deployed);
                 context.IsAborted = true;
                 return;
             }
 
-            context.Trace.TraceInformation(Texts.Installing___);
+            context.Trace.TraceInformation(Msg.D1008, Texts.Installing___);
 
             var failed = false;
 
@@ -48,7 +48,7 @@ namespace Sitecore.Pathfinder.Building.Deploying
                 }
                 else
                 {
-                    context.Trace.TraceInformation("Installed", Path.GetFileName(fileName));
+                    context.Trace.TraceInformation(Msg.D1009, Texts.Installed, Path.GetFileName(fileName));
                 }
             }
 

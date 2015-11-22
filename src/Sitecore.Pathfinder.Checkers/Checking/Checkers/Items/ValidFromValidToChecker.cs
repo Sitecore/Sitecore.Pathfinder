@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
 
                 if (validFrom != DateTime.MinValue && validTo != DateTime.MinValue && validFrom > validTo)
                 {
-                    context.Trace.TraceWarning("Valid From/Valid To dates", TraceHelper.GetTextNode(item.Fields[Constants.Fields.ValidFrom], item.Fields[Constants.Fields.ValidTo], item), "The Valid From date is after the Valid To date. Change either the Valid From date or the Valid To date.");
+                    context.Trace.TraceWarning(Msg.C1021, "Valid From/Valid To dates", TraceHelper.GetTextNode(item.Fields[Constants.Fields.ValidFrom], item.Fields[Constants.Fields.ValidTo], item), "The Valid From date is after the Valid To date. Change either the Valid From date or the Valid To date.");
                 }
             }
         }

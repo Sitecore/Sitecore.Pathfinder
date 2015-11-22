@@ -33,7 +33,7 @@ namespace Sitecore.Pathfinder.Languages.Templates
             var templateIdOrPathTextNode = item.SourceTextNodes.Select(n => n.GetAttribute("Template")).FirstOrDefault(t => t != null);
             if (templateIdOrPathTextNode == null)
             {
-                context.Trace.TraceError(Texts.The__Template__attribute_must_be_specified_when__Template_CreateFromFields__equals_true_, TraceHelper.GetTextNode(item));
+                context.Trace.TraceError(Msg.C1051, Texts.The__Template__attribute_must_be_specified_when__Template_CreateFromFields__equals_true_, TraceHelper.GetTextNode(item));
             }
 
             var itemTextNode = item.SourceTextNodes.First();

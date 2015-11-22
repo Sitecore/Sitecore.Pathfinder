@@ -11,7 +11,6 @@ using Sitecore.Pathfinder.Languages.Renderings;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Parsing.Items;
 using Sitecore.Pathfinder.Projects;
-using Sitecore.Pathfinder.Projects.Files;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Projects.Templates;
@@ -31,7 +30,7 @@ namespace Sitecore.Pathfinder.Configuration
         DeviceReference DeviceReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> deviceNameSourceProperty);
 
         [NotNull]
-        Diagnostic Diagnostic([NotNull] string fileName, TextSpan span, Severity severity, [NotNull] string text);
+        Diagnostic Diagnostic(int msg, [NotNull] string fileName, TextSpan span, Severity severity, [NotNull] string text);
 
         [NotNull]
         Field Field([NotNull] Item item, [NotNull] ITextNode textNode);

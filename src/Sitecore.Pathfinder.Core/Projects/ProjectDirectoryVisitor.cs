@@ -21,7 +21,7 @@ namespace Sitecore.Pathfinder.Projects
         {
             FileSystem = fileSystem;
 
-            FileSearchPattern = configuration.GetString(Constants.Configuration.FileSearchPattern, "*");
+            FileSearchPattern = configuration.GetString(Constants.Configuration.BuildProjectFileSearchPattern, "*");
             IgnoreDirectories = Enumerable.Empty<string>();
             IgnoreFileNames = Enumerable.Empty<string>();
         }

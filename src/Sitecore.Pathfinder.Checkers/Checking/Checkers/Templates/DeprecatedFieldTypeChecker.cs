@@ -55,7 +55,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Templates
 
                     if (!string.IsNullOrEmpty(newType))
                     {
-                        context.Trace.TraceWarning("Deprecated template field type", TraceHelper.GetTextNode(field.TypeProperty, field), $"The template field type \"{type}\" is deprecated. Use the \"{newType}\" field type.");
+                        context.Trace.TraceWarning(Msg.C1022, "Deprecated template field type", TraceHelper.GetTextNode(field.TypeProperty, field), $"The template field type \"{type}\" is deprecated. Use the \"{newType}\" field type.");
                     }
                 }
             }

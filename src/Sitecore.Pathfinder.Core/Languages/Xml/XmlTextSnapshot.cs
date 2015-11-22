@@ -96,10 +96,10 @@ namespace Sitecore.Pathfinder.Languages.Xml
                 switch (args.Severity)
                 {
                     case XmlSeverityType.Error:
-                        context.Trace.TraceError(string.Empty, context.Snapshot.SourceFile.AbsoluteFileName, new TextSpan(args.Exception.LineNumber, args.Exception.LinePosition, length), args.Message);
+                        context.Trace.TraceError(Msg.P1001, string.Empty, context.Snapshot.SourceFile.AbsoluteFileName, new TextSpan(args.Exception.LineNumber, args.Exception.LinePosition, length), args.Message);
                         break;
                     case XmlSeverityType.Warning:
-                        context.Trace.TraceWarning(string.Empty, context.Snapshot.SourceFile.AbsoluteFileName, new TextSpan(args.Exception.LineNumber, args.Exception.LinePosition, length), args.Message);
+                        context.Trace.TraceWarning(Msg.P1002, string.Empty, context.Snapshot.SourceFile.AbsoluteFileName, new TextSpan(args.Exception.LineNumber, args.Exception.LinePosition, length), args.Message);
                         break;
                 }
             };
@@ -110,7 +110,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
             }
             catch (Exception ex)
             {
-                context.Trace.TraceError(Texts.The_file_does_not_contain_valid_XML, context.Snapshot.SourceFile.AbsoluteFileName, TextSpan.Empty, ex.Message);
+                context.Trace.TraceError(Msg.P1003, Texts.The_file_does_not_contain_valid_XML, context.Snapshot.SourceFile.AbsoluteFileName, TextSpan.Empty, ex.Message);
             }
         }
 

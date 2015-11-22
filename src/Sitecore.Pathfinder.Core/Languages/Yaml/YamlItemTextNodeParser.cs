@@ -29,7 +29,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
             var fieldNameTextNode = string.IsNullOrEmpty(textNode.Value) ? textNode.GetAttribute("Name") : textNode;
             if (fieldNameTextNode == null)
             {
-                context.ParseContext.Trace.TraceError("Expected 'Name' attribute", textNode);
+                context.ParseContext.Trace.TraceError(Msg.P1015, Texts.Expected__Name__attribute, textNode);
                 return;
             }
 

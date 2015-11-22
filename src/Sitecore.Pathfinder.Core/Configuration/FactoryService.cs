@@ -79,9 +79,9 @@ namespace Sitecore.Pathfinder.Configuration
             return new DeviceReference(projectItem, deviceNameSourceProperty);
         }
 
-        public virtual Diagnostic Diagnostic(string fileName, TextSpan span, Severity severity, string text)
+        public virtual Diagnostic Diagnostic(int msg, string fileName, TextSpan span, Severity severity, string text)
         {
-            return new Diagnostic(fileName, span, severity, text);
+            return new Diagnostic(msg, fileName, span, severity, text);
         }
 
         public virtual Field Field(Item item, ITextNode textNode)

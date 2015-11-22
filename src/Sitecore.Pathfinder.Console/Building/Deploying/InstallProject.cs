@@ -1,8 +1,6 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.Collections.Generic;
 using System.Linq;
-using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Building.Deploying
 {
@@ -16,12 +14,12 @@ namespace Sitecore.Pathfinder.Building.Deploying
         {
             if (context.Project.HasErrors)
             {
-                context.Trace.TraceInformation(Texts.Package_contains_errors_and_will_not_be_deployed);
+                context.Trace.TraceInformation(Msg.D1010, Texts.Package_contains_errors_and_will_not_be_deployed);
                 context.IsAborted = true;
                 return;
             }
 
-            context.Trace.TraceInformation(Texts.Installing_project___);
+            context.Trace.TraceInformation(Msg.D1011, Texts.Installing_project___);
 
             var url = MakeWebApiUrl(context, "InstallProject");
 

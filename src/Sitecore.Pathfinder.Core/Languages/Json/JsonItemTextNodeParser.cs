@@ -36,7 +36,7 @@ namespace Sitecore.Pathfinder.Languages.Json
             var fieldNameTextNode = textNode.Key == "Field" ? textNode.GetAttribute("Name") : new AttributeNameTextNode(textNode);
             if (fieldNameTextNode == null)
             {
-                context.ParseContext.Trace.TraceError("Expected 'Name' attribute", textNode);
+                context.ParseContext.Trace.TraceError(Msg.P1014, Texts.Expected__Name__attribute, textNode);
                 return;
             }
 

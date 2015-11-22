@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Building.Codegen
 
         public override void Run(IBuildContext context)
         {
-            context.Trace.TraceInformation(Texts.Generating_code___);
+            context.Trace.TraceInformation(Msg.G1009, Texts.Generating_code___);
 
             foreach (var projectCodeGenerator in ProjectCodeGenerators)
             {
@@ -70,7 +70,7 @@ Normally you want to run the `generate-code` task before building an assembly, s
 
             projectItemCodeGenerator.Generate(baseFileName, projectItem);
 
-            context.Trace.TraceInformation(PathHelper.UnmapPath(context.ProjectDirectory, baseFileName));
+            context.Trace.TraceInformation(Msg.G1010, PathHelper.UnmapPath(context.ProjectDirectory, baseFileName));
         }
     }
 }

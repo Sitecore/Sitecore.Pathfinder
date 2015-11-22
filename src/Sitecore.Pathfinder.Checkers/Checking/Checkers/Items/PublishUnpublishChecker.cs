@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
 
                 if (publishDate != DateTime.MinValue && unpublishDate != DateTime.MinValue && publishDate > unpublishDate)
                 {
-                    context.Trace.TraceWarning("Publish/Unpublish dates", TraceHelper.GetTextNode(item.Fields[Constants.Fields.PublishDate], item.Fields[Constants.Fields.UnpublishDate], item), "The Publish date is after the Unpublish date. Change either the Publish date or the Unpublish date.");
+                    context.Trace.TraceWarning(Msg.C1011, "Publish/Unpublish dates", TraceHelper.GetTextNode(item.Fields[Constants.Fields.PublishDate], item.Fields[Constants.Fields.UnpublishDate], item), "The Publish date is after the Unpublish date. Change either the Publish date or the Unpublish date.");
                 }
             }
         }

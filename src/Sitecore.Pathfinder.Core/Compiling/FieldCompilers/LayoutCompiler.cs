@@ -147,7 +147,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
             if (value != "True" && value != "False")
             {
-                context.CompileContext.Trace.TraceError(id + Texts.__Boolean_parameter_must_have_value__True__or__False_, renderingTextNode, attributeName);
+                context.CompileContext.Trace.TraceError(Msg.C1030, id + Texts.__Boolean_parameter_must_have_value__True__or__False_, renderingTextNode, attributeName);
                 value = "False";
             }
 
@@ -171,7 +171,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             var item = context.Field.Item.Project.FindQualifiedItem(dataSource);
             if (item == null)
             {
-                context.CompileContext.Trace.TraceError(Texts.Datasource_not_found, dataSource);
+                context.CompileContext.Trace.TraceError(Msg.C1028, Texts.Datasource_not_found, dataSource);
                 return;
             }
 
@@ -185,14 +185,14 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             var deviceNameTextNode = deviceTextNode.GetAttribute("Name");
             if (deviceNameTextNode == null)
             {
-                context.CompileContext.Trace.TraceError(Texts.Device_element_is_missing__Name__attribute_, deviceTextNode);
+                context.CompileContext.Trace.TraceError(Msg.C1029, Texts.Device_element_is_missing__Name__attribute_, deviceTextNode);
             }
             else
             {
                 var devices = context.Field.Item.Project.ProjectItems.OfType<Item>().Where(i => string.Equals(i.TemplateIdOrPath, "/sitecore/templates/System/Layout/Device", StringComparison.OrdinalIgnoreCase) || string.Equals(i.TemplateIdOrPath, "{B6F7EEB4-E8D7-476F-8936-5ACE6A76F20B}", StringComparison.OrdinalIgnoreCase)).ToList();
                 if (!devices.Any())
                 {
-                    context.CompileContext.Trace.TraceError(Texts.Device_item_not_found, deviceNameTextNode);
+                    context.CompileContext.Trace.TraceError(Msg.C1031, Texts.Device_item_not_found, deviceNameTextNode);
                 }
                 else
                 {
@@ -200,7 +200,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                     var device = devices.FirstOrDefault(d => string.Equals(d.ItemName, deviceName, StringComparison.OrdinalIgnoreCase));
                     if (device == null)
                     {
-                        context.CompileContext.Trace.TraceError(Texts.Device_not_found, deviceNameTextNode, deviceName);
+                        context.CompileContext.Trace.TraceError(Msg.C1032, Texts.Device_not_found, deviceNameTextNode, deviceName);
                     }
                     else
                     {
@@ -216,7 +216,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 var l = context.Field.Item.Project.FindQualifiedItem(layoutPath.Value);
                 if (l == null)
                 {
-                    context.CompileContext.Trace.TraceError(Texts.Layout_not_found_, layoutPath, layoutPath.Value);
+                    context.CompileContext.Trace.TraceError(Msg.C1033, Texts.Layout_not_found_, layoutPath, layoutPath.Value);
                     return;
                 }
 
@@ -293,7 +293,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                         text = "[None]";
                     }
 
-                    context.CompileContext.Trace.TraceWarning(string.Format(Texts._2___Placeholder___0___is_not_defined_in_the_parent_rendering__Parent_rendering_has_these_placeholders___1__, placeholder, text, id), placeholderTextNode);
+                    context.CompileContext.Trace.TraceWarning(Msg.C1034, string.Format(Texts._2___Placeholder___0___is_not_defined_in_the_parent_rendering__Parent_rendering_has_these_placeholders___1__, placeholder, text, id), placeholderTextNode);
                 }
             }
 
@@ -325,7 +325,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
             if (string.IsNullOrEmpty(renderingItemId))
             {
-                context.CompileContext.Trace.TraceError($"Unknown element \"{id}\".", renderingTextNode);
+                context.CompileContext.Trace.TraceError(Msg.C1035, $"Unknown element \"{id}\".", renderingTextNode);
                 return;
             }
 
@@ -340,13 +340,13 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
                 if (matches.Length == 0)
                 {
-                    context.CompileContext.Trace.TraceError($"Rendering \"{renderingItemId}\" not found.", renderingTextNode);
+                    context.CompileContext.Trace.TraceError(Msg.C1036, $"Rendering \"{renderingItemId}\" not found.", renderingTextNode);
                     return;
                 }
 
                 if (matches.Length > 1)
                 {
-                    context.CompileContext.Trace.TraceError($"Ambiguous rendering match. {matches.Length} renderings match \"{renderingItemId}\".", renderingTextNode);
+                    context.CompileContext.Trace.TraceError(Msg.C1037, $"Ambiguous rendering match. {matches.Length} renderings match \"{renderingItemId}\".", renderingTextNode);
                     return;
                 }
 
@@ -355,7 +355,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
             if (renderingItem == null)
             {
-                context.CompileContext.Trace.TraceError($"Rendering \"{renderingItemId}\" not found.", renderingTextNode);
+                context.CompileContext.Trace.TraceError(Msg.C1038, $"Rendering \"{renderingItemId}\" not found.", renderingTextNode);
                 return;
             }
 
@@ -540,7 +540,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                             {
                                 if (value != "True" && value != "False")
                                 {
-                                    context.CompileContext.Trace.TraceError($"{id}: Boolean parameter must have value \"True\", \"False\", \"{{Binding ... }}\" or \"{{@ ... }}\".", renderingTextNode, attributeName);
+                                    context.CompileContext.Trace.TraceError(Msg.C1039, $"{id}: Boolean parameter must have value \"True\", \"False\", \"{{Binding ... }}\" or \"{{@ ... }}\".", renderingTextNode, attributeName);
                                 }
 
                                 value = value == "1" || string.Equals(value, "true", StringComparison.OrdinalIgnoreCase) ? "1" : "0";
@@ -551,7 +551,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 }
                 else
                 {
-                    context.CompileContext.Trace.TraceWarning(Texts._1___Parameter___0___is_not_defined_in_the_parameters_template_, renderingTextNode, id + "." + attributeName);
+                    context.CompileContext.Trace.TraceWarning(Msg.C1040, Texts._1___Parameter___0___is_not_defined_in_the_parameters_template_, renderingTextNode, id + "." + attributeName);
                 }
 
                 if (value.StartsWith("/sitecore", StringComparison.InvariantCultureIgnoreCase))

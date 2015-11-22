@@ -26,7 +26,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
         {
             if (itemName.GetValue().IndexOf(' ') >= 0)
             {
-                context.Trace.TraceWarning("Name should not contain spaces", TraceHelper.GetTextNode(itemName), itemName.GetValue());
+                context.Trace.TraceWarning(Msg.C1012, "Name should not contain spaces", TraceHelper.GetTextNode(itemName), itemName.GetValue());
             }
         }
 
@@ -36,42 +36,42 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
 
             if (!template.Sections.Any() && template.BaseTemplates == Constants.Templates.StandardTemplate)
             {
-                context.Trace.TraceWarning("Empty templates should be avoided. Consider using the Folder template instead", TraceHelper.GetTextNode(template), template.ItemName);
+                context.Trace.TraceWarning(Msg.C1013, "Empty templates should be avoided. Consider using the Folder template instead", TraceHelper.GetTextNode(template), template.ItemName);
             }
 
             if (string.IsNullOrEmpty(template.ShortHelp))
             {
-                context.Trace.TraceWarning("Template should have a short help text", TraceHelper.GetTextNode(template), template.ItemName);
+                context.Trace.TraceWarning(Msg.C1014, "Template should have a short help text", TraceHelper.GetTextNode(template), template.ItemName);
             }
 
             if (!string.IsNullOrEmpty(template.ShortHelp) && !template.ShortHelp.EndsWith("."))
             {
-                context.Trace.TraceWarning("Template short help text should end with '.'", TraceHelper.GetTextNode(template), template.ItemName);
+                context.Trace.TraceWarning(Msg.C1015, "Template short help text should end with '.'", TraceHelper.GetTextNode(template), template.ItemName);
             }
 
             if (!string.IsNullOrEmpty(template.ShortHelp) && !char.IsUpper(template.ShortHelp[0]))
             {
-                context.Trace.TraceWarning("Template short help text should end with a capital letter", TraceHelper.GetTextNode(template), template.ItemName);
+                context.Trace.TraceWarning(Msg.C1016, "Template short help text should end with a capital letter", TraceHelper.GetTextNode(template), template.ItemName);
             }
 
             if (string.IsNullOrEmpty(template.LongHelp))
             {
-                context.Trace.TraceWarning("Template should should have a long help text", TraceHelper.GetTextNode(template), template.ItemName);
+                context.Trace.TraceWarning(Msg.C1017, "Template should should have a long help text", TraceHelper.GetTextNode(template), template.ItemName);
             }
 
             if (!string.IsNullOrEmpty(template.LongHelp) && !template.LongHelp.EndsWith("."))
             {
-                context.Trace.TraceWarning("Template long help text should end with '.'", TraceHelper.GetTextNode(template), template.ItemName);
+                context.Trace.TraceWarning(Msg.C1018, "Template long help text should end with '.'", TraceHelper.GetTextNode(template), template.ItemName);
             }
 
             if (!string.IsNullOrEmpty(template.LongHelp) && !char.IsUpper(template.LongHelp[0]))
             {
-                context.Trace.TraceWarning("Template long help text should end with a capital letter", TraceHelper.GetTextNode(template), template.ItemName);
+                context.Trace.TraceWarning(Msg.C1019, "Template long help text should end with a capital letter", TraceHelper.GetTextNode(template), template.ItemName);
             }
 
             if (string.IsNullOrEmpty(template.Icon))
             {
-                context.Trace.TraceWarning("Template should should have an icon", TraceHelper.GetTextNode(template), template.ItemName);
+                context.Trace.TraceWarning(Msg.C1020, "Template should should have an icon", TraceHelper.GetTextNode(template), template.ItemName);
             }
 
             foreach (var templateSection in template.Sections)

@@ -87,7 +87,7 @@ namespace Sitecore.Pathfinder.Emitters
                 }
                 catch (EmitException ex)
                 {
-                    Trace.TraceError(ex.Text, ex.FileName, ex.Span, ex.Details);
+                    Trace.TraceError(Msg.E1000, ex.Text, ex.FileName, ex.Span, ex.Details);
                 }
                 catch (Exception ex)
                 {
@@ -131,15 +131,15 @@ namespace Sitecore.Pathfinder.Emitters
                 var buildException = exception as EmitException;
                 if (buildException != null)
                 {
-                    Trace.TraceError(buildException.Text, buildException.FileName, buildException.Span, buildException.Details);
+                    Trace.TraceError(Msg.E1001, buildException.Text, buildException.FileName, buildException.Span, buildException.Details);
                 }
                 else if (exception != null)
                 {
-                    Trace.TraceError(exception.Message, projectItem.Snapshots.First().SourceFile.AbsoluteFileName, TextSpan.Empty);
+                    Trace.TraceError(Msg.E1002, exception.Message, projectItem.Snapshots.First().SourceFile.AbsoluteFileName, TextSpan.Empty);
                 }
                 else
                 {
-                    Trace.TraceError(Texts.An_error_occured, projectItem.Snapshots.First().SourceFile.AbsoluteFileName, TextSpan.Empty);
+                    Trace.TraceError(Msg.E1003, Texts.An_error_occured, projectItem.Snapshots.First().SourceFile.AbsoluteFileName, TextSpan.Empty);
                 }
             }
         }
@@ -151,13 +151,13 @@ namespace Sitecore.Pathfinder.Emitters
                 switch (diagnostic.Severity)
                 {
                     case Severity.Error:
-                        context.Trace.TraceError(diagnostic.Text, diagnostic.FileName, diagnostic.Span);
+                        context.Trace.TraceError(diagnostic.Msg, diagnostic.Text, diagnostic.FileName, diagnostic.Span);
                         break;
                     case Severity.Warning:
-                        context.Trace.TraceWarning(diagnostic.Text, diagnostic.FileName, diagnostic.Span);
+                        context.Trace.TraceWarning(diagnostic.Msg, diagnostic.Text, diagnostic.FileName, diagnostic.Span);
                         break;
                     default:
-                        context.Trace.TraceInformation(diagnostic.Text, diagnostic.FileName, diagnostic.Span);
+                        context.Trace.TraceInformation(diagnostic.Msg, diagnostic.Text, diagnostic.FileName, diagnostic.Span);
                         break;
                 }
             }

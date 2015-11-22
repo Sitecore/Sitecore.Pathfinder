@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System.Linq;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
@@ -12,6 +13,8 @@ namespace Sitecore.Pathfinder.Projects
         public ProjectDiagnosticTraceService([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] IFactoryService factory) : base(configuration, console)
         {
             Factory = factory;
+
+
         }
 
         [NotNull]
@@ -27,14 +30,19 @@ namespace Sitecore.Pathfinder.Projects
             return this;
         }
 
-        protected override void Write(string text, Severity severity, string fileName, TextSpan span, string details)
+        protected override void Write(int msg, string text, Severity severity, string fileName, TextSpan span, string details)
         {
+            if (IgnoredMessages.Contains(msg))
+            {
+                return;
+            }
+
             if (!string.IsNullOrEmpty(details))
             {
                 text += ": " + details;
             }
 
-            var diagnostic = Factory.Diagnostic(fileName, span, severity, text);
+            var diagnostic = Factory.Diagnostic(msg, fileName, span, severity, text);
 
             Project.Diagnostics.Add(diagnostic);
         }

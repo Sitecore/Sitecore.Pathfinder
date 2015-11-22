@@ -42,9 +42,9 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
                     {
                         var child1 = children[i1];
 
-                        if (string.Compare(child0.ItemName, child1.ItemName, StringComparison.OrdinalIgnoreCase) == 0)
+                        if (string.Equals(child0.ItemName, child1.ItemName, StringComparison.OrdinalIgnoreCase))
                         {
-                            context.Trace.TraceError("Items with same name on same level", TraceHelper.GetTextNode(child0.ItemNameProperty, child1.ItemNameProperty, child0, child1), $"Two or more items have the same name \"{child0.ItemName}\" on the same level. Change the name of one or more of the items.");
+                            context.Trace.TraceError(Msg.C1007, "Items with same name on same level", TraceHelper.GetTextNode(child0.ItemNameProperty, child1.ItemNameProperty, child0, child1), $"Two or more items have the same name \"{child0.ItemName}\" on the same level. Change the name of one or more of the items.");
                         }
                     }
                 }

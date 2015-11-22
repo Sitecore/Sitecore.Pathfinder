@@ -26,7 +26,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Templates
 
                     if (templateField.Uri.Guid != field.FieldId)
                     {
-                        context.Trace.TraceWarning("Field ID and Template Field ID differs", TraceHelper.GetTextNode(field.FieldIdProperty, field), $"FieldId: {field.FieldId.Format()}, TemplateFieldId: {templateField.Uri.Guid.Format()}");
+                        context.Trace.TraceWarning(Msg.C1024, "Field ID and Template Field ID differs", TraceHelper.GetTextNode(field.FieldIdProperty, field), $"FieldId: {field.FieldId.Format()}, TemplateFieldId: {templateField.Uri.Guid.Format()}");
                     }
                 }
             }

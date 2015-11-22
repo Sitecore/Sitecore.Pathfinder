@@ -53,9 +53,9 @@ namespace Sitecore.Pathfinder.Configuration
             var serverFileDirectory = string.Empty;
             var uploadMedia = true;
 
-            foreach (var pair in configuration.GetSubKeys(Constants.Configuration.Files))
+            foreach (var pair in configuration.GetSubKeys(Constants.Configuration.BuildProjectFiles))
             {
-                var key = Constants.Configuration.Files + ":" + pair.Key;
+                var key = Constants.Configuration.BuildProjectFiles + ":" + pair.Key;
                 var localDirectory = PathHelper.NormalizeItemPath(configuration.GetString(key + ":project-directory"));
 
                 if (!localFileName.StartsWith(localDirectory, StringComparison.OrdinalIgnoreCase))

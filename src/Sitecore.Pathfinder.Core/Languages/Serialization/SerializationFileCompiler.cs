@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
             var rootTextNode = textDocument.Root;
             if (rootTextNode == TextNode.Empty)
             {
-                context.Trace.TraceError(Texts.Document_is_not_valid, textDocument.SourceFile.AbsoluteFileName, TextSpan.Empty);
+                context.Trace.TraceError(Msg.C1050, Texts.Document_is_not_valid, textDocument.SourceFile.AbsoluteFileName, TextSpan.Empty);
                 return;
             }
 

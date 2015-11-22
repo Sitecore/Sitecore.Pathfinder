@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Building.Deploying
                 return;
             }
 
-            context.Trace.TraceInformation("Writing package exports...");
+            context.Trace.TraceInformation(Msg.D1015, Texts.Writing_package_exports___);
 
             var fileName = PathHelper.Combine(context.ProjectDirectory, context.Configuration.GetString(Constants.Configuration.WriteExportsFileName));
 

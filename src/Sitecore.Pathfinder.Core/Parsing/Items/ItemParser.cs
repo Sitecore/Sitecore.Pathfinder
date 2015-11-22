@@ -53,7 +53,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             {
                 var textSpan = textDocument.ParseErrorTextSpan != TextSpan.Empty ? textDocument.ParseErrorTextSpan : textDocument.Root.TextSpan;
                 var text = !string.IsNullOrEmpty(textDocument.ParseError) ? textDocument.ParseError : Texts.Source_file_is_empty;
-                context.Trace.TraceWarning(text, textDocument.SourceFile.AbsoluteFileName, textSpan);
+                context.Trace.TraceWarning(Msg.P1009, text, textDocument.SourceFile.AbsoluteFileName, textSpan);
                 return;
             }
 
@@ -88,7 +88,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             }
             catch (Exception ex)
             {
-                context.ParseContext.Trace.TraceError(string.Empty, context.ParseContext.Snapshot.SourceFile.AbsoluteFileName, TextSpan.Empty, ex.Message);
+                context.ParseContext.Trace.TraceError(Msg.P1004, string.Empty, context.ParseContext.Snapshot.SourceFile.AbsoluteFileName, TextSpan.Empty, ex.Message);
             }
         }
     }

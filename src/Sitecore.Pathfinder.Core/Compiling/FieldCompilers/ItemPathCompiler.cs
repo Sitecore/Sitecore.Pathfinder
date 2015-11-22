@@ -28,7 +28,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 var item = field.Item.Project.FindQualifiedItem(value);
                 if (item == null)
                 {
-                    context.Trace.TraceError(Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), value);
+                    context.Trace.TraceError(Msg.C1045, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), value);
                     return string.Empty;
                 }
 
@@ -41,7 +41,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 var item = field.Item.Project.FindQualifiedItem(itemPath);
                 if (item == null)
                 {
-                    context.Trace.TraceError(Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), itemPath);
+                    context.Trace.TraceError(Msg.C1046, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), itemPath);
                 }
                 else
                 {

@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
             var mediaItem = context.Project.FindQualifiedItem(mediaFile.MediaItemUri) as Projects.Items.Item;
             if (mediaItem == null)
             {
-                context.Trace.TraceError(Texts.Media_item_not_found, new SnapshotTextNode(mediaFile.Snapshots.First()), mediaFile.MediaItemUri.Guid.Format());
+                context.Trace.TraceError(Msg.E1004, Texts.Media_item_not_found, new SnapshotTextNode(mediaFile.Snapshots.First()), mediaFile.MediaItemUri.Guid.Format());
                 return;
             }
 
@@ -118,7 +118,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
 
                     if (mediaItem.Uri.Guid != item.ID.ToGuid())
                     {
-                        context.Trace.TraceError(Texts.Media_item_created_with_wrong_ID, new SnapshotTextNode(mediaFile.Snapshots.First()), $"{item.ID} != {mediaItem.Uri.Guid.Format()}");
+                        context.Trace.TraceError(Msg.E1005, Texts.Media_item_created_with_wrong_ID, new SnapshotTextNode(mediaFile.Snapshots.First()), $"{item.ID} != {mediaItem.Uri.Guid.Format()}");
                     }
                 }
             }

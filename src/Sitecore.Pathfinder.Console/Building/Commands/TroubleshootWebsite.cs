@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Building.Commands
 
         public override void Run(IBuildContext context)
         {
-            context.Trace.TraceInformation("Troubleshooting...");
+            context.Trace.TraceInformation(Msg.G1010, "Troubleshooting...");
 
             var queryStringParameters = new Dictionary<string, string>();
 

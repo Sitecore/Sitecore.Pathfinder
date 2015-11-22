@@ -122,7 +122,7 @@ namespace Sitecore.Pathfinder.Projects
             }
             catch (Exception ex)
             {
-                Diagnostics.Add(new Diagnostic(sourceFileName, TextSpan.Empty, Severity.Error, ex.Message));
+                Diagnostics.Add(new Diagnostic(Msg.P1000, sourceFileName, TextSpan.Empty, Severity.Error, ex.Message));
             }
 
             return this;

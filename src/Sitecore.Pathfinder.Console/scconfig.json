@@ -27,12 +27,20 @@
         // if force-update is true, media will always be uploaded and files always copied during emitting
         "force-update": false,
 
-        // files and directories to ignore
-        "ignore-directories": ".vscode sitecore.filetemplates sitecore.project sitecore.tools node_modules roslyn includes",
-        "ignore-filenames": "scc.cmd project.json readme.md web.config",
+        // comma separated list of files and directories to ignore
+        "ignore-directories": ".vscode, sitecore.filetemplates, sitecore.project, sitecore.tools, node_modules, roslyn, includes",
+        "ignore-filenames": "scc.cmd, project.json, readme.md, web.config",
 
         // default search pattern
         "search-pattern": "*"
+    },
+
+    "check-project": {
+        // comma separated list. Possible values: Items, Fields, Templates, TemplateFields, Media
+        "disabled-categories": "",
+
+        // comma separated list of checker names
+        "disabled-checkers": ""
     },
 
     "copy-dependencies": {
@@ -41,7 +49,7 @@
     },
 
     "copy-package": {
-        "0": {
+        "system-0": {
             "copy-to-directory": "/Pathfinder/packages"
         }
     },
@@ -108,30 +116,30 @@
 
     "sync-website": {
         "files": {
-            "0": {
+            "system-0": {
                 "file": "sitecore.project/schemas/master.layout.schema.json",
                 "database": "master"
             },
-            "1": {
+            "system-1": {
                 "file": "sitecore.project/schemas/core.layout.schema.json",
                 "database": "core"
             },
-            "2": {
+            "system-2": {
                 "file": "sitecore.project/schemas/master.layout.xsd",
                 "database": "master",
                 "namespace": "http://www.sitecore.net/pathfinder/layouts/master"
             },
-            "3": {
+            "system-3": {
                 "file": "sitecore.project/schemas/core.layout.xsd",
                 "database": "core",
                 "namespace": "http://www.sitecore.net/pathfinder/layouts/core"
             },
-            "4": {
+            "system-4": {
                 "file": "sitecore.project/schemas/master.content.xsd",
                 "database": "master",
                 "namespace": "http://www.sitecore.net/pathfinder/content/master"
             },
-            "5": {
+            "system-5": {
                 "file": "sitecore.project/schemas/core.content.xsd",
                 "database": "core",
                 "namespace": "http://www.sitecore.net/pathfinder/content/core"
@@ -164,37 +172,37 @@
     },
 
     "write-website-exports": {
-        "0": {
+        "system-0": {
             "filename": "sitecore.project/repository/Sitecore.Master.8.0.nupkg",
             "queries": {
-                "0": {
+                "system-0": {
                     "query": "/sitecore",
                     "database": "master"
                 },
-                "1": {
+                "system-1": {
                     "query": "/sitecore/*",
                     "database": "master"
                 },
-                "2": {
+                "system-2": {
                     "query": "/sitecore/content/Home",
                     "database": "master"
                 },
-                "3": {
+                "system-3": {
                     "query": "/sitecore/templates/System//*[@@templatekey='template']",
                     "database": "master",
                     "fields": "__Base template"
                 },
-                "4": {
+                "system-4": {
                     "query": "/sitecore/templates/Common//*[@@templatekey='template']",
                     "database": "master",
                     "fields": "__Base template"
                 },
-                "5": {
+                "system-5": {
                     "query": "/sitecore/templates/Sample/Sample Item",
                     "database": "master",
                     "fields": "__Base template"
                 },
-                "6": {
+                "system-6": {
                     "query": "/sitecore/layout//*[@@templatekey='view rendering' or @@templatekey='xsl rendering' or @@templatekey='sublayout' or @@templatekey='layout' or @@templatekey='device' or @@templatekey='webcontrol']",
                     "database": "master",
                     "fields": "Path, Place Holders, Parameters Template"
@@ -202,37 +210,37 @@
             }
         },
 
-        "1": {
+        "system-1": {
             "filename": "sitecore.project/repository/Sitecore.Core.8.0.nupkg",
             "queries": {
-                "0": {
+                "system-0": {
                     "query": "/sitecore",
                     "database": "core"
                 },
-                "1": {
+                "system-1": {
                     "query": "/sitecore/*",
                     "database": "core"
                 },
-                "2": {
+                "system-2": {
                     "query": "/sitecore/client/Applications",
                     "database": "core"
                 },
-                "3": {
+                "system-3": {
                     "query": "/sitecore/templates//*[@@templatekey='template']",
                     "database": "core",
                     "fields": "__Base template"
                 },
-                "4": {
+                "system-4": {
                     "query": "/sitecore/layout//*[@@templatekey='device']",
                     "database": "core"
                 }
             }
         },
 
-        "2": {
+        "system-2": {
             "filename": "sitecore.project/repository/Sitecore.Speak.8.0.nupkg",
             "queries": {
-                "1": {
+                "system-1": {
                     "query": "/sitecore/client/Speak//*[@@templatekey='template' or @@templatekey='view rendering' or @@templatekey='layout']",
                     "database": "core",
                     "fields": "Path, Place Holders, Parameters Template"
@@ -240,10 +248,10 @@
             }
         },
 
-        "3": {
+        "system-3": {
             "filename": "sitecore.project/repository/Sitecore.BusinessComponentLibrary.nupkg",
             "queries": {
-                "1": {
+                "system-1": {
                     "query": "/sitecore/client/Business Component Library//*[@@templatekey='template' or @@templatekey='view rendering' or @@templatekey='layout']",
                     "database": "core",
                     "fields": "Path, Place Holders, Parameters Template"
@@ -251,10 +259,10 @@
             }
         },
 
-        "4": {
+        "system-4": {
             "filename": "sitecore.project/repository/Sitecore.Launchpad.nupkg",
             "queries": {
-                "1": {
+                "system-1": {
                     "query": "/sitecore/client/Applications/Launchpad//*[@@templatekey='template' or @@templatekey='view rendering' or @@templatekey='layout']",
                     "database": "core",
                     "fields": "Path, Place Holders, Parameters Template"
@@ -270,6 +278,11 @@
     "extensions": {
         "project-extensions-directory": "sitecore.project/extensions",
         "project-extensions-assembly-filename": "Sitecore.Pathfinder.Extensions.dll"
+    },
+
+    "messages": {
+        // comma separated list of message numbers to ignore
+        "disabled": ""
     },
 
     "scripts": {
