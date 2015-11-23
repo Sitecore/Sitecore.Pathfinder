@@ -46,6 +46,7 @@ namespace Sitecore.Pathfinder
             return this;
         }
 
+        [NotNull]
         public Startup DisableExtensions()
         {
             CompositionOptions |= Extensibility.StartupExtensions.CompositionOptions.DisableExtensions;

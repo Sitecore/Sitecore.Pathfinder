@@ -1,6 +1,8 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -91,6 +93,9 @@ namespace Sitecore.Pathfinder.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, output.ToString());
             }
+
+            // todo: dangerous cast
+            ((CompositionContainer)app.CompositionService).SatisfyImportsOnce(instance);
 
             var result = instance.Execute(app);
 
