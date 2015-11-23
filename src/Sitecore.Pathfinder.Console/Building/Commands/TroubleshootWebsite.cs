@@ -1,7 +1,5 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.Collections.Generic;
-
 namespace Sitecore.Pathfinder.Building.Commands
 {
     public class TroubleshootWebsite : RequestBuildTaskBase
@@ -12,11 +10,9 @@ namespace Sitecore.Pathfinder.Building.Commands
 
         public override void Run(IBuildContext context)
         {
-            context.Trace.TraceInformation(Msg.G1010, "Troubleshooting...");
+            context.Trace.TraceInformation(Msg.G1010, Texts.Troubleshooting___);
 
-            var queryStringParameters = new Dictionary<string, string>();
-
-            var url = MakeWebApiUrl(context, "TroubleshootWebsite", queryStringParameters);
+            var url = MakeWebApiUrl(context, "TroubleshootWebsite");
 
             Request(context, url);
         }

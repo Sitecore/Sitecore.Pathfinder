@@ -498,4 +498,10 @@
     <data name="Writing_website_exports___" xml:space="preserve">
     <value>Writing website exports...</value>
   </data>
+    <data name="Troubleshooting___" xml:space="preserve">
+    <value>Troubleshooting...</value>
+  </data>
+    <data name="Importing_website___" xml:space="preserve">
+    <value>Importing website...</value>
+  </data>
 </root>

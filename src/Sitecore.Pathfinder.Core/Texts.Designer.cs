@@ -594,6 +594,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Importing website....
+        /// </summary>
+        public static string Importing_website___ {
+            get {
+                return ResourceManager.GetString("Importing_website___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Incremental build started....
         /// </summary>
         public static string Incremental_build_started___ {
@@ -1052,6 +1061,15 @@ namespace Sitecore.Pathfinder {
         public static string There_Is_No_Website_Directory {
             get {
                 return ResourceManager.GetString("There_Is_No_Website_Directory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Troubleshooting....
+        /// </summary>
+        public static string Troubleshooting___ {
+            get {
+                return ResourceManager.GetString("Troubleshooting___", resourceCulture);
             }
         }
         

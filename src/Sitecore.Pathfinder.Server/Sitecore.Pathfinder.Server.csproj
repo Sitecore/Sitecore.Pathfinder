@@ -190,6 +190,7 @@
     <Compile Include="Pipelines\Loader\MapRoutes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerConstants.cs" />
+    <Compile Include="WebApi\ImportWebsite.cs" />
     <Compile Include="WebApi\SynchronizeWebsites\ContentXmlSynchronizer.cs" />
     <Compile Include="WebApi\SynchronizeWebsites\ISynchronizer.cs" />
     <Compile Include="WebApi\SynchronizeWebsites\JsonLayoutSchemaSynchronizer.cs" />

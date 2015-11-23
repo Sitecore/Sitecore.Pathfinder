@@ -68,7 +68,13 @@ namespace Sitecore.Pathfinder.Building
         [NotNull]
         protected virtual string MakeUrl([NotNull] IBuildContext context, [NotNull] string path, [NotNull] Dictionary<string, string> queryStringParameters)
         {
-            var result = context.Configuration.GetString(Constants.Configuration.HostName).TrimEnd('/') + "/" + path.TrimStart('/');
+            var hostName = context.Configuration.GetString(Constants.Configuration.HostName);
+            if (string.IsNullOrEmpty(hostName))
+            {
+                throw new ConfigurationException("Host not found");
+            }
+
+            var result = hostName.TrimEnd('/') + "/" + path.TrimStart('/');
             var parameters = string.Empty;
 
             foreach (var pair in queryStringParameters)

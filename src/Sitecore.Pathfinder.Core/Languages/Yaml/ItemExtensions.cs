@@ -1,111 +1,129 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using Sitecore.Pathfinder.Diagnostics;
 using System;
-using System.IO;
 using System.Linq;
-using Newtonsoft.Json;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.Languages.Yaml
 {
     public static class ItemExtensions
     {
-        public static void WriteAsYaml([NotNull] this Item item, [NotNull] TextWriter output, int indent = 0, [CanBeNull] Action<TextWriter, int> writeInner = null)
+        public static void WriteAsYaml([NotNull] this Item item, [NotNull] YamlTextWriter output, [CanBeNull] Action<YamlTextWriter> writeInner = null)
         {
             var sharedFields = item.Fields.Where(f => string.IsNullOrEmpty(f.Language) && f.Version == 0).ToList();
             var unversionedFields = item.Fields.Where(f => !string.IsNullOrEmpty(f.Language) && f.Version == 0).ToList();
             var versionedFields = item.Fields.Where(f => !string.IsNullOrEmpty(f.Language) && f.Version != 0).ToList();
 
-            output.WriteLineIndented(indent, "Item");
-            indent++;
+            output.WriteStartElement("Item", string.Empty, false);
 
-            output.WriteLineIndented(indent, "Id", item.Uri.Guid.Format());
-            output.WriteLineIndented(indent, "Database", item.DatabaseName);
-            output.WriteLineIndented(indent, "Name", item.ItemName);
-            output.WriteLineIndented(indent, "Path", item.ItemIdOrPath);
-            output.WriteLineIndented(indent, "Template", item.TemplateIdOrPath);
+            output.WriteAttributeString("Id", item.Uri.Guid.Format());
+            output.WriteAttributeStringIf("Database", item.DatabaseName);
+            output.WriteAttributeStringIf("Name", item.ItemName);
+            output.WriteAttributeStringIf("Path", item.ItemIdOrPath);
+            output.WriteAttributeStringIf("Template", item.TemplateIdOrPath);
 
-            output.WriteLineIndented(indent, "- Fields");
-            indent++;
+            output.WriteStartElement("Fields");
 
             foreach (var field in sharedFields)
             {
-                output.WriteLineIndented(indent, "- Field", field.FieldName);
-                indent++;
-                output.WriteLineIndented(indent, "Value", field.Value);
-                indent--;
+                output.WriteStartElement("Field", field.FieldName);
+                output.WriteAttributeString("Value", field.Value);
+                output.WriteEndElement();
             }
 
             if (unversionedFields.Any())
             {
-                output.WriteLineIndented(indent, "- Unversioned");
-                indent++;
+                output.WriteStartElement("Unversioned");
 
                 foreach (var language in unversionedFields.Select(f => f.Language).Distinct())
                 {
-                    output.WriteLineIndented(indent, language);
-                    indent++;
+                    output.WriteStartElement(language);
 
                     foreach (var field in unversionedFields.Where(f => f.Language == language))
                     {
-                        output.WriteLineIndented(indent, "- Field", field.FieldName);
-                        indent++;
-                        output.WriteLineIndented(indent, "Value", field.Value);
-                        indent--;
+                        output.WriteStartElement("Field", field.FieldName);
+                        output.WriteAttributeString("Value", field.Value);
+                        output.WriteEndElement();
                     }
 
-                    indent--;
+                    output.WriteEndElement();
                 }
 
-                indent--;
+                output.WriteEndElement();
             }
 
             if (versionedFields.Any())
             {
-                output.WriteLineIndented(indent, "- Versioned");
-                indent++;
+                output.WriteStartElement("Versioned");
 
                 foreach (var language in versionedFields.Select(f => f.Language).Distinct())
                 {
-                    output.WriteLineIndented(indent, "- " + language);
-                    indent++;
+                    output.WriteStartElement(language);
 
                     foreach (var version in versionedFields.Where(f => f.Language == language).Select(f => f.Version).Distinct())
                     {
-                        output.WriteLineIndented(indent, "- " + version);
-                        indent++;
+                        output.WriteStartElement(version.ToString());
 
                         foreach (var field in versionedFields.Where(f => f.Language == language && f.Version == version))
                         {
-                            output.WriteLineIndented(indent, "- Field", field.FieldName);
-                            indent++;
-                            output.WriteLineIndented(indent, "Value", field.Value);
-                            indent--;
+                            output.WriteStartElement("Field", field.FieldName);
+                            output.WriteAttributeString("Value", field.Value);
+                            output.WriteEndElement();
                         }
 
-                        indent--;
+                        output.WriteEndElement();
                     }
 
-                    indent--;
+                    output.WriteEndElement();
                 }
 
-                indent--;
+                output.WriteEndElement();
             }
 
             if (writeInner != null)
             {
-                writeInner(output, indent);
+                writeInner(output);
             }
         }
 
-        public static void WriteLineIndented([NotNull] this TextWriter output, int indent, [NotNull] string key, [NotNull] string value = "")
+        public static void WriteAsYaml([NotNull] this Template template, [NotNull] YamlTextWriter output)
         {
-            output.Write(new string(' ', indent * 4));
-            output.Write(key);
-            output.Write(" : ");
-            output.WriteLine(value);
+            output.WriteStartElement("Template", string.Empty, false);
+            output.WriteAttributeString("Name", template.ItemName);
+            output.WriteAttributeStringIf("Id", template.Uri.Guid.Format());
+            output.WriteAttributeStringIf("Database", template.DatabaseName);
+            output.WriteAttributeStringIf("Path", template.ItemIdOrPath);
+            output.WriteAttributeStringIf("BaseTemplates", template.BaseTemplates);
+
+            foreach (var section in template.Sections)
+            {
+                output.WriteStartElement("Section");
+                output.WriteAttributeString("Name", section.SectionName);
+                output.WriteAttributeStringIf("Id", section.Uri.Guid.Format());
+                output.WriteAttributeStringIf("Icon", section.Icon);
+
+                foreach (var field in section.Fields)
+                {
+                    output.WriteStartElement("Field");
+                    output.WriteAttributeString("Name", field.FieldName);
+                    output.WriteAttributeStringIf("Id", field.Uri.Guid.Format());
+                    output.WriteAttributeStringIf("Sortorder", field.SortOrder);
+                    output.WriteAttributeStringIf("Type", field.Type);
+                    output.WriteAttributeStringIf("Source", field.Source);
+                    output.WriteAttributeStringIf("Sharing", field.Shared ? "Shared" : field.Unversioned ? "Unversioned" : string.Empty);
+                    output.WriteAttributeStringIf("ShortHelp", field.ShortHelp);
+                    output.WriteAttributeStringIf("LongHelp", field.LongHelp);
+
+                    output.WriteEndElement();
+                }
+
+                output.WriteEndElement();
+            }
+
+            output.WriteEndElement();
         }
     }
 }

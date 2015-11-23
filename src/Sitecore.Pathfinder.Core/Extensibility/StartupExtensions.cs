@@ -22,7 +22,9 @@ namespace Sitecore.Pathfinder.Extensibility
         {
             None = 0x0,
 
-            AddWebsiteAssemblyResolver = 0x01
+            AddWebsiteAssemblyResolver = 0x01,
+
+            DisableExtensions = 0x2
         }
 
         [CanBeNull]
@@ -46,7 +48,7 @@ namespace Sitecore.Pathfinder.Extensibility
             };
 
             var disableExtensions = configuration.GetBool("disable-extensions");
-            if (!disableExtensions)
+            if (!disableExtensions && !options.HasFlag(CompositionOptions.DisableExtensions))
             {
                 // add assemblies from the tools directory
                 AddFeatureAssemblies(catalogs, toolsDirectory);

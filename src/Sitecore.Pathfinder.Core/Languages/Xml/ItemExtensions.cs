@@ -13,67 +13,15 @@ namespace Sitecore.Pathfinder.Languages.Xml
 {
     public static class ItemExtensions
     {
-        public static void WriteAsExport([NotNull] this Item item, [NotNull] XmlTextWriter output, [ItemNotNull] [NotNull] IEnumerable<string> fieldsToWrite)
-        {
-            output.WriteStartElement("Item");
-            output.WriteAttributeString("Id", item.Uri.Guid.Format());
-            output.WriteAttributeString("Database", item.DatabaseName);
-            output.WriteAttributeString("Name", item.ItemName);
-            output.WriteAttributeString("Path", item.ItemIdOrPath);
-            output.WriteAttributeString("Template", item.TemplateIdOrPath);
-
-            foreach (var field in item.Fields)
-            {
-                if (!fieldsToWrite.Contains(field.FieldName.ToLowerInvariant()))
-                {
-                    continue;
-                }
-
-                output.WriteStartElement("Field");
-                output.WriteAttributeString("Name", field.FieldName);
-                output.WriteAttributeString("Value", field.Value);
-                output.WriteEndElement();
-            }
-
-            output.WriteEndElement();
-        }
-
-        public static void WriteAsExport([NotNull] this Template template, [NotNull] XmlTextWriter output)
-        {
-            output.WriteStartElement("Template");
-            output.WriteAttributeString("Id", template.Uri.Guid.Format());
-            output.WriteAttributeString("Database", template.DatabaseName);
-            output.WriteAttributeString("Name", template.ItemName);
-            output.WriteAttributeString("Path", template.ItemIdOrPath);
-            output.WriteAttributeString("BaseTemplates", template.BaseTemplates);
-
-            foreach (var section in template.Sections)
-            {
-                output.WriteStartElement("Section");
-                output.WriteAttributeString("Name", section.SectionName);
-
-                foreach (var field in section.Fields)
-                {
-                    output.WriteStartElement("Field");
-                    output.WriteAttributeString("Name", field.FieldName);
-                    output.WriteAttributeString("Type", field.Type);
-                    output.WriteEndElement();
-                }
-
-                output.WriteEndElement();
-            }
-
-            output.WriteEndElement();
-        }
-
         public static void WriteAsContentXml([NotNull] this Item item, [NotNull] XmlTextWriter output, [CanBeNull] Action<XmlTextWriter> writeInner = null)
         {
             output.WriteStartElement(item.Template.ItemName.EscapeXmlElementName());
             output.WriteAttributeString("xmlns", "http://www.sitecore.net/pathfinder/content/" + item.DatabaseName.ToLowerInvariant());
-            output.WriteAttributeString("Id", item.Uri.Guid.Format());
-            output.WriteAttributeString("Database", item.DatabaseName);
             output.WriteAttributeString("Name", item.ItemName);
-            output.WriteAttributeString("Template", item.TemplateIdOrPath);
+            output.WriteAttributeStringIf("Id", item.Uri.Guid.Format());
+            output.WriteAttributeStringIf("Database", item.DatabaseName);
+            output.WriteAttributeStringIf("Template", item.TemplateIdOrPath);
+
             // todo: write parent item path
 
             var sharedFields = item.Fields.Where(f => string.IsNullOrEmpty(f.Language) && f.Version == 0).ToList();
@@ -123,15 +71,68 @@ namespace Sitecore.Pathfinder.Languages.Xml
             output.WriteEndElement();
         }
 
-        public static void WriteAsXml([NotNull] this Item item, [NotNull] XmlTextWriter output, [CanBeNull] Action<XmlTextWriter> writeInner = null)
+        public static void WriteAsExportXml([NotNull] this Item item, [NotNull] XmlTextWriter output, [ItemNotNull] [NotNull] IEnumerable<string> fieldsToWrite)
         {
             output.WriteStartElement("Item");
-            output.WriteAttributeString("xmlns", "http://www.sitecore.net/pathfinder/item");
             output.WriteAttributeString("Id", item.Uri.Guid.Format());
             output.WriteAttributeString("Database", item.DatabaseName);
             output.WriteAttributeString("Name", item.ItemName);
             output.WriteAttributeString("Path", item.ItemIdOrPath);
             output.WriteAttributeString("Template", item.TemplateIdOrPath);
+
+            foreach (var field in item.Fields)
+            {
+                if (!fieldsToWrite.Contains(field.FieldName.ToLowerInvariant()))
+                {
+                    continue;
+                }
+
+                output.WriteStartElement("Field");
+                output.WriteAttributeString("Name", field.FieldName);
+                output.WriteAttributeString("Value", field.Value);
+                output.WriteEndElement();
+            }
+
+            output.WriteEndElement();
+        }
+
+        public static void WriteAsExportXml([NotNull] this Template template, [NotNull] XmlTextWriter output)
+        {
+            output.WriteStartElement("Template");
+            output.WriteAttributeString("Id", template.Uri.Guid.Format());
+            output.WriteAttributeString("Database", template.DatabaseName);
+            output.WriteAttributeString("Name", template.ItemName);
+            output.WriteAttributeString("Path", template.ItemIdOrPath);
+            output.WriteAttributeString("BaseTemplates", template.BaseTemplates);
+
+            foreach (var section in template.Sections)
+            {
+                output.WriteStartElement("Section");
+                output.WriteAttributeString("Name", section.SectionName);
+
+                foreach (var field in section.Fields)
+                {
+                    output.WriteStartElement("Field");
+                    output.WriteAttributeString("Name", field.FieldName);
+                    output.WriteAttributeString("Type", field.Type);
+                    output.WriteEndElement();
+                }
+
+                output.WriteEndElement();
+            }
+
+            output.WriteEndElement();
+        }
+
+        public static void WriteAsXml([NotNull] this Item item, [NotNull] XmlTextWriter output, [CanBeNull] Action<XmlTextWriter> writeInner = null)
+        {
+            output.WriteStartElement("Item");
+            output.WriteAttributeString("xmlns", "http://www.sitecore.net/pathfinder/item");
+            output.WriteAttributeStringIf("Id", item.Uri.Guid.Format());
+            output.WriteAttributeStringIf("Database", item.DatabaseName);
+            output.WriteAttributeStringIf("Name", item.ItemName);
+            output.WriteAttributeStringIf("Path", item.ItemIdOrPath);
+            output.WriteAttributeStringIf("Template", item.TemplateIdOrPath);
 
             output.WriteStartElement("Fields");
 
@@ -192,6 +193,44 @@ namespace Sitecore.Pathfinder.Languages.Xml
             if (writeInner != null)
             {
                 writeInner(output);
+            }
+
+            output.WriteEndElement();
+        }
+
+        public static void WriteAsXml([NotNull] this Template template, [NotNull] XmlTextWriter output)
+        {
+            output.WriteStartElement("Template");
+            output.WriteAttributeString("xmlns", "http://www.sitecore.net/pathfinder/item");
+            output.WriteAttributeString("Name", template.ItemName);
+            output.WriteAttributeStringIf("Id", template.Uri.Guid.Format());
+            output.WriteAttributeStringIf("Database", template.DatabaseName);
+            output.WriteAttributeStringIf("Path", template.ItemIdOrPath);
+            output.WriteAttributeStringIf("BaseTemplates", template.BaseTemplates);
+
+            foreach (var section in template.Sections)
+            {
+                output.WriteStartElement("Section");
+                output.WriteAttributeString("Name", section.SectionName);
+                output.WriteAttributeStringIf("Id", section.Uri.Guid.Format());
+                output.WriteAttributeStringIf("Icon", section.Icon);
+
+                foreach (var field in section.Fields)
+                {
+                    output.WriteStartElement("Field");
+                    output.WriteAttributeString("Name", field.FieldName);
+                    output.WriteAttributeStringIf("Id", field.Uri.Guid.Format());
+                    output.WriteAttributeStringIf("Sortorder", field.SortOrder);
+                    output.WriteAttributeStringIf("Type", field.Type);
+                    output.WriteAttributeStringIf("Source", field.Source);
+                    output.WriteAttributeStringIf("Sharing", field.Shared ? "Shared" : field.Unversioned ? "Unversioned" : string.Empty);
+                    output.WriteAttributeStringIf("ShortHelp", field.ShortHelp);
+                    output.WriteAttributeStringIf("LongHelp", field.LongHelp);
+
+                    output.WriteEndElement();
+                }
+
+                output.WriteEndElement();
             }
 
             output.WriteEndElement();

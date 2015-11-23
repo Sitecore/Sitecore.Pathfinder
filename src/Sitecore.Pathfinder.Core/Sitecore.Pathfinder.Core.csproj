@@ -113,6 +113,9 @@
     <Compile Include="CodeGeneration\IProjectCodeGenerator.cs" />
     <Compile Include="CodeGeneration\IProjectItemCodeGenerator.cs" />
     <Compile Include="CodeGeneration\ProjectCodeGeneratorBase.cs" />
+    <Compile Include="Compiling\Builders\TemplateBuilder.cs" />
+    <Compile Include="Compiling\Builders\TemplateFieldBuilder.cs" />
+    <Compile Include="Compiling\Builders\TemplateSectionBuilder.cs" />
     <Compile Include="Diagnostics\EmitException.cs" />
     <Compile Include="Diagnostics\RetryableEmitException.cs" />
     <Compile Include="Emitting\EmitContext.cs" />
@@ -121,6 +124,7 @@
     <Compile Include="Emitting\IEmitter.cs" />
     <Compile Include="Extensibility\ExtensionBase.cs" />
     <Compile Include="Extensibility\IExtension.cs" />
+    <Compile Include="Extensions\XmlTextWriter.cs" />
     <Compile Include="Languages\BinFiles\BinFile.cs" />
     <Compile Include="Languages\BinFiles\BinFileParser.cs" />
     <Compile Include="Languages\Json\ItemExtensions.cs" />
@@ -151,6 +155,7 @@
     <Compile Include="Languages\Serialization\SerializationTextSnapshot.cs" />
     <Compile Include="Languages\Xml\ItemExtensions.cs" />
     <Compile Include="Languages\Yaml\ItemExtensions.cs" />
+    <Compile Include="Languages\Yaml\YamlTextWriter.cs" />
     <Compile Include="Projects\Items\FieldCollection.cs" />
     <Compile Include="Projects\Database.cs" />
     <Compile Include="Projects\Items\ChildrenCollection.cs" />

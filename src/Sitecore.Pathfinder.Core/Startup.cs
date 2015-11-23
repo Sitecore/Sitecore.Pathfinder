@@ -33,13 +33,6 @@ namespace Sitecore.Pathfinder
         public string ToolsDirectory { get; private set; }
 
         [NotNull]
-        public virtual Startup WithWebsiteAssemblyResolver()
-        {
-            CompositionOptions = CompositionOptions | Extensibility.StartupExtensions.CompositionOptions.AddWebsiteAssemblyResolver;
-            return this;
-        }
-
-        [NotNull]
         public virtual Startup AsInteractive()
         {
             ConfigurationOptions = ConfigurationOptions.Interactive;
@@ -50,6 +43,12 @@ namespace Sitecore.Pathfinder
         public virtual Startup AsNoninteractive()
         {
             ConfigurationOptions = ConfigurationOptions.Noninteractive;
+            return this;
+        }
+
+        public Startup DisableExtensions()
+        {
+            CompositionOptions |= Extensibility.StartupExtensions.CompositionOptions.DisableExtensions;
             return this;
         }
 
@@ -91,6 +90,13 @@ namespace Sitecore.Pathfinder
         public virtual Startup WithToolsDirectory([NotNull] string toolsDirectory)
         {
             ToolsDirectory = toolsDirectory;
+            return this;
+        }
+
+        [NotNull]
+        public virtual Startup WithWebsiteAssemblyResolver()
+        {
+            CompositionOptions |= Extensibility.StartupExtensions.CompositionOptions.AddWebsiteAssemblyResolver;
             return this;
         }
     }

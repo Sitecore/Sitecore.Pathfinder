@@ -63,6 +63,47 @@
         "uninstall-directory": "../.uninstall"
     },
 
+    "import-website": {
+        "exclude-fields": "__Created, __Created by, __Owner, __Revision, __Updated, __Updated by, Blob",
+        "cleanblog-0": {
+            "database": "master",
+            "root-item-path": "/",
+            "query": "/sitecore/content/Home/CleanBlog | /sitecore/content/Home/CleanBlog//*",
+            "project-directory": "/content/master",
+            "use-directories": true,
+            "single-file": true,
+            "format": "item.xml"
+        },
+        "cleanblog-1": {
+            "database": "master",
+            "root-item-path": "/sitecore/media library/CleanBlog",
+            "query": "/sitecore/media library/CleanBlog//*",
+            "use-directories": true,
+            "project-directory": "/wwwroot/img",
+            "format": "item.xml"
+        },
+        "cleanblog-2": {
+            "database": "master",
+            "root-item-path": "/",
+            "query": "/sitecore/templates/CleanBlog//*[@@templatekey='template']",
+            "project-directory": "/content/master",
+            "use-directories": true,
+            "format": "item.xml"
+        },
+        "cleanblog-3": {
+            "website-directory": "/css",
+            "project-directory": "/wwwroot/css"
+        },
+        "cleanblog-5": {
+            "website-directory": "/js",
+            "project-directory": "/wwwroot/js"
+        },
+        "cleanblog-7": {
+            "website-directory": "/CleanBlog/layout/renderings",
+            "project-directory": "/wwwroot"
+        }
+    },
+
     "generate-code": {
         // the token in the file name that will be replace by the ShortName of the project item
         "name-replacement-token": "Name",

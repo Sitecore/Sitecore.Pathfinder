@@ -215,6 +215,7 @@
       <Link>files\extensions\checkers\Templates\UseIdInsteadOfPathChecker.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Compile Include="Building\Commands\ImportWebsite.cs" />
     <Compile Include="Building\Scripts\RunScript.cs" />
     <Compile Include="Building\Addins\UpdateAddins.cs" />
     <Compile Include="Building\Codegen\GenerateCode.cs" />
