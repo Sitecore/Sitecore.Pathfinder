@@ -78,35 +78,41 @@
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NuGet.Core, Version=1.6.30117.9648, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\components\NuGet.Core.dll</HintPath>
+    <Reference Include="NuGet.Core, Version=2.9.0.729, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NuGet.Core.2.9.0\lib\net40-Client\NuGet.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Sitecore.ContentSearch">
-      <HintPath>..\..\components\Sitecore.ContentSearch.dll</HintPath>
+      <HintPath>..\..\lib\Sitecore\Sitecore.ContentSearch.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Kernel, Version=8.0.5138.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Sitecore.Kernel, Version=8.1.5195.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\components\Sitecore.Kernel.dll</HintPath>
+      <HintPath>..\..\lib\Sitecore\Sitecore.Kernel.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Mvc">
-      <HintPath>..\..\components\Sitecore.Mvc.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Sitecore.Mvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Sitecore\Sitecore.Mvc.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Rocks.Server.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\components\Sitecore.Rocks.Server.Core.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Rocks.Server.Validation">
       <HintPath>..\..\components\Sitecore.Rocks.Server.Validation.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Zip">
-      <HintPath>..\..\components\Sitecore.Zip.dll</HintPath>
+      <HintPath>..\..\lib\Sitecore\Sitecore.Zip.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -202,6 +208,7 @@
     <ProjectReference Include="..\Sitecore.Pathfinder.Core\Sitecore.Pathfinder.Core.csproj">
       <Project>{c674eebf-bbf6-4eda-af5b-a4d58d0be986}</Project>
       <Name>Sitecore.Pathfinder.Core</Name>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

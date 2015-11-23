@@ -119,31 +119,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\components\Microsoft.Framework.ConfigurationModel.dll">
+    <Content Include="..\..\lib\Microsoft\Microsoft.Framework.ConfigurationModel.dll">
       <Link>files\website\bin\Microsoft.Framework.ConfigurationModel.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\components\Microsoft.Framework.ConfigurationModel.Interfaces.dll">
+    <Content Include="..\..\lib\Microsoft\Microsoft.Framework.ConfigurationModel.Interfaces.dll">
       <Link>files\website\bin\Microsoft.Framework.ConfigurationModel.Interfaces.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\components\Microsoft.Framework.ConfigurationModel.Json.dll">
+    <Content Include="..\..\lib\Microsoft\Microsoft.Framework.ConfigurationModel.Json.dll">
       <Link>files\website\bin\Microsoft.Framework.ConfigurationModel.Json.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\components\Microsoft.Framework.ConfigurationModel.Xml.dll">
+    <Content Include="..\..\lib\Microsoft\Microsoft.Framework.ConfigurationModel.Xml.dll">
       <Link>files\website\bin\Microsoft.Framework.ConfigurationModel.Xml.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\components\NuGet.Core.dll">
+    <Content Include="..\..\lib\Microsoft\NuGet.Core.dll">
       <Link>files\website\bin\NuGet.Core.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\components\Sitecore.Rocks.Server.Core.dll">
+    <Content Include="..\..\lib\Sitecore\Sitecore.Rocks.Server.Core.dll">
       <Link>files\website\bin\Sitecore.Rocks.Server.Core.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\components\Sitecore.Rocks.Server.Validation.dll">
+    <Content Include="..\..\lib\Sitecore\Sitecore.Rocks.Server.Validation.dll">
       <Link>files\website\bin\Sitecore.Rocks.Server.Validation.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
