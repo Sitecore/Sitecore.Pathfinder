@@ -98,11 +98,11 @@
     </Reference>
     <Reference Include="Sitecore.Rocks.Server.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\components\Sitecore.Rocks.Server.Core.dll</HintPath>
+      <HintPath>..\..\lib\Sitecore\Sitecore.Rocks.Server.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Rocks.Server.Validation">
-      <HintPath>..\..\components\Sitecore.Rocks.Server.Validation.dll</HintPath>
+      <HintPath>..\..\lib\Sitecore\Sitecore.Rocks.Server.Validation.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Zip">
