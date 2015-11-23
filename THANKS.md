@@ -1,6 +1,7 @@
 # Thanks
 
 ## Contributors
+* Emil Okkels Klein
 * Jakob Christensen
 
 ## Testers
@@ -14,7 +15,6 @@
 * Alistair Deneys
 * Andrea Bellagamba
 * Brian Pedersen
-* Emil Okkels Klein
 * Jacob Surland
 * Kern Herskin
 * Kerry Bellerose

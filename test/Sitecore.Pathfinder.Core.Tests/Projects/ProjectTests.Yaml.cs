@@ -190,7 +190,7 @@ namespace Sitecore.Pathfinder.Projects
             var item = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/YamlItem") as Item;
             Assert.IsNotNull(item);
 
-            var writer = new YamlTextWriter(new StringWriter());
+            var writer = new StringWriter();
 
             item.WriteAsYaml(writer);
 

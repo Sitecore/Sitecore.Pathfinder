@@ -17,14 +17,24 @@ namespace Sitecore.Pathfinder.Extensions
             textWriter.WriteAttributeString(localName, value);
         }
 
-        public static void WriteAttributeStringIf([NotNull] this XmlTextWriter textWriter, [NotNull] string localName, int value)
+        public static void WriteAttributeStringIf([NotNull] this XmlTextWriter textWriter, [NotNull] string localName, int value, int defaultValue = 0)
         {
-            if (value == 0)
+            if (value == defaultValue)
             {
                 return;
             }
 
             textWriter.WriteAttributeString(localName, value.ToString());
+        }
+
+        public static void WriteAttributeStringIf([NotNull] this XmlTextWriter textWriter, [NotNull] string localName, bool value, bool defaultValue = true)
+        {
+            if (value == defaultValue)
+            {
+                return;
+            }
+
+            textWriter.WriteAttributeString(localName, value ? "True" : "False");
         }
     }
 }

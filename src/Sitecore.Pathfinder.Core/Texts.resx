@@ -504,4 +504,7 @@
     <data name="Importing_website___" xml:space="preserve">
     <value>Importing website...</value>
   </data>
+    <data name="Item_is_not_in_root_item_path__Skipping_" xml:space="preserve">
+    <value>Item is not in root-item-path. Skipping.</value>
+  </data>
 </root>

@@ -183,10 +183,8 @@ namespace Sitecore.Pathfinder.Projects
             Assert.IsNotNull(item);
 
             var writer = new StringWriter();
-            var output = new XmlTextWriter(writer);
-            output.Formatting = Formatting.Indented;
 
-            item.WriteAsXml(output);
+            item.WriteAsXml(writer);
 
             var result = writer.ToString();
 

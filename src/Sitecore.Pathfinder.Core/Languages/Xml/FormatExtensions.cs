@@ -2,8 +2,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml;
+using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Items;
@@ -11,8 +13,74 @@ using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.Languages.Xml
 {
-    public static class ItemExtensions
+    public static class FormatExtensions
     {
+        public static void WriteAsXml([NotNull] this LayoutBuilder layoutBuilder, [NotNull] TextWriter writer)
+        {
+            var output = new XmlTextWriter(writer)
+            {
+                Formatting = Formatting.Indented
+            };
+
+            output.WriteStartElement("Layout");
+            output.WriteAttributeString("xmlns", "http://www.sitecore.net/pathfinder/item");
+
+            foreach (var deviceBuilder in layoutBuilder.Devices)
+            {
+                output.WriteStartElement("Device");
+                output.WriteAttributeString("Name", deviceBuilder.DeviceName);
+                output.WriteAttributeStringIf("Layout", deviceBuilder.LayoutItemPath);
+
+                foreach (var renderingBuilder in deviceBuilder.Renderings.Where(r => r.ParentRendering == null))
+                {
+                    WriteAsXml(output, deviceBuilder, renderingBuilder);
+                }
+
+                output.WriteEndElement();
+            }
+
+            output.WriteEndElement();
+        }
+
+        private static void WriteAsXml([NotNull] XmlTextWriter output, [NotNull] DeviceBuilder deviceBuilder, [NotNull] RenderingBuilder renderingBuilder)
+        {
+            if (!renderingBuilder.UnsafeName)
+            {
+                output.WriteStartElement(renderingBuilder.Name);
+            }
+            else
+            {
+                output.WriteStartElement("Rendering");
+                output.WriteAttributeString("RenderingName", renderingBuilder.Name);
+            }
+
+            output.WriteAttributeStringIf("Placeholder", renderingBuilder.Placeholder);
+            output.WriteAttributeStringIf("Cacheable", renderingBuilder.Cacheable);
+            output.WriteAttributeStringIf("VaryByData", renderingBuilder.VaryByData);
+            output.WriteAttributeStringIf("VaryByDevice", renderingBuilder.VaryByDevice);
+            output.WriteAttributeStringIf("VaryByLogin", renderingBuilder.VaryByLogin);
+            output.WriteAttributeStringIf("VaryByParameters", renderingBuilder.VaryByParameters);
+            output.WriteAttributeStringIf("VaryByQueryString", renderingBuilder.VaryByQueryString);
+            output.WriteAttributeStringIf("VaryByUser", renderingBuilder.VaryByUser);
+
+            foreach (var attribute in renderingBuilder.Attributes)
+            {
+                output.WriteAttributeString(attribute.Key, attribute.Value);
+            }
+
+            output.WriteAttributeStringIf("DataSource", renderingBuilder.DataSource);
+
+            foreach (var child in deviceBuilder.Renderings)
+            {
+                if (child.ParentRendering == renderingBuilder)
+                {
+                    WriteAsXml(output, deviceBuilder, child);
+                }
+            }
+
+            output.WriteEndElement();
+        }
+
         public static void WriteAsContentXml([NotNull] this Item item, [NotNull] XmlTextWriter output, [CanBeNull] Action<XmlTextWriter> writeInner = null)
         {
             output.WriteStartElement(item.Template.ItemName.EscapeXmlElementName());
@@ -124,8 +192,11 @@ namespace Sitecore.Pathfinder.Languages.Xml
             output.WriteEndElement();
         }
 
-        public static void WriteAsXml([NotNull] this Item item, [NotNull] XmlTextWriter output, [CanBeNull] Action<XmlTextWriter> writeInner = null)
+        public static void WriteAsXml([NotNull] this Item item, [NotNull] TextWriter writer, [CanBeNull] Action<TextWriter> writeInner = null)
         {
+            var output = new XmlTextWriter(writer);
+            output.Formatting = Formatting.Indented;
+
             output.WriteStartElement("Item");
             output.WriteAttributeString("xmlns", "http://www.sitecore.net/pathfinder/item");
             output.WriteAttributeStringIf("Id", item.Uri.Guid.Format());
@@ -192,14 +263,19 @@ namespace Sitecore.Pathfinder.Languages.Xml
 
             if (writeInner != null)
             {
-                writeInner(output);
+                writeInner(writer);
             }
 
             output.WriteEndElement();
         }
 
-        public static void WriteAsXml([NotNull] this Template template, [NotNull] XmlTextWriter output)
+        public static void WriteAsXml([NotNull] this Template template, [NotNull] TextWriter writer)
         {
+            var output = new XmlTextWriter(writer)
+            {
+                Formatting = Formatting.Indented
+            };
+
             output.WriteStartElement("Template");
             output.WriteAttributeString("xmlns", "http://www.sitecore.net/pathfinder/item");
             output.WriteAttributeString("Name", template.ItemName);

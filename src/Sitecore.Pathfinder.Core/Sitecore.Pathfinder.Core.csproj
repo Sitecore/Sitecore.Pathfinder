@@ -113,6 +113,9 @@
     <Compile Include="CodeGeneration\IProjectCodeGenerator.cs" />
     <Compile Include="CodeGeneration\IProjectItemCodeGenerator.cs" />
     <Compile Include="CodeGeneration\ProjectCodeGeneratorBase.cs" />
+    <Compile Include="Compiling\Builders\DeviceBuilder.cs" />
+    <Compile Include="Compiling\Builders\LayoutBuilder.cs" />
+    <Compile Include="Compiling\Builders\RenderingBuilder.cs" />
     <Compile Include="Compiling\Builders\TemplateBuilder.cs" />
     <Compile Include="Compiling\Builders\TemplateFieldBuilder.cs" />
     <Compile Include="Compiling\Builders\TemplateSectionBuilder.cs" />
@@ -127,7 +130,7 @@
     <Compile Include="Extensions\XmlTextWriter.cs" />
     <Compile Include="Languages\BinFiles\BinFile.cs" />
     <Compile Include="Languages\BinFiles\BinFileParser.cs" />
-    <Compile Include="Languages\Json\ItemExtensions.cs" />
+    <Compile Include="Languages\Json\FormatExtensions.cs" />
     <Compile Include="Languages\Serialization\ItemExtensions.cs" />
     <Compile Include="Languages\Templates\TemplateCompiler.cs" />
     <Compile Include="Compiling\FieldCompilers\FieldCompileContext.cs" />
@@ -153,8 +156,8 @@
     <Compile Include="Compiling\Builders\LanguageVersionBuilder.cs" />
     <Compile Include="IAppService.cs" />
     <Compile Include="Languages\Serialization\SerializationTextSnapshot.cs" />
-    <Compile Include="Languages\Xml\ItemExtensions.cs" />
-    <Compile Include="Languages\Yaml\ItemExtensions.cs" />
+    <Compile Include="Languages\Xml\FormatExtensions.cs" />
+    <Compile Include="Languages\Yaml\FormatExtensions.cs" />
     <Compile Include="Languages\Yaml\YamlTextWriter.cs" />
     <Compile Include="Projects\Items\FieldCollection.cs" />
     <Compile Include="Projects\Database.cs" />

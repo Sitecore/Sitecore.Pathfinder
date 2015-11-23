@@ -46,9 +46,22 @@ namespace Sitecore.Pathfinder.Languages.Yaml
             InnerWriter.WriteLine(value);
         }
 
-        public void WriteAttributeStringIf([NotNull] string key, int value)
+        public void WriteAttributeStringIf([NotNull] string key, int value, int defaultValue = 0)
         {
-            if (value == 0)
+            if (value == defaultValue)
+            {
+                return;
+            }
+
+            InnerWriter.Write(new string(' ', Indent * Indentation));
+            InnerWriter.Write(key);
+            InnerWriter.Write(" : ");
+            InnerWriter.WriteLine(value);
+        }
+
+        public void WriteAttributeStringIf([NotNull] string key, bool value, bool defaultValue = true)
+        {
+            if (value == defaultValue)
             {
                 return;
             }

@@ -151,7 +151,14 @@ namespace Sitecore.Pathfinder.Extensibility
                     continue;
                 }
 
-                catalogs.Add(new AssemblyCatalog(fileName));
+                try
+                {
+                    catalogs.Add(new AssemblyCatalog(fileName));
+                }
+                catch (FileLoadException ex)
+                {
+                   Console.WriteLine("Failed to load assembly: {0}: {1}", ex.Message, fileName);
+                }
             }
         }
 

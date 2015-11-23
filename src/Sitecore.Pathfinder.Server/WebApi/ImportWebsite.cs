@@ -4,10 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Web;
 using System.Web.Mvc;
-using System.Xml;
-using Newtonsoft.Json;
+using System.Xml.Linq;
 using Sitecore.Data.Items;
+using Sitecore.Data.Managers;
 using Sitecore.IO;
 using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Configuration;
@@ -20,12 +22,16 @@ using Sitecore.Pathfinder.Languages.Yaml;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
+using Sitecore.Pathfinder.Text;
 using Sitecore.SecurityModel;
 
 namespace Sitecore.Pathfinder.WebApi
 {
     public class ImportWebsite : IWebApi
     {
+        [Diagnostics.NotNull]
+        private static readonly Regex SafeName = new Regex("^[a-zA-Z0-9_\\-\\.]+$", RegexOptions.Compiled);
+
         [Diagnostics.NotNull]
         protected IFactoryService Factory { get; private set; }
 
@@ -68,8 +74,49 @@ namespace Sitecore.Pathfinder.WebApi
             return null;
         }
 
+        protected virtual void BuildDevice([Diagnostics.NotNull] DeviceBuilder deviceBuilder, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] Item deviceItem, [Diagnostics.NotNull] XElement deviceElement, [Diagnostics.NotNull] [ItemNotNull] List<Item> renderingItems)
+        {
+            deviceBuilder.DeviceName = deviceItem.Name;
+            deviceBuilder.LayoutItemPath = item.Database.GetItem(deviceElement.GetAttributeValue("l"))?.Paths.Path ?? string.Empty;
+
+            foreach (var renderingElement in deviceElement.Elements())
+            {
+                var renderingItem = item.Database.GetItem(renderingElement.GetAttributeValue("id"));
+                if (renderingItem == null)
+                {
+                    continue;
+                }
+
+                var renderingModel = new RenderingBuilder(deviceBuilder);
+
+                ParseRendering(renderingModel, renderingItem, renderingElement, renderingItems);
+
+                deviceBuilder.Renderings.Add(renderingModel);
+            }
+
+            foreach (var rendering in deviceBuilder.Renderings)
+            {
+                rendering.ParentRendering = deviceBuilder.Renderings.FirstOrDefault(r => r.Placeholders.Contains(rendering.Placeholder, StringComparer.OrdinalIgnoreCase));
+                if (rendering.ParentRendering == null)
+                {
+                    continue;
+                }
+
+                if (string.IsNullOrEmpty(rendering.Placeholder))
+                {
+                    continue;
+                }
+
+                // if the renderings placeholder is the parents first placeholder, omit the rendering placeholder since it is the default
+                if (string.Equals(rendering.ParentRendering.Placeholders.FirstOrDefault(), rendering.Placeholder, StringComparison.OrdinalIgnoreCase))
+                {
+                    rendering.Placeholder = string.Empty;
+                }
+            }
+        }
+
         [Diagnostics.NotNull]
-        private Projects.Items.Item BuildItem([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] [ItemNotNull] IEnumerable<string> excludedFields)
+        protected virtual Projects.Items.Item BuildItem([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] [ItemNotNull] IEnumerable<string> excludedFields, [Diagnostics.NotNull] string format)
         {
             var itemBuilder = new ItemBuilder(Factory)
             {
@@ -96,6 +143,28 @@ namespace Sitecore.Pathfinder.WebApi
                     {
                         value = i.Paths.Path;
                     }
+                }
+
+                if (field.Name == "__Renderings")
+                {
+                    var layoutBuilder = new LayoutBuilder();
+                    BuildLayout(layoutBuilder, item, value);
+
+                    var stringWriter = new StringWriter();
+                    switch (format.ToLowerInvariant())
+                    {
+                        case "item.json":
+                            layoutBuilder.WriteAsJson(stringWriter);
+                            break;
+                        case "item.xml":
+                            layoutBuilder.WriteAsXml(stringWriter);
+                            break;
+                        case "item.yaml":
+                            layoutBuilder.WriteAsYaml(stringWriter);
+                            break;
+                    }
+
+                    value = stringWriter.ToString();
                 }
 
                 var fieldBuilder = new FieldBuilder(Factory)
@@ -157,8 +226,45 @@ namespace Sitecore.Pathfinder.WebApi
             return itemBuilder.Build(project, TextNode.Empty);
         }
 
+        protected virtual void BuildLayout([Diagnostics.NotNull] LayoutBuilder layoutBuilder, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string layout)
+        {
+            if (string.IsNullOrEmpty(layout))
+            {
+                return;
+            }
+
+            var layoutElement = layout.ToXElement();
+            if (layoutElement == null)
+            {
+                return;
+            }
+
+            var renderingItems = item.Database.GetItemsByTemplate(ServerConstants.Renderings.ViewRenderingId, TemplateIDs.XSLRendering, TemplateIDs.Sublayout, ServerConstants.Renderings.WebcontrolRendering, ServerConstants.Renderings.UrlRendering, ServerConstants.Renderings.MethodRendering).GroupBy(i => i.Name).Select(i => i.First()).OrderBy(i => i.Name).ToList();
+
+            foreach (var deviceElement in layoutElement.Elements())
+            {
+                var deviceId = deviceElement.GetAttributeValue("id");
+                if (string.IsNullOrEmpty(deviceId))
+                {
+                    continue;
+                }
+
+                var deviceItem = item.Database.GetItem(deviceId);
+                if (deviceItem == null)
+                {
+                    continue;
+                }
+
+                var deviceModel = new DeviceBuilder(layoutBuilder);
+
+                BuildDevice(deviceModel, item, deviceItem, deviceElement, renderingItems);
+
+                layoutBuilder.Devices.Add(deviceModel);
+            }
+        }
+
         [Diagnostics.NotNull]
-        private Template BuildTemplate([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Item item)
+        protected virtual Template BuildTemplate([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Item item)
         {
             var templateItem = new TemplateItem(item);
 
@@ -192,7 +298,31 @@ namespace Sitecore.Pathfinder.WebApi
             return templateBuilder.Build(project, TextNode.Empty);
         }
 
-        private void ImportFiles([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] string key)
+        [NotNull]
+        protected virtual string GetUniqueRenderingName([NotNull] [ItemNotNull] IEnumerable<Item> duplicates, [Diagnostics.NotNull] Item renderingItem)
+        {
+            var paths = duplicates.Where(r => r.Name == renderingItem.Name && r.ID != renderingItem.ID).Select(r => r.Paths.Path).ToList();
+            var parts = renderingItem.Paths.Path.Split(Constants.Slash, StringSplitOptions.RemoveEmptyEntries);
+
+            var result = string.Empty;
+
+            for (var i = parts.Length - 1; i >= 0; i--)
+            {
+                result = "/" + parts[i] + result;
+
+                var r = result;
+                if (!paths.Any(p => p.EndsWith(r, StringComparison.InvariantCultureIgnoreCase)))
+                {
+                    break;
+                }
+            }
+
+            result = result.Mid(1).Replace("/", ".");
+
+            return result;
+        }
+
+        protected virtual void ImportFiles([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] string key)
         {
             var sourceDirectory = PathHelper.NormalizeFilePath(Path.Combine(WebsiteDirectory, PathHelper.NormalizeFilePath(app.Configuration.GetString(key + ":website-directory")).TrimStart('\\'))).TrimEnd('\\');
             var projectDirectory = PathHelper.NormalizeFilePath(Path.Combine(app.ProjectDirectory, PathHelper.NormalizeFilePath(app.Configuration.GetString(key + ":project-directory")).TrimStart('\\'))).TrimEnd('\\');
@@ -243,7 +373,7 @@ namespace Sitecore.Pathfinder.WebApi
             }
         }
 
-        private void ImportItems([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] string key)
+        protected virtual void ImportItems([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] string key)
         {
             var project = app.CompositionService.Resolve<IProject>();
 
@@ -264,7 +394,7 @@ namespace Sitecore.Pathfinder.WebApi
                     var fileName = item.Paths.Path;
                     if (!fileName.StartsWith(rootItemPath))
                     {
-                        Trace.TraceError("Item is not in root-item-path. Skipping.", fileName);
+                        Trace.TraceError(Texts.Item_is_not_in_root_item_path__Skipping_, fileName);
                         return;
                     }
 
@@ -284,26 +414,141 @@ namespace Sitecore.Pathfinder.WebApi
             }
         }
 
-        private void WriteItem([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Data.Items.Item item, [Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] string format, [Diagnostics.NotNull] [ItemNotNull] IEnumerable<string> excludedFields)
+        protected virtual void ParseRendering([Diagnostics.NotNull] RenderingBuilder renderingBuilder, [Diagnostics.NotNull] Item renderingItem, [Diagnostics.NotNull] XElement renderingElement, [Diagnostics.NotNull] [ItemNotNull] List<Item> renderingItems)
         {
-            var itemToWrite = BuildItem(project, item, excludedFields);
+            var parameters = new UrlString(renderingElement.GetAttributeValue("par"));
+            renderingBuilder.Id = parameters.Parameters["Id"];
+            renderingBuilder.Placeholder = renderingElement.GetAttributeValue("ph");
+
+            foreach (var placeholder in renderingItem["Place Holders"].Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries))
+            {
+                renderingBuilder.Placeholders.Add(placeholder.Replace("$Id", renderingBuilder.Id).Trim());
+            }
+
+            var fields = new Dictionary<string, Data.Templates.TemplateField>();
+
+            var parametersTemplateItem = renderingItem.Database.GetItem(renderingItem["Parameters Template"]);
+            if (parametersTemplateItem != null)
+            {
+                var template = TemplateManager.GetTemplate(parametersTemplateItem.ID, renderingItem.Database);
+                if (template != null)
+                {
+                    foreach (var field in template.GetFields(true))
+                    {
+                        if (field.Template.BaseIDs.Length != 0)
+                        {
+                            fields[field.Name.ToLowerInvariant()] = field;
+                        }
+                    }
+                }
+            }
+
+            // rendering name
+            var name = renderingItem.Name;
+
+            var duplicates = renderingItems.Where(i => i.Name == renderingItem.Name).ToList();
+            if (duplicates.Count > 1)
+            {
+                name = GetUniqueRenderingName(duplicates, renderingItem);
+            }
+
+            renderingBuilder.UnsafeName = !SafeName.IsMatch(name);
+            renderingBuilder.Name = name;
+
+            // parameters
+            foreach (var key in parameters.Parameters.Keys.OfType<string>().Where(k => !string.IsNullOrEmpty(k)).OrderBy(k => k))
+            {
+                var value = parameters.Parameters[key];
+                if (string.IsNullOrEmpty(value))
+                {
+                    continue;
+                }
+
+                value = HttpUtility.UrlDecode(value) ?? string.Empty;
+
+                Data.Templates.TemplateField field;
+                if (fields.TryGetValue(key.ToLowerInvariant(), out field))
+                {
+                    switch (field.Type.ToLowerInvariant())
+                    {
+                        case "checkbox":
+                            if (!value.StartsWith("{Binding"))
+                            {
+                                value = MainUtil.GetBool(value, false) ? "True" : "False";
+                            }
+
+                            break;
+
+                        case "droptree":
+                            if (Data.ID.IsID(value))
+                            {
+                                var i = renderingItem.Database.GetItem(value);
+                                if (i != null)
+                                {
+                                    value = i.Paths.Path;
+                                }
+                            }
+
+                            break;
+                    }
+
+                    var source = new Sitecore.Text.UrlString(field.Source);
+                    var defaultValue = source.Parameters["defaultvalue"] ?? string.Empty;
+
+                    if (string.Equals(value, defaultValue, StringComparison.OrdinalIgnoreCase))
+                    {
+                        continue;
+                    }
+                }
+
+                // todo: Hacky, hacky, hacky
+                if ((key == "IsEnabled" || key == "IsVisible") && value == "True")
+                {
+                    continue;
+                }
+
+                renderingBuilder.Attributes[key] = value;
+            }
+
+            // data source
+            var dataSource = renderingElement.GetAttributeValue("ds");
+            if (Data.ID.IsID(dataSource))
+            {
+                var dataSourceItem = renderingItem.Database.GetItem(dataSource);
+                if (dataSourceItem != null)
+                {
+                    dataSource = dataSourceItem.Paths.Path;
+                }
+            }
+
+            renderingBuilder.DataSource = dataSource;
+
+            // caching
+            renderingBuilder.Cacheable = renderingElement.GetAttributeValue("cac") == @"1";
+            renderingBuilder.VaryByData = renderingElement.GetAttributeValue("vbd") == @"1";
+            renderingBuilder.VaryByDevice = renderingElement.GetAttributeValue("vbdev") == @"1";
+            renderingBuilder.VaryByLogin = renderingElement.GetAttributeValue("vbl") == @"1";
+            renderingBuilder.VaryByParameters = renderingElement.GetAttributeValue("vbp") == @"1";
+            renderingBuilder.VaryByQueryString = renderingElement.GetAttributeValue("vbqs") == @"1";
+            renderingBuilder.VaryByUser = renderingElement.GetAttributeValue("vbu") == @"1";
+        }
+
+        protected virtual void WriteItem([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] string format, [Diagnostics.NotNull] [ItemNotNull] IEnumerable<string> excludedFields)
+        {
+            var itemToWrite = BuildItem(project, item, excludedFields, format);
 
             using (var stream = new StreamWriter(fileName))
             {
                 switch (format.ToLowerInvariant())
                 {
                     case "item.json":
-                        var jsonOutput = new JsonTextWriter(stream);
-                        jsonOutput.Formatting = Newtonsoft.Json.Formatting.Indented;
-                        itemToWrite.WriteAsJson(jsonOutput);
+                        itemToWrite.WriteAsJson(stream);
                         break;
                     case "item.xml":
-                        var xmlOutput = new XmlTextWriter(stream);
-                        xmlOutput.Formatting = System.Xml.Formatting.Indented;
-                        itemToWrite.WriteAsXml(xmlOutput);
+                        itemToWrite.WriteAsXml(stream);
                         break;
                     case "item.yaml":
-                        itemToWrite.WriteAsYaml(new YamlTextWriter(stream));
+                        itemToWrite.WriteAsYaml(stream);
                         break;
                 }
             }
@@ -321,7 +566,7 @@ namespace Sitecore.Pathfinder.WebApi
             }
         }
 
-        private void WriteTemplate([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] string format)
+        protected virtual void WriteTemplate([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] string format)
         {
             var templateToWrite = BuildTemplate(project, item);
 
@@ -330,17 +575,13 @@ namespace Sitecore.Pathfinder.WebApi
                 switch (format.ToLowerInvariant())
                 {
                     case "item.json":
-                        var jsonOutput = new JsonTextWriter(stream);
-                        jsonOutput.Formatting = Newtonsoft.Json.Formatting.Indented;
-                        templateToWrite.WriteAsJson(jsonOutput);
+                        templateToWrite.WriteAsJson(stream);
                         break;
                     case "item.xml":
-                        var xmlOutput = new XmlTextWriter(stream);
-                        xmlOutput.Formatting = System.Xml.Formatting.Indented;
-                        templateToWrite.WriteAsXml(xmlOutput);
+                        templateToWrite.WriteAsXml(stream);
                         break;
                     case "item.yaml":
-                        templateToWrite.WriteAsYaml(new YamlTextWriter(stream));
+                        templateToWrite.WriteAsYaml(stream);
                         break;
                 }
             }

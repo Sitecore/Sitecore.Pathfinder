@@ -153,10 +153,8 @@ namespace Sitecore.Pathfinder.Projects
             Assert.IsNotNull(item);
 
             var writer = new StringWriter();
-            var output = new JsonTextWriter(writer);
-            output.Formatting = Formatting.Indented;
 
-            item.WriteAsJson(output);
+            item.WriteAsJson(writer);
 
             var result = writer.ToString();
 

@@ -639,6 +639,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item is not in root-item-path. Skipping..
+        /// </summary>
+        public static string Item_is_not_in_root_item_path__Skipping_ {
+            get {
+                return ResourceManager.GetString("Item_is_not_in_root_item_path__Skipping_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Item not found.
         /// </summary>
         public static string Item_not_found {

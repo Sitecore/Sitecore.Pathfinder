@@ -1,7 +1,9 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.IO;
 using System.Linq;
+using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Items;
@@ -9,10 +11,35 @@ using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.Languages.Yaml
 {
-    public static class ItemExtensions
+    public static class FormatExtensions
     {
-        public static void WriteAsYaml([NotNull] this Item item, [NotNull] YamlTextWriter output, [CanBeNull] Action<YamlTextWriter> writeInner = null)
+        public static void WriteAsYaml([NotNull] this LayoutBuilder layoutBuilder, [NotNull] TextWriter writer)
         {
+            var output = new YamlTextWriter(writer);
+
+            output.WriteStartElement("Layout");
+
+            foreach (var deviceBuilder in layoutBuilder.Devices)
+            {
+                output.WriteStartElement("Device");
+                output.WriteAttributeString("Name", deviceBuilder.DeviceName);
+                output.WriteAttributeStringIf("Layout", deviceBuilder.LayoutItemPath);
+
+                foreach (var renderingBuilder in deviceBuilder.Renderings.Where(r => r.ParentRendering == null))
+                {
+                    WriteAsYaml(output, deviceBuilder, renderingBuilder);
+                }
+
+                output.WriteEndElement();
+            }
+
+            output.WriteEndElement();
+        }
+
+        public static void WriteAsYaml([NotNull] this Item item, [NotNull] TextWriter writer, [CanBeNull] Action<TextWriter> writeInner = null)
+        {
+            var output = new YamlTextWriter(writer);
+
             var sharedFields = item.Fields.Where(f => string.IsNullOrEmpty(f.Language) && f.Version == 0).ToList();
             var unversionedFields = item.Fields.Where(f => !string.IsNullOrEmpty(f.Language) && f.Version == 0).ToList();
             var versionedFields = item.Fields.Where(f => !string.IsNullOrEmpty(f.Language) && f.Version != 0).ToList();
@@ -85,12 +112,14 @@ namespace Sitecore.Pathfinder.Languages.Yaml
 
             if (writeInner != null)
             {
-                writeInner(output);
+                writeInner(writer);
             }
         }
 
-        public static void WriteAsYaml([NotNull] this Template template, [NotNull] YamlTextWriter output)
+        public static void WriteAsYaml([NotNull] this Template template, [NotNull] TextWriter writer)
         {
+            var output = new YamlTextWriter(writer);
+
             output.WriteStartElement("Template", string.Empty, false);
             output.WriteAttributeString("Name", template.ItemName);
             output.WriteAttributeStringIf("Id", template.Uri.Guid.Format());
@@ -121,6 +150,45 @@ namespace Sitecore.Pathfinder.Languages.Yaml
                 }
 
                 output.WriteEndElement();
+            }
+
+            output.WriteEndElement();
+        }
+
+        private static void WriteAsYaml([NotNull] YamlTextWriter output, [NotNull] DeviceBuilder deviceBuilder, [NotNull] RenderingBuilder renderingBuilder)
+        {
+            if (!renderingBuilder.UnsafeName)
+            {
+                output.WriteStartElement(renderingBuilder.Name);
+            }
+            else
+            {
+                output.WriteStartElement("Rendering");
+                output.WriteAttributeString("RenderingName", renderingBuilder.Name);
+            }
+
+            output.WriteAttributeStringIf("Placeholder", renderingBuilder.Placeholder);
+            output.WriteAttributeStringIf("Cacheable", renderingBuilder.Cacheable);
+            output.WriteAttributeStringIf("VaryByData", renderingBuilder.VaryByData);
+            output.WriteAttributeStringIf("VaryByDevice", renderingBuilder.VaryByDevice);
+            output.WriteAttributeStringIf("VaryByLogin", renderingBuilder.VaryByLogin);
+            output.WriteAttributeStringIf("VaryByParameters", renderingBuilder.VaryByParameters);
+            output.WriteAttributeStringIf("VaryByQueryString", renderingBuilder.VaryByQueryString);
+            output.WriteAttributeStringIf("VaryByUser", renderingBuilder.VaryByUser);
+
+            foreach (var attribute in renderingBuilder.Attributes)
+            {
+                output.WriteAttributeString(attribute.Key, attribute.Value);
+            }
+
+            output.WriteAttributeStringIf("DataSource", renderingBuilder.DataSource);
+
+            foreach (var child in deviceBuilder.Renderings)
+            {
+                if (child.ParentRendering == renderingBuilder)
+                {
+                    WriteAsYaml(output, deviceBuilder, child);
+                }
             }
 
             output.WriteEndElement();
