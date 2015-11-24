@@ -9,6 +9,7 @@ namespace Sitecore.Pathfinder.Building.Checking
     {
         public CheckProject() : base("check-project")
         {
+            CanRunWithoutConfig = true;
         }
 
         public override void Run(IBuildContext context)

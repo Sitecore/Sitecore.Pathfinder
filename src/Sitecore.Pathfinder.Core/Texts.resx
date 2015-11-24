@@ -537,4 +537,7 @@
     <data name="Files" xml:space="preserve">
     <value>Files</value>
   </data>
+    <data name="Config_file_not_found__" xml:space="preserve">
+    <value>Config file not found: </value>
+  </data>
 </root>

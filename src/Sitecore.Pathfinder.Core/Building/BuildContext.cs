@@ -29,6 +29,8 @@ namespace Sitecore.Pathfinder.Building
             ProjectService = projectService;
         }
 
+        public bool IsBuildingWithNoConfig => Configuration.GetBool(Constants.Configuration.BuildingWithNoConfig);
+
         public ICompositionService CompositionService { get; }
 
         public IConfiguration Configuration { get; }

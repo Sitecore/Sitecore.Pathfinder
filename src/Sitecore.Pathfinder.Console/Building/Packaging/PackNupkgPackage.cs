@@ -14,6 +14,7 @@ namespace Sitecore.Pathfinder.Building.Packaging
     {
         public PackNupkgPackage() : base("pack-nuget")
         {
+            CanRunWithoutConfig = true;
         }
 
         public override void Run(IBuildContext context)
@@ -27,16 +28,39 @@ namespace Sitecore.Pathfinder.Building.Packaging
 
             context.Trace.TraceInformation(Msg.D1018, Texts.Creating_Nupkg_file___);
 
-            var packageFileName = context.Configuration.Get(Constants.Configuration.PackNugetDirectory);
-            var directory = PathHelper.Combine(context.ProjectDirectory, packageFileName);
+            var packageDirectory = context.Configuration.Get(Constants.Configuration.PackNugetDirectory);
+
+            string directory;
+            if (context.Configuration.GetBool(Constants.Configuration.BuildingWithNoConfig))
+            {
+                directory = PathHelper.Combine(context.Configuration.GetString(Constants.Configuration.ToolsDirectory), "files\\project.noconfig\\sitecore.project");
+            }
+            else
+            {
+                directory = PathHelper.Combine(context.ProjectDirectory, packageDirectory);
+            }
+
             var pathMatcher = new PathMatcher(context.Configuration.Get(Constants.Configuration.PackNugetInclude), context.Configuration.Get(Constants.Configuration.PackNugetExclude));
 
-            foreach (var fileName in context.FileSystem.GetFiles(directory, "*", SearchOption.AllDirectories))
+            foreach (var nuspecFileName in context.FileSystem.GetFiles(directory, "*", SearchOption.AllDirectories))
             {
-                if (pathMatcher.IsMatch(fileName))
+                if (!pathMatcher.IsMatch(nuspecFileName))
                 {
-                    Pack(context, fileName);
+                    continue;
                 }
+
+                string nupkgFileName;
+                if (context.IsBuildingWithNoConfig)
+                {
+                    nupkgFileName = Path.Combine(context.ProjectDirectory, "sitecore.project\\" + Path.GetFileNameWithoutExtension(nuspecFileName) + ".nupkg");
+                    context.FileSystem.CreateDirectoryFromFileName(nupkgFileName);
+                }
+                else
+                {
+                    nupkgFileName = Path.ChangeExtension(nuspecFileName, ".nupkg");
+                }
+
+                Pack(context, nuspecFileName, nupkgFileName);
             }
         }
 
@@ -46,10 +70,8 @@ namespace Sitecore.Pathfinder.Building.Packaging
             helpWriter.Remarks.Write("The Nuget specifications and Nuget packages are located in the /sitecore.project folder.");
         }
 
-        protected virtual void Pack([NotNull] IBuildContext context, [NotNull] string nuspecFileName)
+        protected virtual void Pack([NotNull] IBuildContext context, [NotNull] string nuspecFileName, [NotNull] string nupkgFileName)
         {
-            var nupkgFileName = Path.ChangeExtension(nuspecFileName, ".nupkg");
-
             if (context.FileSystem.FileExists(nupkgFileName))
             {
                 context.FileSystem.DeleteFile(nupkgFileName);

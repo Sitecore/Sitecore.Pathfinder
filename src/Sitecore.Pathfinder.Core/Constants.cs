@@ -77,6 +77,8 @@ namespace Sitecore.Pathfinder
 
             public const string CommandLineConfig = "config";
 
+            public const string BuildingWithNoConfig = "building-with-no-config";
+
             public const string CopyDependenciesSourceDirectory = "copy-dependencies:source-directory";
 
             public const string Database = "database";

@@ -10,6 +10,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
     {
         public ShowMetrics() : base("show-metrics")
         {
+            CanRunWithoutConfig = true;
         }
 
         public override void Run(IBuildContext context)

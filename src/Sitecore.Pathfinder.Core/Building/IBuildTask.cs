@@ -11,6 +11,8 @@ namespace Sitecore.Pathfinder.Building
         [NotNull]
         string TaskName { get; }
 
+        bool CanRunWithoutConfig { get;  }
+
         void Run([NotNull] IBuildContext context);
 
         void WriteHelp([NotNull] HelpWriter helpWriter);

@@ -14,6 +14,7 @@ namespace Sitecore.Pathfinder.Building.Deploying
     {
         public WriteExports() : base("write-exports")
         {
+            CanRunWithoutConfig = true;
         }
 
         public override void Run(IBuildContext context)
@@ -26,6 +27,8 @@ namespace Sitecore.Pathfinder.Building.Deploying
             context.Trace.TraceInformation(Msg.D1015, Texts.Writing_package_exports___);
 
             var fileName = PathHelper.Combine(context.ProjectDirectory, context.Configuration.GetString(Constants.Configuration.WriteExportsFileName));
+
+            Directory.CreateDirectory(Path.GetDirectoryName(fileName) ?? string.Empty);
 
             var fieldToWrite = context.Configuration.GetString(Constants.Configuration.WriteExportsFieldsToWrite).Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(f => f.Trim().ToLowerInvariant()).ToList();
 

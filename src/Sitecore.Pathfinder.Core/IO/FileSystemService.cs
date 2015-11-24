@@ -46,6 +46,17 @@ namespace Sitecore.Pathfinder.IO
             }
         }
 
+        public void CreateDirectoryFromFileName(string fileName)
+        {
+            var directory = Path.GetDirectoryName(fileName);
+            if (string.IsNullOrEmpty(directory))
+            {
+                throw new InvalidOperationException("Cannot create directory from empty filename");
+            }
+
+            CreateDirectory(directory);
+        }
+
         public virtual void DeleteDirectory(string directory)
         {
             Directory.Delete(directory, true);

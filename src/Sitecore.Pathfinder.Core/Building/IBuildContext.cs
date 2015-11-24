@@ -12,6 +12,8 @@ namespace Sitecore.Pathfinder.Building
 {
     public interface IBuildContext
     {
+        bool IsBuildingWithNoConfig { get; }
+
         [NotNull]
         ICompositionService CompositionService { get; }
 

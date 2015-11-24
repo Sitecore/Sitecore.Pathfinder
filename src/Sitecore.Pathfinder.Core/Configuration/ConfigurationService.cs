@@ -125,6 +125,15 @@ namespace Sitecore.Pathfinder.Configuration
             {
                 configurationSourceRoot.AddFile(projectConfigFileName);
             }
+            else if (Directory.GetFiles(projectDirectory).Any() || Directory.GetDirectories(projectDirectory).Any())
+            {
+                // no config file, but project directory has files, so let's try the default project config file
+                projectConfigFileName = PathHelper.Combine(toolsDirectory, "files\\project.noconfig\\scconfig.json");
+                if (File.Exists(projectConfigFileName))
+                {
+                    configurationSourceRoot.AddFile(projectConfigFileName);
+                }
+            }
 
             var machineConfigFileName = Path.GetFileNameWithoutExtension(projectConfigFileName) + "." + Environment.MachineName + ".json";
 
@@ -173,7 +182,7 @@ namespace Sitecore.Pathfinder.Configuration
                     }
                     else
                     {
-                        throw new ConfigurationException("Config file not found: " + configFileName);
+                        throw new ConfigurationException(Texts.Config_file_not_found__ + configFileName);
                     }
                 }
             }

@@ -36,9 +36,18 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual void Import([NotNull] IProject project, [NotNull] IParseContext context)
         {
-            var packagesDirectory = PathHelper.NormalizeFilePath(context.Configuration.Get(Constants.Configuration.CopyDependenciesSourceDirectory));
+            string packagesDirectory;
 
-            packagesDirectory = Path.Combine(project.Options.ProjectDirectory, packagesDirectory);
+            if (context.Configuration.GetBool(Constants.Configuration.BuildingWithNoConfig))
+            {
+                packagesDirectory = Path.Combine(context.Configuration.GetString(Constants.Configuration.ToolsDirectory), "files\\project\\sitecore.project\\packages");
+            }
+            else
+            {
+                packagesDirectory = PathHelper.NormalizeFilePath(context.Configuration.Get(Constants.Configuration.CopyDependenciesSourceDirectory));
+                packagesDirectory = Path.Combine(project.Options.ProjectDirectory, packagesDirectory);
+            }
+
             if (!FileSystem.DirectoryExists(packagesDirectory))
             {
                 return;

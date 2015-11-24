@@ -215,6 +215,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Config file not found: .
+        /// </summary>
+        public static string Config_file_not_found__ {
+            get {
+                return ResourceManager.GetString("Config_file_not_found__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configuration failed spectacularly.
         /// </summary>
         public static string Configuration_failed_spectacularly {

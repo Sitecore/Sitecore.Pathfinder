@@ -20,6 +20,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
         {
             PipelineService = pipelineService;
             Extensions = extensions;
+            CanRunWithoutConfig = true;
         }
 
         [NotNull]

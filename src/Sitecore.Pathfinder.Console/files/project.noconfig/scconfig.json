@@ -1,0 +1,61 @@
+{
+    // every project must have a unique id, since the project-unique-id is used to
+    // calculate item ids.
+    "project-unique-id": "{DefaultPathfinderProject}",
+
+    "website-directory": "",
+    "data-folder-directory": "",
+    "host-name": "",
+
+    "building-with-no-config": true,
+
+    // user name and password
+    "user-name": "sitecore\\admin",
+    "password": "b",
+
+    // Sitecore database name (master, core, or web)
+    "database": "master",
+
+    // =====
+    // TASKS
+    // =====
+
+    "build-project": {
+        // build tasks
+        "tasks": "check-project write-exports pack-nuget show-metrics",
+
+        "ignore-directories": "App_Browsers, App_Config, App_Data, Areas, aspnet_client, bin, data, sitecore, temp, upload, .vscode, sitecore.filetemplates, sitecore.project, sitecore.tools, node_modules, roslyn, includes, ExperienceExplorer, Social",
+        "ignore-filenames": "scc.cmd, project.json, readme.md, web.config, web.debug.config, Default.aspx, default.css, default.htm.sitedown, default.js, global.asax",
+
+        // mapping of files between project paths and website paths and item paths
+        "files": {
+            "master": {
+                "project-directory": "/content/master/sitecore",
+                "include": "**",
+                "website-directory": "/",
+                "item-path": "/sitecore",
+                "database": "master"
+            },
+            "core": {
+                "project-directory": "/content/core/sitecore",
+                "include": "**",
+                "website-directory": "/",
+                "item-path": "/sitecore",
+                "database": "core"
+            },
+            "views": {
+                "project-directory": "/Views",
+                "include": "**",
+                "website-directory": "/Views",
+                "item-path": "/sitecore/layout/renderings"
+            },
+            "wwwroot": {
+                "project-directory": "/wwwroot",
+                "include": "**",
+                "website-directory": "/",
+                "item-path": "/",
+                "upload-media": false
+            }
+        }
+    }
+}

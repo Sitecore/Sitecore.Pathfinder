@@ -33,6 +33,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
 
         public NewProject() : base("new-project")
         {
+            CanRunWithoutConfig = true;
         }
 
         public override void Run(IBuildContext context)

@@ -114,6 +114,7 @@ namespace Sitecore.Pathfinder
         public const int I1006 = I + 6;
         public const int I1007 = I + 7;
         public const int I1008 = I + 8;
+        public const int I1009 = I + 9;
 
         public const int M = 6000;
         public const int M1000 = M;
