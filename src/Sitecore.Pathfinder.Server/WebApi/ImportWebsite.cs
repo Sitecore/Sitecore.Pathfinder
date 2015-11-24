@@ -187,6 +187,7 @@ namespace Sitecore.Pathfinder.WebApi
         [Diagnostics.NotNull]
         protected virtual string GetFieldValue([Diagnostics.NotNull] Field field, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string format)
         {
+            // todo: make this pluggable
             var value = field.Value;
             if (Data.ID.IsID(value))
             {
@@ -197,7 +198,7 @@ namespace Sitecore.Pathfinder.WebApi
                 }
             }
 
-            if (field.Name == "__Renderings")
+            if (field.Name == "__Renderings" || string.Equals(field.Type, "Layout", StringComparison.OrdinalIgnoreCase))
             {
                 var layoutBuilder = new LayoutBuilder();
                 BuildLayout(layoutBuilder, item, value);
@@ -219,6 +220,20 @@ namespace Sitecore.Pathfinder.WebApi
 
                 value = stringWriter.ToString();
             }
+
+            switch (field.Type.ToLowerInvariant())
+            {
+                case "general link":
+                case "link":
+                    var linkField = new LinkField(field);
+                    value = linkField.TargetItem?.Paths.Path ?? value;
+                    break;
+                case "image":
+                    var imageField = new ImageField(field);
+                    value = imageField.MediaItem?.Paths.Path ?? value;
+                    break;
+            }
+
             return value;
         }
 
@@ -581,7 +596,7 @@ namespace Sitecore.Pathfinder.WebApi
             if (!string.IsNullOrEmpty(item["Blob"]))
             {
                 var mediaItem = new MediaItem(item);
-                var mediaFileName = Path.ChangeExtension(fileName, mediaItem.Extension);
+                var mediaFileName = PathHelper.GetDirectoryAndFileNameWithoutExtensions(fileName) + "." + mediaItem.Extension;
 
                 using (var stream = new FileStream(mediaFileName, FileMode.Create))
                 {

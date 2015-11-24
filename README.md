@@ -1,8 +1,5 @@
 # Pathfinder
 
-### Disclaimer
-Pathfinder is a personal side project. It is not endorsed or supported by Sitecore in any way.
-
 ## Get Started
 Get started, get far, get happy!
 
@@ -50,9 +47,15 @@ The goal of Pathfinder is to make it easy to start working with Sitecore.
 
 1. Install a Sitecore website (e.g. using [SIM (Sitecore Instance Manager)](https://marketplace.sitecore.net/modules/sitecore_instance_manager.aspx)
 2. Create an empty directory (seperate from the Sitecore website directory)
-3. Run `scc.exe new-project` in the directory
+3. Run `scc new-project` in the directory
 4. Enter Project Unique ID, website directory, Data Folder directory and a hostname
 5. Done
+
+### Importing an existing project
+1. Create a new (blank) project (see above)
+2. Configure the import-website task in the scconfig.json file
+3. Run `scc import-website` in the directory
+4. Done
 
 ## How does Pathfinder make Sitecore development easier
 * Familiar developer experience: Edit source files, build project, test, repeat...
@@ -690,6 +693,48 @@ In the [Project]/scconfig.json file, you can map files and items to different lo
 }
 ```
 
+## Importing a website
+The import-website task can import items and files from an existing website into a Pathfinder project. The task uses Sitecore Query to find items
+to import. The configuration determines how items and files are placed in the project.
+
+Below is an example of how to import the CleanBlog startkit.
+
+```js
+"import-website": {
+    "cleanblog-0": {
+        "database": "master",
+        "map-item-path-to-file-path": "/ => /content/master",
+        "query": "/sitecore/content/Home/CleanBlog | /sitecore/content/Home/CleanBlog//*",
+        "use-directories": true,
+        "single-file": true,
+        "format": "item.xml"
+    },
+    "cleanblog-1": {
+        "database": "master",
+        "map-item-path-to-file-path": "/sitecore/media library/CleanBlog => /wwwroot/img",
+        "query": "/sitecore/media library/CleanBlog//*",
+        "use-directories": true,
+        "format": "item.xml"
+    },
+    "cleanblog-2": {
+        "database": "master",
+        "map-item-path-to-file-path": "/ => /content/master",
+        "query": "/sitecore/templates/CleanBlog//*[@@templatekey='template']",
+        "use-directories": true,
+        "format": "item.xml"
+    },
+    "cleanblog-3": {
+        "map-website-directory-to-project-directory": "/css => /wwwroot/css"
+    },
+    "cleanblog-4": {
+        "map-website-directory-to-project-directory": "/js => /wwwroot/js"
+    },
+    "cleanblog-5": {
+        "map-website-directory-to-project-directory": "/CleanBlog/layout/renderings => /wwwroot"
+    }
+}
+``` 
+
 ## Synchronizing project and website
 In Pathfinder the project contains the whole truth. However a project may need to use items, template, renderings from a standard 
 Sitecore website. If these resources are not available as packages, you can generate the using Pathfinder.
@@ -1080,16 +1125,16 @@ module.exports = function (grunt) {
     grunt.initConfig({
         shell: {
             "build-project": {
-                command: "scc.exe"
+                command: "scc.cmd"
             },
             "generate-code": {
-                command: "scc.exe generate-code"
+                command: "scc.cmd generate-code"
             },
             "sync-website": {
-                command: "scc.exe sync-website"
+                command: "scc.cmd sync-website"
             },
             "validate-website": {
-                command: "scc.exe validate-website"
+                command: "scc.cmd validate-website"
             }
         }
     });
