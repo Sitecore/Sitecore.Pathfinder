@@ -83,38 +83,7 @@
     },
 
     "import-website": {
-        "exclude-fields": "__Created, __Created by, __Owner, __Revision, __Updated, __Updated by, Blob",
-        "cleanblog-0": {
-            "database": "master",
-            "map-item-path-to-file-path": "/ => /content/master",
-            "query": "/sitecore/content/Home/CleanBlog | /sitecore/content/Home/CleanBlog//*",
-            "use-directories": true,
-            "single-file": true,
-            "format": "item.xml"
-        },
-        "cleanblog-1": {
-            "database": "master",
-            "map-item-path-to-file-path": "/sitecore/media library/CleanBlog => /wwwroot/img",
-            "query": "/sitecore/media library/CleanBlog//*",
-            "use-directories": true,
-            "format": "item.xml"
-        },
-        "cleanblog-2": {
-            "database": "master",
-            "map-item-path-to-file-path": "/ => /content/master",
-            "query": "/sitecore/templates/CleanBlog//*[@@templatekey='template']",
-            "use-directories": true,
-            "format": "item.xml"
-        },
-        "cleanblog-3": {
-            "map-website-directory-to-project-directory": "/css => /wwwroot/css"
-        },
-        "cleanblog-4": {
-            "map-website-directory-to-project-directory": "/js => /wwwroot/js"
-        },
-        "cleanblog-5": {
-            "map-website-directory-to-project-directory": "/CleanBlog/layout/renderings => /wwwroot"
-        }
+        "exclude-fields": "__Created, __Created by, __Owner, __Revision, __Updated, __Updated by, Blob"
     },
 
     "generate-code": {

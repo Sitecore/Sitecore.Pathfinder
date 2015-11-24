@@ -263,18 +263,18 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             output.WriteEndElement();
         }
 
-        protected virtual void WritePlaceholder([NotNull] LayoutCompileContext context, [NotNull] XmlTextWriter output, [NotNull] ITextNode renderingTextNode, [NotNull] string id, [NotNull] string placeholders)
+        protected virtual void WritePlaceholder([NotNull] LayoutCompileContext context, [NotNull] XmlTextWriter output, [NotNull] ITextNode renderingTextNode, [NotNull] string id, [NotNull] string parentPlaceholders)
         {
             var placeholderTextNode = renderingTextNode.GetAttribute("Placeholder");
             var placeholder = placeholderTextNode?.Value ?? string.Empty;
 
             // get the first placeholder from the parent rendering
-            if (string.IsNullOrEmpty(placeholder) && !string.IsNullOrEmpty(placeholders))
+            if (string.IsNullOrEmpty(placeholder) && !string.IsNullOrEmpty(parentPlaceholders))
             {
-                var n = placeholders.IndexOf(",", 1, StringComparison.InvariantCultureIgnoreCase);
+                var n = parentPlaceholders.IndexOf(",", 1, StringComparison.InvariantCultureIgnoreCase);
                 if (n >= 0)
                 {
-                    placeholder = placeholders.Mid(1, n - 1);
+                    placeholder = parentPlaceholders.Mid(1, n - 1);
                 }
             }
 
@@ -283,11 +283,11 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 return;
             }
                                                                  
-            if (placeholderTextNode != null && !string.IsNullOrEmpty(placeholders))
+            if (placeholderTextNode != null && !string.IsNullOrEmpty(parentPlaceholders))
             {
-                if (placeholders.IndexOf("," + placeholder + ",", StringComparison.InvariantCultureIgnoreCase) < 0)
+                if (parentPlaceholders.IndexOf("," + placeholder + ",", StringComparison.InvariantCultureIgnoreCase) < 0)
                 {
-                    var text = placeholders.Mid(1, placeholders.Length - 2);
+                    var text = parentPlaceholders.Mid(1, parentPlaceholders.Length - 2);
                     if (string.IsNullOrEmpty(text))
                     {
                         text = "[None]";

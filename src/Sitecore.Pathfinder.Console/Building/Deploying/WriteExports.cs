@@ -7,8 +7,6 @@ using System.Xml;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.Xml;
-using Sitecore.Pathfinder.Projects.Items;
-using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.Building.Deploying
 {
@@ -29,7 +27,7 @@ namespace Sitecore.Pathfinder.Building.Deploying
 
             var fileName = PathHelper.Combine(context.ProjectDirectory, context.Configuration.GetString(Constants.Configuration.WriteExportsFileName));
 
-            var fieldToWrite = context.Configuration.GetString(Constants.Configuration.WriteExportsFieldsToWrite).Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(f => f.Trim()).ToList();
+            var fieldToWrite = context.Configuration.GetString(Constants.Configuration.WriteExportsFieldsToWrite).Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(f => f.Trim().ToLowerInvariant()).ToList();
 
             using (var writer = new StreamWriter(fileName))
             {
@@ -39,12 +37,12 @@ namespace Sitecore.Pathfinder.Building.Deploying
 
                     output.WriteStartElement("Exports");
 
-                    foreach (var template in context.Project.ProjectItems.OfType<Template>().Where(template => !template.IsImport))
+                    foreach (var template in context.Project.Templates)
                     {
                         template.WriteAsExportXml(output);
                     }
 
-                    foreach (var item in context.Project.ProjectItems.OfType<Item>().Where(item => !item.IsImport))
+                    foreach (var item in context.Project.Items)
                     {
                         item.WriteAsExportXml(output, fieldToWrite);
                     }

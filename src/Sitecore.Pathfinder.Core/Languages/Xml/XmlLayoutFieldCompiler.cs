@@ -23,13 +23,14 @@ namespace Sitecore.Pathfinder.Languages.Xml
 
         public override bool CanCompile(IFieldCompileContext context, Field field)
         {
+            // avoid being called by Json
             var textNode = TraceHelper.GetTextNode(field.ValueProperty);
             if (!(textNode is XmlTextNode))
             {
                 return false;
             }
 
-            return string.Equals(field.TemplateField.Type, "layout", StringComparison.OrdinalIgnoreCase) || field.ValueHint.Contains("Layout");
+            return string.Equals(field.TemplateField.Type, "layout", StringComparison.OrdinalIgnoreCase) || field.ValueHint.Contains("Layout") || field.FieldName == "__Renderings" || field.FieldName == "Final __Renderings";
         }
 
         public override string Compile(IFieldCompileContext context, Field field)

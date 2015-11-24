@@ -5,6 +5,7 @@ using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
+using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Compiling.Builders
 {
@@ -64,8 +65,9 @@ namespace Sitecore.Pathfinder.Compiling.Builders
         public TemplateField Build([NotNull] Template template)
         {
             Guid fieldIdGuid;
-            if (Guid.TryParse(FieldId, out fieldIdGuid))
+            if (!Guid.TryParse(FieldId, out fieldIdGuid))
             {
+                throw new InvalidOperationException("Template Field Guid is not valid");
             }
 
             var field = Factory.TemplateField(template, fieldIdGuid, FieldTextNode);

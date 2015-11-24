@@ -153,7 +153,7 @@ namespace Sitecore.Pathfinder
 
             public const string WebTestRunnerUrl = "run-unittests:web-test-runner-url";
 
-            public const string WriteExportsFieldsToWrite = "write-exports:fields";
+            public const string WriteExportsFieldsToWrite = "write-exports:fields-to-write";
 
             public const string WriteExportsFileName = "write-exports:filename";
 

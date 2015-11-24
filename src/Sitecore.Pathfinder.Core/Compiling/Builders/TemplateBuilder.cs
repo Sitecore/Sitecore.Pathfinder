@@ -18,6 +18,9 @@ namespace Sitecore.Pathfinder.Compiling.Builders
         }
 
         [NotNull]
+        public string BaseTemplates { get; set; } = string.Empty;
+
+        [NotNull]
         public string DatabaseName { get; set; } = string.Empty;
 
         [NotNull]
@@ -34,17 +37,20 @@ namespace Sitecore.Pathfinder.Compiling.Builders
         public ITextNode IconTextNode { get; set; } = TextNode.Empty;
 
         [NotNull]
+        public ITextNode BaseTemplatesTextNode { get; set; } = TextNode.Empty;
+
+        [NotNull]
         public string ItemIdOrPath { get; set; } = string.Empty;
+
+        [NotNull]
+        [ItemNotNull]
+        public IList<TemplateSectionBuilder> Sections { get; } = new List<TemplateSectionBuilder>();
 
         [NotNull]
         public string TemplateName { get; set; } = string.Empty;
 
         [NotNull]
         public ITextNode TemplateNameTextNode { get; set; } = TextNode.Empty;
-
-        [NotNull]
-        [ItemNotNull]
-        public IList<TemplateSectionBuilder> Sections { get; } = new List<TemplateSectionBuilder>();
 
         [NotNull]
         protected IFactoryService Factory { get; }
@@ -60,7 +66,17 @@ namespace Sitecore.Pathfinder.Compiling.Builders
                 template.ItemNameProperty.AddSourceTextNode(TemplateNameTextNode);
             }
 
-            template.IconProperty.SetValue(IconTextNode);
+            template.BaseTemplates = BaseTemplates;
+            if (BaseTemplatesTextNode != TextNode.Empty)
+            {
+                template.BaseTemplatesProperty.SetValue(BaseTemplatesTextNode);
+            }
+
+            template.Icon = Icon;
+            if (IconTextNode != TextNode.Empty)
+            {
+                template.IconProperty.SetValue(IconTextNode);
+            }
 
             foreach (var sectionBuilder in Sections)
             {

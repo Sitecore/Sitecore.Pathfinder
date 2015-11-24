@@ -16,6 +16,9 @@ namespace Sitecore.Pathfinder.Projects.Items
     [DebuggerDisplay("{GetType().Name,nq}: {FieldName,nq} = {Value}")]
     public class Field : IHasSourceTextNodes
     {
+        [CanBeNull]
+        private TemplateField _templateField;
+
         public Field([NotNull] Item item, [NotNull] ITextNode textNode)
         {
             Item = item;
@@ -112,7 +115,20 @@ namespace Sitecore.Pathfinder.Projects.Items
         public ICollection<ITextNode> SourceTextNodes { get; } = new List<ITextNode>();
 
         [NotNull]
-        public TemplateField TemplateField => Item.Template.Sections.SelectMany(s => s.Fields).FirstOrDefault(f => string.Equals(f.FieldName, FieldName, StringComparison.OrdinalIgnoreCase)) ?? TemplateField.Empty;
+        public TemplateField TemplateField
+        {
+            get
+            {
+                if (_templateField != null)
+                {
+                    return _templateField;
+                }
+
+                var fieldName = FieldName;
+                _templateField = Item.Template.GetAllFields().FirstOrDefault(f => string.Equals(f.FieldName, fieldName, StringComparison.OrdinalIgnoreCase));
+                return _templateField ?? TemplateField.Empty;
+            }
+        }
 
         [NotNull]
         public string Value

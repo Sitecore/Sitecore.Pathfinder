@@ -79,7 +79,12 @@ namespace Sitecore.Pathfinder.WebApi
         protected virtual void BuildDevice([Diagnostics.NotNull] DeviceBuilder deviceBuilder, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] Item deviceItem, [Diagnostics.NotNull] XElement deviceElement, [Diagnostics.NotNull] [ItemNotNull] List<Item> renderingItems)
         {
             deviceBuilder.DeviceName = deviceItem.Name;
-            deviceBuilder.LayoutItemPath = item.Database.GetItem(deviceElement.GetAttributeValue("l"))?.Paths.Path ?? string.Empty;
+
+            var layoutItem = item.Database.GetItem(deviceElement.GetAttributeValue("l"));
+            if (layoutItem != null)
+            {
+                deviceBuilder.LayoutItemPath = layoutItem.Paths.Path;
+            }
 
             foreach (var renderingElement in deviceElement.Elements())
             {
@@ -205,7 +210,7 @@ namespace Sitecore.Pathfinder.WebApi
                         layoutBuilder.WriteAsJson(stringWriter);
                         break;
                     case "item.xml":
-                        layoutBuilder.WriteAsXml(stringWriter);
+                        layoutBuilder.WriteAsXml(stringWriter, item.Database.Name);
                         break;
                     case "item.yaml":
                         layoutBuilder.WriteAsYaml(stringWriter);
@@ -265,6 +270,12 @@ namespace Sitecore.Pathfinder.WebApi
             templateBuilder.TemplateName = templateItem.Name;
             templateBuilder.ItemIdOrPath = templateItem.InnerItem.Paths.Path;
             templateBuilder.Icon = templateItem.InnerItem.Appearance.Icon;
+
+            var baseTemplates = templateItem.BaseTemplates;
+            if (baseTemplates.Length > 1 || (baseTemplates.Length == 1 && baseTemplates[0].ID != TemplateIDs.StandardTemplate))
+            {
+                templateBuilder.BaseTemplates = string.Join("|", baseTemplates.Select(i => i.InnerItem.Paths.Path));
+            }
 
             foreach (var templateSectionItem in templateItem.GetSections())
             {
@@ -397,6 +408,12 @@ namespace Sitecore.Pathfinder.WebApi
             {
                 foreach (var item in database.Query(queryText))
                 {
+                    // template sections and fields are handled by importing the template
+                    if (item.TemplateID == TemplateIDs.TemplateSection || item.TemplateID == TemplateIDs.TemplateField)
+                    {
+                        continue;
+                    }
+
                     var fileName = item.Paths.Path;
                     if (!fileName.StartsWith(rootItemPath))
                     {

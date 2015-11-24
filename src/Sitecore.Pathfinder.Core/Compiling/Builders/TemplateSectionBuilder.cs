@@ -45,8 +45,9 @@ namespace Sitecore.Pathfinder.Compiling.Builders
         public TemplateSection Build([NotNull] Template template)
         {
             Guid sectionIdGuid;
-            if (Guid.TryParse(SectionId, out sectionIdGuid))
+            if (!Guid.TryParse(SectionId, out sectionIdGuid))
             {
+                throw new InvalidOperationException("Template Section Guid is not valid");
             }
 
             var section = Factory.TemplateSection(template, sectionIdGuid, SectionTextNode);

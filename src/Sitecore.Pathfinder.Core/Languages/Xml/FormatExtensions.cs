@@ -126,7 +126,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
             output.WriteEndElement();
         }
 
-        public static void WriteAsXml([NotNull] this LayoutBuilder layoutBuilder, [NotNull] TextWriter writer)
+        public static void WriteAsXml([NotNull] this LayoutBuilder layoutBuilder, [NotNull] TextWriter writer, [NotNull] string databaseName)
         {
             var output = new XmlTextWriter(writer)
             {
@@ -134,7 +134,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
             };
 
             output.WriteStartElement("Layout");
-            output.WriteAttributeString("xmlns", "http://www.sitecore.net/pathfinder/item");
+            output.WriteAttributeString("xmlns", "http://www.sitecore.net/pathfinder/layouts/" + databaseName);
 
             foreach (var deviceBuilder in layoutBuilder.Devices)
             {
@@ -174,10 +174,15 @@ namespace Sitecore.Pathfinder.Languages.Xml
 
             foreach (var field in sharedFields)
             {
+                if (string.Equals(field.TemplateField.Type, "Layout", StringComparison.OrdinalIgnoreCase) || string.Equals(field.FieldName, "__Renderings", StringComparison.OrdinalIgnoreCase) || string.Equals(field.FieldName, "__Final Renderings", StringComparison.OrdinalIgnoreCase))
+                {
+                    field.Value.ToXElement()?.WriteTo(output);
+                    continue;
+                }
+
                 output.WriteStartElement("Field");
                 output.WriteAttributeString("Name", field.FieldName);
 
-                // todo: hmm... unsure how to escape it
                 output.WriteRaw(EscapeFieldValue(field.Value));
                 output.WriteEndElement();
             }
@@ -189,6 +194,12 @@ namespace Sitecore.Pathfinder.Languages.Xml
 
                 foreach (var field in unversionedFields.Where(f => f.Language == language))
                 {
+                    if (string.Equals(field.TemplateField.Type, "Layout", StringComparison.OrdinalIgnoreCase) || string.Equals(field.FieldName, "__Renderings", StringComparison.OrdinalIgnoreCase) || string.Equals(field.FieldName, "__Final Renderings", StringComparison.OrdinalIgnoreCase))
+                    {
+                        field.Value.ToXElement()?.WriteTo(output);
+                        continue;
+                    }
+
                     output.WriteStartElement("Field");
                     output.WriteAttributeString("Name", field.FieldName);
                     output.WriteRaw(EscapeFieldValue(field.Value));
@@ -210,6 +221,12 @@ namespace Sitecore.Pathfinder.Languages.Xml
 
                     foreach (var field in versionedFields.Where(f => f.Language == language && f.Version == version))
                     {
+                        if (string.Equals(field.TemplateField.Type, "Layout", StringComparison.OrdinalIgnoreCase) || string.Equals(field.FieldName, "__Renderings", StringComparison.OrdinalIgnoreCase) || string.Equals(field.FieldName, "__Final Renderings", StringComparison.OrdinalIgnoreCase))
+                        {
+                            field.Value.ToXElement()?.WriteTo(output);
+                            continue;
+                        }
+
                         output.WriteStartElement("Field");
                         output.WriteAttributeString("Name", field.FieldName);
                         output.WriteRaw(EscapeFieldValue(field.Value));
@@ -278,6 +295,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
         [NotNull]
         private static string EscapeFieldValue([NotNull] string value)
         {
+            // todo: hmm... unsure how to escape it
             return value.Replace("&", "&amp;");
         }
 
