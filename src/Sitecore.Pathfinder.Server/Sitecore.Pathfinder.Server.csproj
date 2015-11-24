@@ -219,6 +219,7 @@
     <Content Include="sitecore\shell\client\Applications\Pathfinder\Packages.cshtml" />
     <Content Include="sitecore\shell\client\Applications\Pathfinder\web.config" />
     <Content Include="sitecore\shell\client\Applications\Pathfinder\Package.cshtml" />
+    <Content Include="Readme.md" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

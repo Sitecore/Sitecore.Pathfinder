@@ -73,6 +73,9 @@
   <ItemGroup>
     <None Include="build.cmd" />
     <None Include="packages.config" />
+    <None Include="readme.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Sitecore.Pathfinder.Core\Sitecore.Pathfinder.Core.csproj">
