@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
 
         public int Indentation { get; set; } = 4;
 
-        protected int Indent { get; set; }
+        public int Indent { get; protected set; }
 
         [NotNull]
         protected TextWriter InnerWriter { get; }
@@ -77,9 +77,9 @@ namespace Sitecore.Pathfinder.Languages.Yaml
             Indent--;
         }
 
-        public void WriteStartElement([NotNull] string key, [NotNull] string value = "", bool includeDash = true)
+        public void WriteStartElement([NotNull] string key, [NotNull] string value = "")
         {
-            if (includeDash && !key.StartsWith("-"))
+            if (Indent > 0 && !key.StartsWith("-"))
             {
                 key = "- " + key;
             }

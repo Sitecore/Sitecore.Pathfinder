@@ -36,7 +36,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
             output.WriteEndElement();
         }
 
-        public static void WriteAsYaml([NotNull] this Item item, [NotNull] TextWriter writer, [CanBeNull] Action<TextWriter> writeInner = null)
+        public static void WriteAsYaml([NotNull] this Item item, [NotNull] TextWriter writer, [CanBeNull] Action<TextWriter, int> writeInner = null)
         {
             var output = new YamlTextWriter(writer);
 
@@ -44,7 +44,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
             var unversionedFields = item.Fields.Where(f => !string.IsNullOrEmpty(f.Language) && f.Version == 0).ToList();
             var versionedFields = item.Fields.Where(f => !string.IsNullOrEmpty(f.Language) && f.Version != 0).ToList();
 
-            output.WriteStartElement("Item", string.Empty, false);
+            output.WriteStartElement("Item");
 
             output.WriteAttributeString("Id", item.Uri.Guid.Format());
             output.WriteAttributeStringIf("Database", item.DatabaseName);
@@ -112,7 +112,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
 
             if (writeInner != null)
             {
-                writeInner(writer);
+                writeInner(writer, output.Indent);
             }
         }
 
@@ -120,7 +120,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
         {
             var output = new YamlTextWriter(writer);
 
-            output.WriteStartElement("Template", string.Empty, false);
+            output.WriteStartElement("Template");
             output.WriteAttributeString("Name", template.ItemName);
             output.WriteAttributeStringIf("Id", template.Uri.Guid.Format());
             output.WriteAttributeStringIf("Database", template.DatabaseName);
