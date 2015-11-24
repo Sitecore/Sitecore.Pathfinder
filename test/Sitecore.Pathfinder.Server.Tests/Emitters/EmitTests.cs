@@ -2,10 +2,7 @@
 
 using System.IO;
 using System.Reflection;
-using Sitecore.Exceptions;
-using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Emitters;
-using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 
@@ -33,7 +30,7 @@ namespace Sitecore.Pathfinder.Server.Tests.Emitters
             var app = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(projectDirectory).Start();
             if (app == null)
             {
-                throw new ConfigurationException("Oh no, nothing works!");
+                throw new Exceptions.ConfigurationException("Oh no, nothing works!");
             }
 
             var emitter = app.CompositionService.Resolve<Emitter>();
