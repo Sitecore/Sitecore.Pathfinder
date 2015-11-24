@@ -70,6 +70,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ---------------.
+        /// </summary>
+        public static string _______________ {
+            get {
+                return ResourceManager.GetString("_______________", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to : Boolean parameter must have value &quot;True&quot; or &quot;False&quot;.
         /// </summary>
         public static string @__Boolean_parameter_must_have_value__True__or__False_ {
@@ -476,6 +485,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to load assembly: {0}: {1}.
+        /// </summary>
+        public static string Failed_to_load_assembly___0____1_ {
+            get {
+                return ResourceManager.GetString("Failed_to_load_assembly___0____1_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to upload media.
         /// </summary>
         public static string Failed_to_upload_media {
@@ -517,6 +535,15 @@ namespace Sitecore.Pathfinder {
         public static string File_path_must_start_with____ {
             get {
                 return ResourceManager.GetString("File_path_must_start_with____", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Files.
+        /// </summary>
+        public static string Files {
+            get {
+                return ResourceManager.GetString("Files", resourceCulture);
             }
         }
         
@@ -666,6 +693,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Items.
+        /// </summary>
+        public static string Items {
+            get {
+                return ResourceManager.GetString("Items", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Json file is not valid.
         /// </summary>
         public static string Json_file_is_not_valid {
@@ -722,6 +758,24 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Layout is not valid.
+        /// </summary>
+        public static string Layout_is_not_valid {
+            get {
+                return ResourceManager.GetString("Layout_is_not_valid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Layout not found.
+        /// </summary>
+        public static string Layout_not_found {
+            get {
+                return ResourceManager.GetString("Layout_not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Layout not found..
         /// </summary>
         public static string Layout_not_found_ {
@@ -772,6 +826,15 @@ namespace Sitecore.Pathfinder {
         public static string Media_item_not_found {
             get {
                 return ResourceManager.GetString("Media_item_not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Microsoft.CodeAnalysis.dll is missing. Extensions will not be compiled..
+        /// </summary>
+        public static string Microsoft_CodeAnalysis_dll_is_missing__Extensions_will_not_be_loaded_ {
+            get {
+                return ResourceManager.GetString("Microsoft_CodeAnalysis_dll_is_missing__Extensions_will_not_be_loaded_", resourceCulture);
             }
         }
         
@@ -857,6 +920,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Project Metrics.
+        /// </summary>
+        public static string Project_Metrics {
+            get {
+                return ResourceManager.GetString("Project_Metrics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Publishing database....
         /// </summary>
         public static string Publishing___ {
@@ -938,6 +1010,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to System.Collections.Immutable.dll is missing. Extensions will not be compiled..
+        /// </summary>
+        public static string System_Collections_Immutable_dll_is_missing__Extensions_will_not_be_loaded_ {
+            get {
+                return ResourceManager.GetString("System_Collections_Immutable_dll_is_missing__Extensions_will_not_be_loaded_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to System configuration file not found.
         /// </summary>
         public static string System_configuration_file_not_found {
@@ -1006,6 +1087,15 @@ namespace Sitecore.Pathfinder {
         public static string Template_missing {
             get {
                 return ResourceManager.GetString("Template_missing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Templates.
+        /// </summary>
+        public static string Templates {
+            get {
+                return ResourceManager.GetString("Templates", resourceCulture);
             }
         }
         

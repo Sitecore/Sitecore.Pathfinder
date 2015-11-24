@@ -55,6 +55,7 @@ namespace Sitecore.Pathfinder
             public const string BuildProject = "build-project:tasks";
 
             public const string BuildProjectContentFiles = "build-project:content-files";
+            public const string BuildProjectMediaTemplate = "build-project:media:template";
 
             public const string BuildProjectFiles = "build-project:files";
 

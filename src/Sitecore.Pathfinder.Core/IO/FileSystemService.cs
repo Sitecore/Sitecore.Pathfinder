@@ -6,9 +6,7 @@ using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using System.Net;
 using System.Text;
-using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.IO
 {

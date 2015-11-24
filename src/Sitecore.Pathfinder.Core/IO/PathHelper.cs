@@ -143,7 +143,7 @@ namespace Sitecore.Pathfinder.IO
             localFileDirectory = "/" + NormalizeItemPath(localFileDirectory).Trim('/');
             serverFileDirectory = "/" + NormalizeItemPath(serverFileDirectory).Trim('/');
 
-            if (filePath.StartsWith(localFileDirectory, StringComparison.OrdinalIgnoreCase))                                
+            if (filePath.StartsWith(localFileDirectory, StringComparison.OrdinalIgnoreCase))
             {
                 filePath = serverFileDirectory.TrimEnd('/') + "/" + filePath.Mid(localFileDirectory.Length).TrimStart('/');
             }
@@ -223,6 +223,22 @@ namespace Sitecore.Pathfinder.IO
         public static string NormalizeItemPath([NotNull] string filePath)
         {
             return filePath.Replace("\\", "/").TrimEnd('/');
+        }
+
+        [NotNull]
+        public static string RemapDirectory([NotNull] string fileName, [NotNull] string sourceDirectory, [NotNull] string destinationDirectory)
+        {
+            fileName = NormalizeFilePath(fileName);
+            sourceDirectory = NormalizeFilePath(sourceDirectory).TrimEnd('\\');
+
+            if (!fileName.StartsWith(sourceDirectory + "\\", StringComparison.OrdinalIgnoreCase))
+            {
+                return fileName;
+            }
+
+            destinationDirectory = NormalizeFilePath(destinationDirectory).TrimEnd('\\');
+
+            return Path.Combine(destinationDirectory, fileName.Mid(sourceDirectory.Length).TrimStart('\\'));
         }
 
         [NotNull]

@@ -128,7 +128,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
 
             foreach (var sourceFileName in context.FileSystem.GetFiles(sourceDirectory, SearchOption.AllDirectories))
             {
-                var targetFileName = Path.Combine(websiteDirectory, sourceFileName.Mid(sourceDirectory.Length + 1));
+                var targetFileName = PathHelper.RemapDirectory(sourceFileName, sourceDirectory, websiteDirectory);
                 if (!context.FileSystem.FileExists(targetFileName))
                 {
                     context.FileSystem.Copy(sourceFileName, targetFileName);
@@ -144,14 +144,14 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
                     {
                         context.FileSystem.Copy(sourceFileName, targetFileName);
                         writeMessage = true;
+                        continue;
                     }
-
-                    continue;
                 }
 
+                // update file if length or last write time has changed
                 var sourceFileInfo = new FileInfo(sourceFileName);
                 var targetFileInfo = new FileInfo(targetFileName);
-                if (sourceFileInfo.Length != targetFileInfo.Length)
+                if (sourceFileInfo.Length != targetFileInfo.Length || sourceFileInfo.LastWriteTimeUtc > targetFileInfo.LastWriteTimeUtc)
                 {
                     context.FileSystem.Copy(sourceFileName, targetFileName);
                     writeMessage = true;

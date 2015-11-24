@@ -8,8 +8,10 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
+using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
+using Sitecore.Exceptions;
 using Sitecore.IO;
 using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Configuration;
@@ -135,38 +137,7 @@ namespace Sitecore.Pathfinder.WebApi
             // shared fields
             foreach (var field in sharedFields.OrderBy(f => f.Name))
             {
-                var value = field.Value;
-                if (Data.ID.IsID(value))
-                {
-                    var i = item.Database.GetItem(value);
-                    if (i != null)
-                    {
-                        value = i.Paths.Path;
-                    }
-                }
-
-                if (field.Name == "__Renderings")
-                {
-                    var layoutBuilder = new LayoutBuilder();
-                    BuildLayout(layoutBuilder, item, value);
-
-                    var stringWriter = new StringWriter();
-                    switch (format.ToLowerInvariant())
-                    {
-                        case "item.json":
-                            layoutBuilder.WriteAsJson(stringWriter);
-                            break;
-                        case "item.xml":
-                            layoutBuilder.WriteAsXml(stringWriter);
-                            break;
-                        case "item.yaml":
-                            layoutBuilder.WriteAsYaml(stringWriter);
-                            break;
-                    }
-
-                    value = stringWriter.ToString();
-                }
-
+                var value = GetFieldValue(field, item, format);
                 var fieldBuilder = new FieldBuilder(Factory)
                 {
                     FieldName = field.Name,
@@ -179,16 +150,7 @@ namespace Sitecore.Pathfinder.WebApi
             // unversioned fields
             foreach (var field in unversionedFields.OrderBy(f => f.Name))
             {
-                var value = field.Value;
-                if (Data.ID.IsID(value))
-                {
-                    var i = item.Database.GetItem(value);
-                    if (i != null)
-                    {
-                        value = i.Paths.Path;
-                    }
-                }
-
+                var value = GetFieldValue(field, item, format);
                 var fieldBuilder = new FieldBuilder(Factory)
                 {
                     FieldName = field.Name,
@@ -202,16 +164,7 @@ namespace Sitecore.Pathfinder.WebApi
             // versioned fields
             foreach (var field in versionedFields.OrderBy(f => f.Name))
             {
-                var value = field.Value;
-                if (Data.ID.IsID(value))
-                {
-                    var i = item.Database.GetItem(value);
-                    if (i != null)
-                    {
-                        value = i.Paths.Path;
-                    }
-                }
-
+                var value = GetFieldValue(field, item, format);
                 var fieldBuilder = new FieldBuilder(Factory)
                 {
                     FieldName = field.Name,
@@ -224,6 +177,44 @@ namespace Sitecore.Pathfinder.WebApi
             }
 
             return itemBuilder.Build(project, TextNode.Empty);
+        }
+
+        [Diagnostics.NotNull]
+        protected virtual string GetFieldValue([Diagnostics.NotNull] Field field, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string format)
+        {
+            var value = field.Value;
+            if (Data.ID.IsID(value))
+            {
+                var i = item.Database.GetItem(value);
+                if (i != null)
+                {
+                    value = i.Paths.Path;
+                }
+            }
+
+            if (field.Name == "__Renderings")
+            {
+                var layoutBuilder = new LayoutBuilder();
+                BuildLayout(layoutBuilder, item, value);
+
+                // todo: make this pluggable
+                var stringWriter = new StringWriter();
+                switch (format.ToLowerInvariant())
+                {
+                    case "item.json":
+                        layoutBuilder.WriteAsJson(stringWriter);
+                        break;
+                    case "item.xml":
+                        layoutBuilder.WriteAsXml(stringWriter);
+                        break;
+                    case "item.yaml":
+                        layoutBuilder.WriteAsYaml(stringWriter);
+                        break;
+                }
+
+                value = stringWriter.ToString();
+            }
+            return value;
         }
 
         protected virtual void BuildLayout([Diagnostics.NotNull] LayoutBuilder layoutBuilder, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string layout)
@@ -324,8 +315,15 @@ namespace Sitecore.Pathfinder.WebApi
 
         protected virtual void ImportFiles([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] string key)
         {
-            var sourceDirectory = PathHelper.NormalizeFilePath(Path.Combine(WebsiteDirectory, PathHelper.NormalizeFilePath(app.Configuration.GetString(key + ":website-directory")).TrimStart('\\'))).TrimEnd('\\');
-            var projectDirectory = PathHelper.NormalizeFilePath(Path.Combine(app.ProjectDirectory, PathHelper.NormalizeFilePath(app.Configuration.GetString(key + ":project-directory")).TrimStart('\\'))).TrimEnd('\\');
+            var map = app.Configuration.GetString(key + ":map-website-directory-to-project-directory");
+            var n = map.IndexOf("=>", StringComparison.OrdinalIgnoreCase);
+            if (n < 0)
+            {
+                throw new Diagnostics.ConfigurationException("Configuration setting 'map-website-directory-to-project-directory' is invalid. Are you missing a '=>'?");
+            }
+
+            var sourceDirectory = PathHelper.NormalizeFilePath(Path.Combine(WebsiteDirectory, PathHelper.NormalizeFilePath(map.Left(n).Trim()).TrimStart('\\'))).TrimEnd('\\');
+            var projectDirectory = PathHelper.NormalizeFilePath(Path.Combine(app.ProjectDirectory, PathHelper.NormalizeFilePath(map.Mid(n + 2).Trim()).TrimStart('\\'))).TrimEnd('\\');
 
             if (!FileSystem.DirectoryExists(sourceDirectory))
             {
@@ -338,10 +336,10 @@ namespace Sitecore.Pathfinder.WebApi
 
             IEnumerable<string> fileNames;
 
-            var fileNameList = app.Configuration.GetList(key + ":file-names").ToList();
-            if (fileNameList.Any())
+            var files = app.Configuration.GetList(key + ":files").ToList();
+            if (files.Any())
             {
-                fileNames = fileNameList.Select(f => Path.Combine(sourceDirectory, PathHelper.NormalizeFilePath(f).TrimStart('\\')));
+                fileNames = files.Select(f => Path.Combine(sourceDirectory, PathHelper.NormalizeFilePath(f).TrimStart('\\')));
             }
             else if (!string.IsNullOrEmpty(include) || !string.IsNullOrEmpty(exclude))
             {
@@ -380,11 +378,19 @@ namespace Sitecore.Pathfinder.WebApi
             var excludedFields = app.Configuration.GetList("import-website:exclude-fields");
 
             var databaseName = app.Configuration.GetString(key + ":database");
-            var rootItemPath = app.Configuration.GetString(key + ":root-item-path").TrimEnd('/');
+
+            var map = app.Configuration.GetString(key + ":map-item-path-to-file-path", "/ => /content/" + databaseName);
+            var n = map.IndexOf("=>", StringComparison.OrdinalIgnoreCase);
+            if (n < 0)
+            {
+               throw new Diagnostics.ConfigurationException("Configuration setting 'map-item-path-to-file-path' is invalid. Are you missing a '=>'?");
+            }
+
+            var rootItemPath = PathHelper.NormalizeItemPath(map.Left(n)).Trim().TrimEnd('/');
             var queryText = app.Configuration.GetString(key + ":query");
             var useDirectories = app.Configuration.GetBool(key + ":use-directories", true);
             var format = app.Configuration.GetString(key + ":format", "item.xml");
-            var projectDirectory = PathHelper.NormalizeFilePath(Path.Combine(app.ProjectDirectory, PathHelper.NormalizeFilePath(app.Configuration.GetString(key + ":project-directory")).TrimStart('\\'))).TrimEnd('\\');
+            var projectDirectory = PathHelper.NormalizeFilePath(Path.Combine(app.ProjectDirectory, PathHelper.NormalizeFilePath(map.Mid(n + 2).Trim()).TrimStart('\\'))).TrimEnd('\\');
 
             var database = Sitecore.Configuration.Factory.GetDatabase(databaseName);
             using (new SecurityDisabler())
@@ -539,6 +545,7 @@ namespace Sitecore.Pathfinder.WebApi
 
             using (var stream = new StreamWriter(fileName))
             {
+                // todo: make this pluggable
                 switch (format.ToLowerInvariant())
                 {
                     case "item.json":
@@ -572,6 +579,7 @@ namespace Sitecore.Pathfinder.WebApi
 
             using (var stream = new StreamWriter(fileName))
             {
+                // todo: make this pluggable
                 switch (format.ToLowerInvariant())
                 {
                     case "item.json":

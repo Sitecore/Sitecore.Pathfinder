@@ -3,7 +3,6 @@
 using System;
 using System.Linq;
 using Sitecore.Configuration;
-using Sitecore.Data;
 using Sitecore.Data.Managers;
 using Sitecore.Data.Templates;
 using Sitecore.Pathfinder.Diagnostics;
@@ -134,6 +133,55 @@ namespace Sitecore.Pathfinder.Emitters.Items
                     if (language == null)
                     {
                         throw new RetryableEmitException(Texts.Language_not_found, TraceHelper.GetTextNode(field.ValueProperty), field.Language);
+                    }
+                }
+
+                if (field.FieldName == "__Renderings" ||field.FieldName == "__Final Renderings" || field.TemplateField.Type == "Layout")
+                {
+                    ValidateLayout(database, field, field.CompiledValue);
+                }
+            }
+        }
+
+        protected void ValidateLayout([Diagnostics.NotNull] Data.Database database, [Diagnostics.NotNull] Field field, [Diagnostics.NotNull] string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return;
+            }
+
+            var root = value.ToXElement();
+            if (root == null)
+            {
+                throw new EmitException(Texts.Layout_is_not_valid, TraceHelper.GetTextNode(field.FieldNameProperty, field));
+            }
+
+            foreach (var deviceElement in root.Elements())
+            {
+                var deviceId = deviceElement.GetAttributeValue("id");
+                var device = database.GetItem(deviceId);
+                if (device == null)
+                {
+                    throw new RetryableEmitException(Texts.Device_not_found, TraceHelper.GetTextNode(field.FieldNameProperty, field), deviceId);
+                }
+
+                var layoutId = deviceElement.GetAttributeValue("l");
+                if (!string.IsNullOrEmpty(layoutId))
+                {
+                    var layout = database.GetItem(layoutId);
+                    if (layout == null)
+                    {
+                        throw new RetryableEmitException(Texts.Layout_not_found, TraceHelper.GetTextNode(field.FieldNameProperty, field), deviceId);
+                    }
+                }
+
+                foreach (var renderingElement in deviceElement.Elements())
+                {
+                    var renderingId = renderingElement.GetAttributeValue("id");
+                    var rendering = database.GetItem(renderingId);
+                    if (rendering == null)
+                    {
+                        throw new RetryableEmitException(Texts.Rendering_not_found, TraceHelper.GetTextNode(field.FieldNameProperty, field), deviceId);
                     }
                 }
             }

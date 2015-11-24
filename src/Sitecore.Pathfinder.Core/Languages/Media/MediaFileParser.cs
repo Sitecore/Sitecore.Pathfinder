@@ -1,39 +1,22 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.IO;
-using System.Linq;
-using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Parsing;
 
 namespace Sitecore.Pathfinder.Languages.Media
 {
     public class MediaFileParser : ParserBase
     {
-        // todo: make this configurable
-        [NotNull]
-        [ItemNotNull]
-        private static readonly string[] FileExtensions =
-        {
-            ".png",
-            ".gif",
-            ".bmp",
-            ".jpg",
-            ".jpeg",
-            ".docx",
-            ".doc",
-            ".pdf",
-            ".zip",
-        };
-
         public MediaFileParser() : base(Constants.Parsers.Media)
         {
         }
 
         public override bool CanParse(IParseContext context)
         {
-            var fileExtension = Path.GetExtension(context.Snapshot.SourceFile.AbsoluteFileName);
-            return FileExtensions.Contains(fileExtension, StringComparer.OrdinalIgnoreCase);
+            var extension = Path.GetExtension(context.Snapshot.SourceFile.AbsoluteFileName).TrimStart('.').ToLowerInvariant();
+            var templateIdOrPath = context.Configuration.Get(Constants.Configuration.BuildProjectMediaTemplate + ":" + extension);
+
+            return templateIdOrPath != null;
         }
 
         public override void Parse(IParseContext context)

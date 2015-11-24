@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Extensibility
     public class CsharpCompilerService
     {
         [CanBeNull]
-        public Assembly Compile([NotNull] string assemblyFileName, [NotNull] [ItemNotNull] IEnumerable<string> sourceFileNames)
+        public Assembly Compile([NotNull] string toolsDirectory, [NotNull] string assemblyFileName, [NotNull] [ItemNotNull] IEnumerable<string> sourceFileNames)
         {
             // check if assembly is newer than all checkers
             if (File.Exists(assemblyFileName))
@@ -25,6 +25,20 @@ namespace Sitecore.Pathfinder.Extensibility
                 {
                     return Assembly.LoadFrom(assemblyFileName);
                 }
+            }
+
+            var collectionsFileName = Path.Combine(toolsDirectory, "System.Collections.Immutable.dll");
+            if (!File.Exists(collectionsFileName))
+            {
+                Console.WriteLine(Texts.System_Collections_Immutable_dll_is_missing__Extensions_will_not_be_loaded_);
+                return null;
+            }
+
+            var codeAnalysisFileName = Path.Combine(toolsDirectory, "Microsoft.CodeAnalysis.dll");
+            if (!File.Exists(codeAnalysisFileName))
+            {
+                Console.WriteLine(Texts.Microsoft_CodeAnalysis_dll_is_missing__Extensions_will_not_be_loaded_);
+                return null;
             }
 
             // compile extensions

@@ -96,6 +96,7 @@ namespace Sitecore.Pathfinder.Extensibility
                 return;
             }
 
+            // only load Sitecore.Pathfinder.*.dll assemblies for performance
             foreach (var fileName in Directory.GetFiles(directory, "Sitecore.Pathfinder.*.dll", SearchOption.AllDirectories))
             {
                 if (!string.Equals(fileName, assemblyFileName, StringComparison.OrdinalIgnoreCase))
@@ -112,20 +113,6 @@ namespace Sitecore.Pathfinder.Extensibility
                 return;
             }
 
-            var collectionsFileName = Path.Combine(toolsDirectory, "System.Collections.Immutable.dll");
-            if (!File.Exists(collectionsFileName))
-            {
-                Console.WriteLine("System.Collections.Immutable.dll is missing. Extensions will not be loaded.");
-                return;
-            }
-
-            var codeAnalysisFileName = Path.Combine(toolsDirectory, "Microsoft.CodeAnalysis.dll");
-            if (!File.Exists(codeAnalysisFileName))
-            {
-                Console.WriteLine("Microsoft.CodeAnalysis.dll is missing. Extensions will not be loaded.");
-                return;
-            }
-
             var compilerService = new CsharpCompilerService();
 
             var fileNames = Directory.GetFiles(directory, "*.cs", SearchOption.AllDirectories);
@@ -134,7 +121,7 @@ namespace Sitecore.Pathfinder.Extensibility
                 return;
             }
 
-            var assembly = compilerService.Compile(assemblyFileName, fileNames);
+            var assembly = compilerService.Compile(toolsDirectory, assemblyFileName, fileNames);
             if (assembly != null)
             {
                 catalogs.Add(new AssemblyCatalog(assembly));
@@ -143,6 +130,7 @@ namespace Sitecore.Pathfinder.Extensibility
 
         private static void AddFeatureAssemblies([NotNull] [ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string toolsDirectory)
         {
+            // only load Sitecore.Pathfinder.*.dll assemblies for performance
             foreach (var fileName in Directory.GetFiles(toolsDirectory, "Sitecore.Pathfinder.*.dll", SearchOption.TopDirectoryOnly))
             {
                 // already added
@@ -157,7 +145,7 @@ namespace Sitecore.Pathfinder.Extensibility
                 }
                 catch (FileLoadException ex)
                 {
-                   Console.WriteLine("Failed to load assembly: {0}: {1}", ex.Message, fileName);
+                   Console.WriteLine(Texts.Failed_to_load_assembly___0____1_, ex.Message, fileName);
                 }
             }
         }

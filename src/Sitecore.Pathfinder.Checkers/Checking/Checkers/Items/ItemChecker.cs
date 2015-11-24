@@ -52,16 +52,10 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
                 return;
             }
 
-            var templateFields = template.GetAllFields();
+            var templateFields = template.GetAllFields().ToList();
 
             foreach (var field in item.Fields)
             {
-                var standardField = context.Project.Options.StandardTemplateFields.FirstOrDefault(f => string.Equals(f, field.FieldName, StringComparison.OrdinalIgnoreCase));
-                if (standardField != null)
-                {
-                    continue;
-                }
-
                 var templateField = templateFields.FirstOrDefault(f => string.Equals(f.FieldName, field.FieldName, StringComparison.OrdinalIgnoreCase));
                 if (templateField == null)
                 {

@@ -36,6 +36,12 @@ namespace Sitecore.Pathfinder.IO
         }
 
         [Test]
+        public void RemapDirectory()
+        {
+            Assert.AreEqual("c:\\5\\6\\3\\4.txt", PathHelper.RemapDirectory("c:\\1\\2\\3\\4.txt", "c:\\1\\2", "c:\\5\\6"));
+        }
+
+        [Test]
         public void GetFileNameWithoutExtensionsTests()
         {
             Assert.AreEqual("test", PathHelper.GetFileNameWithoutExtensions("\\sitecore\\client\\test.txt"));

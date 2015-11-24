@@ -64,7 +64,7 @@ namespace Sitecore.Pathfinder.Building
 
                 if (_stopwatch != null)
                 {
-                    Console.Write(". Time: {0}ms", _stopwatch.Elapsed.TotalMilliseconds.ToString("#,##0"));
+                    Console.Write(", time: {0}ms", _stopwatch.Elapsed.TotalMilliseconds.ToString("#,##0"));
                 }
 
                 Console.WriteLine();

@@ -507,4 +507,34 @@
     <data name="Item_is_not_in_root_item_path__Skipping_" xml:space="preserve">
     <value>Item is not in root-item-path. Skipping.</value>
   </data>
+    <data name="System_Collections_Immutable_dll_is_missing__Extensions_will_not_be_loaded_" xml:space="preserve">
+    <value>System.Collections.Immutable.dll is missing. Extensions will not be compiled.</value>
+  </data>
+    <data name="Microsoft_CodeAnalysis_dll_is_missing__Extensions_will_not_be_loaded_" xml:space="preserve">
+    <value>Microsoft.CodeAnalysis.dll is missing. Extensions will not be compiled.</value>
+  </data>
+    <data name="Failed_to_load_assembly___0____1_" xml:space="preserve">
+    <value>Failed to load assembly: {0}: {1}</value>
+  </data>
+    <data name="Layout_is_not_valid" xml:space="preserve">
+    <value>Layout is not valid</value>
+  </data>
+    <data name="Layout_not_found" xml:space="preserve">
+    <value>Layout not found</value>
+  </data>
+    <data name="Project_Metrics" xml:space="preserve">
+    <value>Project Metrics</value>
+  </data>
+    <data name="_______________" xml:space="preserve">
+    <value>---------------</value>
+  </data>
+    <data name="Items" xml:space="preserve">
+    <value>Items</value>
+  </data>
+    <data name="Templates" xml:space="preserve">
+    <value>Templates</value>
+  </data>
+    <data name="Files" xml:space="preserve">
+    <value>Files</value>
+  </data>
 </root>

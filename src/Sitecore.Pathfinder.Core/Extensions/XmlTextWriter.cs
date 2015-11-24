@@ -27,7 +27,7 @@ namespace Sitecore.Pathfinder.Extensions
             textWriter.WriteAttributeString(localName, value.ToString());
         }
 
-        public static void WriteAttributeStringIf([NotNull] this XmlTextWriter textWriter, [NotNull] string localName, bool value, bool defaultValue = true)
+        public static void WriteAttributeStringIf([NotNull] this XmlTextWriter textWriter, [NotNull] string localName, bool value, bool defaultValue = false)
         {
             if (value == defaultValue)
             {

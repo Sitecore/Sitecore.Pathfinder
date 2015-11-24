@@ -2,11 +2,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects.Templates
 {
+    [DebuggerDisplay("{GetType().Name,nq}: {FieldName}")]
     public class TemplateField : IHasSourceTextNodes
     {
         [NotNull]

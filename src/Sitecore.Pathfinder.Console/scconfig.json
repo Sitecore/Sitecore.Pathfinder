@@ -31,6 +31,25 @@
         "ignore-directories": ".vscode, sitecore.filetemplates, sitecore.project, sitecore.tools, node_modules, roslyn, includes",
         "ignore-filenames": "scc.cmd, project.json, readme.md, web.config",
 
+        "media": {
+            "template": {
+                "jpeg": "/sitecore/templates/System/Media/Unversioned/Jpeg",
+                "jpg": "/sitecore/templates/System/Media/Unversioned/Jpeg",
+                "gif": "/sitecore/templates/System/Media/Unversioned/Image",
+                "bmp": "/sitecore/templates/System/Media/Unversioned/Image",
+                "png": "/sitecore/templates/System/Media/Unversioned/Image",
+                "tiff": "/sitecore/templates/System/Media/Unversioned/Image",
+                "pdf": "/sitecore/templates/System/Media/Unversioned/Pdf",
+                "zip": "/sitecore/templates/System/Media/Unversioned/Zip",
+                "wav": "/sitecore/templates/System/Media/Unversioned/Audio",
+                "mp3": "/sitecore/templates/System/Media/Unversioned/Mp3",
+                "doc": "/sitecore/templates/System/Media/Unversioned/Doc",
+                "docx": "/sitecore/templates/System/Media/Unversioned/Docx",
+                "mp4": "/sitecore/templates/System/Media/Unversioned/Movie",
+                "m4v": "/sitecore/templates/System/Media/Unversioned/Movie"
+            }
+        },
+
         // default search pattern
         "search-pattern": "*"
     },
@@ -67,40 +86,34 @@
         "exclude-fields": "__Created, __Created by, __Owner, __Revision, __Updated, __Updated by, Blob",
         "cleanblog-0": {
             "database": "master",
-            "root-item-path": "/",
+            "map-item-path-to-file-path": "/ => /content/master",
             "query": "/sitecore/content/Home/CleanBlog | /sitecore/content/Home/CleanBlog//*",
-            "project-directory": "/content/master",
             "use-directories": true,
             "single-file": true,
             "format": "item.xml"
         },
         "cleanblog-1": {
             "database": "master",
-            "root-item-path": "/sitecore/media library/CleanBlog",
+            "map-item-path-to-file-path": "/sitecore/media library/CleanBlog => /wwwroot/img",
             "query": "/sitecore/media library/CleanBlog//*",
             "use-directories": true,
-            "project-directory": "/wwwroot/img",
             "format": "item.xml"
         },
         "cleanblog-2": {
             "database": "master",
-            "root-item-path": "/",
+            "map-item-path-to-file-path": "/ => /content/master",
             "query": "/sitecore/templates/CleanBlog//*[@@templatekey='template']",
-            "project-directory": "/content/master",
             "use-directories": true,
             "format": "item.xml"
         },
         "cleanblog-3": {
-            "website-directory": "/css",
-            "project-directory": "/wwwroot/css"
+            "map-website-directory-to-project-directory": "/css => /wwwroot/css"
+        },
+        "cleanblog-4": {
+            "map-website-directory-to-project-directory": "/js => /wwwroot/js"
         },
         "cleanblog-5": {
-            "website-directory": "/js",
-            "project-directory": "/wwwroot/js"
-        },
-        "cleanblog-7": {
-            "website-directory": "/CleanBlog/layout/renderings",
-            "project-directory": "/wwwroot"
+            "map-website-directory-to-project-directory": "/CleanBlog/layout/renderings => /wwwroot"
         }
     },
 
