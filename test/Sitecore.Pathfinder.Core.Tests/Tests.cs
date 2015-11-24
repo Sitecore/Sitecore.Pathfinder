@@ -13,8 +13,8 @@ namespace Sitecore.Pathfinder
 {
     public abstract class Tests
     {
-        public const string GoodWebsite = "..\\..\\..\\Website.Good\\bin";
-        public const string BadWebsite = "..\\..\\..\\Website.Bad\\bin";
+        public const string GoodWebsite = "Website.Good\\bin";
+        public const string BadWebsite = "Website.Bad\\bin";
 
         [NotNull]
         public string ProjectDirectory { get; private set; } = string.Empty;
@@ -34,7 +34,9 @@ namespace Sitecore.Pathfinder
 
         protected void Start([NotNull] string website, [CanBeNull] Action mock = null)
         {
-            ProjectDirectory = PathHelper.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, website);
+
+            var projectDir =  Directory.GetParent(Directory.GetCurrentDirectory()).Parent;
+            ProjectDirectory = PathHelper.Combine(Path.GetDirectoryName(projectDir?.FullName) ?? string.Empty, website);
 
             Services = new Services();
             Services.Start(ProjectDirectory, mock);
