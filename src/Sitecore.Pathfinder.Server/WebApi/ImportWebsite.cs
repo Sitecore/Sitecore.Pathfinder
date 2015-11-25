@@ -11,7 +11,6 @@ using System.Xml.Linq;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
-using Sitecore.Exceptions;
 using Sitecore.IO;
 using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Configuration;
@@ -184,59 +183,6 @@ namespace Sitecore.Pathfinder.WebApi
             return itemBuilder.Build(project, TextNode.Empty);
         }
 
-        [Diagnostics.NotNull]
-        protected virtual string GetFieldValue([Diagnostics.NotNull] Field field, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string format)
-        {
-            // todo: make this pluggable
-            var value = field.Value;
-            if (Data.ID.IsID(value))
-            {
-                var i = item.Database.GetItem(value);
-                if (i != null)
-                {
-                    value = i.Paths.Path;
-                }
-            }
-
-            if (field.Name == "__Renderings" || string.Equals(field.Type, "Layout", StringComparison.OrdinalIgnoreCase))
-            {
-                var layoutBuilder = new LayoutBuilder();
-                BuildLayout(layoutBuilder, item, value);
-
-                // todo: make this pluggable
-                var stringWriter = new StringWriter();
-                switch (format.ToLowerInvariant())
-                {
-                    case "item.json":
-                        layoutBuilder.WriteAsJson(stringWriter);
-                        break;
-                    case "item.xml":
-                        layoutBuilder.WriteAsXml(stringWriter, item.Database.Name);
-                        break;
-                    case "item.yaml":
-                        layoutBuilder.WriteAsYaml(stringWriter);
-                        break;
-                }
-
-                value = stringWriter.ToString();
-            }
-
-            switch (field.Type.ToLowerInvariant())
-            {
-                case "general link":
-                case "link":
-                    var linkField = new LinkField(field);
-                    value = linkField.TargetItem?.Paths.Path ?? value;
-                    break;
-                case "image":
-                    var imageField = new ImageField(field);
-                    value = imageField.MediaItem?.Paths.Path ?? value;
-                    break;
-            }
-
-            return value;
-        }
-
         protected virtual void BuildLayout([Diagnostics.NotNull] LayoutBuilder layoutBuilder, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string layout)
         {
             if (string.IsNullOrEmpty(layout))
@@ -315,6 +261,59 @@ namespace Sitecore.Pathfinder.WebApi
             return templateBuilder.Build(project, TextNode.Empty);
         }
 
+        [Diagnostics.NotNull]
+        protected virtual string GetFieldValue([Diagnostics.NotNull] Field field, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string format)
+        {
+            // todo: make this pluggable
+            var value = field.Value;
+            if (Data.ID.IsID(value))
+            {
+                var i = item.Database.GetItem(value);
+                if (i != null)
+                {
+                    value = i.Paths.Path;
+                }           
+            }
+
+            if (field.Name == "__Renderings" || string.Equals(field.Type, "Layout", StringComparison.OrdinalIgnoreCase))
+            {
+                var layoutBuilder = new LayoutBuilder();
+                BuildLayout(layoutBuilder, item, value);
+
+                // todo: make this pluggable
+                var stringWriter = new StringWriter();
+                switch (format.ToLowerInvariant())
+                {
+                    case "item.json":
+                        layoutBuilder.WriteAsJson(stringWriter);
+                        break;
+                    case "item.xml":
+                        layoutBuilder.WriteAsXml(stringWriter, item.Database.Name);
+                        break;
+                    case "item.yaml":
+                        layoutBuilder.WriteAsYaml(stringWriter);
+                        break;
+                }
+
+                value = stringWriter.ToString();
+            }
+
+            switch (field.Type.ToLowerInvariant())
+            {
+                case "general link":
+                case "link":
+                    var linkField = new LinkField(field);
+                    value = linkField.TargetItem?.Paths.Path ?? value;
+                    break;
+                case "image":
+                    var imageField = new ImageField(field);
+                    value = imageField.MediaItem?.Paths.Path ?? value;
+                    break;
+            }
+
+            return value;
+        }
+
         [NotNull]
         protected virtual string GetUniqueRenderingName([NotNull] [ItemNotNull] IEnumerable<Item> duplicates, [Diagnostics.NotNull] Item renderingItem)
         {
@@ -345,7 +344,7 @@ namespace Sitecore.Pathfinder.WebApi
             var n = map.IndexOf("=>", StringComparison.OrdinalIgnoreCase);
             if (n < 0)
             {
-                throw new Diagnostics.ConfigurationException("Configuration setting 'map-website-directory-to-project-directory' is invalid. Are you missing a '=>'?");
+                throw new ConfigurationException("Configuration setting 'map-website-directory-to-project-directory' is invalid. Are you missing a '=>'?");
             }
 
             var sourceDirectory = PathHelper.NormalizeFilePath(Path.Combine(WebsiteDirectory, PathHelper.NormalizeFilePath(map.Left(n).Trim()).TrimStart('\\'))).TrimEnd('\\');
@@ -409,7 +408,7 @@ namespace Sitecore.Pathfinder.WebApi
             var n = map.IndexOf("=>", StringComparison.OrdinalIgnoreCase);
             if (n < 0)
             {
-               throw new Diagnostics.ConfigurationException("Configuration setting 'map-item-path-to-file-path' is invalid. Are you missing a '=>'?");
+                throw new ConfigurationException("Configuration setting 'map-item-path-to-file-path' is invalid. Are you missing a '=>'?");
             }
 
             var rootItemPath = PathHelper.NormalizeItemPath(map.Left(n)).Trim().TrimEnd('/');

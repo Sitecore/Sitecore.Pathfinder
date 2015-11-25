@@ -191,17 +191,20 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerConstants.cs" />
     <Compile Include="WebApi\ImportWebsite.cs" />
-    <Compile Include="WebApi\SynchronizeWebsite.cs" />
-    <Compile Include="WebApi\SynchronizeWebsites\ContentXmlSynchronizer.cs" />
     <Compile Include="WebApi\SynchronizeWebsites\ISynchronizer.cs" />
+    <Compile Include="WebApi\SynchronizeWebsites\SynchronizeWebsite.cs" />
+    <Compile Include="WebApi\SynchronizeWebsites\ContentXmlSynchronizer.cs" />
     <Compile Include="WebApi\SynchronizeWebsites\JsonLayoutSchemaSynchronizer.cs" />
     <Compile Include="WebApi\SynchronizeWebsites\XsdLayoutSchemaSynchronizer.cs" />
     <Compile Include="WebApi\SynchronizeWebsites\XsdContentSchemaSynchronizer.cs" />
     <Compile Include="WebApi\InstallProject.cs" />
     <Compile Include="WebApi\IWebApi.cs" />
     <Compile Include="WebApi\ResetWebsite.cs" />
+    <Compile Include="WebApi\TroubleshootWebsites\1000 - RebuildClassicIndexesTroubleshooter.cs" />
+    <Compile Include="WebApi\TroubleshootWebsites\2000 - RepublishMasterDatabaseTroubleshooter.cs" />
+    <Compile Include="WebApi\TroubleshootWebsites\3000 - RebuildLinkDatabaseTroubleshooter.cs" />
     <Compile Include="WebApi\WriteWebsiteExports.cs" />
-    <Compile Include="WebApi\TroubleshootWebsite.cs" />
+    <Compile Include="WebApi\TroubleshootWebsites\TroubleshootWebsite.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

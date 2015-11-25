@@ -947,6 +947,24 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rebuilding indexes....
+        /// </summary>
+        public static string Rebuilding_indexes___ {
+            get {
+                return ResourceManager.GetString("Rebuilding_indexes___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rebuilding link database....
+        /// </summary>
+        public static string Rebuilding_link_database___ {
+            get {
+                return ResourceManager.GetString("Rebuilding_link_database___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rendering not found.
         /// </summary>
         public static string Rendering_not_found {
@@ -961,6 +979,15 @@ namespace Sitecore.Pathfinder {
         public static string Rendering_reference_not_found {
             get {
                 return ResourceManager.GetString("Rendering_reference_not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Republishing master database....
+        /// </summary>
+        public static string Republishing_master_database___ {
+            get {
+                return ResourceManager.GetString("Republishing_master_database___", resourceCulture);
             }
         }
         

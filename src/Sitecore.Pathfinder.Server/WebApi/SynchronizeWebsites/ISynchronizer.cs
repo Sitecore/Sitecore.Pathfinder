@@ -9,8 +9,8 @@ namespace Sitecore.Pathfinder.WebApi.SynchronizeWebsites
     [InheritedExport]
     public interface ISynchronizer
     {
-        bool CanSynchronize([Diagnostics.NotNull] IConfiguration configuration, [Diagnostics.NotNull] string fileName);
+        bool CanSynchronize([NotNull] IConfiguration configuration, [NotNull] string fileName);
 
-        void Synchronize([Diagnostics.NotNull] IConfiguration configuration, [NotNull] ZipWriter zip, [Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] string configKey);
+        void Synchronize([NotNull] IConfiguration configuration, [NotNull] ZipWriter zip, [NotNull] string fileName, [NotNull] string configKey);
     }
 }

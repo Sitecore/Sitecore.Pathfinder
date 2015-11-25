@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Building.Commands
         {
             context.Trace.TraceInformation(Msg.G1010, Texts.Troubleshooting___);
 
-            var url = MakeWebApiUrl(context, "TroubleshootWebsite");
+            var url = MakeWebApiUrl(context, "TroubleshootWebsites.TroubleshootWebsite");
 
             Request(context, url);
         }

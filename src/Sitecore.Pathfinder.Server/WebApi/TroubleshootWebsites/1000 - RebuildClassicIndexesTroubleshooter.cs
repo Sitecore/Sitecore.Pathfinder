@@ -1,35 +1,27 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.Linq;
-using System.Web.Mvc;
 using Sitecore.Configuration;
 using Sitecore.ContentSearch;
-using Sitecore.Data.Managers;
 using Sitecore.Diagnostics;
 using Sitecore.Pathfinder.Jobs;
-using Sitecore.Publishing;
 using Sitecore.Search;
 
-namespace Sitecore.Pathfinder.WebApi
+namespace Sitecore.Pathfinder.WebApi.TroubleshootWebsites
 {
-    public class TroubleshootWebsite : IWebApi
+    public class RebuildClassicIndexesTroubleshooter : TroubleshooterBase
     {
-        public ActionResult Execute(IAppService app)
+        public RebuildClassicIndexesTroubleshooter() : base(1000)
         {
-            Console.WriteLine("Republishing master database...");
-            BackgroundJob.Run("Pathfinder Republish", "Publishing", Republish);
+        }
 
-            Console.WriteLine("Rebuilding indexes...");
+        public override void Troubleshoot(IAppService app)
+        {
+            Console.WriteLine(Texts.Rebuilding_indexes___);
+
             BackgroundJob.Run("Pathfinder Rebuild ContentSearch Indexes", "Indexing", RebuildContentSearchIndexes);
             BackgroundJob.Run("Pathfinder Rebuild Classic Indexes", "Indexing", () => RebuildClassicIndex("master"));
             BackgroundJob.Run("Pathfinder Rebuild Classic Indexes", "Indexing", () => RebuildClassicIndex("core"));
-
-            Console.WriteLine("Rebuilding link database...");
-            BackgroundJob.Run("Pathfinder Rebuild Link Database", "Link Database", () => RebuildLinkDatabase("master"));
-            BackgroundJob.Run("Pathfinder Rebuild Link Database", "Link Database", () => RebuildLinkDatabase("core"));
-
-            return null;
         }
 
         protected virtual void RebuildClassicIndex([NotNull] string databaseName)
@@ -71,32 +63,6 @@ namespace Sitecore.Pathfinder.WebApi
                 Log.Audit(this, "Rebuild Content Search Index: {0}", searchIndex.Name);
                 searchIndex.Rebuild();
             }
-        }
-
-        protected virtual void RebuildLinkDatabase([Diagnostics.NotNull] string databaseName)
-        {
-            var database = Factory.GetDatabase(databaseName);
-            Log.Audit(this, "Rebuild link database: {0}", database.Name);
-
-            var linkDatabase = Globals.LinkDatabase;
-            linkDatabase.Rebuild(database);
-        }
-
-        protected virtual void Republish()
-        {
-            var database = Factory.GetDatabase("master");
-
-            var publishingTargets = PublishManager.GetPublishingTargets(database);
-
-            var targetDatabases = publishingTargets.Select(target => Factory.GetDatabase(target["Target database"])).ToArray();
-            if (!targetDatabases.Any())
-            {
-                return;
-            }
-
-            Log.Audit(this, "Republish: master");
-            var languages = LanguageManager.GetLanguages(database).ToArray();
-            PublishManager.Republish(database, targetDatabases, languages);
         }
     }
 }

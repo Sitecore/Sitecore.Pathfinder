@@ -326,6 +326,8 @@
     </Compile>
     <Compile Include="Text\StringHelper.cs" />
     <Compile Include="Text\UrlString.cs" />
+    <Compile Include="WebApi\TroubleshootWebsites\ITroubleshooter.cs" />
+    <Compile Include="WebApi\TroubleshootWebsites\TroubleshooterBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

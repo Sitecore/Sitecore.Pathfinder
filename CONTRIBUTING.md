@@ -11,7 +11,7 @@ Also please start a discussion in the [issues](https://github.com/JakobChristens
 
 ## Getting started
 Clone the project from [GitHub](https://github.com/JakobChristensen/Sitecore.Pathfinder), and copy the following assemblies 
-to the /components directory.
+to the /lib/Sitecore directory.
 
 * Sitecore.ContentSearch.dll
 * Sitecore.ContentSearch.Linq.dll
@@ -19,7 +19,7 @@ to the /components directory.
 * Sitecore.Mvc.dll
 * Sitecore.Zip.dll 
 
-The Sitecore.Pathfinder.Console project the default project and you should set it as StartUp Project. 
+The Sitecore.Pathfinder.Console project is the default project and you should set it as StartUp Project. 
 
 # Architecture
 
