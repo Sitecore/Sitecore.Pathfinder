@@ -233,6 +233,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Configuration setting &apos;map-website-directory-to-project-directory&apos; is invalid. Are you missing a &apos;=&gt;&apos;?.
+        /// </summary>
+        public static string ConfigurationSsettingMapWebsiteDirectoryToProjectDirectoryIsInvalid {
+            get {
+                return ResourceManager.GetString("ConfigurationSsettingMapWebsiteDirectoryToProjectDirectoryIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copying dependency packages....
         /// </summary>
         public static string Copying_dependencies___ {
@@ -553,6 +562,15 @@ namespace Sitecore.Pathfinder {
         public static string Files {
             get {
                 return ResourceManager.GetString("Files", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Format not found.
+        /// </summary>
+        public static string Format_not_found {
+            get {
+                return ResourceManager.GetString("Format_not_found", resourceCulture);
             }
         }
         

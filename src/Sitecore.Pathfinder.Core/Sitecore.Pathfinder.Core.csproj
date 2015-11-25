@@ -130,7 +130,11 @@
     <Compile Include="Extensions\XmlTextWriter.cs" />
     <Compile Include="Languages\BinFiles\BinFile.cs" />
     <Compile Include="Languages\BinFiles\BinFileParser.cs" />
+    <Compile Include="Languages\ILanguage.cs" />
+    <Compile Include="Languages\ILanguageService.cs" />
     <Compile Include="Languages\Json\FormatExtensions.cs" />
+    <Compile Include="Languages\LanguageBase.cs" />
+    <Compile Include="Languages\LanguageService.cs" />
     <Compile Include="Languages\Serialization\ItemExtensions.cs" />
     <Compile Include="Languages\Templates\TemplateCompiler.cs" />
     <Compile Include="Compiling\FieldCompilers\FieldCompileContext.cs" />
@@ -157,6 +161,9 @@
     <Compile Include="IAppService.cs" />
     <Compile Include="Languages\Serialization\SerializationTextSnapshot.cs" />
     <Compile Include="Languages\Xml\FormatExtensions.cs" />
+    <Compile Include="Languages\Xml\XmlLanguage.cs" />
+    <Compile Include="Languages\Json\JsonLanguage.cs" />
+    <Compile Include="Languages\Yaml\YamlLanguage.cs" />
     <Compile Include="Languages\Yaml\FormatExtensions.cs" />
     <Compile Include="Languages\Yaml\YamlTextWriter.cs" />
     <Compile Include="Projects\Items\FieldCollection.cs" />

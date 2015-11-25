@@ -9,6 +9,7 @@ using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Languages;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Querying;
@@ -32,6 +33,9 @@ namespace Sitecore.Pathfinder.Helpers
 
         [NotNull]
         public IFileSystemService FileSystem { get; private set; }
+
+        [NotNull]
+        public ILanguageService LanguageService { get; private set; }
 
         [NotNull]
         public IParseService ParseService { get; private set; }
@@ -71,6 +75,7 @@ namespace Sitecore.Pathfinder.Helpers
             SnapshotService = CompositionService.Resolve<ISnapshotService>();
             CheckerService = CompositionService.Resolve<ICheckerService>();
             QueryService = CompositionService.Resolve<IQueryService>();
+            LanguageService = CompositionService.Resolve<ILanguageService>();
         }
     }
 }

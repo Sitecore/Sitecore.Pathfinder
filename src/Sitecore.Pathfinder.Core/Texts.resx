@@ -549,4 +549,10 @@
     <data name="Rebuilding_link_database___" xml:space="preserve">
     <value>Rebuilding link database...</value>
   </data>
+    <data name="ConfigurationSsettingMapWebsiteDirectoryToProjectDirectoryIsInvalid" xml:space="preserve">
+    <value>Configuration setting 'map-website-directory-to-project-directory' is invalid. Are you missing a '=&gt;'?</value>
+  </data>
+    <data name="Format_not_found" xml:space="preserve">
+    <value>Format not found</value>
+  </data>
 </root>

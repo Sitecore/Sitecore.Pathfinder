@@ -2,7 +2,6 @@
 
 using System;
 using System.IO;
-using System.Reflection;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -24,7 +23,7 @@ namespace Sitecore.Pathfinder
 
         protected void Mock<T>(T value)
         {
-            Services.CompositionService.Set<T>(value);
+            Services.CompositionService.Set(value);
         }                                   
 
         protected T Resolve<T>()
@@ -34,7 +33,6 @@ namespace Sitecore.Pathfinder
 
         protected void Start([NotNull] string website, [CanBeNull] Action mock = null)
         {
-
             var projectDir =  Directory.GetParent(Directory.GetCurrentDirectory()).Parent;
             ProjectDirectory = PathHelper.Combine(Path.GetDirectoryName(projectDir?.FullName) ?? string.Empty, website);
 
