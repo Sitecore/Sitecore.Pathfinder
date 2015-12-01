@@ -17,5 +17,12 @@ namespace Sitecore.Pathfinder.Extensions
 
             return dictionary;
         }
+
+        [NotNull]
+        public static string GetString([NotNull] this IDictionary<string, string> dictionary, [NotNull] string key)
+        {
+            string value;
+            return dictionary.TryGetValue(key, out value) ? value : string.Empty;
+        }
     }
 }

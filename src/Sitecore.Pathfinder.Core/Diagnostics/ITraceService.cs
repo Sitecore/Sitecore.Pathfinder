@@ -35,6 +35,8 @@ namespace Sitecore.Pathfinder.Diagnostics
 
         void TraceInformation(int msg, [Localizable(true)] [NotNull] string text, [NotNull] ITextNode textNode, [NotNull] string details = "");
 
+        void TraceInformation(int msg, [Localizable(true)] [NotNull] string text, [NotNull] ISourceFile sourceFile, [NotNull] string details = "");
+
         void TraceWarning([Localizable(true)] [NotNull] string text, [NotNull] string details = "");
 
         void TraceWarning([Localizable(true)] [NotNull] string text, [NotNull] string fileName, TextSpan span, [NotNull] string details = "");
@@ -46,6 +48,8 @@ namespace Sitecore.Pathfinder.Diagnostics
         void TraceWarning(int msg, [Localizable(true)] [NotNull] string text, [NotNull] string fileName, TextSpan span, [NotNull] string details = "");
 
         void TraceWarning(int msg, [Localizable(true)] [NotNull] string text, [NotNull] ITextNode textNode, [NotNull] string details = "");
+
+        void TraceWarning(int msg, [Localizable(true)] [NotNull] string text, [NotNull] ISourceFile sourceFile, [NotNull] string details = "");
 
         void WriteLine([Localizable(true)] [NotNull] string text, [NotNull] string details = "");
     }

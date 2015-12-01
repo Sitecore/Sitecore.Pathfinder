@@ -1,0 +1,23 @@
+{
+    "simple-rule": {
+        "if": {
+            "always": true
+        },
+        "then": {
+            "trace-information": { "text": "Rule-0" }
+        }
+    },
+
+    "no-content-rule": {
+        "if": {
+            "and": {
+                "item-id-or-path": { "starts-with": "/sitecore/content/" },
+                "item-name": { "starts-with": "Xml" }
+            }
+        },
+        "then": {
+            "trace-error": { "text": "[Convention] Content items not allowed in this project-role" }
+        }
+    }
+}
+                                       

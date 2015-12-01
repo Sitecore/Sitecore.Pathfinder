@@ -1,0 +1,16 @@
+{
+    "check-project": {
+        "conventions": {
+            "rule-0": {
+                "if": {
+                    "and": {
+                        "item-id-or-path": { "starts-with": "/sitecore/content" }
+                    }
+                },
+                "then": {
+                    "trace-error": { "text": "No content items allowed" }
+                }
+            }
+        }
+    }
+}       

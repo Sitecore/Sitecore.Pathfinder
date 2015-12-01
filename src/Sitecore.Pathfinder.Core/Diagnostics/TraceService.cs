@@ -39,13 +39,13 @@ namespace Sitecore.Pathfinder.Diagnostics
         }
 
         [NotNull]
-        protected IEnumerable<int> IgnoredMessages { get; }
-
-        [NotNull]
         protected IConfiguration Configuration { get; }
 
         [NotNull]
         protected IConsoleService Console { get; }
+
+        [NotNull]
+        protected IEnumerable<int> IgnoredMessages { get; }
 
         public void TraceError(string text, string details = "")
         {
@@ -137,6 +137,11 @@ namespace Sitecore.Pathfinder.Diagnostics
             Write(msg, text, Severity.Information, textNode.Snapshot.SourceFile.AbsoluteFileName, textNode.TextSpan, details);
         }
 
+        public void TraceInformation(int msg, string text, ISourceFile sourceFile, string details = "")
+        {
+            Write(msg, text, Severity.Information, sourceFile.AbsoluteFileName, TextSpan.Empty, details);
+        }
+
         public void TraceWarning(string text, string details = "")
         {
             TraceWarning(0, text, details);
@@ -165,6 +170,11 @@ namespace Sitecore.Pathfinder.Diagnostics
         public void TraceWarning(int msg, string text, ITextNode textNode, string details = "")
         {
             Write(msg, text, Severity.Warning, textNode.Snapshot.SourceFile.AbsoluteFileName, textNode.TextSpan, details);
+        }
+
+        public void TraceWarning(int msg, string text, ISourceFile sourceFile, string details = "")
+        {
+            Write(msg, text, Severity.Warning, sourceFile.AbsoluteFileName, TextSpan.Empty, details);
         }
 
         public void WriteLine(string text, string details = "")

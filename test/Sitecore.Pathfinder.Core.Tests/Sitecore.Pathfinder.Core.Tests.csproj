@@ -96,6 +96,7 @@
     <Compile Include="IO\MockedFileSystemService.cs" />
     <Compile Include="Extensions\StringExtensionsTests.cs" />
     <Compile Include="Languages\LanguageTests.cs" />
+    <Compile Include="Rules\RuleTests.cs" />
     <Compile Include="Projects\ProjectTests.Json.cs" />
     <Compile Include="Projects\ProjectTests.Unicorn.cs" />
     <Compile Include="Projects\ProjectTests.SerializedItem.cs" />
@@ -138,6 +139,7 @@
       <Name>Sitecore.Pathfinder.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

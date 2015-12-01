@@ -16,6 +16,8 @@ namespace Sitecore.Pathfinder.Checking
 
         protected const string Templates = "Templates,";
 
+        protected const string All = Fields + Items + Media + TemplateFields + Templates;
+
         protected CheckerBase([NotNull] string name, [NotNull] string categories)
         {
             Name = name;
