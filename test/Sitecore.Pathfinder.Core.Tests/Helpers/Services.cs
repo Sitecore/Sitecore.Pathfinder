@@ -3,6 +3,7 @@
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
+using System.Reflection;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Checking;
 using Sitecore.Pathfinder.Configuration;
@@ -54,7 +55,7 @@ namespace Sitecore.Pathfinder.Helpers
 
         public void Start(string projectDirectory, [CanBeNull] Action mock = null)
         {
-            var toolsDirectory = Path.Combine(projectDirectory, "sitecore.tools");
+            var toolsDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
 
             var app = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(projectDirectory).WithWebsiteAssemblyResolver().Start();
             if (app == null)

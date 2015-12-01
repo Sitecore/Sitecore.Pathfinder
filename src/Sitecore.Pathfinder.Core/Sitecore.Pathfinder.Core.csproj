@@ -171,6 +171,7 @@
     <Compile Include="Projects\Items\ChildrenCollection.cs" />
     <Compile Include="Projects\ID.cs" />
     <Compile Include="Projects\Items\ItemPublishing.cs" />
+    <Compile Include="Projects\IUnloadable.cs" />
     <Compile Include="Projects\ProjectImportsService.cs" />
     <Compile Include="Snapshots\IMutableTextNode.cs" />
     <Compile Include="Languages\Yaml\YamlContentTextNodeParser.cs" />

@@ -11,7 +11,7 @@ using Sitecore.Pathfinder.Snapshots;
 namespace Sitecore.Pathfinder.Projects.Items
 {
     [DebuggerDisplay("{GetType().Name,nq}: {ItemIdOrPath}")]
-    public abstract class ItemBase : ProjectItem, IHasSourceTextNodes
+    public abstract class ItemBase : ProjectItem, IHasSourceTextNodes, IUnloadable
     {
         [CanBeNull]
         private ID _id;
@@ -22,6 +22,8 @@ namespace Sitecore.Pathfinder.Projects.Items
             ItemName = itemName;
             ItemIdOrPath = itemIdOrPath;
             SourceTextNodes.Add(textNode);
+
+            project.ProjectChanged += OnProjectChanged;
         }
 
         [NotNull]
@@ -126,6 +128,20 @@ namespace Sitecore.Pathfinder.Projects.Items
             IsImport = IsImport || newItemBase.IsImport;
 
             References.AddRange(newItemBase.References);
+        }
+
+        protected virtual void OnProjectChanged([NotNull] object sender)
+        {
+        }
+
+        protected virtual void OnUnload()
+        {
+        }
+
+        void IUnloadable.Unload()
+        {
+            Project.ProjectChanged -= OnProjectChanged;
+            OnUnload();
         }
     }
 }

@@ -9,7 +9,7 @@ using Sitecore.Pathfinder.Snapshots;
 namespace Sitecore.Pathfinder.Projects.Templates
 {
     [DebuggerDisplay("{GetType().Name,nq}: {FieldName}")]
-    public class TemplateField : IHasSourceTextNodes
+    public class TemplateField : IHasSourceTextNodes, IUnloadable
     {
         [NotNull]
         public static readonly TemplateField Empty = new TemplateField(Template.Empty, new Guid("{D269BE69-A982-4415-ABC6-A870F286435A}"), TextNode.Empty);
@@ -148,6 +148,10 @@ namespace Sitecore.Pathfinder.Projects.Templates
             {
                 SortOrderProperty.SetValue(newField.SortOrderProperty, SetValueOptions.DisableUpdates);
             }
+        }
+
+        void IUnloadable.Unload()
+        {
         }
     }
 }

@@ -304,8 +304,10 @@
     },
 
     "messages": {
-        // comma separated list of message numbers to ignore
-        "disabled": ""
+        "system-0": {
+            // comma separated list of message numbers to ignore
+            "disabled": ""
+        }
     },
 
     "scripts": {

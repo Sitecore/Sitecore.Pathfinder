@@ -26,7 +26,7 @@
         - Field : Link
           Field.ShortHelp : Short Help. 
           Field.LongHelp  : Long help.
-          Field.Type      : Link
+          Field.Type      : General Link
           Value: | 
                 /sitecore/media library/mushrooms
 

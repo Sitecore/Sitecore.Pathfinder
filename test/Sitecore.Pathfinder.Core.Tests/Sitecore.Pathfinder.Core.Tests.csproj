@@ -63,8 +63,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Collections.Immutable, Version=1.1.37.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Collections.Immutable.1.1.37\lib\dotnet\System.Collections.Immutable.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\System.Collections.Immutable.1.1.37\lib\dotnet\System.Collections.Immutable.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
@@ -122,16 +121,23 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Features\Sitecore.Pathfinder.T4\Sitecore.Pathfinder.T4.csproj">
+      <Project>{bc0ec297-60e6-4d8f-a846-e1da920cfc26}</Project>
+      <Name>Sitecore.Pathfinder.T4</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Features\Sitecore.Pathfinder.Unicorn\Sitecore.Pathfinder.Unicorn.csproj">
       <Project>{e707e44a-9f34-41e2-90e2-7065ef60cb03}</Project>
       <Name>Sitecore.Pathfinder.Unicorn</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Sitecore.Pathfinder.Console\Sitecore.Pathfinder.Console.csproj">
+      <Project>{c73d309b-6d61-42bd-a5b1-661710f1cdc7}</Project>
+      <Name>Sitecore.Pathfinder.Console</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Sitecore.Pathfinder.Core\Sitecore.Pathfinder.Core.csproj">
       <Project>{c674eebf-bbf6-4eda-af5b-a4d58d0be986}</Project>
       <Name>Sitecore.Pathfinder.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

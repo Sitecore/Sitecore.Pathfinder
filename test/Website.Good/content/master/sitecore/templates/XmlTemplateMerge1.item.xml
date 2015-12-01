@@ -5,7 +5,7 @@
         <Field Name="Text" Type="Single-Line Text" ShortHelp="Short Help." LongHelp="Long Help." Sharing="Shared" SortOrder="100" Source="/sitecore/content" />
     </Section>
     <Section Name="Data" Icon="Applications/16x16/about.png">
-        <Field Name="Data1" Type="Single-Line Text" ShortHelp="Short Help." LongHelp="Long Help." Sharing="Shared" SortOrder="100" Source="/sitecore/content" />
-        <Field Name="Data2" Type="Rich Text" ShortHelp="Short Help." LongHelp="Long Help." StandardValue="Hello World" />
+        <Field Name="Data2" Type="Single-Line Text" ShortHelp="Short Help." LongHelp="Long Help." Sharing="Shared" SortOrder="100" Source="/sitecore/content" />
+        <Field Name="Data3" Type="Rich Text" ShortHelp="Short Help." LongHelp="Long Help." StandardValue="Hello World" />
     </Section>
 </Template>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3FD15219-6CAE-4865-A054-8E9E2A5EDF4E}"
 	ProjectSection(SolutionItems) = preProject
@@ -49,8 +49,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.Unicorn", "src\Features\Sitecore.Pathfinder.Unicorn\Sitecore.Pathfinder.Unicorn.csproj", "{E707E44A-9F34-41E2-90E2-7065EF60CB03}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.T4", "src\Features\Sitecore.Pathfinder.T4\Sitecore.Pathfinder.T4.csproj", "{BC0EC297-60E6-4D8F-A846-E1DA920CFC26}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{60F0B2EB-6211-4387-99D6-E391D2C380B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -114,6 +112,5 @@ Global
 		{18B20426-A6EE-4967-8112-A455A4502A7E} = {049B9C99-6613-43BB-BF14-A60D7C9F7F57}
 		{E707E44A-9F34-41E2-90E2-7065EF60CB03} = {5325B39E-6883-47AA-BD17-291B7608E834}
 		{BC0EC297-60E6-4D8F-A846-E1DA920CFC26} = {5325B39E-6883-47AA-BD17-291B7608E834}
-		{60F0B2EB-6211-4387-99D6-E391D2C380B3} = {3FD15219-6CAE-4865-A054-8E9E2A5EDF4E}
 	EndGlobalSection
 EndGlobal

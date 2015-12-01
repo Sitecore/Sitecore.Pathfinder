@@ -8,7 +8,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects.Templates
 {
-    public class TemplateSection : IHasSourceTextNodes
+    public class TemplateSection : IHasSourceTextNodes, IUnloadable
     {
         public TemplateSection([NotNull] Template template, Guid guid, [NotNull] ITextNode templateSectionTextNode)
         {
@@ -67,6 +67,14 @@ namespace Sitecore.Pathfinder.Projects.Templates
                 }
 
                 field.Merge(newField, overwrite);
+            }
+        }
+
+        void IUnloadable.Unload()
+        {
+            foreach (var unloadable in Fields.OfType<IUnloadable>())
+            {
+                unloadable.Unload();
             }
         }
     }

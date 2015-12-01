@@ -108,7 +108,6 @@ namespace Sitecore.Pathfinder.Projects.Items
         {
             get
             {
-                // todo: dangereous cache - make template lookup faster im the project
                 if (_template == null || _template == Template.Empty)
                 {
                     var templateIdOrPath = TemplateIdOrPath;
@@ -122,11 +121,6 @@ namespace Sitecore.Pathfinder.Projects.Items
                         // resolve by short name
                         var templates = Project.ProjectItems.OfType<Template>().Where(t => t.ShortName == templateIdOrPath && string.Equals(t.DatabaseName, DatabaseName, StringComparison.OrdinalIgnoreCase)).ToList();
                         _template = templates.Count == 1 ? templates.First() : null;
-                    }
-
-                    if (_template == null)
-                    {
-                        _template = Template.Empty;
                     }
                 }
 
@@ -145,7 +139,7 @@ namespace Sitecore.Pathfinder.Projects.Items
             set
             {
                 TemplateIdOrPathProperty.SetValue(value);
-                _template = Template.Empty;
+                _template = null;
             }
         }
 
@@ -232,6 +226,11 @@ namespace Sitecore.Pathfinder.Projects.Items
 
                 field.ValueProperty.SetValue(newField.ValueProperty, SetValueOptions.DisableUpdates);
             }
+        }
+
+        protected override void OnProjectChanged(object sender)
+        {
+            _template = null;
         }
     }
 }

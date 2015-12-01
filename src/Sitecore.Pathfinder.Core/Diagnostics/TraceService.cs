@@ -29,7 +29,13 @@ namespace Sitecore.Pathfinder.Diagnostics
             Configuration = configuration;
             Console = console;
 
-            IgnoredMessages = configuration.GetList(Constants.Configuration.MessagesDisabled).Select(int.Parse).ToArray();
+            var ignoredMessages = new List<int>();
+            foreach (var pair in configuration.GetSubKeys("messages"))
+            {
+                ignoredMessages.AddRange(configuration.GetList("messages:" + pair.Key + ":disabled").Select(int.Parse));
+            }
+
+            IgnoredMessages = ignoredMessages;
         }
 
         [NotNull]

@@ -29,14 +29,14 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull]
         [ItemNotNull]
-        IEnumerable<IProjectItem> ProjectItems { get; }
-
-        [NotNull]
-        [ItemNotNull]
         IEnumerable<Item> Items { get; }
 
         [NotNull]
         ProjectOptions Options { get; }
+
+        [NotNull]
+        [ItemNotNull]
+        IEnumerable<IProjectItem> ProjectItems { get; }
 
         [NotNull]
         string ProjectUniqueId { get; }
@@ -72,6 +72,8 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull]
         IProject Load([NotNull] ProjectOptions projectOptions, [NotNull] [ItemNotNull] IEnumerable<string> sourceFileNames);
+
+        event ProjectChangedEventHandler ProjectChanged;
 
         void Remove([NotNull] IProjectItem projectItem);
 

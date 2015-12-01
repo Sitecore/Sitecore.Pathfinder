@@ -1,5 +1,9 @@
-Version next
+Version Next
 ============
+* Add: Project changed event for invalidating caches (2015-12-01)
+
+Version 0.5.0
+=============
 * Add: Support for Include files (2015-10-21)
 * Add: Pack and install multiple NuGet packages (2015-10-29) - Todd Mitchell
 * Add: Support for user config files (scconfig.json.user) (2015-10-29) - Alistair Denneys
@@ -22,4 +26,4 @@ Version next
 * Removed: run-unittests and generate-unittests tasks. These have been replaced with generate-code and T4 templates (2015-11-18)
 * Add: scc can now run scripts files (PowerShell, .cmd and -bat) (2015-11-19)
 * Add: Script files for installing FakeDb and NUnit-Runners (2015-11-19)
-* Add: import-website task for importing a website into a Pathfinder project (2015-11-)
+* Add: import-website task for importing a website into a Pathfinder project (2015-11-20)

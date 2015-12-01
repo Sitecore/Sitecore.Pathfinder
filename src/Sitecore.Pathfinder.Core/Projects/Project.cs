@@ -21,6 +21,8 @@ using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Projects
 {
+    public delegate void ProjectChangedEventHandler([NotNull] object sender);
+
     [Export]
     [Export(typeof(IProject))]
     [PartCreationPolicy(CreationPolicy.NonShared)]
@@ -133,16 +135,27 @@ namespace Sitecore.Pathfinder.Projects
             var newItem = projectItem as Item;
             if (newItem != null)
             {
-                return (T)MergeItem(newItem);
+                var addedItem = (T)MergeItem(newItem);
+
+                OnProjectChanged();
+
+                return addedItem;
             }
 
             var newTemplate = projectItem as Template;
             if (newTemplate != null)
             {
-                return (T)MergeTemplate(newTemplate);
+                var addedTemplate = (T)MergeTemplate(newTemplate);
+
+                OnProjectChanged();
+
+                return addedTemplate;
             }
 
             _projectItems.Add(projectItem);
+
+            OnProjectChanged();
+
             return projectItem;
         }
 
@@ -227,9 +240,19 @@ namespace Sitecore.Pathfinder.Projects
             return this;
         }
 
+        public event ProjectChangedEventHandler ProjectChanged;
+
         public virtual void Remove(IProjectItem projectItem)
         {
             _projectItems.Remove(projectItem);
+
+            var unloadable = projectItem as IUnloadable;
+            if (unloadable != null)
+            {
+                unloadable.Unload();
+            }
+
+            OnProjectChanged();
         }
 
         public virtual void Remove(string sourceFileName)
@@ -337,6 +360,11 @@ namespace Sitecore.Pathfinder.Projects
             var template = templates.First();
             template.Merge(newTemplate);
             return template;
+        }
+
+        protected virtual void OnProjectChanged()
+        {
+            ProjectChanged?.Invoke(this);
         }
     }
 }

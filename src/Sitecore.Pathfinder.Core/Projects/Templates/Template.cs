@@ -31,7 +31,11 @@ namespace Sitecore.Pathfinder.Projects.Templates
         public string BaseTemplates
         {
             get { return BaseTemplatesProperty.GetValue(); }
-            set { BaseTemplatesProperty.SetValue(value); }
+            set
+            {
+                BaseTemplatesProperty.SetValue(value);
+                _baseTemplates = null;
+            }
         }
 
         [NotNull]
@@ -173,6 +177,15 @@ namespace Sitecore.Pathfinder.Projects.Templates
                 }
 
                 section.Merge(newSection, overwrite);
+            }
+        }
+
+        protected override void OnUnload()
+        {
+            base.OnUnload();
+            foreach (var unloadable in Sections.OfType<IUnloadable>())
+            {
+                unloadable.Unload();
             }
         }
     }
