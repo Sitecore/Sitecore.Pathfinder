@@ -6,10 +6,10 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Rules.Actions
 {
-    public class TraceError : TraceBase
+    public class TraceErrorAction : TraceActionBase
     {
         [ImportingConstructor]
-        public TraceError([NotNull] ITraceService trace) : base(trace, "trace-error")
+        public TraceErrorAction([NotNull] ITraceService trace) : base(trace, "trace-error")
         {
         }
 

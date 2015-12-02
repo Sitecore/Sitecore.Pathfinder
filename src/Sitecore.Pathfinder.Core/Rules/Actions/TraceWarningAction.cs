@@ -6,10 +6,10 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Rules.Actions
 {
-    public class TraceInformation : TraceBase
+    public class TraceWarningAction : TraceActionBase
     {
         [ImportingConstructor]
-        public TraceInformation([NotNull] ITraceService trace) : base(trace, "trace-information")
+        public TraceWarningAction([NotNull] ITraceService trace) : base(trace, "trace-warning")
         {
         }
 
@@ -17,15 +17,15 @@ namespace Sitecore.Pathfinder.Rules.Actions
         {
             if (textNode != null)
             {
-                Trace.TraceInformation(msg, text, textNode);
+                Trace.TraceWarning(msg, text, textNode);
             }
             else if (snapshot != null)
             {
-                Trace.TraceInformation(msg, text, snapshot.SourceFile);
+                Trace.TraceWarning(msg, text, snapshot.SourceFile);
             }
             else
             {
-                Trace.TraceInformation(msg, text);
+                Trace.TraceWarning(msg, text);
             }
         }
     }

@@ -5,9 +5,9 @@ using Sitecore.Pathfinder.Rules.Contexts;
 
 namespace Sitecore.Pathfinder.Rules.Conditions
 {
-    public class Always : ConditionBase
+    public class AlwaysCondition : ConditionBase
     {
-        public Always() : base("always")
+        public AlwaysCondition() : base("always")
         {
         }
 

@@ -36,7 +36,9 @@ namespace Sitecore.Pathfinder.Rules
 
         public IRule ParseRule(string configurationKey)
         {
-            var rule = new Rule();
+            var filter = Configuration.GetString(configurationKey + ":filter");
+
+            var rule = new Rule(filter);
 
             ParseIf(rule, configurationKey);
             ParseThen(rule, configurationKey);
@@ -167,9 +169,17 @@ namespace Sitecore.Pathfinder.Rules
         {
             var parameter = new Dictionary<string, string>();
 
-            foreach (var pair in Configuration.GetSubKeys(configurationKey + ":" + key))
+            var keys = Configuration.GetSubKeys(configurationKey + ":" + key);
+            if (keys.Any())
             {
-                parameter[pair.Key] = Configuration.GetString(configurationKey + ":" + key + ":" + pair.Key);
+                foreach (var pair in keys)
+                {
+                    parameter[pair.Key] = Configuration.GetString(configurationKey + ":" + key + ":" + pair.Key);
+                }
+            }
+            else
+            {
+                parameter["value"] = Configuration.GetString(configurationKey + ":" + key);
             }
 
             return parameter;

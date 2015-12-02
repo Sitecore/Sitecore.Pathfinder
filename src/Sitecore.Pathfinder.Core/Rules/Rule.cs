@@ -9,9 +9,17 @@ namespace Sitecore.Pathfinder.Rules
 {
     public class Rule : IRule
     {
+        public Rule([NotNull] string filter)
+        {
+            Filter = filter;
+        }
+
         [NotNull]
         [ItemNotNull]
         public ICollection<RuleAction> Else { get; } = new List<RuleAction>();
+
+        [NotNull]
+        public string Filter { get; }
 
         [NotNull]
         [ItemNotNull]

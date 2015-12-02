@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -17,28 +18,31 @@ namespace Sitecore.Pathfinder.Rules.Conditions
 
         public override bool Evaluate(IRuleContext ruleContext, IDictionary<string, string> parameters)
         {
-            // return false, if no elements
-            var result = false;
-
-            foreach (var value in GetValues(ruleContext, parameters))
+            if (!ruleContext.Objects.Any())
             {
-                if (!CompareValue(value, parameters))
-                {
-                    return false;
-                }
-
-                result = true;
+                return false;
             }
 
-            return result;
+            return GetValues(ruleContext, parameters).All(value => CompareValue(value, parameters));
         }
 
-        private bool CompareValue([NotNull] string value, [NotNull] IDictionary<string, string> parameters)
+        private bool CompareValue([CanBeNull] string value, [NotNull] IDictionary<string, string> parameters)
         {
-            var equals = parameters.GetString("=");
-            if (!string.IsNullOrEmpty(@equals))
+            if (value == null)
             {
-                return string.Equals(value, @equals, StringComparison.OrdinalIgnoreCase);
+                return false;
+            }
+
+            var val = parameters.GetString("value");
+            if (!string.IsNullOrEmpty(val))
+            {
+                return string.Equals(value, val, StringComparison.OrdinalIgnoreCase);
+            }
+
+            var equals = parameters.GetString("=");
+            if (!string.IsNullOrEmpty(equals))
+            {
+                return string.Equals(value, equals, StringComparison.OrdinalIgnoreCase);
             }
 
             var notequals = parameters.GetString("!=");

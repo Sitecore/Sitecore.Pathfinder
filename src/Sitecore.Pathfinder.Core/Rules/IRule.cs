@@ -7,6 +7,9 @@ namespace Sitecore.Pathfinder.Rules
 {
     public interface IRule
     {
+        [NotNull]
+        string Filter { get; }
+
         bool EvaluateIf([NotNull] IRuleContext context);
 
         bool Execute([NotNull] IRuleContext context);

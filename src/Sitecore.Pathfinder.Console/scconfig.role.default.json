@@ -1,0 +1,54 @@
+{
+    "check-project": {
+        "conventions": {
+            "default-convention-0": {
+                "filter": "items",
+                "if": {
+                    "and": {
+                        "or": {
+                            "template-name-0": { "=": "Template" },
+                            "template-name-1": { "=": "Template Folder" },
+                            "template-name-2": { "=": "Template Section" },
+                            "template-name-3": { "=": "Template Field" }
+                        },
+                        "not": { "item-id-or-path": { "starts-with": "/sitecore/templates/" } }
+                    }
+                },
+                "then": {
+                    "trace-warning": "All templates, template sections, template fields and template folders should be located in the template section: /sitecore/templates"
+                }
+            },
+
+            "default-convention-1": {
+                "filter": "templates",
+                "if": {
+                    "not": { "item-id-or-path": { "starts-with": "/sitecore/templates/" } }
+                },
+                "then": {
+                    "trace-warning": "All templates be located in the template section: /sitecore/templates"
+                }
+            },
+
+            "default-convention-2": {
+                "filter": "items",
+                "if": {
+                    "item-name": "__Standard Values",
+                    "not": { "parent-item-template-name": "Template" }
+                },
+                "then": {
+                    "trace-warning": "A Standard Values item should be located under the template, it holds values for."
+                }
+            },
+
+            "default-convention-3": {
+                "filter": "items",
+                "if": {
+                    "template-name": { "!=": { "xpath": "../@TemplateName" } }
+                },
+                "then": {
+                    "trace-warning": "A Standard Values item should be located under the template, it holds values for."
+                }
+            }
+        }
+    }
+}

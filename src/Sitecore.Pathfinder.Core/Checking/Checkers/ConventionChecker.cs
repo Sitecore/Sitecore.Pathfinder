@@ -3,7 +3,9 @@
 using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Projects.Files;
 using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Rules;
 
 namespace Sitecore.Pathfinder.Checking.Checkers
@@ -31,7 +33,50 @@ namespace Sitecore.Pathfinder.Checking.Checkers
 
                 foreach (var rule in rules)
                 {
+                    switch (rule.Filter.ToLowerInvariant())
+                    {
+                        case "items":
+                            var item = projectItem as Item;
+                            if (item == null)
+                            {
+                                continue;
+                            }
+
+                            break;
+                        case "templates":
+                            var template = projectItem as Template;
+                            if (template == null)
+                            {
+                                continue;
+                            }
+
+                            break;
+
+                        case "itembases":
+                            var itemBase = projectItem as ItemBase;
+                            if (itemBase == null)
+                            {
+                                continue;
+                            }
+
+                            break;
+
+                        case "file":
+                            var file = projectItem as File;
+                            if (file == null)
+                            {
+                                continue;
+                            }
+
+                            break;
+                    }
+
                     rule.Execute(ruleContext);
+
+                    if (ruleContext.IsAborted)
+                    {
+                        break;
+                    }
                 }
             }
         }

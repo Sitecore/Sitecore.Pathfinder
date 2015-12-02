@@ -1,16 +1,60 @@
 {
     "check-project": {
         "conventions": {
-            "rule-0": {
+            "speak-convention-0": {
+                "filter": "items",
+                "if": {
+                    "database-name": { "!=": "core" }
+                },
+                "then": {
+                    "trace-warning": {
+                        "text": "All SPEAK items should be located in the Core database under the SPEAK root item: /sitecore/client.",
+                        "msg": 5600
+                    }
+                }
+            },
+            "speak-convention-1": {
+                "filter": "items",
+                "if": {
+                    "not": { "item-id-or-path": { "starts-with": "/sitecore/client" } }
+                },
+                "then": {
+                    "trace-warning": {
+                        "text": "All SPEAK item should be located under the SPEAK root item: /sitecore/client.",
+                        "msg": 5601
+                    }
+                }
+            },
+            "speak-convention-2": {
+                "filter": "items",
                 "if": {
                     "and": {
-                        "item-id-or-path": { "starts-with": "/sitecore/content" }
+                        "item-name": { "=": "PageSettings" },
+                        "children": { "count": 0 }
                     }
                 },
                 "then": {
-                    "trace-error": { "text": "No content items allowed" }
+                    "trace-warning": {
+                        "text": "PageSettings item has no children. This item can safely be deleted.",
+                        "msg": 5602
+                    }
+                }
+            },
+            "speak-convention-3": {
+                "filter": "items",
+                "if": {
+                    "and": {
+                        "not": { "is-field-empty": "__Renderings" },
+                        "has-parent-with-name": "PageSettings"
+                    }
+                },
+                "then": {
+                    "trace-warning": {
+                        "text": "Items that are located under a PageSettings item should not have a layout. PageSettings contain configuration items for the page.",
+                        "msg": 5602
+                    }
                 }
             }
         }
     }
-}       
+}

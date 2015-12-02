@@ -1,26 +1,28 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
+using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Rules.Contexts;
 
 namespace Sitecore.Pathfinder.Rules.Conditions
 {
-    public class TemplateName : StringConditionBase
+    public class TemplateNameCondition : StringConditionBase
     {
-        public TemplateName() : base("template-name")
+        public TemplateNameCondition() : base("template-name")
         {
         }
 
         protected override IEnumerable<string> GetValues(IRuleContext ruleContext, IDictionary<string, string> parameters)
         {
-            var context = ruleContext as IItemsRuleContext;
-            if (context == null)
+            foreach (var obj in ruleContext.Objects)
             {
-                yield break;
-            }
+                var item = obj as Item;
+                if (item == null)
+                {
+                    yield return null;
+                    yield break;
+                }
 
-            foreach (var item in context.Items)
-            {
                 yield return item.TemplateName;
             }
         }
