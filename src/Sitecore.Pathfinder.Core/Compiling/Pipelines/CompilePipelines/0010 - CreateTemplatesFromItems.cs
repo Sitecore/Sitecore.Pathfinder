@@ -7,6 +7,7 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 {
@@ -18,10 +19,16 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
         protected override void Process(CompilePipeline pipeline)
         {
-            var templateItems = pipeline.Project.ProjectItems.OfType<Item>().Where(i => i.TemplateIdOrPath == "{AB86861A-6030-46C5-B394-E8F99E8B87DB}").ToList();
+            // todo: consider if imports should be omitted
+            var templateItems = pipeline.Project.ProjectItems.OfType<Item>().Where(i => i.TemplateIdOrPath == Constants.Templates.Template || string.Equals(i.TemplateIdOrPath, Constants.Templates.TemplatePath, StringComparison.OrdinalIgnoreCase)).ToList();
 
             foreach (var templateItem in templateItems)
             {
+                if (pipeline.Project.ProjectItems.OfType<Template>().Any(t => t.Uri == templateItem.Uri))
+                {
+                    continue;
+                }
+
                 CreateTemplate(pipeline.Context, pipeline.Project, templateItem);
             }
         }
@@ -30,6 +37,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
         {
             var template = context.Factory.Template(project, templateItem.Uri.Guid, templateItem.SourceTextNodes.First(), templateItem.DatabaseName, templateItem.ItemName, templateItem.ItemIdOrPath);
             template.IsEmittable = false;
+            template.IsImport = templateItem.IsImport;
 
             var baseTemplateField = templateItem.Fields.FirstOrDefault(f => f.FieldName == "__Base template");
             if (baseTemplateField != null)

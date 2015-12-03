@@ -20,8 +20,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 {
     public class LayoutCompiler
     {
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         private static readonly List<string> IgnoreAttributes = new List<string>
         {
             "Cacheable",
@@ -51,9 +50,8 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             return result;
         }
 
-        [NotNull]
-        [ItemNotNull]
-        protected virtual Item[] FindRenderingItems([NotNull][ItemNotNull] IEnumerable<Item> renderingItems, [NotNull] string renderingItemId)
+        [NotNull, ItemNotNull]
+        protected virtual Item[] FindRenderingItems([NotNull, ItemNotNull] IEnumerable<Item> renderingItems, [NotNull] string renderingItemId)
         {
             var n = renderingItemId.LastIndexOf('.');
             if (n < 0)
@@ -109,18 +107,16 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             return childTextNode.Key.StartsWith(renderingTextNode.Key + ".");
         }
 
-        [NotNull]
-        [ItemNotNull]
-        protected virtual Item[] ResolveRenderingItem([NotNull][ItemNotNull] IEnumerable<Item> renderingItems, [NotNull] string renderingItemId)
+        [NotNull, ItemNotNull]
+        protected virtual Item[] ResolveRenderingItem([NotNull, ItemNotNull] IEnumerable<Item> renderingItems, [NotNull] string renderingItemId)
         {
             var path = "/" + renderingItemId.Replace(".", "/");
 
             return renderingItems.Where(r => r.ItemIdOrPath.EndsWith(path, StringComparison.InvariantCultureIgnoreCase)).ToArray();
         }
 
-        [NotNull]
-        [ItemNotNull]
-        protected virtual Item[] ResolveRenderingItemId([NotNull][ItemNotNull] IEnumerable<Item> renderingItems, [NotNull] string renderingItemId)
+        [NotNull, ItemNotNull]
+        protected virtual Item[] ResolveRenderingItemId([NotNull, ItemNotNull] IEnumerable<Item> renderingItems, [NotNull] string renderingItemId)
         {
             var matches = renderingItems.Where(r => r.ShortName == renderingItemId).ToArray();
 
@@ -178,7 +174,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             output.WriteAttributeString("ds", item.Uri.Guid.Format());
         }
 
-        protected virtual void WriteDevice([NotNull] LayoutCompileContext context, [NotNull] XmlTextWriter output, [NotNull][ItemNotNull] IEnumerable<Item> renderingItems, [NotNull] ITextNode deviceTextNode)
+        protected virtual void WriteDevice([NotNull] LayoutCompileContext context, [NotNull] XmlTextWriter output, [NotNull, ItemNotNull] IEnumerable<Item> renderingItems, [NotNull] ITextNode deviceTextNode)
         {
             output.WriteStartElement("d");
 
@@ -282,7 +278,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             {
                 return;
             }
-                                                                 
+
             if (placeholderTextNode != null && !string.IsNullOrEmpty(parentPlaceholders))
             {
                 if (parentPlaceholders.IndexOf("," + placeholder + ",", StringComparison.InvariantCultureIgnoreCase) < 0)
@@ -300,7 +296,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             output.WriteAttributeString("ph", placeholder);
         }
 
-        protected virtual void WriteRendering([NotNull] LayoutCompileContext context, [NotNull] XmlTextWriter output, [NotNull][ItemNotNull] IEnumerable<Item> renderingItems, [NotNull] ITextNode renderingTextNode, [NotNull] string placeholders)
+        protected virtual void WriteRendering([NotNull] LayoutCompileContext context, [NotNull] XmlTextWriter output, [NotNull, ItemNotNull] IEnumerable<Item> renderingItems, [NotNull] ITextNode renderingTextNode, [NotNull] string placeholders)
         {
             string renderingItemId;
 
@@ -411,8 +407,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             }
         }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         private IEnumerable<string> AnalyzeFile([NotNull] LayoutCompileContext context, [NotNull] Item item, bool includeDynamicPlaceholders)
         {
             var pathField = item.Fields.FirstOrDefault(f => string.Equals(f.FieldName, "Path", StringComparison.OrdinalIgnoreCase));
@@ -442,16 +437,14 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             return Enumerable.Empty<string>();
         }
 
-        [ItemNotNull]
-        [NotNull]
+        [ItemNotNull, NotNull]
         private IEnumerable<string> AnalyzeViewFile([NotNull] string source)
         {
             var matches = Regex.Matches(source, "\\@Html\\.Sitecore\\(\\)\\.Placeholder\\(\"([^\"]*)\"\\)", RegexOptions.IgnoreCase);
             return matches.OfType<Match>().Select(i => i.Groups[1].ToString().Trim());
         }
 
-        [ItemNotNull]
-        [NotNull]
+        [ItemNotNull, NotNull]
         private IEnumerable<string> AnalyzeViewFileWithDynamicPlaceholders([NotNull] string source)
         {
             var matches = Regex.Matches(source, "\\@Html\\.Sitecore\\(\\)\\.Placeholder\\(([^\"\\)]*)\"([^\"]*)\"\\)", RegexOptions.IgnoreCase);
@@ -478,8 +471,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             return result;
         }
 
-        [ItemNotNull]
-        [NotNull]
+        [ItemNotNull, NotNull]
         private IEnumerable<string> AnalyzeWebFormsFile([NotNull] string source)
         {
             var matches = Regex.Matches(source, "<[^>]*Placeholder[^>]*Key=\"([^\"]*)\"[^>]*>", RegexOptions.IgnoreCase);

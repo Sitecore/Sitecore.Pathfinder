@@ -4,7 +4,6 @@ using System.Linq;
 using Sitecore.Pathfinder.Compiling.FieldCompilers;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 {
@@ -18,7 +17,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
         {
             var context = pipeline.Context.CompositionService.Resolve<IFieldCompileContext>().With(pipeline.Project);
 
-            foreach (var field in pipeline.Project.ProjectItems.OfType<Item>().SelectMany(item => item.Fields))
+            foreach (var field in pipeline.Project.Items.SelectMany(item => item.Fields))
             {
                 field.Compile(context);
             }

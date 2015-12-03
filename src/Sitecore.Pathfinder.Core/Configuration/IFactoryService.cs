@@ -92,6 +92,7 @@ namespace Sitecore.Pathfinder.Configuration
         [NotNull]
         ISourceFile SourceFile([NotNull] IFileSystemService fileSystem, [NotNull] string sourceFileName, [NotNull] string projectFileName);
 
+        // todo: swap guid and textnode parameters
         [NotNull]
         Template Template([NotNull] IProject project, Guid guid, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath);
 

@@ -12,14 +12,18 @@ namespace Sitecore.Pathfinder.Projects
 {
     public interface IProject
     {
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
+        IEnumerable<Item> Items { get; }
+
+        [NotNull, ItemNotNull]
+        IEnumerable<Template> Templates { get; }
+
+        [NotNull, ItemNotNull]
         ICollection<Diagnostic> Diagnostics { get; }
 
         long Ducats { get; set; }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         IEnumerable<File> Files { get; }
 
         [NotNull]
@@ -28,26 +32,16 @@ namespace Sitecore.Pathfinder.Projects
         bool HasErrors { get; }
 
         [NotNull]
-        [ItemNotNull]
-        IEnumerable<Item> Items { get; }
-
-        [NotNull]
         ProjectOptions Options { get; }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         IEnumerable<IProjectItem> ProjectItems { get; }
 
         [NotNull]
         string ProjectUniqueId { get; }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         ICollection<ISourceFile> SourceFiles { get; }
-
-        [NotNull]
-        [ItemNotNull]
-        IEnumerable<Template> Templates { get; }
 
         [NotNull]
         IProject Add([NotNull] string sourceFileName);
@@ -70,8 +64,11 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         Database GetDatabase([NotNull] string databaseName);
 
+        [NotNull, ItemNotNull]
+        IEnumerable<Item> GetItems([NotNull] string databaseName);
+
         [NotNull]
-        IProject Load([NotNull] ProjectOptions projectOptions, [NotNull] [ItemNotNull] IEnumerable<string> sourceFileNames);
+        IProject Load([NotNull] ProjectOptions projectOptions, [NotNull, ItemNotNull] IEnumerable<string> sourceFileNames);
 
         event ProjectChangedEventHandler ProjectChanged;
 
@@ -81,5 +78,8 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull]
         IProject SaveChanges();
+
+        [NotNull, ItemNotNull]
+        IEnumerable<Template> GetTemplates([NotNull] string databaseName);
     }
 }

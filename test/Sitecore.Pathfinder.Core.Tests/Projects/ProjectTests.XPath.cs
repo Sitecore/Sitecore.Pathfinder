@@ -35,6 +35,8 @@ namespace Sitecore.Pathfinder.Projects
             Assert.AreEqual("XmlItemTemplate123", Evaluate("@@templatename + '123'"));
             Assert.AreEqual(2, ((object[])Evaluate(". | .")).Length);
             Assert.AreEqual(true, Evaluate("startswith('Hello World', 'Hello')"));
+            Assert.AreEqual(true, Evaluate("not(false)"));
+            Assert.AreEqual("XmlItem", Evaluate("../../Home/XmlItem/@@name"));
         }
     }
 }

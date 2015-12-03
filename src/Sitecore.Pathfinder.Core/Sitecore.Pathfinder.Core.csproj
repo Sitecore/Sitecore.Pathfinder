@@ -121,6 +121,7 @@
     <Compile Include="Compiling\Builders\TemplateBuilder.cs" />
     <Compile Include="Compiling\Builders\TemplateFieldBuilder.cs" />
     <Compile Include="Compiling\Builders\TemplateSectionBuilder.cs" />
+    <Compile Include="Compiling\Pipelines\CompilePipelines\0020 - CreateItemsFromTemplates.cs" />
     <Compile Include="Diagnostics\EmitException.cs" />
     <Compile Include="Diagnostics\RetryableEmitException.cs" />
     <Compile Include="Emitting\EmitContext.cs" />
@@ -149,7 +150,7 @@
     <Compile Include="Compiling\Pipelines\CompilePipelines\2000 - CompileFields.cs" />
     <Compile Include="Compiling\Pipelines\CompilePipelines\3000 - ResolveReferences.cs" />
     <Compile Include="Compiling\Pipelines\CompilePipelines\4000 - CheckProject.cs" />
-    <Compile Include="Compiling\Pipelines\CompilePipelines\10 - CreateTemplatesFromItems.cs" />
+    <Compile Include="Compiling\Pipelines\CompilePipelines\0010 - CreateTemplatesFromItems.cs" />
     <Compile Include="Configuration\StartupExtensions.cs" />
     <Compile Include="Configuration\FileContext.cs" />
     <Compile Include="Diagnostics\ConsoleService.cs" />
@@ -325,7 +326,7 @@
     <Compile Include="Projects\Files\File.cs" />
     <Compile Include="Languages\Content\ContentFile.cs" />
     <Compile Include="Projects\Items\Field.cs" />
-    <Compile Include="Projects\Items\ItemBase.cs" />
+    <Compile Include="Projects\DatabaseProjectItem.cs" />
     <Compile Include="Languages\Media\MediaFile.cs" />
     <Compile Include="Projects\ProjectItem.cs" />
     <Compile Include="Projects\Templates\Template.cs" />

@@ -33,7 +33,7 @@ namespace Sitecore.Pathfinder.T4.Code
 
         [NotNull]
         [ItemNotNull]
-        public IEnumerable<CodeTemplate> Templates => InnerProject.ProjectItems.OfType<Template>().Where(t => !t.IsImport).Select(t => new CodeTemplate(this, t));
+        public IEnumerable<CodeTemplate> Templates => InnerProject.Templates.Where(t => !t.IsImport).Select(t => new CodeTemplate(this, t));
 
         [NotNull]
         public CodeDatabase GetDatabase([NotNull] string databaseName)

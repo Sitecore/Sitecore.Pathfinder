@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Rules.Contexts;
 
@@ -26,7 +27,7 @@ namespace Sitecore.Pathfinder.Rules.Conditions
 
             foreach (var obj in ruleContext.Objects)
             {
-                var item = obj as ItemBase;
+                var item = obj as DatabaseProjectItem;
                 if (item == null)
                 {
                     return false;

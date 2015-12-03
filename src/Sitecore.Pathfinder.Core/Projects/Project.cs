@@ -23,9 +23,7 @@ namespace Sitecore.Pathfinder.Projects
 {
     public delegate void ProjectChangedEventHandler([NotNull] object sender);
 
-    [Export]
-    [Export(typeof(IProject))]
-    [PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export, Export(typeof(IProject)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class Project : IProject
     {
         [NotNull]
@@ -34,12 +32,10 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         private readonly Dictionary<string, Database> _databases = new Dictionary<string, Database>();
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         private readonly List<Diagnostic> _diagnostics = new List<Diagnostic>();
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         private readonly List<IProjectItem> _projectItems = new List<IProjectItem>();
 
         [CanBeNull]
@@ -219,6 +215,16 @@ namespace Sitecore.Pathfinder.Projects
             }
 
             return database;
+        }
+
+        public IEnumerable<Item> GetItems(string databaseName)
+        {
+            return Items.Where(i => string.Equals(i.DatabaseName, databaseName, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public IEnumerable<Template> GetTemplates(string databaseName)
+        {
+            return Templates.Where(t => string.Equals(t.DatabaseName, databaseName, StringComparison.OrdinalIgnoreCase));
         }
 
         public virtual IProject Load(ProjectOptions projectOptions, IEnumerable<string> sourceFileNames)

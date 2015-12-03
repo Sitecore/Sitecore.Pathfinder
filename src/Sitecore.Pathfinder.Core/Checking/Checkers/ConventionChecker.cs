@@ -3,6 +3,7 @@
 using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Files;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
@@ -25,7 +26,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         {
             var rules = RuleService.ParseRules("check-project:conventions").ToArray();
 
-            var items = context.Project.ProjectItems.Where(i => !(i is ItemBase) || !((ItemBase)i).IsImport).ToArray();
+            var items = context.Project.ProjectItems.Where(i => !(i is DatabaseProjectItem) || !((DatabaseProjectItem)i).IsImport).ToArray();
 
             foreach (var projectItem in items)
             {
@@ -53,7 +54,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                             break;
 
                         case "itembases":
-                            var itemBase = projectItem as ItemBase;
+                            var itemBase = projectItem as DatabaseProjectItem;
                             if (itemBase == null)
                             {
                                 continue;

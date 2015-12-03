@@ -19,8 +19,7 @@ namespace Sitecore.Pathfinder
             ','
         };
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         public static readonly IList<ITextNode> EmptyReadOnlyTextNodeCollection = new ReadOnlyCollection<ITextNode>(new List<ITextNode>());
 
         [NotNull]
@@ -52,10 +51,11 @@ namespace Sitecore.Pathfinder
 
         public static class Configuration
         {
+            public const string BuildingWithNoConfig = "building-with-no-config";
+
             public const string BuildProject = "build-project:tasks";
 
             public const string BuildProjectContentFiles = "build-project:content-files";
-            public const string BuildProjectMediaTemplate = "build-project:media:template";
 
             public const string BuildProjectFiles = "build-project:files";
 
@@ -67,6 +67,8 @@ namespace Sitecore.Pathfinder
 
             public const string BuildProjectIgnoreFileNames = "build-project:ignore-filenames";
 
+            public const string BuildProjectMediaTemplate = "build-project:media:template";
+
             public const string CheckBinFileVersion = "install-package:check-bin-file-version";
 
             public const string CheckProjectDisabledCategories = "check-project:disabled-categories";
@@ -76,8 +78,6 @@ namespace Sitecore.Pathfinder
             public const string CodeGen = "codegen";
 
             public const string CommandLineConfig = "config";
-
-            public const string BuildingWithNoConfig = "building-with-no-config";
 
             public const string CopyDependenciesSourceDirectory = "copy-dependencies:source-directory";
 
@@ -254,6 +254,14 @@ namespace Sitecore.Pathfinder
             public const string StandardTemplate = "{1930BBEB-7805-471A-A3BE-4858AC7CF696}";
 
             public const string Sublayout = "{0A98E368-CDB9-4E1E-927C-8E0C24A003FB}";
+
+            public const string Template = "{AB86861A-6030-46C5-B394-E8F99E8B87DB}";
+
+            public const string TemplateFieldPath = "/sitecore/templates/System/Templates/Template field";
+
+            public const string TemplatePath = "/sitecore/templates/System/Templates/Template";
+
+            public const string TemplateSectionPath = "/sitecore/templates/System/Templates/Template section";
 
             public const string ViewRendering = "{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}";
         }

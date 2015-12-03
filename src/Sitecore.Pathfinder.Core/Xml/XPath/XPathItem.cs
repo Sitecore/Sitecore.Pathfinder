@@ -5,20 +5,28 @@ using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Xml.XPath
 {
     public class XPathItem : IXPathItem
     {
-        public XPathItem([NotNull] IProject project, [NotNull] string itemPath)
+        [CanBeNull]
+        private string _parentPath;
+
+        public XPathItem([NotNull] IProject project, [NotNull] string databaseName, [NotNull] string itemPath)
         {
             Project = project;
+            DatabaseName = databaseName;
             ItemPath = itemPath;
 
             var n = ItemPath.LastIndexOf('/');
             ItemName = ItemPath.Mid(n + 1);
         }
+
+        [NotNull]
+        public string DatabaseName { get; }
 
         public string this[string name] => string.Empty;
 
@@ -27,40 +35,58 @@ namespace Sitecore.Pathfinder.Xml.XPath
         public string ItemName { get; }
 
         [NotNull]
-        protected string ItemPath { get; }
-
-        [NotNull]
-        protected IProject Project { get; }
+        public string ParentItemPath => _parentPath ?? (_parentPath = PathHelper.GetItemParentPath(ItemPath));
 
         public string TemplateId => string.Empty;
 
         public string TemplateName => string.Empty;
 
+        [NotNull]
+        protected string ItemPath { get; }
+
+        [NotNull]
+        protected IProject Project { get; }
+
         public IEnumerable<IXPathItem> GetChildren()
         {
+            var childNames = new HashSet<string>();
+
+            foreach (var child in Project.GetItems(DatabaseName).Where(i => string.Equals(i.ParentItemPath, ItemPath, StringComparison.OrdinalIgnoreCase)))
+            {
+                yield return child;
+                childNames.Add(child.ItemName);
+            }
+
+            // yield virtual paths that are used by items deeper in the hierachy - tricky, tricky
             var itemIdOrPath = ItemPath + "/";
-            var index = itemIdOrPath.Length;
+            foreach (var descendent in Project.GetItems(DatabaseName).Where(i => i.ItemIdOrPath.StartsWith(itemIdOrPath, StringComparison.OrdinalIgnoreCase)))
+            {
+                var n = descendent.ItemIdOrPath.IndexOf('/', itemIdOrPath.Length);
+                if (n < 0)
+                {
+                    continue;
+                }
 
-            // todo: return XPath items
-            // todo: create items from templates
-            // todo: rename ItemBase => DatabaseObject
+                var childName = descendent.ItemIdOrPath.Mid(itemIdOrPath.Length, n - itemIdOrPath.Length);
+                if (childNames.Contains(childName, StringComparer.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
 
-            return Project.Items.Where(i => i.ItemIdOrPath.StartsWith(itemIdOrPath, StringComparison.OrdinalIgnoreCase) && i.ItemIdOrPath.IndexOf('/', index) < 0);
+                yield return new XPathItem(Project, DatabaseName, itemIdOrPath + childName);
+                childNames.Add(childName);
+            }
         }
 
         public IXPathItem GetParent()
         {
-            var n = ItemPath.LastIndexOf('/');
-            if (n <= 0)
+            if (string.IsNullOrEmpty(ParentItemPath))
             {
                 return null;
             }
 
-            var parentItemPath = ItemPath.Left(n);
-
-            var item = Project.FindQualifiedItem(parentItemPath) as IXPathItem;
-
-            return item ?? new XPathItem(Project, parentItemPath);
+            var item = Project.FindQualifiedItem(DatabaseName, ParentItemPath) as IXPathItem;
+            return item ?? new XPathItem(Project, DatabaseName, ParentItemPath);
         }
     }
 }

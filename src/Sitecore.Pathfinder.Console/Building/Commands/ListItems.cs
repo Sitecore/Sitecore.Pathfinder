@@ -1,6 +1,7 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Linq;
+using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Building.Commands
@@ -15,7 +16,7 @@ namespace Sitecore.Pathfinder.Building.Commands
         {
             context.IsAborted = true;
 
-            foreach (var item in context.Project.ProjectItems.OfType<ItemBase>().Where(i => !i.IsImport).OrderBy(i => i.ItemIdOrPath))
+            foreach (var item in context.Project.ProjectItems.OfType<DatabaseProjectItem>().Where(i => !i.IsImport).OrderBy(i => i.ItemIdOrPath))
             {
                 context.Trace.WriteLine(item.ItemIdOrPath);
             }

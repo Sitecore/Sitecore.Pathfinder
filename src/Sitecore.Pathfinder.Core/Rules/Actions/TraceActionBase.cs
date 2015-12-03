@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Rules.Actions
 
             if (context.Objects.Count() == 1)
             {
-                var itemBase = context.Objects.First() as ItemBase;
+                var itemBase = context.Objects.First() as DatabaseProjectItem;
                 if (itemBase != null)
                 {
                     textNode = itemBase.SourceTextNodes.FirstOrDefault();

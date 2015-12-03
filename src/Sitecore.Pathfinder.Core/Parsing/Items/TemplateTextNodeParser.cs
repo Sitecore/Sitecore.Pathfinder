@@ -85,7 +85,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             var templateField = templateSection.Fields.FirstOrDefault(f => string.Equals(f.FieldName, fieldName.Value, StringComparison.OrdinalIgnoreCase));
             if (templateField == null)
             {
-                var itemIdOrPath = template.ItemIdOrPath + "/" + templateSection.SectionName + "/" + fieldName;
+                var itemIdOrPath = template.ItemIdOrPath + "/" + templateSection.SectionName + "/" + fieldName.Value;
                 var guid = StringHelper.GetGuid(template.Project, templateFieldTextNode.GetAttributeValue("Id", itemIdOrPath));
 
                 templateField = context.ParseContext.Factory.TemplateField(template, guid, templateFieldTextNode);
@@ -137,7 +137,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             var templateSection = template.Sections.FirstOrDefault(s => string.Equals(s.SectionName, sectionName.Value, StringComparison.OrdinalIgnoreCase));
             if (templateSection == null)
             {
-                var itemIdOrPath = template.ItemIdOrPath + "/" + sectionName;
+                var itemIdOrPath = template.ItemIdOrPath + "/" + sectionName.Value;
                 var guid = StringHelper.GetGuid(template.Project, templateSectionTextNode.GetAttributeValue("Id", itemIdOrPath));
 
                 templateSection = context.ParseContext.Factory.TemplateSection(template, guid, templateSectionTextNode);

@@ -50,12 +50,7 @@ namespace Sitecore.Pathfinder.Projects
                 return true;
             }
 
-            if (obj.GetType() != typeof(ProjectItemUri))
-            {
-                return false;
-            }
-
-            return Equals((ProjectItemUri)obj);
+            return obj is ProjectItemUri && Equals((ProjectItemUri)obj);
         }
 
         public override int GetHashCode()
