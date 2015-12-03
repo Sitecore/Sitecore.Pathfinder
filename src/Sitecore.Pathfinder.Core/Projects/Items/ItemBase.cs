@@ -77,16 +77,6 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         public ICollection<ITextNode> SourceTextNodes { get; } = new List<ITextNode>();
 
-        [NotNull]
-        [ItemNotNull]
-        public virtual IEnumerable<Item> GetChildren()
-        {
-            var itemIdOrPath = ItemIdOrPath + "/";
-            var index = itemIdOrPath.Length;
-
-            return Project.ProjectItems.OfType<Item>().Where(i => i.ItemIdOrPath.StartsWith(itemIdOrPath, StringComparison.OrdinalIgnoreCase) && i.ItemIdOrPath.IndexOf('/', index) < 0);
-        }
-
         public override void Rename(string newShortName)
         {
             var n = ItemIdOrPath.LastIndexOf('/');

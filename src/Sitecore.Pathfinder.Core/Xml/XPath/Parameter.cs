@@ -10,10 +10,10 @@ namespace Sitecore.Pathfinder.Xml.XPath
         {
         }
 
-        public override object Evaluate(Query query, object context)
+        public override object Evaluate(XPathExpression xpath, object context)
         {
             object result;
-            if (query.Parameters.TryGetValue(Name, out result))
+            if (xpath.Parameters.TryGetValue(Name, out result))
             {
                 return result;
             }

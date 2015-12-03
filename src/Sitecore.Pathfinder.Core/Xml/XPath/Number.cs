@@ -11,7 +11,7 @@ namespace Sitecore.Pathfinder.Xml.XPath
 
         public int Value { get; }
 
-        public override object Evaluate(Query query, object context)
+        public override object Evaluate(XPathExpression xpath, object context)
         {
             return Value;
         }

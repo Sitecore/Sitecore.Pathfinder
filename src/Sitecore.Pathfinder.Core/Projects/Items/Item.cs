@@ -7,6 +7,7 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
+using Sitecore.Pathfinder.Xml.XPath;
 
 namespace Sitecore.Pathfinder.Projects.Items
 {
@@ -17,7 +18,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         MatchUsingSourceFile
     }
 
-    public class Item : ItemBase
+    public class Item : ItemBase, IXPathItem
     {
         [NotNull]
         public static readonly Item Empty = new Item(Projects.Project.Empty, TextNode.Empty, new Guid("{935B8D6C-D25A-48B8-8167-2C0443D77027}"), "emptydatabase", string.Empty, string.Empty, string.Empty);
@@ -50,7 +51,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         public FieldCollection Fields => _fields ?? (_fields = new FieldCollection(this));
 
         [NotNull]
-        public string this[[NotNull] string fieldName]
+        public string this[string fieldName]
         {
             get
             {
@@ -146,8 +147,21 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public SourceProperty<string> TemplateIdOrPathProperty { get; } = new SourceProperty<string>("Template", string.Empty, SourcePropertyFlags.IsQualified);
 
-        [NotNull]
         public string TemplateName => Template.ItemName;
+
+        string IXPathItem.ItemId => Uri.Guid.Format();
+
+        string IXPathItem.TemplateId => Template.Uri.Guid.Format();
+
+        [NotNull]
+        [ItemNotNull]
+        public virtual IEnumerable<Item> GetChildren()
+        {
+            var itemIdOrPath = ItemIdOrPath + "/";
+            var index = itemIdOrPath.Length;
+
+            return Project.Items.Where(i => i.ItemIdOrPath.StartsWith(itemIdOrPath, StringComparison.OrdinalIgnoreCase) && i.ItemIdOrPath.IndexOf('/', index) < 0);
+        }
 
         [NotNull]
         public string GetDisplayName([NotNull] string language, int version)
@@ -167,7 +181,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         public Item GetParent()
         {
             var n = ItemIdOrPath.LastIndexOf('/');
-            if (n < 0)
+            if (n <= 0)
             {
                 return null;
             }
@@ -231,6 +245,28 @@ namespace Sitecore.Pathfinder.Projects.Items
         protected override void OnProjectChanged(object sender)
         {
             _template = null;
+        }
+
+        IEnumerable<IXPathItem> IXPathItem.GetChildren()
+        {
+            foreach (var child in GetChildren())
+            {
+                yield return child;
+            }
+
+            // todo: return XPath items
+        }
+
+        IXPathItem IXPathItem.GetParent()
+        {
+            var parent = GetParent();
+            if (parent != null)
+            {
+                return parent;
+            }
+
+            var n = ItemIdOrPath.LastIndexOf('/');
+            return n > 0 ? new XPathItem(Project, ItemIdOrPath.Left(n)) : null;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Projects
         {
             var context = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/XmlItem");
 
-            var q = new Query();
+            var q = new XPathExpression(Services.XPathService);
             q.Parse(query);
             return q.Evaluate(context);
         }

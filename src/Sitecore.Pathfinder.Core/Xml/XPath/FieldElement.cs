@@ -3,8 +3,6 @@
 using System;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.Projects;
-using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Xml.XPath
 {
@@ -14,10 +12,9 @@ namespace Sitecore.Pathfinder.Xml.XPath
         {
         }
 
-        public override object Evaluate(Query query, object context)
+        public override object Evaluate(XPathExpression xpath, object context)
         {
-            var item = context as Item;
-            var projectItem = context as IProjectItem;
+            var item = context as IXPathItem;
 
             if (!Name.StartsWith("@", StringComparison.InvariantCulture))
             {
@@ -32,16 +29,16 @@ namespace Sitecore.Pathfinder.Xml.XPath
             switch (name.ToLowerInvariant())
             {
                 case "name":
-                    return projectItem?.ShortName;
+                    return item?.ItemName;
 
                 case "key":
-                    return projectItem?.ShortName.ToLowerInvariant();
+                    return item?.ItemName.ToLowerInvariant();
 
                 case "id":
-                    return projectItem?.Uri.Guid.Format();
+                    return item?.ItemId;
 
                 case "templateid":
-                    return item?.Template.Uri.Guid.Format();
+                    return item?.TemplateId;
 
                 case "templatename":
                     return item?.TemplateName;

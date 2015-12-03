@@ -1,17 +1,16 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.Collections;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Xml.XPath.Axes;
 
 namespace Sitecore.Pathfinder.Xml.XPath
 {
-    public class Predicate : Step
+    public class Predicate : StepBase
     {
         public Predicate([NotNull] string expression)
         {
-            var queryParser = new QueryParser();
+            var queryParser = new XPathParser();
             Expression = queryParser.ParsePredicate(expression);
         }
 
@@ -26,36 +25,27 @@ namespace Sitecore.Pathfinder.Xml.XPath
         [NotNull]
         public Opcode Expression { get; }
 
-        public override object Evaluate(Query query, object context)
+        public override object Evaluate(XPathExpression xpath, object context)
         {
-            return Test(query, context);
+            return Test(xpath, context);
         }
 
-        public bool Test([CanBeNull] object result)
-        {
-            var query = new Query(this);
-
-            query.BeginQuery();
-
-            return Test(query, result);
-        }
-
-        public bool Test([NotNull] Query query, [CanBeNull] object result)
+        public bool Test([NotNull] XPathExpression xpath, [CanBeNull] object result)
         {
             Current = result;
 
-            query.PredicateCounter++;
-            query.AnyCounter++;
+            xpath.PredicateCounter++;
+            xpath.AnyCounter++;
 
             object expressionResult;
             try
             {
-                expressionResult = Expression.Evaluate(query, result);
+                expressionResult = Expression.Evaluate(xpath, result);
             }
             finally
             {
-                query.PredicateCounter--;
-                query.AnyCounter--;
+                xpath.PredicateCounter--;
+                xpath.AnyCounter--;
             }
 
             if (expressionResult is bool)
@@ -71,9 +61,9 @@ namespace Sitecore.Pathfinder.Xml.XPath
             return expressionResult != null;
         }
 
-        int GetPosition([CanBeNull] object result)
+        private int GetPosition([CanBeNull] object result)
         {
-            var item = result as Item;
+            var item = result as IXPathItem;
             if (item == null)
             {
                 return -1;

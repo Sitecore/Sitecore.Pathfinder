@@ -7,18 +7,18 @@ namespace Sitecore.Pathfinder.Xml.XPath
     public abstract class Opcode
     {
         [CanBeNull]
-        public virtual object Evaluate([NotNull] Query query, [CanBeNull] object context)
+        public virtual object Evaluate([NotNull] XPathExpression xpath, [CanBeNull] object context)
         {
-            throw new QueryException("Cannot evaluate this element: " + GetType().Name);
+            throw new XPathException("Cannot evaluate this element: " + GetType().Name);
         }
 
-        protected void Process([NotNull] Query query, [CanBeNull] object context, [CanBeNull] Predicate predicate, [CanBeNull] Opcode nextStep, [CanBeNull] ref object result)
+        protected void Process([NotNull] XPathExpression xpath, [CanBeNull] object context, [CanBeNull] Predicate predicate, [CanBeNull] Opcode nextStep, [CanBeNull] ref object result)
         {
             var test = true;
 
             if (predicate != null)
             {
-                test = ProcessPredicate(query, predicate, context);
+                test = ProcessPredicate(xpath, predicate, context);
             }
 
             if (!test)
@@ -26,33 +26,33 @@ namespace Sitecore.Pathfinder.Xml.XPath
                 return;
             }
 
-            if (nextStep == null && query.PredicateCounter == 0)
+            if (nextStep == null && xpath.PredicateCounter == 0)
             {
                 result = ProcessResults(result, context);
             }
             else
             {
-                var nextResult = ProcessNextStep(query, context, nextStep);
+                var nextResult = ProcessNextStep(xpath, context, nextStep);
                 result = ProcessResults(result, nextResult);
             }
         }
 
         [CanBeNull]
-        private object ProcessNextStep([NotNull] Query query, [CanBeNull] object context, [CanBeNull] Opcode nextStep)
+        private object ProcessNextStep([NotNull] XPathExpression xpath, [CanBeNull] object context, [CanBeNull] Opcode nextStep)
         {
             if (nextStep != null)
             {
-                return nextStep.Evaluate(query, context);
+                return nextStep.Evaluate(xpath, context);
             }
 
             return context;
         }
 
-        private bool ProcessPredicate([NotNull] Query query, [CanBeNull] Predicate predicate, [CanBeNull] object context)
+        private bool ProcessPredicate([NotNull] XPathExpression xpath, [CanBeNull] Predicate predicate, [CanBeNull] object context)
         {
             if (predicate != null)
             {
-                return predicate.Test(query, context);
+                return predicate.Test(xpath, context);
             }
 
             return true;
@@ -69,7 +69,7 @@ namespace Sitecore.Pathfinder.Xml.XPath
                 return result;
             }
 
-            throw new QueryException("Type mismatch");
+            throw new XPathException("Type mismatch");
         }
 
         [CanBeNull]

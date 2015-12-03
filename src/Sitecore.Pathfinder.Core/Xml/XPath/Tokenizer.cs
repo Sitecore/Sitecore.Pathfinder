@@ -182,7 +182,7 @@ namespace Sitecore.Pathfinder.Xml.XPath
                         }
                         else
                         {
-                            throw new QueryException("!= expected");
+                            throw new XPathException("!= expected");
                         }
                         break;
 
@@ -243,7 +243,7 @@ namespace Sitecore.Pathfinder.Xml.XPath
                         }
                         else
                         {
-                            throw new QueryException("Unexpected character '" + _text[_index] + "'");
+                            throw new XPathException("Unexpected character '" + _text[_index] + "'");
                         }
                         break;
                 }
@@ -288,7 +288,7 @@ namespace Sitecore.Pathfinder.Xml.XPath
                 }
             }
 
-            throw new ParseException("Guid expected");
+            throw new XPathParseException("Guid expected");
         }
 
         [NotNull]
@@ -331,7 +331,7 @@ namespace Sitecore.Pathfinder.Xml.XPath
 
             if (_index >= _text.Length)
             {
-                throw new ParseException("Unterminated identifier");
+                throw new XPathParseException("Unterminated identifier");
             }
 
             _index++;
@@ -352,7 +352,7 @@ namespace Sitecore.Pathfinder.Xml.XPath
 
             if (_index >= _text.Length)
             {
-                throw new ParseException("Unterminated string");
+                throw new XPathParseException("Unterminated string");
             }
 
             _index++;

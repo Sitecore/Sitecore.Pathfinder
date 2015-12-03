@@ -16,6 +16,7 @@ using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Querying;
 using Sitecore.Pathfinder.Rules;
 using Sitecore.Pathfinder.Snapshots;
+using Sitecore.Pathfinder.Xml.XPath;
 
 namespace Sitecore.Pathfinder.Helpers
 {
@@ -53,6 +54,8 @@ namespace Sitecore.Pathfinder.Helpers
         [NotNull]
         public ISnapshotService SnapshotService { get; set; }
 
+        public IXPathService XPathService { get; set; }
+
         [NotNull]
         public ITraceService Trace { get; private set; }
 
@@ -81,6 +84,7 @@ namespace Sitecore.Pathfinder.Helpers
             QueryService = CompositionService.Resolve<IQueryService>();
             LanguageService = CompositionService.Resolve<ILanguageService>();
             RuleService = CompositionService.Resolve<IRuleService>();
+            XPathService = CompositionService.Resolve<IXPathService>();
         }
     }
 }
