@@ -7,7 +7,7 @@ namespace Sitecore.Pathfinder.Rules
 {
     public class RuleAction
     {
-        public RuleAction([NotNull] IAction action, [NotNull] IDictionary<string, string> parameters)
+        public RuleAction([NotNull] IAction action, [NotNull] IDictionary<string, object> parameters)
         {
             Action = action;
             Parameters = parameters;
@@ -17,6 +17,6 @@ namespace Sitecore.Pathfinder.Rules
         public IAction Action { get; }
 
         [NotNull]
-        public IDictionary<string, string> Parameters { get; }
+        public IDictionary<string, object> Parameters { get; }
     }
 }

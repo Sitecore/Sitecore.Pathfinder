@@ -22,8 +22,10 @@ namespace Sitecore.Pathfinder.Xml.XPath
         [NotNull]
         string TemplateName { get; }
 
-        [ItemNotNull]
         [NotNull]
+        string ItemPath { get; }
+
+        [NotNull, ItemNotNull]
         IEnumerable<IXPathItem> GetChildren();
 
         [CanBeNull]

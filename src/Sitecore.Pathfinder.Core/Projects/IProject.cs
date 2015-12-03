@@ -53,13 +53,13 @@ namespace Sitecore.Pathfinder.Projects
         IProject Compile();
 
         [CanBeNull]
-        IProjectItem FindQualifiedItem([NotNull] string qualifiedName);
+        T FindQualifiedItem<T>([NotNull] string qualifiedName) where T : IProjectItem;
 
         [CanBeNull]
-        IProjectItem FindQualifiedItem([NotNull] string databaseName, [NotNull] string qualifiedName);
+        T FindQualifiedItem<T>([NotNull] string databaseName, [NotNull] string qualifiedName) where T : IProjectItem;
 
         [CanBeNull]
-        IProjectItem FindQualifiedItem([NotNull] ProjectItemUri uri);
+        T FindQualifiedItem<T>([NotNull] ProjectItemUri uri) where T : IProjectItem;
 
         [NotNull]
         Database GetDatabase([NotNull] string databaseName);

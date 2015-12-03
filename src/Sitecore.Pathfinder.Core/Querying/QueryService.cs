@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Querying
     {
         public IProjectItem FindProjectItem(IProject project, string qualifiedName)
         {
-            return project.FindQualifiedItem(qualifiedName);
+            return project.FindQualifiedItem<IProjectItem>(qualifiedName);
         }
 
         public IEnumerable<IReference> FindUsages(IProject project, string qualifiedName)

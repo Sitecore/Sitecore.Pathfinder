@@ -34,7 +34,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
         {
             var mediaFile = (MediaFile)projectItem;
 
-            var mediaItem = context.Project.FindQualifiedItem(mediaFile.MediaItemUri) as Projects.Items.Item;
+            var mediaItem = context.Project.FindQualifiedItem<Projects.Items.Item>(mediaFile.MediaItemUri);
             if (mediaItem == null)
             {
                 context.Trace.TraceError(Msg.E1004, Texts.Media_item_not_found, new SnapshotTextNode(mediaFile.Snapshots.First()), mediaFile.MediaItemUri.Guid.Format());

@@ -4,6 +4,7 @@ using System.Linq;
 using Sitecore.Pathfinder.Building.Querying;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Querying;
 
 namespace Sitecore.Pathfinder.Building.Refactoring
@@ -42,7 +43,7 @@ namespace Sitecore.Pathfinder.Building.Refactoring
                 return;
             }
 
-            var projectItem = context.Project.FindQualifiedItem(qualifiedName);
+            var projectItem = context.Project.FindQualifiedItem<IProjectItem>(qualifiedName);
             if (projectItem == null)
             {
                 context.Trace.WriteLine(Texts.Item_not_found, qualifiedName);

@@ -7,6 +7,7 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Xml.XPath
 {
@@ -41,8 +42,7 @@ namespace Sitecore.Pathfinder.Xml.XPath
 
         public string TemplateName => string.Empty;
 
-        [NotNull]
-        protected string ItemPath { get; }
+        public string ItemPath { get; }
 
         [NotNull]
         protected IProject Project { get; }
@@ -85,7 +85,7 @@ namespace Sitecore.Pathfinder.Xml.XPath
                 return null;
             }
 
-            var item = Project.FindQualifiedItem(DatabaseName, ParentItemPath) as IXPathItem;
+            var item = Project.FindQualifiedItem<Item>(DatabaseName, ParentItemPath) as IXPathItem;
             return item ?? new XPathItem(Project, DatabaseName, ParentItemPath);
         }
     }

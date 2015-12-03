@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Rules.Contexts;
 
@@ -13,28 +13,24 @@ namespace Sitecore.Pathfinder.Rules.Conditions
         {
         }
 
-        public override bool Evaluate(IRuleContext ruleContext, IDictionary<string, string> parameters)
+        public override bool Evaluate(IRuleContext ruleContext, IDictionary<string, object> parameters)
         {
-            if (!ruleContext.Objects.Any())
+            var fieldName = GetParameterValue(parameters, "value", ruleContext.Object);
+            if (fieldName == null)
             {
-                return true;
+                throw new ConfigurationException("Field name expected");
             }
 
-            var fieldName = parameters.GetString("value");
-
-            foreach (var obj in ruleContext.Objects)
+            var item = ruleContext.Object as Item;
+            if (item == null)
             {
-                var item = obj as Item;
-                if (item == null)
-                {
-                    return false;
-                }
+                return false;
+            }
 
-                var fields = item.Fields.Where(f => string.Equals(f.FieldName, fieldName, StringComparison.OrdinalIgnoreCase));
-                if (fields.Any(f => !string.IsNullOrEmpty(f.Value)))
-                {
-                    return false;
-                }
+            var fields = item.Fields.Where(f => string.Equals(f.FieldName, fieldName, StringComparison.OrdinalIgnoreCase));
+            if (fields.Any(f => !string.IsNullOrEmpty(f.Value)))
+            {
+                return false;
             }
 
             return true;

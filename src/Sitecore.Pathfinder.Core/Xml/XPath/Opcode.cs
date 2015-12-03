@@ -12,18 +12,14 @@ namespace Sitecore.Pathfinder.Xml.XPath
             throw new XPathException("Cannot evaluate this element: " + GetType().Name);
         }
 
-        protected void Process([NotNull] XPathExpression xpath, [CanBeNull] object context, [CanBeNull] Predicate predicate, [CanBeNull] Opcode nextStep, [CanBeNull] ref object result)
+        protected virtual void Process([NotNull] XPathExpression xpath, [CanBeNull] object context, [CanBeNull] Predicate predicate, [CanBeNull] Opcode nextStep, [CanBeNull] ref object result)
         {
-            var test = true;
-
             if (predicate != null)
             {
-                test = ProcessPredicate(xpath, predicate, context);
-            }
-
-            if (!test)
-            {
-                return;
+                if (!predicate.Test(xpath,  context))
+                {
+                    return;
+                }
             }
 
             if (nextStep == null && xpath.PredicateCounter == 0)
@@ -38,7 +34,7 @@ namespace Sitecore.Pathfinder.Xml.XPath
         }
 
         [CanBeNull]
-        private object ProcessNextStep([NotNull] XPathExpression xpath, [CanBeNull] object context, [CanBeNull] Opcode nextStep)
+        protected virtual object ProcessNextStep([NotNull] XPathExpression xpath, [CanBeNull] object context, [CanBeNull] Opcode nextStep)
         {
             if (nextStep != null)
             {
@@ -48,18 +44,8 @@ namespace Sitecore.Pathfinder.Xml.XPath
             return context;
         }
 
-        private bool ProcessPredicate([NotNull] XPathExpression xpath, [CanBeNull] Predicate predicate, [CanBeNull] object context)
-        {
-            if (predicate != null)
-            {
-                return predicate.Test(xpath, context);
-            }
-
-            return true;
-        }
-
         [CanBeNull]
-        private object ProcessResults([CanBeNull] object left, [CanBeNull] object right)
+        protected virtual object ProcessResults([CanBeNull] object left, [CanBeNull] object right)
         {
             bool handled;
 
@@ -73,7 +59,7 @@ namespace Sitecore.Pathfinder.Xml.XPath
         }
 
         [CanBeNull]
-        private object ProcessResults([CanBeNull] object left, [CanBeNull] object right, out bool handled)
+        protected virtual object ProcessResults([CanBeNull] object left, [CanBeNull] object right, out bool handled)
         {
             if (left == null)
             {
@@ -116,6 +102,8 @@ namespace Sitecore.Pathfinder.Xml.XPath
                 result3[0] = left;
                 return result3;
             }
+
+            // todo: throw if incompatible types
 
             handled = true;
             var result2 = new object[2];

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Languages.Serialization
@@ -19,7 +20,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
             if (n >= 0)
             {
                 var parentPath = item.ItemIdOrPath.Left(n);
-                var parent = item.Project.FindQualifiedItem(parentPath);
+                var parent = item.Project.FindQualifiedItem<IProjectItem>(parentPath);
 
                 if (parent != null)
                 {

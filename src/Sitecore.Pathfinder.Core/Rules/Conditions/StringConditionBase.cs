@@ -2,10 +2,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Rules.Contexts;
 
 namespace Sitecore.Pathfinder.Rules.Conditions
@@ -16,70 +14,56 @@ namespace Sitecore.Pathfinder.Rules.Conditions
         {
         }
 
-        public override bool Evaluate(IRuleContext ruleContext, IDictionary<string, string> parameters)
+        public override bool Evaluate(IRuleContext ruleContext, IDictionary<string, object> parameters)
         {
-            if (!ruleContext.Objects.Any())
-            {
-                return false;
-            }
+            var value = GetValue(ruleContext, parameters);
 
-            return GetValues(ruleContext, parameters).All(value => CompareValue(value, parameters));
-        }
-
-        private bool CompareValue([CanBeNull] string value, [NotNull] IDictionary<string, string> parameters)
-        {
-            if (value == null)
-            {
-                return false;
-            }
-
-            var val = parameters.GetString("value");
-            if (!string.IsNullOrEmpty(val))
+            var val = GetParameterValue(parameters, "value", ruleContext.Object);
+            if (val != null)
             {
                 return string.Equals(value, val, StringComparison.OrdinalIgnoreCase);
             }
 
-            var equals = parameters.GetString("=");
-            if (!string.IsNullOrEmpty(equals))
+            var equals = GetParameterValue(parameters, "=", ruleContext.Object);
+            if (equals != null)
             {
                 return string.Equals(value, equals, StringComparison.OrdinalIgnoreCase);
             }
 
-            var notequals = parameters.GetString("!=");
-            if (!string.IsNullOrEmpty(notequals))
+            var notequals = GetParameterValue(parameters, "!=", ruleContext.Object);
+            if (notequals != null)
             {
                 return !string.Equals(value, notequals, StringComparison.OrdinalIgnoreCase);
             }
 
-            var contains = parameters.GetString("contains");
-            if (!string.IsNullOrEmpty(contains))
+            var contains = GetParameterValue(parameters, "contains", ruleContext.Object);
+            if (contains != null)
             {
                 return value.IndexOf(contains, StringComparison.OrdinalIgnoreCase) >= 0;
             }
 
-            var startsWith = parameters.GetString("starts-with");
-            if (!string.IsNullOrEmpty(startsWith))
+            var startsWith = GetParameterValue(parameters, "starts-with", ruleContext.Object);
+            if (startsWith != null)
             {
                 return value.StartsWith(startsWith, StringComparison.OrdinalIgnoreCase);
             }
 
-            var endsWith = parameters.GetString("ends-with");
-            if (!string.IsNullOrEmpty(endsWith))
+            var endsWith = GetParameterValue(parameters, "ends-with", ruleContext.Object);
+            if (endsWith != null)
             {
                 return value.EndsWith(endsWith, StringComparison.OrdinalIgnoreCase);
             }
 
-            var matches = parameters.GetString("matches");
-            if (!string.IsNullOrEmpty(matches))
+            var matches = GetParameterValue(parameters, "matches", ruleContext.Object);
+            if (matches != null)
             {
                 return Regex.IsMatch(value, matches, RegexOptions.IgnoreCase);
             }
 
-            throw new ConfigurationException("No string operator found");
+            throw new ConfigurationException("String operator not found");
         }
 
-        [ItemNotNull]
         [NotNull]
-        protected abstract IEnumerable<string> GetValues([NotNull] IRuleContext ruleContext, [NotNull] IDictionary<string, string> parameters);
+        protected abstract string GetValue([NotNull] IRuleContext ruleContext, [NotNull] IDictionary<string, object> parameters);
     }
 }

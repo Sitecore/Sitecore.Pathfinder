@@ -44,7 +44,7 @@ namespace Sitecore.Pathfinder.T4.Code
         [CanBeNull]
         public CodeItem GetItem([NotNull] string path)
         {
-            var item = Project.InnerProject.FindQualifiedItem(path) as Item;
+            var item = Project.InnerProject.FindQualifiedItem<Item>(path);
             return item == null ? null : new CodeItem(Project, item);
         }
 

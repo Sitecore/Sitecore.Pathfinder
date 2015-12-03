@@ -59,10 +59,14 @@ namespace Sitecore.Pathfinder.Xml.XPath
             return func.Evaluate(args);
         }
 
-        public void Parse([NotNull] string query)
+        [NotNull]
+        public XPathExpression Parse([NotNull] string query)
         {
             var queryParser = new XPathParser();
+
             _opcode = queryParser.Parse(query);
+
+            return this;
         }
     }
 }

@@ -10,16 +10,15 @@ namespace Sitecore.Pathfinder.Rules
     [PartNotDiscoverable]
     public class NotCondition : ConditionBase
     {
-        public NotCondition([NotNull] [ItemNotNull] RuleCondition condition) : base("not")
+        public NotCondition([NotNull, ItemNotNull]  RuleCondition condition) : base("not")
         {
             Condition = condition;
         }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         public RuleCondition Condition { get; }
 
-        public override bool Evaluate(IRuleContext ruleContext, IDictionary<string, string> parameters)
+        public override bool Evaluate(IRuleContext ruleContext, IDictionary<string, object> parameters)
         {
             return !Condition.Condition.Evaluate(ruleContext, Condition.Parameters);
         }

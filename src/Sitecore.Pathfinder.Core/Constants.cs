@@ -257,11 +257,11 @@ namespace Sitecore.Pathfinder
 
             public const string Template = "{AB86861A-6030-46C5-B394-E8F99E8B87DB}";
 
-            public const string TemplateFieldPath = "/sitecore/templates/System/Templates/Template field";
+            public const string TemplateField = "{455A3E98-A627-4B40-8035-E683A0331AC7}";
 
             public const string TemplatePath = "/sitecore/templates/System/Templates/Template";
 
-            public const string TemplateSectionPath = "/sitecore/templates/System/Templates/Template section";
+            public const string TemplateSection = "{E269FBB5-3750-427A-9149-7AA950B49301}";
 
             public const string ViewRendering = "{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}";
         }

@@ -183,6 +183,7 @@
     <Compile Include="Rules\Actions\TraceInformationAction.cs" />
     <Compile Include="Rules\Actions\TraceWarningAction.cs" />
     <Compile Include="Rules\AndCondition.cs" />
+    <Compile Include="Rules\ConditionActionBase.cs" />
     <Compile Include="Rules\ConditionBase.cs" />
     <Compile Include="Rules\Conditions\AlwaysCondition.cs" />
     <Compile Include="Rules\Conditions\ChildrenCondition.cs" />
@@ -210,6 +211,7 @@
     <Compile Include="Rules\RuleAction.cs" />
     <Compile Include="Rules\RuleCondition.cs" />
     <Compile Include="Rules\RuleService.cs" />
+    <Compile Include="Rules\XPathCondition.cs" />
     <Compile Include="Snapshots\IMutableTextNode.cs" />
     <Compile Include="Languages\Yaml\YamlContentTextNodeParser.cs" />
     <Compile Include="Languages\Yaml\YamlLayoutTextNodeParser.cs" />

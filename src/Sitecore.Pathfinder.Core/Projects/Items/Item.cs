@@ -31,6 +31,9 @@ namespace Sitecore.Pathfinder.Projects.Items
         private FieldCollection _fields;
 
         [CanBeNull]
+        private Item _parent;
+
+        [CanBeNull]
         private string _parentPath;
 
         [CanBeNull]
@@ -38,9 +41,6 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         [CanBeNull]
         private Template _template;
-
-        [CanBeNull]
-        private Item _parent;
 
         public Item([NotNull] IProject project, [NotNull] ITextNode textNode, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath) : base(project, textNode, guid, databaseName, itemName, itemIdOrPath)
         {
@@ -119,7 +119,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
                     if (templateIdOrPath.Contains('/') || templateIdOrPath.Contains('{'))
                     {
-                        _template = Project.FindQualifiedItem(DatabaseName, templateIdOrPath) as Template;
+                        _template = Project.FindQualifiedItem<Template>(DatabaseName, templateIdOrPath);
                     }
                     else
                     {
@@ -154,6 +154,8 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         string IXPathItem.ItemId => Uri.Guid.Format();
 
+        string IXPathItem.ItemPath => ItemIdOrPath;
+
         string IXPathItem.TemplateId => Template.Uri.Guid.Format();
 
         [NotNull, ItemNotNull]
@@ -178,7 +180,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         [CanBeNull]
         public Item GetParent()
         {
-            return _parent ?? (_parent = Project.FindQualifiedItem(DatabaseName, ParentItemPath) as Item);
+            return _parent ?? (_parent = Project.FindQualifiedItem<Item>(DatabaseName, ParentItemPath));
         }
 
         [NotNull, ItemNotNull]

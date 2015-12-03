@@ -44,7 +44,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
             var template = item.Template;
             if (template == Template.Empty)
             {
-                if (item.Project.FindQualifiedItem(item.TemplateIdOrPath) == null)
+                if (item.Project.FindQualifiedItem<IProjectItem>(item.TemplateIdOrPath) == null)
                 {
                     context.Trace.TraceWarning(Msg.C1004, "Item template not found", TraceHelper.GetTextNode(item.TemplateIdOrPathProperty, item, item.ItemNameProperty), item.TemplateIdOrPath);
                 }

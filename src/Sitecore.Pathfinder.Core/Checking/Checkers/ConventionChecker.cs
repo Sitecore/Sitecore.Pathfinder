@@ -53,9 +53,9 @@ namespace Sitecore.Pathfinder.Checking.Checkers
 
                             break;
 
-                        case "itembases":
-                            var itemBase = projectItem as DatabaseProjectItem;
-                            if (itemBase == null)
+                        case "databaseprojectitems":
+                            var databaseProjectItem = projectItem as DatabaseProjectItem;
+                            if (databaseProjectItem == null)
                             {
                                 continue;
                             }

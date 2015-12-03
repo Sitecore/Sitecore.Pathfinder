@@ -12,6 +12,6 @@ namespace Sitecore.Pathfinder.Xml.XPath
         }
 
         [CanBeNull]
-        public Predicate Predicate { get; set; }
+        public Predicate Predicate { get; }
     }
 }

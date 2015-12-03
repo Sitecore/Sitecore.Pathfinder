@@ -7,7 +7,7 @@ namespace Sitecore.Pathfinder.Rules
 {
     public class RuleCondition
     {
-        public RuleCondition([NotNull] ICondition condition, [NotNull] IDictionary<string, string> parameters)
+        public RuleCondition([NotNull] ICondition condition, [NotNull] IDictionary<string, object> parameters)
         {
             Condition = condition;
             Parameters = parameters;
@@ -17,6 +17,6 @@ namespace Sitecore.Pathfinder.Rules
         public ICondition Condition { get; }
 
         [NotNull]
-        public IDictionary<string, string> Parameters { get; }
+        public IDictionary<string, object> Parameters { get; }
     }
 }

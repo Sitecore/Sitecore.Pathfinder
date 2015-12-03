@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Rules.Contexts;
 
@@ -15,52 +14,44 @@ namespace Sitecore.Pathfinder.Rules.Conditions
         {
         }
 
-        public override bool Evaluate(IRuleContext ruleContext, IDictionary<string, string> parameters)
+        public override bool Evaluate(IRuleContext ruleContext, IDictionary<string, object> parameters)
         {
-            if (!ruleContext.Objects.Any())
-            {
-                return false;
-            }
-
             int count;
-            if (!int.TryParse(parameters.GetString("count"), out count))
+            if (!int.TryParse(GetParameterValue(parameters, "count", ruleContext.Object), out count))
             {
                 count = -1;
             }
 
-            var containsName = parameters.GetString("contains");
-            var any = string.Equals(parameters.GetString("any"), "true", StringComparison.OrdinalIgnoreCase);
+            var containsName = GetParameterValue(parameters, "contains", ruleContext.Object);
+            var any = string.Equals(GetParameterValue(parameters, "any", ruleContext.Object), "true", StringComparison.OrdinalIgnoreCase);
 
-            foreach (var obj in ruleContext.Objects)
+            var item = ruleContext.Object as Item;
+            if (item == null)
             {
-                var item = obj as Item;
-                if (item == null)
+                return false;
+            }
+
+            var children = item.GetChildren();
+
+            if (count >= 0)
+            {
+                if (children.Count() != count)
                 {
                     return false;
                 }
+            }
 
-                var children = item.GetChildren();
-
-                if (count >= 0)
-                {
-                    if (children.Count() != count)
-                    {
-                        return false;
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(containsName))
-                {
-                    if (children.All(c => !string.Equals(c.ItemName, containsName, StringComparison.OrdinalIgnoreCase)))
-                    {
-                        return false;
-                    }
-                }
-
-                if (any && !children.Any())
+            if (containsName != null)
+            {
+                if (children.All(c => !string.Equals(c.ItemName, containsName, StringComparison.OrdinalIgnoreCase)))
                 {
                     return false;
                 }
+            }
+
+            if (any && !children.Any())
+            {
+                return false;
             }
 
             return true;

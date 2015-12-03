@@ -11,7 +11,7 @@ namespace Sitecore.Pathfinder.Rules.Conditions
         {
         }
 
-        public override bool Evaluate(IRuleContext ruleContext, IDictionary<string, string> parameters)
+        public override bool Evaluate(IRuleContext ruleContext, IDictionary<string, object> parameters)
         {
             return true;
         }

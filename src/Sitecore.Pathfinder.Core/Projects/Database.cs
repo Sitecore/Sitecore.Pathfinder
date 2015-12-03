@@ -49,7 +49,7 @@ namespace Sitecore.Pathfinder.Projects
         [CanBeNull]
         public Item GetItem([NotNull] string path)
         {
-            return Project.FindQualifiedItem(DatabaseName, path) as Item;
+            return Project.FindQualifiedItem<Item>(DatabaseName, path);
         }
 
         public static bool operator ==([CanBeNull] Database left, [CanBeNull] Database right)

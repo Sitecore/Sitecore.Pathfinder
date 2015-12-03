@@ -8,7 +8,7 @@ using Sitecore.Pathfinder.Rules.Contexts;
 namespace Sitecore.Pathfinder.Rules
 {
     [InheritedExport(typeof(ICondition))]
-    public abstract class ConditionBase : ICondition
+    public abstract class ConditionBase : ConditionActionBase, ICondition
     {
         protected ConditionBase([NotNull] string name)
         {
@@ -17,6 +17,6 @@ namespace Sitecore.Pathfinder.Rules
 
         public string Name { get; }
 
-        public abstract bool Evaluate(IRuleContext ruleContext, IDictionary<string, string> parameters);
+        public abstract bool Evaluate(IRuleContext ruleContext, IDictionary<string, object> parameters);
     }
 }

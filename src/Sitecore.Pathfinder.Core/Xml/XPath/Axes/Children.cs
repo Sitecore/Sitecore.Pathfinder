@@ -58,6 +58,8 @@ namespace Sitecore.Pathfinder.Xml.XPath.Axes
                         return item.TemplateName.ToLowerInvariant();
                     case "@templateid":
                         return item.TemplateId;
+                    case "@path":
+                        return item.ItemPath;
                     default:
                         return item[Name];
                 }

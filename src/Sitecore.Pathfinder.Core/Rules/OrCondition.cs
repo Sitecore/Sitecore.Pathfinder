@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Rules
         [ItemNotNull]
         public IEnumerable<RuleCondition> Conditions { get; }
 
-        public override bool Evaluate(IRuleContext ruleContext, IDictionary<string, string> parameters)
+        public override bool Evaluate(IRuleContext ruleContext, IDictionary<string, object> parameters)
         {
             return Conditions.Any(c => c.Condition.Evaluate(ruleContext, c.Parameters));
         }

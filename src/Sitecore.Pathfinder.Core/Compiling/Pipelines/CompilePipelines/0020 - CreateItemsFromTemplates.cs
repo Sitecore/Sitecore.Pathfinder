@@ -19,8 +19,8 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
         protected override void Process(CompilePipeline pipeline)
         {
-            // todo: consider if imports should be omitted
-            var templates = pipeline.Project.ProjectItems.OfType<Template>().ToList();
+            // todo: consider if imports should be omitted or not
+            var templates = pipeline.Project.Templates.ToList();
 
             foreach (var template in templates)
             {
@@ -35,7 +35,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
         private void CreateItems([NotNull] ICompileContext context, [NotNull] IProject project, [NotNull] Template template)
         {
-            var templateItem = context.Factory.Item(project, template.SourceTextNodes.First(), template.Uri.Guid, template.DatabaseName, template.ItemName, template.ItemIdOrPath, Constants.Templates.TemplatePath);
+            var templateItem = context.Factory.Item(project, template.SourceTextNodes.First(), template.Uri.Guid, template.DatabaseName, template.ItemName, template.ItemIdOrPath, Constants.Templates.Template);
             templateItem.IsEmittable = false;
             templateItem.IsImport = template.IsImport;
             templateItem.IconProperty.SetValue(template.IconProperty);
@@ -46,7 +46,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
             foreach (var templateSection in template.Sections)
             {
                 var templateSectionItemIdOrPath = template.ItemIdOrPath + "/" + templateSection.SectionName;
-                var templateSectionItem = context.Factory.Item(project, templateSection.SourceTextNodes.First(), templateSection.Uri.Guid, template.DatabaseName, templateSection.SectionName, templateSectionItemIdOrPath, Constants.Templates.TemplateSectionPath);
+                var templateSectionItem = context.Factory.Item(project, templateSection.SourceTextNodes.First(), templateSection.Uri.Guid, template.DatabaseName, templateSection.SectionName, templateSectionItemIdOrPath, Constants.Templates.TemplateSection);
                 templateSectionItem.IsEmittable = false;
                 templateSectionItem.IsImport = template.IsImport;
                 templateSectionItem.IconProperty.SetValue(templateSection.IconProperty);
@@ -54,7 +54,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
                 foreach (var templateField in templateSection.Fields)
                 {
                     var templateFieldItemIdOrPath = templateSectionItemIdOrPath + "/" + templateField.FieldName;
-                    var templateFieldItem = context.Factory.Item(project, templateField.SourceTextNodes.First(), templateField.Uri.Guid, template.DatabaseName, templateField.FieldName, templateFieldItemIdOrPath, Constants.Templates.TemplateFieldPath);
+                    var templateFieldItem = context.Factory.Item(project, templateField.SourceTextNodes.First(), templateField.Uri.Guid, template.DatabaseName, templateField.FieldName, templateFieldItemIdOrPath, Constants.Templates.TemplateField);
                     templateFieldItem.IsEmittable = false;
                     templateFieldItem.IsImport = template.IsImport;
 

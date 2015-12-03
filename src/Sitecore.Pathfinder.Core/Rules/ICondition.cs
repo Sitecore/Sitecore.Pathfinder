@@ -11,6 +11,6 @@ namespace Sitecore.Pathfinder.Rules
         [NotNull]
         string Name { get; }
 
-        bool Evaluate([NotNull] IRuleContext ruleContext, [NotNull] IDictionary<string, string> parameters);
+        bool Evaluate([NotNull] IRuleContext ruleContext, [NotNull] IDictionary<string, object> parameters);
     }
 }

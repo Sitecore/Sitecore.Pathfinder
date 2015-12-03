@@ -164,43 +164,43 @@ namespace Sitecore.Pathfinder.Projects
             return this;
         }
 
-        public IProjectItem FindQualifiedItem(string qualifiedName)
+        public T FindQualifiedItem<T>(string qualifiedName) where T : IProjectItem
         {
             if (!qualifiedName.StartsWith("{") || !qualifiedName.EndsWith("}"))
             {
-                return ProjectItems.FirstOrDefault(i => string.Equals(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase));
+                return ProjectItems.OfType<T>().FirstOrDefault(i => string.Equals(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase));
             }
 
             Guid guid;
             if (Guid.TryParse(qualifiedName, out guid))
             {
-                return ProjectItems.FirstOrDefault(i => i.Uri.Guid == guid);
+                return ProjectItems.OfType<T>().FirstOrDefault(i => i.Uri.Guid == guid);
             }
 
             guid = StringHelper.ToGuid(qualifiedName);
-            return ProjectItems.FirstOrDefault(i => i.Uri.Guid == guid);
+            return ProjectItems.OfType<T>().FirstOrDefault(i => i.Uri.Guid == guid);
         }
 
-        public IProjectItem FindQualifiedItem(string databaseName, string qualifiedName)
+        public T FindQualifiedItem<T>(string databaseName, string qualifiedName) where T : IProjectItem
         {
             if (!qualifiedName.StartsWith("{") || !qualifiedName.EndsWith("}"))
             {
-                return ProjectItems.FirstOrDefault(i => string.Equals(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase) && i.Uri.FileOrDatabaseName == databaseName);
+                return ProjectItems.OfType<T>().FirstOrDefault(i => string.Equals(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase) && i.Uri.FileOrDatabaseName == databaseName);
             }
 
             Guid guid;
             if (Guid.TryParse(qualifiedName, out guid))
             {
-                return ProjectItems.FirstOrDefault(i => i.Uri.Guid == guid && i.Uri.FileOrDatabaseName == databaseName);
+                return ProjectItems.OfType<T>().FirstOrDefault(i => i.Uri.Guid == guid && i.Uri.FileOrDatabaseName == databaseName);
             }
 
             guid = StringHelper.ToGuid(qualifiedName);
-            return ProjectItems.FirstOrDefault(i => i.Uri.Guid == guid && i.Uri.FileOrDatabaseName == databaseName);
+            return ProjectItems.OfType<T>().FirstOrDefault(i => i.Uri.Guid == guid && i.Uri.FileOrDatabaseName == databaseName);
         }
 
-        public IProjectItem FindQualifiedItem(ProjectItemUri uri)
+        public T FindQualifiedItem<T>(ProjectItemUri uri) where T : IProjectItem
         {
-            return ProjectItems.FirstOrDefault(i => i.Uri == uri);
+            return ProjectItems.OfType<T>().FirstOrDefault(i => i.Uri == uri);
         }
 
         public Database GetDatabase(string databaseName)

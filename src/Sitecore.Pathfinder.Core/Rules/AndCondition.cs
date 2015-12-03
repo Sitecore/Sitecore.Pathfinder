@@ -11,16 +11,15 @@ namespace Sitecore.Pathfinder.Rules
     [PartNotDiscoverable]
     public class AndCondition : ConditionBase
     {
-        public AndCondition([NotNull] [ItemNotNull] IEnumerable<RuleCondition> conditions) : base("and")
+        public AndCondition([NotNull, ItemNotNull]  IEnumerable<RuleCondition> conditions) : base("and")
         {
             Conditions = conditions;
         }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         public IEnumerable<RuleCondition> Conditions { get; }
 
-        public override bool Evaluate(IRuleContext ruleContext, IDictionary<string, string> parameters)
+        public override bool Evaluate(IRuleContext ruleContext, IDictionary<string, object> parameters)
         {
             return Conditions.All(c => c.Condition.Evaluate(ruleContext, c.Parameters));
         }

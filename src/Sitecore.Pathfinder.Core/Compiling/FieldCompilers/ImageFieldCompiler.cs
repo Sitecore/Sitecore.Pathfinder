@@ -2,6 +2,7 @@
 
 using System;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -26,7 +27,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 return string.Empty;
             }
 
-            var item = field.Item.Project.FindQualifiedItem(qualifiedName);
+            var item = field.Item.Project.FindQualifiedItem<IProjectItem>(qualifiedName);
             if (item == null)
             {
                 context.Trace.TraceError(Msg.C1044, Texts.Image_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), qualifiedName);

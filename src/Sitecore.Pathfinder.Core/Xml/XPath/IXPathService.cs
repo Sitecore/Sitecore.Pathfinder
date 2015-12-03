@@ -8,11 +8,13 @@ namespace Sitecore.Pathfinder.Xml.XPath
 {
     public interface IXPathService
     {
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         IEnumerable<IFunction> Functions { get; }
 
         [NotNull]
-        XPathExpression GetXPath();
+        XPathExpression GetXPathExpression();
+
+        [NotNull]
+        XPathExpression GetXPathExpression([NotNull] string xpath);
     }
 }

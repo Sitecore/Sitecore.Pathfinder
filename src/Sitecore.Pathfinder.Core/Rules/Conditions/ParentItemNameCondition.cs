@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using System.Collections.Generic;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Rules.Contexts;
 
@@ -10,26 +12,21 @@ namespace Sitecore.Pathfinder.Rules.Conditions
         {
         }
 
-        protected override IEnumerable<string> GetValues(IRuleContext ruleContext, IDictionary<string, string> parameters)
+        protected override string GetValue(IRuleContext ruleContext, IDictionary<string, object> parameters)
         {
-            foreach (var obj in ruleContext.Objects)
+            var item = ruleContext.Object as Item;
+            if (item == null)
             {
-                var item = obj as Item;
-                if (item == null)
-                {
-                    yield return null;
-                    yield break;
-                }
-
-                var parentItem = item.GetParent();
-                if (parentItem == null)
-                {
-                    yield return null;
-                    yield break;
-                }
-
-                yield return parentItem.ItemName;
+                return string.Empty;
             }
+
+            var parentItem = item.GetParent();
+            if (parentItem == null)
+            {
+                return string.Empty;
+            }
+
+            return parentItem.ItemName;
         }
     }
 }

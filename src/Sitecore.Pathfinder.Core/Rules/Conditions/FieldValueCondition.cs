@@ -1,7 +1,7 @@
-﻿using System;
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
 using System.Collections.Generic;
-using System.Linq;
-using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Rules.Contexts;
 
@@ -13,25 +13,21 @@ namespace Sitecore.Pathfinder.Rules.Conditions
         {
         }
 
-        protected override IEnumerable<string> GetValues(IRuleContext ruleContext, IDictionary<string, string> parameters)
+        protected override string GetValue(IRuleContext ruleContext, IDictionary<string, object> parameters)
         {
-            var fieldName = parameters.GetString("name");
-
-            foreach (var obj in ruleContext.Objects)
+            var item = ruleContext.Object as Item;
+            if (item == null)
             {
-                var item = obj as Item;
-                if (item == null)
-                {
-                    yield return null;
-                    yield break;
-                }
-
-                var fields = item.Fields.Where(f => string.Equals(f.FieldName, fieldName, StringComparison.OrdinalIgnoreCase));
-                foreach (var field in fields)
-                {
-                    yield return field.Value;
-                }
+                return string.Empty;
             }
+
+            var fieldName = GetParameterValue(parameters, "name", ruleContext.Object);
+            if (fieldName == null)
+            {
+                throw new ConfigurationException("Field name expected");
+            }
+
+            return item[fieldName];
         }
     }
 }

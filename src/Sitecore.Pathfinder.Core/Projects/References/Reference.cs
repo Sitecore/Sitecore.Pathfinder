@@ -74,7 +74,7 @@ namespace Sitecore.Pathfinder.Projects.References
                     return null;
                 }
 
-                var result = Owner.Project.FindQualifiedItem(ResolvedUri);
+                var result = Owner.Project.FindQualifiedItem<IProjectItem>(ResolvedUri);
                 if (result == null)
                 {
                     IsValid = false;
@@ -86,7 +86,7 @@ namespace Sitecore.Pathfinder.Projects.References
 
             IsResolved = true;
 
-            var projectItem = Owner.Project.FindQualifiedItem(ReferenceText);
+            var projectItem = Owner.Project.FindQualifiedItem<IProjectItem>(ReferenceText);
             if (projectItem == null)
             {
                 IsValid = false;

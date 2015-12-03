@@ -14,19 +14,16 @@ namespace Sitecore.Pathfinder.Rules
             Filter = filter;
         }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         public ICollection<RuleAction> Else { get; } = new List<RuleAction>();
 
         [NotNull]
         public string Filter { get; }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         public ICollection<RuleCondition> If { get; } = new List<RuleCondition>();
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         public ICollection<RuleAction> Then { get; } = new List<RuleAction>();
 
         public bool EvaluateIf(IRuleContext context)

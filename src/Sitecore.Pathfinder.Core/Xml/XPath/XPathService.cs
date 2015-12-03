@@ -11,16 +11,21 @@ namespace Sitecore.Pathfinder.Xml.XPath
     public class XPathService : IXPathService
     {
         [ImportingConstructor]
-        public XPathService([ImportMany] [ItemNotNull] [NotNull] IEnumerable<IFunction> functions)
+        public XPathService([ImportMany, ItemNotNull, NotNull]   IEnumerable<IFunction> functions)
         {
             Functions = functions;
         }
 
         public IEnumerable<IFunction> Functions { get; }
 
-        public virtual XPathExpression GetXPath()
+        public virtual XPathExpression GetXPathExpression()
         {
             return new XPathExpression(this);
+        }
+
+        public XPathExpression GetXPathExpression(string xpath)
+        {
+            return GetXPathExpression().Parse(xpath);
         }
     }
 }

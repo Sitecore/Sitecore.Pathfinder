@@ -3,6 +3,7 @@
 using System;
 using System.Text;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -25,7 +26,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             var value = field.Value.Trim();
             if (value.IndexOf('|') < 0)
             {
-                var item = field.Item.Project.FindQualifiedItem(value);
+                var item = field.Item.Project.FindQualifiedItem<IProjectItem>(value);
                 if (item == null)
                 {
                     context.Trace.TraceError(Msg.C1045, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), value);
@@ -38,7 +39,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             var sb = new StringBuilder();
             foreach (var itemPath in value.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries))
             {
-                var item = field.Item.Project.FindQualifiedItem(itemPath);
+                var item = field.Item.Project.FindQualifiedItem<IProjectItem>(itemPath);
                 if (item == null)
                 {
                     context.Trace.TraceError(Msg.C1046, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), itemPath);

@@ -13,19 +13,19 @@ namespace Sitecore.Pathfinder.Rules.Actions
         {
         }
 
-        protected override void TraceLine(int msg, string text, ITextNode textNode, ISnapshot snapshot)
+        protected override void TraceLine(int msg, string text, ITextNode textNode, ISnapshot snapshot, string details)
         {
             if (textNode != null)
             {
-                Trace.TraceInformation(msg, text, textNode);
+                Trace.TraceInformation(msg, text, textNode, details);
             }
             else if (snapshot != null)
             {
-                Trace.TraceInformation(msg, text, snapshot.SourceFile);
+                Trace.TraceInformation(msg, text, snapshot.SourceFile, details);
             }
             else
             {
-                Trace.TraceInformation(msg, text);
+                Trace.TraceInformation(msg, text, details);
             }
         }
     }

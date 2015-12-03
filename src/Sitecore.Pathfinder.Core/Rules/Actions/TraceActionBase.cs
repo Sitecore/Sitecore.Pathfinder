@@ -3,9 +3,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
-using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Rules.Contexts;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -21,38 +19,37 @@ namespace Sitecore.Pathfinder.Rules.Actions
         [NotNull]
         protected ITraceService Trace { get; }
 
-        public override void Execute(IRuleContext context, IDictionary<string, string> parameters)
+        public override void Execute(IRuleContext context, IDictionary<string, object> parameters)
         {
-            var text = parameters.GetString("text");
+            var text = GetParameterValue(parameters, "text", context.Object);
             if (string.IsNullOrEmpty(text))
             {
-                text = parameters.GetString("value");
+                text = GetParameterValue(parameters, "value", context.Object) ?? string.Empty;
             }
 
+            var details = GetParameterValue(parameters, "details", context.Object);
+
             int msg;
-            int.TryParse(parameters.GetString("msg"), out msg);
+            int.TryParse(GetParameterValue(parameters, "msg", context.Object), out msg);
 
             ITextNode textNode = null;
             ISnapshot snapshot = null;
 
-            if (context.Objects.Count() == 1)
+            var itemBase = context.Object as DatabaseProjectItem;
+            if (itemBase != null)
             {
-                var itemBase = context.Objects.First() as DatabaseProjectItem;
-                if (itemBase != null)
-                {
-                    textNode = itemBase.SourceTextNodes.FirstOrDefault();
-                }
-
-                var projectItem = context.Objects.First() as IProjectItem;
-                if (projectItem != null)
-                {
-                    snapshot = projectItem.Snapshots.FirstOrDefault();
-                }
+                textNode = itemBase.SourceTextNodes.FirstOrDefault();
             }
 
-            TraceLine(msg, text, textNode, snapshot);
+            var projectItem = context.Object as IProjectItem;
+            if (projectItem != null)
+            {
+                snapshot = projectItem.Snapshots.FirstOrDefault();
+            }
+
+            TraceLine(msg, text, textNode, snapshot, details ?? string.Empty);
         }
 
-        protected abstract void TraceLine(int msg, [NotNull] string text, [CanBeNull] ITextNode textNode, [CanBeNull] ISnapshot snapshot);
+        protected abstract void TraceLine(int msg, [NotNull] string text, [CanBeNull] ITextNode textNode, [CanBeNull] ISnapshot snapshot, [NotNull] string details);
     }
 }
