@@ -1,11 +1,9 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using Sitecore.Pathfinder.Extensions;
 
-namespace Sitecore.Pathfinder.Building.Initializing
+namespace Sitecore.Pathfinder.Building.Maintaining
 {
     public class WriteWebsiteExports : RequestBuildTaskBase
     {

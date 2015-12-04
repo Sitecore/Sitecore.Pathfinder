@@ -1,6 +1,6 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
-namespace Sitecore.Pathfinder.Building.Commands
+namespace Sitecore.Pathfinder.Building.Maintaining
 {
     public class TroubleshootWebsite : RequestBuildTaskBase
     {

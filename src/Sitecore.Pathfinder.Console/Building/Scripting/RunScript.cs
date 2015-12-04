@@ -10,7 +10,7 @@ using System.Text;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 
-namespace Sitecore.Pathfinder.Building.Scripts
+namespace Sitecore.Pathfinder.Building.Scripting
 {
     public class RunScript : BuildTaskBase
     {

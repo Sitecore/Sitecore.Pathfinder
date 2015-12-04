@@ -194,6 +194,11 @@
         "fields-to-write": "Place Holders"
     },
 
+    "write-serialization": {
+        "directory": "sitecore.project/serialization",
+        "flat": false
+    },
+
     "write-website-exports": {
         "system-0": {
             "filename": "sitecore.project/repository/Sitecore.Master.8.0.nupkg",

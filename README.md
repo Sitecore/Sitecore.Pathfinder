@@ -1151,6 +1151,19 @@ module.exports = function (grunt) {
 10. In Task Runner Explorer, right-click 'build-project' and select Bindings | After Build. This will run Pathfinder after each build.
 10. If you want to use code generate, right-click 'generate-code' and select Binding | Before Build.
 
+As a second choice, you can put scc.cmd in the Post-Build Event Command Line.
+
+Thirdly, you add scc.cmd to your .csproj file. To do so, Unload Project in Visual Studio and edit the .csproj file. Add the following lines at the 
+appropriate position (usually at the very bottom of the file).
+
+```xml
+<Target Name="AfterBuild">
+    <Exec Command="scc.cmd" IgnoreExitCode="True"  />
+</Target>
+```
+
+Visual Studio should now display errors and warning in the Output window and in the Error List window.
+
 # External tools
 There are many good 3. party tools for Sitecore. These are some of my personal thoughts on how to use/integrate these tools with Pathfinder. Please notice
 that these thoughts do not reflect the official Sitecore opinions in any form. I do apologies in advance for misunderstanding or not knowing 

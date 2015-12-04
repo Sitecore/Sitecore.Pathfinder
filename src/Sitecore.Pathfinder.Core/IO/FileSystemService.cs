@@ -97,6 +97,23 @@ namespace Sitecore.Pathfinder.IO
             return File.GetLastWriteTimeUtc(sourceFileName);
         }
 
+        public string GetUniqueFileName(string fileName)
+        {
+            var result = fileName;
+            var index = 0;
+
+            var baseFileName = Path.GetDirectoryName(fileName) + "\\" + Path.GetFileNameWithoutExtension(fileName) + " ";
+            var extension = Path.GetExtension(fileName);
+
+            while (FileExists(result))
+            {
+                result = baseFileName + index + extension;
+                index++;
+            }
+
+            return result;
+        }
+
         public virtual void Mirror(string sourceDirectory, string destinationDirectory)
         {
             var proc = new Process

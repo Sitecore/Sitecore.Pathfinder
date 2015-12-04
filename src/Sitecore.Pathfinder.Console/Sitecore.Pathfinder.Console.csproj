@@ -214,16 +214,17 @@
       <Link>files\extensions\checkers\Templates\UseIdInsteadOfPathChecker.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Compile Include="Building\Assembling\WriteSerialization.cs" />
     <Compile Include="Building\Commands\ImportWebsite.cs" />
-    <Compile Include="Building\Scripts\RunScript.cs" />
+    <Compile Include="Building\Scripting\RunScript.cs" />
     <Compile Include="Building\Addins\UpdateAddins.cs" />
     <Compile Include="Building\Codegen\GenerateCode.cs" />
     <Compile Include="Building\Commands\ListFiles.cs" />
     <Compile Include="Building\Commands\ListItems.cs" />
     <Compile Include="Building\Commands\ListProject.cs" />
-    <Compile Include="Building\Commands\TroubleshootWebsite.cs" />
+    <Compile Include="Building\Maintaining\TroubleshootWebsite.cs" />
     <Compile Include="Building\Deploying\CopyPackage.cs" />
-    <Compile Include="Building\Deploying\WriteExports.cs" />
+    <Compile Include="Building\Assembling\WriteExports.cs" />
     <Compile Include="Building\Deploying\InstallPackage.cs" />
     <Compile Include="Building\Deploying\InstallProject.cs" />
     <Compile Include="Building\Deploying\PublishDatabase.cs" />
@@ -238,10 +239,10 @@
     <Compile Include="Building\Initializing\InitAtom.cs" />
     <Compile Include="Building\Initializing\InitVisualStudio.cs" />
     <Compile Include="Building\Initializing\InitVsCode.cs" />
-    <Compile Include="Building\Initializing\ResetWebsite.cs" />
-    <Compile Include="Building\Initializing\ShowMetrics.cs" />
-    <Compile Include="Building\Initializing\SynchronizeWebsite.cs" />
-    <Compile Include="Building\Initializing\WriteWebsiteExports.cs" />
+    <Compile Include="Building\Maintaining\ResetWebsite.cs" />
+    <Compile Include="Building\Postbuild\ShowMetrics.cs" />
+    <Compile Include="Building\Maintaining\SynchronizeWebsite.cs" />
+    <Compile Include="Building\Maintaining\WriteWebsiteExports.cs" />
     <Compile Include="Building\Packaging\PackDependencies.cs" />
     <Compile Include="Building\Querying\FindReferences.cs" />
     <Compile Include="Building\Querying\FindUsages.cs" />
@@ -303,6 +304,9 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="files\project\bin\readme.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="files\project\content\master\readme.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -330,6 +334,7 @@
     <None Include="files\project\sitecore.project\packages\Sitecore.Master.8.0.nupkg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="files\repository\sitecore.project\Legoland.nuspec" />
     <None Include="files\repository\sitecore.project\packages\Sitecore.BusinessComponentLibrary.nupkg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

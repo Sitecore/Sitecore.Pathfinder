@@ -4,7 +4,7 @@ using System.Linq;
 using Sitecore.Pathfinder.Languages.Media;
 using Sitecore.Pathfinder.Languages.Renderings;
 
-namespace Sitecore.Pathfinder.Building.Initializing
+namespace Sitecore.Pathfinder.Building.Postbuild
 {
     public class ShowMetrics : BuildTaskBase
     {

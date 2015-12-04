@@ -99,7 +99,7 @@
                     "trace-information": {
                         "text": "In a template field, the 'Default value' field is no longer used. To fix, clear the 'Default value' field and set the value on the Standard Values item"
                     }
-                }
+                }                                                          
             }, 
             
             "default-convention-7": {

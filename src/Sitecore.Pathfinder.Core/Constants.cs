@@ -159,6 +159,10 @@ namespace Sitecore.Pathfinder
 
             public const string WriteExportsFileName = "write-exports:filename";
 
+            public const string WriteSerializationDirectory = "write-serialization:directory";
+
+            public const string WriteSerializationFlat = "write-serialization:flat";
+
             public const string WwwrootDirectory = "new-project:wwwroot-repository";
 
             public static class ValidateWebsite

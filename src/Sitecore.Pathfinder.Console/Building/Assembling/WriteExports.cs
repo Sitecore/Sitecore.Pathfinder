@@ -8,7 +8,7 @@ using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.Xml;
 
-namespace Sitecore.Pathfinder.Building.Deploying
+namespace Sitecore.Pathfinder.Building.Assembling
 {
     public class WriteExports : BuildTaskBase
     {
