@@ -146,7 +146,7 @@
     <Compile Include="Compiling\Compilers\ICompiler.cs" />
     <Compile Include="Languages\Renderings\RenderingCompiler.cs" />
     <Compile Include="Languages\Serialization\SerializationFileCompiler.cs" />
-    <Compile Include="Compiling\Pipelines\CompilePipelines\1000 - CompileFiles.cs" />
+    <Compile Include="Compiling\Pipelines\CompilePipelines\1000 - CompileProjectItems.cs" />
     <Compile Include="Compiling\Pipelines\CompilePipelines\2000 - CompileFields.cs" />
     <Compile Include="Compiling\Pipelines\CompilePipelines\3000 - ResolveReferences.cs" />
     <Compile Include="Compiling\Pipelines\CompilePipelines\4000 - CheckProject.cs" />
@@ -169,6 +169,8 @@
     <Compile Include="Languages\Yaml\YamlLanguage.cs" />
     <Compile Include="Languages\Yaml\FormatExtensions.cs" />
     <Compile Include="Languages\Yaml\YamlTextWriter.cs" />
+    <Compile Include="Parsing\Pipelines\TemplateParserPipelines\TemplateParserPipeline.cs" />
+    <Compile Include="Projects\ISourcePropertyBag.cs" />
     <Compile Include="Projects\Items\FieldCollection.cs" />
     <Compile Include="Projects\Database.cs" />
     <Compile Include="Projects\Items\ChildrenCollection.cs" />
@@ -182,7 +184,7 @@
     <Compile Include="Rules\Actions\TraceErrorAction.cs" />
     <Compile Include="Rules\Actions\TraceInformationAction.cs" />
     <Compile Include="Rules\Actions\TraceWarningAction.cs" />
-    <Compile Include="Rules\AndCondition.cs" />
+    <Compile Include="Rules\Conditions\AndCondition.cs" />
     <Compile Include="Rules\ConditionActionBase.cs" />
     <Compile Include="Rules\ConditionBase.cs" />
     <Compile Include="Rules\Conditions\AlwaysCondition.cs" />
@@ -205,13 +207,13 @@
     <Compile Include="Rules\IRule.cs" />
     <Compile Include="Rules\Contexts\IRuleContext.cs" />
     <Compile Include="Rules\IRuleService.cs" />
-    <Compile Include="Rules\NotCondition.cs" />
-    <Compile Include="Rules\OrCondition.cs" />
+    <Compile Include="Rules\Conditions\NotCondition.cs" />
+    <Compile Include="Rules\Conditions\OrCondition.cs" />
     <Compile Include="Rules\Rule.cs" />
     <Compile Include="Rules\RuleAction.cs" />
     <Compile Include="Rules\RuleCondition.cs" />
     <Compile Include="Rules\RuleService.cs" />
-    <Compile Include="Rules\XPathCondition.cs" />
+    <Compile Include="Rules\Conditions\XPathCondition.cs" />
     <Compile Include="Snapshots\IMutableTextNode.cs" />
     <Compile Include="Languages\Yaml\YamlContentTextNodeParser.cs" />
     <Compile Include="Languages\Yaml\YamlLayoutTextNodeParser.cs" />
@@ -229,7 +231,6 @@
     <Compile Include="Compiling\FieldCompilers\ItemPathCompiler.cs" />
     <Compile Include="Languages\Json\JsonLayoutFieldCompiler.cs" />
     <Compile Include="Languages\Xml\XmlLayoutFieldCompiler.cs" />
-    <Compile Include="Compiling\FieldCompilers\LayoutHtmlFileFieldCompiler.cs" />
     <Compile Include="Compiling\FieldCompilers\LayoutCompileContext.cs" />
     <Compile Include="Compiling\FieldCompilers\LayoutCompiler.cs" />
     <Compile Include="Compiling\FieldCompilers\LinkFieldCompiler.cs" />
@@ -267,8 +268,6 @@
     <Compile Include="Extensibility\Pipelines\PipelineBase.cs" />
     <Compile Include="Extensibility\Pipelines\PipelineService.cs" />
     <Compile Include="Extensibility\Pipelines\PipelineProcessorBase.cs" />
-    <Compile Include="Languages\HtmlTemplates\HtmlTemplateRenderingParser.cs" />
-    <Compile Include="Parsing\Pipelines\ItemParserPipelines\1000 - HtmlTemplateItemParser.cs" />
     <Compile Include="Parsing\Pipelines\ItemParserPipelines\ItemParserPipeline.cs" />
     <Compile Include="Projects\SourceProperty.cs" />
     <Compile Include="Languages\Serialization\SerializationSnapshotLoader.cs" />

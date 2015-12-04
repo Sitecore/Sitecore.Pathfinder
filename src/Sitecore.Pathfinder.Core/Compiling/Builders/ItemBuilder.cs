@@ -28,12 +28,6 @@ namespace Sitecore.Pathfinder.Compiling.Builders
         public string Guid { get; set; } = string.Empty;
 
         [NotNull]
-        public string HtmlFile { get; set; } = string.Empty;
-
-        [NotNull]
-        public ITextNode HtmlFileTextNode { get; set; } = TextNode.Empty;
-
-        [NotNull]
         public string Icon { get; set; } = string.Empty;
 
         [NotNull]

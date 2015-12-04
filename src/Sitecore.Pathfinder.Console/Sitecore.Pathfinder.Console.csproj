@@ -304,9 +304,6 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="files\project\bin\readme.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="files\project\content\master\readme.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -561,6 +558,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Features\Sitecore.Pathfinder.HtmlFile\Sitecore.Pathfinder.HtmlFile.csproj">
+      <Project>{7287e9e2-cab5-4de4-87b5-237b65020dc4}</Project>
+      <Name>Sitecore.Pathfinder.HtmlFile</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Features\Sitecore.Pathfinder.T4\Sitecore.Pathfinder.T4.csproj">
       <Project>{bc0ec297-60e6-4d8f-a846-e1da920cfc26}</Project>
       <Name>Sitecore.Pathfinder.T4</Name>
@@ -581,7 +582,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
+    <Folder Include="files\project\bin\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions />

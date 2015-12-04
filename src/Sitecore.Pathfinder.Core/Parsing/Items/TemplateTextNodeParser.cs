@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Parsing.Pipelines.TemplateParserPipelines;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Pathfinder.Text;
@@ -34,6 +35,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             template.IconProperty.Parse(textNode);
             template.ShortHelpProperty.Parse(textNode);
             template.LongHelpProperty.Parse(textNode);
+            // todo: yuck
             template.IsEmittable = !string.Equals(textNode.GetAttributeValue(Constants.Fields.IsEmittable), "False", StringComparison.OrdinalIgnoreCase);
             template.IsImport = string.Equals(textNode.GetAttributeValue(Constants.Fields.IsExtern, context.IsExtern.ToString()), "True", StringComparison.OrdinalIgnoreCase);
 
@@ -58,16 +60,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 }
             }
 
-            // setup HtmlTemplate
-            var htmlFileTextNode = textNode.GetAttribute("Layout.HtmlFile");
-            if (htmlFileTextNode != null && !string.IsNullOrEmpty(htmlFileTextNode.Value))
-            {
-                var field = context.ParseContext.Factory.Field(template.StandardValuesItem, htmlFileTextNode);
-                field.FieldNameProperty.SetValue("__Renderings");
-                field.ValueProperty.SetValue(htmlFileTextNode.Value);
-                field.ValueHintProperty.SetValue("HtmlTemplate");
-                template.StandardValuesItem.Fields.Add(field);
-            }
+            context.ParseContext.PipelineService.Resolve<TemplateParserPipeline>().Execute(context, template, textNode);
 
             context.ParseContext.Project.AddOrMerge(template);
             context.ParseContext.Project.AddOrMerge(standardValuesItem);
@@ -91,7 +84,6 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 templateField = context.ParseContext.Factory.TemplateField(template, guid, templateFieldTextNode);
                 templateSection.Fields.Add(templateField);
                 templateField.FieldNameProperty.SetValue(fieldName);
-
             }
 
             templateField.TypeProperty.Parse(templateFieldTextNode, "Single-Line Text");
@@ -122,7 +114,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 }
             }
 
-              template.References.AddRange(context.ParseContext.ReferenceParser.ParseReferences(template, templateField.SourceProperty));
+            template.References.AddRange(context.ParseContext.ReferenceParser.ParseReferences(template, templateField.SourceProperty));
         }
 
         protected virtual void ParseSection([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] ITextNode templateSectionTextNode)

@@ -123,6 +123,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Features\Sitecore.Pathfinder.HtmlFile\Sitecore.Pathfinder.HtmlFile.csproj">
+      <Project>{7287e9e2-cab5-4de4-87b5-237b65020dc4}</Project>
+      <Name>Sitecore.Pathfinder.HtmlFile</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Features\Sitecore.Pathfinder.T4\Sitecore.Pathfinder.T4.csproj">
       <Project>{bc0ec297-60e6-4d8f-a846-e1da920cfc26}</Project>
       <Name>Sitecore.Pathfinder.T4</Name>

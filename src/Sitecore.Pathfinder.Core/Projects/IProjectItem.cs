@@ -37,7 +37,6 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull]
         ProjectItemUri Uri { get; }
-
         void Rename([NotNull] string newShortName);
     }
 }

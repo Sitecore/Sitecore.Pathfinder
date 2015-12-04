@@ -85,16 +85,6 @@ namespace Sitecore.Pathfinder.Projects.Items
             }
         }
 
-        [NotNull]
-        public string LayoutHtmlFile
-        {
-            get { return LayoutHtmlFileProperty.GetValue(); }
-            set { LayoutHtmlFileProperty.SetValue(value); }
-        }
-
-        [NotNull]
-        public SourceProperty<string> LayoutHtmlFileProperty { get; } = new SourceProperty<string>("Layout.HtmlFile", string.Empty);
-
         public MergingMatch MergingMatch { get; set; }
 
         public bool OverwriteWhenMerging { get; set; }

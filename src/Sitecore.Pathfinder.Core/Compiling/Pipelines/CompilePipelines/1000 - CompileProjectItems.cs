@@ -9,9 +9,9 @@ using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 {
-    public class CompileFiles : PipelineProcessorBase<CompilePipeline>
+    public class CompileProjectItems : PipelineProcessorBase<CompilePipeline>
     {
-        public CompileFiles() : base(1000)
+        public CompileProjectItems() : base(1000)
         {
         }
 

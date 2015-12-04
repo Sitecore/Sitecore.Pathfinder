@@ -29,6 +29,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
             var item = context.ParseContext.Factory.Item(context.ParseContext.Project, textNode, guid, databaseName, itemNameTextNode.Value, itemIdOrPath, templateIdOrPath);
             item.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
+            // todo: yuck
             item.IsEmittable = !string.Equals(textNode.GetAttributeValue(Constants.Fields.IsEmittable), "False", StringComparison.OrdinalIgnoreCase);
             item.IsImport = string.Equals(textNode.GetAttributeValue(Constants.Fields.IsExtern, context.IsExtern.ToString()), "True", StringComparison.OrdinalIgnoreCase);
 
@@ -42,9 +43,9 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 }
             }
 
-            context.ParseContext.PipelineService.Resolve<ItemParserPipeline>().Execute(context, item, textNode);
-
             ParseChildNodes(context, item, textNode);
+
+            context.ParseContext.PipelineService.Resolve<ItemParserPipeline>().Execute(context, item, textNode);
 
             context.ParseContext.Project.AddOrMerge(item);
         }

@@ -6,14 +6,14 @@ using System.Text.RegularExpressions;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Languages.Renderings;
 
-namespace Sitecore.Pathfinder.Languages.HtmlTemplates
+namespace Sitecore.Pathfinder.HtmlFile.HtmlFiles
 {
-    public class HtmlTemplateRenderingParser : RenderingParser
+    public class HtmlFileRenderingParser : RenderingParser
     {
         [NotNull]
         private static readonly Regex regex = new Regex("\\{\\{\\%([^\\}]*)\\}\\}", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-        public HtmlTemplateRenderingParser() : base(".html", Constants.Templates.ViewRendering)
+        public HtmlFileRenderingParser() : base(".html", Constants.Templates.ViewRendering)
         {
         }
 

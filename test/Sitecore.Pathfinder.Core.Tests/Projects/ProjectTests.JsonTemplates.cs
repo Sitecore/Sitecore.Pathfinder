@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Linq;
 using NUnit.Framework;
 using Sitecore.Pathfinder.Projects.Items;
@@ -49,8 +50,7 @@ namespace Sitecore.Pathfinder.Projects
                                          
             var renderings = standardValuesItem.Fields.FirstOrDefault(f => f.FieldName == "__Renderings");
             Assert.IsNotNull(renderings);
-            Assert.AreEqual("~/layout/renderings/HelloWorld.cshtml", renderings.Value);
-            Assert.AreEqual("HtmlTemplate", renderings.ValueHint);
+            Assert.IsTrue(renderings.Value.IndexOf("<d id=\"{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}\" l=\"{5B2B5845-4D8A-FBB3-08D3-9A6065C35D1E}\">", StringComparison.Ordinal) >= 0);
         }
     }
 }
