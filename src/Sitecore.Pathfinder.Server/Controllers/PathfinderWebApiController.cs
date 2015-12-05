@@ -88,7 +88,7 @@ namespace Sitecore.Pathfinder.Controllers
             var binDirectory = FileUtil.MapPath("/bin");
             var assemblyFileNames = Directory.Exists(binDirectory) ? Directory.GetFiles(binDirectory, "Sitecore.Pathfinder.Server.*.dll") : Enumerable.Empty<string>();
 
-            var app = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(projectDirectory).WithAssemblies(assemblyFileNames).DisableExtensions().Start();
+            var app = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(projectDirectory).WithAssemblies(assemblyFileNames).Start();
             if (app == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, output.ToString());

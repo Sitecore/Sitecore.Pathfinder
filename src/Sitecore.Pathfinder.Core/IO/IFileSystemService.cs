@@ -50,6 +50,8 @@ namespace Sitecore.Pathfinder.IO
 
         void Unzip([NotNull] string zipFileName, [NotNull] string destinationDirectory);
 
+        bool CopyIfNewer([NotNull] string sourceFileName, [NotNull] string targetFileName);
+
         void WriteAllText([NotNull] string fileName, [NotNull] string contents);
 
         void WriteAllText([NotNull] string fileName, [NotNull] string contents, [NotNull] Encoding encoding);

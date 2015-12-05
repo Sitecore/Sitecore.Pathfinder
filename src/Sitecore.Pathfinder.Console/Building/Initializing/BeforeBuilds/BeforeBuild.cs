@@ -85,8 +85,20 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
             }
             else
             {
-                UpdateFiles(context, sourceDirectory, websiteDirectory);
+                UpdateWebsiteFiles(context, sourceDirectory, websiteDirectory);
+                UpdateWebsiteAssembly(context, "Sitecore.Pathfinder.Core.dll");
             }
+
+            UpdateWebsiteAssembly(context, "Microsoft.CodeAnalysis.dll");
+            UpdateWebsiteAssembly(context, "Microsoft.CodeAnalysis.CSharp.dll");
+            UpdateWebsiteAssembly(context, "Microsoft.CSharp.dll");
+            UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.dll");
+            UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Interfaces.dll");
+            UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Json.dll");
+            UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Xml.dll");
+            UpdateWebsiteAssembly(context, "Nuget.Core.dll");
+            UpdateWebsiteAssembly(context, "System.Collections.Immutable.dll");
+            UpdateWebsiteAssembly(context, "System.Reflection.Metadata.dll");
 
             UpdateConfigFile(context, toolsDirectory, websiteDirectory);
 
@@ -123,46 +135,27 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
             }
         }
 
-        protected virtual void UpdateFiles([NotNull] IBuildContext context, [NotNull] string sourceDirectory, [NotNull] string websiteDirectory)
+        protected virtual void UpdateWebsiteFiles([NotNull] IBuildContext context, [NotNull] string sourceDirectory, [NotNull] string websiteDirectory)
         {
             var writeMessage = false;
 
             foreach (var sourceFileName in context.FileSystem.GetFiles(sourceDirectory, SearchOption.AllDirectories))
             {
                 var targetFileName = PathHelper.RemapDirectory(sourceFileName, sourceDirectory, websiteDirectory);
-                if (!context.FileSystem.FileExists(targetFileName))
-                {
-                    context.FileSystem.Copy(sourceFileName, targetFileName);
-                    writeMessage = true;
-                    continue;
-                }
-
-                if (string.Equals(Path.GetExtension(sourceFileName), ".dll", StringComparison.OrdinalIgnoreCase))
-                {
-                    var sourceVersion = new Version(FileVersionInfo.GetVersionInfo(sourceFileName).FileVersion);
-                    var targetVersion = new Version(FileVersionInfo.GetVersionInfo(targetFileName).FileVersion);
-                    if (targetVersion < sourceVersion)
-                    {
-                        context.FileSystem.Copy(sourceFileName, targetFileName);
-                        writeMessage = true;
-                        continue;
-                    }
-                }
-
-                // update file if length or last write time has changed
-                var sourceFileInfo = new FileInfo(sourceFileName);
-                var targetFileInfo = new FileInfo(targetFileName);
-                if (sourceFileInfo.Length != targetFileInfo.Length || sourceFileInfo.LastWriteTimeUtc > targetFileInfo.LastWriteTimeUtc)
-                {
-                    context.FileSystem.Copy(sourceFileName, targetFileName);
-                    writeMessage = true;
-                }
+                writeMessage |= context.FileSystem.CopyIfNewer(sourceFileName, targetFileName);
             }
 
             if (writeMessage)
             {
                 context.Trace.WriteLine(Texts.Just_so_you_know__I_have_updated_the__Sitecore_Pathfinder_Server_dll__and__NuGet_Core_dll__assemblies_in_the___bin__directory_in_the_website_and_a_number_of___aspx__files_in_the___sitecore_shell_client_Applications_Pathfinder__directory_to_the_latest_version);
             }
+        }
+        protected virtual void UpdateWebsiteAssembly([NotNull] IBuildContext context, [NotNull] string fileName)
+        {
+            var sourceFileName = Path.Combine(context.ToolsDirectory, fileName);
+            var targetFileName = Path.Combine(context.WebsiteDirectory + "\\bin", fileName);
+
+            context.FileSystem.CopyIfNewer(sourceFileName, targetFileName);
         }
     }
 }
