@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -98,6 +99,26 @@ namespace Sitecore.Pathfinder
         public virtual Startup WithWebsiteAssemblyResolver()
         {
             CompositionOptions |= Extensibility.StartupExtensions.CompositionOptions.AddWebsiteAssemblyResolver;
+            return this;
+        }
+
+        [NotNull]
+        public Startup WithExtensionsDirectory([NotNull] string directory)
+        {
+            var assemblyFileNames = Directory.Exists(directory) ? Directory.GetFiles(directory, "Sitecore.Pathfinder.*.dll") : Enumerable.Empty<string>();
+
+            // remove Sitecore.Pathfinder.Core and Sitecore.Pathfinder.Server assemblies
+            assemblyFileNames = assemblyFileNames.Where(a => !string.Equals(Path.GetFileName(a), "Sitecore.Pathfinder.Core.dll", StringComparison.OrdinalIgnoreCase) && !string.Equals(Path.GetFileName(a), "Sitecore.Pathfinder.Server.dll", StringComparison.OrdinalIgnoreCase)).ToList();
+
+            if (AssemblyFileNames == null)
+            {
+                AssemblyFileNames = assemblyFileNames;
+            }
+            else
+            {
+                AssemblyFileNames = AssemblyFileNames.Concat(assemblyFileNames).Distinct().ToList();
+            }
+
             return this;
         }
     }

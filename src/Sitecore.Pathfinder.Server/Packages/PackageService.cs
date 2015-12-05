@@ -335,9 +335,8 @@ namespace Sitecore.Pathfinder.Packages
                 var toolsDirectory = Path.Combine(projectDirectory, "sitecore.tools");
 
                 var binDirectory = FileUtil.MapPath("/bin");
-                var assemblyFileNames = Directory.Exists(binDirectory) ? Directory.GetFiles(binDirectory, "Sitecore.Pathfinder.Server.*.dll") : Enumerable.Empty<string>();
 
-                var app = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(projectDirectory).WithAssemblies(assemblyFileNames).Start();
+                var app = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(projectDirectory).WithExtensionsDirectory(binDirectory).Start();
                 if (app == null)
                 {
                     return;

@@ -7,13 +7,17 @@ namespace Sitecore.Pathfinder.Unicorn
 {
     public class UnicornExtension : ExtensionBase
     {
-        public override void UpdateWebsiteFiles(IBuildContext context)
+        public override bool UpdateWebsiteFiles(IBuildContext context)
         {
-            CopyToolsFileToWebsiteBinDirectory(context, "Sitecore.Pathfinder.Unicorn.dll");
-            CopyToolsFileToWebsiteBinDirectory(context, "Unicorn.dll");
-            CopyToolsFileToWebsiteBinDirectory(context, "Rainbow.Storage.Sc.dll");
-            CopyToolsFileToWebsiteBinDirectory(context, "Rainbow.Storage.Yaml.dll");
-            CopyToolsFileToWebsiteBinDirectory(context, "Rainbow.dll");
-        }                               
+            var updated = false;
+
+            updated |= CopyToolsFileToWebsiteBinDirectory(context, "Sitecore.Pathfinder.Unicorn.dll");
+            updated |= CopyToolsFileToWebsiteBinDirectory(context, "Unicorn.dll");
+            updated |= CopyToolsFileToWebsiteBinDirectory(context, "Rainbow.Storage.Sc.dll");
+            updated |= CopyToolsFileToWebsiteBinDirectory(context, "Rainbow.Storage.Yaml.dll");
+            updated |= CopyToolsFileToWebsiteBinDirectory(context, "Rainbow.dll");
+
+            return updated;
+        }
     }
 }

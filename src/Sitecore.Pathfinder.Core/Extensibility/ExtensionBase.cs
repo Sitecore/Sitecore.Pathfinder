@@ -9,9 +9,9 @@ namespace Sitecore.Pathfinder.Extensibility
 {
     public abstract class ExtensionBase : IExtension
     {
-        public abstract void UpdateWebsiteFiles(IBuildContext context);
+        public abstract bool UpdateWebsiteFiles(IBuildContext context);
 
-        protected virtual void CopyProjectFileToWebsiteBinDirectory([NotNull] IBuildContext context, [NotNull] string fileName)
+        protected virtual bool CopyProjectFileToWebsiteBinDirectory([NotNull] IBuildContext context, [NotNull] string fileName)
         {
             var projectDirectory = context.ProjectDirectory;
             var websiteDirectory = context.WebsiteDirectory;
@@ -19,10 +19,10 @@ namespace Sitecore.Pathfinder.Extensibility
             var sourceFileName = PathHelper.Combine(projectDirectory, fileName);
             var targetFileName = PathHelper.Combine(PathHelper.Combine(websiteDirectory, "bin"), Path.GetFileName(fileName));
 
-            context.FileSystem.CopyIfNewer(sourceFileName, targetFileName);
+            return context.FileSystem.CopyIfNewer(sourceFileName, targetFileName);
         }
 
-        protected virtual void CopyToolsFileToWebsiteBinDirectory([NotNull] IBuildContext context, [NotNull] string fileName)
+        protected virtual bool CopyToolsFileToWebsiteBinDirectory([NotNull] IBuildContext context, [NotNull] string fileName)
         {
             var toolsDirectory = context.ToolsDirectory;
             var websiteDirectory = context.WebsiteDirectory;
@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Extensibility
             var sourceFileName = PathHelper.Combine(toolsDirectory, fileName);
             var targetFileName = PathHelper.Combine(PathHelper.Combine(websiteDirectory, "bin"), Path.GetFileName(fileName));
 
-            context.FileSystem.CopyIfNewer(sourceFileName, targetFileName);
+            return context.FileSystem.CopyIfNewer(sourceFileName, targetFileName);
         }
     }
 }

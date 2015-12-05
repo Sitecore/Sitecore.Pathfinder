@@ -7,9 +7,9 @@ namespace Sitecore.Pathfinder.HtmlFile
 {
     public class HtmlFileExtension : ExtensionBase
     {
-        public override void UpdateWebsiteFiles(IBuildContext context)
+        public override bool UpdateWebsiteFiles(IBuildContext context)
         {
-            CopyToolsFileToWebsiteBinDirectory(context, "Sitecore.Pathfinder.HtmlFile.dll");
+            return CopyToolsFileToWebsiteBinDirectory(context, "Sitecore.Pathfinder.HtmlFile.dll");
         }                               
     }
 }

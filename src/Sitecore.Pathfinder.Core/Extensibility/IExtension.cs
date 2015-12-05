@@ -9,6 +9,6 @@ namespace Sitecore.Pathfinder.Extensibility
     [InheritedExport]
     public interface IExtension
     {
-        void UpdateWebsiteFiles([NotNull] IBuildContext context);
+        bool UpdateWebsiteFiles([NotNull] IBuildContext context);
     }
 }

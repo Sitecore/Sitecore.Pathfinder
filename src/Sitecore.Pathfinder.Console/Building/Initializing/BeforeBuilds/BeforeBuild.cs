@@ -3,12 +3,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Diagnostics;
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
-using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
@@ -76,33 +74,7 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
                 return;
             }
 
-            var sourceDirectory = Path.Combine(context.ToolsDirectory, "files\\website");
-            var coreServerAssemblyFileName = Path.Combine(websiteDirectory, "bin\\Sitecore.Pathfinder.Core.dll");
-            if (!context.FileSystem.FileExists(coreServerAssemblyFileName))
-            {
-                context.FileSystem.XCopy(sourceDirectory, websiteDirectory);
-                context.Trace.WriteLine(Texts.Just_so_you_know__I_have_copied_the__Sitecore_Pathfinder_Server_dll__and__NuGet_Core_dll__assemblies_to_the___bin__directory_in_the_website_and_a_number_of___aspx__files_to_the___sitecore_shell_client_Applications_Pathfinder__directory);
-            }
-            else
-            {
-                UpdateWebsiteFiles(context, sourceDirectory, websiteDirectory);
-                UpdateWebsiteAssembly(context, "Sitecore.Pathfinder.Core.dll");
-            }
-
-            UpdateWebsiteAssembly(context, "Microsoft.CodeAnalysis.dll");
-            UpdateWebsiteAssembly(context, "Microsoft.CodeAnalysis.CSharp.dll");
-            UpdateWebsiteAssembly(context, "Microsoft.CSharp.dll");
-            UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.dll");
-            UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Interfaces.dll");
-            UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Json.dll");
-            UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Xml.dll");
-            UpdateWebsiteAssembly(context, "Nuget.Core.dll");
-            UpdateWebsiteAssembly(context, "System.Collections.Immutable.dll");
-            UpdateWebsiteAssembly(context, "System.Reflection.Metadata.dll");
-
-            UpdateConfigFile(context, toolsDirectory, websiteDirectory);
-
-            UpdateExtensions(context);
+            UpdateWebsite(context);
 
             PipelineService.Resolve<BeforeBuildPipeline>().Execute(context);
         }
@@ -111,51 +83,74 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
         {
         }
 
-        protected virtual void UpdateConfigFile([NotNull] IBuildContext context, [NotNull] string toolsDirectory, [NotNull] string websiteDirectory)
+        protected virtual bool UpdateExtensions([NotNull] IBuildContext context)
         {
-            var projectConfigFileName = context.Configuration.GetString(Constants.Configuration.ProjectConfigFileName);
+            var updated = false;
 
-            var sourceFileName = Path.Combine(toolsDirectory, projectConfigFileName);
-            var targetFileName = Path.Combine(websiteDirectory, "bin\\" + projectConfigFileName);
-
-            var sourceFileInfo = new FileInfo(sourceFileName);
-            var targetFileInfo = new FileInfo(targetFileName);
-
-            if (!targetFileInfo.Exists || sourceFileInfo.Length != targetFileInfo.Length)
-            {
-                context.FileSystem.Copy(sourceFileName, targetFileName);
-            }
-        }
-
-        protected virtual void UpdateExtensions([NotNull] IBuildContext context)
-        {
             foreach (var extension in Extensions)
             {
-                extension.UpdateWebsiteFiles(context);
+                updated |= extension.UpdateWebsiteFiles(context);
             }
+
+            return updated;
         }
 
-        protected virtual void UpdateWebsiteFiles([NotNull] IBuildContext context, [NotNull] string sourceDirectory, [NotNull] string websiteDirectory)
+        protected virtual void UpdateWebsite([NotNull] IBuildContext context)
         {
-            var writeMessage = false;
+            var updated = false;
 
-            foreach (var sourceFileName in context.FileSystem.GetFiles(sourceDirectory, SearchOption.AllDirectories))
+            var sourceDirectory = Path.Combine(context.ToolsDirectory, "files\\website");
+
+            var coreServerAssemblyFileName = Path.Combine(context.WebsiteDirectory, "bin\\Sitecore.Pathfinder.Core.dll");
+            if (!context.FileSystem.FileExists(coreServerAssemblyFileName))
             {
-                var targetFileName = PathHelper.RemapDirectory(sourceFileName, sourceDirectory, websiteDirectory);
-                writeMessage |= context.FileSystem.CopyIfNewer(sourceFileName, targetFileName);
+                context.FileSystem.XCopy(sourceDirectory, context.WebsiteDirectory);
+                updated = true;
+            }
+            else
+            {
+                updated |= UpdateWebsiteFiles(context, sourceDirectory, context.WebsiteDirectory);
+                updated |= UpdateWebsiteAssembly(context, "Sitecore.Pathfinder.Core.dll");
             }
 
-            if (writeMessage)
+            updated |= UpdateWebsiteAssembly(context, "Microsoft.CodeAnalysis.dll");
+            updated |= UpdateWebsiteAssembly(context, "Microsoft.CodeAnalysis.CSharp.dll");
+            updated |= UpdateWebsiteAssembly(context, "Microsoft.CSharp.dll");
+            updated |= UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.dll");
+            updated |= UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Interfaces.dll");
+            updated |= UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Json.dll");
+            updated |= UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Xml.dll");
+            updated |= UpdateWebsiteAssembly(context, "Nuget.Core.dll");
+            updated |= UpdateWebsiteAssembly(context, "System.Collections.Immutable.dll");
+            updated |= UpdateWebsiteAssembly(context, "System.Reflection.Metadata.dll");
+
+            updated |= UpdateExtensions(context);
+
+            if (updated)
             {
                 context.Trace.WriteLine(Texts.Just_so_you_know__I_have_updated_the__Sitecore_Pathfinder_Server_dll__and__NuGet_Core_dll__assemblies_in_the___bin__directory_in_the_website_and_a_number_of___aspx__files_in_the___sitecore_shell_client_Applications_Pathfinder__directory_to_the_latest_version);
             }
         }
-        protected virtual void UpdateWebsiteAssembly([NotNull] IBuildContext context, [NotNull] string fileName)
+
+        protected virtual bool UpdateWebsiteAssembly([NotNull] IBuildContext context, [NotNull] string fileName)
         {
             var sourceFileName = Path.Combine(context.ToolsDirectory, fileName);
             var targetFileName = Path.Combine(context.WebsiteDirectory + "\\bin", fileName);
 
-            context.FileSystem.CopyIfNewer(sourceFileName, targetFileName);
+            return context.FileSystem.CopyIfNewer(sourceFileName, targetFileName);
+        }
+
+        protected virtual bool UpdateWebsiteFiles([NotNull] IBuildContext context, [NotNull] string sourceDirectory, [NotNull] string websiteDirectory)
+        {
+            var updated = false;
+
+            foreach (var sourceFileName in context.FileSystem.GetFiles(sourceDirectory, SearchOption.AllDirectories))
+            {
+                var targetFileName = PathHelper.RemapDirectory(sourceFileName, sourceDirectory, websiteDirectory);
+                updated |= context.FileSystem.CopyIfNewer(sourceFileName, targetFileName);
+            }
+
+            return updated;
         }
     }
 }
