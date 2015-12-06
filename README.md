@@ -223,7 +223,8 @@ items must be located in the Core database under /sitecore/client.
 
 The project role also causes a configuration file to be loaded from the [Tools] directory. This config file contains special configuration for that
 particular role. Conventions are typically specified in this file. Suppose a project has the role "speak", this will load the configuration
-file [Tools]/sitecore.role.speak.json - the "habitat.framework" role will load the [Tools]/sitecore.role.habitat.framework.json file.
+file [Tools]/files/project.roles/sitecore.role.speak.json - the "habitat.framework" role will load the 
+[Tools]/files/project.roles/sitecore.role.habitat.framework.json file.
 
 ### Conventions
 Conventions are rules that a project should follow. Usually they depend on the project role. The Convention checker is the checker, that validates

@@ -507,10 +507,10 @@
     <None Include="files\website\App_Config\include\Sitecore.Pathfinder.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="scconfig.role.default.json">
+    <None Include="files\project.roles\scconfig.role.default.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="scconfig.role.speak.json">
+    <None Include="files\project.roles\scconfig.role.speak.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="scconfig.json">
