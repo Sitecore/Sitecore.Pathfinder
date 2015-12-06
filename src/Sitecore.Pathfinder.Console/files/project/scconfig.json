@@ -22,6 +22,29 @@
         // build tasks
         "tasks": "check-project write-exports pack-nuget copy-dependencies copy-package install-package publish-database show-metrics",
 
+        "project-website-mapping": {
+            "master": {
+                "type": "items",
+
+                "item-path-to-project-directory": "/sitecore <=> /content/master/sitecore",
+                "database": "master",
+
+                "project-files-include": "**",
+                "project-files-exclude": "**",
+
+                "item-name-include": "",
+                "item-name-exclude": "",
+
+                "item-template-include": "",
+                "item-template-exclude": "",
+
+                "item-xpath-include": "",
+                "item-xpath-exclude": "",
+
+                "format": "item.json"
+            }
+        },
+
         // mapping of files between project paths and website paths and item paths
         "files": {
             "master": {

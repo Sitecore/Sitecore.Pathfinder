@@ -1,6 +1,5 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.IO;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;

@@ -6,7 +6,7 @@ using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Rules.Contexts;
 
-namespace Sitecore.Pathfinder.Rules
+namespace Sitecore.Pathfinder.Rules.Conditions
 {
     [PartNotDiscoverable]
     public class OrCondition : ConditionBase

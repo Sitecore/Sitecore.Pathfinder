@@ -17,7 +17,6 @@ namespace Sitecore.Pathfinder.Rules
         [NotNull, ItemNotNull]
         public ICollection<RuleAction> Else { get; } = new List<RuleAction>();
 
-        [NotNull]
         public string Filter { get; }
 
         [NotNull, ItemNotNull]

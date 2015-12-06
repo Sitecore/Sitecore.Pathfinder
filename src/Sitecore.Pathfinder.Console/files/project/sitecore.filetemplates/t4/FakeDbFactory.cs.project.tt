@@ -8,9 +8,8 @@
 <#@ import namespace="Sitecore.Pathfinder.Projects" #>
 <#@ import namespace="Sitecore.Pathfinder.Projects.Items" #>
 <#@ import namespace="Sitecore.Pathfinder.Projects.Templates" #>
-<#@ import namespace="Sitecore.Pathfinder.T4.Code" #>
 <# 
-    CodeProject project = (Host as T4.Host).Project; 
+    IProject project = (Host as T4.Host).Project; 
     IBuildContext context = (Host as T4.Host).Context; 
 #>
 //------------------------------------------------------------------------------
@@ -51,7 +50,7 @@ foreach(var template in project.Templates.OrderBy(t => t.Name))
       firstTemplate = false;
     }
 
-    var baseTemplates = string.Join(", ", template.BaseTemplates.Select(t => "new ID(\"" + t.ToString() + "\")"));
+    var baseTemplates = string.Join(", ", template.BaseTemplates.Split('|').Select(t => "new ID(\"" + t.ToString() + "\")"));
     var fields = string.Join(", ", template.Fields.Select(f => "\"" + f.Name + "\""));
 #>
                 new DbTemplate("<#= template.Name #>", TemplateIds.<#= template.Name.GetSafeCodeIdentifier() #>.ID) 
@@ -76,7 +75,7 @@ foreach(var item in project.Items.OrderBy(t => t.Name))
     }
 
     var templateId = string.Empty;
-    if (item.Template.InnerTemplate.IsExtern) {
+    if (item.Template.IsImport) {
         templateId = "new ID(\"" + item.TemplateID.ToString() + "\")";
     }
     else 

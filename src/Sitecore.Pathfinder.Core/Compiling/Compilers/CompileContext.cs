@@ -27,7 +27,6 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
 
         public ICompositionService CompositionService { get; }
 
-        [NotNull]
         public IConfiguration Configuration { get; }
 
         public IFactoryService Factory { get; }

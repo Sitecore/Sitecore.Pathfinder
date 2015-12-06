@@ -16,7 +16,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
 
             if (!Directory.Exists(Path.Combine(context.ProjectDirectory, "node_modules\\grunt")))
             {
-                context.Trace.WriteLine("Hey, GruntJS has not yet been installed. Run the install-grunt.cmd file to install it.");
+                context.Trace.WriteLine(Texts.Hey__GruntJS_has_not_yet_been_installed__Run_the_install_grunt_cmd_file_to_install_it_);
             }
 
             context.FileSystem.Unzip(zipFileName, context.ProjectDirectory);

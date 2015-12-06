@@ -99,7 +99,7 @@ namespace Sitecore.Pathfinder.Projects
             Guid guid;
             if (!Guid.TryParse(element.GetAttributeValue("Id"), out guid))
             {
-                context.Trace.TraceError(Msg.I1003, "Failed to parse Id.", fileName);
+                context.Trace.TraceError(Msg.I1003, Texts.Failed_to_parse_Id_, fileName);
                 return;
             }
 
@@ -133,7 +133,7 @@ namespace Sitecore.Pathfinder.Projects
                         Guid sectionGuid;
                         if (!Guid.TryParse(sectionElement.GetAttributeValue("Id"), out sectionGuid))
                         {
-                            context.Trace.TraceError(Msg.I1004, "Failed to parse Id.", fileName);
+                            context.Trace.TraceError(Msg.I1004, Texts.Failed_to_parse_Id_, fileName);
                             return;
                         }
 
@@ -145,7 +145,7 @@ namespace Sitecore.Pathfinder.Projects
                             Guid fieldGuid;
                             if (!Guid.TryParse(fieldElement.GetAttributeValue("Id"), out fieldGuid))
                             {
-                                context.Trace.TraceError(Msg.I1005, "Failed to parse Id.", fileName);
+                                context.Trace.TraceError(Msg.I1005, Texts.Failed_to_parse_Id_, fileName);
                                 return;
                             }
 

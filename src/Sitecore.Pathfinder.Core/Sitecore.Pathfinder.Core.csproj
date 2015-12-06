@@ -130,7 +130,7 @@
     <Compile Include="Emitting\IEmitter.cs" />
     <Compile Include="Extensibility\ExtensionBase.cs" />
     <Compile Include="Extensibility\IExtension.cs" />
-    <Compile Include="Extensions\XmlTextWriter.cs" />
+    <Compile Include="Extensions\XmlTextWriterExtensions.cs" />
     <Compile Include="Languages\BinFiles\BinFile.cs" />
     <Compile Include="Languages\BinFiles\BinFileParser.cs" />
     <Compile Include="Languages\ILanguage.cs" />
@@ -275,7 +275,7 @@
     <Compile Include="Languages\Xml\ItemXmlSnapshotLoader.cs" />
     <Compile Include="Extensions\CompositionServiceExtensions.cs" />
     <Compile Include="Extensions\ConfigurationExtensions.cs" />
-    <Compile Include="Extensions\JsonTextWriter.cs" />
+    <Compile Include="Extensions\JsonTextWriterExtensions.cs" />
     <Compile Include="IO\PathMatcher.cs" />
     <Compile Include="Languages\Json\JsonItemTextNodeParser.cs" />
     <Compile Include="Languages\Json\JsonLayoutTextNodeParser.cs" />
@@ -364,7 +364,6 @@
     <Compile Include="Languages\Yaml\YamlTextSnapshot.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Msg.cs" />
-    <Compile Include="Testing\ITestRunner.cs" />
     <Compile Include="Texts.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

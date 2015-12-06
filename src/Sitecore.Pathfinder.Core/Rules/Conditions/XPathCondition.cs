@@ -6,7 +6,7 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Rules.Contexts;
 using Sitecore.Pathfinder.Xml.XPath;
 
-namespace Sitecore.Pathfinder.Rules
+namespace Sitecore.Pathfinder.Rules.Conditions
 {
     [PartNotDiscoverable]
     public class XPathCondition : ConditionBase

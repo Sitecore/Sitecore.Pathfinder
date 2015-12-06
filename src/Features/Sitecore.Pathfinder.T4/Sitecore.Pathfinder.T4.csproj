@@ -56,15 +56,6 @@
   <ItemGroup>
     <Compile Include="CodeGeneration\T4GeneratorBase.cs" />
     <Compile Include="CodeGeneration\T4IFileCodeGenerator.cs" />
-    <Compile Include="Code\CodeDatabase.cs" />
-    <Compile Include="Code\CodeField.cs" />
-    <Compile Include="Code\CodeItem.cs" />
-    <Compile Include="Code\CodeItemChildCollection.cs" />
-    <Compile Include="Code\CodeItemFieldCollection.cs" />
-    <Compile Include="Code\CodeProject.cs" />
-    <Compile Include="Code\CodeTemplate.cs" />
-    <Compile Include="Code\CodeTemplateField.cs" />
-    <Compile Include="Code\ID.cs" />
     <Compile Include="Host.cs" />
     <Compile Include="CodeGeneration\T4ProjectCodeGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

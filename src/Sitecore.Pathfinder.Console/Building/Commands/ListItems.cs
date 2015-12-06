@@ -2,7 +2,6 @@
 
 using System.Linq;
 using Sitecore.Pathfinder.Projects;
-using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Building.Commands
 {

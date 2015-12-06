@@ -9,7 +9,6 @@ using Sitecore.Pathfinder.Checking;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Projects
 {

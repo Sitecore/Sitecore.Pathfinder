@@ -24,7 +24,7 @@ namespace Sitecore.Pathfinder.Languages.Json
         {
         }
 
-        public override ITextNode Root => _root ?? (_root = (RootToken != null ? ParseDirectives(ParseContext, Parse()) : TextNode.Empty));
+        public override ITextNode Root => _root ?? (_root = RootToken != null ? ParseDirectives(ParseContext, Parse()) : TextNode.Empty);
 
         [CanBeNull]
         [ItemNotNull]
@@ -115,7 +115,7 @@ namespace Sitecore.Pathfinder.Languages.Json
         [NotNull]
         protected virtual ITextNode Parse([NotNull] string name, [NotNull] [ItemNotNull] JObject jobject, [CanBeNull] JsonTextNode parent)
         {
-            var textNodes = (parent?.ChildNodes as ICollection<ITextNode>);
+            var textNodes = parent?.ChildNodes as ICollection<ITextNode>;
 
             var treeNode = new JsonTextNode(this, name, jobject);
             textNodes?.Add(treeNode);

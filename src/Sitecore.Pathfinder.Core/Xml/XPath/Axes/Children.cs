@@ -24,7 +24,7 @@ namespace Sitecore.Pathfinder.Xml.XPath.Axes
             }
             else
             {
-                throw new ArgumentException("Node or Field type expected", nameof(element));
+                throw new ArgumentException(Texts.Node_or_Field_type_expected, nameof(element));
             }
         }
 

@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Xml.XPath.Axes
             var itemElement = element as ItemElement;
             if (itemElement == null)
             {
-                throw new ArgumentException("Element type expected", nameof(element));
+                throw new ArgumentException(Texts.Element_type_expected, nameof(element));
             }
 
             _predicate = itemElement.Predicate;

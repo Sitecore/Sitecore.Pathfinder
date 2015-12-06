@@ -33,7 +33,7 @@ namespace Sitecore.Pathfinder.Diagnostics
             set { Console.ForegroundColor = value; }
         }
 
-        public bool IsInteractive { get; set; } = true;
+        public bool IsInteractive { get; set; }
 
         public bool IsSilent { get; set; }
 
@@ -67,7 +67,7 @@ namespace Sitecore.Pathfinder.Diagnostics
                         }
                     }
 
-                    throw new ConfigurationException("Input is not valid: " + configValue);
+                    throw new ConfigurationException(Texts.Input_is_not_valid__ + configValue);
                 }
             }
 
@@ -213,7 +213,7 @@ namespace Sitecore.Pathfinder.Diagnostics
                         return false;
                     }
 
-                    throw new ConfigurationException("Input is not valid: " + configValue);
+                    throw new ConfigurationException(Texts.Input_is_not_valid__ + configValue);
                 }
             }
 

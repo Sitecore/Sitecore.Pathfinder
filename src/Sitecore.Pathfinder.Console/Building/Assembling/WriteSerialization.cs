@@ -21,7 +21,7 @@ namespace Sitecore.Pathfinder.Building.Assembling
                 return;
             }
 
-            context.Trace.TraceInformation(Msg.D1021, "Writing serialization...");
+            context.Trace.TraceInformation(Msg.D1021, Texts.Writing_serialization___);
 
             var directory = PathHelper.Combine(context.ProjectDirectory, context.Configuration.GetString(Constants.Configuration.WriteSerializationDirectory));
             if (context.FileSystem.DirectoryExists(directory))

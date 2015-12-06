@@ -24,7 +24,7 @@ namespace Sitecore.Pathfinder.Rules.Conditions
             var fieldName = GetParameterValue(parameters, "name", ruleContext.Object);
             if (fieldName == null)
             {
-                throw new ConfigurationException("Field name expected");
+                throw new ConfigurationException(Texts.Field_name_expected);
             }
 
             return item[fieldName];

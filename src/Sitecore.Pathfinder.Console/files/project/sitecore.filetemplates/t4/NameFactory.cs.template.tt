@@ -8,10 +8,9 @@
 <#@ import namespace="Sitecore.Pathfinder.Projects" #>
 <#@ import namespace="Sitecore.Pathfinder.Projects.Items" #>
 <#@ import namespace="Sitecore.Pathfinder.Projects.Templates" #>
-<#@ import namespace="Sitecore.Pathfinder.T4.Code" #>
 <# 
     IBuildContext context = (Host as T4.Host).Context; 
-    CodeProject project = (Host as T4.Host).Project; 
+    IProject project = (Host as T4.Host).Project; 
     Template template = (Host as T4.Host).Item as Template;
     
     var className = template.ItemName.GetSafeCodeIdentifier() + "Factory"; 

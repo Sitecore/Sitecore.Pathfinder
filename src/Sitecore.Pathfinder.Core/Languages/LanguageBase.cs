@@ -2,7 +2,6 @@
 
 using System.IO;
 using Sitecore.Pathfinder.Compiling.Builders;
-using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
 

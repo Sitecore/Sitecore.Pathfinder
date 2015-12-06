@@ -5,7 +5,6 @@ using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
-using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Compiling.Builders
 {

@@ -555,4 +555,46 @@
     <data name="Format_not_found" xml:space="preserve">
     <value>Format not found</value>
   </data>
+    <data name="Hey__GruntJS_has_not_yet_been_installed__Run_the_install_grunt_cmd_file_to_install_it_" xml:space="preserve">
+    <value>Hey, GruntJS has not yet been installed. Run the install-grunt.cmd file to install it.</value>
+  </data>
+    <data name="Writing_serialization___" xml:space="preserve">
+    <value>Writing serialization...</value>
+  </data>
+    <data name="Cannot_run_task_without_a_configuration_file" xml:space="preserve">
+    <value>Cannot run task without a configuration file</value>
+  </data>
+    <data name="Node_type_expected" xml:space="preserve">
+    <value>Node type expected</value>
+  </data>
+    <data name="Element_type_expected" xml:space="preserve">
+    <value>Element type expected</value>
+  </data>
+    <data name="Node_or_Field_type_expected" xml:space="preserve">
+    <value>Node or Field type expected</value>
+  </data>
+    <data name="Field_name_expected" xml:space="preserve">
+    <value>Field name expected</value>
+  </data>
+    <data name="Parent_name_expected" xml:space="preserve">
+    <value>Parent name expected</value>
+  </data>
+    <data name="Input_is_not_valid__" xml:space="preserve">
+    <value>Input is not valid: </value>
+  </data>
+    <data name="String_operator_not_found" xml:space="preserve">
+    <value>String operator not found</value>
+  </data>
+    <data name="Host_not_found" xml:space="preserve">
+    <value>Host not found</value>
+  </data>
+    <data name="Failed_to_parse_Id_" xml:space="preserve">
+    <value>Failed to parse Id.</value>
+  </data>
+    <data name="Action_not_found__" xml:space="preserve">
+    <value>Action not found: </value>
+  </data>
+    <data name="Condition_not_found__" xml:space="preserve">
+    <value>Condition not found: </value>
+  </data>
 </root>

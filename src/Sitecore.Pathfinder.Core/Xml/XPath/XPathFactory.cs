@@ -16,12 +16,12 @@ namespace Sitecore.Pathfinder.Xml.XPath
             {
                 if (right is Literal)
                 {
-                    return new Literal((left as Literal).Text + (right as Literal).Text);
+                    return new Literal(((Literal)left).Text + (right as Literal).Text);
                 }
 
                 if (right is Number)
                 {
-                    return new Literal((left as Literal).Text + (right as Number).Value);
+                    return new Literal(((Literal)left).Text + (right as Number).Value);
                 }
             }
 
@@ -29,12 +29,12 @@ namespace Sitecore.Pathfinder.Xml.XPath
             {
                 if (right is Literal)
                 {
-                    return new Literal((left as Number).Value + (right as Literal).Text);
+                    return new Literal(((Number)left).Value + (right as Literal).Text);
                 }
 
                 if (right is Number)
                 {
-                    return new Number((left as Number).Value + (right as Number).Value);
+                    return new Number(((Number)left).Value + (right as Number).Value);
                 }
             }
 

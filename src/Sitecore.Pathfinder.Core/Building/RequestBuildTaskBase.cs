@@ -71,7 +71,7 @@ namespace Sitecore.Pathfinder.Building
             var hostName = context.Configuration.GetString(Constants.Configuration.HostName);
             if (string.IsNullOrEmpty(hostName))
             {
-                throw new ConfigurationException("Host not found");
+                throw new ConfigurationException(Texts.Host_not_found);
             }
 
             var result = hostName.TrimEnd('/') + "/" + path.TrimStart('/');

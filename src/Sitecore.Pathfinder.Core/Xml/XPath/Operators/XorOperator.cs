@@ -12,12 +12,12 @@ namespace Sitecore.Pathfinder.Xml.XPath.Operators
         {
             if (left is bool && right is bool)
             {
-                return ((bool)left) ^ ((bool)right);
+                return (bool)left ^ (bool)right;
             }
 
             if (left is int && right is int)
             {
-                return ((int)left) ^ ((int)right);
+                return (int)left ^ (int)right;
             }
 
             throw new XPathException("Type mismatch");

@@ -7,6 +7,7 @@ using System.Linq;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Rules.Conditions;
 using Sitecore.Pathfinder.Xml.XPath;
 
 namespace Sitecore.Pathfinder.Rules
@@ -187,7 +188,7 @@ namespace Sitecore.Pathfinder.Rules
                 return new RuleAction(action, parameters);
             }
 
-            throw new ConfigurationException("Action not found: " + key);
+            throw new ConfigurationException(Texts.Action_not_found__ + key);
         }
 
         [NotNull]
@@ -224,7 +225,7 @@ namespace Sitecore.Pathfinder.Rules
                 return new RuleCondition(condition, parameters);
             }
 
-            throw new ConfigurationException("Condition not found: " + key);
+            throw new ConfigurationException(Texts.Condition_not_found__ + key);
         }
     }
 }

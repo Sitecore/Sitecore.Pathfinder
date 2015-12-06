@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Rules.Conditions
             var parentName = GetParameterValue(parameters, "value", ruleContext.Object);
             if (parentName == null)
             {
-                throw new ConfigurationException("Parent name expected");
+                throw new ConfigurationException(Texts.Parent_name_expected);
             }
 
             var item = ruleContext.Object as DatabaseProjectItem;

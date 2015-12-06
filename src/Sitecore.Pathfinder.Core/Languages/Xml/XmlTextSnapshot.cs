@@ -29,7 +29,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
         {
         }
 
-        public override ITextNode Root => _root ?? (_root = (RootElement != null ? ParseDirectives(ParseContext, Parse(null, RootElement)) : TextNode.Empty));
+        public override ITextNode Root => _root ?? (_root = RootElement != null ? ParseDirectives(ParseContext, Parse(null, RootElement)) : TextNode.Empty);
 
         [NotNull]
         public string SchemaFileName { get; private set; }

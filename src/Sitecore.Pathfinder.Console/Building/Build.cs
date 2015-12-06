@@ -190,7 +190,7 @@ namespace Sitecore.Pathfinder.Building
 
             if (context.IsBuildingWithNoConfig && !task.CanRunWithoutConfig)
             {
-                context.Trace.TraceError(Msg.I1009, "Cannot run task without a configuration file", taskName);
+                context.Trace.TraceError(Msg.I1009, Texts.Cannot_run_task_without_a_configuration_file, taskName);
                 context.IsAborted = true;
                 return;
             }

@@ -60,7 +60,7 @@ namespace Sitecore.Pathfinder.Rules.Conditions
                 return Regex.IsMatch(value, matches, RegexOptions.IgnoreCase);
             }
 
-            throw new ConfigurationException("String operator not found");
+            throw new ConfigurationException(Texts.String_operator_not_found);
         }
 
         [NotNull]

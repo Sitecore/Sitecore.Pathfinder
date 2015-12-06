@@ -152,6 +152,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Action not found: .
+        /// </summary>
+        public static string Action_not_found__ {
+            get {
+                return ResourceManager.GetString("Action_not_found__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An error occured.
         /// </summary>
         public static string An_error_occured {
@@ -188,6 +197,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot run task without a configuration file.
+        /// </summary>
+        public static string Cannot_run_task_without_a_configuration_file {
+            get {
+                return ResourceManager.GetString("Cannot_run_task_without_a_configuration_file", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Checkbox field value must be &apos;true&apos; or &apos;false&apos;..
         /// </summary>
         public static string Checkbox_field_value_must_be__true__or__false__ {
@@ -211,6 +229,15 @@ namespace Sitecore.Pathfinder {
         public static string Cleaning_output_directory___ {
             get {
                 return ResourceManager.GetString("Cleaning_output_directory___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Condition not found: .
+        /// </summary>
+        public static string Condition_not_found__ {
+            get {
+                return ResourceManager.GetString("Condition_not_found__", resourceCulture);
             }
         }
         
@@ -440,6 +467,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Element type expected.
+        /// </summary>
+        public static string Element_type_expected {
+            get {
+                return ResourceManager.GetString("Element_type_expected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Expected &apos;Name&apos; attribute.
         /// </summary>
         public static string Expected__Name__attribute {
@@ -512,6 +548,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to parse Id..
+        /// </summary>
+        public static string Failed_to_parse_Id_ {
+            get {
+                return ResourceManager.GetString("Failed_to_parse_Id_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to upload media.
         /// </summary>
         public static string Failed_to_upload_media {
@@ -544,6 +589,15 @@ namespace Sitecore.Pathfinder {
         public static string Field_is_not_defined_in_the_template {
             get {
                 return ResourceManager.GetString("Field_is_not_defined_in_the_template", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Field name expected.
+        /// </summary>
+        public static string Field_name_expected {
+            get {
+                return ResourceManager.GetString("Field_name_expected", resourceCulture);
             }
         }
         
@@ -630,11 +684,30 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hey, GruntJS has not yet been installed. Run the install-grunt.cmd file to install it..
+        /// </summary>
+        public static string Hey__GruntJS_has_not_yet_been_installed__Run_the_install_grunt_cmd_file_to_install_it_ {
+            get {
+                return ResourceManager.GetString("Hey__GruntJS_has_not_yet_been_installed__Run_the_install_grunt_cmd_file_to_instal" +
+                        "l_it_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hi there..
         /// </summary>
         public static string Hi_there_ {
             get {
                 return ResourceManager.GetString("Hi_there_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Host not found.
+        /// </summary>
+        public static string Host_not_found {
+            get {
+                return ResourceManager.GetString("Host_not_found", resourceCulture);
             }
         }
         
@@ -662,6 +735,15 @@ namespace Sitecore.Pathfinder {
         public static string Incremental_build_started___ {
             get {
                 return ResourceManager.GetString("Incremental_build_started___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input is not valid: .
+        /// </summary>
+        public static string Input_is_not_valid__ {
+            get {
+                return ResourceManager.GetString("Input_is_not_valid__", resourceCulture);
             }
         }
         
@@ -749,7 +831,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Just so you know, I have updated the Pathfinder assemblies in the &apos;/bin&apos; directory in the website and the files in the &apos;/sitecore/shell/client/Applications/Pathfinder&apos; directory to the latest version..
+        ///   Looks up a localized string similar to Just so you know, I have updated some files on the website....
         /// </summary>
         public static string Just_so_you_know__I_have_updated_the__Sitecore_Pathfinder_Server_dll__and__NuGet_Core_dll__assemblies_in_the___bin__directory_in_the_website_and_a_number_of___aspx__files_in_the___sitecore_shell_client_Applications_Pathfinder__directory_to_the_latest_version {
             get {
@@ -875,6 +957,24 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Node or Field type expected.
+        /// </summary>
+        public static string Node_or_Field_type_expected {
+            get {
+                return ResourceManager.GetString("Node_or_Field_type_expected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Node type expected.
+        /// </summary>
+        public static string Node_type_expected {
+            get {
+                return ResourceManager.GetString("Node_type_expected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Created.
         /// </summary>
         public static string NuGet_file_size {
@@ -916,6 +1016,15 @@ namespace Sitecore.Pathfinder {
         public static string Packing_dependency_Sitecore_packages_in_Nuget_packages___ {
             get {
                 return ResourceManager.GetString("Packing_dependency_Sitecore_packages_in_Nuget_packages___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parent name expected.
+        /// </summary>
+        public static string Parent_name_expected {
+            get {
+                return ResourceManager.GetString("Parent_name_expected", resourceCulture);
             }
         }
         
@@ -1051,6 +1160,15 @@ namespace Sitecore.Pathfinder {
         public static string Source_files_changed {
             get {
                 return ResourceManager.GetString("Source_files_changed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to String operator not found.
+        /// </summary>
+        public static string String_operator_not_found {
+            get {
+                return ResourceManager.GetString("String_operator_not_found", resourceCulture);
             }
         }
         
@@ -1323,6 +1441,15 @@ namespace Sitecore.Pathfinder {
         public static string Writing_package_exports___ {
             get {
                 return ResourceManager.GetString("Writing_package_exports___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Writing serialization....
+        /// </summary>
+        public static string Writing_serialization___ {
+            get {
+                return ResourceManager.GetString("Writing_serialization___", resourceCulture);
             }
         }
         
