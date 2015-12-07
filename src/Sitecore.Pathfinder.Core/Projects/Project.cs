@@ -231,7 +231,7 @@ namespace Sitecore.Pathfinder.Projects
         {
             Options = projectOptions;
 
-            var context = CompositionService.Resolve<IParseContext>().With(this, Snapshot.Empty);
+            var context = CompositionService.Resolve<IParseContext>().With(this, Snapshot.Empty, PathMappingContext.Empty);
 
             var projectImportService = CompositionService.Resolve<ProjectImportsService>();
             projectImportService.Import(this, context);

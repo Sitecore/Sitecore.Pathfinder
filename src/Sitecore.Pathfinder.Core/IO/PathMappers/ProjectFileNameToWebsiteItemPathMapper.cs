@@ -7,13 +7,15 @@ namespace Sitecore.Pathfinder.IO.PathMappers
 {
     public class ProjectFileNameToWebsiteItemPathMapper
     {
-        public ProjectFileNameToWebsiteItemPathMapper([NotNull] string projectDirectory, string databaseName, [NotNull] string itemPath, [NotNull] string include, [NotNull] string exclude)
+        public ProjectFileNameToWebsiteItemPathMapper([NotNull] string projectDirectory, [NotNull] string databaseName, [NotNull] string itemPath, [NotNull] string include, [NotNull] string exclude, bool isImport, bool uploadMedia)
         {
             ProjectDirectory = '\\' + PathHelper.NormalizeFilePath(projectDirectory).Trim('\\');
             ItemPath = '/' + PathHelper.NormalizeItemPath(itemPath).Trim('/');
             DatabaseName = databaseName;
             Include = include;
             Exclude = exclude;
+            IsImport = isImport;
+            UploadMedia = uploadMedia;
 
             if (string.IsNullOrEmpty(Include) && string.IsNullOrEmpty(Exclude))
             {
@@ -34,13 +36,15 @@ namespace Sitecore.Pathfinder.IO.PathMappers
         }
 
         [NotNull]
-        public string Exclude { get; }
-
-        [NotNull]
         public string DatabaseName { get; }
 
         [NotNull]
+        public string Exclude { get; }
+
+        [NotNull]
         public string Include { get; }
+
+        public bool IsImport { get; }
 
         [NotNull]
         public string ItemPath { get; }
@@ -48,12 +52,17 @@ namespace Sitecore.Pathfinder.IO.PathMappers
         [NotNull]
         public string ProjectDirectory { get; }
 
+        public bool UploadMedia { get; }
+
         [CanBeNull]
         protected PathMatcher PathMatcher { get; }
 
-        public bool TryGetWebsiteItemPath([NotNull] string projectFileName, [CanBeNull] out string itemPath)
+        public bool TryGetWebsiteItemPath([NotNull] string projectFileName, [NotNull] out string databaseName, [NotNull] out string itemPath, out bool isImport, out bool uploadMedia)
         {
-            itemPath = null;
+            databaseName = string.Empty;
+            itemPath = string.Empty;
+            isImport = false;
+            uploadMedia = true;
 
             if (!projectFileName.StartsWith(ProjectDirectory, StringComparison.OrdinalIgnoreCase))
             {
@@ -68,6 +77,10 @@ namespace Sitecore.Pathfinder.IO.PathMappers
             itemPath = PathHelper.UnmapPath(ProjectDirectory, PathHelper.GetDirectoryAndFileNameWithoutExtensions(projectFileName));
 
             itemPath = ItemPath + '/' + PathHelper.NormalizeItemPath(itemPath);
+
+            databaseName = DatabaseName;
+            isImport = IsImport;
+            uploadMedia = UploadMedia;
 
             return true;
         }

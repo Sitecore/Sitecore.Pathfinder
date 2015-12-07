@@ -11,6 +11,10 @@ namespace Sitecore.Pathfinder.Languages.Renderings
 {
     public class RenderingCompiler : CompilerBase
     {
+        public RenderingCompiler() : base(1000)
+        {
+        }
+
         public override bool CanCompile(ICompileContext context, IProjectItem projectItem)
         {
             return projectItem is Rendering;

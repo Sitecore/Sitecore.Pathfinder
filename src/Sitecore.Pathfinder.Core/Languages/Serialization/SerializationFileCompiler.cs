@@ -14,6 +14,10 @@ namespace Sitecore.Pathfinder.Languages.Serialization
 {
     public class SerializationFileCompiler : CompilerBase
     {
+        public SerializationFileCompiler() : base(1000)
+        {
+        }
+
         public override bool CanCompile(ICompileContext context, IProjectItem projectItem)
         {
             return projectItem is SerializationFile;

@@ -11,8 +11,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Parsing
 {
-    [Export(typeof(IParseContext))]
-    [PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export(typeof(IParseContext)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class ParseContext : IParseContext
     {
         [ImportingConstructor]
@@ -28,18 +27,11 @@ namespace Sitecore.Pathfinder.Parsing
 
         public IConfiguration Configuration { get; }
 
-        [NotNull]
-        protected IConsoleService Console { get; }
-
         public virtual string DatabaseName { get; private set; }
 
         public IFactoryService Factory { get; }
 
         public virtual string FilePath { get; private set; }
-
-        public virtual bool IsExtern { get; private set; }
-
-        public bool UploadMedia { get; private set; }
 
         public virtual string ItemName { get; private set; }
 
@@ -55,19 +47,23 @@ namespace Sitecore.Pathfinder.Parsing
 
         public ITraceService Trace { get; private set; }
 
-        public IParseContext With(IProject project, ISnapshot snapshot)
+        public bool UploadMedia { get; private set; }
+
+        [NotNull]
+        protected IConsoleService Console { get; }
+
+        public IParseContext With(IProject project, ISnapshot snapshot, PathMappingContext pathMappingContext)
         {
             Project = project;
             Snapshot = snapshot;
-            Trace = new ProjectDiagnosticTraceService(Configuration, Console, Factory).With(Project);
 
-            var fileContext = FileContext.GetFileContext(Project, Configuration, snapshot.SourceFile);
-            FilePath = fileContext.FilePath;
-            ItemName = fileContext.ItemName;
-            ItemPath = fileContext.ItemPath;
-            DatabaseName = fileContext.DatabaseName;
-            IsExtern = fileContext.IsExtern;
-            UploadMedia = fileContext.UploadMedia;
+            FilePath = pathMappingContext.FilePath;
+            ItemName = pathMappingContext.ItemName;
+            ItemPath = pathMappingContext.ItemPath;
+            DatabaseName = pathMappingContext.DatabaseName;
+            UploadMedia = pathMappingContext.UploadMedia;
+
+            Trace = new ProjectDiagnosticTraceService(Configuration, Console, Factory).With(Project);
 
             return this;
         }

@@ -1,7 +1,7 @@
 {
     "website-directory": "",
     "data-folder-directory": "",
-    "hostname": "",
+    "host-name": "",
 
     // default database name (master, core or web)
     "database": "master",
@@ -9,9 +9,14 @@
     // project configuration file
     "project": "scconfig.json",
 
-    // ======
-    // TASKS
-    // ======
+    // mapping between project files and website files and items
+    "project-website-mappings": {
+        "project-to-website": {
+        },
+
+        "website-to-project": {
+        }
+    },
 
     "build-project": {
         // default build pipeline
@@ -19,10 +24,6 @@
 
         // files to copy to website
         "content-files": ".js .css .config .htm .ashx .asmx",
-
-        // mapping of files between local path and server path and item path
-        "files": {
-        },
 
         // if force-update is true, media will always be uploaded and files always copied during emitting
         "force-update": false,

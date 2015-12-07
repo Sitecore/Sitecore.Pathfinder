@@ -1101,6 +1101,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rendering has not yet been compiled.
+        /// </summary>
+        public static string Rendering_has_not_yet_been_compiled {
+            get {
+                return ResourceManager.GetString("Rendering_has_not_yet_been_compiled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rendering not found.
         /// </summary>
         public static string Rendering_not_found {

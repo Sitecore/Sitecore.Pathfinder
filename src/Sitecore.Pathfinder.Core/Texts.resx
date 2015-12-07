@@ -600,4 +600,7 @@
     <data name="Missing_Mapping" xml:space="preserve">
     <value>Missing =&gt;</value>
   </data>
+    <data name="Rendering_has_not_yet_been_compiled" xml:space="preserve">
+    <value>Rendering has not yet been compiled</value>
+  </data>
 </root>

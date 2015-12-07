@@ -75,10 +75,10 @@ namespace Sitecore.Pathfinder.IO.PathMappers
         [CanBeNull]
         protected PathMatcher TemplateNamePathMatcher { get; }
 
-        public bool TryGetProjectFileName([NotNull] string itemPath, [NotNull] string templateName, [CanBeNull] out string projectFileName, [CanBeNull] out string format)
+        public bool TryGetProjectFileName([NotNull] string itemPath, [NotNull] string templateName, [CanBeNull] out string projectFileName, [NotNull] out string format)
         {
-            projectFileName = null;
-            format = null;
+            projectFileName = string.Empty;
+            format = string.Empty;
 
             if (!itemPath.StartsWith(ItemPath, StringComparison.OrdinalIgnoreCase))
             {

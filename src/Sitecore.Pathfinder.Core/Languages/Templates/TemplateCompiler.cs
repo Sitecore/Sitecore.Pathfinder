@@ -11,6 +11,10 @@ namespace Sitecore.Pathfinder.Languages.Templates
 {
     public class TemplateCompiler : CompilerBase
     {
+        public TemplateCompiler() : base(1000)
+        {
+        }
+
         public override bool CanCompile(ICompileContext context, IProjectItem projectItem)
         {
             var item = projectItem as Item;

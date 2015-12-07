@@ -17,6 +17,11 @@ namespace Sitecore.Pathfinder.HtmlFile.HtmlFiles
     {
         public const string LayoutHtmlfile = "Layout.HtmlFile";
 
+        // must come after RenderingCompiler, or renderings will not be found
+        public HtmlFilePropertyCompiler() : base(9000)
+        {
+        }
+
         public override bool CanCompile(ICompileContext context, IProjectItem projectItem)
         {
             var item = projectItem as Item;
@@ -59,6 +64,7 @@ namespace Sitecore.Pathfinder.HtmlFile.HtmlFiles
             var renderingItemUri = rendering.RenderingItemUri;
             if (renderingItemUri == ProjectItemUri.Empty)
             {
+                RetryCompilation(projectItem);
                 return;
             }
 

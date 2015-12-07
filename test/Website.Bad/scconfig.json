@@ -1,54 +1,55 @@
 {
     // wwwroot points to the base directory of the website
     // The wwwroot directory must contain a 'Data' and a 'Website' folder
-    "website-directory": "c:\\inetpub\\wwwroot\\Sitecore.Default\\Website",
+    "website-directory": "c:\\inetpub\\wwwroot\\Pathfinder\\Website",
     "data-folder-directory": "c:\\inetpub\\wwwroot\\Sitecore.Default\\Data",
-    "hostname": "http://sitecore.default",
+    "host-name": "http://sitecore.default",
 
-    // relative project directory to solution directory
-    "projectdirectory": "",
+    // user name and password
+    "user-name": "sitecore\\admin",
+    "password": "b",
 
-    // Sitecore database name (master, core, or web)
+    // default Sitecore database name (master, core, or web)
     "database": "master",
 
-    // =====
-    // TASKS
-    // =====
+    // mapping between project files and website files and items
+    "project-website-mappings": {
+        "project-to-website": {
+            "master": {
+                "project-directory-to-item-path": "/content/master/sitecore => /sitecore",
+                "project-directory-to-website-directory": "/content/master/sitecore => /"
+            },
+
+            "core": {
+                "project-directory-to-item-path": "/content/core/sitecore => /sitecore",
+                "project-directory-to-website-directory": "/content/master/sitecore => /",
+                "database": "core"
+            },
+
+            "bin": {
+                "project-directory-to-website-directory": "/bin => /bin",
+                "file-name-include": "*.dll"
+            },
+
+            "wwwroot": {
+                "project-directory-to-item-path": "/wwwroot => /",
+                "project-directory-to-website-directory": "/wwwroot => /",
+                "upload-media": false
+            },
+
+            "views": {
+                "project-directory-to-item-path": "/views => /sitecore/layout/renderings",
+                "project-directory-to-website-directory": "/views => /views"
+            }
+        },
+
+        "website-to-project": {
+        }
+    },
 
     "build-project": {
         // build tasks
-        "tasks": "check-project write-exports",
-
-        // mapping of files between project paths and website paths and item paths
-        "files": {
-            "master": {
-                "project-directory": "/content/master/sitecore",
-                "include": "**",
-                "website-directory": "/",
-                "item-path": "/sitecore",
-                "database": "master"
-            },
-            "core": {
-                "project-directory": "/content/core/sitecore",
-                "include": "**",
-                "website-directory": "/",
-                "item-path": "/sitecore",
-                "database": "core"
-            },
-            "views": {
-                "project-directory": "/Views",
-                "include": "**",
-                "website-directory": "/Views",
-                "item-path": "/sitecore/layout/renderings"
-            },
-            "wwwroot": {
-                "project-directory": "/wwwroot",
-                "include": "**",
-                "website-directory": "/",
-                "item-path": "/",
-                "upload-media": false
-            }
-        }
+        "tasks": "check-project write-exports"
     }
 }
                                        

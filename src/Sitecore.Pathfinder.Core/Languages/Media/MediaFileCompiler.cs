@@ -13,6 +13,10 @@ namespace Sitecore.Pathfinder.Languages.Media
 {
     public class MediaFileCompiler : CompilerBase
     {
+        public MediaFileCompiler() : base(1000)
+        {
+        }
+
         public override bool CanCompile(ICompileContext context, IProjectItem projectItem)
         {
             return projectItem is MediaFile;

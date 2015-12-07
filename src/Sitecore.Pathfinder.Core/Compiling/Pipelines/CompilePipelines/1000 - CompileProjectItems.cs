@@ -19,16 +19,16 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
         {
             var context = pipeline.Context.CompositionService.Resolve<ICompileContext>();
 
-            List<IProjectItem> items;
+            List<IProjectItem> projectItems;
             do
             {
-                items = pipeline.Project.ProjectItems.Where(i => i.State == ProjectItemState.CompilationPending).ToList();
+                projectItems = pipeline.Project.ProjectItems.Where(i => i.State == ProjectItemState.CompilationPending).ToList();
 
-                foreach (var projectItem in items)
+                foreach (var projectItem in projectItems)
                 {
                     projectItem.State = ProjectItemState.Compiled;
 
-                    foreach (var compiler in pipeline.Context.Compilers)
+                    foreach (var compiler in pipeline.Context.Compilers.OrderBy(c => c.Priority))
                     {
                         if (compiler.CanCompile(context, projectItem))
                         {
@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
                     }
                 }
             }
-            while (items.Any());
+            while (projectItems.Any());
         }
     }
 }

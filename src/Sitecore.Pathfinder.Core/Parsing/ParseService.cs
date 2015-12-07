@@ -19,12 +19,13 @@ namespace Sitecore.Pathfinder.Parsing
     public class ParseService : IParseService
     {
         [ImportingConstructor]
-        public ParseService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] ISnapshotService snapshotService, [ImportMany] [NotNull] [ItemNotNull] IEnumerable<IParser> parsers)
+        public ParseService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] ISnapshotService snapshotService, [NotNull] IPathMapperService pathMapper, [ImportMany, NotNull, ItemNotNull] IEnumerable<IParser> parsers)
         {
             CompositionService = compositionService;
             Configuration = configuration;
             Factory = factory;
             SnapshotService = snapshotService;
+            PathMapper = pathMapper;
             Parsers = parsers;
         }
 
@@ -37,8 +38,7 @@ namespace Sitecore.Pathfinder.Parsing
         [NotNull]
         protected IFactoryService Factory { get; }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         protected IEnumerable<IParser> Parsers { get; }
 
         [NotNull]
@@ -46,11 +46,16 @@ namespace Sitecore.Pathfinder.Parsing
 
         public virtual void Parse(IProject project, ISourceFile sourceFile)
         {
+            var pathMappingContext = new PathMappingContext(PathMapper);
+            pathMappingContext.Parse(project, sourceFile);
+
+            if (!pathMappingContext.IsMapped)
+            {
+                return;
+            }
+
             var itemName = PathHelper.GetItemName(sourceFile);
-
-            var fileContext = FileContext.GetFileContext(project, Configuration, sourceFile);
-
-            var filePath = fileContext.FilePath;
+            var filePath = pathMappingContext.FilePath;
             if (filePath.StartsWith("~/"))
             {
                 filePath = filePath.Mid(1);
@@ -76,7 +81,7 @@ namespace Sitecore.Pathfinder.Parsing
 
             var snapshot = SnapshotService.LoadSnapshot(snapshotParseContext, sourceFile);
 
-            var parseContext = Factory.ParseContext(project, snapshot);
+            var parseContext = Factory.ParseContext(project, snapshot, pathMappingContext);
 
             foreach (var parser in Parsers.OrderBy(p => p.Priority))
             {
@@ -93,5 +98,8 @@ namespace Sitecore.Pathfinder.Parsing
                 }
             }
         }
+
+        [NotNull]
+        protected IPathMapperService PathMapper { get; }
     }
 }

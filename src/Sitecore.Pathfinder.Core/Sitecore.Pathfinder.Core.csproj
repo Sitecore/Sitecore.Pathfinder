@@ -158,7 +158,6 @@
     <Compile Include="Compiling\Pipelines\CompilePipelines\4000 - CheckProject.cs" />
     <Compile Include="Compiling\Pipelines\CompilePipelines\0010 - CreateTemplatesFromItems.cs" />
     <Compile Include="Configuration\StartupExtensions.cs" />
-    <Compile Include="Configuration\FileContext.cs" />
     <Compile Include="Diagnostics\ConsoleService.cs" />
     <Compile Include="Diagnostics\IConsoleService.cs" />
     <Compile Include="Extensibility\StartupExtensions.cs" />
@@ -175,6 +174,7 @@
     <Compile Include="Languages\Yaml\YamlLanguage.cs" />
     <Compile Include="Languages\Yaml\FormatExtensions.cs" />
     <Compile Include="Languages\Yaml\YamlTextWriter.cs" />
+    <Compile Include="Parsing\PathMappingContext.cs" />
     <Compile Include="Parsing\Pipelines\TemplateParserPipelines\TemplateParserPipeline.cs" />
     <Compile Include="Projects\ISourcePropertyBag.cs" />
     <Compile Include="Projects\Items\FieldCollection.cs" />

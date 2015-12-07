@@ -27,8 +27,7 @@ namespace Sitecore.Pathfinder.Languages.Renderings
         [NotNull]
         public string ItemPath { get; }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         public List<string> Placeholders { get; } = new List<string>();
 
         [NotNull]

@@ -8,12 +8,12 @@ namespace Sitecore.Pathfinder.IO
     {
         void Clear();
 
-        bool TryGetProjectFileName([NotNull] string itemPath, [NotNull] string templateName, [CanBeNull] out string projectFileName, [CanBeNull] out string format);
+        bool TryGetProjectFileName([NotNull] string itemPath, [NotNull] string templateName, [NotNull] out string projectFileName, [NotNull] out string format);
 
-        bool TryGetProjectFileName([NotNull] string websiteFileName, [CanBeNull] out string projectFileName);
+        bool TryGetProjectFileName([NotNull] string websiteFileName, [NotNull] out string projectFileName);
 
-        bool TryGetWebsiteFileName([NotNull] string projectFileName, [CanBeNull] out string websiteFileName);
+        bool TryGetWebsiteFileName([NotNull] string projectFileName, [NotNull] out string websiteFileName);
 
-        bool TryGetWebsiteItemPath([NotNull] string projectFileName, [CanBeNull] out string itemPath);
+        bool TryGetWebsiteItemPath([NotNull] string projectFileName, [NotNull] out string databaseName, [NotNull] out string itemPath, out bool isImport, out bool uploadMedia);
     }
 }

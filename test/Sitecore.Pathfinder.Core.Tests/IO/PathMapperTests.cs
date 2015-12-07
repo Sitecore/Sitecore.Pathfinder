@@ -17,10 +17,10 @@ namespace Sitecore.Pathfinder.IO
 
             string websiteFileName;
             Assert.IsTrue(pathMapperService.TryGetWebsiteFileName("/wwwroot/about.html", out websiteFileName));
-            Assert.AreEqual("about.html", websiteFileName);
+            Assert.AreEqual("~/about.html", websiteFileName);
 
             Assert.IsTrue(pathMapperService.TryGetWebsiteFileName("/wwwroot/files/about.html", out websiteFileName));
-            Assert.AreEqual("files\\about.html", websiteFileName);
+            Assert.AreEqual("~/files/about.html", websiteFileName);
 
             Assert.IsFalse(pathMapperService.TryGetWebsiteFileName("/wwwroot/files/about.aspx", out websiteFileName));
             Assert.IsFalse(pathMapperService.TryGetWebsiteFileName("/wwwroot/files/about.ashx", out websiteFileName));
@@ -32,15 +32,18 @@ namespace Sitecore.Pathfinder.IO
         {
             var pathMapperService = new PathMapperService();
 
-            pathMapperService.ProjectFileNameToWebsiteItemPaths.Add(new ProjectFileNameToWebsiteItemPathMapper("/content/master/sitecore", "master", "/sitecore", "**/*.item.json", "**/*.aspx"));
+            pathMapperService.ProjectFileNameToWebsiteItemPaths.Add(new ProjectFileNameToWebsiteItemPathMapper("/content/master/sitecore", "master", "/sitecore", "**/*.item.json", "**/*.aspx", false, true));
 
             string itemPath;
-            Assert.IsTrue(pathMapperService.TryGetWebsiteItemPath("/content/master/sitecore/content/Home/about.item.json", out itemPath));
+            string databaseName;
+            bool isImport;
+            bool uploadMedia;
+            Assert.IsTrue(pathMapperService.TryGetWebsiteItemPath("/content/master/sitecore/content/Home/about.item.json", out databaseName, out itemPath, out isImport, out uploadMedia));
             Assert.AreEqual("/sitecore/content/Home/about", itemPath);
 
-            Assert.IsFalse(pathMapperService.TryGetWebsiteItemPath("/content/master/sitecore/content/Home/about.item.xml", out itemPath));
-            Assert.IsFalse(pathMapperService.TryGetWebsiteItemPath("/content/master/sitecore/content/Home/about.aspx", out itemPath));
-            Assert.IsFalse(pathMapperService.TryGetWebsiteItemPath("/content/core/sitecore/content/Home/about.aspx", out itemPath));
+            Assert.IsFalse(pathMapperService.TryGetWebsiteItemPath("/content/master/sitecore/content/Home/about.item.xml", out databaseName, out itemPath, out isImport, out uploadMedia));
+            Assert.IsFalse(pathMapperService.TryGetWebsiteItemPath("/content/master/sitecore/content/Home/about.aspx", out databaseName, out itemPath, out isImport, out uploadMedia));
+            Assert.IsFalse(pathMapperService.TryGetWebsiteItemPath("/content/core/sitecore/content/Home/about.aspx", out databaseName, out itemPath, out isImport, out uploadMedia));
         }
 
         [Test]

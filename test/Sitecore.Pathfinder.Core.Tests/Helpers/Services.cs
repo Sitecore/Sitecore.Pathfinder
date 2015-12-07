@@ -63,7 +63,7 @@ namespace Sitecore.Pathfinder.Helpers
         {
             var toolsDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
 
-            var app = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(projectDirectory).WithWebsiteAssemblyResolver().Start();
+            var app = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(projectDirectory).Start();
             if (app == null)
             {
                 throw new ConfigurationException("Oh no, nothing works!");

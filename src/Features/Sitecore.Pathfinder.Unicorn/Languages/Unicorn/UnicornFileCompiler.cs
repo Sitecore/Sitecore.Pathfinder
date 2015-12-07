@@ -11,6 +11,10 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
 {
     public class UnicornFileCompiler : CompilerBase
     {
+        public UnicornFileCompiler() : base(1000)
+        {
+        }
+
         public override bool CanCompile(ICompileContext context, IProjectItem projectItem)
         {
             return projectItem is UnicornFile;

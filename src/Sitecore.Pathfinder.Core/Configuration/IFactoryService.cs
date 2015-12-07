@@ -106,6 +106,6 @@ namespace Sitecore.Pathfinder.Configuration
         TextNode TextNode([NotNull] ISnapshot snapshot, TextSpan span, [NotNull] string name, [NotNull] string value);
 
         [NotNull]
-        IParseContext ParseContext([NotNull] IProject project, [NotNull] ISnapshot snapshot);
+        IParseContext ParseContext([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] PathMappingContext pathMappingContext);
     }
 }

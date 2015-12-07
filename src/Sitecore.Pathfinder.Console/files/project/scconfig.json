@@ -1,8 +1,8 @@
 {
-    // every project must have a unique id, since the project-unique-id is used to
-    // calculate item ids.
+    // every project must have a unique id, since the project-unique-id is used to calculate item ids
     "project-unique-id": "{project-unique-id}",
 
+    // website directories and host name
     "website-directory": "c:\\inetpub\\wwwroot\\Sitecore.Default\\Website",
     "data-folder-directory": "c:\\inetpub\\wwwroot\\Sitecore.Default\\Data",
     "host-name": "http://sitecore.default",
@@ -11,99 +11,46 @@
     "user-name": "sitecore\\admin",
     "password": "b",
 
-    // Sitecore database name (master, core, or web)
+    // default Sitecore database name (master, core, or web)
     "database": "master",
 
+    // mapping between project files and website files and items
     "project-website-mappings": {
         "project-to-website": {
             "master": {
-                "project-directory-to-item-path": "/content/master/sitecore => /sitecore"
+                "project-directory-to-item-path": "/content/master/sitecore => /sitecore",
+                "project-directory-to-website-directory": "/content/master/sitecore => /"
             },
 
             "core": {
                 "project-directory-to-item-path": "/content/core/sitecore => /sitecore",
+                "project-directory-to-website-directory": "/content/master/sitecore => /",
                 "database": "core"
             },
 
+            "bin": {
+                "project-directory-to-website-directory": "/bin => /bin",
+                "file-name-include": "*.dll"
+            },
+
             "wwwroot": {
-                "project-directory-to-website-directory": "/wwwroot => /"
+                "project-directory-to-item-path": "/wwwroot => /",
+                "project-directory-to-website-directory": "/wwwroot => /",
+                "upload-media": false
             },
 
             "views": {
                 "project-directory-to-item-path": "/views => /sitecore/layout/renderings",
                 "project-directory-to-website-directory": "/views => /views"
-            },
+            }
         },
 
         "website-to-project": {
-            "website-to-project-0": {
-                "item-path-to-project-directory": "/sitecore/content/Home/CleanBlog => /content/master/sitecore/content/Home/CleanBlog",
-                "format": "item.json"
-            }
-        },
-
-        "template": {
-            "core": {
-                "project-directory-to-item-path": "/content/core/sitecore => /sitecore",
-                "database": "core",
-
-                "file-name-include": "**",
-                "file-name-exclude": "**"
-            },
-
-            "website-to-project-0": {
-                "item-path-to-project-directory": "/sitecore/content/Home/CleanBlog => /content/master/sitecore/content/Home/CleanBlog",
-                "format": "item.json",
-
-                "item-name-include": "**",
-                "item-name-exclude": "**",
-
-                "item-template-name-include": "**",
-                "item-template-name-exclude": "**",
-
-                "item-xpath-include": "true",
-                "item-xpath-exclude": "true"
-            }
         }
     },
 
-    // =====
-    // TASKS
-    // =====
-
+    // tasks to execute when building
     "build-project": {
-        // build tasks
-        "tasks": "check-project write-exports pack-nuget copy-dependencies copy-package install-package publish-database show-metrics",
-
-        // mapping of files between project paths and website paths and item paths
-        "files": {
-            "master": {
-                "project-directory": "/content/master/sitecore",
-                "include": "**",
-                "website-directory": "/",
-                "item-path": "/sitecore",
-                "database": "master"
-            },
-            "core": {
-                "project-directory": "/content/core/sitecore",
-                "include": "**",
-                "website-directory": "/",
-                "item-path": "/sitecore",
-                "database": "core"
-            },
-            "views": {
-                "project-directory": "/Views",
-                "include": "**",
-                "website-directory": "/Views",
-                "item-path": "/sitecore/layout/renderings"
-            },
-            "wwwroot": {
-                "project-directory": "/wwwroot",
-                "include": "**",
-                "website-directory": "/",
-                "item-path": "/",
-                "upload-media": false
-            }
-        }
+        "tasks": "check-project write-exports pack-nuget copy-dependencies copy-package install-package publish-database show-metrics"
     }
 }

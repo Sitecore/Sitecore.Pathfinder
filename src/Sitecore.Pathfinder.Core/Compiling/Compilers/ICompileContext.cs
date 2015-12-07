@@ -11,8 +11,7 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
 {
     public interface ICompileContext
     {
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         IEnumerable<ICompiler> Compilers { get; }
 
         [NotNull]

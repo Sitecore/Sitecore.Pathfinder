@@ -57,6 +57,7 @@ namespace Sitecore.Pathfinder
         public const int C1049 = C + 49;
         public const int C1050 = C + 50;
         public const int C1051 = C + 51;
+        public const int C1052 = C + 52;
 
         public const int D = 4000;
         public const int D1000 = D;

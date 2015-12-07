@@ -3,28 +3,27 @@
 using System;
 using System.IO;
 using Sitecore.Pathfinder.Configuration;
-using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.Helpers;
 using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder
 {
     public abstract class Tests
     {
-        public const string GoodWebsite = "Website.Good\\bin";
         public const string BadWebsite = "Website.Bad\\bin";
+
+        public const string GoodWebsite = "Website.Good\\bin";
 
         [NotNull]
         public string ProjectDirectory { get; private set; } = string.Empty;
 
         [NotNull]
-        public Services Services { get; private set; }
+        public Helpers.Services Services { get; private set; }
 
         protected void Mock<T>(T value)
         {
             Services.CompositionService.Set(value);
-        }                                   
+        }
 
         protected T Resolve<T>()
         {
@@ -33,10 +32,10 @@ namespace Sitecore.Pathfinder
 
         protected void Start([NotNull] string website, [CanBeNull] Action mock = null)
         {
-            var projectDir =  Directory.GetParent(Directory.GetCurrentDirectory()).Parent;
-            ProjectDirectory = PathHelper.Combine(Path.GetDirectoryName(projectDir?.FullName) ?? string.Empty, website);
+            var workingDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent;
+            ProjectDirectory = PathHelper.Combine(Path.GetDirectoryName(workingDirectory?.FullName) ?? string.Empty, website);
 
-            Services = new Services();
+            Services = new Helpers.Services();
             Services.Start(ProjectDirectory, mock);
 
             Services.ConfigurationService.Load(ConfigurationOptions.None, ProjectDirectory);

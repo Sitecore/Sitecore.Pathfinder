@@ -56,6 +56,9 @@ namespace Sitecore.Pathfinder.Configuration
         protected IFileSystemService FileSystem { get; }
 
         [NotNull]
+        protected IPathMapperService PathMapper { get; }
+
+        [NotNull]
         protected IParseService ParseService => _parseService ?? (_parseService = CompositionService.Resolve<IParseService>());
 
         [NotNull]
@@ -147,9 +150,9 @@ namespace Sitecore.Pathfinder.Configuration
             return new MediaFile(project, snapshot, databaseName, itemName, itemPath, filePath);
         }
 
-        public virtual IParseContext ParseContext(IProject project, ISnapshot snapshot)
+        public virtual IParseContext ParseContext(IProject project, ISnapshot snapshot, PathMappingContext pathMappingContext)
         {
-            return new ParseContext(Configuration, Console, this, PipelineService, ReferenceParser).With(project, snapshot);
+            return new ParseContext(Configuration, Console, this, PipelineService, ReferenceParser).With(project, snapshot, pathMappingContext);
         }
 
         public virtual IProject Project(ProjectOptions projectOptions, List<string> sourceFileNames)

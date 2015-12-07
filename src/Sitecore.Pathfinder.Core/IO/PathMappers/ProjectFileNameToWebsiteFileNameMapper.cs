@@ -47,9 +47,9 @@ namespace Sitecore.Pathfinder.IO.PathMappers
         [CanBeNull]
         protected PathMatcher PathMatcher { get; }
 
-        public bool TryGetWebsiteFileName([NotNull] string projectFileName, [CanBeNull] out string websiteFileName)
+        public bool TryGetWebsiteFileName([NotNull] string projectFileName, [NotNull] out string websiteFileName)
         {
-            websiteFileName = null;
+            websiteFileName = string.Empty;
 
             if (!projectFileName.StartsWith(ProjectDirectory, StringComparison.OrdinalIgnoreCase))
             {
@@ -61,7 +61,7 @@ namespace Sitecore.Pathfinder.IO.PathMappers
                 return false;
             }
 
-            websiteFileName = PathHelper.RemapDirectory(projectFileName, ProjectDirectory, WebsiteDirectory);
+            websiteFileName = "~/" + PathHelper.NormalizeItemPath(PathHelper.RemapDirectory(projectFileName, ProjectDirectory, WebsiteDirectory)).TrimStart('/');
 
             return true;
         }

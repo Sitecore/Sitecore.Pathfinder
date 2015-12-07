@@ -79,7 +79,7 @@ namespace Sitecore.Pathfinder.Projects
         public void MergeByProjectUniqueIdTest()
         {
             var project = Resolve<IProject>();
-            var context = Services.CompositionService.Resolve<IParseContext>().With(project, Snapshot.Empty);
+            var context = Services.CompositionService.Resolve<IParseContext>().With(project, Snapshot.Empty, PathMappingContext.Empty);
 
             var sameGuid = new Guid("{11CDDC59-0F73-4A6E-90E2-6614418F173E}");
             var projectItem1 = new Item(project, TextNode.Empty, sameGuid, string.Empty, "SameId", string.Empty, string.Empty);

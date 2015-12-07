@@ -45,8 +45,8 @@ namespace Sitecore.Pathfinder.IO
 
         public virtual bool TryGetProjectFileName(string itemPath, string templateName, out string projectFileName, out string format)
         {
-            projectFileName = null;
-            format = null;
+            projectFileName = string.Empty;
+            format = string.Empty;
 
             itemPath = '/' + PathHelper.NormalizeItemPath(itemPath).TrimStart('/');
 
@@ -63,7 +63,7 @@ namespace Sitecore.Pathfinder.IO
 
         public virtual bool TryGetProjectFileName(string websiteFileName, out string projectFileName)
         {
-            projectFileName = null;
+            projectFileName = string.Empty;
 
             websiteFileName = '\\' + PathHelper.NormalizeFilePath(websiteFileName).TrimStart('\\');
 
@@ -80,7 +80,7 @@ namespace Sitecore.Pathfinder.IO
 
         public virtual bool TryGetWebsiteFileName(string projectFileName, out string websiteFileName)
         {
-            websiteFileName = null;
+            websiteFileName = string.Empty;
 
             projectFileName = '\\' + PathHelper.NormalizeFilePath(projectFileName).TrimStart('\\');
 
@@ -95,15 +95,18 @@ namespace Sitecore.Pathfinder.IO
             return false;
         }
 
-        public virtual bool TryGetWebsiteItemPath(string projectFileName, out string itemPath)
+        public virtual bool TryGetWebsiteItemPath(string projectFileName, out string databaseName, out string itemPath, out bool isImport, out bool uploadMedia)
         {
-            itemPath = null;
+            itemPath = string.Empty;
+            databaseName = string.Empty;
+            isImport = false;
+            uploadMedia = true;
 
             projectFileName = '\\' + PathHelper.NormalizeFilePath(projectFileName).TrimStart('\\');
 
             foreach (var mapper in ProjectFileNameToWebsiteItemPaths)
             {
-                if (mapper.TryGetWebsiteItemPath(projectFileName, out itemPath))
+                if (mapper.TryGetWebsiteItemPath(projectFileName, out databaseName, out itemPath, out isImport, out uploadMedia))
                 {
                     return true;
                 }
@@ -134,8 +137,10 @@ namespace Sitecore.Pathfinder.IO
                     var databaseName = configuration.GetString(key + ":database", "master");
                     var include = configuration.GetString(key + ":file-name-include");
                     var exclude = configuration.GetString(key + ":file-name-exclude");
+                    var isImport = configuration.GetBool(key + ":is-import");
+                    var uploadMedia = configuration.GetBool(key + ":upload-media", true);
 
-                    ProjectFileNameToWebsiteItemPaths.Add(new ProjectFileNameToWebsiteItemPathMapper(projectDirectory, databaseName, itemPath, include, exclude));
+                    ProjectFileNameToWebsiteItemPaths.Add(new ProjectFileNameToWebsiteItemPathMapper(projectDirectory, databaseName, itemPath, include, exclude, isImport, uploadMedia));
                 }
 
                 var projectDirectoryToWebsiteDirectory = configuration.GetString(key + ":project-directory-to-website-directory");
@@ -147,8 +152,8 @@ namespace Sitecore.Pathfinder.IO
                         throw new ConfigurationException(Texts.Missing_Mapping);
                     }
 
-                    var projectDirectory = projectDirectoryToItemPath.Left(n).Trim();
-                    var websiteDirectory = projectDirectoryToItemPath.Mid(n + 2).Trim();
+                    var projectDirectory = projectDirectoryToWebsiteDirectory.Left(n).Trim();
+                    var websiteDirectory = projectDirectoryToWebsiteDirectory.Mid(n + 2).Trim();
                     var include = configuration.GetString(key + ":file-name-include");
                     var exclude = configuration.GetString(key + ":file-name-exclude");
 
@@ -189,8 +194,8 @@ namespace Sitecore.Pathfinder.IO
                         throw new ConfigurationException(Texts.Missing_Mapping);
                     }
 
-                    var websiteDirectory = itemPathToProjectDirectory.Left(n).Trim();
-                    var projectDirectory = itemPathToProjectDirectory.Mid(n + 2).Trim();
+                    var websiteDirectory = projectDirectoryToWebsiteDirectory.Left(n).Trim();
+                    var projectDirectory = projectDirectoryToWebsiteDirectory.Mid(n + 2).Trim();
                     var include = configuration.GetString(key + ":file-name-include");
                     var exclude = configuration.GetString(key + ":file-name-exclude");
 
