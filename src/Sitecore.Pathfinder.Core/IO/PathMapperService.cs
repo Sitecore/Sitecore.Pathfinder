@@ -23,16 +23,12 @@ namespace Sitecore.Pathfinder.IO
             LoadFromConfiguration(configuration);
         }
 
-        [NotNull, ItemNotNull]
         public ICollection<ProjectFileNameToWebsiteFileNameMapper> ProjectFileNameToWebsiteFileNames { get; } = new List<ProjectFileNameToWebsiteFileNameMapper>();
 
-        [NotNull, ItemNotNull]
         public ICollection<ProjectFileNameToWebsiteItemPathMapper> ProjectFileNameToWebsiteItemPaths { get; } = new List<ProjectFileNameToWebsiteItemPathMapper>();
 
-        [NotNull, ItemNotNull]
         public ICollection<WebsiteFileNameToProjectFileNameMapper> WebsiteFileNameToProjectFileNames { get; } = new List<WebsiteFileNameToProjectFileNameMapper>();
 
-        [NotNull, ItemNotNull]
         public ICollection<WebsiteItemPathToProjectFileNameMapper> WebsiteItemPathToProjectFileNames { get; } = new List<WebsiteItemPathToProjectFileNameMapper>();
 
         public void Clear()
@@ -69,7 +65,7 @@ namespace Sitecore.Pathfinder.IO
 
             foreach (var mapper in WebsiteFileNameToProjectFileNames)
             {
-                if (mapper.TryGetWebsiteFileName(websiteFileName, out projectFileName))
+                if (mapper.TryGetProjectFileName(websiteFileName, out projectFileName))
                 {
                     return true;
                 }
@@ -174,6 +170,7 @@ namespace Sitecore.Pathfinder.IO
                         throw new ConfigurationException(Texts.Missing_Mapping);
                     }
 
+                    var databaseName = configuration.GetString(key + ":database", "master");
                     var itemPath = itemPathToProjectDirectory.Left(n).Trim();
                     var projectDirectory = itemPathToProjectDirectory.Mid(n + 2).Trim();
                     var format = configuration.GetString(key + ":format", "item.json");
@@ -182,7 +179,7 @@ namespace Sitecore.Pathfinder.IO
                     var templateNameInclude = configuration.GetString(key + ":template-name-include");
                     var templateNameExclude = configuration.GetString(key + ":template-name-exclude");
 
-                    WebsiteItemPathToProjectFileNames.Add(new WebsiteItemPathToProjectFileNameMapper(itemPath, projectDirectory, format, itemNameInclude, itemNameExclude, templateNameInclude, templateNameExclude));
+                    WebsiteItemPathToProjectFileNames.Add(new WebsiteItemPathToProjectFileNameMapper(databaseName, itemPath, projectDirectory, format, itemNameInclude, itemNameExclude, templateNameInclude, templateNameExclude));
                 }
 
                 var projectDirectoryToWebsiteDirectory = configuration.GetString(key + ":website-directory-to-project-directory");
@@ -199,7 +196,7 @@ namespace Sitecore.Pathfinder.IO
                     var include = configuration.GetString(key + ":file-name-include");
                     var exclude = configuration.GetString(key + ":file-name-exclude");
 
-                    WebsiteFileNameToProjectFileNames.Add(new WebsiteFileNameToProjectFileNameMapper(projectDirectory, websiteDirectory, include, exclude));
+                    WebsiteFileNameToProjectFileNames.Add(new WebsiteFileNameToProjectFileNameMapper(websiteDirectory, projectDirectory, include, exclude));
                 }
             }
         }

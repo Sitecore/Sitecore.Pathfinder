@@ -26,16 +26,13 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
         [Diagnostics.NotNull]
         protected IFactoryService Factory { get; private set; }
 
-        [ImportMany]
-        [Diagnostics.NotNull]
-        [ItemNotNull]
+        [ImportMany, Diagnostics.NotNull, ItemNotNull]
         protected IEnumerable<IFieldValueConverter> FieldValueConverters { get; set; }
 
         [Diagnostics.NotNull]
         protected IFileSystemService FileSystem { get; private set; }
 
-        [Import]
-        [Diagnostics.NotNull]
+        [Import, Diagnostics.NotNull]
         protected ILanguageService LanguageService { get; set; }
 
         [Diagnostics.NotNull]
@@ -75,7 +72,7 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
         }
 
         [Diagnostics.NotNull]
-        protected virtual Projects.Items.Item BuildItem([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] [ItemNotNull] IEnumerable<string> excludedFields, [Diagnostics.NotNull] ILanguage language)
+        protected virtual Projects.Items.Item BuildItem([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Data.Items.Item item, [Diagnostics.NotNull, ItemNotNull]  IEnumerable<string> excludedFields, [Diagnostics.NotNull] ILanguage language)
         {
             var itemBuilder = new ItemBuilder(Factory)
             {
@@ -137,7 +134,7 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
         }
 
         [Diagnostics.NotNull]
-        protected virtual Template BuildTemplate([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Item item)
+        protected virtual Template BuildTemplate([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Data.Items.Item item)
         {
             var templateItem = new TemplateItem(item);
 
@@ -178,7 +175,7 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
         }
 
         [Diagnostics.NotNull]
-        protected virtual string ConvertFieldValue([Diagnostics.NotNull] Data.Fields.Field field, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] ILanguage language)
+        protected virtual string ConvertFieldValue([Diagnostics.NotNull] Data.Fields.Field field, [Diagnostics.NotNull] Data.Items.Item item, [Diagnostics.NotNull] ILanguage language)
         {
             var value = field.Value;
 
@@ -312,7 +309,7 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
             }
         }
 
-        protected virtual void WriteItem([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull] [ItemNotNull] IEnumerable<string> excludedFields)
+        protected virtual void WriteItem([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Data.Items.Item item, [Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull, ItemNotNull]  IEnumerable<string> excludedFields)
         {
             var itemToWrite = BuildItem(project, item, excludedFields, language);
             using (var stream = new StreamWriter(fileName))
@@ -333,7 +330,7 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
             }
         }
 
-        protected virtual void WriteTemplate([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] ILanguage language)
+        protected virtual void WriteTemplate([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Data.Items.Item item, [Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] ILanguage language)
         {
             var template = BuildTemplate(project, item);
             using (var stream = new StreamWriter(fileName))

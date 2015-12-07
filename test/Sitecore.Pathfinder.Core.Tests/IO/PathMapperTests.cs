@@ -69,7 +69,7 @@ namespace Sitecore.Pathfinder.IO
         {
             var pathMapperService = new PathMapperService();
 
-            pathMapperService.WebsiteItemPathToProjectFileNames.Add(new WebsiteItemPathToProjectFileNameMapper("/sitecore/content/Home", "/content/master/sitecore/content/Home", "item.json", "CleanBlog/**", string.Empty, string.Empty, string.Empty));
+            pathMapperService.WebsiteItemPathToProjectFileNames.Add(new WebsiteItemPathToProjectFileNameMapper("master", "/sitecore/content/Home", "/content/master/sitecore/content/Home", "item.json", "CleanBlog/**", string.Empty, string.Empty, string.Empty));
 
             string projectFileName;
             string format;

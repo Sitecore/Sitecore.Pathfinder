@@ -45,7 +45,7 @@ namespace Sitecore.Pathfinder.IO.PathMappers
         [CanBeNull]
         protected PathMatcher PathMatcher { get; }
 
-        public bool TryGetWebsiteFileName([NotNull] string websiteFileName, [NotNull] out string projectFileName)
+        public bool TryGetProjectFileName([NotNull] string websiteFileName, [NotNull] out string projectFileName)
         {
             projectFileName = string.Empty;
 

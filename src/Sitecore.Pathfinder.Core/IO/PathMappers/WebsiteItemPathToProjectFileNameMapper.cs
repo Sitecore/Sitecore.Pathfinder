@@ -7,10 +7,11 @@ namespace Sitecore.Pathfinder.IO.PathMappers
 {
     public class WebsiteItemPathToProjectFileNameMapper
     {
-        public WebsiteItemPathToProjectFileNameMapper([NotNull] string itemPath, [NotNull] string projectDirectory, [NotNull] string format, [NotNull] string itemNameInclude, [NotNull] string itemNameExclude, [NotNull] string templateNameInclude, [NotNull] string templateNameExclude)
+        public WebsiteItemPathToProjectFileNameMapper([NotNull] string databaseName, [NotNull] string itemPath, [NotNull] string projectDirectory, [NotNull] string format, [NotNull] string itemNameInclude, [NotNull] string itemNameExclude, [NotNull] string templateNameInclude, [NotNull] string templateNameExclude)
         {
             ItemPath = '/' + PathHelper.NormalizeItemPath(itemPath).Trim('/');
             ProjectDirectory = '\\' + PathHelper.NormalizeFilePath(projectDirectory).Trim('\\');
+            DatabaseName = databaseName;
             Format = format;
             ItemNameInclude = itemNameInclude;
             ItemNameExclude = itemNameExclude;
@@ -47,6 +48,9 @@ namespace Sitecore.Pathfinder.IO.PathMappers
                 TemplateNamePathMatcher = new PathMatcher(templateNameInclude, templateNameExclude);
             }
         }
+
+        [NotNull]
+        public string DatabaseName { get; }
 
         [NotNull]
         public string Format { get; }
