@@ -95,6 +95,7 @@
     <Compile Include="Helpers\Services.cs" />
     <Compile Include="IO\MockedFileSystemService.cs" />
     <Compile Include="Extensions\StringExtensionsTests.cs" />
+    <Compile Include="IO\PathMapperTests.cs" />
     <Compile Include="Languages\LanguageTests.cs" />
     <Compile Include="Projects\ProjectTests.XPath.cs" />
     <Compile Include="Rules\RuleTests.cs" />

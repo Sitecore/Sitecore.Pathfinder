@@ -948,6 +948,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Missing =&gt;.
+        /// </summary>
+        public static string Missing_Mapping {
+            get {
+                return ResourceManager.GetString("Missing_Mapping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No tests were found.
         /// </summary>
         public static string No_tests_were_found {

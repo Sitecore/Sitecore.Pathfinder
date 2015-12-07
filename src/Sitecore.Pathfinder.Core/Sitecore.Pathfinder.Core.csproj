@@ -131,6 +131,12 @@
     <Compile Include="Extensibility\ExtensionBase.cs" />
     <Compile Include="Extensibility\IExtension.cs" />
     <Compile Include="Extensions\XmlTextWriterExtensions.cs" />
+    <Compile Include="IO\IPathMapperService.cs" />
+    <Compile Include="IO\PathMapperService.cs" />
+    <Compile Include="IO\PathMappers\ProjectFileNameToWebsiteFileNameMapper.cs" />
+    <Compile Include="IO\PathMappers\ProjectFileNameToWebsiteItemPathMapper.cs" />
+    <Compile Include="IO\PathMappers\WebsiteFileNameToProjectFileNameMapper.cs" />
+    <Compile Include="IO\PathMappers\WebsiteItemPathToProjectFileNameMapper.cs" />
     <Compile Include="Languages\BinFiles\BinFile.cs" />
     <Compile Include="Languages\BinFiles\BinFileParser.cs" />
     <Compile Include="Languages\ILanguage.cs" />
