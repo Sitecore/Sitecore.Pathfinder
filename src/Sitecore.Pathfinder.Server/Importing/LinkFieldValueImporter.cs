@@ -5,19 +5,19 @@ using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Pathfinder.Languages;
 
-namespace Sitecore.Pathfinder.WebApi.ImportWebsites
+namespace Sitecore.Pathfinder.Importing
 {
-    public class ImageFieldValueConverter : FieldValueConverterBase
+    public class LinkFieldValueImporter : FieldValueImporterBase
     {
         public override bool CanConvert(Field field, Item item, ILanguage language, string value)
         {
-            return string.Equals(field.Type, "image", StringComparison.OrdinalIgnoreCase);
+            return string.Equals(field.Type, "link", StringComparison.OrdinalIgnoreCase) || string.Equals(field.Type, "general link", StringComparison.OrdinalIgnoreCase);
         }
 
         public override string Convert(Field field, Item item, ILanguage language, string value)
         {
-            var imageField = new ImageField(field);
-            return imageField.MediaItem?.Paths.Path ?? value;
+            var linkField = new LinkField(field);
+            return linkField.TargetItem?.Paths.Path ?? value;
         }
     }
 }

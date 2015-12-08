@@ -130,6 +130,7 @@
     <Compile Include="Emitting\IEmitter.cs" />
     <Compile Include="Extensibility\ExtensionBase.cs" />
     <Compile Include="Extensibility\IExtension.cs" />
+    <Compile Include="Extensions\JsonObjectExtensions.cs" />
     <Compile Include="Extensions\XmlTextWriterExtensions.cs" />
     <Compile Include="IO\IPathMapperService.cs" />
     <Compile Include="IO\PathMapperService.cs" />

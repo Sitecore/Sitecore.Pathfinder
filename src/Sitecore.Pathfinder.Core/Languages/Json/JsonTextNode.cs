@@ -11,21 +11,20 @@ namespace Sitecore.Pathfinder.Languages.Json
 {
     public class JsonTextNode : TextNode, IMutableTextNode
     {
-        [NotNull]
-        [ItemCanBeNull]
+        [NotNull, ItemCanBeNull]
         private JToken _jtoken;
 
-        public JsonTextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull] [ItemCanBeNull] JObject jobject) : base(snapshot, key, string.Empty, GetTextSpan(jobject))
+        public JsonTextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull, ItemCanBeNull]  JObject jobject) : base(snapshot, key, string.Empty, GetTextSpan(jobject))
         {
             _jtoken = jobject;
         }
 
-        public JsonTextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull] [ItemCanBeNull] JArray jarray) : base(snapshot, key, string.Empty, GetTextSpan(jarray))
+        public JsonTextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull, ItemCanBeNull]  JArray jarray) : base(snapshot, key, string.Empty, GetTextSpan(jarray))
         {
             _jtoken = jarray;
         }
 
-        public JsonTextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull] [ItemCanBeNull] JProperty jproperty) : base(snapshot, key, jproperty.Value?.ToString() ?? string.Empty, GetTextSpan(jproperty))
+        public JsonTextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull, ItemCanBeNull]  JProperty jproperty) : base(snapshot, key, jproperty.Value?.ToString() ?? string.Empty, GetTextSpan(jproperty))
         {
             _jtoken = jproperty;
         }
@@ -33,15 +32,15 @@ namespace Sitecore.Pathfinder.Languages.Json
         IList<ITextNode> IMutableTextNode.AttributeList => (IList<ITextNode>)Attributes;
 
         IList<ITextNode> IMutableTextNode.ChildNodeCollection => (IList<ITextNode>)ChildNodes;
-        
-        public override ITextNode GetSnapshotLanguageSpecificChildNode(string name)
-        {
-            return ChildNodes.FirstOrDefault(n => n.Key == name);
-        }
 
         public override ITextNode GetInnerTextNode()
         {
             return new JsonInnerTextNode(this, _jtoken);
+        }
+
+        public override ITextNode GetSnapshotLanguageSpecificChildNode(string name)
+        {
+            return ChildNodes.FirstOrDefault(n => n.Key == name);
         }
 
         private static TextSpan GetTextSpan([NotNull] IJsonLineInfo lineInfo)

@@ -1,13 +1,12 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using Sitecore.Data;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Pathfinder.Languages;
 
-namespace Sitecore.Pathfinder.WebApi.ImportWebsites
+namespace Sitecore.Pathfinder.Importing
 {
-    public abstract class FieldValueConverterBase : IFieldValueConverter
+    public abstract class FieldValueImporterBase : IFieldValueImporter
     {
         public abstract bool CanConvert(Field field, Item item, ILanguage language, string value);
 

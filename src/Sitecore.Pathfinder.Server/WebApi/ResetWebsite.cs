@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Sitecore.Configuration;
 using Sitecore.Data.Items;
 using Sitecore.IO;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.IO.PathMappers;
 
@@ -28,23 +29,15 @@ namespace Sitecore.Pathfinder.WebApi
                 DeleteFiles(app.ProjectDirectory, mapper);
             }
 
-            /*
+            var fileSystem = app.CompositionService.Resolve<IFileSystemService>();
+
             foreach (var pair in app.Configuration.GetSubKeys("reset-website"))
             {
-                if (pair.Key == "website")
-                {
-                    DeleteFiles(app.Configuration, "website", FileUtil.MapPath("/"));
-                }
-                else if (pair.Key == "data")
-                {
-                    DeleteFiles(app.Configuration, "data", FileUtil.MapPath(Settings.DataFolder));
-                }
-                else
-                {
-                    DeleteItems(app.Configuration, pair.Key);
-                }
+                var key = "reset-website:" + pair.Key;
+
+                ResetItems(app, key);
+                ResetFiles(app, fileSystem, key);
             }
-            */
 
             return null;
         }
@@ -189,6 +182,51 @@ namespace Sitecore.Pathfinder.WebApi
             {
                 DeleteItems(mapper, child);
             }
+        }
+
+        private void ResetFiles([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] IFileSystemService fileSystem, [Diagnostics.NotNull] string key)
+        {
+            var filePath = app.Configuration.GetString(key + ":delete-file-name");
+            if (string.IsNullOrEmpty(filePath))
+            {
+                return;
+            }
+
+            var fileName = FileUtil.MapPath(PathHelper.NormalizeItemPath(filePath).Trim('/'));
+
+            if (fileSystem.FileExists(fileName))
+            {
+                fileSystem.DeleteFile(fileName);
+            }
+
+            if (fileSystem.DirectoryExists(fileName))
+            {
+                fileSystem.DeleteDirectory(fileName);
+            }
+        }
+
+        private void ResetItems([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] string key)
+        {
+            var itemPath = app.Configuration.GetString(key + ":delete-item-path");
+            if (string.IsNullOrEmpty(itemPath))
+            {
+                return;
+            }
+
+            var databaseName = app.Configuration.GetString(key + ":database", "master");
+            if (string.IsNullOrEmpty(databaseName))
+            {
+                return;
+            }
+
+            var database = Factory.GetDatabase(databaseName);
+            var item = database.GetItem(itemPath);
+            if (item == null)
+            {
+                return;
+            }
+
+            item.Recycle();
         }
     }
 }

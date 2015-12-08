@@ -1,6 +1,7 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.IO.PathMappers
@@ -79,7 +80,7 @@ namespace Sitecore.Pathfinder.IO.PathMappers
         [CanBeNull]
         protected PathMatcher TemplateNamePathMatcher { get; }
 
-        public bool TryGetProjectFileName([NotNull] string itemPath, [NotNull] string templateName, [CanBeNull] out string projectFileName, [NotNull] out string format)
+        public bool TryGetProjectFileName([NotNull] string itemPath, [NotNull] string templateName, [NotNull] out string projectFileName, [NotNull] out string format)
         {
             projectFileName = string.Empty;
             format = string.Empty;

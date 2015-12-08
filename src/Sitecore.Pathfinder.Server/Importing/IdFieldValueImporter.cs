@@ -5,9 +5,9 @@ using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Pathfinder.Languages;
 
-namespace Sitecore.Pathfinder.WebApi.ImportWebsites
+namespace Sitecore.Pathfinder.Importing
 {
-    public class IdFieldValueConverter : FieldValueConverterBase
+    public class IdFieldValueImporter : FieldValueImporterBase
     {
         public override bool CanConvert(Field field, Item item, ILanguage language, string value)
         {

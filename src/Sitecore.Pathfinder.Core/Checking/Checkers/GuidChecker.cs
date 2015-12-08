@@ -38,6 +38,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                         continue;
                     }
 
+                    // todo: not good
                     if (item1 is Item && item2 is Template)
                     {
                         continue;
@@ -48,7 +49,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                         continue;
                     }
 
-                    context.Trace.TraceError(Msg.C1001, Texts.Unique_ID_clash, projectItem1.QualifiedName);
+                    context.Trace.TraceError(Msg.C1001, Texts.Unique_ID_clash, projectItem1.Snapshots.First().SourceFile, projectItem2.Snapshots.First().SourceFile.AbsoluteFileName);
                     context.IsDeployable = false;
                 }
             }

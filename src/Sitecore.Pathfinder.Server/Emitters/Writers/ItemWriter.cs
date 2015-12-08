@@ -83,6 +83,10 @@ namespace Sitecore.Pathfinder.Emitters.Writers
         protected virtual Item CreateNewItem([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] Database database, [Diagnostics.NotNull] Item templateItem)
         {
             var parentItemPath = PathHelper.GetItemParentPath(ItemIdOrPath);
+            if (string.IsNullOrEmpty(parentItemPath))
+            {
+                throw new EmitException("Parent not found", Snapshot, ItemIdOrPath);
+            }
 
             var parentItem = database.CreateItemPath(parentItemPath);
             if (parentItem == null)

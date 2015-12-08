@@ -84,7 +84,7 @@
     },
 
     "import-website": {
-        "exclude-fields": "__Created, __Created by, __Owner, __Revision, __Updated, __Updated by, Blob"
+        "excluded-fields": "__Created, __Created by, __Owner, __Revision, __Updated, __Updated by, Blob"
     },
 
     "generate-code": {

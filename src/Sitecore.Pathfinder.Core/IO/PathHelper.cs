@@ -211,6 +211,11 @@ namespace Sitecore.Pathfinder.IO
             fileName = NormalizeFilePath(fileName);
             sourceDirectory = NormalizeFilePath(sourceDirectory).TrimEnd('\\');
 
+            if (string.Equals(fileName, sourceDirectory, StringComparison.OrdinalIgnoreCase))
+            {
+                return destinationDirectory;
+            }
+
             if (!fileName.StartsWith(sourceDirectory + "\\", StringComparison.OrdinalIgnoreCase))
             {
                 return fileName;

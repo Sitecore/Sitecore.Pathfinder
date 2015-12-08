@@ -18,9 +18,9 @@ using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Languages;
 using Sitecore.Pathfinder.Text;
 
-namespace Sitecore.Pathfinder.WebApi.ImportWebsites
+namespace Sitecore.Pathfinder.Importing
 {
-    public class LayoutFieldValueConverter : FieldValueConverterBase
+    public class LayoutFieldValueImporter : FieldValueImporterBase
     {
         [Diagnostics.NotNull]
         private static readonly Regex SafeName = new Regex("^[a-zA-Z0-9_\\-\\.]+$", RegexOptions.Compiled);

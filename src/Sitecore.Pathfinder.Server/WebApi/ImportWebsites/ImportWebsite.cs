@@ -12,12 +12,13 @@ using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Importing;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.IO.PathMappers;
 using Sitecore.Pathfinder.Languages;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
-using Sitecore.SecurityModel;
 
 namespace Sitecore.Pathfinder.WebApi.ImportWebsites
 {
@@ -27,7 +28,7 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
         protected IFactoryService Factory { get; private set; }
 
         [ImportMany, Diagnostics.NotNull, ItemNotNull]
-        protected IEnumerable<IFieldValueConverter> FieldValueConverters { get; set; }
+        protected IEnumerable<IFieldValueImporter> FieldValueImporters { get; set; }
 
         [Diagnostics.NotNull]
         protected IFileSystemService FileSystem { get; private set; }
@@ -36,7 +37,7 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
         protected ILanguageService LanguageService { get; set; }
 
         [Diagnostics.NotNull]
-        protected ITraceService Trace { get; private set; }
+        protected IPathMapperService PathMapper { get; private set; }
 
         [Diagnostics.NotNull]
         protected string WebsiteDirectory { get; private set; }
@@ -45,34 +46,24 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
         {
             WebsiteDirectory = FileUtil.MapPath("/");
             FileSystem = app.CompositionService.Resolve<IFileSystemService>();
-            Trace = app.CompositionService.Resolve<ITraceService>();
             Factory = app.CompositionService.Resolve<IFactoryService>();
+            PathMapper = app.CompositionService.Resolve<IPathMapperService>();
 
-            foreach (var pair in app.Configuration.GetSubKeys("import-website"))
+            foreach (var mapper in PathMapper.WebsiteItemPathToProjectFileNames)
             {
-                var key = "import-website:" + pair.Key;
+                ImportItems(app, mapper);
+            }
 
-                var databaseName = app.Configuration.GetString(key + ":database");
-                if (key == "import-website:exclude-fields")
-                {
-                    continue;
-                }
-
-                if (!string.IsNullOrEmpty(databaseName))
-                {
-                    ImportItems(app, key);
-                }
-                else
-                {
-                    ImportFiles(app, key);
-                }
+            foreach (var mapper in PathMapper.WebsiteFileNameToProjectFileNames)
+            {
+                ImportFiles(app, mapper);
             }
 
             return null;
         }
 
         [Diagnostics.NotNull]
-        protected virtual Projects.Items.Item BuildItem([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Data.Items.Item item, [Diagnostics.NotNull, ItemNotNull]  IEnumerable<string> excludedFields, [Diagnostics.NotNull] ILanguage language)
+        protected virtual Projects.Items.Item BuildItem([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Data.Items.Item item, [Diagnostics.NotNull, ItemNotNull] IEnumerable<string> excludedFields, [Diagnostics.NotNull] ILanguage language)
         {
             var itemBuilder = new ItemBuilder(Factory)
             {
@@ -91,7 +82,7 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
             // shared fields
             foreach (var field in sharedFields.OrderBy(f => f.Name))
             {
-                var value = ConvertFieldValue(field, item, language);
+                var value = ImportFieldValue(field, item, language);
                 var fieldBuilder = new FieldBuilder(Factory)
                 {
                     FieldName = field.Name,
@@ -104,7 +95,7 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
             // unversioned fields
             foreach (var field in unversionedFields.OrderBy(f => f.Name))
             {
-                var value = ConvertFieldValue(field, item, language);
+                var value = ImportFieldValue(field, item, language);
                 var fieldBuilder = new FieldBuilder(Factory)
                 {
                     FieldName = field.Name,
@@ -118,7 +109,7 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
             // versioned fields
             foreach (var field in versionedFields.OrderBy(f => f.Name))
             {
-                var value = ConvertFieldValue(field, item, language);
+                var value = ImportFieldValue(field, item, language);
                 var fieldBuilder = new FieldBuilder(Factory)
                 {
                     FieldName = field.Name,
@@ -175,100 +166,80 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
         }
 
         [Diagnostics.NotNull]
-        protected virtual string ConvertFieldValue([Diagnostics.NotNull] Data.Fields.Field field, [Diagnostics.NotNull] Data.Items.Item item, [Diagnostics.NotNull] ILanguage language)
+        protected virtual string ImportFieldValue([Diagnostics.NotNull] Data.Fields.Field field, [Diagnostics.NotNull] Data.Items.Item item, [Diagnostics.NotNull] ILanguage language)
         {
             var value = field.Value;
 
-            foreach (var fieldValueConverter in FieldValueConverters)
+            foreach (var fieldValueImporter in FieldValueImporters)
             {
-                if (fieldValueConverter.CanConvert(field, item, language, value))
+                if (fieldValueImporter.CanConvert(field, item, language, value))
                 {
-                    value = fieldValueConverter.Convert(field, item, language, value);
+                    value = fieldValueImporter.Convert(field, item, language, value);
                 }
             }
 
             return value;
         }
 
-        protected virtual void ImportFiles([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] string key)
+        protected virtual void ImportFiles([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] WebsiteFileNameToProjectFileNameMapper mapper)
         {
-            var map = app.Configuration.GetString(key + ":map-website-directory-to-project-directory");
-            var n = map.IndexOf("=>", StringComparison.OrdinalIgnoreCase);
-            if (n < 0)
-            {
-                throw new ConfigurationException(Texts.ConfigurationSsettingMapWebsiteDirectoryToProjectDirectoryIsInvalid);
-            }
-
-            var sourceDirectory = PathHelper.NormalizeFilePath(Path.Combine(WebsiteDirectory, PathHelper.NormalizeFilePath(map.Left(n).Trim()).TrimStart('\\'))).TrimEnd('\\');
-            var projectDirectory = PathHelper.NormalizeFilePath(Path.Combine(app.ProjectDirectory, PathHelper.NormalizeFilePath(map.Mid(n + 2).Trim()).TrimStart('\\'))).TrimEnd('\\');
+            var sourceDirectory = PathHelper.NormalizeFilePath(Path.Combine(WebsiteDirectory, PathHelper.NormalizeFilePath(mapper.WebsiteDirectory).TrimStart('\\'))).TrimEnd('\\');
 
             if (!FileSystem.DirectoryExists(sourceDirectory))
             {
                 return;
             }
 
-            var searchPattern = app.Configuration.GetString(key + ":search-pattern", "*");
-            var include = app.Configuration.GetString(key + ":include");
-            var exclude = app.Configuration.GetString(key + ":exclude");
+            ImportFiles(app, mapper, FileUtil.MapPath("/"), FileUtil.MapPath(PathHelper.NormalizeItemPath(mapper.WebsiteDirectory)));
+        }
 
-            IEnumerable<string> fileNames;
+        protected virtual void ImportFiles([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] WebsiteFileNameToProjectFileNameMapper mapper, [Diagnostics.NotNull] string websiteDirectory, [Diagnostics.NotNull] string directoryOrFileName)
+        {
+            var websiteDirectoryOrFileName = '\\' + PathHelper.UnmapPath(websiteDirectory, directoryOrFileName);
 
-            var files = app.Configuration.GetList(key + ":files").ToList();
-            if (files.Any())
+            if (File.Exists(directoryOrFileName))
             {
-                fileNames = files.Select(f => Path.Combine(sourceDirectory, PathHelper.NormalizeFilePath(f).TrimStart('\\')));
-            }
-            else if (!string.IsNullOrEmpty(include) || !string.IsNullOrEmpty(exclude))
-            {
-                var pathMatcher = new PathMatcher(include, exclude);
-                fileNames = FileSystem.GetFiles(sourceDirectory, searchPattern, SearchOption.AllDirectories).Where(f => pathMatcher.IsMatch(f)).ToList();
-            }
-            else
-            {
-                fileNames = FileSystem.GetFiles(sourceDirectory, searchPattern, SearchOption.AllDirectories);
-            }
-
-            FileSystem.CreateDirectory(projectDirectory);
-            foreach (var fileName in fileNames)
-            {
-                if (!FileSystem.FileExists(fileName))
+                string projectFileName;
+                if (mapper.TryGetProjectFileName(websiteDirectoryOrFileName, out projectFileName))
                 {
-                    continue;
+                    FileSystem.Copy(directoryOrFileName, Path.Combine(app.ProjectDirectory, projectFileName));
                 }
 
-                var targetFileName = Path.Combine(projectDirectory, PathHelper.UnmapPath(sourceDirectory, fileName));
-                try
+                return;
+            }
+
+            if (Directory.Exists(directoryOrFileName))
+            {
+                string projectFileName;
+                if (mapper.TryGetProjectFileName(websiteDirectoryOrFileName, out projectFileName))
                 {
-                    FileSystem.Copy(fileName, targetFileName);
+                    FileSystem.XCopy(directoryOrFileName, Path.Combine(app.ProjectDirectory, projectFileName));
+                    return;
                 }
-                catch (Exception ex)
-                {
-                    Trace.TraceError(Msg.M1022, ex.Message, fileName);
-                }
+            }
+
+            if (!Directory.Exists(directoryOrFileName))
+            {
+                return;
+            }
+
+            foreach (var fileName in Directory.GetFiles(directoryOrFileName, "*", SearchOption.TopDirectoryOnly))
+            {
+                ImportFiles(app, mapper, websiteDirectory, fileName);
+            }
+
+            foreach (var directory in Directory.GetDirectories(directoryOrFileName, "*", SearchOption.TopDirectoryOnly))
+            {
+                ImportFiles(app, mapper, websiteDirectory, directory);
             }
         }
 
-        protected virtual void ImportItems([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] string key)
+        protected virtual void ImportItems([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] WebsiteItemPathToProjectFileNameMapper mapper)
         {
             var project = app.CompositionService.Resolve<IProject>();
 
-            var excludedFields = app.Configuration.GetList("import-website:exclude-fields");
-
-            var databaseName = app.Configuration.GetString(key + ":database");
-
-            var map = app.Configuration.GetString(key + ":map-item-path-to-file-path", "/ => /content/" + databaseName);
-            var n = map.IndexOf("=>", StringComparison.OrdinalIgnoreCase);
-            if (n < 0)
-            {
-                throw new ConfigurationException("Configuration setting 'map-item-path-to-file-path' is invalid. Are you missing a '=>'?");
-            }
-
-            var rootItemPath = PathHelper.NormalizeItemPath(map.Left(n)).Trim().TrimEnd('/');
-            var queryText = app.Configuration.GetString(key + ":query");
-            var useDirectories = app.Configuration.GetBool(key + ":use-directories", true);
-            var format = app.Configuration.GetString(key + ":format", "item.xml");
-            var projectDirectory = PathHelper.NormalizeFilePath(Path.Combine(app.ProjectDirectory, PathHelper.NormalizeFilePath(map.Mid(n + 2).Trim()).TrimStart('\\'))).TrimEnd('\\');
-
+            var databaseName = mapper.DatabaseName;
+            var format = mapper.Format;
             var language = LanguageService.GetLanguageByExtension(format);
             if (language == null)
             {
@@ -276,27 +247,30 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
             }
 
             var database = Sitecore.Configuration.Factory.GetDatabase(databaseName);
-            using (new SecurityDisabler())
+            var item = database.GetItem(mapper.ItemPath);
+            if (item == null)
             {
-                foreach (var item in database.Query(queryText))
+                return;
+            }
+
+            var excludedFields = app.Configuration.GetList("import-website:excluded-fields");
+
+            ImportItems(app, mapper, project, language, item, excludedFields);
+        }
+
+        protected virtual void ImportItems([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] WebsiteItemPathToProjectFileNameMapper mapper, [Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull][ItemNotNull] IEnumerable<string> excludedFields)
+        {
+            string projectFileName;
+            string format;
+            if (mapper.TryGetProjectFileName(item.Paths.Path, item.TemplateName, out projectFileName, out format))
+            {
+                // template sections and fields are handled by importing the template
+                if (item.TemplateID != TemplateIDs.TemplateSection && item.TemplateID != TemplateIDs.TemplateField)
                 {
-                    // template sections and fields are handled by importing the template
-                    if (item.TemplateID == TemplateIDs.TemplateSection || item.TemplateID == TemplateIDs.TemplateField)
-                    {
-                        continue;
-                    }
+                    var fileName = Path.Combine(app.ProjectDirectory, projectFileName);
 
-                    var fileName = item.Paths.Path;
-                    if (!fileName.StartsWith(rootItemPath))
-                    {
-                        Trace.TraceError(Texts.Item_is_not_in_root_item_path__Skipping_, fileName);
-                        return;
-                    }
+                    FileSystem.CreateDirectoryFromFileName(fileName);
 
-                    fileName = useDirectories ? fileName.Mid(rootItemPath.Length).TrimStart('/') : item.Name.GetSafeCodeIdentifier();
-                    fileName = Path.Combine(projectDirectory, PathHelper.NormalizeFilePath(fileName)) + "." + format;
-
-                    FileSystem.CreateDirectory(Path.GetDirectoryName(fileName) ?? string.Empty);
                     if (item.Template.ID == TemplateIDs.Template)
                     {
                         WriteTemplate(project, item, fileName, language);
@@ -307,9 +281,14 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
                     }
                 }
             }
+
+            foreach (Item child in item.Children)
+            {
+                ImportItems(app, mapper, project, language, child, excludedFields);
+            }
         }
 
-        protected virtual void WriteItem([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Data.Items.Item item, [Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull, ItemNotNull]  IEnumerable<string> excludedFields)
+        protected virtual void WriteItem([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Data.Items.Item item, [Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull, ItemNotNull] IEnumerable<string> excludedFields)
         {
             var itemToWrite = BuildItem(project, item, excludedFields, language);
             using (var stream = new StreamWriter(fileName))
