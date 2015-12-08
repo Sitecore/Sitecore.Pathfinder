@@ -1,6 +1,5 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
@@ -12,7 +11,7 @@ using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.Importing;
+using Sitecore.Pathfinder.Importing.ItemImporters;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.IO.PathMappers;
 using Sitecore.Pathfinder.Languages;
@@ -22,22 +21,33 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.WebApi.ImportWebsites
 {
+    [Export(nameof(ImportWebsite), typeof(IWebApi))]
     public class ImportWebsite : IWebApi
     {
-        [Diagnostics.NotNull]
-        protected IFactoryService Factory { get; private set; }
+        [ImportingConstructor]
+        public ImportWebsite([Diagnostics.NotNull] IFactoryService factory, [Diagnostics.NotNull] IFileSystemService fileSystem, [Diagnostics.NotNull] ILanguageService languageService, [Diagnostics.NotNull] IPathMapperService pathMapper, [Diagnostics.NotNull] IItemImporterService itemImporter)
+        {
+            Factory = factory;
+            FileSystem = fileSystem;
+            LanguageService = languageService;
+            PathMapper = pathMapper;
+            ItemImporter = itemImporter;
+        }
 
-        [ImportMany, Diagnostics.NotNull, ItemNotNull]
-        protected IEnumerable<IFieldValueImporter> FieldValueImporters { get; set; }
+        [Diagnostics.NotNull]
+        protected IFactoryService Factory { get; }
 
         [Diagnostics.NotNull]
-        protected IFileSystemService FileSystem { get; private set; }
+        protected IFileSystemService FileSystem { get; }
 
         [Import, Diagnostics.NotNull]
-        protected ILanguageService LanguageService { get; set; }
+        protected IItemImporterService ItemImporter { get; }
+
+        [Import, Diagnostics.NotNull]
+        protected ILanguageService LanguageService { get; }
 
         [Diagnostics.NotNull]
-        protected IPathMapperService PathMapper { get; private set; }
+        protected IPathMapperService PathMapper { get; }
 
         [Diagnostics.NotNull]
         protected string WebsiteDirectory { get; private set; }
@@ -45,9 +55,6 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
         public ActionResult Execute(IAppService app)
         {
             WebsiteDirectory = FileUtil.MapPath("/");
-            FileSystem = app.CompositionService.Resolve<IFileSystemService>();
-            Factory = app.CompositionService.Resolve<IFactoryService>();
-            PathMapper = app.CompositionService.Resolve<IPathMapperService>();
 
             foreach (var mapper in PathMapper.WebsiteItemPathToProjectFileNames)
             {
@@ -63,69 +70,7 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
         }
 
         [Diagnostics.NotNull]
-        protected virtual Projects.Items.Item BuildItem([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Data.Items.Item item, [Diagnostics.NotNull, ItemNotNull] IEnumerable<string> excludedFields, [Diagnostics.NotNull] ILanguage language)
-        {
-            var itemBuilder = new ItemBuilder(Factory)
-            {
-                DatabaseName = item.Database.Name,
-                Guid = item.ID.ToString(),
-                ItemName = item.Name,
-                TemplateIdOrPath = item.Template.InnerItem.Paths.Path,
-                ItemIdOrPath = item.Paths.Path
-            };
-
-            var versions = item.Versions.GetVersions(true);
-            var sharedFields = item.Fields.Where(f => f.Shared && !excludedFields.Contains(f.Name, StringComparer.OrdinalIgnoreCase) && !f.ContainsStandardValue && !string.IsNullOrEmpty(f.Value)).ToList();
-            var unversionedFields = versions.SelectMany(i => i.Fields.Where(f => !f.Shared && f.Unversioned && !excludedFields.Contains(f.Name, StringComparer.OrdinalIgnoreCase) && !f.ContainsStandardValue && !string.IsNullOrEmpty(f.Value))).ToList();
-            var versionedFields = versions.SelectMany(i => i.Fields.Where(f => !f.Shared && !f.Unversioned && !excludedFields.Contains(f.Name, StringComparer.OrdinalIgnoreCase) && !f.ContainsStandardValue && !string.IsNullOrEmpty(f.Value))).ToList();
-
-            // shared fields
-            foreach (var field in sharedFields.OrderBy(f => f.Name))
-            {
-                var value = ImportFieldValue(field, item, language);
-                var fieldBuilder = new FieldBuilder(Factory)
-                {
-                    FieldName = field.Name,
-                    Value = value
-                };
-
-                itemBuilder.Fields.Add(fieldBuilder);
-            }
-
-            // unversioned fields
-            foreach (var field in unversionedFields.OrderBy(f => f.Name))
-            {
-                var value = ImportFieldValue(field, item, language);
-                var fieldBuilder = new FieldBuilder(Factory)
-                {
-                    FieldName = field.Name,
-                    Value = value,
-                    Language = field.Language.Name
-                };
-
-                itemBuilder.Fields.Add(fieldBuilder);
-            }
-
-            // versioned fields
-            foreach (var field in versionedFields.OrderBy(f => f.Name))
-            {
-                var value = ImportFieldValue(field, item, language);
-                var fieldBuilder = new FieldBuilder(Factory)
-                {
-                    FieldName = field.Name,
-                    Value = value,
-                    Language = field.Language.Name,
-                    Version = field.Item.Version.Number
-                };
-
-                itemBuilder.Fields.Add(fieldBuilder);
-            }
-
-            return itemBuilder.Build(project, TextNode.Empty);
-        }
-
-        [Diagnostics.NotNull]
-        protected virtual Template BuildTemplate([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Data.Items.Item item)
+        protected virtual Template BuildTemplate([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Item item)
         {
             var templateItem = new TemplateItem(item);
 
@@ -163,22 +108,6 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
             }
 
             return templateBuilder.Build(project, TextNode.Empty);
-        }
-
-        [Diagnostics.NotNull]
-        protected virtual string ImportFieldValue([Diagnostics.NotNull] Data.Fields.Field field, [Diagnostics.NotNull] Data.Items.Item item, [Diagnostics.NotNull] ILanguage language)
-        {
-            var value = field.Value;
-
-            foreach (var fieldValueImporter in FieldValueImporters)
-            {
-                if (fieldValueImporter.CanConvert(field, item, language, value))
-                {
-                    value = fieldValueImporter.Convert(field, item, language, value);
-                }
-            }
-
-            return value;
         }
 
         protected virtual void ImportFiles([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] WebsiteFileNameToProjectFileNameMapper mapper)
@@ -253,12 +182,12 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
                 return;
             }
 
-            var excludedFields = app.Configuration.GetList("import-website:excluded-fields");
+            var excludedFields = app.Configuration.GetCommaSeparatedStringList(Constants.Configuration.ProjectWebsiteMappingsExcludedFields);
 
             ImportItems(app, mapper, project, language, item, excludedFields);
         }
 
-        protected virtual void ImportItems([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] WebsiteItemPathToProjectFileNameMapper mapper, [Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull][ItemNotNull] IEnumerable<string> excludedFields)
+        protected virtual void ImportItems([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] WebsiteItemPathToProjectFileNameMapper mapper, [Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull, ItemNotNull] IEnumerable<string> excludedFields)
         {
             string projectFileName;
             string format;
@@ -288,9 +217,10 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
             }
         }
 
-        protected virtual void WriteItem([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Data.Items.Item item, [Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull, ItemNotNull] IEnumerable<string> excludedFields)
+        protected virtual void WriteItem([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull, ItemNotNull] IEnumerable<string> excludedFields)
         {
-            var itemToWrite = BuildItem(project, item, excludedFields, language);
+            var itemToWrite = ItemImporter.ImportItem(project, item, language, excludedFields);
+
             using (var stream = new StreamWriter(fileName))
             {
                 language.WriteItem(stream, itemToWrite);
@@ -309,7 +239,7 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
             }
         }
 
-        protected virtual void WriteTemplate([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Data.Items.Item item, [Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] ILanguage language)
+        protected virtual void WriteTemplate([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] ILanguage language)
         {
             var template = BuildTemplate(project, item);
             using (var stream = new StreamWriter(fileName))

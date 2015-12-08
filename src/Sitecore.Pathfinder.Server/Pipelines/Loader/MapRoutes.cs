@@ -6,7 +6,6 @@ using Sitecore.Pipelines;
 
 namespace Sitecore.Pathfinder.Pipelines.Loader
 {
-    /// <summary>The precompile speak views.</summary>
     public class MapRoutes
     {
         public void Process([NotNull] PipelineArgs args)

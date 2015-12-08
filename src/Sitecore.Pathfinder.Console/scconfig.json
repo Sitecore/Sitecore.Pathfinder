@@ -11,6 +11,8 @@
 
     // mapping between project files and website files and items
     "project-website-mappings": {
+        "excluded-fields": "__Created, __Created by, __Owner, __Revision, __Updated, __Updated by, Blob",
+
         "project-to-website": {
         },
 
@@ -81,10 +83,6 @@
         "check-bin-file-version": false,
         "install-url": "/sitecore/shell/client/Applications/Pathfinder/InstallPackage",
         "uninstall-directory": "../.uninstall"
-    },
-
-    "import-website": {
-        "excluded-fields": "__Created, __Created by, __Owner, __Revision, __Updated, __Updated by, Blob"
     },
 
     "generate-code": {

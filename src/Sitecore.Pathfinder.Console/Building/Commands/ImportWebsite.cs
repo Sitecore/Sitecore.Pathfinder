@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Building.Commands
         {
             context.Trace.TraceInformation(Msg.G1012, Texts.Importing_website___);
 
-            var url = MakeWebApiUrl(context, "ImportWebsites.ImportWebsite");
+            var url = MakeWebApiUrl(context, "ImportWebsite");
 
             Request(context, url);
         }

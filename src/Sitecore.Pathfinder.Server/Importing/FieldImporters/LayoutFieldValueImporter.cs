@@ -25,12 +25,12 @@ namespace Sitecore.Pathfinder.Importing
         [Diagnostics.NotNull]
         private static readonly Regex SafeName = new Regex("^[a-zA-Z0-9_\\-\\.]+$", RegexOptions.Compiled);
 
-        public override bool CanConvert(Field field, Item item, ILanguage language, string value)
+        public override bool CanImport(Field field, Item item, ILanguage language, string value)
         {
             return field.Name == "__Renderings" || string.Equals(field.Type, "Layout", StringComparison.OrdinalIgnoreCase);
         }
 
-        public override string Convert(Field field, Item item, ILanguage language, string value)
+        public override string Import(Field field, Item item, ILanguage language, string value)
         {
             var layoutBuilder = new LayoutBuilder();
 

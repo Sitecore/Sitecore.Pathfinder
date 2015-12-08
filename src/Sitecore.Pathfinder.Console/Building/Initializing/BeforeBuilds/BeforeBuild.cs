@@ -110,9 +110,9 @@ namespace Sitecore.Pathfinder.Building.Initializing.BeforeBuilds
             else
             {
                 updated |= UpdateWebsiteFiles(context, sourceDirectory, context.WebsiteDirectory);
-                updated |= UpdateWebsiteAssembly(context, "Sitecore.Pathfinder.Core.dll");
             }
 
+            updated |= UpdateWebsiteAssembly(context, "Sitecore.Pathfinder.Core.dll");
             updated |= UpdateWebsiteAssembly(context, "Microsoft.CodeAnalysis.dll");
             updated |= UpdateWebsiteAssembly(context, "Microsoft.CodeAnalysis.CSharp.dll");
             updated |= UpdateWebsiteAssembly(context, "Microsoft.CSharp.dll");

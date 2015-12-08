@@ -9,12 +9,12 @@ namespace Sitecore.Pathfinder.Importing
 {
     public class IdFieldValueImporter : FieldValueImporterBase
     {
-        public override bool CanConvert(Field field, Item item, ILanguage language, string value)
+        public override bool CanImport(Field field, Item item, ILanguage language, string value)
         {
             return ID.IsID(value);
         }
 
-        public override string Convert(Field field, Item item, ILanguage language, string value)
+        public override string Import(Field field, Item item, ILanguage language, string value)
         {
             var i = item.Database.GetItem(value);
             if (i != null)

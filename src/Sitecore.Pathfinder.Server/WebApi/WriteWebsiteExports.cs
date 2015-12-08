@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,7 @@ using Sitecore.Zip;
 
 namespace Sitecore.Pathfinder.WebApi
 {
+    [Export(nameof(WriteWebsiteExports), typeof(IWebApi))]
     public class WriteWebsiteExports : IWebApi
     {
         public ActionResult Execute(IAppService app)

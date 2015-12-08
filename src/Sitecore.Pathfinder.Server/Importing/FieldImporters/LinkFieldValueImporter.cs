@@ -9,12 +9,12 @@ namespace Sitecore.Pathfinder.Importing
 {
     public class LinkFieldValueImporter : FieldValueImporterBase
     {
-        public override bool CanConvert(Field field, Item item, ILanguage language, string value)
+        public override bool CanImport(Field field, Item item, ILanguage language, string value)
         {
             return string.Equals(field.Type, "link", StringComparison.OrdinalIgnoreCase) || string.Equals(field.Type, "general link", StringComparison.OrdinalIgnoreCase);
         }
 
-        public override string Convert(Field field, Item item, ILanguage language, string value)
+        public override string Import(Field field, Item item, ILanguage language, string value)
         {
             var linkField = new LinkField(field);
             return linkField.TargetItem?.Paths.Path ?? value;

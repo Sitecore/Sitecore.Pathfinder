@@ -8,8 +8,8 @@ namespace Sitecore.Pathfinder.Importing
 {
     public abstract class FieldValueImporterBase : IFieldValueImporter
     {
-        public abstract bool CanConvert(Field field, Item item, ILanguage language, string value);
+        public abstract bool CanImport(Field field, Item item, ILanguage language, string value);
 
-        public abstract string Convert(Field field, Item item, ILanguage language, string value);
+        public abstract string Import(Field field, Item item, ILanguage language, string value);
     }
 }

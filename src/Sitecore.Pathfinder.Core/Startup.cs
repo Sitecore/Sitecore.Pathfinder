@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility;
@@ -19,8 +20,7 @@ namespace Sitecore.Pathfinder
             ProjectDirectory = Directory.GetCurrentDirectory();
         }
 
-        [CanBeNull]
-        [ItemNotNull]
+        [CanBeNull, ItemNotNull]
         public IEnumerable<string> AssemblyFileNames { get; private set; }
 
         public Extensibility.StartupExtensions.CompositionOptions CompositionOptions { get; private set; } = Extensibility.StartupExtensions.CompositionOptions.None;
@@ -55,15 +55,32 @@ namespace Sitecore.Pathfinder
         }
 
         [CanBeNull]
+        public IConfiguration RegisterConfiguration()
+        {
+            return this.RegisterConfiguration(ToolsDirectory, ProjectDirectory, ConfigurationOptions);
+        }
+
+        [NotNull]
+        private static readonly Dictionary<string, IAppService> AppServiceCache = new Dictionary<string, IAppService>();
+
+        [CanBeNull]
         public IAppService Start()
         {
+            var assemblyFileNames = AssemblyFileNames ?? Enumerable.Empty<string>();
+
+            var cacheKey = ToolsDirectory.ToLowerInvariant() + ProjectDirectory.ToLowerInvariant() + ConfigurationOptions + string.Join(",", assemblyFileNames);
+
+            IAppService app;
+            if (AppServiceCache.TryGetValue(cacheKey, out app))
+            {
+                return app;
+            }
+
             var configuration = this.RegisterConfiguration(ToolsDirectory, ProjectDirectory, ConfigurationOptions);
             if (configuration == null)
             {
                 return null;
             }
-
-            var assemblyFileNames = AssemblyFileNames ?? Enumerable.Empty<string>();
 
             var compositionService = this.RegisterCompositionService(configuration, ProjectDirectory, Assembly.GetCallingAssembly(), assemblyFileNames, CompositionOptions);
             if (compositionService == null)
@@ -71,13 +88,35 @@ namespace Sitecore.Pathfinder
                 return null;
             }
 
-            return new AppService(configuration, compositionService, ToolsDirectory, ProjectDirectory);
+            app = new AppService(configuration, compositionService, ToolsDirectory, ProjectDirectory);
+            AppServiceCache[cacheKey] = app;
+            return app;
         }
 
         [NotNull]
-        public virtual Startup WithAssemblies([NotNull] [ItemNotNull] IEnumerable<string> assemblyFileNames)
+        public virtual Startup WithAssemblies([NotNull, ItemNotNull]  IEnumerable<string> assemblyFileNames)
         {
             AssemblyFileNames = assemblyFileNames;
+            return this;
+        }
+
+        [NotNull]
+        public Startup WithExtensionsDirectory([NotNull] string directory)
+        {
+            var assemblyFileNames = Directory.Exists(directory) ? Directory.GetFiles(directory, "Sitecore.Pathfinder.*.dll") : Enumerable.Empty<string>();
+
+            // remove Sitecore.Pathfinder.Core and Sitecore.Pathfinder.Server assemblies
+            assemblyFileNames = assemblyFileNames.Where(a => !string.Equals(Path.GetFileName(a), "Sitecore.Pathfinder.Core.dll", StringComparison.OrdinalIgnoreCase) && !string.Equals(Path.GetFileName(a), "Sitecore.Pathfinder.Server.dll", StringComparison.OrdinalIgnoreCase)).ToList();
+
+            if (AssemblyFileNames == null)
+            {
+                AssemblyFileNames = assemblyFileNames;
+            }
+            else
+            {
+                AssemblyFileNames = AssemblyFileNames.Concat(assemblyFileNames).Distinct().ToList();
+            }
+
             return this;
         }
 
@@ -99,26 +138,6 @@ namespace Sitecore.Pathfinder
         public virtual Startup WithWebsiteAssemblyResolver()
         {
             CompositionOptions |= Extensibility.StartupExtensions.CompositionOptions.AddWebsiteAssemblyResolver;
-            return this;
-        }
-
-        [NotNull]
-        public Startup WithExtensionsDirectory([NotNull] string directory)
-        {
-            var assemblyFileNames = Directory.Exists(directory) ? Directory.GetFiles(directory, "Sitecore.Pathfinder.*.dll") : Enumerable.Empty<string>();
-
-            // remove Sitecore.Pathfinder.Core and Sitecore.Pathfinder.Server assemblies
-            assemblyFileNames = assemblyFileNames.Where(a => !string.Equals(Path.GetFileName(a), "Sitecore.Pathfinder.Core.dll", StringComparison.OrdinalIgnoreCase) && !string.Equals(Path.GetFileName(a), "Sitecore.Pathfinder.Server.dll", StringComparison.OrdinalIgnoreCase)).ToList();
-
-            if (AssemblyFileNames == null)
-            {
-                AssemblyFileNames = assemblyFileNames;
-            }
-            else
-            {
-                AssemblyFileNames = AssemblyFileNames.Concat(assemblyFileNames).Distinct().ToList();
-            }
-
             return this;
         }
     }

@@ -12,6 +12,7 @@ using Sitecore.Pathfinder.IO.PathMappers;
 
 namespace Sitecore.Pathfinder.WebApi
 {
+    [Export(nameof(ResetWebsite), typeof(IWebApi))]
     public class ResetWebsite : IWebApi
     {
         [Diagnostics.NotNull, Import]

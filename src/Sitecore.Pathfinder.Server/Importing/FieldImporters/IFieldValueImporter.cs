@@ -10,9 +10,9 @@ namespace Sitecore.Pathfinder.Importing
     [InheritedExport]
     public interface IFieldValueImporter
     {
-        bool CanConvert([Diagnostics.NotNull] Field field, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull] string value);
+        bool CanImport([Diagnostics.NotNull] Field field, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull] string value);
 
         [Diagnostics.NotNull]
-        string Convert([Diagnostics.NotNull] Field field, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull] string value);
+        string Import([Diagnostics.NotNull] Field field, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull] string value);
     }
 }
