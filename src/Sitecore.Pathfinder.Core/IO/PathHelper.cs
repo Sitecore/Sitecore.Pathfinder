@@ -118,7 +118,7 @@ namespace Sitecore.Pathfinder.IO
             }
 
             var e1 = fileName.IndexOf('.', s);
-            return e1 < 0 ? string.Empty : fileName.Mid(e1);
+            return e1 >= 0 ? fileName.Mid(e1) : string.Empty;
         }
 
         [NotNull]
@@ -133,22 +133,6 @@ namespace Sitecore.Pathfinder.IO
 
             var e1 = fileName.IndexOf('.', s);
             return e1 < 0 ? fileName.Mid(s + 1) : fileName.Mid(s + 1, e1 - s - 1);
-        }
-
-        [NotNull]
-        public static string GetFilePath([NotNull] IProject project, [NotNull] ISourceFile sourceFile, [NotNull] string localFileDirectory, [NotNull] string serverFileDirectory)
-        {
-            var filePath = "/" + NormalizeItemPath(UnmapPath(project.Options.ProjectDirectory, sourceFile.AbsoluteFileName)).TrimStart('/');
-
-            localFileDirectory = "/" + NormalizeItemPath(localFileDirectory).Trim('/');
-            serverFileDirectory = "/" + NormalizeItemPath(serverFileDirectory).Trim('/');
-
-            if (filePath.StartsWith(localFileDirectory, StringComparison.OrdinalIgnoreCase))
-            {
-                filePath = serverFileDirectory.TrimEnd('/') + "/" + filePath.Mid(localFileDirectory.Length).TrimStart('/');
-            }
-
-            return "~" + filePath;
         }
 
         [NotNull]
@@ -199,11 +183,6 @@ namespace Sitecore.Pathfinder.IO
             return result;
         }
 
-        public static bool IsQualifiedName([NotNull] string name)
-        {
-            return name.IndexOf('/') >= 0;
-        }
-
         public static bool MatchesPattern([NotNull] string fileName, [NotNull] string pattern)
         {
             var s = Path.GetFileName(fileName);
@@ -225,6 +204,7 @@ namespace Sitecore.Pathfinder.IO
             return filePath.Replace("\\", "/").TrimEnd('/');
         }
 
+        /// <summary> Replaces the beginning of a file name with the specified destination directory. End slashes are removed.</summary>
         [NotNull]
         public static string RemapDirectory([NotNull] string fileName, [NotNull] string sourceDirectory, [NotNull] string destinationDirectory)
         {

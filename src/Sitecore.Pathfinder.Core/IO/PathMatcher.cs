@@ -16,12 +16,10 @@ namespace Sitecore.Pathfinder.IO
             Excludes = exclude.Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(GetRegex).ToList();
         }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         protected List<Regex> Excludes { get; }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         protected List<Regex> Includes { get; }
 
         public bool IsMatch([NotNull] string fileName)
@@ -34,6 +32,7 @@ namespace Sitecore.Pathfinder.IO
         [NotNull]
         protected Regex GetRegex([NotNull] string wildcard)
         {
+            // todo: consider caching this
             var pattern = '^' + Regex.Escape(wildcard).Replace("/", @"\\").Replace(@"\*\*\\", ".*").Replace(@"\*\*", ".*").Replace(@"\*", @"[^\\]*(\\)?").Replace(@"\?", ".") + '$';
             var options = RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase;
 
