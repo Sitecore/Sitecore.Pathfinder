@@ -54,12 +54,6 @@ namespace Sitecore.Pathfinder
             return this;
         }
 
-        [CanBeNull]
-        public IConfiguration RegisterConfiguration()
-        {
-            return this.RegisterConfiguration(ToolsDirectory, ProjectDirectory, ConfigurationOptions);
-        }
-
         [NotNull]
         private static readonly Dictionary<string, IAppService> AppServiceCache = new Dictionary<string, IAppService>();
 

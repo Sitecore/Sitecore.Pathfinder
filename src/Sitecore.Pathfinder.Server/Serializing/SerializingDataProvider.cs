@@ -1,0 +1,84 @@
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+
+using Sitecore.Data;
+using Sitecore.Data.DataProviders;
+using Sitecore.Data.Items;
+using Sitecore.Data.Templates;
+using Sitecore.Globalization;
+
+namespace Sitecore.Pathfinder.Serializing
+{
+    public class SerializingDataProvider : DataProvider
+    {
+        public override int AddVersion([Diagnostics.NotNull] ItemDefinition itemDefinition, [Diagnostics.NotNull] VersionUri baseVersion, [Diagnostics.NotNull] CallContext context)
+        {
+            SerializeItem(itemDefinition.ID);
+            return base.AddVersion(itemDefinition, baseVersion, context);
+        }
+
+        public override bool ChangeTemplate([Diagnostics.NotNull] ItemDefinition itemDefinition, [Diagnostics.NotNull] TemplateChangeList changes, [Diagnostics.NotNull] CallContext context)
+        {
+            SerializeItem(itemDefinition.ID);
+            return base.ChangeTemplate(itemDefinition, changes, context);
+        }
+
+        public override bool CopyItem([Diagnostics.NotNull] ItemDefinition source, [Diagnostics.NotNull] ItemDefinition destination, [Diagnostics.NotNull] string copyName, [Diagnostics.NotNull] ID copyID, [Diagnostics.NotNull] CallContext context)
+        {
+            SerializeItem(copyID);
+            return base.CopyItem(source, destination, copyName, copyID, context);
+        }
+
+        public override bool CreateItem([Diagnostics.NotNull] ID itemID, [Diagnostics.NotNull] string itemName, [Diagnostics.NotNull] ID templateID, [Diagnostics.NotNull] ItemDefinition parent, [Diagnostics.NotNull] CallContext context)
+        {
+            SerializeItem(itemID);
+            return base.CreateItem(itemID, itemName, templateID, parent, context);
+        }
+
+        public override bool DeleteItem([Diagnostics.NotNull] ItemDefinition itemDefinition, [Diagnostics.NotNull] CallContext context)
+        {
+            RemoveItem(itemDefinition.ID);
+            return base.DeleteItem(itemDefinition, context);
+        }
+
+        public override bool MoveItem([Diagnostics.NotNull] ItemDefinition itemDefinition, [Diagnostics.NotNull] ItemDefinition destination, [Diagnostics.NotNull] CallContext context)
+        {
+            RemoveItem(itemDefinition.ID);
+            SerializeItem(itemDefinition.ID);
+            return base.MoveItem(itemDefinition, destination, context);
+        }
+
+        public override bool RemoveVersion([Diagnostics.NotNull] ItemDefinition itemDefinition, [Diagnostics.NotNull] VersionUri version, [Diagnostics.NotNull] CallContext context)
+        {
+            SerializeItem(itemDefinition.ID);
+            return base.RemoveVersion(itemDefinition, version, context);
+        }
+
+        public override bool RemoveVersions([Diagnostics.NotNull] ItemDefinition itemDefinition, [Diagnostics.NotNull] Language language, [Diagnostics.NotNull] CallContext context)
+        {
+            SerializeItem(itemDefinition.ID);
+            return base.RemoveVersions(itemDefinition, language, context);
+        }
+
+        public override bool RemoveVersions([Diagnostics.NotNull] ItemDefinition itemDefinition, [Diagnostics.NotNull] Language language, bool removeSharedData, [Diagnostics.NotNull] CallContext context)
+        {
+            SerializeItem(itemDefinition.ID);
+            return base.RemoveVersions(itemDefinition, language, removeSharedData, context);
+        }
+
+        public override bool SaveItem([Diagnostics.NotNull] ItemDefinition itemDefinition, [Diagnostics.NotNull] ItemChanges changes, [Diagnostics.NotNull] CallContext context)
+        {
+            SerializeItem(itemDefinition.ID);
+            return base.SaveItem(itemDefinition, changes, context);
+        }
+
+        protected virtual void SerializeItem([Diagnostics.NotNull] ID itemID)
+        {
+            SerializingDataProviderDispatcher.RaiseSerializeItem(Database.Name, itemID);
+        }
+
+        protected virtual void RemoveItem([Diagnostics.NotNull] ID itemID)
+        {
+            SerializingDataProviderDispatcher.RaiseRemoveItem(Database.Name, itemID);
+        }
+    }
+}

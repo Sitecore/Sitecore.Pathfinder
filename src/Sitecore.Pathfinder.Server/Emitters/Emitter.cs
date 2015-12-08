@@ -8,6 +8,7 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Serializing;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Emitters
@@ -39,10 +40,18 @@ namespace Sitecore.Pathfinder.Emitters
 
         public virtual int Start()
         {
-            // todo: support installation without configuration files
-            var project = ProjectService.LoadProjectFromConfiguration();
+            SerializingDataProviderDispatcher.Disabled = true;
+            try
+            {
+                // todo: support installation without configuration files
+                var project = ProjectService.LoadProjectFromConfiguration();
 
-            Emit(project);
+                Emit(project);
+            }
+            finally
+            {
+                SerializingDataProviderDispatcher.Disabled = false;
+            }
 
             return 0;
         }
