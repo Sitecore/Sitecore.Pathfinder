@@ -1,14 +1,15 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Rules.Contexts;
 
-namespace Sitecore.Pathfinder.Rules.Conditions
+namespace Sitecore.Pathfinder.Rules.Conditions.ItemConditions
 {
-    public class ParentItemNameCondition : StringConditionBase
+    public class FieldValueCondition : StringConditionBase
     {
-        public ParentItemNameCondition() : base("parent-item-name")
+        public FieldValueCondition() : base("field-value")
         {
         }
 
@@ -20,13 +21,13 @@ namespace Sitecore.Pathfinder.Rules.Conditions
                 return string.Empty;
             }
 
-            var parentItem = item.GetParent();
-            if (parentItem == null)
+            var fieldName = GetParameterValue(parameters, "name", ruleContext.Object);
+            if (fieldName == null)
             {
-                return string.Empty;
+                throw new ConfigurationException(Texts.Field_name_expected);
             }
 
-            return parentItem.ItemName;
+            return item[fieldName];
         }
     }
 }

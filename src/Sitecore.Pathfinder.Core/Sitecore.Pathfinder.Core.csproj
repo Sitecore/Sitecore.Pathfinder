@@ -191,36 +191,44 @@
     <Compile Include="Rules\Actions\TraceErrorAction.cs" />
     <Compile Include="Rules\Actions\TraceInformationAction.cs" />
     <Compile Include="Rules\Actions\TraceWarningAction.cs" />
-    <Compile Include="Rules\Conditions\AndCondition.cs" />
+    <Compile Include="Rules\Conditions\IntConditionBase.cs" />
+    <Compile Include="Rules\Conditions\ItemConditions\ItemVersionCountCondition.cs" />
+    <Compile Include="Rules\Conditions\LogicConditions\AndCondition.cs" />
     <Compile Include="Rules\ConditionActionBase.cs" />
     <Compile Include="Rules\ConditionBase.cs" />
-    <Compile Include="Rules\Conditions\AlwaysCondition.cs" />
-    <Compile Include="Rules\Conditions\ChildrenCondition.cs" />
-    <Compile Include="Rules\Conditions\DatabaseNameCondition.cs" />
-    <Compile Include="Rules\Conditions\FieldValueCondition.cs" />
-    <Compile Include="Rules\Conditions\IsFieldEmptyCondition.cs" />
-    <Compile Include="Rules\Conditions\ItemIdOrPathCondition.cs" />
-    <Compile Include="Rules\Conditions\ItemNameCondition.cs" />
-    <Compile Include="Rules\Conditions\HasParentWithNameCondition.cs" />
-    <Compile Include="Rules\Conditions\ParentItemNameCondition.cs" />
-    <Compile Include="Rules\Conditions\ParentItemTemplateNameCondition.cs" />
-    <Compile Include="Rules\Conditions\QualifiedNameCondition.cs" />
-    <Compile Include="Rules\Conditions\ShortNameCondition.cs" />
+    <Compile Include="Rules\Conditions\LogicConditions\AlwaysCondition.cs" />
+    <Compile Include="Rules\Conditions\ItemConditions\ChildrenCondition.cs" />
+    <Compile Include="Rules\Conditions\DatabaseProjectItemConditions\DatabaseNameCondition.cs" />
+    <Compile Include="Rules\Conditions\ItemConditions\FieldValueCondition.cs" />
+    <Compile Include="Rules\Conditions\FileConditions\AbsoluteFileNameCondition.cs" />
+    <Compile Include="Rules\Conditions\FileConditions\FileExtensionCondition.cs" />
+    <Compile Include="Rules\Conditions\FileConditions\FileExtensionsCondition.cs" />
+    <Compile Include="Rules\Conditions\FileConditions\FileNameCondition.cs" />
+    <Compile Include="Rules\Conditions\FileConditions\FileNameDirectoryCondition.cs" />
+    <Compile Include="Rules\Conditions\FileConditions\ProjectFileNameCondition.cs" />
+    <Compile Include="Rules\Conditions\ItemConditions\IsFieldEmptyCondition.cs" />
+    <Compile Include="Rules\Conditions\DatabaseProjectItemConditions\ItemIdOrPathCondition.cs" />
+    <Compile Include="Rules\Conditions\DatabaseProjectItemConditions\ItemNameCondition.cs" />
+    <Compile Include="Rules\Conditions\DatabaseProjectItemConditions\HasParentWithNameCondition.cs" />
+    <Compile Include="Rules\Conditions\ItemConditions\ParentItemNameCondition.cs" />
+    <Compile Include="Rules\Conditions\ItemConditions\ParentItemTemplateNameCondition.cs" />
+    <Compile Include="Rules\Conditions\ProjectItemConditions\QualifiedNameCondition.cs" />
+    <Compile Include="Rules\Conditions\ProjectItemConditions\ShortNameCondition.cs" />
     <Compile Include="Rules\Conditions\StringConditionBase.cs" />
-    <Compile Include="Rules\Conditions\TemplateNameCondition.cs" />
+    <Compile Include="Rules\Conditions\ItemConditions\TemplateNameCondition.cs" />
     <Compile Include="Rules\Contexts\RuleContext.cs" />
     <Compile Include="Rules\IAction.cs" />
     <Compile Include="Rules\ICondition.cs" />
     <Compile Include="Rules\IRule.cs" />
     <Compile Include="Rules\Contexts\IRuleContext.cs" />
     <Compile Include="Rules\IRuleService.cs" />
-    <Compile Include="Rules\Conditions\NotCondition.cs" />
-    <Compile Include="Rules\Conditions\OrCondition.cs" />
+    <Compile Include="Rules\Conditions\LogicConditions\NotCondition.cs" />
+    <Compile Include="Rules\Conditions\LogicConditions\OrCondition.cs" />
     <Compile Include="Rules\Rule.cs" />
     <Compile Include="Rules\RuleAction.cs" />
     <Compile Include="Rules\RuleCondition.cs" />
     <Compile Include="Rules\RuleService.cs" />
-    <Compile Include="Rules\Conditions\XPathCondition.cs" />
+    <Compile Include="Rules\Conditions\XPathConditions\XPathCondition.cs" />
     <Compile Include="Snapshots\IMutableTextNode.cs" />
     <Compile Include="Languages\Yaml\YamlContentTextNodeParser.cs" />
     <Compile Include="Languages\Yaml\YamlLayoutTextNodeParser.cs" />
@@ -458,7 +466,9 @@
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
     <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.2\analyzers\dotnet\cs\CodeContractNullability.dll" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Rules\Conditions\TemplateConditions\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

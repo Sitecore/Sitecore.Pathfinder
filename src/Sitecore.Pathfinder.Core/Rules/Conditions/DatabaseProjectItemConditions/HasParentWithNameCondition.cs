@@ -7,7 +7,7 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Rules.Contexts;
 
-namespace Sitecore.Pathfinder.Rules.Conditions
+namespace Sitecore.Pathfinder.Rules.Conditions.DatabaseProjectItemConditions
 {
     public class HasParentWithNameCondition : ConditionBase
     {

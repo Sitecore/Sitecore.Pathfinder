@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Rules.Contexts;
 
-namespace Sitecore.Pathfinder.Rules.Conditions
+namespace Sitecore.Pathfinder.Rules.Conditions.ProjectItemConditions
 {
     public class QualifiedNameCondition : StringConditionBase
     {

@@ -4,18 +4,18 @@ using System.Collections.Generic;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Rules.Contexts;
 
-namespace Sitecore.Pathfinder.Rules.Conditions
+namespace Sitecore.Pathfinder.Rules.Conditions.ProjectItemConditions
 {
-    public class ItemNameCondition : StringConditionBase
+    public class ShortNameCondition : StringConditionBase
     {
-        public ItemNameCondition() : base("item-name")
+        public ShortNameCondition() : base("short-name")
         {
         }
 
         protected override string GetValue(IRuleContext ruleContext, IDictionary<string, object> parameters)
         {
-            var item = ruleContext.Object as DatabaseProjectItem;
-            return item?.ItemName ?? string.Empty;
+            var item = ruleContext.Object as IProjectItem;
+            return item?.ShortName ?? string.Empty;
         }
     }
 }

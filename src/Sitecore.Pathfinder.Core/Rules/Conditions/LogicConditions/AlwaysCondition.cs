@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Rules.Contexts;
 
-namespace Sitecore.Pathfinder.Rules.Conditions
+namespace Sitecore.Pathfinder.Rules.Conditions.LogicConditions
 {
     public class AlwaysCondition : ConditionBase
     {

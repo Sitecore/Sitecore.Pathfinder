@@ -1,0 +1,32 @@
+{
+    "check-project": {
+        "conventions": {
+            "habitat-website-convention-0": {
+                "filter": "items",
+                "if": {
+                    "always": true
+                },
+                "then": {
+                    "trace-warning": "A Habitat.Design project should not items. To fix, remove the item."
+                }
+            },
+            "habitat-website-convention-1": {
+                "filter": "files",
+                "if": {
+                    "or": {
+                        "file-name-extension-0": ".js",
+                        "file-name-extension-1": ".css",
+                        "file-name-extension-2": ".eot",
+                        "file-name-extension-3": ".svg",
+                        "file-name-extension-4": ".ttf",
+                        "file-name-extension-5": ".woff",
+                        "file-name-extension-6": ".woff2"
+                    }
+                },
+                "then": {
+                    "trace-warning": "A Habitat.Website project should not contain assets. To fix, remove the file to a Habitat.Design project."
+                }
+            }
+        }
+    }
+}

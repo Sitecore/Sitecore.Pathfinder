@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Rules.Contexts;
 
-namespace Sitecore.Pathfinder.Rules.Conditions
+namespace Sitecore.Pathfinder.Rules.Conditions.ItemConditions
 {
     public class TemplateNameCondition : StringConditionBase
     {

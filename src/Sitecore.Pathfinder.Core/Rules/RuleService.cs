@@ -8,6 +8,8 @@ using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Rules.Conditions;
+using Sitecore.Pathfinder.Rules.Conditions.LogicConditions;
+using Sitecore.Pathfinder.Rules.Conditions.XPathConditions;
 using Sitecore.Pathfinder.Xml.XPath;
 
 namespace Sitecore.Pathfinder.Rules

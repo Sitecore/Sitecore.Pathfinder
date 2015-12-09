@@ -2,25 +2,26 @@
 
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Rules.Contexts;
 
-namespace Sitecore.Pathfinder.Rules.Conditions
+namespace Sitecore.Pathfinder.Rules.Conditions.LogicConditions
 {
     [PartNotDiscoverable]
-    public class NotCondition : ConditionBase
+    public class AndCondition : ConditionBase
     {
-        public NotCondition([NotNull, ItemNotNull]  RuleCondition condition) : base("not")
+        public AndCondition([NotNull, ItemNotNull]  IEnumerable<RuleCondition> conditions) : base("and")
         {
-            Condition = condition;
+            Conditions = conditions;
         }
 
         [NotNull, ItemNotNull]
-        public RuleCondition Condition { get; }
+        public IEnumerable<RuleCondition> Conditions { get; }
 
         public override bool Evaluate(IRuleContext ruleContext, IDictionary<string, object> parameters)
         {
-            return !Condition.Condition.Evaluate(ruleContext, Condition.Parameters);
+            return Conditions.All(c => c.Condition.Evaluate(ruleContext, c.Parameters));
         }
     }
 }
