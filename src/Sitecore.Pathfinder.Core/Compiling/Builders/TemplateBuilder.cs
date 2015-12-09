@@ -21,10 +21,12 @@ namespace Sitecore.Pathfinder.Compiling.Builders
         public string BaseTemplates { get; set; } = string.Empty;
 
         [NotNull]
-        public string DatabaseName { get; set; } = string.Empty;
+        public ITextNode BaseTemplatesTextNode { get; set; } = TextNode.Empty;
 
         [NotNull]
-        [ItemNotNull]
+        public string DatabaseName { get; set; } = string.Empty;
+
+        [NotNull, ItemNotNull]
         public IList<FieldBuilder> Fields { get; } = new List<FieldBuilder>();
 
         [NotNull]
@@ -37,14 +39,22 @@ namespace Sitecore.Pathfinder.Compiling.Builders
         public ITextNode IconTextNode { get; set; } = TextNode.Empty;
 
         [NotNull]
-        public ITextNode BaseTemplatesTextNode { get; set; } = TextNode.Empty;
-
-        [NotNull]
         public string ItemIdOrPath { get; set; } = string.Empty;
 
         [NotNull]
-        [ItemNotNull]
+        public string LongHelp { get; set; } = string.Empty;
+
+        [NotNull]
+        public ITextNode LongHelpTextNode { get; set; } = TextNode.Empty;
+
+        [NotNull, ItemNotNull]
         public IList<TemplateSectionBuilder> Sections { get; } = new List<TemplateSectionBuilder>();
+
+        [NotNull]
+        public string ShortHelp { get; set; } = string.Empty;
+
+        [NotNull]
+        public ITextNode ShortHelpTextNode { get; set; } = TextNode.Empty;
 
         [NotNull]
         public string TemplateName { get; set; } = string.Empty;
@@ -76,6 +86,18 @@ namespace Sitecore.Pathfinder.Compiling.Builders
             if (IconTextNode != TextNode.Empty)
             {
                 template.IconProperty.SetValue(IconTextNode);
+            }
+
+            template.ShortHelp = ShortHelp;
+            if (ShortHelpTextNode != TextNode.Empty)
+            {
+                template.ShortHelpProperty.SetValue(ShortHelpTextNode);
+            }
+
+            template.LongHelp = LongHelp;
+            if (LongHelpTextNode != TextNode.Empty)
+            {
+                template.LongHelpProperty.SetValue(LongHelpTextNode);
             }
 
             foreach (var sectionBuilder in Sections)

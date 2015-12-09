@@ -196,6 +196,7 @@
     </Content>
     <Compile Include="Building\Assembling\WriteSerialization.cs" />
     <Compile Include="Building\Commands\ImportWebsite.cs" />
+    <Compile Include="Building\Maintaining\UpdateDataProvider.cs" />
     <Compile Include="Building\Scripting\RunScript.cs" />
     <Compile Include="Building\Addins\UpdateAddins.cs" />
     <Compile Include="Building\Codegen\GenerateCode.cs" />
@@ -396,6 +397,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="files\starterkits\TodoMvc.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\website\App_Config\include\Sitecore.Pathfinder.SerializingDataProvider.config.disabled">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Properties\app.manifest" />

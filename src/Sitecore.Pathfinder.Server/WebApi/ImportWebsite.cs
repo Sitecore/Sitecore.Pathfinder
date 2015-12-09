@@ -3,11 +3,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
-using System.Linq;
 using System.Web.Mvc;
 using Sitecore.Data.Items;
 using Sitecore.IO;
-using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -16,8 +14,6 @@ using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.IO.PathMappers;
 using Sitecore.Pathfinder.Languages;
 using Sitecore.Pathfinder.Projects;
-using Sitecore.Pathfinder.Projects.Templates;
-using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.WebApi.ImportWebsites
 {
@@ -67,47 +63,6 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
             }
 
             return null;
-        }
-
-        [Diagnostics.NotNull]
-        protected virtual Template BuildTemplate([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Item item)
-        {
-            var templateItem = new TemplateItem(item);
-
-            var templateBuilder = new TemplateBuilder(Factory);
-            templateBuilder.DatabaseName = templateItem.Database.Name;
-            templateBuilder.Guid = templateItem.ID.ToString();
-            templateBuilder.TemplateName = templateItem.Name;
-            templateBuilder.ItemIdOrPath = templateItem.InnerItem.Paths.Path;
-            templateBuilder.Icon = templateItem.InnerItem.Appearance.Icon;
-
-            var baseTemplates = templateItem.BaseTemplates;
-            if (baseTemplates.Length > 1 || (baseTemplates.Length == 1 && baseTemplates[0].ID != TemplateIDs.StandardTemplate))
-            {
-                templateBuilder.BaseTemplates = string.Join("|", baseTemplates.Select(i => i.InnerItem.Paths.Path));
-            }
-
-            foreach (var templateSectionItem in templateItem.GetSections())
-            {
-                var templateSectionBuilder = new TemplateSectionBuilder(Factory).With(templateBuilder, TextNode.Empty);
-                templateSectionBuilder.SectionId = templateSectionItem.ID.ToString();
-                templateSectionBuilder.SectionName = templateSectionItem.Name;
-
-                foreach (var templateFieldItem in templateSectionItem.GetFields())
-                {
-                    var templateFieldBuilder = new TemplateFieldBuilder(Factory).With(templateSectionBuilder, TextNode.Empty);
-                    templateFieldBuilder.FieldId = templateFieldItem.ID.ToString();
-                    templateFieldBuilder.FieldName = templateFieldItem.Name;
-                    templateFieldBuilder.Source = templateFieldItem.Source;
-                    templateFieldBuilder.Type = templateFieldItem.Type;
-
-                    templateSectionBuilder.Fields.Add(templateFieldBuilder);
-                }
-
-                templateBuilder.Sections.Add(templateSectionBuilder);
-            }
-
-            return templateBuilder.Build(project, TextNode.Empty);
         }
 
         protected virtual void ImportFiles([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] WebsiteFileNameToProjectFileNameMapper mapper)
@@ -241,7 +196,7 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
 
         protected virtual void WriteTemplate([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] ILanguage language)
         {
-            var template = BuildTemplate(project, item);
+            var template = ItemImporter.ImportTemplate(project, item);
             using (var stream = new StreamWriter(fileName))
             {
                 language.WriteTemplate(stream, template);

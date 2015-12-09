@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
+    <sitecore>
+        <dataProviders>
+            <pathfinderyDataProvider type="Sitecore.Pathfinder.Serializing.SerializingDataProvider, Sitecore.Pathfinder.Server" />
+        </dataProviders>
+        
+        <databases>
+            <database id="master" singleInstance="true" type="Sitecore.Data.Database, Sitecore.Kernel">
+                <dataProviders hint="list:AddDataProvider">
+                    <dataProvider ref="dataProviders/pathfinderyDataProvider"/>
+                </dataProviders>
+            </database>
+            
+            <database id="core" singleInstance="true" type="Sitecore.Data.Database, Sitecore.Kernel">
+                <dataProviders hint="list:AddDataProvider">
+                    <dataProvider ref="dataProviders/pathfinderyDataProvider"/>
+                </dataProviders>
+            </database>
+        </databases>
+    </sitecore>
+</configuration>

@@ -9,7 +9,7 @@ namespace Sitecore.Pathfinder.Pipelines.Loader
     {
         public void Process([NotNull] PipelineArgs args)
         {
-            SerializingDataProviderDispatcher.Reload();
+            SerializingDataProviderService.Reload();
         }
     }
 }

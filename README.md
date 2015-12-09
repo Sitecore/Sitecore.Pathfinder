@@ -785,40 +785,107 @@ to import. The configuration determines how items and files are placed in the pr
 Below is an example of how to import the CleanBlog startkit.
 
 ```js
-"import-website": {
-    "cleanblog-0": {
-        "database": "master",
-        "map-item-path-to-file-path": "/ => /content/master",
-        "query": "/sitecore/content/Home/CleanBlog | /sitecore/content/Home/CleanBlog//*",
-        "use-directories": true,
-        "single-file": true,
-        "format": "item.xml"
+"project-website-mappings": {
+    "project-to-website": {
     },
-    "cleanblog-1": {
-        "database": "master",
-        "map-item-path-to-file-path": "/sitecore/media library/CleanBlog => /wwwroot/img",
-        "query": "/sitecore/media library/CleanBlog//*",
-        "use-directories": true,
-        "format": "item.xml"
-    },
-    "cleanblog-2": {
-        "database": "master",
-        "map-item-path-to-file-path": "/ => /content/master",
-        "query": "/sitecore/templates/CleanBlog//*[@@templatekey='template']",
-        "use-directories": true,
-        "format": "item.xml"
-    },
-    "cleanblog-3": {
-        "map-website-directory-to-project-directory": "/css => /wwwroot/css"
-    },
-    "cleanblog-4": {
-        "map-website-directory-to-project-directory": "/js => /wwwroot/js"
-    },
-    "cleanblog-5": {
-        "map-website-directory-to-project-directory": "/CleanBlog/layout/renderings => /wwwroot"
+
+    "website-to-project": {
+        "clean-blog-content": {
+            "item-path-to-project-directory": "/sitecore/content/Home/CleanBlog => /content/master/sitecore/content/Home/CleanBlog",
+            "format": "item.xml"
+        },
+        "clean-blog-media": {
+            "item-path-to-project-directory": "/sitecore/media library/CleanBlog => /wwwroot/img",
+            "format": "item.xml" 
+        },
+        "clean-blog-templates": {
+            "item-path-to-project-directory": "/sitecore/templates/CleanBlog => /content/master/sitecore/templates/CleanBlog",
+            "format": "item.xml" 
+        },
+        "clean-blog-css": {
+            "website-directory-to-project-directory": "/css => /wwwroot/css" 
+        },
+        "clean-blog-js": {
+            "website-directory-to-project-directory": "/js => /wwwroot/js" 
+        },
+        "clean-blog-renderings-files": {
+            "website-directory-to-project-directory": "/CleanBlog/layout/renderings => /wwwroot" 
+        }
     }
 }
 ``` 
+
+## Serializing items from website to project
+Normally items flow from the project to the website, meaning that you create items as files in the project and when the project is
+built and deployed the items are installed in the website.
+
+However, if you want to use the web client, Sitecore Rocks, DB Browser or another tools to edit items, you can. You can enable the Serializing
+Data Provider which will serialize changed items back to the project.
+
+This feature is heavily inspired by [Unicorn](https://github.com/kamsar/Unicorn) by Kam Figy and all credits should go to him. The serialization 
+part of Unicorn is superior to the Serializing Data Provider. The reason Pathfinder has it's own implementation is that we cannot take a 
+hard dependency on Unicorn - it has to be an optional component.
+
+To enable the Serializing Data Provider, you must first setup the mappings between project and website in the 'project-website-mappings'
+section in the scconfig.json file. The Serializing Data Provider will read this section to determine which, how and where to serialize 
+items.
+
+For the CleanBlog startkit, the section looks like this:
+
+```js
+"project-website-mappings": {
+    "project-to-website": {
+    },
+
+    "website-to-project": {
+        "clean-blog-content": {
+            "item-path-to-project-directory": "/sitecore/content/Home/CleanBlog => /content/master/sitecore/content/Home/CleanBlog",
+            "format": "item.xml"
+        },
+        "clean-blog-media": {
+            "item-path-to-project-directory": "/sitecore/media library/CleanBlog => /wwwroot/img",
+            "format": "item.xml" 
+        },
+        "clean-blog-templates": {
+            "item-path-to-project-directory": "/sitecore/templates/CleanBlog => /content/master/sitecore/templates/CleanBlog",
+            "format": "item.xml" 
+        },
+        "clean-blog-css": {
+            "website-directory-to-project-directory": "/css => /wwwroot/css" 
+        },
+        "clean-blog-js": {
+            "website-directory-to-project-directory": "/js => /wwwroot/js" 
+        },
+        "clean-blog-renderings-files": {
+            "website-directory-to-project-directory": "/CleanBlog/layout/renderings => /wwwroot" 
+        }
+    }
+}
+```
+
+Next you must rename the [Website]/App_Config/include/Sitecore.Pathfinder.SerializingDataProvider.config.disabled to
+[Website]/App_Config/include/Sitecore.Pathfinder.SerializingDataProvider.config.
+
+Finally you should execute the `scc update-mappings` task to make sure the website has read any updated configuration. This should
+not really be necessary since the configuration are read on startup, but better safe than sorry.
+
+## Resetting a website
+Sometimes it is nice to revert back to a known state on the website or simply clean up. The `scc reset-website` can delete items
+and files on a website based on the project/website settings. Any items or files that are mapped back to the project in the
+'project-website-mappings' settings will be deleted.
+
+If you have additional items to be deleted using reset-website, you can configure them in the 'reset-website' settings.
+
+```js
+   "reset-website": {
+        "clean-blog-renderings": {
+            "delete-item-path": "/sitecore/layout/Renderings/CleanBlog" 
+        }
+    }
+}
+```
+
+This will delete the /sitecore/layout/Renderings/CleanBlog item.
 
 ## Synchronizing project and website
 In Pathfinder the project contains the whole truth. However a project may need to use items, template, renderings from a standard 

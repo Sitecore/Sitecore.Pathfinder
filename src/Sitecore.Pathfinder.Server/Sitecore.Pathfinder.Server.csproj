@@ -191,11 +191,11 @@
     <Compile Include="Pipelines\Loader\InitializeSerializingDataProvider.cs" />
     <Compile Include="Pipelines\Loader\MapRoutes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Serializing\SerializingDataProviderDispatcher.cs" />
+    <Compile Include="Serializing\SerializingDataProviderService.cs" />
     <Compile Include="ServerConstants.cs" />
     <Compile Include="Serializing\SerializingDataProvider.cs" />
     <Compile Include="Serializing\WebsiteSerializer.cs" />
-    <Compile Include="WebApi\ImportWebsites\ImportWebsite.cs" />
+    <Compile Include="WebApi\ImportWebsite.cs" />
     <Compile Include="Importing\FieldImporters\FieldValueImporterBase.cs" />
     <Compile Include="Importing\FieldImporters\IdFieldValueImporter.cs" />
     <Compile Include="Importing\FieldImporters\IFieldValueImporter.cs" />
@@ -214,6 +214,7 @@
     <Compile Include="WebApi\TroubleshootWebsites\1000 - RebuildClassicIndexesTroubleshooter.cs" />
     <Compile Include="WebApi\TroubleshootWebsites\2000 - RepublishMasterDatabaseTroubleshooter.cs" />
     <Compile Include="WebApi\TroubleshootWebsites\3000 - RebuildLinkDatabaseTroubleshooter.cs" />
+    <Compile Include="WebApi\UpdateProjectWebsiteMappings.cs" />
     <Compile Include="WebApi\WriteWebsiteExports.cs" />
     <Compile Include="WebApi\TroubleshootWebsites\TroubleshootWebsite.cs" />
   </ItemGroup>

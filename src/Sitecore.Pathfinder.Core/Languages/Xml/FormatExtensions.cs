@@ -263,6 +263,8 @@ namespace Sitecore.Pathfinder.Languages.Xml
             output.WriteAttributeStringIf("Database", template.DatabaseName);
             output.WriteAttributeStringIf("Path", template.ItemIdOrPath);
             output.WriteAttributeStringIf("BaseTemplates", template.BaseTemplates);
+            output.WriteAttributeStringIf("ShortHelp", template.ShortHelp);
+            output.WriteAttributeStringIf("LongHelp", template.LongHelp);
 
             foreach (var section in template.Sections)
             {

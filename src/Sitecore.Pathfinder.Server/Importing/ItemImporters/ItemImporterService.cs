@@ -4,12 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+using Sitecore.Data.Items;
 using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Languages;
 using Sitecore.Pathfinder.Projects;
-using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Importing.ItemImporters
@@ -30,7 +31,7 @@ namespace Sitecore.Pathfinder.Importing.ItemImporters
         [Diagnostics.NotNull, ItemNotNull]
         protected IEnumerable<IFieldValueImporter> FieldValueImporters { get; }
 
-        public virtual Item ImportItem(IProject project, Data.Items.Item item, ILanguage language, [ItemNotNull] IEnumerable<string> excludedFields)
+        public virtual Projects.Items.Item ImportItem(IProject project, Data.Items.Item item, ILanguage language, [ItemNotNull] IEnumerable<string> excludedFields)
         {
             var itemBuilder = new ItemBuilder(Factory)
             {
@@ -89,6 +90,50 @@ namespace Sitecore.Pathfinder.Importing.ItemImporters
             }
 
             return itemBuilder.Build(project, TextNode.Empty);
+        }
+
+        public virtual Template ImportTemplate(IProject project, Data.Items.Item item)
+        {
+            var templateItem = new TemplateItem(item);
+
+            var templateBuilder = new TemplateBuilder(Factory);
+            templateBuilder.DatabaseName = templateItem.Database.Name;
+            templateBuilder.Guid = templateItem.ID.ToString();
+            templateBuilder.TemplateName = templateItem.Name;
+            templateBuilder.ItemIdOrPath = templateItem.InnerItem.Paths.Path;
+            templateBuilder.Icon = templateItem.InnerItem.Appearance.Icon;
+            templateBuilder.ShortHelp = templateItem.InnerItem.Help.ToolTip;
+            templateBuilder.LongHelp = templateItem.InnerItem.Help.Text;
+
+            var baseTemplates = templateItem.BaseTemplates;
+            if (baseTemplates.Length > 1 || (baseTemplates.Length == 1 && baseTemplates[0].ID != TemplateIDs.StandardTemplate))
+            {
+                templateBuilder.BaseTemplates = string.Join("|", baseTemplates.Select(i => i.InnerItem.Paths.Path));
+            }
+
+            foreach (var templateSectionItem in templateItem.GetSections())
+            {
+                var templateSectionBuilder = new TemplateSectionBuilder(Factory).With(templateBuilder, TextNode.Empty);
+                templateSectionBuilder.SectionId = templateSectionItem.ID.ToString();
+                templateSectionBuilder.SectionName = templateSectionItem.Name;
+
+                foreach (var templateFieldItem in templateSectionItem.GetFields())
+                {
+                    var templateFieldBuilder = new TemplateFieldBuilder(Factory).With(templateSectionBuilder, TextNode.Empty);
+                    templateFieldBuilder.FieldId = templateFieldItem.ID.ToString();
+                    templateFieldBuilder.FieldName = templateFieldItem.Name;
+                    templateFieldBuilder.Source = templateFieldItem.Source;
+                    templateFieldBuilder.Type = templateFieldItem.Type;
+                    templateFieldBuilder.TemplateFieldShortHelp = templateFieldItem.InnerItem.Help.ToolTip;
+                    templateFieldBuilder.TemplateFieldLongHelp = templateFieldItem.InnerItem.Help.Text;
+
+                    templateSectionBuilder.Fields.Add(templateFieldBuilder);
+                }
+
+                templateBuilder.Sections.Add(templateSectionBuilder);
+            }
+
+            return templateBuilder.Build(project, TextNode.Empty);
         }
 
         [Diagnostics.NotNull]

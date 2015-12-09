@@ -11,7 +11,7 @@
 
     // mapping between project files and website files and items
     "project-website-mappings": {
-        "excluded-fields": "__Created, __Created by, __Owner, __Revision, __Updated, __Updated by, Blob",
+        "excluded-fields": "__Created, __Created by, __Owner, __Revision, __Updated, __Updated by, Blob, Originator",
 
         "project-to-website": {
         },

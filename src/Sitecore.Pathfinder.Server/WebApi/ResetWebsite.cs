@@ -9,6 +9,7 @@ using Sitecore.IO;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.IO.PathMappers;
+using Sitecore.Pathfinder.Serializing;
 
 namespace Sitecore.Pathfinder.WebApi
 {
@@ -20,24 +21,32 @@ namespace Sitecore.Pathfinder.WebApi
 
         public ActionResult Execute(IAppService app)
         {
-            foreach (var mapper in PathMapper.WebsiteItemPathToProjectFileNames)
+            SerializingDataProviderService.Disabled = true;
+            try
             {
-                DeleteItems(mapper);
+                foreach (var mapper in PathMapper.WebsiteItemPathToProjectFileNames)
+                {
+                    DeleteItems(mapper);
+                }
+
+                foreach (var mapper in PathMapper.WebsiteFileNameToProjectFileNames)
+                {
+                    DeleteFiles(app.ProjectDirectory, mapper);
+                }
+
+                var fileSystem = app.CompositionService.Resolve<IFileSystemService>();
+
+                foreach (var pair in app.Configuration.GetSubKeys("reset-website"))
+                {
+                    var key = "reset-website:" + pair.Key;
+
+                    ResetItems(app, key);
+                    ResetFiles(app, fileSystem, key);
+                }
             }
-
-            foreach (var mapper in PathMapper.WebsiteFileNameToProjectFileNames)
+            finally
             {
-                DeleteFiles(app.ProjectDirectory, mapper);
-            }
-
-            var fileSystem = app.CompositionService.Resolve<IFileSystemService>();
-
-            foreach (var pair in app.Configuration.GetSubKeys("reset-website"))
-            {
-                var key = "reset-website:" + pair.Key;
-
-                ResetItems(app, key);
-                ResetFiles(app, fileSystem, key);
+                SerializingDataProviderService.Disabled = false;
             }
 
             return null;

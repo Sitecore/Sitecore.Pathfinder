@@ -12,13 +12,13 @@ using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Serializing
 {
-    public static class SerializingDataProviderDispatcher
+    public static class SerializingDataProviderService
     {
         private static int _disabled;
 
         public static bool Disabled
         {
-            get { return _disabled == 0; }
+            get { return _disabled != 0; }
             set
             {
                 if (value)
@@ -36,11 +36,10 @@ namespace Sitecore.Pathfinder.Serializing
             }
         }
 
-        [Diagnostics.NotNull]
-        [ItemNotNull]
+        [Diagnostics.NotNull, ItemNotNull]
         public static ICollection<WebsiteSerializer> WebsiteSerializers { get; } = new List<WebsiteSerializer>();
 
-        public static void RaiseRemoveItem([Diagnostics.NotNull] string databaseName, [Diagnostics.NotNull] ID itemId)
+        public static void RemoveItem([Diagnostics.NotNull] string databaseName, [Diagnostics.NotNull] ID itemId)
         {
             if (Disabled)
             {
@@ -55,12 +54,32 @@ namespace Sitecore.Pathfinder.Serializing
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("Failed to remove item", ex, typeof(SerializingDataProviderDispatcher));
+                    Log.Error("Failed to remove item", ex, typeof(SerializingDataProviderService));
                 }
             }
         }
 
-        public static void RaiseSerializeItem([Diagnostics.NotNull] string databaseName, [Diagnostics.NotNull] ID itemId)
+        public static void RemoveItem([Diagnostics.NotNull] string databaseName, [Diagnostics.NotNull] ID itemId, [Diagnostics.NotNull] string oldName)
+        {
+            if (Disabled)
+            {
+                return;
+            }
+
+            foreach (var serializer in WebsiteSerializers)
+            {
+                try
+                {
+                    serializer.RemoveItem(databaseName, itemId, oldName);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("Failed to remove item", ex, typeof(SerializingDataProviderService));
+                }
+            }
+        }
+
+        public static void SerializeItem([Diagnostics.NotNull] string databaseName, [Diagnostics.NotNull] ID itemId)
         {
             if (Disabled)
             {
@@ -75,7 +94,27 @@ namespace Sitecore.Pathfinder.Serializing
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("Failed to serialize item", ex, typeof(SerializingDataProviderDispatcher));
+                    Log.Error("Failed to serialize item", ex, typeof(SerializingDataProviderService));
+                }
+            }
+        }
+
+        public static void SerializeItem([Diagnostics.NotNull] string databaseName, [Diagnostics.NotNull] ID itemId, [Diagnostics.NotNull] ID newParentId)
+        {
+            if (Disabled)
+            {
+                return;
+            }
+
+            foreach (var serializer in WebsiteSerializers)
+            {
+                try
+                {
+                    serializer.SerializeItem(databaseName, itemId, newParentId);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("Failed to serialize item", ex, typeof(SerializingDataProviderService));
                 }
             }
         }

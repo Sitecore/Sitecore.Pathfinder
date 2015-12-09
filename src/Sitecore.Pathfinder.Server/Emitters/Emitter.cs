@@ -40,7 +40,7 @@ namespace Sitecore.Pathfinder.Emitters
 
         public virtual int Start()
         {
-            SerializingDataProviderDispatcher.Disabled = true;
+            SerializingDataProviderService.Disabled = true;
             try
             {
                 // todo: support installation without configuration files
@@ -50,7 +50,7 @@ namespace Sitecore.Pathfinder.Emitters
             }
             finally
             {
-                SerializingDataProviderDispatcher.Disabled = false;
+                SerializingDataProviderService.Disabled = false;
             }
 
             return 0;
