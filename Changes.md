@@ -5,6 +5,8 @@ Version Next
 * Add: Rules Engine (2015-12-01)
 * Add: Convention checker (2015-12-01)
 * Add: XPath expressions (2015-12-03)
+* Add: PathMapper API (2015-12-07)
+* Add: Serializing Data Provider (2015-12-09)
 
 Version 0.5.0
 =============
