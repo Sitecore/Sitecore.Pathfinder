@@ -29,11 +29,9 @@ namespace Sitecore.Pathfinder.Rules
             Actions = actions;
         }
 
-        [NotNull, ItemNotNull]
-        protected IEnumerable<IAction> Actions { get; }
+        public IEnumerable<IAction> Actions { get; }
 
-        [NotNull, ItemNotNull]
-        protected IEnumerable<ICondition> Conditions { get; }
+        public IEnumerable<ICondition> Conditions { get; }
 
         [NotNull]
         protected IConfiguration Configuration { get; }

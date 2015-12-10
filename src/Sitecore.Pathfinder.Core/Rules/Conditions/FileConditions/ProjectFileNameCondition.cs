@@ -9,7 +9,7 @@ namespace Sitecore.Pathfinder.Rules.Conditions.FileConditions
 {
     public class ProjectFileNameCondition : StringConditionBase
     {
-        public ProjectFileNameCondition() : base("absolute-file-name")
+        public ProjectFileNameCondition() : base("project-file-name")
         {
         }
 

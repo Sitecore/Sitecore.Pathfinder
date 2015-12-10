@@ -196,6 +196,7 @@
     </Content>
     <Compile Include="Building\Assembling\WriteSerialization.cs" />
     <Compile Include="Building\Commands\ImportWebsite.cs" />
+    <Compile Include="Building\Commands\ListRules.cs" />
     <Compile Include="Building\Maintaining\UpdateDataProvider.cs" />
     <Compile Include="Building\Scripting\RunScript.cs" />
     <Compile Include="Building\Addins\UpdateAddins.cs" />
