@@ -1,14 +1,12 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
-
-using System;
+﻿using System;
 using System.ComponentModel;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Diagnostics
 {
-    public class EmitException : Exception
+    public class AssertException : Exception
     {
-        public EmitException([Localizable(true), NotNull]  string text) : base(text)
+        public AssertException([Localizable(true), NotNull]  string text) : base(text)
         {
             Text = text;
 
@@ -18,7 +16,7 @@ namespace Sitecore.Pathfinder.Diagnostics
             Details = string.Empty;
         }
 
-        public EmitException([Localizable(true), NotNull]  string text, [NotNull] ISnapshot snapshot, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
+        public AssertException([Localizable(true), NotNull]  string text, [NotNull] ISnapshot snapshot, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
         {
             Text = text;
             FileName = snapshot.SourceFile.AbsoluteFileName;
@@ -26,7 +24,7 @@ namespace Sitecore.Pathfinder.Diagnostics
             Details = details;
         }
 
-        public EmitException([Localizable(true), NotNull]  string text, [NotNull] ITextNode textNode, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
+        public AssertException([Localizable(true), NotNull]  string text, [NotNull] ITextNode textNode, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
         {
             Text = text;
             FileName = textNode.Snapshot.SourceFile.AbsoluteFileName;

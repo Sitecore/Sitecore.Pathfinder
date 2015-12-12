@@ -189,10 +189,7 @@ namespace Sitecore.Pathfinder.Projects.Items
             base.Merge(newProjectItem, overwrite);
 
             var newItem = newProjectItem as Item;
-            if (newItem == null)
-            {
-                return;
-            }
+            Assert.Cast(newItem, nameof(newItem));
 
             if (!string.IsNullOrEmpty(newItem.TemplateIdOrPath))
             {

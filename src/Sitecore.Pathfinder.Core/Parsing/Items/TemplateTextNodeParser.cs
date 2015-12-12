@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             template.LongHelpProperty.Parse(textNode);
             // todo: yuck
             template.IsEmittable = !string.Equals(textNode.GetAttributeValue(Constants.Fields.IsEmittable), "False", StringComparison.OrdinalIgnoreCase);
-            template.IsImport = string.Equals(textNode.GetAttributeValue(Constants.Fields.IsExtern, context.IsExtern.ToString()), "True", StringComparison.OrdinalIgnoreCase);
+            template.IsImport = string.Equals(textNode.GetAttributeValue(Constants.Fields.IsImport, context.IsImport.ToString()), "True", StringComparison.OrdinalIgnoreCase);
 
             template.References.AddRange(context.ParseContext.ReferenceParser.ParseReferences(template, template.BaseTemplatesProperty));
 

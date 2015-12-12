@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Sitecore.Pathfinder.Compiling.Compilers;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
@@ -29,10 +30,7 @@ namespace Sitecore.Pathfinder.Languages.Templates
         public override void Compile(ICompileContext context, IProjectItem projectItem)
         {
             var item = projectItem as Item;
-            if (item == null)
-            {
-                return;
-            }
+            Assert.Cast(item, nameof(item));
 
             var templateIdOrPathTextNode = item.SourceTextNodes.Select(n => n.GetAttribute("Template")).FirstOrDefault(t => t != null);
             if (templateIdOrPathTextNode == null)
@@ -54,8 +52,8 @@ namespace Sitecore.Pathfinder.Languages.Templates
             template.BaseTemplatesProperty.Parse("Template.BaseTemplates", itemTextNode, Constants.Templates.StandardTemplate);
             template.ShortHelpProperty.Parse("Template.ShortHelp", itemTextNode);
             template.LongHelpProperty.Parse("Template.LongHelp", itemTextNode);
-            template.IsEmittable = !string.Equals(itemTextNode.GetAttributeValue(Constants.Fields.IsEmittable), "False", StringComparison.OrdinalIgnoreCase);
-            template.IsImport = item.IsImport || string.Equals(itemTextNode.GetAttributeValue(Constants.Fields.IsExtern), "True", StringComparison.OrdinalIgnoreCase);
+            template.IsEmittable = item.IsEmittable;
+            template.IsImport = item.IsImport || string.Equals(itemTextNode.GetAttributeValue(Constants.Fields.IsImport), "True", StringComparison.OrdinalIgnoreCase);
 
             if (!template.IsImport)
             {

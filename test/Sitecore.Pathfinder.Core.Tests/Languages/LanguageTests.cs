@@ -1,7 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using NUnit.Framework;
-using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Languages.Json;
 using Sitecore.Pathfinder.Languages.Xml;
 using Sitecore.Pathfinder.Languages.Yaml;

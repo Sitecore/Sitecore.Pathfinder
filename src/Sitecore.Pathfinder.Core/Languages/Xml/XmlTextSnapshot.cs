@@ -59,17 +59,17 @@ namespace Sitecore.Pathfinder.Languages.Xml
             }
         }
 
-        public override void ValidateSchema(IParseContext context)
+        public override bool ValidateSchema(IParseContext context)
         {
             if (string.IsNullOrEmpty(SchemaFileName) || string.IsNullOrEmpty(SchemaNamespace))
             {
-                return;
+                return true;
             }
 
             var doc = RootElement?.Document;
             if (doc == null)
             {
-                return;
+                return true;
             }
 
             XmlSchemaSet schema;
@@ -81,8 +81,10 @@ namespace Sitecore.Pathfinder.Languages.Xml
 
             if (schema == null)
             {
-                return;
+                return true;
             }
+
+            var isValid = true;
 
             ValidationEventHandler validateHandler = delegate(object sender, ValidationEventArgs args)
             {
@@ -96,10 +98,11 @@ namespace Sitecore.Pathfinder.Languages.Xml
                 switch (args.Severity)
                 {
                     case XmlSeverityType.Error:
-                        context.Trace.TraceError(Msg.P1001, string.Empty, context.Snapshot.SourceFile.AbsoluteFileName, new TextSpan(args.Exception.LineNumber, args.Exception.LinePosition, length), args.Message);
+                        context.Trace.TraceError(Msg.P1001, args.Message, SourceFile.AbsoluteFileName, new TextSpan(args.Exception.LineNumber, args.Exception.LinePosition, length));
+                        isValid = false;
                         break;
                     case XmlSeverityType.Warning:
-                        context.Trace.TraceWarning(Msg.P1002, string.Empty, context.Snapshot.SourceFile.AbsoluteFileName, new TextSpan(args.Exception.LineNumber, args.Exception.LinePosition, length), args.Message);
+                        context.Trace.TraceWarning(Msg.P1002, args.Message, SourceFile.AbsoluteFileName, new TextSpan(args.Exception.LineNumber, args.Exception.LinePosition, length));
                         break;
                 }
             };
@@ -112,6 +115,8 @@ namespace Sitecore.Pathfinder.Languages.Xml
             {
                 context.Trace.TraceError(Msg.P1003, Texts.The_file_does_not_contain_valid_XML, context.Snapshot.SourceFile.AbsoluteFileName, TextSpan.Empty, ex.Message);
             }
+
+            return isValid;
         }
 
         [NotNull]

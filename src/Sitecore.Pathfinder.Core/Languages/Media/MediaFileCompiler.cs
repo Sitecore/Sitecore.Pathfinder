@@ -3,6 +3,7 @@
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Compiling.Compilers;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
@@ -25,10 +26,7 @@ namespace Sitecore.Pathfinder.Languages.Media
         public override void Compile(ICompileContext context, IProjectItem projectItem)
         {
             var mediaFile = projectItem as MediaFile;
-            if (mediaFile == null)
-            {
-                return;
-            }
+            Assert.Cast(mediaFile, nameof(mediaFile));
 
             var extension = Path.GetExtension(mediaFile.Snapshots.First().SourceFile.AbsoluteFileName).TrimStart('.').ToLowerInvariant();
 

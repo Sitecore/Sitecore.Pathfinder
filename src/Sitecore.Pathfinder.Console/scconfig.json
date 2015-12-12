@@ -25,7 +25,7 @@
         "tasks": "help",
 
         // files to copy to website
-        "content-files": ".js .css .config .htm .ashx .asmx",
+        "content-files": ".js, .css,. config, .htm, .ashx, .asmx, .eot, .svg, .ttf, .woff, .woff2, .less, .php",
 
         // if force-update is true, media will always be uploaded and files always copied during emitting
         "force-update": false,
@@ -51,6 +51,16 @@
                 "mp4": "/sitecore/templates/System/Media/Unversioned/Movie",
                 "m4v": "/sitecore/templates/System/Media/Unversioned/Movie"
             }
+        },
+
+        "schema": {
+            "Item-attributes": "Name, Id, Database, Template, IsEmittable, IsExternalReference, Layout.HtmlFile, Template.CreateFromFields, Template.Id, Template.Icon, Template.BaseTemplates, Template.ShortHelp, Template.LongHelp",
+            "Item-childnodes": "Fields, Children, Template",
+            "Fields-childnode": "Field, Unversioned, Versioned, Layout", 
+            "Field-attributes": "Name, Value, Language, Version, Field.Type, Field.SortOrder, Field.Sharing, Field.Source, Field.ShortHelp, Field.LongHelp",
+            "Template-attributes": "Name, Id, Database, Icon, IsEmittable, IsExternalReference, ShortHelp, LongHelp, Layout.HtmlFile", 
+            "Template-childnodes": "Section",
+            "Children-childnode": "Item, Template"
         },
 
         // default search pattern

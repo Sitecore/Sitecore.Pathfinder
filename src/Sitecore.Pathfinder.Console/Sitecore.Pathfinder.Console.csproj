@@ -248,7 +248,7 @@
       <Link>files\website\sitecore\shell\client\Applications\Pathfinder\PackageSources.txt</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="files\project\sitecore.filetemplates\Item.master.content.json">
+    <Content Include="files\project\sitecore.filetemplates\json\item.master.content.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\Packages.cshtml">
@@ -298,7 +298,6 @@
     <None Include="files\project.roles\scconfig.role.Habitat.Design.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\project\bin\readme.md" />
     <None Include="files\project\content\master\readme.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -314,13 +313,13 @@
     <None Include="files\project.noconfig\scconfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\project\sitecore.filetemplates\Item.item.yaml">
+    <None Include="files\project\sitecore.filetemplates\yaml\item.item.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="files\project\sitecore.filetemplates\Item.master.content.yaml">
+    <Content Include="files\project\sitecore.filetemplates\yaml\item.master.content.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="files\project\sitecore.filetemplates\Layout.master.layout.yaml">
+    <Content Include="files\project\sitecore.filetemplates\yaml\layout.master.layout.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="files\project\sitecore.project\packages\Sitecore.Master.8.0.nupkg">
@@ -357,14 +356,14 @@
     <None Include="files\project\sitecore.project\schemas\readme.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\project\sitecore.filetemplates\gruntfile.js">
+    <None Include="files\project\sitecore.filetemplates\grunt\gruntfile.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="files\project\content\master\sitecore\content\Home\Welcome.item.json">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="files\project\sitecore.filetemplates\Layout.master.layout.xml">
+    <Content Include="files\project\sitecore.filetemplates\xml\layout.master.layout.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="files\project\views\readme.md">
@@ -421,16 +420,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="files\project\sitecore.filetemplates\Item.master.content.xml">
+    <Content Include="files\project\sitecore.filetemplates\xml\item.master.content.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="files\project\sitecore.filetemplates\Item.item.xml">
+    <Content Include="files\project\sitecore.filetemplates\xml\item.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="files\project\sitecore.filetemplates\Layout.master.layout.json">
+    <None Include="files\project\sitecore.filetemplates\json\layout.master.layout.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\project\sitecore.filetemplates\gulpfile.js">
+    <None Include="files\project\sitecore.filetemplates\gulp\gulpfile.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="files\project\sitecore.filetemplates\t4\FakeDbFactory.cs.project.tt">
@@ -453,7 +452,7 @@
       <LastGenOutput>TemplateIds.project1.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="files\project\sitecore.filetemplates\Template.item.xml">
+    <Content Include="files\project\sitecore.filetemplates\xml\template.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="files\project\content\master\sitecore\layout\layouts\readme.md">
@@ -471,7 +470,7 @@
     <None Include="files\project\content\master\sitecore\templates\readme.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="files\project\sitecore.filetemplates\htmltemplate.html">
+    <Content Include="files\project\sitecore.filetemplates\html\htmltemplate.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="files\project\sitecore.project\packages\SitecorePathfinderCore.nupkg">
@@ -495,13 +494,13 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="files\project\sitecore.filetemplates\Item.item.json">
+    <None Include="files\project\sitecore.filetemplates\json\item.item.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\project\sitecore.filetemplates\rendering.cshtml">
+    <None Include="files\project\sitecore.filetemplates\cshtml\rendering.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\project\sitecore.filetemplates\Template.item.json">
+    <None Include="files\project\sitecore.filetemplates\json\template.item.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="files\project\sitecore.project\schemas\item.schema.json">
@@ -575,7 +574,9 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="files\project\bin\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions />
   <PropertyGroup>

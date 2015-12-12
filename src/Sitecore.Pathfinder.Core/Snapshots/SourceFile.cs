@@ -75,8 +75,7 @@ namespace Sitecore.Pathfinder.Snapshots
         {
             foreach (var token in tokens)
             {
-                var tokenName = "$" + token.Key;
-                text = text.Replace(tokenName, token.Value);
+                text = text.Replace("$" + token.Key, token.Value);
             }
 
             return text;

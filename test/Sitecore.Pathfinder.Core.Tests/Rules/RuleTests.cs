@@ -1,7 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using NUnit.Framework;
-using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Rules.Contexts;
 
@@ -21,17 +20,6 @@ namespace Sitecore.Pathfinder.Rules
         }
 
         [Test]
-        public void SimpleRule()
-        {
-            var rule = Services.RuleService.ParseRule("simple-rule");
-
-            var context = new RuleContext(Project.Items);
-
-            Assert.IsTrue(rule.EvaluateIf(context));
-            rule.Execute(context);
-        }
-
-        [Test]
         public void NoContentItemsRule()
         {
             var rule = Services.RuleService.ParseRule("no-content-rule");
@@ -41,6 +29,17 @@ namespace Sitecore.Pathfinder.Rules
                 var context = new RuleContext(item);
                 rule.Execute(context);
             }
+        }
+
+        [Test]
+        public void SimpleRule()
+        {
+            var rule = Services.RuleService.ParseRule("simple-rule");
+
+            var context = new RuleContext(Project.Items);
+
+            Assert.IsTrue(rule.EvaluateIf(context));
+            rule.Execute(context);
         }
     }
 }

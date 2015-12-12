@@ -7,8 +7,7 @@ using Sitecore.Pathfinder.Parsing;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
-    [Export]
-    [PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export, PartCreationPolicy(CreationPolicy.NonShared)]
     public class TextSnapshot : Snapshot, ITextSnapshot
     {
         [ImportingConstructor]
@@ -26,8 +25,9 @@ namespace Sitecore.Pathfinder.Snapshots
         [NotNull]
         protected ISnapshotService SnapshotService { get; }
 
-        public virtual void ValidateSchema(IParseContext context)
+        public virtual bool ValidateSchema(IParseContext context)
         {
+            return true;
         }
 
         public override ISnapshot With(ISourceFile sourceFile)
@@ -55,10 +55,7 @@ namespace Sitecore.Pathfinder.Snapshots
         protected virtual void ParseDirectives([NotNull] SnapshotParseContext snapshotParseContext, [NotNull] ITextNode parentTextNode, [NotNull] ITextNode textNode)
         {
             var mutableParentTextNode = parentTextNode as IMutableTextNode;
-            if (mutableParentTextNode == null)
-            {
-                return;
-            }
+            Assert.Cast(mutableParentTextNode, nameof(mutableParentTextNode));
 
             IEnumerable<ITextNode> newTextNodes = null;
 
@@ -83,6 +80,7 @@ namespace Sitecore.Pathfinder.Snapshots
             var childNodes = mutableParentTextNode.ChildNodeCollection;
             var index = childNodes.IndexOf(textNode);
             childNodes.Remove(textNode);
+            
             // todo: remove direct cast
             ((List<ITextNode>)childNodes).InsertRange(index, newTextNodes);
 

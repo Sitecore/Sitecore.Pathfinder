@@ -19,9 +19,7 @@ namespace Sitecore.Pathfinder.Snapshots
         All = SupportTildeInFileNames | SupportsTrueAndFalseForBooleanFields
     }
 
-    [Export]
-    [PartCreationPolicy(CreationPolicy.NonShared)]
-    [DebuggerDisplay("\\{{GetType().Name,nq}\\}: ProjectFileName: {SourceFile.ProjectFileName}")]
+    [Export, PartCreationPolicy(CreationPolicy.NonShared), DebuggerDisplay("\\{{GetType().Name,nq}\\}: ProjectFileName: {SourceFile.ProjectFileName}")]
     public class Snapshot : ISnapshot
     {
         [NotNull]

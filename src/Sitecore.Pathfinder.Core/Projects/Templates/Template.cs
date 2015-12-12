@@ -14,17 +14,14 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull]
         public static readonly Template Empty = new Template(Projects.Project.Empty, TextNode.Empty, new Guid("{00000000-0000-0000-0000-000000000000}"), string.Empty, string.Empty, string.Empty);
 
-        [CanBeNull]
-        [ItemNotNull]
+        [CanBeNull, ItemNotNull]
         private ID[] _baseTemplates;
 
         public Template([NotNull] IProject project, [NotNull] ITextNode textNode, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, textNode, guid, databaseName, itemName, itemIdOrPath)
         {
         }
 
-        [NotNull]
-        [ItemNotNull]
-        [Obsolete("Use BaseTemplates instead", false)]
+        [NotNull, ItemNotNull, Obsolete("Use BaseTemplates instead", false)]
         public ID[] BaseTemplateIDs => _baseTemplates ?? (_baseTemplates = BaseTemplates.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries).Select(id => new ID(id)).ToArray());
 
         [NotNull]
@@ -41,8 +38,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull]
         public SourceProperty<string> BaseTemplatesProperty { get; } = new SourceProperty<string>("BaseTemplates", string.Empty);
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         public IEnumerable<TemplateField> Fields => Sections.SelectMany(s => s.Fields);
 
         [NotNull]
@@ -55,8 +51,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull]
         public SourceProperty<string> LongHelpProperty { get; } = new SourceProperty<string>("LongHelp", string.Empty);
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         public IList<TemplateSection> Sections { get; } = new List<TemplateSection>();
 
         [NotNull]
@@ -72,8 +67,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [CanBeNull]
         public Item StandardValuesItem { get; set; }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         public virtual IEnumerable<TemplateField> GetAllFields()
         {
             var templates = new List<ProjectItemUri>();
@@ -99,9 +93,8 @@ namespace Sitecore.Pathfinder.Projects.Templates
             Merge(newTemplate, true);
         }
 
-        [NotNull]
-        [ItemNotNull]
-        protected virtual IEnumerable<TemplateField> GetAllFields([NotNull] [ItemNotNull] ICollection<ProjectItemUri> templates, [NotNull] Template template)
+        [NotNull, ItemNotNull]
+        protected virtual IEnumerable<TemplateField> GetAllFields([NotNull, ItemNotNull]  ICollection<ProjectItemUri> templates, [NotNull] Template template)
         {
             templates.Add(template.Uri);
 
@@ -141,10 +134,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
             base.Merge(newProjectItem, overwrite);
 
             var newTemplate = newProjectItem as Template;
-            if (newTemplate == null)
-            {
-                return;
-            }
+            Assert.Cast(newTemplate, nameof(newTemplate));
 
             if (!string.IsNullOrEmpty(newTemplate.BaseTemplates))
             {

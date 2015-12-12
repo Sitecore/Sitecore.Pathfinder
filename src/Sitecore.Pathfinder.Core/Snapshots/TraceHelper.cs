@@ -8,7 +8,7 @@ namespace Sitecore.Pathfinder.Snapshots
     public static class TraceHelper
     {
         [NotNull]
-        public static ITextNode GetTextNode([NotNull] [ItemCanBeNull] params IHasSourceTextNodes[] sourceTextNodes)
+        public static ITextNode GetTextNode([NotNull, ItemCanBeNull]  params IHasSourceTextNodes[] sourceTextNodes)
         {
             foreach (var sourceTextNode in sourceTextNodes)
             {

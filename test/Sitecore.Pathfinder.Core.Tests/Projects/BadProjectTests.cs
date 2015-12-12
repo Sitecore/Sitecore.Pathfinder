@@ -24,54 +24,54 @@ namespace Sitecore.Pathfinder.Projects
         public void XmlItemTest()
         {
             var item = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/XmlItem") as Item;
-            Assert.IsNotNull(item);
+            NUnit.Framework.Assert.IsNotNull(item);
 
             var diagnostic = Project.Diagnostics.FirstOrDefault(d => d.Text == "Item path reference not found: /sitecore/media library/badlink");
-            Assert.IsNotNull(diagnostic);
-            Assert.AreEqual(Severity.Error, diagnostic.Severity);
-            Assert.AreEqual(3, diagnostic.Span.LineNumber);
-            Assert.AreEqual(10, diagnostic.Span.LinePosition);
-            Assert.AreEqual(5, diagnostic.Span.Length);
+            NUnit.Framework.Assert.IsNotNull(diagnostic);
+            NUnit.Framework.Assert.AreEqual(Severity.Error, diagnostic.Severity);
+            NUnit.Framework.Assert.AreEqual(3, diagnostic.Span.LineNumber);
+            NUnit.Framework.Assert.AreEqual(10, diagnostic.Span.LinePosition);
+            NUnit.Framework.Assert.AreEqual(5, diagnostic.Span.Length);
 
             // link field
             var linkField = item.Fields.FirstOrDefault(f => f.FieldName == "BadLink");
-            Assert.IsNotNull(linkField);
-            Assert.AreEqual("/sitecore/media library/badlink", linkField.Value);
-            Assert.AreEqual(string.Empty, linkField.CompiledValue);
+            NUnit.Framework.Assert.IsNotNull(linkField);
+            NUnit.Framework.Assert.AreEqual("/sitecore/media library/badlink", linkField.Value);
+            NUnit.Framework.Assert.AreEqual(string.Empty, linkField.CompiledValue);
             diagnostic = Project.Diagnostics.FirstOrDefault(d => d.Text == "Link field reference not found: /sitecore/media library/badlink");
-            Assert.IsNotNull(diagnostic);
+            NUnit.Framework.Assert.IsNotNull(diagnostic);
 
             // link field
             linkField = item.Fields.FirstOrDefault(f => f.FieldName == "BadLink1");
-            Assert.IsNotNull(linkField);
-            Assert.AreEqual("/sitecore/media library/badlink", linkField.Value);
-            Assert.AreEqual(string.Empty, linkField.CompiledValue);
+            NUnit.Framework.Assert.IsNotNull(linkField);
+            NUnit.Framework.Assert.AreEqual("/sitecore/media library/badlink", linkField.Value);
+            NUnit.Framework.Assert.AreEqual(string.Empty, linkField.CompiledValue);
 
             // link field
             linkField = item.Fields.FirstOrDefault(f => f.FieldName == "BadLink2");
-            Assert.IsNotNull(linkField);
-            Assert.AreEqual("", linkField.Value);
-            Assert.AreEqual(string.Empty, linkField.CompiledValue);
-          
+            NUnit.Framework.Assert.IsNotNull(linkField);
+            NUnit.Framework.Assert.AreEqual("", linkField.Value);
+            NUnit.Framework.Assert.AreEqual(string.Empty, linkField.CompiledValue);
+
             // multiple links field
             linkField = item.Fields.FirstOrDefault(f => f.FieldName == "Multiple");
-            Assert.IsNotNull(linkField);
-            Assert.AreEqual("/sitecore/media library/badlink|/sitecore/media library/badlink", linkField.Value);
-            Assert.AreEqual(string.Empty, linkField.CompiledValue);
-          
+            NUnit.Framework.Assert.IsNotNull(linkField);
+            NUnit.Framework.Assert.AreEqual("/sitecore/media library/badlink|/sitecore/media library/badlink", linkField.Value);
+            NUnit.Framework.Assert.AreEqual(string.Empty, linkField.CompiledValue);
+
             // image field
             var imageField = item.Fields.FirstOrDefault(f => f.FieldName == "BadImage");
-            Assert.IsNotNull(imageField);
-            Assert.AreEqual("/sitecore/media library/badlink", imageField.Value);
-            Assert.AreEqual(string.Empty, imageField.CompiledValue);
+            NUnit.Framework.Assert.IsNotNull(imageField);
+            NUnit.Framework.Assert.AreEqual("/sitecore/media library/badlink", imageField.Value);
+            NUnit.Framework.Assert.AreEqual(string.Empty, imageField.CompiledValue);
             diagnostic = Project.Diagnostics.FirstOrDefault(d => d.Text == "Image reference not found: /sitecore/media library/badlink");
-            Assert.IsNotNull(diagnostic);
+            NUnit.Framework.Assert.IsNotNull(diagnostic);
 
             // image field
             imageField = item.Fields.FirstOrDefault(f => f.FieldName == "BadImage2");
-            Assert.IsNotNull(imageField);
-            Assert.AreEqual(string.Empty, imageField.Value);
-            Assert.AreEqual(string.Empty, imageField.CompiledValue);
+            NUnit.Framework.Assert.IsNotNull(imageField);
+            NUnit.Framework.Assert.AreEqual(string.Empty, imageField.Value);
+            NUnit.Framework.Assert.AreEqual(string.Empty, imageField.CompiledValue);
         }
     }
 }

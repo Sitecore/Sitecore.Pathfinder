@@ -26,10 +26,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
         public override void Compile(ICompileContext context, IProjectItem projectItem)
         {
             var serializationFile = projectItem as SerializationFile;
-            if (serializationFile == null)
-            {
-                return;
-            }
+            Assert.Cast(serializationFile, nameof(serializationFile));
 
             var textDocument = (ITextSnapshot)serializationFile.Snapshots.First();
             var rootTextNode = textDocument.Root;

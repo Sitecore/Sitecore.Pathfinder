@@ -1,6 +1,5 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -28,9 +27,9 @@ namespace Sitecore.Pathfinder.Building.Assembling
 
             var fileName = PathHelper.Combine(context.ProjectDirectory, context.Configuration.GetString(Constants.Configuration.WriteExportsFileName));
 
-            Directory.CreateDirectory(Path.GetDirectoryName(fileName) ?? string.Empty);
+            context.FileSystem.CreateDirectory(Path.GetDirectoryName(fileName) ?? string.Empty);
 
-            var fieldToWrite = context.Configuration.GetString(Constants.Configuration.WriteExportsFieldsToWrite).Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(f => f.Trim().ToLowerInvariant()).ToList();
+            var fieldToWrite = context.Configuration.GetCommaSeparatedStringList(Constants.Configuration.WriteExportsFieldsToWrite).Select(f => f.ToLowerInvariant()).ToList();
 
             using (var writer = new StreamWriter(fileName))
             {

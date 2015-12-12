@@ -215,7 +215,7 @@ namespace Sitecore.Pathfinder
 
             public const string IsEmittable = "IsEmittable";
 
-            public const string IsExtern = "IsExternalReference";
+            public const string IsImport = "IsExternalReference";
 
             public static readonly Guid ArchiveDate = new Guid("{56C15C6D-FD5A-40CA-BB37-64CEEC6A9BD5}");
 

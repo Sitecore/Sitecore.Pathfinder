@@ -2,7 +2,6 @@
 
 using System.Linq;
 using NUnit.Framework;
-using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Xml.XPath;
 

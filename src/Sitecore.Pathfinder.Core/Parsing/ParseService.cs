@@ -78,11 +78,11 @@ namespace Sitecore.Pathfinder.Parsing
             };
 
             var snapshotParseContext = new SnapshotParseContext(SnapshotService, tokens, new Dictionary<string, List<ITextNode>>());
-
             var snapshot = SnapshotService.LoadSnapshot(snapshotParseContext, sourceFile);
 
             var parseContext = Factory.ParseContext(project, snapshot, pathMappingContext);
 
+            var parsed = false;
             foreach (var parser in Parsers.OrderBy(p => p.Priority))
             {
                 try
@@ -90,12 +90,18 @@ namespace Sitecore.Pathfinder.Parsing
                     if (parser.CanParse(parseContext))
                     {
                         parser.Parse(parseContext);
+                        parsed = true;
                     }
                 }
                 catch (Exception ex)
                 {
-                    parseContext.Trace.TraceError(Msg.P1013, ex.Message, sourceFile.AbsoluteFileName, TextSpan.Empty);
+                    parseContext.Trace.TraceError(Msg.P1013, ex.Message, sourceFile);
                 }
+            }
+
+            if (!parsed)
+            {
+                parseContext.Trace.TraceWarning(Msg.P1024, "No parser found for file. If the file is a content file, add the file extension to the 'build-project:content-files' setting", sourceFile);
             }
         }
 
