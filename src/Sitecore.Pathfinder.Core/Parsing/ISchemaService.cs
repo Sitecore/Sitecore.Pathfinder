@@ -10,5 +10,7 @@ namespace Sitecore.Pathfinder.Parsing
         bool ValidateSnapshotSchema([NotNull] IParseContext context, [NotNull] ITextSnapshot textSnapshot);
 
         bool ValidateTextNodeSchema([NotNull] ITextNode textNode);
+
+        bool ValidateTextNodeSchema([NotNull] ITextNode textNode, [NotNull] string textNodeName);
     }
 }

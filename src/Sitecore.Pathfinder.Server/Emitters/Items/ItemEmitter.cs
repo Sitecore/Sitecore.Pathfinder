@@ -28,7 +28,9 @@ namespace Sitecore.Pathfinder.Emitters.Items
 
         public override void Emit(IEmitContext context, IProjectItem projectItem)
         {
-            var item = (Item)projectItem;
+            var item = projectItem as Item;
+            Assert.Cast(item, nameof(item));
+
             if (!item.IsEmittable || item.IsImport)
             {
                 return;
@@ -53,6 +55,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
                 throw new RetryableEmitException(Texts.Template_missing, TraceHelper.GetTextNode(item.TemplateIdOrPathProperty), item.TemplateIdOrPath);
             }
 
+            // todo: convert to pipeline
             ValidateFields(database, template, item);
 
             var itemWriter = new ItemWriter

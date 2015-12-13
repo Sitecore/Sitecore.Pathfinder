@@ -34,13 +34,14 @@ namespace Sitecore.Pathfinder.Configuration
         private IReferenceParserService _referenceParser;
 
         [ImportingConstructor]
-        public FactoryService([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] IConsoleService console, [NotNull] IPipelineService pipelineService, [NotNull] IFileSystemService fileSystem)
+        public FactoryService([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] IConsoleService console, [NotNull] IPipelineService pipelineService, [NotNull] IFileSystemService fileSystem, [NotNull] ISchemaService schemaService)
         {
             Configuration = configuration;
             CompositionService = compositionService;
             Console = console;
             PipelineService = pipelineService;
             FileSystem = fileSystem;
+            SchemaService = schemaService;
         }
 
         [NotNull]
@@ -54,6 +55,9 @@ namespace Sitecore.Pathfinder.Configuration
 
         [NotNull]
         protected IFileSystemService FileSystem { get; }
+
+        [NotNull]
+        protected ISchemaService SchemaService { get; }
 
         [NotNull]
         protected IPathMapperService PathMapper { get; }
@@ -152,7 +156,7 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual IParseContext ParseContext(IProject project, ISnapshot snapshot, PathMappingContext pathMappingContext)
         {
-            return new ParseContext(Configuration, Console, this, PipelineService, ReferenceParser).With(project, snapshot, pathMappingContext);
+            return new ParseContext(Configuration, Console, this, PipelineService, SchemaService, ReferenceParser).With(project, snapshot, pathMappingContext);
         }
 
         public virtual IProject Project(ProjectOptions projectOptions, List<string> sourceFileNames)

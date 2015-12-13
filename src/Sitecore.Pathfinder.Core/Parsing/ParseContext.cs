@@ -15,12 +15,13 @@ namespace Sitecore.Pathfinder.Parsing
     public class ParseContext : IParseContext
     {
         [ImportingConstructor]
-        public ParseContext([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] IFactoryService factory, [NotNull] IPipelineService pipelineService, [NotNull] IReferenceParserService referenceParser)
+        public ParseContext([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] IFactoryService factory, [NotNull] IPipelineService pipelineService, [NotNull] ISchemaService schemaService, [NotNull] IReferenceParserService referenceParser)
         {
             Configuration = configuration;
             Console = console;
             Factory = factory;
             PipelineService = pipelineService;
+            SchemaService = schemaService;
             ReferenceParser = referenceParser;
             Snapshot = Snapshots.Snapshot.Empty;
         }
@@ -42,6 +43,9 @@ namespace Sitecore.Pathfinder.Parsing
         public IProject Project { get; private set; }
 
         public IReferenceParserService ReferenceParser { get; }
+
+        [NotNull]
+        public ISchemaService SchemaService { get; }
 
         public ISnapshot Snapshot { get; private set; }
 

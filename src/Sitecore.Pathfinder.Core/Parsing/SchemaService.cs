@@ -41,15 +41,19 @@ namespace Sitecore.Pathfinder.Parsing
 
         public bool ValidateTextNodeSchema(ITextNode textNode)
         {
+            return ValidateTextNodeSchema(textNode, textNode.Key);
+        }
+
+        public bool ValidateTextNodeSchema(ITextNode textNode, string textNodeName)
+        {
             Assert.IsNotNullOrEmpty(textNode.Key);
 
             var result = true;
-            var key = textNode.Key;
 
             HashSet<string> hashSet;
-            if (!_schema.TryGetValue(key, out hashSet))
+            if (!_schema.TryGetValue(textNodeName, out hashSet))
             {
-                _schema.TryGetValue(key + "-attributes", out hashSet);
+                _schema.TryGetValue(textNodeName + "-attributes", out hashSet);
             }
 
             if (hashSet != null)
@@ -64,7 +68,7 @@ namespace Sitecore.Pathfinder.Parsing
                 }
             }
 
-            if (_schema.TryGetValue(key + "-childnodes", out hashSet))
+            if (_schema.TryGetValue(textNodeName + "-childnodes", out hashSet))
             {
                 foreach (var childNode in textNode.ChildNodes)
                 {

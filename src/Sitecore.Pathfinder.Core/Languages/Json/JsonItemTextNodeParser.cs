@@ -62,6 +62,8 @@ namespace Sitecore.Pathfinder.Languages.Json
 
         protected override void ParseUnversionedTextNode(ItemParseContext context, Item item, ITextNode textNode)
         {
+            context.ParseContext.SchemaService.ValidateTextNodeSchema(textNode);
+
             foreach (var languageChildNode in textNode.ChildNodes)
             {
                 var fieldContext = new LanguageVersionContext();
@@ -72,6 +74,8 @@ namespace Sitecore.Pathfinder.Languages.Json
 
         protected override void ParseVersionedTextNode(ItemParseContext context, Item item, ITextNode textNode)
         {
+            context.ParseContext.SchemaService.ValidateTextNodeSchema(textNode);
+
             foreach (var languageChildNode in textNode.ChildNodes)
             {
                 foreach (var versionChildNode in languageChildNode.ChildNodes)

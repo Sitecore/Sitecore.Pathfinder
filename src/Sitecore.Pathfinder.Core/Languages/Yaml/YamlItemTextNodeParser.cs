@@ -46,6 +46,8 @@ namespace Sitecore.Pathfinder.Languages.Yaml
         {
             var firstChildNode = textNode.ChildNodes.First();
 
+            context.ParseContext.SchemaService.ValidateTextNodeSchema(firstChildNode);
+
             var fieldContext = new LanguageVersionContext();
             fieldContext.LanguageProperty.SetValue(new AttributeNameTextNode(firstChildNode));
 
@@ -58,6 +60,8 @@ namespace Sitecore.Pathfinder.Languages.Yaml
         protected override void ParseVersionedTextNode(ItemParseContext context, Item item, ITextNode textNode)
         {
             var firstChildNode = textNode.ChildNodes.First();
+
+            context.ParseContext.SchemaService.ValidateTextNodeSchema(firstChildNode);
 
             foreach (var node in firstChildNode.ChildNodes)
             {

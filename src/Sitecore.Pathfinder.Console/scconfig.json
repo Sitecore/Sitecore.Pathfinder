@@ -58,8 +58,12 @@
             "Item-childnodes": "Fields, Children, Template",
             "Fields-childnode": "Field, Unversioned, Versioned, Layout", 
             "Field-attributes": "Name, Value, Language, Version, Field.Type, Field.SortOrder, Field.Sharing, Field.Source, Field.ShortHelp, Field.LongHelp",
-            "Template-attributes": "Name, Id, Database, Icon, IsEmittable, IsExternalReference, ShortHelp, LongHelp, Layout.HtmlFile", 
+            "Template-attributes": "Name, Id, Database, Icon, IsEmittable, IsExternalReference, ShortHelp, LongHelp, Layout.HtmlFile",
             "Template-childnodes": "Section",
+            "TemplateSection-attributes": "Name, Id",
+            "TemplateSection-childnodes": "Field",
+            "TemplateField-attributes": "Name, Id, Type, Sharing, Source, ShortHelp, LongHelp, SortOrder, StandardValue",
+            "TemplateField-childnodes": "",
             "Children-childnode": "Item, Template"
         },
 
