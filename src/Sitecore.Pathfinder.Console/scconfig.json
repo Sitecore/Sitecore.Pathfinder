@@ -56,7 +56,7 @@
         "schema": {
             "Item-attributes": "Name, Id, Database, Template, IsEmittable, IsExternalReference, Layout.HtmlFile, Template.CreateFromFields, Template.Id, Template.Icon, Template.BaseTemplates, Template.ShortHelp, Template.LongHelp",
             "Item-childnodes": "Fields, Children, Template",
-            "Fields-childnode": "Field, Unversioned, Versioned, Layout", 
+            "Fields-childnodes": "Field, Unversioned, Versioned, Layout", 
             "Field-attributes": "Name, Value, Language, Version, Field.Type, Field.SortOrder, Field.Sharing, Field.Source, Field.ShortHelp, Field.LongHelp",
             "Template-attributes": "Name, Id, Database, Icon, IsEmittable, IsExternalReference, ShortHelp, LongHelp, Layout.HtmlFile",
             "Template-childnodes": "Section",
@@ -64,7 +64,7 @@
             "TemplateSection-childnodes": "Field",
             "TemplateField-attributes": "Name, Id, Type, Sharing, Source, ShortHelp, LongHelp, SortOrder, StandardValue",
             "TemplateField-childnodes": "",
-            "Children-childnode": "Item, Template"
+            "Children-childnodes": "Item, Template"
         },
 
         // default search pattern
@@ -135,19 +135,6 @@
     },
 
     "reset-website": {
-        "master": {
-        },
-        "core": {
-        },
-        "files": {
-        }
-    },
-
-    "run-unittests": {
-        "local-test-directory": "Tests",
-
-        "web-test-runner-url": "/sitecore/shell/client/Applications/Pathfinder/WebTestRunner",
-        "web-test-runner-name": "NUnit"
     },
 
     "sync-website": {
