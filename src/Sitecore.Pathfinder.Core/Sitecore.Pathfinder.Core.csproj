@@ -190,6 +190,12 @@
     <Compile Include="Projects\Items\ItemPublishing.cs" />
     <Compile Include="Projects\IUnloadable.cs" />
     <Compile Include="Projects\ProjectImportsService.cs" />
+    <Compile Include="ProjectTrees\FileProjectTreeItem.cs" />
+    <Compile Include="ProjectTrees\IProjectTree.cs" />
+    <Compile Include="ProjectTrees\IProjectTreeItem.cs" />
+    <Compile Include="ProjectTrees\ProjectTree.cs" />
+    <Compile Include="ProjectTrees\ProjectTreeItemBase.cs" />
+    <Compile Include="ProjectTrees\ProjectTreeUri.cs" />
     <Compile Include="Rules\ActionBase.cs" />
     <Compile Include="Rules\Actions\AbortAction.cs" />
     <Compile Include="Rules\Actions\TraceActionBase.cs" />
