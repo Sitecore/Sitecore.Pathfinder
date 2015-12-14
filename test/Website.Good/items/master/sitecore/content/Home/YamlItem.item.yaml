@@ -47,7 +47,7 @@
           Field.Type      : Checkbox
           Value           : False
 
-        - File.Include : ~/includes/Field.include.item.json
+        - File.Include : ~/includes/Field.include.item.xml
         
         - File.Include : ~/includes/ParameterizedField.include.item.xml
           Name  : ParameterizedField
@@ -79,23 +79,23 @@
                 Layout: /sitecore/layout/Layouts/MvcLayout
                 - HelloWorld :
                     DataSource: /sitecore
-    
-    - Item :
-        Name     : YamlSubitem
-        Template : /sitecore/templates/Sample/YamlItemTemplate
-        - Fields :
-            - Field : Title
-              Value : Hello
+    - Children :
+        - Item :
+            Name     : YamlSubitem
+            Template : /sitecore/templates/Sample/YamlItemTemplate
+            - Fields :
+                - Field : Title
+                  Value : Hello
 
-    - Template :  
-        Name      : ItemYamlItemTemplate
-        Icon      : Applications/16x16/About.png
-        ShortHelp : Short Help.
-        LongHelp  : Long help.
-        - Section :
-            Name : Fields
-            - Field :
-                Name      : Header
-                Type      : Single-Line Text
-                ShortHelp : Short Help.
-                LongHelp  : Long help.
+        - Template :  
+            Name      : ItemYamlItemTemplate
+            Icon      : Applications/16x16/About.png
+            ShortHelp : Short Help.
+            LongHelp  : Long help.
+            - Section :
+                Name : Fields
+                - Field :
+                    Name      : Header
+                    Type      : Single-Line Text
+                    ShortHelp : Short Help.
+                    LongHelp  : Long help.

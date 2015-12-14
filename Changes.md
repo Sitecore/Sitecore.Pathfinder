@@ -7,6 +7,8 @@ Version Next
 * Add: XPath expressions (2015-12-03)
 * Add: PathMapper API (2015-12-07)
 * Add: Serializing Data Provider (2015-12-09)
+* Add: Stricter checking using build-project:schema setting (2015-12-12)
+* Add: Renamed /content directory to /items to avoid conflict with ASP.NET 5 (2015-12-12)
 
 Version 0.5.0
 =============

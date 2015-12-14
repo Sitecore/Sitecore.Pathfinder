@@ -298,10 +298,10 @@
     <None Include="files\project.roles\scconfig.role.Habitat.Design.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\project\content\master\readme.md">
+    <None Include="files\project\items\master\readme.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\project\content\readme.md">
+    <None Include="files\project\items\readme.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="files\project\includes\readme.md">
@@ -359,7 +359,7 @@
     <None Include="files\project\sitecore.filetemplates\grunt\gruntfile.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\project\content\master\sitecore\content\Home\Welcome.item.json">
+    <None Include="files\project\items\master\sitecore\content\Home\Welcome.item.json">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -455,19 +455,19 @@
     <Content Include="files\project\sitecore.filetemplates\xml\template.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="files\project\content\master\sitecore\layout\layouts\readme.md">
+    <None Include="files\project\items\master\sitecore\layout\layouts\readme.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\project\content\master\sitecore\layout\renderings\readme.md">
+    <None Include="files\project\items\master\sitecore\layout\renderings\readme.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\project\content\master\sitecore\media library\readme.md">
+    <None Include="files\project\items\master\sitecore\media library\readme.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\project\content\master\sitecore\system\readme.md">
+    <None Include="files\project\items\master\sitecore\system\readme.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\project\content\master\sitecore\templates\readme.md">
+    <None Include="files\project\items\master\sitecore\templates\readme.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="files\project\sitecore.filetemplates\html\htmltemplate.html">

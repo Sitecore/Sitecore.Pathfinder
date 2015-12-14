@@ -46,7 +46,10 @@ namespace Sitecore.Pathfinder.Parsing
 
         public bool ValidateTextNodeSchema(ITextNode textNode, string textNodeName)
         {
-            Assert.IsNotNullOrEmpty(textNode.Key);
+            if (string.IsNullOrEmpty(textNode.Key))
+            {
+                return true;
+            }
 
             var result = true;
 
@@ -62,7 +65,7 @@ namespace Sitecore.Pathfinder.Parsing
                 {
                     if (!hashSet.Contains(attribute.Key))
                     {
-                        Trace.TraceError("Unexpected attribute", attribute, attribute.Key);
+                        Trace.TraceError("'" + textNode.Key + "' element has unexpected attribute", attribute, attribute.Key);
                         result = false;
                     }
                 }
@@ -74,7 +77,7 @@ namespace Sitecore.Pathfinder.Parsing
                 {
                     if (!hashSet.Contains(childNode.Key))
                     {
-                        Trace.TraceError("Unexpected child node", childNode, childNode.Key);
+                        Trace.TraceError("'" + textNode.Key + "' element has unexpected child node", childNode, childNode.Key);
                         result = false;
                     }
                 }

@@ -1,5 +1,4 @@
 ﻿{
-    "$schema": "../../../../sitecore.pathfinder.console/files/project/sitecore.project/schemas/item.schema.json#",
     "Item": {
         "Name": "$ItemName",
         "Template": "/sitecore/templates/Sample/JsonPlaceholderItem",

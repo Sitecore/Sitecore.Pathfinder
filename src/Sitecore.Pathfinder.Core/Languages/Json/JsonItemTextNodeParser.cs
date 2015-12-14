@@ -2,6 +2,7 @@
 
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing.Items;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
@@ -29,6 +30,22 @@ namespace Sitecore.Pathfinder.Languages.Json
             }
 
             base.ParseFieldsTextNode(context, item, textNode);
+        }
+
+        protected override void ParseChildrenTextNodes(ItemParseContext context, Item item, ITextNode textNode)
+        {
+            foreach (var childNode in textNode.ChildNodes)
+            {
+                // id child node is blank and first child is "Item", then this is probably an File.Include item
+                var child = childNode;
+                if (string.IsNullOrEmpty(child.Key) && !child.Attributes.Any() && child.ChildNodes.Count() == 1 && child.ChildNodes.First().Key == "Item")
+                {
+                    child = childNode.ChildNodes.First();
+                }
+
+                var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, PathHelper.CombineItemPath(context.ParentItemPath, item.ItemName), item.IsImport);
+                Parse(newContext, child);
+            }
         }
 
         protected override void ParseFieldTextNode(ItemParseContext context, Item item, LanguageVersionContext languageVersionContext, ITextNode textNode)

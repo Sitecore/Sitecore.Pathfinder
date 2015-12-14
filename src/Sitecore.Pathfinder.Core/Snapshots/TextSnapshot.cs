@@ -42,6 +42,7 @@ namespace Sitecore.Pathfinder.Snapshots
         [NotNull]
         protected virtual ITextNode ParseDirectives([NotNull] SnapshotParseContext snapshotParseContext, [NotNull] ITextNode textNode)
         {
+            // todo: dangereous cast
             var childNodes = (List<ITextNode>)textNode.ChildNodes;
 
             for (var index = childNodes.Count - 1; index >= 0; index--)

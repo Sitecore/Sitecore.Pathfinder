@@ -83,8 +83,6 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
         protected virtual void ParseFieldsTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode fieldsTextNode)
         {
-            context.ParseContext.SchemaService.ValidateTextNodeSchema(fieldsTextNode);
-
             var languageVersionContext = new LanguageVersionContext();
 
             foreach (var childNode in fieldsTextNode.ChildNodes)

@@ -54,13 +54,13 @@
         },
 
         "schema": {
-            "Item-attributes": "Name, Id, Database, Template, IsEmittable, IsExternalReference, Layout.HtmlFile, Template.CreateFromFields, Template.Id, Template.Icon, Template.BaseTemplates, Template.ShortHelp, Template.LongHelp",
+            "Item-attributes": "Name, Id, Database, Icon, Template, IsEmittable, IsExternalReference, Layout.HtmlFile, Template.CreateFromFields, Template.Id, Template.Icon, Template.BaseTemplates, Template.ShortHelp, Template.LongHelp",
             "Item-childnodes": "Fields, Children, Template",
             "Fields-childnodes": "Field, Unversioned, Versioned, Layout", 
             "Field-attributes": "Name, Value, Language, Version, Field.Type, Field.SortOrder, Field.Sharing, Field.Source, Field.ShortHelp, Field.LongHelp",
-            "Template-attributes": "Name, Id, Database, Icon, IsEmittable, IsExternalReference, ShortHelp, LongHelp, Layout.HtmlFile",
-            "Template-childnodes": "Section",
-            "TemplateSection-attributes": "Name, Id",
+            "Template-attributes": "Name, Id, Database, Icon, IsEmittable, IsExternalReference, ShortHelp, LongHelp, BaseTemplates, Layout.HtmlFile",
+            "Template-childnodes": "Section, Sections",
+            "TemplateSection-attributes": "Name, Id, Icon",
             "TemplateSection-childnodes": "Field",
             "TemplateField-attributes": "Name, Id, Type, Sharing, Source, ShortHelp, LongHelp, SortOrder, StandardValue",
             "TemplateField-childnodes": "",

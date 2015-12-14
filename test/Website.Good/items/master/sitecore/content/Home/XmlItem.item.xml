@@ -11,7 +11,7 @@
         <Field Name="TrueCheckbox" Field.Type="Checkbox" Field.ShortHelp="Checkbox field." Field.LongHelp="Checkbox field.">True</Field>
         <Field Name="FalseCheckbox" Field.Type="Checkbox" Field.ShortHelp="Checkbox field." Field.LongHelp="Checkbox field.">False</Field>
         
-        <File.Include File="~/includes/Field.include.item.json" />
+        <File.Include File="~/includes/Field.include.item.xml" />
         <File.Include File="~/includes/ParameterizedField.include.item.xml" Name="ParameterizedField" Value="Parameterized Value"/>
 
         <Unversioned Language="da-DK">                     
@@ -34,21 +34,23 @@
         </Layout>
     </Fields>
 
-    <File.Include File="~/includes/PlaceholderItem.include.item.xml" ItemName="PlaceholderItem">
-        <Placeholder>
-            <Field Name="PlaceholderText" Field.ShortHelp="Placeholder Text." Field.LongHelp="Placeholder Text.">Placeholder text.</Field>
-        </Placeholder>
-    </File.Include>
+    <Children>
+        <File.Include File="~/includes/PlaceholderItem.include.item.xml" ItemName="PlaceholderItem">
+            <Placeholder>
+                <Field Name="PlaceholderText" Field.ShortHelp="Placeholder Text." Field.LongHelp="Placeholder Text.">Placeholder text.</Field>
+            </Placeholder>
+        </File.Include>
 
-    <Item Name="XmlSubitem" Template="/sitecore/templates/Sample/XmlItemTemplate">
-        <Fields>
-            <Field Name="Title">Hello</Field>
-        </Fields>
-    </Item>
+        <Item Name="XmlSubitem" Template="/sitecore/templates/Sample/XmlItemTemplate">
+            <Fields>
+                <Field Name="Title">Hello</Field>
+            </Fields>
+        </Item>
 
-    <Template Name="ItemXmlItemTemplate" Icon="Applications/16x16/About.png" ShortHelp="Short Help." LongHelp="Long help.">
-        <Section Name="Fields">
-            <Field Name="Header" Type="Single-Line Text" ShortHelp="Short Help." LongHelp="Long help." />
-        </Section>
-    </Template>
+        <Template Name="ItemXmlItemTemplate" Icon="Applications/16x16/About.png" ShortHelp="Short Help." LongHelp="Long help.">
+            <Section Name="Fields">
+                <Field Name="Header" Type="Single-Line Text" ShortHelp="Short Help." LongHelp="Long help." />
+            </Section>
+        </Template>
+    </Children>
 </Item>

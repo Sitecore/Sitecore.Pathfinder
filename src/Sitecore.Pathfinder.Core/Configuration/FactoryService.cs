@@ -134,9 +134,9 @@ namespace Sitecore.Pathfinder.Configuration
             return new ItemBuilder(this);
         }
 
-        public virtual ItemParseContext ItemParseContext(IParseContext context, ItemParser itemParser, string databaseName, string parentItemPath, bool isExtern)
+        public virtual ItemParseContext ItemParseContext(IParseContext context, ItemParser itemParser, string databaseName, string parentItemPath, bool isImport)
         {
-            return new ItemParseContext(context, itemParser, databaseName, parentItemPath, isExtern);
+            return new ItemParseContext(context, itemParser, databaseName, parentItemPath, isImport);
         }
 
         public virtual LayoutReference LayoutReference(IProjectItem projectItem, SourceProperty<string> layoutSourceProperty)

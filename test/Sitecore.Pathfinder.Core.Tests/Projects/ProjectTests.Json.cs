@@ -2,10 +2,8 @@
 
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json;
 using NUnit.Framework;
 using Sitecore.Pathfinder.Languages.Json;
-using Sitecore.Pathfinder.Languages.Xml;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 

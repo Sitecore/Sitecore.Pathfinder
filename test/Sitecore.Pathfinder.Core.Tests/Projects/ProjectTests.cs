@@ -57,7 +57,7 @@ namespace Sitecore.Pathfinder.Projects
                 Console.WriteLine();
             }
 
-            Assert.AreEqual(13, Project.Diagnostics.Count);
+            Assert.AreEqual(0, Project.Diagnostics.Count);
         }
 
         [Test]

@@ -99,27 +99,30 @@
             }
         },
 
-        "File.Include": {
-            "File": "~/includes/PlaceholderItem.include.item.json",
-            "ItemName": "PlaceholderItem",
-            "Placeholders": {
-                "": {
-                    "PlaceholderText": {
-                        "Value": "Placeholder text.",
-                        "Field.ShortHelp": "Placeholder Text.",
-                        "Field.LongHelp": "Placeholder Text."
+        "Children": [
+            {
+                "File.Include": {
+                    "File": "~/includes/PlaceholderItem.include.item.json",
+                    "ItemName": "PlaceholderItem",
+                    "Placeholders": {
+                        "": {
+                            "PlaceholderText": {
+                                "Value": "Placeholder text.",
+                                "Field.ShortHelp": "Placeholder Text.",
+                                "Field.LongHelp": "Placeholder Text."
+                            }
+                        }
                     }
-               }
+                }
+            },
+            {
+                "Name": "JsonSubitem",
+                "Template": "/sitecore/templates/Sample/JsonItem",
+                "Fields": {
+                    "Title": "Subitem Title",
+                    "Text": { "Value": "Subitem Text" }
+                }
             }
-        },
-
-        "Item": {
-            "Name": "JsonSubitem",
-            "Template": "/sitecore/templates/Sample/JsonItem",
-            "Fields": {
-                "Title": "Subitem Title",
-                "Text": { "Value": "Subitem Text" }
-            }
-        }
+        ]
     }
 }
