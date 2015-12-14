@@ -55,17 +55,7 @@ namespace Sitecore.Pathfinder
 
             public const string BuildProject = "build-project:tasks";
 
-            public const string BuildProjectContentFiles = "build-project:content-files";
-
-            public const string BuildProjectFiles = "build-project:files";
-
-            public const string BuildProjectFileSearchPattern = "build-project:file-search-pattern";
-
             public const string BuildProjectForceUpdate = "build-project:force-update";
-
-            public const string BuildProjectIgnoreDirectories = "build-project:ignore-directories";
-
-            public const string BuildProjectIgnoreFileNames = "build-project:ignore-filenames";
 
             public const string BuildProjectMediaTemplate = "build-project:media:template";
 
@@ -102,6 +92,14 @@ namespace Sitecore.Pathfinder
             public const string InstallUrl = "install-package:install-url";
 
             public const string LocalTestDirectory = "run-unittests:local-test-directory";
+
+            public const string MappingContentFiles = "project-website-mappings:content-files";
+
+            public const string MappingFileSearchPattern = "project-website-mappings:file-search-pattern";
+
+            public const string MappingIgnoreDirectories = "project-website-mappings:ignore-directories";
+
+            public const string MappingIgnoreFileNames = "project-website-mappings:ignore-filenames";
 
             public const string MessagesDisabled = "messages:disabled";
 

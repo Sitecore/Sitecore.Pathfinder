@@ -176,7 +176,7 @@ namespace Sitecore.Pathfinder.Serializing
 
         protected virtual void RemoveItem([Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string itemPath, [Diagnostics.NotNull] string templateName)
         {
-            foreach (var mapper in PathMapper.WebsiteItemPathToProjectFileNames)
+            foreach (var mapper in PathMapper.WebsiteItemPathToProjectDirectories)
             {
                 string projectFileName;
                 string format;
@@ -216,7 +216,7 @@ namespace Sitecore.Pathfinder.Serializing
 
         protected virtual void SerializeItem([Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string itemPath)
         {
-            foreach (var mapper in PathMapper.WebsiteItemPathToProjectFileNames)
+            foreach (var mapper in PathMapper.WebsiteItemPathToProjectDirectories)
             {
                 string projectFileName;
                 string format;

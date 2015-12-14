@@ -16,6 +16,8 @@
 
     // mapping between project files and website files and items
     "project-website-mappings": {
+
+        // mapping items and files to website when building a project
         "project-to-website": {
             "master": {
                 "project-directory-to-item-path": "/items/master/sitecore => /sitecore",
@@ -45,6 +47,7 @@
             }
         },
 
+        // mapping items and files to project when importing a website
         "website-to-project": {
         }
     },

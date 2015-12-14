@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.IO
         {
             var pathMapperService = new PathMapperService();
 
-            pathMapperService.ProjectFileNameToWebsiteFileNames.Add(new ProjectFileNameToWebsiteFileNameMapper("/wwwroot", "/", "**/*.html", "**/*.aspx"));
+            pathMapperService.ProjectDirectoryToWebsiteDirectories.Add(new ProjectDirectoryToWebsiteDirectoryMapper("/wwwroot", "/", "**/*.html", "**/*.aspx"));
 
             string websiteFileName;
             Assert.IsTrue(pathMapperService.TryGetWebsiteFileName("/wwwroot/about.html", out websiteFileName));
@@ -32,7 +32,7 @@ namespace Sitecore.Pathfinder.IO
         {
             var pathMapperService = new PathMapperService();
 
-            pathMapperService.ProjectFileNameToWebsiteItemPaths.Add(new ProjectFileNameToWebsiteItemPathMapper("/content/master/sitecore", "master", "/sitecore", "**/*.item.json", "**/*.aspx", false, true));
+            pathMapperService.ProjectDirectoryToWebsiteItemPaths.Add(new ProjectDirectoryToWebsiteItemPathMapper("/content/master/sitecore", "master", "/sitecore", "**/*.item.json", "**/*.aspx", false, true));
 
             string itemPath;
             string databaseName;
@@ -51,8 +51,8 @@ namespace Sitecore.Pathfinder.IO
         {
             var pathMapperService = new PathMapperService();
 
-            pathMapperService.WebsiteFileNameToProjectFileNames.Add(new WebsiteFileNameToProjectFileNameMapper("/sitecore modules/shell/module", "/module", "**/*.cshtml", "**/*.png"));
-            pathMapperService.WebsiteFileNameToProjectFileNames.Add(new WebsiteFileNameToProjectFileNameMapper("/", "/wwwroot", "**/*.cshtml", "**/*.png"));
+            pathMapperService.WebsiteDirectoryToProjectDirectories.Add(new WebsiteDirectoryToProjectDirectoryMapper("/sitecore modules/shell/module", "/module", "**/*.cshtml", "**/*.png"));
+            pathMapperService.WebsiteDirectoryToProjectDirectories.Add(new WebsiteDirectoryToProjectDirectoryMapper("/", "/wwwroot", "**/*.cshtml", "**/*.png"));
 
             string projectFileName;
             Assert.IsTrue(pathMapperService.TryGetProjectFileName("/sitecore modules/shell/module/overview.cshtml", out projectFileName));
@@ -69,7 +69,7 @@ namespace Sitecore.Pathfinder.IO
         {
             var pathMapperService = new PathMapperService();
 
-            pathMapperService.WebsiteItemPathToProjectFileNames.Add(new WebsiteItemPathToProjectFileNameMapper("master", "/sitecore/content/Home", "/content/master/sitecore/content/Home", "item.json", "CleanBlog/**", string.Empty, string.Empty, string.Empty));
+            pathMapperService.WebsiteItemPathToProjectDirectories.Add(new WebsiteItemPathToProjectDirectoryMapper("master", "/sitecore/content/Home", "/content/master/sitecore/content/Home", "item.json", "CleanBlog/**", string.Empty, string.Empty, string.Empty));
 
             string projectFileName;
             string format;

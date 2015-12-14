@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Linq;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -24,20 +23,23 @@ namespace Sitecore.Pathfinder.IO
             LoadFromConfiguration(configuration);
         }
 
+        public ICollection<ProjectDirectoryToWebsiteDirectoryMapper> ProjectDirectoryToWebsiteDirectories { get; } = new List<ProjectDirectoryToWebsiteDirectoryMapper>();
+
+        public ICollection<ProjectDirectoryToWebsiteItemPathMapper> ProjectDirectoryToWebsiteItemPaths { get; } = new List<ProjectDirectoryToWebsiteItemPathMapper>();
+
         public ICollection<ProjectFileNameToWebsiteFileNameMapper> ProjectFileNameToWebsiteFileNames { get; } = new List<ProjectFileNameToWebsiteFileNameMapper>();
 
-        public ICollection<ProjectFileNameToWebsiteItemPathMapper> ProjectFileNameToWebsiteItemPaths { get; } = new List<ProjectFileNameToWebsiteItemPathMapper>();
+        public ICollection<WebsiteDirectoryToProjectDirectoryMapper> WebsiteDirectoryToProjectDirectories { get; } = new List<WebsiteDirectoryToProjectDirectoryMapper>();
 
-        public ICollection<WebsiteFileNameToProjectFileNameMapper> WebsiteFileNameToProjectFileNames { get; } = new List<WebsiteFileNameToProjectFileNameMapper>();
-
-        public ICollection<WebsiteItemPathToProjectFileNameMapper> WebsiteItemPathToProjectFileNames { get; } = new List<WebsiteItemPathToProjectFileNameMapper>();
+        public ICollection<WebsiteItemPathToProjectDirectoryMapper> WebsiteItemPathToProjectDirectories { get; } = new List<WebsiteItemPathToProjectDirectoryMapper>();
 
         public void Clear()
         {
+            ProjectDirectoryToWebsiteDirectories.Clear();
             ProjectFileNameToWebsiteFileNames.Clear();
-            ProjectFileNameToWebsiteItemPaths.Clear();
-            WebsiteFileNameToProjectFileNames.Clear();
-            WebsiteItemPathToProjectFileNames.Clear();
+            ProjectDirectoryToWebsiteItemPaths.Clear();
+            WebsiteDirectoryToProjectDirectories.Clear();
+            WebsiteItemPathToProjectDirectories.Clear();
         }
 
         public virtual bool TryGetProjectFileName(string itemPath, string templateName, out string projectFileName, out string format)
@@ -47,7 +49,7 @@ namespace Sitecore.Pathfinder.IO
 
             itemPath = '/' + PathHelper.NormalizeItemPath(itemPath).TrimStart('/');
 
-            foreach (var mapper in WebsiteItemPathToProjectFileNames)
+            foreach (var mapper in WebsiteItemPathToProjectDirectories)
             {
                 if (mapper.TryGetProjectFileName(itemPath, templateName, out projectFileName, out format))
                 {
@@ -64,7 +66,7 @@ namespace Sitecore.Pathfinder.IO
 
             websiteFileName = '\\' + PathHelper.NormalizeFilePath(websiteFileName).TrimStart('\\');
 
-            foreach (var mapper in WebsiteFileNameToProjectFileNames)
+            foreach (var mapper in WebsiteDirectoryToProjectDirectories)
             {
                 if (mapper.TryGetProjectFileName(websiteFileName, out projectFileName))
                 {
@@ -89,6 +91,14 @@ namespace Sitecore.Pathfinder.IO
                 }
             }
 
+            foreach (var mapper in ProjectDirectoryToWebsiteDirectories)
+            {
+                if (mapper.TryGetWebsiteFileName(projectFileName, out websiteFileName))
+                {
+                    return true;
+                }
+            }
+
             return false;
         }
 
@@ -101,7 +111,7 @@ namespace Sitecore.Pathfinder.IO
 
             projectFileName = '\\' + PathHelper.NormalizeFilePath(projectFileName).TrimStart('\\');
 
-            foreach (var mapper in ProjectFileNameToWebsiteItemPaths)
+            foreach (var mapper in ProjectDirectoryToWebsiteItemPaths)
             {
                 if (mapper.TryGetWebsiteItemPath(projectFileName, out databaseName, out itemPath, out isImport, out uploadMedia))
                 {
@@ -137,7 +147,7 @@ namespace Sitecore.Pathfinder.IO
                     var isImport = configuration.GetBool(key + ":is-import");
                     var uploadMedia = configuration.GetBool(key + ":upload-media", true);
 
-                    ProjectFileNameToWebsiteItemPaths.Add(new ProjectFileNameToWebsiteItemPathMapper(projectDirectory, databaseName, itemPath, include, exclude, isImport, uploadMedia));
+                    ProjectDirectoryToWebsiteItemPaths.Add(new ProjectDirectoryToWebsiteItemPathMapper(projectDirectory, databaseName, itemPath, include, exclude, isImport, uploadMedia));
                 }
 
                 var projectDirectoryToWebsiteDirectory = configuration.GetString(key + ":project-directory-to-website-directory");
@@ -154,7 +164,27 @@ namespace Sitecore.Pathfinder.IO
                     var include = configuration.GetString(key + ":file-name-include");
                     var exclude = configuration.GetString(key + ":file-name-exclude");
 
-                    ProjectFileNameToWebsiteFileNames.Add(new ProjectFileNameToWebsiteFileNameMapper(projectDirectory, websiteDirectory, include, exclude));
+                    ProjectDirectoryToWebsiteDirectories.Add(new ProjectDirectoryToWebsiteDirectoryMapper(projectDirectory, websiteDirectory, include, exclude));
+                }
+
+                foreach (var fileNamePair in configuration.GetSubKeys(key))
+                {
+                    if (!fileNamePair.Key.StartsWith("project-file-name-to-website-file-name", StringComparison.OrdinalIgnoreCase))
+                    {
+                        continue;
+                    }
+
+                    var projectFileNameToWebsiteFileName = configuration.GetString(key + ":" + fileNamePair.Key);
+                    var n = projectFileNameToWebsiteFileName.IndexOf("=>", StringComparison.Ordinal);
+                    if (n < 0)
+                    {
+                        throw new ConfigurationException(Texts.Missing_Mapping);
+                    }
+
+                    var sourceFileName = projectFileNameToWebsiteFileName.Left(n).Trim();
+                    var targetFileName = projectFileNameToWebsiteFileName.Mid(n + 2).Trim();
+
+                    ProjectFileNameToWebsiteFileNames.Add(new ProjectFileNameToWebsiteFileNameMapper(sourceFileName, targetFileName));
                 }
             }
 
@@ -180,7 +210,7 @@ namespace Sitecore.Pathfinder.IO
                     var templateNameInclude = configuration.GetString(key + ":template-name-include");
                     var templateNameExclude = configuration.GetString(key + ":template-name-exclude");
 
-                    WebsiteItemPathToProjectFileNames.Add(new WebsiteItemPathToProjectFileNameMapper(databaseName, itemPath, projectDirectory, format, itemNameInclude, itemNameExclude, templateNameInclude, templateNameExclude));
+                    WebsiteItemPathToProjectDirectories.Add(new WebsiteItemPathToProjectDirectoryMapper(databaseName, itemPath, projectDirectory, format, itemNameInclude, itemNameExclude, templateNameInclude, templateNameExclude));
                 }
 
                 var projectDirectoryToWebsiteDirectory = configuration.GetString(key + ":website-directory-to-project-directory");
@@ -197,7 +227,7 @@ namespace Sitecore.Pathfinder.IO
                     var include = configuration.GetString(key + ":file-name-include");
                     var exclude = configuration.GetString(key + ":file-name-exclude");
 
-                    WebsiteFileNameToProjectFileNames.Add(new WebsiteFileNameToProjectFileNameMapper(websiteDirectory, projectDirectory, include, exclude));
+                    WebsiteDirectoryToProjectDirectories.Add(new WebsiteDirectoryToProjectDirectoryMapper(websiteDirectory, projectDirectory, include, exclude));
                 }
             }
         }

@@ -11,11 +11,24 @@
 
     // mapping between project files and website files and items
     "project-website-mappings": {
+        // files to copy to website
+        "content-files": ".js, .map, .css, .config, .htm, .ashx, .asmx, .asax, .eot, .svg, .ttf, .woff, .woff2, .less, .php, .ico",
+
+        // comma separated list of files and directories to ignore
+        "ignore-directories": ".vscode, sitecore.filetemplates, sitecore.project, sitecore.tools, node_modules, roslyn, includes",
+        "ignore-filenames": "scc.cmd, project.json, readme.md, web.config",
+
+        // default file search pattern
+        "search-pattern": "*",
+        
+        // fields to exclude when importing a website
         "excluded-fields": "__Created, __Created by, __Owner, __Revision, __Updated, __Updated by, Blob, Originator",
 
+        // mapping items and files to website when building a project
         "project-to-website": {
         },
 
+        // mapping items and files to project when importing a website
         "website-to-project": {
         }
     },
@@ -24,15 +37,8 @@
         // default build pipeline
         "tasks": "help",
 
-        // files to copy to website
-        "content-files": ".js, .css,. config, .htm, .ashx, .asmx, .eot, .svg, .ttf, .woff, .woff2, .less, .php",
-
         // if force-update is true, media will always be uploaded and files always copied during emitting
         "force-update": false,
-
-        // comma separated list of files and directories to ignore
-        "ignore-directories": ".vscode, sitecore.filetemplates, sitecore.project, sitecore.tools, node_modules, roslyn, includes",
-        "ignore-filenames": "scc.cmd, project.json, readme.md, web.config",
 
         "media": {
             "template": {
@@ -65,10 +71,7 @@
             "TemplateField-attributes": "Name, Id, Type, Sharing, Source, ShortHelp, LongHelp, SortOrder, StandardValue",
             "TemplateField-childnodes": "",
             "Children-childnodes": "Item, Template"
-        },
-
-        // default search pattern
-        "search-pattern": "*"
+        }
     },
 
     "check-project": {

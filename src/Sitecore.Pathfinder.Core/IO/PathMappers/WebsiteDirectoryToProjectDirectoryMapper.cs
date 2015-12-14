@@ -3,9 +3,9 @@ using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.IO.PathMappers
 {
-    public class WebsiteFileNameToProjectFileNameMapper
+    public class WebsiteDirectoryToProjectDirectoryMapper
     {
-        public WebsiteFileNameToProjectFileNameMapper([NotNull] string websiteDirectory, [NotNull] string projectDirectory, [NotNull] string include, [NotNull] string exclude)
+        public WebsiteDirectoryToProjectDirectoryMapper([NotNull] string websiteDirectory, [NotNull] string projectDirectory, [NotNull] string include, [NotNull] string exclude)
         {
             WebsiteDirectory = '\\' + PathHelper.NormalizeFilePath(websiteDirectory).Trim('\\');
             ProjectDirectory = '\\' + PathHelper.NormalizeFilePath(projectDirectory).Trim('\\');

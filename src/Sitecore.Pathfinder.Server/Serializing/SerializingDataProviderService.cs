@@ -16,6 +16,8 @@ namespace Sitecore.Pathfinder.Serializing
     {
         private static int _disabled;
 
+        private static bool _isLoaded;
+
         public static bool Disabled
         {
             get { return _disabled != 0; }
@@ -39,11 +41,26 @@ namespace Sitecore.Pathfinder.Serializing
         [Diagnostics.NotNull, ItemNotNull]
         public static ICollection<WebsiteSerializer> WebsiteSerializers { get; } = new List<WebsiteSerializer>();
 
+        public static void Initialize()
+        {
+            _isLoaded = false;
+        }
+
+        public static void Reload()
+        {
+            Load();
+        }
+
         public static void RemoveItem([Diagnostics.NotNull] string databaseName, [Diagnostics.NotNull] ID itemId)
         {
             if (Disabled)
             {
                 return;
+            }
+
+            if (!_isLoaded)
+            {
+                Load();
             }
 
             foreach (var serializer in WebsiteSerializers)
@@ -66,6 +83,11 @@ namespace Sitecore.Pathfinder.Serializing
                 return;
             }
 
+            if (!_isLoaded)
+            {
+                Load();
+            }
+
             foreach (var serializer in WebsiteSerializers)
             {
                 try
@@ -84,6 +106,11 @@ namespace Sitecore.Pathfinder.Serializing
             if (Disabled)
             {
                 return;
+            }
+
+            if (!_isLoaded)
+            {
+                Load();
             }
 
             foreach (var serializer in WebsiteSerializers)
@@ -106,6 +133,11 @@ namespace Sitecore.Pathfinder.Serializing
                 return;
             }
 
+            if (!_isLoaded)
+            {
+                Load();
+            }
+
             foreach (var serializer in WebsiteSerializers)
             {
                 try
@@ -119,8 +151,10 @@ namespace Sitecore.Pathfinder.Serializing
             }
         }
 
-        public static void Reload()
+        private static void Load()
         {
+            _isLoaded = true;
+
             WebsiteSerializers.Clear();
 
             var dataFolder = FileUtil.MapPath(Settings.DataFolder);
@@ -132,7 +166,7 @@ namespace Sitecore.Pathfinder.Serializing
                 return;
             }
 
-            var xml = FileUtil.ReadFromFile(fileName);
+            var xml = FileUtil.ReadFromFile(fileName);       
             var root = xml.ToXElement();
             if (root == null)
             {
