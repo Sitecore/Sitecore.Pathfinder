@@ -158,6 +158,7 @@
     <Content Include="sitecore\shell\client\Applications\Pathfinder\PackageSources.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\PathfinderContentEditorController.cs" />
     <Compile Include="Controllers\PathfinderInstalledController.cs" />
     <Compile Include="Controllers\PathfinderInstallPackageController.cs" />
     <Compile Include="Controllers\PathfinderPackageController.cs" />
@@ -235,6 +236,9 @@
     <Content Include="sitecore\shell\client\Applications\Pathfinder\web.config" />
     <Content Include="sitecore\shell\client\Applications\Pathfinder\Package.cshtml" />
     <Content Include="Readme.md" />
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\ContentEditors\ContentEditorShell.cshtml" />
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\ContentEditors\ContentEditorTree.cshtml" />
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\ContentEditors\ContentEditorContent.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
