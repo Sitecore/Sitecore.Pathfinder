@@ -1,17 +1,42 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Linq;
 using Sitecore.Collections;
 using Sitecore.Data;
 using Sitecore.Data.DataProviders;
 using Sitecore.Data.Items;
 using Sitecore.Data.Templates;
+using Sitecore.Diagnostics;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Serializing
 {
     public class SerializingDataProvider : DataProvider
     {
+        private static int _disabled;
+
+        public static bool Disabled
+        {
+            get { return _disabled != 0; }
+            set
+            {
+                if (value)
+                {
+                    _disabled++;
+                }
+                else
+                {
+                    _disabled--;
+                    if (_disabled < 0)
+                    {
+                        throw new InvalidOperationException("Calls to Disabled are not balanced");
+                    }
+                }
+            }
+        }
+
         public override int AddVersion([Diagnostics.NotNull] ItemDefinition itemDefinition, [Diagnostics.NotNull] VersionUri baseVersion, [Diagnostics.NotNull] CallContext context)
         {
             SerializeItem(itemDefinition.ID);
@@ -24,13 +49,13 @@ namespace Sitecore.Pathfinder.Serializing
             return base.ChangeTemplate(itemDefinition, changes, context);
         }
 
-        public override bool CopyItem([Diagnostics.NotNull] ItemDefinition source, [Diagnostics.NotNull] ItemDefinition destination, [Diagnostics.NotNull] string copyName, [Diagnostics.NotNull] ID copyID, [Diagnostics.NotNull] CallContext context)
+        public override bool CopyItem([Diagnostics.NotNull] ItemDefinition source, [Diagnostics.NotNull] ItemDefinition destination, [Diagnostics.NotNull] string copyName, [Diagnostics.NotNull] Data.ID copyID, [Diagnostics.NotNull] CallContext context)
         {
             SerializeItem(copyID);
             return base.CopyItem(source, destination, copyName, copyID, context);
         }
 
-        public override bool CreateItem([Diagnostics.NotNull] ID itemID, [Diagnostics.NotNull] string itemName, [Diagnostics.NotNull] ID templateID, [Diagnostics.NotNull] ItemDefinition parent, [Diagnostics.NotNull] CallContext context)
+        public override bool CreateItem([Diagnostics.NotNull] Data.ID itemID, [Diagnostics.NotNull] string itemName, [Diagnostics.NotNull] Data.ID templateID, [Diagnostics.NotNull] ItemDefinition parent, [Diagnostics.NotNull] CallContext context)
         {
             SerializeItem(itemID);
             return base.CreateItem(itemID, itemName, templateID, parent, context);
@@ -86,24 +111,84 @@ namespace Sitecore.Pathfinder.Serializing
             return base.SaveItem(itemDefinition, changes, context);
         }
 
-        protected virtual void RemoveItem([Diagnostics.NotNull] ID itemID)
+        protected virtual void RemoveItem([Diagnostics.NotNull] Data.ID itemID)
         {
-            SerializingDataProviderService.RemoveItem(Database.Name, itemID);
+            if (Disabled)
+            {
+                return;
+            }
+
+            foreach (var project in ProjectHost.Projects)
+            {
+                try
+                {
+                    project.WebsiteSerializer.RemoveItem(Database.Name, itemID);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("Failed to remove item", ex, typeof(SerializingDataProvider));
+                }
+            }
         }
 
-        protected virtual void RemoveItem([Diagnostics.NotNull] ID itemID, [Diagnostics.NotNull] string oldItemName)
+        protected virtual void RemoveItem([Diagnostics.NotNull] Data.ID itemID, [Diagnostics.NotNull] string oldItemName)
         {
-            SerializingDataProviderService.RemoveItem(Database.Name, itemID, oldItemName);
+            if (Disabled)
+            {
+                return;
+            }
+
+            foreach (var project in ProjectHost.Projects)
+            {
+                try
+                {
+                    project.WebsiteSerializer.RemoveItem(Database.Name, itemID, oldItemName);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("Failed to remove item", ex, typeof(SerializingDataProvider));
+                }
+            }
         }
 
-        protected virtual void SerializeItem([Diagnostics.NotNull] ID itemID)
+        protected virtual void SerializeItem([Diagnostics.NotNull] Data.ID itemID)
         {
-            SerializingDataProviderService.SerializeItem(Database.Name, itemID);
+            if (Disabled)
+            {
+                return;
+            }
+
+            foreach (var project in ProjectHost.Projects)
+            {
+                try
+                {
+                    project.WebsiteSerializer.SerializeItem(Database.Name, itemID);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("Failed to serialize item", ex, typeof(SerializingDataProvider));
+                }
+            }
         }
 
-        protected virtual void SerializeItem([Diagnostics.NotNull] ID itemID, [Diagnostics.NotNull] ID newParentId)
+        protected virtual void SerializeItem([Diagnostics.NotNull] Data.ID itemID, [Diagnostics.NotNull] Data.ID newParentId)
         {
-            SerializingDataProviderService.SerializeItem(Database.Name, itemID, newParentId);
+            if (Disabled)
+            {
+                return;
+            }
+
+            foreach (var project in ProjectHost.Projects)
+            {
+                try
+                {
+                    project.WebsiteSerializer.SerializeItem(Database.Name, itemID, newParentId);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("Failed to serialize item", ex, typeof(SerializingDataProvider));
+                }
+            }
         }
     }
 }

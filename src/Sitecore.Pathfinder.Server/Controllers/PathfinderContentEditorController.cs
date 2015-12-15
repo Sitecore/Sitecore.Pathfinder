@@ -1,6 +1,9 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System.Collections.Generic;
 using System.Web.Mvc;
+using Sitecore.Pathfinder.ProjectTrees;
+using Sitecore.Web;
 
 namespace Sitecore.Pathfinder.Controllers
 {
@@ -9,9 +12,17 @@ namespace Sitecore.Pathfinder.Controllers
         [Diagnostics.NotNull]
         public ActionResult Index([Diagnostics.NotNull] string route)
         {
-            // ViewBag.Packages = packageService.CheckForInstalledUpdates(packageService.GetInstalledPackages()).ToList();
+            var uri = WebUtil.GetQueryString("uri");
 
-            return View("~/sitecore/shell/client/Applications/Pathfinder/ContentEditors/ContentEditorShell.cshtml");
+            var selection = new List<ProjectTreeUri>();
+            if (!string.IsNullOrEmpty(uri))
+            {
+                selection.Add(new ProjectTreeUri(uri));
+            }
+
+            ViewBag.Selection = selection;
+
+            return View("~/sitecore/shell/client/Applications/Pathfinder/ContentEditors/shell.cshtml");
         }
     }
 }

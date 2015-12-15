@@ -41,7 +41,6 @@ namespace Sitecore.Pathfinder.ProjectTrees
 
         public IPipelineService Pipelines { get; }
 
-        [NotNull]
         public string ProjectDirectory { get; private set; }
 
         public IEnumerable<IProjectTreeItem> Roots
@@ -56,7 +55,6 @@ namespace Sitecore.Pathfinder.ProjectTrees
             }
         }
 
-        [NotNull]
         public string ToolsDirectory { get; private set; }
 
         [NotNull]
@@ -68,7 +66,6 @@ namespace Sitecore.Pathfinder.ProjectTrees
         [NotNull]
         protected IFactoryService Factory { get; }
 
-        [NotNull]
         public virtual IProject GetProject(ProjectOptions projectOptions)
         {
             var sourceFileNames = new List<string>();
@@ -79,7 +76,7 @@ namespace Sitecore.Pathfinder.ProjectTrees
             return Factory.Project(projectOptions, sourceFileNames);
         }
 
-        public IProjectTree With(string toolsDirectory, string projectDirectory)
+        public virtual IProjectTree With(string toolsDirectory, string projectDirectory)
         {
             ToolsDirectory = toolsDirectory;
             ProjectDirectory = projectDirectory;

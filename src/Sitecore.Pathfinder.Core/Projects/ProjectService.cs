@@ -38,8 +38,7 @@ namespace Sitecore.Pathfinder.Projects
             return projectTree.GetProject(projectOptions);
         }
 
-        [NotNull]
-        protected virtual ProjectOptions GetProjectOptions()
+        public virtual ProjectOptions GetProjectOptions()
         {
             var projectDirectory = Configuration.GetString(Constants.Configuration.ProjectDirectory);
             var databaseName = Configuration.GetString(Constants.Configuration.Database);
@@ -51,8 +50,7 @@ namespace Sitecore.Pathfinder.Projects
             return projectOptions;
         }
 
-        [NotNull]
-        protected virtual IProjectTree GetProjectTree([NotNull] ProjectOptions projectOptions)
+        public virtual IProjectTree GetProjectTree(ProjectOptions projectOptions)
         {
             var projectTree = CompositionService.Resolve<IProjectTree>().With(Configuration.GetString(Constants.Configuration.ToolsDirectory), projectOptions.ProjectDirectory);
 

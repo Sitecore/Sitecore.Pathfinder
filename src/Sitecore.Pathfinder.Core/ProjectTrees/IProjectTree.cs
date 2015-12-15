@@ -22,8 +22,14 @@ namespace Sitecore.Pathfinder.ProjectTrees
         [NotNull]
         IPipelineService Pipelines { get; }
 
+        [NotNull]
+        string ProjectDirectory { get; }
+
         [NotNull, ItemNotNull]
         IEnumerable<IProjectTreeItem> Roots { get; }
+
+        [NotNull]
+        string ToolsDirectory { get; }
 
         [NotNull]
         IProject GetProject([NotNull] ProjectOptions projectOptions);

@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Emitters
     public class Emitter
     {
         [ImportingConstructor]
-        public Emitter([NotNull] ICompositionService compositionService, [NotNull] ITraceService traceService, [NotNull] IProjectService projectService, [ImportMany] [NotNull] [ItemNotNull] IEnumerable<IEmitter> emitters)
+        public Emitter([NotNull] ICompositionService compositionService, [NotNull] ITraceService traceService, [NotNull] IProjectService projectService, [ImportMany, NotNull, ItemNotNull] IEnumerable<IEmitter> emitters)
         {
             CompositionService = compositionService;
             Trace = traceService;
@@ -28,8 +28,7 @@ namespace Sitecore.Pathfinder.Emitters
         [NotNull]
         protected ICompositionService CompositionService { get; }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         protected IEnumerable<IEmitter> Emitters { get; }
 
         [NotNull]
@@ -40,7 +39,7 @@ namespace Sitecore.Pathfinder.Emitters
 
         public virtual int Start()
         {
-            SerializingDataProviderService.Disabled = true;
+            SerializingDataProvider.Disabled = true;
             try
             {
                 // todo: support installation without configuration files
@@ -50,7 +49,7 @@ namespace Sitecore.Pathfinder.Emitters
             }
             finally
             {
-                SerializingDataProviderService.Disabled = false;
+                SerializingDataProvider.Disabled = false;
             }
 
             return 0;
@@ -69,7 +68,7 @@ namespace Sitecore.Pathfinder.Emitters
             EmitRetry(context, emitters, retries);
         }
 
-        protected virtual void Emit([NotNull] IEmitContext context, [NotNull] IProject project, [NotNull] [ItemNotNull] List<IEmitter> emitters, [NotNull] [ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
+        protected virtual void Emit([NotNull] IEmitContext context, [NotNull] IProject project, [NotNull, ItemNotNull] List<IEmitter> emitters, [NotNull, ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
         {
             foreach (var projectItem in project.ProjectItems)
             {
@@ -77,7 +76,7 @@ namespace Sitecore.Pathfinder.Emitters
             }
         }
 
-        protected virtual void EmitProjectItem([NotNull] IEmitContext context, [NotNull] IProjectItem projectItem, [NotNull] [ItemNotNull] List<IEmitter> emitters, [NotNull] [ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
+        protected virtual void EmitProjectItem([NotNull] IEmitContext context, [NotNull] IProjectItem projectItem, [NotNull, ItemNotNull] List<IEmitter> emitters, [NotNull, ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
         {
             foreach (var emitter in emitters)
             {
@@ -105,7 +104,7 @@ namespace Sitecore.Pathfinder.Emitters
             }
         }
 
-        protected virtual void EmitRetry([NotNull] IEmitContext context, [NotNull] [ItemNotNull] List<IEmitter> emitters, [NotNull] [ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
+        protected virtual void EmitRetry([NotNull] IEmitContext context, [NotNull, ItemNotNull] List<IEmitter> emitters, [NotNull, ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
         {
             while (true)
             {

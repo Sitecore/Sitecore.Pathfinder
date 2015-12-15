@@ -3,7 +3,7 @@
 using System.ComponentModel.Composition;
 using System.Net;
 using System.Web.Mvc;
-using Sitecore.Pathfinder.Serializing;
+using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.WebApi
 {
@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.WebApi
     {
         public ActionResult Execute(IAppService app)
         {
-            SerializingDataProviderService.Reload();
+            ProjectHost.Clear();
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }

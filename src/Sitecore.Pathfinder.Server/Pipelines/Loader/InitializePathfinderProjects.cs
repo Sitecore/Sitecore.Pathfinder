@@ -1,15 +1,15 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using Sitecore.Pathfinder.Serializing;
+using Sitecore.Pathfinder.Projects;
 using Sitecore.Pipelines;
 
 namespace Sitecore.Pathfinder.Pipelines.Loader
 {
-    public class InitializeSerializingDataProvider
+    public class InitializePathfinderProjects
     {
         public void Process([NotNull] PipelineArgs args)
         {
-            SerializingDataProviderService.Initialize();
+            ProjectHost.Initialize();
         }
     }
 }

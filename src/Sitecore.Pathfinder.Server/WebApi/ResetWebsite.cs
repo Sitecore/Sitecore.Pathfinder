@@ -21,7 +21,7 @@ namespace Sitecore.Pathfinder.WebApi
 
         public ActionResult Execute(IAppService app)
         {
-            SerializingDataProviderService.Disabled = true;
+            SerializingDataProvider.Disabled = true;
             try
             {
                 foreach (var mapper in PathMapper.WebsiteItemPathToProjectDirectories)
@@ -46,7 +46,7 @@ namespace Sitecore.Pathfinder.WebApi
             }
             finally
             {
-                SerializingDataProviderService.Disabled = false;
+                SerializingDataProvider.Disabled = false;
             }
 
             return null;

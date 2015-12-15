@@ -1,43 +1,67 @@
-﻿@{
+﻿@using Sitecore.Pathfinder.Projects
+@using Sitecore.Pathfinder.ProjectTrees
+@{
+    var selection = (List<ProjectTreeUri>)ViewBag.Selection;
 }
+@helper RenderProjectRoots(IProjectContext project, List<ProjectTreeUri> selection, int indent)
+{
+    <ul class="list-unstyled">
+        @foreach (var projectRootItem in project.ProjectTree.Roots)
+        {
+            var isSelected = selection.Any(uri => string.Equals(uri.Uri, projectRootItem.Uri.Uri, StringComparison.OrdinalIgnoreCase));
+            var className = isSelected ? "class=\"bg-primary\"" : string.Empty;
+
+            <li>
+                <div @Html.Raw(className) style="padding-left: @(indent)px">
+                    <a @Html.Raw(className) href="/sitecore/Pathfinder/Contenteditor?uri=@(projectRootItem.Uri.Uri)">@projectRootItem.Name</a>
+                </div>
+
+                @if (isSelected || selection.Any(uri => uri.Uri.StartsWith(projectRootItem.Uri.Uri, StringComparison.OrdinalIgnoreCase)))
+                {
+                  @RenderProjectTreeItems(projectRootItem, selection, indent + 24);
+                }
+            </li>
+        }
+    </ul>
+}
+
+@helper RenderProjectTreeItems(IProjectTreeItem projectTreeItem, List<ProjectTreeUri> selection, int indent)
+{
+    <ul class="list-unstyled">
+        @foreach (var child in projectTreeItem.GetChildren())
+        {
+            var isSelected = selection.Any(uri => string.Equals(uri.Uri, child.Uri.Uri, StringComparison.OrdinalIgnoreCase));
+            var className = isSelected ? "class=\"bg-primary\"" : string.Empty;
+
+            <li>
+                <div @Html.Raw(className) style="padding-left: @(indent)px">
+                    <a @Html.Raw(className) href="/sitecore/Pathfinder/Contenteditor?uri=@(child.Uri.Uri)">@child.Name</a>
+                </div>
+
+                @if (isSelected || selection.Any(uri => uri.Uri.StartsWith(child.Uri.Uri, StringComparison.OrdinalIgnoreCase)))
+                {
+                  @RenderProjectTreeItems(child, selection, indent + 24);
+                }
+            </li>
+        }
+    </ul>
+}
+
 <ul class="nav nav-sidebar">
-    <li>
-        <div style="padding-left: 8px">
-            <a href="#"><img src="/temp/IconCache/Applications/16x16/about.png" style="width: 16px; height: 16px" alt="" /> sitecore</a>
-        </div>
-        <ul class="list-unstyled">
-            <li>
-                <div style="padding-left: 32px">
-                    <a href="#"><img src="/temp/IconCache/Applications/16x16/about.png" style="width: 16px; height: 16px" alt="" /> content</a>
-                </div>
-                <ul class="list-unstyled">
-                    <li>
-                        <div class="bg-primary" style="padding-left: 56px">
-                            <a class="bg-primary" href="#"><img src="/temp/IconCache/Applications/16x16/about.png" style="width: 16px; height: 16px" alt="" /> Home</a>
-                        </div>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <div style="padding-left: 24px">
-                    <a href="#"><img src="/temp/IconCache/Applications/16x16/about.png" style="width: 16px; height: 16px" alt="" /> media library</a>
-                </div>
-            </li>
-            <li>
-                <div style="padding-left: 24px">
-                    <a href="#"><img src="/temp/IconCache/Applications/16x16/about.png" style="width: 16px; height: 16px" alt="" /> layout</a>
-                </div>
-            </li>
-            <li>
-                <div style="padding-left: 24px">
-                    <a href="#"><img src="/temp/IconCache/Applications/16x16/about.png" style="width: 16px; height: 16px" alt="" /> system</a>
-                </div>
-            </li>
-            <li>
-                <div style="padding-left: 24px">
-                    <a href="#"><img src="/temp/IconCache/Applications/16x16/about.png" style="width: 16px; height: 16px" alt="" /> templates</a>
-                </div>
-            </li>
-        </ul>
-    </li>
+    @foreach (var project in ProjectHost.Projects)
+    {
+        var isSelected = selection.Any(uri => string.Equals(uri.Uri, project.ProjectTree.ProjectDirectory + "Project", StringComparison.OrdinalIgnoreCase));
+        var className = isSelected ? "class=\"bg-primary\"" : string.Empty;
+
+        <li style="margin-bottom: 16px">
+            <div @Html.Raw(className) style="padding-left: 8px">
+                <a @Html.Raw(className) href="/sitecore/Pathfinder/Contenteditor?uri=@(project.ProjectTree.ProjectDirectory + "Project")">Project @project.Name</a>
+            </div>
+
+            @if (isSelected || selection.Any(uri => uri.Uri.StartsWith(project.ProjectTree.ProjectDirectory, StringComparison.OrdinalIgnoreCase)))
+            {
+                @RenderProjectRoots(project, selection, 32);
+            }
+        </li>
+    }
 </ul>
