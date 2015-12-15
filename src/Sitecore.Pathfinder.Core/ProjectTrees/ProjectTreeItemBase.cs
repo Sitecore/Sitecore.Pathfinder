@@ -2,22 +2,27 @@
 
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.ProjectTrees.Pipelines.GetProjectTreeChildren;
 
 namespace Sitecore.Pathfinder.ProjectTrees
 {
     public abstract class ProjectTreeItemBase : IProjectTreeItem
-    {                           
-        protected ProjectTreeItemBase([NotNull] ProjectTreeUri uri)
+    {
+        protected ProjectTreeItemBase([NotNull] IProjectTree projectTree, [NotNull] ProjectTreeUri uri)
         {
+            ProjectTree = projectTree;
             Uri = uri;
         }
 
         public abstract string Name { get; }
 
-        public abstract IProjectTreeItem ParentItem { get; }
+        public IProjectTree ProjectTree { get; }
 
         public ProjectTreeUri Uri { get; }
 
-        public abstract IEnumerable<IProjectTreeItem> GetChildren();
+        public IEnumerable<IProjectTreeItem> GetChildren()
+        {
+            return ProjectTree.Pipelines.Resolve<GetProjectTreeChildrenPipeline>().Execute(this).Children;
+        }
     }
 }

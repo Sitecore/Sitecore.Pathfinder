@@ -122,6 +122,9 @@
     <Compile Include="Compiling\Builders\TemplateFieldBuilder.cs" />
     <Compile Include="Compiling\Builders\TemplateSectionBuilder.cs" />
     <Compile Include="Compiling\Pipelines\CompilePipelines\0020 - CreateItemsFromTemplates.cs" />
+    <Compile Include="ProjectTrees\IProjectTreeSourceFile.cs" />
+    <Compile Include="ProjectTrees\Pipelines\GetProjectTreeChildren\1000 - GetDirectoryChildren.cs" />
+    <Compile Include="ProjectTrees\Pipelines\GetProjectTreeChildren\GetProjectTreeChildrenPipeline.cs" />
     <Compile Include="Diagnostics\Assert.cs" />
     <Compile Include="Diagnostics\AssertException.cs" />
     <Compile Include="Diagnostics\EmitException.cs" />
@@ -190,6 +193,7 @@
     <Compile Include="Projects\Items\ItemPublishing.cs" />
     <Compile Include="Projects\IUnloadable.cs" />
     <Compile Include="Projects\ProjectImportsService.cs" />
+    <Compile Include="ProjectTrees\DirectoryProjectTreeItem.cs" />
     <Compile Include="ProjectTrees\FileProjectTreeItem.cs" />
     <Compile Include="ProjectTrees\IProjectTree.cs" />
     <Compile Include="ProjectTrees\IProjectTreeItem.cs" />
@@ -358,7 +362,7 @@
     <Compile Include="Snapshots\ISourceFile.cs" />
     <Compile Include="Projects\References\Reference.cs" />
     <Compile Include="Projects\Project.cs" />
-    <Compile Include="Projects\ProjectDirectoryVisitor.cs" />
+    <Compile Include="ProjectTrees\ProjectTreeVisitor.cs" />
     <Compile Include="Projects\ProjectService.cs" />
     <Compile Include="Projects\References\ReferenceCollection.cs" />
     <Compile Include="Snapshots\SourceFile.cs" />

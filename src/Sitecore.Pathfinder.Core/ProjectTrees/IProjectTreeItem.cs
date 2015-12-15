@@ -10,8 +10,8 @@ namespace Sitecore.Pathfinder.ProjectTrees
         [NotNull]
         string Name { get; }
 
-        [CanBeNull]
-        IProjectTreeItem ParentItem { get; }
+        [NotNull]
+        IProjectTree ProjectTree { get; }
 
         [NotNull]
         ProjectTreeUri Uri { get; }

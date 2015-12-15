@@ -2,16 +2,33 @@
 
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensibility.Pipelines;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.ProjectTrees
 {
     public interface IProjectTree
     {
-        [CanBeNull]
-        IProject Project { get; }
+        [NotNull]
+        IFileSystemService FileSystem { get; }
+
+        [NotNull, ItemNotNull]
+        HashSet<string> IgnoreDirectories { get; }
+
+        [NotNull, ItemNotNull]
+        HashSet<string> IgnoreFileNames { get; }
+
+        [NotNull]
+        IPipelineService Pipelines { get; }
 
         [NotNull, ItemNotNull]
         IEnumerable<IProjectTreeItem> Roots { get; }
+
+        [NotNull]
+        IProject GetProject([NotNull] ProjectOptions projectOptions);
+
+        [NotNull]
+        IProjectTree With([NotNull] string toolsDirectory, [NotNull] string projectDirectory);
     }
 }
