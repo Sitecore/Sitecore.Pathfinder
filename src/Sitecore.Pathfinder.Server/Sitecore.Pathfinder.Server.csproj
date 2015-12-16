@@ -154,6 +154,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="sitecore\shell\client\Applications\Pathfinder\ContentEditors\contenteditor.css" />
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\img\document_text.png" />
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\img\folder.png" />
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\img\folder_document2.png" />
     <Content Include="sitecore\shell\client\Applications\Pathfinder\packageDefaultIcon-50x50.png" />
     <Content Include="sitecore\shell\client\Applications\Pathfinder\Packages.css" />
     <Content Include="sitecore\shell\client\Applications\Pathfinder\PackageSources.txt" />
