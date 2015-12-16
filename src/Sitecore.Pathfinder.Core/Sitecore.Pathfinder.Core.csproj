@@ -122,6 +122,11 @@
     <Compile Include="Compiling\Builders\TemplateFieldBuilder.cs" />
     <Compile Include="Compiling\Builders\TemplateSectionBuilder.cs" />
     <Compile Include="Compiling\Pipelines\CompilePipelines\0020 - CreateItemsFromTemplates.cs" />
+    <Compile Include="Parsing\Pipelines\ReferenceParserPipelines\1000 - PathReferenceParser.cs" />
+    <Compile Include="Parsing\Pipelines\ReferenceParserPipelines\2000 - GuidReferenceParser.cs" />
+    <Compile Include="Parsing\Pipelines\ReferenceParserPipelines\4000 - FileReferenceParser.cs" />
+    <Compile Include="Parsing\Pipelines\ReferenceParserPipelines\ReferenceParserPipeline.cs" />
+    <Compile Include="Parsing\Pipelines\ReferenceParserPipelines\3000 - SoftGuidReferenceParser.cs" />
     <Compile Include="ProjectTrees\IProjectTreeSourceFile.cs" />
     <Compile Include="ProjectTrees\Pipelines\GetProjectTreeChildren\1000 - GetDirectoryChildren.cs" />
     <Compile Include="ProjectTrees\Pipelines\GetProjectTreeChildren\GetProjectTreeChildrenPipeline.cs" />
@@ -372,7 +377,7 @@
     <Compile Include="Languages\Content\ContentFileParser.cs" />
     <Compile Include="Parsing\IParser.cs" />
     <Compile Include="Parsing\IParseContext.cs" />
-    <Compile Include="Projects\Items\SerializationFile.cs" />
+    <Compile Include="Languages\Serialization\SerializationFile.cs" />
     <Compile Include="Projects\Files\File.cs" />
     <Compile Include="Languages\Content\ContentFile.cs" />
     <Compile Include="Projects\Items\Field.cs" />

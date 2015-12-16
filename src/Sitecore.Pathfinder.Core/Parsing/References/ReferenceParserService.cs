@@ -6,6 +6,8 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensibility.Pipelines;
+using Sitecore.Pathfinder.Parsing.Pipelines.ReferenceParserPipelines;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Snapshots;
@@ -17,39 +19,22 @@ namespace Sitecore.Pathfinder.Parsing.References
     public class ReferenceParserService : IReferenceParserService
     {
         [ImportingConstructor]
-        public ReferenceParserService([NotNull] IFactoryService factory)
+        public ReferenceParserService([NotNull] IFactoryService factory, [NotNull] IPipelineService pipelines)
         {
             Factory = factory;
+            Pipelines = pipelines;
         }
 
         [NotNull]
         protected IFactoryService Factory { get; }
 
+        [NotNull]
+        protected IPipelineService Pipelines { get; }
+
         public virtual IReference ParseReference(IProjectItem projectItem, ITextNode sourceTextNode, string referenceText)
         {
-            if (referenceText.StartsWith("/sitecore/", StringComparison.OrdinalIgnoreCase))
-            {
-                var sourceProperty = new SourceProperty<string>(sourceTextNode.Key, string.Empty, SourcePropertyFlags.IsQualified);
-                sourceProperty.SetValue(sourceTextNode);
-                return Factory.Reference(projectItem, sourceProperty, referenceText);
-            }
-
-            Guid guid;
-            if (Guid.TryParse(referenceText, out guid))
-            {
-                var sourceProperty = new SourceProperty<string>(sourceTextNode.Key, string.Empty, SourcePropertyFlags.IsGuid);
-                sourceProperty.SetValue(sourceTextNode);
-                return Factory.Reference(projectItem, sourceProperty, referenceText);
-            }
-
-            if (referenceText.StartsWith("{") && referenceText.EndsWith("}"))
-            {
-                var sourceProperty = new SourceProperty<string>(sourceTextNode.Key, string.Empty, SourcePropertyFlags.IsSoftGuid);
-                sourceProperty.SetValue(sourceTextNode);
-                return Factory.Reference(projectItem, sourceProperty, referenceText);
-            }
-
-            return null;
+            var pipeline = Pipelines.Resolve<ReferenceParserPipeline>().Execute(Factory, projectItem, sourceTextNode, referenceText);
+            return pipeline.Reference;
         }
 
         [ItemNotNull]
@@ -69,6 +54,7 @@ namespace Sitecore.Pathfinder.Parsing.References
         {
             var text = textNode.Value;
 
+            // pipe seperated list
             IReference reference;
             if (text.IndexOf('|') >= 0)
             {
@@ -85,6 +71,7 @@ namespace Sitecore.Pathfinder.Parsing.References
                 yield break;
             }
 
+            // url string
             if (text.IndexOf('&') >= 0 || text.IndexOf('=') >= 0)
             {
                 var urlString = new UrlString(text);
@@ -108,6 +95,7 @@ namespace Sitecore.Pathfinder.Parsing.References
                 yield break;
             }
 
+            // plain text
             reference = ParseReference(projectItem, textNode, text);
             if (reference != null)
             {

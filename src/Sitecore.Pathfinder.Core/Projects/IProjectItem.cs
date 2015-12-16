@@ -22,21 +22,20 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         string QualifiedName { get; }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         ReferenceCollection References { get; }
 
         [NotNull]
         string ShortName { get; }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         ICollection<ISnapshot> Snapshots { get; }
 
         ProjectItemState State { get; set; }
 
         [NotNull]
         ProjectItemUri Uri { get; }
+
         void Rename([NotNull] string newShortName);
     }
 }
