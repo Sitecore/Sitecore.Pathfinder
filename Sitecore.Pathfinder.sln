@@ -52,6 +52,36 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.T4", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.HtmlFile", "src\Features\Sitecore.Pathfinder.HtmlFile\Sitecore.Pathfinder.HtmlFile.csproj", "{7287E9E2-CAB5-4DE4-87B5-237B65020DC4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{2913B82E-EAB7-452F-AB67-97DD577A7439}"
+	ProjectSection(SolutionItems) = preProject
+		docs\01. Home.md = docs\01. Home.md
+		docs\02. Getting started.md = docs\02. Getting started.md
+		docs\03. Basic concepts.md = docs\03. Basic concepts.md
+		docs\03.01. Tasks and Scripts.md = docs\03.01. Tasks and Scripts.md
+		docs\03.02. Project configuration.md = docs\03.02. Project configuration.md
+		docs\03.03. Building a project.md = docs\03.03. Building a project.md
+		docs\03.04. Sitecore items as files.md = docs\03.04. Sitecore items as files.md
+		docs\04. Tasks.md = docs\04. Tasks.md
+		docs\04.01. Checking a project.md = docs\04.01. Checking a project.md
+		docs\04.02. Deploying to a website.md = docs\04.02. Deploying to a website.md
+		docs\04.03. Installing on a website.md = docs\04.03. Installing on a website.md
+		docs\04.04. Bypassing package creation.md = docs\04.04. Bypassing package creation.md
+		docs\04.05. Watching for project changes.md = docs\04.05. Watching for project changes.md
+		docs\04.06. Importing a website.md = docs\04.06. Importing a website.md
+		docs\04.07. Serializing items from website to project.md = docs\04.07. Serializing items from website to project.md
+		docs\04.08. Resetting a website.md = docs\04.08. Resetting a website.md
+		docs\04.09. Synchronizing website and project.md = docs\04.09. Synchronizing website and project.md
+		docs\04.10. Code generation.md = docs\04.10. Code generation.md
+		docs\04.16. Website validation.md = docs\04.16. Website validation.md
+		docs\04.17. Layout engines.md = docs\04.17. Layout engines.md
+		docs\04.19. Extensibility.md = docs\04.19. Extensibility.md
+		docs\05. Starterkits.md = docs\05. Starterkits.md
+		docs\06. Package Installer UI.md = docs\06. Package Installer UI.md
+		docs\07. Developer Environment.md = docs\07. Developer Environment.md
+		docs\08. External Tools.md = docs\08. External Tools.md
+		docs\README.md = docs\README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -119,5 +149,6 @@ Global
 		{E707E44A-9F34-41E2-90E2-7065EF60CB03} = {5325B39E-6883-47AA-BD17-291B7608E834}
 		{BC0EC297-60E6-4D8F-A846-E1DA920CFC26} = {5325B39E-6883-47AA-BD17-291B7608E834}
 		{7287E9E2-CAB5-4DE4-87B5-237B65020DC4} = {5325B39E-6883-47AA-BD17-291B7608E834}
+		{2913B82E-EAB7-452F-AB67-97DD577A7439} = {3FD15219-6CAE-4865-A054-8E9E2A5EDF4E}
 	EndGlobalSection
 EndGlobal

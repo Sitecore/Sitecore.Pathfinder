@@ -26,10 +26,7 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
         public override void Emit(IEmitContext context, IProjectItem projectItem)
         {
             var unicornFile = projectItem as UnicornFile;
-            if (unicornFile == null)
-            {
-                return;
-            }
+            Assert.Cast(unicornFile, nameof(unicornFile));
 
             var snapshot = unicornFile.Snapshots.First();
 

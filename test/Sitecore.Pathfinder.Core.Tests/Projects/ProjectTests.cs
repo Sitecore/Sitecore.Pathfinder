@@ -4,7 +4,6 @@ using System;
 using System.IO;
 using System.Linq;
 using NUnit.Framework;
-using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects.Items;
@@ -34,18 +33,6 @@ namespace Sitecore.Pathfinder.Projects
         }
 
         [Test]
-        public void DiagnosticsTests()
-        {
-            foreach (var diagnostic in Project.Diagnostics)
-            {
-                Console.WriteLine($"{diagnostic.Severity} ({diagnostic.Span.LineNumber}, {diagnostic.Span.LinePosition}, {diagnostic.Span.Length}): {diagnostic.Text} [{diagnostic.FileName}]");
-                Console.WriteLine();
-            }
-
-            Assert.AreEqual(13, Project.Diagnostics.Count);
-        }
-
-        [Test]
         public void AddRemoveTests()
         {
             var project = Resolve<IProject>().Load(new ProjectOptions(ProjectDirectory, "master"), Enumerable.Empty<string>());
@@ -59,6 +46,18 @@ namespace Sitecore.Pathfinder.Projects
 
             project.Remove(fileName);
             Assert.AreEqual(count, project.SourceFiles.Count);
+        }
+
+        [Test]
+        public void DiagnosticsTests()
+        {
+            foreach (var diagnostic in Project.Diagnostics)
+            {
+                Console.WriteLine($"{diagnostic.Severity} ({diagnostic.Span.LineNumber}, {diagnostic.Span.LinePosition}, {diagnostic.Span.Length}): {diagnostic.Text} [{diagnostic.FileName}]");
+                Console.WriteLine();
+            }
+
+            Assert.AreEqual(0, Project.Diagnostics.Count);
         }
 
         [Test]

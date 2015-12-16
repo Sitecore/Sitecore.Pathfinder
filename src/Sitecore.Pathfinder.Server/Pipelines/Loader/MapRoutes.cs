@@ -6,7 +6,6 @@ using Sitecore.Pipelines;
 
 namespace Sitecore.Pathfinder.Pipelines.Loader
 {
-    /// <summary>The precompile speak views.</summary>
     public class MapRoutes
     {
         public void Process([NotNull] PipelineArgs args)
@@ -59,6 +58,12 @@ namespace Sitecore.Pathfinder.Pipelines.Loader
                 controller = "PathfinderWebApi",
                 action = "Index",
                 route = ""
+            });
+
+            RouteTable.Routes.MapRoute("Sitecore.Pathfinder.ContentEditor", "sitecore/Pathfinder/ContentEditor", new
+            {
+                controller = "PathfinderContentEditor",
+                action = "Index"
             });
         }
     }

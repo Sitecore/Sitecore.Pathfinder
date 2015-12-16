@@ -1,5 +1,6 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 
@@ -22,9 +23,12 @@ namespace Sitecore.Pathfinder.Building.Checking
         public override void WriteHelp(HelpWriter helpWriter)
         {
             helpWriter.Summary.Write("Checks the project for warnings and errors.");
+            helpWriter.Remarks.Write("SETTINGS:");
+            helpWriter.Remarks.Write("  check-project:disabled-categories - Disables checker categories (Items, Fields, Templates, TemplateFields, Media).");
+            helpWriter.Remarks.Write("  check-project:disabled-checkers - Disables specific checkers.");
         }
 
-        protected void TraceDiagnostics([NotNull] IBuildContext context)
+        protected virtual void TraceDiagnostics([NotNull] IBuildContext context)
         {
             foreach (var diagnostic in context.Project.Diagnostics)
             {
@@ -36,9 +40,11 @@ namespace Sitecore.Pathfinder.Building.Checking
                     case Severity.Warning:
                         context.Trace.TraceWarning(diagnostic.Msg, diagnostic.Text, diagnostic.FileName, diagnostic.Span);
                         break;
-                    default:
+                     case Severity.Information:
                         context.Trace.TraceInformation(diagnostic.Msg, diagnostic.Text, diagnostic.FileName, diagnostic.Span);
                         break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
             }
 

@@ -21,13 +21,13 @@
     "project-website-mappings": {
         "project-to-website": {
             "master": {
-                "project-directory-to-item-path": "/content/master/sitecore => /sitecore",
-                "project-directory-to-website-directory": "/content/master/sitecore => /"
+                "project-directory-to-item-path": "/items/master/sitecore => /sitecore",
+                "project-directory-to-website-directory": "/items/master/sitecore => /"
             },
 
             "core": {
-                "project-directory-to-item-path": "/content/core/sitecore => /sitecore",
-                "project-directory-to-website-directory": "/content/master/sitecore => /",
+                "project-directory-to-item-path": "/items/core/sitecore => /sitecore",
+                "project-directory-to-website-directory": "/items/items/sitecore => /",
                 "database": "core"
             },
 

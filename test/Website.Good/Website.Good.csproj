@@ -66,10 +66,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="content\master\sitecore\content\Home\YamlContentItem.master.content.yaml">
+    <Content Include="items\master\sitecore\content\Home\YamlContentItem.master.content.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="content\master\sitecore\content\Home\YamlLayout.item.yaml">
+    <Content Include="items\master\sitecore\content\Home\YamlLayout.item.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\src\Sitecore.Pathfinder.Console\files\project\sitecore.project\packages\readme.md">
@@ -88,7 +88,10 @@
       <Link>sitecore.tools\scconfig.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="content\master\sitecore\content\Home\YamlItem.item.yaml">
+    <Content Include="includes\Field.include.item.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="items\master\sitecore\content\Home\YamlItem.item.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="includes\PlaceholderItem.include.item.xml">
@@ -100,39 +103,39 @@
     <Content Include="includes\PlaceholderItem.include.item.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="content\master\sitecore\content\Home\YmlItem.yml">
+    <Content Include="items\master\sitecore\content\Home\YmlItem.yml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="includes\Field.include.item.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="packages.config" />
-    <Content Include="content\master\sitecore\content\Home\JsonItem.item.json">
+    <Content Include="items\master\sitecore\content\Home\JsonItem.item.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="content\master\sitecore\content\Home\JsonLayout.item.json">
+    <Content Include="items\master\sitecore\content\Home\JsonLayout.item.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="content\master\sitecore\content\Home\JsonLayout.layout.json">
+    <Content Include="items\master\sitecore\content\Home\JsonLayout.layout.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="content\master\sitecore\content\Home\SerializedItem.item">
+    <Content Include="items\master\sitecore\content\Home\SerializedItem.item">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="content\master\sitecore\layout\layouts\MvcLayout.cshtml">
+    <Content Include="items\master\sitecore\layout\layouts\MvcLayout.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="content\master\sitecore\layout\renderings\HelloWorld.cshtml">
+    <Content Include="items\master\sitecore\layout\renderings\HelloWorld.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="content\master\sitecore\layout\web.config" />
+    <Content Include="items\master\sitecore\layout\web.config" />
     <Content Include="scconfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="content\master\sitecore\templates\JsonTemplate.item.json">
+    <Content Include="items\master\sitecore\templates\JsonTemplate.item.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="content\master\sitecore\content\Home\YamlLayout.layout.yaml">
+    <Content Include="items\master\sitecore\content\Home\YamlLayout.layout.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="scconfig.rules.json">
@@ -146,37 +149,37 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="content\master\sitecore\content\Home\Welcome.item.xml">
+    <Content Include="items\master\sitecore\content\Home\Welcome.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="content\master\sitecore\content\Home\XmlContentItem.master.content.xml">
+    <Content Include="items\master\sitecore\content\Home\XmlContentItem.master.content.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="content\master\sitecore\content\Home\XmlItem.item.xml">
+    <Content Include="items\master\sitecore\content\Home\XmlItem.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="content\master\sitecore\content\Home\XmlLayout.item.xml">
+    <Content Include="items\master\sitecore\content\Home\XmlLayout.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="content\master\sitecore\content\Home\XmlLayout.layout.xml">
+    <Content Include="items\master\sitecore\content\Home\XmlLayout.layout.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="content\master\sitecore\layout\layouts\MvcLayout.item.xml">
+    <Content Include="items\master\sitecore\layout\layouts\MvcLayout.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="content\master\sitecore\media library\mushrooms.item.xml">
+    <Content Include="items\master\sitecore\media library\mushrooms.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="content\master\sitecore\media library\mushrooms.jpg">
+    <Content Include="items\master\sitecore\media library\mushrooms.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="content\master\sitecore\templates\XmlTemplate.item.xml">
+    <Content Include="items\master\sitecore\templates\XmlTemplate.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="content\master\sitecore\templates\XmlTemplateMerge.item.xml">
+    <Content Include="items\master\sitecore\templates\XmlTemplateMerge.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="content\master\sitecore\templates\XmlTemplateMerge1.item.xml">
+    <Content Include="items\master\sitecore\templates\XmlTemplateMerge1.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Web.config" />

@@ -1,0 +1,128 @@
+﻿{
+    "$schema": "../../../../sitecore.pathfinder.console/files/project/sitecore.project/schemas/item.schema.json#",
+    "Item": {
+        "Template": "/sitecore/templates/Sample/JsonItem",
+        "Template.CreateFromFields": true,
+        "Template.ShortHelp": "Short help.",
+        "Template.LongHelp": "Long help.",
+        "Template.Icon": "Application/16x16/About.png",
+
+        "Fields": {
+            "Title": {
+                "Value": "Hello",
+                "Field.ShortHelp": "Short help.",
+                "Field.LongHelp": "Long help."
+            },
+            "Text": {
+                "Value": "Hello World",
+                "Field.ShortHelp": "Short help.",
+                "Field.LongHelp": "Long help."
+            },
+            "Image": {
+                "Value": "/sitecore/media library/mushrooms",
+                "Field.Type": "Image",
+                "Field.ShortHelp": "Short help.",
+                "Field.LongHelp": "Long help."
+            },
+            "Link": {
+                "Value": "/sitecore/media library/mushrooms",
+                "Field.Type": "General Link",
+                "Field.ShortHelp": "Short help.",
+                "Field.LongHelp": "Long help."
+            },
+            "ItemPath": {
+                "Value": "/sitecore/media library/mushrooms",
+                "Field.ShortHelp": "Short help.",
+                "Field.LongHelp": "Long help."
+            },
+            "TrueCheckbox": {
+                "Value": true,
+                "Field.Type": "Checkbox",
+                "Field.ShortHelp": "Short help.",
+                "Field.LongHelp": "Long help."
+            },
+            "FalseCheckbox": {
+                "Value": false,
+                "Field.Type": "Checkbox",
+                "Field.ShortHelp": "Short help.",
+                "Field.LongHelp": "Long help."
+            },
+
+            "File.Include": [
+                {
+                    "File": "~/includes/Field.include.item.json"
+                },
+                {
+                    "File": "~/includes/ParameterizedField.include.item.xml",
+                    "Name": "ParameterizedField",
+                    "Value": "Parameterized Value"
+                }
+            ],
+
+            "Unversioned": {
+                "da-DK": {
+                    "UnversionedField": {
+                        "Value": "Hello",
+                        "Field.ShortHelp": "Short help.",
+                        "Field.LongHelp": "Long help."
+                    }
+                }
+            },
+
+            "Versioned": {
+                "da-DK": {
+                    "1": {
+                        "VersionedField": {
+                            "Value": "Version 1",
+                            "Field.ShortHelp": "Short help.",
+                            "Field.LongHelp": "Long help."
+                        }
+                    },
+                    "2": {
+                        "VersionedField": "Version 2"
+                    }
+                }
+            },
+
+            "Layout": {
+                "Devices": [
+                    {
+                        "Name": "Default",
+                        "Layout": "/sitecore/layout/Layouts/MvcLayout",
+                        "Renderings": [
+                            {
+                                "HelloWorld": { "DataSource": "/sitecore" }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+
+        "Children": [
+            {
+                "File.Include": {
+                    "File": "~/includes/PlaceholderItem.include.item.json",
+                    "ItemName": "PlaceholderItem",
+                    "Placeholders": {
+                        "": {
+                            "PlaceholderText": {
+                                "Value": "Placeholder text.",
+                                "Field.ShortHelp": "Placeholder Text.",
+                                "Field.LongHelp": "Placeholder Text."
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "Name": "JsonSubitem",
+                "Template": "/sitecore/templates/Sample/JsonItem",
+                "Fields": {
+                    "Title": "Subitem Title",
+                    "Text": { "Value": "Subitem Text" }
+                }
+            }
+        ]
+    }
+}

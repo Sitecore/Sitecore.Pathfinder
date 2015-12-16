@@ -10,13 +10,13 @@ namespace Sitecore.Pathfinder
 {
     internal class Program
     {
-        private static int Main([NotNull] [ItemNotNull] string[] args)
+        private static int Main([NotNull, ItemNotNull] string[] args)
         {
-            var stopwatch = new Stopwatch();             
-            stopwatch.Start();        
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
 
             Trace.Listeners.Add(new ConsoleTraceListener());
-                                      
+
             var app = new Startup().AsInteractive().WithWebsiteAssemblyResolver().Start();
             if (app == null)
             {

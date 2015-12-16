@@ -8,11 +8,10 @@ using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.WebApi.TroubleshootWebsites
 {
+    [Export(nameof(TroubleshootWebsite), typeof(IWebApi))]
     public class TroubleshootWebsite : IWebApi
     {
-        [Diagnostics.NotNull]
-        [ItemNotNull]
-        [ImportMany]
+        [Diagnostics.NotNull, ItemNotNull, ImportMany]
         public IEnumerable<ITroubleshooter> Troubleshooters { get; private set; }
 
         public ActionResult Execute(IAppService app)

@@ -13,6 +13,8 @@ namespace Sitecore.Pathfinder.Building
 {
     public abstract class RequestBuildTaskBase : BuildTaskBase
     {
+        /// <summary>Createa new task.</summary>
+        /// <param name="taskName">The name of the task. This should have the format "verb-noun" like PowerShell. See approved PowerShell verbs: https://technet.microsoft.com/en-us/library/ms714428%28v=vs.85%29.aspx</param>
         protected RequestBuildTaskBase([NotNull] string taskName) : base(taskName)
         {
         }

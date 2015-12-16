@@ -70,7 +70,7 @@ namespace Sitecore.Pathfinder.WebApi.SynchronizeWebsites
             {
                 output.WriteAttributeString("Database", item.Database.Name);
                 output.WriteAttributeString("ParentItemPath", item.Parent == null ? "/" : item.Parent.Paths.Path);
-                output.WriteAttributeString(Constants.Fields.IsExtern, "True");
+                output.WriteAttributeString(Constants.Fields.IsImport, "True");
             }
 
             var writeAll = fieldsToWrite.Count() == 1 && fieldsToWrite.ElementAt(0) == "*";

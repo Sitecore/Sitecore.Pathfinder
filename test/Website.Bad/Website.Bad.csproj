@@ -70,7 +70,7 @@
     <Content Include="scconfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="content\master\sitecore\content\templates\JsonTemplate.item.json">
+    <Content Include="items\master\sitecore\content\templates\JsonTemplate.item.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\src\Sitecore.Pathfinder.Console\scconfig.json">
@@ -97,10 +97,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="content\master\sitecore\content\Home\XmlItem.item.xml">
+    <Content Include="items\master\sitecore\content\Home\XmlItem.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="content\master\sitecore\content\templates\XmlTemplate.item.xml">
+    <Content Include="items\master\sitecore\content\templates\XmlTemplate.item.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Web.config" />
@@ -177,9 +177,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="content\master\sitecore\content\layout\layouts\" />
-    <Folder Include="content\master\sitecore\content\layout\renderings\" />
-    <Folder Include="content\master\sitecore\content\media library\" />
+    <Folder Include="items\master\sitecore\content\layout\layouts\" />
+    <Folder Include="items\master\sitecore\content\layout\renderings\" />
+    <Folder Include="items\master\sitecore\content\media library\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

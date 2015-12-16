@@ -12,8 +12,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
 {
     public class ItemParser : ParserBase
     {
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         private static readonly string[] FileExtensions =
         {
             ".item.xml",
@@ -29,13 +28,16 @@ namespace Sitecore.Pathfinder.Parsing.Items
         };
 
         [ImportingConstructor]
-        public ItemParser([ImportMany] [NotNull] [ItemNotNull] IEnumerable<ITextNodeParser> textNodeParsers) : base(Constants.Parsers.Items)
+        public ItemParser([NotNull] ISchemaService schemaService, [ImportMany, NotNull, ItemNotNull] IEnumerable<ITextNodeParser> textNodeParsers) : base(Constants.Parsers.Items)
         {
+            SchemaService = schemaService;
             TextNodeParsers = textNodeParsers;
         }
 
         [NotNull]
-        [ItemNotNull]
+        protected ISchemaService SchemaService { get; }
+
+        [NotNull, ItemNotNull]
         public IEnumerable<ITextNodeParser> TextNodeParsers { get; }
 
         public override bool CanParse(IParseContext context)
@@ -46,18 +48,22 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
         public override void Parse(IParseContext context)
         {
-            var textDocument = (ITextSnapshot)context.Snapshot;
+            var textSnapshot = context.Snapshot as ITextSnapshot;
+            Assert.Cast(textSnapshot, nameof(textSnapshot));
 
-            var textNode = textDocument.Root;
+            var textNode = textSnapshot.Root;
             if (textNode == TextNode.Empty)
             {
-                var textSpan = textDocument.ParseErrorTextSpan != TextSpan.Empty ? textDocument.ParseErrorTextSpan : textDocument.Root.TextSpan;
-                var text = !string.IsNullOrEmpty(textDocument.ParseError) ? textDocument.ParseError : Texts.Source_file_is_empty;
-                context.Trace.TraceWarning(Msg.P1009, text, textDocument.SourceFile.AbsoluteFileName, textSpan);
+                var textSpan = textSnapshot.ParseErrorTextSpan != TextSpan.Empty ? textSnapshot.ParseErrorTextSpan : textSnapshot.Root.TextSpan;
+                var text = !string.IsNullOrEmpty(textSnapshot.ParseError) ? textSnapshot.ParseError : Texts.Source_file_is_empty;
+                context.Trace.TraceWarning(Msg.P1009, text, textSnapshot.SourceFile.AbsoluteFileName, textSpan);
                 return;
             }
 
-            textDocument.ValidateSchema(context);
+            if (!SchemaService.ValidateSnapshotSchema(context, textSnapshot))
+            {
+                return;
+            }
 
             var parentItemPath = PathHelper.GetItemParentPath(context.ItemPath);
             var itemParseContext = context.Factory.ItemParseContext(context, this, context.DatabaseName, parentItemPath, false);
@@ -77,13 +83,29 @@ namespace Sitecore.Pathfinder.Parsing.Items
         {
             try
             {
+                var parsed = false;
+
                 foreach (var textNodeParser in TextNodeParsers.OrderBy(p => p.Priority))
                 {
-                    if (textNodeParser.CanParse(context, textNode))
+                    if (!textNodeParser.CanParse(context, textNode))
+                    {
+                        continue;
+                    }
+
+                    parsed = true;
+
+                    if (SchemaService.ValidateTextNodeSchema(textNode))
                     {
                         textNodeParser.Parse(context, textNode);
-                        break;
                     }
+
+                    break;
+                }
+
+                if (!parsed)
+                {
+                    context.ParseContext.Trace.TraceError(Msg.P1025, "Unknown text node", textNode, textNode.Key);
+
                 }
             }
             catch (Exception ex)

@@ -8,6 +8,8 @@ using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Rules.Conditions;
+using Sitecore.Pathfinder.Rules.Conditions.LogicConditions;
+using Sitecore.Pathfinder.Rules.Conditions.XPathConditions;
 using Sitecore.Pathfinder.Xml.XPath;
 
 namespace Sitecore.Pathfinder.Rules
@@ -27,11 +29,9 @@ namespace Sitecore.Pathfinder.Rules
             Actions = actions;
         }
 
-        [NotNull, ItemNotNull]
-        protected IEnumerable<IAction> Actions { get; }
+        public IEnumerable<IAction> Actions { get; }
 
-        [NotNull, ItemNotNull]
-        protected IEnumerable<ICondition> Conditions { get; }
+        public IEnumerable<ICondition> Conditions { get; }
 
         [NotNull]
         protected IConfiguration Configuration { get; }

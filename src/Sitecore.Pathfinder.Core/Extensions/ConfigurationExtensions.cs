@@ -57,7 +57,7 @@ namespace Sitecore.Pathfinder.Extensions
 
         [NotNull]
         [ItemNotNull]
-        public static IEnumerable<string> GetList([NotNull] this IConfiguration configuration, [NotNull] string key)
+        public static IEnumerable<string> GetCommaSeparatedStringList([NotNull] this IConfiguration configuration, [NotNull] string key)
         {
             var value = configuration.Get(key) ?? string.Empty;
             var parts = value.Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToList();

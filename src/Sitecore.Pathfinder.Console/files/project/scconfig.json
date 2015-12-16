@@ -16,15 +16,17 @@
 
     // mapping between project files and website files and items
     "project-website-mappings": {
+
+        // mapping items and files to website when building a project
         "project-to-website": {
             "master": {
-                "project-directory-to-item-path": "/content/master/sitecore => /sitecore",
-                "project-directory-to-website-directory": "/content/master/sitecore => /"
+                "project-directory-to-item-path": "/items/master/sitecore => /sitecore",
+                "project-directory-to-website-directory": "/items/master/sitecore => /"
             },
 
             "core": {
-                "project-directory-to-item-path": "/content/core/sitecore => /sitecore",
-                "project-directory-to-website-directory": "/content/master/sitecore => /",
+                "project-directory-to-item-path": "/items/core/sitecore => /sitecore",
+                "project-directory-to-website-directory": "/items/core/sitecore => /",
                 "database": "core"
             },
 
@@ -45,6 +47,7 @@
             }
         },
 
+        // mapping items and files to project when importing a website
         "website-to-project": {
         }
     },

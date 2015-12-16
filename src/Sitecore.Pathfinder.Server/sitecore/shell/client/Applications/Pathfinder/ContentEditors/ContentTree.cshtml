@@ -1,0 +1,81 @@
+﻿@using Sitecore.Pathfinder.Projects
+@using Sitecore.Pathfinder.ProjectTrees
+@{
+    var selection = (List<ProjectTreeUri>)ViewBag.Selection;
+}
+@helper RenderProjectRoots(IProjectContext project, List<ProjectTreeUri> selection, int indent)
+{
+    <ul class="list-unstyled">
+        @foreach (var projectRootItem in project.ProjectTree.Roots)
+        {
+            var isSelected = selection.Any(uri => string.Equals(uri.Uri, projectRootItem.Uri.Uri, StringComparison.OrdinalIgnoreCase));
+            var className = isSelected ? "class=\"bg-primary\"" : string.Empty;
+            var icon = projectRootItem is IProjectTreeSourceFile ? "document_text.png" : "folder.png";
+            <li>
+                <div @Html.Raw(className) style="padding-left: @(indent)px">
+                    <a @Html.Raw(className) href="/sitecore/Pathfinder/Contenteditor?uri=@(projectRootItem.Uri.Uri)">
+                        <img src="/sitecore/shell/client/Applications/Pathfinder/img/@(icon)" alt=""/>
+                        @projectRootItem.Name
+                    </a>
+                </div>
+
+                @if (isSelected || selection.Any(uri => uri.Uri.StartsWith(projectRootItem.Uri.Uri, StringComparison.OrdinalIgnoreCase)))
+                {
+                    @RenderProjectTreeItems(projectRootItem, selection, indent + 24)
+                    ;
+                }
+            </li>
+        }
+    </ul>
+}
+
+@helper RenderProjectTreeItems(IProjectTreeItem projectTreeItem, List<ProjectTreeUri> selection, int indent)
+{
+    <ul class="list-unstyled">
+        @foreach (var child in projectTreeItem.GetChildren())
+        {
+            var isSelected = selection.Any(uri => string.Equals(uri.Uri, child.Uri.Uri, StringComparison.OrdinalIgnoreCase));
+            var className = isSelected ? "class=\"bg-primary\"" : string.Empty;
+            var icon = child is IProjectTreeSourceFile ? "document_text.png" : "folder.png";
+
+            <li>
+                <div @Html.Raw(className) style="padding-left: @(indent)px">
+                    <a @Html.Raw(className) href="/sitecore/Pathfinder/Contenteditor?uri=@(child.Uri.Uri)">
+                        <img src="/sitecore/shell/client/Applications/Pathfinder/img/@(icon)" alt=""/>
+                        @child.Name
+                    </a>
+                </div>
+
+                @if (isSelected || selection.Any(uri => uri.Uri.StartsWith(child.Uri.Uri, StringComparison.OrdinalIgnoreCase)))
+                {
+                    @RenderProjectTreeItems(child, selection, indent + 24)
+                    ;
+                }
+            </li>
+        }
+    </ul>
+}
+
+<ul class="nav nav-sidebar">
+    @foreach (var project in ProjectHost.Projects)
+    {
+        var isSelected = selection.Any(uri => string.Equals(uri.Uri, project.ProjectTree.ProjectDirectory + "Project", StringComparison.OrdinalIgnoreCase));
+        var className = isSelected ? "class=\"bg-primary\"" : string.Empty;
+
+        <li style="margin-bottom: 16px">
+            <div @Html.Raw(className) style="padding-left: 8px">
+
+                <a @Html.Raw(className) href="/sitecore/Pathfinder/Contenteditor?uri=@(project.ProjectTree.ProjectDirectory + "Project")">
+                    <img src="/sitecore/shell/client/Applications/Pathfinder/img/folder_document2.png" alt=""/>
+                    Project @project.Name
+                </a>
+            </div>
+
+            @if (isSelected || selection.Any(uri => uri.Uri.StartsWith(project.ProjectTree.ProjectDirectory, StringComparison.OrdinalIgnoreCase)))
+            {
+                @RenderProjectRoots(project, selection, 32)
+                ;
+            }
+        </li>
+    }
+</ul>

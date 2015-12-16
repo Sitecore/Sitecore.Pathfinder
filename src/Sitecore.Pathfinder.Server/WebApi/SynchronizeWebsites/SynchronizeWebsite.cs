@@ -1,21 +1,19 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using Sitecore.Pathfinder.Diagnostics;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Web.Mvc;
 using Sitecore.IO;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.WebApi.SynchronizeWebsites;
 using Sitecore.Zip;
 
-namespace Sitecore.Pathfinder.WebApi
+namespace Sitecore.Pathfinder.WebApi.SynchronizeWebsites
 {
+    [Export(nameof(SynchronizeWebsite), typeof(IWebApi))]
     public class SynchronizeWebsite : IWebApi
     {
-        [Diagnostics.NotNull]
-        [ImportMany(typeof(ISynchronizer))]
-        [ItemNotNull]
+        [Diagnostics.NotNull, ImportMany(typeof(ISynchronizer)), ItemNotNull]
         public IEnumerable<ISynchronizer> Synchronizers { get; protected set; }
 
         public ActionResult Execute(IAppService app)
@@ -36,7 +34,7 @@ namespace Sitecore.Pathfinder.WebApi
                         if (synchronizer.CanSynchronize(app.Configuration, syncFileName))
                         {
                             synchronizer.Synchronize(app.Configuration, zip, syncFileName, configKey);
-                        } 
+                        }
                     }
                 }
             }

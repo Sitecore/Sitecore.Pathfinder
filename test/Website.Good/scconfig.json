@@ -16,13 +16,13 @@
     "project-website-mappings": {
         "project-to-website": {
             "master": {
-                "project-directory-to-item-path": "/content/master/sitecore => /sitecore",
-                "project-directory-to-website-directory": "/content/master/sitecore => /"
+                "project-directory-to-item-path": "/items/master/sitecore => /sitecore",
+                "project-directory-to-website-directory": "/items/master/sitecore => /"
             },
 
             "core": {
-                "project-directory-to-item-path": "/content/core/sitecore => /sitecore",
-                "project-directory-to-website-directory": "/content/master/sitecore => /",
+                "project-directory-to-item-path": "/items/core/sitecore => /sitecore",
+                "project-directory-to-website-directory": "/items/core/sitecore => /",
                 "database": "core"
             },
 
@@ -50,6 +50,10 @@
     "build-project": {
         // build tasks
         "tasks": "check-project write-exports"
+    },
+
+    "check-project": {
+        "disabled-checkers": "Unused template, Use ID instead of path"
     }
 }
                                        

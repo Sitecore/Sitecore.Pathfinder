@@ -15,6 +15,6 @@ namespace Sitecore.Pathfinder.Snapshots
         [NotNull]
         ITextNode Root { get; }
 
-        void ValidateSchema([NotNull] IParseContext context);
+        bool ValidateSchema([NotNull] IParseContext context);
     }
 }

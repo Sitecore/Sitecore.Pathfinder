@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using Sitecore.Pathfinder.Compiling.Compilers;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Languages.Renderings;
 using Sitecore.Pathfinder.Projects;
@@ -31,10 +32,7 @@ namespace Sitecore.Pathfinder.HtmlFile.HtmlFiles
         public override void Compile(ICompileContext context, IProjectItem projectItem)
         {
             var item = projectItem as Item;
-            if (item == null)
-            {
-                return;
-            }
+            Assert.Cast(item, nameof(item));
 
             var value = item.GetValue<string>(LayoutHtmlfile)?.Trim() ?? string.Empty;
             if (string.IsNullOrEmpty(value))

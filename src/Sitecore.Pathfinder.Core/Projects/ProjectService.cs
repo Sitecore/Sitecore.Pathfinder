@@ -1,14 +1,11 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.IO;
-using System.Linq;
 using Microsoft.Framework.ConfigurationModel;
-using Sitecore.Pathfinder.Checking;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.ProjectTrees;
 
 namespace Sitecore.Pathfinder.Projects
 {
@@ -16,16 +13,12 @@ namespace Sitecore.Pathfinder.Projects
     public class ProjectService : IProjectService
     {
         [ImportingConstructor]
-        public ProjectService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] ICheckerService checker)
+        public ProjectService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFactoryService factory)
         {
             CompositionService = compositionService;
             Configuration = configuration;
             Factory = factory;
-            Checker = checker;
         }
-
-        [NotNull]
-        protected ICheckerService Checker { get; set; }
 
         [NotNull]
         protected ICompositionService CompositionService { get; }
@@ -38,25 +31,30 @@ namespace Sitecore.Pathfinder.Projects
 
         public IProject LoadProjectFromConfiguration()
         {
-            var projectOptions = CreateProjectOptions();
+            var projectOptions = GetProjectOptions();
 
-            LoadStandardTemplateFields(projectOptions);
+            var projectTree = GetProjectTree(projectOptions);
 
-            var sourceFileNames = new List<string>();
-            LoadSourceFileNames(projectOptions, sourceFileNames);
-
-            var project = Factory.Project(projectOptions, sourceFileNames);
-
-            return project;
+            return projectTree.GetProject(projectOptions);
         }
 
-        [NotNull]
-        protected virtual ProjectOptions CreateProjectOptions()
+        public virtual ProjectOptions GetProjectOptions()
         {
             var projectDirectory = Configuration.GetString(Constants.Configuration.ProjectDirectory);
             var databaseName = Configuration.GetString(Constants.Configuration.Database);
 
-            return Factory.ProjectOptions(projectDirectory, databaseName);
+            var projectOptions = Factory.ProjectOptions(projectDirectory, databaseName);
+
+            LoadStandardTemplateFields(projectOptions);
+
+            return projectOptions;
+        }
+
+        public virtual IProjectTree GetProjectTree(ProjectOptions projectOptions)
+        {
+            var projectTree = CompositionService.Resolve<IProjectTree>().With(Configuration.GetString(Constants.Configuration.ToolsDirectory), projectOptions.ProjectDirectory);
+
+            return projectTree;
         }
 
         protected virtual void LoadStandardTemplateFields([NotNull] ProjectOptions projectOptions)
@@ -71,16 +69,6 @@ namespace Sitecore.Pathfinder.Projects
                     projectOptions.StandardTemplateFields.Add(value);
                 }
             }
-        }
-
-        protected virtual void LoadSourceFileNames([NotNull] ProjectOptions projectOptions, [NotNull][ItemNotNull] ICollection<string> sourceFileNames)
-        {
-            var ignoreFileNames = Configuration.GetList(Constants.Configuration.BuildProjectIgnoreFileNames).ToList();
-            var ignoreDirectories = Configuration.GetList(Constants.Configuration.BuildProjectIgnoreDirectories).ToList();
-            ignoreDirectories.Add(Path.GetFileName(Configuration.GetString(Constants.Configuration.ToolsDirectory)));
-
-            var visitor = CompositionService.Resolve<ProjectDirectoryVisitor>().With(ignoreDirectories, ignoreFileNames);
-            visitor.Visit(projectOptions, sourceFileNames);
         }
     }
 }

@@ -36,8 +36,8 @@ namespace Sitecore.Pathfinder.Checking
         {
             var context = CompositionService.Resolve<ICheckerContext>().With(project);
 
-            var disabledCategories = Configuration.GetList(Constants.Configuration.CheckProjectDisabledCategories);
-            var disabledCheckers = Configuration.GetList(Constants.Configuration.CheckProjectDisabledCheckers);
+            var disabledCategories = Configuration.GetCommaSeparatedStringList(Constants.Configuration.CheckProjectDisabledCategories);
+            var disabledCheckers = Configuration.GetCommaSeparatedStringList(Constants.Configuration.CheckProjectDisabledCheckers);
 
             foreach (var checker in Checkers)
             {

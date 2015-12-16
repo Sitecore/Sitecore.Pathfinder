@@ -11,8 +11,7 @@ using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Building
 {
-    [Export(typeof(IBuildContext))]
-    [PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export(typeof(IBuildContext)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class BuildContext : IBuildContext
     {
         [CanBeNull]
@@ -29,8 +28,6 @@ namespace Sitecore.Pathfinder.Building
             ProjectService = projectService;
         }
 
-        public bool IsBuildingWithNoConfig => Configuration.GetBool(Constants.Configuration.BuildingWithNoConfig);
-
         public ICompositionService CompositionService { get; }
 
         public IConfiguration Configuration { get; }
@@ -42,6 +39,8 @@ namespace Sitecore.Pathfinder.Building
         public IFileSystemService FileSystem { get; }
 
         public bool IsAborted { get; set; }
+
+        public bool IsBuildingWithNoConfig => Configuration.GetBool(Constants.Configuration.BuildingWithNoConfig);
 
         public IList<IProjectItem> ModifiedProjectItems { get; } = new List<IProjectItem>();
 

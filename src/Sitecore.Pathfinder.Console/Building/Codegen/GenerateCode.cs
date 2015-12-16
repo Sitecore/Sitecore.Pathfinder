@@ -14,18 +14,16 @@ namespace Sitecore.Pathfinder.Building.Codegen
     public class GenerateCode : BuildTaskBase
     {
         [ImportingConstructor]
-        public GenerateCode([NotNull] [ImportMany] [ItemNotNull] IEnumerable<IProjectCodeGenerator> projectCodeGenerators, [NotNull] [ImportMany] [ItemNotNull] IEnumerable<IProjectItemCodeGenerator> projectItemCodeGenerators) : base("generate-code")
+        public GenerateCode([NotNull, ImportMany, ItemNotNull]   IEnumerable<IProjectCodeGenerator> projectCodeGenerators, [NotNull, ImportMany, ItemNotNull]   IEnumerable<IProjectItemCodeGenerator> projectItemCodeGenerators) : base("generate-code")
         {
             ProjectCodeGenerators = projectCodeGenerators;
             ProjectItemCodeGenerators = projectItemCodeGenerators;
         }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         public IEnumerable<IProjectCodeGenerator> ProjectCodeGenerators { get; }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         protected IEnumerable<IProjectItemCodeGenerator> ProjectItemCodeGenerators { get; }
 
         public override void Run(IBuildContext context)

@@ -1,0 +1,30 @@
+{
+    "check-project": {
+        "conventions": {
+            "habitat-design-convention-0": {
+                "filter": "items",
+                "if": {
+                    "always": true
+                },
+                "then": {
+                    "trace-warning": "A Habitat.Design project should only contain assets - not items. To fix, remove the item."
+                }
+            },
+            "habitat-design-convention-1": {
+                "filter": "files",
+                "if": {
+                    "or": {
+                        "file-name-extension-0": ".cshtml",
+                        "file-name-extension-1": ".aspx",
+                        "file-name-extension-2": ".ascx",
+                        "file-name-extension-3": ".ashx",
+                        "file-name-extension-4": ".asmx"
+                    }
+                },
+                "then": {
+                    "trace-warning": "A Habitat.Design project should only contain assets - not renderings. To fix, remove the rendering file."
+                }
+            }
+        }
+    }
+}

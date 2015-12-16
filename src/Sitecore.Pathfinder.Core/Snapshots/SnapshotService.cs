@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Snapshots
     public class SnapshotService : ISnapshotService
     {
         [ImportingConstructor]
-        public SnapshotService([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [ImportMany] [NotNull] [ItemNotNull] IEnumerable<ISnapshotLoader> loaders, [ImportMany] [NotNull] [ItemNotNull] IEnumerable<ISnapshotDirective> directives)
+        public SnapshotService([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [ImportMany, NotNull, ItemNotNull]   IEnumerable<ISnapshotLoader> loaders, [ImportMany, NotNull, ItemNotNull]   IEnumerable<ISnapshotDirective> directives)
         {
             Configuration = configuration;
             Factory = factory;
@@ -37,8 +37,7 @@ namespace Sitecore.Pathfinder.Snapshots
         [NotNull]
         protected IFactoryService Factory { get; }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         protected IEnumerable<ISnapshotLoader> Loaders { get; }
 
         public virtual ITextNode LoadIncludeFile(SnapshotParseContext snapshotParseContext, ISnapshot snapshot, string includeFileName)
@@ -65,8 +64,9 @@ namespace Sitecore.Pathfinder.Snapshots
             var sourceFile = Factory.SourceFile(FileSystem, sourceFileName, projectFileName);
 
             var includeSnapshot = LoadSnapshot(snapshotParseContext, sourceFile) as TextSnapshot;
+            Assert.Cast(includeSnapshot, nameof(includeSnapshot));
 
-            return includeSnapshot?.Root ?? TextNode.Empty;
+            return includeSnapshot.Root;
         }
 
         public ISnapshot LoadSnapshot(SnapshotParseContext snapshotParseContext, ISourceFile sourceFile)

@@ -3,7 +3,6 @@
 using System;
 using System.IO;
 using NUnit.Framework;
-using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Snapshots

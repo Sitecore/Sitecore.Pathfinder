@@ -153,11 +153,16 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\ContentEditors\contenteditor.css" />
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\img\document_text.png" />
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\img\folder.png" />
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\img\folder_document2.png" />
     <Content Include="sitecore\shell\client\Applications\Pathfinder\packageDefaultIcon-50x50.png" />
     <Content Include="sitecore\shell\client\Applications\Pathfinder\Packages.css" />
     <Content Include="sitecore\shell\client\Applications\Pathfinder\PackageSources.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\PathfinderContentEditorController.cs" />
     <Compile Include="Controllers\PathfinderInstalledController.cs" />
     <Compile Include="Controllers\PathfinderInstallPackageController.cs" />
     <Compile Include="Controllers\PathfinderPackageController.cs" />
@@ -180,22 +185,30 @@
     <Compile Include="Emitters\Items\TemplateEmitter.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="Extensions\DatabaseExtensions.cs" />
+    <Compile Include="Importing\ItemImporters\IItemImporterService.cs" />
+    <Compile Include="Importing\ItemImporters\ItemImporterService.cs" />
     <Compile Include="Jobs\BackgroundJob.cs" />
     <Compile Include="Mvc\Presentation\HtmlTemplateRenderer.cs" />
     <Compile Include="Mvc\Response\GetRenderer\GetHtmlTemplateRenderer.cs" />
     <Compile Include="Packages\PackageService.cs" />
     <Compile Include="Packages\Packages\NugetPackage.cs" />
     <Compile Include="Packages\Packages\PackageBase.cs" />
+    <Compile Include="Pipelines\Loader\InitializePathfinderProjects.cs" />
     <Compile Include="Pipelines\Loader\MapRoutes.cs" />
+    <Compile Include="Projects\IProjectContext.cs" />
+    <Compile Include="Projects\ProjectContext.cs" />
+    <Compile Include="Projects\ProjectHost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerConstants.cs" />
-    <Compile Include="WebApi\ImportWebsites\ImportWebsite.cs" />
-    <Compile Include="WebApi\ImportWebsites\FieldValueConverterBase.cs" />
-    <Compile Include="WebApi\ImportWebsites\IdFieldValueConverter.cs" />
-    <Compile Include="WebApi\ImportWebsites\IFieldValueConverter.cs" />
-    <Compile Include="WebApi\ImportWebsites\ImageFieldValueConverter.cs" />
-    <Compile Include="WebApi\ImportWebsites\LayoutFieldValueConverter.cs" />
-    <Compile Include="WebApi\ImportWebsites\LinkFieldValueConverter.cs" />
+    <Compile Include="Serializing\SerializingDataProvider.cs" />
+    <Compile Include="Serializing\WebsiteSerializer.cs" />
+    <Compile Include="WebApi\ImportWebsite.cs" />
+    <Compile Include="Importing\FieldImporters\FieldValueImporterBase.cs" />
+    <Compile Include="Importing\FieldImporters\IdFieldValueImporter.cs" />
+    <Compile Include="Importing\FieldImporters\IFieldValueImporter.cs" />
+    <Compile Include="Importing\FieldImporters\ImageFieldValueImporter.cs" />
+    <Compile Include="Importing\FieldImporters\LayoutFieldValueImporter.cs" />
+    <Compile Include="Importing\FieldImporters\LinkFieldValueImporter.cs" />
     <Compile Include="WebApi\SynchronizeWebsites\ISynchronizer.cs" />
     <Compile Include="WebApi\SynchronizeWebsites\SynchronizeWebsite.cs" />
     <Compile Include="WebApi\SynchronizeWebsites\ContentXmlSynchronizer.cs" />
@@ -208,6 +221,7 @@
     <Compile Include="WebApi\TroubleshootWebsites\1000 - RebuildClassicIndexesTroubleshooter.cs" />
     <Compile Include="WebApi\TroubleshootWebsites\2000 - RepublishMasterDatabaseTroubleshooter.cs" />
     <Compile Include="WebApi\TroubleshootWebsites\3000 - RebuildLinkDatabaseTroubleshooter.cs" />
+    <Compile Include="WebApi\UpdateProjectWebsiteMappings.cs" />
     <Compile Include="WebApi\WriteWebsiteExports.cs" />
     <Compile Include="WebApi\TroubleshootWebsites\TroubleshootWebsite.cs" />
   </ItemGroup>
@@ -225,9 +239,12 @@
     <Content Include="web.config" />
     <Content Include="sitecore\shell\client\Applications\Pathfinder\InstalledPackages.cshtml" />
     <Content Include="sitecore\shell\client\Applications\Pathfinder\Packages.cshtml" />
-    <Content Include="sitecore\shell\client\Applications\Pathfinder\web.config" />
+    <None Include="sitecore\shell\client\Applications\Pathfinder\web.config" />
     <Content Include="sitecore\shell\client\Applications\Pathfinder\Package.cshtml" />
     <Content Include="Readme.md" />
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\ContentEditors\shell.cshtml" />
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\ContentEditors\contenttree.cshtml" />
+    <Content Include="sitecore\shell\client\Applications\Pathfinder\ContentEditors\contenteditor.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

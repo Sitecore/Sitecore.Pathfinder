@@ -45,7 +45,7 @@ namespace Sitecore.Pathfinder.Extensions
             jsonTextWriter.WriteValue(value);
         }
 
-        public static void WritePropertyStringIf([NotNull] this JsonTextWriter jsonTextWriter, [NotNull] string propertyName, bool value, bool defaultValue = true)
+        public static void WritePropertyStringIf([NotNull] this JsonTextWriter jsonTextWriter, [NotNull] string propertyName, bool value, bool defaultValue = false)
         {
             if (value == defaultValue)
             {

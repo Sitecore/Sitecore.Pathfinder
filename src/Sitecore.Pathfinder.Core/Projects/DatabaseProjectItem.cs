@@ -88,10 +88,7 @@ namespace Sitecore.Pathfinder.Projects
             base.Merge(newProjectItem, overwrite);
 
             var newItemBase = newProjectItem as DatabaseProjectItem;
-            if (newItemBase == null)
-            {
-                return;
-            }
+            Assert.Cast(newItemBase, nameof(newItemBase));
 
             if (overwrite)
             {

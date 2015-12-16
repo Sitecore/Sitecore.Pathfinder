@@ -126,10 +126,7 @@ namespace Sitecore.Pathfinder.Building.Scripting
         protected virtual void WriteError([NotNull] object sender, [NotNull] EventArgs e)
         {
             var error = sender as PipelineReader<object>;
-            if (error == null)
-            {
-                return;
-            }
+            Assert.Cast(error, nameof(error));
 
             while (error.Count > 0)
             {
@@ -139,11 +136,8 @@ namespace Sitecore.Pathfinder.Building.Scripting
 
         protected virtual void WriteOutput([NotNull] object sender, [NotNull] EventArgs e)
         {
-            var output = sender as PipelineReader<PSObject>;
-            if (output == null)
-            {
-                return;
-            }
+            var output = sender as PipelineReader<object>;
+            Assert.Cast(output, nameof(output));
 
             while (output.Count > 0)
             {

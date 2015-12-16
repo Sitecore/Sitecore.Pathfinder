@@ -23,6 +23,13 @@ namespace Sitecore.Pathfinder.Languages.Xml
             ParseFieldTextNode(context, item, languageVersionContext, textNode, fieldNameTextNode);
         }
 
+        protected override void ParseFieldsTextNode(ItemParseContext context, Item item, ITextNode fieldsTextNode)
+        {
+            context.ParseContext.SchemaService.ValidateTextNodeSchema(fieldsTextNode);
+
+            base.ParseFieldsTextNode(context, item, fieldsTextNode);
+        }
+
         protected override void ParseLayoutTextNode(ItemParseContext context, Item item, ITextNode textNode)
         {
             var parser = new XmlLayoutTextNodeParser();
@@ -31,6 +38,8 @@ namespace Sitecore.Pathfinder.Languages.Xml
 
         protected override void ParseUnversionedTextNode(ItemParseContext context, Item item, ITextNode textNode)
         {
+            context.ParseContext.SchemaService.ValidateTextNodeSchema(textNode);
+
             var fieldContext = new LanguageVersionContext();
             fieldContext.LanguageProperty.Parse(textNode);
 
@@ -42,6 +51,8 @@ namespace Sitecore.Pathfinder.Languages.Xml
 
         protected override void ParseVersionedTextNode(ItemParseContext context, Item item, ITextNode textNode)
         {
+            context.ParseContext.SchemaService.ValidateTextNodeSchema(textNode);
+
             foreach (var versionChildNode in textNode.ChildNodes)
             {
                 var fieldContext = new LanguageVersionContext();

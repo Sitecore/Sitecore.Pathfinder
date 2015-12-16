@@ -22,11 +22,12 @@ namespace Sitecore.Pathfinder.Languages.Json
             };
 
             output.WriteStartObject("Layout");
-            output.WriteStartObject("Devices");
+            output.WriteStartArray("Devices");
 
             foreach (var deviceBuilder in layoutBuilder.Devices)
             {
-                output.WriteStartObject(deviceBuilder.DeviceName);
+                output.WriteStartObject();
+                output.WritePropertyStringIf("Name", deviceBuilder.DeviceName);
                 output.WritePropertyStringIf("Layout", deviceBuilder.LayoutItemPath);
 
                 output.WriteStartArray("Renderings");
@@ -40,7 +41,7 @@ namespace Sitecore.Pathfinder.Languages.Json
                 output.WriteEndObject();
             }
 
-            output.WriteEndObject();
+            output.WriteEndArray();
             output.WriteEndObject();
         }
 
@@ -68,6 +69,14 @@ namespace Sitecore.Pathfinder.Languages.Json
 
             foreach (var field in sharedFields)
             {
+                if (string.Equals(field.TemplateField.Type, "Layout", StringComparison.OrdinalIgnoreCase) || string.Equals(field.FieldName, "__Renderings", StringComparison.OrdinalIgnoreCase) || string.Equals(field.FieldName, "__Final Renderings", StringComparison.OrdinalIgnoreCase))
+                {
+                    var layout = "{" + field.Value + "}";
+                    var jToken = layout.ToJToken();
+                    jToken?.First.WriteTo(output);
+                    continue;
+                }
+
                 output.WritePropertyString(field.FieldName, field.Value);
             }
 
@@ -137,7 +146,7 @@ namespace Sitecore.Pathfinder.Languages.Json
 
             output.WriteStartObject();
 
-            output.WriteStartObject("Item");
+            output.WriteStartObject("Template");
             output.WritePropertyString("Name", template.ItemName);
             output.WritePropertyStringIf("Id", template.Uri.Guid.Format());
             output.WritePropertyStringIf("Database", template.DatabaseName);
@@ -150,6 +159,7 @@ namespace Sitecore.Pathfinder.Languages.Json
             {
                 output.WriteStartObject(section.SectionName);
                 output.WritePropertyStringIf("Id", section.Uri.Guid.Format());
+                output.WritePropertyStringIf("Name", section.SectionName);
                 output.WritePropertyStringIf("Icon", section.Icon);
 
                 output.WriteStartObject("Fields");
@@ -158,6 +168,7 @@ namespace Sitecore.Pathfinder.Languages.Json
                 {
                     output.WriteStartObject(field.FieldName);
                     output.WritePropertyStringIf("Id", field.Uri.Guid.Format());
+                    output.WritePropertyStringIf("Name", field.FieldName);
                     output.WritePropertyStringIf("Sortorder", field.SortOrder);
                     output.WritePropertyStringIf("Type", field.Type);
                     output.WritePropertyStringIf("Source", field.Source);
@@ -182,8 +193,8 @@ namespace Sitecore.Pathfinder.Languages.Json
         private static void WriteAsJson([NotNull] JsonTextWriter output, [NotNull] DeviceBuilder deviceBuilder, [NotNull] RenderingBuilder renderingBuilder)
         {
             output.WriteStartObject();
+            output.WriteStartObject(renderingBuilder.Name);
 
-            output.WritePropertyString("Name", renderingBuilder.Name);
             output.WritePropertyStringIf("Placeholder", renderingBuilder.Placeholder);
             output.WritePropertyStringIf("Cacheable", renderingBuilder.Cacheable);
             output.WritePropertyStringIf("VaryByData", renderingBuilder.VaryByData);
@@ -213,6 +224,7 @@ namespace Sitecore.Pathfinder.Languages.Json
                 output.WriteEndArray();
             }
 
+            output.WriteEndObject();
             output.WriteEndObject();
         }
     }

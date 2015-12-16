@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Rainbow.Storage.Yaml;
 using Sitecore.Pathfinder.Compiling.Compilers;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 
@@ -23,10 +24,7 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
         public override void Compile(ICompileContext context, IProjectItem projectItem)
         {
             var unicornFile = projectItem as UnicornFile;
-            if (unicornFile == null)
-            {
-                return;
-            }
+            Assert.Cast(unicornFile, nameof(unicornFile));
 
             var snapshot = unicornFile.Snapshots.First();
 

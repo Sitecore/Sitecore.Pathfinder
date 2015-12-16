@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             template.LongHelpProperty.Parse(textNode);
             // todo: yuck
             template.IsEmittable = !string.Equals(textNode.GetAttributeValue(Constants.Fields.IsEmittable), "False", StringComparison.OrdinalIgnoreCase);
-            template.IsImport = string.Equals(textNode.GetAttributeValue(Constants.Fields.IsExtern, context.IsExtern.ToString()), "True", StringComparison.OrdinalIgnoreCase);
+            template.IsImport = string.Equals(textNode.GetAttributeValue(Constants.Fields.IsImport, context.IsImport.ToString()), "True", StringComparison.OrdinalIgnoreCase);
 
             template.References.AddRange(context.ParseContext.ReferenceParser.ParseReferences(template, template.BaseTemplatesProperty));
 
@@ -68,6 +68,8 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
         protected virtual void ParseField([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] TemplateSection templateSection, [NotNull] ITextNode templateFieldTextNode, ref int nextSortOrder)
         {
+            context.ParseContext.SchemaService.ValidateTextNodeSchema(templateFieldTextNode, "TemplateField");
+
             var fieldName = templateFieldTextNode.GetAttribute("Name");
             if (fieldName == null)
             {
@@ -119,6 +121,8 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
         protected virtual void ParseSection([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] ITextNode templateSectionTextNode)
         {
+            context.ParseContext.SchemaService.ValidateTextNodeSchema(templateSectionTextNode, "TemplateSection");
+
             var sectionName = templateSectionTextNode.GetAttribute("Name");
             if (sectionName == null)
             {

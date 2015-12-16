@@ -1,0 +1,101 @@
+﻿Item :
+    Template : /sitecore/templates/Sample/YamlItemTemplate
+    Template.CreateFromFields : True 
+    Template.ShortHelp        : Clean blog.
+    Template.LongHelp         : Clean blog from StartBootstrap.
+    Template.Icon             : Applications/16x16/about.png
+
+    - Fields :
+        - Field : Title
+          Field.ShortHelp : Short Help. 
+          Field.LongHelp  : Long help.
+          Value           : Hello
+
+        - Field : Text
+          Field.ShortHelp : Short Help. 
+          Field.LongHelp  : Long help.
+          Value           : Hello World
+
+        - Field : Image
+          Field.ShortHelp : Short Help. 
+          Field.LongHelp  : Long help.
+          Field.Type      : Image
+          Value: >
+                /sitecore/media library/mushrooms
+
+        - Field : Link
+          Field.ShortHelp : Short Help. 
+          Field.LongHelp  : Long help.
+          Field.Type      : General Link
+          Value: | 
+                /sitecore/media library/mushrooms
+
+        - Field : ItemPath
+          Field.ShortHelp : Short Help. 
+          Field.LongHelp  : Long help.
+          Value           : /sitecore/media library/mushrooms
+
+        - Field : TrueCheckbox
+          Field.ShortHelp : Short Help. 
+          Field.LongHelp  : Long help.
+          Field.Type      : Checkbox
+          Value           : True
+
+        - Field : FalseCheckbox
+          Field.ShortHelp : Short Help. 
+          Field.LongHelp  : Long help.
+          Field.Type      : Checkbox
+          Value           : False
+
+        - File.Include : ~/includes/Field.include.item.xml
+        
+        - File.Include : ~/includes/ParameterizedField.include.item.xml
+          Name  : ParameterizedField
+          Value : Parameterized Value
+
+        - Unversioned :
+            - da-DK :
+                - Field : UnversionedField
+                  Field.ShortHelp : Short Help. 
+                  Field.LongHelp  : Long help.
+                  Value: >
+                        Hello
+
+        - Versioned :
+            - da-DK :
+                - 1 :
+                    - Field : VersionedField
+                      Field.ShortHelp : Short Help. 
+                      Field.LongHelp  : Long help.
+                      Value           : Version 1
+                - 2 :
+                    - Field : VersionedField
+                      Field.ShortHelp : Short Help. 
+                      Field.LongHelp  : Long help.
+                      Value           : Version 2
+        - Layout :
+            - Device :
+                Name : Default
+                Layout: /sitecore/layout/Layouts/MvcLayout
+                - HelloWorld :
+                    DataSource: /sitecore
+    - Children :
+        - Item :
+            Name     : YamlSubitem
+            Template : /sitecore/templates/Sample/YamlItemTemplate
+            - Fields :
+                - Field : Title
+                  Value : Hello
+
+        - Template :  
+            Name      : ItemYamlItemTemplate
+            Icon      : Applications/16x16/About.png
+            ShortHelp : Short Help.
+            LongHelp  : Long help.
+            - Section :
+                Name : Fields
+                - Field :
+                    Name      : Header
+                    Type      : Single-Line Text
+                    ShortHelp : Short Help.
+                    LongHelp  : Long help.

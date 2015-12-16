@@ -1,6 +1,8 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 
@@ -58,14 +60,20 @@ namespace Sitecore.Pathfinder.Snapshots
 
         bool IMutableTextNode.SetKey(string newKey)
         {
+            var mutableTextNode = TextNode as IMutableTextNode;
+            Assert.IsNotNull(mutableTextNode, "TextNode must be mutable");
+
             _key = newKey.UnescapeXmlElementName();
-            return ((IMutableTextNode)TextNode).SetKey(newKey);
+            return mutableTextNode.SetKey(newKey);
         }
 
         bool IMutableTextNode.SetValue(string newValue)
         {
+            var mutableTextNode = TextNode as IMutableTextNode;
+            Assert.IsNotNull(mutableTextNode, "TextNode must be mutable");
+
             _key = newValue.UnescapeXmlElementName();
-            return ((IMutableTextNode)TextNode).SetKey(newValue);
+            return mutableTextNode.SetKey(newValue);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Building.Maintaining
         {
             context.Trace.TraceInformation(Msg.S1000, Texts.SynchronizingWebsite);
 
-            var url = MakeWebApiUrl(context, "SynchronizeWebsites.SynchronizeWebsite");
+            var url = MakeWebApiUrl(context, "SynchronizeWebsite");
             var targetFileName = Path.GetTempFileName();
 
             if (!DownloadFile(context, url, targetFileName))
