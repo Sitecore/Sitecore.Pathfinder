@@ -183,7 +183,7 @@ namespace Sitecore.Pathfinder.Building.Initializing
             var fileName = Path.Combine(projectDirectory, "scc.cmd");
             var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-            var contents = "@" + directory + "\\scc.exe %*";
+            var contents = "@\"" + directory + "\\scc.exe\" %*";
 
             context.FileSystem.WriteAllText(fileName, contents, Encoding.ASCII);
         }

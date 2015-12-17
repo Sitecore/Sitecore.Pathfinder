@@ -207,7 +207,6 @@ namespace Sitecore.Pathfinder.Building
                 if (context.Configuration.GetBool(Constants.Configuration.Debug))
                 {
                     context.Trace.WriteLine(ex.StackTrace);
-                    Debugger.Launch();
                 }
             }
         }

@@ -236,6 +236,22 @@
     <Compile Include="Building\Testing\ValidateWebsite.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\ContentEditors\contenteditor.css">
+      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\ContentEditors\contenteditor.css</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\img\document_text.png">
+      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\img\document_text.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\img\folder.png">
+      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\img\folder.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\img\folder_document2.png">
+      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\img\folder_document2.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\packageDefaultIcon-50x50.png">
       <Link>files\website\sitecore\shell\client\Applications\Pathfinder\packageDefaultIcon-50x50.png</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -268,6 +284,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="nuget.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\ContentEditors\contenteditor.cshtml">
+      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\ContentEditors\contenteditor.cshtml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\ContentEditors\contenttree.cshtml">
+      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\ContentEditors\contenttree.cshtml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\ContentEditors\shell.cshtml">
+      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\ContentEditors\shell.cshtml</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="files\editors\Atom.zip">

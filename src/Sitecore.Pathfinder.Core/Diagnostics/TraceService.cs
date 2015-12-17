@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Diagnostics;
 using System.Linq;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Extensions;
@@ -65,11 +64,6 @@ namespace Sitecore.Pathfinder.Diagnostics
         public void TraceError(int msg, string text, string fileName, TextSpan span, string details = "")
         {
             Write(msg, text, Severity.Error, fileName, span, details);
-
-            if (Configuration.GetBool(Constants.Configuration.Debug))
-            {
-                Debugger.Launch();
-            }
         }
 
         public void TraceError(string text, ISourceFile sourceFile, string details = "")
@@ -80,11 +74,6 @@ namespace Sitecore.Pathfinder.Diagnostics
         public void TraceError(int msg, string text, ISourceFile sourceFile, string details = "")
         {
             Write(msg, text, Severity.Error, sourceFile.AbsoluteFileName, TextSpan.Empty, details);
-
-            if (Configuration.GetBool(Constants.Configuration.Debug))
-            {
-                Debugger.Launch();
-            }
         }
 
         public void TraceError(string text, ITextNode textNode, string details = "")
@@ -95,11 +84,6 @@ namespace Sitecore.Pathfinder.Diagnostics
         public void TraceError(int msg, string text, ITextNode textNode, string details = "")
         {
             Write(msg, text, Severity.Error, textNode.Snapshot.SourceFile.AbsoluteFileName, textNode.TextSpan, details);
-
-            if (Configuration.GetBool(Constants.Configuration.Debug))
-            {
-                Debugger.Launch();
-            }
         }
 
         public void TraceInformation(string text, string details = "")
@@ -110,11 +94,6 @@ namespace Sitecore.Pathfinder.Diagnostics
         public void TraceInformation(int msg, string text, string details = "")
         {
             Write(msg, text, Severity.Information, string.Empty, TextSpan.Empty, details);
-
-            if (Configuration.GetBool(Constants.Configuration.Debug))
-            {
-                Debugger.Launch();
-            }
         }
 
         public void TraceInformation(string text, string fileName, TextSpan span, string details = "")

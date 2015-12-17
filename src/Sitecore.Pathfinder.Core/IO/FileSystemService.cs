@@ -162,7 +162,7 @@ namespace Sitecore.Pathfinder.IO
                         else
                         {
                             var fileName = Path.Combine(destinationDirectory, entry.FullName);
-                            Directory.CreateDirectory(Path.GetDirectoryName(fileName) ?? string.Empty);
+                            CreateDirectoryFromFileName(fileName);
                             entry.ExtractToFile(fileName, true);
                         }
                     }
@@ -178,6 +178,7 @@ namespace Sitecore.Pathfinder.IO
         {
             if (!FileExists(targetFileName))
             {
+                CreateDirectoryFromFileName(targetFileName);
                 File.Copy(sourceFileName, targetFileName);
                 return true;
             }

@@ -101,7 +101,7 @@ namespace Sitecore.Pathfinder.Parsing
 
             if (!parsed)
             {
-                parseContext.Trace.TraceWarning(Msg.P1024, "No parser found for file. If the file is a content file, add the file extension to the 'build-project:content-files' setting", sourceFile);
+                parseContext.Trace.TraceWarning(Msg.P1024, "No parser found for file. If the file is a content file, add the file extension to the 'project-website-mappings:content-files' setting", sourceFile);
             }
         }
 
