@@ -1,5 +1,8 @@
 Version Next
 ============
+
+Version 0.6.0
+=============
 * Add: Project changed event for invalidating caches (2015-12-01)
 * Add: Project roles - enables/disabled checkers and conventions (2015-12-01)
 * Add: Rules Engine (2015-12-01)

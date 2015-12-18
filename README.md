@@ -18,7 +18,7 @@ Please notice that some details in these videos are out of date.
 * [04 - Html Templates](https://www.youtube.com/watch?v=9aTGhW6ErYM)
 * [05 - Code Generation, Visual Studio and Grunt](http://youtu.be/ZM3ve1WhwwQ)
 
-Then download [Pathfinder 0.5.0-Alpha](http://vsplugins.sitecore.net/Pathfinder/Sitecore.Pathfinder.0.5.0.zip) to 
+Then download [Pathfinder 0.6.0-Alpha](http://vsplugins.sitecore.net/Pathfinder/Sitecore.Pathfinder.0.6.0.zip) to 
 try it out.
 
 # Introduction
