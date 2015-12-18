@@ -583,6 +583,10 @@
       <Project>{7287e9e2-cab5-4de4-87b5-237b65020dc4}</Project>
       <Name>Sitecore.Pathfinder.HtmlFile</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Features\Sitecore.Pathfinder.Markdown\Sitecore.Pathfinder.Markdown.csproj">
+      <Project>{37d4ea12-aeb1-4bfa-a5c8-76185f68dd25}</Project>
+      <Name>Sitecore.Pathfinder.Markdown</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Features\Sitecore.Pathfinder.T4\Sitecore.Pathfinder.T4.csproj">
       <Project>{bc0ec297-60e6-4d8f-a846-e1da920cfc26}</Project>
       <Name>Sitecore.Pathfinder.T4</Name>
