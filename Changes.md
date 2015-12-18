@@ -9,6 +9,7 @@ Version Next
 * Add: Serializing Data Provider (2015-12-09)
 * Add: Stricter checking using build-project:schema setting (2015-12-12)
 * Add: Renamed /content directory to /items to avoid conflict with ASP.NET 5 (2015-12-12)
+* Add: Merged Markdown compiler pull request (2015-12-18) - Alistair Deneys
 
 Version 0.5.0
 =============

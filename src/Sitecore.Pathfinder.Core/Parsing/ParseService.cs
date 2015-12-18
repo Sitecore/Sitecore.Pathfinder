@@ -74,8 +74,11 @@ namespace Sitecore.Pathfinder.Parsing
                 ["Database"] = project.Options.DatabaseName,
                 ["FileNameWithoutExtensions"] = fileNameWithoutExtensions,
                 ["FileName"] = fileName,
-                ["DirectoryName"] = directoryName
+                ["DirectoryName"] = directoryName,
+                ["ProjectDirectory"] = project.Options.ProjectDirectory
             };
+
+            tokens.AddRange(project.Options.Tokens);
 
             var snapshotParseContext = new SnapshotParseContext(SnapshotService, tokens, new Dictionary<string, List<ITextNode>>());
             var snapshot = SnapshotService.LoadSnapshot(snapshotParseContext, sourceFile);

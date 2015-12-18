@@ -201,13 +201,17 @@ namespace Sitecore.Pathfinder.Building
             }
             catch (Exception ex)
             {
-                context.Trace.TraceError(Msg.I1007, Texts.An_error_occured, ex.Message);
-                context.IsAborted = true;
+                context.Trace.TraceError(Msg.I1007, ex.Message);
 
-                if (context.Configuration.GetBool(Constants.Configuration.Debug))
+                var innerException = ex.InnerException;
+                while (innerException != null)
                 {
-                    context.Trace.WriteLine(ex.StackTrace);
+                    context.Trace.TraceError(Msg.I1007, innerException.Message);
+                    innerException = innerException.InnerException;
                 }
+
+                context.Trace.WriteLine(ex.StackTrace);
+                context.IsAborted = true;
             }
         }
 

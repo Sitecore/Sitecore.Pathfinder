@@ -22,8 +22,10 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         public string ProjectDirectory { get; }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         public ICollection<string> StandardTemplateFields { get; } = new List<string>();
+
+        [NotNull]
+        public IDictionary<string, string> Tokens { get; } = new Dictionary<string, string>();
     }
 }

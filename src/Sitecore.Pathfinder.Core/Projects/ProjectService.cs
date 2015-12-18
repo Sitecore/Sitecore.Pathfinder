@@ -46,6 +46,7 @@ namespace Sitecore.Pathfinder.Projects
             var projectOptions = Factory.ProjectOptions(projectDirectory, databaseName);
 
             LoadStandardTemplateFields(projectOptions);
+            LoadTokens(projectOptions);
 
             return projectOptions;
         }
@@ -68,6 +69,15 @@ namespace Sitecore.Pathfinder.Projects
                 {
                     projectOptions.StandardTemplateFields.Add(value);
                 }
+            }
+        }
+        protected virtual void LoadTokens([NotNull] ProjectOptions projectOptions)
+        {
+            foreach (var pair in Configuration.GetSubKeys(Constants.Configuration.SearchAndReplaceTokens))
+            {
+                var value = Configuration.Get(Constants.Configuration.SearchAndReplaceTokens + ":" + pair.Key);
+                projectOptions.Tokens[pair.Key] = value;
+
             }
         }
     }

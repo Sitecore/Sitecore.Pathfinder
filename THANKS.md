@@ -1,10 +1,12 @@
 # Thanks
 
 ## Contributors
+* Alistair Deneys
 * Emil Okkels Klein
 * Jakob Christensen
 
 ## Testers
+* Alin Marius Pârjolea
 * Dmitry Konstenko
 * Martin Svarrer Christensen
 
@@ -12,7 +14,6 @@
 * Alan Coates
 * Alen Pelin
 * Alex Shyba
-* Alistair Deneys
 * Andrea Bellagamba
 * Brian Pedersen
 * Jacob Surland

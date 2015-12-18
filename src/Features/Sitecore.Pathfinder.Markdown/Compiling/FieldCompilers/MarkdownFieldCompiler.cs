@@ -2,6 +2,7 @@
 using Sitecore.Pathfinder.Compiling.FieldCompilers;
 using Sitecore.Pathfinder.Projects.Items;
 using System;
+using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Markdown.Compiling.FieldCompilers
 {
@@ -41,7 +42,7 @@ namespace Sitecore.Pathfinder.Markdown.Compiling.FieldCompilers
 
         protected string GetIndicatorToken(IConfiguration config)
         {
-            return config.Get(Constants.Configuration.IndicatorToken);
+            return config.GetString(Constants.Configuration.IndicatorToken);
         }
     }
 }

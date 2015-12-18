@@ -131,6 +131,8 @@ namespace Sitecore.Pathfinder
 
             public const string ScriptExtensions = "scripts:file-extensions";
 
+            public const string SearchAndReplaceTokens = "search-and-replace-tokens";
+
             public const string StandardTemplateFields = "standard-template-fields";
 
             public const string SystemConfigFileName = "system:config";

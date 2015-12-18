@@ -20,7 +20,7 @@
 
         // default file search pattern
         "search-pattern": "*",
-        
+
         // fields to exclude when importing a website
         "excluded-fields": "__Created, __Created by, __Owner, __Revision, __Updated, __Updated by, Blob, Originator",
 
@@ -62,7 +62,7 @@
         "schema": {
             "Item-attributes": "Name, Id, Database, Icon, Template, IsEmittable, IsExternalReference, Layout.HtmlFile, Template.CreateFromFields, Template.Id, Template.Icon, Template.BaseTemplates, Template.ShortHelp, Template.LongHelp",
             "Item-childnodes": "Fields, Children, Template",
-            "Fields-childnodes": "Field, Unversioned, Versioned, Layout", 
+            "Fields-childnodes": "Field, Unversioned, Versioned, Layout",
             "Field-attributes": "Name, Value, Language, Version, Field.Type, Field.SortOrder, Field.Sharing, Field.Source, Field.ShortHelp, Field.LongHelp",
             "Template-attributes": "Name, Id, Database, Icon, IsEmittable, IsExternalReference, ShortHelp, LongHelp, BaseTemplates, Layout.HtmlFile",
             "Template-childnodes": "Section, Sections",
@@ -302,10 +302,6 @@
         }
     },
 
-    // =========
-    // SETTINGS
-    // =========
-
     "extensions": {
         "project-extensions-directory": "sitecore.project/extensions",
         "project-extensions-assembly-filename": "Sitecore.Pathfinder.Extensions.dll"
@@ -320,6 +316,11 @@
 
     "scripts": {
         "file-extensions": ".ps1 .cmd .bat"
+    },
+
+    // global search and replace tokens - case-sensitive
+    "search-and-replace-tokens": {
+        // "replace" : "with"
     },
 
     "standard-template-fields": {
