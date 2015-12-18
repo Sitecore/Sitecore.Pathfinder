@@ -1,12 +1,13 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO.PathMappers;
+using Sitecore.Pathfinder.IO.PathMappers.Pipelines;
 
 namespace Sitecore.Pathfinder.IO
 {
@@ -18,20 +19,24 @@ namespace Sitecore.Pathfinder.IO
         }
 
         [ImportingConstructor]
-        public PathMapperService([NotNull] IConfiguration configuration)
+        public PathMapperService([NotNull] IConfiguration configuration, [NotNull] IPipelineService pipelines)
         {
+            Pipelines = pipelines;
             LoadFromConfiguration(configuration);
         }
 
-        public ICollection<ProjectDirectoryToWebsiteDirectoryMapper> ProjectDirectoryToWebsiteDirectories { get; } = new List<ProjectDirectoryToWebsiteDirectoryMapper>();
+        [NotNull]
+        protected IPipelineService Pipelines { get; }
 
-        public ICollection<ProjectDirectoryToWebsiteItemPathMapper> ProjectDirectoryToWebsiteItemPaths { get; } = new List<ProjectDirectoryToWebsiteItemPathMapper>();
+        public ICollection<IProjectToWebsiteFileNameMapper> ProjectDirectoryToWebsiteDirectories { get; } = new List<IProjectToWebsiteFileNameMapper>();
 
-        public ICollection<ProjectFileNameToWebsiteFileNameMapper> ProjectFileNameToWebsiteFileNames { get; } = new List<ProjectFileNameToWebsiteFileNameMapper>();
+        public ICollection<IProjectFileNameToItemPathMapper> ProjectDirectoryToWebsiteItemPaths { get; } = new List<IProjectFileNameToItemPathMapper>();
 
-        public ICollection<WebsiteDirectoryToProjectDirectoryMapper> WebsiteDirectoryToProjectDirectories { get; } = new List<WebsiteDirectoryToProjectDirectoryMapper>();
+        public ICollection<IProjectToWebsiteFileNameMapper> ProjectFileNameToWebsiteFileNames { get; } = new List<IProjectToWebsiteFileNameMapper>();
 
-        public ICollection<WebsiteItemPathToProjectDirectoryMapper> WebsiteItemPathToProjectDirectories { get; } = new List<WebsiteItemPathToProjectDirectoryMapper>();
+        public ICollection<IWebsiteToProjectFileNameMapper> WebsiteDirectoryToProjectDirectories { get; } = new List<IWebsiteToProjectFileNameMapper>();
+
+        public ICollection<IItemPathToProjectFileNameMapper> WebsiteItemPathToProjectDirectories { get; } = new List<IItemPathToProjectFileNameMapper>();
 
         public void Clear()
         {
@@ -126,110 +131,13 @@ namespace Sitecore.Pathfinder.IO
         {
             Clear();
 
-            foreach (var pair in configuration.GetSubKeys("project-website-mappings:project-to-website"))
-            {
-                var key = "project-website-mappings:project-to-website:" + pair.Key;
+            var pipeline = Pipelines.Resolve<ParsePathMappersPipeline>().Execute(configuration);
 
-                var projectDirectoryToItemPath = configuration.GetString(key + ":project-directory-to-item-path");
-                if (!string.IsNullOrEmpty(projectDirectoryToItemPath))
-                {
-                    var n = projectDirectoryToItemPath.IndexOf("=>", StringComparison.Ordinal);
-                    if (n < 0)
-                    {
-                        throw new ConfigurationException(Texts.Missing_Mapping);
-                    }
-
-                    var projectDirectory = projectDirectoryToItemPath.Left(n).Trim();
-                    var itemPath = projectDirectoryToItemPath.Mid(n + 2).Trim();
-                    var databaseName = configuration.GetString(key + ":database", "master");
-                    var include = configuration.GetString(key + ":file-name-include");
-                    var exclude = configuration.GetString(key + ":file-name-exclude");
-                    var isImport = configuration.GetBool(key + ":is-import");
-                    var uploadMedia = configuration.GetBool(key + ":upload-media", true);
-
-                    ProjectDirectoryToWebsiteItemPaths.Add(new ProjectDirectoryToWebsiteItemPathMapper(projectDirectory, databaseName, itemPath, include, exclude, isImport, uploadMedia));
-                }
-
-                var projectDirectoryToWebsiteDirectory = configuration.GetString(key + ":project-directory-to-website-directory");
-                if (!string.IsNullOrEmpty(projectDirectoryToWebsiteDirectory))
-                {
-                    var n = projectDirectoryToWebsiteDirectory.IndexOf("=>", StringComparison.Ordinal);
-                    if (n < 0)
-                    {
-                        throw new ConfigurationException(Texts.Missing_Mapping);
-                    }
-
-                    var projectDirectory = projectDirectoryToWebsiteDirectory.Left(n).Trim();
-                    var websiteDirectory = projectDirectoryToWebsiteDirectory.Mid(n + 2).Trim();
-                    var include = configuration.GetString(key + ":file-name-include");
-                    var exclude = configuration.GetString(key + ":file-name-exclude");
-
-                    ProjectDirectoryToWebsiteDirectories.Add(new ProjectDirectoryToWebsiteDirectoryMapper(projectDirectory, websiteDirectory, include, exclude));
-                }
-
-                foreach (var fileNamePair in configuration.GetSubKeys(key))
-                {
-                    if (!fileNamePair.Key.StartsWith("project-file-name-to-website-file-name", StringComparison.OrdinalIgnoreCase))
-                    {
-                        continue;
-                    }
-
-                    var projectFileNameToWebsiteFileName = configuration.GetString(key + ":" + fileNamePair.Key);
-                    var n = projectFileNameToWebsiteFileName.IndexOf("=>", StringComparison.Ordinal);
-                    if (n < 0)
-                    {
-                        throw new ConfigurationException(Texts.Missing_Mapping);
-                    }
-
-                    var sourceFileName = projectFileNameToWebsiteFileName.Left(n).Trim();
-                    var targetFileName = projectFileNameToWebsiteFileName.Mid(n + 2).Trim();
-
-                    ProjectFileNameToWebsiteFileNames.Add(new ProjectFileNameToWebsiteFileNameMapper(sourceFileName, targetFileName));
-                }
-            }
-
-            foreach (var pair in configuration.GetSubKeys("project-website-mappings:website-to-project"))
-            {
-                var key = "project-website-mappings:website-to-project:" + pair.Key;
-
-                var itemPathToProjectDirectory = configuration.GetString(key + ":item-path-to-project-directory");
-                if (!string.IsNullOrEmpty(itemPathToProjectDirectory))
-                {
-                    var n = itemPathToProjectDirectory.IndexOf("=>", StringComparison.Ordinal);
-                    if (n < 0)
-                    {
-                        throw new ConfigurationException(Texts.Missing_Mapping);
-                    }
-
-                    var databaseName = configuration.GetString(key + ":database", "master");
-                    var itemPath = itemPathToProjectDirectory.Left(n).Trim();
-                    var projectDirectory = itemPathToProjectDirectory.Mid(n + 2).Trim();
-                    var format = configuration.GetString(key + ":format", "item.json");
-                    var itemNameInclude = configuration.GetString(key + ":item-name-include");
-                    var itemNameExclude = configuration.GetString(key + ":item-name-exclude");
-                    var templateNameInclude = configuration.GetString(key + ":template-name-include");
-                    var templateNameExclude = configuration.GetString(key + ":template-name-exclude");
-
-                    WebsiteItemPathToProjectDirectories.Add(new WebsiteItemPathToProjectDirectoryMapper(databaseName, itemPath, projectDirectory, format, itemNameInclude, itemNameExclude, templateNameInclude, templateNameExclude));
-                }
-
-                var projectDirectoryToWebsiteDirectory = configuration.GetString(key + ":website-directory-to-project-directory");
-                if (!string.IsNullOrEmpty(projectDirectoryToWebsiteDirectory))
-                {
-                    var n = projectDirectoryToWebsiteDirectory.IndexOf("=>", StringComparison.Ordinal);
-                    if (n < 0)
-                    {
-                        throw new ConfigurationException(Texts.Missing_Mapping);
-                    }
-
-                    var websiteDirectory = projectDirectoryToWebsiteDirectory.Left(n).Trim();
-                    var projectDirectory = projectDirectoryToWebsiteDirectory.Mid(n + 2).Trim();
-                    var include = configuration.GetString(key + ":file-name-include");
-                    var exclude = configuration.GetString(key + ":file-name-exclude");
-
-                    WebsiteDirectoryToProjectDirectories.Add(new WebsiteDirectoryToProjectDirectoryMapper(websiteDirectory, projectDirectory, include, exclude));
-                }
-            }
+            ProjectDirectoryToWebsiteDirectories.AddRange(pipeline.ProjectDirectoryToWebsiteDirectories);
+            ProjectDirectoryToWebsiteItemPaths.AddRange(pipeline.ProjectDirectoryToWebsiteItemPaths);
+            ProjectFileNameToWebsiteFileNames.AddRange(pipeline.ProjectFileNameToWebsiteFileNames);
+            WebsiteDirectoryToProjectDirectories.AddRange(pipeline.WebsiteDirectoryToProjectDirectories);
+            WebsiteItemPathToProjectDirectories.AddRange(pipeline.WebsiteItemPathToProjectDirectories);
         }
     }
 }

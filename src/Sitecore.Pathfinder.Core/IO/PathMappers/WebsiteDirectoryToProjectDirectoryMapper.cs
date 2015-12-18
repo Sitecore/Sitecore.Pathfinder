@@ -3,7 +3,7 @@ using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.IO.PathMappers
 {
-    public class WebsiteDirectoryToProjectDirectoryMapper
+    public class WebsiteDirectoryToProjectDirectoryMapper : IWebsiteToProjectFileNameMapper
     {
         public WebsiteDirectoryToProjectDirectoryMapper([NotNull] string websiteDirectory, [NotNull] string projectDirectory, [NotNull] string include, [NotNull] string exclude)
         {
@@ -39,13 +39,12 @@ namespace Sitecore.Pathfinder.IO.PathMappers
         [NotNull]
         public string ProjectDirectory { get; }
 
-        [NotNull]
         public string WebsiteDirectory { get; }
 
         [CanBeNull]
         protected PathMatcher PathMatcher { get; }
 
-        public bool TryGetProjectFileName([NotNull] string websiteFileName, [NotNull] out string projectFileName)
+        public bool TryGetProjectFileName(string websiteFileName, out string projectFileName)
         {
             projectFileName = string.Empty;
 

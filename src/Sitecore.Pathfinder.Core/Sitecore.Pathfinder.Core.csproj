@@ -122,6 +122,13 @@
     <Compile Include="Compiling\Builders\TemplateFieldBuilder.cs" />
     <Compile Include="Compiling\Builders\TemplateSectionBuilder.cs" />
     <Compile Include="Compiling\Pipelines\CompilePipelines\0020 - CreateItemsFromTemplates.cs" />
+    <Compile Include="Extensions\CollectionExtensions.cs" />
+    <Compile Include="IO\PathMappers\IItemPathToProjectFileNameMapper.cs" />
+    <Compile Include="IO\PathMappers\IWebsiteToProjectFileNameMapper.cs" />
+    <Compile Include="IO\PathMappers\IProjectFileNameToItemPathMapper.cs" />
+    <Compile Include="IO\PathMappers\Pipelines\1000 - ParsePathMappers.cs" />
+    <Compile Include="IO\PathMappers\Pipelines\ParsePathMappersPipeline.cs" />
+    <Compile Include="IO\PathMappers\IProjectToWebsiteFileNameMapper.cs" />
     <Compile Include="Parsing\Pipelines\ReferenceParserPipelines\1000 - PathReferenceParser.cs" />
     <Compile Include="Parsing\Pipelines\ReferenceParserPipelines\2000 - GuidReferenceParser.cs" />
     <Compile Include="Parsing\Pipelines\ReferenceParserPipelines\4000 - FileReferenceParser.cs" />

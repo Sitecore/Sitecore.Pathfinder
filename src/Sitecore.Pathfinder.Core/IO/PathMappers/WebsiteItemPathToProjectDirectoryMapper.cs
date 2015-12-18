@@ -1,12 +1,11 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.IO.PathMappers
 {
-    public class WebsiteItemPathToProjectDirectoryMapper
+    public class WebsiteItemPathToProjectDirectoryMapper : IItemPathToProjectFileNameMapper
     {
         public WebsiteItemPathToProjectDirectoryMapper([NotNull] string databaseName, [NotNull] string itemPath, [NotNull] string projectDirectory, [NotNull] string format, [NotNull] string itemNameInclude, [NotNull] string itemNameExclude, [NotNull] string templateNameInclude, [NotNull] string templateNameExclude)
         {
@@ -50,10 +49,8 @@ namespace Sitecore.Pathfinder.IO.PathMappers
             }
         }
 
-        [NotNull]
         public string DatabaseName { get; }
 
-        [NotNull]
         public string Format { get; }
 
         [NotNull]
@@ -62,7 +59,6 @@ namespace Sitecore.Pathfinder.IO.PathMappers
         [NotNull]
         public string ItemNameInclude { get; }
 
-        [NotNull]
         public string ItemPath { get; }
 
         [NotNull]
@@ -80,7 +76,7 @@ namespace Sitecore.Pathfinder.IO.PathMappers
         [CanBeNull]
         protected PathMatcher TemplateNamePathMatcher { get; }
 
-        public bool TryGetProjectFileName([NotNull] string itemPath, [NotNull] string templateName, [NotNull] out string projectFileName, [NotNull] out string format)
+        public bool TryGetProjectFileName(string itemPath, string templateName, out string projectFileName, out string format)
         {
             projectFileName = string.Empty;
             format = string.Empty;

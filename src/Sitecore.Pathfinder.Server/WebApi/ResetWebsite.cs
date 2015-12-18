@@ -52,12 +52,12 @@ namespace Sitecore.Pathfinder.WebApi
             return null;
         }
 
-        protected virtual void DeleteFiles([Diagnostics.NotNull] string projectDirectory, [Diagnostics.NotNull] WebsiteDirectoryToProjectDirectoryMapper mapper)
+        protected virtual void DeleteFiles([Diagnostics.NotNull] string projectDirectory, [Diagnostics.NotNull] IWebsiteToProjectFileNameMapper mapper)
         {
             DeleteFiles(mapper, FileUtil.MapPath("/"), FileUtil.MapPath(PathHelper.NormalizeItemPath(mapper.WebsiteDirectory)));
         }
 
-        protected virtual void DeleteFiles([Diagnostics.NotNull] WebsiteDirectoryToProjectDirectoryMapper mapper, [Diagnostics.NotNull] string websiteDirectory, [Diagnostics.NotNull] string directoryOrFileName)
+        protected virtual void DeleteFiles([Diagnostics.NotNull] IWebsiteToProjectFileNameMapper mapper, [Diagnostics.NotNull] string websiteDirectory, [Diagnostics.NotNull] string directoryOrFileName)
         {
             var websiteDirectoryOrFileName = '\\' + PathHelper.UnmapPath(websiteDirectory, directoryOrFileName);
 
@@ -166,7 +166,7 @@ namespace Sitecore.Pathfinder.WebApi
 
         */
 
-        protected virtual void DeleteItems([Diagnostics.NotNull] WebsiteItemPathToProjectDirectoryMapper mapper)
+        protected virtual void DeleteItems([Diagnostics.NotNull] IItemPathToProjectFileNameMapper mapper)
         {
             var database = Factory.GetDatabase(mapper.DatabaseName);
             var item = database.GetItem(mapper.ItemPath);
@@ -178,7 +178,7 @@ namespace Sitecore.Pathfinder.WebApi
             DeleteItems(mapper, item);
         }
 
-        protected virtual void DeleteItems([Diagnostics.NotNull] WebsiteItemPathToProjectDirectoryMapper mapper, [Diagnostics.NotNull] Item item)
+        protected virtual void DeleteItems([Diagnostics.NotNull] IItemPathToProjectFileNameMapper mapper, [Diagnostics.NotNull] Item item)
         {
             string projectFileName;
             string format;

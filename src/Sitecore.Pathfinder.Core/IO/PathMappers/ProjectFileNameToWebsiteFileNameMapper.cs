@@ -5,7 +5,7 @@ using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.IO.PathMappers
 {
-    public class ProjectFileNameToWebsiteFileNameMapper
+    public class ProjectFileNameToWebsiteFileNameMapper : IProjectToWebsiteFileNameMapper
     {
         public ProjectFileNameToWebsiteFileNameMapper([NotNull] string projectFileName, [NotNull] string websiteFileName)
         {

@@ -9,19 +9,19 @@ namespace Sitecore.Pathfinder.IO
     public interface IPathMapperService
     {
         [NotNull, ItemNotNull]
-        ICollection<ProjectDirectoryToWebsiteDirectoryMapper> ProjectDirectoryToWebsiteDirectories { get; }
+        ICollection<IProjectToWebsiteFileNameMapper> ProjectDirectoryToWebsiteDirectories { get; }
 
         [NotNull, ItemNotNull]
-        ICollection<ProjectDirectoryToWebsiteItemPathMapper> ProjectDirectoryToWebsiteItemPaths { get; }
+        ICollection<IProjectFileNameToItemPathMapper> ProjectDirectoryToWebsiteItemPaths { get; }
 
         [NotNull, ItemNotNull]
-        ICollection<ProjectFileNameToWebsiteFileNameMapper> ProjectFileNameToWebsiteFileNames { get; }
+        ICollection<IProjectToWebsiteFileNameMapper> ProjectFileNameToWebsiteFileNames { get; }
 
         [NotNull, ItemNotNull]
-        ICollection<WebsiteDirectoryToProjectDirectoryMapper> WebsiteDirectoryToProjectDirectories { get; }
+        ICollection<IWebsiteToProjectFileNameMapper> WebsiteDirectoryToProjectDirectories { get; }
 
         [NotNull, ItemNotNull]
-        ICollection<WebsiteItemPathToProjectDirectoryMapper> WebsiteItemPathToProjectDirectories { get; }
+        ICollection<IItemPathToProjectFileNameMapper> WebsiteItemPathToProjectDirectories { get; }
 
         void Clear();
 

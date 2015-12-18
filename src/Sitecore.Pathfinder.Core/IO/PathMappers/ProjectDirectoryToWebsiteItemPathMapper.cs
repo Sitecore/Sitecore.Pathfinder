@@ -5,7 +5,7 @@ using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.IO.PathMappers
 {
-    public class ProjectDirectoryToWebsiteItemPathMapper
+    public class ProjectDirectoryToWebsiteItemPathMapper : IProjectFileNameToItemPathMapper
     {
         public ProjectDirectoryToWebsiteItemPathMapper([NotNull] string projectDirectory, [NotNull] string databaseName, [NotNull] string itemPath, [NotNull] string include, [NotNull] string exclude, bool isImport, bool uploadMedia)
         {
@@ -57,7 +57,7 @@ namespace Sitecore.Pathfinder.IO.PathMappers
         [CanBeNull]
         protected PathMatcher PathMatcher { get; }
 
-        public bool TryGetWebsiteItemPath([NotNull] string projectFileName, [NotNull] out string databaseName, [NotNull] out string itemPath, out bool isImport, out bool uploadMedia)
+        public bool TryGetWebsiteItemPath(string projectFileName, out string databaseName, out string itemPath, out bool isImport, out bool uploadMedia)
         {
             databaseName = string.Empty;
             itemPath = string.Empty;

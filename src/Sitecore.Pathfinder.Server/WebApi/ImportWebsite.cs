@@ -15,7 +15,7 @@ using Sitecore.Pathfinder.IO.PathMappers;
 using Sitecore.Pathfinder.Languages;
 using Sitecore.Pathfinder.Projects;
 
-namespace Sitecore.Pathfinder.WebApi.ImportWebsites
+namespace Sitecore.Pathfinder.WebApi
 {
     [Export(nameof(ImportWebsite), typeof(IWebApi))]
     public class ImportWebsite : IWebApi
@@ -65,7 +65,7 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
             return null;
         }
 
-        protected virtual void ImportFiles([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] WebsiteDirectoryToProjectDirectoryMapper mapper)
+        protected virtual void ImportFiles([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] IWebsiteToProjectFileNameMapper mapper)
         {
             var sourceDirectory = PathHelper.NormalizeFilePath(Path.Combine(WebsiteDirectory, PathHelper.NormalizeFilePath(mapper.WebsiteDirectory).TrimStart('\\'))).TrimEnd('\\');
 
@@ -77,7 +77,7 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
             ImportFiles(app, mapper, FileUtil.MapPath("/"), FileUtil.MapPath(PathHelper.NormalizeItemPath(mapper.WebsiteDirectory)));
         }
 
-        protected virtual void ImportFiles([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] WebsiteDirectoryToProjectDirectoryMapper mapper, [Diagnostics.NotNull] string websiteDirectory, [Diagnostics.NotNull] string directoryOrFileName)
+        protected virtual void ImportFiles([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] IWebsiteToProjectFileNameMapper mapper, [Diagnostics.NotNull] string websiteDirectory, [Diagnostics.NotNull] string directoryOrFileName)
         {
             var websiteDirectoryOrFileName = '\\' + PathHelper.UnmapPath(websiteDirectory, directoryOrFileName);
 
@@ -118,7 +118,7 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
             }
         }
 
-        protected virtual void ImportItems([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] WebsiteItemPathToProjectDirectoryMapper mapper)
+        protected virtual void ImportItems([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] IItemPathToProjectFileNameMapper mapper)
         {
             var project = app.CompositionService.Resolve<IProject>();
 
@@ -142,7 +142,7 @@ namespace Sitecore.Pathfinder.WebApi.ImportWebsites
             ImportItems(app, mapper, project, language, item, excludedFields);
         }
 
-        protected virtual void ImportItems([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] WebsiteItemPathToProjectDirectoryMapper mapper, [Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull, ItemNotNull] IEnumerable<string> excludedFields)
+        protected virtual void ImportItems([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] IItemPathToProjectFileNameMapper mapper, [Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull, ItemNotNull] IEnumerable<string> excludedFields)
         {
             string projectFileName;
             string format;
