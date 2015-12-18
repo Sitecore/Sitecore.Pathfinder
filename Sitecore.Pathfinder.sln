@@ -82,6 +82,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{2913B82E-E
 		docs\README.md = docs\README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.Markdown", "src\Features\Sitecore.Pathfinder.Markdown\Sitecore.Pathfinder.Markdown.csproj", "{37D4EA12-AEB1-4BFA-A5C8-76185F68DD25}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -136,6 +138,10 @@ Global
 		{7287E9E2-CAB5-4DE4-87B5-237B65020DC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7287E9E2-CAB5-4DE4-87B5-237B65020DC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7287E9E2-CAB5-4DE4-87B5-237B65020DC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37D4EA12-AEB1-4BFA-A5C8-76185F68DD25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37D4EA12-AEB1-4BFA-A5C8-76185F68DD25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37D4EA12-AEB1-4BFA-A5C8-76185F68DD25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37D4EA12-AEB1-4BFA-A5C8-76185F68DD25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -149,6 +155,7 @@ Global
 		{E707E44A-9F34-41E2-90E2-7065EF60CB03} = {5325B39E-6883-47AA-BD17-291B7608E834}
 		{BC0EC297-60E6-4D8F-A846-E1DA920CFC26} = {5325B39E-6883-47AA-BD17-291B7608E834}
 		{7287E9E2-CAB5-4DE4-87B5-237B65020DC4} = {5325B39E-6883-47AA-BD17-291B7608E834}
+		{37D4EA12-AEB1-4BFA-A5C8-76185F68DD25} = {5325B39E-6883-47AA-BD17-291B7608E834}
 		{2913B82E-EAB7-452F-AB67-97DD577A7439} = {3FD15219-6CAE-4865-A054-8E9E2A5EDF4E}
 	EndGlobalSection
 EndGlobal
