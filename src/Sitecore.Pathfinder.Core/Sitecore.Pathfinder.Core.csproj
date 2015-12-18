@@ -127,8 +127,11 @@
     <Compile Include="IO\PathMappers\IWebsiteToProjectFileNameMapper.cs" />
     <Compile Include="IO\PathMappers\IProjectFileNameToItemPathMapper.cs" />
     <Compile Include="IO\PathMappers\Pipelines\1000 - ParsePathMappers.cs" />
+    <Compile Include="Languages\BinFiles\Pipelines\1000 - ModelCompiler.cs" />
+    <Compile Include="Languages\BinFiles\Pipelines\BinFileCompilerPipeline.cs" />
     <Compile Include="IO\PathMappers\Pipelines\ParsePathMappersPipeline.cs" />
     <Compile Include="IO\PathMappers\IProjectToWebsiteFileNameMapper.cs" />
+    <Compile Include="Languages\BinFiles\BinFileCompiler.cs" />
     <Compile Include="Parsing\Pipelines\ReferenceParserPipelines\1000 - PathReferenceParser.cs" />
     <Compile Include="Parsing\Pipelines\ReferenceParserPipelines\2000 - GuidReferenceParser.cs" />
     <Compile Include="Parsing\Pipelines\ReferenceParserPipelines\4000 - FileReferenceParser.cs" />

@@ -5,6 +5,7 @@ using System.ComponentModel.Composition;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Parsing.References;
 
 namespace Sitecore.Pathfinder.Compiling.Compilers
@@ -25,6 +26,9 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
 
         [NotNull]
         IReferenceParserService ReferenceParser { get; }
+
+        [NotNull]
+        IPipelineService Pipelines { get; }
 
         [NotNull]
         ITraceService Trace { get; }

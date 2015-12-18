@@ -5,6 +5,7 @@ using System.ComponentModel.Composition;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Parsing.References;
 
 namespace Sitecore.Pathfinder.Compiling.Compilers
@@ -13,11 +14,12 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
     public class CompileContext : ICompileContext
     {
         [ImportingConstructor]
-        public CompileContext([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] IFactoryService factory, [NotNull] ITraceService trace, [NotNull] IReferenceParserService referenceParser, [ImportMany] [NotNull] [ItemNotNull] IEnumerable<ICompiler> compilers)
+        public CompileContext([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] IFactoryService factory, [NotNull] IPipelineService pipelines, [NotNull] ITraceService trace, [NotNull] IReferenceParserService referenceParser, [ImportMany, NotNull, ItemNotNull] IEnumerable<ICompiler> compilers)
         {
             Configuration = configuration;
             CompositionService = compositionService;
             Factory = factory;
+            Pipelines = pipelines;
             Trace = trace;
             ReferenceParser = referenceParser;
             Compilers = compilers;
@@ -30,6 +32,8 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
         public IConfiguration Configuration { get; }
 
         public IFactoryService Factory { get; }
+
+        public IPipelineService Pipelines { get; }
 
         public IReferenceParserService ReferenceParser { get; }
 
