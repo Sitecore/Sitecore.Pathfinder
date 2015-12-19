@@ -71,6 +71,11 @@
             "TemplateField-attributes": "Name, Id, Type, Sharing, Source, ShortHelp, LongHelp, SortOrder, StandardValue",
             "TemplateField-childnodes": "",
             "Children-childnodes": "Item, Template"
+        },
+
+        "type-name-to-field-type": {
+            "System.Boolean" : "Checkbox",
+            "System.Int32" : "Integer"
         }
     },
 

@@ -1,5 +1,4 @@
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.IO.PathMappers
 {

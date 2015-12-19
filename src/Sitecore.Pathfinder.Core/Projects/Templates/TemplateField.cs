@@ -41,8 +41,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull]
         public SourceProperty<string> FieldNameProperty { get; } = new SourceProperty<string>("Name", string.Empty);
 
-        [NotNull]
-        [Obsolete("Use Uri.Guid instead", false)]
+        [NotNull, Obsolete("Use Uri.Guid instead", false)]
         public ID ID => _id ?? (_id = new ID(Uri.Guid));
 
         [NotNull]
@@ -55,8 +54,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull]
         public SourceProperty<string> LongHelpProperty { get; } = new SourceProperty<string>("LongHelp", string.Empty);
 
-        [NotNull]
-        [Obsolete("Use FieldName instead", false)]
+        [NotNull, Obsolete("Use FieldName instead", false)]
         public string Name => FieldName;
 
         // todo: make shared and unversioned into attributes
