@@ -141,6 +141,7 @@ namespace Sitecore.Pathfinder.Languages.BinFiles.Pipelines
             // build sections and fields
             foreach (var pair in fields)
             {
+                // todo: support for [Browsable(false)] 
                 guid = StringHelper.GetGuid(pipeline.BinFile.Project, itemIdOrPath + "/" + pair.Key);
                 var templateSection = pipeline.Context.Factory.TemplateSection(template, guid, snapshotTextNode);
                 templateSection.SectionName = pair.Key;

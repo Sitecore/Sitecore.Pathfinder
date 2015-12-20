@@ -8,9 +8,9 @@ namespace Sitecore.Pathfinder.Checking.Checkers
 {
     public class ConventionRuleContext : IRuleContext
     {
-        public ConventionRuleContext([NotNull] IProjectItem projectItem)
+        public ConventionRuleContext([NotNull] object obj)
         {
-            Object = projectItem;
+            Object = obj;
         }
 
         public bool IsAborted { get; set; }

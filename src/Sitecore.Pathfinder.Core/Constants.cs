@@ -121,6 +121,8 @@ namespace Sitecore.Pathfinder
 
             public const string ProjectExtensionsDirectory = "extensions:project-extensions-directory";
 
+            public const string ProjectRole = "project-role";
+
             public const string ProjectUniqueId = "project-unique-id";
 
             public const string ProjectWebsiteMappingsExcludedFields = "project-website-mappings:excluded-fields";

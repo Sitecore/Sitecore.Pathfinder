@@ -221,6 +221,8 @@
     <Compile Include="Rules\Actions\TraceErrorAction.cs" />
     <Compile Include="Rules\Actions\TraceInformationAction.cs" />
     <Compile Include="Rules\Actions\TraceWarningAction.cs" />
+    <Compile Include="Rules\Conditions\FileSystemConditions\DirectoryExistsCondition.cs" />
+    <Compile Include="Rules\Conditions\FileSystemConditions\FileExistsCondition.cs" />
     <Compile Include="Rules\Conditions\IntConditionBase.cs" />
     <Compile Include="Rules\Conditions\ItemConditions\FieldCompiledValueCondition.cs" />
     <Compile Include="Rules\Conditions\ItemConditions\FieldSharedCondition.cs" />

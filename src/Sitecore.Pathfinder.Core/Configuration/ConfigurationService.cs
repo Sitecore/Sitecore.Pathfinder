@@ -89,13 +89,13 @@ namespace Sitecore.Pathfinder.Configuration
             var toolsDirectory = configurationSourceRoot.Get(Constants.Configuration.ToolsDirectory);
 
             // add system config
-            var fileName = Path.Combine(toolsDirectory, configurationSourceRoot.Get(Constants.Configuration.SystemConfigFileName));
-            if (!File.Exists(fileName))
+            var systemConfigFileName = Path.Combine(toolsDirectory, configurationSourceRoot.Get(Constants.Configuration.SystemConfigFileName));
+            if (!File.Exists(systemConfigFileName))
             {
-                throw new ConfigurationException(Texts.System_configuration_file_not_found, fileName);
+                throw new ConfigurationException(Texts.System_configuration_file_not_found, systemConfigFileName);
             }
 
-            configurationSourceRoot.AddJsonFile(fileName);
+            configurationSourceRoot.AddJsonFile(systemConfigFileName);
 
             // add command line
             if ((options & ConfigurationOptions.IncludeCommandLine) == ConfigurationOptions.IncludeCommandLine)
@@ -135,14 +135,25 @@ namespace Sitecore.Pathfinder.Configuration
                 }
             }
 
-            // add project role config - scconfig.role.*.json
-            var projectRole = configurationSourceRoot.GetString("project-role");
+            // add project role configs 
+            var projectRole = configurationSourceRoot.GetString(Constants.Configuration.ProjectRole).ToLowerInvariant();
             if (!string.IsNullOrEmpty(projectRole))
             {
-                var projectRoleConfig = Path.Combine(toolsDirectory, $"files\\project.roles\\scconfig.role.{projectRole}.json");
-                if (File.Exists(projectRoleConfig))
+                foreach (var pair in configurationSourceRoot.GetSubKeys("project-role-conventions:" + projectRole))
                 {
-                    configurationSourceRoot.AddFile(projectRoleConfig);
+                    var conventionsFileName = configurationSourceRoot.GetString("project-role-conventions:" + projectRole + ":" + pair.Key);
+
+                    if (conventionsFileName.StartsWith("$tools/", StringComparison.OrdinalIgnoreCase))
+                    {
+                        conventionsFileName = Path.Combine(configurationSourceRoot.GetString(Constants.Configuration.ToolsDirectory), PathHelper.NormalizeFilePath(conventionsFileName.Mid(7)));
+                    }
+
+                    if (conventionsFileName.StartsWith("~/", StringComparison.OrdinalIgnoreCase))
+                    {
+                        conventionsFileName = Path.Combine(configurationSourceRoot.GetString(Constants.Configuration.ProjectDirectory), PathHelper.NormalizeFilePath(conventionsFileName.Mid(2)));
+                    }
+
+                    configurationSourceRoot.AddFile(conventionsFileName);
                 }
             }
 

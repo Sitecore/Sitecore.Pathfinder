@@ -333,16 +333,19 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="files\project.roles\scconfig.role.Habitat.Domain.json">
+    <None Include="files\conventions\habitat.domain.conventions.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\project.roles\scconfig.role.Habitat.Framework.json">
+    <None Include="files\conventions\habitat.framework.conventions.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\project.roles\scconfig.role.Habitat.Website.json">
+    <None Include="files\conventions\pathfinder.filesystem.conventions.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\project.roles\scconfig.role.Habitat.Design.json">
+    <None Include="files\conventions\habitat.website.conventions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\conventions\habitat.design.conventions.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="files\project\items\master\readme.md">
@@ -571,10 +574,10 @@
     <None Include="files\website\App_Config\include\Sitecore.Pathfinder.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\project.roles\scconfig.role.default.json">
+    <None Include="files\conventions\sitecore.templates.conventions.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\project.roles\scconfig.role.speak.json">
+    <None Include="files\conventions\speak.conventions.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="scconfig.json">

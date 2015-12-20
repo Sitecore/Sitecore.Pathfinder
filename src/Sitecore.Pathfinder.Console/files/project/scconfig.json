@@ -14,6 +14,9 @@
     // default Sitecore database name (master, core, or web)
     "database": "master",
 
+    // the project roles enables/disables checkers and conventions. Examples: "pathfinder", "speak", "habitat.website"
+    "project-role": "",
+
     // mapping between project files and website files and items
     "project-website-mappings": {
 

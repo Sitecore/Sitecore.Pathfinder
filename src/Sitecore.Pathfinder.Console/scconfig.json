@@ -6,8 +6,8 @@
     // default database name (master, core or web)
     "database": "master",
 
-    // project configuration file
-    "project": "scconfig.json",
+    // the project roles enables/disables checkers and conventions
+    "project-role": "",
 
     // mapping between project files and website files and items
     "project-website-mappings": {
@@ -33,8 +33,12 @@
         }
     },
 
+    // project configuration file
+    "project": "scconfig.json",
+
+    // tasks
     "build-project": {
-        // default build pipeline
+        // default build pipeline - show help
         "tasks": "help",
 
         // if force-update is true, media will always be uploaded and files always copied during emitting
@@ -74,8 +78,8 @@
         },
 
         "type-name-to-field-type": {
-            "System.Boolean" : "Checkbox",
-            "System.Int32" : "Integer"
+            "System.Boolean": "Checkbox",
+            "System.Int32": "Integer"
         }
     },
 
@@ -316,6 +320,30 @@
         "system-0": {
             // comma separated list of message numbers to ignore
             "disabled": ""
+        }
+    },
+
+    // maps project role to convention files
+    "project-role-conventions": {
+        "habitat-design": {
+            "habitat-design-0": "$tools/files/conventions/habitat.design.conventions.json"
+        },
+        "habitat-domain": {
+            "habitat-domain-0": "$tools/files/conventions/habitat.domain.conventions.json"
+        },
+        "habitat-framework": {
+            "habitat-framework-0": "$tools/files/conventions/habitat.framework.conventions.json"
+        },
+        "habitat-website": {
+            "habitat-website-0": "$tools/files/conventions/habitat.website.conventions.json",
+            "habitat-website-1": "$tools/files/conventions/sitecore.template.conventions.json"
+        },
+        "pathfinder": {
+            "pathfinder-0": "$tools/files/conventions/pathfinder.filesystem.conventions.json",
+            "pathfinder-1": "$tools/files/conventions/sitecore.template.conventions.json"
+        },
+        "speak": {
+            "speak-0": "$tools/files/conventions/speak.conventions.json"
         }
     },
 

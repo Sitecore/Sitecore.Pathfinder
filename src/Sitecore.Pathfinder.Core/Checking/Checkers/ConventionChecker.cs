@@ -1,5 +1,6 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
@@ -26,8 +27,28 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         {
             var rules = RuleService.ParseRules("check-project:conventions").ToArray();
 
-            var items = context.Project.ProjectItems.Where(i => !(i is DatabaseProjectItem) || !((DatabaseProjectItem)i).IsImport).ToArray();
+            CheckProject(context, rules);
+            CheckProjectItems(context, rules);
+        }
 
+        protected virtual void CheckProject([NotNull] ICheckerContext context, [NotNull, ItemNotNull] IRule[] rules)
+        {
+            var ruleContext = new ConventionRuleContext(context.Project);
+
+            foreach (var rule in rules.Where(rule => string.Equals(rule.Filter, "project", StringComparison.OrdinalIgnoreCase)))
+            {
+                rule.Execute(ruleContext);
+
+                if (ruleContext.IsAborted)
+                {
+                    break;
+                }
+            }
+        }
+
+        protected virtual void CheckProjectItems([NotNull] ICheckerContext context, [NotNull, ItemNotNull] IRule[] rules)
+        {
+            var items = context.Project.ProjectItems.Where(i => !(i is DatabaseProjectItem) || !((DatabaseProjectItem)i).IsImport).ToArray();
             foreach (var projectItem in items)
             {
                 var ruleContext = new ConventionRuleContext(projectItem);
@@ -70,6 +91,9 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                             }
 
                             break;
+
+                        case "project":
+                            continue;
                     }
 
                     rule.Execute(ruleContext);
