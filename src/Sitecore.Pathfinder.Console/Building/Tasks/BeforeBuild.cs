@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
-using Sitecore.Pathfinder.Building.Tasks.BeforeBuilds;
+using Sitecore.Pathfinder.Building.Pipelines.BeforeBuildPipelines;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensibility.Pipelines;

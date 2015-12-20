@@ -180,6 +180,7 @@ namespace Sitecore.Pathfinder.Building.Tasks
 
         protected virtual void UpdateSccCmd([NotNull] IBuildContext context, [NotNull] string projectDirectory)
         {
+            // todo: absolute path to scc.exe is not source control friendly
             var fileName = Path.Combine(projectDirectory, "scc.cmd");
             var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 

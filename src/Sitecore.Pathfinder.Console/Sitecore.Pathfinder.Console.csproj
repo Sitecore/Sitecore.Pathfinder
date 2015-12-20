@@ -194,6 +194,7 @@
       <Link>files\extensions\checkers\Templates\UseIdInsteadOfPathChecker.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Compile Include="Building\Tasks\AddProject.cs" />
     <Compile Include="Building\Tasks\InstallAddins.cs" />
     <Compile Include="Building\Tasks\ListAddins.cs" />
     <Compile Include="Building\Tasks\UpdateAddins.cs" />
@@ -215,7 +216,7 @@
     <Compile Include="Building\Tasks\PublishDatabase.cs" />
     <Compile Include="Building\Tasks\WatchProject.cs" />
     <Compile Include="Building\Tasks\BeforeBuild.cs" />
-    <Compile Include="Building\Tasks\Pipelines\BeforeBuildPipeline.cs" />
+    <Compile Include="Building\Pipelines\BeforeBuildPipelines\BeforeBuildPipeline.cs" />
     <Compile Include="Building\Tasks\Help.cs" />
     <Compile Include="Building\Tasks\CopyDependencies.cs" />
     <Compile Include="Building\Tasks\NewProject.cs" />

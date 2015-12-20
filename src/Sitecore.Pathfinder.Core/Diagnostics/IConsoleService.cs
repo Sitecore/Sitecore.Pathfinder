@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Sitecore.Pathfinder.Diagnostics
 {
@@ -14,7 +15,7 @@ namespace Sitecore.Pathfinder.Diagnostics
         bool IsInteractive { get; set; }
 
         [NotNull]
-        string Pick([NotNull] string promptText, [NotNull] Dictionary<string, string> options, [NotNull] string configName = "");
+        string Pick([NotNull, Localizable(true)] string promptText, [NotNull] Dictionary<string, string> options, [NotNull] string configName = "");
 
         [CanBeNull]
         string ReadLine([NotNull] string configName = "");
@@ -22,17 +23,17 @@ namespace Sitecore.Pathfinder.Diagnostics
         [NotNull]
         string ReadLine([NotNull] string promptText, [NotNull] string defaultValue, [NotNull] string configName = "");
 
-        void Write([NotNull] string format, [NotNull] [ItemCanBeNull] params object[] arg);
+        void Write([NotNull, Localizable(true)] string format, [NotNull, ItemCanBeNull] params object[] arg);
 
-        void Write([NotNull] string text);
+        void Write([NotNull, Localizable(true)] string text);
 
-        void WriteLine([NotNull] string format, [NotNull] [ItemCanBeNull] params object[] arg);
+        void WriteLine([NotNull, Localizable(true)] string format, [NotNull, ItemCanBeNull] params object[] arg);
 
-        void WriteLine([NotNull] string text);
+        void WriteLine([NotNull, Localizable(true)] string text);
 
         void WriteLine();
 
         [CanBeNull]
-        bool? YesNo([NotNull] string promptText, [CanBeNull] bool? defaultValue, [NotNull] string configName = "");
+        bool? YesNo([NotNull, Localizable(true)] string promptText, [CanBeNull] bool? defaultValue, [NotNull] string configName = "");
     }
 }

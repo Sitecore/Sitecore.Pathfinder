@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Building
         private Stopwatch _stopwatch;
 
         [ImportingConstructor]
-        public Build([NotNull] ICompositionService compositionService, [NotNull] IConfigurationService configurationService, [NotNull] ITraceService trace, [ImportMany] [NotNull] [ItemNotNull] IEnumerable<IBuildTask> tasks)
+        public Build([NotNull] ICompositionService compositionService, [NotNull] IConfigurationService configurationService, [NotNull] ITraceService trace, [ImportMany, NotNull, ItemNotNull] IEnumerable<IBuildTask> tasks)
         {
             CompositionService = compositionService;
             ConfigurationService = configurationService;
@@ -28,8 +28,7 @@ namespace Sitecore.Pathfinder.Building
             Tasks = tasks;
         }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         public IEnumerable<IBuildTask> Tasks { get; }
 
         [NotNull]
@@ -81,8 +80,7 @@ namespace Sitecore.Pathfinder.Building
             return this;
         }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         protected virtual IEnumerable<string> GetTaskNames([NotNull] IBuildContext context)
         {
             string taskList;
@@ -156,9 +154,11 @@ namespace Sitecore.Pathfinder.Building
             var root = xml.ToXElement() ?? "<projects />".ToXElement();
             if (root == null)
             {
+                // silent
                 return;
             }
 
+            // check if already registered
             if (root.Elements().Any(e => string.Equals(e.GetAttributeValue("projectdirectory"), context.ProjectDirectory, StringComparison.OrdinalIgnoreCase)))
             {
                 return;

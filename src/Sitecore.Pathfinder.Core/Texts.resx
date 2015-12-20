@@ -310,7 +310,7 @@
     <value>Hey - there is no 'Data' directory under the 'wwwroot' directory - are you sure = you have set the 'wwwroot' correctly in the configuration file</value>
   </data>
   <data name="Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in_the___0___configuration_file_" xml:space="preserve">
-    <value>Hey - you haven't changed the the 'project-unique-id', 'wwwroot' or 'hostname' in the configuration file.</value>
+    <value>Hey - you haven't changed the 'project-unique-id', 'website-directory', 'data-folder-directory' or 'host-name' settings in the configuration file.</value>
   </data>
   <data name="The_server_returned_an_error" xml:space="preserve">
     <value>The server returned an error</value>

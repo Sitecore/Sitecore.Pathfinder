@@ -1,5 +1,6 @@
 Version Next
 ============
+* Add: Added add-project task for creating a Pathfinder project in an existing directory (2015-12-20)
 
 Version 0.6.0
 =============

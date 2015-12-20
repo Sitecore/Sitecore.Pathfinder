@@ -3,7 +3,7 @@
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 
-namespace Sitecore.Pathfinder.Building.Tasks.BeforeBuilds
+namespace Sitecore.Pathfinder.Building.Pipelines.BeforeBuildPipelines
 {
     public class BeforeBuildPipeline : PipelineBase<BeforeBuildPipeline>
     {
