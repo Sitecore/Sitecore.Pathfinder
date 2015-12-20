@@ -11,17 +11,22 @@ Watch the videos on YouTube:
 * [01 - Idea and concepts](https://www.youtube.com/watch?v=TcJ0IoI7sVM)
 * [06 - Visual Studio, T4 templates, unit testing with FakeDB](https://youtu.be/_v6-1NKgxT0)
 
-Please notice that some details in these videos are out of date.
+_Please notice that some details in these videos are out of date._
 
 * [02 - HelloWorld](https://www.youtube.com/watch?v=jQz5hAVOTzU)
 * [03 - Unit Testing](https://www.youtube.com/watch?v=DWU6D7L8ykg) (Functionality removed) 
 * [04 - Html Templates](https://www.youtube.com/watch?v=9aTGhW6ErYM)
 * [05 - Code Generation, Visual Studio and Grunt](http://youtu.be/ZM3ve1WhwwQ)
 
-Then download [Pathfinder 0.6.0-Alpha](http://vsplugins.sitecore.net/Pathfinder/Sitecore.Pathfinder.0.6.0.zip) to 
+Download [Pathfinder 0.6.0-Alpha](http://vsplugins.sitecore.net/Pathfinder/Sitecore.Pathfinder.0.6.0.zip) to 
 try it out.
 
-# Introduction
+Follow the walk-throughs:
+
+* [1. Setting up](docs/walkthroughs/1. Setting up/README.md)
+* [2. HelloWorld](docs/walkthroughs/2. Hello world/README.md)
+
+## Introduction
 Pathfinder is an experimental toolchain for Sitecore, that allows developers to use their favorite tools 
 in a familiar fashion to develop Sitecore websites.
 
@@ -34,7 +39,7 @@ changes on website, repeat.
 *Please notice that this document is a brain dump, so concepts and functionality are probably not explained 
 in a friendly manner.*
 
-## How does Pathfinder make Sitecore development easier
+### How does Pathfinder make Sitecore development easier
 * Familiar developer experience: Edit source files, build project, test, repeat...
 * Text editor agnostic (Visual Studio not required - use Notepad, Notepad++, SublimeText, Atom, VS Code etc.)
 * Build process agnostic (command-line tool, so it integrates easily with Grunt, Gulp, MSBuild etc.)
@@ -48,5 +53,5 @@ in a friendly manner.*
 * Code Generation for generating strongly typed item model, factories and unit tests
 * Validate a Sitecore website against 70 rules using Sitecore Rocks SitecoreCop
 
-# Documentation
+## Documentation
 For more documentation see [Pathfinder Documentation](docs/README.md).
