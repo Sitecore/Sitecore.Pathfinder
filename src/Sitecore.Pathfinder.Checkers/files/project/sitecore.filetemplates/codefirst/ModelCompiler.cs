@@ -9,10 +9,11 @@ using System.Runtime.InteropServices;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Languages.BinFiles.Pipelines;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Pathfinder.Text;
 
-namespace Sitecore.Pathfinder.Languages.BinFiles.Pipelines
+namespace Sitecore.Pathfinder.CodeFirst
 {
     public class ModelScanner : PipelineProcessorBase<BinFileCompilerPipeline>
     {
@@ -80,8 +81,15 @@ namespace Sitecore.Pathfinder.Languages.BinFiles.Pipelines
             return value != null && (bool)value;
         }
 
+        protected virtual bool GetBrowsableAttribute([NotNull] MemberInfo memberInfo)
+        {
+            var value = GetAttribute(memberInfo, typeof(BrowsableAttribute));
+            return value == null || (bool)value;
+        }
+
         protected override void Process(BinFileCompilerPipeline pipeline)
         {
+            // create a new template, if the class name ends with "Model"
             var typeName = pipeline.Type.FullName;
             if (!typeName.EndsWith("Model"))
             {
@@ -122,6 +130,11 @@ namespace Sitecore.Pathfinder.Languages.BinFiles.Pipelines
             var fields = new Dictionary<string, List<PropertyInfo>>();
             foreach (var propertyInfo in pipeline.Type.GetProperties(BindingFlags.Instance | BindingFlags.Public))
             {
+                if (!GetBrowsableAttribute(propertyInfo))
+                {
+                    continue;
+                }
+
                 var sectionName = GetCategoryAttribute(propertyInfo);
                 if (string.IsNullOrEmpty(sectionName))
                 {
@@ -141,7 +154,6 @@ namespace Sitecore.Pathfinder.Languages.BinFiles.Pipelines
             // build sections and fields
             foreach (var pair in fields)
             {
-                // todo: support for [Browsable(false)] 
                 guid = StringHelper.GetGuid(pipeline.BinFile.Project, itemIdOrPath + "/" + pair.Key);
                 var templateSection = pipeline.Context.Factory.TemplateSection(template, guid, snapshotTextNode);
                 templateSection.SectionName = pair.Key;

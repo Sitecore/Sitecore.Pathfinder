@@ -1,7 +1,7 @@
 {
     "check-project": {
         "conventions": {
-            "default-convention-0": {
+            "sitecore-template-0": {
                 "filter": "items",
                 "if": {
                     "or": {
@@ -17,7 +17,7 @@
                 }
             },
 
-            "default-convention-1": {
+            "sitecore-template-1": {
                 "filter": "templates",
                 "if": {
                     "not": { "item-id-or-path": { "starts-with": "/sitecore/templates/" } }
@@ -27,7 +27,7 @@
                 }
             },
 
-            "default-convention-2": {
+            "sitecore-template-2": {
                 "filter": "items",
                 "if": {
                     "item-name": "__Standard Values",
@@ -40,7 +40,7 @@
                 }
             },
 
-            "default-convention-3": {
+            "sitecore-template-3": {
                 "filter": "items",
                 "if": {
                     "item-id-or-path": { "starts-with": "/sitecore/templates/" },
@@ -56,7 +56,7 @@
                 }
             },
 
-            "default-convention-4": {
+            "sitecore-template-4": {
                 "filter": "items",
                 "if": {
                     "item-id-or-path": { "starts-with": "/sitecore/templates/" },
@@ -75,7 +75,7 @@
                 }
             },
 
-            "default-convention-5": {
+            "sitecore-template-5": {
                 "filter": "items",
                 "if": {
                     "template-name": "Template field",
@@ -89,7 +89,7 @@
                 }
             }, 
             
-            "default-convention-6": {
+            "sitecore-template-6": {
                 "filter": "items",
                 "if": {
                     "template-name": "Template field",
@@ -102,7 +102,7 @@
                 }                                                          
             }, 
             
-            "default-convention-7": {
+            "sitecore-template-7": {
                 "filter": "items",
                 "if": {
                     "template-name": "Template field",
