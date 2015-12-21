@@ -11,13 +11,9 @@ namespace Sitecore.Pathfinder.Rules.Actions
 {
     public abstract class TraceActionBase : ActionBase
     {
-        protected TraceActionBase([NotNull] ITraceService trace, [NotNull] string name) : base(name)
+        protected TraceActionBase([NotNull] string name) : base(name)
         {
-            Trace = trace;
         }
-
-        [NotNull]
-        protected ITraceService Trace { get; }
 
         public override void Execute(IRuleContext context, IDictionary<string, object> parameters)
         {
@@ -47,9 +43,9 @@ namespace Sitecore.Pathfinder.Rules.Actions
                 snapshot = projectItem.Snapshots.FirstOrDefault();
             }
 
-            TraceLine(msg, text, textNode, snapshot, details ?? string.Empty);
+            TraceLine(context.Trace, msg, text, textNode, snapshot, details ?? string.Empty);
         }
 
-        protected abstract void TraceLine(int msg, [NotNull] string text, [CanBeNull] ITextNode textNode, [CanBeNull] ISnapshot snapshot, [NotNull] string details);
+        protected abstract void TraceLine([NotNull] ITraceService trace, int msg, [NotNull] string text, [CanBeNull] ITextNode textNode, [CanBeNull] ISnapshot snapshot, [NotNull] string details);
     }
 }

@@ -8,24 +8,23 @@ namespace Sitecore.Pathfinder.Rules.Actions
 {
     public class TraceErrorAction : TraceActionBase
     {
-        [ImportingConstructor]
-        public TraceErrorAction([NotNull] ITraceService trace) : base(trace, "trace-error")
+        public TraceErrorAction() : base("trace-error")
         {
         }
 
-        protected override void TraceLine(int msg, string text, ITextNode textNode, ISnapshot snapshot, string details)
+        protected override void TraceLine(ITraceService trace, int msg, string text, ITextNode textNode, ISnapshot snapshot, string details)
         {
             if (textNode != null)
             {
-                Trace.TraceError(msg, text, textNode, details);
+                trace.TraceError(msg, text, textNode, details);
             }
             else if (snapshot != null)
             {
-                Trace.TraceError(msg, text, snapshot.SourceFile, details);
+                trace.TraceError(msg, text, snapshot.SourceFile, details);
             }
             else
             {
-                Trace.TraceError(msg, text, details);
+                trace.TraceError(msg, text, details);
             }
         }
     }

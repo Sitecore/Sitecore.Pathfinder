@@ -18,6 +18,8 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
 
         public override void Check(ICheckerContext context)
         {
+            context.CheckCount += 2;
+
             foreach (var item in context.Project.Items)
             {
                 CheckTemplate(context, item);

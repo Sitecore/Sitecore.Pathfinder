@@ -27,13 +27,15 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         {
             var rules = RuleService.ParseRules("check-project:conventions").ToArray();
 
+            context.ConventionCount += rules.Length;
+
             CheckProject(context, rules);
             CheckProjectItems(context, rules);
         }
 
         protected virtual void CheckProject([NotNull] ICheckerContext context, [NotNull, ItemNotNull] IRule[] rules)
         {
-            var ruleContext = new ConventionRuleContext(context.Project);
+            var ruleContext = new ConventionRuleContext(context.Trace, context.Project);
 
             foreach (var rule in rules.Where(rule => string.Equals(rule.Filter, "project", StringComparison.OrdinalIgnoreCase)))
             {
@@ -51,7 +53,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
             var items = context.Project.ProjectItems.Where(i => !(i is DatabaseProjectItem) || !((DatabaseProjectItem)i).IsImport).ToArray();
             foreach (var projectItem in items)
             {
-                var ruleContext = new ConventionRuleContext(projectItem);
+                var ruleContext = new ConventionRuleContext(context.Trace, projectItem);
 
                 foreach (var rule in rules)
                 {

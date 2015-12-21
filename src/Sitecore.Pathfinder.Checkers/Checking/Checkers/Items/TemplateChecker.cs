@@ -16,6 +16,8 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
 
         public override void Check(ICheckerContext context)
         {
+            context.CheckCount += 15;
+
             foreach (var template in context.Project.Templates)
             {
                 CheckTemplate(context, template);

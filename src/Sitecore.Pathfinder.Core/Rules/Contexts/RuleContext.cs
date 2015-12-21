@@ -6,13 +6,16 @@ namespace Sitecore.Pathfinder.Rules.Contexts
 {
     public class RuleContext : IRuleContext
     {
-        public RuleContext([NotNull] object obj)
+        public RuleContext([NotNull] ITraceService trace, [NotNull] object obj)
         {
+            Trace = trace;
             Object = obj;
         }
 
         public bool IsAborted { get; set; }
 
         public object Object { get; }
+
+        public ITraceService Trace { get; }
     }
 }

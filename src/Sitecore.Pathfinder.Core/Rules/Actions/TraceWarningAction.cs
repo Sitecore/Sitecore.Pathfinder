@@ -9,23 +9,23 @@ namespace Sitecore.Pathfinder.Rules.Actions
     public class TraceWarningAction : TraceActionBase
     {
         [ImportingConstructor]
-        public TraceWarningAction([NotNull] ITraceService trace) : base(trace, "trace-warning")
+        public TraceWarningAction() : base("trace-warning")
         {
         }
 
-        protected override void TraceLine(int msg, string text, ITextNode textNode, ISnapshot snapshot, string details)
+        protected override void TraceLine(ITraceService trace, int msg, string text, ITextNode textNode, ISnapshot snapshot, string details)
         {
             if (textNode != null)
             {
-                Trace.TraceWarning(msg, text, textNode, details);
+                trace.TraceWarning(msg, text, textNode, details);
             }
             else if (snapshot != null)
             {
-                Trace.TraceWarning(msg, text, snapshot.SourceFile, details);
+                trace.TraceWarning(msg, text, snapshot.SourceFile, details);
             }
             else
             {
-                Trace.TraceWarning(msg, text, details);
+                trace.TraceWarning(msg, text, details);
             }
         }
     }

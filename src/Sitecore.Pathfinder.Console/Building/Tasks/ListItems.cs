@@ -1,7 +1,6 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Linq;
-using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Building.Tasks
 {

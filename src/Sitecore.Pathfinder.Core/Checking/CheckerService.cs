@@ -15,16 +15,18 @@ namespace Sitecore.Pathfinder.Checking
     public class CheckerService : ICheckerService
     {
         [ImportingConstructor]
-        public CheckerService([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] [ImportMany] [ItemNotNull] IEnumerable<IChecker> checkers)
+        public CheckerService([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull, ImportMany, ItemNotNull] IEnumerable<IChecker> checkers)
         {
             Configuration = configuration;
             CompositionService = compositionService;
             Checkers = checkers;
         }
 
-        [NotNull]
-        [ItemNotNull]
-        protected IEnumerable<IChecker> Checkers { get; }
+        public IEnumerable<IChecker> Checkers { get; }
+
+        public int LastCheckerCount { get; protected set; }
+
+        public int LastConventionCount { get; protected set; }
 
         [NotNull]
         protected ICompositionService CompositionService { get; }
@@ -32,7 +34,7 @@ namespace Sitecore.Pathfinder.Checking
         [NotNull]
         protected IConfiguration Configuration { get; }
 
-        public void CheckProject(IProject project)
+        public virtual void CheckProject(IProject project)
         {
             var context = CompositionService.Resolve<ICheckerContext>().With(project);
 
@@ -53,7 +55,12 @@ namespace Sitecore.Pathfinder.Checking
                 }
 
                 checker.Check(context);
+
+                context.CheckCount++;
             }
+
+            LastCheckerCount = context.CheckCount;
+            LastConventionCount = context.ConventionCount;
         }
     }
 }

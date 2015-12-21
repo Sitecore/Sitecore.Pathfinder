@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Rules.Actions
         }
 
         public override void Execute(IRuleContext context, IDictionary<string, object> parameters)
-        {
+        {                       
             context.IsAborted = true;
         }
     }

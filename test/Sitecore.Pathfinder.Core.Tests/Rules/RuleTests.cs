@@ -26,7 +26,7 @@ namespace Sitecore.Pathfinder.Rules
 
             foreach (var item in Project.Items)
             {
-                var context = new RuleContext(item);
+                var context = new RuleContext(Services.Trace, item);
                 rule.Execute(context);
             }
         }
@@ -36,7 +36,7 @@ namespace Sitecore.Pathfinder.Rules
         {
             var rule = Services.RuleService.ParseRule("simple-rule");
 
-            var context = new RuleContext(Project.Items);
+            var context = new RuleContext(Services.Trace, Project.Items);
 
             Assert.IsTrue(rule.EvaluateIf(context));
             rule.Execute(context);
