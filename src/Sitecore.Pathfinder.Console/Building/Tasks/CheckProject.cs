@@ -1,17 +1,25 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.ComponentModel.Composition;
 using System.Linq;
+using Sitecore.Pathfinder.Checking;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Building.Tasks
 {
     public class CheckProject : BuildTaskBase
     {
-        public CheckProject() : base("check-project")
+        [ImportingConstructor]
+        public CheckProject([NotNull] ICheckerService checkerService) : base("check-project")
         {
+            CheckerService = checkerService;
+
             CanRunWithoutConfig = true;
         }
+
+        [NotNull]
+        protected ICheckerService CheckerService { get; }
 
         public override void Run(IBuildContext context)
         {
@@ -40,7 +48,7 @@ namespace Sitecore.Pathfinder.Building.Tasks
                     case Severity.Warning:
                         context.Trace.TraceWarning(diagnostic.Msg, diagnostic.Text, diagnostic.FileName, diagnostic.Span);
                         break;
-                     case Severity.Information:
+                    case Severity.Information:
                         context.Trace.TraceInformation(diagnostic.Msg, diagnostic.Text, diagnostic.FileName, diagnostic.Span);
                         break;
                     default:
@@ -51,8 +59,10 @@ namespace Sitecore.Pathfinder.Building.Tasks
             var errors = context.Project.Diagnostics.Count(d => d.Severity == Severity.Error);
             var warnings = context.Project.Diagnostics.Count(d => d.Severity == Severity.Warning);
             var messages = context.Project.Diagnostics.Count(d => d.Severity == Severity.Information);
+            var checkers = CheckerService.LastCheckerCount;
+            var conventions = CheckerService.LastConventionCount;
 
-            context.Trace.TraceInformation(Msg.C1042, $"Errors: {errors}, warnings: {warnings}, messages: {messages}");
+            context.Trace.TraceInformation(Msg.C1042, $"Errors: {errors}, warnings: {warnings}, messages: {messages}, checks: {checkers}, conventions: {conventions}");
         }
     }
 }

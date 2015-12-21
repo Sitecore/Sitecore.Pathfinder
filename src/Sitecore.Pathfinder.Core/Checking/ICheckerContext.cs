@@ -8,8 +8,12 @@ namespace Sitecore.Pathfinder.Checking
 {
     public interface ICheckerContext
     {
+        int CheckCount { get; set; }
+
         [NotNull]
         ICompositionService CompositionService { get; }
+
+        int ConventionCount { get; set; }
 
         bool IsDeployable { get; set; }
 

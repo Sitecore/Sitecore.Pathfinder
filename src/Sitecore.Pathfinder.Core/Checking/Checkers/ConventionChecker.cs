@@ -27,6 +27,8 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         {
             var rules = RuleService.ParseRules("check-project:conventions").ToArray();
 
+            context.ConventionCount += rules.Length;
+
             CheckProject(context, rules);
             CheckProjectItems(context, rules);
         }

@@ -163,7 +163,7 @@ namespace Sitecore.Pathfinder.Building.Tasks
                 return;
             }
 
-            Console.WriteLine("Publishing database...");
+            Console.WriteLine(Texts.Publishing___);
 
             var queryStringParameters = new Dictionary<string, string>
             {

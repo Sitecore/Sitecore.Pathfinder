@@ -22,10 +22,11 @@ namespace Sitecore.Pathfinder.Checking
             IsDeployable = true;
         }
 
+        public int CheckCount { get; set; }
+
         public ICompositionService CompositionService { get; }
 
-        [NotNull]
-        protected IConsoleService Console { get; }
+        public int ConventionCount { get; set; }
 
         public bool IsDeployable { get; set; }
 
@@ -35,6 +36,9 @@ namespace Sitecore.Pathfinder.Checking
 
         [NotNull]
         protected IConfiguration Configuration { get; }
+
+        [NotNull]
+        protected IConsoleService Console { get; }
 
         [NotNull]
         protected IFactoryService Factory { get; }

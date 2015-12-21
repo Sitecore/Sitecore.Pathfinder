@@ -14,7 +14,7 @@ namespace Sitecore.Pathfinder.Building.Tasks
         {
         }
 
-        protected virtual void Display([NotNull] IBuildContext context, [NotNull][ItemNotNull] IEnumerable<IReference> references)
+        protected virtual void Display([NotNull] IBuildContext context, [NotNull, ItemNotNull] IEnumerable<IReference> references)
         {
             foreach (var reference in references)
             {

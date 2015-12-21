@@ -23,8 +23,8 @@ try it out.
 
 Follow the walk-throughs:
 
-* [1. Setting up](docs/walkthroughs/1. Setting up/README.md)
-* [2. HelloWorld](docs/walkthroughs/2. Hello world/README.md)
+* [Setting up](docs/walkthroughs/1. Setting up/README.md)
+* [HelloWorld](docs/walkthroughs/2. Hello world/README.md)
 
 ## Introduction
 Pathfinder is an experimental toolchain for Sitecore, that allows developers to use their favorite tools 
