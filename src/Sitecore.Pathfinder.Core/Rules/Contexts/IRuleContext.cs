@@ -10,5 +10,8 @@ namespace Sitecore.Pathfinder.Rules.Contexts
 
         [NotNull, ItemNotNull]
         object Object { get; }
+
+        [NotNull]
+        ITraceService Trace { get; }
     }
 }
