@@ -91,6 +91,16 @@
         "disabled-checkers": ""
     },
 
+    "write-json-project-diagnostics": {
+        "diagnostics-output": "",
+
+        // comma separated list. Possible values: Items, Fields, Templates, TemplateFields, Media
+        "disabled-categories": "",
+
+        // comma separated list of checker names
+        "disabled-checkers": ""
+    },
+
     "copy-dependencies": {
         // source directory for dependency packages
         "source-directory": "sitecore.project/packages"
@@ -328,8 +338,8 @@
         "habitat-design": {
             "habitat-design-0": "$tools/files/conventions/habitat.design.conventions.json"
         },
-        "habitat-domain": {
-            "habitat-domain-0": "$tools/files/conventions/habitat.domain.conventions.json"
+        "habitat-feature": {
+            "habitat-feature-0": "$tools/files/conventions/habitat.feature.conventions.json"
         },
         "habitat-framework": {
             "habitat-framework-0": "$tools/files/conventions/habitat.framework.conventions.json"

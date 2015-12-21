@@ -39,7 +39,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\bin\</OutputPath>
+    <OutputPath>..\..\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -203,6 +203,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Compile Include="Building\Tasks\AddProject.cs" />
+    <Compile Include="Building\Tasks\WriteJsonProjectDiagnostics.cs" />
     <Compile Include="Building\Tasks\InstallAddins.cs" />
     <Compile Include="Building\Tasks\ListAddins.cs" />
     <Compile Include="Building\Tasks\UpdateAddins.cs" />
@@ -341,7 +342,7 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="files\conventions\habitat.domain.conventions.json">
+    <None Include="files\conventions\habitat.feature.conventions.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="files\conventions\habitat.framework.conventions.json">

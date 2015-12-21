@@ -83,6 +83,8 @@ namespace Sitecore.Pathfinder.Projects
 
         public ICollection<ISourceFile> SourceFiles { get; } = new List<ISourceFile>();
 
+        public string Name => Options.ProjectDirectory.Split('\\').Last();
+
         [ItemNotNull]
         public IEnumerable<Template> Templates => ProjectItems.OfType<Template>().Where(t => !t.IsImport);
 

@@ -44,6 +44,9 @@ namespace Sitecore.Pathfinder.Projects
         ICollection<ISourceFile> SourceFiles { get; }
 
         [NotNull]
+        string Name { get;}
+
+        [NotNull]
         IProject Add([NotNull] string sourceFileName);
 
         [NotNull]

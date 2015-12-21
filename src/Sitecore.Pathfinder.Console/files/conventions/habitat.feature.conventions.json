@@ -7,7 +7,7 @@
                     "always": true
                 },
                 "then": {
-                    "trace-warning": "A Habitat.Framework project should not items. To fix, remove the item."
+                    "trace-warning": "A Habitat.Feature project should not items. To fix, remove the item."
                 }
             },
             "habitat-domain-convention-1": {
@@ -24,7 +24,7 @@
                     }
                 },
                 "then": {
-                    "trace-warning": "A Habitat.Framework should not contain design assets. To fix, move the file to a Habitat.Design project."
+                    "trace-warning": "A Habitat.Feature should not contain design assets. To fix, move the file to a Habitat.Design project."
                 }
             }
         }
