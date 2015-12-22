@@ -1,24 +1,33 @@
 var gulp = require("gulp");
-var clean = require("gulp-clean");
+var del = require("del");
 var msbuild = require("gulp-msbuild");
+var runSequence = require("run-sequence");
+var spawn = require("child_process").spawn;
 var zip = require("gulp-zip");
 
-gulp.task("build-dist-directory", function () {
-    console.log("Building distribution directory...");
-
-    gulp.src("build/dist", { read: false }).pipe(clean());
-
-    gulp.src(["bin/files/**/*"], { read: false }).pipe(gulp.dest("build/dist/files"));
-    gulp.src(["bin/licenses/**/*"], { read: false }).pipe(gulp.dest("build/dist/licenses"));
-    gulp.src(["bin/*.dll"], { read: false }).pipe(gulp.dest("build/dist"));
-    gulp.src(["bin/scc.exe"], { read: false }).pipe(gulp.dest("build/dist"));
-    gulp.src(["bin/scc.exe.config"], { read: false }).pipe(gulp.dest("build/dist"));
-    gulp.src(["bin/scconfig.json"], { read: false }).pipe(gulp.dest("build/dist"));
+gulp.task("clean-dist-directory", function() {
+    return del("./build/dist");
 });
 
-gulp.task("build-project", function () {
-    console.log("Building project...");
+gulp.task("build-dist-directory", ["clean-dist-directory"], function(cb) {
+    return gulp.src(["./bin/files/**/*", "./bin/licenses/**/*", "./bin/*.dll", "./bin/scc.exe", "./bin/scc.exe.config", "./bin/scconfig.json"], { base: "./bin/" }).
+        pipe(gulp.dest("./build/dist"));
+});
 
+gulp.task("clean-npm-directory", function() {
+    return del("./build/npm");
+});
+
+gulp.task("build-npm-directory", ["clean-npm-directory"], function () {
+    return gulp.src(["./build/dist/**/*", "package.json"]).
+        pipe(gulp.dest("./build/npm/"));
+});
+
+gulp.task("build-npm-package", ["build-npm-directory"], function () {
+    return spawn("npm.cmd", ["pack"], { stdio: "inherit", "cwd": "./build/npm/" });
+});
+
+gulp.task("build-project", function() {
     return gulp.src("./Sitecore.Pathfinder.sln").pipe(msbuild({
         targets: ["Clean", "Build"],
         configuration: "Debug",
@@ -29,21 +38,16 @@ gulp.task("build-project", function () {
     }));
 });
 
-gulp.task("build-zip-file", function() {
-    console.log("Building zip file...");
+gulp.task("clean-zip-file", function() {
+    return del("./build/Sitecore.Pathfinder.zip");
+});
 
-    gulp.src("build/Sitecore.Pathfinder.zip", { read: false }).pipe(clean());
-
+gulp.task("build-zip-file", ["clean-zip-file"], function() {
     return gulp.src(["build/dist/**/*"]).
         pipe(zip("Sitecore.Pathfinder.zip")).
         pipe(gulp.dest("build"));
 });
 
-gulp.task("clean-dist-directory", function () {
-    console.log("Cleaning distribution directory...");
-
-    gulp.src("build/dist", { read: false }).pipe(clean());
+gulp.task("default", function() {
+    runSequence("build-dist-directory", "build-zip-file", "build-npm-package");
 });
-
-
-gulp.task("default", ["build-project", "build-dist-directory", "build-zip-file"]);
