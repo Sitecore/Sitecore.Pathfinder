@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Newtonsoft.Json;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -37,7 +36,7 @@ namespace Sitecore.Pathfinder.Building.Tasks
         {
             JsonSerializer serializer = new JsonSerializer();
 
-            ProjectDiagnostic projectDiagnostic = new ProjectDiagnostic{ProjectName = context.ProjectDirectory, Diagnostics = new List<Diagnostic>()};
+            ProjectDiagnostic projectDiagnostic = new ProjectDiagnostic { ProjectName = context.ProjectDirectory, Diagnostics = new List<Diagnostic>() };
 
             foreach (var diagnostic in context.Project.Diagnostics)
             {
@@ -60,10 +59,11 @@ namespace Sitecore.Pathfinder.Building.Tasks
             }
         }
 
-        private string GetOutputPath(IBuildContext context)
+        [NotNull]
+        protected virtual string GetOutputPath([NotNull]IBuildContext context)
         {
             string path = context.Configuration.GetString("op");
-            return path ?? String.Empty;
+            return path ?? string.Empty;
         }
     }
 
