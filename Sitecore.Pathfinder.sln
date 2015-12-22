@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3FD15219-6CAE-4865-A054-8E9E2A5EDF4E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{3FD15219-6CAE-4865-A054-8E9E2A5EDF4E}"
 	ProjectSection(SolutionItems) = preProject
 		Changes.md = Changes.md
 		CONTRIBUTING.md = CONTRIBUTING.md
@@ -94,6 +94,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Hello world", "2. Hello world", "{B86678EC-8111-4D28-9B60-1DF723E2CB6E}"
 	ProjectSection(SolutionItems) = preProject
 		docs\walkthroughs\2. Hello world\README.md = docs\walkthroughs\2. Hello world\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{8BCC4338-81A1-4B6C-99F9-89ABFF7812BE}"
+	ProjectSection(SolutionItems) = preProject
+		gulpfile.js = gulpfile.js
+		package.json = package.json
 	EndProjectSection
 EndProject
 Global

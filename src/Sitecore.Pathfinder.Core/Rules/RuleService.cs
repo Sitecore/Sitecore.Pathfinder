@@ -7,7 +7,6 @@ using System.Linq;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.Rules.Conditions;
 using Sitecore.Pathfinder.Rules.Conditions.LogicConditions;
 using Sitecore.Pathfinder.Rules.Conditions.XPathConditions;
 using Sitecore.Pathfinder.Xml.XPath;
@@ -177,18 +176,28 @@ namespace Sitecore.Pathfinder.Rules
         [NotNull]
         private RuleAction ParseAction([NotNull] string configurationKey, [NotNull] string key)
         {
-            foreach (var action in Actions)
+            IAction action = null;
+            foreach (var a in Actions)
             {
-                if (!key.StartsWith(action.Name))
+                if (!key.StartsWith(a.Name))
                 {
                     continue;
                 }
 
-                var parameters = ParseParameters(configurationKey, key);
-                return new RuleAction(action, parameters);
+                // longest action name is best match
+                if (action == null || a.Name.Length > action.Name.Length)
+                {
+                    action = a;
+                }
             }
 
-            throw new ConfigurationException(Texts.Action_not_found__ + key);
+            if (action == null)
+            {
+                throw new ConfigurationException(Texts.Action_not_found__ + key);
+            }
+
+            var parameters = ParseParameters(configurationKey, key);
+            return new RuleAction(action, parameters);
         }
 
         [NotNull]
@@ -214,18 +223,28 @@ namespace Sitecore.Pathfinder.Rules
                 return ParseConditionEvalXPath(configurationKey, key);
             }
 
-            foreach (var condition in Conditions)
+            ICondition condition = null;
+            foreach (var c in Conditions)
             {
-                if (!key.StartsWith(condition.Name))
+                if (!key.StartsWith(c.Name))
                 {
                     continue;
                 }
 
-                var parameters = ParseParameters(configurationKey, key);
-                return new RuleCondition(condition, parameters);
+                // longest condition name is best match
+                if (condition == null || c.Name.Length > condition.Name.Length)
+                {
+                    condition = c;
+                }
             }
 
-            throw new ConfigurationException(Texts.Condition_not_found__ + key);
+            if (condition == null)
+            {
+                throw new ConfigurationException(Texts.Condition_not_found__ + key);
+            }
+
+            var parameters = ParseParameters(configurationKey, key);
+            return new RuleCondition(condition, parameters);
         }
     }
 }
