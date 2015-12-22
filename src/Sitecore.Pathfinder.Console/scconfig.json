@@ -63,6 +63,9 @@
             }
         },
 
+        // if true, all files are parsed and processed, otherwise only mapped files are processed (mapped files are specifed in project-website-mappings:project-to-website)
+        "parse-all-files": false,
+
         "schema": {
             "Item-attributes": "Name, Id, Database, Icon, Template, IsEmittable, IsExternalReference, Layout.HtmlFile, Template.CreateFromFields, Template.Id, Template.Icon, Template.BaseTemplates, Template.ShortHelp, Template.LongHelp",
             "Item-childnodes": "Fields, Children, Template",

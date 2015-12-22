@@ -603,4 +603,7 @@
     <data name="Rendering_has_not_yet_been_compiled" xml:space="preserve">
     <value>Rendering has not yet been compiled</value>
   </data>
+    <data name="No_parser_found_for_file__If_the_file_is_a_content_file__add_the_file_extension_to_the__project_website_mappings_content_files__setting" xml:space="preserve">
+    <value>No parser found for file. If the file is a content file, add the file extension to the 'project-website-mappings:content-files' setting</value>
+  </data>
 </root>

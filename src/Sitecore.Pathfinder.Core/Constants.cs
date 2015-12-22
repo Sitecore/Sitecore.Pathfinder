@@ -59,6 +59,8 @@ namespace Sitecore.Pathfinder
 
             public const string BuildProjectMediaTemplate = "build-project:media:template";
 
+            public const string BuildProjectParseAllFiles = "build-project:parse-all-files";
+
             public const string CheckBinFileVersion = "install-package:check-bin-file-version";
 
             public const string CheckProjectDisabledCategories = "check-project:disabled-categories";

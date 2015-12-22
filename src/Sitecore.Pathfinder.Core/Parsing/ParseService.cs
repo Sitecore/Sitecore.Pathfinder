@@ -49,7 +49,8 @@ namespace Sitecore.Pathfinder.Parsing
             var pathMappingContext = new PathMappingContext(PathMapper);
             pathMappingContext.Parse(project, sourceFile);
 
-            if (!pathMappingContext.IsMapped)
+            var parseAllFiles = Configuration.GetBool(Constants.Configuration.BuildProjectParseAllFiles);
+            if (!parseAllFiles && !pathMappingContext.IsMapped)
             {
                 return;
             }
@@ -102,9 +103,9 @@ namespace Sitecore.Pathfinder.Parsing
                 }
             }
 
-            if (!parsed)
+            if (!parseAllFiles && !parsed)
             {
-                parseContext.Trace.TraceWarning(Msg.P1024, "No parser found for file. If the file is a content file, add the file extension to the 'project-website-mappings:content-files' setting", sourceFile);
+                parseContext.Trace.TraceWarning(Msg.P1024, Texts.No_parser_found_for_file__If_the_file_is_a_content_file__add_the_file_extension_to_the__project_website_mappings_content_files__setting, sourceFile);
             }
         }
 

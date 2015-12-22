@@ -674,7 +674,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hey - you haven&apos;t changed the the &apos;project-unique-id&apos;, &apos;wwwroot&apos; or &apos;hostname&apos; in the configuration file..
+        ///   Looks up a localized string similar to Hey - you haven&apos;t changed the &apos;project-unique-id&apos;, &apos;website-directory&apos;, &apos;data-folder-directory&apos; or &apos;host-name&apos; settings in the configuration file..
         /// </summary>
         public static string Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in_the___0___configuration_file_ {
             get {
@@ -953,6 +953,16 @@ namespace Sitecore.Pathfinder {
         public static string Missing_Mapping {
             get {
                 return ResourceManager.GetString("Missing_Mapping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No parser found for file. If the file is a content file, add the file extension to the &apos;project-website-mappings:content-files&apos; setting.
+        /// </summary>
+        public static string No_parser_found_for_file__If_the_file_is_a_content_file__add_the_file_extension_to_the__project_website_mappings_content_files__setting {
+            get {
+                return ResourceManager.GetString("No_parser_found_for_file__If_the_file_is_a_content_file__add_the_file_extension_t" +
+                        "o_the__project_website_mappings_content_files__setting", resourceCulture);
             }
         }
         
