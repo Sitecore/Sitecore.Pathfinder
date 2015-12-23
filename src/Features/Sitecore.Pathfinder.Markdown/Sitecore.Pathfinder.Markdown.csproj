@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Compiling\FieldCompilers\MarkdownFieldCompiler.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="MarkdownExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
