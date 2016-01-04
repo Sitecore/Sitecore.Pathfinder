@@ -36,7 +36,20 @@ namespace Sitecore.Pathfinder.Building.Tasks
         {
             JsonSerializer serializer = new JsonSerializer();
 
-            ProjectDiagnostic projectDiagnostic = new ProjectDiagnostic { ProjectName = context.ProjectDirectory, Diagnostics = new List<Diagnostic>() };
+            SolutionDiagnostic solutionDiagnostic = new SolutionDiagnostic
+            {
+                SolutionName = "HARDCODED - PROJECT NAME",
+                SolutionLocation = "Hardcoded - C:\\Projects\\MY PROJECT",
+                ProjectDiagnostics = new List<ProjectDiagnostic>()
+            };
+
+            ProjectDiagnostic projectDiagnostic = new ProjectDiagnostic
+            {
+                ProjectId = context.Project.ProjectUniqueId,
+                ProjectDirectory = context.ProjectDirectory,
+                ProjectName = context.Project.Name,
+                Diagnostics = new List<Diagnostic>()
+            };
 
             foreach (var diagnostic in context.Project.Diagnostics)
             {
@@ -50,12 +63,14 @@ namespace Sitecore.Pathfinder.Building.Tasks
                 });
             }
 
+            solutionDiagnostic.ProjectDiagnostics.Add(projectDiagnostic);
+
             var outputPath = GetOutputPath(context);
 
             using (StreamWriter sw = new StreamWriter(string.Concat(outputPath, context.Project.Name, ".json")))
             using (JsonWriter writer = new JsonTextWriter(sw))
             {
-                serializer.Serialize(writer, projectDiagnostic);
+                serializer.Serialize(writer, solutionDiagnostic);
             }
         }
 
@@ -67,10 +82,25 @@ namespace Sitecore.Pathfinder.Building.Tasks
         }
     }
 
+    internal class SolutionDiagnostic
+    {
+        [NotNull]
+        public string SolutionName { get; set; }
+        [NotNull]
+        public string SolutionLocation { get; set; }
+        [NotNull]
+        [ItemNotNull]
+        public IList<ProjectDiagnostic> ProjectDiagnostics { get; set; }
+    }
+
     internal class ProjectDiagnostic
     {
         [NotNull]
+        public string ProjectId { get; set; }
+        [NotNull]
         public string ProjectName { get; set; }
+        [NotNull]
+        public string ProjectDirectory { get; set; }
         [NotNull]
         [ItemNotNull]
         public IList<Diagnostic> Diagnostics { get; set; }

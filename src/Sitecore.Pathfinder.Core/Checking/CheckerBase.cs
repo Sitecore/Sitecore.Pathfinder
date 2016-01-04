@@ -8,6 +8,8 @@ namespace Sitecore.Pathfinder.Checking
     {
         protected const string Fields = "Fields,";
 
+        protected const string Files = "Files,";
+
         protected const string Items = "Items,";
 
         protected const string Media = "Media,";

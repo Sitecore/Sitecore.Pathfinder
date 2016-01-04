@@ -176,5 +176,10 @@ namespace Sitecore.Pathfinder
         public const int S1001 = S + 1;
         public const int S1002 = S + 2;
 
+        public const int CR = 30000;
+        public const int CR1000 = CR + 1000;
+        public const int CR2000 = CR + 2000;
+        public const int CR3000 = CR + 3000;
+        public const int CR4000 = CR + 4000;
     }
 }
