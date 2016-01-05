@@ -105,9 +105,9 @@ namespace Sitecore.Pathfinder.Building.Tasks
             console.WriteLine();
 
             _hostName = console.ReadLine($"Enter the hostname of the website [http://{projectName.ToLowerInvariant()}]: ", $"http://{projectName.ToLowerInvariant()}", "host");
-            if (!_hostName.StartsWith("https:") && !_hostName.StartsWith("https:"))
+            if(!_hostName.Contains(Uri.SchemeDelimiter))
             {
-                _hostName = "http://" + _hostName.TrimStart('/');
+                _hostName = Uri.UriSchemeHttp + Uri.SchemeDelimiter + _hostName.TrimStart('/');
             }
 
             console.WriteLine();
