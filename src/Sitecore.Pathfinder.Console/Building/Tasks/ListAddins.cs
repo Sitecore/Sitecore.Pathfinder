@@ -14,6 +14,7 @@ namespace Sitecore.Pathfinder.Building.Tasks
         public ListAddins([NotNull] IConsoleService console) : base("list-addins")
         {
             Console = console;
+            CanRunWithoutConfig = true;
         }
 
         [NotNull]

@@ -15,6 +15,7 @@ namespace Sitecore.Pathfinder.Building.Tasks
     {
         public Help() : base("help")
         {
+            CanRunWithoutConfig = true;
         }
 
         public override void Run(IBuildContext context)

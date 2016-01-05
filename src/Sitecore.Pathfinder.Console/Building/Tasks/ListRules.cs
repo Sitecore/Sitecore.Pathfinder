@@ -13,6 +13,7 @@ namespace Sitecore.Pathfinder.Building.Tasks
         public ListRules([NotNull] IRuleService ruleService) : base("list-rules")
         {
             RuleService = ruleService;
+            CanRunWithoutConfig = true;
         }
 
         [NotNull]

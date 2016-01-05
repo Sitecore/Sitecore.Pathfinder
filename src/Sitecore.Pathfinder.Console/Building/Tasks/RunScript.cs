@@ -17,6 +17,7 @@ namespace Sitecore.Pathfinder.Building.Tasks
         public RunScript([NotNull] IConsoleService console) : base("run-script")
         {
             Console = console;
+            CanRunWithoutConfig = true;
         }
 
         [NotNull]

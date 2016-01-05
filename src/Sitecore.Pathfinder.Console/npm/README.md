@@ -1,30 +1,6 @@
-# Sitecore Pathfinder
-
 Get started, get far, get happy!
 
 An experimental tool chain for Sitecore.
-
-![Pathfinder](docs/img/SitecorePathfinder.png)
- 
-Watch the videos on YouTube:
-
-* [01 - Idea and concepts](https://www.youtube.com/watch?v=TcJ0IoI7sVM)
-* [06 - Visual Studio, T4 templates, unit testing with FakeDB](https://youtu.be/_v6-1NKgxT0)
-
-_Please notice that some details in these videos are out of date._
-
-* [02 - HelloWorld](https://www.youtube.com/watch?v=jQz5hAVOTzU)
-* [03 - Unit Testing](https://www.youtube.com/watch?v=DWU6D7L8ykg) (Functionality removed) 
-* [04 - Html Templates](https://www.youtube.com/watch?v=9aTGhW6ErYM)
-* [05 - Code Generation, Visual Studio and Grunt](http://youtu.be/ZM3ve1WhwwQ)
-
-Download [Pathfinder 0.6.0-Alpha](http://vsplugins.sitecore.net/Pathfinder/Sitecore.Pathfinder.zip) to 
-try it out.
-
-Follow the walk-throughs:
-
-* [Setting up](docs/walkthroughs/1. Setting up/README.md)
-* [HelloWorld](docs/walkthroughs/2. Hello world/README.md)
 
 ## Introduction
 Pathfinder is an experimental toolchain for Sitecore, that allows developers to use their favorite tools 
@@ -54,4 +30,4 @@ in a friendly manner.*
 * Validate a Sitecore website against 70 rules using Sitecore Rocks SitecoreCop
 
 ## Documentation
-For more documentation see [Pathfinder Documentation](docs/README.md).
+For more documentation see [Pathfinder Documentation](https://github.com/JakobChristensen/Sitecore.Pathfinder/blob/master/docs/README.md).

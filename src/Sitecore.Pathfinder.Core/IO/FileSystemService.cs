@@ -38,6 +38,38 @@ namespace Sitecore.Pathfinder.IO
             File.SetLastWriteTimeUtc(destinationFileName, File.GetLastWriteTimeUtc(sourceFileName));
         }
 
+        public bool CopyIfNewer(string sourceFileName, string targetFileName)
+        {
+            if (!FileExists(targetFileName))
+            {
+                CreateDirectoryFromFileName(targetFileName);
+                File.Copy(sourceFileName, targetFileName);
+                return true;
+            }
+
+            if (string.Equals(Path.GetExtension(sourceFileName), ".dll", StringComparison.OrdinalIgnoreCase))
+            {
+                var sourceVersion = new Version(FileVersionInfo.GetVersionInfo(sourceFileName).FileVersion);
+                var targetVersion = new Version(FileVersionInfo.GetVersionInfo(targetFileName).FileVersion);
+                if (targetVersion < sourceVersion)
+                {
+                    File.Copy(sourceFileName, targetFileName, true);
+                    return true;
+                }
+            }
+
+            // update file if length or last write time has changed
+            var sourceFileInfo = new FileInfo(sourceFileName);
+            var targetFileInfo = new FileInfo(targetFileName);
+            if (sourceFileInfo.Length != targetFileInfo.Length || sourceFileInfo.LastWriteTimeUtc > targetFileInfo.LastWriteTimeUtc)
+            {
+                File.Copy(sourceFileName, targetFileName, true);
+                return true;
+            }
+
+            return false;
+        }
+
         public virtual void CreateDirectory(string directory)
         {
             if (!string.IsNullOrEmpty(directory))
@@ -75,6 +107,27 @@ namespace Sitecore.Pathfinder.IO
         public virtual bool FileExists(string fileName)
         {
             return File.Exists(fileName);
+        }
+
+        public bool FileExistsInPath(string fileName)
+        {
+            if (FileExists(fileName))
+            {
+                return true;
+            }
+
+            var paths = Environment.GetEnvironmentVariable("PATH") ?? string.Empty;
+            foreach (var path in paths.Split(';'))
+            {
+                var fullPath = Path.Combine(path, fileName);
+
+                if (FileExists(fullPath))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public virtual IEnumerable<string> GetDirectories(string directory)
@@ -172,38 +225,6 @@ namespace Sitecore.Pathfinder.IO
                     }
                 }
             }
-        }
-
-        public bool CopyIfNewer(string sourceFileName, string targetFileName)
-        {
-            if (!FileExists(targetFileName))
-            {
-                CreateDirectoryFromFileName(targetFileName);
-                File.Copy(sourceFileName, targetFileName);
-                return true;
-            }
-
-            if (string.Equals(Path.GetExtension(sourceFileName), ".dll", StringComparison.OrdinalIgnoreCase))
-            {
-                var sourceVersion = new Version(FileVersionInfo.GetVersionInfo(sourceFileName).FileVersion);
-                var targetVersion = new Version(FileVersionInfo.GetVersionInfo(targetFileName).FileVersion);
-                if (targetVersion < sourceVersion)
-                {
-                    File.Copy(sourceFileName, targetFileName, true);
-                    return true;
-                }
-            }
-
-            // update file if length or last write time has changed
-            var sourceFileInfo = new FileInfo(sourceFileName);
-            var targetFileInfo = new FileInfo(targetFileName);
-            if (sourceFileInfo.Length != targetFileInfo.Length || sourceFileInfo.LastWriteTimeUtc > targetFileInfo.LastWriteTimeUtc)
-            {
-                File.Copy(sourceFileName, targetFileName, true);
-                return true;
-            }
-
-            return false;
         }
 
         public virtual void WriteAllText(string fileName, string contents)

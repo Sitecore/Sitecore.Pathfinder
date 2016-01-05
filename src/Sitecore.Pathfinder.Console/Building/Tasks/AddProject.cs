@@ -45,11 +45,25 @@ namespace Sitecore.Pathfinder.Building.Tasks
 
         protected virtual void UpdateSccCmd([NotNull] IBuildContext context, [NotNull] string projectDirectory)
         {
-            // todo: absolute path to scc.exe is not source control friendly
+            // duplicate code in NewProject.cs
             var fileName = Path.Combine(projectDirectory, "scc.cmd");
-            var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-            var contents = "@\"" + directory + "\\scc.exe\" %*";
+            string contents;
+
+            var nodeModule = Path.Combine(projectDirectory, "node_modules\\sitecore-pathfinder");
+            if (context.FileSystem.DirectoryExists(nodeModule))
+            {
+                contents = "@npm run scc %*";
+            }
+            else if (context.FileSystem.FileExistsInPath("scc.exe"))
+            {
+                contents = "@scc.exe %*";
+            }
+            else
+            {
+                var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                contents = "@\"" + directory + "\\scc.exe\" %*";
+            }
 
             context.FileSystem.WriteAllText(fileName, contents, Encoding.ASCII);
         }

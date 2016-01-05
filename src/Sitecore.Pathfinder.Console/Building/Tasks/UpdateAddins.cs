@@ -15,6 +15,7 @@ namespace Sitecore.Pathfinder.Building.Tasks
         public UpdateAddins([NotNull] IConsoleService console) : base("update-addins")
         {
             Console = console;
+            CanRunWithoutConfig = true;
         }
 
         [NotNull]

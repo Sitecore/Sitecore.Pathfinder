@@ -12,6 +12,8 @@ namespace Sitecore.Pathfinder.IO
     {
         void Copy([NotNull] string sourceFileName, [NotNull] string destinationFileName, bool forceUpdate = true);
 
+        bool CopyIfNewer([NotNull] string sourceFileName, [NotNull] string targetFileName);
+
         void CreateDirectory([NotNull] string directory);
 
         void CreateDirectoryFromFileName([NotNull] string fileName);
@@ -23,6 +25,8 @@ namespace Sitecore.Pathfinder.IO
         bool DirectoryExists([NotNull] string directory);
 
         bool FileExists([NotNull] string fileName);
+
+        bool FileExistsInPath([NotNull] string fileName);
 
         [NotNull, ItemNotNull]
         IEnumerable<string> GetDirectories([NotNull] string directory);
@@ -49,8 +53,6 @@ namespace Sitecore.Pathfinder.IO
         void Rename([NotNull] string oldFileName, [NotNull] string newFileName);
 
         void Unzip([NotNull] string zipFileName, [NotNull] string destinationDirectory);
-
-        bool CopyIfNewer([NotNull] string sourceFileName, [NotNull] string targetFileName);
 
         void WriteAllText([NotNull] string fileName, [NotNull] string contents);
 
