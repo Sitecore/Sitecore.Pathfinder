@@ -1,3 +1,16 @@
+// 1. Install NodeJS
+// 2. Run 'npm update' to install/update node modules
+//
+// 3. Update version in this file
+// 4. Update version in ./buildfiles/npm/package.json
+// 5. Update version in assemblyinfo.cs files
+//
+// 6. Run 'gulp' to build Pathfinder without publishing
+// 7. Or run 'gulp publish' to publish Pathfinder to npmjs.com, Nuget.org and the zip file directory
+// 8. Or run 'gulp nightly' to publish Pathfinder to the nightly directory
+//
+// 9. Done
+
 var version = "0.6.0-alpha";
 var zipFileDestination = "\\\\rocks2d1.dk.sitecore.net\\d$\\inetpub\\wwwroot\\Default Web Site\\Pathfinder";
 var zipFileNightlyDestination = "\\\\rocks2d1.dk.sitecore.net\\d$\\inetpub\\wwwroot\\Default Web Site\\Pathfinder\\Nightly";
@@ -81,18 +94,19 @@ gulp.task("build-nuget-package", ["clean-nuget-package"], function(callback) {
             dependencies: [
             ],
             tags: "Sitecore, Pathfinder, compilation, nuget, npm",
-            excludes: [],
+            excludes: ["./src/Sitecore.Pathfinder.Console/files/project/scc.cmd", "./src/Sitecore.Pathfinder.Console/files/project/sitecore.filetemplates"],
             outputDir: "./build"
         },
         [
             { src: "./build/dist", dest: "../../sitecore.tools/" },
-            { src: "./buildfiles/nuget/scc.cmd", dest: "/content/scc.cmd" }
+            { src: "./buildfiles/nuget/scc.cmd", dest: "/content/scc.cmd" },
+            { src: "./src/Sitecore.Pathfinder.Console/files/project", dest: "/content/" }
         ],
         callback
     );
 });
 
-gulp.task("publish-nuget-package", ["build-nuget-package"], function () {
+gulp.task("publish-nuget-package", ["build-nuget-package"], function() {
     return spawn("../bin/nuget.exe", ["push", "Sitecore.Pathfinder." + version + ".nupkg"], { stdio: "inherit", "cwd": "./build/" });
 });
 
@@ -127,10 +141,10 @@ gulp.task("build", function() {
     runSequence("build-project", "build-dist-directory", ["build-zip-file", "build-npm-package", "build-nuget-package"]);
 });
 
-gulp.task("nightly", function () {
+gulp.task("nightly", function() {
     runSequence("build-project", "build-dist-directory", ["publish-zip-file-nightly"]);
 });
 
-gulp.task("publish", function () {
+gulp.task("publish", function() {
     runSequence("build-project", "build-dist-directory", ["publish-zip-file", "publish-npm-package"]);
 });
