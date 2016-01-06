@@ -11,8 +11,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
 {
     public class TemplateSectionWriter
     {
-        [CanBeNull]
-        [ItemNotNull]
+        [CanBeNull, ItemNotNull]
         private IEnumerable<TemplateFieldWriter> _fieldBuilders;
 
         public TemplateSectionWriter([NotNull] TemplateSection templateSection)
@@ -20,8 +19,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             TemplateSection = templateSection;
         }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         public IEnumerable<TemplateFieldWriter> Fields
         {
             get { return _fieldBuilders ?? (_fieldBuilders = TemplateSection.Fields.Select(f => new TemplateFieldWriter(f)).ToList()); }

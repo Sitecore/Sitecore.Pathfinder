@@ -18,8 +18,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
 {
     public class TemplateWriter
     {
-        [Diagnostics.CanBeNull]
-        [ItemNotNull]
+        [Diagnostics.CanBeNull, ItemNotNull]
         private IEnumerable<TemplateSectionWriter> _sectionBuilders;
 
         public TemplateWriter([Diagnostics.NotNull] Template template)
@@ -30,8 +29,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
         [Diagnostics.CanBeNull]
         public Item Item { get; set; }
 
-        [Diagnostics.NotNull]
-        [ItemNotNull]
+        [Diagnostics.NotNull, ItemNotNull]
         public IEnumerable<TemplateSectionWriter> Sections
         {
             get { return _sectionBuilders ?? (_sectionBuilders = Template.Sections.Select(s => new TemplateSectionWriter(s)).ToList()); }
@@ -144,8 +142,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             }
         }
 
-        [Diagnostics.NotNull]
-        [ItemNotNull]
+        [Diagnostics.NotNull, ItemNotNull]
         protected IEnumerable<Data.Templates.TemplateField> GetInheritedFields([Diagnostics.NotNull] Template template)
         {
             var fields = new List<Data.Templates.TemplateField>();
@@ -263,7 +260,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                         }
                     }
 
-                    sortorder = lastSortorder + ((nextSortorder - lastSortorder) / 2);
+                    sortorder = lastSortorder + (nextSortorder - lastSortorder) / 2;
 
                     using (new EditContext(field.Item))
                     {
@@ -307,7 +304,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                         }
                     }
 
-                    sortorder = lastSortorder + ((nextSortorder - lastSortorder) / 2);
+                    sortorder = lastSortorder + (nextSortorder - lastSortorder) / 2;
 
                     using (new EditContext(section.Item))
                     {
@@ -321,7 +318,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             }
         }
 
-        protected virtual void WriteField([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] TemplateSectionWriter templateSectionWriter, [Diagnostics.NotNull] TemplateFieldWriter templateFieldWriter, [Diagnostics.NotNull] [ItemNotNull] IEnumerable<Data.Templates.TemplateField> inheritedFields)
+        protected virtual void WriteField([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] TemplateSectionWriter templateSectionWriter, [Diagnostics.NotNull] TemplateFieldWriter templateFieldWriter, [Diagnostics.NotNull, ItemNotNull] IEnumerable<Data.Templates.TemplateField> inheritedFields)
         {
             if (inheritedFields.Any(f => string.Equals(f.Name, templateFieldWriter.TemplateField.FieldName, StringComparison.OrdinalIgnoreCase)))
             {
@@ -333,7 +330,8 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             var isNew = item == null;
             if (isNew)
             {
-                item = ItemManager.AddFromTemplate(templateFieldWriter.TemplateField.FieldName, new TemplateID(TemplateIDs.TemplateField), templateSectionWriter.Item);
+                var id = new ID(templateFieldWriter.TemplateField.Uri.Guid);
+                item = ItemManager.AddFromTemplate(templateFieldWriter.TemplateField.FieldName, new TemplateID(TemplateIDs.TemplateField), templateSectionWriter.Item, id);
                 if (item == null)
                 {
                     throw new EmitException(Texts.Could_not_create_template_field, TraceHelper.GetTextNode(templateFieldWriter.TemplateField.FieldNameProperty), templateFieldWriter.TemplateField.FieldName);
@@ -381,7 +379,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             }
         }
 
-        protected virtual void WriteNewTemplate([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] [ItemNotNull] IEnumerable<Data.Templates.TemplateField> inheritedFields)
+        protected virtual void WriteNewTemplate([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull, ItemNotNull] IEnumerable<Data.Templates.TemplateField> inheritedFields)
         {
             var database = Factory.GetDatabase(Template.DatabaseName);
             if (database == null)
@@ -433,7 +431,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             }
         }
 
-        protected virtual void WriteSection([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] TemplateSectionWriter templateSectionWriter, [Diagnostics.NotNull] [ItemNotNull] IEnumerable<Data.Templates.TemplateField> inheritedFields)
+        protected virtual void WriteSection([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] TemplateSectionWriter templateSectionWriter, [Diagnostics.NotNull, ItemNotNull] IEnumerable<Data.Templates.TemplateField> inheritedFields)
         {
             if (Item == null)
             {
@@ -443,7 +441,8 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             var isNew = templateSectionWriter.Item == null;
             if (isNew)
             {
-                templateSectionWriter.Item = ItemManager.AddFromTemplate(templateSectionWriter.TemplateSection.SectionName, new TemplateID(TemplateIDs.TemplateSection), Item);
+                var id = new ID(templateSectionWriter.TemplateSection.Uri.Guid);
+                templateSectionWriter.Item = ItemManager.AddFromTemplate(templateSectionWriter.TemplateSection.SectionName, new TemplateID(TemplateIDs.TemplateSection), Item, id);
                 if (templateSectionWriter.Item == null)
                 {
                     throw new EmitException(Texts.Could_not_create_section_item, TraceHelper.GetTextNode(Template.ItemNameProperty));
@@ -474,7 +473,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             }
         }
 
-        protected virtual void WriteTemplate([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] [ItemNotNull] IEnumerable<Data.Templates.TemplateField> inheritedFields)
+        protected virtual void WriteTemplate([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull, ItemNotNull] IEnumerable<Data.Templates.TemplateField> inheritedFields)
         {
             var item = Item;
             if (item == null)

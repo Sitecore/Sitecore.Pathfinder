@@ -2,6 +2,7 @@ Version Next
 ============
 * Add: Added add-project task for creating a Pathfinder project in an existing directory (2015-12-20)
 * Add: Support for running as NPM module (2016-01-05)
+* Fix: Template field IDs now has the specified ID (2016-01-06) - Dave Morrison
 
 Version 0.6.0
 =============

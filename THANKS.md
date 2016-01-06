@@ -7,6 +7,7 @@
 
 ## Testers
 * Alin Marius Pârjolea
+* Dave Morrison
 * Dmitry Konstenko
 * Martin Svarrer Christensen
 
