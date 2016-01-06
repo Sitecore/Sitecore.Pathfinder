@@ -102,6 +102,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configurat
 		package.json = package.json
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "npm", "npm", "{ED5569AF-973C-4638-AD50-21B25FA50C9C}"
+	ProjectSection(SolutionItems) = preProject
+		buildfiles\npm\package.json = buildfiles\npm\package.json
+		buildfiles\npm\README.md = buildfiles\npm\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget", "nuget", "{93EF9BA8-748F-478F-A953-CDAA58084BC4}"
+	ProjectSection(SolutionItems) = preProject
+		buildfiles\nuget\scc.cmd = buildfiles\nuget\scc.cmd
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -178,5 +189,7 @@ Global
 		{626A72A8-4461-4E2E-BB10-2A36D9D1BB5D} = {3FD15219-6CAE-4865-A054-8E9E2A5EDF4E}
 		{ED92B747-FD90-4DE5-BB52-96DC808B58C0} = {626A72A8-4461-4E2E-BB10-2A36D9D1BB5D}
 		{B86678EC-8111-4D28-9B60-1DF723E2CB6E} = {626A72A8-4461-4E2E-BB10-2A36D9D1BB5D}
+		{ED5569AF-973C-4638-AD50-21B25FA50C9C} = {8BCC4338-81A1-4B6C-99F9-89ABFF7812BE}
+		{93EF9BA8-748F-478F-A953-CDAA58084BC4} = {8BCC4338-81A1-4B6C-99F9-89ABFF7812BE}
 	EndGlobalSection
 EndGlobal

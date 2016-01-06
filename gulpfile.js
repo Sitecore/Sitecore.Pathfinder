@@ -1,4 +1,6 @@
 var version = "0.6.0-alpha";
+var zipFileDestination = "\\\\rocks2d1.dk.sitecore.net\\d$\\inetpub\\wwwroot\\Default Web Site\\Pathfinder";
+var zipFileNightlyDestination = "\\\\rocks2d1.dk.sitecore.net\\d$\\inetpub\\wwwroot\\Default Web Site\\Pathfinder\\Nightly";
 
 var gulp = require("gulp");
 var del = require("del");
@@ -39,7 +41,7 @@ gulp.task("clean-npm-directory", function() {
 });
 
 gulp.task("copy-npm-files", ["clean-npm-directory"], function() {
-    return gulp.src(["./bin/npm/package.json", "./bin/npm/README.md"]).
+    return gulp.src(["./buildfiles/npm/package.json", "./buildfiles/npm/README.md"]).
         pipe(gulp.dest("./build/npm"));
 });
 
@@ -64,7 +66,7 @@ gulp.task("clean-nuget-package", function() {
 
 gulp.task("build-nuget-package", ["clean-nuget-package"], function(callback) {
     return nugetpack({
-            id: "SitecorePathfinder",
+            id: "Sitecore.Pathfinder",
             version: version,
             authors: "Jakob Christensen",
             owners: "Sitecore A/S",
@@ -83,11 +85,15 @@ gulp.task("build-nuget-package", ["clean-nuget-package"], function(callback) {
             outputDir: "./build"
         },
         [
-            { src: "./build/dist", dest: "/content/sitecore.tools/" },
-            { src: "./src/Sitecore.Pathfinder.Console/files/project/scc.cmd", dest: "/content/scc.cmd" }
+            { src: "./build/dist", dest: "../../sitecore.tools/" },
+            { src: "./buildfiles/nuget/scc.cmd", dest: "/content/scc.cmd" }
         ],
         callback
     );
+});
+
+gulp.task("publish-nuget-package", ["build-nuget-package"], function () {
+    return spawn("../bin/nuget.exe", ["push", "Sitecore.Pathfinder." + version + ".nupkg"], { stdio: "inherit", "cwd": "./build/" });
 });
 
 // zip file
@@ -104,19 +110,27 @@ gulp.task("build-zip-file", ["clean-zip-file"], function() {
 
 gulp.task("publish-zip-file", ["build-zip-file"], function() {
     return gulp.src(["build/Sitecore.Pathfinder.zip"]).
-        pipe(gulp.dest("\\\\rocks2d1.dk.sitecore.net\\d$\\inetpub\\wwwroot\\Default Web Site\\Pathfinder"));
+        pipe(gulp.dest(zipFileDestination));
+});
+
+gulp.task("publish-zip-file-nightly", ["build-zip-file"], function() {
+    return gulp.src(["build/Sitecore.Pathfinder.zip"]).
+        pipe(gulp.dest(zipFileNightlyDestination));
 });
 
 // tasks
 
-gulp.task("default", function() {
-    runSequence("build-nuget-package");
+gulp.task("default", ["build"], function() {
 });
 
 gulp.task("build", function() {
-    runSequence("build-project", "build-dist-directory", "build-zip-file", "build-npm-package", "build-nuget-package");
+    runSequence("build-project", "build-dist-directory", ["build-zip-file", "build-npm-package", "build-nuget-package"]);
 });
 
-gulp.task("publish", function() {
-    runSequence("build-project", "build-dist-directory", "publish-zip-file", "publish-npm-package");
+gulp.task("nightly", function () {
+    runSequence("build-project", "build-dist-directory", ["publish-zip-file-nightly"]);
+});
+
+gulp.task("publish", function () {
+    runSequence("build-project", "build-dist-directory", ["publish-zip-file", "publish-npm-package"]);
 });
