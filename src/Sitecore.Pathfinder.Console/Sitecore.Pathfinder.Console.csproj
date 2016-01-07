@@ -246,6 +246,9 @@
       <Link>files\project\sitecore.filetemplates\codegenerators\PocoTemplate.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Compile Include="Building\DTO\WriteJsonProjectDiagnostic\Diagnostic.cs" />
+    <Compile Include="Building\DTO\WriteJsonProjectDiagnostic\ProjectDiagnostic.cs" />
+    <Compile Include="Building\DTO\WriteJsonProjectDiagnostic\SolutionDiagnostic.cs" />
     <Compile Include="Building\Tasks\AddProject.cs" />
     <Compile Include="Building\Tasks\WriteJsonProjectDiagnostics.cs" />
     <Compile Include="Building\Tasks\InstallAddins.cs" />
