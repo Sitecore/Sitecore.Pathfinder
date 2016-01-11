@@ -83,30 +83,26 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Sitecore.ContentSearch">
-      <HintPath>..\..\lib\Sitecore\Sitecore.ContentSearch.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\bin\Sitecore.ContentSearch.dll</HintPath>
     </Reference>
-    <Reference Include="Sitecore.Kernel, Version=8.1.5195.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Sitecore.ContentSearch.Linq">
+      <HintPath>..\..\bin\Sitecore.ContentSearch.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.Kernel">
+      <HintPath>..\..\bin\Sitecore.Kernel.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.Mvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Sitecore\Sitecore.Kernel.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\bin\Sitecore.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="Sitecore.Mvc">
-      <HintPath>..\..\lib\Sitecore\Sitecore.Mvc.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Sitecore.Rocks.Server.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Sitecore\Sitecore.Rocks.Server.Core.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="Sitecore.Rocks.Server.Core">
+      <HintPath>..\..\bin\Sitecore.Rocks.Server.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Rocks.Server.Validation">
-      <HintPath>..\..\lib\Sitecore\Sitecore.Rocks.Server.Validation.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\bin\Sitecore.Rocks.Server.Validation.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Zip">
-      <HintPath>..\..\lib\Sitecore\Sitecore.Zip.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\bin\Sitecore.Zip.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data.DataSetExtensions" />
