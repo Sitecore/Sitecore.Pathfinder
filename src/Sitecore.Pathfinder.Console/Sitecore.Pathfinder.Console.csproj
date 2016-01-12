@@ -195,6 +195,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Compile Include="Building\Tasks\AddProject.cs" />
+    <Compile Include="Building\Tasks\CleanWebsite.cs" />
     <Compile Include="Building\Tasks\WriteExports.cs" />
     <Compile Include="Building\Tasks\WriteSerialization.cs" />
     <Compile Include="Building\Tasks\CheckProject.cs" />

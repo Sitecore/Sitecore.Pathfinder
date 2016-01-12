@@ -233,6 +233,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cleaning website....
+        /// </summary>
+        public static string Cleaning_website___ {
+            get {
+                return ResourceManager.GetString("Cleaning_website___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Condition not found: .
         /// </summary>
         public static string Condition_not_found__ {
@@ -553,6 +562,15 @@ namespace Sitecore.Pathfinder {
         public static string Failed_to_parse_Id_ {
             get {
                 return ResourceManager.GetString("Failed_to_parse_Id_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to remove: .
+        /// </summary>
+        public static string Failed_to_remove__ {
+            get {
+                return ResourceManager.GetString("Failed_to_remove__", resourceCulture);
             }
         }
         
@@ -1107,6 +1125,15 @@ namespace Sitecore.Pathfinder {
         public static string Rebuilding_link_database___ {
             get {
                 return ResourceManager.GetString("Rebuilding_link_database___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removed: .
+        /// </summary>
+        public static string Removed__ {
+            get {
+                return ResourceManager.GetString("Removed__", resourceCulture);
             }
         }
         

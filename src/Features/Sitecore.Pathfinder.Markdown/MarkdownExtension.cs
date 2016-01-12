@@ -10,6 +10,12 @@ namespace Sitecore.Pathfinder.Markdown
 {
     public class MarkdownExtension : ExtensionBase
     {
+        public override void RemoveWebsiteFiles(IBuildContext context)
+        {
+            RemoveWebsiteAssembly(context, "Sitecore.Pathfinder.Markdown.dll");
+            RemoveWebsiteAssembly(context, "MarkdownSharp.dll");
+        }
+
         public override bool UpdateWebsiteFiles(IBuildContext context)
         {
             var updated = false;

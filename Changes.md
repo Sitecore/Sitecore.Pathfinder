@@ -6,6 +6,8 @@ Version Next
 * Removed: validate-website task (Sitecore Rocks SitecoreCop) (2016-01-12)
 * Removed: list-addins, install-addin and update-addins tasks (2016-01-12)
 * Removed: Experimental website UI (2016-01-12)
+* Removed: rename task (2016-01-12)
+* Add: clean-website task for removing Pathfinder files from the website (2016-01-12)
 
 Version 0.6.0
 =============
