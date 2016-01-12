@@ -71,6 +71,7 @@
     <Compile Include="UnicornExtension.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="build.cmd" />
     <None Include="packages.config" />
     <None Include="readme.md">
@@ -84,7 +85,9 @@
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Analyzer Include="..\..\..\packages\ResharperCodeContractNullability.1.0.3\analyzers\dotnet\cs\CodeContractNullability.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

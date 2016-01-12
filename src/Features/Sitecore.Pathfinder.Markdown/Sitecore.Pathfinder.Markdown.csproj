@@ -59,6 +59,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="build.cmd" />
     <None Include="packages.config" />
     <None Include="scconfig.markdown.json" />
@@ -68,6 +69,9 @@
       <Project>{c674eebf-bbf6-4eda-af5b-a4d58d0be986}</Project>
       <Name>Sitecore.Pathfinder.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\..\..\packages\ResharperCodeContractNullability.1.0.3\analyzers\dotnet\cs\CodeContractNullability.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

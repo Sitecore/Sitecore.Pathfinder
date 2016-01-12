@@ -8,24 +8,25 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
 {
     internal class TraceLogger : ILogger
     {
+        [NotNull]
         private readonly ITraceService _trace;
 
-        public TraceLogger(ITraceService trace)
+        public TraceLogger([NotNull] ITraceService trace)
         {
             _trace = trace;
         }
 
-        public void Debug(string message)
+        public void Debug([NotNull] string message)
         {
             // _trace.TraceInformation(message);
         }
 
-        public void Error(string message)
+        public void Error([NotNull] string message)
         {
             _trace.TraceError(Msg.M1004, message);
         }
 
-        public void Error(Exception exception)
+        public void Error([NotNull] Exception exception)
         {
             _trace.TraceError(Msg.M1010, exception.Message);
         }
@@ -34,12 +35,12 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
         {
         }
 
-        public void Info(string message)
+        public void Info([NotNull] string message)
         {
             _trace.TraceInformation(Msg.M1021, message);
         }
 
-        public void Warn(string message)
+        public void Warn([NotNull] string message)
         {
             _trace.TraceWarning(Msg.M1011, message);
         }
