@@ -230,7 +230,6 @@
     <Compile Include="Building\Tasks\PackNupkgPackage.cs" />
     <Compile Include="Building\Build.cs" />
     <Compile Include="Building\Tasks\QueryBuildTaskBase.cs" />
-    <Compile Include="Building\Tasks\Rename.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\img\document_text.png">
