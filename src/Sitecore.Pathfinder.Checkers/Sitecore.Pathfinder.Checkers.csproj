@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Checking\Checkers\Configuration\TypeAssemblyChecker.cs" />
     <Compile Include="Checking\Checkers\Items\ArchiveReminderChecker.cs" />
     <Compile Include="Checking\Checkers\Items\ItemsWithSameDisplayNameChecker.cs" />
     <Compile Include="Checking\Checkers\Items\LorumIpsumChecker.cs" />

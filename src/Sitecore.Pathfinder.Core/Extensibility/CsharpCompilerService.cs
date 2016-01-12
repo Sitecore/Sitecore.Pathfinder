@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Xml.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
@@ -45,11 +46,14 @@ namespace Sitecore.Pathfinder.Extensibility
             Console.WriteLine(Texts.scc_cmd_0_0___information_SCC0000__Compiling_checkers___);
 
             var syntaxTrees = sourceFileNames.Select(File.ReadAllText).Select(code => CSharpSyntaxTree.ParseText(code)).ToList();
+
             var references = AppDomain.CurrentDomain.GetAssemblies().Select(assembly => MetadataReference.CreateFromFile(assembly.Location)).ToList();
-            var options = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary);
+            // todo: add references from scconfig.json
+            references.Add(MetadataReference.CreateFromFile(typeof(XDocument).Assembly.Location)); // add System.Xml.Linq assembly
 
             Directory.CreateDirectory(Path.GetDirectoryName(assemblyFileName) ?? string.Empty);
 
+            var options = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary);
             var compilation = CSharpCompilation.Create(Path.GetFileNameWithoutExtension(assemblyFileName), syntaxTrees, references, options);
 
             EmitResult result;

@@ -52,7 +52,7 @@ namespace Sitecore.Pathfinder.Parsing
             var parseAllFiles = Configuration.GetBool(Constants.Configuration.BuildProjectParseAllFiles);
             if (!parseAllFiles && !pathMappingContext.IsMapped)
             {
-                return;
+                    return;
             }
 
             var itemName = PathHelper.GetItemName(sourceFile);

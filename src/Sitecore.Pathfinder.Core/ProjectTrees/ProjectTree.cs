@@ -73,6 +73,8 @@ namespace Sitecore.Pathfinder.ProjectTrees
             var visitor = CompositionService.Resolve<ProjectTreeVisitor>();
             visitor.Visit(this, sourceFileNames);
 
+            sourceFileNames.Reverse();
+
             return Factory.Project(projectOptions, sourceFileNames);
         }
 

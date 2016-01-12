@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -10,6 +10,7 @@ using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.BinFiles;
+using Sitecore.Pathfinder.Languages.ConfigFiles;
 using Sitecore.Pathfinder.Languages.Content;
 using Sitecore.Pathfinder.Languages.Media;
 using Sitecore.Pathfinder.Languages.Renderings;
@@ -57,13 +58,10 @@ namespace Sitecore.Pathfinder.Configuration
         protected IFileSystemService FileSystem { get; }
 
         [NotNull]
-        protected ISchemaService SchemaService { get; }
+        protected IParseService ParseService => _parseService ?? (_parseService = CompositionService.Resolve<IParseService>());
 
         [NotNull]
         protected IPathMapperService PathMapper { get; }
-
-        [NotNull]
-        protected IParseService ParseService => _parseService ?? (_parseService = CompositionService.Resolve<IParseService>());
 
         [NotNull]
         protected IPipelineService PipelineService { get; }
@@ -71,9 +69,17 @@ namespace Sitecore.Pathfinder.Configuration
         [NotNull]
         protected IReferenceParserService ReferenceParser => _referenceParser ?? (_referenceParser = CompositionService.Resolve<IReferenceParserService>());
 
+        [NotNull]
+        protected ISchemaService SchemaService { get; }
+
         public virtual BinFile BinFile(IProject project, ISnapshot snapshot, string filePath)
         {
             return new BinFile(project, snapshot, filePath);
+        }
+
+        public ConfigFile ConfigFile(IProject project, ISnapshot snapshot, string filePath)
+        {
+            return new ConfigFile(project, snapshot, filePath);
         }
 
         public virtual IProjectItem ContentFile(IProject project, ISnapshot snapshot, string filePath)

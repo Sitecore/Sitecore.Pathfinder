@@ -2,7 +2,6 @@
 
 using System;
 using Sitecore.Pathfinder.Compiling.Compilers;
-using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 

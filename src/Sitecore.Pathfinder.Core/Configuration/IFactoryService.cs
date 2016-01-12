@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -6,6 +6,7 @@ using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.BinFiles;
+using Sitecore.Pathfinder.Languages.ConfigFiles;
 using Sitecore.Pathfinder.Languages.Media;
 using Sitecore.Pathfinder.Languages.Renderings;
 using Sitecore.Pathfinder.Parsing;
@@ -22,6 +23,9 @@ namespace Sitecore.Pathfinder.Configuration
     {
         [NotNull]
         BinFile BinFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath);
+
+        [NotNull]
+        ConfigFile ConfigFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath);
 
         [NotNull]
         IProjectItem ContentFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath);
@@ -42,6 +46,9 @@ namespace Sitecore.Pathfinder.Configuration
         Field Field([NotNull] Item item, [NotNull] ITextNode textNode, [NotNull] string fieldName, [NotNull] string fieldValue);
 
         [NotNull]
+        FieldBuilder FieldBuilder();
+
+        [NotNull]
         FileReference FileReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceSourceProperty);
 
         [NotNull]
@@ -52,9 +59,6 @@ namespace Sitecore.Pathfinder.Configuration
 
         [NotNull]
         ItemBuilder ItemBuilder();
-
-        [NotNull]
-        FieldBuilder FieldBuilder();
 
         [NotNull]
         ItemParseContext ItemParseContext([NotNull] IParseContext context, [NotNull] ItemParser itemParser, [NotNull] string databaseName, [NotNull] string parentItemPath, bool isImport);
@@ -69,7 +73,10 @@ namespace Sitecore.Pathfinder.Configuration
         MediaFile MediaFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemPath, [NotNull] string filePath);
 
         [NotNull]
-        IProject Project([NotNull] ProjectOptions projectOptions, [NotNull, ItemNotNull]  List<string> sourceFileNames);
+        IParseContext ParseContext([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] PathMappingContext pathMappingContext);
+
+        [NotNull]
+        IProject Project([NotNull] ProjectOptions projectOptions, [NotNull, ItemNotNull] List<string> sourceFileNames);
 
         [NotNull]
         ProjectOptions ProjectOptions([NotNull] string projectDirectory, [NotNull] string databaseName);
@@ -104,8 +111,5 @@ namespace Sitecore.Pathfinder.Configuration
 
         [NotNull]
         TextNode TextNode([NotNull] ISnapshot snapshot, TextSpan span, [NotNull] string name, [NotNull] string value);
-
-        [NotNull]
-        IParseContext ParseContext([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] PathMappingContext pathMappingContext);
     }
 }

@@ -8,6 +8,7 @@ Version Next
 * Removed: Experimental website UI (2016-01-12)
 * Removed: rename task (2016-01-12)
 * Add: clean-website task for removing Pathfinder files from the website (2016-01-12)
+* Add: Type/Assembly reference in .config files checker (2016-01-12)
 
 Version 0.6.0
 =============

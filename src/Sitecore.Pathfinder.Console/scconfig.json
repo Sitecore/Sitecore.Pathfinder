@@ -15,7 +15,7 @@
     // mapping between project files and website files and items
     "project-website-mappings": {
         // files to copy to website
-        "content-files": ".js, .map, .css, .config, .htm, .ashx, .asmx, .asax, .eot, .svg, .ttf, .woff, .woff2, .less, .php, .ico",
+        "content-files": ".js, .map, .css, .htm, .ashx, .asmx, .asax, .eot, .svg, .ttf, .woff, .woff2, .less, .php, .ico",
 
         // comma separated list of files and directories to ignore
         "ignore-directories": ".vscode, sitecore.filetemplates, sitecore.project, sitecore.tools, node_modules, roslyn, includes",
@@ -64,7 +64,7 @@
         },
 
         // if true, all files are parsed and processed, otherwise only mapped files are processed (mapped files are specifed in project-website-mappings:project-to-website)
-        "parse-all-files": false,
+        "parse-all-files": true,
 
         "schema": {
             "Item-attributes": "Name, Id, Database, Icon, Template, IsEmittable, IsExternalReference, Layout.HtmlFile, Template.CreateFromFields, Template.Id, Template.Icon, Template.BaseTemplates, Template.ShortHelp, Template.LongHelp",
