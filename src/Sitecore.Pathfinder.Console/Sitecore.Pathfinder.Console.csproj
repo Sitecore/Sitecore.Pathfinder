@@ -118,14 +118,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\lib\Sitecore\Sitecore.Rocks.Server.Core.dll">
-      <Link>files\website\bin\Sitecore.Rocks.Server.Core.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\lib\Sitecore\Sitecore.Rocks.Server.Validation.dll">
-      <Link>files\website\bin\Sitecore.Rocks.Server.Validation.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\ReferenceChecker.cs">
       <Link>files\extensions\checkers\ReferenceChecker.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -203,9 +195,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Compile Include="Building\Tasks\AddProject.cs" />
-    <Compile Include="Building\Tasks\InstallAddins.cs" />
-    <Compile Include="Building\Tasks\ListAddins.cs" />
-    <Compile Include="Building\Tasks\UpdateAddins.cs" />
     <Compile Include="Building\Tasks\WriteExports.cs" />
     <Compile Include="Building\Tasks\WriteSerialization.cs" />
     <Compile Include="Building\Tasks\CheckProject.cs" />
@@ -242,13 +231,8 @@
     <Compile Include="Building\Build.cs" />
     <Compile Include="Building\Tasks\QueryBuildTaskBase.cs" />
     <Compile Include="Building\Tasks\Rename.cs" />
-    <Compile Include="Building\Tasks\ValidateWebsite.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\ContentEditors\contenteditor.css">
-      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\ContentEditors\contenteditor.css</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\img\document_text.png">
       <Link>files\website\sitecore\shell\client\Applications\Pathfinder\img\document_text.png</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -312,18 +296,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="nuget.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\ContentEditors\contenteditor.cshtml">
-      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\ContentEditors\contenteditor.cshtml</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\ContentEditors\contenttree.cshtml">
-      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\ContentEditors\contenttree.cshtml</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\ContentEditors\shell.cshtml">
-      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\ContentEditors\shell.cshtml</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="files\editors\Atom.zip">

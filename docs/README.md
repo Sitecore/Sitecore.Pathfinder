@@ -18,7 +18,6 @@
     1. [Resetting a website](04.08. Resetting a website.md)
     1. [Synchronizing website and project](04.09. Synchronizing website and project.md)
     1. [Code generation](04.10. Code generation.md)
-    1. [Website validation](04.16. Website validation.md)
     1. [Layout engines](04.17. Layout engines.md)
     1. [Extensibility](04.19. Extensibility.md)
 1. [Starterkits](05. Starterkits.md)

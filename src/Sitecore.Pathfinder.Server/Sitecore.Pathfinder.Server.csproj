@@ -95,15 +95,6 @@
       <HintPath>..\..\lib\Sitecore\Sitecore.Mvc.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Rocks.Server.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Sitecore\Sitecore.Rocks.Server.Core.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Sitecore.Rocks.Server.Validation">
-      <HintPath>..\..\lib\Sitecore\Sitecore.Rocks.Server.Validation.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Sitecore.Zip">
       <HintPath>..\..\lib\Sitecore\Sitecore.Zip.dll</HintPath>
       <Private>False</Private>
@@ -153,7 +144,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="sitecore\shell\client\Applications\Pathfinder\ContentEditors\contenteditor.css" />
     <Content Include="sitecore\shell\client\Applications\Pathfinder\img\document_text.png" />
     <Content Include="sitecore\shell\client\Applications\Pathfinder\img\folder.png" />
     <Content Include="sitecore\shell\client\Applications\Pathfinder\img\folder_document2.png" />
@@ -168,7 +158,6 @@
     <Compile Include="Controllers\PathfinderPackageController.cs" />
     <Compile Include="Controllers\PathfinderPackagesController.cs" />
     <Compile Include="Controllers\PathfinderPublishController.cs" />
-    <Compile Include="Controllers\PathfinderSitecoreCopController.cs" />
     <Compile Include="Controllers\PathfinderWebApiController.cs" />
     <Compile Include="Emitters\Emitter.cs" />
     <Compile Include="Emitters\Writers\FieldWriter.cs" />
@@ -242,9 +231,6 @@
     <None Include="sitecore\shell\client\Applications\Pathfinder\web.config" />
     <Content Include="sitecore\shell\client\Applications\Pathfinder\Package.cshtml" />
     <Content Include="Readme.md" />
-    <Content Include="sitecore\shell\client\Applications\Pathfinder\ContentEditors\shell.cshtml" />
-    <Content Include="sitecore\shell\client\Applications\Pathfinder\ContentEditors\contenttree.cshtml" />
-    <Content Include="sitecore\shell\client\Applications\Pathfinder\ContentEditors\contenteditor.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

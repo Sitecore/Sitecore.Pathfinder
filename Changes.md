@@ -3,6 +3,9 @@ Version Next
 * Add: Added add-project task for creating a Pathfinder project in an existing directory (2015-12-20)
 * Add: Support for running as NPM module (2016-01-05)
 * Fix: Template field IDs now has the specified ID (2016-01-06) - Dave Morrison
+* Removed: validate-website task (Sitecore Rocks SitecoreCop) (2016-01-12)
+* Removed: list-addins, install-addin and update-addins tasks (2016-01-12)
+* Removed: Experimental website UI (2016-01-12)
 
 Version 0.6.0
 =============

@@ -51,7 +51,6 @@ in a friendly manner.*
   * SitecorePathfinderCore NuGet package tweaks Sitecore defaults to be easier to work with (e.g. removes initial workflow)
 * Support for Html Templates (with [Mustache](https://mustache.github.io/mustache.5.html) tags) makes getting started with the Sitecore Rendering Engine easier
 * Code Generation for generating strongly typed item model, factories and unit tests
-* Validate a Sitecore website against 70 rules using Sitecore Rocks SitecoreCop
 
 ## Documentation
 For more documentation see [Pathfinder Documentation](docs/README.md).

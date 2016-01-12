@@ -6,6 +6,9 @@
     // default database name (master, core or web)
     "database": "master",
 
+    // project configuration file
+    "project": "scconfig.json",
+
     // the project roles enables/disables checkers and conventions
     "project-role": "",
 
@@ -32,9 +35,6 @@
         "website-to-project": {
         }
     },
-
-    // project configuration file
-    "project": "scconfig.json",
 
     // tasks
     "build-project": {
@@ -183,16 +183,6 @@
                 "namespace": "http://www.sitecore.net/pathfinder/content/core"
             }
         }
-    },
-
-    "validate-website": {
-        "url": "/sitecore/shell/client/Applications/Pathfinder/SitecoreCop",
-        "inactive-validations": "",
-        "languages": "en",
-        "process-site-validations": "True",
-        "root-item-path": "",
-        "site": "Site",
-        "timeout": "600"
     },
 
     "watch-project": {
