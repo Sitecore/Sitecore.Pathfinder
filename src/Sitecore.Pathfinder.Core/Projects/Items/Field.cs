@@ -161,7 +161,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         public void Compile([NotNull] IFieldCompileContext context)
         {
-            if (IsCompiled)
+            if ((context.FieldCompilers != null && !context.FieldCompilers.Any()) || IsCompiled)
             {
                 return;
             }
@@ -174,7 +174,11 @@ namespace Sitecore.Pathfinder.Projects.Items
                 if (compiler.CanCompile(context, this))
                 {
                     CompiledValue = compiler.Compile(context, this);
-                    break;
+
+                    if (compiler.IsExclusive)
+                    {
+                        break;
+                    }
                 }
             }
         }
