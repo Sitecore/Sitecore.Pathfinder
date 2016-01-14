@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.ComponentModel.Composition;
@@ -35,6 +35,63 @@ namespace Sitecore.Pathfinder.Projects
         protected IFileSystemService FileSystem { get; }
 
         public virtual void Import([NotNull] IProject project, [NotNull] IParseContext context)
+        {
+            // todo: consider making this a pipeline
+            ImportNugetPackages(project, context);
+            ImportNpmPackages(project, context);
+        }
+
+        protected virtual void ImportElements([NotNull] IProject project, [NotNull] IParseContext context, [NotNull] string fileName, [NotNull] XElement root)
+        {
+            foreach (var element in root.Elements())
+            {
+                ImportElement(project, context, fileName, element);
+            }
+        }
+
+        protected virtual void ImportNpmPackages([NotNull] IProject project, [NotNull] IParseContext context)
+        {
+            var nodeModules = Path.Combine(project.Options.ProjectDirectory, "node_modules");
+            if (!FileSystem.DirectoryExists(nodeModules))
+            {
+                return;
+            }
+
+            foreach (var directory in Directory.GetDirectories(nodeModules))
+            {
+                var manifest = Path.Combine(directory, "pathfinder.json");
+                if (!FileSystem.FileExists(manifest))
+                {
+                    continue;
+                }
+
+                var fileName = Path.Combine(directory, "sitecore.project/exports.xml");
+                if (!FileSystem.FileExists(fileName))
+                {
+                    continue;
+                }
+
+                try
+                {
+                    var doc = XDocument.Load(fileName);
+
+                    var root = doc.Root;
+                    if (root == null)
+                    {
+                        context.Trace.TraceError(Msg.I1001, Texts.Could_not_read_exports_xml_in_dependency_package, fileName);
+                        continue;
+                    }
+
+                    ImportElements(project, context, fileName, root);
+                }
+                catch
+                {
+                    context.Trace.TraceError(Msg.I1002, Texts.Could_not_read_exports_xml_in_dependency_package, fileName);
+                }
+            }
+        }
+
+        protected virtual void ImportNugetPackages([NotNull] IProject project, [NotNull] IParseContext context)
         {
             string packagesDirectory;
 
@@ -83,14 +140,6 @@ namespace Sitecore.Pathfinder.Projects
                         context.Trace.TraceError(Msg.I1002, Texts.Could_not_read_exports_xml_in_dependency_package, fileName);
                     }
                 }
-            }
-        }
-
-        protected virtual void ImportElements([NotNull] IProject project, [NotNull] IParseContext context, [NotNull] string fileName, [NotNull] XElement root)
-        {
-            foreach (var element in root.Elements())
-            {
-                ImportElement(project, context, fileName, element);
             }
         }
 
