@@ -1,30 +1,29 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
-
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using Sitecore.IO;
 using Sitecore.Pathfinder.Emitting;
-using Sitecore.Pathfinder.Languages.Content;
+using Sitecore.Pathfinder.Languages.ConfigFiles;
 using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Emitters.Files
 {
-    public class ContentFileEmitter : EmitterBase
+    public class ConfigFileEmitter : EmitterBase
     {
-        public ContentFileEmitter() : base(Constants.Emitters.BinFiles)
+        public ConfigFileEmitter() : base(Constants.Emitters.ContentFiles)
         {
         }
 
         public override bool CanEmit(IEmitContext context, IProjectItem projectItem)
         {
-            return projectItem is ContentFile;
+            return projectItem is ConfigFile;
         }
+
 
         public override void Emit(IEmitContext context, IProjectItem projectItem)
         {
-            var contentFile = (ContentFile)projectItem;
+            var configFile = (ConfigFile)projectItem;
 
-            var destinationFileName = FileUtil.MapPath(contentFile.FilePath);
+            var destinationFileName = FileUtil.MapPath(configFile.FilePath);
 
             context.FileSystem.CreateDirectoryFromFileName(destinationFileName);
             context.FileSystem.Copy(projectItem.Snapshots.First().SourceFile.AbsoluteFileName, destinationFileName, context.ForceUpdate);

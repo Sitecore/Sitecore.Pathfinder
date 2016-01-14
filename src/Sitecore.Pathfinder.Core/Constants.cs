@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -106,6 +106,10 @@ namespace Sitecore.Pathfinder
             public const string MessagesDisabled = "messages:disabled";
 
             public const string PackageDirectory = "copy-package:package-directory";
+
+            public const string PackNpmOutputFile = "pack-npm:output-file";
+
+            public const string PackNpmPackageJsonFile = "pack-npm:package-json-file";
 
             public const string PackNugetDirectory = "pack-nuget:directory";
 

@@ -160,6 +160,7 @@
     <Compile Include="Controllers\PathfinderPublishController.cs" />
     <Compile Include="Controllers\PathfinderWebApiController.cs" />
     <Compile Include="Emitters\Emitter.cs" />
+    <Compile Include="Emitters\Files\ConfigFileEmitter.cs" />
     <Compile Include="Emitters\Writers\FieldWriter.cs" />
     <Compile Include="Configuration\PathfinderSettings.cs" />
     <Compile Include="Emitters\Items\ItemEmitter.cs" />

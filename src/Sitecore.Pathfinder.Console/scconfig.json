@@ -145,6 +145,11 @@
         "exclude": ""
     },
 
+    "pack-npm": {
+        "output-file": "sitecore.project/sitecore.tgz",
+        "package-json-file": "sitecore.project/package.json"
+    },
+
     "publish-databases": {
         "publish-url": "/sitecore/shell/client/Applications/Pathfinder/Publish"
     },

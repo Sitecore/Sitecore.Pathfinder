@@ -75,6 +75,10 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Framework.ConfigurationModel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Framework.ConfigurationModel.1.0.0-beta4\lib\net45\Microsoft.Framework.ConfigurationModel.dll</HintPath>
       <Private>True</Private>
@@ -200,6 +204,7 @@
     </Content>
     <Compile Include="Building\Tasks\AddProject.cs" />
     <Compile Include="Building\Tasks\CleanWebsite.cs" />
+    <Compile Include="Building\Tasks\PackNpmPackage.cs" />
     <Compile Include="Building\Tasks\WriteExports.cs" />
     <Compile Include="Building\Tasks\WriteSerialization.cs" />
     <Compile Include="Building\Tasks\CheckProject.cs" />
@@ -261,6 +266,7 @@
       <Link>files\website\sitecore\shell\client\Applications\Pathfinder\PackageSources.txt</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="licenses\ICSharpCode.SharpZipLib.txt" />
     <Content Include="licenses\MarkdownSharp.txt" />
     <Content Include="licenses\Sitecore.Pathfinder.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
