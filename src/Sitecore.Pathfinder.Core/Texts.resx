@@ -214,7 +214,7 @@
     <value>Media item not found</value>
   </data>
   <data name="Unique_ID_clash" xml:space="preserve">
-    <value>Unique ID clash</value>
+    <value>Duplicate project item Id detected</value>
   </data>
     <data name="Project_has_not_been_loaded__Call_Load___first" xml:space="preserve">
     <value>Project has not been loaded. Call Load() first</value>

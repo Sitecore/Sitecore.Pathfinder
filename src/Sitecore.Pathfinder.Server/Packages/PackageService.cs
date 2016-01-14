@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -54,15 +54,14 @@ namespace Sitecore.Pathfinder.Packages
         [NotNull]
         public string InstalledRepository { get; }
 
-        [NotNull]
-        [ItemNotNull]
-        public virtual IEnumerable<PackageBase> CheckForAvailableUpdates([Diagnostics.NotNull][ItemNotNull] IEnumerable<PackageBase> availablePackages)
+        [NotNull, ItemNotNull]
+        public virtual IEnumerable<PackageBase> CheckForAvailableUpdates([Diagnostics.NotNull, ItemNotNull] IEnumerable<PackageBase> availablePackages)
         {
             var installedPackages = GetInstalledPackages();
 
             foreach (var availablePackage in availablePackages)
             {
-                var installedPackage = installedPackages.FirstOrDefault(p => string.Compare(p.PackageId, availablePackage.PackageId, StringComparison.OrdinalIgnoreCase) == 0);
+                var installedPackage = installedPackages.FirstOrDefault(p => string.Equals(p.PackageId, availablePackage.PackageId, StringComparison.OrdinalIgnoreCase));
                 if (installedPackage == null)
                 {
                     continue;
@@ -82,15 +81,14 @@ namespace Sitecore.Pathfinder.Packages
             return availablePackages;
         }
 
-        [NotNull]
-        [ItemNotNull]
-        public virtual IEnumerable<PackageBase> CheckForInstalledUpdates([NotNull] [ItemNotNull] IEnumerable<PackageBase> installedPackages)
+        [NotNull, ItemNotNull]
+        public virtual IEnumerable<PackageBase> CheckForInstalledUpdates([NotNull, ItemNotNull] IEnumerable<PackageBase> installedPackages)
         {
             var availablePackages = GetAvailablePackages(string.Empty, string.Empty, string.Empty);
 
             foreach (var installedPackage in installedPackages)
             {
-                var availablePackage = availablePackages.FirstOrDefault(p => string.Compare(p.PackageId, installedPackage.PackageId, StringComparison.OrdinalIgnoreCase) == 0);
+                var availablePackage = availablePackages.FirstOrDefault(p => string.Equals(p.PackageId, installedPackage.PackageId, StringComparison.OrdinalIgnoreCase));
                 if (availablePackage == null)
                 {
                     continue;
@@ -122,8 +120,7 @@ namespace Sitecore.Pathfinder.Packages
             return new NugetPackage(packages.First());
         }
 
-        [Diagnostics.NotNull]
-        [ItemNotNull]
+        [Diagnostics.NotNull, ItemNotNull]
         public virtual IEnumerable<NugetPackage> FindPackagesById([NotNull] string packageId)
         {
             var availableRepository = GetAvailableRepository();
@@ -137,8 +134,7 @@ namespace Sitecore.Pathfinder.Packages
             return packages.Select(p => new NugetPackage(p)).ToList();
         }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         public virtual IEnumerable<PackageBase> GetAvailablePackages([Diagnostics.NotNull] string queryText, [Diagnostics.NotNull] string author, [Diagnostics.NotNull] string tags, int skip = -1)
         {
             var query = GetAvailablePackagesQuery(queryText, author, tags);
@@ -151,8 +147,7 @@ namespace Sitecore.Pathfinder.Packages
             return query.Select(p => new NugetPackage(p)).ToList();
         }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         public virtual IEnumerable<PackageBase> GetInstalledPackages()
         {
             var installedRepository = GetInstalledRepository();
@@ -169,8 +164,7 @@ namespace Sitecore.Pathfinder.Packages
             return query.Count();
         }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         public virtual IEnumerable<PackageBase> GetUpdatePackages(bool includePrerelease)
         {
             var repository = GetAvailableRepository();
@@ -262,8 +256,7 @@ namespace Sitecore.Pathfinder.Packages
             }
         }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         protected virtual IEnumerable<IPackage> GetAvailablePackagesQuery([Diagnostics.NotNull] string queryText, [Diagnostics.NotNull] string author, [Diagnostics.NotNull] string tags)
         {
             var availableRepository = GetAvailableRepository();
@@ -277,7 +270,7 @@ namespace Sitecore.Pathfinder.Packages
 
             if (!string.IsNullOrEmpty(author))
             {
-                query = query.Where(p => p.Authors.Any(a => string.Compare(a, author, StringComparison.OrdinalIgnoreCase) == 0));
+                query = query.Where(p => p.Authors.Any(a => string.Equals(a, author, StringComparison.OrdinalIgnoreCase)));
             }
 
             if (!string.IsNullOrEmpty(tags))

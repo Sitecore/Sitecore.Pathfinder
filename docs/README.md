@@ -20,6 +20,8 @@
     1. [Code generation](04.10. Code generation.md)
     1. [Layout engines](04.17. Layout engines.md)
     1. [Extensibility](04.19. Extensibility.md)
+    1. [Task reference](04.20. Tasks Reference.md)
+    1. [Language examples](04.21. Languages.md)
 1. [Starterkits](05. Starterkits.md)
 1. [Package Installer UI](06. Package Installer UI.md)
 1. [Developer Environment](07. Developer Environment.md)

@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -16,8 +16,10 @@ namespace Sitecore.Pathfinder.Extensibility
     public class CsharpCompilerService
     {
         [CanBeNull]
-        public Assembly Compile([NotNull] string toolsDirectory, [NotNull] string assemblyFileName, [NotNull] [ItemNotNull] IEnumerable<string> sourceFileNames)
+        public Assembly Compile([NotNull] string toolsDirectory, [NotNull] string assemblyFileName, [NotNull, ItemNotNull] IEnumerable<string> sourceFileNames)
         {
+            // todo: if a *.sln file exists, compile that. Otherwise look for *.csproj files. Lastly compile all C# files.
+
             // check if assembly is newer than all checkers
             if (File.Exists(assemblyFileName))
             {
@@ -48,6 +50,7 @@ namespace Sitecore.Pathfinder.Extensibility
             var syntaxTrees = sourceFileNames.Select(File.ReadAllText).Select(code => CSharpSyntaxTree.ParseText(code)).ToList();
 
             var references = AppDomain.CurrentDomain.GetAssemblies().Select(assembly => MetadataReference.CreateFromFile(assembly.Location)).ToList();
+
             // todo: add references from scconfig.json
             references.Add(MetadataReference.CreateFromFile(typeof(XDocument).Assembly.Location)); // add System.Xml.Linq assembly
 

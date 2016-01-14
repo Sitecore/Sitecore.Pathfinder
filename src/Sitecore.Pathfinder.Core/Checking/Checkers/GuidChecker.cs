@@ -2,6 +2,7 @@
 
 using System;
 using System.Linq;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
@@ -49,7 +50,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                         continue;
                     }
 
-                    context.Trace.TraceError(Msg.C1001, Texts.Unique_ID_clash, projectItem1.Snapshots.First().SourceFile, projectItem2.Snapshots.First().SourceFile.AbsoluteFileName);
+                    context.Trace.TraceError(Msg.C1001, Texts.Unique_ID_clash, projectItem1.Snapshots.First().SourceFile, PathHelper.UnmapPath(context.Project.Options.ProjectDirectory, projectItem2.Snapshots.First().SourceFile.AbsoluteFileName));
                     context.IsDeployable = false;
                 }
             }

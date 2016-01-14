@@ -2,6 +2,7 @@
 using Sitecore.Pathfinder.Compiling.FieldCompilers;
 using Sitecore.Pathfinder.Projects.Items;
 using System;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Markdown.Compiling.FieldCompilers
@@ -40,7 +41,8 @@ namespace Sitecore.Pathfinder.Markdown.Compiling.FieldCompilers
             return wip;
         }
 
-        protected string GetIndicatorToken(IConfiguration config)
+        [NotNull]
+        protected string GetIndicatorToken([NotNull] IConfiguration config)
         {
             return config.GetString(Constants.Configuration.IndicatorToken);
         }

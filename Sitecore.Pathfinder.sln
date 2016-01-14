@@ -7,7 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 	ProjectSection(SolutionItems) = preProject
 		Changes.md = Changes.md
 		CONTRIBUTING.md = CONTRIBUTING.md
-		Languages.md = Languages.md
 		LICENSE = LICENSE
 		README.md = README.md
 		THANKS.md = THANKS.md
@@ -74,10 +73,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{2913B82E-E
 		docs\04.10. Code generation.md = docs\04.10. Code generation.md
 		docs\04.17. Layout engines.md = docs\04.17. Layout engines.md
 		docs\04.19. Extensibility.md = docs\04.19. Extensibility.md
+		docs\04.20. Tasks Reference.md = docs\04.20. Tasks Reference.md
+		docs\04.21. Languages.md = docs\04.21. Languages.md
 		docs\05. Starterkits.md = docs\05. Starterkits.md
 		docs\06. Package Installer UI.md = docs\06. Package Installer UI.md
 		docs\07. Developer Environment.md = docs\07. Developer Environment.md
 		docs\08. External Tools.md = docs\08. External Tools.md
+		Languages.md = Languages.md
 		docs\README.md = docs\README.md
 	EndProjectSection
 EndProject

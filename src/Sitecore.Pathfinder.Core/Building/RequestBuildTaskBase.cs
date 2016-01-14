@@ -153,6 +153,7 @@ namespace Sitecore.Pathfinder.Building
 
                 if (!string.IsNullOrEmpty(output))
                 {
+                    // todo: consider parsing diagnostics
                     context.Trace.WriteLine(output);
                 }
 

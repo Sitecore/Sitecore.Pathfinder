@@ -25,6 +25,8 @@ namespace Sitecore.Pathfinder.Building.Tasks
             context.IsAborted = true;
             context.Trace.TraceInformation(Msg.D1022, Texts.Cleaning_website___);
 
+            // todo: remove files from Data Folder as well
+
             RemoveWebsiteFiles(context);
 
             RemoveWebsiteAssembly(context, "Sitecore.Pathfinder.Core.dll");

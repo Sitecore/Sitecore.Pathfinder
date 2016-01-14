@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -28,7 +28,7 @@ namespace Sitecore.Pathfinder.Extensibility
         }
 
         [CanBeNull]
-        public static CompositionContainer RegisterCompositionService([NotNull] this Startup startup, [NotNull] IConfiguration configuration, [NotNull] string projectDirectory, [NotNull] Assembly callingAssembly, [NotNull] [ItemNotNull] IEnumerable<string> additionalAssemblyFileNames, CompositionOptions options)
+        public static CompositionContainer RegisterCompositionService([NotNull] this Startup startup, [NotNull] IConfiguration configuration, [NotNull] string projectDirectory, [NotNull] Assembly callingAssembly, [NotNull, ItemNotNull] IEnumerable<string> additionalAssemblyFileNames, CompositionOptions options)
         {
             var toolsDirectory = configuration.GetString(Constants.Configuration.ToolsDirectory);
 
@@ -59,14 +59,17 @@ namespace Sitecore.Pathfinder.Extensibility
                 // add core extensions
                 var coreExtensionsDirectory = Path.Combine(toolsDirectory, "files\\extensions");
                 var coreAssemblyFileName = Path.Combine(coreExtensionsDirectory, "Sitecore.Pathfinder.Core.Extensions.dll");
-                AddAssembliesFromDirectory(catalogs, coreAssemblyFileName, coreExtensionsDirectory);
                 AddDynamicAssembly(catalogs, toolsDirectory, coreAssemblyFileName, coreExtensionsDirectory);
+                AddAssembliesFromDirectory(catalogs, coreExtensionsDirectory);
+
+                // add extension from [Project]/node_modules directory
+                AddNodeModules(catalogs, coreAssemblyFileName, projectDirectory);
 
                 // add projects extensions
                 var projectExtensionsDirectory = PathHelper.Combine(projectDirectory, configuration.GetString(Constants.Configuration.ProjectExtensionsDirectory));
                 var projectAssemblyFileName = Path.Combine(projectExtensionsDirectory, configuration.GetString(Constants.Configuration.ProjectExtensionsAssemblyFileName));
-                AddAssembliesFromDirectory(catalogs, projectAssemblyFileName, projectExtensionsDirectory);
                 AddDynamicAssembly(catalogs, toolsDirectory, projectAssemblyFileName, projectExtensionsDirectory);
+                AddAssembliesFromDirectory(catalogs, projectExtensionsDirectory);
             }
 
             // build composition graph
@@ -81,15 +84,15 @@ namespace Sitecore.Pathfinder.Extensibility
             return compositionContainer;
         }
 
-        private static void AddAdditionalAssemblies([NotNull] [ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] [ItemNotNull] IEnumerable<string> additionalAssemblyFileNames)
+        private static void AddAdditionalAssemblies([NotNull, ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull, ItemNotNull] IEnumerable<string> additionalAssemblyFileNames)
         {
             foreach (var additionalAssemblyFileName in additionalAssemblyFileNames)
             {
-                catalogs.Add(new AssemblyCatalog(additionalAssemblyFileName));
+                AddAssembly(catalogs, additionalAssemblyFileName);
             }
         }
 
-        private static void AddAssembliesFromDirectory([NotNull] [ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string assemblyFileName, [NotNull] string directory)
+        private static void AddAssembliesFromDirectory([NotNull, ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string directory)
         {
             if (!Directory.Exists(directory))
             {
@@ -97,16 +100,32 @@ namespace Sitecore.Pathfinder.Extensibility
             }
 
             // only load Sitecore.Pathfinder.*.dll assemblies for performance
-            foreach (var fileName in Directory.GetFiles(directory, "Sitecore.Pathfinder.*.dll", SearchOption.AllDirectories))
+            foreach (var assemblyFileName in Directory.GetFiles(directory, "Sitecore.Pathfinder.*.dll", SearchOption.AllDirectories))
             {
-                if (!string.Equals(fileName, assemblyFileName, StringComparison.OrdinalIgnoreCase))
-                {
-                    catalogs.Add(new AssemblyCatalog(fileName));
-                }
+                AddAssembly(catalogs, assemblyFileName);
             }
         }
 
-        private static void AddDynamicAssembly([NotNull] [ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string toolsDirectory, [NotNull] string assemblyFileName, [NotNull] string directory)
+        private static void AddAssembly([NotNull, ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string assemblyFileName)
+        {
+            var fileName = Path.GetFileName(assemblyFileName);
+
+            if (catalogs.OfType<AssemblyCatalog>().Any(c => string.Equals(Path.GetFileName(c.Assembly.Location), fileName, StringComparison.OrdinalIgnoreCase)))
+            {
+                return;
+            }
+
+            try
+            {
+                catalogs.Add(new AssemblyCatalog(assemblyFileName));
+            }
+            catch (FileLoadException ex)
+            {
+                Console.WriteLine(Texts.Failed_to_load_assembly___0____1_, ex.Message, assemblyFileName);
+            }
+        }
+
+        private static void AddDynamicAssembly([NotNull, ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string toolsDirectory, [NotNull] string assemblyFileName, [NotNull] string directory)
         {
             if (!Directory.Exists(directory))
             {
@@ -124,29 +143,39 @@ namespace Sitecore.Pathfinder.Extensibility
             var assembly = compilerService.Compile(toolsDirectory, assemblyFileName, fileNames);
             if (assembly != null)
             {
-                catalogs.Add(new AssemblyCatalog(assembly));
+                AddAssembly(catalogs, assemblyFileName);
             }
         }
 
-        private static void AddFeatureAssemblies([NotNull] [ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string toolsDirectory)
+        private static void AddFeatureAssemblies([NotNull, ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string toolsDirectory)
         {
             // only load Sitecore.Pathfinder.*.dll assemblies for performance
-            foreach (var fileName in Directory.GetFiles(toolsDirectory, "Sitecore.Pathfinder.*.dll", SearchOption.TopDirectoryOnly))
+            foreach (var assemblyFileName in Directory.GetFiles(toolsDirectory, "Sitecore.Pathfinder.*.dll", SearchOption.TopDirectoryOnly))
             {
-                // already added
-                if (string.Equals(Path.GetFileName(fileName), "Sitecore.Pathfinder.Core.dll", StringComparison.OrdinalIgnoreCase))
+                AddAssembly(catalogs, assemblyFileName);
+            }
+        }
+
+        private static void AddNodeModules([NotNull, ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string coreAssemblyFileName, [NotNull] string projectDirectory)
+        {
+            var nodeModules = Path.Combine(projectDirectory, "node_modules");
+            if (!Directory.Exists(nodeModules))
+            {
+                return;
+            }
+
+            foreach (var directory in Directory.GetDirectories(nodeModules))
+            {
+                var manifest = Path.Combine(directory, "pathfinder.json");
+                if (!File.Exists(manifest))
                 {
                     continue;
                 }
 
-                try
-                {
-                    catalogs.Add(new AssemblyCatalog(fileName));
-                }
-                catch (FileLoadException ex)
-                {
-                   Console.WriteLine(Texts.Failed_to_load_assembly___0____1_, ex.Message, fileName);
-                }
+                // todo: exclude nested node_modules directories
+
+                AddDynamicAssembly(catalogs, directory, coreAssemblyFileName, directory);
+                AddAssembliesFromDirectory(catalogs, directory);
             }
         }
 
