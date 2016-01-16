@@ -18,7 +18,8 @@ namespace Sitecore.Pathfinder.Extensibility
         [CanBeNull]
         public Assembly Compile([NotNull] string toolsDirectory, [NotNull] string assemblyFileName, [NotNull, ItemNotNull] IEnumerable<string> sourceFileNames)
         {
-            // todo: if a *.sln file exists, compile that. Otherwise look for *.csproj files. Lastly compile all C# files.
+            // to do: if a *.sln file exists, compile that. Otherwise look for *.csproj files. Lastly compile all C# files. 
+            // Unfortunately CodeAnalysis.Workspaces is a 6Mb payload and depends on MSBuild, so postponed for now.
 
             // check if assembly is newer than all checkers
             if (File.Exists(assemblyFileName))

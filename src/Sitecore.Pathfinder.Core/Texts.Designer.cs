@@ -134,6 +134,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;package.json&apos; file not found. Skipping..
+        /// </summary>
+        public static string _package_json__file_not_found__Skipping_ {
+            get {
+                return ResourceManager.GetString("_package_json__file_not_found__Skipping_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Section&apos; element must have a &apos;Name&apos; attribute.
         /// </summary>
         public static string _Section__element_must_have_a__Name__attribute {
@@ -346,6 +355,15 @@ namespace Sitecore.Pathfinder {
         public static string Could_not_read_exports_xml_in_dependency_package {
             get {
                 return ResourceManager.GetString("Could_not_read_exports_xml_in_dependency_package", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Creating npm module....
+        /// </summary>
+        public static string Creating_npm_module___ {
+            get {
+                return ResourceManager.GetString("Creating_npm_module___", resourceCulture);
             }
         }
         
@@ -1427,7 +1445,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unique ID clash.
+        ///   Looks up a localized string similar to Duplicate project item Id detected.
         /// </summary>
         public static string Unique_ID_clash {
             get {

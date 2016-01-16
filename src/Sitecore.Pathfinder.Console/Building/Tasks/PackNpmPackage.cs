@@ -1,13 +1,10 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.ComponentModel.Composition;
+using System.Diagnostics;
 using System.IO;
-using ICSharpCode.SharpZipLib.GZip;
-using ICSharpCode.SharpZipLib.Tar;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
-using Sitecore.Pathfinder.Parsing;
 
 namespace Sitecore.Pathfinder.Building.Tasks
 {
@@ -33,41 +30,28 @@ namespace Sitecore.Pathfinder.Building.Tasks
                 return;
             }
 
-            context.Trace.TraceInformation(Msg.D1018, "Creating Npm module...");
+            context.Trace.TraceInformation(Msg.D1023, Texts.Creating_npm_module___);
 
-            var npmFileName = Path.Combine(context.ProjectDirectory, context.Configuration.GetString(Constants.Configuration.PackNpmOutputFile));
-
-            using (var fileStream = File.Create(npmFileName))
+            var npmFileName = Path.Combine(context.ProjectDirectory, "package.json");
+            if (!context.FileSystem.FileExists(npmFileName))
             {
-                using (var zipStream = new GZipOutputStream(fileStream))
-                {
-                    using (var tarArchive = TarArchive.CreateOutputTarArchive(zipStream))
-                    {
-                        tarArchive.RootPath = context.ProjectDirectory;
-
-                        foreach (var sourceFile in context.Project.SourceFiles)
-                        {
-                            var pathMappingContext = new PathMappingContext(PathMapper);
-                            pathMappingContext.Parse(context.Project, sourceFile);
-
-                            if (!pathMappingContext.IsMapped)
-                            {
-                                continue;
-                            }
-
-                            var tarEntry = TarEntry.CreateEntryFromFile(sourceFile.AbsoluteFileName);
-                            tarArchive.WriteEntry(tarEntry, true);
-                        }
-
-                        tarArchive.Close();
-                    }
-                }
+                context.Trace.TraceInformation(Msg.D1024, Texts._package_json__file_not_found__Skipping_);
+                return;
             }
+
+            var process = new Process();
+            process.StartInfo.FileName = "npm";
+            process.StartInfo.Arguments = "pack";
+            process.StartInfo.WorkingDirectory = context.ProjectDirectory;
+            process.StartInfo.UseShellExecute = true;
+            process.StartInfo.CreateNoWindow = true;
+            process.Start();
+            process.WaitForExit();
         }
 
         public override void WriteHelp(HelpWriter helpWriter)
         {
-            helpWriter.Summary.Write("Creates an Npm module from the project.");
+            helpWriter.Summary.Write("Creates an npm module from the project.");
         }
     }
 }
