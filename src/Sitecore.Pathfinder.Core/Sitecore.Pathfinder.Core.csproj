@@ -116,6 +116,7 @@
     <Compile Include="Compiling\Builders\TemplateFieldBuilder.cs" />
     <Compile Include="Compiling\Builders\TemplateSectionBuilder.cs" />
     <Compile Include="Compiling\Pipelines\CompilePipelines\0020 - CreateItemsFromTemplates.cs" />
+    <Compile Include="Emitting\IEmitterService.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="IO\PathMappers\IItemPathToProjectFileNameMapper.cs" />
     <Compile Include="IO\PathMappers\IWebsiteToProjectFileNameMapper.cs" />
@@ -127,6 +128,14 @@
     <Compile Include="IO\PathMappers\Pipelines\ParsePathMappersPipeline.cs" />
     <Compile Include="IO\PathMappers\IProjectToWebsiteFileNameMapper.cs" />
     <Compile Include="Languages\BinFiles\BinFileCompiler.cs" />
+    <Compile Include="Packaging\IPackage.cs" />
+    <Compile Include="Packaging\IPackageProvider.cs" />
+    <Compile Include="Packaging\IPackageService.cs" />
+    <Compile Include="Packaging\PackageBase.cs" />
+    <Compile Include="Packaging\PackageDependency.cs" />
+    <Compile Include="Packaging\PackageDependencySet.cs" />
+    <Compile Include="Packaging\PackageProviderBase.cs" />
+    <Compile Include="Packaging\PackageService.cs" />
     <Compile Include="Parsing\Pipelines\ReferenceParserPipelines\1000 - PathReferenceParser.cs" />
     <Compile Include="Parsing\Pipelines\ReferenceParserPipelines\2000 - GuidReferenceParser.cs" />
     <Compile Include="Parsing\Pipelines\ReferenceParserPipelines\4000 - FileReferenceParser.cs" />

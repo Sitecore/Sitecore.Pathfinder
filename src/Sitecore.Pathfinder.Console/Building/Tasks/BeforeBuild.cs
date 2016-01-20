@@ -120,7 +120,6 @@ namespace Sitecore.Pathfinder.Building.Tasks
             updated |= UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Interfaces.dll");
             updated |= UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Json.dll");
             updated |= UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Xml.dll");
-            updated |= UpdateWebsiteAssembly(context, "Nuget.Core.dll");
             updated |= UpdateWebsiteAssembly(context, "System.Collections.Immutable.dll");
             updated |= UpdateWebsiteAssembly(context, "System.Reflection.Metadata.dll");
 

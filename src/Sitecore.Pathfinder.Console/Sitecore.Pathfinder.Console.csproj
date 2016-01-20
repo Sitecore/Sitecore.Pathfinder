@@ -75,10 +75,6 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.Framework.ConfigurationModel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Framework.ConfigurationModel.1.0.0-beta4\lib\net45\Microsoft.Framework.ConfigurationModel.dll</HintPath>
       <Private>True</Private>
@@ -98,10 +94,6 @@
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="NuGet.Core, Version=2.10.1.766, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NuGet.Core.2.10.1\lib\net40-Client\NuGet.Core.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -204,7 +196,6 @@
     </Content>
     <Compile Include="Building\Tasks\AddProject.cs" />
     <Compile Include="Building\Tasks\CleanWebsite.cs" />
-    <Compile Include="Building\Tasks\PackNpmPackage.cs" />
     <Compile Include="Building\Tasks\WriteExports.cs" />
     <Compile Include="Building\Tasks\WriteSerialization.cs" />
     <Compile Include="Building\Tasks\CheckProject.cs" />
@@ -234,10 +225,8 @@
     <Compile Include="Building\Tasks\ShowMetrics.cs" />
     <Compile Include="Building\Tasks\SynchronizeWebsite.cs" />
     <Compile Include="Building\Tasks\WriteWebsiteExports.cs" />
-    <Compile Include="Building\Tasks\PackDependencies.cs" />
     <Compile Include="Building\Tasks\FindReferences.cs" />
     <Compile Include="Building\Tasks\FindUsages.cs" />
-    <Compile Include="Building\Tasks\PackNupkgPackage.cs" />
     <Compile Include="Building\Build.cs" />
     <Compile Include="Building\Tasks\QueryBuildTaskBase.cs" />
     <Compile Include="Program.cs" />
@@ -605,6 +594,14 @@
     <ProjectReference Include="..\Features\Sitecore.Pathfinder.Markdown\Sitecore.Pathfinder.Markdown.csproj">
       <Project>{37d4ea12-aeb1-4bfa-a5c8-76185f68dd25}</Project>
       <Name>Sitecore.Pathfinder.Markdown</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Features\Sitecore.Pathfinder.Npm\Sitecore.Pathfinder.Npm.csproj">
+      <Project>{543470a3-c795-4e05-9e38-d0a827ff4546}</Project>
+      <Name>Sitecore.Pathfinder.Npm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Features\Sitecore.Pathfinder.NuGet\Sitecore.Pathfinder.NuGet.csproj">
+      <Project>{a67c9ed1-949c-49d8-8d1a-b3774f38c128}</Project>
+      <Name>Sitecore.Pathfinder.NuGet</Name>
     </ProjectReference>
     <ProjectReference Include="..\Features\Sitecore.Pathfinder.T4\Sitecore.Pathfinder.T4.csproj">
       <Project>{bc0ec297-60e6-4d8f-a846-e1da920cfc26}</Project>

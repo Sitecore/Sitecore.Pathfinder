@@ -4,11 +4,12 @@ using System;
 using System.IO;
 using System.Text;
 using NuGet;
+using Sitecore.Pathfinder.Building;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 
-namespace Sitecore.Pathfinder.Building.Tasks
+namespace Sitecore.Pathfinder.NuGet.Building
 {
     public class PackDependencies : BuildTaskBase
     {

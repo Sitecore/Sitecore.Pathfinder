@@ -114,6 +114,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget", "nuget", "{93EF9BA8
 		buildfiles\nuget\scc.cmd = buildfiles\nuget\scc.cmd
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.NuGet", "src\Features\Sitecore.Pathfinder.NuGet\Sitecore.Pathfinder.NuGet.csproj", "{A67C9ED1-949C-49D8-8D1A-B3774F38C128}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.Npm", "src\Features\Sitecore.Pathfinder.Npm\Sitecore.Pathfinder.Npm.csproj", "{543470A3-C795-4E05-9E38-D0A827FF4546}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -170,6 +174,14 @@ Global
 		{37D4EA12-AEB1-4BFA-A5C8-76185F68DD25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37D4EA12-AEB1-4BFA-A5C8-76185F68DD25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37D4EA12-AEB1-4BFA-A5C8-76185F68DD25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A67C9ED1-949C-49D8-8D1A-B3774F38C128}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A67C9ED1-949C-49D8-8D1A-B3774F38C128}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A67C9ED1-949C-49D8-8D1A-B3774F38C128}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A67C9ED1-949C-49D8-8D1A-B3774F38C128}.Release|Any CPU.Build.0 = Release|Any CPU
+		{543470A3-C795-4E05-9E38-D0A827FF4546}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{543470A3-C795-4E05-9E38-D0A827FF4546}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{543470A3-C795-4E05-9E38-D0A827FF4546}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{543470A3-C795-4E05-9E38-D0A827FF4546}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -190,5 +202,7 @@ Global
 		{B86678EC-8111-4D28-9B60-1DF723E2CB6E} = {626A72A8-4461-4E2E-BB10-2A36D9D1BB5D}
 		{ED5569AF-973C-4638-AD50-21B25FA50C9C} = {8BCC4338-81A1-4B6C-99F9-89ABFF7812BE}
 		{93EF9BA8-748F-478F-A953-CDAA58084BC4} = {8BCC4338-81A1-4B6C-99F9-89ABFF7812BE}
+		{A67C9ED1-949C-49D8-8D1A-B3774F38C128} = {5325B39E-6883-47AA-BD17-291B7608E834}
+		{543470A3-C795-4E05-9E38-D0A827FF4546} = {5325B39E-6883-47AA-BD17-291B7608E834}
 	EndGlobalSection
 EndGlobal

@@ -33,7 +33,7 @@ namespace Sitecore.Pathfinder.Server.Tests.Emitters
                 throw new Exceptions.ConfigurationException("Oh no, nothing works!");
             }
 
-            var emitter = app.CompositionService.Resolve<Emitter>();
+            var emitter = app.CompositionService.Resolve<EmitterService>();
             emitter.Start();
         }
     }

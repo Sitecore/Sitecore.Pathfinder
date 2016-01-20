@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -13,11 +13,11 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Emitters
 {
-    [Export]
-    public class Emitter
+    [Export(typeof(IEmitterService))]
+    public class EmitterService : IEmitterService
     {
         [ImportingConstructor]
-        public Emitter([NotNull] ICompositionService compositionService, [NotNull] ITraceService traceService, [NotNull] IProjectService projectService, [ImportMany, NotNull, ItemNotNull] IEnumerable<IEmitter> emitters)
+        public EmitterService([NotNull] ICompositionService compositionService, [NotNull] ITraceService traceService, [NotNull] IProjectService projectService, [ImportMany, NotNull, ItemNotNull] IEnumerable<IEmitter> emitters)
         {
             CompositionService = compositionService;
             Trace = traceService;

@@ -23,6 +23,8 @@ namespace Sitecore.Pathfinder.Configuration
 
         IncludeModuleConfig = 32,
 
+        DoNotLoadConfig = 64,
+
         Interactive = IncludeCommandLine | IncludeEnvironment | IncludeMachineConfig | IncludeUserConfig | IncludeCommandLineConfig | IncludeModuleConfig,
 
         Noninteractive = IncludeEnvironment | IncludeMachineConfig | IncludeModuleConfig

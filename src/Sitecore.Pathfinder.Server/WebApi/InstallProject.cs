@@ -19,7 +19,7 @@ namespace Sitecore.Pathfinder.WebApi
             var output = new StringWriter();
             Console.SetOut(output);
 
-            var emitter = app.CompositionService.Resolve<Emitter>();
+            var emitter = app.CompositionService.Resolve<EmitterService>();
             emitter.Start();
 
             var response = output.ToString();

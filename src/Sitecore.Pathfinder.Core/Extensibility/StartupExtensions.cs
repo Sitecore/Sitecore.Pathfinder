@@ -50,11 +50,11 @@ namespace Sitecore.Pathfinder.Extensibility
             var disableExtensions = configuration.GetBool("disable-extensions");
             if (!disableExtensions && !options.HasFlag(CompositionOptions.DisableExtensions))
             {
-                // add assemblies from the tools directory
-                AddFeatureAssemblies(catalogs, toolsDirectory);
-
                 // add additional assemblies - this is used in Sitecore.Pathfinder.Server to load assemblies from the /bin folder
                 AddAdditionalAssemblies(catalogs, additionalAssemblyFileNames);
+
+                // add assemblies from the tools directory
+                AddFeatureAssemblies(catalogs, toolsDirectory);
 
                 // add core extensions
                 var coreExtensionsDirectory = Path.Combine(toolsDirectory, "files\\extensions");
@@ -66,10 +66,14 @@ namespace Sitecore.Pathfinder.Extensibility
                 AddNodeModules(catalogs, coreAssemblyFileName, projectDirectory);
 
                 // add projects extensions
-                var projectExtensionsDirectory = PathHelper.Combine(projectDirectory, configuration.GetString(Constants.Configuration.ProjectExtensionsDirectory));
-                var projectAssemblyFileName = Path.Combine(projectExtensionsDirectory, configuration.GetString(Constants.Configuration.ProjectExtensionsAssemblyFileName));
-                AddDynamicAssembly(catalogs, toolsDirectory, projectAssemblyFileName, projectExtensionsDirectory);
-                AddAssembliesFromDirectory(catalogs, projectExtensionsDirectory);
+                var projectExtensionsDirectory = configuration.GetString(Constants.Configuration.ProjectExtensionsDirectory);
+                if (!string.IsNullOrEmpty(projectExtensionsDirectory))
+                {
+                    projectExtensionsDirectory = PathHelper.Combine(projectDirectory, projectExtensionsDirectory);
+                    var projectAssemblyFileName = Path.Combine(projectExtensionsDirectory, configuration.GetString(Constants.Configuration.ProjectExtensionsAssemblyFileName));
+                    AddDynamicAssembly(catalogs, toolsDirectory, projectAssemblyFileName, projectExtensionsDirectory);
+                    AddAssembliesFromDirectory(catalogs, projectExtensionsDirectory);
+                }
             }
 
             // build composition graph

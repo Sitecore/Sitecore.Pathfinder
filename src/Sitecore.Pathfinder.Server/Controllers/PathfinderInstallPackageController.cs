@@ -1,11 +1,14 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.IO;
+using System.Net;
+using System.Web;
 using System.Web.Mvc;
-using NuGet;
+using Sitecore.Configuration;
+using Sitecore.IO;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.Packages;
+using Sitecore.Pathfinder.Packaging;
 using Sitecore.Web;
 
 namespace Sitecore.Pathfinder.Controllers
@@ -24,14 +27,15 @@ namespace Sitecore.Pathfinder.Controllers
                 return authenticateResult;
             }
 
-            var packageService = new PackageService();
-
-            var versionString = WebUtil.GetQueryString("v", string.Empty);
-            SemanticVersion version;
-            if (!SemanticVersion.TryParse(versionString, out version))
+            var app = new Startup().WithToolsDirectory(FileUtil.MapPath("/bin")).WithProjectDirectory(FileUtil.MapPath("/")).WithWebsiteDirectory(FileUtil.MapPath("/")).WithDataFolderDirectory(FileUtil.MapPath(Settings.DataFolder)).DoNotLoadConfigFiles().Start();
+            if (app == null)
             {
-                version = null;
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, output.ToString());
             }
+
+            var packageService = app.CompositionService.Resolve<IPackageService>();
+
+            var version = WebUtil.GetQueryString("v", string.Empty);
 
             // replace
             var packageId = WebUtil.GetQueryString("rep");
@@ -64,7 +68,7 @@ namespace Sitecore.Pathfinder.Controllers
             var response = output.ToString();
             if (!string.IsNullOrEmpty(response) || WebUtil.GetQueryString("w") == "0")
             {
-                return Content(System.Web.HttpUtility.HtmlEncode(response));
+                return Content(HttpUtility.HtmlEncode(response));
             }
 
             var urlReferrer = Request.UrlReferrer;
