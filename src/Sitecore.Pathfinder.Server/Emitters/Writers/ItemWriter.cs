@@ -39,7 +39,8 @@ namespace Sitecore.Pathfinder.Emitters.Writers
         [Diagnostics.NotNull]
         public string TemplateIdOrPath { get; set; } = string.Empty;
 
-        public virtual void Write([Diagnostics.NotNull] IEmitContext context)
+        [Diagnostics.NotNull]
+        public virtual Item Write([Diagnostics.NotNull] IEmitContext context)
         {
             var database = Factory.GetDatabase(DatabaseName);
             if (database == null)
@@ -77,6 +78,8 @@ namespace Sitecore.Pathfinder.Emitters.Writers
 
                 existingItem.Recycle();
             }
+
+            return item;
         }
 
         [Diagnostics.NotNull]

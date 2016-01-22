@@ -1,10 +1,11 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Linq;
 using Sitecore.Configuration;
 using Sitecore.Data.Managers;
 using Sitecore.Data.Templates;
+using Sitecore.Data.Validators;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitters.Writers;
 using Sitecore.Pathfinder.Emitting;
@@ -80,7 +81,33 @@ namespace Sitecore.Pathfinder.Emitters.Items
                 itemWriter.Fields.Add(fieldWriter);
             }
 
-            itemWriter.Write(context);
+            var dataItem = itemWriter.Write(context);
+
+            Check(context, item, dataItem);
+        }
+
+        protected virtual void Check([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] Data.Items.Item dataItem)
+        {
+            var validatorCollection = ValidatorManager.BuildValidators(ValidatorsMode.ValidateButton, dataItem);
+
+            ValidatorManager.Validate(validatorCollection, new ValidatorOptions(true));
+
+            foreach (BaseValidator validator in validatorCollection)
+            {
+                switch (validator.Result)
+                {
+                    case ValidatorResult.Suggestion:
+                    case ValidatorResult.Warning:
+                        context.Trace.TraceWarning(validator.Text, item.SourceTextNodes.First(), validator.GetFieldDisplayName());
+                        break;
+
+                    case ValidatorResult.Error:
+                    case ValidatorResult.CriticalError:
+                    case ValidatorResult.FatalError:
+                        context.Trace.TraceError(validator.Text, item.SourceTextNodes.First(), validator.GetFieldDisplayName());
+                        break;
+                }
+            }
         }
 
         [Diagnostics.CanBeNull]
@@ -139,7 +166,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
                     }
                 }
 
-                if (field.FieldName == "__Renderings" ||field.FieldName == "__Final Renderings" || field.TemplateField.Type == "Layout")
+                if (field.FieldName == "__Renderings" || field.FieldName == "__Final Renderings" || field.TemplateField.Type == "Layout")
                 {
                     ValidateLayout(database, field, field.CompiledValue);
                 }

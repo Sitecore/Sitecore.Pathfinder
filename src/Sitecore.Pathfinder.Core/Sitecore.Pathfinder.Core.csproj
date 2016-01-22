@@ -117,6 +117,7 @@
     <Compile Include="Compiling\Builders\TemplateSectionBuilder.cs" />
     <Compile Include="Compiling\FieldCompilers\DateFieldCompiler.cs" />
     <Compile Include="Compiling\FieldCompilers\DateTimeFieldCompiler.cs" />
+    <Compile Include="Compiling\FieldCompilers\ReferenceFieldCompiler.cs" />
     <Compile Include="Compiling\Pipelines\CompilePipelines\0020 - CreateItemsFromTemplates.cs" />
     <Compile Include="Emitting\IEmitterService.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
