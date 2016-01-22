@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using Sitecore.Pathfinder.Snapshots;
 
-namespace Sitecore.Pathfinder.Checking.Checkers.Items
+namespace Sitecore.Pathfinder.Checking.Checkers.Fields
 {
     public class LorumIpsumChecker : CheckerBase
     {

@@ -59,9 +59,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Checking\Checkers\Configuration\TypeAssemblyChecker.cs" />
+    <Compile Include="Checking\Checkers\Fields\NumberChecker.cs" />
     <Compile Include="Checking\Checkers\Items\ArchiveReminderChecker.cs" />
     <Compile Include="Checking\Checkers\Items\ItemsWithSameDisplayNameChecker.cs" />
-    <Compile Include="Checking\Checkers\Items\LorumIpsumChecker.cs" />
+    <Compile Include="Checking\Checkers\Fields\LorumIpsumChecker.cs" />
     <Compile Include="Checking\Checkers\Items\ManyChildrenChecker.cs" />
     <Compile Include="Checking\Checkers\Items\ManyVersionsChecker.cs" />
     <Compile Include="Checking\Checkers\Items\PublishUnpublishChecker.cs" />

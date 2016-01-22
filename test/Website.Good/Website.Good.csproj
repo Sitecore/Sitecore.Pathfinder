@@ -205,10 +205,6 @@
       <Link>sitecore.tools\files\extensions\checkers\Items\ItemsWithSameNameChecker.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\items\LorumIpsumChecker.cs">
-      <Link>sitecore.tools\files\extensions\checkers\Items\LorumIpsumChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\items\ManyChildrenChecker.cs">
       <Link>sitecore.tools\files\extensions\checkers\Items\ManyChildrenChecker.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -251,6 +247,14 @@
     </Content>
     <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\templates\UseIdInsteadOfPathChecker.cs">
       <Link>sitecore.tools\files\extensions\checkers\Templates\UseIdInsteadOfPathChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\src\Sitecore.Pathfinder.Checkers\Checking\Checkers\Fields\LorumIpsumChecker.cs">
+      <Link>sitecore.tools\files\extensions\checkers\Fields\LorumIpsumChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\src\Sitecore.Pathfinder.Checkers\Checking\Checkers\Fields\NumberChecker.cs">
+      <Link>sitecore.tools\files\extensions\checkers\Fields\NumberChecker.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Compile Include="Properties\AssemblyInfo.cs" />

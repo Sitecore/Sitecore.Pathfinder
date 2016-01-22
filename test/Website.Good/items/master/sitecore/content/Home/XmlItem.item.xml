@@ -10,6 +10,9 @@
         <Field Name="ItemPath" Field.ShortHelp="Path field." Field.LongHelp="Path field.">/sitecore/media library/mushrooms</Field>
         <Field Name="TrueCheckbox" Field.Type="Checkbox" Field.ShortHelp="Checkbox field." Field.LongHelp="Checkbox field.">True</Field>
         <Field Name="FalseCheckbox" Field.Type="Checkbox" Field.ShortHelp="Checkbox field." Field.LongHelp="Checkbox field.">False</Field>
+        <Field Name="DateTime" Field.Type="Datetime" Field.ShortHelp="DateTime Field." Field.LongHelp="DateTime field.">22-01-2016 9:52</Field>
+        <Field Name="Date" Field.Type="Date" Field.ShortHelp="Date Field." Field.LongHelp="Date field.">22-01-2016</Field>
+        <Field Name="Number" Field.Type="Number" Field.ShortHelp="Number Field." Field.LongHelp="Number field.">1234</Field>
         
         <File.Include File="~/includes/Field.include.item.xml" />
         <File.Include File="~/includes/ParameterizedField.include.item.xml" Name="ParameterizedField" Value="Parameterized Value"/>

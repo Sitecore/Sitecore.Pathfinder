@@ -118,6 +118,21 @@ namespace Sitecore.Pathfinder.Projects
             Assert.IsNotNull(checkBoxField);
             Assert.AreEqual(string.Empty, checkBoxField.CompiledValue);
 
+            // date fields
+            var dateField = item.Fields.FirstOrDefault(f => f.FieldName == "Date");
+            Assert.IsNotNull(dateField);
+            Assert.AreEqual("20160122T000000Z", dateField.CompiledValue);
+
+            // datetime fields
+            var dateTimeField = item.Fields.FirstOrDefault(f => f.FieldName == "DateTime");
+            Assert.IsNotNull(dateTimeField);
+            Assert.AreEqual("20160122T095200Z", dateTimeField.CompiledValue);
+
+            // number fields
+            var numberField = item.Fields.FirstOrDefault(f => f.FieldName == "Number");
+            Assert.IsNotNull(numberField);
+            Assert.AreEqual("1234", numberField.CompiledValue);
+
             // layout field
             var layout = item.Fields.FirstOrDefault(f => f.FieldName == "__Renderings");
             Assert.IsNotNull(layout);
