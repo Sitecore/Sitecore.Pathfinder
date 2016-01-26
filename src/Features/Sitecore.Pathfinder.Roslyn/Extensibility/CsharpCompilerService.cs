@@ -9,17 +9,20 @@ using System.Xml.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
-using Sitecore.Pathfinder.Diagnostics;
 
-namespace Sitecore.Pathfinder.Extensibility
+namespace Sitecore.Pathfinder.Roslyn.Extensibility
 {
     public class CsharpCompilerService
     {
-        [CanBeNull]
-        public Assembly Compile([NotNull] string toolsDirectory, [NotNull] string assemblyFileName, [NotNull, ItemNotNull] IEnumerable<string> sourceFileNames)
+        public Assembly Compile(string toolsDirectory, string assemblyFileName, IEnumerable<string> sourceFileNames)
         {
             // to do: if a *.sln file exists, compile that. Otherwise look for *.csproj files. Lastly compile all C# files. 
             // Unfortunately CodeAnalysis.Workspaces is a 6Mb payload and depends on MSBuild, so postponed for now.
+
+            if (!sourceFileNames.Any())
+            {
+                return null;
+            }
 
             // check if assembly is newer than all checkers
             if (File.Exists(assemblyFileName))
@@ -31,22 +34,27 @@ namespace Sitecore.Pathfinder.Extensibility
                 }
             }
 
+            // check if Roslyn is available
             var collectionsFileName = Path.Combine(toolsDirectory, "System.Collections.Immutable.dll");
             if (!File.Exists(collectionsFileName))
             {
-                Console.WriteLine(Texts.System_Collections_Immutable_dll_is_missing__Extensions_will_not_be_loaded_);
+                Console.WriteLine("System.Collections.Immutable.dll is missing. Extensions will not be loaded");
                 return null;
             }
 
             var codeAnalysisFileName = Path.Combine(toolsDirectory, "Microsoft.CodeAnalysis.dll");
             if (!File.Exists(codeAnalysisFileName))
             {
-                Console.WriteLine(Texts.Microsoft_CodeAnalysis_dll_is_missing__Extensions_will_not_be_loaded_);
+                Console.WriteLine("Microsoft.CodeAnalysis.dll is missing. extensions will not be loaded");
                 return null;
             }
 
-            // compile extensions
-            Console.WriteLine(Texts.scc_cmd_0_0___information_SCC0000__Compiling_checkers___);
+            return CompileExtensions(toolsDirectory, assemblyFileName, sourceFileNames);
+        }
+
+        protected Assembly CompileExtensions(string toolsDirectory, string assemblyFileName, IEnumerable<string> sourceFileNames)
+        {
+            Console.WriteLine("Compiling extensions...");
 
             var syntaxTrees = sourceFileNames.Select(File.ReadAllText).Select(code => CSharpSyntaxTree.ParseText(code)).ToList();
 

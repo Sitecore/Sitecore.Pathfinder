@@ -88,6 +88,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
 
         protected virtual void Check([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] Data.Items.Item dataItem)
         {
+            /*
             var validatorCollection = ValidatorManager.BuildValidators(ValidatorsMode.ValidateButton, dataItem);
 
             ValidatorManager.Validate(validatorCollection, new ValidatorOptions(true));
@@ -108,6 +109,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
                         break;
                 }
             }
+            */
         }
 
         [Diagnostics.CanBeNull]

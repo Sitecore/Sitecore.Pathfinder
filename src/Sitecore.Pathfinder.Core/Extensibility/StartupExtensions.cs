@@ -12,6 +12,7 @@ using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Roslyn.Extensibility;
 
 namespace Sitecore.Pathfinder.Extensibility
 {

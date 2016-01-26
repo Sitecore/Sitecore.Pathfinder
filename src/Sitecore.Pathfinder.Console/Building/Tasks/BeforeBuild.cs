@@ -113,15 +113,11 @@ namespace Sitecore.Pathfinder.Building.Tasks
             }
 
             updated |= UpdateWebsiteAssembly(context, "Sitecore.Pathfinder.Core.dll");
-            updated |= UpdateWebsiteAssembly(context, "Microsoft.CodeAnalysis.dll");
-            updated |= UpdateWebsiteAssembly(context, "Microsoft.CodeAnalysis.CSharp.dll");
-            updated |= UpdateWebsiteAssembly(context, "Microsoft.CSharp.dll");
+            updated |= UpdateWebsiteAssembly(context, "Sitecore.Pathfinder.Roslyn.dll");
             updated |= UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.dll");
             updated |= UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Interfaces.dll");
             updated |= UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Json.dll");
             updated |= UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Xml.dll");
-            updated |= UpdateWebsiteAssembly(context, "System.Collections.Immutable.dll");
-            updated |= UpdateWebsiteAssembly(context, "System.Reflection.Metadata.dll");
 
             updated |= UpdateExtensions(context);
 

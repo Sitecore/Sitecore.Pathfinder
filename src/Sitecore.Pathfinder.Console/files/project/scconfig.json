@@ -57,9 +57,6 @@
 
     // tasks to execute when building
     "build-project": {
-        "tasks": "check-project copy-dependencies install-project publish-database show-metrics"
-
-        // to build the project with a distribution package:
-        // "tasks": "check-project write-exports pack-nuget copy-dependencies copy-package install-package publish-database show-metrics"
+        "tasks": "check-project write-exports pack-nuget copy-dependencies copy-package install-package publish-database show-metrics"
     }
 }

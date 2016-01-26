@@ -90,6 +90,7 @@ namespace Sitecore.Pathfinder.NuGet.Building
 
             var nuspec = context.FileSystem.ReadAllText(nuspecFileName);
             nuspec = nuspec.Replace("$global.scconfig.json$", configFileName);
+            nuspec = nuspec.Replace("$toolsDirectory$", context.ToolsDirectory);
 
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(nuspec));
             try
