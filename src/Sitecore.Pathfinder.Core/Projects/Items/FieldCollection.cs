@@ -26,13 +26,13 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public string GetFieldValue([NotNull] string fieldName, [NotNull] string language, int version)
         {
-            return this.FirstOrDefault(f => string.Compare(f.FieldName, fieldName, StringComparison.OrdinalIgnoreCase) == 0 && string.Compare(f.Language, language, StringComparison.OrdinalIgnoreCase) == 0 && f.Version == version)?.Value ?? string.Empty;
+            return this.FirstOrDefault(f => string.Equals(f.FieldName, fieldName, StringComparison.OrdinalIgnoreCase) && string.Equals(f.Language, language, StringComparison.OrdinalIgnoreCase) && f.Version == version)?.Value ?? string.Empty;
         }
 
         [NotNull]
         public string GetFieldValue(Guid fieldId, [NotNull] string language, int version)
         {
-            return this.FirstOrDefault(f => f.FieldId == fieldId && string.Compare(f.Language, language, StringComparison.OrdinalIgnoreCase) == 0 && f.Version == version)?.Value ?? string.Empty;
+            return this.FirstOrDefault(f => f.FieldId == fieldId && string.Equals(f.Language, language, StringComparison.OrdinalIgnoreCase) && f.Version == version)?.Value ?? string.Empty;
         }
     }
 }

@@ -55,6 +55,10 @@ namespace Sitecore.Pathfinder
 
             public const string BuildProject = "build-project:tasks";
 
+            public const string BuildProjectCompileBinFilesExclude = "build-project:compile-bin-files:exclude";
+
+            public const string BuildProjectCompileBinFilesInclude = "build-project:compile-bin-files:include";
+
             public const string BuildProjectForceUpdate = "build-project:force-update";
 
             public const string BuildProjectMediaTemplate = "build-project:media:template";

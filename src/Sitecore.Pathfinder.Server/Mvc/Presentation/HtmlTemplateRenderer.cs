@@ -82,7 +82,7 @@ namespace Sitecore.Pathfinder.Mvc.Presentation
                 var text = match.Groups[2].Value.Trim();
 
                 var value = contextItem[expression];
-                var isVisible = !string.IsNullOrEmpty(value) && value != "0" && string.Compare(value, "false", StringComparison.OrdinalIgnoreCase) != 0;
+                var isVisible = !string.IsNullOrEmpty(value) && value != "0" && !string.Equals(value, "false", StringComparison.OrdinalIgnoreCase);
                 return !isVisible ? Process(sitecoreHelper, contextItem, text) : string.Empty;
             };
 
@@ -111,7 +111,7 @@ namespace Sitecore.Pathfinder.Mvc.Presentation
                 }
 
                 var value = contextItem[expression];
-                var isVisible = !string.IsNullOrEmpty(value) && value != "0" && string.Compare(value, "false", StringComparison.OrdinalIgnoreCase) != 0;
+                var isVisible = !string.IsNullOrEmpty(value) && value != "0" && !string.Equals(value, "false", StringComparison.OrdinalIgnoreCase);
                 return isVisible ? Process(sitecoreHelper, contextItem, text) : string.Empty;
             };
 

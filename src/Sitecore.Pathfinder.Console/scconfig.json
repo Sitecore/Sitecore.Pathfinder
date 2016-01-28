@@ -44,6 +44,11 @@
         // if force-update is true, media will always be uploaded and files always copied during emitting
         "force-update": false,
 
+        "compile-bin-files": {
+            "include": "",
+            "exclude": ""
+        },
+
         "media": {
             "template": {
                 "jpeg": "/sitecore/templates/System/Media/Unversioned/Jpeg",
