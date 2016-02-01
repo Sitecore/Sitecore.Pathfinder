@@ -2,8 +2,9 @@
 
 using System;
 using System.IO;
-using Sitecore.Pathfinder.Configuration;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Helpers;
 using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder
@@ -14,31 +15,38 @@ namespace Sitecore.Pathfinder
 
         public const string GoodWebsite = "Website.Good\\bin";
 
+        [Diagnostics.NotNull]
         public string ProjectDirectory { get; private set; } = string.Empty;
 
-        public Helpers.Services Services { get; private set; }
+        [Diagnostics.NotNull]
+        public Services Services { get; private set; }
 
-        protected void Mock<T>(T value)
+        protected void Mock<T>([Diagnostics.NotNull] T value)
         {
             Services.CompositionService.Set(value);
         }
 
+        [Diagnostics.NotNull]
         protected T Resolve<T>()
         {
             return Services.CompositionService.Resolve<T>();
         }
 
-        protected void Start(string website, Action mock = null)
+        protected void Start([Diagnostics.NotNull] string website, [Diagnostics.CanBeNull] Action mock = null)
         {
-            var rootDirectory = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory())));
-
             var toolsDirectory = Directory.GetCurrentDirectory();
+
+            // 3 levels up
+            var rootDirectory = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory())));
             ProjectDirectory = PathHelper.Combine(rootDirectory ?? string.Empty, website);
 
-            Services = new Helpers.Services();
-            Services.Start(toolsDirectory, ProjectDirectory, mock);
+            var app = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(ProjectDirectory).Start();
+            if (app == null)
+            {
+                throw new ConfigurationException(@"Oh no, nothing works!");
+            }
 
-            Services.ConfigurationService.Load(ConfigurationOptions.None, ProjectDirectory);
+            Services = new Services().Start(app, mock);
         }
     }
 }

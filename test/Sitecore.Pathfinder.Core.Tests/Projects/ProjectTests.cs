@@ -15,18 +15,15 @@ namespace Sitecore.Pathfinder.Projects
     [TestFixture]
     public partial class ProjectTests : Tests
     {
-        public IProject Project { get; set; }
+        [Diagnostics.NotNull]
+        public IProject Project { get; private set; }
 
         [TestFixtureSetUp]
         public void Startup()
         {
             Start(GoodWebsite);
 
-            Console.WriteLine("ProjectTests Startup 1");
-
             Project = Services.ProjectService.LoadProjectFromConfiguration();
-
-            Console.WriteLine("ProjectTests Startup 2");
 
             foreach (var diagnostic in Project.Diagnostics)
             {

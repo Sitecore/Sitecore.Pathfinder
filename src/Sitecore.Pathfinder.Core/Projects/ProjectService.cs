@@ -53,9 +53,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual IProjectTree GetProjectTree(ProjectOptions projectOptions)
         {
-            var projectTree = CompositionService.Resolve<IProjectTree>().With(Configuration.GetString(Constants.Configuration.ToolsDirectory), projectOptions.ProjectDirectory);
-
-            return projectTree;
+            return CompositionService.Resolve<IProjectTree>().With(Configuration.GetString(Constants.Configuration.ToolsDirectory), projectOptions.ProjectDirectory);
         }
 
         protected virtual void LoadStandardTemplateFields([NotNull] ProjectOptions projectOptions)

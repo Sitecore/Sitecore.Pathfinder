@@ -2,8 +2,6 @@
 
 using System;
 using System.ComponentModel.Composition;
-using System.IO;
-using System.Reflection;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Checking;
 using Sitecore.Pathfinder.Configuration;
@@ -49,24 +47,21 @@ namespace Sitecore.Pathfinder.Helpers
         [NotNull]
         public IQueryService QueryService { get; set; }
 
+        [Diagnostics.NotNull]
         public IRuleService RuleService { get; set; }
 
         [NotNull]
         public ISnapshotService SnapshotService { get; set; }
 
-        public IXPathService XPathService { get; set; }
-
         [NotNull]
         public ITraceService Trace { get; private set; }
 
-        public void Start(string toolsDirectory, string projectDirectory, [CanBeNull] Action mock = null)
-        {
-            var app = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(projectDirectory).Start();
-            if (app == null)
-            {
-                throw new ConfigurationException("Oh no, nothing works!");
-            }
+        [Diagnostics.NotNull]
+        public IXPathService XPathService { get; set; }
 
+        [Diagnostics.NotNull]
+        public Services Start([NotNull] IAppService app, [CanBeNull] Action mock = null)
+        {
             Configuration = app.Configuration;
             CompositionService = app.CompositionService;
 
@@ -83,6 +78,8 @@ namespace Sitecore.Pathfinder.Helpers
             LanguageService = CompositionService.Resolve<ILanguageService>();
             RuleService = CompositionService.Resolve<IRuleService>();
             XPathService = CompositionService.Resolve<IXPathService>();
+
+            return this;
         }
     }
 }
