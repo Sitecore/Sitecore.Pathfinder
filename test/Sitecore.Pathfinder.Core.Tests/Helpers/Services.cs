@@ -59,10 +59,8 @@ namespace Sitecore.Pathfinder.Helpers
         [NotNull]
         public ITraceService Trace { get; private set; }
 
-        public void Start(string projectDirectory, [CanBeNull] Action mock = null)
+        public void Start(string toolsDirectory, string projectDirectory, [CanBeNull] Action mock = null)
         {
-            var toolsDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
-
             var app = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(projectDirectory).Start();
             if (app == null)
             {

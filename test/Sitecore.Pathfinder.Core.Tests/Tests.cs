@@ -31,16 +31,16 @@ namespace Sitecore.Pathfinder
 
         protected void Start(string website, Action mock = null)
         {
-            var workingDirectory = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory())));
-            ProjectDirectory = PathHelper.Combine(workingDirectory ?? string.Empty, website);
+            var rootDirectory = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory())));
 
-            var toolsDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
+            ProjectDirectory = PathHelper.Combine(rootDirectory ?? string.Empty, website);
+
+            var toolsDirectory = Directory.GetCurrentDirectory();
             Console.WriteLine("ToolsDirectory: " + toolsDirectory);
             foreach (var file in Directory.GetFiles(toolsDirectory))
             {
                 Console.WriteLine(file);
             }
-
 
             Console.WriteLine("ProjectDirectory: " + ProjectDirectory);
             foreach (var file in Directory.GetFiles(ProjectDirectory))
@@ -48,9 +48,8 @@ namespace Sitecore.Pathfinder
                 Console.WriteLine(file);
             }
 
-
             Services = new Helpers.Services();
-            Services.Start(ProjectDirectory, mock);
+            Services.Start(toolsDirectory, ProjectDirectory, mock);
 
             Services.ConfigurationService.Load(ConfigurationOptions.None, ProjectDirectory);
         }
