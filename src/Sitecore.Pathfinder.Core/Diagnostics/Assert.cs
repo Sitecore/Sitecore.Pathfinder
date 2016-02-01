@@ -7,6 +7,17 @@ namespace Sitecore.Pathfinder.Diagnostics
     public static class Assert
     {
         [AssertionMethod]
+        public static void ArgumentNotNull([CanBeNull, AssertionCondition(AssertionConditionType.IS_NOT_NULL)] object instance, [NotNull] string paramName)
+        {
+            if (instance != null)
+            {
+                return;
+            }
+
+            throw new ArgumentNullException(paramName);
+        }
+
+        [AssertionMethod]
         public static void Cast([AssertionCondition(AssertionConditionType.IS_NOT_NULL), CanBeNull] object instance, [CanBeNull] string variableName = null, [CanBeNull] string detailMessageFormat = null, [NotNull, ItemCanBeNull] params object[] args)
         {
             if (instance != null)
