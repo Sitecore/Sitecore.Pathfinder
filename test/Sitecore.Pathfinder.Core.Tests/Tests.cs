@@ -33,6 +33,9 @@ namespace Sitecore.Pathfinder
             var workingDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent;
             ProjectDirectory = PathHelper.Combine(Path.GetDirectoryName(workingDirectory?.FullName) ?? string.Empty, website);
 
+            Console.WriteLine("workingDirectory:" + workingDirectory);
+            Console.WriteLine("ProjectDirectory:" + ProjectDirectory);
+
             Services = new Helpers.Services();
             Services.Start(ProjectDirectory, mock);
 

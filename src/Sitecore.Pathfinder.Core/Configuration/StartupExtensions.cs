@@ -32,7 +32,7 @@ namespace Sitecore.Pathfinder.Configuration
             if ((options & ConfigurationOptions.DoNotLoadConfig) != ConfigurationOptions.DoNotLoadConfig)
             {
                 try
-                {
+                {                       
                     configurationService.Load(options);
                 }
                 catch (Exception ex)
