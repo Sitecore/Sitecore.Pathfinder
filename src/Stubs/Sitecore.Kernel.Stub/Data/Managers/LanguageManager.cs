@@ -1,7 +1,7 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.Collections.Generic;
+using Sitecore.Collections;
 using Sitecore.Globalization;
 
 namespace Sitecore.Data.Managers
@@ -9,7 +9,10 @@ namespace Sitecore.Data.Managers
     public class LanguageManager
     {
         [NotNull]
-        public static Language DefaultLanguage { get; private set; }
+        public static Language DefaultLanguage
+        {
+            get { throw new System.NotImplementedException(); }
+        }
 
         [CanBeNull]
         public static Language GetLanguage([NotNull] string language, [NotNull] Database database)
@@ -17,8 +20,8 @@ namespace Sitecore.Data.Managers
             throw new NotImplementedException();
         }
 
-        [NotNull, ItemNotNull]
-        public static IEnumerable<Language> GetLanguages([NotNull] Database database)
+        [NotNull]
+        public static LanguageCollection GetLanguages([NotNull] Database database)
         {
             throw new NotImplementedException();
         }

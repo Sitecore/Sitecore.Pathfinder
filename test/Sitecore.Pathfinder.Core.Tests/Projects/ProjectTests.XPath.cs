@@ -10,7 +10,7 @@ namespace Sitecore.Pathfinder.Projects
     [TestFixture]
     public partial class ProjectTests
     {
-        private object Evaluate([NotNull] string query)
+        private object Evaluate(string query)
         {
             var context = Project.ProjectItems.FirstOrDefault(i => i.QualifiedName == "/sitecore/content/Home/XmlItem");
 

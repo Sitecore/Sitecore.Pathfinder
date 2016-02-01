@@ -3,6 +3,10 @@ namespace Sitecore.Data.Serialization
 {
     public class ItemHandler
     {
-        public static bool DisabledLocally { get; set; }
+        public static bool DisabledLocally
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
     }
 }

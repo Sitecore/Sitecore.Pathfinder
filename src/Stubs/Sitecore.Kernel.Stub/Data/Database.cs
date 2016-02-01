@@ -10,10 +10,16 @@ namespace Sitecore.Data
     public class Database
     {
         [NotNull]
-        public DataIndexes Indexes { get; private set; }
+        public DataIndexes Indexes
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         [NotNull]
-        public string Name { get; private set; }
+        public string Name
+        {
+            get { throw new System.NotImplementedException(); }
+        }
 
         [CanBeNull]
         public Item CreateItemPath([NotNull] string parentItemPath)

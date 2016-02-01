@@ -3,6 +3,10 @@ namespace Sitecore.Data.Serialization
 {
     public class LoadOptions
     {
-        public bool ForceUpdate { get; set; }
+        public bool ForceUpdate
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
     }
 }

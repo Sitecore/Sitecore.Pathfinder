@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using Sitecore.Data.Items;
@@ -12,7 +12,11 @@ namespace Sitecore.Data.Query
             throw new NotImplementedException();
         }
 
-        public int Max { get; set; }
+        public int Max
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
 
         [CanBeNull]
         public object Execute([NotNull] Item getRootItem)

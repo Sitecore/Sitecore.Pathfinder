@@ -15,7 +15,7 @@ namespace Sitecore.Web.UI.HtmlControls.Data
             throw new NotImplementedException();
         }
 
-        [ItemNotNull, NotNull]
+        [NotNull]
         public static IEnumerable<Item> GetItems([NotNull] Item rootItem, [NotNull] string source)
         {
             throw new NotImplementedException();

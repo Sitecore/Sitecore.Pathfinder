@@ -1,37 +1,36 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.Collections.Generic;
+using Sitecore.Collections;
 using Sitecore.Data;
-using Sitecore.Data.Items;
 using Sitecore.Globalization;
 
 namespace Sitecore.Publishing
 {
     public static class PublishManager
     {
-        [NotNull, ItemNotNull]
-        public static IEnumerable<Item> GetPublishingTargets([NotNull] Database database)
+        [NotNull]
+        public static ItemList GetPublishingTargets([NotNull] Database database)
         {
             throw new NotImplementedException();
         }
 
-        public static void RebuildDatabase([NotNull] Database database, [NotNull, ItemNotNull] Database[] targetDatabases)
+        public static Handle RebuildDatabase([NotNull] Database database, [NotNull] Database[] targetDatabases)
         {
             throw new NotImplementedException();
         }
 
-        public static void PublishIncremental([NotNull] Database database, [NotNull, ItemNotNull] Database[] targetDatabases, [NotNull, ItemNotNull] Language[] languages)
+        public static Handle PublishIncremental([NotNull] Database database, [NotNull] Database[] targetDatabases, [NotNull] Language[] languages)
         {
             throw new NotImplementedException();
         }
 
-        public static void PublishSmart([NotNull] Database database, [NotNull, ItemNotNull] Database[] targetDatabases, [NotNull, ItemNotNull] Language[] languages)
+        public static Handle PublishSmart([NotNull] Database database, [NotNull] Database[] targetDatabases, [NotNull] Language[] languages)
         {
             throw new NotImplementedException();
         }
 
-        public static void Republish([NotNull] Database database, [NotNull, ItemNotNull] Database[] targetDatabases, [NotNull, ItemNotNull] Language[] languages)
+        public static Handle Republish([NotNull] Database database, [NotNull] Database[] targetDatabases, [NotNull] Language[] languages)
         {
             throw new NotImplementedException();
         }

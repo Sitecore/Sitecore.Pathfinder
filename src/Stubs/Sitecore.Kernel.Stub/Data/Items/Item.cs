@@ -14,7 +14,7 @@ namespace Sitecore.Data.Items
             get { throw new NotImplementedException(); }
         }
 
-        [NotNull, ItemNotNull]
+        [NotNull]
         public ChildList Children
         {
             get { throw new NotImplementedException(); }
@@ -33,7 +33,7 @@ namespace Sitecore.Data.Items
             get { throw new NotImplementedException(); }
         }
 
-        [NotNull, ItemNotNull]
+        [NotNull]
         public FieldCollection Fields
         {
             get { throw new NotImplementedException(); }
@@ -91,7 +91,7 @@ namespace Sitecore.Data.Items
         }
 
         [NotNull]
-        public ItemPaths Paths
+        public ItemPath Paths
         {
             get { throw new NotImplementedException(); }
         }
@@ -142,7 +142,7 @@ namespace Sitecore.Data.Items
             throw new NotImplementedException();
         }
 
-        public void Recycle()
+        public Guid Recycle()
         {
             throw new NotImplementedException();
         }

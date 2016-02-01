@@ -7,7 +7,7 @@ namespace Sitecore.ContentSearch
 {
     public class ContentSearchManager
     {
-        [NotNull, ItemNotNull]
+        [NotNull]
         public static IEnumerable<ISearchIndex> Indexes
         {
             get { throw new NotImplementedException(); }

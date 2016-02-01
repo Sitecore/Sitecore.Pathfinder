@@ -14,10 +14,8 @@ namespace Sitecore.Pathfinder
 
         public const string GoodWebsite = "Website.Good\\bin";
 
-        [NotNull]
         public string ProjectDirectory { get; private set; } = string.Empty;
 
-        [NotNull]
         public Helpers.Services Services { get; private set; }
 
         protected void Mock<T>(T value)
@@ -30,7 +28,7 @@ namespace Sitecore.Pathfinder
             return Services.CompositionService.Resolve<T>();
         }
 
-        protected void Start([NotNull] string website, [CanBeNull] Action mock = null)
+        protected void Start(string website, Action mock = null)
         {
             var workingDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent;
             ProjectDirectory = PathHelper.Combine(Path.GetDirectoryName(workingDirectory?.FullName) ?? string.Empty, website);

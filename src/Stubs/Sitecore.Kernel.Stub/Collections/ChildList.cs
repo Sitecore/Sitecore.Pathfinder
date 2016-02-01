@@ -30,17 +30,17 @@ namespace Sitecore.Collections
             get { throw new NotImplementedException(); }
         }
 
-        public void CopyTo([ItemNotNull] Array array, int index)
+        public void CopyTo(Array array, int index)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerator<Item> GetEnumerator()
+        IEnumerator<Item> IEnumerable<Item>.GetEnumerator()
         {
             throw new NotImplementedException();
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+        [NotNull]               public IEnumerator GetEnumerator()
         {
             return GetEnumerator();
         }

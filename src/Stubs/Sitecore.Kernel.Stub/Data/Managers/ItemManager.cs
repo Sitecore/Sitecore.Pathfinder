@@ -8,13 +8,13 @@ namespace Sitecore.Data.Managers
     public static class ItemManager
     {
         [CanBeNull]
-        public static Item AddFromTemplate([NotNull] string name, [NotNull] TemplateID templateID, Item parent, [NotNull] ID id)
+        public static Item AddFromTemplate([NotNull] string itemName, [NotNull] ID templateID, Item destination)
         {
             throw new NotImplementedException();
-        }
+        }                                                                                       
 
         [CanBeNull]
-        public static Item AddFromTemplate([NotNull] string name, [NotNull] ID templateID, [NotNull] Item parent, [NotNull] ID id)
+        public static Item AddFromTemplate([NotNull] string itemName, [NotNull] ID templateId, [NotNull] Item destination, [NotNull] ID newItemId)
         {
             throw new NotImplementedException();
         }

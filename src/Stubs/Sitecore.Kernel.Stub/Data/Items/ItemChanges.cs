@@ -13,7 +13,10 @@ namespace Sitecore.Data.Items
             get { throw new NotImplementedException(); }
         }
 
-        public bool HasPropertiesChanged { get; private set; }
+        public bool HasPropertiesChanged
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         [NotNull]
         public Dictionary<string, PropertyChange> Properties
@@ -21,6 +24,9 @@ namespace Sitecore.Data.Items
             get { throw new NotImplementedException(); }
         }
 
-        public bool Renamed { get; private set; }
+        public bool Renamed
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

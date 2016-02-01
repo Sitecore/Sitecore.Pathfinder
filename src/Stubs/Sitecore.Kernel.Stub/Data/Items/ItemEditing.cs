@@ -11,7 +11,7 @@ namespace Sitecore.Data.Items
             throw new NotImplementedException();
         }
 
-        public void EndEdit()
+        public bool EndEdit()
         {
             throw new NotImplementedException();
         }

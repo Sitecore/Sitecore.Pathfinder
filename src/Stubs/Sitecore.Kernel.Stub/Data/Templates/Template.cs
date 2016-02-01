@@ -14,10 +14,16 @@ namespace Sitecore.Data.Templates
         }
 
         [NotNull]
-        public ID ID { get; private set; }
+        public ID ID
+        {
+            get { throw new System.NotImplementedException(); }
+        }
 
         [NotNull]
-        public string Name { get; private set; }
+        public string Name
+        {
+            get { throw new System.NotImplementedException(); }
+        }
 
         [CanBeNull]
         public TemplateField GetField([NotNull] string fieldName)
@@ -25,7 +31,7 @@ namespace Sitecore.Data.Templates
             throw new NotImplementedException();
         }
 
-        [NotNull, ItemNotNull]
+        [NotNull]
         public TemplateField[] GetFields(bool includeBaseFields)
         {
             throw new NotImplementedException();

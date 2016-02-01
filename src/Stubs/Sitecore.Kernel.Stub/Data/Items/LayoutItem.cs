@@ -1,7 +1,7 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 namespace Sitecore.Data.Items
 {
-    public class LayoutItem : CustomBaseItem
+    public class LayoutItem : CustomItemBase
     {
         public LayoutItem([NotNull] Item innerItem) : base(innerItem)
         {

@@ -6,6 +6,9 @@ namespace Sitecore
 {
     public static class Client
     {
-        public static Site Site { get; private set; }
+        public static Site Site
+        {
+            get { throw new System.NotImplementedException(); }
+        }
     }
 }

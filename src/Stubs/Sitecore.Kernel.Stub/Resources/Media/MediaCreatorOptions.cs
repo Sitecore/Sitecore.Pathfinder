@@ -1,24 +1,59 @@
-﻿using Sitecore.Data;
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+
+using System;
+using Sitecore.Data;
 using Sitecore.Globalization;
 
 namespace Sitecore.Resources.Media
 {
     public class MediaCreatorOptions
     {
-        public string AlternateText { get; set; }
+        public string AlternateText
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
 
-        public Database Database { get; set; }
+        public Database Database
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
 
-        public bool FileBased { get; set; }
+        public string Destination
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
 
-        public bool IncludeExtensionInItemName { get; set; }
+        public bool FileBased
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
 
-        public bool KeepExisting { get; set; }
+        public bool IncludeExtensionInItemName
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
 
-        public Language Language { get; set; }
+        public bool KeepExisting
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
 
-        public bool Versioned { get; set; }
+        public Language Language
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
 
-        public string Destination { get; set; }
+        public bool Versioned
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
     }
 }

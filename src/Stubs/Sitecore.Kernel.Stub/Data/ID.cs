@@ -15,12 +15,17 @@ namespace Sitecore.Data
         {
         }
 
-        public Guid ToGuid()
+        public static bool IsID(string id)
         {
             throw new NotImplementedException();
         }
 
-        public static bool IsID(string id)
+        public static implicit operator ID(TemplateID templateID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Guid ToGuid()
         {
             throw new NotImplementedException();
         }

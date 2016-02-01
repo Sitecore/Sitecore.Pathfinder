@@ -15,7 +15,6 @@ namespace Sitecore.Pathfinder.Projects
     [TestFixture]
     public partial class ProjectTests : Tests
     {
-        [NotNull]
         public IProject Project { get; set; }
 
         [TestFixtureSetUp]

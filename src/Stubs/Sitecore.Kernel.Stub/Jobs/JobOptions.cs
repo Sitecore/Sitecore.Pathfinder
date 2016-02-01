@@ -1,8 +1,7 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using Sitecore.Security.Accounts;
-using Sitecore.SecurityModel;
 
 namespace Sitecore.Jobs
 {
@@ -12,9 +11,16 @@ namespace Sitecore.Jobs
         {
         }
 
+        public TimeSpan AfterLife
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
 
-        public User ContextUser { get; set; }
-
-        public TimeSpan AfterLife { get; set; }
+        public User ContextUser
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
     }
 }

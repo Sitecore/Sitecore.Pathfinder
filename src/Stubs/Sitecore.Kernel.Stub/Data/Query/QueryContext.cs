@@ -3,6 +3,9 @@ namespace Sitecore.Data.Query
 {
     public class QueryContext
     {
-        public ID ID { get; private set; }
+        public ID ID
+        {
+            get { throw new System.NotImplementedException(); }
+        }
     }
 }

@@ -4,9 +4,9 @@ using System;
 
 namespace Sitecore.Data.Items
 {
-    public abstract class CustomBaseItem
+    public abstract class CustomItemBase
     {
-        protected CustomBaseItem([NotNull] Item innerItem)
+        protected CustomItemBase([NotNull] Item innerItem)
         {
             InnerItem = innerItem;
         }

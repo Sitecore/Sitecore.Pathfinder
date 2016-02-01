@@ -8,7 +8,7 @@ namespace Sitecore.Data.Links
 {
     public class LinkDatabase
     {
-        [NotNull, ItemNotNull]
+        [NotNull]
         public ItemLink[] GetReferrers([NotNull] Item item)
         {
             throw new NotImplementedException();

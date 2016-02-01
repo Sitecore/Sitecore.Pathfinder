@@ -45,6 +45,7 @@
     <Compile Include="CodeAnnotations.cs" />
     <Compile Include="Collections\ChildList.cs" />
     <Compile Include="Collections\FieldCollection.cs" />
+    <Compile Include="Collections\ItemList.cs" />
     <Compile Include="Collections\LanguageCollection.cs" />
     <Compile Include="Collections\SafeDictionary.cs" />
     <Compile Include="Collections\TemplateDictionary.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Data\DatabaseCacheDisabler.cs" />
     <Compile Include="Data\DataProviders\CallContext.cs" />
     <Compile Include="Data\DataProviders\DataProvider.cs" />
+    <Compile Include="Data\Engines\SyncOperationContext.cs" />
     <Compile Include="Data\Fields\CustomField.cs" />
     <Compile Include="Data\Fields\Field.cs" />
     <Compile Include="Data\Fields\ImageField.cs" />
@@ -65,7 +67,7 @@
     <Compile Include="Data\Indexing\DataIndexes.cs" />
     <Compile Include="Data\Indexing\Index.cs" />
     <Compile Include="Data\ItemDefinition.cs" />
-    <Compile Include="Data\Items\CustomBaseItem.cs" />
+    <Compile Include="Data\Items\CustomItemBase.cs" />
     <Compile Include="Data\Items\EditContext.cs" />
     <Compile Include="Data\Items\FieldChange.cs" />
     <Compile Include="Data\Items\FieldChangeList.cs" />
@@ -74,7 +76,7 @@
     <Compile Include="Data\Items\ItemChanges.cs" />
     <Compile Include="Data\Items\ItemEditing.cs" />
     <Compile Include="Data\Items\ItemHelp.cs" />
-    <Compile Include="Data\Items\ItemPaths.cs" />
+    <Compile Include="Data\ItemPath.cs" />
     <Compile Include="Data\Items\ItemVersions.cs" />
     <Compile Include="Data\Items\LayoutItem.cs" />
     <Compile Include="Data\Items\MediaItem.cs" />
@@ -85,8 +87,20 @@
     <Compile Include="Data\Items\TemplateSectionItem.cs" />
     <Compile Include="Data\Links\ItemLink.cs" />
     <Compile Include="Data\Links\LinkDatabase.cs" />
+    <Compile Include="Data\Proxies\ProxyDisabler.cs" />
     <Compile Include="Data\StandardValuesManager.cs" />
     <Compile Include="Data\Templates\TemplateSection.cs" />
+    <Compile Include="Data\Validators\ValidatorCollection.cs" />
+    <Compile Include="Handle.cs" />
+    <Compile Include="Install\Files\DefaultFileInstallerEvents.cs" />
+    <Compile Include="Install\Framework\IProcessingContext.cs" />
+    <Compile Include="Install\Framework\SimpleProcessingContext.cs" />
+    <Compile Include="Install\Installer.cs" />
+    <Compile Include="Install\Items\DefaultItemInstallerEvents.cs" />
+    <Compile Include="Install\Metadata\MetadataSink.cs" />
+    <Compile Include="Install\Metadata\MetadataView.cs" />
+    <Compile Include="Install\Utils\InstallOptions.cs" />
+    <Compile Include="Install\Zip\PackageReader.cs" />
     <Compile Include="IO\TempFolder.cs" />
     <Compile Include="Jobs\JobState.cs" />
     <Compile Include="Jobs\JobStatus.cs" />

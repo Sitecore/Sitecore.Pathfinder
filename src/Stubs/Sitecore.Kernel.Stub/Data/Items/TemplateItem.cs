@@ -4,20 +4,20 @@ using System;
 
 namespace Sitecore.Data.Items
 {
-    public class TemplateItem : CustomBaseItem
+    public class TemplateItem : CustomItemBase
     {
         public TemplateItem([NotNull] Item innerItem) : base(innerItem)
         {
             throw new NotImplementedException();
         }
 
-        [NotNull, ItemNotNull]
+        [NotNull]
         public TemplateItem[] BaseTemplates
         {
             get { throw new NotImplementedException(); }
         }
 
-        [NotNull, ItemNotNull]
+        [NotNull]
         public TemplateSectionItem[] GetSections()
         {
             throw new NotImplementedException();

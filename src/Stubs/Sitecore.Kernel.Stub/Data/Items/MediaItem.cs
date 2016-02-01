@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Sitecore.Data.Items
 {
-    public class MediaItem : CustomBaseItem
+    public class MediaItem : CustomItemBase
     {
         public MediaItem([NotNull] Item innerItem) : base(innerItem)
         {
@@ -17,7 +17,10 @@ namespace Sitecore.Data.Items
             get { throw new NotImplementedException(); }
         }
 
-        public long Size { get; private set; }
+        public long Size
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         [NotNull]
         public Stream GetMediaStream()

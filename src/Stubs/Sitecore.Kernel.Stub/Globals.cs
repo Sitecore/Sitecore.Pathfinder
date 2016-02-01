@@ -7,6 +7,10 @@ namespace Sitecore
     public static class Globals
     {
         [NotNull]
-        public static LinkDatabase LinkDatabase { get; set; }
+        public static LinkDatabase LinkDatabase
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
     }
 }

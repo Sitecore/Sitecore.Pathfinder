@@ -4,13 +4,13 @@ using System;
 
 namespace Sitecore.Data.Items
 {
-    public class TemplateSectionItem : CustomBaseItem
+    public class TemplateSectionItem : CustomItemBase
     {
         public TemplateSectionItem([NotNull] Item innerItem) : base(innerItem)
         {
         }
 
-        [NotNull, ItemNotNull]
+        [NotNull]
         public TemplateFieldItem[] GetFields()
         {
             throw new NotImplementedException();

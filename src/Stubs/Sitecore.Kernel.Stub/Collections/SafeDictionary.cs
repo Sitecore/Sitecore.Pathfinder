@@ -8,7 +8,7 @@ namespace Sitecore.Collections
 {
     public class SafeDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
     {
-        [NotNull, ItemNotNull]
+        [NotNull]
         public IEnumerable<TValue> Values
         {
             get { throw new NotImplementedException(); }

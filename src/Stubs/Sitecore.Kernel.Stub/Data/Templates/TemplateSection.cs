@@ -29,7 +29,7 @@ namespace Sitecore.Data.Templates
             get { throw new NotImplementedException(); }
         }
 
-        [NotNull, ItemNotNull]
+        [NotNull]
         public TemplateField[] GetFields()
         {
             throw new NotImplementedException();

@@ -4,7 +4,7 @@ using System;
 
 namespace Sitecore.Data.Items
 {
-    public class TemplateFieldItem : CustomBaseItem
+    public class TemplateFieldItem : CustomItemBase
     {
         public TemplateFieldItem([NotNull] Item innerItem) : base(innerItem)
         {

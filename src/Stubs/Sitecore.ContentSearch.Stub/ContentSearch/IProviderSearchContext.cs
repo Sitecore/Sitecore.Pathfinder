@@ -7,7 +7,7 @@ namespace Sitecore.ContentSearch
 {
     public interface IProviderSearchContext : IDisposable
     {
-        [NotNull, ItemNotNull]
+        [NotNull]
         IQueryable<TItem> GetQueryable<TItem>();
     }
 }

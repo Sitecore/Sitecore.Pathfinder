@@ -2,6 +2,7 @@
 
 using System.IO;
 using System.Reflection;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitters;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -16,21 +17,13 @@ namespace Sitecore.Pathfinder.Server.Tests.Emitters
         // [Test]
         public void ProjectTests()
         {
-            try
-            {
-                Context.IsUnitTesting = true;
-            }
-            catch
-            {
-            }
-
             var projectDirectory = PathHelper.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, GoodWebsite);
             var toolsDirectory = Path.Combine(projectDirectory, "sitecore.tools");
 
             var app = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(projectDirectory).Start();
             if (app == null)
             {
-                throw new Exceptions.ConfigurationException("Oh no, nothing works!");
+                throw new ConfigurationException("Oh no, nothing works!");
             }
 
             var emitter = app.CompositionService.Resolve<EmitterService>();

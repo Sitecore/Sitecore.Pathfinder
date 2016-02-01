@@ -6,7 +6,7 @@ namespace Sitecore.Security.Authentication
 {
     public static class AuthenticationManager
     {
-        public static void Login([NotNull] string userName, [NotNull] string password, bool b)
+        public static bool Login([NotNull] string userName, [NotNull] string password, bool persistent)
         {
             throw new NotImplementedException();
         }

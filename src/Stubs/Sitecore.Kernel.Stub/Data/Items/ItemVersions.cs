@@ -6,7 +6,7 @@ namespace Sitecore.Data.Items
 {
     public class ItemVersions
     {
-        [NotNull, ItemNotNull]
+        [NotNull]
         public Item[] GetVersions(bool b)
         {
             throw new NotImplementedException();

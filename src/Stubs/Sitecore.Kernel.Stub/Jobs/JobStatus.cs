@@ -13,7 +13,7 @@ namespace Sitecore.Jobs
             set { throw new NotImplementedException(); }
         }
 
-        [NotNull, ItemNotNull]
+        [NotNull]
         public StringCollection Messages
         {
             get { throw new NotImplementedException(); }

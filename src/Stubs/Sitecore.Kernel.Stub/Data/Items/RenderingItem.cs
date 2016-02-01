@@ -2,7 +2,7 @@
 
 namespace Sitecore.Data.Items
 {
-    public class RenderingItem : CustomBaseItem
+    public class RenderingItem : CustomItemBase
     {
         public RenderingItem([NotNull] Item innerItem) : base(innerItem)
         {

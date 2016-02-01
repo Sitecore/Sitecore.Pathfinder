@@ -10,7 +10,6 @@ namespace Sitecore.Pathfinder.Snapshots
     [TestFixture]
     public class SourceFileTests : Tests
     {
-        [NotNull]
         public IProject Project { get; set; }
 
         [Test]

@@ -3,6 +3,9 @@ namespace Sitecore.Data.Items
 {
     public class PropertyChange
     {
-        public object OriginalValue { get; private set; }
+        public object OriginalValue
+        {
+            get { throw new System.NotImplementedException(); }
+        }
     }
 }

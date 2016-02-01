@@ -9,7 +9,7 @@ namespace Sitecore.Resources.Media
     public class MediaCreator
     {
         [CanBeNull]
-        public Item CreateFromStream([NotNull] FileStream stream, [NotNull] string path, [NotNull] MediaCreatorOptions options)
+        public Item CreateFromStream([NotNull] Stream stream, [NotNull] string path, [NotNull] MediaCreatorOptions options)
         {
             throw new NotImplementedException();
         }

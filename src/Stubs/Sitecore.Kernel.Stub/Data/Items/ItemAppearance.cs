@@ -1,14 +1,28 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+
+using System;
+
 namespace Sitecore.Data.Items
 {
     public class ItemAppearance
     {
-        public int Sortorder { get; set; }
+        [NotNull]
+        public string DisplayName
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         [NotNull]
-        public string Icon { get; set; }
+        public string Icon
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
 
-        [NotNull]
-        public string DisplayName { get; private set; }
+        public int Sortorder
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
     }
 }
