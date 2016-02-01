@@ -103,7 +103,7 @@ namespace Sitecore.Pathfinder.Configuration
 
             foreach (var file in Directory.GetFiles(toolsDirectory))
             {
-                Console.WriteLine(file);
+                Console.WriteLine(file + ": " + new FileInfo(file).Length.ToString("#,##0 bytes"));
             }
 
             configurationSourceRoot.AddJsonFile(systemConfigFileName);
