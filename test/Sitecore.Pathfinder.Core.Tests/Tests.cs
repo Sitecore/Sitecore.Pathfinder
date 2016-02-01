@@ -30,11 +30,15 @@ namespace Sitecore.Pathfinder
 
         protected void Start(string website, Action mock = null)
         {
-            var workingDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent;
-            ProjectDirectory = PathHelper.Combine(Path.GetDirectoryName(workingDirectory?.FullName) ?? string.Empty, website);
+            var workingDirectory = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory())));
+            ProjectDirectory = PathHelper.Combine(workingDirectory ?? string.Empty, website);
 
-            Console.WriteLine("workingDirectory:" + workingDirectory);
-            Console.WriteLine("ProjectDirectory:" + ProjectDirectory);
+            Console.WriteLine("ProjectDirectory: " + ProjectDirectory);
+            foreach (var file in Directory.GetFiles(ProjectDirectory))
+            {
+                Console.WriteLine(file);
+            }
+
 
             Services = new Helpers.Services();
             Services.Start(ProjectDirectory, mock);
