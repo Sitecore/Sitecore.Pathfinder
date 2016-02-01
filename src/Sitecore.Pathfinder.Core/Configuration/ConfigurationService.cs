@@ -97,6 +97,12 @@ namespace Sitecore.Pathfinder.Configuration
 
             configurationSourceRoot.AddJsonFile(systemConfigFileName);
 
+            Console.WriteLine("ProjectDirectory1: " + projectDirectory);
+            Console.WriteLine("SourceDirectory1: " + configurationSourceRoot.GetString(Constants.Configuration.CopyDependenciesSourceDirectory));
+            Console.WriteLine("Database1: " + configurationSourceRoot.GetString(Constants.Configuration.Database));
+            Console.WriteLine("ConfigFileName1: " + configurationSourceRoot.GetString(Constants.Configuration.ProjectConfigFileName));
+
+
             // add command line
             if ((options & ConfigurationOptions.IncludeCommandLine) == ConfigurationOptions.IncludeCommandLine)
             {
@@ -120,6 +126,7 @@ namespace Sitecore.Pathfinder.Configuration
             }
 
             Console.WriteLine("ProjectDirectory: " + projectDirectory);
+            Console.WriteLine("SourceDirectory: " + configurationSourceRoot.GetString(Constants.Configuration.CopyDependenciesSourceDirectory));
             Console.WriteLine("Database: " + configurationSourceRoot.GetString(Constants.Configuration.Database));
             Console.WriteLine("ConfigFileName: " + configurationSourceRoot.GetString(Constants.Configuration.ProjectConfigFileName));
 
