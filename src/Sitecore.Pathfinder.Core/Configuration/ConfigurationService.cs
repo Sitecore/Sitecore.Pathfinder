@@ -87,6 +87,9 @@ namespace Sitecore.Pathfinder.Configuration
             }
 
             var toolsDirectory = configurationSourceRoot.Get(Constants.Configuration.ToolsDirectory);
+            Console.WriteLine();
+            Console.WriteLine("ToolsDirectory1: " + toolsDirectory);
+
 
             // add system config
             var systemConfigFileName = Path.Combine(toolsDirectory, configurationSourceRoot.Get(Constants.Configuration.SystemConfigFileName));
@@ -94,6 +97,9 @@ namespace Sitecore.Pathfinder.Configuration
             {
                 throw new ConfigurationException(Texts.System_configuration_file_not_found, systemConfigFileName);
             }
+
+            Console.WriteLine(File.ReadAllText(toolsDirectory));
+
 
             configurationSourceRoot.AddJsonFile(systemConfigFileName);
 
