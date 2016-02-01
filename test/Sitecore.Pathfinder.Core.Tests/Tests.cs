@@ -40,17 +40,13 @@ namespace Sitecore.Pathfinder
             var rootDirectory = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory())));
             ProjectDirectory = PathHelper.Combine(rootDirectory ?? string.Empty, website);
 
-            Console.WriteLine("Start:3");
             var app = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(ProjectDirectory).Start();
-            Console.WriteLine("Start:4");
             if (app == null)
             {
                 throw new ConfigurationException(@"Oh no, nothing works!");
             }
 
-            Console.WriteLine("Start:5");
             Services = new Services().Start(app, mock);
-            Console.WriteLine("Start:6");
         }
     }
 }

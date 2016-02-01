@@ -119,6 +119,9 @@ namespace Sitecore.Pathfinder.Configuration
                 projectDirectory = configurationSourceRoot.GetString(Constants.Configuration.ProjectDirectory);
             }
 
+            Console.WriteLine("ProjectDirectory: " + projectDirectory);
+            Console.WriteLine("ConfigFileName: " + configurationSourceRoot.Get(Constants.Configuration.ProjectConfigFileName));
+
             // add project config file - scconfig.json
             var projectConfigFileName = PathHelper.Combine(projectDirectory, configurationSourceRoot.Get(Constants.Configuration.ProjectConfigFileName));
             if (File.Exists(projectConfigFileName))
