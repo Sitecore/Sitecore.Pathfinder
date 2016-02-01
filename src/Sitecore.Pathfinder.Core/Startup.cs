@@ -1,6 +1,5 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -123,6 +122,13 @@ namespace Sitecore.Pathfinder
         public virtual Startup WithAssemblies([NotNull, ItemNotNull] IEnumerable<string> assemblyFileNames)
         {
             AssemblyFileNames = assemblyFileNames;
+            return this;
+        }
+
+        [NotNull]
+        public Startup WithConfiguration(ConfigurationOptions options)
+        {
+            ConfigurationOptions = options;
             return this;
         }
 

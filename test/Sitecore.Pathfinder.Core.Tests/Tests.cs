@@ -2,6 +2,7 @@
 
 using System;
 using System.IO;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Helpers;
@@ -40,7 +41,7 @@ namespace Sitecore.Pathfinder
             var rootDirectory = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory())));
             ProjectDirectory = PathHelper.Combine(rootDirectory ?? string.Empty, website);
 
-            var app = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(ProjectDirectory).Start();
+            var app = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(ProjectDirectory).WithConfiguration(ConfigurationOptions.None).Start();
             if (app == null)
             {
                 throw new ConfigurationException(@"Oh no, nothing works!");
