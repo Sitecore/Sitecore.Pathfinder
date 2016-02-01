@@ -89,6 +89,7 @@ namespace Sitecore.Pathfinder.Configuration
             var toolsDirectory = configurationSourceRoot.Get(Constants.Configuration.ToolsDirectory);
             Console.WriteLine();
             Console.WriteLine("ToolsDirectory1: " + toolsDirectory);
+            Console.WriteLine("SystemConfigFileName: " + configurationSourceRoot.Get(Constants.Configuration.SystemConfigFileName));
 
 
             // add system config
