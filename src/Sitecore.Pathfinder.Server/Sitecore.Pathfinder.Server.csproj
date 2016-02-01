@@ -78,10 +78,6 @@
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sitecore.ContentSearch">
-      <HintPath>..\..\lib\Sitecore\Sitecore.ContentSearch.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Sitecore.Zip">
       <HintPath>..\..\lib\Sitecore\Sitecore.Zip.dll</HintPath>
       <Private>False</Private>
@@ -212,13 +208,19 @@
       <Name>Sitecore.Pathfinder.Core</Name>
       <Private>True</Private>
     </ProjectReference>
+    <ProjectReference Include="..\Stubs\Sitecore.ContentSearch.Stub\Sitecore.ContentSearch.Stub.csproj">
+      <Project>{471bd5aa-22f8-4983-8b7c-3f94505c7e00}</Project>
+      <Name>Sitecore.ContentSearch.Stub</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Stubs\Sitecore.Kernel.Stub\Sitecore.Kernel.Stub.csproj">
       <Project>{b02588f1-d7e6-4329-ac37-5ec42ca47083}</Project>
       <Name>Sitecore.Kernel.Stub</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Stubs\Sitecore.Mvc.Stub\Sitecore.Mvc.Stub.csproj">
       <Project>{c13ac30e-5e26-43d7-8a46-e6aaa04715e2}</Project>
       <Name>Sitecore.Mvc.Stub</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

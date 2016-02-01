@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 #pragma warning disable 1591
 // ReSharper disable UnusedMember.Global
@@ -23,7 +24,7 @@ namespace Sitecore
     ///   var s = p.ToString(); // Warning: Possible 'System.NullReferenceException'
     /// }
     /// </code></example>
-    [AttributeUsage(
+    [Conditional("DEBUG"), AttributeUsage(
       AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
       AttributeTargets.Delegate | AttributeTargets.Field | AttributeTargets.Event)]
     public sealed class CanBeNullAttribute : Attribute { }
@@ -36,7 +37,7 @@ namespace Sitecore
     ///   return null; // Warning: Possible 'null' assignment
     /// }
     /// </code></example>
-    [AttributeUsage(
+    [Conditional("DEBUG"), AttributeUsage(
       AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
       AttributeTargets.Delegate | AttributeTargets.Field | AttributeTargets.Event)]
     public sealed class NotNullAttribute : Attribute { }
@@ -46,7 +47,7 @@ namespace Sitecore
     /// and Lazy classes to indicate that the value of a collection item, of the Task.Result property
     /// or of the Lazy.Value property can never be null.
     /// </summary>
-    [AttributeUsage(
+    [Conditional("DEBUG"), AttributeUsage(
       AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
       AttributeTargets.Delegate | AttributeTargets.Field)]
     public sealed class ItemNotNullAttribute : Attribute { }
@@ -56,7 +57,7 @@ namespace Sitecore
     /// and Lazy classes to indicate that the value of a collection item, of the Task.Result property
     /// or of the Lazy.Value property can be null.
     /// </summary>
-    [AttributeUsage(
+    [Conditional("DEBUG"), AttributeUsage(
       AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
       AttributeTargets.Delegate | AttributeTargets.Field)]
     public sealed class ItemCanBeNullAttribute : Attribute { }

@@ -14,7 +14,7 @@ namespace Sitecore.Pathfinder.Extensions
     public static class DatabaseExtensions
     {
         [Diagnostics.NotNull,ItemNotNull]
-        public static IEnumerable<Item> GetItemsByTemplate([Diagnostics.NotNull] this Database database, [Diagnostics.NotNull] [ItemNotNull] params ID[] templateId)
+        public static IEnumerable<Item> GetItemsByTemplate([Diagnostics.NotNull] this Database database, [Diagnostics.NotNull, ItemNotNull]  params ID[] templateId)
         {
             var indexName = "sitecore_" + database.Name.ToLowerInvariant() + "_index";
 
