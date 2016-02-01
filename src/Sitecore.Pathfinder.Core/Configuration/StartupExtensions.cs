@@ -38,6 +38,7 @@ namespace Sitecore.Pathfinder.Configuration
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.StackTrace);
                     return null;
                 }
             }
