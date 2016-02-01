@@ -78,10 +78,6 @@
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sitecore.Zip">
-      <HintPath>..\..\lib\Sitecore\Sitecore.Zip.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.IO.Compression" />
@@ -221,6 +217,10 @@
       <Project>{c13ac30e-5e26-43d7-8a46-e6aaa04715e2}</Project>
       <Name>Sitecore.Mvc.Stub</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Stubs\Sitecore.Zip.Stub\Sitecore.Zip.Stub.csproj">
+      <Project>{64e20f9d-0395-46f6-98c0-c3fce4697429}</Project>
+      <Name>Sitecore.Zip.Stub</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

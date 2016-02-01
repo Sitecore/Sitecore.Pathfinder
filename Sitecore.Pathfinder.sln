@@ -128,6 +128,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Mvc.Stub", "src\St
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.ContentSearch.Stub", "src\Stubs\Sitecore.ContentSearch.Stub\Sitecore.ContentSearch.Stub.csproj", "{471BD5AA-22F8-4983-8B7C-3F94505C7E00}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Zip.Stub", "src\Stubs\Sitecore.Zip.Stub\Sitecore.Zip.Stub.csproj", "{64E20F9D-0395-46F6-98C0-C3FCE4697429}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -210,6 +212,10 @@ Global
 		{471BD5AA-22F8-4983-8B7C-3F94505C7E00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{471BD5AA-22F8-4983-8B7C-3F94505C7E00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{471BD5AA-22F8-4983-8B7C-3F94505C7E00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64E20F9D-0395-46F6-98C0-C3FCE4697429}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64E20F9D-0395-46F6-98C0-C3FCE4697429}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64E20F9D-0395-46F6-98C0-C3FCE4697429}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64E20F9D-0395-46F6-98C0-C3FCE4697429}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -236,5 +242,6 @@ Global
 		{B02588F1-D7E6-4329-AC37-5EC42CA47083} = {81B86865-6107-48E1-8EEC-7789C79D3B05}
 		{C13AC30E-5E26-43D7-8A46-E6AAA04715E2} = {81B86865-6107-48E1-8EEC-7789C79D3B05}
 		{471BD5AA-22F8-4983-8B7C-3F94505C7E00} = {81B86865-6107-48E1-8EEC-7789C79D3B05}
+		{64E20F9D-0395-46F6-98C0-C3FCE4697429} = {81B86865-6107-48E1-8EEC-7789C79D3B05}
 	EndGlobalSection
 EndGlobal
