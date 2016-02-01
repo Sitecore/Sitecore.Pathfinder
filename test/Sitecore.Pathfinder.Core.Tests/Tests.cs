@@ -2,7 +2,6 @@
 
 using System;
 using System.IO;
-using System.Reflection;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -33,20 +32,8 @@ namespace Sitecore.Pathfinder
         {
             var rootDirectory = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory())));
 
-            ProjectDirectory = PathHelper.Combine(rootDirectory ?? string.Empty, website);
-
             var toolsDirectory = Directory.GetCurrentDirectory();
-            Console.WriteLine("ToolsDirectory: " + toolsDirectory);
-            foreach (var file in Directory.GetFiles(toolsDirectory))
-            {
-                Console.WriteLine(file);
-            }
-
-            Console.WriteLine("ProjectDirectory: " + ProjectDirectory);
-            foreach (var file in Directory.GetFiles(ProjectDirectory))
-            {
-                Console.WriteLine(file);
-            }
+            ProjectDirectory = PathHelper.Combine(rootDirectory ?? string.Empty, website);
 
             Services = new Helpers.Services();
             Services.Start(toolsDirectory, ProjectDirectory, mock);

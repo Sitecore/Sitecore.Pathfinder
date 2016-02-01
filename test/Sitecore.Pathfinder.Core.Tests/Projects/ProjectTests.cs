@@ -22,7 +22,11 @@ namespace Sitecore.Pathfinder.Projects
         {
             Start(GoodWebsite);
 
+            Console.WriteLine("ProjectTests Startup 1");
+
             Project = Services.ProjectService.LoadProjectFromConfiguration();
+
+            Console.WriteLine("ProjectTests Startup 2");
 
             foreach (var diagnostic in Project.Diagnostics)
             {
