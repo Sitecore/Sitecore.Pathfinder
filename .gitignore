@@ -205,8 +205,8 @@ ModelManifest.xml
 # Specific files
 /Sitecore.Pathfinder.Console/Nuget/*.nupkg
 /src/Sitecore.Pathfinder.Console/Nuget/SitecorePathfinder.0.2.0-Developing.nupkg
-/lib/Sitecore/Sitecore.ContentSearch.dll
-/lib/Sitecore/Sitecore.ContentSearch.Linq.dll
-/lib/Sitecore/Sitecore.Kernel.dll
-/lib/Sitecore/Sitecore.Mvc.dll
-/lib/Sitecore/Sitecore.Zip.dll
+/lib/Sitecore.Website/Sitecore.ContentSearch.dll
+/lib/Sitecore.Website/Sitecore.ContentSearch.Linq.dll
+/lib/Sitecore.Website/Sitecore.Kernel.dll
+/lib/Sitecore.Website/Sitecore.Mvc.dll
+/lib/Sitecore.Website/Sitecore.Zip.dll
