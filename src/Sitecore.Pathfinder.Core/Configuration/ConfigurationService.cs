@@ -99,7 +99,7 @@ namespace Sitecore.Pathfinder.Configuration
                 throw new ConfigurationException(Texts.System_configuration_file_not_found, systemConfigFileName);
             }
 
-            Console.WriteLine(File.ReadAllText(toolsDirectory));
+            Console.WriteLine(File.ReadAllText(systemConfigFileName));
 
 
             configurationSourceRoot.AddJsonFile(systemConfigFileName);
