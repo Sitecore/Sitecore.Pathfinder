@@ -1,5 +1,6 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -73,6 +74,7 @@ namespace Sitecore.Pathfinder
         [CanBeNull]
         public IAppService Start()
         {
+            Console.WriteLine("App:1");
             IEnumerable<string> assemblyFileNames;
             if (AssemblyFileNames == null)
             {
@@ -83,15 +85,19 @@ namespace Sitecore.Pathfinder
                 assemblyFileNames = AssemblyFileNames.Distinct().OrderBy(a => a).ToList();
             }
 
+            Console.WriteLine("App:2");
             var cacheKey = ToolsDirectory.ToLowerInvariant() + ProjectDirectory.ToLowerInvariant() + ConfigurationOptions + string.Join(",", assemblyFileNames);
 
+            Console.WriteLine("App:3");
             IAppService app;
             if (AppServiceCache.TryGetValue(cacheKey, out app))
             {
                 return app;
             }
 
+            Console.WriteLine("App:4");
             var configuration = this.RegisterConfiguration(ToolsDirectory, ProjectDirectory, ConfigurationOptions);
+            Console.WriteLine("App:5");
             if (configuration == null)
             {
                 return null;
@@ -99,22 +105,29 @@ namespace Sitecore.Pathfinder
 
             if (!string.IsNullOrEmpty(WebsiteDirectory))
             {
+                Console.WriteLine("App:6");
                 configuration.Set(Constants.Configuration.WebsiteDirectory, WebsiteDirectory);
             }
 
             if (!string.IsNullOrEmpty(DataFolderDirectory))
             {
+                Console.WriteLine("App:7");
                 configuration.Set(Constants.Configuration.DataFolderDirectory, DataFolderDirectory);
             }
 
+            Console.WriteLine("App:8");
             var compositionService = this.RegisterCompositionService(configuration, ProjectDirectory, Assembly.GetCallingAssembly(), assemblyFileNames, CompositionOptions);
+            Console.WriteLine("App:9");
             if (compositionService == null)
             {
                 return null;
             }
 
+            Console.WriteLine("App:10");
             app = new AppService(configuration, compositionService, ToolsDirectory, ProjectDirectory);
+            Console.WriteLine("App:11");
             AppServiceCache[cacheKey] = app;
+            Console.WriteLine("App:12");
             return app;
         }
 
