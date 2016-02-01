@@ -5,7 +5,6 @@ using System.Linq;
 using Sitecore.Configuration;
 using Sitecore.Data.Managers;
 using Sitecore.Data.Templates;
-using Sitecore.Data.Validators;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitters.Writers;
 using Sitecore.Pathfinder.Emitting;

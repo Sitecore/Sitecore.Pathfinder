@@ -207,10 +207,6 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Features\Sitecore.Kernel\Sitecore.Kernel.csproj">
-      <Project>{b02588f1-d7e6-4329-ac37-5ec42ca47083}</Project>
-      <Name>Sitecore.Kernel</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Features\Sitecore.Pathfinder.NuGet\Sitecore.Pathfinder.NuGet.csproj">
       <Project>{a67c9ed1-949c-49d8-8d1a-b3774f38c128}</Project>
       <Name>Sitecore.Pathfinder.NuGet</Name>
@@ -219,6 +215,10 @@
       <Project>{c674eebf-bbf6-4eda-af5b-a4d58d0be986}</Project>
       <Name>Sitecore.Pathfinder.Core</Name>
       <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Stubs\Sitecore.Kernel.Stub\Sitecore.Kernel.Stub.csproj">
+      <Project>{b02588f1-d7e6-4329-ac37-5ec42ca47083}</Project>
+      <Name>Sitecore.Kernel.Stub</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

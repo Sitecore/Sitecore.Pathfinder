@@ -21,8 +21,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
         [Diagnostics.NotNull]
         public string DatabaseName { get; set; } = string.Empty;
 
-        [Diagnostics.NotNull]
-        [ItemNotNull]
+        [Diagnostics.NotNull, ItemNotNull]
         public ICollection<FieldWriter> Fields { get; } = new List<FieldWriter>();
 
         public Guid Guid { get; set; } = Guid.Empty;

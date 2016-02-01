@@ -104,7 +104,7 @@ namespace Sitecore.Pathfinder.WebApi
             packageBuilder.CreateNugetPackage(tempDirectory, fileName, sourceFileName);
         }
 
-        protected virtual void WriteItemAsExport([Diagnostics.NotNull] XmlTextWriter output, [Diagnostics.NotNull] Item item, [ItemNotNull] [NotNull] IEnumerable<string> fieldsToWrite)
+        protected virtual void WriteItemAsExport([Diagnostics.NotNull] XmlTextWriter output, [Diagnostics.NotNull] Item item, [ItemNotNull, NotNull]  IEnumerable<string> fieldsToWrite)
         {
             output.WriteStartElement("Item");
             output.WriteAttributeString("Id", item.ID.ToString());

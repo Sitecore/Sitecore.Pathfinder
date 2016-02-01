@@ -218,7 +218,7 @@ namespace Sitecore.Pathfinder.WebApi.SynchronizeWebsites
             output.WriteEndElement();
         }
 
-        protected virtual void WriteSchema([NotNull] XmlTextWriter output, [Diagnostics.NotNull] Database database, [Diagnostics.NotNull] string nameSpace, [Diagnostics.NotNull][ItemNotNull] IEnumerable<Template> templates)
+        protected virtual void WriteSchema([NotNull] XmlTextWriter output, [Diagnostics.NotNull] Database database, [Diagnostics.NotNull] string nameSpace, [Diagnostics.NotNull, ItemNotNull] IEnumerable<Template> templates)
         {
             output.WriteProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\"");
             output.WriteStartElement(Xs, "schema", Namespace);
@@ -322,7 +322,7 @@ namespace Sitecore.Pathfinder.WebApi.SynchronizeWebsites
             }
         }
 
-        protected virtual void WriteTemplates([Diagnostics.NotNull] XmlTextWriter output, [Diagnostics.NotNull] Database database, [Diagnostics.NotNull][ItemNotNull] IEnumerable<Template> templates)
+        protected virtual void WriteTemplates([Diagnostics.NotNull] XmlTextWriter output, [Diagnostics.NotNull] Database database, [Diagnostics.NotNull, ItemNotNull] IEnumerable<Template> templates)
         {
             foreach (var template in templates)
             {
@@ -445,7 +445,7 @@ namespace Sitecore.Pathfinder.WebApi.SynchronizeWebsites
             output.WriteEndElement(); // group
         }
 
-        protected virtual void WriteTemplatesGroup([NotNull] XmlTextWriter output, [NotNull][ItemNotNull] IEnumerable<Template> templates)
+        protected virtual void WriteTemplatesGroup([NotNull] XmlTextWriter output, [NotNull, ItemNotNull] IEnumerable<Template> templates)
         {
             output.WriteStartElement(Xs, "group", Namespace);
             output.WriteAttributeString("name", "Templates");
