@@ -91,7 +91,6 @@ namespace Sitecore.Pathfinder.Configuration
             Console.WriteLine("ToolsDirectory1: " + toolsDirectory);
             Console.WriteLine("SystemConfigFileName: " + configurationSourceRoot.Get(Constants.Configuration.SystemConfigFileName));
 
-
             // add system config
             var systemConfigFileName = Path.Combine(toolsDirectory, configurationSourceRoot.Get(Constants.Configuration.SystemConfigFileName));
             if (!File.Exists(systemConfigFileName))
@@ -99,8 +98,13 @@ namespace Sitecore.Pathfinder.Configuration
                 throw new ConfigurationException(Texts.System_configuration_file_not_found, systemConfigFileName);
             }
 
+            Console.WriteLine("SystemConfigFileName: " + systemConfigFileName);
             Console.WriteLine(File.ReadAllText(systemConfigFileName));
 
+            foreach (var file in Directory.GetFiles(toolsDirectory))
+            {
+                Console.WriteLine(file);
+            }
 
             configurationSourceRoot.AddJsonFile(systemConfigFileName);
 
