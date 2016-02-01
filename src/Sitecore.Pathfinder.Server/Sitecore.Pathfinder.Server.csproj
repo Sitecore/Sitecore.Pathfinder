@@ -82,10 +82,6 @@
       <HintPath>..\..\lib\Sitecore\Sitecore.ContentSearch.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Mvc">
-      <HintPath>..\..\lib\Sitecore\Sitecore.Mvc.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Sitecore.Zip">
       <HintPath>..\..\lib\Sitecore\Sitecore.Zip.dll</HintPath>
       <Private>False</Private>
@@ -219,6 +215,10 @@
     <ProjectReference Include="..\Stubs\Sitecore.Kernel.Stub\Sitecore.Kernel.Stub.csproj">
       <Project>{b02588f1-d7e6-4329-ac37-5ec42ca47083}</Project>
       <Name>Sitecore.Kernel.Stub</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Stubs\Sitecore.Mvc.Stub\Sitecore.Mvc.Stub.csproj">
+      <Project>{c13ac30e-5e26-43d7-8a46-e6aaa04715e2}</Project>
+      <Name>Sitecore.Mvc.Stub</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
