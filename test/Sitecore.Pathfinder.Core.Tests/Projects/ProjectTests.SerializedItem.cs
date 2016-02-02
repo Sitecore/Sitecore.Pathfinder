@@ -116,7 +116,7 @@ content-length: 14
 
 sitecore\admin
 ";
-            Assert.AreEqual(expected, result);
+            Assert.AreEqual(expected.Replace("\r", string.Empty).Replace("\n", string.Empty), result.Replace("\r", string.Empty).Replace("\n", string.Empty));
         }
     }
 }
