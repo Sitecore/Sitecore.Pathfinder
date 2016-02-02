@@ -43,6 +43,9 @@
       <HintPath>..\..\..\packages\NuGet.Core.2.10.1\lib\net40-Client\NuGet.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Sitecore.Kernel">
+      <HintPath>..\..\..\lib\Sitecore\Sitecore.Kernel.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
@@ -67,11 +70,6 @@
       <Project>{c674eebf-bbf6-4eda-af5b-a4d58d0be986}</Project>
       <Name>Sitecore.Pathfinder.Core</Name>
       <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Stubs\Sitecore.Kernel.Stub\Sitecore.Kernel.Stub.csproj">
-      <Project>{b02588f1-d7e6-4329-ac37-5ec42ca47083}</Project>
-      <Name>Sitecore.Kernel.Stub</Name>
-      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

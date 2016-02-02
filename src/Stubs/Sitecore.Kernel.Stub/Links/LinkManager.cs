@@ -11,5 +11,5 @@ namespace Sitecore.Links
         {
             throw new System.NotImplementedException();
         }
-    }
+    }                    
 }
