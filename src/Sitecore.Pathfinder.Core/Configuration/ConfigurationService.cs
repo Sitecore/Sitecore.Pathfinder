@@ -87,9 +87,6 @@ namespace Sitecore.Pathfinder.Configuration
             }
 
             var toolsDirectory = configurationSourceRoot.Get(Constants.Configuration.ToolsDirectory);
-            Console.WriteLine();
-            Console.WriteLine("ToolsDirectory1: " + toolsDirectory);
-            Console.WriteLine("SystemConfigFileName: " + configurationSourceRoot.Get(Constants.Configuration.SystemConfigFileName));
 
             // add system config
             var systemConfigFileName = Path.Combine(toolsDirectory, configurationSourceRoot.Get(Constants.Configuration.SystemConfigFileName));
@@ -98,21 +95,7 @@ namespace Sitecore.Pathfinder.Configuration
                 throw new ConfigurationException(Texts.System_configuration_file_not_found, systemConfigFileName);
             }
 
-            Console.WriteLine("SystemConfigFileName: " + systemConfigFileName);
-            Console.WriteLine(File.ReadAllText(systemConfigFileName));
-
-            foreach (var file in Directory.GetFiles(toolsDirectory))
-            {
-                Console.WriteLine(file + ": " + new FileInfo(file).Length.ToString("#,##0 bytes"));
-            }
-
             configurationSourceRoot.AddJsonFile(systemConfigFileName);
-
-            Console.WriteLine("ProjectDirectory1: " + projectDirectory);
-            Console.WriteLine("SourceDirectory1: " + configurationSourceRoot.GetString(Constants.Configuration.CopyDependenciesSourceDirectory));
-            Console.WriteLine("Database1: " + configurationSourceRoot.GetString(Constants.Configuration.Database));
-            Console.WriteLine("ConfigFileName1: " + configurationSourceRoot.GetString(Constants.Configuration.ProjectConfigFileName));
-
 
             // add command line
             if ((options & ConfigurationOptions.IncludeCommandLine) == ConfigurationOptions.IncludeCommandLine)
@@ -135,11 +118,6 @@ namespace Sitecore.Pathfinder.Configuration
             {
                 projectDirectory = configurationSourceRoot.GetString(Constants.Configuration.ProjectDirectory);
             }
-
-            Console.WriteLine("ProjectDirectory: " + projectDirectory);
-            Console.WriteLine("SourceDirectory: " + configurationSourceRoot.GetString(Constants.Configuration.CopyDependenciesSourceDirectory));
-            Console.WriteLine("Database: " + configurationSourceRoot.GetString(Constants.Configuration.Database));
-            Console.WriteLine("ConfigFileName: " + configurationSourceRoot.GetString(Constants.Configuration.ProjectConfigFileName));
 
             // add project config file - scconfig.json
             var projectConfigFileName = PathHelper.Combine(projectDirectory, configurationSourceRoot.Get(Constants.Configuration.ProjectConfigFileName));
