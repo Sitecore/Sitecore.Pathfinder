@@ -1,0 +1,20 @@
+﻿<Item xmlns="http://www.sitecore.net/pathfinder/item" Template="/sitecore/templates/CleanBlog/Contact" Template.CreateFromFields="True" Template.ShortHelp="Contact page." Template.LongHelp="Contact page." Template.Icon="Applications/16x16/about.png" Layout.HtmlFile="~/CleanBlog/layout/renderings/contact.html">
+
+    <Fields>
+        <Field Name="PageTitle" Field.Type="Single-Line Text" Field.ShortHelp="Name of the page." Field.LongHelp="Displayed in the browser window caption.">
+            Clean Blog - Contact
+        </Field>
+
+        <Field Name="Header" Field.Type="Single-Line Text" Field.ShortHelp="Header text." Field.LongHelp="Displayed at the top of the page.">
+            Contact Me
+        </Field>
+
+        <Field Name="Subheader" Field.Type="Single-Line Text" Field.ShortHelp="Subheader text." Field.LongHelp="Displayed beneath the header.">
+            Have questions? I have answers (maybe).
+        </Field>
+
+        <Field Name="Text" Field.Type="Rich Text" Field.ShortHelp="Body text." Field.LongHelp="The main text.">
+            <p>Want to get in touch with me? Fill out the form below to send me a message and I will try to get back to you within 24 hours!</p>
+        </Field>
+    </Fields>
+</Item>

@@ -1,0 +1,21 @@
+﻿<Item xmlns="http://www.sitecore.net/pathfinder/item" Template="/sitecore/templates/CleanBlog/About" Template.CreateFromFields="True" Template.ShortHelp="About page." Template.LongHelp="About page." Template.Icon="Applications/16x16/about.png" Layout.HtmlFile="~/CleanBlog/layout/renderings/about.html">
+
+    <Fields>
+        <Field Name="PageTitle" Field.Type="Single-Line Text" Field.ShortHelp="Name of the page." Field.LongHelp="Displayed in the browser window caption.">
+            Clean Blog - About Me
+        </Field>
+
+        <Field Name="Header" Field.Type="Single-Line Text" Field.ShortHelp="Header text." Field.LongHelp="Displayed at the top of the page.">
+            About Me
+        </Field>
+        <Field Name="Subheader" Field.Type="Single-Line Text" Field.ShortHelp="Subheader text." Field.LongHelp="Displayed beneath the header.">
+            This is what I do.
+        </Field>
+
+        <Field Name="Text" Field.Type="Rich Text" Field.ShortHelp="Body text." Field.LongHelp="The main text.">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum ullam eveniet pariatur voluptates odit, fuga atque ea nobis sit soluta odio, adipisci quas excepturi maxime quae totam ducimus consectetur?</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius praesentium recusandae illo eaque architecto error, repellendus iusto reprehenderit, doloribus, minus sunt. Numquam at quae voluptatum in officia voluptas voluptatibus, minus!</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum molestiae debitis nobis, quod sapiente qui voluptatum, placeat magni repudiandae accusantium fugit quas labore non rerum possimus, corrupti enim modi! Et.</p>
+        </Field>
+    </Fields>
+</Item>

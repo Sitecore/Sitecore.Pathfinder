@@ -1,0 +1,44 @@
+{
+    "project-website-mappings": {
+        "project-to-website": {
+            "cleanblog-img": {
+                "project-directory-to-item-path": "/wwwroot/img => /sitecore/media library/CleanBlog"
+            },
+            "cleanblog-html": {
+                "project-directory-to-item-path": "/wwwroot => /sitecore/layout/renderings/CleanBlog",
+                "project-directory-to-website-directory": "/wwwroot => /CleanBlog/layout/renderings",
+                "file-name-include": "*.html"
+            }
+        },
+
+        "website-to-project": {
+            "clean-blog-content": {
+               "item-path-to-project-directory": "/sitecore/content/Home/CleanBlog => /items/master/sitecore/content/Home/CleanBlog",
+               "format": "item.xml"
+           },
+           "clean-blog-media": {
+               "item-path-to-project-directory": "/sitecore/media library/CleanBlog => /wwwroot/img",
+               "format": "item.xml" 
+           },
+           "clean-blog-templates": {
+               "item-path-to-project-directory": "/sitecore/templates/CleanBlog => /items/master/sitecore/templates/CleanBlog",
+               "format": "item.xml" 
+           },
+           "clean-blog-css": {
+               "website-directory-to-project-directory": "/css => /wwwroot/css" 
+           },
+           "clean-blog-js": {
+               "website-directory-to-project-directory": "/js => /wwwroot/js" 
+           },
+           "clean-blog-renderings-files": {
+               "website-directory-to-project-directory": "/CleanBlog/layout/renderings => /wwwroot" 
+           }
+        }
+    },
+    
+    "reset-website": {
+        "clean-blog-renderings": {
+            "delete-item-path": "/sitecore/layout/Renderings/CleanBlog" 
+        }
+    }
+}

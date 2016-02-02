@@ -1,0 +1,19 @@
+{
+    "project-website-mappings": {
+        "project-to-website": {
+            "todomvc": {
+                "database" : "core",
+                "project-directory-to-item-path": "/items/core/sitecore/client/Applications/TodoMvc => /sitecore/client/Applications/TodoMvc",
+                "project-directory-to-website-directory": "/items/core/sitecore/client/Applications/TodoMvc => /sitecore/shell/client/Applications/TodoMvc"
+            }
+        },
+
+        "website-to-project": {
+            "todomvc": {
+                "database": "core",
+                "item-path-to-project-directory": "/sitecore/client/Applications/TodoMvc => /items/core/sitecore/client/Applications/TodoMvc",
+                "website-directory-to-project-directory": "/sitecore/shell/client/Applications/TodoMvc => /items/core/sitecore/client/Applications/TodoMvc"
+            }
+        }
+    }
+}

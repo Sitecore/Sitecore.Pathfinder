@@ -1,0 +1,115 @@
+{
+    "$schema": "../../../sitecore.project/schemas/item.schema.json#",
+    "Item": {
+        "Template": "/sitecore/client/Applications/TodoMvc/templates/TodoMvcApp",
+        "Template.CreateFromFields": true,
+        "Template.ShortHelp": "Pathfinder TodoMvc sample.",
+        "Template.LongHelp": "Pathfinder TodoMvc sample.",
+        "Template.Icon": "Applications/16x16/About.png",
+        "Fields": {
+            "Title": {
+                "Value": "todos",
+                "Field.ShortHelp": "Title field.",
+                "Field.LongHelp": "Title field."
+            },
+            "Watermark": {
+                "Value": "What needs to be done?",
+                "Field.ShortHelp": "Watermark.",
+                "Field.LongHelp": "Watermark in the input field."
+            },
+            "Layout": {
+                "Devices": [
+                    {
+                        "Name": "Internet Explorer",
+                        "Layout": "/sitecore/client/Speak/Layouts/Layouts/Speak-Layout",
+                        "Renderings": [
+                            {
+                                "PageCode": {
+                                    "Placeholder": "Page.Code",
+                                    "PageCodeScriptFileName": "/sitecore/shell/client/Applications/TodoMvc/content/TodoMvcPageCode.js"
+                                }
+                            },
+                            {
+                                "QueryDataSource": {
+                                    "Placeholder": "Page.Body",
+                                    "Id": "TodoItemDataSource",
+                                    "Database": "core",
+                                    "Query": "/sitecore/client/Applications/TodoMvc/content/TodoMvc/*"
+                                }
+                            },
+                            {
+                                "Dashboard": {
+                                    "Placeholder": "Page.Body",
+                                    "Renderings": [
+                                        {
+                                            "GlobalHeader": {
+                                                "Renderings": [
+                                                    {
+                                                        "GlobalLogo": {}
+                                                    },
+                                                    {
+                                                        "AccountInformation": {
+                                                            "Placeholder": "GlobalHeader.LoginInfo"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "ApplicationContentM": {
+                                                "Placeholder": "ApplicationContent",
+                                                "Renderings": [
+                                                    {
+                                                        "ApplicationHeader": {
+                                                            "Placeholder": "ApplicationHeader",
+                                                            "ShowHeader": false,
+                                                            "Renderings": [
+                                                                {
+                                                                    "Text": {
+                                                                        "Placeholder": "ApplicationHeader.Title",
+                                                                        "Text": "{@Title}"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "TextBox": {
+                                                            "Id": "InputTextBox",
+                                                            "Watermark": "{@Watermark}"
+                                                        }
+                                                    },
+                                                    {
+                                                        "Border": {
+                                                            "Id": "ErrorTextBorder",
+                                                            "UsePadding": true,
+                                                            "Renderings": [
+                                                                {
+                                                                    "Text": {
+                                                                        "Id": "ErrorMessageText",
+                                                                        "TextType": "Text",
+                                                                        "IsVisible": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "TodoMvcList": {
+                                                            "Id": "TodoList",
+                                                            "Items": "{Binding TodoItemDataSource.Items}"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}

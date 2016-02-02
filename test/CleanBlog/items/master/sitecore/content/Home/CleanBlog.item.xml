@@ -1,0 +1,38 @@
+﻿<Item xmlns="http://www.sitecore.net/pathfinder/item"
+    Template="/sitecore/templates/CleanBlog/CleanBlog"
+    Template.CreateFromFields="True"
+    Template.ShortHelp="Clean blog."
+    Template.LongHelp="Clean blog from StartBootstrap."
+    Template.Icon="Applications/16x16/about.png"
+    Layout.HtmlFile="~/CleanBlog/layout/renderings/index.html">
+
+    <Fields>
+        <Field Name="PageTitle" Field.Type="Single-Line Text" Field.ShortHelp="Name of the page." Field.LongHelp="Displayed in the browser window caption.">
+            Clean Blog
+        </Field>
+
+        <Field Name="Header" Field.ShortHelp="Header." Field.LongHelp="Blog Header.">
+            Clean Blog
+        </Field>
+
+        <Field Name="Subheader" Field.ShortHelp="Subheader." Field.LongHelp="Subheader.">
+            A Clean Blog Theme by Start Bootstrap
+        </Field>
+
+        <Field Name="ToggleNavigation" Field.ShortHelp="Toggle Navigation text." Field.LongHelp="Toggle Navigation text.">
+            Toggle Navigation
+        </Field>
+
+        <Field Name="StartBootstrap" Field.ShortHelp="Start Bootstrap text." Field.LongHelp="Start Bootstrap text.">
+            Start Bootstrap
+        </Field>
+
+        <Field Name="Copyright" Field.ShortHelp="Copyright notice." Field.LongHelp="Copyright notice to display at the bottom of the page.">
+            Copyright (C); Your Website 2014
+        </Field>
+
+        <Field Name="OlderPosts" Field.ShortHelp="Older posts link." Field.LongHelp="Older posts link.">
+            Older Posts
+        </Field>
+    </Fields>
+</Item>

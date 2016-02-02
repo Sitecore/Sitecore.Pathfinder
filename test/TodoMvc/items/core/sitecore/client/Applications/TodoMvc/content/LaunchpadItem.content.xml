@@ -1,0 +1,30 @@
+<LaunchPad-Button Name="ToDoList" Icon="Applications/32x32/About.png" Link="/sitecore/client/Applications/TodoMvc/content/TodoMvc" Text="To Do List" ParentItemPath="/sitecore/client/Applications/Launchpad/PageSettings/Buttons/Tools" />
+<!--
+{
+    "$schema": "sitecore.project/schemas/item.schema.json",
+    "Item": {
+        "Name": "TodoList",
+        "Template": "LaunchPad-Button",
+        "ParentItemPath": "/sitecore/client/Applications/Launchpad/PageSettings/Buttons/Tools",
+        "Fields": {
+            "Icon": "Applications/32x32/About.png", 
+            "Link": "/sitecore/client/Applications/TodoMvc/content/TodoMvc",
+            "Text": "Todo List" 
+        }
+    }
+}
+
+{
+    "$schema": "sitecore.project/schemas/item.schema.json",
+    "LaunchPad-Button": {
+        "Name": "TodoList",
+        "ParentItemPath": "/sitecore/client/Applications/Launchpad/PageSettings/Buttons/Tools",
+        "Icon": "Applications/32x32/About.png", 
+        "Link": "/sitecore/client/Applications/TodoMvc/content/TodoMvc",
+        "Text": "Todo List",
+        "Children": [
+            
+        ] 
+    }
+}
+-->

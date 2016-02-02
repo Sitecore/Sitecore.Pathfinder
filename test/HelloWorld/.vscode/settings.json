@@ -1,0 +1,35 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "*.item.json"
+      ],
+      "url": "/sitecore.project/schemas/item.schema.json"
+    },
+    {
+      "fileMatch": [
+        "*.master.content.json"
+      ],
+      "url": "/sitecore.project/schemas/master.content.schema.json"
+    },
+    {
+      "fileMatch": [
+        "*.core.content.json"
+      ],
+      "url": "/sitecore.project/schemas/core.content.schema.json"
+    },
+    {
+      "fileMatch": [
+        "*.master.layout.json"
+      ],
+      "url": "/sitecore.project/schemas/master.layout.schema.json"
+    },
+    {
+      "fileMatch": [
+        "*.core.layout.json"
+      ],
+      "url": "/sitecore.project/schemas/core.layout.schema.json"
+    }
+  ]
+}

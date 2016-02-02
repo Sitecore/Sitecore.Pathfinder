@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Kernel.Stub", "src\Stubs\Sitecore.Kernel.Stub\Sitecore.Kernel.Stub.csproj", "{B02588F1-D7E6-4329-AC37-5EC42CA47083}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Kernel.Stub", "Sitecore.Kernel.Stub\Sitecore.Kernel.Stub.csproj", "{B02588F1-D7E6-4329-AC37-5EC42CA47083}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Mvc.Stub", "src\Stubs\Sitecore.Mvc.Stub\Sitecore.Mvc.Stub.csproj", "{C13AC30E-5E26-43D7-8A46-E6AAA04715E2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Mvc.Stub", "Sitecore.Mvc.Stub\Sitecore.Mvc.Stub.csproj", "{C13AC30E-5E26-43D7-8A46-E6AAA04715E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.ContentSearch.Stub", "src\Stubs\Sitecore.ContentSearch.Stub\Sitecore.ContentSearch.Stub.csproj", "{471BD5AA-22F8-4983-8B7C-3F94505C7E00}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.ContentSearch.Stub", "Sitecore.ContentSearch.Stub\Sitecore.ContentSearch.Stub.csproj", "{471BD5AA-22F8-4983-8B7C-3F94505C7E00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Zip.Stub", "src\Stubs\Sitecore.Zip.Stub\Sitecore.Zip.Stub.csproj", "{64E20F9D-0395-46F6-98C0-C3FCE4697429}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Zip.Stub", "Sitecore.Zip.Stub\Sitecore.Zip.Stub.csproj", "{64E20F9D-0395-46F6-98C0-C3FCE4697429}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

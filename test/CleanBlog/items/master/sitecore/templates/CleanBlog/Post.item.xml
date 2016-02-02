@@ -1,0 +1,12 @@
+﻿<Template xmlns="http://www.sitecore.net/pathfinder/item" 
+  ShortHelp="Post entry."
+  LongHelp="Clean blog post."
+  Icon="Applications/16x16/about.png"
+  Layout.HtmlFile="~/CleanBlog/layout/renderings/post.html">
+  <Section Name="Fields">
+    <Field Name="Title" ShortHelp="Post title." LongHelp="Post title." />
+    <Field Name="Subtitle" ShortHelp="Post subtitle." LongHelp="Post subtitle." />
+    <Field Name="Posted" ShortHelp="Date posted." LongHelp="The date that the post was published." />
+    <Field Name="Text" Type="Rich Text" ShortHelp="Blog text." LongHelp="Blog post body text." />
+  </Section>
+</Template>
