@@ -148,3 +148,7 @@ gulp.task("nightly", function() {
 gulp.task("publish", function() {
     runSequence("build-project", "build-dist-directory", ["publish-zip-file", "publish-npm-package"]);
 });
+
+gulp.task("appveyor", "build-dist-directory", ["build-zip-file", "build-npm-package", "build-nuget-package"], function () {
+});
+
