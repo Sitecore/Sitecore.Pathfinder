@@ -2,6 +2,8 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/21a8xc3s80mcic81?svg=true)](https://ci.appveyor.com/project/JakobChristensen/sitecore-pathfinder)
 
+[![Downloads](https://img.shields.io/myget/sitecore-pathfinder/dt/sitecore.pathfinder.svg)](https://www.myget.org/feed/sitecore-pathfinder/package/nuget/Sitecore.Pathfinder)
+
 [![Build History](https://ci-buildstats.azurewebsites.net/appveyor/chart/JakobChristensen/sitecore-pathfinder?branch=master&includeBuildsFromPullRequest=false)](https://ci.appveyor.com/project/JakobChristensen/sitecore-pathfinder)
 
 Get started, get far, get happy!
