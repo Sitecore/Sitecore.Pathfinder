@@ -12,9 +12,9 @@ namespace Sitecore.Pathfinder
 {
     public abstract class Tests
     {
-        public const string BadWebsite = "Website.Bad\\bin";
+        public const string BadWebsite = "Website.Bad";
 
-        public const string GoodWebsite = "Website.Good\\bin";
+        public const string GoodWebsite = "Website.Good";
 
         [Diagnostics.NotNull]
         public string ProjectDirectory { get; private set; } = string.Empty;

@@ -66,197 +66,44 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="items\master\sitecore\content\Home\YamlContentItem.master.content.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="items\master\sitecore\content\Home\YamlLayout.item.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\src\Sitecore.Pathfinder.Console\files\project\sitecore.project\packages\readme.md">
-      <Link>sitecore.project\packages\readme.md</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\src\Sitecore.Pathfinder.Console\files\project\sitecore.project\packages\Sitecore.Master.8.0.nupkg">
-      <Link>sitecore.project\packages\Sitecore.Master.8.0.nupkg</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\src\Sitecore.Pathfinder.Console\files\project\sitecore.project\packages\SitecorePathfinderCore.nupkg">
-      <Link>sitecore.project\packages\SitecorePathfinderCore.nupkg</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\src\Sitecore.Pathfinder.Console\scconfig.json">
-      <Link>sitecore.tools\scconfig.json</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="includes\Field.include.item.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <None Include="items\master\sitecore\content\Home\YamlItem.item.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <Content Include="includes\PlaceholderItem.include.item.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="includes\ParameterizedField.include.item.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="includes\PlaceholderItem.include.item.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="items\master\sitecore\content\Home\YmlItem.yml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <None Include="includes\Field.include.item.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <Content Include="items\master\sitecore\content\Home\JsonItem.item.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="items\master\sitecore\content\Home\JsonLayout.item.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="items\master\sitecore\content\Home\JsonLayout.layout.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="items\master\sitecore\content\Home\SerializedItem.item">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="items\master\sitecore\layout\layouts\MvcLayout.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="items\master\sitecore\layout\renderings\HelloWorld.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="items\master\sitecore\content\Home\YamlContentItem.master.content.yaml" />
+    <Content Include="items\master\sitecore\content\Home\YamlLayout.item.yaml" />
+    <Content Include="includes\Field.include.item.xml" />
+    <None Include="items\master\sitecore\content\Home\YamlItem.item.yaml" />
+    <Content Include="includes\PlaceholderItem.include.item.xml" />
+    <Content Include="includes\ParameterizedField.include.item.xml" />
+    <Content Include="includes\PlaceholderItem.include.item.json" />
+    <Content Include="items\master\sitecore\content\Home\YmlItem.yml" />
+    <None Include="includes\Field.include.item.json" />
+    <Content Include="items\master\sitecore\content\Home\JsonItem.item.json" />
+    <Content Include="items\master\sitecore\content\Home\JsonLayout.item.json" />
+    <Content Include="items\master\sitecore\content\Home\JsonLayout.layout.json" />
+    <Content Include="items\master\sitecore\content\Home\SerializedItem.item" />
+    <Content Include="items\master\sitecore\layout\layouts\MvcLayout.cshtml" />
+    <Content Include="items\master\sitecore\layout\renderings\HelloWorld.cshtml" />
     <Content Include="items\master\sitecore\layout\web.config" />
-    <Content Include="scconfig.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="items\master\sitecore\templates\JsonTemplate.item.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="items\master\sitecore\content\Home\YamlLayout.layout.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="scconfig.rules.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="scconfig.json" />
+    <Content Include="items\master\sitecore\templates\JsonTemplate.item.json" />
+    <Content Include="items\master\sitecore\content\Home\YamlLayout.layout.yaml" />
+    <Content Include="scconfig.rules.json" />
     <Content Include="packages.config" />
-    <None Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
+    <Content Include="sitecore.project\packages\Sitecore.Master.8.0.nupkg" />
+    <Content Include="sitecore.project\packages\SitecorePathfinderCore.nupkg" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="items\master\sitecore\content\Home\Welcome.item.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="items\master\sitecore\content\Home\XmlContentItem.master.content.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="items\master\sitecore\content\Home\XmlItem.item.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="items\master\sitecore\content\Home\XmlLayout.item.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="items\master\sitecore\content\Home\XmlLayout.layout.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="items\master\sitecore\layout\layouts\MvcLayout.item.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="items\master\sitecore\media library\mushrooms.item.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="items\master\sitecore\media library\mushrooms.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="items\master\sitecore\templates\XmlTemplate.item.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="items\master\sitecore\templates\XmlTemplateMerge.item.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="items\master\sitecore\templates\XmlTemplateMerge1.item.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Web.config" />
+    <Content Include="items\master\sitecore\content\Home\Welcome.item.xml" />
+    <Content Include="items\master\sitecore\content\Home\XmlContentItem.master.content.xml" />
+    <Content Include="items\master\sitecore\content\Home\XmlItem.item.xml" />
+    <Content Include="items\master\sitecore\content\Home\XmlLayout.item.xml" />
+    <Content Include="items\master\sitecore\content\Home\XmlLayout.layout.xml" />
+    <Content Include="items\master\sitecore\layout\layouts\MvcLayout.item.xml" />
+    <Content Include="items\master\sitecore\media library\mushrooms.item.xml" />
+    <Content Include="items\master\sitecore\media library\mushrooms.jpg" />
+    <Content Include="items\master\sitecore\templates\XmlTemplate.item.xml" />
+    <Content Include="items\master\sitecore\templates\XmlTemplateMerge.item.xml" />
+    <Content Include="items\master\sitecore\templates\XmlTemplateMerge1.item.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\files\MediaFileChecker.cs">
-      <Link>sitecore.tools\files\extensions\checkers\Files\MediaFileChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\items\ArchiveReminderChecker.cs">
-      <Link>sitecore.tools\files\extensions\checkers\Items\ArchiveReminderChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\items\ItemChecker.cs">
-      <Link>sitecore.tools\files\extensions\checkers\Items\ItemChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\items\ItemsWithSameDisplayNameChecker.cs">
-      <Link>sitecore.tools\files\extensions\checkers\Items\ItemsWithSameDisplayNameChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\items\ItemsWithSameNameChecker.cs">
-      <Link>sitecore.tools\files\extensions\checkers\Items\ItemsWithSameNameChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\items\ManyChildrenChecker.cs">
-      <Link>sitecore.tools\files\extensions\checkers\Items\ManyChildrenChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\items\ManyVersionsChecker.cs">
-      <Link>sitecore.tools\files\extensions\checkers\Items\ManyVersionsChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\items\PublishUnpublishChecker.cs">
-      <Link>sitecore.tools\files\extensions\checkers\Items\PublishUnpublishChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\items\TemplateChecker.cs">
-      <Link>sitecore.tools\files\extensions\checkers\Items\TemplateChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\items\ValidFromValidToChecker.cs">
-      <Link>sitecore.tools\files\extensions\checkers\Items\ValidFromValidToChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\ReferenceChecker.cs">
-      <Link>sitecore.tools\files\extensions\checkers\ReferenceChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\templates\DeprecatedFieldTypeChecker.cs">
-      <Link>sitecore.tools\files\extensions\checkers\Templates\DeprecatedFieldTypeChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\templates\DuplicateTemplateFieldChecker.cs">
-      <Link>sitecore.tools\files\extensions\checkers\Templates\DuplicateTemplateFieldChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\templates\FieldIdTemplateFieldIdChecker.cs">
-      <Link>sitecore.tools\files\extensions\checkers\Templates\FieldIdTemplateFieldIdChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\templates\UnusedTemplateChecker.cs">
-      <Link>sitecore.tools\files\extensions\checkers\Templates\UnusedTemplateChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\src\sitecore.pathfinder.checkers\checking\checkers\templates\UseIdInsteadOfPathChecker.cs">
-      <Link>sitecore.tools\files\extensions\checkers\Templates\UseIdInsteadOfPathChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\src\Sitecore.Pathfinder.Checkers\Checking\Checkers\Fields\LorumIpsumChecker.cs">
-      <Link>sitecore.tools\files\extensions\checkers\Fields\LorumIpsumChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\src\Sitecore.Pathfinder.Checkers\Checking\Checkers\Fields\NumberChecker.cs">
-      <Link>sitecore.tools\files\extensions\checkers\Fields\NumberChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
