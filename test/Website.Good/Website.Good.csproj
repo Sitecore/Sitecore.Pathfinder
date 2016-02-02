@@ -80,7 +80,7 @@
     <Content Include="items\master\sitecore\content\Home\JsonLayout.layout.json" />
     <Content Include="items\master\sitecore\content\Home\SerializedItem.item" />
     <Content Include="items\master\sitecore\layout\layouts\MvcLayout.cshtml" />
-    <Content Include="items\master\sitecore\layout\renderings\HelloWorld.cshtml" />
+    <None Include="items\master\sitecore\layout\renderings\HelloWorld.cshtml" />
     <Content Include="items\master\sitecore\layout\web.config" />
     <Content Include="scconfig.json" />
     <Content Include="items\master\sitecore\templates\JsonTemplate.item.json" />

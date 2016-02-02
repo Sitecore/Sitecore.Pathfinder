@@ -60,7 +60,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="build.cmd" />
     <None Include="packages.config" />
     <None Include="scconfig.markdown.json" />
   </ItemGroup>

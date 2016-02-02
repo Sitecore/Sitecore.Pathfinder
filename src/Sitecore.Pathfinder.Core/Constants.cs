@@ -77,6 +77,8 @@ namespace Sitecore.Pathfinder
 
             public const string CopyDependenciesSourceDirectory = "copy-dependencies:source-directory";
 
+            public const string Culture = "culture";
+
             public const string Database = "database";
 
             public const string DataFolderDirectory = "data-folder-directory";

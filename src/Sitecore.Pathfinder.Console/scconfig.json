@@ -314,6 +314,9 @@
         }
     },
 
+    // specifies the .NET CultureInfo name to use when parsing date/times and numbers
+    "culture": "en-US",
+
     "extensions": {
         "project-extensions-directory": "sitecore.project/extensions",
         "project-extensions-assembly-filename": "Sitecore.Pathfinder.Extensions.dll"

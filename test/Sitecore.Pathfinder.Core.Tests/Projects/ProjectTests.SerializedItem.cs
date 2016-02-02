@@ -61,13 +61,6 @@ master: {00000000-0000-0000-0000-000000000000}
 template: {76036F5E-CBCE-46D1-AF0A-4143F9B557AA}
 templatekey: Sample Item
 
-----field----
-field: {A4F985D9-98B3-4B52-AAAF-4344F6E747C6}
-name: __Workflow
-key: __workflow
-content-length: 38
-
-{A5BC37E7-ED96-4C1E-8590-A26E64DB55EA}
 ----version----
 language: en
 version: 1
@@ -122,13 +115,6 @@ key: __updated by
 content-length: 14
 
 sitecore\admin
-----field----
-field: {3E431DE1-525E-47A3-B6B0-1CCBEC3A8C98}
-name: __Workflow state
-key: __workflow state
-content-length: 38
-
-{190B1C84-F1BE-47ED-AA41-F42193D9C8FC}
 ";
             Assert.AreEqual(expected, result);
         }

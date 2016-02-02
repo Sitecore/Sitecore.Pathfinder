@@ -1,6 +1,7 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Globalization;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
@@ -33,9 +34,9 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             }
 
             DateTime dateTime;
-            if (!DateTime.TryParse(value, out dateTime))
+            if (!DateTime.TryParse(value, context.Culture, DateTimeStyles.None, out dateTime))
             {
-                context.Trace.TraceError(Msg.C1058, "DateTime field must contain a valid date/time value", TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), value);
+                context.Trace.TraceError(Msg.C1058, Texts.DateTime_field_must_contain_a_valid_date_time_value, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), value);
                 return string.Empty;
             }
 

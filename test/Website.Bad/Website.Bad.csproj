@@ -67,12 +67,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="scconfig.json" />
-    <Content Include="items\master\sitecore\content\templates\JsonTemplate.item.json" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="items\master\sitecore\content\Home\XmlItem.item.xml" />
-    <Content Include="items\master\sitecore\content\templates\XmlTemplate.item.xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -81,6 +79,7 @@
     <Folder Include="items\master\sitecore\content\layout\layouts\" />
     <Folder Include="items\master\sitecore\content\layout\renderings\" />
     <Folder Include="items\master\sitecore\content\media library\" />
+    <Folder Include="items\master\sitecore\content\templates\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="sitecore.project\packages\Sitecore.Master.8.0.nupkg" />

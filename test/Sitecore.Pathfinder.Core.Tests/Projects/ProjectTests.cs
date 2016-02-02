@@ -126,14 +126,14 @@ namespace Sitecore.Pathfinder.Projects
 
             var field = item.Fields.FirstOrDefault();
             Assert.IsNotNull(field);
-            Assert.AreEqual("__Workflow", field.FieldName);
-            Assert.AreEqual("{A5BC37E7-ED96-4C1E-8590-A26E64DB55EA}", field.Value);
+            Assert.AreEqual("Title", field.FieldName);
+            Assert.AreEqual("Pip 1", field.Value);
 
             field = item.Fields.ElementAt(1);
             Assert.IsNotNull(field);
-            Assert.AreEqual("Title", field.FieldName);
-            Assert.AreEqual("Pip 1", field.Value);
-            Assert.AreEqual("Pip 1", field.CompiledValue);
+            Assert.AreEqual("Text", field.FieldName);
+            Assert.AreEqual("Pip 2", field.Value);
+            Assert.AreEqual("Pip 2", field.CompiledValue);
             Assert.AreEqual("en", field.Language);
             Assert.AreEqual(1, field.Version);
         }

@@ -1,7 +1,8 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using Microsoft.Framework.ConfigurationModel;
@@ -55,13 +56,19 @@ namespace Sitecore.Pathfinder.Extensions
             return configuration.GetString("arg" + position);
         }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         public static IEnumerable<string> GetCommaSeparatedStringList([NotNull] this IConfiguration configuration, [NotNull] string key)
         {
             var value = configuration.Get(key) ?? string.Empty;
             var parts = value.Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToList();
             return parts;
+        }
+
+        [NotNull]
+        public static CultureInfo GetCulture([NotNull] this IConfiguration configuration)
+        {
+            var cultureName = configuration.GetString(Constants.Configuration.Culture);
+            return string.IsNullOrEmpty(cultureName) ? CultureInfo.CurrentCulture : new CultureInfo(cultureName);
         }
 
         [NotNull]

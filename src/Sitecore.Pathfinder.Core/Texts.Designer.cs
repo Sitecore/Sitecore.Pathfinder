@@ -413,6 +413,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DateTime field must contain a valid date/time value.
+        /// </summary>
+        public static string DateTime_field_must_contain_a_valid_date_time_value {
+            get {
+                return ResourceManager.GetString("DateTime_field_must_contain_a_valid_date_time_value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Packages directory not found. Skipping.
         /// </summary>
         public static string Dependencies_directory_not_found__Skipping {
