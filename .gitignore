@@ -18,6 +18,7 @@ Components/Sitecore.ContentSearch.dll
 Components/Sitecore.ContentSearch.Linq.dll
 *.csproj.sitecore
 *.csproj.sitecore.foldersync
+PrecompiledWeb/
 
 # Build results
 [Dd]ebug/

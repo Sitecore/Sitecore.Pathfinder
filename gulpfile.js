@@ -11,7 +11,7 @@
 //
 // 9. Done
 
-var version = "0.6.0-alpha";
+var version = "0.6.7-alpha";
 var zipFileDestination = "\\\\rocks2d1.dk.sitecore.net\\d$\\inetpub\\wwwroot\\Default Web Site\\Pathfinder";
 var zipFileNightlyDestination = "\\\\rocks2d1.dk.sitecore.net\\d$\\inetpub\\wwwroot\\Default Web Site\\Pathfinder\\Nightly";
 
@@ -146,7 +146,7 @@ gulp.task("nightly", function() {
 });
 
 gulp.task("publish", function() {
-    runSequence("build-project", "build-dist-directory", ["publish-zip-file", "publish-npm-package"]);
+    runSequence("build-project", "build-dist-directory", ["publish-zip-file", "publish-nuget-package", "publish-npm-package"]);
 });
 
 gulp.task("appveyor", function() {

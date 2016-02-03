@@ -54,21 +54,20 @@ namespace Sitecore.Pathfinder.Building
             }
 
             var errorCode = context.Project.Diagnostics.Any(d => d.Severity == Severity.Warning || d.Severity == Severity.Error) ? 1 : 0;
-
-            _stopwatch?.Stop();
-
-            if (context.DisplayDoneMessage)
+            if (!context.DisplayDoneMessage)
             {
-                Console.Write(Texts.Ducats___0_, context.Project.Ducats.ToString("#,##0"));
-
-                if (_stopwatch != null)
-                {
-                    Console.Write(", time: {0}ms", _stopwatch.Elapsed.TotalMilliseconds.ToString("#,##0"));
-                }
-
-                Console.WriteLine();
-                Console.WriteLine(Texts.Done);
+                return errorCode;
             }
+
+            Console.Write(Texts.Ducats___0_, context.Project.Ducats.ToString("#,##0"));
+            if (_stopwatch != null)
+            {
+                _stopwatch.Stop();
+                Console.Write(", time: {0}ms", _stopwatch.Elapsed.TotalMilliseconds.ToString("#,##0"));
+            }
+
+            Console.WriteLine();
+            Console.WriteLine(Texts.Done);
 
             return errorCode;
         }
