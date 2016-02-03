@@ -187,6 +187,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "TodoMvc", "test\TodoMvc\", 
 		SlnRelativePath = "test\TodoMvc\"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.React", "src\Features\Sitecore.Pathfinder.React\Sitecore.Pathfinder.React.csproj", "{C735B4FA-4834-47D0-A0D7-51270AD3153E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -256,17 +258,18 @@ Global
 		{2776F71A-6B50-478E-A0A0-E2151EBE8A98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2776F71A-6B50-478E-A0A0-E2151EBE8A98}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9FCA2EDF-6DC1-4B6C-8BEC-926295050A7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9FCA2EDF-6DC1-4B6C-8BEC-926295050A7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FCA2EDF-6DC1-4B6C-8BEC-926295050A7B}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{9FCA2EDF-6DC1-4B6C-8BEC-926295050A7B}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{69BAB7E7-30D5-4B77-B0E1-080F35DA4B04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{69BAB7E7-30D5-4B77-B0E1-080F35DA4B04}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69BAB7E7-30D5-4B77-B0E1-080F35DA4B04}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{69BAB7E7-30D5-4B77-B0E1-080F35DA4B04}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{7E7E0FFC-3BF6-4463-B74C-5D5BE205B355}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7E7E0FFC-3BF6-4463-B74C-5D5BE205B355}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E7E0FFC-3BF6-4463-B74C-5D5BE205B355}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{7E7E0FFC-3BF6-4463-B74C-5D5BE205B355}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{C735B4FA-4834-47D0-A0D7-51270AD3153E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C735B4FA-4834-47D0-A0D7-51270AD3153E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C735B4FA-4834-47D0-A0D7-51270AD3153E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C735B4FA-4834-47D0-A0D7-51270AD3153E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -293,5 +296,6 @@ Global
 		{9FCA2EDF-6DC1-4B6C-8BEC-926295050A7B} = {049B9C99-6613-43BB-BF14-A60D7C9F7F57}
 		{69BAB7E7-30D5-4B77-B0E1-080F35DA4B04} = {049B9C99-6613-43BB-BF14-A60D7C9F7F57}
 		{7E7E0FFC-3BF6-4463-B74C-5D5BE205B355} = {049B9C99-6613-43BB-BF14-A60D7C9F7F57}
+		{C735B4FA-4834-47D0-A0D7-51270AD3153E} = {5325B39E-6883-47AA-BD17-291B7608E834}
 	EndGlobalSection
 EndGlobal

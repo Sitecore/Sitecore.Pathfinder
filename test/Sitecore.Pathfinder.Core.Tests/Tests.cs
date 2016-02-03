@@ -5,7 +5,6 @@ using System.IO;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.Helpers;
 using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder
@@ -20,7 +19,7 @@ namespace Sitecore.Pathfinder
         public string ProjectDirectory { get; private set; } = string.Empty;
 
         [Diagnostics.NotNull]
-        public Services Services { get; private set; }
+        public Helpers.Services Services { get; private set; }
 
         protected void Mock<T>([Diagnostics.NotNull] T value)
         {
@@ -47,7 +46,7 @@ namespace Sitecore.Pathfinder
                 throw new ConfigurationException(@"Oh no, nothing works!");
             }
 
-            Services = new Services().Start(app, mock);
+            Services = new Helpers.Services().Start(app, mock);
         }
     }
 }
