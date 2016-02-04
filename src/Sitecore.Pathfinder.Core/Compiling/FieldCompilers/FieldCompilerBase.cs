@@ -13,10 +13,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
         public double Priority { get; }
 
-        public virtual bool IsExclusive
-        {
-            get { return false; }
-        }
+        public virtual bool IsExclusive => false;
 
         public abstract bool CanCompile(IFieldCompileContext context, Field field);
 
