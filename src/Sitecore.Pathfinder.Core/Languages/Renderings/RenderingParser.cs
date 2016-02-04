@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -44,8 +44,7 @@ namespace Sitecore.Pathfinder.Languages.Renderings
             context.Project.Ducats += 100;
         }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         protected abstract IEnumerable<string> GetPlaceholders([NotNull] string contents);
     }
 }

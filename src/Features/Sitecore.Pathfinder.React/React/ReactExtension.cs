@@ -10,6 +10,7 @@ namespace Sitecore.Pathfinder.React
         public override void RemoveWebsiteFiles(IBuildContext context)
         {
             RemoveWebsiteAssembly(context, "Sitecore.Pathfinder.React.dll");
+            /*
             RemoveWebsiteAssembly(context, "ClearScript.dll");
             RemoveWebsiteAssembly(context, "JavaScriptEngineSwitcher.Core.dll");
             RemoveWebsiteAssembly(context, "JavaScriptEngineSwitcher.Msie.dll");
@@ -18,15 +19,18 @@ namespace Sitecore.Pathfinder.React
             RemoveWebsiteAssembly(context, "MsieJavaScriptEngine.dll");
             RemoveWebsiteAssembly(context, "React.Core.dll");
             RemoveWebsiteAssembly(context, "React.Web.dll");
-            RemoveWebsiteAssembly(context, "React.Mvc4.dll");
+            RemoveWebsiteAssembly(context, "React.Web.Mvc4.dll");
             RemoveWebsiteAssembly(context, "VroomJs.dll");
+            RemoveWebsiteAssembly(context, "WebActivatorEx.dll");
+            */
         }
-
+                                                                             
         public override bool UpdateWebsiteFiles(IBuildContext context)
         {
             var updated = false;
 
             updated |= CopyToolsFileToWebsiteBinDirectory(context, "Sitecore.Pathfinder.React.dll");
+            /*
             updated |= CopyToolsFileToWebsiteBinDirectory(context, "ClearScript.dll");
             updated |= CopyToolsFileToWebsiteBinDirectory(context, "JavaScriptEngineSwitcher.Core.dll");
             updated |= CopyToolsFileToWebsiteBinDirectory(context, "JavaScriptEngineSwitcher.Msie.dll");
@@ -35,8 +39,10 @@ namespace Sitecore.Pathfinder.React
             updated |= CopyToolsFileToWebsiteBinDirectory(context, "MsieJavaScriptEngine.dll");
             updated |= CopyToolsFileToWebsiteBinDirectory(context, "React.Core.dll");
             updated |= CopyToolsFileToWebsiteBinDirectory(context, "React.Web.dll");
-            updated |= CopyToolsFileToWebsiteBinDirectory(context, "React.Mvc4.dll");
+            updated |= CopyToolsFileToWebsiteBinDirectory(context, "React.Web.Mvc4.dll");
             updated |= CopyToolsFileToWebsiteBinDirectory(context, "VroomJs.dll");
+            updated |= CopyToolsFileToWebsiteBinDirectory(context, "WebActivatorEx.dll");
+            */
 
             return updated;
         }                               

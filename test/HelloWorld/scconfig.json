@@ -38,6 +38,12 @@
                 "file-name-include": "*.dll"
             },
 
+            "jsx": {
+                "project-directory-to-item-path": "/wwwroot/jsx => /sitecore/layout/renderings",
+                "project-directory-to-website-directory": "/wwwroot/jsx => /jsx",
+                "upload-media": false
+            },
+
             "wwwroot": {
                 "project-directory-to-item-path": "/wwwroot => /",
                 "project-directory-to-website-directory": "/wwwroot => /",

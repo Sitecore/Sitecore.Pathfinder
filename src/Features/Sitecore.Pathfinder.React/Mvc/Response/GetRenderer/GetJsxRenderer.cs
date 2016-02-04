@@ -9,7 +9,7 @@ using Sitecore.Pathfinder.Mvc.Presentation;
 
 namespace Sitecore.Pathfinder.Mvc.Response.GetRenderer
 {
-    public class GetHtmlTemplateRenderer : GetRendererProcessor
+    public class GetJsxRenderer : GetRendererProcessor
     {
         public override void Process([Diagnostics.NotNull] GetRendererArgs args)
         {
@@ -34,7 +34,7 @@ namespace Sitecore.Pathfinder.Mvc.Response.GetRenderer
             {
                 return null;
             }
-
+                                           
             return new JsxRenderer
             {
                 FilePath = filePath,
