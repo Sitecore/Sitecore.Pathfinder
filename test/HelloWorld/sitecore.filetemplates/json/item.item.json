@@ -1,0 +1,24 @@
+{
+    "$schema": "sitecore.project/schemas/item.schema.json",
+    "Item": {
+        "Template": "/sitecore/templates/Sample/Sample Item",
+        "Fields": {
+            "Title": "Hello friend"
+            /*
+            "Layout": {
+                "Devices": [
+                    {
+                        "Name": "Default",
+                        "Layout": "/sitecore/layout/Layouts/MvcLayout",
+                        "Renderings": [
+                            {
+                                "HelloFriend": { }
+                            }
+                        ]
+                    }
+                ]
+            }
+            */
+        }
+    }
+}

@@ -41,7 +41,7 @@ namespace Sitecore.Pathfinder.ProjectTrees
 
         public IPipelineService Pipelines { get; }
 
-        public string ProjectDirectory { get; private set; }
+        public string ProjectDirectory { get; private set; } = string.Empty;
 
         public IEnumerable<IProjectTreeItem> Roots
         {
@@ -55,7 +55,7 @@ namespace Sitecore.Pathfinder.ProjectTrees
             }
         }
 
-        public string ToolsDirectory { get; private set; }
+        public string ToolsDirectory { get; private set; } = string.Empty;
 
         [NotNull]
         protected ICompositionService CompositionService { get; }

@@ -1,0 +1,96 @@
+// Available variables which can be used inside of strings.
+// ${workspaceRoot}: the root folder of the team
+// ${file}: the current opened file
+// ${fileBasename}: the current opened file's basename
+// ${fileDirname}: the current opened file's dirname
+// ${fileExtname}: the current opened file's extension
+// ${cwd}: the current working directory of the spawned process
+{
+    "version": "0.1.0",
+    "command": "scc",
+    "showOutput": "always",
+    "windows": {
+        "command": "scc.cmd"
+    },
+    "tasks": [
+        {
+            "taskName": "build",
+            "args": [ ],
+            "isBuildCommand": true,
+            "problemMatcher": {
+                "owner": "sitecore",
+                "fileLocation": [ "relative", "${workspaceRoot}" ],
+                "pattern": {
+                    // The regular expression. Matches HelloWorld.ts(2,10): error TS2339: Property 'logg' does not exist on type 'Console'.
+                    "regexp": "^([^\\s].*)\\((\\d+|\\d+,\\d+|\\d+,\\d+,\\d+,\\d+)\\):\\s+(.rror|.arning)\\s+(.+\\d+)\\s*:\\s*(.*)$",
+                    // The match group that denotes the file containing the problem.
+                    "file": 1,
+                    // The match group that denotes the problem location.
+                    "location": 2,
+                    // The match group that denotes the problem's severity. Can be omitted.
+                    "severity": 3,
+                    // The match group that denotes the problem code. Can be omitted.
+                    "code": 4,
+                    // The match group that denotes the problem's message.
+                    "message": 5
+                }
+            }
+        },
+        {
+            "taskName": "generate-code",
+            "args": [ ],
+            "isBuildCommand": false,
+            "problemMatcher": {
+                "owner": "sitecore",
+                "fileLocation": [ "relative", "${workspaceRoot}" ],
+                "pattern": {
+                    // The regular expression. Matches HelloWorld.ts(2,10): error TS2339: Property 'logg' does not exist on type 'Console'.
+                    "regexp": "^([^\\s].*)\\((\\d+|\\d+,\\d+|\\d+,\\d+,\\d+,\\d+)\\):\\s+(.rror|.arning)\\s+(.+\\d+)\\s*:\\s*(.*)$",
+                    // The match group that denotes the file containing the problem.
+                    "file": 1,
+                    // The match group that denotes the problem location.
+                    "location": 2,
+                    // The match group that denotes the problem's severity. Can be omitted.
+                    "severity": 3,
+                    // The match group that denotes the problem code. Can be omitted.
+                    "code": 4,
+                    // The match group that denotes the problem's message.
+                    "message": 5
+                }
+            }
+        },
+        {
+            "taskName": "reset-website",
+            "args": [ ],
+            "isBuildCommand": false
+        },
+        {
+            "taskName": "sync-website",
+            "args": [ ],
+            "isBuildCommand": false
+        },
+        {
+            "taskName": "validate-website",
+            "args": [ ],
+            "isBuildCommand": false,
+            "problemMatcher": {
+                "owner": "sitecore",
+                "fileLocation": [ "relative", "${workspaceRoot}" ],
+                "pattern": {
+                    // The regular expression. Matches HelloWorld.ts(2,10): error TS2339: Property 'logg' does not exist on type 'Console'.
+                    "regexp": "^([^\\s].*)\\((\\d+|\\d+,\\d+|\\d+,\\d+,\\d+,\\d+)\\):\\s+(.rror|.arning)\\s+(.+\\d+)\\s*:\\s*(.*)$",
+                    // The match group that denotes the file containing the problem.
+                    "file": 1,
+                    // The match group that denotes the problem location.
+                    "location": 2,
+                    // The match group that denotes the problem's severity. Can be omitted.
+                    "severity": 3,
+                    // The match group that denotes the problem code. Can be omitted.
+                    "code": 4,
+                    // The match group that denotes the problem's message.
+                    "message": 5
+                }
+            }
+        }
+    ]
+}

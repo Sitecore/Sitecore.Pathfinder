@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.IO;
 using System.Linq;
 using Rainbow.Storage.Yaml;
@@ -7,6 +8,7 @@ using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
 {
@@ -28,6 +30,18 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
 
             var snapshot = unicornFile.Snapshots.First();
 
+            try
+            {
+                CompileUnicornFile(context, snapshot, unicornFile);
+            }
+            catch (MissingMethodException)
+            {
+                // Unicorn or Kernel is not loading
+            }
+        }
+
+        protected virtual void CompileUnicornFile([NotNull] ICompileContext context, [NotNull] ISnapshot snapshot, [NotNull] UnicornFile unicornFile)
+        {
             // todo: use real Unicorn configuration instead of hacking it
             var formatter = new YamlSerializationFormatter(null, new AllFieldFilter());
             using (var stream = new FileStream(snapshot.SourceFile.AbsoluteFileName, FileMode.Open))

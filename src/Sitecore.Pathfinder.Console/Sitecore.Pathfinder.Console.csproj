@@ -75,29 +75,16 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Framework.ConfigurationModel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Framework.ConfigurationModel.1.0.0-beta4\lib\net45\Microsoft.Framework.ConfigurationModel.dll</HintPath>
+    <Reference Include="Microsoft.CSharp">
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Framework.ConfigurationModel.Interfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Framework.ConfigurationModel.Interfaces.1.0.0-beta4\lib\net45\Microsoft.Framework.ConfigurationModel.Interfaces.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Framework.ConfigurationModel.Json, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Framework.ConfigurationModel.Json.1.0.0-beta4\lib\net45\Microsoft.Framework.ConfigurationModel.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Framework.ConfigurationModel.Xml, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Framework.ConfigurationModel.Xml.1.0.0-beta4\lib\net45\Microsoft.Framework.ConfigurationModel.Xml.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="NuGet.Core, Version=2.10.1.766, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NuGet.Core.2.10.1\lib\net40-Client\NuGet.Core.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -112,9 +99,6 @@
     <Reference Include="System.Security" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Microsoft.CSharp">
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -140,10 +124,6 @@
     </Content>
     <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\ItemsWithSameNameChecker.cs">
       <Link>files\extensions\checkers\Items\ItemsWithSameNameChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\LorumIpsumChecker.cs">
-      <Link>files\extensions\checkers\Items\LorumIpsumChecker.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\ManyChildrenChecker.cs">
@@ -198,6 +178,14 @@
       <Link>files\extensions\checkers\Configuration\TypeAssemblyChecker.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Fields\LorumIpsumChecker.cs">
+      <Link>files\extensions\checkers\Fields\LorumIpsumChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Fields\NumberChecker.cs">
+      <Link>files\extensions\checkers\Fields\NumberChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Compile Include="Building\Tasks\AddProject.cs" />
     <Compile Include="Building\Tasks\CleanWebsite.cs" />
     <Compile Include="Building\Tasks\WriteExports.cs" />
@@ -229,10 +217,8 @@
     <Compile Include="Building\Tasks\ShowMetrics.cs" />
     <Compile Include="Building\Tasks\SynchronizeWebsite.cs" />
     <Compile Include="Building\Tasks\WriteWebsiteExports.cs" />
-    <Compile Include="Building\Tasks\PackDependencies.cs" />
     <Compile Include="Building\Tasks\FindReferences.cs" />
     <Compile Include="Building\Tasks\FindUsages.cs" />
-    <Compile Include="Building\Tasks\PackNupkgPackage.cs" />
     <Compile Include="Building\Build.cs" />
     <Compile Include="Building\Tasks\QueryBuildTaskBase.cs" />
     <Compile Include="Program.cs" />
@@ -261,6 +247,7 @@
       <Link>files\website\sitecore\shell\client\Applications\Pathfinder\PackageSources.txt</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="licenses\ICSharpCode.SharpZipLib.txt" />
     <Content Include="licenses\MarkdownSharp.txt" />
     <Content Include="licenses\Sitecore.Pathfinder.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -363,6 +350,9 @@
     <Content Include="files\project\sitecore.filetemplates\yaml\layout.master.layout.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="files\project\sitecore.project\extensions\readme.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="files\project\sitecore.project\packages\Sitecore.Master.8.0.nupkg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -600,6 +590,22 @@
       <Project>{37d4ea12-aeb1-4bfa-a5c8-76185f68dd25}</Project>
       <Name>Sitecore.Pathfinder.Markdown</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Features\Sitecore.Pathfinder.Npm\Sitecore.Pathfinder.Npm.csproj">
+      <Project>{543470a3-c795-4e05-9e38-d0a827ff4546}</Project>
+      <Name>Sitecore.Pathfinder.Npm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Features\Sitecore.Pathfinder.NuGet\Sitecore.Pathfinder.NuGet.csproj">
+      <Project>{a67c9ed1-949c-49d8-8d1a-b3774f38c128}</Project>
+      <Name>Sitecore.Pathfinder.NuGet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Features\Sitecore.Pathfinder.React\Sitecore.Pathfinder.React.csproj">
+      <Project>{c735b4fa-4834-47d0-a0d7-51270ad3153e}</Project>
+      <Name>Sitecore.Pathfinder.React</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Features\Sitecore.Pathfinder.Roslyn\Sitecore.Pathfinder.Roslyn.csproj">
+      <Project>{2776f71a-6b50-478e-a0a0-e2151ebe8a98}</Project>
+      <Name>Sitecore.Pathfinder.Roslyn</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Features\Sitecore.Pathfinder.T4\Sitecore.Pathfinder.T4.csproj">
       <Project>{bc0ec297-60e6-4d8f-a846-e1da920cfc26}</Project>
       <Name>Sitecore.Pathfinder.T4</Name>
@@ -620,7 +626,7 @@
     <Folder Include="files\project\bin\" />
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.3\analyzers\dotnet\cs\CodeContractNullability.dll" />
+    <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.4\analyzers\dotnet\cs\CodeContractNullability.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions />

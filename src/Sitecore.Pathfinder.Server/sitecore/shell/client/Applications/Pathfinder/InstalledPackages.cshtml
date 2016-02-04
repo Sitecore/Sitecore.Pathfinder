@@ -1,6 +1,6 @@
-﻿@using Sitecore.Pathfinder.Packages.Packages;
+﻿@using Sitecore.Pathfinder.Packaging
 @{
-    var packages = (IEnumerable<PackageBase>)ViewBag.Packages;
+    var packages = (IEnumerable<IPackage>)ViewBag.Packages;
 }
 <!DOCTYPE html>
 <html class="fuelux">
@@ -125,7 +125,7 @@
                             var uninstallHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage?rem=" + HttpUtility.UrlEncode(package.PackageId);
                             <tr>
                                 <td>
-                                   Hola  @packageName
+                                   @packageName
                                 </td>
                                 <td>
                                     @version

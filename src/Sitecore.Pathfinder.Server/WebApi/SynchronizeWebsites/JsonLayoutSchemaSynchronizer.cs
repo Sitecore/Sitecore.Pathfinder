@@ -115,7 +115,7 @@ namespace Sitecore.Pathfinder.WebApi.SynchronizeWebsites
             return true;
         }
 
-        protected virtual void WriteLayout([NotNull] JsonTextWriter output, [ItemNotNull] [Diagnostics.NotNull] List<string> deviceNames)
+        protected virtual void WriteLayout([NotNull] JsonTextWriter output, [ItemNotNull, Diagnostics.NotNull] List<string> deviceNames)
         {
             output.WriteStartObject("Layout");
             output.WritePropertyString("type", "object");
@@ -221,7 +221,7 @@ namespace Sitecore.Pathfinder.WebApi.SynchronizeWebsites
             }
         }
 
-        protected virtual void WriteRenderings([Diagnostics.NotNull] JsonTextWriter output, [Diagnostics.NotNull][ItemNotNull] IEnumerable<Item> renderingItems)
+        protected virtual void WriteRenderings([Diagnostics.NotNull] JsonTextWriter output, [Diagnostics.NotNull, ItemNotNull] IEnumerable<Item> renderingItems)
         {
             foreach (var rendering in renderingItems)
             {

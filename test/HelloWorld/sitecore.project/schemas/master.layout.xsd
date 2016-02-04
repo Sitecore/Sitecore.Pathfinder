@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.sitecore.net/pathfinder/layouts/master" xmlns="http://www.sitecore.net/pathfinder/layouts/master" xmlns:vs="http://schemas.microsoft.com/Visual-Studio-Intellisense" vs:friendlyname="Sitecore Pathfinder Layout Schema" vs:ishtmlschema="false" vs:iscasesensitive="true" vs:requireattributequotes="true" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="bool">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="False" />
+      <xs:enumeration value="True" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="bindablebool">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="False" />
+          <xs:enumeration value="True" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="\{Binding.*\}" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="\{\@.*\}" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="bindableint">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:int" />
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="\{Binding.*\}" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="\{\@.*\}" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:attributeGroup name="stdattr">
+    <xs:attribute name="Placeholder" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>The place holder where this rendering will be rendered.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="DataSource" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>The data source.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="Cacheable" type="bool">
+      <xs:annotation>
+        <xs:documentation>Indicates if the output will be cached.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="VaryByData" type="bool">
+      <xs:annotation>
+        <xs:documentation>Indicates if the cached output will vary by the data source.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="VaryByDevice" type="bool">
+      <xs:annotation>
+        <xs:documentation>Indicates if the cached output will vary by the current device.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="VaryByLogin" type="bool">
+      <xs:annotation>
+        <xs:documentation>Indicates if the cached output will vary by the login.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="VaryByParameters" type="bool">
+      <xs:annotation>
+        <xs:documentation>Indicates if the cached output will vary by the parameters.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="VaryByQueryString" type="bool">
+      <xs:annotation>
+        <xs:documentation>Indicates if the cached output will vary by the query string.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="VaryByUser" type="bool">
+      <xs:annotation>
+        <xs:documentation>Indicates if the cached output will vary by the user.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:group name="rendering">
+    <xs:choice>
+      <xs:element name="__Sublayout">
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="rendering" />
+          </xs:sequence>
+          <xs:attributeGroup ref="stdattr" />
+          <xs:anyAttribute processContents="lax" />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="about">
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="rendering" />
+          </xs:sequence>
+          <xs:attributeGroup ref="stdattr" />
+          <xs:anyAttribute processContents="lax" />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AppEditor">
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="rendering" />
+          </xs:sequence>
+          <xs:attributeGroup ref="stdattr" />
+          <xs:anyAttribute processContents="lax" />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="contact">
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="rendering" />
+          </xs:sequence>
+          <xs:attributeGroup ref="stdattr" />
+          <xs:anyAttribute processContents="lax" />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="FeedRenderer">
+        <xs:annotation>
+          <xs:documentation>Renders individual items in RSS feeds</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="rendering" />
+          </xs:sequence>
+          <xs:attribute name="AdditionalParameters" type="xs:string" />
+          <xs:attribute name="AuthorField" type="xs:string" />
+          <xs:attribute name="BodyField" type="xs:string" />
+          <xs:attribute name="EnclosureField" type="xs:string" />
+          <xs:attribute name="TitleField" type="xs:string" />
+          <xs:attributeGroup ref="stdattr" />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="FieldRenderer">
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="rendering" />
+          </xs:sequence>
+          <xs:attributeGroup ref="stdattr" />
+          <xs:anyAttribute processContents="lax" />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="HiddenComponentsBegin">
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="rendering" />
+          </xs:sequence>
+          <xs:attributeGroup ref="stdattr" />
+          <xs:anyAttribute processContents="lax" />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="HiddenComponentsEnd">
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="rendering" />
+          </xs:sequence>
+          <xs:attributeGroup ref="stdattr" />
+          <xs:anyAttribute processContents="lax" />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="HiddenComponentsHead">
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="rendering" />
+          </xs:sequence>
+          <xs:attributeGroup ref="stdattr" />
+          <xs:anyAttribute processContents="lax" />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="index">
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="rendering" />
+          </xs:sequence>
+          <xs:attributeGroup ref="stdattr" />
+          <xs:anyAttribute processContents="lax" />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="MvcLayout">
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="rendering" />
+          </xs:sequence>
+          <xs:attributeGroup ref="stdattr" />
+          <xs:anyAttribute processContents="lax" />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Placeholder">
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="rendering" />
+          </xs:sequence>
+          <xs:attributeGroup ref="stdattr" />
+          <xs:anyAttribute processContents="lax" />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="post">
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="rendering" />
+          </xs:sequence>
+          <xs:attributeGroup ref="stdattr" />
+          <xs:anyAttribute processContents="lax" />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Rendering">
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="rendering" />
+          </xs:sequence>
+          <xs:attribute name="RenderingName" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The full name of the rendering.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attributeGroup ref="stdattr" />
+          <xs:anyAttribute processContents="lax" />
+        </xs:complexType>
+      </xs:element>
+    </xs:choice>
+  </xs:group>
+  <xs:element name="Layout">
+    <xs:complexType>
+      <xs:sequence minOccurs="1" maxOccurs="unbounded">
+        <xs:element name="Device">
+          <xs:complexType>
+            <xs:sequence minOccurs="0" maxOccurs="unbounded">
+              <xs:group ref="rendering" />
+            </xs:sequence>
+            <xs:attribute name="Name">
+              <xs:annotation>
+                <xs:documentation>The name of the device</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:enumeration value="Default" />
+                  <xs:enumeration value="Print" />
+                  <xs:enumeration value="App Center Placeholder" />
+                  <xs:enumeration value="Feed" />
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="Layout" type="xs:string">
+              <xs:annotation>
+                <xs:documentation>The name of the layout</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+          <xs:unique name="IdKey">
+            <xs:selector xpath=".//*" />
+            <xs:field xpath="@Id" />
+          </xs:unique>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="ItemId" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The ID of the item where this layout is saved.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

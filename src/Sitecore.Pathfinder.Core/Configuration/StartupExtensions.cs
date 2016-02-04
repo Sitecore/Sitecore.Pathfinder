@@ -29,14 +29,18 @@ namespace Sitecore.Pathfinder.Configuration
 
             var configurationService = new ConfigurationService(configuration);
 
-            try
+            if ((options & ConfigurationOptions.DoNotLoadConfig) != ConfigurationOptions.DoNotLoadConfig)
             {
-                configurationService.Load(options);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return null;
+                try
+                {                       
+                    configurationService.Load(options);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.StackTrace);
+                    return null;
+                }
             }
 
             return configuration;

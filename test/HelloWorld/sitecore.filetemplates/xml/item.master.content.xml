@@ -1,0 +1,3 @@
+﻿<Sample.Item xmlns="http://www.sitecore.net/pathfinder/content/master" Title="Hello friend">
+    <Sample.Item Title="This is a subitem"/>
+</Sample.Item>

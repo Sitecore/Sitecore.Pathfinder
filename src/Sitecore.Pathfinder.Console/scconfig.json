@@ -19,7 +19,7 @@
 
         // comma separated list of files and directories to ignore
         "ignore-directories": ".vscode, sitecore.filetemplates, sitecore.project, sitecore.tools, node_modules, roslyn, includes",
-        "ignore-filenames": "scc.cmd, project.json, readme.md, web.config",
+        "ignore-filenames": "scc.cmd, project.json, readme.md, web.config, packages.config",
 
         // default file search pattern
         "search-pattern": "*",
@@ -43,6 +43,11 @@
 
         // if force-update is true, media will always be uploaded and files always copied during emitting
         "force-update": false,
+
+        "compile-bin-files": {
+            "include": "",
+            "exclude": ""
+        },
 
         "media": {
             "template": {
@@ -143,6 +148,11 @@
         "directory": "sitecore.project",
         "include": "**/*.nuspec",
         "exclude": ""
+    },
+
+    "pack-npm": {
+        "output-file": "sitecore.project/sitecore.tgz",
+        "package-json-file": "sitecore.project/package.json"
     },
 
     "publish-databases": {
@@ -303,6 +313,9 @@
             }
         }
     },
+
+    // specifies the .NET CultureInfo name to use when parsing date/times and numbers
+    "culture": "en-US",
 
     "extensions": {
         "project-extensions-directory": "sitecore.project/extensions",

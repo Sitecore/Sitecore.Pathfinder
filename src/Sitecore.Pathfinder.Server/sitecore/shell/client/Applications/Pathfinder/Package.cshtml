@@ -1,22 +1,21 @@
-﻿@using Sitecore.Pathfinder.Packages
-@using NuGet
+﻿@using Sitecore.Pathfinder.Packaging
 <!DOCTYPE html>
 @{
     var packageId = ViewBag.PackageId as string ?? string.Empty;
 
-    var packageService = new PackageService();
-    var packages = packageService.FindPackagesById(packageId);
-    var nuget = packages.First();
+    var packageService = (IPackageService)ViewBag.PackageService;
+    var packages = packageService.FindInstallablePackagesById(packageId);
+    var package = packages.First();
 
-    var installedPackage = packageService.FindInstalledPackageById(packageId);
+    var installedPackage = packageService.FindInstalledPackagesById(packageId).FirstOrDefault();
 
-    var packageName = nuget.Package.Title ?? nuget.Package.Id;
-    var iconUrl = nuget.Package.IconUrl != null ? nuget.Package.IconUrl.ToString() : "../packageDefaultIcon-50x50.png";
-    var published = nuget.Package.Published != null ? nuget.Package.Published.Value.ToString("d") ?? string.Empty : string.Empty;
-    var projectUrl = nuget.Package.ProjectUrl != null ? nuget.Package.ProjectUrl.ToString() : string.Empty;
-    var licenseUrl = nuget.Package.LicenseUrl != null ? nuget.Package.LicenseUrl.ToString() : string.Empty;
-    var owners = nuget.Package.Owners;
-    var authors = nuget.Package.Authors;
+    var packageName = package.Name ?? package.PackageId;
+    var iconUrl = !string.IsNullOrEmpty(package.IconUrl) ? package.IconUrl : "../packageDefaultIcon-50x50.png";
+    var published = package.Published != DateTime.MinValue ? package.Published.ToString("d") : string.Empty;
+    var projectUrl = !string.IsNullOrEmpty(package.ProjectUrl) ? package.ProjectUrl : string.Empty;
+    var licenseUrl = !string.IsNullOrEmpty(package.LicenseUrl) ? package.LicenseUrl : string.Empty;
+    var owners = package.Owners;
+    var authors = package.Authors;
 }
 <html class="fuelux">
 <head>
@@ -160,45 +159,33 @@
                     <h1>@packageName</h1>
                     <hr />
                     <p>
-                        @nuget.Package.Description
+                        @package.Description
                     </p>
 
                     <h3>Owners</h3>
-                    @foreach (var owner in owners)
-                    {
-                        <p>@owner</p>
-                    }
+                    <p>@package.Owners</p>
 
                     <h3>Authors</h3>
-                    @foreach (var author in authors)
-                    {
-                        <p>@author</p>
-                    }
+                    <p>@package.Authors</p>
 
-                    @if (!string.IsNullOrEmpty(nuget.Package.Copyright))
+                    @if (!string.IsNullOrEmpty(package.Copyright))
                     {
                         <h3>Copyright</h3>
-                        @nuget.Package.Copyright
+                        @package.Copyright
                     }
 
-                    @if (nuget.Package.DependencySets.Any(s => s.TargetFramework != null))
+                    @if (package.DependencySets.Any())
                     {
                         <h3>Dependencies</h3>
-                        foreach (var set in nuget.Package.DependencySets)
+                        foreach (var set in package.DependencySets)
                         {
-                            if (set.TargetFramework == null)
-                            {
-                                continue;
-                            }
-
                             if (!set.Dependencies.Any())
                             {
                                 continue;
                             }
 
-
                             <p>
-                                <u>@set.TargetFramework.Identifier version @set.TargetFramework.Version.ToString()</u>
+                                <u>@set.TargetFramework version @set.Version</u>
                             </p>
 
                             foreach (var dependency in set.Dependencies)
@@ -207,7 +194,7 @@
 
                                 <p>
                                     <a href="@packageUrl">@dependency.Id</a>
-                                    <span>@VersionUtility.PrettyPrint(dependency.VersionSpec)</span>
+                                    <span>@dependency.Version</span>
                                 </p>
                             }
                         }
@@ -220,20 +207,19 @@
                             <th>Last update</th>
                             <th>Action</th>
                         </tr>
-                        @foreach (var package in packages.OrderByDescending(p => p.Package.Version))
+                        @foreach (var packageVersion in packages.OrderByDescending(p => p.Version))
                         {
-                            var isInstalled = installedPackage != null && package.Version == installedPackage.Version;
-                            var installHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage?ins=" + System.Web.HttpUtility.UrlEncode(package.PackageId) + "&v=" + System.Web.HttpUtility.UrlEncode(package.Version.ToString());
-                            var updateHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage?upd=" + System.Web.HttpUtility.UrlEncode(package.PackageId) + "&v=" + System.Web.HttpUtility.UrlEncode(package.Version.ToString());
-                            var uninstallHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage?rem=" + System.Web.HttpUtility.UrlEncode(package.PackageId);
-
+                            var isInstalled = installedPackage != null && packageVersion.Version == installedPackage.Version;
+                            var installHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage?ins=" + System.Web.HttpUtility.UrlEncode(packageVersion.PackageId) + "&v=" + System.Web.HttpUtility.UrlEncode(packageVersion.Version.ToString());
+                            var updateHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage?upd=" + System.Web.HttpUtility.UrlEncode(packageVersion.PackageId) + "&v=" + System.Web.HttpUtility.UrlEncode(packageVersion.Version.ToString());
+                            var uninstallHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage?rem=" + System.Web.HttpUtility.UrlEncode(packageVersion.PackageId);
 
                             <tr>
                                 <td>
-                                    @package.Package.Version.ToString()
+                                    @packageVersion.Version.ToString()
                                 </td>
                                 <td>
-                                    @(package.Package.Published != null ? package.Package.Published.Value.ToString("d") ?? string.Empty : string.Empty)
+                                    @(packageVersion.Published != DateTime.MinValue ? packageVersion.Published.ToString("d") ?? string.Empty : string.Empty)
                                 </td>
                                 <td>
                                     @if (isInstalled)
@@ -264,6 +250,7 @@
             </div>
 
         </section>
+
     </div>
 </body>
 </html>

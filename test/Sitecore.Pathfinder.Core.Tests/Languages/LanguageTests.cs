@@ -11,7 +11,7 @@ namespace Sitecore.Pathfinder.Languages
     [TestFixture]
     public class LanguageTests : Tests
     {
-        [NotNull]
+        [Diagnostics.NotNull]
         public IProject Project { get; set; }
 
         [TestFixtureSetUp]

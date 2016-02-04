@@ -1,5 +1,6 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System.Globalization;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
@@ -14,6 +15,9 @@ namespace Sitecore.Pathfinder.Parsing
     {
         [NotNull]
         IConfiguration Configuration { get; }
+
+        [NotNull]
+        CultureInfo Culture { get; }
 
         [NotNull]
         string DatabaseName { get; }
@@ -40,15 +44,15 @@ namespace Sitecore.Pathfinder.Parsing
         IReferenceParserService ReferenceParser { get; }
 
         [NotNull]
+        ISchemaService SchemaService { get; }
+
+        [NotNull]
         ISnapshot Snapshot { get; }
 
         [NotNull]
         ITraceService Trace { get; }
 
         bool UploadMedia { get; }
-
-        [NotNull]
-        ISchemaService SchemaService { get; }
 
         [NotNull]
         IParseContext With([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] PathMappingContext pathMappingContext);

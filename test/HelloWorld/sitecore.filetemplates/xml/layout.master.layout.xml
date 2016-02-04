@@ -1,0 +1,5 @@
+﻿<Layout xmlns="http://www.sitecore.net/pathfinder/layouts/master">
+    <Device Name="Default" Layout="/sitecore/layout/Layouts/MvcLayout">
+        <Sample.Rendering DataSource="/sitecore" />
+    </Device>
+</Layout>

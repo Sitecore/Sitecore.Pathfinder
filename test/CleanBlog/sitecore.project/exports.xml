@@ -1,0 +1,61 @@
+<Exports>
+  <Template Id="{F4C3F303-976D-105B-357E-E535E11AE3FD}" Database="master" Name="Post" Path="/sitecore/templates/CleanBlog/Post" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Name="Fields">
+      <Field Name="Title" Type="Single-Line Text" />
+      <Field Name="Subtitle" Type="Single-Line Text" />
+      <Field Name="Posted" Type="Single-Line Text" />
+      <Field Name="Text" Type="Rich Text" />
+    </Section>
+  </Template>
+  <Template Id="{815F21A6-56B5-00CD-EF76-436D8FA29A3D}" Database="master" Name="CleanBlog" Path="/sitecore/templates/CleanBlog/CleanBlog" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Name="Fields">
+      <Field Name="PageTitle" Type="Single-Line Text" />
+      <Field Name="Header" Type="Single-Line Text" />
+      <Field Name="Subheader" Type="Single-Line Text" />
+      <Field Name="ToggleNavigation" Type="Single-Line Text" />
+      <Field Name="StartBootstrap" Type="Single-Line Text" />
+      <Field Name="Copyright" Type="Single-Line Text" />
+      <Field Name="OlderPosts" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{7C763DB2-8501-1D36-52DB-1E1E4AB0A604}" Database="master" Name="Contact" Path="/sitecore/templates/CleanBlog/Contact" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Name="Fields">
+      <Field Name="PageTitle" Type="Single-Line Text" />
+      <Field Name="Header" Type="Single-Line Text" />
+      <Field Name="Subheader" Type="Single-Line Text" />
+      <Field Name="Text" Type="Rich Text" />
+    </Section>
+  </Template>
+  <Template Id="{EE2F08E7-23AD-BA0B-0B6E-307EEB11EA98}" Database="master" Name="About" Path="/sitecore/templates/CleanBlog/About" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Name="Fields">
+      <Field Name="PageTitle" Type="Single-Line Text" />
+      <Field Name="Header" Type="Single-Line Text" />
+      <Field Name="Subheader" Type="Single-Line Text" />
+      <Field Name="Text" Type="Rich Text" />
+    </Section>
+  </Template>
+  <Item Id="{2FFB3FCB-CC1D-6099-38D1-A3A1FB627844}" Database="master" Name="__Standard Values" Path="/sitecore/templates/CleanBlog/Post/__Standard Values" Template="/sitecore/templates/CleanBlog/Post" />
+  <Item Id="{C0D75663-D122-E705-54EA-5120DC19F1B0}" Database="master" Name="Welcome" Path="/sitecore/content/Home/Welcome" Template="/sitecore/templates/Sample/Sample Item" />
+  <Item Id="{074FEDD7-5CB4-CAF3-E212-0D18018E085E}" Database="master" Name="CleanBlog" Path="/sitecore/content/Home/CleanBlog" Template="/sitecore/templates/CleanBlog/CleanBlog" />
+  <Item Id="{4D202EE4-215F-0D3A-6C22-92129B406ADB}" Database="master" Name="Post4" Path="/sitecore/content/Home/CleanBlog/Posts/Post4" Template="/sitecore/templates/CleanBlog/Post" />
+  <Item Id="{30E2709B-16C9-926D-89D8-C6B9B6E48B87}" Database="master" Name="Post3" Path="/sitecore/content/Home/CleanBlog/Posts/Post3" Template="/sitecore/templates/CleanBlog/Post" />
+  <Item Id="{E2EB8BEF-93DE-9317-6525-C7122C5CBD07}" Database="master" Name="Post2" Path="/sitecore/content/Home/CleanBlog/Posts/Post2" Template="/sitecore/templates/CleanBlog/Post" />
+  <Item Id="{99D0E203-4963-6F21-90B7-06A23E310C1F}" Database="master" Name="Post1" Path="/sitecore/content/Home/CleanBlog/Posts/Post1" Template="/sitecore/templates/CleanBlog/Post" />
+  <Item Id="{2341F179-F881-775A-EDD4-9A9CBAA03A7A}" Database="master" Name="Contact" Path="/sitecore/content/Home/CleanBlog/NavBar/Contact" Template="/sitecore/templates/CleanBlog/Contact" />
+  <Item Id="{3D669B70-8FC0-A05E-211D-C79C896EDF24}" Database="master" Name="About" Path="/sitecore/content/Home/CleanBlog/NavBar/About" Template="/sitecore/templates/CleanBlog/About" />
+  <Item Id="{F8DFE268-D587-E540-1BDE-6B029B5C1459}" Database="master" Name="Title" Path="/sitecore/templates/CleanBlog/Post/Fields/Title" Template="{455A3E98-A627-4B40-8035-E683A0331AC7}" />
+  <Item Id="{4BD95DE1-1F1F-CB26-341D-D381BDCC291F}" Database="master" Name="Subtitle" Path="/sitecore/templates/CleanBlog/Post/Fields/Subtitle" Template="{455A3E98-A627-4B40-8035-E683A0331AC7}" />
+  <Item Id="{FDBE4F16-325B-F71D-D698-34EA44F52D41}" Database="master" Name="Posted" Path="/sitecore/templates/CleanBlog/Post/Fields/Posted" Template="{455A3E98-A627-4B40-8035-E683A0331AC7}" />
+  <Item Id="{FBB1D674-EC3E-80DC-EA39-14A80733F24B}" Database="master" Name="Text" Path="/sitecore/templates/CleanBlog/Post/Fields/Text" Template="{455A3E98-A627-4B40-8035-E683A0331AC7}" />
+  <Item Id="{54734951-E562-39F3-A84A-5D4B02825D48}" Database="master" Name="Fields" Path="/sitecore/templates/CleanBlog/Post/Fields" Template="{E269FBB5-3750-427A-9149-7AA950B49301}" />
+  <Item Id="{F4C3F303-976D-105B-357E-E535E11AE3FD}" Database="master" Name="Post" Path="/sitecore/templates/CleanBlog/Post" Template="{AB86861A-6030-46C5-B394-E8F99E8B87DB}" />
+  <Item Id="{EA436249-65B4-8C3C-6FB7-A81B39BC9129}" Database="master" Name="post" Path="/sitecore/layout/renderings/CleanBlog/post" Template="{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}" />
+  <Item Id="{A21D1772-3C77-1993-EC92-AB23E8F9CECA}" Database="master" Name="index" Path="/sitecore/layout/renderings/CleanBlog/index" Template="{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}" />
+  <Item Id="{47E4B1FB-BE55-8229-799B-4C99EEBBF508}" Database="master" Name="contact" Path="/sitecore/layout/renderings/CleanBlog/contact" Template="{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}" />
+  <Item Id="{B3AA36D5-C41F-1F0B-4F8C-9AE3C0134FAE}" Database="master" Name="about" Path="/sitecore/layout/renderings/CleanBlog/about" Template="{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}" />
+  <Item Id="{2B42DBCB-10A8-544C-4B08-C0B35A184161}" Database="master" Name="post-sample-image" Path="/sitecore/media library/CleanBlog/post-sample-image" Template="/sitecore/templates/System/Media/Unversioned/Jpeg" />
+  <Item Id="{5B8E44F5-EB03-36D2-98B0-D9A79B7334C9}" Database="master" Name="post-bg" Path="/sitecore/media library/CleanBlog/post-bg" Template="/sitecore/templates/System/Media/Unversioned/Jpeg" />
+  <Item Id="{5E2AEA87-3E53-EC97-577D-FCC2B0CB0C3D}" Database="master" Name="home-bg" Path="/sitecore/media library/CleanBlog/home-bg" Template="/sitecore/templates/System/Media/Unversioned/Jpeg" />
+  <Item Id="{58692726-940A-3863-EB4C-C5CC9346077E}" Database="master" Name="contact-bg" Path="/sitecore/media library/CleanBlog/contact-bg" Template="/sitecore/templates/System/Media/Unversioned/Jpeg" />
+  <Item Id="{BAB769B8-7BB7-7262-FCD9-533494E0784F}" Database="master" Name="about-bg" Path="/sitecore/media library/CleanBlog/about-bg" Template="/sitecore/templates/System/Media/Unversioned/Jpeg" />
+</Exports>

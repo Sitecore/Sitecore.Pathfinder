@@ -21,8 +21,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
         [Diagnostics.NotNull]
         public string DatabaseName { get; set; } = string.Empty;
 
-        [Diagnostics.NotNull]
-        [ItemNotNull]
+        [Diagnostics.NotNull, ItemNotNull]
         public ICollection<FieldWriter> Fields { get; } = new List<FieldWriter>();
 
         public Guid Guid { get; set; } = Guid.Empty;
@@ -39,7 +38,8 @@ namespace Sitecore.Pathfinder.Emitters.Writers
         [Diagnostics.NotNull]
         public string TemplateIdOrPath { get; set; } = string.Empty;
 
-        public virtual void Write([Diagnostics.NotNull] IEmitContext context)
+        [Diagnostics.NotNull]
+        public virtual Item Write([Diagnostics.NotNull] IEmitContext context)
         {
             var database = Factory.GetDatabase(DatabaseName);
             if (database == null)
@@ -77,6 +77,8 @@ namespace Sitecore.Pathfinder.Emitters.Writers
 
                 existingItem.Recycle();
             }
+
+            return item;
         }
 
         [Diagnostics.NotNull]

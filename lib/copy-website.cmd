@@ -1,0 +1,1 @@
+xcopy Sitecore.Website\*.dll Sitecore /y

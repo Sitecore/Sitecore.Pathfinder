@@ -615,4 +615,13 @@
     <data name="Failed_to_remove__" xml:space="preserve">
     <value>Failed to remove: </value>
   </data>
+    <data name="Creating_npm_module___" xml:space="preserve">
+    <value>Creating npm module...</value>
+  </data>
+    <data name="_package_json__file_not_found__Skipping_" xml:space="preserve">
+    <value>'package.json' file not found. Skipping.</value>
+  </data>
+    <data name="DateTime_field_must_contain_a_valid_date_time_value" xml:space="preserve">
+    <value>DateTime field must contain a valid date/time value</value>
+  </data>
 </root>

@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -55,6 +55,10 @@ namespace Sitecore.Pathfinder
 
             public const string BuildProject = "build-project:tasks";
 
+            public const string BuildProjectCompileBinFilesExclude = "build-project:compile-bin-files:exclude";
+
+            public const string BuildProjectCompileBinFilesInclude = "build-project:compile-bin-files:include";
+
             public const string BuildProjectForceUpdate = "build-project:force-update";
 
             public const string BuildProjectMediaTemplate = "build-project:media:template";
@@ -72,6 +76,8 @@ namespace Sitecore.Pathfinder
             public const string CommandLineConfig = "config";
 
             public const string CopyDependenciesSourceDirectory = "copy-dependencies:source-directory";
+
+            public const string Culture = "culture";
 
             public const string Database = "database";
 
@@ -106,6 +112,10 @@ namespace Sitecore.Pathfinder
             public const string MessagesDisabled = "messages:disabled";
 
             public const string PackageDirectory = "copy-package:package-directory";
+
+            public const string PackNpmOutputFile = "pack-npm:output-file";
+
+            public const string PackNpmPackageJsonFile = "pack-npm:package-json-file";
 
             public const string PackNugetDirectory = "pack-nuget:directory";
 

@@ -1,10 +1,12 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.ComponentModel.Composition;
+using System.Globalization;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Parsing.References;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
@@ -24,9 +26,13 @@ namespace Sitecore.Pathfinder.Parsing
             SchemaService = schemaService;
             ReferenceParser = referenceParser;
             Snapshot = Snapshots.Snapshot.Empty;
+
+            Culture = Configuration.GetCulture();
         }
 
         public IConfiguration Configuration { get; }
+
+        public CultureInfo Culture { get; }
 
         public virtual string DatabaseName { get; private set; }
 

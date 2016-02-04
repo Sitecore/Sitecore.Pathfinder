@@ -1,5 +1,8 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System.Linq;
+using Sitecore.Data.Items;
+using Sitecore.Data.Validators;
 using Sitecore.Pathfinder.Emitters.Writers;
 using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Projects;
@@ -27,7 +30,37 @@ namespace Sitecore.Pathfinder.Emitters.Items
             }
 
             var templateWriter = new TemplateWriter(template);
-            templateWriter.Write(context);
+
+            var dataItem = templateWriter.Write(context);
+
+            if (dataItem != null)
+            {
+                Check(context, template, dataItem);
+            }
+        }
+
+        protected virtual void Check([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] Template item, [Diagnostics.NotNull] Item dataItem)
+        {
+            var validatorCollection = ValidatorManager.BuildValidators(ValidatorsMode.ValidateButton, dataItem);
+
+            ValidatorManager.Validate(validatorCollection, new ValidatorOptions(true));
+
+            foreach (BaseValidator validator in validatorCollection)
+            {
+                switch (validator.Result)
+                {
+                    case ValidatorResult.Suggestion:
+                    case ValidatorResult.Warning:
+                        context.Trace.TraceWarning(validator.Text, item.SourceTextNodes.First(), validator.GetFieldDisplayName());
+                        break;
+
+                    case ValidatorResult.Error:
+                    case ValidatorResult.CriticalError:
+                    case ValidatorResult.FatalError:
+                        context.Trace.TraceError(validator.Text, item.SourceTextNodes.First(), validator.GetFieldDisplayName());
+                        break;
+                }
+            }
         }
     }
 }

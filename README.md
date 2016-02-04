@@ -1,5 +1,9 @@
 # Sitecore Pathfinder
 
+[![Build status](https://ci.appveyor.com/api/projects/status/21a8xc3s80mcic81?svg=true)](https://ci.appveyor.com/project/JakobChristensen/sitecore-pathfinder) [![MyGet Prerelease](https://img.shields.io/myget/sitecore-pathfinder/vpre/Sitecore.Pathfinder.svg?label=version)](https://www.myget.org/feed/sitecore-pathfinder/package/nuget/Sitecore.Pathfinder) [![Downloads](https://img.shields.io/myget/sitecore-pathfinder/dt/sitecore.pathfinder.svg?label=downloads)](https://www.myget.org/feed/sitecore-pathfinder/package/nuget/Sitecore.Pathfinder) 
+
+[![Build History](https://ci-buildstats.azurewebsites.net/appveyor/chart/JakobChristensen/sitecore-pathfinder?branch=master&includeBuildsFromPullRequest=false)](https://ci.appveyor.com/project/JakobChristensen/sitecore-pathfinder) 
+
 Get started, get far, get happy!
 
 An experimental tool chain for Sitecore.
@@ -25,6 +29,7 @@ Follow the walk-throughs:
 
 * [Setting up](docs/walkthroughs/1. Setting up/README.md)
 * [HelloWorld](docs/walkthroughs/2. Hello world/README.md)
+
 
 ## Introduction
 Pathfinder is an experimental toolchain for Sitecore, that allows developers to use their favorite tools 

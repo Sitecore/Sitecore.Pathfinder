@@ -1,6 +1,7 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.ComponentModel.Composition;
+using System.Globalization;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
 
@@ -14,6 +15,9 @@ namespace Sitecore.Pathfinder.Checking
         ICompositionService CompositionService { get; }
 
         int ConventionCount { get; set; }
+
+        [NotNull]
+        CultureInfo Culture { get; }
 
         bool IsDeployable { get; set; }
 

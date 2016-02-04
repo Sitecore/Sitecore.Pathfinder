@@ -42,27 +42,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Framework.ConfigurationModel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Framework.ConfigurationModel.1.0.0-beta4\lib\net45\Microsoft.Framework.ConfigurationModel.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.Framework.ConfigurationModel.Interfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Framework.ConfigurationModel.Interfaces.1.0.0-beta4\lib\net45\Microsoft.Framework.ConfigurationModel.Interfaces.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Framework.ConfigurationModel.Json, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Framework.ConfigurationModel.Json.1.0.0-beta4\lib\net45\Microsoft.Framework.ConfigurationModel.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Framework.ConfigurationModel.Xml, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Framework.ConfigurationModel.Xml.1.0.0-beta4\lib\net45\Microsoft.Framework.ConfigurationModel.Xml.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -78,26 +61,18 @@
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NuGet.Core, Version=2.10.1.766, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NuGet.Core.2.10.1\lib\net40-Client\NuGet.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Sitecore.ContentSearch">
       <HintPath>..\..\lib\Sitecore\Sitecore.ContentSearch.dll</HintPath>
-      <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Kernel, Version=8.1.5195.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Sitecore.Kernel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Sitecore\Sitecore.Kernel.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Mvc">
       <HintPath>..\..\lib\Sitecore\Sitecore.Mvc.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Zip">
       <HintPath>..\..\lib\Sitecore\Sitecore.Zip.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -159,7 +134,8 @@
     <Compile Include="Controllers\PathfinderPackagesController.cs" />
     <Compile Include="Controllers\PathfinderPublishController.cs" />
     <Compile Include="Controllers\PathfinderWebApiController.cs" />
-    <Compile Include="Emitters\Emitter.cs" />
+    <Compile Include="Emitters\EmitterService.cs" />
+    <Compile Include="Emitters\Files\ConfigFileEmitter.cs" />
     <Compile Include="Emitters\Writers\FieldWriter.cs" />
     <Compile Include="Configuration\PathfinderSettings.cs" />
     <Compile Include="Emitters\Items\ItemEmitter.cs" />
@@ -179,9 +155,6 @@
     <Compile Include="Jobs\BackgroundJob.cs" />
     <Compile Include="Mvc\Presentation\HtmlTemplateRenderer.cs" />
     <Compile Include="Mvc\Response\GetRenderer\GetHtmlTemplateRenderer.cs" />
-    <Compile Include="Packages\PackageService.cs" />
-    <Compile Include="Packages\Packages\NugetPackage.cs" />
-    <Compile Include="Packages\Packages\PackageBase.cs" />
     <Compile Include="Pipelines\Loader\InitializePathfinderProjects.cs" />
     <Compile Include="Pipelines\Loader\MapRoutes.cs" />
     <Compile Include="Projects\IProjectContext.cs" />
@@ -211,13 +184,17 @@
     <Compile Include="WebApi\TroubleshootWebsites\2000 - RepublishMasterDatabaseTroubleshooter.cs" />
     <Compile Include="WebApi\TroubleshootWebsites\3000 - RebuildLinkDatabaseTroubleshooter.cs" />
     <Compile Include="WebApi\UpdateProjectWebsiteMappings.cs" />
-    <Compile Include="WebApi\WriteWebsiteExports.cs" />
     <Compile Include="WebApi\TroubleshootWebsites\TroubleshootWebsite.cs" />
+    <Compile Include="WebApi\WriteWebsiteExports.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Features\Sitecore.Pathfinder.NuGet\Sitecore.Pathfinder.NuGet.csproj">
+      <Project>{a67c9ed1-949c-49d8-8d1a-b3774f38c128}</Project>
+      <Name>Sitecore.Pathfinder.NuGet</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sitecore.Pathfinder.Core\Sitecore.Pathfinder.Core.csproj">
       <Project>{c674eebf-bbf6-4eda-af5b-a4d58d0be986}</Project>
       <Name>Sitecore.Pathfinder.Core</Name>
@@ -239,7 +216,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.3\analyzers\dotnet\cs\CodeContractNullability.dll" />
+    <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.4\analyzers\dotnet\cs\CodeContractNullability.dll" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

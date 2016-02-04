@@ -5,6 +5,8 @@ using System.Linq;
 using System.Reflection;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.BinFiles.Pipelines;
 using Sitecore.Pathfinder.Projects;
 
@@ -23,10 +25,22 @@ namespace Sitecore.Pathfinder.Languages.BinFiles
 
         public override void Compile(ICompileContext context, IProjectItem projectItem)
         {
-            // todo: restrict the assemblies and types to compile to increase performance
+            var include = context.Configuration.GetString(Constants.Configuration.BuildProjectCompileBinFilesInclude);
+            if (string.IsNullOrEmpty(include))
+            {
+                return;
+            }
 
             var binFile = projectItem as BinFile;
             Assert.Cast(binFile, nameof(binFile));
+
+            var exclude = context.Configuration.GetString(Constants.Configuration.BuildProjectCompileBinFilesExclude);
+
+            var pathMatcher = new PathMatcher(include, exclude);
+            if (!pathMatcher.IsMatch(binFile.FilePath))
+            {
+                return;
+            }
 
             try
             {
@@ -39,9 +53,8 @@ namespace Sitecore.Pathfinder.Languages.BinFiles
             }
             catch (Exception ex)
             {
-                context.Trace.TraceError(ex.Message, binFile.FilePath);
+                context.Trace.TraceError(Msg.C1059, ex.Message, binFile.FilePath);
             }
-
         }
     }
 }

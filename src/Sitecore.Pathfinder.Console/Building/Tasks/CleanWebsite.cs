@@ -30,16 +30,11 @@ namespace Sitecore.Pathfinder.Building.Tasks
             RemoveWebsiteFiles(context);
 
             RemoveWebsiteAssembly(context, "Sitecore.Pathfinder.Core.dll");
-            RemoveWebsiteAssembly(context, "Microsoft.CodeAnalysis.dll");
-            RemoveWebsiteAssembly(context, "Microsoft.CodeAnalysis.CSharp.dll");
-            RemoveWebsiteAssembly(context, "Microsoft.CSharp.dll");
+            RemoveWebsiteAssembly(context, "Sitecore.Pathfinder.Roslyn.dll");
             RemoveWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.dll");
             RemoveWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Interfaces.dll");
             RemoveWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Json.dll");
             RemoveWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Xml.dll");
-            RemoveWebsiteAssembly(context, "Nuget.Core.dll");
-            RemoveWebsiteAssembly(context, "System.Collections.Immutable.dll");
-            RemoveWebsiteAssembly(context, "System.Reflection.Metadata.dll");
 
             foreach (var extension in Extensions)
             {

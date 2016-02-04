@@ -1,0 +1,14 @@
+{
+    "Layout": {
+        "Devices": [
+            {
+                "Name": "Default",
+                "Layout": "/sitecore/layout/layouts/MvcLayout",
+                "Renderings": [
+                    { }
+                ]
+            
+            }
+        ]
+    }
+}

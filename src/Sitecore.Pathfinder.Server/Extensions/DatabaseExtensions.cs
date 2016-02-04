@@ -13,9 +13,8 @@ namespace Sitecore.Pathfinder.Extensions
 {
     public static class DatabaseExtensions
     {
-        [Diagnostics.NotNull]
-        [ItemNotNull]
-        public static IEnumerable<Item> GetItemsByTemplate([Diagnostics.NotNull] this Database database, [Diagnostics.NotNull] [ItemNotNull] params ID[] templateId)
+        [Diagnostics.NotNull,ItemNotNull]
+        public static IEnumerable<Item> GetItemsByTemplate([Diagnostics.NotNull] this Database database, [Diagnostics.NotNull, ItemNotNull]  params ID[] templateId)
         {
             var indexName = "sitecore_" + database.Name.ToLowerInvariant() + "_index";
 
@@ -28,8 +27,7 @@ namespace Sitecore.Pathfinder.Extensions
             }
         }
 
-        [ItemNotNull]
-        [Diagnostics.NotNull]
+        [ItemNotNull,Diagnostics.NotNull]
         public static IEnumerable<Item> Query([Diagnostics.NotNull] this Database database, [Diagnostics.NotNull] string queryText)
         {
             var query = new Query(queryText)
@@ -63,6 +61,6 @@ namespace Sitecore.Pathfinder.Extensions
                     yield return item;
                 }
             }
-    }
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace Sitecore.Pathfinder.Rules
     [TestFixture]
     public class RuleTests : Tests
     {
-        [NotNull]
+        [Diagnostics.NotNull]
         public IProject Project { get; set; }
 
         [TestFixtureSetUp]

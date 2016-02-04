@@ -9,6 +9,11 @@ Version Next
 * Removed: rename task (2016-01-12)
 * Add: clean-website task for removing Pathfinder files from the website (2016-01-12)
 * Add: Type/Assembly reference in .config files checker (2016-01-12)
+* Add: Number field checker (2016-01-22)
+* Add: DateTime and Date field compilers (2016-01-22)
+* Add: Reference field compiler (2016-01-22)
+* Add: Run Sitecore validations on saving an item (2016-01-22)
+* Fix: Roslyn is no longer copied to the website, since it breaks Sitecore (2016-01-26) - Dmitry Kostenko
 
 Version 0.6.0
 =============

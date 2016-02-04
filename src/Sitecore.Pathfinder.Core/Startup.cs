@@ -1,6 +1,5 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,10 +12,15 @@ namespace Sitecore.Pathfinder
 {
     public class Startup
     {
+        [NotNull]
+        private static readonly Dictionary<string, IAppService> AppServiceCache = new Dictionary<string, IAppService>();
+
         public Startup()
         {
             ToolsDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
             ProjectDirectory = Directory.GetCurrentDirectory();
+            WebsiteDirectory = string.Empty;
+            DataFolderDirectory = string.Empty;
         }
 
         [CanBeNull, ItemNotNull]
@@ -27,10 +31,16 @@ namespace Sitecore.Pathfinder
         public ConfigurationOptions ConfigurationOptions { get; private set; } = ConfigurationOptions.Noninteractive;
 
         [NotNull]
+        public string DataFolderDirectory { get; private set; }
+
+        [NotNull]
         public string ProjectDirectory { get; private set; }
 
         [NotNull]
         public string ToolsDirectory { get; private set; }
+
+        [NotNull]
+        public string WebsiteDirectory { get; private set; }
 
         [NotNull]
         public virtual Startup AsInteractive()
@@ -54,12 +64,24 @@ namespace Sitecore.Pathfinder
         }
 
         [NotNull]
-        private static readonly Dictionary<string, IAppService> AppServiceCache = new Dictionary<string, IAppService>();
+        public Startup DoNotLoadConfigFiles()
+        {
+            ConfigurationOptions |= ConfigurationOptions.DoNotLoadConfig;
+            return this;
+        }
 
         [CanBeNull]
         public IAppService Start()
         {
-            var assemblyFileNames = AssemblyFileNames ?? Enumerable.Empty<string>();
+            IEnumerable<string> assemblyFileNames;
+            if (AssemblyFileNames == null)
+            {
+                assemblyFileNames = Enumerable.Empty<string>();
+            }
+            else
+            {
+                assemblyFileNames = AssemblyFileNames.Distinct().OrderBy(a => a).ToList();
+            }
 
             var cacheKey = ToolsDirectory.ToLowerInvariant() + ProjectDirectory.ToLowerInvariant() + ConfigurationOptions + string.Join(",", assemblyFileNames);
 
@@ -75,6 +97,16 @@ namespace Sitecore.Pathfinder
                 return null;
             }
 
+            if (!string.IsNullOrEmpty(WebsiteDirectory))
+            {
+                configuration.Set(Constants.Configuration.WebsiteDirectory, WebsiteDirectory);
+            }
+
+            if (!string.IsNullOrEmpty(DataFolderDirectory))
+            {
+                configuration.Set(Constants.Configuration.DataFolderDirectory, DataFolderDirectory);
+            }
+
             var compositionService = this.RegisterCompositionService(configuration, ProjectDirectory, Assembly.GetCallingAssembly(), assemblyFileNames, CompositionOptions);
             if (compositionService == null)
             {
@@ -87,9 +119,23 @@ namespace Sitecore.Pathfinder
         }
 
         [NotNull]
-        public virtual Startup WithAssemblies([NotNull, ItemNotNull]  IEnumerable<string> assemblyFileNames)
+        public virtual Startup WithAssemblies([NotNull, ItemNotNull] IEnumerable<string> assemblyFileNames)
         {
             AssemblyFileNames = assemblyFileNames;
+            return this;
+        }
+
+        [NotNull]
+        public Startup WithConfiguration(ConfigurationOptions options)
+        {
+            ConfigurationOptions = options;
+            return this;
+        }
+
+        [NotNull]
+        public virtual Startup WithDataFolderDirectory([NotNull] string dataFolderDirectory)
+        {
+            DataFolderDirectory = dataFolderDirectory;
             return this;
         }
 
@@ -97,9 +143,6 @@ namespace Sitecore.Pathfinder
         public Startup WithExtensionsDirectory([NotNull] string directory)
         {
             var assemblyFileNames = Directory.Exists(directory) ? Directory.GetFiles(directory, "Sitecore.Pathfinder.*.dll") : Enumerable.Empty<string>();
-
-            // remove Sitecore.Pathfinder.Core and Sitecore.Pathfinder.Server assemblies
-            assemblyFileNames = assemblyFileNames.Where(a => !string.Equals(Path.GetFileName(a), "Sitecore.Pathfinder.Core.dll", StringComparison.OrdinalIgnoreCase) && !string.Equals(Path.GetFileName(a), "Sitecore.Pathfinder.Server.dll", StringComparison.OrdinalIgnoreCase)).ToList();
 
             if (AssemblyFileNames == null)
             {
@@ -131,6 +174,13 @@ namespace Sitecore.Pathfinder
         public virtual Startup WithWebsiteAssemblyResolver()
         {
             CompositionOptions |= Extensibility.StartupExtensions.CompositionOptions.AddWebsiteAssemblyResolver;
+            return this;
+        }
+
+        [NotNull]
+        public Startup WithWebsiteDirectory([NotNull] string websiteDirectory)
+        {
+            WebsiteDirectory = websiteDirectory;
             return this;
         }
     }

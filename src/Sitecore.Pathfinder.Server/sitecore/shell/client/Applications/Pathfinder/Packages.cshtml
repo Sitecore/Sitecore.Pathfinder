@@ -1,5 +1,4 @@
-﻿@using Sitecore.Pathfinder.Packages
-@using Sitecore.Pathfinder.Packages.Packages
+﻿@using Sitecore.Pathfinder.Packaging
 @using Sitecore.Pathfinder.Text
 <!DOCTYPE html>
 @{
@@ -12,8 +11,8 @@
         skip = 0;
     }
 
-    var packageService = new PackageService();
-    var packages = packageService.CheckForAvailableUpdates(packageService.GetAvailablePackages(queryText, author, tags, skip)).ToList();
+    var packageService = (IPackageService)ViewBag.PackageService;
+    var packages = packageService.CheckForUpdates(packageService.GetInstallablePackages(queryText, author, tags, skip)).ToList();
     var totalPackageCount = packageService.GetTotalPackageCount(queryText, author, tags);
 
     var previousButton = skip > 0 ? string.Empty : "disabled=\"disabled\"";
@@ -167,13 +166,12 @@
                     {
                         foreach (var package in packages.OrderBy(p => p.Name).ThenByDescending(p => p.Version))
                         {
-                            var nuget = (NugetPackage)package;
-                            var packageName = nuget.Package.Title ?? nuget.Package.Id;
+                            var packageName = package.Name ?? package.PackageId;
                             var version = package.Version;
                             var installHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage?ins=" + HttpUtility.UrlEncode(package.PackageId);
                             var updateHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage?upd=" + HttpUtility.UrlEncode(package.PackageId);
                             var uninstallHref = "/sitecore/shell/client/Applications/Pathfinder/InstallPackage?rem=" + HttpUtility.UrlEncode(package.PackageId);
-                            var iconUrl = nuget.Package.IconUrl != null ? nuget.Package.IconUrl.ToString() : "packageDefaultIcon-50x50.png";
+                            var iconUrl = !string.IsNullOrEmpty(package.IconUrl) ? package.IconUrl : "packageDefaultIcon-50x50.png";
                             var packageUrl = "/sitecore/shell/client/Applications/Pathfinder/Package/" + package.PackageId;
 
                             <tr>
@@ -186,14 +184,14 @@
                                             @packageName
                                         </a>
                                         <span>by </span>
-                                        @foreach (var a in nuget.Package.Authors)
+                                        @foreach (var a in package.Authors)
                                         {
                                             var authorUrl = "/sitecore/shell/client/Applications/Pathfinder/Packages?author=" + a;
                                             <a href="@authorUrl">@a</a>
                                         }
                                     </p>
                                     <p>
-                                        @nuget.Package.Description
+                                        @package.Description
                                     </p>
 
                                     <p>
@@ -202,10 +200,10 @@
                                         {
                                             <span class="text-muted">- Version @package.UpdateVersion  is installed</span>
                                         }
-                                        @if (nuget.Package.Tags != null)
+                                        @if (package.Tags != null)
                                         {
                                             <span style="font-size: 17px">| Tags</span>
-                                            foreach (var tag in nuget.Package.Tags.Split(' '))
+                                            foreach (var tag in package.Tags.Split(' '))
                                             {
                                                 var tagUrl = "/sitecore/shell/client/Applications/Pathfinder/Packages?tags=" + tag;
                                                 <a href="@tagUrl">@tag</a>

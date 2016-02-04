@@ -118,14 +118,25 @@ namespace Sitecore.Pathfinder.Projects
             Assert.IsNotNull(checkBoxField);
             Assert.AreEqual(string.Empty, checkBoxField.CompiledValue);
 
+            // date fields
+            var dateField = item.Fields.FirstOrDefault(f => f.FieldName == "Date");
+            Assert.IsNotNull(dateField);
+            Assert.AreEqual("20160122T000000Z", dateField.CompiledValue);
+
+            // datetime fields
+            var dateTimeField = item.Fields.FirstOrDefault(f => f.FieldName == "DateTime");
+            Assert.IsNotNull(dateTimeField);
+            Assert.AreEqual("20160122T095200Z", dateTimeField.CompiledValue);
+
+            // number fields
+            var numberField = item.Fields.FirstOrDefault(f => f.FieldName == "Number");
+            Assert.IsNotNull(numberField);
+            Assert.AreEqual("1234", numberField.CompiledValue);
+
             // layout field
             var layout = item.Fields.FirstOrDefault(f => f.FieldName == "__Renderings");
             Assert.IsNotNull(layout);
-            Assert.AreEqual(@"<r>
-  <d id=""{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}"" l=""{5B2B5845-4D8A-FBB3-08D3-9A6065C35D1E}"">
-    <r id=""{663E1E86-C959-7A70-8945-CFCEA79AFAC2}"" ds=""{11111111-1111-1111-1111-111111111111}"" par="""" ph=""Page.Body"" />
-  </d>
-</r>", layout.CompiledValue);
+            Assert.AreEqual(@"<r>  <d id=""{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}"" l=""{5B2B5845-4D8A-FBB3-08D3-9A6065C35D1E}"">    <r id=""{663E1E86-C959-7A70-8945-CFCEA79AFAC2}"" ds=""{11111111-1111-1111-1111-111111111111}"" par="""" ph=""Page.Body"" />  </d></r>", layout.CompiledValue.Replace("\r", string.Empty).Replace("\n", string.Empty));
 
             // unversioned field
             var unversionedFields = item.Fields.Where(f => f.FieldName == "UnversionedField").ToList();
@@ -221,13 +232,7 @@ namespace Sitecore.Pathfinder.Projects
 
             var layout = item.Fields.FirstOrDefault(f => f.FieldName == "__Renderings");
             Assert.IsNotNull(layout);
-            Assert.AreEqual(@"<r>
-  <d id=""{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}"" l=""{5B2B5845-4D8A-FBB3-08D3-9A6065C35D1E}"">
-    <r id=""{663E1E86-C959-7A70-8945-CFCEA79AFAC2}"" ds=""{11111111-1111-1111-1111-111111111111}"" par="""" ph=""Page.Body"" />
-    <r id=""{663E1E86-C959-7A70-8945-CFCEA79AFAC2}"" par="""" ph=""Page.Body"" />
-    <r id=""{663E1E86-C959-7A70-8945-CFCEA79AFAC2}"" par="""" ph=""Page.Body"" />
-  </d>
-</r>", layout.CompiledValue);
+            Assert.AreEqual(@"<r>  <d id=""{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}"" l=""{5B2B5845-4D8A-FBB3-08D3-9A6065C35D1E}"">    <r id=""{663E1E86-C959-7A70-8945-CFCEA79AFAC2}"" ds=""{11111111-1111-1111-1111-111111111111}"" par="""" ph=""Page.Body"" />    <r id=""{663E1E86-C959-7A70-8945-CFCEA79AFAC2}"" par="""" ph=""Page.Body"" />    <r id=""{663E1E86-C959-7A70-8945-CFCEA79AFAC2}"" par="""" ph=""Page.Body"" />  </d></r>", layout.CompiledValue.Replace("\r", string.Empty).Replace("\n", string.Empty));
         }
     }
 }
