@@ -502,8 +502,10 @@
     <ProjectReference Include="..\Features\Sitecore.Pathfinder.Roslyn\Sitecore.Pathfinder.Roslyn.csproj">
       <Project>{2776F71A-6B50-478E-A0A0-E2151EBE8A98}</Project>
       <Name>Sitecore.Pathfinder.Roslyn</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

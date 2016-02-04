@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Text;
+using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.IO
 {
@@ -49,8 +50,8 @@ namespace Sitecore.Pathfinder.IO
 
             if (string.Equals(Path.GetExtension(sourceFileName), ".dll", StringComparison.OrdinalIgnoreCase))
             {
-                var sourceVersion = new Version(FileVersionInfo.GetVersionInfo(sourceFileName).FileVersion);
-                var targetVersion = new Version(FileVersionInfo.GetVersionInfo(targetFileName).FileVersion);
+                var sourceVersion = GetVersion(sourceFileName);
+                var targetVersion = GetVersion(targetFileName);
                 if (targetVersion < sourceVersion)
                 {
                     File.Copy(sourceFileName, targetFileName, true);
@@ -68,6 +69,32 @@ namespace Sitecore.Pathfinder.IO
             }
 
             return false;
+        }
+
+        [NotNull]
+        private static Version GetVersion([NotNull] string fileName)
+        {
+            var fileVersionInfo = FileVersionInfo.GetVersionInfo(fileName);
+
+            try
+            {
+                return new Version(fileVersionInfo.FileVersion);
+            }
+            catch
+            {
+                // silent
+            }
+
+            try
+            {
+                return new Version(fileVersionInfo.ProductVersion);
+            }
+            catch
+            {
+                // silent
+            }
+
+            return new Version(0, 0, 0, 0);
         }
 
         public virtual void CreateDirectory(string directory)

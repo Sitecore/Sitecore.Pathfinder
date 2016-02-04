@@ -1,0 +1,15 @@
+<Exports>
+  <Template Id="{AD264141-00B2-B4CB-6FC5-EE59CC7DCD4B}" Database="master" Name="HelloWorld" Path="/sitecore/templates/Sample/HelloWorld" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Name="Fields">
+      <Field Name="Title" Type="Single-Line Text" />
+      <Field Name="Text" Type="Single-Line Text" />
+      <Field Name="Image" Type="Image" />
+    </Section>
+  </Template>
+  <Item Id="{A2FA4D52-7FCF-F2A7-4F2D-2836F94716EB}" Database="master" Name="Welcome" Path="/sitecore/content/Home/Welcome" Template="/sitecore/templates/Sample/Sample Item" />
+  <Item Id="{E17F99E8-E838-CC97-81D5-54C5484F8FD6}" Database="master" Name="HelloWorld" Path="/sitecore/content/Home/HelloWorld" Template="/sitecore/templates/Sample/HelloWorld" />
+  <Item Id="{A38E6B33-EADF-0312-D211-31D230DF3D30}" Database="master" Name="ReactHelloWorld" Path="/sitecore/layout/renderings/ReactHelloWorld" Template="{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}" />
+  <Item Id="{A352743D-0A93-A0A4-6C0E-0FD4CACC5409}" Database="master" Name="Demo" Path="/sitecore/layout/renderings/Demo" Template="{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}" />
+  <Item Id="{FB58989C-043C-92A7-493D-286CB5A6C180}" Database="master" Name="lighthouse" Path="/sitecore/media library/lighthouse" Template="/sitecore/templates/System/Media/Unversioned/Jpeg" />
+  <Item Id="{67C697EA-2180-06AA-A1CA-FAC17D72376B}" Database="master" Name="HelloWorld" Path="/sitecore/layout/renderings/HelloWorld" Template="{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}" />
+</Exports>

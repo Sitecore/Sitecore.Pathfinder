@@ -26,5 +26,11 @@ namespace Sitecore.Mvc.Presentation
         {
             get { throw new NotImplementedException(); }
         }
+
+        [NotNull]
+        public string DataSource
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

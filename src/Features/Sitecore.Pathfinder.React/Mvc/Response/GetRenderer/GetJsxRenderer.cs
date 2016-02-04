@@ -9,7 +9,7 @@ using Sitecore.Pathfinder.Mvc.Presentation;
 
 namespace Sitecore.Pathfinder.Mvc.Response.GetRenderer
 {
-    public class GetHtmlTemplateRenderer : GetRendererProcessor
+    public class GetJsxRenderer : GetRendererProcessor
     {
         public override void Process([Diagnostics.NotNull] GetRendererArgs args)
         {
@@ -34,7 +34,7 @@ namespace Sitecore.Pathfinder.Mvc.Response.GetRenderer
             {
                 return null;
             }
-
+                                           
             return new JsxRenderer
             {
                 FilePath = filePath,
@@ -52,6 +52,13 @@ namespace Sitecore.Pathfinder.Mvc.Response.GetRenderer
         private string GetViewPathFromLayoutItem([Diagnostics.NotNull] GetRendererArgs args)
         {
             var filePath = args.LayoutItem.ValueOrDefault(item => item.FilePath);
+            return string.IsNullOrWhiteSpace(filePath) ? null : filePath;
+        }
+
+        [Diagnostics.CanBeNull]
+        private string GetViewPathFromInnerItem([Diagnostics.NotNull] Rendering rendering)
+        {
+            var filePath = rendering.RenderingItem.InnerItem["Path"];
             return string.IsNullOrWhiteSpace(filePath) ? null : filePath;
         }
 
@@ -78,6 +85,11 @@ namespace Sitecore.Pathfinder.Mvc.Response.GetRenderer
         [Diagnostics.CanBeNull]
         private string GetViewPathFromRenderingType([Diagnostics.NotNull] Rendering rendering, [Diagnostics.NotNull] GetRendererArgs args)
         {
+            if (rendering.RenderingType == "r")
+            {
+                return GetViewPathFromInnerItem(rendering);
+            }
+
             if (rendering.RenderingType == "View")
             {
                 return GetViewPathFromPathProperty(rendering);

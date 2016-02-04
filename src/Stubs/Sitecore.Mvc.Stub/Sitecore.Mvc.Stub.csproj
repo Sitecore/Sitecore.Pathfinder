@@ -89,12 +89,6 @@
   <ItemGroup>
     <Analyzer Include="..\..\..\packages\ResharperCodeContractNullability.1.0.4\analyzers\dotnet\cs\CodeContractNullability.dll" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Sitecore.Kernel.Stub\Sitecore.Kernel.Stub.csproj">
-      <Project>{b02588f1-d7e6-4329-ac37-5ec42ca47083}</Project>
-      <Name>Sitecore.Kernel.Stub</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

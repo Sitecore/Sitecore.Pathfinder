@@ -21,7 +21,7 @@
                 "Value": "/sitecore/media library/lighthouse",
                 "Field.Type": "Image",
                 "Field.ShortHelp": "Short.",
-                "Field.LongHelp": "Longer help."
+                "Field.LongHelp": "Longer help."    
             },
             "Layout": {
                 "Devices": [
@@ -29,6 +29,12 @@
                         "Name": "Default",
                         "Layout": "/sitecore/layout/Layouts/MvcLayout",
                         "Renderings": [
+                            {
+                                "ReactHelloWorld": { }
+                            },
+                            {
+                                "Demo": { }
+                            },
                             {
                                 "HelloWorld": { }
                             }
