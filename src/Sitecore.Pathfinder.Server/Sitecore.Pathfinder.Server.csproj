@@ -45,34 +45,38 @@
     <Reference Include="Microsoft.Framework.ConfigurationModel.Interfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Framework.ConfigurationModel.Interfaces.1.0.0-beta4\lib\net45\Microsoft.Framework.ConfigurationModel.Interfaces.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Web.XmlTransform, Version=2.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Web.Xdt.2.1.1\lib\net40\Microsoft.Web.XmlTransform.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.ContentSearch">
       <HintPath>..\..\lib\Sitecore\Sitecore.ContentSearch.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Kernel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Sitecore\Sitecore.Kernel.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Mvc">
       <HintPath>..\..\lib\Sitecore\Sitecore.Mvc.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Zip">
       <HintPath>..\..\lib\Sitecore\Sitecore.Zip.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -90,27 +94,27 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.Helpers.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.1.1\lib\net45\System.Web.Mvc.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.Razor.3.1.2\lib\net45\System.Web.Razor.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
@@ -137,7 +141,6 @@
     <Compile Include="Emitters\EmitterService.cs" />
     <Compile Include="Emitters\Files\ConfigFileEmitter.cs" />
     <Compile Include="Emitters\Writers\FieldWriter.cs" />
-    <Compile Include="Configuration\PathfinderSettings.cs" />
     <Compile Include="Emitters\Items\ItemEmitter.cs" />
     <Compile Include="Emitters\Files\ContentFileEmitter.cs" />
     <Compile Include="Emitters\Files\BinFileEmitter.cs" />
@@ -153,8 +156,6 @@
     <Compile Include="Importing\ItemImporters\IItemImporterService.cs" />
     <Compile Include="Importing\ItemImporters\ItemImporterService.cs" />
     <Compile Include="Jobs\BackgroundJob.cs" />
-    <Compile Include="Mvc\Presentation\HtmlTemplateRenderer.cs" />
-    <Compile Include="Mvc\Response\GetRenderer\GetHtmlTemplateRenderer.cs" />
     <Compile Include="Pipelines\Loader\InitializePathfinderProjects.cs" />
     <Compile Include="Pipelines\Loader\MapRoutes.cs" />
     <Compile Include="Projects\IProjectContext.cs" />
@@ -194,11 +195,12 @@
     <ProjectReference Include="..\Features\Sitecore.Pathfinder.NuGet\Sitecore.Pathfinder.NuGet.csproj">
       <Project>{a67c9ed1-949c-49d8-8d1a-b3774f38c128}</Project>
       <Name>Sitecore.Pathfinder.NuGet</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Sitecore.Pathfinder.Core\Sitecore.Pathfinder.Core.csproj">
       <Project>{c674eebf-bbf6-4eda-af5b-a4d58d0be986}</Project>
       <Name>Sitecore.Pathfinder.Core</Name>
-      <Private>True</Private>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

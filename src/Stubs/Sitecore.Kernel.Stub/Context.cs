@@ -1,6 +1,7 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Jobs;
 using Sitecore.Security.Accounts;
@@ -9,6 +10,12 @@ namespace Sitecore
 {
     public static class Context
     {
+        [NotNull]
+        public static Database Database
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         public static bool IsLoggedIn
         {
             get { throw new NotImplementedException(); }

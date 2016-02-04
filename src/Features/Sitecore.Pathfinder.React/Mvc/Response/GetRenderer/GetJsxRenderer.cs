@@ -56,6 +56,13 @@ namespace Sitecore.Pathfinder.Mvc.Response.GetRenderer
         }
 
         [Diagnostics.CanBeNull]
+        private string GetViewPathFromInnerItem([Diagnostics.NotNull] Rendering rendering)
+        {
+            var filePath = rendering.RenderingItem.InnerItem["Path"];
+            return string.IsNullOrWhiteSpace(filePath) ? null : filePath;
+        }
+
+        [Diagnostics.CanBeNull]
         private string GetViewPathFromPathProperty([Diagnostics.NotNull] Rendering rendering)
         {
             var filePath = rendering["Path"];
@@ -78,6 +85,11 @@ namespace Sitecore.Pathfinder.Mvc.Response.GetRenderer
         [Diagnostics.CanBeNull]
         private string GetViewPathFromRenderingType([Diagnostics.NotNull] Rendering rendering, [Diagnostics.NotNull] GetRendererArgs args)
         {
+            if (rendering.RenderingType == "r")
+            {
+                return GetViewPathFromInnerItem(rendering);
+            }
+
             if (rendering.RenderingType == "View")
             {
                 return GetViewPathFromPathProperty(rendering);

@@ -1,22 +1,20 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using React;
 using React.Exceptions;
 using React.TinyIoC;
-using React.Web.Mvc;
+using Sitecore.Data.Fields;
+using Sitecore.Data.Items;
 using Sitecore.Mvc.Presentation;
+using Sitecore.Web.UI.WebControls;
 
 namespace Sitecore.Pathfinder.Mvc.Presentation
 {
     public class JsxRenderer : Renderer
     {
-        [Diagnostics.NotNull]
-        public string FilePath { get; set; } = string.Empty;
-
-        [Diagnostics.NotNull]
-        public Rendering Rendering { get; set; }
-
         public static IReactEnvironment Environment
         {
             get
@@ -32,14 +30,47 @@ namespace Sitecore.Pathfinder.Mvc.Presentation
                 }
 
                 return current;
-            }                      
-        }                                                                             
+            }
+        }
+
+        [Diagnostics.NotNull]
+        public string FilePath { get; set; } = string.Empty;
+
+        [Diagnostics.NotNull]
+        public Sitecore.Mvc.Presentation.Rendering Rendering { get; set; }
 
         public override void Render([Diagnostics.NotNull] TextWriter writer)
-        {                         
-            var helper = PageContext.Current.HtmlHelper;
+        {
+            var props = GetProps();
 
-            writer.WriteLine(helper.React(Path.GetFileNameWithoutExtension(FilePath), new { name = "Daniel" }));
+            IReactComponent reactComponent = Environment.CreateComponent(Path.GetFileNameWithoutExtension(FilePath), props);
+
+            writer.WriteLine(reactComponent.RenderHtml());
+            writer.WriteLine($"<script src=\"{FilePath}\"></script>");
+            writer.WriteLine($"<script>{reactComponent.RenderJavaScript()}</script>");
+        }
+
+        private Item GetDataSourceItem()
+        {
+            return !string.IsNullOrEmpty(Rendering.DataSource) ? (Context.Database.GetItem(Rendering.DataSource) ?? Context.Item) : Context.Item;
+        }
+
+        private dynamic GetProps()
+        {
+            dynamic props = new ExpandoObject();
+            var dataSourceItem = GetDataSourceItem();
+
+            foreach (Field field in dataSourceItem.Fields)
+            {
+                if (field.Name.StartsWith("__"))
+                {
+                    continue;
+                }
+
+                ((IDictionary<string, object>)props).Add(field.Name.ToLowerInvariant(), FieldRenderer.Render(dataSourceItem, field.Name));
+            }
+
+            return props;
         }
     }
 }

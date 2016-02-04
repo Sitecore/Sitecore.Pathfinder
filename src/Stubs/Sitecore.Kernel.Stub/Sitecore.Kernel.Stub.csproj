@@ -91,6 +91,7 @@
     <Compile Include="Data\StandardValuesManager.cs" />
     <Compile Include="Data\Templates\TemplateSection.cs" />
     <Compile Include="Data\Validators\ValidatorCollection.cs" />
+    <Compile Include="Events\Hooks\IHook.cs" />
     <Compile Include="Handle.cs" />
     <Compile Include="Install\Files\DefaultFileInstallerEvents.cs" />
     <Compile Include="Install\Framework\IProcessingContext.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="Security\Authentication\AuthenticationManager.cs" />
     <Compile Include="Sites\Site.cs" />
     <Compile Include="Web\UI\ImageDimension.cs" />
+    <Compile Include="Web\UI\WebControls\FieldRenderer.cs" />
     <Compile Include="Web\WebUtil.cs" />
     <Compile Include="WellknownIDs.cs" />
   </ItemGroup>
