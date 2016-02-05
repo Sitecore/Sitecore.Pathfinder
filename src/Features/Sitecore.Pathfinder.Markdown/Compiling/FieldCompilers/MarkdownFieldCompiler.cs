@@ -1,9 +1,9 @@
 ﻿using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Compiling.FieldCompilers;
-using Sitecore.Pathfinder.Projects.Items;
-using System;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Projects.Items;
+using System;
 
 namespace Sitecore.Pathfinder.Markdown.Compiling.FieldCompilers
 {
@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Markdown.Compiling.FieldCompilers
         {
         }
 
-        public override bool CanCompile(IFieldCompileContext context, Field field)
+        public override bool CanCompile([NotNull] IFieldCompileContext context, [NotNull] Field field)
         {
             if(string.IsNullOrEmpty(field.Value))
             {
@@ -23,12 +23,13 @@ namespace Sitecore.Pathfinder.Markdown.Compiling.FieldCompilers
             var fieldTypeCheck = string.Equals(field.TemplateField.Type, "rich text", StringComparison.OrdinalIgnoreCase);
 
             var indicator = GetIndicatorToken(context.Configuration);
-            var indicatorCheck = indicator == null ? true : field.Value.StartsWith(indicator);
+            var indicatorCheck = indicator == null || field.Value.StartsWith(indicator);
 
             return fieldTypeCheck && indicatorCheck;
         }
 
-        public override string Compile(IFieldCompileContext context, Field field)
+        [NotNull]
+        public override string Compile([NotNull] IFieldCompileContext context, [NotNull] Field field)
         {
             var indicator = GetIndicatorToken(context.Configuration);
 
