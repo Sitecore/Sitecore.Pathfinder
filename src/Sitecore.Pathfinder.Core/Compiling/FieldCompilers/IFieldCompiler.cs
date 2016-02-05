@@ -11,6 +11,8 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
     {
         double Priority { get; }
 
+        bool IsExclusive { get; }
+
         bool CanCompile([NotNull] IFieldCompileContext context, [NotNull] Field field);
 
         [NotNull]

@@ -14,6 +14,8 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         {
         }
 
+        public override bool IsExclusive => true;
+
         public override bool CanCompile(IFieldCompileContext context, Field field)
         {
             var type = field.TemplateField.Type;
