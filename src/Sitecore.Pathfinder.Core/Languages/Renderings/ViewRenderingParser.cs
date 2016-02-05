@@ -3,19 +3,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Languages.Renderings
 {
     public class ViewRenderingParser : RenderingParser
     {
+        [NotNull]
+        private static readonly Regex PlaceholderRegex = new Regex("\\@Html\\.Sitecore\\(\\)\\.Placeholder\\(([^\"\\)]*)\"([^\"]*)\"\\)", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
         public ViewRenderingParser() : base(".cshtml", Constants.Templates.ViewRendering)
         {
         }
 
         protected override IEnumerable<string> GetPlaceholders(string contents)
         {
-            var matches = Regex.Matches(contents, "\\@Html\\.Sitecore\\(\\)\\.Placeholder\\(([^\"\\)]*)\"([^\"]*)\"\\)", RegexOptions.IgnoreCase);
+            var matches = PlaceholderRegex.Matches(contents);
 
             var result = new List<string>();
             foreach (var match in matches.OfType<Match>())

@@ -9,13 +9,16 @@ namespace Sitecore.Pathfinder.Languages.Renderings
 {
     public abstract class WebFormsRenderingParser : RenderingParser
     {
+        [NotNull]
+        private static readonly Regex PlaceholderRegex = new Regex("<[^>]*Placeholder[^>]*Key=\"([^\"]*)\"[^>]*>", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
         protected WebFormsRenderingParser([NotNull] string fileExtension, [NotNull] string templateIdOrPath) : base(fileExtension, templateIdOrPath)
         {
         }
 
         protected override IEnumerable<string> GetPlaceholders(string contents)
         {
-            var matches = Regex.Matches(contents, "<[^>]*Placeholder[^>]*Key=\"([^\"]*)\"[^>]*>", RegexOptions.IgnoreCase);
+            var matches = PlaceholderRegex.Matches(contents);
 
             return matches.OfType<Match>().Select(i => i.Groups[1].ToString().Trim());
         }

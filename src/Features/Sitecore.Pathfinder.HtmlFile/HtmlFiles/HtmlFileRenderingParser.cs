@@ -10,7 +10,7 @@ namespace Sitecore.Pathfinder.HtmlFile.HtmlFiles
     public class HtmlFileRenderingParser : RenderingParser
     {
         [NotNull]
-        private static readonly Regex Regex = new Regex("\\{\\{\\%([^\\}]*)\\}\\}", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        private static readonly Regex PlaceholderRegex = new Regex("\\{\\{\\%([^\\}]*)\\}\\}", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
         public HtmlFileRenderingParser() : base(".html", Constants.Templates.ViewRendering)
         {
@@ -18,9 +18,10 @@ namespace Sitecore.Pathfinder.HtmlFile.HtmlFiles
 
         protected override IEnumerable<string> GetPlaceholders(string contents)
         {
-            var matches = Regex.Matches(contents);
+            var matches = PlaceholderRegex.Matches(contents);
 
-            return matches.OfType<Match>().Select(i => i.Groups[1].ToString().Trim());
+            var placeholders = matches.OfType<Match>().Select(i => i.Groups[1].ToString().Trim());
+            return placeholders;
         }
     }
 }

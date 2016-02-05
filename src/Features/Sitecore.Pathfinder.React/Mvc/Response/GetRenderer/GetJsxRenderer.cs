@@ -5,9 +5,9 @@ using Sitecore.Mvc.Extensions;
 using Sitecore.Mvc.Names;
 using Sitecore.Mvc.Pipelines.Response.GetRenderer;
 using Sitecore.Mvc.Presentation;
-using Sitecore.Pathfinder.Mvc.Presentation;
+using Sitecore.Pathfinder.React.Mvc.Presentation;
 
-namespace Sitecore.Pathfinder.Mvc.Response.GetRenderer
+namespace Sitecore.Pathfinder.React.Mvc.Response.GetRenderer
 {
     public class GetJsxRenderer : GetRendererProcessor
     {
@@ -30,16 +30,12 @@ namespace Sitecore.Pathfinder.Mvc.Response.GetRenderer
                 return null;
             }
 
-            if (!filePath.EndsWith(".jsx", StringComparison.OrdinalIgnoreCase))
+            if (filePath.EndsWith(".jsx", StringComparison.OrdinalIgnoreCase))
             {
-                return null;
+                return new JsxRenderer(rendering, filePath);
             }
-                                           
-            return new JsxRenderer
-            {
-                FilePath = filePath,
-                Rendering = rendering
-            };
+
+            return null;
         }
 
         [Diagnostics.CanBeNull]
@@ -49,16 +45,16 @@ namespace Sitecore.Pathfinder.Mvc.Response.GetRenderer
         }
 
         [Diagnostics.CanBeNull]
-        private string GetViewPathFromLayoutItem([Diagnostics.NotNull] GetRendererArgs args)
+        private string GetViewPathFromInnerItem([Diagnostics.NotNull] Rendering rendering)
         {
-            var filePath = args.LayoutItem.ValueOrDefault(item => item.FilePath);
+            var filePath = rendering.RenderingItem.InnerItem["Path"];
             return string.IsNullOrWhiteSpace(filePath) ? null : filePath;
         }
 
         [Diagnostics.CanBeNull]
-        private string GetViewPathFromInnerItem([Diagnostics.NotNull] Rendering rendering)
+        private string GetViewPathFromLayoutItem([Diagnostics.NotNull] GetRendererArgs args)
         {
-            var filePath = rendering.RenderingItem.InnerItem["Path"];
+            var filePath = args.LayoutItem.ValueOrDefault(item => item.FilePath);
             return string.IsNullOrWhiteSpace(filePath) ? null : filePath;
         }
 

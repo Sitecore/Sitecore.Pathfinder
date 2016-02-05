@@ -24,10 +24,15 @@ namespace Sitecore.Pathfinder.Extensions
             {
                 Console.WriteLine(ex.Message);
 
-                if (ex is System.Reflection.ReflectionTypeLoadException)
+                if (ex is ReflectionTypeLoadException)
                 {
                     var typeLoadException = ex as ReflectionTypeLoadException;
                     var loaderExceptions = typeLoadException.LoaderExceptions;
+
+                    foreach (var loaderException in loaderExceptions)
+                    {
+                        Console.WriteLine(loaderException.Message);
+                    }
                 }
 
                 throw;

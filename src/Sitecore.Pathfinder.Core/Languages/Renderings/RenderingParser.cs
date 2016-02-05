@@ -39,15 +39,11 @@ namespace Sitecore.Pathfinder.Languages.Renderings
             var rendering = context.Factory.Rendering(context.Project, context.Snapshot, context.DatabaseName, context.ItemPath, context.ItemName, context.FilePath, TemplateIdOrPath);
             context.Project.AddOrMerge(rendering);
 
-            // todo: make this configurable
-            if (string.Equals(rendering.DatabaseName, "core", StringComparison.OrdinalIgnoreCase))
-            {
-                var contents = context.Snapshot.SourceFile.ReadAsText();
+            var contents = context.Snapshot.SourceFile.ReadAsText();
 
-                var placeholders = GetPlaceholders(contents);
+            var placeholders = GetPlaceholders(contents);
 
-                rendering.Placeholders.AddRange(placeholders);
-            }
+            rendering.Placeholders.AddRange(placeholders);
 
             context.Project.Ducats += 100;
         }

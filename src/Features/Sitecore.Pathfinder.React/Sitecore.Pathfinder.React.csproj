@@ -8,7 +8,7 @@
     <ProjectGuid>{C735B4FA-4834-47D0-A0D7-51270AD3153E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sitecore.Pathfinder</RootNamespace>
+    <RootNamespace>Sitecore.Pathfinder.React</RootNamespace>
     <AssemblyName>Sitecore.Pathfinder.React</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -134,7 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="React\JsxRenderingParser.cs" />
-    <Compile Include="React\AddJsxScripts.cs" />
+    <Compile Include="Hooks\AddJsxScripts.cs" />
     <Compile Include="React\ReactExtension.cs" />
     <Compile Include="Mvc\Presentation\JsxRenderer.cs" />
     <Compile Include="Mvc\Response\GetRenderer\GetJsxRenderer.cs" />

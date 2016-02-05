@@ -8,7 +8,7 @@ using Sitecore.Events.Hooks;
 using Sitecore.IO;
 using Sitecore.Pathfinder.Extensions;
 
-namespace Sitecore.Pathfinder.React
+namespace Sitecore.Pathfinder.React.Hooks
 {
     public class AddJsxScripts : IHook
     {
