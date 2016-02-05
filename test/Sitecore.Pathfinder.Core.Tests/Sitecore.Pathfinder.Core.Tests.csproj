@@ -36,7 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Framework.ConfigurationModel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Framework.ConfigurationModel.1.0.0-beta4\lib\net45\Microsoft.Framework.ConfigurationModel.dll</HintPath>
       <Private>True</Private>
@@ -63,6 +65,10 @@
     </Reference>
     <Reference Include="Sitecore.Kernel">
       <HintPath>..\..\lib\Sitecore\Sitecore.Kernel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Sitecore.Mvc">
+      <HintPath>..\..\lib\Sitecore\Sitecore.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Collections.Immutable, Version=1.1.37.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -131,6 +137,22 @@
       <Project>{7287e9e2-cab5-4de4-87b5-237b65020dc4}</Project>
       <Name>Sitecore.Pathfinder.HtmlFile</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\Features\Sitecore.Pathfinder.Markdown\Sitecore.Pathfinder.Markdown.csproj">
+      <Project>{37d4ea12-aeb1-4bfa-a5c8-76185f68dd25}</Project>
+      <Name>Sitecore.Pathfinder.Markdown</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Features\Sitecore.Pathfinder.Npm\Sitecore.Pathfinder.Npm.csproj">
+      <Project>{543470a3-c795-4e05-9e38-d0a827ff4546}</Project>
+      <Name>Sitecore.Pathfinder.Npm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Features\Sitecore.Pathfinder.NuGet\Sitecore.Pathfinder.NuGet.csproj">
+      <Project>{a67c9ed1-949c-49d8-8d1a-b3774f38c128}</Project>
+      <Name>Sitecore.Pathfinder.NuGet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Features\Sitecore.Pathfinder.Roslyn\Sitecore.Pathfinder.Roslyn.csproj">
+      <Project>{2776f71a-6b50-478e-a0a0-e2151ebe8a98}</Project>
+      <Name>Sitecore.Pathfinder.Roslyn</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Features\Sitecore.Pathfinder.T4\Sitecore.Pathfinder.T4.csproj">
       <Project>{bc0ec297-60e6-4d8f-a846-e1da920cfc26}</Project>
       <Name>Sitecore.Pathfinder.T4</Name>
@@ -146,6 +168,10 @@
     <ProjectReference Include="..\..\src\Sitecore.Pathfinder.Core\Sitecore.Pathfinder.Core.csproj">
       <Project>{c674eebf-bbf6-4eda-af5b-a4d58d0be986}</Project>
       <Name>Sitecore.Pathfinder.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Sitecore.Pathfinder.Server\Sitecore.Pathfinder.Server.csproj">
+      <Project>{42808013-7a25-4c07-91fa-be4f7aa8e0b1}</Project>
+      <Name>Sitecore.Pathfinder.Server</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

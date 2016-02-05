@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+
 using System.Linq;
 using NUnit.Framework;
 using Sitecore.Pathfinder.Extensions;
@@ -24,7 +25,7 @@ namespace Sitecore.Pathfinder.Snapshots
             Assert.AreEqual("Item", snapshot.Root.Key);
 
             var field = snapshot.Root.ChildNodes.First();
-            
+
             var fileNameTextNode = new FileNameTextNode("test", snapshot);
             Assert.AreEqual(0, fileNameTextNode.Attributes.Count());
             Assert.AreEqual(0, fileNameTextNode.ChildNodes.Count());

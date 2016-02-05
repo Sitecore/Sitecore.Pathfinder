@@ -23,10 +23,12 @@ namespace Sitecore.Pathfinder.React
                     f = f.Mid(1);
                 }
 
+                /*
                 if (!FileUtil.FolderExists(f))
                 {
                     continue;
                 }
+                */
 
                 ReactSiteConfiguration.Configuration.SetReuseJavaScriptEngines(true).AddScript(folder + "/*.jsx");
             }
