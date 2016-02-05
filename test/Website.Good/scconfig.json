@@ -31,6 +31,11 @@
                 "file-name-include": "*.dll"
             },
 
+            "pages": {
+                "project-directory-to-website-directory": "/pages => /pages",
+                "file-name-include": "*.page.html"
+            },
+
             "wwwroot": {
                 "project-directory-to-item-path": "/wwwroot => /",
                 "project-directory-to-website-directory": "/wwwroot => /",

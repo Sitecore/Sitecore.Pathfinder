@@ -66,6 +66,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="items\master\sitecore\content\Home\PageHtml.item.xml" />
     <Content Include="items\master\sitecore\content\Home\YamlContentItem.master.content.yaml" />
     <Content Include="items\master\sitecore\content\Home\YamlLayout.item.yaml" />
     <Content Include="includes\Field.include.item.xml" />
@@ -80,6 +81,11 @@
     <Content Include="items\master\sitecore\content\Home\JsonLayout.layout.json" />
     <Content Include="items\master\sitecore\content\Home\SerializedItem.item" />
     <Content Include="items\master\sitecore\layout\layouts\MvcLayout.cshtml" />
+    <Content Include="pages\helloworld.page.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="items\master\sitecore\layout\renderings\Literal.cshtml" />
+    <None Include="items\master\sitecore\layout\renderings\timer.jsx" />
     <None Include="items\master\sitecore\layout\renderings\HelloWorld.cshtml" />
     <Content Include="items\master\sitecore\layout\web.config" />
     <Content Include="scconfig.json" />

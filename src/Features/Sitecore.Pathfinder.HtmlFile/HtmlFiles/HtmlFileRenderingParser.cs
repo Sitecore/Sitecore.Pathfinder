@@ -3,7 +3,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Languages.Renderings;
 
 namespace Sitecore.Pathfinder.HtmlFile.HtmlFiles
@@ -11,7 +10,7 @@ namespace Sitecore.Pathfinder.HtmlFile.HtmlFiles
     public class HtmlFileRenderingParser : RenderingParser
     {
         [NotNull]
-        private static readonly Regex regex = new Regex("\\{\\{\\%([^\\}]*)\\}\\}", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        private static readonly Regex Regex = new Regex("\\{\\{\\%([^\\}]*)\\}\\}", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
         public HtmlFileRenderingParser() : base(".html", Constants.Templates.ViewRendering)
         {
@@ -19,7 +18,7 @@ namespace Sitecore.Pathfinder.HtmlFile.HtmlFiles
 
         protected override IEnumerable<string> GetPlaceholders(string contents)
         {
-            var matches = regex.Matches(contents);
+            var matches = Regex.Matches(contents);
 
             return matches.OfType<Match>().Select(i => i.Groups[1].ToString().Trim());
         }

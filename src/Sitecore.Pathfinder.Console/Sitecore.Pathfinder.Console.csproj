@@ -598,6 +598,14 @@
       <Project>{a67c9ed1-949c-49d8-8d1a-b3774f38c128}</Project>
       <Name>Sitecore.Pathfinder.NuGet</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Features\Sitecore.Pathfinder.PageHtml\Sitecore.Pathfinder.PageHtml.csproj">
+      <Project>{9fa3a409-fbe3-4f65-8d5b-d8510ca6348d}</Project>
+      <Name>Sitecore.Pathfinder.PageHtml</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Features\Sitecore.Pathfinder.React\Sitecore.Pathfinder.React.csproj">
+      <Project>{c735b4fa-4834-47d0-a0d7-51270ad3153e}</Project>
+      <Name>Sitecore.Pathfinder.React</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Features\Sitecore.Pathfinder.Roslyn\Sitecore.Pathfinder.Roslyn.csproj">
       <Project>{2776f71a-6b50-478e-a0a0-e2151ebe8a98}</Project>
       <Name>Sitecore.Pathfinder.Roslyn</Name>

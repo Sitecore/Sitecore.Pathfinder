@@ -1,6 +1,7 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.IO;
 using React;
 using Sitecore.Configuration;
 using Sitecore.Events.Hooks;
@@ -20,15 +21,14 @@ namespace Sitecore.Pathfinder.React
                 var f = folder;
                 if (f.StartsWith("~/"))
                 {
-                    f = f.Mid(1);
+                    f = f.Mid(2);
                 }
 
-                /*
-                if (!FileUtil.FolderExists(f))
+                f = FileUtil.MapPath(f);
+                if (!Directory.Exists(f))
                 {
                     continue;
                 }
-                */
 
                 ReactSiteConfiguration.Configuration.SetReuseJavaScriptEngines(true).AddScript(folder + "/*.jsx");
             }

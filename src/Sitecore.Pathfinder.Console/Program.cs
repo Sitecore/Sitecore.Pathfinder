@@ -11,7 +11,7 @@ namespace Sitecore.Pathfinder
     internal class Program
     {
         private static int Main([NotNull, ItemNotNull] string[] args)
-        {
+        {                                  
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 

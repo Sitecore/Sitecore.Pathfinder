@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing;
 
 namespace Sitecore.Pathfinder.Languages.Renderings
@@ -10,6 +11,12 @@ namespace Sitecore.Pathfinder.Languages.Renderings
     public abstract class RenderingParser : ParserBase
     {
         protected RenderingParser([NotNull] string fileExtension, [NotNull] string templateIdOrPath) : base(Constants.Parsers.Renderings)
+        {
+            FileExtension = fileExtension;
+            TemplateIdOrPath = templateIdOrPath;
+        }
+
+        protected RenderingParser([NotNull] string fileExtension, [NotNull] string templateIdOrPath, double priority) : base(priority)
         {
             FileExtension = fileExtension;
             TemplateIdOrPath = templateIdOrPath;
@@ -23,7 +30,8 @@ namespace Sitecore.Pathfinder.Languages.Renderings
 
         public override bool CanParse(IParseContext context)
         {
-            return context.Snapshot.SourceFile.AbsoluteFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
+            var extension = PathHelper.GetExtension(context.Snapshot.SourceFile.AbsoluteFileName);
+            return string.Equals(extension, FileExtension, StringComparison.OrdinalIgnoreCase);
         }
 
         public override void Parse(IParseContext context)

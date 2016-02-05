@@ -202,7 +202,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
                     var layout = database.GetItem(layoutId);
                     if (layout == null)
                     {
-                        throw new RetryableEmitException(Texts.Layout_not_found, TraceHelper.GetTextNode(field.FieldNameProperty, field), deviceId);
+                        throw new RetryableEmitException(Texts.Layout_not_found, TraceHelper.GetTextNode(field.FieldNameProperty, field), layoutId);
                     }
                 }
 
@@ -212,7 +212,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
                     var rendering = database.GetItem(renderingId);
                     if (rendering == null)
                     {
-                        throw new RetryableEmitException(Texts.Rendering_not_found, TraceHelper.GetTextNode(field.FieldNameProperty, field), deviceId);
+                        throw new RetryableEmitException(Texts.Rendering_not_found, TraceHelper.GetTextNode(field.FieldNameProperty, field), renderingId);
                     }
                 }
             }
