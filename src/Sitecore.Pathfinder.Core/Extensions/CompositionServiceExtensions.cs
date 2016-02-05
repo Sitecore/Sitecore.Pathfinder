@@ -3,6 +3,7 @@
 using System;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.Reflection;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Extensions
@@ -22,7 +23,14 @@ namespace Sitecore.Pathfinder.Extensions
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return default(T);
+
+                if (ex is System.Reflection.ReflectionTypeLoadException)
+                {
+                    var typeLoadException = ex as ReflectionTypeLoadException;
+                    var loaderExceptions = typeLoadException.LoaderExceptions;
+                }
+
+                throw;
             }
         }
 

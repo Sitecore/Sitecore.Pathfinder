@@ -34,9 +34,9 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
             {
                 CompileUnicornFile(context, snapshot, unicornFile);
             }
-            catch (MissingMethodException)
+            catch (NotImplementedException)
             {
-                // Unicorn or Kernel is not loading
+                // using stub Sitecore.Kernel assembly in unit tests
             }
         }
 

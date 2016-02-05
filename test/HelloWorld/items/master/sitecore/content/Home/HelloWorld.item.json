@@ -30,12 +30,6 @@
                         "Layout": "/sitecore/layout/Layouts/MvcLayout",
                         "Renderings": [
                             {
-                                "ReactHelloWorld": { }
-                            },
-                            {
-                                "Demo": { }
-                            },
-                            {
                                 "HelloWorld": { }
                             }
                         ]
