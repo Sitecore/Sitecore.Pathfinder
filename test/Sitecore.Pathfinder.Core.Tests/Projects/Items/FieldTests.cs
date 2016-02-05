@@ -14,7 +14,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         [Test]
         public void Compile_NullCompilers()
         {
-            var context = new FieldCompileContext(null, null, null, null, null);
+            var context = CreateContext(null);
             var field = new Field(Item.Empty, null) {Value = "Lorem Ipsum"};
 
             field.Compile(context);
@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         [Test]
         public void Compile_EmptyCompilers()
         {
-            var context = new FieldCompileContext(null, null, null, null, new IFieldCompiler[0]);
+            var context = CreateContext(new IFieldCompiler[0]);
             var field = new Field(Item.Empty, null) {Value = "Lorem Ipsum"};
 
             field.Compile(context);
@@ -39,7 +39,7 @@ namespace Sitecore.Pathfinder.Projects.Items
             var compilers = new IFieldCompiler[] { new CheckboxFieldCompiler() };
             var project = new Project(null, null, null, null, null, null);
             var template = CreateTemplate(project);
-            var context = new FieldCompileContext(null, null, null, null, compilers);
+            var context = CreateContext(compilers);
 
             var item = new Item(project, TextNode.Empty, Guid.NewGuid(), "master", "item", "/sitecore/item", template.ItemIdOrPath);
             project.AddOrMerge(item);
@@ -61,7 +61,7 @@ namespace Sitecore.Pathfinder.Projects.Items
             var compilers = new IFieldCompiler[] { new CheckboxFieldCompiler() };
             var project = new Project(null, null, null, null, null, null);
             var template = CreateTemplate(project);
-            var context = new FieldCompileContext(null, null, null, null, compilers);
+            var context = CreateContext(compilers);
 
             var item = new Item(project, TextNode.Empty, Guid.NewGuid(), "master", "item", "/sitecore/item", template.ItemName);
             project.AddOrMerge(item);
@@ -84,7 +84,7 @@ namespace Sitecore.Pathfinder.Projects.Items
             var compilers = new IFieldCompiler[] { new CheckboxFieldCompiler(), new ReplaceCompiler("alpha")  };
             var project = new Project(null, null, null, null, null, null);
             var template = CreateTemplate(project);
-            var context = new FieldCompileContext(null, null, null, null, compilers);
+            var context = CreateContext(compilers);
 
             var item = new Item(project, TextNode.Empty, Guid.NewGuid(), "master", "item", "/sitecore/item", template.ItemName);
             project.AddOrMerge(item);
@@ -107,7 +107,7 @@ namespace Sitecore.Pathfinder.Projects.Items
             var compilers = new IFieldCompiler[] { new ReplaceCompiler("alpha"), new ReplaceCompiler("beta"),  };
             var project = new Project(null, null, null, null, null, null);
             var template = CreateTemplate(project);
-            var context = new FieldCompileContext(null, null, null, null, compilers);
+            var context = CreateContext(compilers);
 
             var item = new Item(project, TextNode.Empty, Guid.NewGuid(), "master", "item", "/sitecore/item", template.ItemName);
             project.AddOrMerge(item);
@@ -124,7 +124,15 @@ namespace Sitecore.Pathfinder.Projects.Items
             Assert.That(field.CompiledValue, Is.EqualTo("beta"));
         }
 
-        private Template CreateTemplate(IProject project)
+        [NotNull]
+        private IFieldCompileContext CreateContext([CanBeNull] IFieldCompiler[] compilers)
+        {
+            var config = new Microsoft.Framework.ConfigurationModel.Configuration();
+            return new FieldCompileContext(config, null, null, null, compilers);
+        }
+
+        [NotNull]
+        private Template CreateTemplate([NotNull] IProject project)
         {
             var template = new Template(project, TextNode.Empty, Guid.NewGuid(), "master", "dummy template", Guid.NewGuid().ToString());
             var stringField = new TemplateField(template, Guid.NewGuid(), null)
