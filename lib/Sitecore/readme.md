@@ -6,3 +6,5 @@ This directory should contain the following files:
 * Sitecore.Mvc.dll
 * Sitecore.Zip.dll
 
+*Please notice that these assemblies are stub assemblies where every method 
+and property throws a NotImplementedException.*
