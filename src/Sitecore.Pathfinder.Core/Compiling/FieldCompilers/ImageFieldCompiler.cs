@@ -14,6 +14,8 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         {
         }
 
+        public override bool IsExclusive { get; } = true;
+
         public override bool CanCompile(IFieldCompileContext context, Field field)
         {
             return string.Equals(field.TemplateField.Type, "image", StringComparison.OrdinalIgnoreCase);

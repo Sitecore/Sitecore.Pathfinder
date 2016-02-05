@@ -5,6 +5,7 @@ using Sitecore.Pathfinder.Compiling.FieldCompilers;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 using System;
+using System.ComponentModel.Composition;
 
 namespace Sitecore.Pathfinder.Projects.Items
 {
@@ -162,6 +163,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         {
             public string Value { get; set; }
 
+            [ImportingConstructor]
             public ReplaceCompiler(string value) : base(Constants.FieldCompilers.Low)
             {
                 Value = value;

@@ -18,6 +18,8 @@ namespace Sitecore.Pathfinder.Languages.Yaml
             FileSystem = fileSystem;
         }
 
+        public override bool IsExclusive { get; } = true;
+
         [NotNull]
         protected IFileSystemService FileSystem { get; }
 

@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -21,6 +21,8 @@ namespace Sitecore.Pathfinder.Languages.Json
         {
             FileSystem = fileSystem;
         }
+
+        public override bool IsExclusive { get; } = true;
 
         [NotNull]
         protected IFileSystemService FileSystem { get; }

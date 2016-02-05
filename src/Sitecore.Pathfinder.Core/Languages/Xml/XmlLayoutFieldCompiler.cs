@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.ComponentModel.Composition;
@@ -17,6 +17,8 @@ namespace Sitecore.Pathfinder.Languages.Xml
         {
             FileSystem = fileSystem;
         }
+
+        public override bool IsExclusive { get; } = true;
 
         [NotNull]
         protected IFileSystemService FileSystem { get; }
