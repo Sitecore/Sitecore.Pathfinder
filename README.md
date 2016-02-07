@@ -2,8 +2,6 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/21a8xc3s80mcic81?svg=true)](https://ci.appveyor.com/project/JakobChristensen/sitecore-pathfinder) [![MyGet Prerelease](https://img.shields.io/myget/sitecore-pathfinder/vpre/Sitecore.Pathfinder.svg?label=version)](https://www.myget.org/feed/sitecore-pathfinder/package/nuget/Sitecore.Pathfinder) [![Downloads](https://img.shields.io/myget/sitecore-pathfinder/dt/sitecore.pathfinder.svg?label=downloads)](https://www.myget.org/feed/sitecore-pathfinder/package/nuget/Sitecore.Pathfinder) 
 
-[![Build History](https://ci-buildstats.azurewebsites.net/appveyor/chart/JakobChristensen/sitecore-pathfinder?branch=master&includeBuildsFromPullRequest=false)](https://ci.appveyor.com/project/JakobChristensen/sitecore-pathfinder) 
-
 Get started, get far, get happy!
 
 An experimental tool chain for Sitecore.
@@ -22,14 +20,13 @@ _Please notice that some details in these videos are out of date._
 * [04 - Html Templates](https://www.youtube.com/watch?v=9aTGhW6ErYM)
 * [05 - Code Generation, Visual Studio and Grunt](http://youtu.be/ZM3ve1WhwwQ)
 
-Download [Pathfinder 0.6.0-Alpha](http://vsplugins.sitecore.net/Pathfinder/Sitecore.Pathfinder.zip) to 
+Download [Pathfinder 0.6.7-Alpha](http://vsplugins.sitecore.net/Pathfinder/Sitecore.Pathfinder.zip) to 
 try it out.
 
 Follow the walk-throughs:
 
 * [Setting up](docs/walkthroughs/1. Setting up/README.md)
 * [HelloWorld](docs/walkthroughs/2. Hello world/README.md)
-
 
 ## Introduction
 Pathfinder is an experimental toolchain for Sitecore, that allows developers to use their favorite tools 
@@ -54,8 +51,13 @@ in a friendly manner.*
   * Dependency tracking through NuGet dependencies
   * NuGet package installer on Sitecore website
   * SitecorePathfinderCore NuGet package tweaks Sitecore defaults to be easier to work with (e.g. removes initial workflow)
+* Support for Html files as Sitecore Layout definitions
 * Support for Html Templates (with [Mustache](https://mustache.github.io/mustache.5.html) tags) makes getting started with the Sitecore Rendering Engine easier
+* Support for React renderings (.jsx)
 * Code Generation for generating strongly typed item model, factories and unit tests
 
 ## Documentation
 For more documentation see [Pathfinder Documentation](docs/README.md).
+
+### Build history
+[![Build History](https://ci-buildstats.azurewebsites.net/appveyor/chart/JakobChristensen/sitecore-pathfinder?branch=master&includeBuildsFromPullRequest=false)](https://ci.appveyor.com/project/JakobChristensen/sitecore-pathfinder) 

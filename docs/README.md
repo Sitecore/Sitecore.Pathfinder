@@ -7,6 +7,8 @@
     1. [Project configuration](03.02. Project configuration.md)
     1. [Building a project](03.03. Building a project.md)
     1. [Sitecore items as files](03.04. Sitecore items as files.md)
+    1. [Layouts as files](03.05. Layouts as files.md)
+    1. [React](03.06. React.md)
 1. Tasks
     1. [Checking a project](04.01. Checking a project.md)
     1. [Deploying to a website](04.02. Deploying to a website.md)

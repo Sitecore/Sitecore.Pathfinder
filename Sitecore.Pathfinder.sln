@@ -65,6 +65,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{2913B82E-E
 		docs\03.02. Project configuration.md = docs\03.02. Project configuration.md
 		docs\03.03. Building a project.md = docs\03.03. Building a project.md
 		docs\03.04. Sitecore items as files.md = docs\03.04. Sitecore items as files.md
+		docs\03.05. Layouts as files.md = docs\03.05. Layouts as files.md
+		docs\03.06. React.md = docs\03.06. React.md
 		docs\04. Tasks.md = docs\04. Tasks.md
 		docs\04.01. Checking a project.md = docs\04.01. Checking a project.md
 		docs\04.02. Deploying to a website.md = docs\04.02. Deploying to a website.md
@@ -84,7 +86,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{2913B82E-E
 		docs\06. Package Installer UI.md = docs\06. Package Installer UI.md
 		docs\07. Developer Environment.md = docs\07. Developer Environment.md
 		docs\08. External Tools.md = docs\08. External Tools.md
-		Languages.md = Languages.md
 		docs\README.md = docs\README.md
 	EndProjectSection
 EndProject
