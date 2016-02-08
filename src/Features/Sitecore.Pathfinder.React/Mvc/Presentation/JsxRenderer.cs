@@ -9,7 +9,6 @@ using React;
 using React.Exceptions;
 using React.TinyIoC;
 using Sitecore.Data.Fields;
-using Sitecore.Data.Items;
 using Sitecore.Mvc;
 using Sitecore.Mvc.Presentation;
 using Sitecore.Pathfinder.Extensions;
@@ -50,7 +49,8 @@ namespace Sitecore.Pathfinder.React.Mvc.Presentation
         {
             var props = GetProps();
 
-            IReactComponent reactComponent = Environment.CreateComponent(Path.GetFileNameWithoutExtension(FilePath), props);
+            var componentName = "FlatButtonLabel"; // Path.GetFileNameWithoutExtension(FilePath).Replace("-", string.Empty);
+            IReactComponent reactComponent = Environment.CreateComponent(componentName, props);
 
             writer.WriteLine(reactComponent.RenderHtml());
             writer.WriteLine($"<script src=\"{FilePath}\"></script>");

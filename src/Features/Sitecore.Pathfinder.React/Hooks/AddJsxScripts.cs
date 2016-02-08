@@ -30,7 +30,11 @@ namespace Sitecore.Pathfinder.React.Hooks
                     continue;
                 }
 
-                ReactSiteConfiguration.Configuration.SetReuseJavaScriptEngines(true).AddScript(folder + "/*.jsx");
+                foreach (var fileName in Directory.GetFiles(f, "*.jsx", SearchOption.AllDirectories))
+                {
+                    var jsx = "~" + FileUtil.UnmapPath(fileName, false);
+                    ReactSiteConfiguration.Configuration.SetReuseJavaScriptEngines(true).AddScript(jsx);
+                }
             }
         }
     }

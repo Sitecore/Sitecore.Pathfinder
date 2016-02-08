@@ -10,12 +10,6 @@ namespace Sitecore.Pathfinder.Pipelines.Loader
     {
         public void Process([NotNull] PipelineArgs args)
         {
-            RouteTable.Routes.MapRoute("Sitecore.Pathfinder.SitecoreCop", "sitecore/shell/client/Applications/Pathfinder/SitecoreCop", new
-            {
-                controller = "PathfinderSitecoreCop",
-                action = "Index"
-            });
-
             RouteTable.Routes.MapRoute("Sitecore.Pathfinder.Publish", "sitecore/shell/client/Applications/Pathfinder/Publish", new
             {
                 controller = "PathfinderPublish",
@@ -58,12 +52,6 @@ namespace Sitecore.Pathfinder.Pipelines.Loader
                 controller = "PathfinderWebApi",
                 action = "Index",
                 route = ""
-            });
-
-            RouteTable.Routes.MapRoute("Sitecore.Pathfinder.ContentEditor", "sitecore/Pathfinder/ContentEditor", new
-            {
-                controller = "PathfinderContentEditor",
-                action = "Index"
             });
         }
     }
