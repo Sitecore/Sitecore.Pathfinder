@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Sitecore.Pathfinder.Languages.Renderings;
 
-namespace Sitecore.Pathfinder.React.React
+namespace Sitecore.Pathfinder.React.Language
 {
     public class JsxRenderingParser : RenderingParser
     {

@@ -54,6 +54,10 @@
       <HintPath>..\..\..\packages\JSPool.0.3.1\lib\net40-Client\JSPool.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Microsoft.Framework.ConfigurationModel.Interfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Framework.ConfigurationModel.Interfaces.1.0.0-beta4\lib\net45\Microsoft.Framework.ConfigurationModel.Interfaces.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
@@ -133,9 +137,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="React\JsxRenderingParser.cs" />
+    <Compile Include="Language\JsxEmitter.cs" />
+    <Compile Include="Language\JsxRenderingParser.cs" />
     <Compile Include="Hooks\AddJsxScripts.cs" />
-    <Compile Include="React\ReactExtension.cs" />
+    <Compile Include="ReactExtension.cs" />
     <Compile Include="Mvc\Presentation\JsxRenderer.cs" />
     <Compile Include="Mvc\Response\GetRenderer\GetJsxRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
