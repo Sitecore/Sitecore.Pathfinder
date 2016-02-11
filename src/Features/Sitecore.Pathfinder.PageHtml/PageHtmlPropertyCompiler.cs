@@ -141,7 +141,7 @@ namespace Sitecore.Pathfinder.PageHtml
                 return;
             }
 
-            var root = html.ToXElement(LoadOptions.PreserveWhitespace);
+            var root = html.ToXElement(LoadOptions.SetLineInfo);
             if (root == null)
             {
                 context.CompileContext.Trace.TraceError(Msg.C1048, "Page Html is not valid", context.SourceFile);

@@ -7,6 +7,7 @@ using System.Net;
 using System.Text;
 using System.Web.Mvc;
 using Sitecore.Pathfinder.Emitters;
+using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.WebApi
@@ -19,7 +20,7 @@ namespace Sitecore.Pathfinder.WebApi
             var output = new StringWriter();
             Console.SetOut(output);
 
-            var emitter = app.CompositionService.Resolve<EmitterService>();
+            var emitter = app.CompositionService.Resolve<IEmitterService>();
             emitter.Start();
 
             var response = output.ToString();

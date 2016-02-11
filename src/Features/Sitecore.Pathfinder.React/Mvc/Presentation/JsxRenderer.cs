@@ -40,7 +40,7 @@ namespace Sitecore.Pathfinder.React.Mvc.Presentation
         }
 
         [Diagnostics.NotNull]
-        protected string FilePath { get; } 
+        protected string FilePath { get; }
 
         [Diagnostics.NotNull]
         protected Sitecore.Mvc.Presentation.Rendering Rendering { get; }
@@ -49,11 +49,10 @@ namespace Sitecore.Pathfinder.React.Mvc.Presentation
         {
             var props = GetProps();
 
-            var componentName = "FlatButtonLabel"; // Path.GetFileNameWithoutExtension(FilePath).Replace("-", string.Empty);
+            var componentName = Path.GetFileNameWithoutExtension(FilePath).Replace("-", string.Empty);
             IReactComponent reactComponent = Environment.CreateComponent(componentName, props);
 
             writer.WriteLine(reactComponent.RenderHtml());
-            writer.WriteLine($"<script src=\"{FilePath}\"></script>");
             writer.WriteLine($"<script>{reactComponent.RenderJavaScript()}</script>");
         }
 
