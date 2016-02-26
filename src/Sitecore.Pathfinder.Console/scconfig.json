@@ -9,8 +9,8 @@
     // project configuration file
     "project": "scconfig.json",
 
-    // the project roles enables/disables checkers and conventions
-    "project-role": "",
+    // the project roles enables/disables checkers and conventions - comma seperated list of roles
+    "project-role": "default",
 
     // mapping between project files and website files and items
     "project-website-mappings": {
@@ -331,22 +331,26 @@
 
     // maps project role to convention files
     "project-role-conventions": {
+        "default": {
+            "default-0": "PathfinderProjectFileSystemConventions",
+            "default-1": "SitecoreTemplateConventions"
+        },
         "habitat-design": {
             "habitat-design-0": "$tools/files/conventions/habitat.design.conventions.json"
         },
         "habitat-domain": {
             "habitat-domain-0": "$tools/files/conventions/habitat.domain.conventions.json"
         },
-        "habitat-framework": {
-            "habitat-framework-0": "$tools/files/conventions/habitat.framework.conventions.json"
+        "habitat-foundation": {
+            "habitat-foundation-0": "$tools/files/conventions/habitat.framework.conventions.json"
         },
         "habitat-website": {
             "habitat-website-0": "$tools/files/conventions/habitat.website.conventions.json",
-            "habitat-website-1": "$tools/files/conventions/sitecore.template.conventions.json"
+            "habitat-website-1": "SitecoreTemplateConventions"
         },
         "pathfinder": {
-            "pathfinder-0": "$tools/files/conventions/pathfinder.filesystem.conventions.json",
-            "pathfinder-1": "$tools/files/conventions/sitecore.template.conventions.json"
+            "pathfinder-0": "PathfinderProjectFileSystemConventions",
+            "pathfinder-1": "SitecoreTemplateConventions"
         },
         "speak": {
             "speak-0": "$tools/files/conventions/speak.conventions.json"

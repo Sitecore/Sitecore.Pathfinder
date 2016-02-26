@@ -1,9 +1,13 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+using Microsoft.Framework.ConfigurationModel;
+using Sitecore.Pathfinder.Checking.Conventions;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Files;
 using Sitecore.Pathfinder.Projects.Items;
@@ -15,22 +19,66 @@ namespace Sitecore.Pathfinder.Checking.Checkers
     public class ConventionChecker : CheckerBase
     {
         [ImportingConstructor]
-        public ConventionChecker([NotNull] IRuleService ruleService) : base("Conventions", All)
+        public ConventionChecker([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] IRuleService ruleService) : base("Conventions", All)
         {
+            Configuration = configuration;
+            CompositionService = compositionService;
             RuleService = ruleService;
         }
+
+        [NotNull]
+        protected ICompositionService CompositionService { get; }
+
+        [NotNull]
+        protected IConfiguration Configuration { get; }
 
         [NotNull]
         protected IRuleService RuleService { get; }
 
         public override void Check(ICheckerContext context)
         {
-            var rules = RuleService.ParseRules("check-project:conventions").ToArray();
+            CheckConventions(context);
 
-            context.ConventionCount += rules.Length;
+            // todo: consider deprecating Json based rules
+            CheckRules(context);
+        }
 
-            CheckProject(context, rules);
-            CheckProjectItems(context, rules);
+        protected virtual void CheckConventions([NotNull] ICheckerContext context)
+        {
+            var conventionNames = new HashSet<string>();
+
+            var projectRoles = Configuration.GetCommaSeparatedStringList(Constants.Configuration.ProjectRole);
+            foreach (var projectRole in projectRoles)
+            {
+                foreach (var pair in Configuration.GetSubKeys("project-role-conventions:" + projectRole))
+                {
+                    var conventionName = Configuration.GetString("project-role-conventions:" + projectRole + ":" + pair.Key);
+                    if (string.IsNullOrEmpty(conventionName))
+                    {
+                        continue;
+                    }
+
+                    // ignore json rule files
+                    if (conventionName.IndexOf(".json", StringComparison.OrdinalIgnoreCase) < 0)
+                    {
+                        conventionNames.Add(conventionName);
+                    }
+                }
+            }
+
+            var conventions = CompositionService.ResolveMany<ConventionsBase>();
+
+            foreach (var convention in conventions)
+            {
+                if (!conventionNames.Contains(convention.GetType().Name))
+                {
+                    continue;
+                }
+
+                context.ConventionCount += convention.ConventionCount;
+
+                convention.Check(context);
+            }
         }
 
         protected virtual void CheckProject([NotNull] ICheckerContext context, [NotNull, ItemNotNull] IRule[] rules)
@@ -106,6 +154,16 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                     }
                 }
             }
+        }
+
+        protected virtual void CheckRules([NotNull] ICheckerContext context)
+        {
+            var rules = RuleService.ParseRules("check-project:conventions").ToArray();
+
+            context.ConventionCount += rules.Length;
+
+            CheckProject(context, rules);
+            CheckProjectItems(context, rules);
         }
     }
 }

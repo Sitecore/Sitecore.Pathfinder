@@ -1,6 +1,7 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Reflection;
@@ -24,12 +25,37 @@ namespace Sitecore.Pathfinder.Extensions
             {
                 Console.WriteLine(ex.Message);
 
-                if (ex is ReflectionTypeLoadException)
+                var typeLoadException = ex as ReflectionTypeLoadException;
+                if (typeLoadException != null)
                 {
-                    var typeLoadException = ex as ReflectionTypeLoadException;
-                    var loaderExceptions = typeLoadException.LoaderExceptions;
+                    foreach (var loaderException in typeLoadException.LoaderExceptions)
+                    {
+                        Console.WriteLine(loaderException.Message);
+                    }
+                }
 
-                    foreach (var loaderException in loaderExceptions)
+                throw;
+            }
+        }
+
+        [NotNull, ItemNotNull]
+        public static IEnumerable<T> ResolveMany<T>([NotNull] this ICompositionService compositionService)
+        {
+            var compositionContainer = (CompositionContainer)compositionService;
+
+            try
+            {
+                var exportedValue = compositionContainer.GetExportedValues<T>();
+                return exportedValue;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                var typeLoadException = ex as ReflectionTypeLoadException;
+                if (typeLoadException != null)
+                {
+                    foreach (var loaderException in typeLoadException.LoaderExceptions)
                     {
                         Console.WriteLine(loaderException.Message);
                     }

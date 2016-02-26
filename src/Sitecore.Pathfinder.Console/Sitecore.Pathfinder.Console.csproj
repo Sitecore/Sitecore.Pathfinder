@@ -186,6 +186,14 @@
       <Link>files\extensions\checkers\Fields\NumberChecker.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Conventions\PathfinderProjectFileSystemConventions.cs">
+      <Link>files\extensions\conventions\PathfinderProjectFileSystemConventions.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Conventions\SitecoreTemplateConventions.cs">
+      <Link>files\extensions\conventions\SitecoreTemplateConventions.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Compile Include="Building\Tasks\AddProject.cs" />
     <Compile Include="Building\Tasks\CleanWebsite.cs" />
     <Compile Include="Building\Tasks\WriteExports.cs" />
@@ -309,9 +317,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="files\conventions\habitat.framework.conventions.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="files\conventions\pathfinder.filesystem.conventions.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="files\conventions\habitat.website.conventions.json">
@@ -553,9 +558,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="files\website\App_Config\include\Sitecore.Pathfinder.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="files\conventions\sitecore.templates.conventions.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="files\conventions\speak.conventions.json">

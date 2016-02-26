@@ -136,12 +136,16 @@ namespace Sitecore.Pathfinder.Configuration
             }
 
             // add project role configs 
-            var projectRole = configurationSourceRoot.GetString(Constants.Configuration.ProjectRole).ToLowerInvariant();
-            if (!string.IsNullOrEmpty(projectRole))
+            var projectRoles = configurationSourceRoot.GetCommaSeparatedStringList(Constants.Configuration.ProjectRole);
+            foreach (var projectRole in projectRoles)
             {
                 foreach (var pair in configurationSourceRoot.GetSubKeys("project-role-conventions:" + projectRole))
                 {
                     var conventionsFileName = configurationSourceRoot.GetString("project-role-conventions:" + projectRole + ":" + pair.Key);
+                    if (string.IsNullOrEmpty(conventionsFileName))
+                    {
+                        continue;
+                    }
 
                     if (conventionsFileName.StartsWith("$tools/", StringComparison.OrdinalIgnoreCase))
                     {
@@ -153,7 +157,11 @@ namespace Sitecore.Pathfinder.Configuration
                         conventionsFileName = Path.Combine(configurationSourceRoot.GetString(Constants.Configuration.ProjectDirectory), PathHelper.NormalizeFilePath(conventionsFileName.Mid(2)));
                     }
 
-                    configurationSourceRoot.AddFile(conventionsFileName);
+                    // filename might be a json config file or the name of a class in an extension
+                    if (File.Exists(conventionsFileName))
+                    {
+                        configurationSourceRoot.AddFile(conventionsFileName);
+                    }
                 }
             }
 

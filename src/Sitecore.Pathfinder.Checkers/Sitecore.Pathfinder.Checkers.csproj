@@ -69,6 +69,8 @@
     <Compile Include="Checking\Checkers\Items\TemplateChecker.cs" />
     <Compile Include="Checking\Checkers\Templates\UseIdInsteadOfPathChecker.cs" />
     <Compile Include="Checking\Checkers\ReferenceChecker.cs" />
+    <Compile Include="Checking\Conventions\PathfinderProjectFileSystemConventions.cs" />
+    <Compile Include="Checking\Conventions\SitecoreTemplateConventions.cs" />
     <Compile Include="files\project\sitecore.filetemplates\codegenerators\PocoTemplate.cs" />
     <Compile Include="files\project\sitecore.filetemplates\codefirst\ModelCompiler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

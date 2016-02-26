@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{3FD15219-6CAE-4865-A054-8E9E2A5EDF4E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documentation", "documentation", "{3FD15219-6CAE-4865-A054-8E9E2A5EDF4E}"
 	ProjectSection(SolutionItems) = preProject
 		Changes.md = Changes.md
 		CONTRIBUTING.md = CONTRIBUTING.md
@@ -25,7 +25,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.Core", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.Checkers", "src\Sitecore.Pathfinder.Checkers\Sitecore.Pathfinder.Checkers.csproj", "{0DAB8EEC-C4A6-4B27-9C21-6D2F4E32CB76}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{049B9C99-6613-43BB-BF14-A60D7C9F7F57}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{049B9C99-6613-43BB-BF14-A60D7C9F7F57}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Website.Good", "test\Website.Good\Website.Good.csproj", "{E2B6E3D8-1D5D-4CDB-ACA9-6F2108560ED9}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -48,7 +48,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.Console
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.Server.Tests", "test\Sitecore.Pathfinder.Server.Tests\Sitecore.Pathfinder.Server.Tests.csproj", "{18B20426-A6EE-4967-8112-A455A4502A7E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Features", "Features", "{5325B39E-6883-47AA-BD17-291B7608E834}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "features", "features", "{5325B39E-6883-47AA-BD17-291B7608E834}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.Unicorn", "src\Features\Sitecore.Pathfinder.Unicorn\Sitecore.Pathfinder.Unicorn.csproj", "{E707E44A-9F34-41E2-90E2-7065EF60CB03}"
 EndProject
@@ -103,7 +103,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Hello world", "2. Hello 
 		docs\walkthroughs\2. Hello world\README.md = docs\walkthroughs\2. Hello world\README.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{8BCC4338-81A1-4B6C-99F9-89ABFF7812BE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configuration", "configuration", "{8BCC4338-81A1-4B6C-99F9-89ABFF7812BE}"
 	ProjectSection(SolutionItems) = preProject
 		gulpfile.js = gulpfile.js
 		package.json = package.json

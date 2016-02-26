@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Diagnostics;
 using System.IO;
@@ -14,12 +14,26 @@ namespace Sitecore.Pathfinder.Projects.Files
     public class File : ProjectItem
     {
         [CanBeNull]
+        private string _extension;
+
+        [CanBeNull]
+        private string _extensions;
+
+        [CanBeNull]
         private string _shortName;
 
         public File([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath) : base(project, snapshot, GetUri(project, snapshot))
         {
             FilePath = filePath;
         }
+
+        /// <summary>Gets the last extension of the FilePath property - including the period (".").</summary>
+        [NotNull]
+        public string Extension => _extension ?? (_extension = Path.GetExtension(FilePath));
+
+        /// <summary>Gets all the extensions of the FilePath property - including the period (".").</summary>
+        [NotNull]
+        public string Extensions => _extensions ?? (_extensions = PathHelper.GetExtension(FilePath));
 
         [NotNull]
         public string FilePath { get; }

@@ -80,6 +80,8 @@
     <Compile Include="Checking\Checkers\ConventionChecker.cs" />
     <Compile Include="Checking\Checkers\ConventionRuleContext.cs" />
     <Compile Include="Checking\Checkers\GuidChecker.cs" />
+    <Compile Include="Checking\Conventions\ConventionsBase.cs" />
+    <Compile Include="Checking\Conventions\ProjectExtensions.cs" />
     <Compile Include="Checking\IChecker.cs" />
     <Compile Include="Checking\ICheckerContext.cs" />
     <Compile Include="Checking\ICheckerService.cs" />
