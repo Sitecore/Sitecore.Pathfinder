@@ -39,13 +39,13 @@ namespace Sitecore.Pathfinder.Checking.Conventions
         [NotNull, ItemNotNull]
         protected IEnumerable<Template> Templates => Context.Project.Templates;
 
-        [NotNull, ItemNotNull]
+        [NotNull, ItemCanBeNull]
         protected abstract IEnumerable<IEnumerable<Diagnostic>> Check();
 
         [NotNull, ItemNotNull]
         protected virtual IEnumerable<Diagnostic> CheckDiagnostics()
         {
-            return Check().SelectMany(i => i.ToList()).ToList();
+            return Check().SelectMany(i => i != null ? i.ToList() : Enumerable.Empty<Diagnostic>()).ToList();
         }
 
         [NotNull]
