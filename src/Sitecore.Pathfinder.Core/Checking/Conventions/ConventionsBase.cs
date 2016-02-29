@@ -45,7 +45,7 @@ namespace Sitecore.Pathfinder.Checking.Conventions
         [NotNull, ItemNotNull]
         protected virtual IEnumerable<Diagnostic> CheckDiagnostics()
         {
-            return Check().SelectMany(i => i != null ? i.ToList() : Enumerable.Empty<Diagnostic>()).ToList();
+            return Check().ToList().SelectMany(i => i != null ? i.ToList() : Enumerable.Empty<Diagnostic>()).ToList();
         }
 
         [NotNull]

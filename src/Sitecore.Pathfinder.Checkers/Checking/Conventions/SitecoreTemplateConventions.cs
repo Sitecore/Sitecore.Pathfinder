@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Checking.Conventions
 
         protected override IEnumerable<IEnumerable<Diagnostic>> Check()
         {
-            yield return 
+            yield return    
                 from item in Items
                 where 
                     !item.ItemIdOrPath.StartsWithIgnoreCase("/sitecore/templates/") &&
@@ -50,7 +50,7 @@ namespace Sitecore.Pathfinder.Checking.Conventions
                     )
                 select Warning("In the '/sitecore/templates' section, folder items use the 'Template folder' template - not the 'Folder' or 'Node' template. To fix, change the template of the item to 'Template Folder", item);
 
-            yield return
+            yield return               
                 from item in Items
                 where
                     item.ItemIdOrPath.StartsWithIgnoreCase("/sitecore/templates/") &&
@@ -96,8 +96,8 @@ namespace Sitecore.Pathfinder.Checking.Conventions
                 let validationText = item.Fields["ValidationText"]
                 where
                     validation != null && validation.Value != "" &&
-                    validationText == null || validationText.Value == ""
+                    validationText != null && validationText.Value == ""
                 select Warning("In a template field, the 'Default value' field is no longer used. To fix, clear the 'Default value' field and set the value on the Standard Values item", validation, item);
-        }
+       }
     }
 }
