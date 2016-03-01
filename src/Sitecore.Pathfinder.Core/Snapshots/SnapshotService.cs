@@ -43,25 +43,25 @@ namespace Sitecore.Pathfinder.Snapshots
         public virtual ITextNode LoadIncludeFile(SnapshotParseContext snapshotParseContext, ISnapshot snapshot, string includeFileName)
         {
             var extension = PathHelper.GetExtension(snapshot.SourceFile.AbsoluteFileName);
-            var projectDirectory = snapshot.SourceFile.AbsoluteFileName.Left(snapshot.SourceFile.AbsoluteFileName.Length - snapshot.SourceFile.ProjectFileName.Length - extension.Length + 1);
+            var projectDirectory = snapshot.SourceFile.AbsoluteFileName.Left(snapshot.SourceFile.AbsoluteFileName.Length - snapshot.SourceFile.ProjectItemName.Length - extension.Length + 1);
 
-            string sourceFileName;
+            string absoluteFileName;
             if (includeFileName.StartsWith("~/"))
             {
-                sourceFileName = PathHelper.Combine(projectDirectory, includeFileName.Mid(2));
+                absoluteFileName = PathHelper.Combine(projectDirectory, includeFileName.Mid(2));
             }
             else
             {
-                sourceFileName = PathHelper.Combine(Path.GetDirectoryName(snapshot.SourceFile.AbsoluteFileName) ?? string.Empty, includeFileName);
+                absoluteFileName = PathHelper.Combine(Path.GetDirectoryName(snapshot.SourceFile.AbsoluteFileName) ?? string.Empty, includeFileName);
             }
 
-            if (!FileSystem.FileExists(sourceFileName))
+            if (!FileSystem.FileExists(absoluteFileName))
             {
-                throw new FileNotFoundException("Include file not found", sourceFileName);
+                throw new FileNotFoundException("Include file not found", absoluteFileName);
             }
 
-            var projectFileName = "~/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(projectDirectory, PathHelper.GetDirectoryAndFileNameWithoutExtensions(sourceFileName))).TrimStart('/');
-            var sourceFile = Factory.SourceFile(FileSystem, sourceFileName, projectFileName);
+            var projectFileName = "~/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(projectDirectory, PathHelper.GetDirectoryAndFileNameWithoutExtensions(absoluteFileName))).TrimStart('/');
+            var sourceFile = Factory.SourceFile(FileSystem, projectDirectory, absoluteFileName);
 
             var includeSnapshot = LoadSnapshot(snapshotParseContext, sourceFile) as TextSnapshot;
             Assert.Cast(includeSnapshot, nameof(includeSnapshot));

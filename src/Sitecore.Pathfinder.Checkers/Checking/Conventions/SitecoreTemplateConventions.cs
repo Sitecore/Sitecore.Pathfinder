@@ -35,9 +35,11 @@ namespace Sitecore.Pathfinder.Checking.Conventions
 
             yield return
                 from item in Items
+                let parent = item.GetParent()
                 where
+                    parent != null && 
                     item.ItemName.EqualsIgnoreCase("__Standard Values") &&
-                    item.Template.Uri.Guid != item.GetParent()?.Uri.Guid
+                    item.Template.Uri.Guid != parent.Uri.Guid
                 select Warning("The Template ID of a Standard Values item should be match the ID of the parent item. To fix, moved the Standard Values item under the correct template", item);
 
             yield return

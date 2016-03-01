@@ -44,7 +44,7 @@ namespace Sitecore.Pathfinder.Projects
         ICollection<ISourceFile> SourceFiles { get; }
 
         [NotNull]
-        IProject Add([NotNull] string sourceFileName);
+        IProject Add([NotNull] string absoluteFileName);
 
         [NotNull]
         T AddOrMerge<T>([NotNull] T projectItem) where T : IProjectItem;

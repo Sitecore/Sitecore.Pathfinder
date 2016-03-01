@@ -98,20 +98,19 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         protected IPipelineService PipelineService { get; }
 
-        public virtual IProject Add(string sourceFileName)
+        public virtual IProject Add(string absoluteFileName)
         {
             if (string.IsNullOrEmpty(Options.ProjectDirectory))
             {
                 throw new InvalidOperationException(Texts.Project_has_not_been_loaded__Call_Load___first);
             }
 
-            if (SourceFiles.Any(s => string.Equals(s.AbsoluteFileName, sourceFileName, StringComparison.OrdinalIgnoreCase)))
+            if (SourceFiles.Any(s => string.Equals(s.AbsoluteFileName, absoluteFileName, StringComparison.OrdinalIgnoreCase)))
             {
-                Remove(sourceFileName);
+                Remove(absoluteFileName);
             }
 
-            var projectFileName = "~/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(Options.ProjectDirectory, PathHelper.GetDirectoryAndFileNameWithoutExtensions(sourceFileName))).TrimStart('/');
-            var sourceFile = Factory.SourceFile(FileSystem, sourceFileName, projectFileName);
+            var sourceFile = Factory.SourceFile(FileSystem, Options.ProjectDirectory, absoluteFileName);
             SourceFiles.Add(sourceFile);
 
             try
@@ -120,7 +119,7 @@ namespace Sitecore.Pathfinder.Projects
             }
             catch (Exception ex)
             {
-                Diagnostics.Add(new Diagnostic(Msg.P1000, sourceFileName, TextSpan.Empty, Severity.Error, ex.Message));
+                Diagnostics.Add(new Diagnostic(Msg.P1000, absoluteFileName, TextSpan.Empty, Severity.Error, ex.Message));
             }
 
             return this;

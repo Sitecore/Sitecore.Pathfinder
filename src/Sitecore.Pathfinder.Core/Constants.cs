@@ -65,6 +65,8 @@ namespace Sitecore.Pathfinder
 
             public const string BuildProjectParseAllFiles = "build-project:parse-all-files";
 
+            public const string BuildProjectRunValidators = "build-project:run-sitecore-validators";
+
             public const string CheckBinFileVersion = "install-package:check-bin-file-version";
 
             public const string CheckProjectDisabledCategories = "check-project:disabled-categories";
@@ -248,6 +250,11 @@ namespace Sitecore.Pathfinder
             public static readonly Guid ValidFrom = new Guid("{C8F93AFE-BFD4-4E8F-9C61-152559854661}");
 
             public static readonly Guid ValidTo = new Guid("{4C346442-E859-4EFD-89B2-44AEDF467D21}");
+        }
+
+        public static class Layouts
+        {
+            public const string MvcLayout = "/sitecore/layout/layouts/Pathfinder/MvcLayout";
         }
 
         public static class Parsers

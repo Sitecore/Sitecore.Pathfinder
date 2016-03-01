@@ -1,0 +1,9 @@
+<Exports>
+  <Item Id="{9DFBB778-512F-4BA7-8293-C01503572D30}" Database="master" Name="__Standard Values" Path="/sitecore/templates/Sample/Sample Item/__Standard Values" Template="/sitecore/templates/Sample/Sample Item" />
+  <Item Id="{4A36B825-C550-4EF3-9DCF-A1C455041BDF}" Database="master" Name="MvcPage" Path="/sitecore/layout/layouts/Pathfinder/MvcPage" Template="{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}">
+    <Field Name="Place Holders" Value="Page" />
+  </Item>
+  <Item Id="{5B2B5845-4D8A-FBB3-08D3-9A6065C35D1E}" Database="master" Name="MvcLayout" Path="/sitecore/layout/layouts/Pathfinder/MvcLayout" Template="{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}">
+    <Field Name="Place Holders" Value="Page.Body" />
+  </Item>
+</Exports>

@@ -194,6 +194,27 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.React",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.PageHtml", "src\Features\Sitecore.Pathfinder.PageHtml\Sitecore.Pathfinder.PageHtml.csproj", "{9FA3A409-FBE3-4F65-8D5B-D8510CA6348D}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "SitecorePathfinderCore", "test\SitecorePathfinderCore\", "{A746E909-84DD-409F-9900-C0BF80FAD1D5}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_51161"
+		Debug.AspNetCompiler.PhysicalPath = "test\SitecorePathfinderCore\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_51161\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_51161"
+		Release.AspNetCompiler.PhysicalPath = "test\SitecorePathfinderCore\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_51161\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "51161"
+		SlnRelativePath = "test\SitecorePathfinderCore\"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -279,6 +300,10 @@ Global
 		{9FA3A409-FBE3-4F65-8D5B-D8510CA6348D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FA3A409-FBE3-4F65-8D5B-D8510CA6348D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FA3A409-FBE3-4F65-8D5B-D8510CA6348D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A746E909-84DD-409F-9900-C0BF80FAD1D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A746E909-84DD-409F-9900-C0BF80FAD1D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A746E909-84DD-409F-9900-C0BF80FAD1D5}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{A746E909-84DD-409F-9900-C0BF80FAD1D5}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -307,5 +332,6 @@ Global
 		{7E7E0FFC-3BF6-4463-B74C-5D5BE205B355} = {049B9C99-6613-43BB-BF14-A60D7C9F7F57}
 		{C735B4FA-4834-47D0-A0D7-51270AD3153E} = {5325B39E-6883-47AA-BD17-291B7608E834}
 		{9FA3A409-FBE3-4F65-8D5B-D8510CA6348D} = {5325B39E-6883-47AA-BD17-291B7608E834}
+		{A746E909-84DD-409F-9900-C0BF80FAD1D5} = {049B9C99-6613-43BB-BF14-A60D7C9F7F57}
 	EndGlobalSection
 EndGlobal

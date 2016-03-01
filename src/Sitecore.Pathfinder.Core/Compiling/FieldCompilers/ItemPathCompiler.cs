@@ -24,6 +24,11 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         public override string Compile(IFieldCompileContext context, Field field)
         {
             var value = field.Value.Trim();
+            if (string.IsNullOrEmpty(value))
+            {
+                return string.Empty;
+            }
+
             if (value.IndexOf('|') < 0)
             {
                 var item = field.Item.Project.FindQualifiedItem<IProjectItem>(value);

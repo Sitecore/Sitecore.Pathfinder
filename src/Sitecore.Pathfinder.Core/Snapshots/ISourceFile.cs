@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -20,7 +20,10 @@ namespace Sitecore.Pathfinder.Snapshots
         DateTime LastWriteTimeUtc { get; }
 
         [NotNull]
-        string ProjectFileName { get; }
+        string ProjectItemName { get; }
+
+        [NotNull]
+        string RelativeFileName { get; }
 
         [NotNull]
         string GetFileNameWithoutExtensions();

@@ -27,7 +27,7 @@
                 "Devices": [
                     {
                         "Name": "Default",
-                        "Layout": "/sitecore/layout/Layouts/MvcLayout",
+                        "Layout": "/sitecore/layout/Layouts/Pathfinder/MvcLayout",
                         "Renderings": [
                             {
                                 "HelloWorld": { }

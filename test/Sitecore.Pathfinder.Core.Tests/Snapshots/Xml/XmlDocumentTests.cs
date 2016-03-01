@@ -19,7 +19,7 @@ namespace Sitecore.Pathfinder.Snapshots.Xml
         [Test]
         public void GetNestedTextNodeTests()
         {
-            var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt");
+            var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt", "test.txt");
 
             var doc = Services.CompositionService.Resolve<XmlTextSnapshot>().With(SnapshotParseContext.Empty, sourceFile, "<Item><Field Name=\"Text\">123</Field></Item>", string.Empty, string.Empty);
             var root = doc.Root;
@@ -35,7 +35,7 @@ namespace Sitecore.Pathfinder.Snapshots.Xml
         [Test]
         public void InvalidXmlTests()
         {
-            var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt");
+            var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt", "test.txt");
 
             var doc = Services.CompositionService.Resolve<XmlTextSnapshot>().With(SnapshotParseContext.Empty, sourceFile, "<Item>", string.Empty, string.Empty);
             Assert.AreEqual(TextNode.Empty, doc.Root);
@@ -47,7 +47,7 @@ namespace Sitecore.Pathfinder.Snapshots.Xml
         [Test]
         public void ItemTests()
         {
-            var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt");
+            var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt", "test.txt");
 
             var doc = Services.CompositionService.Resolve<XmlTextSnapshot>().With(SnapshotParseContext.Empty, sourceFile, "<Item><Field Name=\"Text\" Value=\"123\" /></Item>", string.Empty, string.Empty);
             var root = doc.Root;
@@ -73,7 +73,7 @@ namespace Sitecore.Pathfinder.Snapshots.Xml
         [Test]
         public void ValueTests()
         {
-            var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt");
+            var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt", "test.txt");
 
             var doc = Services.CompositionService.Resolve<XmlTextSnapshot>().With(SnapshotParseContext.Empty, sourceFile, "<Item><Field Name=\"Text\">123</Field></Item>", string.Empty, string.Empty);
             var root = doc.Root;

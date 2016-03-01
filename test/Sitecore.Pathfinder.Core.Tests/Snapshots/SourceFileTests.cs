@@ -21,11 +21,11 @@ namespace Sitecore.Pathfinder.Snapshots
 
             var projectFileName = "~/content/Home/XmlItem.item.xml";
             var fileName = Path.Combine(ProjectDirectory, "content\\Home\\XmlItem.item.xml");
-            var sourceFile = new SourceFile(Services.FileSystem, fileName, projectFileName);
+            var sourceFile = new SourceFile(Services.FileSystem, fileName, fileName, projectFileName);
 
             Assert.AreEqual(fileName, sourceFile.AbsoluteFileName);
             Assert.AreNotEqual(DateTime.MinValue, sourceFile.LastWriteTimeUtc);
-            Assert.AreEqual("~/content/Home/XmlItem.item.xml", sourceFile.ProjectFileName);
+            Assert.AreEqual("~/content/Home/XmlItem.item.xml", sourceFile.ProjectItemName);
         }
     }
 }

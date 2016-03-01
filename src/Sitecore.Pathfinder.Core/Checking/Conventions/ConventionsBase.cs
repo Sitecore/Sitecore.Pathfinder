@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Files;
 using Sitecore.Pathfinder.Projects.Items;
@@ -58,7 +60,7 @@ namespace Sitecore.Pathfinder.Checking.Conventions
         protected Diagnostic Error([NotNull] string text, [NotNull, ItemNotNull] params IHasSourceTextNodes[] textNodes)
         {
             var textNode = TraceHelper.GetTextNode(textNodes);
-            return new Diagnostic(0, textNode.Snapshot.SourceFile.ProjectFileName, textNode.TextSpan, Severity.Error, text);
+            return new Diagnostic(0, textNode.Snapshot.SourceFile.RelativeFileName, textNode.TextSpan, Severity.Error, text);
         }
 
         [NotNull]
@@ -71,14 +73,15 @@ namespace Sitecore.Pathfinder.Checking.Conventions
         protected Diagnostic Information([NotNull] string text, [NotNull, ItemNotNull] params IHasSourceTextNodes[] textNodes)
         {
             var textNode = TraceHelper.GetTextNode(textNodes);
-            return new Diagnostic(0, textNode.Snapshot.SourceFile.ProjectFileName, textNode.TextSpan, Severity.Information, text);
+            return new Diagnostic(0, textNode.Snapshot.SourceFile.RelativeFileName, textNode.TextSpan, Severity.Information, text);
         }
 
         [NotNull]
         protected Diagnostic Warning([NotNull] string text, [NotNull, ItemNotNull] params IHasSourceTextNodes[] textNodes)
         {
             var textNode = TraceHelper.GetTextNode(textNodes);
-            return new Diagnostic(0, textNode.Snapshot.SourceFile.ProjectFileName, textNode.TextSpan, Severity.Warning, text);
+
+            return new Diagnostic(0, textNode.Snapshot.SourceFile.RelativeFileName, textNode.TextSpan, Severity.Warning, text);
         }
 
         [NotNull]

@@ -44,11 +44,13 @@
         // if force-update is true, media will always be uploaded and files always copied during emitting
         "force-update": false,
 
+        // bin files to compile for code generation
         "compile-bin-files": {
             "include": "",
             "exclude": ""
         },
 
+        // file extension to template map
         "media": {
             "template": {
                 "jpeg": "/sitecore/templates/System/Media/Unversioned/Jpeg",
@@ -71,6 +73,10 @@
         // if true, all files are parsed and processed, otherwise only mapped files are processed (mapped files are specifed in project-website-mappings:project-to-website)
         "parse-all-files": true,
 
+        // execute Sitecore validators after item or template has been updated
+        "run-sitecore-validators": true,
+
+        // poor mans schema for item files.
         "schema": {
             "Item-attributes": "Name, Id, Database, Icon, Template, IsEmittable, IsExternalReference, Layout.HtmlFile, Layout.Page, Template.CreateFromFields, Template.Id, Template.Icon, Template.BaseTemplates, Template.ShortHelp, Template.LongHelp",
             "Item-childnodes": "Fields, Children, Template",
@@ -85,6 +91,7 @@
             "Children-childnodes": "Item, Template"
         },
 
+        // CLR type name to field type map
         "type-name-to-field-type": {
             "System.Boolean": "Checkbox",
             "System.Int32": "Integer"

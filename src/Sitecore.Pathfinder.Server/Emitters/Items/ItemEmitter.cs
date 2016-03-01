@@ -5,6 +5,9 @@ using System.Linq;
 using Sitecore.Configuration;
 using Sitecore.Data.Managers;
 using Sitecore.Data.Templates;
+using Sitecore.Data.Validators;
+using Sitecore.Data.Validators.FieldValidators;
+using Sitecore.Data.Validators.ItemValidators;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitters.Writers;
 using Sitecore.Pathfinder.Emitting;
@@ -82,33 +85,61 @@ namespace Sitecore.Pathfinder.Emitters.Items
 
             var dataItem = itemWriter.Write(context);
 
-            Check(context, item, dataItem);
+            if (context.Configuration.GetBool(Constants.Configuration.BuildProjectRunValidators))
+            {
+                Validate(context, item, dataItem);
+            }
         }
 
-        protected virtual void Check([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] Data.Items.Item dataItem)
+        protected virtual void Validate([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] Data.Items.Item dataItem)
         {
-            /*
-            var validatorCollection = ValidatorManager.BuildValidators(ValidatorsMode.ValidateButton, dataItem);
+            var validatorCollection = new ValidatorCollection();
+            foreach (BaseValidator validator in ValidatorManager.BuildValidators(ValidatorsMode.ValidatorBar, dataItem))
+            {
+                // remove slow and obsolete validators
+                if (validator is FullPageXHtmlValidator)
+                {
+                    continue;
+                }
+
+                if (validator is XhtmlValidator)
+                {
+                    continue;
+                }
+
+                if (validator is W3CXhtmlValidator)
+                {
+                    continue;
+                }
+
+                validatorCollection.Add(validator);
+            }
 
             ValidatorManager.Validate(validatorCollection, new ValidatorOptions(true));
 
             foreach (BaseValidator validator in validatorCollection)
             {
+                var text = validator.Text.TrimEnd('.');
+                var details = validator.GetFieldDisplayName();
+                if (details == "[unknown]")
+                {
+                    details = string.Empty;
+                }
+
                 switch (validator.Result)
                 {
                     case ValidatorResult.Suggestion:
                     case ValidatorResult.Warning:
-                        context.Trace.TraceWarning(validator.Text, item.SourceTextNodes.First(), validator.GetFieldDisplayName());
+                        context.Trace.TraceWarning(Msg.E1008, text, item.SourceTextNodes.First(), details);
                         break;
 
                     case ValidatorResult.Error:
                     case ValidatorResult.CriticalError:
                     case ValidatorResult.FatalError:
-                        context.Trace.TraceError(validator.Text, item.SourceTextNodes.First(), validator.GetFieldDisplayName());
+                        context.Trace.TraceError(Msg.E1008, text, item.SourceTextNodes.First(), details);
                         break;
                 }
             }
-            */
         }
 
         [Diagnostics.CanBeNull]

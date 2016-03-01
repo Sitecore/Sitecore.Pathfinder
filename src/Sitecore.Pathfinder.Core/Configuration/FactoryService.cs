@@ -200,9 +200,12 @@ namespace Sitecore.Pathfinder.Configuration
             return new Snapshot().With(sourceFile);
         }
 
-        public virtual ISourceFile SourceFile(IFileSystemService fileSystem, string sourceFileName, string projectFileName)
+        public virtual ISourceFile SourceFile(IFileSystemService fileSystem, string projectDirectory, string absoluteFileName)
         {
-            return new SourceFile(fileSystem, sourceFileName, projectFileName);
+            var relativeFileName = PathHelper.NormalizeFilePath(PathHelper.UnmapPath(projectDirectory, absoluteFileName)).TrimStart('\\');
+            var projectFileName = "~/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(projectDirectory, PathHelper.GetDirectoryAndFileNameWithoutExtensions(absoluteFileName))).TrimStart('/');
+
+            return new SourceFile(fileSystem, absoluteFileName, relativeFileName, projectFileName);
         }
 
         public virtual Template Template(IProject project, Guid guid, ITextNode textNode, string databaseName, string itemName, string itemIdOrPath)

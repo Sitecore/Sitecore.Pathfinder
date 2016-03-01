@@ -64,10 +64,10 @@ namespace Sitecore.Pathfinder.PageHtml
             }
 
             // find MvcLayout
-            var layoutItem = item.Project.ProjectItems.OfType<Item>().FirstOrDefault(i => i.ItemIdOrPath == "/sitecore/layout/Layouts/MvcLayout");
+            var layoutItem = item.Project.ProjectItems.OfType<Item>().FirstOrDefault(i => string.Equals(i.ItemIdOrPath, Constants.Layouts.MvcLayout, StringComparison.OrdinalIgnoreCase));
             if (layoutItem == null)
             {
-                context.Trace.TraceError(Msg.C1048, Texts.Layout_reference_not_found, TraceHelper.GetTextNode(property), "/sitecore/layout/Layouts/MvcLayout");
+                context.Trace.TraceError(Msg.C1048, Texts.Layout_reference_not_found, TraceHelper.GetTextNode(property), Constants.Layouts.MvcLayout);
             }
 
             if (rendering == null || layoutItem == null)

@@ -2,16 +2,12 @@
 
 using System;
 using System.Collections.Generic;
-using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
     public class EmptySourceFile : ISourceFile
     {
-        [NotNull]
-        private readonly string _fileNameWithoutExtensions = string.Empty;
-
         public string AbsoluteFileName { get; } = string.Empty;
 
         public IFileSystemService FileSystem { get; }
@@ -20,11 +16,13 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public DateTime LastWriteTimeUtc { get; } = DateTime.MinValue;
 
-        public string ProjectFileName { get; } = string.Empty;
+        public string ProjectItemName { get; } = string.Empty;
+
+        public string RelativeFileName { get; } = string.Empty;
 
         public string GetFileNameWithoutExtensions()
         {
-            return _fileNameWithoutExtensions;
+            return string.Empty;
         }
 
         public string[] ReadAsLines()

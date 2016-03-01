@@ -18,7 +18,7 @@ namespace Sitecore.Pathfinder.Building.Tasks
         {
             foreach (var reference in references)
             {
-                string line = $"{reference.Owner.Snapshots.First().SourceFile.ProjectFileName}";
+                string line = $"{reference.Owner.Snapshots.First().SourceFile.ProjectItemName}";
 
                 var textNode = TraceHelper.GetTextNode(reference.SourceProperty);
                 line += $"({textNode.TextSpan.LineNumber},{textNode.TextSpan.LineNumber})";

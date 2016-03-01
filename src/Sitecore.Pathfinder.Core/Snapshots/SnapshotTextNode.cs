@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public TextSpan TextSpan { get; } = TextSpan.Empty;
 
-        public string Value => Snapshot.SourceFile.ProjectFileName;
+        public string Value => Snapshot.SourceFile.ProjectItemName;
 
         public ITextNode GetAttribute(string attributeName)
         {
