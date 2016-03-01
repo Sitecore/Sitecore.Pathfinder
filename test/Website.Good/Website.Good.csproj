@@ -80,7 +80,7 @@
     <Content Include="items\master\sitecore\content\Home\JsonLayout.item.json" />
     <Content Include="items\master\sitecore\content\Home\JsonLayout.layout.json" />
     <Content Include="items\master\sitecore\content\Home\SerializedItem.item" />
-    <Content Include="items\master\sitecore\layout\layouts\MvcLayout.cshtml" />
+    <Content Include="items\master\sitecore\layout\layouts\Pathfinder\MvcLayout.cshtml" />
     <Content Include="pages\helloworld.page.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -102,7 +102,7 @@
     <Content Include="items\master\sitecore\content\Home\XmlItem.item.xml" />
     <Content Include="items\master\sitecore\content\Home\XmlLayout.item.xml" />
     <Content Include="items\master\sitecore\content\Home\XmlLayout.layout.xml" />
-    <Content Include="items\master\sitecore\layout\layouts\MvcLayout.item.xml" />
+    <Content Include="items\master\sitecore\layout\layouts\Pathfinder\MvcLayout.item.xml" />
     <Content Include="items\master\sitecore\media library\mushrooms.item.xml" />
     <Content Include="items\master\sitecore\media library\mushrooms.jpg" />
     <Content Include="items\master\sitecore\templates\XmlTemplate.item.xml" />

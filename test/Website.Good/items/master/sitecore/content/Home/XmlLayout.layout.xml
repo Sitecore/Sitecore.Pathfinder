@@ -1,5 +1,5 @@
 ﻿<Layout xmlns="http://www.sitecore.net/pathfinder/layouts/master">
-    <Device Name="Default" Layout="/sitecore/layout/Layouts/MvcLayout">
+    <Device Name="Default" Layout="/sitecore/layout/Layouts/Pathfinder/MvcLayout">
         <HelloWorld DataSource="/sitecore" />
         <HelloWorld />
         <HelloWorld />

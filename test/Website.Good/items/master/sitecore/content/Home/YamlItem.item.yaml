@@ -76,7 +76,7 @@
         - Layout :
             - Device :
                 Name : Default
-                Layout: /sitecore/layout/Layouts/MvcLayout
+                Layout: /sitecore/layout/Layouts/Pathfinder/MvcLayout
                 - HelloWorld :
                     DataSource: /sitecore
     - Children :

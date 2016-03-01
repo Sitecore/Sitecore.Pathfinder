@@ -1,0 +1,5 @@
+﻿<Item xmlns="http://www.sitecore.net/pathfinder/item" Id="{5B2B5845-4D8A-FBB3-08D3-9A6065C35D1E}" Template="/sitecore/templates/System/Layout/Renderings/View rendering">
+    <Fields>
+        <Field Name="Place Holders">Page.Body</Field>
+    </Fields>
+</Item>
