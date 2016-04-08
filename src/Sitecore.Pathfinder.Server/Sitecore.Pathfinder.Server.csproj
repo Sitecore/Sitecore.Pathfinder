@@ -131,6 +131,7 @@
     <Content Include="sitecore\shell\client\Applications\Pathfinder\PackageSources.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ContentDeliveryController.cs" />
     <Compile Include="Controllers\PathfinderInstalledController.cs" />
     <Compile Include="Controllers\PathfinderInstallPackageController.cs" />
     <Compile Include="Controllers\PathfinderPackageController.cs" />

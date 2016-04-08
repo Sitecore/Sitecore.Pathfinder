@@ -81,7 +81,7 @@ namespace Sitecore.Pathfinder.Parsing
 
             tokens.AddRange(project.Options.Tokens);
 
-            var snapshotParseContext = new SnapshotParseContext(SnapshotService, tokens, new Dictionary<string, List<ITextNode>>());
+            var snapshotParseContext = new SnapshotParseContext(SnapshotService, project, tokens, new Dictionary<string, List<ITextNode>>());
             var snapshot = SnapshotService.LoadSnapshot(snapshotParseContext, sourceFile);
 
             var parseContext = Factory.ParseContext(project, snapshot, pathMappingContext);

@@ -60,7 +60,6 @@ namespace Sitecore.Pathfinder.Snapshots
                 throw new FileNotFoundException("Include file not found", absoluteFileName);
             }
 
-            var projectFileName = "~/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(projectDirectory, PathHelper.GetDirectoryAndFileNameWithoutExtensions(absoluteFileName))).TrimStart('/');
             var sourceFile = Factory.SourceFile(FileSystem, projectDirectory, absoluteFileName);
 
             var includeSnapshot = LoadSnapshot(snapshotParseContext, sourceFile) as TextSnapshot;

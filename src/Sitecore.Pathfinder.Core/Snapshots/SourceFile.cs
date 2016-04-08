@@ -14,7 +14,7 @@ namespace Sitecore.Pathfinder.Snapshots
         [CanBeNull]
         private string _fileNameWithoutExtensions;
 
-        public SourceFile([NotNull] IFileSystemService fileSystem, [NotNull] string absoluteFileName, string relativeFileName, [NotNull] string projectItemName)
+        public SourceFile([NotNull] IFileSystemService fileSystem, [NotNull] string absoluteFileName, [NotNull] string relativeFileName, [NotNull] string projectItemName)
         {
             FileSystem = fileSystem;
             AbsoluteFileName = absoluteFileName;

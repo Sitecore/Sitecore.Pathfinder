@@ -67,9 +67,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="items\master\sitecore\content\Home\PageHtml.item.xml" />
+    <Content Include="items\master\sitecore\content\Home\XmlTransform.loremipsum.item.xml" />
     <Content Include="items\master\sitecore\content\Home\YamlContentItem.master.content.yaml" />
     <Content Include="items\master\sitecore\content\Home\YamlLayout.item.yaml" />
     <Content Include="includes\Field.include.item.xml" />
+    <Content Include="sitecore.project\transforms\loremipsum.item.xslt" />
     <None Include="items\master\sitecore\content\Home\YamlItem.item.yaml" />
     <Content Include="includes\PlaceholderItem.include.item.xml" />
     <Content Include="includes\ParameterizedField.include.item.xml" />

@@ -14,6 +14,7 @@ Version Next
 * Add: Reference field compiler (2016-01-22)
 * Add: Run Sitecore validations on saving an item (2016-01-22)
 * Fix: Roslyn is no longer copied to the website, since it breaks Sitecore (2016-01-26) - Dmitry Kostenko
+* Add: Xslt Transforms of xml files (2016-04-08) - Dmitry Kostenko
 
 Version 0.6.0
 =============

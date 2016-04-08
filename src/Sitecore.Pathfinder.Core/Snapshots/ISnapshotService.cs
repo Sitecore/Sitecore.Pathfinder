@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
@@ -8,8 +8,7 @@ namespace Sitecore.Pathfinder.Snapshots
 {
     public interface ISnapshotService
     {
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         IEnumerable<ISnapshotDirective> Directives { get; }
 
         [NotNull]

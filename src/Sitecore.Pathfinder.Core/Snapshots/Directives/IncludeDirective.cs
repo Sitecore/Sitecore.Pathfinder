@@ -72,7 +72,7 @@ namespace Sitecore.Pathfinder.Snapshots.Directives
             mutableTextNode.ChildNodeCollection.Clear();
 
             var tokens = new Dictionary<string, string>(snapshotParseContext.Tokens).AddRange(textNode.Attributes.ToDictionary(a => a.Key, a => a.Value));
-            var context = new SnapshotParseContext(snapshotParseContext.SnapshotService, tokens, placeholderTextNodes);
+            var context = new SnapshotParseContext(snapshotParseContext.SnapshotService, snapshotParseContext.Project, tokens, placeholderTextNodes);
 
             textNodes.Add(snapshotParseContext.SnapshotService.LoadIncludeFile(context, textNode.Snapshot, fileName));
 

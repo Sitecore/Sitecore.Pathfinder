@@ -2,6 +2,7 @@
 
 using NUnit.Framework;
 using Sitecore.Pathfinder.Compiling.FieldCompilers;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 using System;
@@ -16,22 +17,22 @@ namespace Sitecore.Pathfinder.Projects.Items
         public void Compile_NullCompilers()
         {
             var context = CreateContext(null);
-            var field = new Field(Item.Empty, null) {Value = "Lorem Ipsum"};
+            var field = new Field(Item.Empty, null) { Value = "Lorem Ipsum" };
 
             field.Compile(context);
 
-            Assert.That(field.IsCompiled, Is.False);
+            NUnit.Framework.Assert.That(field.IsCompiled, Is.False);
         }
 
         [Test]
         public void Compile_EmptyCompilers()
         {
             var context = CreateContext(new IFieldCompiler[0]);
-            var field = new Field(Item.Empty, null) {Value = "Lorem Ipsum"};
+            var field = new Field(Item.Empty, null) { Value = "Lorem Ipsum" };
 
             field.Compile(context);
 
-            Assert.That(field.IsCompiled, Is.False);
+            NUnit.Framework.Assert.That(field.IsCompiled, Is.False);
         }
 
         [Test]
@@ -53,7 +54,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
             field.Compile(context);
 
-            Assert.That(field.IsCompiled, Is.False);
+            NUnit.Framework.Assert.That(field.IsCompiled, Is.False);
         }
 
         [Test]
@@ -75,14 +76,14 @@ namespace Sitecore.Pathfinder.Projects.Items
 
             field.Compile(context);
 
-            Assert.That(field.IsCompiled, Is.True);
-            Assert.That(field.CompiledValue, Is.EqualTo("1"));
+            NUnit.Framework.Assert.That(field.IsCompiled, Is.True);
+            NUnit.Framework.Assert.That(field.CompiledValue, Is.EqualTo("1"));
         }
 
         [Test]
         public void Compile_ExclusiveCompiler()
         {
-            var compilers = new IFieldCompiler[] { new CheckboxFieldCompiler(), new ReplaceCompiler("alpha")  };
+            var compilers = new IFieldCompiler[] { new CheckboxFieldCompiler(), new ReplaceCompiler("alpha") };
             var project = new Project(null, null, null, null, null, null);
             var template = CreateTemplate(project);
             var context = CreateContext(compilers);
@@ -98,14 +99,14 @@ namespace Sitecore.Pathfinder.Projects.Items
 
             field.Compile(context);
 
-            Assert.That(field.IsCompiled, Is.True);
-            Assert.That(field.CompiledValue, Is.EqualTo("1"));
+            NUnit.Framework.Assert.That(field.IsCompiled, Is.True);
+            NUnit.Framework.Assert.That(field.CompiledValue, Is.EqualTo("1"));
         }
 
         [Test]
         public void Compile_NonExclusiveCompiler()
         {
-            var compilers = new IFieldCompiler[] { new ReplaceCompiler("alpha"), new ReplaceCompiler("beta"),  };
+            var compilers = new IFieldCompiler[] { new ReplaceCompiler("alpha"), new ReplaceCompiler("beta"), };
             var project = new Project(null, null, null, null, null, null);
             var template = CreateTemplate(project);
             var context = CreateContext(compilers);
@@ -121,12 +122,12 @@ namespace Sitecore.Pathfinder.Projects.Items
 
             field.Compile(context);
 
-            Assert.That(field.IsCompiled, Is.True);
-            Assert.That(field.CompiledValue, Is.EqualTo("beta"));
+            NUnit.Framework.Assert.That(field.IsCompiled, Is.True);
+            NUnit.Framework.Assert.That(field.CompiledValue, Is.EqualTo("beta"));
         }
 
         [NotNull]
-        private IFieldCompileContext CreateContext([CanBeNull] IFieldCompiler[] compilers)
+        private IFieldCompileContext CreateContext([CanBeNull,ItemNotNull] IFieldCompiler[] compilers)
         {
             var config = new Microsoft.Framework.ConfigurationModel.Configuration();
             return new FieldCompileContext(config, null, null, null, compilers);
@@ -161,10 +162,11 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         private class ReplaceCompiler : FieldCompilerBase
         {
-            public string Value { get; set; }
+            [NotNull]
+            private string Value { get; set; }
 
             [ImportingConstructor]
-            public ReplaceCompiler(string value) : base(Constants.FieldCompilers.Low)
+            public ReplaceCompiler([NotNull] string value) : base(Constants.FieldCompilers.Low)
             {
                 Value = value;
             }
