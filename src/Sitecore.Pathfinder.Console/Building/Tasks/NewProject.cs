@@ -3,8 +3,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -132,7 +130,6 @@ namespace Sitecore.Pathfinder.Building.Tasks
             console.WriteLine("Creating project...");
 
             CopyProjectTemplate(context, projectDirectory);
-            UpdateSccCmd(context, projectDirectory);
             CopyStarterKit(context, projectDirectory);
             CopyEditor(context, projectDirectory);
             UpdateConfigFile(context, projectDirectory);
@@ -176,31 +173,6 @@ namespace Sitecore.Pathfinder.Building.Tasks
             config = config.Replace("http://sitecore.default", _hostName);
 
             context.FileSystem.WriteAllText(projectConfigFileName, config);
-        }
-
-        protected virtual void UpdateSccCmd([NotNull] IBuildContext context, [NotNull] string projectDirectory)
-        {
-            // duplicate code in AddProject.cs
-            var fileName = Path.Combine(projectDirectory, "scc.cmd");
-
-            string contents;
-
-            var nodeModule = Path.Combine(projectDirectory, "node_modules\\sitecore-pathfinder");
-            if (context.FileSystem.DirectoryExists(nodeModule))
-            {
-                contents = "@npm run scc %*";
-            }
-            else if (context.FileSystem.FileExistsInPath("scc.exe"))
-            {
-                contents = "@scc.exe %*";
-            }
-            else
-            {
-                var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                contents = "@\"" + directory + "\\scc.exe\" %*";
-            }
-
-            context.FileSystem.WriteAllText(fileName, contents, Encoding.ASCII);
         }
 
         protected virtual bool ValidateDataFolderDirectory([NotNull] IBuildContext context, [NotNull] ConsoleService console)

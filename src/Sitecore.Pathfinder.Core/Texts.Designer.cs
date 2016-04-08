@@ -170,6 +170,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adding project....
+        /// </summary>
+        public static string Adding_project___ {
+            get {
+                return ResourceManager.GetString("Adding_project___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An error occured.
         /// </summary>
         public static string An_error_occured {

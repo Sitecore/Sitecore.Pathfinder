@@ -1,4 +1,5 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,15 @@ namespace Sitecore.Pathfinder.IO
     [Export(typeof(IFileSystemService))]
     public class FileSystemService : IFileSystemService
     {
+        [ImportingConstructor]
+        public FileSystemService([NotNull] IConsoleService console)
+        {
+            Console = console;
+        }
+
+        [NotNull]
+        protected IConsoleService Console { get; }
+
         public virtual void Copy(string sourceFileName, string destinationFileName, bool forceUpdate = true)
         {
             if (!forceUpdate)
@@ -69,32 +79,6 @@ namespace Sitecore.Pathfinder.IO
             }
 
             return false;
-        }
-
-        [NotNull]
-        private static Version GetVersion([NotNull] string fileName)
-        {
-            var fileVersionInfo = FileVersionInfo.GetVersionInfo(fileName);
-
-            try
-            {
-                return new Version(fileVersionInfo.FileVersion);
-            }
-            catch
-            {
-                // silent
-            }
-
-            try
-            {
-                return new Version(fileVersionInfo.ProductVersion);
-            }
-            catch
-            {
-                // silent
-            }
-
-            return new Version(0, 0, 0, 0);
         }
 
         public virtual void CreateDirectory(string directory)
@@ -280,6 +264,32 @@ namespace Sitecore.Pathfinder.IO
 
             proc.Start();
             proc.WaitForExit();
+        }
+
+        [NotNull]
+        private static Version GetVersion([NotNull] string fileName)
+        {
+            var fileVersionInfo = FileVersionInfo.GetVersionInfo(fileName);
+
+            try
+            {
+                return new Version(fileVersionInfo.FileVersion);
+            }
+            catch
+            {
+                // silent
+            }
+
+            try
+            {
+                return new Version(fileVersionInfo.ProductVersion);
+            }
+            catch
+            {
+                // silent
+            }
+
+            return new Version(0, 0, 0, 0);
         }
     }
 }

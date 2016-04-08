@@ -1,8 +1,6 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.IO;
-using System.Reflection;
-using System.Text;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Building.Tasks
@@ -26,10 +24,9 @@ namespace Sitecore.Pathfinder.Building.Tasks
             }
 
             console.WriteLine();
-            console.WriteLine("Adding project...");
+            console.WriteLine(Texts.Adding_project___);
 
             CopyProjectTemplate(context, projectDirectory);
-            UpdateSccCmd(context, projectDirectory);
         }
 
         public override void WriteHelp(HelpWriter helpWriter)
@@ -41,31 +38,6 @@ namespace Sitecore.Pathfinder.Building.Tasks
         {
             var sourceDirectory = Path.Combine(context.ToolsDirectory, "files\\project\\*");
             context.FileSystem.XCopy(sourceDirectory, projectDirectory);
-        }
-
-        protected virtual void UpdateSccCmd([NotNull] IBuildContext context, [NotNull] string projectDirectory)
-        {
-            // duplicate code in NewProject.cs
-            var fileName = Path.Combine(projectDirectory, "scc.cmd");
-
-            string contents;
-
-            var nodeModule = Path.Combine(projectDirectory, "node_modules\\sitecore-pathfinder");
-            if (context.FileSystem.DirectoryExists(nodeModule))
-            {
-                contents = "@npm run scc %*";
-            }
-            else if (context.FileSystem.FileExistsInPath("scc.exe"))
-            {
-                contents = "@scc.exe %*";
-            }
-            else
-            {
-                var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                contents = "@\"" + directory + "\\scc.exe\" %*";
-            }
-
-            context.FileSystem.WriteAllText(fileName, contents, Encoding.ASCII);
         }
     }
 }

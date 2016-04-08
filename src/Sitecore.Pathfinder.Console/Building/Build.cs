@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -20,10 +20,11 @@ namespace Sitecore.Pathfinder.Building
         private Stopwatch _stopwatch;
 
         [ImportingConstructor]
-        public Build([NotNull] ICompositionService compositionService, [NotNull] IConfigurationService configurationService, [NotNull] ITraceService trace, [ImportMany, NotNull, ItemNotNull] IEnumerable<IBuildTask> tasks)
+        public Build([NotNull] ICompositionService compositionService, [NotNull] IConfigurationService configurationService, [NotNull] IConsoleService console, [NotNull] ITraceService trace, [ImportMany, NotNull, ItemNotNull] IEnumerable<IBuildTask> tasks)
         {
             CompositionService = compositionService;
             ConfigurationService = configurationService;
+            Console = console;
             Trace = trace;
             Tasks = tasks;
         }
@@ -36,6 +37,9 @@ namespace Sitecore.Pathfinder.Building
 
         [NotNull]
         protected IConfigurationService ConfigurationService { get; }
+
+        [NotNull]
+        protected IConsoleService Console { get; }
 
         [NotNull]
         protected ITraceService Trace { get; }

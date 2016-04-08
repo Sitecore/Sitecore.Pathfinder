@@ -624,4 +624,7 @@
     <data name="DateTime_field_must_contain_a_valid_date_time_value" xml:space="preserve">
     <value>DateTime field must contain a valid date/time value</value>
   </data>
+    <data name="Adding_project___" xml:space="preserve">
+    <value>Adding project...</value>
+  </data>
 </root>
