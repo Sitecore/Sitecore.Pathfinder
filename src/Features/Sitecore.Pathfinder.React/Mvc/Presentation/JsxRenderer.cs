@@ -12,11 +12,12 @@ using Sitecore.Data.Fields;
 using Sitecore.Mvc;
 using Sitecore.Mvc.Presentation;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Mvc.Presentation;
 using Sitecore.Web.UI.WebControls;
 
 namespace Sitecore.Pathfinder.React.Mvc.Presentation
 {
-    public class JsxRenderer : Renderer
+    public class JsxRenderer : IRenderer
     {
         public JsxRenderer([Diagnostics.NotNull] Sitecore.Mvc.Presentation.Rendering rendering, [Diagnostics.NotNull] string filePath)
         {
@@ -45,7 +46,7 @@ namespace Sitecore.Pathfinder.React.Mvc.Presentation
         [Diagnostics.NotNull]
         protected Sitecore.Mvc.Presentation.Rendering Rendering { get; }
 
-        public override void Render([Diagnostics.NotNull] TextWriter writer)
+        public void Render(TextWriter writer)
         {
             var props = GetProps();
 

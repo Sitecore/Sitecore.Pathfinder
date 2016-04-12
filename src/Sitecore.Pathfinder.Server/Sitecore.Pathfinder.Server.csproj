@@ -155,8 +155,14 @@
     <Compile Include="Importing\ItemImporters\IItemImporterService.cs" />
     <Compile Include="Importing\ItemImporters\ItemImporterService.cs" />
     <Compile Include="Jobs\BackgroundJob.cs" />
+    <Compile Include="Mvc\Presentation\IRenderer.cs" />
+    <Compile Include="Mvc\Presentation\RendererWrapper.cs" />
+    <Compile Include="Mvc\Response\GetRenderer\GetRenderer.cs" />
+    <Compile Include="Mvc\Response\GetRenderer\GetRendererPipeline.cs" />
+    <Compile Include="Pipelines\Loader\LoaderPipeline.cs" />
     <Compile Include="Pipelines\Loader\InitializePathfinderProjects.cs" />
     <Compile Include="Pipelines\Loader\MapRoutes.cs" />
+    <Compile Include="Pipelines\Loader\ExecuteLoaderPipeline.cs" />
     <Compile Include="Projects\IProjectContext.cs" />
     <Compile Include="Projects\ProjectContext.cs" />
     <Compile Include="Projects\ProjectHost.cs" />
@@ -186,6 +192,7 @@
     <Compile Include="WebApi\UpdateProjectWebsiteMappings.cs" />
     <Compile Include="WebApi\TroubleshootWebsites\TroubleshootWebsite.cs" />
     <Compile Include="WebApi\WriteWebsiteExports.cs" />
+    <Compile Include="WebsiteHost.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

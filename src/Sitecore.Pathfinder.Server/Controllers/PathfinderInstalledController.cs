@@ -5,8 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using Sitecore.Configuration;
-using Sitecore.IO;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Packaging;
 
@@ -20,7 +18,7 @@ namespace Sitecore.Pathfinder.Controllers
             var output = new StringWriter();
             Console.SetOut(output);
 
-            var app = new Startup().WithToolsDirectory(FileUtil.MapPath("/bin")).WithProjectDirectory(FileUtil.MapPath("/")).WithWebsiteDirectory(FileUtil.MapPath("/")).WithDataFolderDirectory(FileUtil.MapPath(Settings.DataFolder)).DoNotLoadConfigFiles().Start();
+            var app = WebsiteHost.App;
             if (app == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, output.ToString());

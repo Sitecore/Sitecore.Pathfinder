@@ -100,6 +100,11 @@
     <Compile Include="Compiling\Pipelines\CompilePipelines\0020 - CreateItemsFromTemplates.cs" />
     <Compile Include="Emitting\IEmitterService.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
+    <Compile Include="Features\LayoutFiles\LayoutFileCompilers\ILayoutFileCompiler.cs" />
+    <Compile Include="Features\LayoutFiles\LayoutFileCompilers\LayoutFileCompilerBase.cs" />
+    <Compile Include="Features\LayoutFiles\LayoutFileItemParser.cs" />
+    <Compile Include="Features\LayoutFiles\LayoutFilePropertyCompiler.cs" />
+    <Compile Include="Features\LayoutFiles\LayoutFileTemplateParser.cs" />
     <Compile Include="IO\PathMappers\IItemPathToProjectFileNameMapper.cs" />
     <Compile Include="IO\PathMappers\IWebsiteToProjectFileNameMapper.cs" />
     <Compile Include="IO\PathMappers\IProjectFileNameToItemPathMapper.cs" />

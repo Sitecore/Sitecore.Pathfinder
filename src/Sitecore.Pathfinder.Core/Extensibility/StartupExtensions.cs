@@ -25,7 +25,9 @@ namespace Sitecore.Pathfinder.Extensibility
 
             AddWebsiteAssemblyResolver = 0x01,
 
-            DisableExtensions = 0x2
+            DisableExtensions = 0x02,
+
+            IgnoreServerAssemblies = 0x04
         }
 
         [CanBeNull]
@@ -55,7 +57,7 @@ namespace Sitecore.Pathfinder.Extensibility
                 AddAdditionalAssemblies(catalogs, additionalAssemblyFileNames);
 
                 // add assemblies from the tools directory
-                AddFeatureAssemblies(catalogs, toolsDirectory);
+                AddFeatureAssemblies(options, catalogs, toolsDirectory);
 
                 // add core extensions
                 var coreExtensionsDirectory = Path.Combine(toolsDirectory, "files\\extensions");
@@ -152,11 +154,17 @@ namespace Sitecore.Pathfinder.Extensibility
             }
         }
 
-        private static void AddFeatureAssemblies([NotNull, ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string toolsDirectory)
+        private static void AddFeatureAssemblies(CompositionOptions options, [NotNull, ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string toolsDirectory)
         {
             // only load Sitecore.Pathfinder.*.dll assemblies for performance
             foreach (var assemblyFileName in Directory.GetFiles(toolsDirectory, "Sitecore.Pathfinder.*.dll", SearchOption.TopDirectoryOnly))
             {
+                // skip server assembly, if interactive
+                if ((options & CompositionOptions.IgnoreServerAssemblies) == CompositionOptions.IgnoreServerAssemblies && string.Equals(Path.GetFileName(assemblyFileName), "Sitecore.Pathfinder.Server.dll", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
                 AddAssembly(catalogs, assemblyFileName);
             }
         }
@@ -188,6 +196,10 @@ namespace Sitecore.Pathfinder.Extensibility
         private static Assembly ResolveAssembly([NotNull] ResolveEventArgs args, [NotNull] IConfiguration configuration)
         {
             var websiteDirectory = configuration.GetString(Constants.Configuration.WebsiteDirectory);
+            if (string.IsNullOrEmpty(websiteDirectory))
+            {
+                return null;
+            }
 
             var fileName = args.Name;
             var n = fileName.IndexOf(',');

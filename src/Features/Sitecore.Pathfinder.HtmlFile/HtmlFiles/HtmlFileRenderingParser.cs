@@ -1,4 +1,4 @@
-// � 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using System.Linq;

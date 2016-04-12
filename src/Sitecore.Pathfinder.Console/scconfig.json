@@ -78,11 +78,11 @@
 
         // poor mans schema for item files.
         "schema": {
-            "Item-attributes": "Name, Id, Database, Icon, Template, IsEmittable, IsExternalReference, Layout.HtmlFile, Layout.Page, Template.CreateFromFields, Template.Id, Template.Icon, Template.BaseTemplates, Template.ShortHelp, Template.LongHelp",
+            "Item-attributes": "Name, Id, Database, Icon, Template, IsEmittable, IsExternalReference, Layout.File, Template.CreateFromFields, Template.Id, Template.Icon, Template.BaseTemplates, Template.ShortHelp, Template.LongHelp",
             "Item-childnodes": "Fields, Children, Template",
             "Fields-childnodes": "Field, Unversioned, Versioned, Layout",
             "Field-attributes": "Name, Value, Language, Version, Field.Type, Field.SortOrder, Field.Sharing, Field.Source, Field.ShortHelp, Field.LongHelp",
-            "Template-attributes": "Name, Id, Database, Icon, IsEmittable, IsExternalReference, ShortHelp, LongHelp, BaseTemplates, Layout.HtmlFile, Layout.Page",
+            "Template-attributes": "Name, Id, Database, Icon, IsEmittable, IsExternalReference, ShortHelp, LongHelp, BaseTemplates, Layout.File",
             "Template-childnodes": "Section, Sections",
             "TemplateSection-attributes": "Name, Id, Icon",
             "TemplateSection-childnodes": "Field",

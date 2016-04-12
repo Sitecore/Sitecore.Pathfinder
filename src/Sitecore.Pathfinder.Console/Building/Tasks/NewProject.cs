@@ -81,17 +81,28 @@ namespace Sitecore.Pathfinder.Building.Tasks
                 projectName = _projectUniqueId;
             }
 
-            var wwwrootDirectory = context.Configuration.GetString(Constants.Configuration.WwwrootDirectory, "c:\\inetpub\\wwwroot").TrimEnd('\\');
-            var defaultProjectDirectory = $"{wwwrootDirectory}\\{projectName}\\Website";
+            var defaultWebsiteDirectory = context.Configuration.GetString(Constants.Configuration.NewProjectDefaultWebsiteDirectory).TrimEnd('\\');
+            if (string.IsNullOrEmpty(defaultWebsiteDirectory))
+            {
+                var wwwrootDirectory = context.Configuration.GetString(Constants.Configuration.NewProjectWwwrootDirectory, "c:\\inetpub\\wwwroot").TrimEnd('\\');
+                defaultWebsiteDirectory = $"{wwwrootDirectory}\\{projectName}\\Website";
+            }
+
             do
             {
-                var website = console.ReadLine($"Enter the directory of the Website [{defaultProjectDirectory}: ", defaultProjectDirectory, "website");
-                _websiteDirectory = PathHelper.Combine(defaultProjectDirectory, website);
+                var website = console.ReadLine($"Enter the directory of the Website [{defaultWebsiteDirectory}]: ", defaultWebsiteDirectory, "website");
+                _websiteDirectory = PathHelper.Combine(defaultWebsiteDirectory, website);
             }
             while (!ValidateWebsiteDirectory(context, console));
 
             console.WriteLine();
-            var defaultDataFolderDirectory = Path.Combine(Path.GetDirectoryName(_websiteDirectory) ?? string.Empty, "Data");
+
+            var defaultDataFolderDirectory = context.Configuration.GetString(Constants.Configuration.NewProjectDefaultDataFolderDirectory).TrimEnd('\\');
+            if (string.IsNullOrEmpty(defaultDataFolderDirectory))
+            {
+                defaultDataFolderDirectory = Path.Combine(Path.GetDirectoryName(_websiteDirectory) ?? string.Empty, "Data");
+            }
+
             do
             {
                 _dataFolderDirectory = console.ReadLine("Enter the directory of the DataFolder [" + defaultDataFolderDirectory + "]: ", defaultDataFolderDirectory, "datafolder");
@@ -102,7 +113,13 @@ namespace Sitecore.Pathfinder.Building.Tasks
             console.WriteLine("Finally Pathfinder requires the hostname of the Sitecore website.");
             console.WriteLine();
 
-            _hostName = console.ReadLine($"Enter the hostname of the website [http://{projectName.ToLowerInvariant()}]: ", $"http://{projectName.ToLowerInvariant()}", "host");
+            var defaultHostName = context.Configuration.GetString(Constants.Configuration.NewProjectDefaultHostName);
+            if (string.IsNullOrEmpty(defaultHostName))
+            {
+                defaultHostName = $"http://{projectName.ToLowerInvariant()}";
+            }
+
+            _hostName = console.ReadLine($"Enter the hostname of the website [{defaultHostName}]: ", defaultHostName, "host");
             if(!_hostName.Contains(Uri.SchemeDelimiter))
             {
                 _hostName = Uri.UriSchemeHttp + Uri.SchemeDelimiter + _hostName.TrimStart('/');

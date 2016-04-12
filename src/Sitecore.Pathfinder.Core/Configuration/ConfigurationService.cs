@@ -97,6 +97,16 @@ namespace Sitecore.Pathfinder.Configuration
 
             configurationSourceRoot.AddJsonFile(systemConfigFileName);
 
+            // add system user config file located next to the system config file - scconfig.json.user
+            if ((options & ConfigurationOptions.IncludeUserConfig) == ConfigurationOptions.IncludeUserConfig)
+            {
+                var userConfigFileName = systemConfigFileName + ".user";
+                if (File.Exists(userConfigFileName))
+                {
+                    configurationSourceRoot.AddFile(userConfigFileName, ".json");
+                }
+            }
+
             // add command line
             if ((options & ConfigurationOptions.IncludeCommandLine) == ConfigurationOptions.IncludeCommandLine)
             {

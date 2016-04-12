@@ -6,18 +6,17 @@ using Sitecore.Mvc.Names;
 using Sitecore.Mvc.Presentation;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Mvc.Response.GetRenderer;
-using Sitecore.Pathfinder.React.Mvc.Presentation;
 
-namespace Sitecore.Pathfinder.React.Mvc.Response.GetRenderer
+namespace Sitecore.Pathfinder.HtmlFile.HtmlFiles
 {
-    public class GetJsxRenderer : PipelineProcessorBase<GetRendererPipeline>
+    public class HtmlLayoutFileGetRenderer : PipelineProcessorBase<GetRendererPipeline>
     {
-        public GetJsxRenderer() : base(1000)
+        public HtmlLayoutFileGetRenderer() : base(1000)
         {
         }
 
         [Diagnostics.CanBeNull]
-        protected virtual string GetViewPath([Diagnostics.NotNull] GetRendererPipeline pipeline)
+        private string GetViewPath([Diagnostics.NotNull] GetRendererPipeline pipeline)
         {
             return GetViewPathFromRenderingType(pipeline) ?? GetViewPathFromRenderingItem(pipeline);
         }
@@ -30,38 +29,43 @@ namespace Sitecore.Pathfinder.React.Mvc.Response.GetRenderer
                 return;
             }
 
-            if (!filePath.EndsWith(".jsx", StringComparison.OrdinalIgnoreCase))
+            if (!filePath.EndsWith(".html", StringComparison.OrdinalIgnoreCase))
             {
                 return;
             }
 
-            pipeline.Renderer = new JsxRenderer(pipeline.Rendering, filePath);
+            pipeline.Renderer = new HtmlLayoutFileRenderer
+            {
+                FilePath = filePath,
+                Rendering = pipeline.Rendering
+            };
+
             pipeline.Abort();
         }
 
         [Diagnostics.CanBeNull]
-        private string GetViewPathFromInnerItem([Diagnostics.NotNull] Rendering rendering)
+        protected virtual string GetViewPathFromInnerItem([Diagnostics.NotNull] Rendering rendering)
         {
             var filePath = rendering.RenderingItem.InnerItem["Path"];
             return string.IsNullOrWhiteSpace(filePath) ? null : filePath;
         }
 
         [Diagnostics.CanBeNull]
-        private string GetViewPathFromLayoutItem([Diagnostics.NotNull] GetRendererPipeline pipeline)
+        protected virtual string GetViewPathFromLayoutItem([Diagnostics.NotNull] GetRendererPipeline pipeline)
         {
             var filePath = pipeline.LayoutItem.ValueOrDefault(item => item.FilePath);
             return string.IsNullOrWhiteSpace(filePath) ? null : filePath;
         }
 
         [Diagnostics.CanBeNull]
-        private string GetViewPathFromPathProperty([Diagnostics.NotNull] Rendering rendering)
+        protected virtual string GetViewPathFromPathProperty([Diagnostics.NotNull] Rendering rendering)
         {
             var filePath = rendering["Path"];
             return string.IsNullOrWhiteSpace(filePath) ? null : filePath;
         }
 
         [Diagnostics.CanBeNull]
-        private string GetViewPathFromRenderingItem([Diagnostics.NotNull] GetRendererPipeline pipeline)
+        protected virtual string GetViewPathFromRenderingItem([Diagnostics.NotNull] GetRendererPipeline pipeline)
         {
             var renderingItem = pipeline.Rendering.RenderingItem;
             if (renderingItem == null || renderingItem.InnerItem.TemplateID != TemplateIds.ViewRendering)
@@ -74,7 +78,7 @@ namespace Sitecore.Pathfinder.React.Mvc.Response.GetRenderer
         }
 
         [Diagnostics.CanBeNull]
-        private string GetViewPathFromRenderingType([Diagnostics.NotNull] GetRendererPipeline pipeline)
+        protected virtual string GetViewPathFromRenderingType([Diagnostics.NotNull] GetRendererPipeline pipeline)
         {
             if (pipeline.Rendering.RenderingType == "r")
             {

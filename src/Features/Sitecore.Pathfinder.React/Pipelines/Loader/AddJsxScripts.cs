@@ -7,14 +7,19 @@ using System.Web.Optimization.React;
 using React;
 using Sitecore.Configuration;
 using Sitecore.IO;
+using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pipelines;
+using Sitecore.Pathfinder.Pipelines.Loader;
 
 namespace Sitecore.Pathfinder.React.Pipelines.Loader
 {
-    public class AddJsxScripts
+    public class AddJsxScripts : PipelineProcessorBase<LoaderPipeline>
     {
-        public void Process([NotNull] PipelineArgs args)
+        public AddJsxScripts() : base(1000)
+        {
+        }
+
+        protected override void Process(LoaderPipeline pipeline)
         {
             var bundleName = Settings.GetSetting("Pathfinder.React.BundleName");
             if (string.IsNullOrEmpty(bundleName))

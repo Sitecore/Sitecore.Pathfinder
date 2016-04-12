@@ -113,6 +113,14 @@ namespace Sitecore.Pathfinder
 
             public const string MessagesDisabled = "messages:disabled";
 
+            public const string NewProjectDefaultDataFolderDirectory = "new-project:default-data-folder-directory";
+
+            public const string NewProjectDefaultHostName = "new-project:default-host-name";
+
+            public const string NewProjectDefaultWebsiteDirectory = "new-project:default-wwwroot-directory";
+
+            public const string NewProjectWwwrootDirectory = "new-project:wwwroot-directory";
+
             public const string PackageDirectory = "copy-package:package-directory";
 
             public const string PackNpmOutputFile = "pack-npm:output-file";
@@ -180,8 +188,6 @@ namespace Sitecore.Pathfinder
             public const string WriteSerializationDirectory = "write-serialization:directory";
 
             public const string WriteSerializationFlat = "write-serialization:flat";
-
-            public const string WwwrootDirectory = "new-project:wwwroot-repository";
 
             public static class ValidateWebsite
             {

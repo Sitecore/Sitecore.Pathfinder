@@ -1,9 +1,11 @@
-﻿using Microsoft.Framework.ConfigurationModel;
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+
+using System;
+using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Compiling.FieldCompilers;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Items;
-using System;
 
 namespace Sitecore.Pathfinder.Markdown.Compiling.FieldCompilers
 {
@@ -13,9 +15,9 @@ namespace Sitecore.Pathfinder.Markdown.Compiling.FieldCompilers
         {
         }
 
-        public override bool CanCompile([NotNull] IFieldCompileContext context, [NotNull] Field field)
+        public override bool CanCompile(IFieldCompileContext context, Field field)
         {
-            if(string.IsNullOrEmpty(field.Value))
+            if (string.IsNullOrEmpty(field.Value))
             {
                 return false;
             }
@@ -23,13 +25,12 @@ namespace Sitecore.Pathfinder.Markdown.Compiling.FieldCompilers
             var fieldTypeCheck = string.Equals(field.TemplateField.Type, "rich text", StringComparison.OrdinalIgnoreCase);
 
             var indicator = GetIndicatorToken(context.Configuration);
-            var indicatorCheck = indicator == null || field.Value.StartsWith(indicator);
+            var indicatorCheck = field.Value.StartsWith(indicator);
 
             return fieldTypeCheck && indicatorCheck;
         }
 
-        [NotNull]
-        public override string Compile([NotNull] IFieldCompileContext context, [NotNull] Field field)
+        public override string Compile(IFieldCompileContext context, Field field)
         {
             var indicator = GetIndicatorToken(context.Configuration);
 
@@ -45,7 +46,7 @@ namespace Sitecore.Pathfinder.Markdown.Compiling.FieldCompilers
         [NotNull]
         protected string GetIndicatorToken([NotNull] IConfiguration config)
         {
-            return config.GetString(Constants.Configuration.IndicatorToken);
+            return config.GetString(Constants.Configuration.IndicatorToken, "!md\r\n");
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.IO;
@@ -12,13 +12,14 @@ using Sitecore.Mvc;
 using Sitecore.Mvc.Helpers;
 using Sitecore.Mvc.Presentation;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Mvc.Presentation;
 using Sitecore.Resources;
 using Sitecore.Web.UI;
 using Sitecore.Web.UI.HtmlControls.Data;
 
-namespace Sitecore.Pathfinder.Mvc.Presentation
+namespace Sitecore.Pathfinder.HtmlFile.HtmlFiles
 {
-    public class HtmlTemplateRenderer : Renderer
+    public class HtmlLayoutFileRenderer : IRenderer
     {
         [Diagnostics.NotNull]
         private static readonly Regex Contexts = new Regex("\\{\\{=([^\\}]*)\\}\\}([\\S\\W]*)\\{\\{/\\1\\}\\}", RegexOptions.Compiled);
@@ -38,7 +39,7 @@ namespace Sitecore.Pathfinder.Mvc.Presentation
         [Diagnostics.CanBeNull]
         public Rendering Rendering { get; set; }
 
-        public override void Render([Diagnostics.NotNull] TextWriter writer)
+        public void Render(TextWriter writer)
         {
             var sitecoreHelper = PageContext.Current.HtmlHelper.Sitecore();
 
@@ -48,7 +49,7 @@ namespace Sitecore.Pathfinder.Mvc.Presentation
         }
 
         [Diagnostics.NotNull]
-        private string Process([Diagnostics.NotNull] SitecoreHelper sitecoreHelper, [Diagnostics.NotNull] Item contextItem, [Diagnostics.NotNull] string output)
+        protected virtual string Process([Diagnostics.NotNull] SitecoreHelper sitecoreHelper, [Diagnostics.NotNull] Item contextItem, [Diagnostics.NotNull] string output)
         {
             output = ProcessLists(sitecoreHelper, contextItem, output);
             output = ProcessContexts(sitecoreHelper, contextItem, output);
@@ -59,7 +60,7 @@ namespace Sitecore.Pathfinder.Mvc.Presentation
         }
 
         [Diagnostics.NotNull]
-        private string ProcessContexts([Diagnostics.NotNull] SitecoreHelper sitecoreHelper, [Diagnostics.NotNull] Item contextItem, [Diagnostics.NotNull] string output)
+        protected virtual string ProcessContexts([Diagnostics.NotNull] SitecoreHelper sitecoreHelper, [Diagnostics.NotNull] Item contextItem, [Diagnostics.NotNull] string output)
         {
             MatchEvaluator evaluator = delegate(Match match)
             {
@@ -74,7 +75,7 @@ namespace Sitecore.Pathfinder.Mvc.Presentation
         }
 
         [Diagnostics.NotNull]
-        private string ProcessInverted([Diagnostics.NotNull] SitecoreHelper sitecoreHelper, [Diagnostics.NotNull] Item contextItem, [Diagnostics.NotNull] string output)
+        protected virtual string ProcessInverted([Diagnostics.NotNull] SitecoreHelper sitecoreHelper, [Diagnostics.NotNull] Item contextItem, [Diagnostics.NotNull] string output)
         {
             MatchEvaluator evaluator = delegate(Match match)
             {
@@ -90,7 +91,7 @@ namespace Sitecore.Pathfinder.Mvc.Presentation
         }
 
         [Diagnostics.NotNull]
-        private string ProcessLists([Diagnostics.NotNull] SitecoreHelper sitecoreHelper, [Diagnostics.NotNull] Item contextItem, [Diagnostics.NotNull] string output)
+        protected virtual string ProcessLists([Diagnostics.NotNull] SitecoreHelper sitecoreHelper, [Diagnostics.NotNull] Item contextItem, [Diagnostics.NotNull] string output)
         {
             MatchEvaluator evaluator = delegate(Match match)
             {
@@ -119,7 +120,7 @@ namespace Sitecore.Pathfinder.Mvc.Presentation
         }
 
         [Diagnostics.NotNull]
-        private string ProcessValues([Diagnostics.NotNull] SitecoreHelper sitecoreHelper, [Diagnostics.NotNull] Item contextItem, [Diagnostics.NotNull] string output)
+        protected virtual string ProcessValues([Diagnostics.NotNull] SitecoreHelper sitecoreHelper, [Diagnostics.NotNull] Item contextItem, [Diagnostics.NotNull] string output)
         {
             MatchEvaluator evaluator = delegate(Match match)
             {
@@ -196,7 +197,7 @@ namespace Sitecore.Pathfinder.Mvc.Presentation
         }
 
         [Diagnostics.NotNull]
-        private string Render([Diagnostics.NotNull] SitecoreHelper sitecoreHelper, [Diagnostics.NotNull] Item contextItem, [Diagnostics.NotNull] string filePath)
+        protected virtual string Render([Diagnostics.NotNull] SitecoreHelper sitecoreHelper, [Diagnostics.NotNull] Item contextItem, [Diagnostics.NotNull] string filePath)
         {
             if (!FileUtil.FileExists(filePath))
             {

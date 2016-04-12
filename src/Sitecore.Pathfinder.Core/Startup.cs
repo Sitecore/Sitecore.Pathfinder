@@ -46,6 +46,7 @@ namespace Sitecore.Pathfinder
         public virtual Startup AsInteractive()
         {
             ConfigurationOptions = ConfigurationOptions.Interactive;
+            CompositionOptions |= Extensibility.StartupExtensions.CompositionOptions.IgnoreServerAssemblies;
             return this;
         }
 
@@ -53,6 +54,7 @@ namespace Sitecore.Pathfinder
         public virtual Startup AsNoninteractive()
         {
             ConfigurationOptions = ConfigurationOptions.Noninteractive;
+            CompositionOptions &= ~Extensibility.StartupExtensions.CompositionOptions.IgnoreServerAssemblies;
             return this;
         }
 
