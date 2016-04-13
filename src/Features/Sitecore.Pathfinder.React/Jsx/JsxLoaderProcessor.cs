@@ -11,11 +11,11 @@ using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Pipelines.Loader;
 
-namespace Sitecore.Pathfinder.React.Pipelines.Loader
+namespace Sitecore.Pathfinder.React.Jsx
 {
-    public class AddJsxScripts : PipelineProcessorBase<LoaderPipeline>
+    public class JsxLoaderProcessor : PipelineProcessorBase<LoaderPipeline>
     {
-        public AddJsxScripts() : base(1000)
+        public JsxLoaderProcessor() : base(1000)
         {
         }
 

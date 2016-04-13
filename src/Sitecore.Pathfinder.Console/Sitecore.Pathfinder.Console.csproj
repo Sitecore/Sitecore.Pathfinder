@@ -584,9 +584,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Features\Sitecore.Pathfinder.HtmlFile\Sitecore.Pathfinder.HtmlFile.csproj">
+    <ProjectReference Include="..\Features\Sitecore.Pathfinder.HtmlFile\Sitecore.Pathfinder.Html.csproj">
       <Project>{7287e9e2-cab5-4de4-87b5-237b65020dc4}</Project>
-      <Name>Sitecore.Pathfinder.HtmlFile</Name>
+      <Name>Sitecore.Pathfinder.Html</Name>
     </ProjectReference>
     <ProjectReference Include="..\Features\Sitecore.Pathfinder.Markdown\Sitecore.Pathfinder.Markdown.csproj">
       <Project>{37d4ea12-aeb1-4bfa-a5c8-76185f68dd25}</Project>

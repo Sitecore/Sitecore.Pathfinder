@@ -55,7 +55,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.Unicorn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.T4", "src\Features\Sitecore.Pathfinder.T4\Sitecore.Pathfinder.T4.csproj", "{BC0EC297-60E6-4D8F-A846-E1DA920CFC26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.HtmlFile", "src\Features\Sitecore.Pathfinder.HtmlFile\Sitecore.Pathfinder.HtmlFile.csproj", "{7287E9E2-CAB5-4DE4-87B5-237B65020DC4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.Html", "src\Features\Sitecore.Pathfinder.HtmlFile\Sitecore.Pathfinder.Html.csproj", "{7287E9E2-CAB5-4DE4-87B5-237B65020DC4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{2913B82E-EAB7-452F-AB67-97DD577A7439}"
 	ProjectSection(SolutionItems) = preProject

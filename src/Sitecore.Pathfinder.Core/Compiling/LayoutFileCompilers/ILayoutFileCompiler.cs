@@ -4,7 +4,7 @@ using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
 
-namespace Sitecore.Pathfinder.Features.LayoutFiles.LayoutFileCompilers
+namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
 {
     public interface ILayoutFileCompiler
     {

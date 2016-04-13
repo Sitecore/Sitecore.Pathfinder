@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
                     foreach (var compiler in pipeline.Context.Compilers.OrderBy(c => c.Priority))
                     {
-                        if (compiler.CanCompile(context, projectItem))
+                        if (compiler.CanCompile(context, projectItem))         
                         {
                             compiler.Compile(context, projectItem);
                         }

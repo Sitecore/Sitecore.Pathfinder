@@ -7,8 +7,8 @@
     <ProjectGuid>{7287E9E2-CAB5-4DE4-87B5-237B65020DC4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sitecore.Pathfinder.HtmlFile</RootNamespace>
-    <AssemblyName>Sitecore.Pathfinder.HtmlFile</AssemblyName>
+    <RootNamespace>Sitecore.Pathfinder.Html</RootNamespace>
+    <AssemblyName>Sitecore.Pathfinder.Html</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -80,12 +80,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HtmlFiles\HtmlLayoutFileCompiler.cs" />
-    <Compile Include="HtmlFiles\HtmlFileRenderingParser.cs" />
-    <Compile Include="HtmlFiles\HtmlLayoutFileRenderer.cs" />
-    <Compile Include="HtmlFiles\HtmlLayoutFileGetRenderer.cs" />
+    <Compile Include="Html\HtmlLayoutFileCompiler.cs" />
+    <Compile Include="Html\HtmlRenderingParser.cs" />
+    <Compile Include="Html\HtmlRenderer.cs" />
+    <Compile Include="Html\HtmlGetRendererProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="HtmlFileExtension.cs" />
+    <Compile Include="HtmlExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Sitecore.Pathfinder.Core\Sitecore.Pathfinder.Core.csproj">

@@ -3,18 +3,18 @@
 using Sitecore.Pathfinder.Building;
 using Sitecore.Pathfinder.Extensibility;
 
-namespace Sitecore.Pathfinder.HtmlFile
+namespace Sitecore.Pathfinder.Html
 {
-    public class HtmlFileExtension : ExtensionBase
+    public class HtmlExtension : ExtensionBase
     {
         public override void RemoveWebsiteFiles(IBuildContext context)
         {
-            RemoveWebsiteAssembly(context, "Sitecore.Pathfinder.HtmlFile.dll");
+            RemoveWebsiteAssembly(context, "Sitecore.Pathfinder.Html.dll");
         }
 
         public override bool UpdateWebsiteFiles(IBuildContext context)
         {
-            return CopyToolsFileToWebsiteBinDirectory(context, "Sitecore.Pathfinder.HtmlFile.dll");
+            return CopyToolsFileToWebsiteBinDirectory(context, "Sitecore.Pathfinder.Html.dll");
         }                               
     }
 }

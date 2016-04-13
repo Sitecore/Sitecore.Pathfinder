@@ -114,7 +114,7 @@ namespace Sitecore.Pathfinder.IO
             if (s < 0)
             {
                 var e0 = fileName.IndexOf('.');
-                return e0 < 0 ? string.Empty : fileName.Mid(e0);
+                return e0 >= 0 ? fileName.Mid(e0) : string.Empty;
             }
 
             var e1 = fileName.IndexOf('.', s);

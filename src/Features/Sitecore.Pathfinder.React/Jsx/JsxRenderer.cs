@@ -15,7 +15,7 @@ using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Mvc.Presentation;
 using Sitecore.Web.UI.WebControls;
 
-namespace Sitecore.Pathfinder.React.Mvc.Presentation
+namespace Sitecore.Pathfinder.React.Jsx
 {
     public class JsxRenderer : IRenderer
     {

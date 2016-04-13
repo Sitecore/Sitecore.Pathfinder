@@ -9,7 +9,7 @@ using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.Renderings;
 using Sitecore.Pathfinder.Projects;
 
-namespace Sitecore.Pathfinder.React.Language
+namespace Sitecore.Pathfinder.React.Jsx
 {
     public class JsxEmitter : EmitterBase
     {

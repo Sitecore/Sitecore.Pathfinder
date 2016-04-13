@@ -7,11 +7,11 @@ using Sitecore.Mvc.Presentation;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Mvc.Response.GetRenderer;
 
-namespace Sitecore.Pathfinder.HtmlFile.HtmlFiles
+namespace Sitecore.Pathfinder.Html.Html
 {
-    public class HtmlLayoutFileGetRenderer : PipelineProcessorBase<GetRendererPipeline>
+    public class HtmlGetRendererProcessor : PipelineProcessorBase<GetRendererPipeline>
     {
-        public HtmlLayoutFileGetRenderer() : base(1000)
+        public HtmlGetRendererProcessor() : base(1000)
         {
         }
 
@@ -34,7 +34,7 @@ namespace Sitecore.Pathfinder.HtmlFile.HtmlFiles
                 return;
             }
 
-            pipeline.Renderer = new HtmlLayoutFileRenderer
+            pipeline.Renderer = new HtmlRenderer
             {
                 FilePath = filePath,
                 Rendering = pipeline.Rendering

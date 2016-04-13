@@ -6,13 +6,12 @@ using Sitecore.Mvc.Names;
 using Sitecore.Mvc.Presentation;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Mvc.Response.GetRenderer;
-using Sitecore.Pathfinder.React.Mvc.Presentation;
 
-namespace Sitecore.Pathfinder.React.Mvc.Response.GetRenderer
+namespace Sitecore.Pathfinder.React.Jsx
 {
-    public class GetJsxRenderer : PipelineProcessorBase<GetRendererPipeline>
+    public class JsxGetRendererProcessor : PipelineProcessorBase<GetRendererPipeline>
     {
-        public GetJsxRenderer() : base(1000)
+        public JsxGetRendererProcessor() : base(1000)
         {
         }
 

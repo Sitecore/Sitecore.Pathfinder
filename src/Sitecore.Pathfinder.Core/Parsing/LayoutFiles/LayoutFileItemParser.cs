@@ -4,7 +4,7 @@ using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Parsing.Pipelines.ItemParserPipelines;
 using Sitecore.Pathfinder.Snapshots;
 
-namespace Sitecore.Pathfinder.Features.LayoutFiles
+namespace Sitecore.Pathfinder.Parsing.LayoutFiles
 {
     public class LayoutFileItemParser : PipelineProcessorBase<ItemParserPipeline>
     {

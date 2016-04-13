@@ -49,7 +49,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
                 return field.Value;
             }
 
-            var layoutResolveContext = new LayoutCompileContext(context, FileSystem, field, textSnapshot);
+            var layoutResolveContext = new LayoutCompileContext(context.Trace, field.Item.Project, textSnapshot);
 
             var resolver = new LayoutCompiler();
 

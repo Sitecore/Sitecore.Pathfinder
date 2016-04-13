@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.IO;
 using System.Linq;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Configuration;
@@ -52,40 +51,12 @@ namespace Sitecore.Pathfinder.Parsing
             var parseAllFiles = Configuration.GetBool(Constants.Configuration.BuildProjectParseAllFiles);
             if (!parseAllFiles && !pathMappingContext.IsMapped)
             {
-                    return;
+                return;
             }
 
-            var itemName = PathHelper.GetItemName(sourceFile);
-            var filePath = pathMappingContext.FilePath;
-            if (filePath.StartsWith("~/"))
-            {
-                filePath = filePath.Mid(1);
-            }
-
-            var filePathWithExtensions = PathHelper.NormalizeItemPath(PathHelper.GetDirectoryAndFileNameWithoutExtensions(filePath));
-            var fileName = Path.GetFileName(filePath);
-            var fileNameWithoutExtensions = PathHelper.GetFileNameWithoutExtensions(fileName);
-            var directoryName = string.IsNullOrEmpty(filePath) ? string.Empty : PathHelper.NormalizeItemPath(Path.GetDirectoryName(filePath) ?? string.Empty);
-
-            var tokens = new Dictionary<string, string>
-            {
-                ["ItemPath"] = itemName,
-                ["FilePathWithoutExtensions"] = filePathWithExtensions,
-                ["FilePath"] = filePath,
-                ["Database"] = project.Options.DatabaseName,
-                ["FileNameWithoutExtensions"] = fileNameWithoutExtensions,
-                ["FileName"] = fileName,
-                ["DirectoryName"] = directoryName,
-                ["ProjectDirectory"] = project.Options.ProjectDirectory
-            };
-
-            tokens.AddRange(project.Options.Tokens);
-
-            var snapshotParseContext = new SnapshotParseContext(SnapshotService, project, tokens, new Dictionary<string, List<ITextNode>>());
-            var snapshot = SnapshotService.LoadSnapshot(snapshotParseContext, sourceFile);
+            var snapshot = SnapshotService.LoadSnapshot(project, sourceFile, pathMappingContext);
 
             var parseContext = Factory.ParseContext(project, snapshot, pathMappingContext);
-
             var parsed = false;
             foreach (var parser in Parsers.OrderBy(p => p.Priority))
             {

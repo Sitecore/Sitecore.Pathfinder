@@ -17,9 +17,9 @@ using Sitecore.Resources;
 using Sitecore.Web.UI;
 using Sitecore.Web.UI.HtmlControls.Data;
 
-namespace Sitecore.Pathfinder.HtmlFile.HtmlFiles
+namespace Sitecore.Pathfinder.Html.Html
 {
-    public class HtmlLayoutFileRenderer : IRenderer
+    public class HtmlRenderer : IRenderer
     {
         [Diagnostics.NotNull]
         private static readonly Regex Contexts = new Regex("\\{\\{=([^\\}]*)\\}\\}([\\S\\W]*)\\{\\{/\\1\\}\\}", RegexOptions.Compiled);

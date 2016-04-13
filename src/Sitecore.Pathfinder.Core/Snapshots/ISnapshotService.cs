@@ -2,6 +2,8 @@
 
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Parsing;
+using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots.Directives;
 
 namespace Sitecore.Pathfinder.Snapshots
@@ -16,5 +18,8 @@ namespace Sitecore.Pathfinder.Snapshots
 
         [NotNull]
         ISnapshot LoadSnapshot([NotNull] SnapshotParseContext snapshotParseContext, [NotNull] ISourceFile sourceFile);
+
+        [NotNull]
+        ISnapshot LoadSnapshot([NotNull] IProject project, [NotNull] ISourceFile sourceFile, [NotNull] PathMappingContext pathMappingContext);
     }
 }

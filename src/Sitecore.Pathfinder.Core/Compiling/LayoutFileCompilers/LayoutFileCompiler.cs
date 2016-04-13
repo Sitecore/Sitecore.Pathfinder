@@ -4,17 +4,17 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Features.LayoutFiles.LayoutFileCompilers;
+using Sitecore.Pathfinder.Parsing.LayoutFiles;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 
-namespace Sitecore.Pathfinder.Features.LayoutFiles
+namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
 {
-    public class LayoutFilePropertyCompiler : CompilerBase
+    public class LayoutFileCompiler : CompilerBase
     {
         // must come after RenderingCompiler, or renderings will not be found
         [ImportingConstructor]
-        public LayoutFilePropertyCompiler([NotNull, ItemNotNull] IEnumerable<ILayoutFileCompiler> layoutFileCompilers) : base(9000)
+        public LayoutFileCompiler([NotNull, ItemNotNull, ImportMany] IEnumerable<ILayoutFileCompiler> layoutFileCompilers) : base(9000)
         {
             LayoutFileCompilers = layoutFileCompilers;
         }

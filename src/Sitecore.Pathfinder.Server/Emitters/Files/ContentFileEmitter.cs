@@ -1,6 +1,5 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.IO;
 using System.Linq;
 using Sitecore.IO;
 using Sitecore.Pathfinder.Emitting;

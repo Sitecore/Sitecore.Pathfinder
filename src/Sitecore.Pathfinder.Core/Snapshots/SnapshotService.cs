@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -9,6 +9,8 @@ using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Parsing;
+using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots.Directives;
 
 namespace Sitecore.Pathfinder.Snapshots
@@ -17,7 +19,7 @@ namespace Sitecore.Pathfinder.Snapshots
     public class SnapshotService : ISnapshotService
     {
         [ImportingConstructor]
-        public SnapshotService([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [ImportMany, NotNull, ItemNotNull]   IEnumerable<ISnapshotLoader> loaders, [ImportMany, NotNull, ItemNotNull]   IEnumerable<ISnapshotDirective> directives)
+        public SnapshotService([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [ImportMany, NotNull, ItemNotNull] IEnumerable<ISnapshotLoader> loaders, [ImportMany, NotNull, ItemNotNull] IEnumerable<ISnapshotDirective> directives)
         {
             Configuration = configuration;
             Factory = factory;
@@ -68,7 +70,7 @@ namespace Sitecore.Pathfinder.Snapshots
             return includeSnapshot.Root;
         }
 
-        public ISnapshot LoadSnapshot(SnapshotParseContext snapshotParseContext, ISourceFile sourceFile)
+        public virtual ISnapshot LoadSnapshot(SnapshotParseContext snapshotParseContext, ISourceFile sourceFile)
         {
             foreach (var loader in Loaders.OrderBy(l => l.Priority))
             {
@@ -79,6 +81,40 @@ namespace Sitecore.Pathfinder.Snapshots
             }
 
             return Factory.Snapshot(sourceFile);
+        }
+
+        public virtual ISnapshot LoadSnapshot(IProject project, ISourceFile sourceFile, PathMappingContext pathMappingContext)
+        {
+            var itemName = PathHelper.GetItemName(sourceFile);
+            var filePath = pathMappingContext.FilePath;
+            if (filePath.StartsWith("~/"))
+            {
+                filePath = filePath.Mid(1);
+            }
+
+            var filePathWithExtensions = PathHelper.NormalizeItemPath(PathHelper.GetDirectoryAndFileNameWithoutExtensions(filePath));
+            var fileName = Path.GetFileName(filePath);
+            var fileNameWithoutExtensions = PathHelper.GetFileNameWithoutExtensions(fileName);
+            var directoryName = string.IsNullOrEmpty(filePath) ? string.Empty : PathHelper.NormalizeItemPath(Path.GetDirectoryName(filePath) ?? string.Empty);
+
+            var tokens = new Dictionary<string, string>
+            {
+                ["ItemPath"] = itemName,
+                ["FilePathWithoutExtensions"] = filePathWithExtensions,
+                ["FilePath"] = filePath,
+                ["Database"] = project.Options.DatabaseName,
+                ["FileNameWithoutExtensions"] = fileNameWithoutExtensions,
+                ["FileName"] = fileName,
+                ["DirectoryName"] = directoryName,
+                ["ProjectDirectory"] = project.Options.ProjectDirectory
+            };
+
+            tokens.AddRange(project.Options.Tokens);
+
+            var snapshotParseContext = new SnapshotParseContext(this, project, tokens, new Dictionary<string, List<ITextNode>>());
+            var snapshot = LoadSnapshot(snapshotParseContext, sourceFile);
+
+            return snapshot;
         }
     }
 }

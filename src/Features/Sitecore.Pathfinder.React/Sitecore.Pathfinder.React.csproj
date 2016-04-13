@@ -154,11 +154,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Language\JsxEmitter.cs" />
-    <Compile Include="Language\JsxRenderingParser.cs" />
-    <Compile Include="Mvc\Response\GetRenderer\GetJsxRenderer.cs" />
-    <Compile Include="Mvc\Presentation\JsxRenderer.cs" />
-    <Compile Include="Pipelines\Loader\AddJsxScripts.cs" />
+    <Compile Include="Jsx\JsxEmitter.cs" />
+    <Compile Include="Jsx\JsxRenderingParser.cs" />
+    <Compile Include="Jsx\JsxGetRendererProcessor.cs" />
+    <Compile Include="Jsx\JsxRenderer.cs" />
+    <Compile Include="Jsx\JsxLoaderProcessor.cs" />
     <Compile Include="ReactExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -185,6 +185,7 @@
   <ItemGroup>
     <Content Include="readme.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

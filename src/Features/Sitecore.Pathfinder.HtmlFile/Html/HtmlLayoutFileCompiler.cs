@@ -3,16 +3,16 @@
 using System;
 using System.Linq;
 using Sitecore.Pathfinder.Compiling.Compilers;
+using Sitecore.Pathfinder.Compiling.LayoutFileCompilers;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Features.LayoutFiles;
-using Sitecore.Pathfinder.Features.LayoutFiles.LayoutFileCompilers;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.Renderings;
+using Sitecore.Pathfinder.Parsing.LayoutFiles;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 
-namespace Sitecore.Pathfinder.HtmlFile.HtmlFiles
+namespace Sitecore.Pathfinder.Html.Html
 {
     public class HtmlLayoutFileCompiler : LayoutFileCompilerBase
     {
@@ -29,8 +29,8 @@ namespace Sitecore.Pathfinder.HtmlFile.HtmlFiles
                 return false;
             }
 
-            var extension = item.GetValue<string>(LayoutFileItemParser.LayoutFile);
-            return !string.IsNullOrEmpty(extension) && string.Equals(PathHelper.GetExtension(extension), ".html", StringComparison.OrdinalIgnoreCase);
+            var fileName = item.GetValue<string>(LayoutFileItemParser.LayoutFile);
+            return !string.IsNullOrEmpty(fileName) && string.Equals(PathHelper.GetExtension(fileName), ".html", StringComparison.OrdinalIgnoreCase);
         }
 
         public override void Compile(ICompileContext context, IProjectItem projectItem, SourceProperty<string> property)
@@ -47,17 +47,7 @@ namespace Sitecore.Pathfinder.HtmlFile.HtmlFiles
             var rendering = item.Project.ProjectItems.OfType<Rendering>().FirstOrDefault(i => string.Equals(i.FilePath, value, StringComparison.OrdinalIgnoreCase));
             if (rendering == null)
             {
-                context.Trace.TraceError(Msg.C1047, Texts.Rendering_reference_not_found, TraceHelper.GetTextNode(property), value);
-            }
-
-            var layoutItem = item.Project.ProjectItems.OfType<Item>().FirstOrDefault(i => string.Equals(i.ItemIdOrPath, Constants.Layouts.MvcLayout, StringComparison.OrdinalIgnoreCase));
-            if (layoutItem == null)
-            {
-                context.Trace.TraceError(Msg.C1048, Texts.Layout_reference_not_found, TraceHelper.GetTextNode(property), Constants.Layouts.MvcLayout);
-            }
-
-            if (rendering == null || layoutItem == null)
-            {
+                context.Trace.TraceError(Msg.C1060, Texts.Rendering_reference_not_found, TraceHelper.GetTextNode(property), value);
                 return;
             }
 
@@ -68,7 +58,7 @@ namespace Sitecore.Pathfinder.HtmlFile.HtmlFiles
                 return;
             }
 
-            CreateLayoutWithRendering(context, item, layoutItem.Uri.Guid, renderingItemUri.Guid, "Page.Body");
+            CreateLayout(context, item, renderingItemUri.Guid);
         }
     }
 }
