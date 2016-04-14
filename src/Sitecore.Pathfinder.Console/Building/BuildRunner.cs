@@ -32,12 +32,14 @@ namespace Sitecore.Pathfinder.Building
 
             if (context.IsAborted)
             {
+                PauseAfterRun();
                 return 0;
             }
 
             var errorCode = context.Project.Diagnostics.Any(d => d.Severity == Severity.Warning || d.Severity == Severity.Error) ? 1 : 0;
             if (!context.DisplayDoneMessage)
             {
+                PauseAfterRun();
                 return errorCode;
             }
 
@@ -51,12 +53,17 @@ namespace Sitecore.Pathfinder.Building
             Console.WriteLine();
             Console.WriteLine(Texts.Done);
 
+            PauseAfterRun();
+
+            return errorCode;
+        }
+
+        protected virtual void PauseAfterRun()
+        {
             if (Configuration.GetBool("pause"))
             {
                 Console.ReadLine();
             }
-
-            return errorCode;
         }
 
         protected virtual void RegisterProjectDirectory([NotNull] IBuildContext context)
