@@ -1,6 +1,7 @@
 ﻿using Sitecore.Pathfinder.Extensibility;
-using Sitecore.Pathfinder.Building;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Tasks;
+using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Markdown
 {

@@ -4,9 +4,10 @@ using System;
 using System.IO;
 using System.Text;
 using NuGet;
-using Sitecore.Pathfinder.Building;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Tasks;
+using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.NuGet.Building
 {
@@ -50,7 +51,7 @@ namespace Sitecore.Pathfinder.NuGet.Building
                 }
 
                 string nupkgFileName;
-                if (context.IsBuildingWithNoConfig)
+                if (context.IsRunningWithNoConfig)
                 {
                     nupkgFileName = Path.Combine(context.ProjectDirectory, "sitecore.project\\" + Path.GetFileNameWithoutExtension(nuspecFileName) + ".nupkg");
                     context.FileSystem.CreateDirectoryFromFileName(nupkgFileName);

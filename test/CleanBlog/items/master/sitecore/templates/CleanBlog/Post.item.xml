@@ -2,7 +2,7 @@
   ShortHelp="Post entry."
   LongHelp="Clean blog post."
   Icon="Applications/16x16/about.png"
-  Layout.HtmlFile="~/CleanBlog/layout/renderings/post.html">
+  Layout.File="~/CleanBlog/layout/renderings/post.html">
   <Section Name="Fields">
     <Field Name="Title" ShortHelp="Post title." LongHelp="Post title." />
     <Field Name="Subtitle" ShortHelp="Post subtitle." LongHelp="Post subtitle." />

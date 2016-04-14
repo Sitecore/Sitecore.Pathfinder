@@ -9,13 +9,14 @@ using System.Xml;
 using System.Xml.Linq;
 using Microsoft.Framework.ConfigurationModel;
 using Newtonsoft.Json;
-using Sitecore.Pathfinder.Building;
 using Sitecore.Pathfinder.CodeGeneration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
+using Sitecore.Pathfinder.Tasks;
+using Sitecore.Pathfinder.Tasks.Building;
 using T4;
 
 namespace Sitecore.Pathfinder.T4.CodeGeneration

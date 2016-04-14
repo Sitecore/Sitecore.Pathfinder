@@ -68,12 +68,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppService.cs" />
-    <Compile Include="Building\BuildContext.cs" />
-    <Compile Include="Building\HelpWriter.cs" />
-    <Compile Include="Building\IBuildContext.cs" />
-    <Compile Include="Building\IBuildTask.cs" />
-    <Compile Include="Building\RequestBuildTaskBase.cs" />
-    <Compile Include="Building\BuildTaskBase.cs" />
+    <Compile Include="Tasks\Building\BuildContext.cs" />
+    <Compile Include="Tasks\Building\IBuildTask.cs" />
+    <Compile Include="Tasks\ITaskContext.cs" />
+    <Compile Include="Tasks\HelpWriter.cs" />
+    <Compile Include="Tasks\Building\IBuildContext.cs" />
+    <Compile Include="Tasks\ITask.cs" />
+    <Compile Include="Tasks\Building\RequestBuildTaskBase.cs" />
+    <Compile Include="Tasks\Building\BuildTaskBase.cs" />
     <Compile Include="Checking\CheckerBase.cs" />
     <Compile Include="Checking\CheckerContext.cs" />
     <Compile Include="Checking\CheckerService.cs" />
@@ -423,6 +425,10 @@
     <Compile Include="Languages\Yaml\YamlTextSnapshot.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Msg.cs" />
+    <Compile Include="Tasks\ITaskRunner.cs" />
+    <Compile Include="Tasks\TaskBase.cs" />
+    <Compile Include="Tasks\TaskContext.cs" />
+    <Compile Include="Tasks\TaskRunnerBase.cs" />
     <Compile Include="Texts.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

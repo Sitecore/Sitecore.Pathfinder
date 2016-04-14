@@ -1,5 +1,6 @@
-﻿using Sitecore.Pathfinder.Building;
-using Sitecore.Pathfinder.Projects;
+﻿using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Tasks;
+using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.CodeGeneration
 {

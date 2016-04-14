@@ -4,7 +4,7 @@
     Template.ShortHelp="Clean blog."
     Template.LongHelp="Clean blog from StartBootstrap."
     Template.Icon="Applications/16x16/about.png"
-    Layout.HtmlFile="~/CleanBlog/layout/renderings/index.html">
+    Layout.File="~/CleanBlog/layout/renderings/index.html">
 
     <Fields>
         <Field Name="PageTitle" Field.Type="Single-Line Text" Field.ShortHelp="Name of the page." Field.LongHelp="Displayed in the browser window caption.">

@@ -1,7 +1,8 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
-using Sitecore.Pathfinder.Building;
 using Sitecore.Pathfinder.Extensibility;
+using Sitecore.Pathfinder.Tasks;
+using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.NuGet
 {

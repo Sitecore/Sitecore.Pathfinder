@@ -13,7 +13,7 @@ using Sitecore.Pathfinder.Languages.BinFiles.Pipelines;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Pathfinder.Text;
 
-namespace Sitecore.Pathfinder.CodeFirst
+namespace Sitecore.Pathfinder.files.project.sitecore.filetemplates.codefirst
 {
     public class ModelScanner : PipelineProcessorBase<BinFileCompilerPipeline>
     {

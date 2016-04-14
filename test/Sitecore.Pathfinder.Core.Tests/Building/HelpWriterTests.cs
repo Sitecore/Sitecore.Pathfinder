@@ -1,6 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using NUnit.Framework;
+using Sitecore.Pathfinder.Tasks;
 
 namespace Sitecore.Pathfinder.Building
 {

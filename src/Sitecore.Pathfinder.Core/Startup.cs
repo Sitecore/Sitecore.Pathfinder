@@ -1,6 +1,7 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -35,6 +36,9 @@ namespace Sitecore.Pathfinder
 
         [NotNull]
         public string ProjectDirectory { get; private set; }
+
+        [CanBeNull]
+        public Stopwatch Stopwatch { get; private set; }
 
         [NotNull]
         public string ToolsDirectory { get; private set; }
@@ -115,7 +119,7 @@ namespace Sitecore.Pathfinder
                 return null;
             }
 
-            app = new AppService(configuration, compositionService, ToolsDirectory, ProjectDirectory);
+            app = new AppService(configuration, compositionService, ToolsDirectory, ProjectDirectory, Stopwatch);
             AppServiceCache[cacheKey] = app;
             return app;
         }
@@ -166,9 +170,25 @@ namespace Sitecore.Pathfinder
         }
 
         [NotNull]
+        public Startup WithStopWatch()
+        {
+            Stopwatch = new Stopwatch();
+            Stopwatch.Start();
+
+            return this;
+        }
+
+        [NotNull]
         public virtual Startup WithToolsDirectory([NotNull] string toolsDirectory)
         {
             ToolsDirectory = toolsDirectory;
+            return this;
+        }
+
+        [NotNull]
+        public Startup WithTraceListeners()
+        {
+            Trace.Listeners.Add(new ConsoleTraceListener());
             return this;
         }
 

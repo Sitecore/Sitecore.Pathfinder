@@ -8,7 +8,7 @@ using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.Templates;
 
-namespace Sitecore.Pathfinder.CodeGen
+namespace Sitecore.Pathfinder.files.project.sitecore.filetemplates.codegenerators
 {
     public class PocoTemplate : IProjectItemCodeGenerator
     {
