@@ -29,6 +29,9 @@ namespace Sitecore.Pathfinder.Xml.XPath
         [NotNull]
         public string DatabaseName { get; }
 
+        [NotNull]
+        public Database Database => Project.GetDatabase(DatabaseName);
+
         public string this[string name] => string.Empty;
 
         public string ItemId => string.Empty;
@@ -51,7 +54,7 @@ namespace Sitecore.Pathfinder.Xml.XPath
         {
             var childNames = new HashSet<string>();
 
-            foreach (var child in Project.GetItems(DatabaseName).Where(i => string.Equals(i.ParentItemPath, ItemPath, StringComparison.OrdinalIgnoreCase)))
+            foreach (var child in Project.GetItems(Database).Where(i => string.Equals(i.ParentItemPath, ItemPath, StringComparison.OrdinalIgnoreCase)))
             {
                 yield return child;
                 childNames.Add(child.ItemName);
@@ -59,7 +62,7 @@ namespace Sitecore.Pathfinder.Xml.XPath
 
             // yield virtual paths that are used by items deeper in the hierachy - tricky, tricky
             var itemIdOrPath = ItemPath + "/";
-            foreach (var descendent in Project.GetItems(DatabaseName).Where(i => i.ItemIdOrPath.StartsWith(itemIdOrPath, StringComparison.OrdinalIgnoreCase)))
+            foreach (var descendent in Project.GetItems(Database).Where(i => i.ItemIdOrPath.StartsWith(itemIdOrPath, StringComparison.OrdinalIgnoreCase)))
             {
                 var n = descendent.ItemIdOrPath.IndexOf('/', itemIdOrPath.Length);
                 if (n < 0)
@@ -85,7 +88,7 @@ namespace Sitecore.Pathfinder.Xml.XPath
                 return null;
             }
 
-            var item = Project.FindQualifiedItem<Item>(DatabaseName, ParentItemPath) as IXPathItem;
+            var item = Project.FindQualifiedItem<Item>(Database, ParentItemPath) as IXPathItem;
             return item ?? new XPathItem(Project, DatabaseName, ParentItemPath);
         }
     }

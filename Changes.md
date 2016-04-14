@@ -15,6 +15,8 @@ Version Next
 * Add: Run Sitecore validations on saving an item (2016-01-22)
 * Fix: Roslyn is no longer copied to the website, since it breaks Sitecore (2016-01-26) - Dmitry Kostenko
 * Add: Xslt Transforms of xml files (2016-04-08) - Dmitry Kostenko
+* Add: Renaming and deletes now works by stamping the Project Unique ID into the __PathfinderUniqueIds fields on every item on the server (2016-04-16)
+* Add: Merged 'Layout.HtmlFile' and 'Layout.Page' into single feature 'Layout.File' (2016-04-16)
 
 Version 0.6.0
 =============

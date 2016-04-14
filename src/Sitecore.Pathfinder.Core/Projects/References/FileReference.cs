@@ -1,6 +1,5 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.Files;
@@ -35,7 +34,8 @@ namespace Sitecore.Pathfinder.Projects.References
             IsResolved = true;
 
             var filePath = SourceProperty.GetValue();
-            var projectItem = Owner.Project.ProjectItems.OfType<File>().FirstOrDefault(i => string.Equals(i.FilePath, filePath, StringComparison.OrdinalIgnoreCase));
+
+            var projectItem = Owner.Project.FindFiles<File>(filePath).FirstOrDefault();
             if (projectItem == null)
             {
                 IsValid = false;

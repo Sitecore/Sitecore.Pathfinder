@@ -4,12 +4,19 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+using Sitecore.Configuration;
+using Sitecore.ContentSearch;
+using Sitecore.ContentSearch.SearchTypes;
+using Sitecore.Data.Items;
+using Sitecore.Data.Managers;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Serializing;
 using Sitecore.Pathfinder.Snapshots;
+using Sitecore.SecurityModel;
+using Sitecore.Text;
 
 namespace Sitecore.Pathfinder.Emitters
 {
@@ -42,10 +49,14 @@ namespace Sitecore.Pathfinder.Emitters
             SerializingDataProvider.Disabled = true;
             try
             {
+                PrepareWebsiteForPathfinder();
+
                 // todo: support installation without configuration files
                 var project = ProjectService.LoadProjectFromConfiguration();
 
                 Emit(project);
+
+                DeleteProjectItems(project);
             }
             finally
             {
@@ -53,6 +64,112 @@ namespace Sitecore.Pathfinder.Emitters
             }
 
             return 0;
+        }
+
+        protected virtual void PrepareWebsiteForPathfinder()
+        {
+            using (new SecurityDisabler())
+            {
+                // ensure __PathfinderProjectUniqueIds field is in the Advanced section of all databases.
+                foreach (var database in Factory.GetDatabases())
+                {
+                    if (database.ReadOnly)
+                    {
+                        continue;
+                    }
+
+                    var item = database.GetItem(ServerConstants.ItemIds.PathfinderProjectUniqueId);
+                    if (item != null)
+                    {
+                        continue;
+                    }
+
+                    var parent = database.GetItem("/sitecore/templates/System/Templates/Sections/Advanced/Advanced");
+                    if (parent != null)
+                    {
+                        var projectUniqueIdTemplateField = ItemManager.AddFromTemplate(ServerConstants.FieldNames.PathfinderProjectUniqueIds, TemplateIDs.TemplateField, parent, ServerConstants.ItemIds.PathfinderProjectUniqueId);
+
+                        using (new EditContext(projectUniqueIdTemplateField))
+                        {
+                            projectUniqueIdTemplateField["Shared"] = "1";
+                        }
+
+                    }
+                }
+            }
+        }
+
+        protected virtual void DeleteProjectItems([NotNull] IProject project)
+        {
+            var projectUniqueId = project.ProjectUniqueId;
+
+            foreach (var database in Factory.GetDatabases())
+            {
+                if (database.ReadOnly)
+                {
+                    continue;
+                }
+
+                var indexName = "sitecore_" + database.Name.ToLowerInvariant() + "_index";
+                var index = ContentSearchManager.GetIndex(indexName);
+                if (index == null)
+                {
+                    continue;
+                }
+
+                using (var context = index.CreateSearchContext())
+                {
+                    var ids = context.GetQueryable<SearchResultItem>().Where(item => item[ServerConstants.FieldNames.PathfinderProjectUniqueIds].Contains(projectUniqueId)).ToList().Select(i => i.ItemId).Distinct().ToList();
+
+                    foreach (var id in ids)
+                    {
+                        var projectItem = project.ProjectItems.FirstOrDefault(i => i.Uri.Guid == id.Guid);
+                        if (projectItem != null)
+                        {
+                            var i = projectItem as Projects.Items.Item;
+                            if (i == null)
+                            {
+                                continue;
+                            }
+
+                            if (string.Equals(i.DatabaseName, database.Name, StringComparison.OrdinalIgnoreCase))
+                            {
+                                continue;
+                            }
+
+                            // todo: check properly for publishing databases
+                            if (string.Equals(i.DatabaseName, "master", StringComparison.OrdinalIgnoreCase) && string.Equals(database.Name, "web", StringComparison.OrdinalIgnoreCase))
+                            {
+                                continue;
+                            }
+                        }
+
+                        var item = database.GetItem(id);
+                        if (item == null)
+                        {
+                            continue;
+                        }
+
+                        var uniqueIds = item[ServerConstants.FieldNames.PathfinderProjectUniqueIds];
+                        if (uniqueIds.IndexOf('|') < 0)
+                        {
+                            // item is only used by this project, so it can be deleted.
+                            item.Delete();
+                        }
+                        else
+                        {
+                            // remove project unique id from the field
+                            var list = new ListString(uniqueIds);
+                            list.Remove(projectUniqueId);
+
+                            using (new EditContext(item))
+                            {
+                                item[ServerConstants.FieldNames.PathfinderProjectUniqueIds] = list.ToString();
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         protected virtual void Emit([NotNull] IProject project)

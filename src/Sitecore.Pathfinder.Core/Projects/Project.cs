@@ -180,8 +180,10 @@ namespace Sitecore.Pathfinder.Projects
             return ProjectItems.OfType<T>().FirstOrDefault(i => i.Uri.Guid == guid);
         }
 
-        public T FindQualifiedItem<T>(string databaseName, string qualifiedName) where T : IProjectItem
+        public T FindQualifiedItem<T>(Database database, string qualifiedName) where T : IProjectItem
         {
+            var databaseName = database.DatabaseName;
+
             if (!qualifiedName.StartsWith("{") || !qualifiedName.EndsWith("}"))
             {
                 return ProjectItems.OfType<T>().FirstOrDefault(i => string.Equals(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase) && i.Uri.FileOrDatabaseName == databaseName);
@@ -202,6 +204,17 @@ namespace Sitecore.Pathfinder.Projects
             return ProjectItems.OfType<T>().FirstOrDefault(i => i.Uri == uri);
         }
 
+        public IEnumerable<T> FindFiles<T>(string fileName) where T : File
+        {
+            var relativeFileName = PathHelper.NormalizeFilePath(fileName);
+            if (relativeFileName.StartsWith("~\\"))
+            {
+                relativeFileName = relativeFileName.Mid(2);
+            }
+
+            return ProjectItems.OfType<T>().Where(f => string.Equals(f.FilePath, fileName, StringComparison.OrdinalIgnoreCase) || f.Snapshots.Any(s => string.Equals(s.SourceFile.RelativeFileName, relativeFileName, StringComparison.OrdinalIgnoreCase)));
+        }
+
         public Database GetDatabase(string databaseName)
         {
             var key = databaseName.ToLowerInvariant();
@@ -216,13 +229,15 @@ namespace Sitecore.Pathfinder.Projects
             return database;
         }
 
-        public IEnumerable<Item> GetItems(string databaseName)
+        public IEnumerable<Item> GetItems(Database database)
         {
+            var databaseName = database.DatabaseName;
             return Items.Where(i => string.Equals(i.DatabaseName, databaseName, StringComparison.OrdinalIgnoreCase));
         }
 
-        public IEnumerable<Template> GetTemplates(string databaseName)
+        public IEnumerable<Template> GetTemplates(Database database)
         {
+            var databaseName = database.DatabaseName;
             return Templates.Where(t => string.Equals(t.DatabaseName, databaseName, StringComparison.OrdinalIgnoreCase));
         }
 

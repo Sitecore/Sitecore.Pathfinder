@@ -63,10 +63,10 @@ namespace Sitecore.Pathfinder.Extensibility
                 var coreExtensionsDirectory = Path.Combine(toolsDirectory, "files\\extensions");
                 var coreAssemblyFileName = Path.Combine(coreExtensionsDirectory, "Sitecore.Pathfinder.Core.Extensions.dll");
                 AddDynamicAssembly(catalogs, toolsDirectory, coreAssemblyFileName, coreExtensionsDirectory);
-                AddAssembliesFromDirectory(catalogs, coreExtensionsDirectory);
+                AddAssembliesFromDirectory(options, catalogs, coreExtensionsDirectory);
 
                 // add extension from [Project]/node_modules directory
-                AddNodeModules(catalogs, coreAssemblyFileName, projectDirectory);
+                AddNodeModules(options, catalogs, coreAssemblyFileName, projectDirectory);
 
                 // add projects extensions
                 var projectExtensionsDirectory = configuration.GetString(Constants.Configuration.ProjectExtensionsDirectory);
@@ -75,7 +75,7 @@ namespace Sitecore.Pathfinder.Extensibility
                     projectExtensionsDirectory = PathHelper.Combine(projectDirectory, projectExtensionsDirectory);
                     var projectAssemblyFileName = Path.Combine(projectExtensionsDirectory, configuration.GetString(Constants.Configuration.ProjectExtensionsAssemblyFileName));
                     AddDynamicAssembly(catalogs, toolsDirectory, projectAssemblyFileName, projectExtensionsDirectory);
-                    AddAssembliesFromDirectory(catalogs, projectExtensionsDirectory);
+                    AddAssembliesFromDirectory(options, catalogs, projectExtensionsDirectory);
                 }
             }
 
@@ -99,7 +99,7 @@ namespace Sitecore.Pathfinder.Extensibility
             }
         }
 
-        private static void AddAssembliesFromDirectory([NotNull, ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string directory)
+        private static void AddAssembliesFromDirectory(CompositionOptions options, [NotNull, ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string directory)
         {
             if (!Directory.Exists(directory))
             {
@@ -109,6 +109,18 @@ namespace Sitecore.Pathfinder.Extensibility
             // only load Sitecore.Pathfinder.*.dll assemblies for performance
             foreach (var assemblyFileName in Directory.GetFiles(directory, "Sitecore.Pathfinder.*.dll", SearchOption.AllDirectories))
             {
+                var fileName = Path.GetFileName(assemblyFileName);
+                if (string.IsNullOrEmpty(fileName))
+                {
+                    continue;
+                }
+
+                // skip server assemblies, if interactive
+                if ((options & CompositionOptions.IgnoreServerAssemblies) == CompositionOptions.IgnoreServerAssemblies && fileName.StartsWith("Sitecore.Pathfinder.Server.", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
                 AddAssembly(catalogs, assemblyFileName);
             }
         }
@@ -159,8 +171,14 @@ namespace Sitecore.Pathfinder.Extensibility
             // only load Sitecore.Pathfinder.*.dll assemblies for performance
             foreach (var assemblyFileName in Directory.GetFiles(toolsDirectory, "Sitecore.Pathfinder.*.dll", SearchOption.TopDirectoryOnly))
             {
-                // skip server assembly, if interactive
-                if ((options & CompositionOptions.IgnoreServerAssemblies) == CompositionOptions.IgnoreServerAssemblies && string.Equals(Path.GetFileName(assemblyFileName), "Sitecore.Pathfinder.Server.dll", StringComparison.OrdinalIgnoreCase))
+                var fileName = Path.GetFileName(assemblyFileName);
+                if (string.IsNullOrEmpty(fileName))
+                {
+                    continue;
+                }
+
+                // skip server assemblies, if interactive
+                if ((options & CompositionOptions.IgnoreServerAssemblies) == CompositionOptions.IgnoreServerAssemblies && fileName.StartsWith("Sitecore.Pathfinder.Server.", StringComparison.OrdinalIgnoreCase))
                 {
                     continue;
                 }
@@ -169,7 +187,7 @@ namespace Sitecore.Pathfinder.Extensibility
             }
         }
 
-        private static void AddNodeModules([NotNull, ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string coreAssemblyFileName, [NotNull] string projectDirectory)
+        private static void AddNodeModules(CompositionOptions options, [NotNull, ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string coreAssemblyFileName, [NotNull] string projectDirectory)
         {
             var nodeModules = Path.Combine(projectDirectory, "node_modules");
             if (!Directory.Exists(nodeModules))
@@ -188,7 +206,7 @@ namespace Sitecore.Pathfinder.Extensibility
                 // todo: exclude nested node_modules directories
 
                 AddDynamicAssembly(catalogs, directory, coreAssemblyFileName, directory);
-                AddAssembliesFromDirectory(catalogs, directory);
+                AddAssembliesFromDirectory(options, catalogs, directory);
             }
         }
 

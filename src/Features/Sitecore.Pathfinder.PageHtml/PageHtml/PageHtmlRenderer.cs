@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.IO;
+using Sitecore.Mvc;
 using Sitecore.Mvc.Pipelines;
 using Sitecore.Mvc.Pipelines.Response.RenderRendering;
 using Sitecore.Mvc.Presentation;
@@ -21,6 +22,8 @@ namespace Sitecore.Pathfinder.PageHtml.PageHtml
 {
     public class PageHtmlRenderer : IRenderer
     {
+        public const string FieldNamespaceName = "http://www.sitecore.net/pathfinder/field";
+
         public const string PlaceholderNamespaceName = "http://www.sitecore.net/pathfinder/placeholder";
 
         public const string RenderingNamespaceName = "http://www.sitecore.net/pathfinder/rendering";
@@ -42,14 +45,13 @@ namespace Sitecore.Pathfinder.PageHtml.PageHtml
 
             var renderings = GetRenderings(Context.Item.Database, html);
 
-            var oldPageDefinition = PageContext.Current.PageDefinition;
-
             var pageDefinition = new PageDefinition();
             pageDefinition.Renderings.AddRange(renderings);
 
+            var oldPageDefinition = PageContext.Current.PageDefinition;
             PageContext.Current.PageDefinition = pageDefinition;
 
-            foreach (var rendering in renderings.Where(r => string.IsNullOrEmpty(r.Placeholder)))
+            foreach (var rendering in pageDefinition.Renderings.Where(r => string.IsNullOrEmpty(r.Placeholder)))
             {
                 PipelineService.Get().RunPipeline("mvc.renderRendering", new RenderRenderingArgs(rendering, writer));
             }
@@ -91,6 +93,27 @@ namespace Sitecore.Pathfinder.PageHtml.PageHtml
             return renderings.First();
         }
 
+        protected virtual void WriteField([NotNull] RenderContext context, [NotNull] XElement element)
+        {
+            WriteLiteral(context);
+
+            var fieldName = element.GetAttributeValue("name");
+            if (string.IsNullOrEmpty(fieldName))
+            {
+                fieldName = element.Name.LocalName;
+            }
+
+            var rendering = new Rendering
+            {
+                Placeholder = context.Placeholder,
+                Renderer = new Field(fieldName),
+                RenderingType = "View",
+                DeviceId = Context.Device.ID.Guid
+            };
+
+            context.Renderings.Add(rendering);
+        }
+
         protected virtual void WriteLiteral([NotNull] RenderContext context)
         {
             var text = context.LiteralText.ToString();
@@ -104,7 +127,9 @@ namespace Sitecore.Pathfinder.PageHtml.PageHtml
             var rendering = new Rendering
             {
                 Placeholder = context.Placeholder,
-                Renderer = new Literal(text)
+                Renderer = new Literal(text),
+                RenderingType = "View",
+                DeviceId = Context.Device.ID.Guid
             };
 
             context.Renderings.Add(rendering);
@@ -153,10 +178,14 @@ namespace Sitecore.Pathfinder.PageHtml.PageHtml
                 return;
             }
 
-            var rendering = new Rendering();
-            rendering.Id = renderingItem.ID.Guid;
-            rendering.Placeholder = context.Placeholder;
-            rendering.RenderingItem = new RenderingItem(renderingItem);
+            var rendering = new Rendering
+            {
+                Id = renderingItem.ID.Guid,
+                Placeholder = context.Placeholder,
+                RenderingItem = new RenderingItem(renderingItem),
+                RenderingType = "View",
+                DeviceId = Context.Device.ID.Guid
+            };
 
             var parameters = new UrlString();
 
@@ -273,6 +302,10 @@ namespace Sitecore.Pathfinder.PageHtml.PageHtml
                 {
                     WriteRendering(context, element);
                 }
+                else if (element.Name.NamespaceName == FieldNamespaceName)
+                {
+                    WriteField(context, element);
+                }
                 else
                 {
                     WriteLiteral(context, element);
@@ -281,6 +314,22 @@ namespace Sitecore.Pathfinder.PageHtml.PageHtml
             else
             {
                 context.LiteralText.Write(node.ToString());
+            }
+        }
+
+        public class Field : Renderer
+        {
+            public Field([NotNull] string fieldName)
+            {
+                FieldName = fieldName;
+            }
+
+            [NotNull]
+            protected string FieldName { get; }
+
+            public override void Render([NotNull] TextWriter writer)
+            {
+                writer.Write(PageContext.Current.HtmlHelper.Sitecore().Field(FieldName, Context.Item));
             }
         }
 

@@ -13,6 +13,7 @@ using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
+using Sitecore.Text;
 
 namespace Sitecore.Pathfinder.Emitters.Writers
 {
@@ -376,6 +377,8 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                 }
 
                 item.Appearance.Sortorder = templateFieldWriter.TemplateField.SortOrder;
+
+                UpdateProjectUniqueIds(context, item);
             }
         }
 
@@ -423,12 +426,27 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                 }
 
                 item[FieldIDs.StandardValues] = Template.StandardValuesItem?.Uri.Guid.Format() ?? string.Empty;
+
+                UpdateProjectUniqueIds(context, item);
             }
 
             foreach (var section in Sections)
             {
                 WriteSection(context, section, inheritedFields);
             }
+        }
+
+        protected virtual void UpdateProjectUniqueIds([NotNull] IEmitContext context, [NotNull] Item item)
+        {
+            // update project unique ids fields, so the item can be deleted, if it is removed from the project
+            var projectUniqueIds = new ListString(item[ServerConstants.FieldNames.PathfinderProjectUniqueIds]);
+            if (projectUniqueIds.Contains(context.Project.ProjectUniqueId))
+            {
+                return;
+            }
+
+            projectUniqueIds.Add(context.Project.ProjectUniqueId);
+            item[ServerConstants.FieldNames.PathfinderProjectUniqueIds] = projectUniqueIds.ToString();
         }
 
         protected virtual void WriteSection([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] TemplateSectionWriter templateSectionWriter, [Diagnostics.NotNull, ItemNotNull] IEnumerable<Data.Templates.TemplateField> inheritedFields)
@@ -465,6 +483,8 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                 {
                     templateSectionWriter.Item.Appearance.Icon = templateSectionWriter.TemplateSection.Icon;
                 }
+
+                UpdateProjectUniqueIds(context, templateSectionWriter.Item);
             }
 
             foreach (var fieldWriter in templateSectionWriter.Fields)
@@ -508,6 +528,8 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                 item.Help.ToolTip = Template.ShortHelp;
                 item.Help.Text = Template.LongHelp;
                 item[FieldIDs.StandardValues] = Template.StandardValuesItem?.Uri.Guid.Format() ?? string.Empty;
+
+                UpdateProjectUniqueIds(context, item);
             }
 
             foreach (var templateSectionWriter in Sections)

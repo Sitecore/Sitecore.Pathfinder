@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
@@ -13,12 +13,6 @@ namespace Sitecore.Pathfinder.Projects
     public interface IProject
     {
         [NotNull, ItemNotNull]
-        IEnumerable<Item> Items { get; }
-
-        [NotNull, ItemNotNull]
-        IEnumerable<Template> Templates { get; }
-
-        [NotNull, ItemNotNull]
         ICollection<Diagnostic> Diagnostics { get; }
 
         long Ducats { get; set; }
@@ -31,6 +25,9 @@ namespace Sitecore.Pathfinder.Projects
 
         bool HasErrors { get; }
 
+        [NotNull, ItemNotNull]
+        IEnumerable<Item> Items { get; }
+
         [NotNull]
         ProjectOptions Options { get; }
 
@@ -42,6 +39,9 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull, ItemNotNull]
         ICollection<ISourceFile> SourceFiles { get; }
+
+        [NotNull, ItemNotNull]
+        IEnumerable<Template> Templates { get; }
 
         [NotNull]
         IProject Add([NotNull] string absoluteFileName);
@@ -56,16 +56,22 @@ namespace Sitecore.Pathfinder.Projects
         T FindQualifiedItem<T>([NotNull] string qualifiedName) where T : IProjectItem;
 
         [CanBeNull]
-        T FindQualifiedItem<T>([NotNull] string databaseName, [NotNull] string qualifiedName) where T : IProjectItem;
+        T FindQualifiedItem<T>([NotNull] Database database, [NotNull] string qualifiedName) where T : IProjectItem;
 
         [CanBeNull]
         T FindQualifiedItem<T>([NotNull] ProjectItemUri uri) where T : IProjectItem;
+
+        [NotNull, ItemNotNull]
+        IEnumerable<T> FindFiles<T>([NotNull] string fileName) where T : File;
 
         [NotNull]
         Database GetDatabase([NotNull] string databaseName);
 
         [NotNull, ItemNotNull]
-        IEnumerable<Item> GetItems([NotNull] string databaseName);
+        IEnumerable<Item> GetItems([NotNull] Database database);
+
+        [NotNull, ItemNotNull]
+        IEnumerable<Template> GetTemplates([NotNull] Database database);
 
         [NotNull]
         IProject Load([NotNull] ProjectOptions projectOptions, [NotNull, ItemNotNull] IEnumerable<string> sourceFileNames);
@@ -78,8 +84,5 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull]
         IProject SaveChanges();
-
-        [NotNull, ItemNotNull]
-        IEnumerable<Template> GetTemplates([NotNull] string databaseName);
     }
 }

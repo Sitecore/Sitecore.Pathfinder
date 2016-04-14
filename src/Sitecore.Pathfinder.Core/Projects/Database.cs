@@ -17,8 +17,7 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         public string DatabaseName { get; }
 
-        [NotNull]
-        [Obsolete("Use DatabaseName property", false)]
+        [NotNull, Obsolete("Use DatabaseName property", false)]
         public string Name => DatabaseName;
 
         [NotNull]
@@ -49,7 +48,7 @@ namespace Sitecore.Pathfinder.Projects
         [CanBeNull]
         public Item GetItem([NotNull] string path)
         {
-            return Project.FindQualifiedItem<Item>(DatabaseName, path);
+            return Project.FindQualifiedItem<Item>(this, path);
         }
 
         public static bool operator ==([CanBeNull] Database left, [CanBeNull] Database right)

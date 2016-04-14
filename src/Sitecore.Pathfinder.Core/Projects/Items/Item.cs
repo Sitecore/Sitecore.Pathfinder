@@ -109,7 +109,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
                     if (templateIdOrPath.Contains('/') || templateIdOrPath.Contains('{'))
                     {
-                        _template = Project.FindQualifiedItem<Template>(DatabaseName, templateIdOrPath);
+                        _template = Project.FindQualifiedItem<Template>(Database, templateIdOrPath);
                     }
                     else
                     {
@@ -151,7 +151,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull, ItemNotNull]
         public virtual IEnumerable<Item> GetChildren()
         {
-            return Project.GetItems(DatabaseName).Where(i => string.Equals(i.ParentItemPath, ItemIdOrPath, StringComparison.OrdinalIgnoreCase));
+            return Project.GetItems(Database).Where(i => string.Equals(i.ParentItemPath, ItemIdOrPath, StringComparison.OrdinalIgnoreCase));
         }
 
         [NotNull]
@@ -170,7 +170,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         [CanBeNull]
         public Item GetParent()
         {
-            return _parent ?? (_parent = Project.FindQualifiedItem<Item>(DatabaseName, ParentItemPath));
+            return _parent ?? (_parent = Project.FindQualifiedItem<Item>(Database, ParentItemPath));
         }
 
         [NotNull, ItemNotNull]
@@ -239,7 +239,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
             // yield virtual paths that are used by items deeper in the hierachy - tricky, tricky
             var itemIdOrPath = ItemIdOrPath + "/";
-            foreach (var descendent in Project.GetItems(DatabaseName).Where(i => i.ItemIdOrPath.StartsWith(itemIdOrPath, StringComparison.OrdinalIgnoreCase)))
+            foreach (var descendent in Project.GetItems(Database).Where(i => i.ItemIdOrPath.StartsWith(itemIdOrPath, StringComparison.OrdinalIgnoreCase)))
             {
                 var n = descendent.ItemIdOrPath.IndexOf('/', itemIdOrPath.Length);
                 if (n < 0)

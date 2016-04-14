@@ -41,12 +41,19 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
                 return;
             }
 
-            var rendering = item.Project.ProjectItems.OfType<Rendering>().FirstOrDefault(i => string.Equals(i.FilePath, value, StringComparison.OrdinalIgnoreCase));
-            if (rendering == null)
+            var renderings = item.Project.FindFiles<Rendering>(value).ToList();
+            if (renderings.Any())
             {
-                context.Trace.TraceError(Msg.C1047, Texts.Rendering_reference_not_found, TraceHelper.GetTextNode(property), value);
+                context.Trace.TraceError(Msg.C1060, Texts.Rendering_reference_not_found, TraceHelper.GetTextNode(property), value);
                 return;
             }
+            if (renderings.Count > 1)
+            {
+                context.Trace.TraceError(Msg.C1062, "Ambiguous file name", TraceHelper.GetTextNode(property), value);
+                return;
+            }
+
+            var rendering = renderings.First();
 
             var renderingItemUri = rendering.RenderingItemUri;
             if (renderingItemUri == ProjectItemUri.Empty)
