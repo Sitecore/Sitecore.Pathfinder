@@ -10,22 +10,22 @@ namespace Sitecore.Pathfinder.Configuration
     public static class StartupExtensions
     {
         [CanBeNull]
-        public static IConfigurationSourceRoot RegisterConfiguration([NotNull] this Startup startup, [NotNull] string projectDirectory, ConfigurationOptions options)
+        public static IConfigurationSourceRoot RegisterConfiguration([NotNull] this Startup startup, [NotNull] string projectDirectory, [NotNull] string systemConfigFileName, ConfigurationOptions options)
         {
             var toolsDirectory = Path.Combine(projectDirectory, "sitecore.tools");
 
-            return RegisterConfiguration(startup, toolsDirectory, projectDirectory, options);
+            return RegisterConfiguration(startup, toolsDirectory, projectDirectory, systemConfigFileName, options);
         }
 
         [CanBeNull]
-        public static IConfigurationSourceRoot RegisterConfiguration([NotNull] this Startup startup, [NotNull] string toolsDirectory, [NotNull] string projectDirectory, ConfigurationOptions options)
+        public static IConfigurationSourceRoot RegisterConfiguration([NotNull] this Startup startup, [NotNull] string toolsDirectory, [NotNull] string projectDirectory, [NotNull] string systemConfigFileName, ConfigurationOptions options)
         {
             var configuration = new Microsoft.Framework.ConfigurationModel.Configuration();
             configuration.Add(new MemoryConfigurationSource());
 
             configuration.Set(Constants.Configuration.ToolsDirectory, toolsDirectory);
             configuration.Set(Constants.Configuration.ProjectDirectory, projectDirectory);
-            configuration.Set(Constants.Configuration.SystemConfigFileName, "scconfig.json");
+            configuration.Set(Constants.Configuration.SystemConfigFileName, systemConfigFileName);
 
             var configurationService = new ConfigurationService(configuration);
 

@@ -13,15 +13,10 @@ namespace Sitecore.Pathfinder
 {
     public class Startup
     {
-        [NotNull]
-        private static readonly Dictionary<string, IAppService> AppServiceCache = new Dictionary<string, IAppService>();
-
         public Startup()
         {
             ToolsDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
             ProjectDirectory = Directory.GetCurrentDirectory();
-            WebsiteDirectory = string.Empty;
-            DataFolderDirectory = string.Empty;
         }
 
         [CanBeNull, ItemNotNull]
@@ -32,7 +27,7 @@ namespace Sitecore.Pathfinder
         public ConfigurationOptions ConfigurationOptions { get; private set; } = ConfigurationOptions.Noninteractive;
 
         [NotNull]
-        public string DataFolderDirectory { get; private set; }
+        public string DataFolderDirectory { get; private set; } = string.Empty;
 
         [NotNull]
         public string ProjectDirectory { get; private set; }
@@ -44,7 +39,10 @@ namespace Sitecore.Pathfinder
         public string ToolsDirectory { get; private set; }
 
         [NotNull]
-        public string WebsiteDirectory { get; private set; }
+        public string SystemConfigurationFileName { get; private set; } = "scconfig.json";
+
+        [NotNull]
+        public string WebsiteDirectory { get; private set; } = string.Empty;
 
         [NotNull]
         public virtual Startup AsInteractive()
@@ -79,25 +77,9 @@ namespace Sitecore.Pathfinder
         [CanBeNull]
         public IAppService Start()
         {
-            IEnumerable<string> assemblyFileNames;
-            if (AssemblyFileNames == null)
-            {
-                assemblyFileNames = Enumerable.Empty<string>();
-            }
-            else
-            {
-                assemblyFileNames = AssemblyFileNames.Distinct().OrderBy(a => a).ToList();
-            }
+            var assemblyFileNames = AssemblyFileNames?.Distinct().OrderBy(a => a).ToList() ?? Enumerable.Empty<string>();
 
-            var cacheKey = ToolsDirectory.ToLowerInvariant() + ProjectDirectory.ToLowerInvariant() + ConfigurationOptions + string.Join(",", assemblyFileNames);
-
-            IAppService app;
-            if (AppServiceCache.TryGetValue(cacheKey, out app))
-            {
-                return app;
-            }
-
-            var configuration = this.RegisterConfiguration(ToolsDirectory, ProjectDirectory, ConfigurationOptions);
+            var configuration = this.RegisterConfiguration(ToolsDirectory, ProjectDirectory, SystemConfigurationFileName, ConfigurationOptions);
             if (configuration == null)
             {
                 return null;
@@ -119,15 +101,20 @@ namespace Sitecore.Pathfinder
                 return null;
             }
 
-            app = new AppService(configuration, compositionService, ToolsDirectory, ProjectDirectory, Stopwatch);
-            AppServiceCache[cacheKey] = app;
-            return app;
+            return new AppService(configuration, compositionService, ToolsDirectory, ProjectDirectory, Stopwatch);
         }
 
         [NotNull]
         public virtual Startup WithAssemblies([NotNull, ItemNotNull] IEnumerable<string> assemblyFileNames)
         {
             AssemblyFileNames = assemblyFileNames;
+            return this;
+        }
+
+        [NotNull]
+        public virtual Startup WithSystemConfigurationFileName([NotNull] string systemConfigurationFileName)
+        {
+            SystemConfigurationFileName  = systemConfigurationFileName;
             return this;
         }
 
