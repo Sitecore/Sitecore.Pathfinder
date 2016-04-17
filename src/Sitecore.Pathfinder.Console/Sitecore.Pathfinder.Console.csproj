@@ -447,7 +447,13 @@
     <None Include="files\starterkits\TodoMvc.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\website\App_Config\include\Sitecore.Pathfinder.SerializingDataProvider.config.disabled">
+    <None Include="files\website\App_Config\include\Sitecore.Pathfinder\zzz.Sitecore.Pathfinder.LiveMode.config.disabled">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\website\App_Config\include\Sitecore.Pathfinder\zzz.Sitecore.Pathfinder.DevConfig.config,disabled">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\website\App_Config\include\Sitecore.Pathfinder\Sitecore.Pathfinder.SerializingDataProvider.config.disabled">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Properties\app.manifest" />
@@ -557,7 +563,7 @@
     <None Include="files\project\scconfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\website\App_Config\include\Sitecore.Pathfinder.config">
+    <None Include="files\website\App_Config\include\Sitecore.Pathfinder\Sitecore.Pathfinder.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="files\conventions\speak.conventions.json">
