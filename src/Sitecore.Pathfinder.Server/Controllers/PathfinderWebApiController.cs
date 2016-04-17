@@ -30,6 +30,21 @@ namespace Sitecore.Pathfinder.Controllers
             var toolsDirectory = WebUtil.GetQueryString("td");
             var binDirectory = FileUtil.MapPath("/bin");
 
+            if (!Directory.Exists(toolsDirectory))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, $"The tools directory could not be found. Do the website server have read/write access to your project directory? ({toolsDirectory})");
+            }
+
+            if (!Directory.Exists(projectDirectory))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, $"The project directory could not be found. Do the website server have read/write access to your project directory? ({projectDirectory})");
+            }
+
+            if (!CanWriteDirectory(projectDirectory))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, $"The website server do not have write access to the project directory ({projectDirectory})");
+            }
+
             var app = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(projectDirectory).WithExtensionsDirectory(binDirectory).Start();
             if (app == null)
             {
@@ -45,6 +60,19 @@ namespace Sitecore.Pathfinder.Controllers
             var result = instance.Execute(app);
 
             return result ?? Content(output.ToString(), "text/plain");
+        }
+
+        protected bool CanWriteDirectory([Diagnostics.NotNull] string directory)
+        {
+            try
+            {
+                Directory.GetAccessControl(directory);
+                return true;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return false;
+            }
         }
     }
 }

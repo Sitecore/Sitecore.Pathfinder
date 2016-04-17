@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -10,6 +10,8 @@ namespace Sitecore.Pathfinder.IO
 {
     public interface IFileSystemService
     {
+        bool CanWriteDirectory([NotNull] string directory);
+
         void Copy([NotNull] string sourceFileName, [NotNull] string destinationFileName, bool forceUpdate = true);
 
         bool CopyIfNewer([NotNull] string sourceFileName, [NotNull] string targetFileName);

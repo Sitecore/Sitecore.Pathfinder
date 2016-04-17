@@ -1,5 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
-// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -23,6 +22,19 @@ namespace Sitecore.Pathfinder.IO
 
         [NotNull]
         protected IConsoleService Console { get; }
+
+        public virtual bool CanWriteDirectory(string directory)
+        {
+            try
+            {
+                Directory.GetAccessControl(directory);
+                return true;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return false;
+            }
+        }
 
         public virtual void Copy(string sourceFileName, string destinationFileName, bool forceUpdate = true)
         {
