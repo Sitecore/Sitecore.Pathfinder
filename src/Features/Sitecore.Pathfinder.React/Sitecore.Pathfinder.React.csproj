@@ -79,15 +79,15 @@
     </Reference>
     <Reference Include="React.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=9aed67b161f7db78, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\React.Core.2.2.0\lib\net40\React.Core.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="React.Web, Version=2.2.0.0, Culture=neutral, PublicKeyToken=9aed67b161f7db78, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\React.Web.2.2.0\lib\net40\React.Web.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="React.Web.Mvc4, Version=2.2.0.0, Culture=neutral, PublicKeyToken=9aed67b161f7db78, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\React.Web.Mvc4.2.2.0\lib\net40\React.Web.Mvc4.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Sitecore.Kernel, Version=8.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -117,7 +117,7 @@
     </Reference>
     <Reference Include="System.Web.Optimization.React, Version=2.2.0.0, Culture=neutral, PublicKeyToken=9aed67b161f7db78, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\System.Web.Optimization.React.2.2.0\lib\net40\System.Web.Optimization.React.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Microsoft.AspNet.Razor.3.1.2\lib\net45\System.Web.Razor.dll</HintPath>
