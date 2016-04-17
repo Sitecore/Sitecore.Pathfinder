@@ -60,7 +60,25 @@ namespace Sitecore.Pathfinder.Extensions
         [NotNull, ItemNotNull]
         public static IEnumerable<string> GetCommaSeparatedStringList([NotNull] this IConfiguration configuration, [NotNull] string key)
         {
-            var value = configuration.GetString(key);
+            string value = string.Empty;
+            if (configuration.GetSubKeys(key).Any())
+            {
+                List<string> result = new List<string>();
+                foreach (var subkey in configuration.GetSubKeys(key))
+                {
+                    if (value.Length > 0)
+                    {
+                        value += ",";
+                    }
+
+                    value += configuration.Get(key + ":" + subkey.Key);
+                }
+            }
+            else
+            {
+                value = configuration.GetString(key);
+            }
+
             return value.Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToList();
         }
 
