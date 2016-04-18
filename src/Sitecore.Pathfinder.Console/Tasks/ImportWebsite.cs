@@ -14,7 +14,7 @@ namespace Sitecore.Pathfinder.Tasks
         {
             context.Trace.TraceInformation(Msg.G1012, Texts.Importing_website___);
 
-            var url = MakeWebApiUrl(context, "ImportWebsite");
+            var url = MakeWebsiteTaskUrl(context, "ImportWebsite");
 
             Request(context, url);
         }

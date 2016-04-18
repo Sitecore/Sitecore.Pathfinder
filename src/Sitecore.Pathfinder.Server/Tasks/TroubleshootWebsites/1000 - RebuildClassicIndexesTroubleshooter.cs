@@ -4,10 +4,9 @@ using System;
 using Sitecore.Configuration;
 using Sitecore.ContentSearch;
 using Sitecore.Diagnostics;
-using Sitecore.Pathfinder.Jobs;
 using Sitecore.Search;
 
-namespace Sitecore.Pathfinder.WebApi.TroubleshootWebsites
+namespace Sitecore.Pathfinder.Tasks.TroubleshootWebsites
 {
     public class RebuildClassicIndexesTroubleshooter : TroubleshooterBase
     {

@@ -8,9 +8,8 @@ using System.Text.RegularExpressions;
 using System.Web;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.Tasks.Building;
 
-namespace Sitecore.Pathfinder.Tasks
+namespace Sitecore.Pathfinder.Tasks.Building
 {
     public abstract class RequestBuildTaskBase : BuildTaskBase
     {
@@ -126,18 +125,18 @@ namespace Sitecore.Pathfinder.Tasks
         }
 
         [NotNull]
-        protected virtual string MakeWebApiUrl([NotNull] IBuildContext context, [NotNull] string route)
+        protected virtual string MakeWebsiteTaskUrl([NotNull] IBuildContext context, [NotNull] string route)
         {
-            return MakeWebApiUrl(context, route, new Dictionary<string, string>());
+            return MakeWebsiteTaskUrl(context, route, new Dictionary<string, string>());
         }
 
         [NotNull]
-        protected virtual string MakeWebApiUrl([NotNull] IBuildContext context, [NotNull] string route, [NotNull] Dictionary<string, string> queryStringParameters)
+        protected virtual string MakeWebsiteTaskUrl([NotNull] IBuildContext context, [NotNull] string route, [NotNull] Dictionary<string, string> queryStringParameters)
         {
             queryStringParameters["td"] = context.ToolsDirectory;
             queryStringParameters["pd"] = context.ProjectDirectory;
 
-            return MakeUrl(context, "sitecore/shell/client/Applications/Pathfinder/WebApi/" + route, queryStringParameters);
+            return MakeUrl(context, "sitecore/shell/client/Applications/Pathfinder/Task/" + route, queryStringParameters);
         }
 
         protected virtual bool Request([NotNull] IBuildContext context, [NotNull] string url)

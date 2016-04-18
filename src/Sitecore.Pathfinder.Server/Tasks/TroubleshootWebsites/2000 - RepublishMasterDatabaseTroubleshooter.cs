@@ -5,10 +5,9 @@ using System.Linq;
 using Sitecore.Configuration;
 using Sitecore.Data.Managers;
 using Sitecore.Diagnostics;
-using Sitecore.Pathfinder.Jobs;
 using Sitecore.Publishing;
 
-namespace Sitecore.Pathfinder.WebApi.TroubleshootWebsites
+namespace Sitecore.Pathfinder.Tasks.TroubleshootWebsites
 {
     public class RepublishMasterDatabaseTroubleshooter : TroubleshooterBase
     {

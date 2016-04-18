@@ -3,9 +3,8 @@
 using System;
 using Sitecore.Configuration;
 using Sitecore.Diagnostics;
-using Sitecore.Pathfinder.Jobs;
 
-namespace Sitecore.Pathfinder.WebApi.TroubleshootWebsites
+namespace Sitecore.Pathfinder.Tasks.TroubleshootWebsites
 {
     public class RebuildLinkDatabaseTroubleshooter : TroubleshooterBase
     {

@@ -22,7 +22,7 @@ namespace Sitecore.Pathfinder.Tasks
 
             context.Trace.TraceInformation(Msg.D1011, Texts.Installing_project___);
 
-            var url = MakeWebApiUrl(context, "InstallProject");
+            var url = MakeWebsiteTaskUrl(context, "InstallProject");
 
             var success = Request(context, url);
 

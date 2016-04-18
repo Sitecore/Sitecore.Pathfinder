@@ -65,6 +65,10 @@
       <HintPath>..\..\lib\Sitecore\Sitecore.ContentSearch.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Sitecore.ContentSearch.Linq">
+      <HintPath>..\..\lib\Sitecore\Sitecore.ContentSearch.Linq.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Sitecore.Kernel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Sitecore\Sitecore.Kernel.dll</HintPath>
@@ -136,7 +140,7 @@
     <Compile Include="Controllers\PathfinderPackageController.cs" />
     <Compile Include="Controllers\PathfinderPackagesController.cs" />
     <Compile Include="Controllers\PathfinderPublishController.cs" />
-    <Compile Include="Controllers\PathfinderWebApiController.cs" />
+    <Compile Include="Controllers\PathfinderTaskController.cs" />
     <Compile Include="Emitters\EmitterService.cs" />
     <Compile Include="Emitters\Files\ConfigFileEmitter.cs" />
     <Compile Include="Emitters\Writers\FieldWriter.cs" />
@@ -152,9 +156,10 @@
     <Compile Include="Emitters\Items\TemplateEmitter.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="Extensions\DatabaseExtensions.cs" />
+    <Compile Include="Extensions\ItemExtensions.cs" />
     <Compile Include="Importing\ItemImporters\IItemImporterService.cs" />
     <Compile Include="Importing\ItemImporters\ItemImporterService.cs" />
-    <Compile Include="Jobs\BackgroundJob.cs" />
+    <Compile Include="Tasks\BackgroundJob.cs" />
     <Compile Include="Mvc\Presentation\IRenderer.cs" />
     <Compile Include="Mvc\Presentation\RendererWrapper.cs" />
     <Compile Include="Mvc\Response\GetRenderer\GetRenderer.cs" />
@@ -170,28 +175,31 @@
     <Compile Include="ServerConstants.cs" />
     <Compile Include="Serializing\SerializingDataProvider.cs" />
     <Compile Include="Serializing\WebsiteSerializer.cs" />
-    <Compile Include="WebApi\ImportWebsite.cs" />
+    <Compile Include="Tasks\ImportWebsite.cs" />
     <Compile Include="Importing\FieldImporters\FieldValueImporterBase.cs" />
     <Compile Include="Importing\FieldImporters\IdFieldValueImporter.cs" />
     <Compile Include="Importing\FieldImporters\IFieldValueImporter.cs" />
     <Compile Include="Importing\FieldImporters\ImageFieldValueImporter.cs" />
     <Compile Include="Importing\FieldImporters\LayoutFieldValueImporter.cs" />
     <Compile Include="Importing\FieldImporters\LinkFieldValueImporter.cs" />
-    <Compile Include="WebApi\SynchronizeWebsites\ISynchronizer.cs" />
-    <Compile Include="WebApi\SynchronizeWebsites\SynchronizeWebsite.cs" />
-    <Compile Include="WebApi\SynchronizeWebsites\ContentXmlSynchronizer.cs" />
-    <Compile Include="WebApi\SynchronizeWebsites\JsonLayoutSchemaSynchronizer.cs" />
-    <Compile Include="WebApi\SynchronizeWebsites\XsdLayoutSchemaSynchronizer.cs" />
-    <Compile Include="WebApi\SynchronizeWebsites\XsdContentSchemaSynchronizer.cs" />
-    <Compile Include="WebApi\InstallProject.cs" />
-    <Compile Include="WebApi\IWebApi.cs" />
-    <Compile Include="WebApi\ResetWebsite.cs" />
-    <Compile Include="WebApi\TroubleshootWebsites\1000 - RebuildClassicIndexesTroubleshooter.cs" />
-    <Compile Include="WebApi\TroubleshootWebsites\2000 - RepublishMasterDatabaseTroubleshooter.cs" />
-    <Compile Include="WebApi\TroubleshootWebsites\3000 - RebuildLinkDatabaseTroubleshooter.cs" />
-    <Compile Include="WebApi\UpdateProjectWebsiteMappings.cs" />
-    <Compile Include="WebApi\TroubleshootWebsites\TroubleshootWebsite.cs" />
-    <Compile Include="WebApi\WriteWebsiteExports.cs" />
+    <Compile Include="Tasks\IWebsiteTaskContext.cs" />
+    <Compile Include="Tasks\SynchronizeWebsites\ISynchronizer.cs" />
+    <Compile Include="Tasks\SynchronizeWebsites\SynchronizeWebsite.cs" />
+    <Compile Include="Tasks\SynchronizeWebsites\ContentXmlSynchronizer.cs" />
+    <Compile Include="Tasks\SynchronizeWebsites\JsonLayoutSchemaSynchronizer.cs" />
+    <Compile Include="Tasks\SynchronizeWebsites\XsdLayoutSchemaSynchronizer.cs" />
+    <Compile Include="Tasks\SynchronizeWebsites\XsdContentSchemaSynchronizer.cs" />
+    <Compile Include="Tasks\InstallProject.cs" />
+    <Compile Include="Tasks\IWebsiteTask.cs" />
+    <Compile Include="Tasks\ResetWebsite.cs" />
+    <Compile Include="Tasks\TroubleshootWebsites\1000 - RebuildClassicIndexesTroubleshooter.cs" />
+    <Compile Include="Tasks\TroubleshootWebsites\2000 - RepublishMasterDatabaseTroubleshooter.cs" />
+    <Compile Include="Tasks\TroubleshootWebsites\3000 - RebuildLinkDatabaseTroubleshooter.cs" />
+    <Compile Include="Tasks\UpdateProjectWebsiteMappings.cs" />
+    <Compile Include="Tasks\TroubleshootWebsites\TroubleshootWebsite.cs" />
+    <Compile Include="Tasks\WebsiteTaskBase.cs" />
+    <Compile Include="Tasks\WebsiteTaskContext.cs" />
+    <Compile Include="Tasks\WriteWebsiteExports.cs" />
     <Compile Include="WebsiteHost.cs" />
   </ItemGroup>
   <ItemGroup>

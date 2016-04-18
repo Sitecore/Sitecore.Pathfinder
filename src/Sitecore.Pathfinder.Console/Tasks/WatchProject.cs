@@ -153,7 +153,7 @@ namespace Sitecore.Pathfinder.Tasks
         {
             Console.WriteLine("Installing project...");
 
-            var url = MakeWebApiUrl(Context, "InstallProject");
+            var url = MakeWebsiteTaskUrl(Context, "InstallProject");
             Request(Context, url);
         }
 

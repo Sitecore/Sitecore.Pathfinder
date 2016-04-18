@@ -38,6 +38,33 @@ namespace Sitecore.Pathfinder.Extensions
             }
         }
 
+        [CanBeNull]
+        public static T Resolve<T>([NotNull] this ICompositionService compositionService, [NotNull] string contractName)
+        {
+            var compositionContainer = (CompositionContainer)compositionService;
+
+            try
+            {
+                var exportedValue = compositionContainer.GetExportedValue<T>(contractName);
+                return exportedValue;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                var typeLoadException = ex as ReflectionTypeLoadException;
+                if (typeLoadException != null)
+                {
+                    foreach (var loaderException in typeLoadException.LoaderExceptions)
+                    {
+                        Console.WriteLine(loaderException.Message);
+                    }
+                }
+            }
+
+            return default(T);
+        }
+
         [NotNull, ItemNotNull]
         public static IEnumerable<T> ResolveMany<T>([NotNull] this ICompositionService compositionService)
         {

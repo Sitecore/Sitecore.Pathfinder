@@ -1,8 +1,8 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.ComponentModel.Composition;
 using System.IO;
-using System.Web.Mvc;
+using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Configuration;
 using Sitecore.Data.Items;
 using Sitecore.IO;
@@ -11,15 +11,19 @@ using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.IO.PathMappers;
 using Sitecore.Pathfinder.Serializing;
 
-namespace Sitecore.Pathfinder.WebApi
+namespace Sitecore.Pathfinder.Tasks
 {
-    [Export(nameof(ResetWebsite), typeof(IWebApi))]
-    public class ResetWebsite : IWebApi
+    [Export(nameof(ResetWebsite), typeof(IWebsiteTask))]
+    public class ResetWebsite : WebsiteTaskBase
     {
+        public ResetWebsite() : base("server:reset-website")
+        {
+        }
+
         [Diagnostics.NotNull, Import]
         public IPathMapperService PathMapper { get; private set; }
 
-        public ActionResult Execute(IAppService app)
+        public override void Run(IWebsiteTaskContext context)
         {
             SerializingDataProvider.Disabled = true;
             try
@@ -31,25 +35,21 @@ namespace Sitecore.Pathfinder.WebApi
 
                 foreach (var mapper in PathMapper.WebsiteDirectoryToProjectDirectories)
                 {
-                    DeleteFiles(app.ProjectDirectory, mapper);
+                    DeleteFiles(context.App.ProjectDirectory, mapper);
                 }
 
-                var fileSystem = app.CompositionService.Resolve<IFileSystemService>();
-
-                foreach (var pair in app.Configuration.GetSubKeys("reset-website"))
+                foreach (var pair in context.Configuration.GetSubKeys("reset-website"))
                 {
                     var key = "reset-website:" + pair.Key;
 
-                    ResetItems(app, key);
-                    ResetFiles(app, fileSystem, key);
+                    ResetItems(context.Configuration, key);
+                    ResetFiles(context.Configuration, context.FileSystem, key);
                 }
             }
             finally
             {
                 SerializingDataProvider.Disabled = false;
             }
-
-            return null;
         }
 
         protected virtual void DeleteFiles([Diagnostics.NotNull] string projectDirectory, [Diagnostics.NotNull] IWebsiteToProjectFileNameMapper mapper)
@@ -194,9 +194,9 @@ namespace Sitecore.Pathfinder.WebApi
             }
         }
 
-        private void ResetFiles([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] IFileSystemService fileSystem, [Diagnostics.NotNull] string key)
+        private void ResetFiles([Diagnostics.NotNull] IConfiguration configuration, [Diagnostics.NotNull] IFileSystemService fileSystem, [Diagnostics.NotNull] string key)
         {
-            var filePath = app.Configuration.GetString(key + ":delete-file-name");
+            var filePath = configuration.GetString(key + ":delete-file-name");
             if (string.IsNullOrEmpty(filePath))
             {
                 return;
@@ -215,15 +215,15 @@ namespace Sitecore.Pathfinder.WebApi
             }
         }
 
-        private void ResetItems([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] string key)
+        private void ResetItems([Diagnostics.NotNull] IConfiguration configuration, [Diagnostics.NotNull] string key)
         {
-            var itemPath = app.Configuration.GetString(key + ":delete-item-path");
+            var itemPath = configuration.GetString(key + ":delete-item-path");
             if (string.IsNullOrEmpty(itemPath))
             {
                 return;
             }
 
-            var databaseName = app.Configuration.GetString(key + ":database", "master");
+            var databaseName = configuration.GetString(key + ":database", "master");
             if (string.IsNullOrEmpty(databaseName))
             {
                 return;

@@ -2,7 +2,6 @@
 
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
-using Sitecore.Pathfinder.Tasks;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Pipelines.BeforeBuildPipelines

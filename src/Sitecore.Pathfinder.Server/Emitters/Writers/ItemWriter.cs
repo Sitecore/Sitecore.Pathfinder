@@ -13,7 +13,6 @@ using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Snapshots;
-using Sitecore.Text;
 
 namespace Sitecore.Pathfinder.Emitters.Writers
 {
@@ -189,13 +188,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                     SetFieldValue(item, fieldName, field.DatabaseValue);
                 }
 
-                // update project unique ids fields, so the item can be deleted, if it is removed from the project
-                var projectUniqueIds = new ListString(item[ServerConstants.FieldNames.PathfinderProjectUniqueIds]);
-                if (!projectUniqueIds.Contains(context.Project.ProjectUniqueId))
-                {
-                    projectUniqueIds.Add(context.Project.ProjectUniqueId);
-                    item[ServerConstants.FieldNames.PathfinderProjectUniqueIds] = projectUniqueIds.ToString();
-                }
+                item.UpdateProjectUniqueIds(context.Project);
             }
 
             var versionedItems = new List<Item>();

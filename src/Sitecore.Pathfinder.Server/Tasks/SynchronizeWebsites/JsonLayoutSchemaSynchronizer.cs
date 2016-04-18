@@ -17,7 +17,7 @@ using Sitecore.Pathfinder.Extensions;
 using Sitecore.SecurityModel;
 using Sitecore.Zip;
 
-namespace Sitecore.Pathfinder.WebApi.SynchronizeWebsites
+namespace Sitecore.Pathfinder.Tasks.SynchronizeWebsites
 {
     public class JsonLayoutSchemaSynchronizer : ISynchronizer
     {

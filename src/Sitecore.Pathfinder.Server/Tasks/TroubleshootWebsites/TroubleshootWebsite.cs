@@ -1,29 +1,30 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
-using System.Web.Mvc;
 using Sitecore.Pathfinder.Diagnostics;
 
-namespace Sitecore.Pathfinder.WebApi.TroubleshootWebsites
+namespace Sitecore.Pathfinder.Tasks.TroubleshootWebsites
 {
-    [Export(nameof(TroubleshootWebsite), typeof(IWebApi))]
-    public class TroubleshootWebsite : IWebApi
+    [Export(nameof(TroubleshootWebsite), typeof(IWebsiteTask))]
+    public class TroubleshootWebsite : WebsiteTaskBase
     {
+        public TroubleshootWebsite() : base("server:troubleshoot-website")
+        {
+        }
+
         [Diagnostics.NotNull, ItemNotNull, ImportMany]
         public IEnumerable<ITroubleshooter> Troubleshooters { get; private set; }
 
-        public ActionResult Execute(IAppService app)
+        public override void Run(IWebsiteTaskContext context)
         {
             Context.SetActiveSite("shell");
 
             foreach (var troubleshooter in Troubleshooters.OrderBy(t => t.Priority))
             {
-                troubleshooter.Troubleshoot(app);
+                troubleshooter.Troubleshoot(context.App);
             }
-
-            return null;
         }
     }
 }

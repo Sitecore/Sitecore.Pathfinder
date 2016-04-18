@@ -47,9 +47,9 @@ namespace Sitecore.Pathfinder.Pipelines.Loader
                 action = "Index",
             });
 
-            RouteTable.Routes.MapRoute("Sitecore.Pathfinder.WebApi", "sitecore/shell/client/Applications/Pathfinder/WebApi/{route}", new
+            RouteTable.Routes.MapRoute("Sitecore.Pathfinder.Task", "sitecore/shell/client/Applications/Pathfinder/Task/{route}", new
             {
-                controller = "PathfinderWebApi",
+                controller = "PathfinderTask",
                 action = "Index",
                 route = ""
             });

@@ -14,7 +14,7 @@ namespace Sitecore.Pathfinder.Tasks
         {
             context.Trace.TraceInformation(Msg.G1010, Texts.Troubleshooting___);
 
-            var url = MakeWebApiUrl(context, "TroubleshootWebsite");
+            var url = MakeWebsiteTaskUrl(context, "TroubleshootWebsite");
 
             Request(context, url);
         }

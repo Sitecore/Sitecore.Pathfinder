@@ -50,11 +50,15 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
                 try
                 {
                     defaultDeserializer.Deserialize(serializedItem);
+
+                    // todo: call UpdateProjectUniqueIds on updated item
                 }
                 catch (Exception ex)
                 {
                     throw new RetryableEmitException(Texts.Failed_to_deserialize_item, unicornFile.Snapshots.First(), ex.Message);
                 }
+
+
             }
         }
     }

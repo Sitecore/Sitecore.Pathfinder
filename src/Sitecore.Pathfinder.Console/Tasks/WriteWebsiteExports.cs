@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Tasks
             context.IsAborted = true;
             context.Trace.TraceInformation(Msg.M1012, Texts.Writing_website_exports___);
 
-            var url = MakeWebApiUrl(context, "WriteWebsiteExports");
+            var url = MakeWebsiteTaskUrl(context, "WriteWebsiteExports");
             var targetFileName = Path.GetTempFileName();
 
             if (!DownloadFile(context, url, targetFileName))

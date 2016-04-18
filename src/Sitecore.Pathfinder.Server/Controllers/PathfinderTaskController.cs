@@ -1,18 +1,17 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Net;
 using System.Web.Mvc;
 using Sitecore.IO;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.WebApi;
+using Sitecore.Pathfinder.Tasks;
 using Sitecore.Web;
 
 namespace Sitecore.Pathfinder.Controllers
 {
-    public class PathfinderWebApiController : Controller
+    public class PathfinderTaskController : Controller
     {
         [Diagnostics.NotNull]
         public ActionResult Index([Diagnostics.NotNull] string route)
@@ -51,15 +50,17 @@ namespace Sitecore.Pathfinder.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, output.ToString());
             }
 
-            var instance = ((CompositionContainer)app.CompositionService).GetExportedValue<IWebApi>(route);
+            var instance = app.CompositionService.Resolve<IWebsiteTask>(route);
             if (instance == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Route not found: " + route);
             }
 
-            var result = instance.Execute(app);
+            var context = app.CompositionService.Resolve<IWebsiteTaskContext>().With(app);
 
-            return result ?? Content(output.ToString(), "text/plain");
+            instance.Run(context);
+
+            return context.ActionResult ?? Content(output.ToString(), "text/plain");
         }
 
         protected bool CanWriteDirectory([Diagnostics.NotNull] string directory)

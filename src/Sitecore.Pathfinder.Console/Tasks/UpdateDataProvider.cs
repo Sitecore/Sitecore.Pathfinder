@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Tasks
         {
             context.Trace.TraceInformation(Msg.M1009, "Updating the project/website mappings on the website...");
 
-            var url = MakeWebApiUrl(context, "UpdateProjectWebsiteMappings");
+            var url = MakeWebsiteTaskUrl(context, "UpdateProjectWebsiteMappings");
 
             Request(context, url);
         }

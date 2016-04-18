@@ -14,7 +14,7 @@ namespace Sitecore.Pathfinder.Tasks
         {
             context.Trace.TraceInformation(Msg.M1009, Texts.Resetting_website___);
 
-            var url = MakeWebApiUrl(context, "ResetWebsite");
+            var url = MakeWebsiteTaskUrl(context, "ResetWebsite");
 
             Request(context, url);
         }

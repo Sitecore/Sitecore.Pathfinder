@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -20,12 +20,16 @@ using Sitecore.Pathfinder.NuGet;
 using Sitecore.SecurityModel;
 using Sitecore.Zip;
 
-namespace Sitecore.Pathfinder.WebApi
+namespace Sitecore.Pathfinder.Tasks
 {
-    [Export(nameof(WriteWebsiteExports), typeof(IWebApi))]
-    public class WriteWebsiteExports : IWebApi
+    [Export(nameof(WriteWebsiteExports), typeof(IWebsiteTask))]
+    public class WriteWebsiteExports : WebsiteTaskBase
     {
-        public ActionResult Execute(IAppService app)
+        public WriteWebsiteExports() : base("server:write-website-exports")
+        {
+        }
+
+        public override void Run(IWebsiteTaskContext context)
         {
             TempFolder.EnsureFolder();
 
@@ -40,22 +44,22 @@ namespace Sitecore.Pathfinder.WebApi
             var exportFileName = Path.Combine(FileUtil.MapPath(tempDirectory), "Pathfinder.Exports.zip");
             using (var zip = new ZipWriter(exportFileName))
             {
-                foreach (var index in app.Configuration.GetSubKeys("write-website-exports"))
+                foreach (var index in context.Configuration.GetSubKeys("write-website-exports"))
                 {
-                    var entryName = app.Configuration.GetString("write-website-exports:" + index.Key + ":filename");
+                    var entryName = context.Configuration.GetString("write-website-exports:" + index.Key + ":filename");
                     var fileKey = "write-website-exports:" + index.Key + ":";
 
                     var fileName = Path.Combine(tempDirectory, PathHelper.NormalizeFilePath(entryName).TrimStart('\\'));
 
                     Directory.CreateDirectory(Path.GetDirectoryName(fileName) ?? string.Empty);
 
-                    WriteFile(app.Configuration, tempDirectory, fileName, fileKey);
+                    WriteFile(context.Configuration, tempDirectory, fileName, fileKey);
 
                     zip.AddEntry(entryName, fileName);
                 }
             }
 
-            return new FilePathResult(exportFileName, "application/zip");
+            context.ActionResult = new FilePathResult(exportFileName, "application/zip");
         }
 
         protected virtual void WriteFile([Diagnostics.NotNull] IConfiguration configuration, [Diagnostics.NotNull] string tempDirectory, [Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] string fileKey)
@@ -89,7 +93,7 @@ namespace Sitecore.Pathfinder.WebApi
                             {
                                 WriteTemplateAsExport(output, item);
                             }
-                            else 
+                            else
                             {
                                 WriteItemAsExport(output, item, fieldToWrite);
                             }
@@ -104,7 +108,7 @@ namespace Sitecore.Pathfinder.WebApi
             packageBuilder.CreateNugetPackage(tempDirectory, fileName, sourceFileName);
         }
 
-        protected virtual void WriteItemAsExport([Diagnostics.NotNull] XmlTextWriter output, [Diagnostics.NotNull] Item item, [ItemNotNull, NotNull]  IEnumerable<string> fieldsToWrite)
+        protected virtual void WriteItemAsExport([Diagnostics.NotNull] XmlTextWriter output, [Diagnostics.NotNull] Item item, [ItemNotNull, NotNull] IEnumerable<string> fieldsToWrite)
         {
             output.WriteStartElement("Item");
             output.WriteAttributeString("Id", item.ID.ToString());

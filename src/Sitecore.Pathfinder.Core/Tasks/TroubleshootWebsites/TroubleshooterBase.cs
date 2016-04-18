@@ -1,6 +1,6 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
-namespace Sitecore.Pathfinder.WebApi.TroubleshootWebsites
+namespace Sitecore.Pathfinder.Tasks.TroubleshootWebsites
 {
     public abstract class TroubleshooterBase : ITroubleshooter
     {

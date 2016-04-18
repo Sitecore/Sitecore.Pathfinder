@@ -6,6 +6,7 @@ using System.Linq;
 using Sitecore.Data.Serialization;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitting;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 
@@ -39,6 +40,8 @@ namespace Sitecore.Pathfinder.Emitters.Files
                 {
                     throw new RetryableEmitException(Texts.Failed_to_deserialize_item, itemModel.Snapshots.First(), "Item not created");
                 }
+
+                item.UpdateProjectUniqueIds(context.Project);
             }
             catch (Exception ex)
             {

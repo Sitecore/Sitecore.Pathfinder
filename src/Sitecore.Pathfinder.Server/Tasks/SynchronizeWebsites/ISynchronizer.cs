@@ -4,7 +4,7 @@ using System.ComponentModel.Composition;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Zip;
 
-namespace Sitecore.Pathfinder.WebApi.SynchronizeWebsites
+namespace Sitecore.Pathfinder.Tasks.SynchronizeWebsites
 {
     [InheritedExport]
     public interface ISynchronizer

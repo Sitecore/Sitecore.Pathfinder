@@ -1,18 +1,18 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using Sitecore.Jobs;
 
-namespace Sitecore.Pathfinder.Jobs
+namespace Sitecore.Pathfinder.Tasks
 {
     public class BackgroundJob
     {
         [Diagnostics.NotNull]
-        private readonly Action action;
+        private readonly Action _action;
 
         private BackgroundJob([NotNull] Action action)
         {
-            this.action = action;
+            _action = action;
         }
 
         [NotNull]
@@ -39,7 +39,7 @@ namespace Sitecore.Pathfinder.Jobs
 
             try
             {
-                action();
+                _action();
             }
             catch (Exception ex)
             {

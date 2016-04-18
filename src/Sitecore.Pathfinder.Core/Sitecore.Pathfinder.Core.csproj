@@ -436,8 +436,8 @@
     </Compile>
     <Compile Include="Text\StringHelper.cs" />
     <Compile Include="Text\UrlString.cs" />
-    <Compile Include="WebApi\TroubleshootWebsites\ITroubleshooter.cs" />
-    <Compile Include="WebApi\TroubleshootWebsites\TroubleshooterBase.cs" />
+    <Compile Include="Tasks\TroubleshootWebsites\ITroubleshooter.cs" />
+    <Compile Include="Tasks\TroubleshootWebsites\TroubleshooterBase.cs" />
     <Compile Include="Xml\XPath\IXPathItem.cs" />
     <Compile Include="Xml\XPath\IXPathService.cs" />
     <Compile Include="Xml\XPath\XPathItem.cs" />

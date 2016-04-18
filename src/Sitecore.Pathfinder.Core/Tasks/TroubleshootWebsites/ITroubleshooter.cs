@@ -3,7 +3,7 @@
 using System.ComponentModel.Composition;
 using Sitecore.Pathfinder.Diagnostics;
 
-namespace Sitecore.Pathfinder.WebApi.TroubleshootWebsites
+namespace Sitecore.Pathfinder.Tasks.TroubleshootWebsites
 {
     [InheritedExport]
     public interface ITroubleshooter

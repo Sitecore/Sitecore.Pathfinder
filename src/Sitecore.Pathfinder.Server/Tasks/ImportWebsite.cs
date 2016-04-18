@@ -1,9 +1,8 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
-using System.Web.Mvc;
 using Sitecore.Data.Items;
 using Sitecore.IO;
 using Sitecore.Pathfinder.Configuration;
@@ -15,13 +14,13 @@ using Sitecore.Pathfinder.IO.PathMappers;
 using Sitecore.Pathfinder.Languages;
 using Sitecore.Pathfinder.Projects;
 
-namespace Sitecore.Pathfinder.WebApi
+namespace Sitecore.Pathfinder.Tasks
 {
-    [Export(nameof(ImportWebsite), typeof(IWebApi))]
-    public class ImportWebsite : IWebApi
+    [Export(nameof(ImportWebsite), typeof(IWebsiteTask))]
+    public class ImportWebsite : WebsiteTaskBase
     {
         [ImportingConstructor]
-        public ImportWebsite([Diagnostics.NotNull] IFactoryService factory, [Diagnostics.NotNull] IFileSystemService fileSystem, [Diagnostics.NotNull] ILanguageService languageService, [Diagnostics.NotNull] IPathMapperService pathMapper, [Diagnostics.NotNull] IItemImporterService itemImporter)
+        public ImportWebsite([Diagnostics.NotNull] IFactoryService factory, [Diagnostics.NotNull] IFileSystemService fileSystem, [Diagnostics.NotNull] ILanguageService languageService, [Diagnostics.NotNull] IPathMapperService pathMapper, [Diagnostics.NotNull] IItemImporterService itemImporter) : base("server:import-website")
         {
             Factory = factory;
             FileSystem = fileSystem;
@@ -48,24 +47,22 @@ namespace Sitecore.Pathfinder.WebApi
         [Diagnostics.NotNull]
         protected string WebsiteDirectory { get; private set; }
 
-        public ActionResult Execute(IAppService app)
+        public override void Run(IWebsiteTaskContext context)
         {
             WebsiteDirectory = FileUtil.MapPath("/");
 
             foreach (var mapper in PathMapper.WebsiteItemPathToProjectDirectories)
             {
-                ImportItems(app, mapper);
+                ImportItems(context, mapper);
             }
 
             foreach (var mapper in PathMapper.WebsiteDirectoryToProjectDirectories)
             {
-                ImportFiles(app, mapper);
+                ImportFiles(context, mapper);
             }
-
-            return null;
         }
 
-        protected virtual void ImportFiles([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] IWebsiteToProjectFileNameMapper mapper)
+        protected virtual void ImportFiles([Diagnostics.NotNull] IWebsiteTaskContext context, [Diagnostics.NotNull] IWebsiteToProjectFileNameMapper mapper)
         {
             var sourceDirectory = PathHelper.NormalizeFilePath(Path.Combine(WebsiteDirectory, PathHelper.NormalizeFilePath(mapper.WebsiteDirectory).TrimStart('\\'))).TrimEnd('\\');
 
@@ -74,10 +71,10 @@ namespace Sitecore.Pathfinder.WebApi
                 return;
             }
 
-            ImportFiles(app, mapper, FileUtil.MapPath("/"), FileUtil.MapPath(PathHelper.NormalizeItemPath(mapper.WebsiteDirectory)));
+            ImportFiles(context, mapper, FileUtil.MapPath("/"), FileUtil.MapPath(PathHelper.NormalizeItemPath(mapper.WebsiteDirectory)));
         }
 
-        protected virtual void ImportFiles([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] IWebsiteToProjectFileNameMapper mapper, [Diagnostics.NotNull] string websiteDirectory, [Diagnostics.NotNull] string directoryOrFileName)
+        protected virtual void ImportFiles([Diagnostics.NotNull] IWebsiteTaskContext context, [Diagnostics.NotNull] IWebsiteToProjectFileNameMapper mapper, [Diagnostics.NotNull] string websiteDirectory, [Diagnostics.NotNull] string directoryOrFileName)
         {
             var websiteDirectoryOrFileName = '\\' + PathHelper.UnmapPath(websiteDirectory, directoryOrFileName);
 
@@ -86,7 +83,7 @@ namespace Sitecore.Pathfinder.WebApi
                 string projectFileName;
                 if (mapper.TryGetProjectFileName(websiteDirectoryOrFileName, out projectFileName))
                 {
-                    FileSystem.Copy(directoryOrFileName, Path.Combine(app.ProjectDirectory, projectFileName));
+                    FileSystem.Copy(directoryOrFileName, Path.Combine(context.App.ProjectDirectory, projectFileName));
                 }
 
                 return;
@@ -97,7 +94,7 @@ namespace Sitecore.Pathfinder.WebApi
                 string projectFileName;
                 if (mapper.TryGetProjectFileName(websiteDirectoryOrFileName, out projectFileName))
                 {
-                    FileSystem.XCopy(directoryOrFileName, Path.Combine(app.ProjectDirectory, projectFileName));
+                    FileSystem.XCopy(directoryOrFileName, Path.Combine(context.App.ProjectDirectory, projectFileName));
                     return;
                 }
             }
@@ -109,18 +106,18 @@ namespace Sitecore.Pathfinder.WebApi
 
             foreach (var fileName in Directory.GetFiles(directoryOrFileName, "*", SearchOption.TopDirectoryOnly))
             {
-                ImportFiles(app, mapper, websiteDirectory, fileName);
+                ImportFiles(context, mapper, websiteDirectory, fileName);
             }
 
             foreach (var directory in Directory.GetDirectories(directoryOrFileName, "*", SearchOption.TopDirectoryOnly))
             {
-                ImportFiles(app, mapper, websiteDirectory, directory);
+                ImportFiles(context, mapper, websiteDirectory, directory);
             }
         }
 
-        protected virtual void ImportItems([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] IItemPathToProjectFileNameMapper mapper)
+        protected virtual void ImportItems([Diagnostics.NotNull] IWebsiteTaskContext context, [Diagnostics.NotNull] IItemPathToProjectFileNameMapper mapper)
         {
-            var project = app.CompositionService.Resolve<IProject>();
+            var project = context.CompositionService.Resolve<IProject>();
 
             var databaseName = mapper.DatabaseName;
             var format = mapper.Format;
@@ -137,12 +134,12 @@ namespace Sitecore.Pathfinder.WebApi
                 return;
             }
 
-            var excludedFields = app.Configuration.GetCommaSeparatedStringList(Constants.Configuration.ProjectWebsiteMappingsExcludedFields);
+            var excludedFields = context.Configuration.GetCommaSeparatedStringList(Constants.Configuration.ProjectWebsiteMappingsExcludedFields);
 
-            ImportItems(app, mapper, project, language, item, excludedFields);
+            ImportItems(context, mapper, project, language, item, excludedFields);
         }
 
-        protected virtual void ImportItems([Diagnostics.NotNull] IAppService app, [Diagnostics.NotNull] IItemPathToProjectFileNameMapper mapper, [Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull, ItemNotNull] IEnumerable<string> excludedFields)
+        protected virtual void ImportItems([Diagnostics.NotNull] IWebsiteTaskContext context, [Diagnostics.NotNull] IItemPathToProjectFileNameMapper mapper, [Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull, ItemNotNull] IEnumerable<string> excludedFields)
         {
             string projectFileName;
             string format;
@@ -151,7 +148,7 @@ namespace Sitecore.Pathfinder.WebApi
                 // template sections and fields are handled by importing the template
                 if (item.TemplateID != TemplateIDs.TemplateSection && item.TemplateID != TemplateIDs.TemplateField)
                 {
-                    var fileName = Path.Combine(app.ProjectDirectory, projectFileName);
+                    var fileName = Path.Combine(context.App.ProjectDirectory, projectFileName);
 
                     FileSystem.CreateDirectoryFromFileName(fileName);
 
@@ -168,7 +165,7 @@ namespace Sitecore.Pathfinder.WebApi
 
             foreach (Item child in item.Children)
             {
-                ImportItems(app, mapper, project, language, child, excludedFields);
+                ImportItems(context, mapper, project, language, child, excludedFields);
             }
         }
 
