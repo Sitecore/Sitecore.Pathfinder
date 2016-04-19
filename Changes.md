@@ -17,6 +17,7 @@ Version Next
 * Add: Xslt Transforms of xml files (2016-04-08) - Dmitry Kostenko
 * Add: Renaming and deletes now works by stamping the Project Unique ID into the __PathfinderUniqueIds fields on every item on the server (2016-04-16)
 * Add: Merged 'Layout.HtmlFile' and 'Layout.Page' into single feature 'Layout.File' (2016-04-16)
+* Add: show-config task (2016-04-19)
 
 Version 0.6.0
 =============

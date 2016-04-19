@@ -196,6 +196,7 @@
     </Content>
     <Compile Include="Tasks\AddProject.cs" />
     <Compile Include="Tasks\CleanWebsite.cs" />
+    <Compile Include="Tasks\ShowConfig.cs" />
     <Compile Include="Tasks\WriteExports.cs" />
     <Compile Include="Tasks\WriteSerialization.cs" />
     <Compile Include="Tasks\CheckProject.cs" />

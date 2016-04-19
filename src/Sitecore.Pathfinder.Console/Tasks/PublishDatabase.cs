@@ -40,7 +40,7 @@ namespace Sitecore.Pathfinder.Tasks
             };
 
             var url = MakeUrl(context, context.Configuration.GetString(Constants.Configuration.PublishUrl), queryStringParameters);
-            Request(context, url);
+            Post(context, url);
         }
 
         public override void WriteHelp(HelpWriter helpWriter)

@@ -43,7 +43,7 @@ namespace Sitecore.Pathfinder.Tasks
 
 
                 var url = MakeUrl(context, context.Configuration.GetString(Constants.Configuration.InstallUrl), queryStringParameters);
-                if (!Request(context, url))
+                if (!Post(context, url))
                 {
                     failed = true;
                 }

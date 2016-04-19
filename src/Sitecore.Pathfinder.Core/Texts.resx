@@ -627,4 +627,7 @@
     <data name="Adding_project___" xml:space="preserve">
     <value>Adding project...</value>
   </data>
+    <data name="Updating_the_project_website_mappings_on_the_website___" xml:space="preserve">
+    <value>Updating the project/website mappings on the website...</value>
+  </data>
 </root>

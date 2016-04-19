@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -6,6 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using Microsoft.Framework.ConfigurationModel;
+using Newtonsoft.Json;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Extensions
@@ -60,8 +61,7 @@ namespace Sitecore.Pathfinder.Extensions
         public static IEnumerable<string> GetCommaSeparatedStringList([NotNull] this IConfiguration configuration, [NotNull] string key)
         {
             var value = configuration.Get(key) ?? string.Empty;
-            var parts = value.Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToList();
-            return parts;
+            return value.Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToList();
         }
 
         [NotNull]
@@ -75,6 +75,68 @@ namespace Sitecore.Pathfinder.Extensions
         public static string GetString([NotNull] this IConfiguration configuration, [NotNull] string key, [NotNull] string defaultValue = "")
         {
             return configuration.Get(key) ?? defaultValue;
+        }
+
+        [NotNull]
+        public static string ToJson([NotNull] this IConfiguration configuration)
+        {
+            var writer = new StringWriter();
+            var output = new JsonTextWriter(writer);
+            output.Formatting = Formatting.Indented;
+
+            output.WriteStartObject();
+
+            ToJson(output, configuration, string.Empty);
+
+            output.WriteEndObject();
+
+            return writer.ToString();
+        }
+
+        private static void ToJson([NotNull] JsonTextWriter output, [NotNull] IConfiguration configuration, [NotNull] string path)
+        {
+            var pairs = string.IsNullOrEmpty(path) ? configuration.GetSubKeys() : configuration.GetSubKeys(path);
+
+            foreach (var pair in pairs.OrderBy(p => p.Key))
+            {
+                var key = string.IsNullOrEmpty(path) ? pair.Key : path + ":" + pair.Key;
+
+                if (configuration.GetSubKeys(key).Any())
+                {
+                    output.WriteStartObject(pair.Key);
+
+                    ToJson(output, configuration, key);
+
+                    output.WriteEndObject();
+                }
+                else
+                {
+                    output.WritePropertyName(pair.Key);
+
+                    var value = configuration.Get(key);
+                    switch (value)
+                    {
+                        case "True":
+                            output.WriteValue(true);
+                            break;
+                        case "False":
+                            output.WriteValue(false);
+                            break;
+                        default:
+                            int i;
+                            if (int.TryParse(value, out i))
+                            {
+                                output.WriteValue(i);
+                            }
+                            else
+                            {
+                                output.WriteValue(value);
+                            }
+
+                            break;
+                    }
+                }
+            }
         }
     }
 }

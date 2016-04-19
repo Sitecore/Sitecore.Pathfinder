@@ -16,7 +16,7 @@ namespace Sitecore.Pathfinder.Tasks
 
             var url = MakeWebsiteTaskUrl(context, "TroubleshootWebsite");
 
-            Request(context, url);
+            Post(context, url);
         }
 
         public override void WriteHelp(HelpWriter helpWriter)

@@ -24,7 +24,7 @@ namespace Sitecore.Pathfinder.Tasks
 
             var url = MakeWebsiteTaskUrl(context, "InstallProject");
 
-            var success = Request(context, url);
+            var success = Post(context, url);
 
             if (success)
             {

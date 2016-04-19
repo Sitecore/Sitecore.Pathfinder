@@ -10,11 +10,11 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
-            context.Trace.TraceInformation(Msg.M1009, "Updating the project/website mappings on the website...");
+            context.Trace.TraceInformation(Msg.M1009, Texts.Updating_the_project_website_mappings_on_the_website___);
 
             var url = MakeWebsiteTaskUrl(context, "UpdateProjectWebsiteMappings");
 
-            Request(context, url);
+            Post(context, url);
         }
 
         public override void WriteHelp(HelpWriter helpWriter)

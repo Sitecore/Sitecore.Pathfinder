@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using Sitecore.Pathfinder.Diagnostics;
@@ -139,12 +140,18 @@ namespace Sitecore.Pathfinder.Tasks.Building
             return MakeUrl(context, "sitecore/shell/client/Applications/Pathfinder/Task/" + route, queryStringParameters);
         }
 
-        protected virtual bool Request([NotNull] IBuildContext context, [NotNull] string url)
-        {
+        protected virtual bool Post([NotNull] IBuildContext context, [NotNull] string url)
+        {                           
             var webClient = new WebClient();
             try
             {
-                var output = webClient.DownloadString(url);
+                var postData = new System.Collections.Specialized.NameValueCollection
+                {
+                    ["configuration"] = context.Configuration.ToJson()
+                };
+
+                var responsebytes = webClient.UploadValues(url, "POST", postData);
+                var output = Encoding.UTF8.GetString(responsebytes);
 
                 if (!string.IsNullOrEmpty(output))
                 {

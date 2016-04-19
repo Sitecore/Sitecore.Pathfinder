@@ -151,10 +151,10 @@ namespace Sitecore.Pathfinder.Tasks
 
         private void InstallProject()
         {
-            Console.WriteLine("Installing project...");
+            Console.WriteLine(Texts.Installing_project___);
 
             var url = MakeWebsiteTaskUrl(Context, "InstallProject");
-            Request(Context, url);
+            Post(Context, url);
         }
 
         private void PublishDatabase()
@@ -173,7 +173,7 @@ namespace Sitecore.Pathfinder.Tasks
             };
 
             var url = MakeUrl(Context, Context.Configuration.GetString(Constants.Configuration.PublishUrl), queryStringParameters);
-            Request(Context, url);
+            Post(Context, url);
         }
     }
 }

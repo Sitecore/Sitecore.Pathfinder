@@ -1481,6 +1481,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Updating the project/website mappings on the website....
+        /// </summary>
+        public static string Updating_the_project_website_mappings_on_the_website___ {
+            get {
+                return ResourceManager.GetString("Updating_the_project_website_mappings_on_the_website___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Usage: scc.cmd command [switches].
         /// </summary>
         public static string Usage__scc_cmd_command__switches_ {
