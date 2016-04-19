@@ -1,9 +1,10 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.IO;
 using System.Net;
 using System.Web.Mvc;
+using Sitecore.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Packaging;
 
@@ -14,20 +15,30 @@ namespace Sitecore.Pathfinder.Controllers
         [Diagnostics.NotNull]
         public ActionResult Index()
         {
-            var output = new StringWriter();
-            Console.SetOut(output);
+            // todo: authenticate user
 
-            var app = WebsiteHost.App;
-            if (app == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, output.ToString());
+                var output = new StringWriter();
+                Console.SetOut(output);
+
+                var app = WebsiteHost.App;
+                if (app == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, output.ToString());
+                }
+
+                var packageService = app.CompositionService.Resolve<IPackageService>();
+
+                ViewBag.PackageService = packageService;
+
+                return View("~/sitecore/shell/client/Applications/Pathfinder/Packages.cshtml");
             }
-
-            var packageService = app.CompositionService.Resolve<IPackageService>();
-
-            ViewBag.PackageService = packageService;
-
-            return View("~/sitecore/shell/client/Applications/Pathfinder/Packages.cshtml");
+            catch (Exception ex)
+            {
+                Log.Error("An error occurred", ex, GetType());
+                throw;
+            }
         }
     }
 }

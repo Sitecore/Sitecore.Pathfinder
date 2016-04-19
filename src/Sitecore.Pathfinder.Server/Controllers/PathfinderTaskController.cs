@@ -1,9 +1,10 @@
-// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+// © 2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.IO;
 using System.Net;
 using System.Web.Mvc;
+using Sitecore.Diagnostics;
 using Sitecore.IO;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Tasks;
@@ -22,45 +23,53 @@ namespace Sitecore.Pathfinder.Controllers
                 return actionResult;
             }
 
-            var output = new StringWriter();
-            Console.SetOut(output);
-
-            var projectDirectory = WebUtil.GetQueryString("pd");
-            var toolsDirectory = WebUtil.GetQueryString("td");
-            var binDirectory = FileUtil.MapPath("/bin");
-
-            if (!Directory.Exists(toolsDirectory))
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, $"The tools directory could not be found. Do the website server have read/write access to your project directory? ({toolsDirectory})");
-            }
+                var output = new StringWriter();
+                Console.SetOut(output);
 
-            if (!Directory.Exists(projectDirectory))
+                var projectDirectory = WebUtil.GetQueryString("pd");
+                var toolsDirectory = WebUtil.GetQueryString("td");
+                var binDirectory = FileUtil.MapPath("/bin");
+
+                if (!Directory.Exists(toolsDirectory))
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest, $"The tools directory could not be found. Do the website server have read/write access to your project directory? ({toolsDirectory})");
+                }
+
+                if (!Directory.Exists(projectDirectory))
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest, $"The project directory could not be found. Do the website server have read/write access to your project directory? ({projectDirectory})");
+                }
+
+                if (!CanWriteDirectory(projectDirectory))
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest, $"The website server do not have write access to the project directory ({projectDirectory})");
+                }
+
+                var app = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(projectDirectory).WithExtensionsDirectory(binDirectory).Start();
+                if (app == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, output.ToString());
+                }
+
+                var instance = app.CompositionService.Resolve<IWebsiteTask>(route);
+                if (instance == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Route not found: " + route);
+                }
+
+                var context = app.CompositionService.Resolve<IWebsiteTaskContext>().With(app);
+
+                instance.Run(context);
+
+                return context.ActionResult ?? Content(output.ToString(), "text/plain");
+            }
+            catch (Exception ex)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, $"The project directory could not be found. Do the website server have read/write access to your project directory? ({projectDirectory})");
+                Log.Error("An error occurred", ex, GetType());
+                throw;
             }
-
-            if (!CanWriteDirectory(projectDirectory))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, $"The website server do not have write access to the project directory ({projectDirectory})");
-            }
-
-            var app = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(projectDirectory).WithExtensionsDirectory(binDirectory).Start();
-            if (app == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, output.ToString());
-            }
-
-            var instance = app.CompositionService.Resolve<IWebsiteTask>(route);
-            if (instance == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Route not found: " + route);
-            }
-
-            var context = app.CompositionService.Resolve<IWebsiteTaskContext>().With(app);
-
-            instance.Run(context);
-
-            return context.ActionResult ?? Content(output.ToString(), "text/plain");
         }
 
         protected bool CanWriteDirectory([Diagnostics.NotNull] string directory)

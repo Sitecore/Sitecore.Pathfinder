@@ -18,22 +18,11 @@ namespace Sitecore.Pathfinder.Extensions
 
             try
             {
-                var exportedValue = compositionContainer.GetExportedValue<T>();
-                return exportedValue;
+                return compositionContainer.GetExportedValue<T>();
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-
-                var typeLoadException = ex as ReflectionTypeLoadException;
-                if (typeLoadException != null)
-                {
-                    foreach (var loaderException in typeLoadException.LoaderExceptions)
-                    {
-                        Console.WriteLine(loaderException.Message);
-                    }
-                }
-
+                HandleException(ex);
                 throw;
             }
         }
@@ -45,21 +34,11 @@ namespace Sitecore.Pathfinder.Extensions
 
             try
             {
-                var exportedValue = compositionContainer.GetExportedValue<T>(contractName);
-                return exportedValue;
+                return compositionContainer.GetExportedValue<T>(contractName);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-
-                var typeLoadException = ex as ReflectionTypeLoadException;
-                if (typeLoadException != null)
-                {
-                    foreach (var loaderException in typeLoadException.LoaderExceptions)
-                    {
-                        Console.WriteLine(loaderException.Message);
-                    }
-                }
+                HandleException(ex);
             }
 
             return default(T);
@@ -72,23 +51,28 @@ namespace Sitecore.Pathfinder.Extensions
 
             try
             {
-                var exportedValue = compositionContainer.GetExportedValues<T>();
-                return exportedValue;
+                return compositionContainer.GetExportedValues<T>();
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-
-                var typeLoadException = ex as ReflectionTypeLoadException;
-                if (typeLoadException != null)
-                {
-                    foreach (var loaderException in typeLoadException.LoaderExceptions)
-                    {
-                        Console.WriteLine(loaderException.Message);
-                    }
-                }
-
+                HandleException(ex);
                 throw;
+            }
+        }
+
+        private static void HandleException([NotNull] Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+
+            var typeLoadException = ex as ReflectionTypeLoadException;
+            if (typeLoadException == null)
+            {
+                return;
+            }
+
+            foreach (var loaderException in typeLoadException.LoaderExceptions)
+            {
+                Console.WriteLine(loaderException.Message);
             }
         }
 
