@@ -1,4 +1,6 @@
 {
+    "project-role": "speak", 
+    
     "project-website-mappings": {
         "project-to-website": {
             "todomvc": {
@@ -15,5 +17,21 @@
                 "website-directory-to-project-directory": "/sitecore/shell/client/Applications/TodoMvc => /items/core/sitecore/client/Applications/TodoMvc"
             }
         }
+    },
+    
+    "messages": {
+        "template-help": {
+            "disabled": "3014, 3017, 2020, 2017"
+        },
+        "unused-template": {
+            "disabled": "3025"
+        },
+        "undefined-placeholder": {
+            "disabled": "3034"
+        }
+    },
+    
+    "show-browser": {
+        "start-url": "/sitecore/client/Applications/TodoMvc/content/TodoMvc"
     }
 }

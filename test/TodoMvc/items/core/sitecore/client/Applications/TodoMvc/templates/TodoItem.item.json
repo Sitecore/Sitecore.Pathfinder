@@ -2,8 +2,6 @@
     "$schema": "../../sitecore.project/schemas/item.schema.json#",
     "Template": {
         "Name": "TodoItem",
-        "ShortHelp": "Todo item.",
-        "LongHelp": "Defines an item in the Todo list.",
         "Icon": "Applications/16x16/about.png",
         "Sections": [
             {
@@ -11,15 +9,11 @@
                 "Fields": [
                     {
                         "Name": "Text",
-                        "Type": "Multi-Line Text",
-                        "ShortHelp": "What to do.",
-                        "LongHelp": "Describes what must be done."
+                        "Type": "Multi-Line Text"
                     },
                     {
                         "Name": "Done",
-                        "Type": "Checkbox",
-                        "ShortHelp": "Done.",
-                        "LongHelp": "Indicates if the task is done."
+                        "Type": "Checkbox"
                     }
                 ]
             }

@@ -127,69 +127,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.Npm", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.Roslyn", "src\Features\Sitecore.Pathfinder.Roslyn\Sitecore.Pathfinder.Roslyn.csproj", "{2776F71A-6B50-478E-A0A0-E2151EBE8A98}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "CleanBlog", "test\CleanBlog\", "{9FCA2EDF-6DC1-4B6C-8BEC-926295050A7B}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_60535"
-		Debug.AspNetCompiler.PhysicalPath = "test\CleanBlog\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_60535\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_60535"
-		Release.AspNetCompiler.PhysicalPath = "test\CleanBlog\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_60535\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "60535"
-		SlnRelativePath = "test\CleanBlog\"
-	EndProjectSection
-EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "HelloWorld", "test\HelloWorld\", "{69BAB7E7-30D5-4B77-B0E1-080F35DA4B04}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_60567"
-		Debug.AspNetCompiler.PhysicalPath = "test\HelloWorld\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_60567\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_60567"
-		Release.AspNetCompiler.PhysicalPath = "test\HelloWorld\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_60567\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "60567"
-		SlnRelativePath = "test\HelloWorld\"
-	EndProjectSection
-EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "TodoMvc", "test\TodoMvc\", "{7E7E0FFC-3BF6-4463-B74C-5D5BE205B355}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_60568"
-		Debug.AspNetCompiler.PhysicalPath = "test\TodoMvc\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_60568\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_60568"
-		Release.AspNetCompiler.PhysicalPath = "test\TodoMvc\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_60568\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "60568"
-		SlnRelativePath = "test\TodoMvc\"
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.React", "src\Features\Sitecore.Pathfinder.React\Sitecore.Pathfinder.React.csproj", "{C735B4FA-4834-47D0-A0D7-51270AD3153E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.PageHtml", "src\Features\Sitecore.Pathfinder.PageHtml\Sitecore.Pathfinder.PageHtml.csproj", "{9FA3A409-FBE3-4F65-8D5B-D8510CA6348D}"
@@ -275,16 +212,8 @@ Global
 		{2776F71A-6B50-478E-A0A0-E2151EBE8A98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2776F71A-6B50-478E-A0A0-E2151EBE8A98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2776F71A-6B50-478E-A0A0-E2151EBE8A98}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9FCA2EDF-6DC1-4B6C-8BEC-926295050A7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9FCA2EDF-6DC1-4B6C-8BEC-926295050A7B}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{9FCA2EDF-6DC1-4B6C-8BEC-926295050A7B}.Release|Any CPU.Build.0 = Debug|Any CPU
-		{69BAB7E7-30D5-4B77-B0E1-080F35DA4B04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{69BAB7E7-30D5-4B77-B0E1-080F35DA4B04}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{69BAB7E7-30D5-4B77-B0E1-080F35DA4B04}.Release|Any CPU.Build.0 = Debug|Any CPU
-		{7E7E0FFC-3BF6-4463-B74C-5D5BE205B355}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7E7E0FFC-3BF6-4463-B74C-5D5BE205B355}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{7E7E0FFC-3BF6-4463-B74C-5D5BE205B355}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{C735B4FA-4834-47D0-A0D7-51270AD3153E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C735B4FA-4834-47D0-A0D7-51270AD3153E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C735B4FA-4834-47D0-A0D7-51270AD3153E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C735B4FA-4834-47D0-A0D7-51270AD3153E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9FA3A409-FBE3-4F65-8D5B-D8510CA6348D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -317,9 +246,6 @@ Global
 		{A67C9ED1-949C-49D8-8D1A-B3774F38C128} = {5325B39E-6883-47AA-BD17-291B7608E834}
 		{543470A3-C795-4E05-9E38-D0A827FF4546} = {5325B39E-6883-47AA-BD17-291B7608E834}
 		{2776F71A-6B50-478E-A0A0-E2151EBE8A98} = {5325B39E-6883-47AA-BD17-291B7608E834}
-		{9FCA2EDF-6DC1-4B6C-8BEC-926295050A7B} = {049B9C99-6613-43BB-BF14-A60D7C9F7F57}
-		{69BAB7E7-30D5-4B77-B0E1-080F35DA4B04} = {049B9C99-6613-43BB-BF14-A60D7C9F7F57}
-		{7E7E0FFC-3BF6-4463-B74C-5D5BE205B355} = {049B9C99-6613-43BB-BF14-A60D7C9F7F57}
 		{C735B4FA-4834-47D0-A0D7-51270AD3153E} = {5325B39E-6883-47AA-BD17-291B7608E834}
 		{9FA3A409-FBE3-4F65-8D5B-D8510CA6348D} = {5325B39E-6883-47AA-BD17-291B7608E834}
 		{A746E909-84DD-409F-9900-C0BF80FAD1D5} = {049B9C99-6613-43BB-BF14-A60D7C9F7F57}

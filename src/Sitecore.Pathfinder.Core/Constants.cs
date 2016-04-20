@@ -157,6 +157,8 @@ namespace Sitecore.Pathfinder
 
             public const string SearchAndReplaceTokens = "search-and-replace-tokens";
 
+            public const string ShowBrowserStartUrl = "show-browser:start-url";
+
             public const string StandardTemplateFields = "standard-template-fields";
 
             public const string SystemConfigFileName = "system:config";

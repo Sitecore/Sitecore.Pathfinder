@@ -33,7 +33,7 @@ namespace Sitecore.Pathfinder.Websites.TodoMvc
                 Console.WriteLine();
             }
 
-            Assert.AreEqual(4, Project.Diagnostics.Count);
+            Assert.AreEqual(0, Project.Diagnostics.Count);
         }
     }
 }

@@ -3,25 +3,17 @@
     "Item": {
         "Template": "/sitecore/templates/Sample/HelloWorld",
         "Template.CreateFromFields": true,
-        "Template.ShortHelp": "Short help.",
-        "Template.LongHelp": "Short help.",
         "Template.Icon": "Applications/16x16/about.png",
         "Fields": {
             "Title": {
-                "Value": "Pathfinder",
-                "Field.LongHelp": "Long help.",
-                "Field.ShortHelp": "Short help."
+                "Value": "Pathfinder"
             },
             "Text": {
-                "Value": "Welcome to Sitecore Pathfinder",
-                "Field.ShortHelp": "Short.",
-                "Field.LongHelp": "Longer help."
+                "Value": "Welcome to Sitecore Pathfinder"
             },
             "Image": {
                 "Value": "/sitecore/media library/lighthouse",
-                "Field.Type": "Image",
-                "Field.ShortHelp": "Short.",
-                "Field.LongHelp": "Longer help."    
+                "Field.Type": "Image"
             },
             "Layout": {
                 "Devices": [

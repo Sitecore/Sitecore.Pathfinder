@@ -52,7 +52,7 @@ namespace Sitecore.Pathfinder.Languages.Json
                 return field.Value;
             }
 
-            var layoutCompileContext = new LayoutCompileContext(context.Trace, field.Item.Project, textSnapshot);
+            var layoutCompileContext = new LayoutCompileContext(context.Trace, field.Item.Project, field.Database, textSnapshot);
 
             var compiler = new JsonLayoutCompiler();
             return compiler.Compile(layoutCompileContext, textNode);

@@ -115,7 +115,7 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
                 return;
             }
 
-            var layoutResolveContext = new LayoutCompileContext(context.Trace, project, snapshot);
+            var layoutResolveContext = new LayoutCompileContext(context.Trace, project, item.Database, snapshot);
             var layoutCompiler = new LayoutCompiler();
 
             var xml = layoutCompiler.Compile(layoutResolveContext, snapshot.Root);

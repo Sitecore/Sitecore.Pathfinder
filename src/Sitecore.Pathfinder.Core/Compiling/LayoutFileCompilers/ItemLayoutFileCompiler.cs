@@ -10,11 +10,11 @@ using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
 {
-    public class LayoutFileCompiler : CompilerBase
+    public class ItemLayoutFileCompiler : CompilerBase
     {
         // must come after RenderingCompiler, or renderings will not be found
         [ImportingConstructor]
-        public LayoutFileCompiler([NotNull, ItemNotNull, ImportMany] IEnumerable<ILayoutFileCompiler> layoutFileCompilers) : base(9000)
+        public ItemLayoutFileCompiler([NotNull, ItemNotNull, ImportMany] IEnumerable<ILayoutFileCompiler> layoutFileCompilers) : base(9000)
         {
             LayoutFileCompilers = layoutFileCompilers;
         }

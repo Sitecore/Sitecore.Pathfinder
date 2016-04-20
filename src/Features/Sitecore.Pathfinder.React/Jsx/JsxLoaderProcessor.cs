@@ -21,6 +21,12 @@ namespace Sitecore.Pathfinder.React.Jsx
 
         protected override void Process(LoaderPipeline pipeline)
         {
+            var reactCoreFileName = FileUtil.MapPath("/bin/React.Core.dll");
+            if (!FileUtil.FileExists(reactCoreFileName))
+            {
+                return;
+            }
+
             var bundleName = Settings.GetSetting("Pathfinder.React.BundleName");
             if (string.IsNullOrEmpty(bundleName))
             {
@@ -33,6 +39,11 @@ namespace Sitecore.Pathfinder.React.Jsx
                 return;
             }
 
+            CreateBundle(bundleName, directories);
+        }
+
+        private void CreateBundle(string bundleName, string directories)
+        {
             ReactSiteConfiguration.Configuration.SetReuseJavaScriptEngines(true);
 
             var jsxBundle = new BabelBundle(bundleName);

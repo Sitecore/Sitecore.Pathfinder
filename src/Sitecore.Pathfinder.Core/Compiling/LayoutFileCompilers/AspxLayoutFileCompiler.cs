@@ -42,7 +42,7 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
             }
 
             var renderings = item.Project.FindFiles<Rendering>(value).ToList();
-            if (renderings.Any())
+            if (!renderings.Any())
             {
                 context.Trace.TraceError(Msg.C1060, Texts.Rendering_reference_not_found, TraceHelper.GetTextNode(property), value);
                 return;

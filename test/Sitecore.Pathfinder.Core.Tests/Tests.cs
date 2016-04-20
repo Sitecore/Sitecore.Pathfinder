@@ -40,7 +40,7 @@ namespace Sitecore.Pathfinder
             var rootDirectory = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory())));
             ProjectDirectory = PathHelper.Combine(rootDirectory ?? string.Empty, website);
 
-            var app = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(ProjectDirectory).WithConfigurationOptions(ConfigurationOptions.None).Start();
+            var app = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(ProjectDirectory).WithConfigurationOptions(ConfigurationOptions.IncludeModuleConfig).Start();
             if (app == null)
             {
                 throw new ConfigurationException(@"Oh no, nothing works!");

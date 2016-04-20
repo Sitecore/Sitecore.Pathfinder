@@ -6,7 +6,7 @@
         "Icon": "Applications/16x16/about.png",
         "ShortHelp": "Short Help.",
         "LongHelp": "Long Help.",
-        "Layout.HtmlFile": "~/layout/renderings/HelloWorld.cshtml",
+        "Layout.File": "~/items/master/sitecore/layout/renderings/HelloWorld.cshtml",
         "Sections": [
             {
                 "Name": "Fields",

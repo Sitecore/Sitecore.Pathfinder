@@ -3,19 +3,13 @@
     "Item": {
         "Template": "/sitecore/client/Applications/TodoMvc/templates/TodoMvcApp",
         "Template.CreateFromFields": true,
-        "Template.ShortHelp": "Pathfinder TodoMvc sample.",
-        "Template.LongHelp": "Pathfinder TodoMvc sample.",
         "Template.Icon": "Applications/16x16/About.png",
         "Fields": {
             "Title": {
-                "Value": "todos",
-                "Field.ShortHelp": "Title field.",
-                "Field.LongHelp": "Title field."
+                "Value": "todos"
             },
             "Watermark": {
-                "Value": "What needs to be done?",
-                "Field.ShortHelp": "Watermark.",
-                "Field.LongHelp": "Watermark in the input field."
+                "Value": "What needs to be done?"
             },
             "Layout": {
                 "Devices": [

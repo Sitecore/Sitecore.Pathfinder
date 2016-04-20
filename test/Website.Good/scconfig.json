@@ -56,7 +56,19 @@
         // build tasks
         "tasks": "check-project write-exports"
     },
-
+    
+    "messages": {
+        "template-help": {
+            "disabled": "3014, 3017, 2020, 2017"
+        },
+        "unused-template": {
+            "disabled": "3025"
+        },
+        "undefined-placeholder": {
+            "disabled": "3034"
+        }
+    },
+    
     "check-project": {
         "disabled-checkers": "Unused template, Use ID instead of path"
     }

@@ -2,8 +2,6 @@
     "$schema": "../../../../sitecore.project/schemas/item.schema.json#",
     "Template": {
         "BaseTemplates": "/sitecore/client/Speak/Templates/Rendering Parameters/ControlBase",
-        "ShortHelp": "TodoMvcList Parameters.",
-        "LongHelp": "TodoMvcList Parameters.",
         "Icon": "Applications/16x16/about.png",
         "Sections": [
             {
@@ -11,14 +9,10 @@
                 "Fields": [
                     {
                         "Name": "Items",
-                        "Source": "bindmode=read",
-                        "ShortHelp": "The items to show.",
-                        "LongHelp": "The items to show."
+                        "Source": "bindmode=read"
                     },
                     {
-                        "Name": "Filter",
-                        "ShortHelp": "Current filter.",
-                        "LongHelp": "Filter to show all, active or completed items."
+                        "Name": "Filter"
                     }
                 ]
             }

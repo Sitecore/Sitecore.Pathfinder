@@ -237,7 +237,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
         protected virtual void WriteLayout([NotNull] LayoutCompileContext context, [NotNull] XmlTextWriter output, [NotNull] ITextNode layoutTextNode)
         {
-            var databaseName = context.Project.Options.DatabaseName;
+            var databaseName = context.Database.DatabaseName;
 
             var renderingItems = context.Project.ProjectItems.OfType<Rendering>().Where(r => string.Equals(r.RenderingItemUri.FileOrDatabaseName, databaseName, StringComparison.OrdinalIgnoreCase)).Select(r => context.Project.FindQualifiedItem<Item>(r.RenderingItemUri)).ToList();
             renderingItems.AddRange(context.Project.ProjectItems.OfType<Item>().Where(r => r.IsImport && string.Equals(r.DatabaseName, databaseName, StringComparison.OrdinalIgnoreCase) && string.Equals(r.TemplateIdOrPath, "/sitecore/templates/System/Layout/Renderings/View rendering", StringComparison.OrdinalIgnoreCase)));

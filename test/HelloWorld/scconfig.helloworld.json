@@ -1,4 +1,6 @@
 {
+    "project-role": "none",
+
     "project-website-mappings": {
         "website-to-project": {
             "helloworld-content": {
@@ -14,8 +16,18 @@
                 "item-path-to-project-directory": "/sitecore/templates/Sample/HelloWorld => /items/master/sitecore/templates/Sample/HelloWorld"
             },
             "helloworld-rendering-files": {
-                "website-directory-to-project-directory": "/layout/renderings => /items/master/sitecore/layout/renderings"
+                "website-directory-to-project-directory": "/views => /views"
             }
         }
+    },
+    
+    "messages": {
+        "template-help": {
+            "disabled": "3014, 3017, 2020, 2017"
+        }
+    },
+    
+    "show-browser": {
+        "start-url": "/home/HelloWorld"
     }
 }

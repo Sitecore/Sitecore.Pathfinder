@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppService.cs" />
+    <Compile Include="Compiling\LayoutFileCompilers\TemplateLayoutFileCompiler.cs" />
     <Compile Include="Tasks\Building\BuildContext.cs" />
     <Compile Include="Tasks\Building\IBuildTask.cs" />
     <Compile Include="Tasks\Building\WebRequest.cs" />
@@ -109,7 +110,7 @@
     <Compile Include="Compiling\LayoutFileCompilers\ILayoutFileCompiler.cs" />
     <Compile Include="Compiling\LayoutFileCompilers\LayoutFileCompilerBase.cs" />
     <Compile Include="Parsing\LayoutFiles\LayoutFileItemParser.cs" />
-    <Compile Include="Compiling\LayoutFileCompilers\LayoutFileCompiler.cs" />
+    <Compile Include="Compiling\LayoutFileCompilers\ItemLayoutFileCompiler.cs" />
     <Compile Include="Parsing\LayoutFiles\LayoutFileTemplateParser.cs" />
     <Compile Include="IO\PathMappers\IItemPathToProjectFileNameMapper.cs" />
     <Compile Include="IO\PathMappers\IWebsiteToProjectFileNameMapper.cs" />

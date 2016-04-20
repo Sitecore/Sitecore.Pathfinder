@@ -338,6 +338,8 @@
 
     // maps project role to convention files
     "project-role-conventions": {
+        "none": {
+        },
         "default": {
             "default-0": "PathfinderProjectFileSystemConventions",
             "default-1": "SitecoreTemplateConventions"
