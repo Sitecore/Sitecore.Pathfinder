@@ -4,7 +4,7 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    public class ImportWebsite : RequestBuildTaskBase
+    public class ImportWebsite : WebBuildTaskBase
     {
         public ImportWebsite() : base("import-website")
         {
@@ -14,9 +14,9 @@ namespace Sitecore.Pathfinder.Tasks
         {
             context.Trace.TraceInformation(Msg.G1012, Texts.Importing_website___);
 
-            var url = MakeWebsiteTaskUrl(context, "ImportWebsite");
+            var webRequest = GetWebRequest(context).AsTask("ImportWebsite");
 
-            Post(context, url);
+            Post(context, webRequest);
         }
 
         public override void WriteHelp(HelpWriter helpWriter)

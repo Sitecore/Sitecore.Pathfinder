@@ -6,22 +6,21 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    public class SynchronizeWebsite : RequestBuildTaskBase
+    public class SynchronizeWebsite : WebBuildTaskBase
     {
         public SynchronizeWebsite() : base("sync-website")
         {
         }
 
-
-
         public override void Run(IBuildContext context)
         {
             context.Trace.TraceInformation(Msg.S1000, Texts.SynchronizingWebsite);
 
-            var url = MakeWebsiteTaskUrl(context, "SynchronizeWebsite");
+            var webRequest = GetWebRequest(context).AsTask("SynchronizeWebsite");
+
             var targetFileName = Path.GetTempFileName();
 
-            if (!DownloadFile(context, url, targetFileName))
+            if (!DownloadFile(context, webRequest, targetFileName))
             {
                 return;
             }

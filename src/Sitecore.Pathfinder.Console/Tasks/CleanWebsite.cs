@@ -10,7 +10,7 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    public class CleanWebsite : RequestBuildTaskBase
+    public class CleanWebsite : BuildTaskBase
     {
         [ImportingConstructor]
         public CleanWebsite([ImportMany, NotNull, ItemNotNull] IEnumerable<IExtension> extensions) : base("clean-website")

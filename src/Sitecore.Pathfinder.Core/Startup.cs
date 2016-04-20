@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility;
@@ -24,6 +25,9 @@ namespace Sitecore.Pathfinder
 
         public Extensibility.StartupExtensions.CompositionOptions CompositionOptions { get; private set; } = Extensibility.StartupExtensions.CompositionOptions.None;
 
+        [NotNull]
+        public string Configuration { get; private set; }
+
         public ConfigurationOptions ConfigurationOptions { get; private set; } = ConfigurationOptions.Noninteractive;
 
         [NotNull]
@@ -36,10 +40,10 @@ namespace Sitecore.Pathfinder
         public Stopwatch Stopwatch { get; private set; }
 
         [NotNull]
-        public string ToolsDirectory { get; private set; }
+        public string SystemConfigurationFileName { get; private set; } = "scconfig.json";
 
         [NotNull]
-        public string SystemConfigurationFileName { get; private set; } = "scconfig.json";
+        public string ToolsDirectory { get; private set; }
 
         [NotNull]
         public string WebsiteDirectory { get; private set; } = string.Empty;
@@ -112,14 +116,7 @@ namespace Sitecore.Pathfinder
         }
 
         [NotNull]
-        public virtual Startup WithSystemConfigurationFileName([NotNull] string systemConfigurationFileName)
-        {
-            SystemConfigurationFileName  = systemConfigurationFileName;
-            return this;
-        }
-
-        [NotNull]
-        public Startup WithConfiguration(ConfigurationOptions options)
+        public Startup WithConfigurationOptions(ConfigurationOptions options)
         {
             ConfigurationOptions = options;
             return this;
@@ -162,6 +159,13 @@ namespace Sitecore.Pathfinder
             Stopwatch = new Stopwatch();
             Stopwatch.Start();
 
+            return this;
+        }
+
+        [NotNull]
+        public virtual Startup WithSystemConfigurationFileName([NotNull] string systemConfigurationFileName)
+        {
+            SystemConfigurationFileName = systemConfigurationFileName;
             return this;
         }
 

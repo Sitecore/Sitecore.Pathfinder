@@ -4,7 +4,7 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    public class TroubleshootWebsite : RequestBuildTaskBase
+    public class TroubleshootWebsite : WebBuildTaskBase
     {
         public TroubleshootWebsite() : base("troubleshoot-website")
         {
@@ -14,9 +14,9 @@ namespace Sitecore.Pathfinder.Tasks
         {
             context.Trace.TraceInformation(Msg.G1010, Texts.Troubleshooting___);
 
-            var url = MakeWebsiteTaskUrl(context, "TroubleshootWebsite");
+            var webRequest = GetWebRequest(context).AsTask("TroubleshootWebsite");
 
-            Post(context, url);
+            Post(context, webRequest);
         }
 
         public override void WriteHelp(HelpWriter helpWriter)

@@ -12,7 +12,7 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    public class WatchProject : RequestBuildTaskBase
+    public class WatchProject : WebBuildTaskBase
     {
         [NotNull]
         private static readonly object SyncObject = new object();
@@ -153,8 +153,9 @@ namespace Sitecore.Pathfinder.Tasks
         {
             Console.WriteLine(Texts.Installing_project___);
 
-            var url = MakeWebsiteTaskUrl(Context, "InstallProject");
-            Post(Context, url);
+            var webRequest = GetWebRequest(Context).AsTask("InstallProject");
+
+            Post(Context, webRequest);
         }
 
         private void PublishDatabase()
@@ -172,8 +173,9 @@ namespace Sitecore.Pathfinder.Tasks
                 ["db"] = Context.Project.Options.DatabaseName
             };
 
-            var url = MakeUrl(Context, Context.Configuration.GetString(Constants.Configuration.PublishUrl), queryStringParameters);
-            Post(Context, url);
+            var webRequest = GetWebRequest(Context).WithUrl(Context.Configuration.GetString(Constants.Configuration.PublishUrl)).WithQueryString(queryStringParameters);
+
+            Post(Context, webRequest);
         }
     }
 }

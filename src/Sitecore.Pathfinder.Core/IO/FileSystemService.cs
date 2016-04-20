@@ -1,4 +1,4 @@
-﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -248,6 +248,11 @@ namespace Sitecore.Pathfinder.IO
                     }
                 }
             }
+        }
+
+        public virtual void WriteAllBytes(string fileName, byte[] bytes)
+        {
+            File.WriteAllBytes(fileName, bytes);
         }
 
         public virtual void WriteAllText(string fileName, string contents)

@@ -4,7 +4,7 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    public class ResetWebsite : RequestBuildTaskBase
+    public class ResetWebsite : WebBuildTaskBase
     {
         public ResetWebsite() : base("reset-website")
         {
@@ -14,9 +14,9 @@ namespace Sitecore.Pathfinder.Tasks
         {
             context.Trace.TraceInformation(Msg.M1009, Texts.Resetting_website___);
 
-            var url = MakeWebsiteTaskUrl(context, "ResetWebsite");
+            var webRequest = GetWebRequest(context).AsTask("ResetWebsite");
 
-            Post(context, url);
+            Post(context, webRequest);
         }
 
         public override void WriteHelp(HelpWriter helpWriter)

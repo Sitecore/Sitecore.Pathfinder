@@ -61,5 +61,7 @@ namespace Sitecore.Pathfinder.IO
         void WriteAllText([NotNull] string fileName, [NotNull] string contents, [NotNull] Encoding encoding);
 
         void XCopy([NotNull] string sourceDirectory, [NotNull] string destinationDirectory);
+
+        void WriteAllBytes([NotNull] string fileName, [NotNull] byte[] bytes);
     }
 }

@@ -6,7 +6,8 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    public class WriteWebsiteExports : RequestBuildTaskBase
+
+    public class WriteWebsiteExports : WebBuildTaskBase
     {
         public WriteWebsiteExports() : base("write-website-exports")
         {
@@ -17,10 +18,11 @@ namespace Sitecore.Pathfinder.Tasks
             context.IsAborted = true;
             context.Trace.TraceInformation(Msg.M1012, Texts.Writing_website_exports___);
 
-            var url = MakeWebsiteTaskUrl(context, "WriteWebsiteExports");
+            var webRequest = GetWebRequest(context).AsTask("WriteWebsiteExports");
+
             var targetFileName = Path.GetTempFileName();
 
-            if (!DownloadFile(context, url, targetFileName))
+            if (!DownloadFile(context, webRequest, targetFileName))
             {
                 return;
             }

@@ -8,7 +8,7 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    public class InstallPackage : RequestBuildTaskBase
+    public class InstallPackage : WebBuildTaskBase
     {
         public InstallPackage() : base("install-package")
         {
@@ -42,14 +42,14 @@ namespace Sitecore.Pathfinder.Tasks
                 };
 
 
-                var url = MakeUrl(context, context.Configuration.GetString(Constants.Configuration.InstallUrl), queryStringParameters);
-                if (!Post(context, url))
+                var webRequest = GetWebRequest(context).WithQueryString(queryStringParameters).WithUrl(context.Configuration.GetString(Constants.Configuration.InstallUrl));
+                if (Post(context, webRequest))
                 {
-                    failed = true;
+                    context.Trace.TraceInformation(Msg.D1009, Texts.Installed, Path.GetFileName(fileName));
                 }
                 else
                 {
-                    context.Trace.TraceInformation(Msg.D1009, Texts.Installed, Path.GetFileName(fileName));
+                    failed = true;
                 }
             }
 

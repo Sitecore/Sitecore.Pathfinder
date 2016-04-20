@@ -5,7 +5,7 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    public class InstallProject : RequestBuildTaskBase
+    public class InstallProject : WebBuildTaskBase
     {
         public InstallProject() : base("install-project")
         {
@@ -22,16 +22,17 @@ namespace Sitecore.Pathfinder.Tasks
 
             context.Trace.TraceInformation(Msg.D1011, Texts.Installing_project___);
 
-            var url = MakeWebsiteTaskUrl(context, "InstallProject");
+            var webRequest = GetWebRequest(context).AsTask("InstallProject");
 
-            var success = Post(context, url);
-
-            if (success)
+            var success = Post(context, webRequest);
+            if (!success)
             {
-                foreach (var snapshot in context.Project.ProjectItems.SelectMany(i => i.Snapshots))
-                {
-                    snapshot.SourceFile.IsModified = false;
-                }
+                return;
+            }
+
+            foreach (var snapshot in context.Project.ProjectItems.SelectMany(i => i.Snapshots))
+            {
+                snapshot.SourceFile.IsModified = false;
             }
         }
 

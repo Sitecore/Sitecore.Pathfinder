@@ -2,7 +2,7 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    public class UpdateDataProvider : RequestBuildTaskBase
+    public class UpdateDataProvider : WebBuildTaskBase
     {
         public UpdateDataProvider() : base("update-mappings")
         {
@@ -12,9 +12,9 @@ namespace Sitecore.Pathfinder.Tasks
         {
             context.Trace.TraceInformation(Msg.M1009, Texts.Updating_the_project_website_mappings_on_the_website___);
 
-            var url = MakeWebsiteTaskUrl(context, "UpdateProjectWebsiteMappings");
+            var webRequest = GetWebRequest(context).AsTask("UpdateProjectWebsiteMappings");
 
-            Post(context, url);
+            Post(context, webRequest);
         }
 
         public override void WriteHelp(HelpWriter helpWriter)

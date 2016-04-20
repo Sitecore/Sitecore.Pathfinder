@@ -7,7 +7,7 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    public class PublishDatabase : RequestBuildTaskBase
+    public class PublishDatabase : WebBuildTaskBase
     {
         public PublishDatabase() : base("publish-database")
         {
@@ -39,8 +39,8 @@ namespace Sitecore.Pathfinder.Tasks
                 ["db"] = context.Project.Options.DatabaseName
             };
 
-            var url = MakeUrl(context, context.Configuration.GetString(Constants.Configuration.PublishUrl), queryStringParameters);
-            Post(context, url);
+            var webRequest = GetWebRequest(context).WithQueryString(queryStringParameters).WithUrl(context.Configuration.GetString(Constants.Configuration.PublishUrl));
+            Post(context, webRequest);
         }
 
         public override void WriteHelp(HelpWriter helpWriter)
