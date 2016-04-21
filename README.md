@@ -20,7 +20,7 @@ _Please notice that some details in these videos are out of date._
 * [04 - Html Templates](https://www.youtube.com/watch?v=9aTGhW6ErYM)
 * [05 - Code Generation, Visual Studio and Grunt](http://youtu.be/ZM3ve1WhwwQ)
 
-Download [Pathfinder 0.6.7-Alpha](http://vsplugins.sitecore.net/Pathfinder/Sitecore.Pathfinder.zip) to 
+Download [Pathfinder 0.7.0-Alpha](http://vsplugins.sitecore.net/Pathfinder/Sitecore.Pathfinder.zip) to 
 try it out.
 
 Follow the walk-throughs:
@@ -38,23 +38,23 @@ the package to a website where an installer installs the new files and Sitecore 
 The developer process is familiar; edit source files, build and install the package, run tests or review the 
 changes on website, repeat.
 
-*Please notice that this document is a brain dump, so concepts and functionality are probably not explained 
-in a friendly manner.*
+_Please notice that this document is a brain dump, so concepts and functionality are probably not explained 
+in a friendly manner._
 
 ### How does Pathfinder make Sitecore development easier
 * Familiar developer experience: Edit source files, build project, test, repeat...
 * Text editor agnostic (Visual Studio not required - use Notepad, Notepad++, SublimeText, Atom, VS Code etc.)
 * Build process agnostic (command-line tool, so it integrates easily with Grunt, Gulp, MSBuild etc.)
 * Everything is a file (easy to edit, search and replace across multiple files, source control friendly)
-* Project directory has whole and single truth (source is not spead across development projects, databases and websites) (contineous integration friendly) 
+* Project directory has whole and single truth (source is not spread across development projects, databases and websites) (contineous integration friendly) 
 * Project is packaged into a NuGet package and deployed to the website
   * Dependency tracking through NuGet dependencies
-  * NuGet package installer on Sitecore website
-  * SitecorePathfinderCore NuGet package tweaks Sitecore defaults to be easier to work with (e.g. removes initial workflow)
+  * NuGet package installer on the Sitecore website
+  * Sitecore.Pathfinder.Core NuGet package tweaks Sitecore defaults to be easier to work with (e.g. removes initial workflow)
 * Support for Html files as Sitecore Layout definitions
 * Support for Html Templates (with [Mustache](https://mustache.github.io/mustache.5.html) tags) makes getting started with the Sitecore Rendering Engine easier
 * Support for React renderings (.jsx)
-* Code Generation for generating strongly typed item model, factories and unit tests
+* Code Generation for generating strongly typed item models, factories and unit tests
 
 ## Documentation
 For more documentation see [Pathfinder Documentation](docs/README.md).

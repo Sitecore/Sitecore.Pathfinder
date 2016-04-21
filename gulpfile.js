@@ -11,7 +11,7 @@
 //
 // 9. Done
 
-var version = "0.6.7-alpha";
+var version = "0.7.0-alpha";
 var zipFileDestination = "\\\\rocks2d1.dk.sitecore.net\\d$\\inetpub\\wwwroot\\Default Web Site\\Pathfinder";
 var zipFileNightlyDestination = "\\\\rocks2d1.dk.sitecore.net\\d$\\inetpub\\wwwroot\\Default Web Site\\Pathfinder\\Nightly";
 

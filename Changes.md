@@ -1,4 +1,4 @@
-Version Next
+Version 0.7.0
 ============
 * Add: Added add-project task for creating a Pathfinder project in an existing directory (2015-12-20)
 * Add: Support for running as NPM module (2016-01-05)
@@ -15,11 +15,11 @@ Version Next
 * Add: Run Sitecore validations on saving an item (2016-01-22)
 * Fix: Roslyn is no longer copied to the website, since it breaks Sitecore (2016-01-26) - Dmitry Kostenko
 * Add: Xslt Transforms of xml files (2016-04-08) - Dmitry Kostenko
-* Add: Renaming and deletes now works by stamping the Project Unique ID into the __PathfinderUniqueIds fields on every item on the server (2016-04-16)
+* Add: Renaming and deletions now works by stamping the Project Unique ID into the __PathfinderUniqueIds fields on every item on the server (2016-04-16)
 * Add: Merged 'Layout.HtmlFile' and 'Layout.Page' into single feature 'Layout.File' (2016-04-16)
 * Add: show-config task (2016-04-19)
 * Add: show-website task (2016-04-20)
-* Add: restore-packages task for downloading dependency Nuget package (2016-04-20) - Dmitry Kostenko
+* Add: restore-packages task for downloading dependency Nuget packages (2016-04-20) - Dmitry Kostenko
 
 Version 0.6.0
 =============
