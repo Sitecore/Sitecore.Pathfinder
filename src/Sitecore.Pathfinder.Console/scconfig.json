@@ -148,6 +148,8 @@
     },
 
     "new-project": {
+        "default-host-name": "",
+        "default-wwwroot-directory": "",
         "wwwroot-directory": "c:\\inetpub\\wwwroot"
     },
 
@@ -223,7 +225,7 @@
 
     "write-website-exports": {
         "system-0": {
-            "filename": "sitecore.project/repository/Sitecore.Master.8.0.nupkg",
+            "filename": "sitecore.project/repository/Sitecore.Master.nupkg",
             "queries": {
                 "system-0": {
                     "query": "/sitecore",
@@ -261,7 +263,7 @@
         },
 
         "system-1": {
-            "filename": "sitecore.project/repository/Sitecore.Core.8.0.nupkg",
+            "filename": "sitecore.project/repository/Sitecore.Core.nupkg",
             "queries": {
                 "system-0": {
                     "query": "/sitecore",
@@ -288,7 +290,7 @@
         },
 
         "system-2": {
-            "filename": "sitecore.project/repository/Sitecore.Speak.8.0.nupkg",
+            "filename": "sitecore.project/repository/Sitecore.Speak.nupkg",
             "queries": {
                 "system-1": {
                     "query": "/sitecore/client/Speak//*[@@templatekey='template' or @@templatekey='view rendering' or @@templatekey='layout']",
@@ -324,6 +326,12 @@
     // specifies the .NET CultureInfo name to use when parsing date/times and numbers
     "culture": "en-US",
 
+    // nuget dependencies for restore-packages task
+    "dependencies": {
+        "Sitecore.Pathfinder.Core": "1.0.0"
+    },  
+
+    // extensions directory and dynamically compiled extensions assembly filename
     "extensions": {
         "project-extensions-directory": "sitecore.project/extensions",
         "project-extensions-assembly-filename": "Sitecore.Pathfinder.Extensions.dll"
@@ -335,6 +343,11 @@
             "disabled": ""
         }
     },
+
+    // NuGet source repositories
+    "nuget-repositories": {
+        "nuget.org": "https://www.nuget.org/api/v2"
+    }, 
 
     // maps project role to convention files
     "project-role-conventions": {

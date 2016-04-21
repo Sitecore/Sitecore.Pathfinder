@@ -1219,6 +1219,24 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restoring.
+        /// </summary>
+        public static string Restoring {
+            get {
+                return ResourceManager.GetString("Restoring", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restoring packages....
+        /// </summary>
+        public static string Restoring_packages___ {
+            get {
+                return ResourceManager.GetString("Restoring_packages___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Running unit tests....
         /// </summary>
         public static string Running_unit_tests___ {

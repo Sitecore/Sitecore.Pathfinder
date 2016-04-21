@@ -31,9 +31,6 @@ namespace Sitecore.Pathfinder.PageHtml.PageHtml
         [Diagnostics.NotNull]
         public string FilePath { get; set; } = string.Empty;
 
-        [Diagnostics.CanBeNull]
-        public Rendering Rendering { get; set; }
-
         public void Render(TextWriter writer)
         {
             if (!FileUtil.FileExists(FilePath))
@@ -46,7 +43,7 @@ namespace Sitecore.Pathfinder.PageHtml.PageHtml
             var renderings = GetRenderings(Context.Item.Database, html);
 
             var pageDefinition = new PageDefinition();
-            pageDefinition.Renderings.AddRange(renderings);
+            pageDefinition.Renderings.AddRange(renderings.OfType<Rendering>());
 
             var oldPageDefinition = PageContext.Current.PageDefinition;
             PageContext.Current.PageDefinition = pageDefinition;
@@ -60,7 +57,7 @@ namespace Sitecore.Pathfinder.PageHtml.PageHtml
         }
 
         [CanBeNull]
-        protected virtual Item FindRendering([NotNull] RenderContext context, [NotNull] string renderingName, [NotNull] string renderingId)
+        private Item FindRendering([NotNull] RenderContext context, [NotNull] string renderingName, [NotNull] string renderingId)
         {
             var renderings = context.RenderingItems.Where(r => r.Name == renderingName).ToList();
 
@@ -93,7 +90,27 @@ namespace Sitecore.Pathfinder.PageHtml.PageHtml
             return renderings.First();
         }
 
-        protected virtual void WriteField([NotNull] RenderContext context, [NotNull] XElement element)
+        [NotNull, ItemNotNull]
+        private IEnumerable<object> GetRenderings([NotNull] Database database, [NotNull] string html)
+        {
+            // todo: cache this!!!
+            var renderings = database.GetItemsByTemplate(ServerConstants.Renderings.ViewRenderingId, ServerConstants.Renderings.MethodRendering, ServerConstants.Renderings.UrlRendering, ServerConstants.Renderings.WebcontrolRendering, TemplateIDs.XSLRendering);
+
+            var root = html.ToXElement(LoadOptions.SetLineInfo);
+            if (root == null)
+            {
+                throw new InvalidOperationException("Page Html is not valid");
+            }
+
+            var context = new RenderContext(renderings);
+
+            WriteRenderings(context, root);
+            WriteLiteral(context);
+
+            return context.Renderings;
+        }
+
+        private void WriteField([NotNull] RenderContext context, [NotNull] XElement element)
         {
             WriteLiteral(context);
 
@@ -106,7 +123,7 @@ namespace Sitecore.Pathfinder.PageHtml.PageHtml
             var rendering = new Rendering
             {
                 Placeholder = context.Placeholder,
-                Renderer = new Field(fieldName),
+                Renderer = new RendererWrapper(new FieldRenderer(fieldName)),
                 RenderingType = "View",
                 DeviceId = Context.Device.ID.Guid
             };
@@ -114,7 +131,7 @@ namespace Sitecore.Pathfinder.PageHtml.PageHtml
             context.Renderings.Add(rendering);
         }
 
-        protected virtual void WriteLiteral([NotNull] RenderContext context)
+        private void WriteLiteral([NotNull] RenderContext context)
         {
             var text = context.LiteralText.ToString();
             context.LiteralText = new StringWriter();
@@ -127,7 +144,7 @@ namespace Sitecore.Pathfinder.PageHtml.PageHtml
             var rendering = new Rendering
             {
                 Placeholder = context.Placeholder,
-                Renderer = new Literal(text),
+                Renderer = new RendererWrapper(new LiteralRenderer(text)),
                 RenderingType = "View",
                 DeviceId = Context.Device.ID.Guid
             };
@@ -135,7 +152,7 @@ namespace Sitecore.Pathfinder.PageHtml.PageHtml
             context.Renderings.Add(rendering);
         }
 
-        protected virtual void WriteLiteral([NotNull] RenderContext context, [NotNull] XElement element)
+        private void WriteLiteral([NotNull] RenderContext context, [NotNull] XElement element)
         {
             context.LiteralText.Write("<");
 
@@ -168,7 +185,7 @@ namespace Sitecore.Pathfinder.PageHtml.PageHtml
             context.LiteralText.Write(">");
         }
 
-        protected virtual void WriteRendering([NotNull] RenderContext context, [NotNull] XElement element)
+        private void WriteRendering([NotNull] RenderContext context, [NotNull] XElement element)
         {
             WriteLiteral(context);
 
@@ -273,26 +290,6 @@ namespace Sitecore.Pathfinder.PageHtml.PageHtml
             context.Renderings.Add(rendering);
         }
 
-        [NotNull, ItemNotNull]
-        private IEnumerable<Rendering> GetRenderings([NotNull] Database database, [NotNull] string html)
-        {
-            // todo: cache this!!!
-            var renderings = database.GetItemsByTemplate(ServerConstants.Renderings.ViewRenderingId, ServerConstants.Renderings.MethodRendering, ServerConstants.Renderings.UrlRendering, ServerConstants.Renderings.WebcontrolRendering, TemplateIDs.XSLRendering);
-
-            var root = html.ToXElement(LoadOptions.SetLineInfo);
-            if (root == null)
-            {
-                throw new InvalidOperationException("Page Html is not valid");
-            }
-
-            var context = new RenderContext(renderings);
-
-            WriteRenderings(context, root);
-            WriteLiteral(context);
-
-            return context.Renderings;
-        }
-
         private void WriteRenderings([NotNull] RenderContext context, [NotNull] XNode node)
         {
             var element = node as XElement;
@@ -317,39 +314,39 @@ namespace Sitecore.Pathfinder.PageHtml.PageHtml
             }
         }
 
-        public class Field : Renderer
+        private class FieldRenderer : IRenderer
         {
-            public Field([NotNull] string fieldName)
+            public FieldRenderer([NotNull] string fieldName)
             {
                 FieldName = fieldName;
             }
 
             [NotNull]
-            protected string FieldName { get; }
+            private string FieldName { get; }
 
-            public override void Render([NotNull] TextWriter writer)
+            public void Render(TextWriter writer)
             {
                 writer.Write(PageContext.Current.HtmlHelper.Sitecore().Field(FieldName, Context.Item));
             }
         }
 
-        public class Literal : Renderer
+        private class LiteralRenderer : IRenderer
         {
-            public Literal([NotNull] string text)
+            public LiteralRenderer([NotNull] string text)
             {
                 Text = text;
             }
 
             [NotNull]
-            protected string Text { get; }
+            private string Text { get; }
 
-            public override void Render([NotNull] TextWriter writer)
+            public void Render(TextWriter writer)
             {
                 writer.Write(Text);
             }
         }
 
-        protected class RenderContext
+        private class RenderContext
         {
             public RenderContext([NotNull, ItemNotNull] IEnumerable<Item> renderingItems)
             {
@@ -366,7 +363,7 @@ namespace Sitecore.Pathfinder.PageHtml.PageHtml
             public IEnumerable<Item> RenderingItems { get; }
 
             [NotNull, ItemNotNull]
-            public ICollection<Rendering> Renderings { get; } = new List<Rendering>();
+            public ICollection<object> Renderings { get; } = new List<object>();
         }
     }
 }

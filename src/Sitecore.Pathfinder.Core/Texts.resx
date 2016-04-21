@@ -630,4 +630,10 @@
     <data name="Updating_the_project_website_mappings_on_the_website___" xml:space="preserve">
     <value>Updating the project/website mappings on the website...</value>
   </data>
+    <data name="Restoring_packages___" xml:space="preserve">
+    <value>Restoring packages...</value>
+  </data>
+    <data name="Restoring" xml:space="preserve">
+    <value>Restoring dependency package</value>
+  </data>
 </root>

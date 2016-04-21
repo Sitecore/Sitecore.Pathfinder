@@ -20,7 +20,9 @@ using Sitecore.IO;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Packaging;
+using Sitecore.Pathfinder.Runtime.Caching;
 using Sitecore.SecurityModel;
 using IPackage = NuGet.IPackage;
 
@@ -29,10 +31,14 @@ namespace Sitecore.Pathfinder.NuGet.Packaging
     public class NugetPackageProvider : PackageProviderBase
     {
         [ImportingConstructor]
-        public NugetPackageProvider([NotNull] IConfiguration configuration)
+        public NugetPackageProvider([NotNull] IConfiguration configuration, [NotNull] ICacheService cache)
         {
             Configuration = configuration;
+            Cache = cache;
         }
+
+        [Diagnostics.NotNull]
+        protected ICacheService Cache { get; }
 
         [NotNull]
         public string InstallableRepository { get; private set; }
@@ -211,6 +217,71 @@ namespace Sitecore.Pathfinder.NuGet.Packaging
             packageManager.PackageInstalled += InstallPackage;
 
             packageManager.UpdatePackage(package, false, true);
+
+            return true;
+        }
+
+        public override bool DownloadPackage(string packageId, string version, string fileName)
+        {
+            var repository = Cache.Get<IPackageRepository>(Constants.Cache.NugetRepositories);
+            if (repository == null)
+            {
+                // add default repository which is located in the tools directory
+                var packageDirectory = PathHelper.NormalizeFilePath(Path.Combine(Configuration.GetString(Constants.Configuration.ToolsDirectory), "files/repository/sitecore.project/packages"));
+                var repositories = new List<IPackageRepository>
+                {
+                    PackageRepositoryFactory.Default.CreateRepository(packageDirectory)
+                };
+
+                // add source repositories from configuration
+                foreach (var pair in Configuration.GetSubKeys("nuget-repositories"))
+                {
+                    var source = Configuration.GetString("nuget-repositories:" + pair.Key);
+                    repositories.Add(PackageRepositoryFactory.Default.CreateRepository(source));
+                }
+
+                repository = new AggregateRepository(repositories);
+
+                Cache.Set(Constants.Cache.NugetRepositories, repository);
+            }
+
+            IPackage package;
+            if (string.IsNullOrEmpty(version))
+            {
+                package = repository.FindPackage(packageId);
+            }
+            else
+            {
+                var semanticVersion = new SemanticVersion(version);
+                package = repository.FindPackage(packageId, semanticVersion, true, false);
+
+                // if package was not found, try this weird hack
+                if (package == null)
+                {
+                    var dummy = repository.GetPackages().Count();
+                    package = repository.FindPackage(packageId, semanticVersion, true, false);
+                }
+
+                // still not found, try this then
+                if (package == null)
+                {
+                    package = repository.FindPackage(packageId);
+                    if (package != null && package.Version != semanticVersion)
+                    {
+                        package = null;
+                    }
+                }
+            }
+
+            if (package == null)
+            {
+                return false;
+            }
+
+            using (var stream = new FileStream(fileName, FileMode.Create))
+            {
+                package.GetStream().CopyTo(stream);
+            }
 
             return true;
         }

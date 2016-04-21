@@ -27,5 +27,7 @@ namespace Sitecore.Pathfinder.Packaging
         public abstract bool UninstallPackage(string packageId);
 
         public abstract bool UpdatePackage(string packageId, string version);
+
+        public abstract bool DownloadPackage(string packageId, string version, string fileName);
     }
 }

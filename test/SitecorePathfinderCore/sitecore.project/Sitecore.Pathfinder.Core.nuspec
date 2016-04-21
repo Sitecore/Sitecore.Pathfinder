@@ -2,8 +2,8 @@
 
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
-        <id>SitecorePathfinderCore</id>
-        <title>Sitecore Pathfinder Package</title>
+        <id>Sitecore.Pathfinder.Core</id>
+        <title>Sitecore Pathfinder Core Package</title>
         <version>1.0.0</version>
         <authors>Sitecore Pathfinder</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>

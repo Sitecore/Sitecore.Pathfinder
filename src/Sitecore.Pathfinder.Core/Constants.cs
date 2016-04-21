@@ -157,7 +157,7 @@ namespace Sitecore.Pathfinder
 
             public const string SearchAndReplaceTokens = "search-and-replace-tokens";
 
-            public const string ShowBrowserStartUrl = "show-browser:start-url";
+            public const string ShowWebsiteStartUrl = "show-website:start-url";
 
             public const string StandardTemplateFields = "standard-template-fields";
 
@@ -231,6 +231,11 @@ namespace Sitecore.Pathfinder
             public const double Low = 2000;
 
             public const double Normal = 1000;
+        }
+
+        public static class Cache
+        {
+            public const string NugetRepositories = "NugetRepositories";
         }
 
         public static class Fields

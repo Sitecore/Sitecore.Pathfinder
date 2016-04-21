@@ -78,8 +78,20 @@
     <Reference Include="Microsoft.CSharp">
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Framework.ConfigurationModel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Framework.ConfigurationModel.1.0.0-beta4\lib\net45\Microsoft.Framework.ConfigurationModel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Framework.ConfigurationModel.Interfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Framework.ConfigurationModel.Interfaces.1.0.0-beta4\lib\net45\Microsoft.Framework.ConfigurationModel.Interfaces.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Framework.ConfigurationModel.Json, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Framework.ConfigurationModel.Json.1.0.0-beta4\lib\net45\Microsoft.Framework.ConfigurationModel.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Framework.ConfigurationModel.Xml, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Framework.ConfigurationModel.Xml.1.0.0-beta4\lib\net45\Microsoft.Framework.ConfigurationModel.Xml.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -196,7 +208,8 @@
     </Content>
     <Compile Include="Tasks\AddProject.cs" />
     <Compile Include="Tasks\CleanWebsite.cs" />
-    <Compile Include="Tasks\ShowBrowser.cs" />
+    <Compile Include="Tasks\RestorePackages.cs" />
+    <Compile Include="Tasks\ShowWebsite.cs" />
     <Compile Include="Tasks\ShowConfig.cs" />
     <Compile Include="Tasks\WriteExports.cs" />
     <Compile Include="Tasks\WriteSerialization.cs" />
@@ -360,26 +373,23 @@
     <None Include="files\project\sitecore.project\extensions\readme.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\project\sitecore.project\packages\Sitecore.Master.8.0.nupkg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="files\repository\sitecore.project\Legoland.nuspec" />
-    <None Include="files\repository\sitecore.project\packages\Sitecore.BusinessComponentLibrary.nupkg">
+    <None Include="files\repository\sitecore.project\packages\Sitecore.BusinessComponentLibrary.1.0.0.nupkg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\repository\sitecore.project\packages\Sitecore.Core.8.0.nupkg">
+    <None Include="files\repository\sitecore.project\packages\Sitecore.Core.1.0.0.nupkg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\repository\sitecore.project\packages\Sitecore.Launchpad.nupkg">
+    <None Include="files\repository\sitecore.project\packages\Sitecore.Launchpad.1.0.0.nupkg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\repository\sitecore.project\packages\Sitecore.Master.8.0.nupkg">
+    <None Include="files\repository\sitecore.project\packages\Sitecore.Master.1.0.0.nupkg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\repository\sitecore.project\packages\Sitecore.Speak.8.0.nupkg">
+    <None Include="files\repository\sitecore.project\packages\Sitecore.Speak.1.0.0.nupkg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\repository\sitecore.project\packages\SitecorePathfinderCore.nupkg">
+    <None Include="files\repository\sitecore.project\packages\Sitecore.Pathfinder.Core.1.0.0.nupkg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="files\project\sitecore.project\packages\readme.md">
@@ -517,9 +527,6 @@
     <Content Include="files\project\sitecore.filetemplates\html\htmltemplate.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="files\project\sitecore.project\packages\SitecorePathfinderCore.nupkg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <Content Include="files\project\sitecore.project\schemas\core.layout.schema.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

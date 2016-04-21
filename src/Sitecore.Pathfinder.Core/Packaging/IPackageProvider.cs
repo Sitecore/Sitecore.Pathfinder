@@ -7,11 +7,13 @@ namespace Sitecore.Pathfinder.Packaging
 {
     public interface IPackageProvider
     {
-        [NotNull, ItemNotNull]
-        IEnumerable<IPackage> FindInstalledPackagesById([NotNull] string packageId);
+        bool DownloadPackage([NotNull] string packageId, [NotNull] string version, [NotNull] string fileName);
 
         [NotNull, ItemNotNull]
         IEnumerable<IPackage> FindInstallablePackagesById([NotNull] string packageId);
+
+        [NotNull, ItemNotNull]
+        IEnumerable<IPackage> FindInstalledPackagesById([NotNull] string packageId);
 
         [NotNull, ItemNotNull]
         IEnumerable<IPackage> GetInstallablePackages([NotNull] string queryText, [NotNull] string author, [NotNull] string tags, int skip);

@@ -5,15 +5,15 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    public class ShowBrowser : BuildTaskBase
+    public class ShowWebsite : BuildTaskBase
     {
-        public ShowBrowser() : base("show-browser")
+        public ShowWebsite() : base("show-website")
         {
         }
 
         public override void Run(IBuildContext context)
         {
-            var url = context.Configuration.GetString(Constants.Configuration.ShowBrowserStartUrl);
+            var url = context.Configuration.GetString(Constants.Configuration.ShowWebsiteStartUrl);
             if (string.IsNullOrEmpty(url))
             {
                 return;
@@ -29,13 +29,13 @@ namespace Sitecore.Pathfinder.Tasks
 
             Process.Start(result);
                                                                                                                     
-            context.Trace.TraceInformation(Msg.G1013, "Opening start URL in browser...");
-            context.Trace.TraceInformation(Msg.G1014, "    (If this annoys you, remove the 'show-browser' task from the 'build-project:tasks' setting)");
+            context.Trace.TraceInformation(Msg.G1013, "Showing website...");
+            context.Trace.TraceInformation(Msg.G1014, "    (If this annoys you, remove the 'show-website' task from the 'build-project:tasks' setting)");
         }
 
         public override void WriteHelp(HelpWriter helpWriter)
         {
-            helpWriter.Summary.WriteLine("Open the default webpage in a browser");
+            helpWriter.Summary.WriteLine("Open the default webpage in a browser, if a start URL has been defined");
         }
     }
 }

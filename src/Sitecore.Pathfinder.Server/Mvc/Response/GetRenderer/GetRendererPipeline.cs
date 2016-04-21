@@ -9,6 +9,7 @@ using Sitecore.Pathfinder.Mvc.Presentation;
 
 namespace Sitecore.Pathfinder.Mvc.Response.GetRenderer
 {
+
     public class GetRendererPipeline : PipelineBase<GetRendererPipeline>
     {
         [NotNull]

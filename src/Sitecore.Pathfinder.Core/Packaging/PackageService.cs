@@ -70,14 +70,23 @@ namespace Sitecore.Pathfinder.Packaging
             return installedPackages;
         }
 
-        public virtual IEnumerable<IPackage> FindInstalledPackagesById(string packageId)
+        public void DownloadPackage(string packageId, string version, string fileName)
         {
-            return PackageProviders.SelectMany(packageProvider => packageProvider.FindInstalledPackagesById(packageId));
+            var downloaded = PackageProviders.Any(packageProvider => packageProvider.DownloadPackage(packageId, version, fileName));
+            if (!downloaded)
+            {
+                throw new InvalidOperationException("Package not found: " + packageId);
+            }
         }
 
         public virtual IEnumerable<IPackage> FindInstallablePackagesById(string packageId)
         {
             return PackageProviders.SelectMany(packageProvider => packageProvider.FindInstallablePackagesById(packageId));
+        }
+
+        public virtual IEnumerable<IPackage> FindInstalledPackagesById(string packageId)
+        {
+            return PackageProviders.SelectMany(packageProvider => packageProvider.FindInstalledPackagesById(packageId));
         }
 
         public virtual IEnumerable<IPackage> GetInstallablePackages(string queryText, string author, string tags, int skip = -1)
