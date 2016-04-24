@@ -1,0 +1,95 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title" : "Pathfinder configuration",
+
+    "properties" : {
+        "project-unique-id": { 
+            "description" : "Every project must have a unique id, since the project-unique-id is used to calculate item ids",
+            "type" : "string" 
+        },
+
+        "website-directory": {
+            "description": "Path to the website root to deploy to", 
+            "type" : "string" 
+        },
+        
+        "data-folder-directory": { 
+            "description": "Path to the data folder for the target website",
+            "type" : "string"
+        },
+        
+        "host-name": { 
+            "description": "Hostname of the website to deploy project to",
+            "type" : "string" 
+        },
+
+        "user-name": {
+            "description": "Name of the user with administrator rights", 
+            "type" : "string"
+        },
+        
+        "password": { 
+            "description" : "Password of the user with administrator rights",
+            "type" : "string" 
+        },
+        
+        "database": { 
+            "description": "Default Sitecore database name (master, core, or web)",
+            "type" : "string" 
+        },
+
+        "project-role":  {
+            "description": "the project roles enables/disables checkers and conventions. Examples: \"pathfinder\", \"speak\", \"habitat.website\"", 
+            "type" : "string" 
+        },
+         
+        "project-website-mappings": {
+            "description": "mapping between project files and website files and items",
+            "type" : "object",
+
+            "properties": {
+        
+                "project-to-website": {
+                    "description": "Mapping items and files to website when building a project",
+                    "type" : "object",
+                    "patternProperties": {
+                        ".*" : {
+                            "$ref" : "#/definitions/Mapping"
+                        }
+                    }
+                },
+
+                "website-to-project": {
+                    "description": "Mapping items and files to project when importing a website",
+                    "type" : "object",
+                    "patternProperties": {
+                        ".*" : {
+                            "$ref" : "#/definitions/Mapping"
+                        }
+                    }            
+                }
+            } 
+        },
+        
+        "build-project": {
+            "description": "Tasks to execute when building",
+            "type" : "object",
+            "properties": {  
+                "tasks": {"type" : "string"}
+            }
+        }
+    },
+    
+    "definitions" : {
+        "Mapping" : {
+            "type" : "object",
+            "properties" : {
+                "project-directory-to-item-path":  { "type" : "string" },
+                "project-directory-to-website-directory": { "type" : "string" },
+                "upload-media": {"type" : "boolean" },
+                "database": {"type" : "string"},
+                "file-name-include": {"type" : "string" }
+            }
+        }
+    }
+}
