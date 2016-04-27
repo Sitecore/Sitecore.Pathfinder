@@ -85,7 +85,7 @@
                 "Template.ShortHelp": { "type": "string" },
                 "Template.LongHelp": { "type": "string" },
                 "Template.Icon": { "type": "string" },
-                "Layout.HtmlFile": { "type": "string" },
+                "Layout.File": { "type": "string" },
 
                 "Fields": {
                     "type": "object",
@@ -118,11 +118,7 @@
                         },
 
                         "Layout": {
-                            "type": "object",
-                            "oneOf": [
-                                { "$ref": "master.layout.schema.json#/definitions/Layout" }
-                                // { "$ref": "core.layout.schema.json#/definitions/Layout" }
-                            ]
+                            "type": "object"
                         },
 
                         "File.Include": { "$ref": "#/definitions/File.Include" },
@@ -181,7 +177,7 @@
                 "Icon": { "type": "string" },
                 "ShortHelp": { "type": "string" },
                 "LongHelp": { "type": "string" },
-                "Layout.HtmlFile": { "type": "string" },
+                "Layout.Html": { "type": "string" },
                 "File.Include": { "$ref": "#/definitions/File.Include" },
                 "File.Placeholder": { "$ref": "#/definitions/File.Placeholder" },
                 "Sections": {
@@ -295,6 +291,5 @@
                 "Unversioned"
             ]
         }
-
     }
 }

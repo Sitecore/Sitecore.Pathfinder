@@ -42,7 +42,6 @@ namespace Sitecore.Pathfinder.Tasks
 
         public abstract int Start();
 
-        [NotNull]
         public ITaskRunner With(IAppService appService)
         {
             AppService = appService;
@@ -56,9 +55,11 @@ namespace Sitecore.Pathfinder.Tasks
 
             // get first positional command line argument or the run parameter
             var tasks = context.Configuration.GetCommandLineArg(0);
+
+            // if no task on command line, look for one in configuration
             if (string.IsNullOrEmpty(tasks))
             {
-                tasks = context.Configuration.GetString("run");
+                tasks = context.Configuration.GetString(Constants.Configuration.Run);
             }
 
             // check if the is a script task
@@ -70,7 +71,12 @@ namespace Sitecore.Pathfinder.Tasks
                 };
             }
 
-            if (!string.IsNullOrEmpty(tasks) && tasks != "build")
+            if (string.IsNullOrEmpty(tasks) || tasks == "build")
+            {
+                // use the build-project:tasks configuration 
+                taskList = context.Configuration.GetString(Constants.Configuration.BuildProjectTasks);
+            }
+            else
             {
                 // look for named task
                 var task = Tasks.FirstOrDefault(t => string.Equals(t.TaskName, tasks, StringComparison.OrdinalIgnoreCase));
@@ -82,11 +88,8 @@ namespace Sitecore.Pathfinder.Tasks
                     };
                 }
 
+                // look for '*:tasks' in configuration
                 taskList = context.Configuration.GetString(tasks + ":tasks");
-            }
-            else
-            {
-                taskList = context.Configuration.GetString(Constants.Configuration.BuildProject);
             }
 
             return taskList.Split(Constants.Space, StringSplitOptions.RemoveEmptyEntries).Select(t => t.Trim()).ToList();

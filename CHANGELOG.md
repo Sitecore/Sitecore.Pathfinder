@@ -1,3 +1,9 @@
+Version next
+============
+Fix: Cleaned up schemas (2016-04-27)
+Fix: Cleaned up VSCode build tasks (2016-04-27)
+Fix: Warning if no layout file compiler was found (2016-04-27)
+
 Version 0.7.0
 ============
 * Add: Added add-project task for creating a Pathfinder project in an existing directory (2015-12-20)

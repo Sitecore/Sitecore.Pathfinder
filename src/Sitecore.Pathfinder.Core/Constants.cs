@@ -49,11 +49,14 @@ namespace Sitecore.Pathfinder
             ' '
         };
 
+        public static class Cache
+        {
+            public const string NugetRepositories = "NugetRepositories";
+        }
+
         public static class Configuration
         {
             public const string BuildingWithNoConfig = "building-with-no-config";
-
-            public const string BuildProject = "build-project:tasks";
 
             public const string BuildProjectCompileBinFilesExclude = "build-project:compile-bin-files:exclude";
 
@@ -66,6 +69,8 @@ namespace Sitecore.Pathfinder
             public const string BuildProjectParseAllFiles = "build-project:parse-all-files";
 
             public const string BuildProjectRunValidators = "build-project:run-sitecore-validators";
+
+            public const string BuildProjectTasks = "build-project:tasks";
 
             public const string CheckBinFileVersion = "install-package:check-bin-file-version";
 
@@ -153,6 +158,8 @@ namespace Sitecore.Pathfinder
 
             public const string RemapFileDirectories = "remap-file-directories";
 
+            public const string Run = "run";
+
             public const string ScriptExtensions = "scripts:file-extensions";
 
             public const string SearchAndReplaceTokens = "search-and-replace-tokens";
@@ -231,11 +238,6 @@ namespace Sitecore.Pathfinder
             public const double Low = 2000;
 
             public const double Normal = 1000;
-        }
-
-        public static class Cache
-        {
-            public const string NugetRepositories = "NugetRepositories";
         }
 
         public static class Fields

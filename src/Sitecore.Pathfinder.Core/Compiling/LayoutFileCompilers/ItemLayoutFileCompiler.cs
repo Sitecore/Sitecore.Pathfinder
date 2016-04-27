@@ -7,6 +7,7 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Parsing.LayoutFiles;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
 {
@@ -39,13 +40,22 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
                 return;
             }
 
+            var compiled = false;
             foreach (var layoutFileCompiler in LayoutFileCompilers)
             {
-                if (layoutFileCompiler.CanCompile(context, projectItem, property))
+                if (!layoutFileCompiler.CanCompile(context, projectItem, property))
                 {
-                    layoutFileCompiler.Compile(context, projectItem, property);
-                    break;
+                    continue;
                 }
+
+                layoutFileCompiler.Compile(context, projectItem, property);
+                compiled = true;
+                break;
+            }
+
+            if (!compiled)
+            {
+                context.Trace.TraceError(Msg.C1063, "Element has a 'Layout.File' attribute, but it could not be compiled", TraceHelper.GetTextNode(property), property.GetValue());
             }
         }
     }
