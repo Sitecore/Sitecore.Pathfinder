@@ -65,12 +65,6 @@ namespace Sitecore.Pathfinder.NuGet.Building
             }
         }
 
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.Write("Creates packages from the project.");
-            helpWriter.Remarks.Write("The Nuget specifications and Nuget packages are located in the /sitecore.project folder.");
-        }
-
         protected virtual void Pack([NotNull] IBuildContext context, [NotNull] string nuspecFileName, [NotNull] string nupkgFileName)
         {
             if (context.FileSystem.FileExists(nupkgFileName))

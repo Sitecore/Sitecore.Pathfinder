@@ -18,11 +18,5 @@ namespace Sitecore.Pathfinder.Tasks
 
             Post(context, webRequest);
         }
-
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.Write("Resets the website.");
-            helpWriter.Remarks.WriteLine("Deletes items and files from the website.");
-        }
     }
 }

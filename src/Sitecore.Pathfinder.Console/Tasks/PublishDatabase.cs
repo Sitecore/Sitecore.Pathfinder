@@ -42,20 +42,5 @@ namespace Sitecore.Pathfinder.Tasks
             var webRequest = GetWebRequest(context).WithQueryString(queryStringParameters).WithUrl(context.Configuration.GetString(Constants.Configuration.PublishUrl));
             Post(context, webRequest);
         }
-
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.Write("Publishes a Sitecore database (usually the master database).");
-
-            helpWriter.Parameters.Write("    database - name of the database (master, core)");
-
-            helpWriter.Examples.WriteLine($"scc {TaskName}");
-            helpWriter.Examples.WriteLine($"scc {TaskName} --database master");
-
-            helpWriter.Remarks.Write("Settings:");
-            helpWriter.Remarks.Write("    database");
-            helpWriter.Remarks.Write("        The name of the database to publish.");
-
-        }
     }
 }

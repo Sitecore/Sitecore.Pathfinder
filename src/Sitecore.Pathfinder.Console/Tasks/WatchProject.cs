@@ -81,15 +81,6 @@ namespace Sitecore.Pathfinder.Tasks
             while (!string.Equals(input, "q", StringComparison.OrdinalIgnoreCase));
         }
 
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.Write("Watches the project directory and install changes immediately.");
-            helpWriter.Remarks.WriteLine("Settings:");
-            helpWriter.Remarks.WriteLine("  watch-project:include - Specifies which files to look for");
-            helpWriter.Remarks.WriteLine("  watch-project:exclude - Specifies which files to ignore");
-            helpWriter.Remarks.WriteLine("  watch-project:publish-database - Indicates if the database should published after installing the project");
-        }
-
         protected virtual void FileChanged([NotNull] object sender, [NotNull] FileSystemEventArgs fileSystemEventArgs)
         {
             if (_pathMatcher.IsMatch(fileSystemEventArgs.FullPath))

@@ -1,8 +1,9 @@
 Version next
 ============
-Fix: Cleaned up schemas (2016-04-27)
-Fix: Cleaned up VSCode build tasks (2016-04-27)
-Fix: Warning if no layout file compiler was found (2016-04-27)
+* Fix: Cleaned up schemas (2016-04-27)
+* Fix: Cleaned up VSCode build tasks (2016-04-27)
+* Fix: Warning if no layout file compiler was found (2016-04-27)
+* Add: Refactored help system to use Markdown files (2016-04-27)
 
 Version 0.7.0
 ============

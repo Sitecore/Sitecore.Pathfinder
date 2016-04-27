@@ -43,11 +43,6 @@ namespace Sitecore.Pathfinder.Tasks
             }
         }
 
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.Write("Removes Pathfinder files and assemblies from the website.");
-        }
-
         protected virtual void DeleteFile([NotNull] IBuildContext context, [NotNull] string fileName)
         {
             try

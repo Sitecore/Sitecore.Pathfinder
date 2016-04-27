@@ -26,10 +26,5 @@ namespace Sitecore.Pathfinder.Tasks
 
             Console.WriteLine(json);
         }
-
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.WriteLine("Displays the effective configuration");
-        }
     }
 }

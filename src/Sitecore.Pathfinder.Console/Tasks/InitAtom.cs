@@ -17,10 +17,5 @@ namespace Sitecore.Pathfinder.Tasks
 
             context.FileSystem.Unzip(zipFileName, context.ProjectDirectory);
         }
-
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.Write("Creates a new Atom project.");
-        }
     }
 }

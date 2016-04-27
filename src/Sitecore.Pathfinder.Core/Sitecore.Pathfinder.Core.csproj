@@ -76,7 +76,6 @@
     <Compile Include="Tasks\Building\IBuildTask.cs" />
     <Compile Include="Tasks\Building\WebRequest.cs" />
     <Compile Include="Tasks\ITaskContext.cs" />
-    <Compile Include="Tasks\HelpWriter.cs" />
     <Compile Include="Tasks\Building\IBuildContext.cs" />
     <Compile Include="Tasks\ITask.cs" />
     <Compile Include="Tasks\Building\WebBuildTaskBase.cs" />

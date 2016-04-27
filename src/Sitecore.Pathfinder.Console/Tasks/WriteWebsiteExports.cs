@@ -38,14 +38,9 @@ namespace Sitecore.Pathfinder.Tasks
 
                     entry.ExtractToFile(fileName, true);
                 }
-            }
+            }                                                       
 
             context.FileSystem.DeleteFile(targetFileName);
-        }
-
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.Write("Write website exports.");
         }
     }
 }

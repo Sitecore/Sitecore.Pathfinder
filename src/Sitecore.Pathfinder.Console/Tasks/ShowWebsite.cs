@@ -33,9 +33,5 @@ namespace Sitecore.Pathfinder.Tasks
             context.Trace.TraceInformation(Msg.G1014, "    (If this annoys you, remove the 'show-website' task from the 'build-project:tasks' setting)");
         }
 
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.WriteLine("Open the default webpage in a browser, if a start URL has been defined");
-        }
     }
 }

@@ -54,12 +54,5 @@ namespace Sitecore.Pathfinder.Tasks
                 }
             }
         }
-
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.Write("Writes all items to a serialization folder");
-
-            helpWriter.Remarks.Write("Writes all items to a serialization folder.");
-        }
     }
 }

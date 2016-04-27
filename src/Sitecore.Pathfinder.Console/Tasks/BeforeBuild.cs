@@ -80,10 +80,6 @@ namespace Sitecore.Pathfinder.Tasks
             PipelineService.Resolve<BeforeBuildPipeline>().Execute(context);
         }
 
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-        }
-
         protected virtual bool UpdateExtensions([NotNull] IBuildContext context)
         {
             var updated = false;

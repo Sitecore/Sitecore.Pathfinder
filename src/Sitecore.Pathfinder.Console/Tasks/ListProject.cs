@@ -30,10 +30,5 @@ namespace Sitecore.Pathfinder.Tasks
 
             context.DisplayDoneMessage = false;
         }
-
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.Write("Lists the project items (Sitecore items and files).");
-        }
     }
 }

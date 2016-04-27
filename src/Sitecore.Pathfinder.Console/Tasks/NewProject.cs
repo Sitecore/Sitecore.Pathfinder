@@ -1,6 +1,7 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
@@ -30,14 +31,18 @@ namespace Sitecore.Pathfinder.Tasks
         [NotNull]
         private string _websiteDirectory = string.Empty;
 
-        public NewProject() : base("new-project")
+        [ImportingConstructor]
+        public NewProject([NotNull] IConsoleService console) : base("new-project")
         {
+            Console = console;
             CanRunWithoutConfig = true;
         }
 
+        [NotNull]
+        protected IConsoleService Console { get; }
+
         public override void Run(IBuildContext context)
         {
-            var console = new ConsoleService(context.Configuration);
             context.IsAborted = true;
 
             var projectDirectory = context.ProjectDirectory;
@@ -46,34 +51,34 @@ namespace Sitecore.Pathfinder.Tasks
                 context.FileSystem.CreateDirectory(projectDirectory);
             }
 
-            console.WriteLine("Welcome to Sitecore Pathfinder.");
+            Console.WriteLine("Welcome to Sitecore Pathfinder.");
 
             if (Directory.GetFiles(projectDirectory).Length > 0 || Directory.GetDirectories(projectDirectory).Length > 0)
             {
-                console.WriteLine();
-                console.WriteLine("The current directory is not empty. It is recommended to create a new project in an empty directory.");
-                console.WriteLine();
-                if (console.YesNo("Are you sure you want to create the project in this directory [N]: ", false, "overwrite") != true)
+                Console.WriteLine();
+                Console.WriteLine("The current directory is not empty. It is recommended to create a new project in an empty directory.");
+                Console.WriteLine();
+                if (Console.YesNo("Are you sure you want to create the project in this directory [N]: ", false, "overwrite") != true)
                 {
                     context.IsAborted = true;
                     return;
                 }
             }
 
-            console.WriteLine();
-            console.WriteLine("Pathfinder needs 4 pieces of information to create a new project; a unique Id for the project, the Sitecore website and data folder directories to deploy to, and the hostname of the website. If you have not yet created a Sitecore website, use a tool like Sitecore Instance Manager to create it for you.");
-            console.WriteLine();
-            console.WriteLine("The project’s unique ID can be a unique string (like MyCompany.MyProject) or a Guid. If you do not specify a unique ID, Pathfinder will generate a Guid for you.");
-            console.WriteLine();
-            console.WriteLine("You should *not* change the project unique ID at a later point, since Sitecore item IDs are dependent on it.");
-            console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Pathfinder needs 4 pieces of information to create a new project; a unique Id for the project, the Sitecore website and data folder directories to deploy to, and the hostname of the website. If you have not yet created a Sitecore website, use a tool like Sitecore Instance Manager to create it for you.");
+            Console.WriteLine();
+            Console.WriteLine("The project’s unique ID can be a unique string (like MyCompany.MyProject) or a Guid. If you do not specify a unique ID, Pathfinder will generate a Guid for you.");
+            Console.WriteLine();
+            Console.WriteLine("You should *not* change the project unique ID at a later point, since Sitecore item IDs are dependent on it.");
+            Console.WriteLine();
 
             _projectUniqueId = Guid.NewGuid().ToString("B").ToUpperInvariant();
-            _projectUniqueId = console.ReadLine("Enter the project unique ID [" + _projectUniqueId + "]: ", _projectUniqueId, "projectid");
+            _projectUniqueId = Console.ReadLine("Enter the project unique ID [" + _projectUniqueId + "]: ", _projectUniqueId, "projectid");
 
-            console.WriteLine();
-            console.WriteLine("Pathfinder requires physical access to both the Website and DataFolder directories to deploy packages.");
-            console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Pathfinder requires physical access to both the Website and DataFolder directories to deploy packages.");
+            Console.WriteLine();
 
             var projectName = "Sitecore";
             Guid guid;
@@ -91,12 +96,12 @@ namespace Sitecore.Pathfinder.Tasks
 
             do
             {
-                var website = console.ReadLine($"Enter the directory of the Website [{defaultWebsiteDirectory}]: ", defaultWebsiteDirectory, "website");
+                var website = Console.ReadLine($"Enter the directory of the Website [{defaultWebsiteDirectory}]: ", defaultWebsiteDirectory, "website");
                 _websiteDirectory = PathHelper.Combine(defaultWebsiteDirectory, website);
             }
-            while (!ValidateWebsiteDirectory(context, console));
+            while (!ValidateWebsiteDirectory(context));
 
-            console.WriteLine();
+            Console.WriteLine();
 
             var defaultDataFolderDirectory = context.Configuration.GetString(Constants.Configuration.NewProjectDefaultDataFolderDirectory).TrimEnd('\\');
             if (string.IsNullOrEmpty(defaultDataFolderDirectory))
@@ -106,13 +111,13 @@ namespace Sitecore.Pathfinder.Tasks
 
             do
             {
-                _dataFolderDirectory = console.ReadLine("Enter the directory of the DataFolder [" + defaultDataFolderDirectory + "]: ", defaultDataFolderDirectory, "datafolder");
+                _dataFolderDirectory = Console.ReadLine("Enter the directory of the DataFolder [" + defaultDataFolderDirectory + "]: ", defaultDataFolderDirectory, "datafolder");
             }
-            while (!ValidateDataFolderDirectory(context, console));
+            while (!ValidateDataFolderDirectory(context));
 
-            console.WriteLine();
-            console.WriteLine("Finally Pathfinder requires the hostname of the Sitecore website.");
-            console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Finally Pathfinder requires the hostname of the Sitecore website.");
+            Console.WriteLine();
 
             var defaultHostName = context.Configuration.GetString(Constants.Configuration.NewProjectDefaultHostName);
             if (string.IsNullOrEmpty(defaultHostName))
@@ -120,42 +125,37 @@ namespace Sitecore.Pathfinder.Tasks
                 defaultHostName = $"http://{projectName.ToLowerInvariant()}";
             }
 
-            _hostName = console.ReadLine($"Enter the hostname of the website [{defaultHostName}]: ", defaultHostName, "host");
-            if(!_hostName.Contains(Uri.SchemeDelimiter))
+            _hostName = Console.ReadLine($"Enter the hostname of the website [{defaultHostName}]: ", defaultHostName, "host");
+            if (!_hostName.Contains(Uri.SchemeDelimiter))
             {
                 _hostName = Uri.UriSchemeHttp + Uri.SchemeDelimiter + _hostName.TrimStart('/');
             }
 
-            console.WriteLine();
-            if (console.YesNo("Do you want to install an editor configuration [Y]: ", true) == true)
+            Console.WriteLine();
+            if (Console.YesNo("Do you want to install an editor configuration [Y]: ", true) == true)
             {
                 var editorsDirectory = Path.Combine(context.ToolsDirectory, "files\\editors");
                 var editors = Directory.GetFiles(editorsDirectory, "*.zip", SearchOption.AllDirectories).ToDictionary(Path.GetFileNameWithoutExtension, e => e);
 
-                _editorFileName = console.Pick("Select editor [1]: ", editors, "editor");
+                _editorFileName = Console.Pick("Select editor [1]: ", editors, "editor");
             }
 
-            console.WriteLine();
-            if (console.YesNo("Do you want to install a starter kit [Y]: ", true) == true)
+            Console.WriteLine();
+            if (Console.YesNo("Do you want to install a starter kit [Y]: ", true) == true)
             {
                 var starterKitDirectory = Path.Combine(context.ToolsDirectory, "files\\starterkits");
                 var starterKits = Directory.GetFiles(starterKitDirectory, "*.zip", SearchOption.AllDirectories).ToDictionary(Path.GetFileNameWithoutExtension, e => e);
 
-                _starterKitFileName = console.Pick("Select starter kit [1]: ", starterKits, "starterkit");
+                _starterKitFileName = Console.Pick("Select starter kit [1]: ", starterKits, "starterkit");
             }
 
-            console.WriteLine();
-            console.WriteLine("Creating project...");
+            Console.WriteLine();
+            Console.WriteLine("Creating project...");
 
             CopyProjectTemplate(context, projectDirectory);
             CopyStarterKit(context, projectDirectory);
             CopyEditor(context, projectDirectory);
             UpdateConfigFile(context, projectDirectory);
-        }
-
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.Write("Creates a new Pathfinder project.");
         }
 
         protected virtual void CopyEditor([NotNull] IBuildContext context, [NotNull] string projectDirectory)
@@ -193,25 +193,25 @@ namespace Sitecore.Pathfinder.Tasks
             context.FileSystem.WriteAllText(projectConfigFileName, config);
         }
 
-        protected virtual bool ValidateDataFolderDirectory([NotNull] IBuildContext context, [NotNull] ConsoleService console)
+        protected virtual bool ValidateDataFolderDirectory([NotNull] IBuildContext context)
         {
             var kernelFileName = Path.Combine(_dataFolderDirectory, "indexes");
             if (!context.FileSystem.DirectoryExists(kernelFileName))
             {
-                console.WriteLine("This does not appear to be a valid Sitecore data folder as /indexes does not exist.");
-                return console.YesNo("Do you want to continue anyway? [N]", false) == true;
+                Console.WriteLine("This does not appear to be a valid Sitecore data folder as /indexes does not exist.");
+                return Console.YesNo("Do you want to continue anyway? [N]", false) == true;
             }
 
             return true;
         }
 
-        protected virtual bool ValidateWebsiteDirectory([NotNull] IBuildContext context, [NotNull] ConsoleService console)
+        protected virtual bool ValidateWebsiteDirectory([NotNull] IBuildContext context)
         {
             var kernelFileName = Path.Combine(_websiteDirectory, "bin\\Sitecore.Kernel.dll");
             if (!context.FileSystem.FileExists(kernelFileName))
             {
-                console.WriteLine("This does not appear to be a valid Sitecore website as /bin/Sitecore.Kernel.dll does not exist.");
-                return console.YesNo("Do you want to continue anyway? [N]", false) == true;
+                Console.WriteLine("This does not appear to be a valid Sitecore website as /bin/Sitecore.Kernel.dll does not exist.");
+                return Console.YesNo("Do you want to continue anyway? [N]", false) == true;
             }
 
             return true;

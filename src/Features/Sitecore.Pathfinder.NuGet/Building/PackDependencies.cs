@@ -36,12 +36,6 @@ namespace Sitecore.Pathfinder.NuGet.Building
             }
         }
 
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.Write("Creates a Nuget package for Sitecore package in the sitecore.tools\\packages directory.");
-            helpWriter.Remarks.Write("Creates a Nuget package for Sitecore package in the sitecore.tools\\packages directory.");
-        }
-
         private void Pack([NotNull] IBuildContext context, [NotNull] string zipFileName)
         {
             var packageName = Path.GetFileNameWithoutExtension(zipFileName);

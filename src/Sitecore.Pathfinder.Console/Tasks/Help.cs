@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using Sitecore.Pathfinder.Building;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -36,12 +37,6 @@ namespace Sitecore.Pathfinder.Tasks
             }
         }
 
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.Write("Displays version information and a list of commands.");
-            helpWriter.Remarks.WriteLine("Displays version information and a list of commands.");
-        }
-
         private void WriteCommandHelp([NotNull] IBuildContext context, [NotNull] string taskName)
         {
             var build = context.CompositionService.Resolve<BuildRunner>();
@@ -54,35 +49,54 @@ namespace Sitecore.Pathfinder.Tasks
                 return;
             }
 
-            var helpWriter = new HelpWriter();
-            task.WriteHelp(helpWriter);
-
-            context.Trace.WriteLine("TASK:");
-            context.Trace.WriteLine($"  {task.TaskName}");
-            context.Trace.WriteLine(string.Empty);
-
-            context.Trace.WriteLine("SUMMARY:");
-            context.Trace.WriteLine($"{helpWriter.GetSummary()}");
-            context.Trace.WriteLine(string.Empty);
-
-            context.Trace.WriteLine("PARAMETERS:");
-            context.Trace.WriteLine($"{helpWriter.GetParameters()}");
-            context.Trace.WriteLine(string.Empty);
-
-            context.Trace.WriteLine("REMARKS:");
-            context.Trace.WriteLine($"{helpWriter.GetRemarks()}");
-            context.Trace.WriteLine(string.Empty);
-
-            context.Trace.WriteLine("EXAMPLES:");
-            var examples = helpWriter.GetExamples();
-            if (!string.IsNullOrEmpty(examples))
+            var directory = Path.GetDirectoryName(task.GetType().Assembly.Location);
+            if (string.IsNullOrEmpty(directory))
             {
-                context.Trace.WriteLine(examples);
+                context.Trace.WriteLine("Help is not available for this task");
+                return;
             }
-            else
+
+            var fileName = Path.Combine(directory, "help\\tasks\\" + task.TaskName + ".md");
+            if (!context.FileSystem.FileExists(fileName))
             {
-                context.Trace.WriteLine($"  scc {task.TaskName}");
+                context.Trace.WriteLine($"Help file not found: {fileName}");
+                return;
             }
+
+            var helpText = new StringWriter();
+            var lines = context.FileSystem.ReadAllLines(fileName);
+            foreach (var line in lines)
+            {
+                if (line.StartsWith("```"))
+                {
+                    continue;
+                }
+
+                if (string.IsNullOrEmpty(line))
+                {
+                    helpText.WriteLine();
+                    helpText.WriteLine();
+                    continue;
+                }
+
+                if (line.StartsWith("#") || line.StartsWith("-") || line.StartsWith("="))
+                {
+                    helpText.WriteLine();
+                    helpText.WriteLine(line);
+                    continue;
+                }
+
+                if (line.StartsWith("|"))
+                {
+                    helpText.WriteLine(line);
+                    continue;
+                }
+
+                helpText.Write(line);
+                helpText.Write(' ');
+            }
+
+            context.Trace.WriteLine(helpText.ToString());
         }
 
         private void WriteGeneralHelp([NotNull] IBuildContext context)
@@ -114,21 +128,13 @@ namespace Sitecore.Pathfinder.Tasks
             WriteListOfTasks(context);
         }
 
-        private void WriteListOfTasks([NotNull] IBuildContext context)
+        protected virtual void WriteListOfTasks([NotNull] IBuildContext context)
         {
             var build = context.CompositionService.Resolve<BuildRunner>();
 
             foreach (var task in build.Tasks.OrderBy(t => t.TaskName))
             {
-                var helpWriter = new HelpWriter();
-                task.WriteHelp(helpWriter);
-
-                var summary = helpWriter.GetSummary();
-                if (string.IsNullOrEmpty(summary))
-                {
-                    continue;
-                }
-
+                var summary = GetSummary(context, task);
                 context.Trace.WriteLine($"{task.TaskName} - {summary}");
             }
 
@@ -157,6 +163,51 @@ namespace Sitecore.Pathfinder.Tasks
             {
                 context.Trace.WriteLine(script);
             }
+        }
+
+        [NotNull]
+        protected virtual string GetSummary([NotNull] IBuildContext context, [NotNull] ITask task)
+        {
+            var directory = Path.GetDirectoryName(task.GetType().Assembly.Location);
+            if (string.IsNullOrEmpty(directory))
+            {
+                return "[No help available]";
+            }
+
+            var fileName = Path.Combine(directory, "help\\tasks\\" + task.TaskName + ".md");
+            if (!context.FileSystem.FileExists(fileName))
+            {
+                return "[No help available]";
+            }
+
+            var state = 0;
+            var lines = context.FileSystem.ReadAllLines(fileName);
+            foreach (var line in lines)
+            {
+                if (line.StartsWith("#") || line.StartsWith("=") || line.StartsWith("-"))
+                {
+                   if (state == 1)
+                   {
+                       break;
+                   }
+
+                    state = 1;
+                    continue;
+                }
+
+                if (state == 1)
+                {
+                    var trimmedLine = line.Trim();
+                    if (string.IsNullOrEmpty(trimmedLine))
+                    {
+                        continue;
+                    }
+
+                    return trimmedLine;
+                }
+            }
+
+            return lines[0];
         }
     }
 }

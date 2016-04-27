@@ -53,12 +53,5 @@ namespace Sitecore.Pathfinder.Tasks
                 }
             }
         }
-
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.Write("Writes export declarations");
-
-            helpWriter.Remarks.Write("Writes export declarations so other packages can use this package.");
-        }
     }
 }

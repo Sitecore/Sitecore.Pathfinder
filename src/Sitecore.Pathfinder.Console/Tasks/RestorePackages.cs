@@ -46,10 +46,5 @@ namespace Sitecore.Pathfinder.Tasks
                 PackageService.DownloadPackage(packageId, version, fileName);
             }
         }
-
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.Write("Restores dependency packages as specified in the configuration");
-        }
     }
 }

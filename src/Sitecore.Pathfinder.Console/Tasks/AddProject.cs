@@ -30,11 +30,6 @@ namespace Sitecore.Pathfinder.Tasks
             CopyProjectTemplate(context, projectDirectory);
         }
 
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.Write("Adds a Pathfinder project to an existing directory.");
-        }
-
         protected virtual void CopyProjectTemplate([NotNull] IBuildContext context, [NotNull] string projectDirectory)
         {
             var sourceDirectory = Path.Combine(context.ToolsDirectory, "files\\project\\*");

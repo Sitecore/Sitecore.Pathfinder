@@ -32,12 +32,5 @@ namespace Sitecore.Pathfinder.Tasks
 
             context.Trace.WriteLine(Texts.Found__ + references.Count);
         }
-
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.Write("Finds all project items that references the specified project item.");
-            helpWriter.Remarks.Write("The project item must be fully qualified.");
-            helpWriter.Examples.Write("scc find-usages /sitecore/content/Home");
-        }
     }
 }

@@ -18,11 +18,5 @@ namespace Sitecore.Pathfinder.Tasks
 
             Post(context, webRequest);
         }
-
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.Write("Tries to fix a non-working website.");
-            helpWriter.Remarks.Write("Republishing the Master database, rebuilds search indexes and rebuild the Link database.");
-        }
     }
 }

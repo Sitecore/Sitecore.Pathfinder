@@ -38,11 +38,5 @@ namespace Sitecore.Pathfinder.Tasks
 
             context.FileSystem.DeleteFile(targetFileName);
         }
-
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.Write("Synchronizes project and the website.");
-            helpWriter.Remarks.WriteLine("Downloads Xml and Json schemas from the website to make item and layout IntelliSense work.");
-        }
     }
 }

@@ -35,10 +35,5 @@ namespace Sitecore.Pathfinder.Tasks
                 snapshot.SourceFile.IsModified = false;
             }
         }
-
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.Write("Installs the project directly from the project directory.");
-        }
     }
 }

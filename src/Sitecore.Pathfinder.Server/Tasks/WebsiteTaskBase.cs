@@ -19,9 +19,5 @@ namespace Sitecore.Pathfinder.Tasks
         }
 
         public abstract void Run(IWebsiteTaskContext context);
-
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-        }
     }
 }

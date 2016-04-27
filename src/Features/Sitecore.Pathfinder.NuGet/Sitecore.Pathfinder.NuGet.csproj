@@ -74,6 +74,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="help\tasks\pack-nuget.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="help\tasks\pack-dependencies.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

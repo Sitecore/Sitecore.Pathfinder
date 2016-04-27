@@ -63,11 +63,6 @@ namespace Sitecore.Pathfinder.Tasks
             }
         }
 
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.Write("Runs a PowerShell, .cmd or .bat script.");
-        }
-
         protected virtual void ExecuteCmdScript([NotNull] IBuildContext context, [NotNull] string fileName)
         {
             var process = new Process();

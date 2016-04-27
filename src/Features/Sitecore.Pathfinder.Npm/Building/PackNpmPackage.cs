@@ -65,10 +65,5 @@ namespace Sitecore.Pathfinder.Npm.Building
             var root = JToken.Parse(context.FileSystem.ReadAllText(npmFileName)) as JObject;
             return root == null ? string.Empty : Path.Combine(context.ProjectDirectory, root["name"] + "-" + root["version"] + ".tgz");
         }
-
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.Write("Creates an npm module from the project.");
-        }
     }
 }

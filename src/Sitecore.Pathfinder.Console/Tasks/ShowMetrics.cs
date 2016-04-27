@@ -24,10 +24,5 @@ namespace Sitecore.Pathfinder.Tasks
 
             context.Trace.WriteLine($"Project metrics: {items} items, {templates} templates, {media} media files, {renderings} renderings, {files} files");
         }
-
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.Write("Shows various information about the project.");
-        }
     }
 }

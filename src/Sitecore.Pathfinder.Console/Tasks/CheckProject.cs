@@ -29,14 +29,6 @@ namespace Sitecore.Pathfinder.Tasks
             TraceDiagnostics(context);
         }
         
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.Write("Checks the project for warnings and errors.");
-            helpWriter.Remarks.Write("SETTINGS:");
-            helpWriter.Remarks.Write("  check-project:disabled-categories - Disables checker categories (Items, Fields, Templates, TemplateFields, Media).");
-            helpWriter.Remarks.Write("  check-project:disabled-checkers - Disables specific checkers.");
-        }
-
         protected virtual void TraceDiagnostics([NotNull] IBuildContext context)
         {
             foreach (var diagnostic in context.Project.Diagnostics)

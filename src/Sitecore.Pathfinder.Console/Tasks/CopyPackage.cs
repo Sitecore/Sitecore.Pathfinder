@@ -47,13 +47,5 @@ namespace Sitecore.Pathfinder.Tasks
                 }
             }
         }
-
-        public override void WriteHelp(HelpWriter helpWriter)
-        {
-            helpWriter.Summary.Write("Copies the project output to the website.");
-            helpWriter.Remarks.Write("Settings:");
-            helpWriter.Remarks.Write("    copy-package:package-directory");
-            helpWriter.Remarks.Write("        The directory under the website Data Folder to copy to.");
-        }
     }
 }

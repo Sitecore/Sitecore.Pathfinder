@@ -20,7 +20,5 @@ namespace Sitecore.Pathfinder.Tasks
         public string TaskName { get; }
 
         public abstract void Run(ITaskContext context);
-
-        public abstract void WriteHelp(HelpWriter helpWriter);
     }
 }
