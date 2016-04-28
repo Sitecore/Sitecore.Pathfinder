@@ -29,6 +29,9 @@ namespace Sitecore.Pathfinder.Tasks
         private string _starterKitFileName = string.Empty;
 
         [NotNull]
+        private string _taskRunnerFileName = string.Empty;
+
+        [NotNull]
         private string _websiteDirectory = string.Empty;
 
         [ImportingConstructor]
@@ -141,6 +144,15 @@ namespace Sitecore.Pathfinder.Tasks
             }
 
             Console.WriteLine();
+            if (Console.YesNo("Do you want to install a task runner [N]: ", false) == true)
+            {
+                var taskRunnerDirectory = Path.Combine(context.ToolsDirectory, "files\\taskrunners");
+                var taskRunners = Directory.GetFiles(taskRunnerDirectory, "*.zip", SearchOption.AllDirectories).ToDictionary(Path.GetFileNameWithoutExtension, e => e);
+
+                _taskRunnerFileName = Console.Pick("Select task runner [1]: ", taskRunners, "taskrunner");
+            }
+
+            Console.WriteLine();
             if (Console.YesNo("Do you want to install a starter kit [Y]: ", true) == true)
             {
                 var starterKitDirectory = Path.Combine(context.ToolsDirectory, "files\\starterkits");
@@ -155,6 +167,7 @@ namespace Sitecore.Pathfinder.Tasks
             CopyProjectTemplate(context, projectDirectory);
             CopyStarterKit(context, projectDirectory);
             CopyEditor(context, projectDirectory);
+            CopyTaskRunner(context, projectDirectory);
             UpdateConfigFile(context, projectDirectory);
         }
 
@@ -163,6 +176,14 @@ namespace Sitecore.Pathfinder.Tasks
             if (!string.IsNullOrEmpty(_editorFileName))
             {
                 context.FileSystem.Unzip(_editorFileName, projectDirectory);
+            }
+        }
+
+        protected virtual void CopyTaskRunner([NotNull] IBuildContext context, [NotNull] string projectDirectory)
+        {
+            if (!string.IsNullOrEmpty(_taskRunnerFileName))
+            {
+                context.FileSystem.Unzip(_taskRunnerFileName, projectDirectory);
             }
         }
 

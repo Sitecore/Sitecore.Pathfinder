@@ -2,7 +2,6 @@
 
 using System.ComponentModel.Composition;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Tasks;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Extensibility

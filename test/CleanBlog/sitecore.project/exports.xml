@@ -35,7 +35,6 @@
     </Section>
   </Template>
   <Item Id="{2FFB3FCB-CC1D-6099-38D1-A3A1FB627844}" Database="master" Name="__Standard Values" Path="/sitecore/templates/CleanBlog/Post/__Standard Values" Template="/sitecore/templates/CleanBlog/Post" />
-  <Item Id="{C0D75663-D122-E705-54EA-5120DC19F1B0}" Database="master" Name="Welcome" Path="/sitecore/content/Home/Welcome" Template="/sitecore/templates/Sample/Sample Item" />
   <Item Id="{074FEDD7-5CB4-CAF3-E212-0D18018E085E}" Database="master" Name="CleanBlog" Path="/sitecore/content/Home/CleanBlog" Template="/sitecore/templates/CleanBlog/CleanBlog" />
   <Item Id="{4D202EE4-215F-0D3A-6C22-92129B406ADB}" Database="master" Name="Post4" Path="/sitecore/content/Home/CleanBlog/Posts/Post4" Template="/sitecore/templates/CleanBlog/Post" />
   <Item Id="{30E2709B-16C9-926D-89D8-C6B9B6E48B87}" Database="master" Name="Post3" Path="/sitecore/content/Home/CleanBlog/Posts/Post3" Template="/sitecore/templates/CleanBlog/Post" />

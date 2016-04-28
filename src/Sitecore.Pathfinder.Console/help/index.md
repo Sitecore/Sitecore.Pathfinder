@@ -14,6 +14,8 @@ For more documentation see [Pathfinder Documentation](https://github.com/JakobCh
 * [help](https://github.com/JakobChristensen/Sitecore.Pathfinder/blob/master/src/Sitecore.Pathfinder.Console/help/tasks/help.md) - Displays version information and a list of commands.
 * [import-website](https://github.com/JakobChristensen/Sitecore.Pathfinder/blob/master/src/Sitecore.Pathfinder.Console/help/tasks/import-website.md) - Imports items and files from the website.
 * [init-atom](https://github.com/JakobChristensen/Sitecore.Pathfinder/blob/master/src/Sitecore.Pathfinder.Console/help/tasks/init-atom.md) - Configures the project for use with Atom.
+* [init-grunt](https://github.com/JakobChristensen/Sitecore.Pathfinder/blob/master/src/Sitecore.Pathfinder.Console/help/tasks/init-grunt.md) - Configures the project to use GruntJS.
+* [init-gulp](https://github.com/JakobChristensen/Sitecore.Pathfinder/blob/master/src/Sitecore.Pathfinder.Console/help/tasks/init-gulp.md) - Configures the project to use GulpJS.
 * [init-visualstudio](https://github.com/JakobChristensen/Sitecore.Pathfinder/blob/master/src/Sitecore.Pathfinder.Console/help/tasks/init-visualstudio.md) - Configures the project for use with Visual Studio.
 * [init-vscode](https://github.com/JakobChristensen/Sitecore.Pathfinder/blob/master/src/Sitecore.Pathfinder.Console/help/tasks/init-vscode.md) - Configures the project for use with Visual Studio Code.
 * [install-package](https://github.com/JakobChristensen/Sitecore.Pathfinder/blob/master/src/Sitecore.Pathfinder.Console/help/tasks/install-package.md) - Unpacks and installs the project package (including dependencies) in the website.

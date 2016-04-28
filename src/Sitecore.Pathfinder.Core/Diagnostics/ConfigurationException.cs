@@ -7,7 +7,7 @@ namespace Sitecore.Pathfinder.Diagnostics
 {
     public class ConfigurationException : Exception
     {
-        public ConfigurationException([Localizable(true)] [NotNull] string text, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
+        public ConfigurationException([NotNull, Localizable(true)]  string text, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
         {
             Text = text;
             Details = details;
