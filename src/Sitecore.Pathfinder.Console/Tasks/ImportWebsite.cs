@@ -14,6 +14,8 @@ namespace Sitecore.Pathfinder.Tasks
         {
             context.Trace.TraceInformation(Msg.G1012, Texts.Importing_website___);
 
+            context.IsAborted = true;
+
             var webRequest = GetWebRequest(context).AsTask("ImportWebsite");
 
             Post(context, webRequest);

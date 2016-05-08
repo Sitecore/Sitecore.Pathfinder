@@ -53,13 +53,13 @@ namespace Sitecore.Pathfinder.Projects
         IProject Compile();
 
         [CanBeNull]
-        T FindQualifiedItem<T>([NotNull] string qualifiedName) where T : IProjectItem;
+        T FindQualifiedItem<T>([NotNull] string qualifiedName) where T : class, IProjectItem;
 
         [CanBeNull]
-        T FindQualifiedItem<T>([NotNull] Database database, [NotNull] string qualifiedName) where T : IProjectItem;
+        T FindQualifiedItem<T>([NotNull] Database database, [NotNull] string qualifiedName) where T : class, IProjectItem;
 
         [CanBeNull]
-        T FindQualifiedItem<T>([NotNull] ProjectItemUri uri) where T : IProjectItem;
+        T FindQualifiedItem<T>([NotNull] ProjectItemUri uri) where T : class, IProjectItem;
 
         [NotNull, ItemNotNull]
         IEnumerable<T> FindFiles<T>([NotNull] string fileName) where T : File;

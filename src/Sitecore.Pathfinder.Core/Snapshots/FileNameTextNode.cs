@@ -65,7 +65,7 @@ namespace Sitecore.Pathfinder.Snapshots
             var newFileName = Path.Combine(Path.GetDirectoryName(fileName) ?? string.Empty, newValue + extension);
 
             // todo: use FileSystemService
-            File.Move(fileName, newFileName);
+            // File.Move(fileName, newFileName);
 
             // todo: update Project Unique ID
             return true;

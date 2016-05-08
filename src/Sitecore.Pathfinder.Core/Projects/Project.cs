@@ -42,7 +42,7 @@ namespace Sitecore.Pathfinder.Projects
         private string _projectUniqueId;
 
         [ImportingConstructor]
-        public Project([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService, [NotNull] IPipelineService pipelineService)
+        public Project([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService, [NotNull] IPipelineService pipelineService, [NotNull] IProjectIndexer indexer)
         {
             CompositionService = compositionService;
             Configuration = configuration;
@@ -50,6 +50,7 @@ namespace Sitecore.Pathfinder.Projects
             FileSystem = fileSystem;
             ParseService = parseService;
             PipelineService = pipelineService;
+            Indexer = indexer;
 
             Options = ProjectOptions.Empty;
         }
@@ -63,6 +64,9 @@ namespace Sitecore.Pathfinder.Projects
         public ICollection<Diagnostic> Diagnostics => _diagnostics;
 
         public long Ducats { get; set; }
+
+        [NotNull]
+        protected IProjectIndexer Indexer { get; }
 
         [NotNull]
         public IFactoryService Factory { get; }
@@ -83,7 +87,6 @@ namespace Sitecore.Pathfinder.Projects
 
         public ICollection<ISourceFile> SourceFiles { get; } = new List<ISourceFile>();
 
-        [ItemNotNull]
         public IEnumerable<Template> Templates => ProjectItems.OfType<Template>().Where(t => !t.IsImport);
 
         [NotNull]
@@ -149,6 +152,8 @@ namespace Sitecore.Pathfinder.Projects
 
             _projectItems.Add(projectItem);
 
+            Indexer.Add(projectItem);
+
             OnProjectChanged();
 
             return projectItem;
@@ -163,11 +168,19 @@ namespace Sitecore.Pathfinder.Projects
             return this;
         }
 
-        public T FindQualifiedItem<T>(string qualifiedName) where T : IProjectItem
+        public T FindQualifiedItem<T>(string qualifiedName) where T : class, IProjectItem
         {
             if (!qualifiedName.StartsWith("{") || !qualifiedName.EndsWith("}"))
             {
-                return ProjectItems.OfType<T>().FirstOrDefault(i => string.Equals(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase));
+                // return ProjectItems.OfType<T>().FirstOrDefault(i => string.Equals(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase));
+
+                IProjectItem projectItem;
+                if (Index.QualifiedNameIndex.TryGetValue(qualifiedName.ToUpperInvariant(), out projectItem))
+                {
+                    return projectItem as T;
+                }
+
+                return null;
             }
 
             Guid guid;
@@ -180,13 +193,21 @@ namespace Sitecore.Pathfinder.Projects
             return ProjectItems.OfType<T>().FirstOrDefault(i => i.Uri.Guid == guid);
         }
 
-        public T FindQualifiedItem<T>(Database database, string qualifiedName) where T : IProjectItem
+        public T FindQualifiedItem<T>(Database database, string qualifiedName) where T : class, IProjectItem
         {
             var databaseName = database.DatabaseName;
 
             if (!qualifiedName.StartsWith("{") || !qualifiedName.EndsWith("}"))
             {
-                return ProjectItems.OfType<T>().FirstOrDefault(i => string.Equals(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase) && i.Uri.FileOrDatabaseName == databaseName);
+                // return ProjectItems.OfType<T>().FirstOrDefault(i => string.Equals(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase) && i.Uri.FileOrDatabaseName == databaseName);
+
+                IProjectItem projectItem;
+                if (Index.QualifiedNameIndex.TryGetValue(qualifiedName.ToUpperInvariant(), out projectItem))
+                {
+                    return projectItem as T;
+                }
+
+                return null;
             }
 
             Guid guid;
@@ -199,7 +220,7 @@ namespace Sitecore.Pathfinder.Projects
             return ProjectItems.OfType<T>().FirstOrDefault(i => i.Uri.Guid == guid && i.Uri.FileOrDatabaseName == databaseName);
         }
 
-        public T FindQualifiedItem<T>(ProjectItemUri uri) where T : IProjectItem
+        public T FindQualifiedItem<T>(ProjectItemUri uri) where T : class, IProjectItem
         {
             return ProjectItems.OfType<T>().FirstOrDefault(i => i.Uri == uri);
         }

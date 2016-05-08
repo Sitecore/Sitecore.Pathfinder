@@ -35,10 +35,10 @@ namespace Sitecore.Pathfinder.Tasks
         [Diagnostics.NotNull]
         protected IFileSystemService FileSystem { get; }
 
-        [Import, Diagnostics.NotNull]
+        [Diagnostics.NotNull]
         protected IItemImporterService ItemImporter { get; }
 
-        [Import, Diagnostics.NotNull]
+        [Diagnostics.NotNull]
         protected ILanguageService LanguageService { get; }
 
         [Diagnostics.NotNull]
