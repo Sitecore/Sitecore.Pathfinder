@@ -172,57 +172,39 @@ namespace Sitecore.Pathfinder.Projects
         {
             if (!qualifiedName.StartsWith("{") || !qualifiedName.EndsWith("}"))
             {
-                // return ProjectItems.OfType<T>().FirstOrDefault(i => string.Equals(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase));
-
-                IProjectItem projectItem;
-                if (Index.QualifiedNameIndex.TryGetValue(qualifiedName.ToUpperInvariant(), out projectItem))
-                {
-                    return projectItem as T;
-                }
-
-                return null;
+                return Indexer.GetByQualifiedName<T>(qualifiedName);
             }
 
             Guid guid;
             if (Guid.TryParse(qualifiedName, out guid))
             {
-                return ProjectItems.OfType<T>().FirstOrDefault(i => i.Uri.Guid == guid);
+                return Indexer.GetByGuid<T>(guid);
             }
 
             guid = StringHelper.ToGuid(qualifiedName);
-            return ProjectItems.OfType<T>().FirstOrDefault(i => i.Uri.Guid == guid);
+            return Indexer.GetByGuid<T>(guid);
         }
 
-        public T FindQualifiedItem<T>(Database database, string qualifiedName) where T : class, IProjectItem
+        public T FindQualifiedItem<T>(Database database, string qualifiedName) where T : DatabaseProjectItem
         {
-            var databaseName = database.DatabaseName;
-
             if (!qualifiedName.StartsWith("{") || !qualifiedName.EndsWith("}"))
             {
-                // return ProjectItems.OfType<T>().FirstOrDefault(i => string.Equals(i.QualifiedName, qualifiedName, StringComparison.OrdinalIgnoreCase) && i.Uri.FileOrDatabaseName == databaseName);
-
-                IProjectItem projectItem;
-                if (Index.QualifiedNameIndex.TryGetValue(qualifiedName.ToUpperInvariant(), out projectItem))
-                {
-                    return projectItem as T;
-                }
-
-                return null;
+                return Indexer.GetByQualifiedName<T>(database, qualifiedName);
             }
 
             Guid guid;
             if (Guid.TryParse(qualifiedName, out guid))
             {
-                return ProjectItems.OfType<T>().FirstOrDefault(i => i.Uri.Guid == guid && i.Uri.FileOrDatabaseName == databaseName);
+                return Indexer.GetByGuid<T>(database, guid);
             }
 
             guid = StringHelper.ToGuid(qualifiedName);
-            return ProjectItems.OfType<T>().FirstOrDefault(i => i.Uri.Guid == guid && i.Uri.FileOrDatabaseName == databaseName);
+            return Indexer.GetByGuid<T>(database, guid);
         }
 
         public T FindQualifiedItem<T>(ProjectItemUri uri) where T : class, IProjectItem
         {
-            return ProjectItems.OfType<T>().FirstOrDefault(i => i.Uri == uri);
+            return Indexer.GetByUri<T>(uri);
         }
 
         public IEnumerable<T> FindFiles<T>(string fileName) where T : File
@@ -262,7 +244,7 @@ namespace Sitecore.Pathfinder.Projects
             return Templates.Where(t => string.Equals(t.DatabaseName, databaseName, StringComparison.OrdinalIgnoreCase));
         }
 
-        public virtual IProject Load(ProjectOptions projectOptions, IEnumerable<string> sourceFileNames)
+        public virtual IProject With(ProjectOptions projectOptions, IEnumerable<string> sourceFileNames)
         {
             Options = projectOptions;
 
@@ -286,6 +268,8 @@ namespace Sitecore.Pathfinder.Projects
         public virtual void Remove(IProjectItem projectItem)
         {
             _projectItems.Remove(projectItem);
+
+            Indexer.Remove(projectItem);
 
             var unloadable = projectItem as IUnloadable;
             if (unloadable != null)

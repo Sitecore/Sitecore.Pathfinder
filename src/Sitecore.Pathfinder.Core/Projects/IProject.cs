@@ -56,7 +56,7 @@ namespace Sitecore.Pathfinder.Projects
         T FindQualifiedItem<T>([NotNull] string qualifiedName) where T : class, IProjectItem;
 
         [CanBeNull]
-        T FindQualifiedItem<T>([NotNull] Database database, [NotNull] string qualifiedName) where T : class, IProjectItem;
+        T FindQualifiedItem<T>([NotNull] Database database, [NotNull] string qualifiedName) where T : DatabaseProjectItem;
 
         [CanBeNull]
         T FindQualifiedItem<T>([NotNull] ProjectItemUri uri) where T : class, IProjectItem;
@@ -74,7 +74,7 @@ namespace Sitecore.Pathfinder.Projects
         IEnumerable<Template> GetTemplates([NotNull] Database database);
 
         [NotNull]
-        IProject Load([NotNull] ProjectOptions projectOptions, [NotNull, ItemNotNull] IEnumerable<string> sourceFileNames);
+        IProject With([NotNull] ProjectOptions projectOptions, [NotNull, ItemNotNull] IEnumerable<string> sourceFileNames);
 
         event ProjectChangedEventHandler ProjectChanged;
 

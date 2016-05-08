@@ -2,6 +2,7 @@
 
 using System;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Projects
@@ -73,7 +74,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public override string ToString()
         {
-            return $"{FileOrDatabaseName}:{Guid.ToString("B").ToUpperInvariant()}";
+            return $"{FileOrDatabaseName}/{Guid.Format()}";
         }
 
         private bool Equals([NotNull] ProjectItemUri other)

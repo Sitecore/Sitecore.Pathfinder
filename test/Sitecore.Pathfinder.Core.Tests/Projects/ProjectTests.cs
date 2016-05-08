@@ -35,7 +35,7 @@ namespace Sitecore.Pathfinder.Projects
         [Test]
         public void AddRemoveTests()
         {
-            var project = Resolve<IProject>().Load(new ProjectOptions(ProjectDirectory, "master"), Enumerable.Empty<string>());
+            var project = Resolve<IProject>().With(new ProjectOptions(ProjectDirectory, "master"), Enumerable.Empty<string>());
             var count = project.SourceFiles.Count;
 
             var fileName = Path.Combine(ProjectDirectory, "content\\Home\\XmlItem.item.xml");

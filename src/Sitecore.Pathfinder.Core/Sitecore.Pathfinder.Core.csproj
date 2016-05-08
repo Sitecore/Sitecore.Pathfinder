@@ -71,6 +71,7 @@
     <Compile Include="AppService.cs" />
     <Compile Include="Compiling\LayoutFileCompilers\TemplateLayoutFileCompiler.cs" />
     <Compile Include="Projects\IProjectIndexer.cs" />
+    <Compile Include="Projects\ProjectIndex.cs" />
     <Compile Include="Projects\ProjectIndexer.cs" />
     <Compile Include="Runtime\Caching\CacheService.cs" />
     <Compile Include="Runtime\Caching\ICacheService.cs" />

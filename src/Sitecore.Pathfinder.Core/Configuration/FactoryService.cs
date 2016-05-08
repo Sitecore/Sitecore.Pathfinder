@@ -167,7 +167,7 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual IProject Project(ProjectOptions projectOptions, List<string> sourceFileNames)
         {
-            return new Project(CompositionService, Configuration, this, FileSystem, ParseService, PipelineService).Load(projectOptions, sourceFileNames);
+            return CompositionService.Resolve<IProject>().With(projectOptions, sourceFileNames);
         }
 
         public virtual ProjectOptions ProjectOptions(string projectDirectory, string databaseName)
