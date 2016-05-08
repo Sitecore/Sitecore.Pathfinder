@@ -130,10 +130,14 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual T AddOrMerge<T>(T projectItem) where T : IProjectItem
         {
+            Indexer.Remove(projectItem);
+
             var newItem = projectItem as Item;
             if (newItem != null)
             {
                 var addedItem = (T)MergeItem(newItem);
+
+                Indexer.Add(addedItem);
 
                 OnProjectChanged();
 
@@ -144,6 +148,8 @@ namespace Sitecore.Pathfinder.Projects
             if (newTemplate != null)
             {
                 var addedTemplate = (T)MergeTemplate(newTemplate);
+
+                Indexer.Add(addedTemplate);
 
                 OnProjectChanged();
 
