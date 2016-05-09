@@ -10,10 +10,6 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
 {
     public class ItemsWithSameNameChecker : CheckerBase
     {
-        public ItemsWithSameNameChecker() : base("Items with same names", Items)
-        {
-        }
-
         public override void Check(ICheckerContext context)
         {
             var parents = new HashSet<Item>();

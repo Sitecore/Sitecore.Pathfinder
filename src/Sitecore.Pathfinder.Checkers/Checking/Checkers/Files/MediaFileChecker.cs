@@ -10,10 +10,6 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Files
 {
     public class MediaFileChecker : CheckerBase
     {
-        public MediaFileChecker() : base("Media file size", Media)
-        {
-        }
-
         public override void Check(ICheckerContext context)
         {
             foreach (var mediaFile in context.Project.ProjectItems.OfType<MediaFile>())

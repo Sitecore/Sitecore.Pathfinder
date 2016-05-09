@@ -8,10 +8,6 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Fields
 {
     public class NumberChecker : CheckerBase
     {
-        public NumberChecker() : base("Invalid Number field", Fields)
-        {
-        }
-
         public override void Check(ICheckerContext context)
         {
             foreach (var field in context.Project.Items.SelectMany(i => i.Fields).Where(f => string.Equals(f.TemplateField.Type, "Number", StringComparison.OrdinalIgnoreCase)))

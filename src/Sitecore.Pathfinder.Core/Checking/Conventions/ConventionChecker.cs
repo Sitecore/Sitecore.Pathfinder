@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Microsoft.Framework.ConfigurationModel;
-using Sitecore.Pathfinder.Checking.Conventions;
+using Sitecore.Pathfinder.Checking.Checkers;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
@@ -14,12 +14,12 @@ using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Rules;
 
-namespace Sitecore.Pathfinder.Checking.Checkers
+namespace Sitecore.Pathfinder.Checking.Conventions
 {
     public class ConventionChecker : CheckerBase
     {
         [ImportingConstructor]
-        public ConventionChecker([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] IRuleService ruleService) : base("Conventions", All)
+        public ConventionChecker([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] IRuleService ruleService)
         {
             Configuration = configuration;
             CompositionService = compositionService;
@@ -40,7 +40,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
             CheckConventions(context);
 
             // todo: consider deprecating Json based rules
-            CheckRules(context);
+            CheckJsonRules(context);
         }
 
         protected virtual void CheckConventions([NotNull] ICheckerContext context)
@@ -156,7 +156,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
             }
         }
 
-        protected virtual void CheckRules([NotNull] ICheckerContext context)
+        protected virtual void CheckJsonRules([NotNull] ICheckerContext context)
         {
             var rules = RuleService.ParseRules("check-project:conventions").ToArray();
 

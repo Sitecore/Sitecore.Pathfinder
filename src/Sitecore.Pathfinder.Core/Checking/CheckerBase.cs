@@ -1,32 +1,17 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
-
-using Sitecore.Pathfinder.Diagnostics;
+﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
 
 namespace Sitecore.Pathfinder.Checking
 {
     public abstract class CheckerBase : IChecker
     {
-        protected const string Fields = "Fields,";
-
-        protected const string Items = "Items,";
-
-        protected const string Media = "Media,";
-
-        protected const string TemplateFields = "TemplateFields,";
-
-        protected const string Templates = "Templates,";
-
-        protected const string All = Fields + Items + Media + TemplateFields + Templates;
-
-        protected CheckerBase([NotNull] string name, [NotNull] string categories)
+        protected CheckerBase()
         {
-            Name = name;
-            Categories = categories;
+            Name = GetType().Name;
         }
 
-        public string Name { get; }
+        public string Category { get; protected set; } = string.Empty;
 
-        public string Categories { get; }
+        public string Name { get; }
 
         public abstract void Check(ICheckerContext context);
     }

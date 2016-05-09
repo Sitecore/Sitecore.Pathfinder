@@ -69,6 +69,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppService.cs" />
+    <Compile Include="Checking\Checkers\Check.cs" />
+    <Compile Include="Checking\Checkers\Checker.cs" />
     <Compile Include="Compiling\LayoutFileCompilers\TemplateLayoutFileCompiler.cs" />
     <Compile Include="Projects\IProjectIndexer.cs" />
     <Compile Include="Projects\ProjectIndex.cs" />
@@ -86,8 +88,8 @@
     <Compile Include="Checking\CheckerBase.cs" />
     <Compile Include="Checking\CheckerContext.cs" />
     <Compile Include="Checking\CheckerService.cs" />
-    <Compile Include="Checking\Checkers\ConventionChecker.cs" />
-    <Compile Include="Checking\Checkers\ConventionRuleContext.cs" />
+    <Compile Include="Checking\Conventions\ConventionChecker.cs" />
+    <Compile Include="Checking\Conventions\ConventionRuleContext.cs" />
     <Compile Include="Checking\Checkers\GuidChecker.cs" />
     <Compile Include="Checking\Conventions\ConventionsBase.cs" />
     <Compile Include="Checking\Conventions\ProjectExtensions.cs" />

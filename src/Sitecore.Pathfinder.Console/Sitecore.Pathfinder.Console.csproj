@@ -114,70 +114,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\ReferenceChecker.cs">
-      <Link>files\extensions\checkers\ReferenceChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Files\MediaFileChecker.cs">
-      <Link>files\extensions\checkers\Files\MediaFileChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\ArchiveReminderChecker.cs">
-      <Link>files\extensions\checkers\Items\ArchiveReminderChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\ItemChecker.cs">
-      <Link>files\extensions\checkers\Items\ItemChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\ItemsWithSameDisplayNameChecker.cs">
-      <Link>files\extensions\checkers\Items\ItemsWithSameDisplayNameChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\ItemsWithSameNameChecker.cs">
-      <Link>files\extensions\checkers\Items\ItemsWithSameNameChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\ManyChildrenChecker.cs">
-      <Link>files\extensions\checkers\Items\ManyChildrenChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\ManyVersionsChecker.cs">
-      <Link>files\extensions\checkers\Items\ManyVersionsChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\PublishUnpublishChecker.cs">
-      <Link>files\extensions\checkers\Items\PublishUnpublishChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\TemplateChecker.cs">
-      <Link>files\extensions\checkers\Items\TemplateChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\ValidFromValidToChecker.cs">
-      <Link>files\extensions\checkers\Items\ValidFromValidToChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Templates\DeprecatedFieldTypeChecker.cs">
-      <Link>files\extensions\checkers\Templates\DeprecatedFieldTypeChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Templates\DuplicateTemplateFieldChecker.cs">
-      <Link>files\extensions\checkers\Templates\DuplicateTemplateFieldChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Templates\FieldIdTemplateFieldIdChecker.cs">
-      <Link>files\extensions\checkers\Templates\FieldIdTemplateFieldIdChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Templates\UnusedTemplateChecker.cs">
-      <Link>files\extensions\checkers\Templates\UnusedTemplateChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Templates\UseIdInsteadOfPathChecker.cs">
-      <Link>files\extensions\checkers\Templates\UseIdInsteadOfPathChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\Sitecore.Pathfinder.Checkers\files\project\sitecore.filetemplates\codefirst\ModelCompiler.cs">
       <Link>files\project\sitecore.filetemplates\codefirst\ModelCompiler.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -186,24 +122,72 @@
       <Link>files\project\sitecore.filetemplates\codegenerators\PocoTemplate.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Configuration\TypeAssemblyChecker.cs">
-      <Link>files\extensions\checkers\Configuration\TypeAssemblyChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Fields\LorumIpsumChecker.cs">
-      <Link>files\extensions\checkers\Fields\LorumIpsumChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Fields\NumberChecker.cs">
-      <Link>files\extensions\checkers\Fields\NumberChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Conventions\PathfinderProjectFileSystemConventions.cs">
       <Link>files\extensions\conventions\PathfinderProjectFileSystemConventions.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Conventions\SitecoreTemplateConventions.cs">
       <Link>files\extensions\conventions\SitecoreTemplateConventions.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Configuration\TypeAssemblyChecker.cs">
+      <Link>files\extensions\Checkers\Configuration\TypeAssemblyChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Fields\LorumIpsumChecker.cs">
+      <Link>files\extensions\Checkers\Fields\LorumIpsumChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Fields\NumberChecker.cs">
+      <Link>files\extensions\Checkers\Fields\NumberChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Files\MediaFileChecker.cs">
+      <Link>files\extensions\Checkers\Files\MediaFileChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\ArchiveReminderChecker.cs">
+      <Link>files\extensions\Checkers\Items\ArchiveReminderChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\ItemChecker.cs">
+      <Link>files\extensions\Checkers\Items\ItemChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\ItemsWithSameDisplayNameChecker.cs">
+      <Link>files\extensions\Checkers\Items\ItemsWithSameDisplayNameChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\ItemsWithSameNameChecker.cs">
+      <Link>files\extensions\Checkers\Items\ItemsWithSameNameChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\ManyChildrenChecker.cs">
+      <Link>files\extensions\Checkers\Items\ManyChildrenChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\ManyVersionsChecker.cs">
+      <Link>files\extensions\Checkers\Items\ManyVersionsChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\PublishUnpublishChecker.cs">
+      <Link>files\extensions\Checkers\Items\PublishUnpublishChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Items\ValidFromValidToChecker.cs">
+      <Link>files\extensions\Checkers\Items\ValidFromValidToChecker.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\References.cs">
+      <Link>files\extensions\Checkers\References.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\TemplateHelp.cs">
+      <Link>files\extensions\Checkers\TemplateHelp.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\Checking\Checkers\Templates.cs">
+      <Link>files\extensions\Checkers\Templates.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Compile Include="Tasks\AddProject.cs" />

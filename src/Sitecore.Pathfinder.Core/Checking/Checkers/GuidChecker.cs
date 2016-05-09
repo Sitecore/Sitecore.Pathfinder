@@ -1,4 +1,4 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Linq;
@@ -11,10 +11,6 @@ namespace Sitecore.Pathfinder.Checking.Checkers
 {
     public class GuidChecker : CheckerBase
     {
-        public GuidChecker() : base("Duplicted ID checker", Items + Templates)
-        {
-        }
-
         public override void Check(ICheckerContext context)
         {
             var items = context.Project.ProjectItems.Where(i => !(i is DatabaseProjectItem) || !((DatabaseProjectItem)i).IsImport).ToArray();

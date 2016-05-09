@@ -7,10 +7,6 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
 {
     public class ValidFromValidToChecker : CheckerBase
     {
-        public ValidFromValidToChecker() : base("Valid From/To", Fields)
-        {
-        }
-
         public override void Check(ICheckerContext context)
         {
             foreach (var item in context.Project.Items)

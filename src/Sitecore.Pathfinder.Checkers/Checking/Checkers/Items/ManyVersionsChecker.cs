@@ -6,10 +6,6 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Items
 {
     public class ManyVersionsChecker : CheckerBase
     {
-        public ManyVersionsChecker() : base("Items with many versions", Items)
-        {
-        }
-
         public override void Check(ICheckerContext context)
         {
             foreach (var item in context.Project.Items)

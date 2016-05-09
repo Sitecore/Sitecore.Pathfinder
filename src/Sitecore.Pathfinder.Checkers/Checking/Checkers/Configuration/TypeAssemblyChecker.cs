@@ -16,10 +16,6 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Configuration
 {
     public class TypeAssemblyChecker : CheckerBase
     {
-        public TypeAssemblyChecker() : base("Type/assembly", Media)
-        {
-        }
-
         public override void Check(ICheckerContext context)
         {
             foreach (var configFile in context.Project.ProjectItems.OfType<ConfigFile>())

@@ -1,5 +1,6 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
 
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Globalization;
 using Microsoft.Framework.ConfigurationModel;
@@ -33,6 +34,10 @@ namespace Sitecore.Pathfinder.Checking
 
         public CultureInfo Culture { get; }
 
+        public IEnumerable<string> DisabledCategories { get; private set; }
+
+        public IEnumerable<string> DisabledCheckers { get; private set; }
+
         public bool IsDeployable { get; set; }
 
         public IProject Project { get; private set; }
@@ -48,9 +53,12 @@ namespace Sitecore.Pathfinder.Checking
         [NotNull]
         protected IFactoryService Factory { get; }
 
-        public ICheckerContext With(IProject project)
+        public ICheckerContext With(IProject project, IEnumerable<string> disabledCategories, IEnumerable<string> disabledCheckers)
         {
             Project = project;
+            DisabledCategories = disabledCategories;
+            DisabledCheckers = disabledCheckers;
+
             Trace = new ProjectDiagnosticTraceService(Configuration, Console, Factory).With(Project);
 
             return this;

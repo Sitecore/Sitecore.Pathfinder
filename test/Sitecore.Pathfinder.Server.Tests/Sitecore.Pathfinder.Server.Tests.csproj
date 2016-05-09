@@ -73,7 +73,6 @@
     <None Include="App_Config\Prototypes.config" />
     <None Include="App_Config\Security\Domains.config" />
     <None Include="App_Config\Security\GlobalRoles.config" />
-    <None Include="App_Config\Sitecore.config" />
     <None Include="App_Config\XamlSharp.config" />
     <None Include="packages.config" />
     <None Include="Web.config">

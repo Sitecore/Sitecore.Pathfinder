@@ -1,11 +1,11 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using Sitecore.Pathfinder.Diagnostics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Microsoft.Framework.ConfigurationModel;
-using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 
@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Checking
     public class CheckerService : ICheckerService
     {
         [ImportingConstructor]
-        public CheckerService([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull, ImportMany, ItemNotNull] IEnumerable<IChecker> checkers)
+        public CheckerService([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull, ItemNotNull, ImportMany] IEnumerable<IChecker> checkers)
         {
             Configuration = configuration;
             CompositionService = compositionService;
@@ -36,20 +36,19 @@ namespace Sitecore.Pathfinder.Checking
 
         public virtual void CheckProject(IProject project)
         {
-            var context = CompositionService.Resolve<ICheckerContext>().With(project);
-
             var disabledCategories = Configuration.GetCommaSeparatedStringList(Constants.Configuration.CheckProjectDisabledCategories);
             var disabledCheckers = Configuration.GetCommaSeparatedStringList(Constants.Configuration.CheckProjectDisabledCheckers);
 
+            var context = CompositionService.Resolve<ICheckerContext>().With(project, disabledCategories, disabledCheckers);
+
             foreach (var checker in Checkers)
             {
-                if (disabledCheckers.Any(disabledChecker => string.Equals(checker.Name, disabledChecker, StringComparison.OrdinalIgnoreCase)))
+                if (context.DisabledCheckers.Any(c => string.Equals(checker.Name, c, StringComparison.OrdinalIgnoreCase)))
                 {
                     continue;
                 }
 
-                var categories = checker.Categories.Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToArray();
-                if (categories.Any(c => disabledCategories.Contains(c)))
+                if (context.DisabledCheckers.Any(c => string.Equals(checker.Category, c, StringComparison.OrdinalIgnoreCase)))
                 {
                     continue;
                 }
