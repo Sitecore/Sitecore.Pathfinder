@@ -40,19 +40,21 @@ namespace Sitecore.Pathfinder.Tasks.SynchronizeWebsites
                     return;
                 }
 
-                var writer = new StringWriter();
-                var output = new XmlTextWriter(writer)
+                using (var writer = new StringWriter())
                 {
-                    Formatting = Formatting.Indented
-                };
+                    var output = new XmlTextWriter(writer)
+                    {
+                        Formatting = Formatting.Indented
+                    };
 
-                WriteItem(output, item, fieldsToWrite, true);
+                    WriteItem(output, item, fieldsToWrite, true);
 
-                zip.AddEntry(fileName, Encoding.UTF8.GetBytes(writer.ToString()));
+                    zip.AddEntry(fileName, Encoding.UTF8.GetBytes(writer.ToString()));
+                }
             }
         }
 
-        private void WriteItem([Diagnostics.NotNull] XmlTextWriter output, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull][ItemNotNull] IEnumerable<string> fieldsToWrite, bool writeParentItemPath)
+        private void WriteItem([Diagnostics.NotNull] XmlTextWriter output, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull, ItemNotNull] IEnumerable<string> fieldsToWrite, bool writeParentItemPath)
         {
             if (item.TemplateID == TemplateIDs.Template)
             {

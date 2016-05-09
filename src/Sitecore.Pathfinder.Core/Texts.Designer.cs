@@ -674,6 +674,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Files imported.
+        /// </summary>
+        public static string Files_imported {
+            get {
+                return ResourceManager.GetString("Files_imported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Format not found.
         /// </summary>
         public static string Format_not_found {
@@ -1219,7 +1228,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Restoring.
+        ///   Looks up a localized string similar to Restoring dependency package.
         /// </summary>
         public static string Restoring {
             get {
@@ -1550,6 +1559,15 @@ namespace Sitecore.Pathfinder {
         public static string Whoops__scc_exe_cannot_run_in_is_own_directory_ {
             get {
                 return ResourceManager.GetString("Whoops__scc_exe_cannot_run_in_is_own_directory_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Writing files and items....
+        /// </summary>
+        public static string Writing_files_and_items___ {
+            get {
+                return ResourceManager.GetString("Writing_files_and_items___", resourceCulture);
             }
         }
         

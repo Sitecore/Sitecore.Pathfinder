@@ -32,7 +32,12 @@ namespace Sitecore.Pathfinder.Tasks
                 foreach (var entry in zip.Entries)
                 {
                     context.Trace.TraceInformation(Msg.S1002, entry.FullName);
-                    entry.ExtractToFile(Path.Combine(context.ProjectDirectory, entry.FullName), true);
+
+                    var destinationFileName = Path.Combine(context.ProjectDirectory, entry.FullName);
+
+                    context.FileSystem.CreateDirectoryFromFileName(destinationFileName);
+
+                    entry.ExtractToFile(destinationFileName, true);
                 }
             }
 

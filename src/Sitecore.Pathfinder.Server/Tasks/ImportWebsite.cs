@@ -3,6 +3,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
+using System.Text;
+using System.Web.Mvc;
 using Sitecore.Data.Items;
 using Sitecore.IO;
 using Sitecore.Pathfinder.Configuration;
@@ -13,6 +15,7 @@ using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.IO.PathMappers;
 using Sitecore.Pathfinder.Languages;
 using Sitecore.Pathfinder.Projects;
+using Sitecore.Zip;
 
 namespace Sitecore.Pathfinder.Tasks
 {
@@ -20,10 +23,9 @@ namespace Sitecore.Pathfinder.Tasks
     public class ImportWebsite : WebsiteTaskBase
     {
         [ImportingConstructor]
-        public ImportWebsite([Diagnostics.NotNull] IFactoryService factory, [Diagnostics.NotNull] IFileSystemService fileSystem, [Diagnostics.NotNull] ILanguageService languageService, [Diagnostics.NotNull] IPathMapperService pathMapper, [Diagnostics.NotNull] IItemImporterService itemImporter) : base("server:import-website")
+        public ImportWebsite([Diagnostics.NotNull] IFactoryService factory, [Diagnostics.NotNull] ILanguageService languageService, [Diagnostics.NotNull] IPathMapperService pathMapper, [Diagnostics.NotNull] IItemImporterService itemImporter) : base("server:import-website")
         {
             Factory = factory;
-            FileSystem = fileSystem;
             LanguageService = languageService;
             PathMapper = pathMapper;
             ItemImporter = itemImporter;
@@ -49,20 +51,29 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IWebsiteTaskContext context)
         {
-            WebsiteDirectory = FileUtil.MapPath("/");
+            TempFolder.EnsureFolder();
 
-            foreach (var mapper in PathMapper.WebsiteItemPathToProjectDirectories)
+            var fileName = FileUtil.MapPath(TempFolder.GetFilename("Pathfinder.ImportWebsite.zip"));
+
+            using (var zip = new ZipWriter(fileName))
             {
-                ImportItems(context, mapper);
+                WebsiteDirectory = FileUtil.MapPath("/");
+
+                foreach (var mapper in PathMapper.WebsiteItemPathToProjectDirectories)
+                {
+                    ImportItems(context, zip, mapper);
+                }
+
+                foreach (var mapper in PathMapper.WebsiteDirectoryToProjectDirectories)
+                {
+                    ImportFiles(context, zip, mapper);
+                }
             }
 
-            foreach (var mapper in PathMapper.WebsiteDirectoryToProjectDirectories)
-            {
-                ImportFiles(context, mapper);
-            }
+            context.ActionResult = new FilePathResult(fileName, "application/zip");
         }
 
-        protected virtual void ImportFiles([Diagnostics.NotNull] IWebsiteTaskContext context, [Diagnostics.NotNull] IWebsiteToProjectFileNameMapper mapper)
+        protected virtual void ImportFiles([Diagnostics.NotNull] IWebsiteTaskContext context, [NotNull] ZipWriter zip, [Diagnostics.NotNull] IWebsiteToProjectFileNameMapper mapper)
         {
             var sourceDirectory = PathHelper.NormalizeFilePath(Path.Combine(WebsiteDirectory, PathHelper.NormalizeFilePath(mapper.WebsiteDirectory).TrimStart('\\'))).TrimEnd('\\');
 
@@ -71,51 +82,56 @@ namespace Sitecore.Pathfinder.Tasks
                 return;
             }
 
-            ImportFiles(context, mapper, FileUtil.MapPath("/"), FileUtil.MapPath(PathHelper.NormalizeItemPath(mapper.WebsiteDirectory)));
+            ImportFiles(context, zip, mapper, FileUtil.MapPath("/"), FileUtil.MapPath(PathHelper.NormalizeItemPath(mapper.WebsiteDirectory)));
         }
 
-        protected virtual void ImportFiles([Diagnostics.NotNull] IWebsiteTaskContext context, [Diagnostics.NotNull] IWebsiteToProjectFileNameMapper mapper, [Diagnostics.NotNull] string websiteDirectory, [Diagnostics.NotNull] string directoryOrFileName)
+        protected virtual void ImportFiles([Diagnostics.NotNull] IWebsiteTaskContext context, [NotNull] ZipWriter zip, [Diagnostics.NotNull] IWebsiteToProjectFileNameMapper mapper, [Diagnostics.NotNull] string websiteDirectory, [Diagnostics.NotNull] string directoryOrFileName)
         {
             var websiteDirectoryOrFileName = '\\' + PathHelper.UnmapPath(websiteDirectory, directoryOrFileName);
 
-            if (File.Exists(directoryOrFileName))
+            if (context.FileSystem.FileExists(directoryOrFileName))
             {
                 string projectFileName;
                 if (mapper.TryGetProjectFileName(websiteDirectoryOrFileName, out projectFileName))
                 {
-                    FileSystem.Copy(directoryOrFileName, Path.Combine(context.App.ProjectDirectory, projectFileName));
+                    zip.AddEntry(projectFileName, directoryOrFileName);
                 }
 
                 return;
             }
 
-            if (Directory.Exists(directoryOrFileName))
+            if (context.FileSystem.DirectoryExists(directoryOrFileName))
             {
                 string projectFileName;
                 if (mapper.TryGetProjectFileName(websiteDirectoryOrFileName, out projectFileName))
                 {
-                    FileSystem.XCopy(directoryOrFileName, Path.Combine(context.App.ProjectDirectory, projectFileName));
+                    foreach (var fileName in context.FileSystem.GetFiles(websiteDirectoryOrFileName, "*", SearchOption.AllDirectories))
+                    {
+                        var f = PathHelper.RemapDirectory(fileName, directoryOrFileName, projectFileName);
+                        zip.AddEntry(projectFileName, f);
+                    }
+
                     return;
                 }
             }
 
-            if (!Directory.Exists(directoryOrFileName))
+            if (!context.FileSystem.DirectoryExists(directoryOrFileName))
             {
                 return;
             }
 
-            foreach (var fileName in Directory.GetFiles(directoryOrFileName, "*", SearchOption.TopDirectoryOnly))
+            foreach (var fileName in context.FileSystem.GetFiles(directoryOrFileName, "*"))
             {
-                ImportFiles(context, mapper, websiteDirectory, fileName);
+                ImportFiles(context, zip, mapper, websiteDirectory, fileName);
             }
 
-            foreach (var directory in Directory.GetDirectories(directoryOrFileName, "*", SearchOption.TopDirectoryOnly))
+            foreach (var directory in context.FileSystem.GetDirectories(directoryOrFileName))
             {
-                ImportFiles(context, mapper, websiteDirectory, directory);
+                ImportFiles(context, zip, mapper, websiteDirectory, directory);
             }
         }
 
-        protected virtual void ImportItems([Diagnostics.NotNull] IWebsiteTaskContext context, [Diagnostics.NotNull] IItemPathToProjectFileNameMapper mapper)
+        protected virtual void ImportItems([Diagnostics.NotNull] IWebsiteTaskContext context, [NotNull] ZipWriter zip, [Diagnostics.NotNull] IItemPathToProjectFileNameMapper mapper)
         {
             var project = context.CompositionService.Resolve<IProject>();
 
@@ -136,10 +152,10 @@ namespace Sitecore.Pathfinder.Tasks
 
             var excludedFields = context.Configuration.GetCommaSeparatedStringList(Constants.Configuration.ProjectWebsiteMappingsExcludedFields);
 
-            ImportItems(context, mapper, project, language, item, excludedFields);
+            ImportItems(context, zip, mapper, project, language, item, excludedFields);
         }
 
-        protected virtual void ImportItems([Diagnostics.NotNull] IWebsiteTaskContext context, [Diagnostics.NotNull] IItemPathToProjectFileNameMapper mapper, [Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull, ItemNotNull] IEnumerable<string> excludedFields)
+        protected virtual void ImportItems([Diagnostics.NotNull] IWebsiteTaskContext context, ZipWriter zip, [Diagnostics.NotNull] IItemPathToProjectFileNameMapper mapper, [Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull, ItemNotNull] IEnumerable<string> excludedFields)
         {
             string projectFileName;
             string format;
@@ -148,55 +164,51 @@ namespace Sitecore.Pathfinder.Tasks
                 // template sections and fields are handled by importing the template
                 if (item.TemplateID != TemplateIDs.TemplateSection && item.TemplateID != TemplateIDs.TemplateField)
                 {
-                    var fileName = Path.Combine(context.App.ProjectDirectory, projectFileName);
-
-                    FileSystem.CreateDirectoryFromFileName(fileName);
-
                     if (item.Template.ID == TemplateIDs.Template)
                     {
-                        WriteTemplate(project, item, fileName, language);
+                        WriteTemplate(zip, project, item, projectFileName, language);
                     }
                     else
                     {
-                        WriteItem(project, item, fileName, language, excludedFields);
+                        WriteItem(zip, project, item, projectFileName, language, excludedFields);
                     }
                 }
             }
 
             foreach (Item child in item.Children)
             {
-                ImportItems(context, mapper, project, language, child, excludedFields);
+                ImportItems(context, zip, mapper, project, language, child, excludedFields);
             }
         }
 
-        protected virtual void WriteItem([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull, ItemNotNull] IEnumerable<string> excludedFields)
+        protected virtual void WriteItem([NotNull] ZipWriter zip, [Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string projectFileName, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull, ItemNotNull] IEnumerable<string> excludedFields)
         {
             var itemToWrite = ItemImporter.ImportItem(project, item, language, excludedFields);
 
-            using (var stream = new StreamWriter(fileName))
+            using (var writer = new StringWriter())
             {
-                language.WriteItem(stream, itemToWrite);
+                language.WriteItem(writer, itemToWrite);
+                zip.AddEntry(projectFileName, Encoding.UTF8.GetBytes(writer.ToString()));
             }
 
             // write media file
             if (!string.IsNullOrEmpty(item["Blob"]))
             {
                 var mediaItem = new MediaItem(item);
-                var mediaFileName = PathHelper.GetDirectoryAndFileNameWithoutExtensions(fileName) + "." + mediaItem.Extension;
+                var mediaFileName = PathHelper.GetDirectoryAndFileNameWithoutExtensions(projectFileName) + "." + mediaItem.Extension;
 
-                using (var stream = new FileStream(mediaFileName, FileMode.Create))
-                {
-                    FileUtil.CopyStream(mediaItem.GetMediaStream(), stream);
-                }
+                zip.AddEntry(mediaFileName, mediaItem.GetMediaStream());
             }
         }
 
-        protected virtual void WriteTemplate([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] ILanguage language)
+        protected virtual void WriteTemplate([NotNull] ZipWriter zip, [Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string projectFileName, [Diagnostics.NotNull] ILanguage language)
         {
             var template = ItemImporter.ImportTemplate(project, item);
-            using (var stream = new StreamWriter(fileName))
+
+            using (var writer = new StringWriter())
             {
-                language.WriteTemplate(stream, template);
+                language.WriteTemplate(writer, template);
+                zip.AddEntry(projectFileName, Encoding.UTF8.GetBytes(writer.ToString()));
             }
         }
     }

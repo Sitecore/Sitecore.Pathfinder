@@ -636,4 +636,10 @@
     <data name="Restoring" xml:space="preserve">
     <value>Restoring dependency package</value>
   </data>
+    <data name="Writing_files_and_items___" xml:space="preserve">
+    <value>Writing files and items...</value>
+  </data>
+    <data name="Files_imported" xml:space="preserve">
+    <value>Files imported</value>
+  </data>
 </root>
