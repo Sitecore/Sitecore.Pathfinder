@@ -37,7 +37,6 @@ namespace Sitecore.Pathfinder.Parsing.References
             return pipeline.Reference;
         }
 
-        [ItemNotNull]
         public virtual IEnumerable<IReference> ParseReferences<T>(IProjectItem projectItem, SourceProperty<T> sourceProperty)
         {
             var sourceTextNode = sourceProperty.SourceTextNode;
@@ -49,7 +48,6 @@ namespace Sitecore.Pathfinder.Parsing.References
             return ParseReferences(projectItem, sourceTextNode);
         }
 
-        [ItemNotNull]
         public virtual IEnumerable<IReference> ParseReferences(IProjectItem projectItem, ITextNode textNode)
         {
             var text = textNode.Value;

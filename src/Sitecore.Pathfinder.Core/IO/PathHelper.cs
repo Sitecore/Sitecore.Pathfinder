@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.IO;
@@ -181,6 +181,22 @@ namespace Sitecore.Pathfinder.IO
             }
 
             return result;
+        }
+
+        public static bool IsProbablyItemPath([NotNull] string itemPath)
+        {
+            if (!itemPath.StartsWith("/sitecore", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return false;
+            }
+
+            var extension = GetExtension(itemPath);
+            if (!string.IsNullOrEmpty(extension))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public static bool MatchesPattern([NotNull] string fileName, [NotNull] string pattern)

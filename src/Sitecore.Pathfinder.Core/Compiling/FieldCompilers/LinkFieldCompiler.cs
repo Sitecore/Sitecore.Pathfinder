@@ -30,6 +30,11 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 return string.Empty;
             }
 
+            if (qualifiedName == "<link />")
+            {
+                return string.Empty;
+            }
+
             var item = field.Item.Project.FindQualifiedItem<IProjectItem>(qualifiedName);
             if (item == null)
             {

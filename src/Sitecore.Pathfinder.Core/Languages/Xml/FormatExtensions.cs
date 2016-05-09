@@ -174,17 +174,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
 
             foreach (var field in sharedFields)
             {
-                if (string.Equals(field.TemplateField.Type, "Layout", StringComparison.OrdinalIgnoreCase) || string.Equals(field.FieldName, "__Renderings", StringComparison.OrdinalIgnoreCase) || string.Equals(field.FieldName, "__Final Renderings", StringComparison.OrdinalIgnoreCase))
-                {
-                    field.Value.ToXElement()?.WriteTo(output);
-                    continue;
-                }
-
-                output.WriteStartElement("Field");
-                output.WriteAttributeString("Name", field.FieldName);
-
-                output.WriteRaw(EscapeFieldValue(field.Value));
-                output.WriteEndElement();
+                WriteField(output, field);
             }
 
             foreach (var language in unversionedFields.Select(f => f.Language).Distinct())
@@ -194,16 +184,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
 
                 foreach (var field in unversionedFields.Where(f => f.Language == language))
                 {
-                    if (string.Equals(field.TemplateField.Type, "Layout", StringComparison.OrdinalIgnoreCase) || string.Equals(field.FieldName, "__Renderings", StringComparison.OrdinalIgnoreCase) || string.Equals(field.FieldName, "__Final Renderings", StringComparison.OrdinalIgnoreCase))
-                    {
-                        field.Value.ToXElement()?.WriteTo(output);
-                        continue;
-                    }
-
-                    output.WriteStartElement("Field");
-                    output.WriteAttributeString("Name", field.FieldName);
-                    output.WriteRaw(EscapeFieldValue(field.Value));
-                    output.WriteEndElement();
+                    WriteField(output, field);
                 }
 
                 output.WriteEndElement();
@@ -221,16 +202,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
 
                     foreach (var field in versionedFields.Where(f => f.Language == language && f.Version == version))
                     {
-                        if (string.Equals(field.TemplateField.Type, "Layout", StringComparison.OrdinalIgnoreCase) || string.Equals(field.FieldName, "__Renderings", StringComparison.OrdinalIgnoreCase) || string.Equals(field.FieldName, "__Final Renderings", StringComparison.OrdinalIgnoreCase))
-                        {
-                            field.Value.ToXElement()?.WriteTo(output);
-                            continue;
-                        }
-
-                        output.WriteStartElement("Field");
-                        output.WriteAttributeString("Name", field.FieldName);
-                        output.WriteRaw(EscapeFieldValue(field.Value));
-                        output.WriteEndElement();
+                        WriteField(output, field);
                     }
 
                     output.WriteEndElement();
@@ -244,6 +216,53 @@ namespace Sitecore.Pathfinder.Languages.Xml
             if (writeInner != null)
             {
                 writeInner(writer);
+            }
+
+            output.WriteEndElement();
+        }
+
+        private static void WriteField([NotNull] XmlTextWriter output, [NotNull] Field field)
+        {
+            output.WriteStartElement("Field");
+            output.WriteAttributeString("Name", field.FieldName);
+
+            var written = false;
+            var value = field.Value;
+
+            // handle checkboxes
+            if (string.Equals(field.TemplateField.Type, "Checkbox", StringComparison.OrdinalIgnoreCase))
+            {
+                if (value == "1")
+                {
+                    value = "True";
+                }
+                else if (value == "0" || string.IsNullOrEmpty(value))
+                {
+                    value = "False";
+                }
+            }
+
+            // if value is valid xml with a single root node, output it raw
+            if (value.TrimStart().StartsWith("<"))
+            {
+                var xml = value.ToXElement();
+                if (xml != null)
+                {
+                    xml.WriteTo(output);
+                    written = true;
+                }
+            }
+
+            if (!written)
+            {
+                if (value.IndexOf('<') >= 0)
+                {
+                    output.WriteCData(value);
+                }
+                else
+                {
+                    output.WriteValue(value);
+                }
             }
 
             output.WriteEndElement();
@@ -292,13 +311,6 @@ namespace Sitecore.Pathfinder.Languages.Xml
             }
 
             output.WriteEndElement();
-        }
-
-        [NotNull]
-        private static string EscapeFieldValue([NotNull] string value)
-        {
-            // todo: hmm... unsure how to escape it
-            return value.Replace("&", "&amp;");
         }
 
         private static void WriteAsXml([NotNull] XmlTextWriter output, [NotNull] DeviceBuilder deviceBuilder, [NotNull] RenderingBuilder renderingBuilder)

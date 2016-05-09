@@ -25,7 +25,7 @@
         "search-pattern": "*",
 
         // fields to exclude when importing a website
-        "excluded-fields": "__Created, __Created by, __Owner, __Revision, __Updated, __Updated by, Blob, Originator",
+        "excluded-fields": "__Created, __Created by, __Owner, __Revision, __Updated, __Updated by, Blob, Originator, __PathfinderProjectUniqueIds",
 
         // mapping items and files to website when building a project
         "project-to-website": {

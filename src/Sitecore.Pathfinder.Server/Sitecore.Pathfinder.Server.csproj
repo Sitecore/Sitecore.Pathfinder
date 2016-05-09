@@ -157,6 +157,7 @@
     <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="Extensions\DatabaseExtensions.cs" />
     <Compile Include="Extensions\ItemExtensions.cs" />
+    <Compile Include="Importing\FieldImporters\CheckboxValueImporter.cs" />
     <Compile Include="Importing\ItemImporters\IItemImporterService.cs" />
     <Compile Include="Importing\ItemImporters\ItemImporterService.cs" />
     <Compile Include="Tasks\BackgroundJob.cs" />

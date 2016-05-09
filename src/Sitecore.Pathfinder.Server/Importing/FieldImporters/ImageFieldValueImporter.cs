@@ -5,7 +5,7 @@ using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Pathfinder.Languages;
 
-namespace Sitecore.Pathfinder.Importing
+namespace Sitecore.Pathfinder.Importing.FieldImporters
 {
     public class ImageFieldValueImporter : FieldValueImporterBase
     {
@@ -16,6 +16,11 @@ namespace Sitecore.Pathfinder.Importing
 
         public override string Import(Field field, Item item, ILanguage language, string value)
         {
+            if (value == "<image />")
+            {
+                return string.Empty;
+            }
+
             var imageField = new ImageField(field);
             return imageField.MediaItem?.Paths.Path ?? value;
         }
