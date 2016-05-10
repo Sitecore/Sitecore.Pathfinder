@@ -74,9 +74,7 @@ namespace Sitecore.Pathfinder
 
             public const string CheckBinFileVersion = "install-package:check-bin-file-version";
 
-            public const string CheckProjectDisabledCategories = "check-project:disabled-categories";
-
-            public const string CheckProjectDisabledCheckers = "check-project:disabled-checkers";
+            public const string CheckProjectCheckers = "check-project:checkers";
 
             public const string CodeGen = "codegen";
 
@@ -149,6 +147,8 @@ namespace Sitecore.Pathfinder
             public const string ProjectExtensionsDirectory = "extensions:project-extensions-directory";
 
             public const string ProjectRole = "project-role";
+
+            public const string ProjectRoleCheckers = "project-role-checkers";
 
             public const string ProjectUniqueId = "project-unique-id";
 

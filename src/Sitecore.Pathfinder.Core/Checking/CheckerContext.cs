@@ -1,6 +1,5 @@
-﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Globalization;
 using Microsoft.Framework.ConfigurationModel;
@@ -11,14 +10,13 @@ using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Checking
 {
-    [Export(typeof(ICheckerContext))]
+    [Export(typeof(ICheckerContext)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class CheckerContext : ICheckerContext
     {
         [ImportingConstructor]
-        public CheckerContext([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] IConsoleService console, [NotNull] IFactoryService factory)
+        public CheckerContext([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] IFactoryService factory)
         {
             Configuration = configuration;
-            CompositionService = compositionService;
             Console = console;
             Factory = factory;
 
@@ -28,15 +26,9 @@ namespace Sitecore.Pathfinder.Checking
 
         public int CheckCount { get; set; }
 
-        public ICompositionService CompositionService { get; }
-
-        public int ConventionCount { get; set; }
-
         public CultureInfo Culture { get; }
 
-        public IEnumerable<string> DisabledCategories { get; private set; }
-
-        public IEnumerable<string> DisabledCheckers { get; private set; }
+        public bool IsAborted { get; set; }
 
         public bool IsDeployable { get; set; }
 
@@ -53,11 +45,9 @@ namespace Sitecore.Pathfinder.Checking
         [NotNull]
         protected IFactoryService Factory { get; }
 
-        public ICheckerContext With(IProject project, IEnumerable<string> disabledCategories, IEnumerable<string> disabledCheckers)
+        public ICheckerContext With(IProject project)
         {
             Project = project;
-            DisabledCategories = disabledCategories;
-            DisabledCheckers = disabledCheckers;
 
             Trace = new ProjectDiagnosticTraceService(Configuration, Console, Factory).With(Project);
 

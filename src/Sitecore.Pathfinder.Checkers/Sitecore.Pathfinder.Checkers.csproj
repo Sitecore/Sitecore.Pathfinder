@@ -7,7 +7,7 @@
     <ProjectGuid>{0DAB8EEC-C4A6-4B27-9C21-6D2F4E32CB76}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sitecore.Pathfinder</RootNamespace>
+    <RootNamespace>Sitecore.Pathfinder.Checkers</RootNamespace>
     <AssemblyName>Sitecore.Pathfinder.Checkers</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -50,23 +50,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Checking\Checkers\Configuration\TypeAssemblyChecker.cs" />
-    <Compile Include="Checking\Checkers\Fields\NumberChecker.cs" />
-    <Compile Include="Checking\Checkers\Items\ArchiveReminderChecker.cs" />
-    <Compile Include="Checking\Checkers\Items\ItemsWithSameDisplayNameChecker.cs" />
-    <Compile Include="Checking\Checkers\Fields\LorumIpsumChecker.cs" />
-    <Compile Include="Checking\Checkers\Items\ManyChildrenChecker.cs" />
-    <Compile Include="Checking\Checkers\Items\ManyVersionsChecker.cs" />
-    <Compile Include="Checking\Checkers\Items\PublishUnpublishChecker.cs" />
-    <Compile Include="Checking\Checkers\Items\ValidFromValidToChecker.cs" />
-    <Compile Include="Checking\Checkers\TemplateHelp.cs" />
-    <Compile Include="Checking\Checkers\Items\ItemsWithSameNameChecker.cs" />
-    <Compile Include="Checking\Checkers\Templates.cs" />
-    <Compile Include="Checking\Checkers\Items\ItemChecker.cs" />
-    <Compile Include="Checking\Checkers\Files\MediaFileChecker.cs" />
-    <Compile Include="Checking\Checkers\References.cs" />
-    <Compile Include="Checking\Conventions\PathfinderProjectFileSystemConventions.cs" />
-    <Compile Include="Checking\Conventions\SitecoreTemplateConventions.cs" />
+    <Compile Include="files\extensions\checkers\ConfigurationChecker.cs" />
+    <Compile Include="files\extensions\checkers\FieldsChecker.cs" />
+    <Compile Include="files\extensions\checkers\FilesChecker.cs" />
+    <Compile Include="files\extensions\checkers\ItemsChecker.cs" />
+    <Compile Include="files\extensions\checkers\TemplateHelpChecker.cs" />
+    <Compile Include="files\extensions\checkers\TemplatesChecker.cs" />
+    <Compile Include="files\extensions\checkers\ReferencesChecker.cs" />
+    <Compile Include="files\extensions\conventions\PathfinderProjectFileSystemConventions.cs" />
+    <Compile Include="files\extensions\conventions\SitecoreTemplateConventions.cs" />
     <Compile Include="files\project\sitecore.filetemplates\codegenerators\PocoTemplate.cs" />
     <Compile Include="files\project\sitecore.filetemplates\codefirst\ModelCompiler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

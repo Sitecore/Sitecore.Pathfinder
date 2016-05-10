@@ -1,5 +1,6 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
@@ -9,11 +10,9 @@ namespace Sitecore.Pathfinder.Checking
     public interface ICheckerService
     {
         [NotNull, ItemNotNull]
-        IEnumerable<IChecker> Checkers { get; }
+        IEnumerable<Func<ICheckerContext, IEnumerable<Diagnostic>>> Checkers { get; }
 
-        int LastCheckerCount { get; }
-
-        int LastConventionCount { get; }
+        int EnabledCheckersCount { get; }
 
         void CheckProject([NotNull] IProject project);
     }

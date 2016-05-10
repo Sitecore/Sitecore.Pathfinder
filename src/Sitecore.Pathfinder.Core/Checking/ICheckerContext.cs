@@ -1,7 +1,6 @@
-﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Globalization;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
@@ -10,21 +9,10 @@ namespace Sitecore.Pathfinder.Checking
 {
     public interface ICheckerContext
     {
-        int CheckCount { get; set; }
-
-        [NotNull]
-        ICompositionService CompositionService { get; }
-
-        int ConventionCount { get; set; }
-
         [NotNull]
         CultureInfo Culture { get; }
 
-        [NotNull, ItemNotNull]
-        IEnumerable<string> DisabledCategories { get; }
-
-        [NotNull, ItemNotNull]
-        IEnumerable<string> DisabledCheckers { get; }
+        bool IsAborted { get; set; }
 
         bool IsDeployable { get; set; }
 
@@ -35,6 +23,6 @@ namespace Sitecore.Pathfinder.Checking
         ITraceService Trace { get; }
 
         [NotNull]
-        ICheckerContext With([NotNull] IProject project, [NotNull, ItemNotNull] IEnumerable<string> disabledCategories, [NotNull, ItemNotNull] IEnumerable<string> disabledCheckers);
+        ICheckerContext With([NotNull] IProject project);
     }
 }

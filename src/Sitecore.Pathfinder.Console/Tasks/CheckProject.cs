@@ -52,10 +52,9 @@ namespace Sitecore.Pathfinder.Tasks
             var errors = context.Project.Diagnostics.Count(d => d.Severity == Severity.Error);
             var warnings = context.Project.Diagnostics.Count(d => d.Severity == Severity.Warning);
             var messages = context.Project.Diagnostics.Count(d => d.Severity == Severity.Information);
-            var checkers = CheckerService.LastCheckerCount;
-            var conventions = CheckerService.LastConventionCount;
+            var checkers = CheckerService.EnabledCheckersCount;
 
-            context.Trace.TraceInformation(Msg.C1042, $"Errors: {errors}, warnings: {warnings}, messages: {messages}, checks: {checkers}, conventions: {conventions}");
+            context.Trace.TraceInformation(Msg.C1042, $"Errors: {errors}, warnings: {warnings}, messages: {messages}, checks: {checkers}");
         }
     }
 }

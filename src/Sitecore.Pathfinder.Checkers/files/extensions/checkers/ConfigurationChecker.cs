@@ -1,22 +1,27 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+// � 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using Sitecore.Pathfinder.Checking;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Languages.BinFiles;
 using Sitecore.Pathfinder.Languages.ConfigFiles;
+using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
 
-namespace Sitecore.Pathfinder.Checking.Checkers.Configuration
+namespace Sitecore.Pathfinder.Checkers
 {
-    public class TypeAssemblyChecker : CheckerBase
+    public class ConfigurationChecker : Checker
     {
-        public override void Check(ICheckerContext context)
+        [Export("Check")]
+        public IEnumerable<Diagnostic> TypeNotFound(ICheckerContext context)
         {
             foreach (var configFile in context.Project.ProjectItems.OfType<ConfigFile>())
             {
@@ -104,7 +109,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers.Configuration
                     var lineInfo = (IXmlLineInfo)element;
                     var textSpan = lineInfo != null ? new TextSpan(lineInfo.LineNumber, lineInfo.LinePosition, 0) : TextSpan.Empty;
 
-                    context.Trace.TraceWarning(Msg.C1054, "Type does not exist in a referenced assembly", fileName, textSpan, element.GetAttributeValue("type"));
+                    yield return Warning(Msg.C1054, "Type does not exist in a referenced assembly", fileName, textSpan, element.GetAttributeValue("type"));
                 }
             }
         }

@@ -1,17 +1,22 @@
-// © 2016 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checking.Checkers
 {
-    public class GuidChecker : CheckerBase
+    public class GuidChecker : Checker
     {
-        public override void Check(ICheckerContext context)
+        [NotNull, ItemNotNull, Export("Check")]
+        public IEnumerable<Diagnostic> GuidClash([NotNull] ICheckerContext context)
         {
             var items = context.Project.ProjectItems.Where(i => !(i is DatabaseProjectItem) || !((DatabaseProjectItem)i).IsImport).ToArray();
 
@@ -46,8 +51,9 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                         continue;
                     }
 
-                    context.Trace.TraceError(Msg.C1001, Texts.Unique_ID_clash, projectItem1.Snapshots.First().SourceFile, PathHelper.UnmapPath(context.Project.Options.ProjectDirectory, projectItem2.Snapshots.First().SourceFile.AbsoluteFileName));
                     context.IsDeployable = false;
+
+                    yield return Error(Msg.C1001, Texts.Unique_ID_clash, TraceHelper.GetTextNode(item2, item1), PathHelper.UnmapPath(context.Project.Options.ProjectDirectory, projectItem2.Snapshots.First().SourceFile.AbsoluteFileName));
                 }
             }
         }

@@ -185,18 +185,13 @@ namespace Sitecore.Pathfinder.IO
 
         public static bool IsProbablyItemPath([NotNull] string itemPath)
         {
-            if (!itemPath.StartsWith("/sitecore", StringComparison.InvariantCultureIgnoreCase))
+            if (!itemPath.StartsWith("/sitecore/", StringComparison.InvariantCultureIgnoreCase))
             {
                 return false;
             }
 
             var extension = GetExtension(itemPath);
-            if (!string.IsNullOrEmpty(extension))
-            {
-                return false;
-            }
-
-            return true;
+            return string.IsNullOrEmpty(extension);
         }
 
         public static bool MatchesPattern([NotNull] string fileName, [NotNull] string pattern)

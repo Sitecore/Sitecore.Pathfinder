@@ -25,16 +25,6 @@ namespace Sitecore.Pathfinder.Checking.Conventions
             return project.FileSystem.DirectoryExists(directory);
         }
 
-        public static bool EndsWithIgnoreCase([NotNull] this string s0, [NotNull] string s1)
-        {
-            return s0.EndsWith(s1, StringComparison.OrdinalIgnoreCase);
-        }
-
-        public static bool EqualsIgnoreCase([NotNull] this string s0, [NotNull] string s1)
-        {
-            return string.Equals(s0, s1, StringComparison.OrdinalIgnoreCase);
-        }
-
         public static bool FileExists([NotNull] this IProject project, [NotNull] string fileName)
         {
             Assert.IsNotNullOrEmpty(fileName);
@@ -47,11 +37,6 @@ namespace Sitecore.Pathfinder.Checking.Conventions
             fileName = Path.Combine(project.Options.ProjectDirectory, PathHelper.NormalizeFilePath(fileName.Mid(2)));
 
             return project.FileSystem.FileExists(fileName);
-        }
-
-        public static bool StartsWithIgnoreCase([NotNull] this string s0, [NotNull] string s1)
-        {
-            return s0.StartsWith(s1, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

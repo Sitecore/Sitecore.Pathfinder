@@ -10,7 +10,7 @@
     "project": "scconfig.json",
 
     // the project roles enables/disables checkers and conventions - comma seperated list of roles
-    "project-role": "default",
+    "project-role": "pathfinder",
 
     // mapping between project files and website files and items
     "project-website-mappings": {
@@ -99,11 +99,10 @@
     },
 
     "check-project": {
-        // comma separated list. Possible values: Items, Fields, Templates, TemplateFields, Media
-        "disabled-categories": "",
-
-        // comma separated list of checker names
-        "disabled-checkers": ""
+        // list of enabled and disabled checkers
+        "checkers": {
+            // "TemplateHelp": "disabled"
+        } 
     },
 
     "copy-dependencies": {
@@ -349,33 +348,19 @@
         "nuget.org": "https://www.nuget.org/api/v2"
     }, 
 
-    // maps project role to convention files
-    "project-role-conventions": {
+    // maps project role to checkers
+    "project-role-checkers": {
         "none": {
+            "*": "disabled"
         },
         "default": {
-            "default-0": "PathfinderProjectFileSystemConventions",
-            "default-1": "SitecoreTemplateConventions"
-        },
-        "habitat-design": {
-            "habitat-design-0": "$tools/files/conventions/habitat.design.conventions.json"
-        },
-        "habitat-domain": {
-            "habitat-domain-0": "$tools/files/conventions/habitat.domain.conventions.json"
-        },
-        "habitat-foundation": {
-            "habitat-foundation-0": "$tools/files/conventions/habitat.framework.conventions.json"
-        },
-        "habitat-website": {
-            "habitat-website-0": "$tools/files/conventions/habitat.website.conventions.json",
-            "habitat-website-1": "SitecoreTemplateConventions"
+            "SitecoreTemplateConventions": "enabled",
+            "TemplateHelp": "disabled"
         },
         "pathfinder": {
-            "pathfinder-0": "PathfinderProjectFileSystemConventions",
-            "pathfinder-1": "SitecoreTemplateConventions"
-        },
-        "speak": {
-            "speak-0": "$tools/files/conventions/speak.conventions.json"
+            "based-on": "default",
+            "PathfinderProjectFileSystem": "enabled",
+            "TemplateHelp": "enabled"
         }
     },
 
