@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Projects
             var linkField = item.Fields.FirstOrDefault(f => f.FieldName == "BadLink");
             NUnit.Framework.Assert.IsNotNull(linkField);
             NUnit.Framework.Assert.AreEqual("/sitecore/media library/badlink", linkField.Value);
-            NUnit.Framework.Assert.AreEqual(string.Empty, linkField.CompiledValue);
+            NUnit.Framework.Assert.AreEqual("/sitecore/media library/badlink", linkField.CompiledValue);
             diagnostic = Project.Diagnostics.FirstOrDefault(d => d.Text == "Link field reference not found: /sitecore/media library/badlink");
             NUnit.Framework.Assert.IsNotNull(diagnostic);
 
@@ -57,7 +57,7 @@ namespace Sitecore.Pathfinder.Projects
             linkField = item.Fields.FirstOrDefault(f => f.FieldName == "Multiple");
             NUnit.Framework.Assert.IsNotNull(linkField);
             NUnit.Framework.Assert.AreEqual("/sitecore/media library/badlink|/sitecore/media library/badlink", linkField.Value);
-            NUnit.Framework.Assert.AreEqual(string.Empty, linkField.CompiledValue);
+            NUnit.Framework.Assert.AreEqual("/sitecore/media library/badlink|/sitecore/media library/badlink", linkField.CompiledValue);
 
             // image field
             var imageField = item.Fields.FirstOrDefault(f => f.FieldName == "BadImage");
