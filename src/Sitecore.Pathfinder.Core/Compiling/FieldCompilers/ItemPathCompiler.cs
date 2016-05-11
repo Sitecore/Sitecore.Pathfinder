@@ -61,7 +61,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             var item = field.Item.Project.FindQualifiedItem<IProjectItem>(value);
             if (item == null)
             {
-                context.Trace.TraceError(Msg.C1045, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), value);
+                context.Trace.TraceError(Msg.C1045, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), value);
                 return value;
             }
 
@@ -103,7 +103,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             var item = field.Item.Project.FindQualifiedItem<IProjectItem>(qualifiedName);
             if (item == null)
             {
-                context.Trace.TraceError(Msg.C1045, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), value);
+                context.Trace.TraceError(Msg.C1045, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), value);
                 return value;
             }
 
@@ -127,7 +127,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                     }
                     else
                     {
-                        context.Trace.TraceError(Msg.C1046, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), path);
+                        context.Trace.TraceError(Msg.C1046, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), path);
                     }
                 }
 
@@ -147,6 +147,17 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         {
             var url = new UrlString(value);
             var result = new UrlString();
+            Database database = null;
+
+            var project = field.Item.Project;
+
+            foreach (string key in url.Parameters.Keys)
+            {
+                if (string.Equals(key, "database", StringComparison.OrdinalIgnoreCase) || string.Equals(key, "databasename", StringComparison.OrdinalIgnoreCase))
+                {
+                    database = project.GetDatabase(url.Parameters[key]);
+                }
+            }
 
             foreach (string key in url.Parameters)
             {
@@ -154,14 +165,21 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
                 if (PathHelper.IsProbablyItemPath(v))
                 {
-                    var i = field.Item.Project.FindQualifiedItem<IProjectItem>(v);
+                    var i = database == null ? project.FindQualifiedItem<IProjectItem>(v) : project.FindQualifiedItem<DatabaseProjectItem>(database, v);
                     if (i != null)
                     {
                         v = i.Uri.Guid.Format();
                     }
                     else
                     {
-                        context.Trace.TraceError(Msg.C1046, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), v);
+                        if (database != null && !string.Equals(database.DatabaseName, field.Item.DatabaseName, StringComparison.OrdinalIgnoreCase))
+                        {
+                            context.Trace.TraceWarning(Msg.C1064, "Item path reference not found, but may be in another database", TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), database.DatabaseName + "://" + v);
+                        }
+                        else
+                        {
+                            context.Trace.TraceError(Msg.C1046, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), v);
+                        }
                     }
                 }
 

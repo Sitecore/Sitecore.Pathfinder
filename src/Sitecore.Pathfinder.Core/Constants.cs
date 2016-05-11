@@ -76,6 +76,8 @@ namespace Sitecore.Pathfinder
 
             public const string CheckProjectCheckers = "check-project:checkers";
 
+            public const string Checkers = "checkers";
+
             public const string CodeGen = "codegen";
 
             public const string CommandLineConfig = "config";

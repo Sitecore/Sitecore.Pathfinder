@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Checkers
             return from projectItem in context.Project.ProjectItems
                 from reference in projectItem.References
                 where !reference.IsValid
-                select Error(Msg.C1000, "Reference not found", TraceHelper.GetTextNode(reference.SourceProperty), reference.SourceProperty.GetValue());
+                select Error(Msg.C1000, "Reference not found", TraceHelper.GetTextNode(reference.SourceProperty), reference.ReferenceText);
         }
     }
 }

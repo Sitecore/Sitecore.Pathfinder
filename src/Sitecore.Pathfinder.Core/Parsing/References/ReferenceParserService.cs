@@ -52,6 +52,11 @@ namespace Sitecore.Pathfinder.Parsing.References
         {
             var text = textNode.Value;
 
+            if (text.StartsWith("query:"))
+            {
+                yield break;
+            }
+
             // pipe seperated list
             IReference reference;
             if (text.IndexOf('|') >= 0)

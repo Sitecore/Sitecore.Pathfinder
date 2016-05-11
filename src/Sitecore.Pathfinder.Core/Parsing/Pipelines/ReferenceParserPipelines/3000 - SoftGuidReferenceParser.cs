@@ -18,6 +18,12 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.ReferenceParserPipelines
                 return;
             }
 
+            // if the reference also contains a ", it is probably a Json string
+            if (pipeline.ReferenceText.IndexOf('\"') >= 0)
+            {
+                return;
+            }
+
             var sourceProperty = new SourceProperty<string>(pipeline.SourceTextNode.Key, string.Empty, SourcePropertyFlags.IsSoftGuid);
             sourceProperty.SetValue(pipeline.SourceTextNode);
 

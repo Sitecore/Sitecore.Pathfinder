@@ -152,6 +152,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1020, "Template should should have an icon", TraceHelper.GetTextNode(template), template.ItemName);
         }
 
+        /*
         [Export("Check")]
         public IEnumerable<Diagnostic> UseIdInsteadOfPath(ICheckerContext context)
         {
@@ -160,5 +161,6 @@ namespace Sitecore.Pathfinder.Checkers
                 where field.Source.IndexOf('/') >= 0
                 select Warning(Msg.C1026, "Use IDs instead of paths in template fields", TraceHelper.GetTextNode(field.SourceProperty, field), $"The template field Source field contains the path \"{field.Source}\". It is recommended to use IDs instead.");
         }
+        */
     }
 }

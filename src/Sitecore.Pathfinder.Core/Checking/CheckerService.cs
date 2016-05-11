@@ -101,7 +101,7 @@ namespace Sitecore.Pathfinder.Checking
 
                 if (!checkers.Any(c => c.Name == key || c.Category == key))
                 {
-                  throw new ConfigurationException("Checker nor found: " + key);
+                  throw new ConfigurationException("Checker not found: " + key);
                 }
 
                 foreach (var checker in checkers)
@@ -128,6 +128,9 @@ namespace Sitecore.Pathfinder.Checking
 
             // apply check-project:checkers
             EnableCheckers(checkers, Constants.Configuration.CheckProjectCheckers);
+
+            // apply checkers
+            EnableCheckers(checkers, Constants.Configuration.Checkers);
 
             return checkers.Where(c => c.IsEnabled).Select(c => c.Checker).ToList();
         }

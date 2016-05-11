@@ -2,6 +2,7 @@
 
 using System;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Parsing.Pipelines.ReferenceParserPipelines
@@ -14,8 +15,7 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.ReferenceParserPipelines
 
         protected override void Process(ReferenceParserPipeline pipeline)
         {
-            // guess: guessing an item refernce
-            if (!pipeline.ReferenceText.StartsWith("/sitecore/", StringComparison.OrdinalIgnoreCase))
+            if (!PathHelper.IsProbablyItemPath(pipeline.ReferenceText))
             {
                 return;
             }

@@ -61,23 +61,23 @@ namespace Sitecore.Pathfinder.Checkers
         {
             return from item in context.Project.Items
                 where item.ItemIdOrPath.StartsWith("/sitecore/templates/") && (item.TemplateName.Equals("Folder") || item.TemplateName.Equals("Node"))
-                select Warning(Msg.C1000, "In the '/sitecore/templates' section, folder items use the 'Template folder' template - not the 'Folder' or 'Node' template. To fix, change the template of the item to 'Template Folder", TraceHelper.GetTextNode(item));
+                select Warning(Msg.C1000, "In the '/sitecore/templates' section, folder items use the 'Template folder' template - not the 'Folder' or 'Node' template. To fix, change the template of the item to 'Template Folder", TraceHelper.GetTextNode(item), item.TemplateName);
         }
 
         [Export("Check")]
         protected IEnumerable<Diagnostic> TemplateSectionShouldOnlyContainTemplates(ICheckerContext context)
         {
             return from item in context.Project.Items
-                where item.ItemIdOrPath.StartsWith("/sitecore/templates/") && !item.ItemName.Equals("__Standard Values") && !item.TemplateName.Equals("Template") && !item.TemplateName.Equals("Template section") && !item.TemplateName.Equals("Template field") && !item.TemplateName.Equals("Template folder")
-                select Warning(Msg.C1000, "The '/sitecore/templates' section should only contain item with template 'Template', 'Template section', 'Template field', 'Template folder' or standard values items. To fix, move the item outside the '/sitecore/templates' section", TraceHelper.GetTextNode(item));
+                where item.ItemIdOrPath.StartsWith("/sitecore/templates/") && item.ItemIdOrPath.IndexOf("Branches") < 0 && !item.ItemName.Equals("__Standard Values") && !item.TemplateName.Equals("Template") && !item.TemplateName.Equals("Template section") && !item.TemplateName.Equals("Template field") && !item.TemplateName.Equals("Template Folder") && !item.TemplateName.Equals("Node") && !item.TemplateName.Equals("Folder")
+                select Warning(Msg.C1000, "The '/sitecore/templates' section should only contain item with template 'Template', 'Template section', 'Template field', 'Template folder' or standard values items. To fix, move the item outside the '/sitecore/templates' section", TraceHelper.GetTextNode(item), item.TemplateName);
         }
 
         [Export("Check")]
         protected IEnumerable<Diagnostic> TemplatesMustLocatedInTemplatesSection(ICheckerContext context)
         {
             return from item in context.Project.Items
-                where !item.ItemIdOrPath.StartsWith("/sitecore/templates/") && (item.TemplateName.Equals("Template") || item.TemplateName.Equals("Template Section") || item.TemplateName.Equals("Template Field") || item.TemplateName.Equals("Template Folder"))
-                select Warning(Msg.C1000, "All items with template 'Template', 'Template section', 'Template field' and 'Template folder' should be located in the '/sitecore/templates' section. To fix, move the template into the '/sitecore/templates' section", TraceHelper.GetTextNode(item));
+                where !item.ItemIdOrPath.StartsWith("/sitecore/templates/") && (item.TemplateName.Equals("Template") || item.TemplateName.Equals("Template section") || item.TemplateName.Equals("Template Field") || item.TemplateName.Equals("Template Folder"))
+                select Warning(Msg.C1000, "All items with template 'Template', 'Template section', 'Template field' and 'Template folder' should be located in the '/sitecore/templates' section. To fix, move the template into the '/sitecore/templates' section", TraceHelper.GetTextNode(item), item.TemplateName);
         }
     }
 }

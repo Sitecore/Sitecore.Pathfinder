@@ -170,7 +170,8 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
             if (!item.IsImport && !field.ValueHint.Contains("NoReference"))
             {
-                item.References.AddRange(context.ParseContext.ReferenceParser.ParseReferences(item, field.ValueProperty));
+                var references = context.ParseContext.ReferenceParser.ParseReferences(item, field.ValueProperty);
+                item.References.AddRange(references);
             }
         }
 

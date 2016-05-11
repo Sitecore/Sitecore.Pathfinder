@@ -52,7 +52,6 @@ namespace Sitecore.Pathfinder.Projects.References
 
         public SourceProperty<string> SourceProperty { get; set; }
 
-        [NotNull]
         public string ReferenceText { get; }
 
         [CanBeNull]

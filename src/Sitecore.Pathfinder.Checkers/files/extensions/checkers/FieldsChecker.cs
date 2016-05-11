@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Checking;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -36,6 +37,26 @@ namespace Sitecore.Pathfinder.Checkers
                     yield return Warning(Msg.C1057, "Number is not valid", TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), $"The field \"{field.FieldName}\" has a type of 'Number', but the value is not a valid number. Replace or remove the value.");
                 }
             }
+        }
+
+        [Export("Check")]
+        public IEnumerable<Diagnostic> DateIsNotValid(ICheckerContext context)
+        {
+            return from field in context.Project.Items.SelectMany(i => i.Fields).Where(f => string.Equals(f.TemplateField.Type, "Date", StringComparison.OrdinalIgnoreCase))
+                where !string.IsNullOrEmpty(field.Value)
+                let dateTime = field.Value.FromIsoToDateTime(DateTime.MaxValue)
+                where dateTime == DateTime.MaxValue
+                select Warning(Msg.C1057, "Date is not valid", TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), $"The field \"{field.FieldName}\" has a type of 'Date', but the value is not a valid date. Replace or remove the value.");
+        }
+
+        [Export("Check")]
+        public IEnumerable<Diagnostic> DateTimeIsNotValid(ICheckerContext context)
+        {
+            return from field in context.Project.Items.SelectMany(i => i.Fields).Where(f => string.Equals(f.TemplateField.Type, "Datetime", StringComparison.OrdinalIgnoreCase))
+                where !string.IsNullOrEmpty(field.Value)
+                let dateTime = field.Value.FromIsoToDateTime(DateTime.MaxValue)
+                where dateTime == DateTime.MaxValue
+                select Warning(Msg.C1057, "Datetime is not valid", TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), $"The field \"{field.FieldName}\" has a type of 'Datetime', but the value is not a valid date. Replace or remove the value.");
         }
     }
 }

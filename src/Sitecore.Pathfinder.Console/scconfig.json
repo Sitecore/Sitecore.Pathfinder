@@ -354,7 +354,7 @@
             "*": "disabled"
         },
         "default": {
-            "SitecoreTemplateConventions": "enabled",
+            "SitecoreTemplate": "enabled",
             "TemplateHelp": "disabled"
         },
         "pathfinder": {
