@@ -19,7 +19,7 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.ReferenceParserPipelines
             }
 
             // if the reference also contains a ", it is probably a Json string
-            if (pipeline.ReferenceText.IndexOf('\"') >= 0)
+            if (pipeline.ReferenceText.IndexOf('\"') >= 0 || pipeline.ReferenceText.IndexOf('\'') >= 0 || pipeline.ReferenceText.IndexOf(':') >= 0) 
             {
                 return;
             }

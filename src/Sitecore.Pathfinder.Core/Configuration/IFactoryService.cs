@@ -49,7 +49,7 @@ namespace Sitecore.Pathfinder.Configuration
         FieldBuilder FieldBuilder();
 
         [NotNull]
-        FileReference FileReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceSourceProperty);
+        FileReference FileReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceSourceProperty, [NotNull] string referenceText);
 
         [NotNull]
         Item Item([NotNull] IProject project, [NotNull] ITextNode textNode, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath);
@@ -80,9 +80,6 @@ namespace Sitecore.Pathfinder.Configuration
 
         [NotNull]
         ProjectOptions ProjectOptions([NotNull] string projectDirectory, [NotNull] string databaseName);
-
-        [NotNull]
-        IReference Reference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> sourceSourceProperty);
 
         [NotNull]
         IReference Reference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> sourceSourceProperty, [NotNull] string referenceText);

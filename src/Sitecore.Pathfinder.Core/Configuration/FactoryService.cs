@@ -89,7 +89,7 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual DeviceReference DeviceReference(IProjectItem projectItem, SourceProperty<string> deviceNameSourceProperty)
         {
-            return new DeviceReference(projectItem, deviceNameSourceProperty);
+            return new DeviceReference(projectItem, deviceNameSourceProperty, deviceNameSourceProperty.GetValue());
         }
 
         public virtual Diagnostic Diagnostic(int msg, string fileName, TextSpan span, Severity severity, string text)
@@ -120,9 +120,9 @@ namespace Sitecore.Pathfinder.Configuration
             return new FieldBuilder(this);
         }
 
-        public virtual FileReference FileReference(IProjectItem owner, SourceProperty<string> sourceSourceProperty)
+        public virtual FileReference FileReference(IProjectItem owner, SourceProperty<string> sourceSourceProperty, [NotNull] string referenceText)
         {
-            return new FileReference(owner, sourceSourceProperty);
+            return new FileReference(owner, sourceSourceProperty, referenceText);
         }
 
         public virtual Item Item(IProject project, ITextNode textNode, Guid guid, string databaseName, string itemName, string itemIdOrPath, string templateIdOrPath)
@@ -147,12 +147,12 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual LayoutReference LayoutReference(IProjectItem projectItem, SourceProperty<string> layoutSourceProperty)
         {
-            return new LayoutReference(projectItem, layoutSourceProperty);
+            return new LayoutReference(projectItem, layoutSourceProperty, layoutSourceProperty.GetValue());
         }
 
         public virtual LayoutRenderingReference LayoutRenderingReference(IProjectItem projectItem, SourceProperty<string> renderingTextNode)
         {
-            return new LayoutRenderingReference(projectItem, renderingTextNode);
+            return new LayoutRenderingReference(projectItem, renderingTextNode, renderingTextNode.GetValue());
         }
 
         public virtual MediaFile MediaFile(IProject project, ISnapshot snapshot, string databaseName, string itemName, string itemPath, string filePath)
@@ -173,11 +173,6 @@ namespace Sitecore.Pathfinder.Configuration
         public virtual ProjectOptions ProjectOptions(string projectDirectory, string databaseName)
         {
             return new ProjectOptions(projectDirectory, databaseName);
-        }
-
-        public virtual IReference Reference(IProjectItem projectItem, SourceProperty<string> sourceSourceProperty)
-        {
-            return new Reference(projectItem, sourceSourceProperty);
         }
 
         public virtual IReference Reference(IProjectItem projectItem, SourceProperty<string> sourceSourceProperty, string referenceText)

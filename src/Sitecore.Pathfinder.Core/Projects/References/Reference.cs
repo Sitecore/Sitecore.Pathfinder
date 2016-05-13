@@ -10,15 +10,6 @@ namespace Sitecore.Pathfinder.Projects.References
     {
         private bool _isValid;
 
-        public Reference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceProperty)
-        {
-            // the reference text might be different from the source property value. 
-            // e.g. the source property value might be a list of guids while the reference text is a single Guid.
-            Owner = owner;
-            SourceProperty = sourceProperty;
-            ReferenceText = sourceProperty.GetValue();
-        }
-
         public Reference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceProperty, [NotNull] string referenceText)
         {
             // the reference text might be different from the source property value. 

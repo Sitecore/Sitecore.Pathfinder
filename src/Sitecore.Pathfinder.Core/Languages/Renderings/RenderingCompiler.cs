@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Languages.Renderings
             var field = context.Factory.Field(item, snapshotTextNode, "Path", rendering.FilePath);
             field.ValueProperty.Flags = SourcePropertyFlags.IsFileName;
             item.Fields.Add(field);
-            item.References.Add(new FileReference(item, field.ValueProperty));
+            item.References.Add(new FileReference(item, field.ValueProperty, field.Value));
 
             if (rendering.Placeholders.Any())
             {

@@ -111,7 +111,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
                     continue;
                 }
 
-                var baseTemplate = Project.FindQualifiedItem<Template>(baseTemplateId);
+                var baseTemplate = Project.FindQualifiedItem<Template>(Database, baseTemplateId);
                 if (baseTemplate == null)
                 {
                     continue;

@@ -8,7 +8,7 @@ namespace Sitecore.Pathfinder.Projects.References
 {
     public class FileReference : Reference
     {
-        public FileReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceProperty) : base(owner, sourceProperty)
+        public FileReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceProperty, [NotNull] string referenceText) : base(owner, sourceProperty, referenceText)
         {
         }
 
