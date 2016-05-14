@@ -40,7 +40,6 @@ Open the file in Notepad and paste the following text into it.
 
 ```js
 {
-    "$schema": "sitecore.project/schemas/item.schema.json",
     "Item": {
         "Template": "/sitecore/templates/Sample/HelloWorld",
         "Template.CreateFromFields": true,
@@ -93,7 +92,6 @@ to point to the image item. This is the name of the image item - not the file na
 
 ```js
 {
-    "$schema": "sitecore.project/schemas/item.schema.json",
     "Item": {
         "Template": "/sitecore/templates/Sample/HelloWorld",
         "Template.CreateFromFields": true,
@@ -150,7 +148,6 @@ Edit the layout on the HelloWorld item to include the new rendering.
 
 ```js
 {
-    "$schema": "sitecore.project/schemas/item.schema.json",
     "Item": {
         "Template": "/sitecore/templates/Sample/HelloWorld",
         "Template.CreateFromFields": true,

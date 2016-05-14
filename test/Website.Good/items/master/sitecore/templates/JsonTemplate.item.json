@@ -1,5 +1,4 @@
 ﻿{
-    "$schema": "/Website/sitecore.tools/schemas/item.schema.json",
     "Template": {
         "Name":  "Json-Template",
         "BaseTemplates": "/sitecore/templates/System/Templates/Standard Template",
