@@ -21,24 +21,20 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
-using Sitecore.Pathfinder.Packaging;
+using Sitecore.Pathfinder.Packaging.WebsitePackages;
 using Sitecore.Pathfinder.Runtime.Caching;
 using Sitecore.SecurityModel;
-using IPackage = NuGet.IPackage;
 
-namespace Sitecore.Pathfinder.NuGet.Packaging
+namespace Sitecore.Pathfinder.NuGet.Packaging.WebsitePackages
 {
-    public class NugetPackageProvider : PackageProviderBase
+    public class NugetWebsitePackageProvider : WebsitePackageProviderBase
     {
         [ImportingConstructor]
-        public NugetPackageProvider([NotNull] IConfiguration configuration, [NotNull] ICacheService cache)
+        public NugetWebsitePackageProvider([NotNull] IConfiguration configuration, [NotNull] ICacheService cache)
         {
             Configuration = configuration;
             Cache = cache;
         }
-
-        [Diagnostics.NotNull]
-        protected ICacheService Cache { get; }
 
         [NotNull]
         public string InstallableRepository { get; private set; }
@@ -46,23 +42,13 @@ namespace Sitecore.Pathfinder.NuGet.Packaging
         [NotNull]
         public string InstalledRepository { get; private set; }
 
+        [Diagnostics.NotNull]
+        protected ICacheService Cache { get; }
+
         [NotNull]
         protected IConfiguration Configuration { get; }
 
-        public override IEnumerable<Pathfinder.Packaging.IPackage> FindInstalledPackagesById(string packageId)
-        {
-            var installedRepository = GetInstalledRepository();
-
-            var packages = installedRepository.FindPackagesById(packageId);
-            if (packages == null || !packages.Any())
-            {
-                return Enumerable.Empty<Pathfinder.Packaging.IPackage>();
-            }
-
-            return packages.Select(p => new NugetPackage(p));
-        }
-
-        public override IEnumerable<Pathfinder.Packaging.IPackage> FindInstallablePackagesById(string packageId)
+        public override IEnumerable<Pathfinder.Packaging.IPackage> FindInstallableWebsitePackagesById(string packageId)
         {
             var installableRepository = GetInstallableRepository();
 
@@ -75,7 +61,20 @@ namespace Sitecore.Pathfinder.NuGet.Packaging
             return packages.Select(p => new NugetPackage(p));
         }
 
-        public override IEnumerable<Pathfinder.Packaging.IPackage> GetInstallablePackages(string queryText, string author, string tags, int skip)
+        public override IEnumerable<Pathfinder.Packaging.IPackage> FindInstalledWebsitePackagesById(string packageId)
+        {
+            var installedRepository = GetInstalledRepository();
+
+            var packages = installedRepository.FindPackagesById(packageId);
+            if (packages == null || !packages.Any())
+            {
+                return Enumerable.Empty<Pathfinder.Packaging.IPackage>();
+            }
+
+            return packages.Select(p => new NugetPackage(p));
+        }
+
+        public override IEnumerable<Pathfinder.Packaging.IPackage> GetInstallableWebsitePackages(string queryText, string author, string tags, int skip)
         {
             var query = GetInstallablePackagesQuery(queryText, author, tags);
 
@@ -87,7 +86,7 @@ namespace Sitecore.Pathfinder.NuGet.Packaging
             return query.Select(p => new NugetPackage(p));
         }
 
-        public override IEnumerable<Pathfinder.Packaging.IPackage> GetInstalledPackages()
+        public override IEnumerable<Pathfinder.Packaging.IPackage> GetInstalledWebsitePackages()
         {
             var installedRepository = GetInstalledRepository();
 
@@ -97,22 +96,22 @@ namespace Sitecore.Pathfinder.NuGet.Packaging
             });
         }
 
-        public override int GetTotalPackageCount(string queryText, string author, string tags)
+        public override int GetTotalWebsitePackageCount(string queryText, string author, string tags)
         {
             var query = GetInstallablePackagesQuery(queryText, author, tags);
             return query.Count();
         }
 
-        public override IEnumerable<Pathfinder.Packaging.IPackage> GetUpdatePackages(bool includePrerelease)
+        public override IEnumerable<Pathfinder.Packaging.IPackage> GetWebsiteUpdatePackages(bool includePrerelease)
         {
             var repository = GetInstallableRepository();
 
-            var installedNugetPackages = GetInstalledPackages().OfType<NugetPackage>().Select(p => p.Package);
+            var installedNugetPackages = GetInstalledWebsitePackages().OfType<NugetPackage>().Select(p => p.Package);
 
             return repository.GetUpdates(installedNugetPackages, includePrerelease, false).Select(p => new NugetPackage(p));
         }
 
-        public override bool InstallOrUpdatePackage(string packageId)
+        public override bool InstallOrUpdateWebsitePackage(string packageId)
         {
             var installableRepository = GetInstallableRepository();
             var installablePackage = installableRepository.FindPackage(packageId);
@@ -176,7 +175,7 @@ namespace Sitecore.Pathfinder.NuGet.Packaging
             return true;
         }
 
-        public override bool UninstallPackage(string packageId)
+        public override bool UninstallWebsitePackage(string packageId)
         {
             var installedRepository = GetInstalledRepository();
 
@@ -193,7 +192,7 @@ namespace Sitecore.Pathfinder.NuGet.Packaging
             return true;
         }
 
-        public override bool UpdatePackage(string packageId, string version)
+        public override bool UpdateWebsitePackage(string packageId, string version)
         {
             var installedRepository = GetInstalledRepository();
 
@@ -217,71 +216,6 @@ namespace Sitecore.Pathfinder.NuGet.Packaging
             packageManager.PackageInstalled += InstallPackage;
 
             packageManager.UpdatePackage(package, false, true);
-
-            return true;
-        }
-
-        public override bool DownloadPackage(string packageId, string version, string fileName)
-        {
-            var repository = Cache.Get<IPackageRepository>(Constants.Cache.NugetRepositories);
-            if (repository == null)
-            {
-                // add default repository which is located in the tools directory
-                var packageDirectory = PathHelper.NormalizeFilePath(Path.Combine(Configuration.GetString(Constants.Configuration.ToolsDirectory), "files/repository/sitecore.project/packages"));
-                var repositories = new List<IPackageRepository>
-                {
-                    PackageRepositoryFactory.Default.CreateRepository(packageDirectory)
-                };
-
-                // add source repositories from configuration
-                foreach (var pair in Configuration.GetSubKeys("nuget-repositories"))
-                {
-                    var source = Configuration.GetString("nuget-repositories:" + pair.Key);
-                    repositories.Add(PackageRepositoryFactory.Default.CreateRepository(source));
-                }
-
-                repository = new AggregateRepository(repositories);
-
-                Cache.Set(Constants.Cache.NugetRepositories, repository);
-            }
-
-            IPackage package;
-            if (string.IsNullOrEmpty(version))
-            {
-                package = repository.FindPackage(packageId);
-            }
-            else
-            {
-                var semanticVersion = new SemanticVersion(version);
-                package = repository.FindPackage(packageId, semanticVersion, true, false);
-
-                // if package was not found, try this weird hack
-                if (package == null)
-                {
-                    var dummy = repository.GetPackages().Count();
-                    package = repository.FindPackage(packageId, semanticVersion, true, false);
-                }
-
-                // still not found, try this then
-                if (package == null)
-                {
-                    package = repository.FindPackage(packageId);
-                    if (package != null && package.Version != semanticVersion)
-                    {
-                        package = null;
-                    }
-                }
-            }
-
-            if (package == null)
-            {
-                return false;
-            }
-
-            using (var stream = new FileStream(fileName, FileMode.Create))
-            {
-                package.GetStream().CopyTo(stream);
-            }
 
             return true;
         }

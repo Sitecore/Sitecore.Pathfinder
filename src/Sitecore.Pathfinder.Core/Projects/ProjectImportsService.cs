@@ -3,13 +3,13 @@
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
-using System.IO.Compression;
 using System.Xml.Linq;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Packaging.ProjectPackages;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -19,10 +19,11 @@ namespace Sitecore.Pathfinder.Projects
     public class ProjectImportsService
     {
         [ImportingConstructor]
-        public ProjectImportsService([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem)
+        public ProjectImportsService([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [NotNull] IProjectPackageService projectPackages)
         {
             Factory = factory;
             FileSystem = fileSystem;
+            ProjectPackages = projectPackages;
         }
 
         [NotNull]
@@ -34,11 +35,13 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         protected IFileSystemService FileSystem { get; }
 
+        [NotNull]
+        protected IProjectPackageService ProjectPackages { get; }
+
         public virtual void Import([NotNull] IProject project, [NotNull] IParseContext context)
         {
             // todo: consider making this a pipeline
-            ImportNugetPackages(project, context);
-            ImportNpmPackages(project, context);
+            ImportProjectPackages(project, context);
         }
 
         protected virtual void ImportElements([NotNull] IProject project, [NotNull] IParseContext context, [NotNull] string fileName, [NotNull] XElement root)
@@ -49,23 +52,12 @@ namespace Sitecore.Pathfinder.Projects
             }
         }
 
-        protected virtual void ImportNpmPackages([NotNull] IProject project, [NotNull] IParseContext context)
+        protected virtual void ImportProjectPackages([NotNull] IProject project, [NotNull] IParseContext context)
         {
-            var nodeModules = Path.Combine(project.Options.ProjectDirectory, "node_modules");
-            if (!FileSystem.DirectoryExists(nodeModules))
+            // todo: NuGet: handle noconfig
+            foreach (var packageInfo in ProjectPackages.GetPackages(project.Options.ProjectDirectory))
             {
-                return;
-            }
-
-            foreach (var directory in Directory.GetDirectories(nodeModules))
-            {
-                var manifest = Path.Combine(directory, "pathfinder.json");
-                if (!FileSystem.FileExists(manifest))
-                {
-                    continue;
-                }
-
-                var fileName = Path.Combine(directory, "sitecore.project/exports.xml");
+                var fileName = Path.Combine(packageInfo.ProjectDirectory, "sitecore.project\\exports.xml");
                 if (!FileSystem.FileExists(fileName))
                 {
                     continue;
@@ -87,58 +79,6 @@ namespace Sitecore.Pathfinder.Projects
                 catch
                 {
                     context.Trace.TraceError(Msg.I1002, Texts.Could_not_read_exports_xml_in_dependency_package, fileName);
-                }
-            }
-        }
-
-        protected virtual void ImportNugetPackages([NotNull] IProject project, [NotNull] IParseContext context)
-        {
-            string packagesDirectory;
-
-            if (context.Configuration.GetBool(Constants.Configuration.BuildingWithNoConfig))
-            {
-                packagesDirectory = Path.Combine(context.Configuration.GetString(Constants.Configuration.ToolsDirectory), "files\\project\\sitecore.project\\packages");
-            }
-            else
-            {
-                packagesDirectory = PathHelper.NormalizeFilePath(context.Configuration.Get(Constants.Configuration.CopyDependenciesSourceDirectory));
-                packagesDirectory = Path.Combine(project.Options.ProjectDirectory, packagesDirectory);
-            }
-
-            if (!FileSystem.DirectoryExists(packagesDirectory))
-            {
-                return;
-            }
-
-            foreach (var fileName in FileSystem.GetFiles(packagesDirectory, "*.nupkg", SearchOption.AllDirectories))
-            {
-                // todo: consider caching this
-                using (var zip = ZipFile.OpenRead(fileName))
-                {
-                    var entry = zip.GetEntry("project/sitecore.project/exports.xml");
-                    if (entry == null)
-                    {
-                        continue;
-                    }
-
-                    var reader = new StreamReader(entry.Open());
-                    try
-                    {
-                        var doc = XDocument.Load(reader);
-
-                        var root = doc.Root;
-                        if (root == null)
-                        {
-                            context.Trace.TraceError(Msg.I1001, Texts.Could_not_read_exports_xml_in_dependency_package, fileName);
-                            continue;
-                        }
-
-                        ImportElements(project, context, fileName, root);
-                    }
-                    catch
-                    {
-                        context.Trace.TraceError(Msg.I1002, Texts.Could_not_read_exports_xml_in_dependency_package, fileName);
-                    }
                 }
             }
         }

@@ -50,7 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Building\PackNpmPackage.cs" />
+    <Compile Include="Tasks\PackNpmPackage.cs" />
     <Compile Include="NpmExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

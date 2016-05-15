@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using Sitecore.Pathfinder.Packaging.WebsitePackages;
 
 namespace Sitecore.Pathfinder.Packaging
 {
@@ -11,7 +12,7 @@ namespace Sitecore.Pathfinder.Packaging
 
         public string Copyright { get; protected set; } = string.Empty;
 
-        public ICollection<PackageDependencySet> DependencySets { get; } = new List<PackageDependencySet>();
+        public ICollection<WebsitePackageDependencySet> DependencySets { get; } = new List<WebsitePackageDependencySet>();
 
         public string Description { get; protected set; } = string.Empty;
 

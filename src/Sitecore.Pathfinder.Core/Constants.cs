@@ -52,6 +52,8 @@ namespace Sitecore.Pathfinder
         public static class Cache
         {
             public const string NugetRepositories = "NugetRepositories";
+
+            public const string ProjectPackages = "ProjectPackages";
         }
 
         public static class Configuration

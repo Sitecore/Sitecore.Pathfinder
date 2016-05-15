@@ -3,17 +3,15 @@
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
 
-namespace Sitecore.Pathfinder.Packaging
+namespace Sitecore.Pathfinder.Packaging.WebsitePackages
 {
-    public interface IPackageService
+    public interface IWebsitePackageService
     {
         [NotNull, ItemNotNull]
         IEnumerable<IPackage> CheckForInstallableUpdates([NotNull, ItemNotNull] IEnumerable<IPackage> installablePackages);
 
         [NotNull, ItemNotNull]
         IEnumerable<IPackage> CheckForInstalledUpdates([NotNull, ItemNotNull] IEnumerable<IPackage> installedPackages);
-
-        void DownloadPackage([NotNull] string packageId, [NotNull] string version, [NotNull] string fileName);
 
         [NotNull, ItemNotNull]
         IEnumerable<IPackage> FindInstallablePackagesById([NotNull] string packageId);

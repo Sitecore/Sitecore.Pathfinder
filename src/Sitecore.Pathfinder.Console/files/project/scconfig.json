@@ -63,10 +63,5 @@
     // tasks to execute when building locally
     "compile-project": {
         "tasks": "restore-packages check-project show-metrics"
-    },
-
-    // package dependencies
-    "dependencies": {
-        "Sitecore.Master" : "1.0.0" 
-    } 
+    }
 }

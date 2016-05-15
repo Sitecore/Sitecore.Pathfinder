@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Sitecore.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Packaging;
+using Sitecore.Pathfinder.Packaging.WebsitePackages;
 using Sitecore.Web;
 
 namespace Sitecore.Pathfinder.Controllers
@@ -34,7 +35,7 @@ namespace Sitecore.Pathfinder.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, output.ToString());
                 }
 
-                var packageService = app.CompositionService.Resolve<IPackageService>();
+                var packageService = app.CompositionService.Resolve<IWebsitePackageService>();
 
                 var version = WebUtil.GetQueryString("v", string.Empty);
 

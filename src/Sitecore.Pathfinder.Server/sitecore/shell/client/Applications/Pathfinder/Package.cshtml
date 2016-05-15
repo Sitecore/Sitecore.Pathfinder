@@ -1,9 +1,10 @@
 ﻿@using Sitecore.Pathfinder.Packaging
+@using Sitecore.Pathfinder.Packaging.WebsitePackages
 <!DOCTYPE html>
 @{
     var packageId = ViewBag.PackageId as string ?? string.Empty;
 
-    var packageService = (IPackageService)ViewBag.PackageService;
+    var packageService = (IWebsitePackageService)ViewBag.PackageService;
     var packages = packageService.FindInstallablePackagesById(packageId);
     var package = packages.First();
 

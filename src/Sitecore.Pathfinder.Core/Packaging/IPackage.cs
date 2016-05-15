@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Packaging.WebsitePackages;
 
 namespace Sitecore.Pathfinder.Packaging
 {
@@ -15,7 +16,7 @@ namespace Sitecore.Pathfinder.Packaging
         string Copyright { get; }
 
         [NotNull, ItemNotNull]
-        ICollection<PackageDependencySet> DependencySets { get; }
+        ICollection<WebsitePackageDependencySet> DependencySets { get; }
 
         [NotNull]
         string Description { get; }

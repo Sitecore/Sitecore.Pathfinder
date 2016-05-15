@@ -2,11 +2,11 @@
 
 using Sitecore.Pathfinder.Diagnostics;
 
-namespace Sitecore.Pathfinder.Packaging
+namespace Sitecore.Pathfinder.Packaging.WebsitePackages
 {
-    public class PackageDependency
+    public class WebsitePackageDependency
     {
-        public PackageDependency([NotNull] string id, [NotNull] string version)
+        public WebsitePackageDependency([NotNull] string id, [NotNull] string version)
         {
             Id = id;
             Version = version;

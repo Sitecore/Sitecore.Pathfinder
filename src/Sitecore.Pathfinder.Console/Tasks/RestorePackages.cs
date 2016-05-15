@@ -3,8 +3,7 @@
 using System.ComponentModel.Composition;
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.Packaging;
+using Sitecore.Pathfinder.Packaging.ProjectPackages;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
@@ -12,13 +11,13 @@ namespace Sitecore.Pathfinder.Tasks
     public class RestorePackages : BuildTaskBase
     {
         [ImportingConstructor]
-        public RestorePackages([NotNull] IPackageService packageService) : base("restore-packages")
+        public RestorePackages([NotNull] IProjectPackageService projectPackages) : base("restore-packages")
         {
-            PackageService = packageService;
+            ProjectPackages = projectPackages;
         }
 
         [NotNull]
-        protected IPackageService PackageService { get; }
+        protected IProjectPackageService ProjectPackages { get; }
 
         public override void Run(IBuildContext context)
         {
@@ -30,20 +29,16 @@ namespace Sitecore.Pathfinder.Tasks
                 return;
             }
 
-            foreach (var pair in context.Configuration.GetSubKeys("dependencies"))
+            foreach (var packageInfo in ProjectPackages.GetPackages(context.ProjectDirectory))
             {
-                var packageId = pair.Key;
-                var version = context.Configuration.GetString("dependencies:" + packageId);
-
-                var fileName = Path.Combine(sourceDirectory, packageId + "." + version + ".nupkg");
-                if (context.FileSystem.FileExists(fileName))
+                if (context.FileSystem.DirectoryExists(packageInfo.PackageDirectory))
                 {
                     continue;
                 }
 
-                context.Trace.TraceInformation(Msg.D1000, Texts.Restoring, packageId + "." + version);
+                context.Trace.TraceInformation(Msg.D1000, Texts.Restoring, packageInfo.Id + "." + packageInfo.Version);
 
-                PackageService.DownloadPackage(packageId, version, fileName);
+                ProjectPackages.RestorePackage(packageInfo.Id, packageInfo.Version, context.ProjectDirectory);
             }
         }
     }

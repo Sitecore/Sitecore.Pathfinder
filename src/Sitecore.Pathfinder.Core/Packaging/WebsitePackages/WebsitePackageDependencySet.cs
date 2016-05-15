@@ -3,18 +3,18 @@
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
 
-namespace Sitecore.Pathfinder.Packaging
+namespace Sitecore.Pathfinder.Packaging.WebsitePackages
 {
-    public class PackageDependencySet
+    public class WebsitePackageDependencySet
     {
-        public PackageDependencySet([NotNull] string targetFramework, [NotNull] string version)
+        public WebsitePackageDependencySet([NotNull] string targetFramework, [NotNull] string version)
         {
             TargetFramework = targetFramework;
             Version = version;
         }
 
         [NotNull, ItemNotNull]
-        public ICollection<PackageDependency> Dependencies { get; } = new List<PackageDependency>();
+        public ICollection<WebsitePackageDependency> Dependencies { get; } = new List<WebsitePackageDependency>();
 
         [NotNull]
         public string TargetFramework { get; }

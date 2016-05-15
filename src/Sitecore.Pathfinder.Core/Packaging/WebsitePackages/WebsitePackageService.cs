@@ -6,19 +6,19 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 
-namespace Sitecore.Pathfinder.Packaging
+namespace Sitecore.Pathfinder.Packaging.WebsitePackages
 {
-    [Export(typeof(IPackageService))]
-    public class PackageService : IPackageService
+    [Export(typeof(IWebsitePackageService))]
+    public class WebsitePackageService : IWebsitePackageService
     {
         [ImportingConstructor]
-        public PackageService([NotNull, ItemNotNull, ImportMany(typeof(IPackageProvider))] IEnumerable<IPackageProvider> packageProviders)
+        public WebsitePackageService([NotNull, ItemNotNull, ImportMany(typeof(IWebsitePackageProvider))] IEnumerable<IWebsitePackageProvider> packageProviders)
         {
             PackageProviders = packageProviders;
         }
 
         [NotNull, ItemNotNull]
-        protected IEnumerable<IPackageProvider> PackageProviders { get; }
+        protected IEnumerable<IWebsitePackageProvider> PackageProviders { get; }
 
         public virtual IEnumerable<IPackage> CheckForInstallableUpdates(IEnumerable<IPackage> installablePackages)
         {
@@ -70,49 +70,40 @@ namespace Sitecore.Pathfinder.Packaging
             return installedPackages;
         }
 
-        public void DownloadPackage(string packageId, string version, string fileName)
-        {
-            var downloaded = PackageProviders.Any(packageProvider => packageProvider.DownloadPackage(packageId, version, fileName));
-            if (!downloaded)
-            {
-                throw new InvalidOperationException("Package not found: " + packageId);
-            }
-        }
-
         public virtual IEnumerable<IPackage> FindInstallablePackagesById(string packageId)
         {
-            return PackageProviders.SelectMany(packageProvider => packageProvider.FindInstallablePackagesById(packageId));
+            return PackageProviders.SelectMany(packageProvider => packageProvider.FindInstallableWebsitePackagesById(packageId));
         }
 
         public virtual IEnumerable<IPackage> FindInstalledPackagesById(string packageId)
         {
-            return PackageProviders.SelectMany(packageProvider => packageProvider.FindInstalledPackagesById(packageId));
+            return PackageProviders.SelectMany(packageProvider => packageProvider.FindInstalledWebsitePackagesById(packageId));
         }
 
         public virtual IEnumerable<IPackage> GetInstallablePackages(string queryText, string author, string tags, int skip = -1)
         {
-            return PackageProviders.SelectMany(packageProvider => packageProvider.GetInstallablePackages(queryText, author, tags, skip));
+            return PackageProviders.SelectMany(packageProvider => packageProvider.GetInstallableWebsitePackages(queryText, author, tags, skip));
         }
 
         public virtual IEnumerable<IPackage> GetInstalledPackages()
         {
-            return PackageProviders.SelectMany(packageProvider => packageProvider.GetInstalledPackages());
+            return PackageProviders.SelectMany(packageProvider => packageProvider.GetInstalledWebsitePackages());
         }
 
         public virtual int GetTotalPackageCount(string queryText, string author, string tags)
         {
-            return PackageProviders.Sum(packageProvider => packageProvider.GetTotalPackageCount(queryText, author, tags));
+            return PackageProviders.Sum(packageProvider => packageProvider.GetTotalWebsitePackageCount(queryText, author, tags));
         }
 
         [NotNull, ItemNotNull]
-        public virtual IEnumerable<IPackage> GetUpdatePackages(bool includePrerelease)
+        public virtual IEnumerable<IPackage> GetWebsiteUpdatePackages(bool includePrerelease)
         {
-            return PackageProviders.SelectMany(packageProvider => packageProvider.GetUpdatePackages(includePrerelease));
+            return PackageProviders.SelectMany(packageProvider => packageProvider.GetWebsiteUpdatePackages(includePrerelease));
         }
 
         public virtual void InstallOrUpdatePackage(string packageId)
         {
-            var installed = PackageProviders.Any(packageProvider => packageProvider.InstallOrUpdatePackage(packageId));
+            var installed = PackageProviders.Any(packageProvider => packageProvider.InstallOrUpdateWebsitePackage(packageId));
             if (!installed)
             {
                 throw new InvalidOperationException("Package not found: " + packageId);
@@ -130,7 +121,7 @@ namespace Sitecore.Pathfinder.Packaging
 
         public virtual void UninstallPackage(string packageId)
         {
-            var uninstalled = PackageProviders.Any(packageProvider => packageProvider.UninstallPackage(packageId));
+            var uninstalled = PackageProviders.Any(packageProvider => packageProvider.UninstallWebsitePackage(packageId));
             if (!uninstalled)
             {
                 throw new InvalidOperationException("Package not found: " + packageId);
@@ -139,7 +130,7 @@ namespace Sitecore.Pathfinder.Packaging
 
         public virtual void UpdatePackage(string packageId, string version)
         {
-            var updated = PackageProviders.Any(packageProvider => packageProvider.UpdatePackage(packageId, version));
+            var updated = PackageProviders.Any(packageProvider => packageProvider.UpdateWebsitePackage(packageId, version));
             if (!updated)
             {
                 throw new InvalidOperationException("Package not found: " + packageId);
