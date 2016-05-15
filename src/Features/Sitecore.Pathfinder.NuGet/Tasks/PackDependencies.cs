@@ -4,13 +4,11 @@ using System;
 using System.IO;
 using System.Text;
 using NuGet;
-using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
-using Sitecore.Pathfinder.Tasks;
 using Sitecore.Pathfinder.Tasks.Building;
 
-namespace Sitecore.Pathfinder.NuGet.Building
+namespace Sitecore.Pathfinder.NuGet.Tasks
 {
     public class PackDependencies : BuildTaskBase
     {
@@ -42,7 +40,7 @@ namespace Sitecore.Pathfinder.NuGet.Building
             var packageId = packageName.GetSafeCodeIdentifier();
 
             var srcFileName = PathHelper.UnmapPath(context.ProjectDirectory, zipFileName);
-            var targetFileName = "content\\packages\\" + Path.GetFileName(zipFileName);
+            var targetFileName = "project\\packages\\" + Path.GetFileName(zipFileName);
 
             context.Trace.TraceInformation(Msg.M1016, Texts.Packing, packageName);
 

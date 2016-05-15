@@ -6,10 +6,9 @@ using System.Text;
 using NuGet;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
-using Sitecore.Pathfinder.Tasks;
 using Sitecore.Pathfinder.Tasks.Building;
 
-namespace Sitecore.Pathfinder.NuGet.Building
+namespace Sitecore.Pathfinder.NuGet.Tasks
 {
     public class PackNupkgPackage : BuildTaskBase
     {

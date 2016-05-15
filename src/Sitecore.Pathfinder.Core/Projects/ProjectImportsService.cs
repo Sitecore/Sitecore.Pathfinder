@@ -115,7 +115,7 @@ namespace Sitecore.Pathfinder.Projects
                 // todo: consider caching this
                 using (var zip = ZipFile.OpenRead(fileName))
                 {
-                    var entry = zip.GetEntry("content/sitecore.project/exports.xml");
+                    var entry = zip.GetEntry("project/sitecore.project/exports.xml");
                     if (entry == null)
                     {
                         continue;

@@ -58,8 +58,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Building\PackDependencies.cs" />
-    <Compile Include="Building\PackNupkgPackage.cs" />
+    <Compile Include="Tasks\PackDependencies.cs" />
+    <Compile Include="Tasks\PackNupkgPackage.cs" />
     <Compile Include="NuGetExtension.cs" />
     <Compile Include="NuGetPackageBuilder.cs" />
     <Compile Include="Packaging\NugetPackage.cs" />
@@ -83,9 +83,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\..\..\packages\ResharperCodeContractNullability.1.0.4\analyzers\dotnet\cs\CodeContractNullability.dll" />
+    <Analyzer Include="..\..\..\packages\ResharperCodeContractNullability.1.0.5\analyzers\dotnet\cs\CodeContractNullability.dll" />
+    <Analyzer Include="..\..\..\packages\ResharperCodeContractNullability.1.0.5\analyzers\dotnet\cs\MsgPack.dll" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

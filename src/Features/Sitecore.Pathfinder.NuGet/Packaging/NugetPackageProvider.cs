@@ -375,10 +375,10 @@ namespace Sitecore.Pathfinder.NuGet.Packaging
         protected virtual void InstallPackage([CanBeNull] object sender, [NotNull] PackageOperationEventArgs e)
         {
             // check if this is a Pathfinder NuGet package
-            var configFileName = Path.Combine(e.InstallPath, "content\\sitecore.tools\\scconfig.json");
+            var configFileName = Path.Combine(e.InstallPath, "project\\sitecore.tools\\scconfig.json");
             if (File.Exists(configFileName))
             {
-                var projectDirectory = Path.Combine(e.InstallPath, "content");
+                var projectDirectory = Path.Combine(e.InstallPath, "project");
                 var toolsDirectory = Path.Combine(projectDirectory, "sitecore.tools");
 
                 var binDirectory = Path.Combine(Configuration.GetString(Constants.Configuration.WebsiteDirectory), "bin");
@@ -393,7 +393,7 @@ namespace Sitecore.Pathfinder.NuGet.Packaging
                 emitter.Start();
             }
 
-            var packagesDirectory = Path.Combine(e.InstallPath, "content\\packages");
+            var packagesDirectory = Path.Combine(e.InstallPath, "project\\packages");
             if (Directory.Exists(packagesDirectory))
             {
                 InstallPackageDirectory(packagesDirectory);
