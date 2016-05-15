@@ -13,7 +13,6 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
-using Sitecore.Pathfinder.Serializing;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.SecurityModel;
 using Sitecore.Text;
@@ -46,22 +45,14 @@ namespace Sitecore.Pathfinder.Emitters
 
         public virtual int Start()
         {
-            SerializingDataProvider.Disabled = true;
-            try
-            {
-                PrepareWebsiteForPathfinder();
+            PrepareWebsiteForPathfinder();
 
-                // todo: support installation without configuration files
-                var project = ProjectService.LoadProjectFromConfiguration();
+            // todo: support installation without configuration files
+            var project = ProjectService.LoadProjectFromConfiguration();
 
-                Emit(project);
+            Emit(project);
 
-                DeleteProjectItems(project);
-            }
-            finally
-            {
-                SerializingDataProvider.Disabled = false;
-            }
+            DeleteProjectItems(project);
 
             return 0;
         }

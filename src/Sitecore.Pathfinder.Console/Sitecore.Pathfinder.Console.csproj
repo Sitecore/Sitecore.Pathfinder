@@ -176,7 +176,6 @@
     <Compile Include="Tasks\ListItems.cs" />
     <Compile Include="Tasks\ListProject.cs" />
     <Compile Include="Tasks\ListRules.cs" />
-    <Compile Include="Tasks\UpdateDataProvider.cs" />
     <Compile Include="Tasks\RunScript.cs" />
     <Compile Include="Tasks\TroubleshootWebsite.cs" />
     <Compile Include="Tasks\CopyPackage.cs" />
@@ -225,9 +224,6 @@
     <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\PackageSources.txt">
       <Link>files\website\sitecore\shell\client\Applications\Pathfinder\PackageSources.txt</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\News.xml">
-      <SubType>Designer</SubType>
     </Content>
     <Content Include="licenses\ICSharpCode.SharpZipLib.txt" />
     <Content Include="licenses\MarkdownSharp.txt" />
@@ -427,9 +423,6 @@
     <None Include="files\website\App_Config\include\Sitecore.Pathfinder\zzz.Sitecore.Pathfinder.DevConfig.config,disabled">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\website\App_Config\include\Sitecore.Pathfinder\Sitecore.Pathfinder.SerializingDataProvider.config.disabled">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="help\index.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -533,9 +526,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="help\tasks\troubleshoot-website.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="help\tasks\update-mappings.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="help\tasks\watch-project.md">
