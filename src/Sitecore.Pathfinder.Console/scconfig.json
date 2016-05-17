@@ -325,10 +325,10 @@
     // specifies the .NET CultureInfo name to use when parsing date/times and numbers
     "culture": "en-US",
 
-    // nuget dependencies for restore-packages task
+    // dependency packages
     "dependencies": {
-        "Sitecore.Pathfinder.Core": "1.0.0"
-    },  
+        // "id" : "version"
+    },
 
     // extensions directory and dynamically compiled extensions assembly filename
     "extensions": {
@@ -347,6 +347,12 @@
     "nuget-repositories": {
         "nuget.org": "https://www.nuget.org/api/v2"
     }, 
+
+    // directories, that hold packages
+    "packages": {
+        "nuget-directory": "packages",
+        "npm-directory": "node_modules"
+    },  
 
     // maps project role to checkers
     "project-role-checkers": {

@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -65,8 +65,11 @@ namespace Sitecore.Pathfinder.Extensibility
                 AddDynamicAssembly(catalogs, toolsDirectory, coreAssemblyFileName, coreExtensionsDirectory);
                 AddAssembliesFromDirectory(options, catalogs, coreExtensionsDirectory);
 
+                // add extension from [Project]/packages directory
+                AddNugetPackages(configuration, options, catalogs, coreAssemblyFileName, projectDirectory);
+
                 // add extension from [Project]/node_modules directory
-                AddNodeModules(options, catalogs, coreAssemblyFileName, projectDirectory);
+                AddNodeModules(configuration, options, catalogs, coreAssemblyFileName, projectDirectory);
 
                 // add projects extensions
                 var projectExtensionsDirectory = configuration.GetString(Constants.Configuration.ProjectExtensionsDirectory);
@@ -187,9 +190,9 @@ namespace Sitecore.Pathfinder.Extensibility
             }
         }
 
-        private static void AddNodeModules(CompositionOptions options, [NotNull, ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string coreAssemblyFileName, [NotNull] string projectDirectory)
+        private static void AddNodeModules([NotNull] IConfiguration configuration, CompositionOptions options, [NotNull, ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string coreAssemblyFileName, [NotNull] string projectDirectory)
         {
-            var nodeModules = Path.Combine(projectDirectory, "node_modules");
+            var nodeModules = Path.Combine(projectDirectory, configuration.GetString(Constants.Configuration.PackagesNpmDirectory));
             if (!Directory.Exists(nodeModules))
             {
                 return;
@@ -206,6 +209,21 @@ namespace Sitecore.Pathfinder.Extensibility
                 // todo: exclude nested node_modules directories
 
                 AddDynamicAssembly(catalogs, directory, coreAssemblyFileName, directory);
+                AddAssembliesFromDirectory(options, catalogs, directory);
+            }
+        }
+
+        private static void AddNugetPackages([NotNull] IConfiguration configuration, CompositionOptions options, [NotNull, ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string coreAssemblyFileName, [NotNull] string projectDirectory)
+        {
+            // todo: consider only loading directories listed in packages.config or scconfig.json
+            var nugetPackages = Path.Combine(projectDirectory, configuration.GetString(Constants.Configuration.PackagesNugetDirectory));
+            if (!Directory.Exists(nugetPackages))
+            {
+                return;
+            }
+
+            foreach (var directory in Directory.GetDirectories(nugetPackages))
+            {
                 AddAssembliesFromDirectory(options, catalogs, directory);
             }
         }

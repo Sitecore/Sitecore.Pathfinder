@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -58,6 +58,8 @@ namespace Sitecore.Pathfinder
 
         public static class Configuration
         {
+            public const string Dependencies = "dependencies";
+
             public const string BuildingWithNoConfig = "building-with-no-config";
 
             public const string BuildProjectCompileBinFilesExclude = "build-project:compile-bin-files:exclude";
@@ -76,9 +78,9 @@ namespace Sitecore.Pathfinder
 
             public const string CheckBinFileVersion = "install-package:check-bin-file-version";
 
-            public const string CheckProjectCheckers = "check-project:checkers";
-
             public const string Checkers = "checkers";
+
+            public const string CheckProjectCheckers = "check-project:checkers";
 
             public const string CodeGen = "codegen";
 
@@ -129,6 +131,10 @@ namespace Sitecore.Pathfinder
             public const string NewProjectWwwrootDirectory = "new-project:wwwroot-directory";
 
             public const string PackageDirectory = "copy-package:package-directory";
+
+            public const string PackagesNpmDirectory = "packages:npm-directory";
+
+            public const string PackagesNugetDirectory = "packages:nuget-directory";
 
             public const string PackNpmOutputFile = "pack-npm:output-file";
 

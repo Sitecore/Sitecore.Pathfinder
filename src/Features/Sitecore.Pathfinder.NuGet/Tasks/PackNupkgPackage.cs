@@ -118,6 +118,7 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
         [Diagnostics.NotNull]
         protected virtual string GetPackagesConfig([Diagnostics.NotNull] IBuildContext context, [Diagnostics.NotNull] string nuspec)
         {
+            // load dependencies from packages.config
             var fileName = Path.Combine(context.ProjectDirectory, "packages.config");
             if (!context.FileSystem.FileExists(fileName))
             {
@@ -138,11 +139,20 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
                 var id = element.GetAttributeValue("id");
                 var version = element.GetAttributeValue("version");
 
-                // Check if the "Sitecore.Pathfinder.Core" package is already included in the nuspec
+                // check if the "Sitecore.Pathfinder.Core" package is already included in the nuspec
                 if (id == "Sitecore.Pathfinder.Core" && nuspec.IndexOf(" id=\"Sitecore.Pathfinder.Core\" ", StringComparison.Ordinal) >= 0)
                 {
                     continue;
                 }
+
+                sb.Append($"    <dependency id=\"{id}\" version=\"{version}\" />");
+            }
+
+            // load dependencies from scconfig.json
+            foreach (var pair in context.Configuration.GetSubKeys(Constants.Configuration.Dependencies))
+            {
+                var id = pair.Key;
+                var version = context.Configuration.GetString(Constants.Configuration.Dependencies + ":" + id);
 
                 sb.Append($"    <dependency id=\"{id}\" version=\"{version}\" />");
             }

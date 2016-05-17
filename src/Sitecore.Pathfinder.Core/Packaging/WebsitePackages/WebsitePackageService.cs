@@ -150,6 +150,7 @@ namespace Sitecore.Pathfinder.Packaging.WebsitePackages
         {
             var list = new List<string>(feeds);
 
+            // add source repositories from sitecore/shell/client/Applications/Pathfinder/PackageSources.txt
             var packageSources = Path.Combine(Configuration.GetString(Constants.Configuration.WebsiteDirectory), "sitecore/shell/client/Applications/Pathfinder/PackageSources.txt");
             if (File.Exists(packageSources))
             {
@@ -163,6 +164,13 @@ namespace Sitecore.Pathfinder.Packaging.WebsitePackages
 
                     list.Add(source);
                 }
+            }
+
+            // add source repositories from configuration
+            foreach (var pair in Configuration.GetSubKeys("nuget-repositories"))
+            {
+                var source = Configuration.GetString("nuget-repositories:" + pair.Key);
+                list.Add(source);
             }
 
             Feeds = list;

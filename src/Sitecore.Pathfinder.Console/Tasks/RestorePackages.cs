@@ -29,6 +29,7 @@ namespace Sitecore.Pathfinder.Tasks
                 return;
             }
 
+            // todo: replace with official NuGet RestorePackages, if such exists
             foreach (var packageInfo in ProjectPackages.GetPackages(context.ProjectDirectory))
             {
                 if (context.FileSystem.DirectoryExists(packageInfo.PackageDirectory))

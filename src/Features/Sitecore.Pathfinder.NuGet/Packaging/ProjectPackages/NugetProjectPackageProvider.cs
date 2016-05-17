@@ -76,7 +76,7 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.ProjectPackages
                     {
                         var id = element.GetAttributeValue("id");
                         var version = element.GetAttributeValue("version");
-                        var directory = Path.Combine(projectDirectory, "packages\\" + id + "." + version);
+                        var directory = Path.Combine(projectDirectory, Configuration.GetString(Constants.Configuration.PackagesNugetDirectory) + "\\" + id + "." + version);
                         var project = Path.Combine(directory, "project");
 
                         projectPackages.Add(new ProjectPackageInfo(id, version, directory, project));

@@ -35,7 +35,7 @@ namespace Sitecore.Pathfinder.Tasks
                     continue;
                 }
 
-                var packagesDirectory = Path.Combine(context.ProjectDirectory, "packages");
+                var packagesDirectory = Path.Combine(context.ProjectDirectory, context.Configuration.GetString(Constants.Configuration.PackagesNugetDirectory));
                 var feeds = Path.GetDirectoryName(fileName) + "," + packagesDirectory;
 
                 var queryStringParameters = new Dictionary<string, string>
