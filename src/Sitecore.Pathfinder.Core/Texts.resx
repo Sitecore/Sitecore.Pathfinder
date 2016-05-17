@@ -142,7 +142,7 @@
     <value>Layout contains errors</value>
   </data>
   <data name="Layout_not_found_" xml:space="preserve">
-    <value>Layout not found.</value>
+    <value>Layout not found</value>
   </data>
   <data name="Cannot_apply_a_layout_to_a_template__The_template_needs_a_Standard_Values_" xml:space="preserve">
     <value>Cannot apply a layout to a template. The template needs a Standard Values.</value>

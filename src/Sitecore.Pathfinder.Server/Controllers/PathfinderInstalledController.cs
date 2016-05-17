@@ -30,9 +30,9 @@ namespace Sitecore.Pathfinder.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, output.ToString());
                 }
 
-                var packageService = app.CompositionService.Resolve<IWebsitePackageService>();
+                var packageService = app.CompositionService.Resolve<IWebsitePackageService>().With(Enumerable.Empty<string>());
 
-                ViewBag.Packages = packageService.CheckForInstalledUpdates(packageService.GetInstalledPackages()).ToList();
+                ViewBag.Packages = packageService.CheckForLocalUpdates(packageService.GetLocalPackages()).ToList();
 
                 return View("~/sitecore/shell/client/Applications/Pathfinder/InstalledPackages.cshtml");
             }

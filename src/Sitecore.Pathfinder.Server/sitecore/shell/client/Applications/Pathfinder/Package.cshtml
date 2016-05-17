@@ -5,10 +5,10 @@
     var packageId = ViewBag.PackageId as string ?? string.Empty;
 
     var packageService = (IWebsitePackageService)ViewBag.PackageService;
-    var packages = packageService.FindInstallablePackagesById(packageId);
+    var packages = packageService.FindRemotePackagesById(packageId);
     var package = packages.First();
 
-    var installedPackage = packageService.FindInstalledPackagesById(packageId).FirstOrDefault();
+    var installedPackage = packageService.FindLocalPackagesById(packageId).FirstOrDefault();
 
     var packageName = package.Name ?? package.PackageId;
     var iconUrl = !string.IsNullOrEmpty(package.IconUrl) ? package.IconUrl : "../packageDefaultIcon-50x50.png";

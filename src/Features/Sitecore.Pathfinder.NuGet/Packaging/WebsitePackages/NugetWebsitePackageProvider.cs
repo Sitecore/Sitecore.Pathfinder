@@ -20,7 +20,6 @@ using Sitecore.IO;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Packaging.WebsitePackages;
 using Sitecore.Pathfinder.Runtime.Caching;
 using Sitecore.SecurityModel;
@@ -37,10 +36,10 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.WebsitePackages
         }
 
         [NotNull]
-        public string InstallableRepository { get; private set; }
+        public string LocalRepository { get; private set; }
 
         [NotNull]
-        public string InstalledRepository { get; private set; }
+        public string ProjectDirectory { get; private set; }
 
         [Diagnostics.NotNull]
         protected ICacheService Cache { get; }
@@ -48,11 +47,11 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.WebsitePackages
         [NotNull]
         protected IConfiguration Configuration { get; }
 
-        public override IEnumerable<Pathfinder.Packaging.IPackage> FindInstallableWebsitePackagesById(string packageId)
+        public override IEnumerable<Pathfinder.Packaging.IPackage> FindRemotePackagesById(string packageId, IEnumerable<string> feeds)
         {
-            var installableRepository = GetInstallableRepository();
+            var remoteRepository = GetRemoteRepository(feeds);
 
-            var packages = installableRepository.FindPackagesById(packageId);
+            var packages = remoteRepository.FindPackagesById(packageId);
             if (packages == null || !packages.Any())
             {
                 return Enumerable.Empty<Pathfinder.Packaging.IPackage>();
@@ -61,11 +60,11 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.WebsitePackages
             return packages.Select(p => new NugetPackage(p));
         }
 
-        public override IEnumerable<Pathfinder.Packaging.IPackage> FindInstalledWebsitePackagesById(string packageId)
+        public override IEnumerable<Pathfinder.Packaging.IPackage> FindLocalPackagesById(string packageId)
         {
-            var installedRepository = GetInstalledRepository();
+            var localRepository = GetLocalRepository();
 
-            var packages = installedRepository.FindPackagesById(packageId);
+            var packages = localRepository.FindPackagesById(packageId);
             if (packages == null || !packages.Any())
             {
                 return Enumerable.Empty<Pathfinder.Packaging.IPackage>();
@@ -74,9 +73,9 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.WebsitePackages
             return packages.Select(p => new NugetPackage(p));
         }
 
-        public override IEnumerable<Pathfinder.Packaging.IPackage> GetInstallableWebsitePackages(string queryText, string author, string tags, int skip)
+        public override IEnumerable<Pathfinder.Packaging.IPackage> GetRemotePackages(string queryText, string author, string tags, int skip, IEnumerable<string> feeds)
         {
-            var query = GetInstallablePackagesQuery(queryText, author, tags);
+            var query = GetRemotePackagesQuery(queryText, author, tags, feeds);
 
             if (skip >= 0)
             {
@@ -86,9 +85,9 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.WebsitePackages
             return query.Select(p => new NugetPackage(p));
         }
 
-        public override IEnumerable<Pathfinder.Packaging.IPackage> GetInstalledWebsitePackages()
+        public override IEnumerable<Pathfinder.Packaging.IPackage> GetLocalPackages()
         {
-            var installedRepository = GetInstalledRepository();
+            var installedRepository = GetLocalRepository();
 
             return installedRepository.GetPackages().Select(p => new NugetPackage(p)
             {
@@ -96,70 +95,70 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.WebsitePackages
             });
         }
 
-        public override int GetTotalWebsitePackageCount(string queryText, string author, string tags)
+        public override int GetTotalPackageCount(string queryText, string author, string tags, IEnumerable<string> feeds)
         {
-            var query = GetInstallablePackagesQuery(queryText, author, tags);
+            var query = GetRemotePackagesQuery(queryText, author, tags, feeds);
             return query.Count();
         }
 
-        public override IEnumerable<Pathfinder.Packaging.IPackage> GetWebsiteUpdatePackages(bool includePrerelease)
+        public override IEnumerable<Pathfinder.Packaging.IPackage> GetUpdatePackages(bool includePrerelease, IEnumerable<string> feeds)
         {
-            var repository = GetInstallableRepository();
+            var repository = GetRemoteRepository(feeds);
 
-            var installedNugetPackages = GetInstalledWebsitePackages().OfType<NugetPackage>().Select(p => p.Package);
+            var installedNugetPackages = GetLocalPackages().OfType<NugetPackage>().Select(p => p.Package);
 
             return repository.GetUpdates(installedNugetPackages, includePrerelease, false).Select(p => new NugetPackage(p));
         }
 
-        public override bool InstallOrUpdateWebsitePackage(string packageId)
+        public override bool InstallOrUpdatePackage(string packageId, IEnumerable<string> feeds)
         {
-            var installableRepository = GetInstallableRepository();
-            var installablePackage = installableRepository.FindPackage(packageId);
-            if (installablePackage == null)
+            var remoteRepository = GetRemoteRepository(feeds);
+            var remotePackage = remoteRepository.FindPackage(packageId);
+            if (remotePackage == null)
             {
                 return false;
             }
 
-            var installedRepository = GetInstalledRepository();
-            var installedPackages = installedRepository.GetPackages().ToList();
+            var localRepository = GetLocalRepository();
+            var localPackages = localRepository.GetPackages().ToList();
 
-            var packageManager = new PackageManager(installableRepository, InstalledRepository);
+            var packageManager = new PackageManager(remoteRepository, LocalRepository);
             packageManager.PackageInstalled += InstallPackage;
 
-            var installedPackage = installedPackages.FirstOrDefault(i => string.Equals(i.Id, packageId, StringComparison.OrdinalIgnoreCase));
-            if (installedPackage != null)
+            var localPackage = localPackages.FirstOrDefault(i => string.Equals(i.Id, packageId, StringComparison.OrdinalIgnoreCase));
+            if (localPackage != null)
             {
-                if (installedPackage.Version == installablePackage.Version)
+                if (localPackage.Version == remotePackage.Version)
                 {
-                    packageManager.UninstallPackage(installedPackage, true);
-                    packageManager.InstallPackage(installablePackage, false, true);
+                    packageManager.UninstallPackage(localPackage, true);
+                    packageManager.InstallPackage(remotePackage, false, true);
                 }
                 else
                 {
-                    packageManager.UpdatePackage(installablePackage, false, true);
+                    packageManager.UpdatePackage(remotePackage, false, true);
                 }
             }
             else
             {
-                packageManager.InstallPackage(installablePackage, false, true);
+                packageManager.InstallPackage(remotePackage, false, true);
             }
 
             return true;
         }
 
-        public override bool InstallPackage(string packageId, string version)
+        public override bool InstallPackage(string packageId, string version, IEnumerable<string> feeds)
         {
-            var installableRepository = GetInstallableRepository();
+            var remoteRepository = GetRemoteRepository(feeds);
 
             IPackage package;
             if (string.IsNullOrEmpty(version))
             {
-                package = installableRepository.FindPackage(packageId);
+                package = remoteRepository.FindPackage(packageId);
             }
             else
             {
                 var semanticVersion = new SemanticVersion(version);
-                package = installableRepository.FindPackage(packageId, semanticVersion);
+                package = remoteRepository.FindPackage(packageId, semanticVersion);
             }
 
             if (package == null)
@@ -167,7 +166,7 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.WebsitePackages
                 return false;
             }
 
-            var packageManager = new PackageManager(installableRepository, InstalledRepository);
+            var packageManager = new PackageManager(remoteRepository, LocalRepository);
             packageManager.PackageInstalled += InstallPackage;
 
             packageManager.InstallPackage(package, false, true);
@@ -175,36 +174,36 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.WebsitePackages
             return true;
         }
 
-        public override bool UninstallWebsitePackage(string packageId)
+        public override bool UninstallPackage(string packageId)
         {
-            var installedRepository = GetInstalledRepository();
+            var localRepository = GetLocalRepository();
 
-            var package = installedRepository.FindPackage(packageId);
+            var package = localRepository.FindPackage(packageId);
             if (package == null)
             {
                 return false;
             }
 
-            var packageManager = new PackageManager(installedRepository, InstalledRepository);
+            var packageManager = new PackageManager(localRepository, LocalRepository);
 
             packageManager.UninstallPackage(package, true);
 
             return true;
         }
 
-        public override bool UpdateWebsitePackage(string packageId, string version)
+        public override bool UpdatePackage(string packageId, string version)
         {
-            var installedRepository = GetInstalledRepository();
+            var localRepository = GetLocalRepository();
 
             IPackage package;
             if (string.IsNullOrEmpty(version))
             {
-                package = installedRepository.FindPackage(packageId);
+                package = localRepository.FindPackage(packageId);
             }
             else
             {
                 var semanticVersion = new SemanticVersion(version);
-                package = installedRepository.FindPackage(packageId, semanticVersion);
+                package = localRepository.FindPackage(packageId, semanticVersion);
             }
 
             if (package == null)
@@ -212,7 +211,7 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.WebsitePackages
                 return false;
             }
 
-            var packageManager = new PackageManager(installedRepository, InstalledRepository);
+            var packageManager = new PackageManager(localRepository, LocalRepository);
             packageManager.PackageInstalled += InstallPackage;
 
             packageManager.UpdatePackage(package, false, true);
@@ -223,32 +222,28 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.WebsitePackages
         protected void CreateDirectories()
         {
             // todo: make this configurable
-            var pathfinder = Path.Combine(Configuration.GetString(Constants.Configuration.DataFolderDirectory), "pathfinder");
-            InstallableRepository = Path.Combine(pathfinder, "packages");
-            InstalledRepository = Path.Combine(pathfinder, "installed");
+            var pathfinderDirectory = Path.Combine(Configuration.GetString(Constants.Configuration.DataFolderDirectory), "pathfinder");
 
-            if (!Directory.Exists(pathfinder))
+            LocalRepository = Path.Combine(pathfinderDirectory, "packages");
+            ProjectDirectory = Configuration.GetString(Constants.Configuration.ProjectDirectory);
+
+            if (!Directory.Exists(pathfinderDirectory))
             {
-                Directory.CreateDirectory(pathfinder);
+                Directory.CreateDirectory(pathfinderDirectory);
             }
 
-            if (!Directory.Exists(InstallableRepository))
+            if (!Directory.Exists(LocalRepository))
             {
-                Directory.CreateDirectory(InstallableRepository);
-            }
-
-            if (!Directory.Exists(InstalledRepository))
-            {
-                Directory.CreateDirectory(InstalledRepository);
+                Directory.CreateDirectory(LocalRepository);
             }
         }
 
         [NotNull, ItemNotNull]
-        protected virtual IEnumerable<IPackage> GetInstallablePackagesQuery([NotNull] string queryText, [NotNull] string author, [NotNull] string tags)
+        protected virtual IEnumerable<IPackage> GetRemotePackagesQuery([NotNull] string queryText, [NotNull] string author, [NotNull] string tags, IEnumerable<string> feeds)
         {
-            var installableRepository = GetInstallableRepository();
+            var remoteRepository = GetRemoteRepository(feeds);
 
-            var query = installableRepository.GetPackages();
+            var query = remoteRepository.GetPackages();
 
             if (!string.IsNullOrEmpty(queryText))
             {
@@ -271,39 +266,19 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.WebsitePackages
         }
 
         [NotNull]
-        protected virtual IPackageRepository GetInstallableRepository()
+        protected virtual IPackageRepository GetRemoteRepository([NotNull, ItemNotNull] IEnumerable<string> feeds)
         {
-            CreateDirectories();
-
-            var repositories = new List<IPackageRepository>
-            {
-                PackageRepositoryFactory.Default.CreateRepository(InstallableRepository)
-            };
-
-            var packageSources = Path.Combine(Configuration.GetString(Constants.Configuration.WebsiteDirectory), "sitecore/shell/client/Applications/Pathfinder/PackageSources.txt");
-            if (File.Exists(packageSources))
-            {
-                var sources = File.ReadAllLines(packageSources);
-                foreach (var source in sources)
-                {
-                    if (string.IsNullOrEmpty(source.Trim()))
-                    {
-                        continue;
-                    }
-
-                    repositories.Add(PackageRepositoryFactory.Default.CreateRepository(source));
-                }
-            }
+            var repositories = feeds.Select(feed => PackageRepositoryFactory.Default.CreateRepository(feed)).ToList();
 
             return new AggregateRepository(repositories);
         }
 
         [NotNull]
-        protected virtual IPackageRepository GetInstalledRepository()
+        protected virtual IPackageRepository GetLocalRepository()
         {
             CreateDirectories();
 
-            return PackageRepositoryFactory.Default.CreateRepository(InstalledRepository);
+            return PackageRepositoryFactory.Default.CreateRepository(LocalRepository);
         }
 
         protected virtual void InstallPackage([CanBeNull] object sender, [NotNull] PackageOperationEventArgs e)

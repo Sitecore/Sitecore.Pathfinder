@@ -2,6 +2,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Sitecore.Diagnostics;
@@ -29,7 +30,7 @@ namespace Sitecore.Pathfinder.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, output.ToString());
                 }
 
-                var packageService = app.CompositionService.Resolve<IWebsitePackageService>();
+                var packageService = app.CompositionService.Resolve<IWebsitePackageService>().With(Enumerable.Empty<string>());
 
                 ViewBag.PackageService = packageService;
                 ViewBag.PackageId = packageId;

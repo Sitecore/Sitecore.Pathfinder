@@ -1,10 +1,13 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.IO;
 using System.Linq;
+using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Packaging.WebsitePackages
 {
@@ -12,43 +15,24 @@ namespace Sitecore.Pathfinder.Packaging.WebsitePackages
     public class WebsitePackageService : IWebsitePackageService
     {
         [ImportingConstructor]
-        public WebsitePackageService([NotNull, ItemNotNull, ImportMany(typeof(IWebsitePackageProvider))] IEnumerable<IWebsitePackageProvider> packageProviders)
+        public WebsitePackageService([NotNull] IConfiguration configuration, [NotNull, ItemNotNull, ImportMany(typeof(IWebsitePackageProvider))] IEnumerable<IWebsitePackageProvider> packageProviders)
         {
+            Configuration = configuration;
             PackageProviders = packageProviders;
         }
 
         [NotNull, ItemNotNull]
+        protected IEnumerable<string> Feeds { get; private set; }
+
+        [NotNull]
+        protected IConfiguration Configuration { get; }
+
+        [NotNull, ItemNotNull]
         protected IEnumerable<IWebsitePackageProvider> PackageProviders { get; }
 
-        public virtual IEnumerable<IPackage> CheckForInstallableUpdates(IEnumerable<IPackage> installablePackages)
+        public virtual IEnumerable<IPackage> CheckForLocalUpdates(IEnumerable<IPackage> installedPackages)
         {
-            var installedPackages = GetInstalledPackages();
-
-            foreach (var installablePackage in installablePackages)
-            {
-                var installedPackage = installedPackages.FirstOrDefault(p => string.Equals(p.PackageId, installablePackage.PackageId, StringComparison.OrdinalIgnoreCase));
-                if (installedPackage == null)
-                {
-                    continue;
-                }
-
-                installablePackage.IsInstalled = true;
-
-                if (installedPackage.CompareTo(installablePackage) < 0)
-                {
-                    continue;
-                }
-
-                installablePackage.HasUpdate = true;
-                installablePackage.UpdateVersion = installedPackage.Version;
-            }
-
-            return installablePackages;
-        }
-
-        public virtual IEnumerable<IPackage> CheckForInstalledUpdates(IEnumerable<IPackage> installedPackages)
-        {
-            var installablePackages = GetInstallablePackages(string.Empty, string.Empty, string.Empty);
+            var installablePackages = GetRemotePackages(string.Empty, string.Empty, string.Empty);
 
             foreach (var installedPackage in installedPackages)
             {
@@ -70,49 +54,74 @@ namespace Sitecore.Pathfinder.Packaging.WebsitePackages
             return installedPackages;
         }
 
-        public virtual IEnumerable<IPackage> FindInstallablePackagesById(string packageId)
+        public virtual IEnumerable<IPackage> CheckForRemoteUpdates(IEnumerable<IPackage> installablePackages)
         {
-            return PackageProviders.SelectMany(packageProvider => packageProvider.FindInstallableWebsitePackagesById(packageId));
+            var localPackages = GetLocalPackages();
+
+            foreach (var installablePackage in installablePackages)
+            {
+                var installedPackage = localPackages.FirstOrDefault(p => string.Equals(p.PackageId, installablePackage.PackageId, StringComparison.OrdinalIgnoreCase));
+                if (installedPackage == null)
+                {
+                    continue;
+                }
+
+                installablePackage.IsInstalled = true;
+
+                if (installedPackage.CompareTo(installablePackage) < 0)
+                {
+                    continue;
+                }
+
+                installablePackage.HasUpdate = true;
+                installablePackage.UpdateVersion = installedPackage.Version;
+            }
+
+            return installablePackages;
         }
 
-        public virtual IEnumerable<IPackage> FindInstalledPackagesById(string packageId)
+        public virtual IEnumerable<IPackage> FindLocalPackagesById(string packageId)
         {
-            return PackageProviders.SelectMany(packageProvider => packageProvider.FindInstalledWebsitePackagesById(packageId));
+            return PackageProviders.SelectMany(packageProvider => packageProvider.FindLocalPackagesById(packageId));
         }
 
-        public virtual IEnumerable<IPackage> GetInstallablePackages(string queryText, string author, string tags, int skip = -1)
+        public virtual IEnumerable<IPackage> FindRemotePackagesById(string packageId)
         {
-            return PackageProviders.SelectMany(packageProvider => packageProvider.GetInstallableWebsitePackages(queryText, author, tags, skip));
+            return PackageProviders.SelectMany(packageProvider => packageProvider.FindRemotePackagesById(packageId, Feeds));
         }
 
-        public virtual IEnumerable<IPackage> GetInstalledPackages()
+        public virtual IEnumerable<IPackage> GetLocalPackages()
         {
-            return PackageProviders.SelectMany(packageProvider => packageProvider.GetInstalledWebsitePackages());
+            return PackageProviders.SelectMany(packageProvider => packageProvider.GetLocalPackages());
+        }
+
+        public virtual IEnumerable<IPackage> GetRemotePackages(string queryText, string author, string tags, int skip = -1)
+        {
+            return PackageProviders.SelectMany(packageProvider => packageProvider.GetRemotePackages(queryText, author, tags, skip, Feeds));
         }
 
         public virtual int GetTotalPackageCount(string queryText, string author, string tags)
         {
-            return PackageProviders.Sum(packageProvider => packageProvider.GetTotalWebsitePackageCount(queryText, author, tags));
+            return PackageProviders.Sum(packageProvider => packageProvider.GetTotalPackageCount(queryText, author, tags, Feeds));
         }
 
         [NotNull, ItemNotNull]
-        public virtual IEnumerable<IPackage> GetWebsiteUpdatePackages(bool includePrerelease)
+        public virtual IEnumerable<IPackage> GetUpdatePackages(bool includePrerelease)
         {
-            return PackageProviders.SelectMany(packageProvider => packageProvider.GetWebsiteUpdatePackages(includePrerelease));
+            return PackageProviders.SelectMany(packageProvider => packageProvider.GetUpdatePackages(includePrerelease, Feeds));
         }
 
         public virtual void InstallOrUpdatePackage(string packageId)
         {
-            var installed = PackageProviders.Any(packageProvider => packageProvider.InstallOrUpdateWebsitePackage(packageId));
+            var installed = PackageProviders.Any(packageProvider => packageProvider.InstallOrUpdatePackage(packageId, Feeds));
             if (!installed)
             {
                 throw new InvalidOperationException("Package not found: " + packageId);
-            }
-        }
+            }}
 
         public virtual void InstallPackage(string packageId, string version)
         {
-            var installed = PackageProviders.Any(packageProvider => packageProvider.InstallPackage(packageId, version));
+            var installed = PackageProviders.Any(packageProvider => packageProvider.InstallPackage(packageId, version, Feeds));
             if (!installed)
             {
                 throw new InvalidOperationException("Package not found: " + packageId);
@@ -121,7 +130,7 @@ namespace Sitecore.Pathfinder.Packaging.WebsitePackages
 
         public virtual void UninstallPackage(string packageId)
         {
-            var uninstalled = PackageProviders.Any(packageProvider => packageProvider.UninstallWebsitePackage(packageId));
+            var uninstalled = PackageProviders.Any(packageProvider => packageProvider.UninstallPackage(packageId));
             if (!uninstalled)
             {
                 throw new InvalidOperationException("Package not found: " + packageId);
@@ -130,11 +139,35 @@ namespace Sitecore.Pathfinder.Packaging.WebsitePackages
 
         public virtual void UpdatePackage(string packageId, string version)
         {
-            var updated = PackageProviders.Any(packageProvider => packageProvider.UpdateWebsitePackage(packageId, version));
+            var updated = PackageProviders.Any(packageProvider => packageProvider.UpdatePackage(packageId, version));
             if (!updated)
             {
                 throw new InvalidOperationException("Package not found: " + packageId);
             }
+        }
+
+        public IWebsitePackageService With(IEnumerable<string> feeds)
+        {
+            var list = new List<string>(feeds);
+
+            var packageSources = Path.Combine(Configuration.GetString(Constants.Configuration.WebsiteDirectory), "sitecore/shell/client/Applications/Pathfinder/PackageSources.txt");
+            if (File.Exists(packageSources))
+            {
+                var sources = File.ReadAllLines(packageSources);
+                foreach (var source in sources)
+                {
+                    if (string.IsNullOrEmpty(source.Trim()))
+                    {
+                        continue;
+                    }
+
+                    list.Add(source);
+                }
+            }
+
+            Feeds = list;
+
+            return this;
         }
     }
 }

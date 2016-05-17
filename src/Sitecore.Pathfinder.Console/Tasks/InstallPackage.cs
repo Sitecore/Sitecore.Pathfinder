@@ -35,12 +35,15 @@ namespace Sitecore.Pathfinder.Tasks
                     continue;
                 }
 
+                var packagesDirectory = Path.Combine(context.ProjectDirectory, "packages");
+                var feeds = Path.GetDirectoryName(fileName) + "," + packagesDirectory;
+
                 var queryStringParameters = new Dictionary<string, string>
                 {
                     ["w"] = "0",
-                    ["rep"] = packageId
+                    ["rep"] = packageId,
+                    ["feeds"] = feeds
                 };
-
 
                 var webRequest = GetWebRequest(context).WithQueryString(queryStringParameters).WithUrl(context.Configuration.GetString(Constants.Configuration.InstallUrl));
                 if (Post(context, webRequest))

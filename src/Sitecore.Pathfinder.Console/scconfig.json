@@ -18,7 +18,7 @@
         "content-files": ".js, .map, .css, .htm, .ashx, .asmx, .asax, .eot, .svg, .ttf, .woff, .woff2, .less, .php, .ico",
 
         // comma separated list of files and directories to ignore
-        "ignore-directories": ".vscode, sitecore.filetemplates, sitecore.project, sitecore.tools, node_modules, roslyn, includes",
+        "ignore-directories": ".vscode, sitecore.filetemplates, sitecore.project, sitecore.tools, node_modules, packages, roslyn, includes",
         "ignore-filenames": "scc.cmd, project.json, readme.md, web.config, packages.config",
 
         // default file search pattern
@@ -76,7 +76,7 @@
         // execute Sitecore validators after item or template has been updated
         "run-sitecore-validators": true,
 
-        // poor mans schema for item files.
+        // poor mans schema for item files
         "schema": {
             "Item-attributes": "Name, Id, Database, Path, Icon, Template, IsEmittable, IsExternalReference, Layout.File, Template.CreateFromFields, Template.Id, Template.Icon, Template.BaseTemplates, Template.ShortHelp, Template.LongHelp",
             "Item-childnodes": "Fields, Children, Template",
@@ -112,7 +112,7 @@
 
     "copy-package": {
         "system-0": {
-            "copy-to-directory": "/Pathfinder/packages"
+            "copy-to-directory": "/pathfinder/repository"
         }
     },
 

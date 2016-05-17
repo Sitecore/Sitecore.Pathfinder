@@ -948,7 +948,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Layout not found..
+        ///   Looks up a localized string similar to Layout not found.
         /// </summary>
         public static string Layout_not_found_ {
             get {

@@ -13,7 +13,7 @@
     }
 
     var packageService = (IWebsitePackageService)ViewBag.PackageService;
-    var packages = packageService.CheckForUpdates(packageService.GetInstallablePackages(queryText, author, tags, skip)).ToList();
+    var packages = packageService.CheckForRemoteUpdates(packageService.GetRemotePackages(queryText, author, tags, skip)).ToList();
     var totalPackageCount = packageService.GetTotalPackageCount(queryText, author, tags);
 
     var previousButton = skip > 0 ? string.Empty : "disabled=\"disabled\"";

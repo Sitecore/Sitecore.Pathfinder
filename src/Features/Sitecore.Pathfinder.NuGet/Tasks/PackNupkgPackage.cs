@@ -80,11 +80,7 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
 
         protected virtual void BuildNupkgFile([NotNull] IBuildContext context, [NotNull] string nuspecFileName, [NotNull] string nupkgFileName)
         {
-            var configFileName = Path.Combine(context.ToolsDirectory, context.Configuration.GetString(Constants.Configuration.ProjectConfigFileName));
-
-            var nuspec = context.FileSystem.ReadAllText(nuspecFileName);
-            nuspec = nuspec.Replace("$global.scconfig.json$", configFileName);
-            nuspec = nuspec.Replace("$toolsDirectory$", context.ToolsDirectory);
+            var nuspec = GetNuspec(context, nuspecFileName);
 
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(nuspec));
             try
@@ -100,6 +96,59 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
             {
                 context.Trace.TraceError(Msg.D1020, Texts.Failed_to_create_the_Nupkg_file, ex.Message);
             }
+        }
+
+        [Diagnostics.NotNull]
+        protected virtual string GetNuspec([NotNull] IBuildContext context, [NotNull] string nuspecFileName)
+        {
+            var configFileName = Path.Combine(context.ToolsDirectory, context.Configuration.GetString(Constants.Configuration.ProjectConfigFileName));
+
+            var nuspec = context.FileSystem.ReadAllText(nuspecFileName);
+
+            nuspec = nuspec.Replace("$global.scconfig.json$", configFileName);
+            nuspec = nuspec.Replace("$toolsDirectory$", context.ToolsDirectory);
+
+            // replace dependencies macro with dependencies from /packages.config
+            var packagesConfig = GetPackagesConfig(context, nuspec);
+            nuspec = nuspec.Replace("<dependency id=\"$packages.config\" version=\"1.0.0\" />", packagesConfig);
+
+            return nuspec;
+        }
+
+        [Diagnostics.NotNull]
+        protected virtual string GetPackagesConfig([Diagnostics.NotNull] IBuildContext context, [Diagnostics.NotNull] string nuspec)
+        {
+            var fileName = Path.Combine(context.ProjectDirectory, "packages.config");
+            if (!context.FileSystem.FileExists(fileName))
+            {
+                return string.Empty;
+            }
+
+            var text = context.FileSystem.ReadAllText(fileName);
+            var root = text.ToXElement();
+            if (root == null)
+            {
+                return string.Empty;
+            }
+
+            var sb = new StringBuilder();
+
+            foreach (var element in root.Elements())
+            {
+                var id = element.GetAttributeValue("id");
+                var version = element.GetAttributeValue("version");
+
+                // Check if the "Sitecore.Pathfinder.Core" package is already included in the nuspec
+                if (id == "Sitecore.Pathfinder.Core" && nuspec.IndexOf(" id=\"Sitecore.Pathfinder.Core\" ", StringComparison.Ordinal) >= 0)
+                {
+                    continue;
+                }
+
+                sb.Append($"    <dependency id=\"{id}\" version=\"{version}\" />");
+            }
+
+            return sb.ToString();
+
         }
     }
 }
