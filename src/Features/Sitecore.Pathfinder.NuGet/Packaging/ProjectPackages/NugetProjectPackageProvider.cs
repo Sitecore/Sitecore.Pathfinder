@@ -17,9 +17,10 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.ProjectPackages
     public class NugetProjectPackageProvider : ProjectPackageProviderBase
     {
         [ImportingConstructor]
-        public NugetProjectPackageProvider([NotNull] IConfiguration configuration, [NotNull] ICacheService cache)
+        public NugetProjectPackageProvider([NotNull] IConfiguration configuration, [Diagnostics.NotNull] IFileSystemService fileSystem, [NotNull] ICacheService cache)
         {
             Configuration = configuration;
+            FileSystem = fileSystem;
             Cache = cache;
         }
 
@@ -28,6 +29,9 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.ProjectPackages
 
         [NotNull]
         protected IConfiguration Configuration { get; }
+
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
 
         public override bool CopyPackageToWebsite(IProjectPackageInfo projectPackageInfo, string destinationDirectory)
         {
@@ -64,6 +68,7 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.ProjectPackages
 
             projectPackages = new List<IProjectPackageInfo>();
 
+            // add packages from packages.config
             var packages = Path.Combine(projectDirectory, "packages.config");
             if (File.Exists(packages))
             {
@@ -147,7 +152,7 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.ProjectPackages
                 return false;
             }
 
-            var path = Path.Combine(projectDirectory, "packages");
+            var path = Path.Combine(projectDirectory, Configuration.GetString(Constants.Configuration.PackagesNugetDirectory));
 
             var packageManager = new PackageManager(repository, path);
             packageManager.InstallPackage(package, false, true);

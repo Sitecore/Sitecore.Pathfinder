@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Tasks
         {
             context.Trace.TraceInformation(Msg.D1000, Texts.Copying_dependencies___);
 
-            var sourceDirectory = context.Configuration.Get(Constants.Configuration.CopyDependenciesSourceDirectory);
+            var sourceDirectory = context.Configuration.GetString(Constants.Configuration.CopyDependenciesSourceDirectory);
             sourceDirectory = Path.Combine(context.ProjectDirectory, sourceDirectory);
             if (!context.FileSystem.DirectoryExists(sourceDirectory))
             {
@@ -45,7 +45,7 @@ namespace Sitecore.Pathfinder.Tasks
                 }
 
                 destinationDirectory = PathHelper.NormalizeFilePath(destinationDirectory).TrimStart('\\');
-                destinationDirectory = PathHelper.Combine(context.Configuration.Get(Constants.Configuration.DataFolderDirectory), destinationDirectory);
+                destinationDirectory = PathHelper.Combine(context.Configuration.GetString(Constants.Configuration.DataFolderDirectory), destinationDirectory);
 
                 context.FileSystem.CreateDirectory(destinationDirectory);
 

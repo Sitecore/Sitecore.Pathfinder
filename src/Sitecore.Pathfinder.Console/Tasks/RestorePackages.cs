@@ -3,6 +3,7 @@
 using System.ComponentModel.Composition;
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Packaging.ProjectPackages;
 using Sitecore.Pathfinder.Tasks.Building;
 
@@ -21,7 +22,7 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
-            var sourceDirectory = context.Configuration.Get(Constants.Configuration.CopyDependenciesSourceDirectory);
+            var sourceDirectory = context.Configuration.GetString(Constants.Configuration.CopyDependenciesSourceDirectory);
             sourceDirectory = Path.Combine(context.ProjectDirectory, sourceDirectory);
             if (!context.FileSystem.DirectoryExists(sourceDirectory))
             {

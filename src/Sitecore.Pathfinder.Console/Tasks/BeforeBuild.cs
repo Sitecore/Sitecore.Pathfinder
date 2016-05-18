@@ -7,6 +7,7 @@ using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Pipelines.BeforeBuildPipelines;
 using Sitecore.Pathfinder.Tasks.Building;
@@ -40,37 +41,37 @@ namespace Sitecore.Pathfinder.Tasks
             var toolsDirectory = context.ToolsDirectory;
             if (string.Equals(projectDirectory, toolsDirectory, StringComparison.OrdinalIgnoreCase))
             {
-                context.Trace.WriteLine(Texts.Whoops__scc_exe_cannot_run_in_is_own_directory_, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
+                context.Trace.WriteLine(Texts.Whoops__scc_exe_cannot_run_in_is_own_directory_, context.Configuration.GetString(Constants.Configuration.ProjectConfigFileName));
                 context.IsAborted = true;
                 return;
             }
 
-            var configFileName = PathHelper.Combine(projectDirectory, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
+            var configFileName = PathHelper.Combine(projectDirectory, context.Configuration.GetString(Constants.Configuration.ProjectConfigFileName));
             if (!context.FileSystem.FileExists(configFileName))
             {
                 return;
             }
 
-            var projectUniqueId = context.Configuration.Get(Constants.Configuration.ProjectUniqueId);
+            var projectUniqueId = context.Configuration.GetString(Constants.Configuration.ProjectUniqueId);
             if (string.Equals(projectUniqueId, "{project-unique-id}", StringComparison.OrdinalIgnoreCase))
             {
-                context.Trace.WriteLine(Texts.Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in_the___0___configuration_file_, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
+                context.Trace.WriteLine(Texts.Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in_the___0___configuration_file_, context.Configuration.GetString(Constants.Configuration.ProjectConfigFileName));
                 context.IsAborted = true;
                 return;
             }
 
-            var hostName = context.Configuration.Get(Constants.Configuration.HostName);
+            var hostName = context.Configuration.GetString(Constants.Configuration.HostName);
             if (string.Equals(hostName, "http://sitecore.default", StringComparison.OrdinalIgnoreCase))
             {
-                context.Trace.WriteLine(Texts.Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in_the___0___configuration_file_, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
+                context.Trace.WriteLine(Texts.Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in_the___0___configuration_file_, context.Configuration.GetString(Constants.Configuration.ProjectConfigFileName));
                 context.IsAborted = true;
                 return;
             }
 
-            var websiteDirectory = context.Configuration.Get(Constants.Configuration.WebsiteDirectory);
+            var websiteDirectory = context.Configuration.GetString(Constants.Configuration.WebsiteDirectory);
             if (string.Equals(websiteDirectory, "c:\\inetpub\\wwwroot\\Sitecore.Default\\Website", StringComparison.OrdinalIgnoreCase))
             {
-                context.Trace.WriteLine(Texts.Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in_the___0___configuration_file_, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
+                context.Trace.WriteLine(Texts.Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in_the___0___configuration_file_, context.Configuration.GetString(Constants.Configuration.ProjectConfigFileName));
                 context.IsAborted = true;
                 return;
             }

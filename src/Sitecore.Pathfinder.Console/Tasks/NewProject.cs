@@ -1323,7 +1323,7 @@ namespace Sitecore.Pathfinder.Tasks
 
         protected virtual void UpdateConfigFile([NotNull] IBuildContext context, [NotNull] string projectDirectory)
         {
-            var projectConfigFileName = Path.Combine(projectDirectory, context.Configuration.Get(Constants.Configuration.ProjectConfigFileName));
+            var projectConfigFileName = Path.Combine(projectDirectory, context.Configuration.GetString(Constants.Configuration.ProjectConfigFileName));
             var config = context.FileSystem.ReadAllText(projectConfigFileName);
 
             config = config.Replace("{project-unique-id}", _projectUniqueId);

@@ -47,9 +47,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
 
             var contents = Transform(snapshotParseContext, sourceFile, text);
 
-            var xmlTextSnapshot = CompositionService.Resolve<XmlTextSnapshot>().With(snapshotParseContext, sourceFile, contents, SchemaNamespace, SchemaFileName);
-
-            return xmlTextSnapshot;
+            return CompositionService.Resolve<XmlTextSnapshot>().With(snapshotParseContext, sourceFile, contents, SchemaNamespace, SchemaFileName);
         }
 
         [NotNull]

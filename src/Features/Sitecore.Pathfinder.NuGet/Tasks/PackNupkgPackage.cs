@@ -28,7 +28,7 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
 
             context.Trace.TraceInformation(Msg.D1018, Texts.Creating_Nupkg_file___);
 
-            var packageDirectory = context.Configuration.Get(Constants.Configuration.PackNugetDirectory);
+            var packageDirectory = context.Configuration.GetString(Constants.Configuration.PackNugetDirectory);
 
             string directory;
             if (context.Configuration.GetBool(Constants.Configuration.BuildingWithNoConfig))
@@ -40,7 +40,7 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
                 directory = PathHelper.Combine(context.ProjectDirectory, packageDirectory);
             }
 
-            var pathMatcher = new PathMatcher(context.Configuration.Get(Constants.Configuration.PackNugetInclude), context.Configuration.Get(Constants.Configuration.PackNugetExclude));
+            var pathMatcher = new PathMatcher(context.Configuration.GetString(Constants.Configuration.PackNugetInclude), context.Configuration.GetString(Constants.Configuration.PackNugetExclude));
 
             foreach (var nuspecFileName in context.FileSystem.GetFiles(directory, "*", SearchOption.AllDirectories))
             {
@@ -109,30 +109,45 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
             nuspec = nuspec.Replace("$toolsDirectory$", context.ToolsDirectory);
 
             // replace dependencies macro with dependencies from /packages.config
-            var packagesConfig = GetPackagesConfig(context, nuspec);
+            var packagesConfig = GetDependencies(context, nuspec);
             nuspec = nuspec.Replace("<dependency id=\"$packages.config\" version=\"1.0.0\" />", packagesConfig);
 
             return nuspec;
         }
 
         [Diagnostics.NotNull]
-        protected virtual string GetPackagesConfig([Diagnostics.NotNull] IBuildContext context, [Diagnostics.NotNull] string nuspec)
+        protected virtual string GetDependencies([Diagnostics.NotNull] IBuildContext context, [Diagnostics.NotNull] string nuspec)
         {
+            var writer = new StringWriter();
+
+            // load dependencies from scconfig.json
+            foreach (var pair in context.Configuration.GetSubKeys(Constants.Configuration.Dependencies))
+            {
+                var id = pair.Key;
+                var version = context.Configuration.GetString(Constants.Configuration.Dependencies + ":" + id);
+
+                // check if the "Sitecore.Pathfinder.Core" package is already included in the nuspec
+                if (id == "Sitecore.Pathfinder.Core" && nuspec.IndexOf(" id=\"Sitecore.Pathfinder.Core\" ", StringComparison.Ordinal) >= 0)
+                {
+                    continue;
+                }
+
+                writer.WriteLine($"    <dependency id=\"{id}\" version=\"{version}\" />");
+            }
+
             // load dependencies from packages.config
             var fileName = Path.Combine(context.ProjectDirectory, "packages.config");
             if (!context.FileSystem.FileExists(fileName))
             {
-                return string.Empty;
+                return writer.ToString();
             }
 
             var text = context.FileSystem.ReadAllText(fileName);
             var root = text.ToXElement();
             if (root == null)
             {
-                return string.Empty;
+                return writer.ToString();
             }
-
-            var sb = new StringBuilder();
 
             foreach (var element in root.Elements())
             {
@@ -145,20 +160,10 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
                     continue;
                 }
 
-                sb.Append($"    <dependency id=\"{id}\" version=\"{version}\" />");
+                writer.WriteLine($"    <dependency id=\"{id}\" version=\"{version}\" />");
             }
 
-            // load dependencies from scconfig.json
-            foreach (var pair in context.Configuration.GetSubKeys(Constants.Configuration.Dependencies))
-            {
-                var id = pair.Key;
-                var version = context.Configuration.GetString(Constants.Configuration.Dependencies + ":" + id);
-
-                sb.Append($"    <dependency id=\"{id}\" version=\"{version}\" />");
-            }
-
-            return sb.ToString();
-
+            return writer.ToString();
         }
     }
 }

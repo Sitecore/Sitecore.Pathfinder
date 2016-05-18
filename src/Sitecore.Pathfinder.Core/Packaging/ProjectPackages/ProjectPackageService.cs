@@ -3,9 +3,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.IO;
 using System.Linq;
+using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Packaging.WebsitePackages;
+using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Packaging.ProjectPackages
 {
@@ -13,10 +15,14 @@ namespace Sitecore.Pathfinder.Packaging.ProjectPackages
     public class ProjectPackageService : IProjectPackageService
     {
         [ImportingConstructor]
-        public ProjectPackageService([NotNull, ItemNotNull, ImportMany(typeof(IProjectPackageProvider))] IEnumerable<IProjectPackageProvider> packageProviders)
+        public ProjectPackageService([NotNull] IConfiguration configuration, [NotNull, ItemNotNull, ImportMany(typeof(IProjectPackageProvider))] IEnumerable<IProjectPackageProvider> packageProviders)
         {
+            Configuration = configuration;
             PackageProviders = packageProviders;
         }
+
+        [NotNull]
+        protected IConfiguration Configuration { get; }
 
         [NotNull, ItemNotNull]
         protected IEnumerable<IProjectPackageProvider> PackageProviders { get; }
@@ -28,7 +34,23 @@ namespace Sitecore.Pathfinder.Packaging.ProjectPackages
 
         public virtual IEnumerable<IProjectPackageInfo> GetPackages(string projectDirectory)
         {
-            return PackageProviders.SelectMany(packageProvider => packageProvider.GetPackages(projectDirectory));
+            // add packages from configuration
+            foreach (var pair in Configuration.GetSubKeys(Constants.Configuration.Dependencies))
+            {
+                var id = pair.Key;
+                var version = Configuration.GetString(Constants.Configuration.Dependencies + ":" + id);
+
+                // todo: add support for NPM packages
+                var directory = Path.Combine(projectDirectory, Configuration.GetString(Constants.Configuration.PackagesNugetDirectory) + "\\" + id + "." + version);
+
+                var project = Path.Combine(directory, "project");
+                yield return new ProjectPackageInfo(id, version, directory, project);
+            }
+
+            foreach (var package in PackageProviders.SelectMany(packageProvider => packageProvider.GetPackages(projectDirectory)))
+            {
+                yield return package;
+            }
         }
 
         public void RestorePackage(string packageId, string version, string projectDirectory)

@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
         {
             context.Trace.TraceInformation(Msg.M1014, Texts.Packing_dependency_Sitecore_packages_in_Nuget_packages___);
 
-            var packagesDirectory = context.Configuration.Get(Constants.Configuration.CopyDependenciesSourceDirectory);
+            var packagesDirectory = context.Configuration.GetString(Constants.Configuration.CopyDependenciesSourceDirectory);
             var sourceDirectory = Path.Combine(context.ProjectDirectory, packagesDirectory);
             if (!context.FileSystem.DirectoryExists(sourceDirectory))
             {

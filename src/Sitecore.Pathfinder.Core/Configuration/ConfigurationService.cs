@@ -86,10 +86,10 @@ namespace Sitecore.Pathfinder.Configuration
                 throw new ConfigurationException(Texts.Configuration_failed_spectacularly);
             }
 
-            var toolsDirectory = configurationSourceRoot.Get(Constants.Configuration.ToolsDirectory);
+            var toolsDirectory = configurationSourceRoot.GetString(Constants.Configuration.ToolsDirectory);
 
             // add system config
-            var systemConfigFileName = Path.Combine(toolsDirectory, configurationSourceRoot.Get(Constants.Configuration.SystemConfigFileName));
+            var systemConfigFileName = Path.Combine(toolsDirectory, configurationSourceRoot.GetString(Constants.Configuration.SystemConfigFileName));
             if (!File.Exists(systemConfigFileName))
             {
                 throw new ConfigurationException(Texts.System_configuration_file_not_found, systemConfigFileName);
@@ -132,7 +132,7 @@ namespace Sitecore.Pathfinder.Configuration
             // add project config file - scconfig.json
             var projectConfigFileName = string.Empty;
 
-            var configurationProjectConfigFileName = configurationSourceRoot.Get(Constants.Configuration.ProjectConfigFileName);
+            var configurationProjectConfigFileName = configurationSourceRoot.GetString(Constants.Configuration.ProjectConfigFileName);
             if (!string.IsNullOrEmpty(configurationProjectConfigFileName))
             {
                 projectConfigFileName = PathHelper.Combine(projectDirectory, configurationProjectConfigFileName);
@@ -218,7 +218,7 @@ namespace Sitecore.Pathfinder.Configuration
             // add config file specified on the command line: /config myconfig.xml
             if ((options & ConfigurationOptions.IncludeCommandLineConfig) == ConfigurationOptions.IncludeCommandLineConfig)
             {
-                var configName = configurationSourceRoot.Get(Constants.Configuration.CommandLineConfig);
+                var configName = configurationSourceRoot.GetString(Constants.Configuration.CommandLineConfig);
 
                 if (!string.IsNullOrEmpty(configName))
                 {

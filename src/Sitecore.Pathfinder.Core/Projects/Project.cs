@@ -83,7 +83,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public IEnumerable<IProjectItem> ProjectItems => _projectItems;
 
-        public string ProjectUniqueId => _projectUniqueId ?? (_projectUniqueId = Configuration.Get(Constants.Configuration.ProjectUniqueId));
+        public string ProjectUniqueId => _projectUniqueId ?? (_projectUniqueId = Configuration.GetString(Constants.Configuration.ProjectUniqueId));
 
         public ICollection<ISourceFile> SourceFiles { get; } = new List<ISourceFile>();
 

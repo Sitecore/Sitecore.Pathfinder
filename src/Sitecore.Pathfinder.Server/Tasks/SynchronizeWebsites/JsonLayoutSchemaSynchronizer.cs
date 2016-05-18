@@ -28,7 +28,7 @@ namespace Sitecore.Pathfinder.Tasks.SynchronizeWebsites
 
         public void Synchronize(IConfiguration configuration, ZipWriter zip, string fileName, string configKey)
         {
-            var databaseName = configuration.Get(configKey + "database");
+            var databaseName = configuration.GetString(configKey + "database");
 
             Synchronize(zip, fileName, databaseName);
         }

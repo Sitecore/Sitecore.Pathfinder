@@ -1,6 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.IO;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Parsing;
 
 namespace Sitecore.Pathfinder.Languages.Media
@@ -14,7 +15,7 @@ namespace Sitecore.Pathfinder.Languages.Media
         public override bool CanParse(IParseContext context)
         {
             var extension = Path.GetExtension(context.Snapshot.SourceFile.AbsoluteFileName).TrimStart('.').ToLowerInvariant();
-            var templateIdOrPath = context.Configuration.Get(Constants.Configuration.BuildProjectMediaTemplate + ":" + extension);
+            var templateIdOrPath = context.Configuration.GetString(Constants.Configuration.BuildProjectMediaTemplate + ":" + extension);
 
             return templateIdOrPath != null;
         }
