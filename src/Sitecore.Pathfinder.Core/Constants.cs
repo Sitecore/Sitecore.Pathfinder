@@ -58,8 +58,6 @@ namespace Sitecore.Pathfinder
 
         public static class Configuration
         {
-            public const string Dependencies = "dependencies";
-
             public const string BuildingWithNoConfig = "building-with-no-config";
 
             public const string BuildProjectCompileBinFilesExclude = "build-project:compile-bin-files:exclude";
@@ -82,8 +80,6 @@ namespace Sitecore.Pathfinder
 
             public const string CheckProjectCheckers = "check-project:checkers";
 
-            public const string CodeGen = "codegen";
-
             public const string CommandLineConfig = "config";
 
             public const string CopyDependenciesSourceDirectory = "copy-dependencies:source-directory";
@@ -95,6 +91,8 @@ namespace Sitecore.Pathfinder
             public const string DataFolderDirectory = "data-folder-directory";
 
             public const string Debug = "debug";
+
+            public const string Dependencies = "dependencies";
 
             public const string GenerateCodeImports = "generate-code:t4-imports";
 
@@ -108,9 +106,9 @@ namespace Sitecore.Pathfinder
 
             public const string HostName = "host-name";
 
-            public const string InstallUrl = "install-package:install-url";
+            public const string InstallPackageAddProjectDirectoriesAsFeeds = "install-package:add-project-directories-as-feeds";
 
-            public const string LocalTestDirectory = "run-unittests:local-test-directory";
+            public const string InstallPackageInstallUrl = "install-package:install-url";
 
             public const string MappingContentFiles = "project-website-mappings:content-files";
 
@@ -166,8 +164,6 @@ namespace Sitecore.Pathfinder
 
             public const string PublishUrl = "publish-databases:publish-url";
 
-            public const string RemapFileDirectories = "remap-file-directories";
-
             public const string Run = "run";
 
             public const string ScriptExtensions = "scripts:file-extensions";
@@ -195,10 +191,6 @@ namespace Sitecore.Pathfinder
             public const string WatchProjectPublishDatabase = "watch-project:publish-database";
 
             public const string WebsiteDirectory = "website-directory";
-
-            public const string WebTestRunnerName = "run-unittests:web-test-runner-name";
-
-            public const string WebTestRunnerUrl = "run-unittests:web-test-runner-url";
 
             public const string WriteExportsFieldsToWrite = "write-exports:fields-to-write";
 

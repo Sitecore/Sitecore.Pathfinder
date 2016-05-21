@@ -117,12 +117,14 @@
     },
 
     "install-package": {
+        // specifies whether the project directories are added as feeds. This requires the website to have read access to the project directory. 
+        "add-project-directories-as-feeds": true,
         // checks that the version of the source bin file is larger than the destination before copying.
         // when developing this should probably be combined with auto-incrementing the file version of the assembly.
         // see http://stackoverflow.com/questions/356543/can-i-automatically-increment-the-file-build-version-when-using-visual-studio
         "check-bin-file-version": false,
         "install-url": "/sitecore/shell/client/Applications/Pathfinder/InstallPackage",
-        "uninstall-directory": "../.uninstall"
+        "uninstall-directory": "../.uninstall",
     },
 
     "generate-code": {
@@ -327,7 +329,7 @@
 
     // dependency packages
     "dependencies": {
-        // "id" : "version"
+        "Sitecore.Pathfinder.Core": "1.0.0"
     },
 
     // extensions directory and dynamically compiled extensions assembly filename
@@ -345,7 +347,7 @@
 
     // NuGet source repositories
     "nuget-repositories": {
-        "nuget.org": "https://www.nuget.org/api/v2"
+        // "nuget.org": "https://www.nuget.org/api/v2"
     }, 
 
     // directories, that hold packages

@@ -224,6 +224,12 @@ namespace Sitecore.Pathfinder.Extensibility
 
             foreach (var directory in Directory.GetDirectories(nugetPackages))
             {
+                var manifest = Path.Combine(directory, "pathfinder.extension.manifest");
+                if (!File.Exists(manifest))
+                {
+                    continue;
+                }
+
                 AddAssembliesFromDirectory(options, catalogs, directory);
             }
         }

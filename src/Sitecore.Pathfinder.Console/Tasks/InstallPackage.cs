@@ -35,8 +35,12 @@ namespace Sitecore.Pathfinder.Tasks
                     continue;
                 }
 
-                var packagesDirectory = Path.Combine(context.ProjectDirectory, context.Configuration.GetString(Constants.Configuration.PackagesNugetDirectory));
-                var feeds = Path.GetDirectoryName(fileName) + "," + packagesDirectory;
+                var feeds = string.Empty;
+                if (context.Configuration.GetBool(Constants.Configuration.InstallPackageAddProjectDirectoriesAsFeeds, true))
+                {
+                    var packagesDirectory = Path.Combine(context.ProjectDirectory, context.Configuration.GetString(Constants.Configuration.PackagesNugetDirectory));
+                    feeds = Path.GetDirectoryName(fileName) + "," + packagesDirectory;
+                }
 
                 var queryStringParameters = new Dictionary<string, string>
                 {
@@ -45,7 +49,7 @@ namespace Sitecore.Pathfinder.Tasks
                     ["feeds"] = feeds
                 };
 
-                var webRequest = GetWebRequest(context).WithQueryString(queryStringParameters).WithUrl(context.Configuration.GetString(Constants.Configuration.InstallUrl));
+                var webRequest = GetWebRequest(context).WithQueryString(queryStringParameters).WithUrl(context.Configuration.GetString(Constants.Configuration.InstallPackageInstallUrl));
                 if (Post(context, webRequest))
                 {
                     context.Trace.TraceInformation(Msg.D1009, Texts.Installed, Path.GetFileName(fileName));
