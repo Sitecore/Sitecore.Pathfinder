@@ -60,6 +60,11 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.ProjectPackages
 
         public override IEnumerable<IProjectPackageInfo> GetPackages(string projectDirectory)
         {
+            if (!Configuration.GetBool(Constants.Configuration.PackagesIncludePackagesConfigAsDependencies, true))
+            {
+                return Enumerable.Empty<IProjectPackageInfo>();
+            }
+
             var projectPackages = Cache.Get<List<IProjectPackageInfo>>(Constants.Cache.ProjectPackages);
             if (projectPackages != null)
             {

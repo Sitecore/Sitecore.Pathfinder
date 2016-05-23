@@ -47,6 +47,7 @@ namespace Sitecore.Pathfinder.Packaging.ProjectPackages
                 yield return new ProjectPackageInfo(id, version, directory, project);
             }
 
+            // add packages from package providers
             foreach (var package in PackageProviders.SelectMany(packageProvider => packageProvider.GetPackages(projectDirectory)))
             {
                 yield return package;

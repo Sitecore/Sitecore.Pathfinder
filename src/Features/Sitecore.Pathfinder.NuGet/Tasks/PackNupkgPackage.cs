@@ -33,7 +33,7 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
             string directory;
             if (context.Configuration.GetBool(Constants.Configuration.BuildingWithNoConfig))
             {
-                directory = PathHelper.Combine(context.Configuration.GetString(Constants.Configuration.ToolsDirectory), "files\\project.noconfig\\sitecore.project");
+                directory = PathHelper.Combine(context.ToolsDirectory, "files\\project.noconfig\\sitecore.project");
             }
             else
             {

@@ -15,6 +15,11 @@
 *.csproj.sitecore.foldersync
 PrecompiledWeb/
 !src/Sitecore.Pathfinder.Console/project/bin
+test/CleanBlog/packages
+test/HelloWorld/packages
+test/TodoMvc/packages
+test/Website.Good/packages
+test/Website.Bad/packages
 
 # Build results
 [Dd]ebug/

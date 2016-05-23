@@ -124,7 +124,7 @@
         // see http://stackoverflow.com/questions/356543/can-i-automatically-increment-the-file-build-version-when-using-visual-studio
         "check-bin-file-version": false,
         "install-url": "/sitecore/shell/client/Applications/Pathfinder/InstallPackage",
-        "uninstall-directory": "../.uninstall",
+        "uninstall-directory": "../.uninstall"
     },
 
     "generate-code": {
@@ -352,6 +352,7 @@
 
     // directories, that hold packages
     "packages": {
+        "include-packages-config-as-dependencies": true ,
         "nuget-directory": "packages",
         "npm-directory": "node_modules"
     },  

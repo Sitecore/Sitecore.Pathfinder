@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Languages.Media
             var extension = Path.GetExtension(context.Snapshot.SourceFile.AbsoluteFileName).TrimStart('.').ToLowerInvariant();
             var templateIdOrPath = context.Configuration.GetString(Constants.Configuration.BuildProjectMediaTemplate + ":" + extension);
 
-            return templateIdOrPath != null;
+            return !string.IsNullOrEmpty(templateIdOrPath);
         }
 
         public override void Parse(IParseContext context)

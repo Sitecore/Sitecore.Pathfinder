@@ -99,7 +99,6 @@ gulp.task("build-nuget-package", ["clean-nuget-package"], function(callback) {
         },
         [
             { src: "./build/dist", dest: "/content/sitecore.tools/" },
-            { src: "./buildfiles/nuget/scc.cmd", dest: "/content/scc.cmd" },
             { src: "./src/Sitecore.Pathfinder.Console/files/project", dest: "/content/" }
         ],
         callback
