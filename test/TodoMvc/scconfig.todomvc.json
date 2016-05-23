@@ -19,6 +19,13 @@
         }
     },
     
+    "dependencies": {
+        "Sitecore.BusinessComponentLibrary": "1.0.0",
+        "Sitecore.Core": "1.0.0",
+        "Sitecore.Launchpad": "1.0.0",
+        "Sitecore.Speak": "1.0.0"
+    },  
+    
     "messages": {
         "template-help": {
             "disabled": "3014, 3017, 2020, 2017"

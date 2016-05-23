@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -52,6 +52,8 @@ namespace Sitecore.Pathfinder
         public static class Cache
         {
             public const string NugetRepositories = "NugetRepositories";
+
+            public const string ProjectPackages = "ProjectPackages";
         }
 
         public static class Configuration
@@ -74,11 +76,9 @@ namespace Sitecore.Pathfinder
 
             public const string CheckBinFileVersion = "install-package:check-bin-file-version";
 
-            public const string CheckProjectCheckers = "check-project:checkers";
-
             public const string Checkers = "checkers";
 
-            public const string CodeGen = "codegen";
+            public const string CheckProjectCheckers = "check-project:checkers";
 
             public const string CommandLineConfig = "config";
 
@@ -92,6 +92,8 @@ namespace Sitecore.Pathfinder
 
             public const string Debug = "debug";
 
+            public const string Dependencies = "dependencies";
+
             public const string GenerateCodeImports = "generate-code:t4-imports";
 
             public const string GenerateCodeIncludePaths = "generate-code:t4-include-paths";
@@ -104,9 +106,9 @@ namespace Sitecore.Pathfinder
 
             public const string HostName = "host-name";
 
-            public const string InstallUrl = "install-package:install-url";
+            public const string InstallPackageAddProjectDirectoriesAsFeeds = "install-package:add-project-directories-as-feeds";
 
-            public const string LocalTestDirectory = "run-unittests:local-test-directory";
+            public const string InstallPackageInstallUrl = "install-package:install-url";
 
             public const string MappingContentFiles = "project-website-mappings:content-files";
 
@@ -127,6 +129,12 @@ namespace Sitecore.Pathfinder
             public const string NewProjectWwwrootDirectory = "new-project:wwwroot-directory";
 
             public const string PackageDirectory = "copy-package:package-directory";
+
+            public const string PackagesIncludePackagesConfigAsDependencies = "packages:include-packages-config-as-dependencies";
+
+            public const string PackagesNpmDirectory = "packages:npm-directory";
+
+            public const string PackagesNugetDirectory = "packages:nuget-directory";
 
             public const string PackNpmOutputFile = "pack-npm:output-file";
 
@@ -158,8 +166,6 @@ namespace Sitecore.Pathfinder
 
             public const string PublishUrl = "publish-databases:publish-url";
 
-            public const string RemapFileDirectories = "remap-file-directories";
-
             public const string Run = "run";
 
             public const string ScriptExtensions = "scripts:file-extensions";
@@ -187,10 +193,6 @@ namespace Sitecore.Pathfinder
             public const string WatchProjectPublishDatabase = "watch-project:publish-database";
 
             public const string WebsiteDirectory = "website-directory";
-
-            public const string WebTestRunnerName = "run-unittests:web-test-runner-name";
-
-            public const string WebTestRunnerUrl = "run-unittests:web-test-runner-url";
 
             public const string WriteExportsFieldsToWrite = "write-exports:fields-to-write";
 

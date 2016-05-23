@@ -2,12 +2,13 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Sitecore.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.Packaging;
+using Sitecore.Pathfinder.Packaging.WebsitePackages;
 using Sitecore.Web;
 
 namespace Sitecore.Pathfinder.Controllers
@@ -34,7 +35,9 @@ namespace Sitecore.Pathfinder.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, output.ToString());
                 }
 
-                var packageService = app.CompositionService.Resolve<IPackageService>();
+                var feeds = WebUtil.GetQueryString("feeds", string.Empty).Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(d => d.Trim()).ToList();
+
+                var packageService = app.CompositionService.Resolve<IWebsitePackageService>().With(feeds);
 
                 var version = WebUtil.GetQueryString("v", string.Empty);
 

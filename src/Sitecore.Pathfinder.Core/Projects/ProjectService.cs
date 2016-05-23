@@ -62,7 +62,7 @@ namespace Sitecore.Pathfinder.Projects
             {
                 projectOptions.StandardTemplateFields.Add(pair.Key);
 
-                var value = Configuration.Get(Constants.Configuration.StandardTemplateFields + ":" + pair.Key);
+                var value = Configuration.GetString(Constants.Configuration.StandardTemplateFields + ":" + pair.Key);
                 if (!string.IsNullOrEmpty(value))
                 {
                     projectOptions.StandardTemplateFields.Add(value);
@@ -73,7 +73,7 @@ namespace Sitecore.Pathfinder.Projects
         {
             foreach (var pair in Configuration.GetSubKeys(Constants.Configuration.SearchAndReplaceTokens))
             {
-                var value = Configuration.Get(Constants.Configuration.SearchAndReplaceTokens + ":" + pair.Key);
+                var value = Configuration.GetString(Constants.Configuration.SearchAndReplaceTokens + ":" + pair.Key);
                 projectOptions.Tokens[pair.Key] = value;
 
             }

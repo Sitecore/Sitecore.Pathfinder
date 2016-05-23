@@ -60,7 +60,7 @@ namespace Sitecore.Pathfinder.Extensions
         [NotNull, ItemNotNull]
         public static IEnumerable<string> GetCommaSeparatedStringList([NotNull] this IConfiguration configuration, [NotNull] string key)
         {
-            var value = configuration.Get(key) ?? string.Empty;
+            var value = configuration.GetString(key);
             return value.Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToList();
         }
 
@@ -74,7 +74,47 @@ namespace Sitecore.Pathfinder.Extensions
         [NotNull]
         public static string GetString([NotNull] this IConfiguration configuration, [NotNull] string key, [NotNull] string defaultValue = "")
         {
-            return configuration.Get(key) ?? defaultValue;
+            var value = configuration.Get(key) ?? defaultValue;
+
+            if (value.IndexOf('$') < 0)
+            {
+                return value;
+            }
+
+            while (true)
+            {
+                var n = value.IndexOf('$');
+                if (n < 0)
+                {
+                    break;
+                }
+
+                var e = value.IndexOf('$', n + 1);
+                if (e < 0)
+                {
+                    break;
+                }
+
+                var replace = value.Mid(n + 1, e - n - 2);
+                string with;
+                switch (replace.ToLowerInvariant())
+                {
+                    case "toolsdirectory":
+                        with = configuration.Get(Constants.Configuration.ToolsDirectory) ?? string.Empty;
+                        break;
+                    case "projectdirectory":
+                        with = configuration.Get(Constants.Configuration.ProjectDirectory) ?? string.Empty;
+                        break;
+                    default:
+                        with = configuration.Get(replace) ?? string.Empty;
+                        break;
+
+                }
+
+                value = value.Left(n) + with + value.Mid(e + 1);
+            }
+
+            return value;
         }
 
         [NotNull]

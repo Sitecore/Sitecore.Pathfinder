@@ -44,6 +44,10 @@
         }
     },
 
+    "dependencies": {
+        "Sitecore.Master": "1.0.0"
+    },  
+
     "messages": {
         "template-help": {
             "disabled": "3014, 3017, 2020, 2017"

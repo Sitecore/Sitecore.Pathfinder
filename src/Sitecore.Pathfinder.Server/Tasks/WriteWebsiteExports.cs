@@ -51,7 +51,7 @@ namespace Sitecore.Pathfinder.Tasks
 
                     var fileName = Path.Combine(tempDirectory, PathHelper.NormalizeFilePath(entryName).TrimStart('\\'));
 
-                    Directory.CreateDirectory(Path.GetDirectoryName(fileName) ?? string.Empty);
+                    context.FileSystem.CreateDirectoryFromFileName(fileName);
 
                     WriteFile(context.Configuration, tempDirectory, fileName, fileKey);
 

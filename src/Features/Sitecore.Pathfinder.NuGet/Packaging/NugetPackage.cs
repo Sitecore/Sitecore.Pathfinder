@@ -2,7 +2,6 @@
 
 using System.Linq;
 using NuGet;
-using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Packaging;
 using IPackage = NuGet.IPackage;
 
@@ -46,12 +45,12 @@ namespace Sitecore.Pathfinder.NuGet.Packaging
                         continue;
                     }
 
-                    var dependencySet = new Pathfinder.Packaging.PackageDependencySet(set.TargetFramework.Identifier, set.TargetFramework.Version.ToString());
+                    var dependencySet = new Pathfinder.Packaging.WebsitePackages.WebsitePackageDependencySet(set.TargetFramework.Identifier, set.TargetFramework.Version.ToString());
                     DependencySets.Add(dependencySet);
 
                     foreach (var dep in set.Dependencies)
                     {
-                        var dependency = new Pathfinder.Packaging.PackageDependency(dep.Id, VersionUtility.PrettyPrint(dep.VersionSpec));
+                        var dependency = new Pathfinder.Packaging.WebsitePackages.WebsitePackageDependency(dep.Id, VersionUtility.PrettyPrint(dep.VersionSpec));
                         dependencySet.Dependencies.Add(dependency);
                     }
                 }

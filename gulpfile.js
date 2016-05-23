@@ -2,7 +2,7 @@
 // 2. Run 'npm update' to install/update node modules
 //
 // 3. Update version in this file
-// 4. Update version in ./buildfiles/npm/package.json
+// 4. Update version in ./src/buildfiles/npm/package.json
 // 5. Update version in assemblyinfo.cs files
 //
 // 6. Run 'gulp' to build Pathfinder without publishing
@@ -54,7 +54,7 @@ gulp.task("clean-npm-directory", function() {
 });
 
 gulp.task("copy-npm-files", ["clean-npm-directory"], function() {
-    return gulp.src(["./buildfiles/npm/package.json", "./buildfiles/npm/README.md"]).
+    return gulp.src(["./src/buildfiles/npm/package.json", "./src/buildfiles/npm/README.md"]).
         pipe(gulp.dest("./build/npm"));
 });
 
@@ -99,7 +99,6 @@ gulp.task("build-nuget-package", ["clean-nuget-package"], function(callback) {
         },
         [
             { src: "./build/dist", dest: "/content/sitecore.tools/" },
-            { src: "./buildfiles/nuget/scc.cmd", dest: "/content/scc.cmd" },
             { src: "./src/Sitecore.Pathfinder.Console/files/project", dest: "/content/" }
         ],
         callback

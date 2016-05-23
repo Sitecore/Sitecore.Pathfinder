@@ -1,24 +1,31 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System.ComponentModel.Composition;
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Packaging.ProjectPackages;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
     public class CopyDependencies : BuildTaskBase
     {
-        public CopyDependencies() : base("copy-dependencies")
+        [ImportingConstructor]
+        public CopyDependencies([NotNull] IProjectPackageService projectPackages) : base("copy-dependencies")
         {
+            ProjectPackages = projectPackages;
         }
+
+        [NotNull]
+        protected IProjectPackageService ProjectPackages { get; }
 
         public override void Run(IBuildContext context)
         {
             context.Trace.TraceInformation(Msg.D1000, Texts.Copying_dependencies___);
 
-            var sourceDirectory = context.Configuration.Get(Constants.Configuration.CopyDependenciesSourceDirectory);
+            var sourceDirectory = context.Configuration.GetString(Constants.Configuration.CopyDependenciesSourceDirectory);
             sourceDirectory = Path.Combine(context.ProjectDirectory, sourceDirectory);
             if (!context.FileSystem.DirectoryExists(sourceDirectory))
             {
@@ -38,26 +45,17 @@ namespace Sitecore.Pathfinder.Tasks
                 }
 
                 destinationDirectory = PathHelper.NormalizeFilePath(destinationDirectory).TrimStart('\\');
-                destinationDirectory = PathHelper.Combine(context.Configuration.Get(Constants.Configuration.DataFolderDirectory), destinationDirectory);
+                destinationDirectory = PathHelper.Combine(context.Configuration.GetString(Constants.Configuration.DataFolderDirectory), destinationDirectory);
 
                 context.FileSystem.CreateDirectory(destinationDirectory);
 
-                CopyNuGetPackages(context, sourceDirectory, destinationDirectory);
-            }
-        }
-
-        private void CopyNuGetPackages([NotNull] IBuildContext context, [NotNull] string sourceDirectory, [NotNull] string destinationDirectory)
-        {
-            foreach (var sourceFileName in context.FileSystem.GetFiles(sourceDirectory, "*.nupkg", SearchOption.AllDirectories))
-            {
-                var destinationFileName = Path.Combine(destinationDirectory, Path.GetFileName(sourceFileName));
-                if (context.FileSystem.FileExists(destinationFileName) && context.FileSystem.GetLastWriteTimeUtc(sourceFileName) <= context.FileSystem.GetLastWriteTimeUtc(destinationFileName))
+                foreach (var packageInfo in ProjectPackages.GetPackages(context.ProjectDirectory))
                 {
-                    continue;
+                    if (ProjectPackages.CopyPackageToWebsite(packageInfo, destinationDirectory))
+                    {
+                        context.Trace.TraceInformation(Msg.D1002, Texts.Copying_dependency, packageInfo.Id + "." + packageInfo.Version);
+                    }
                 }
-
-                context.Trace.TraceInformation(Msg.D1002, Texts.Copying_dependency, Path.GetFileName(sourceFileName));
-                context.FileSystem.Copy(sourceFileName, destinationFileName);
             }
         }
     }

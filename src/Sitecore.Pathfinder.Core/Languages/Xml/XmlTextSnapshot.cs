@@ -8,6 +8,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
@@ -151,7 +152,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
         [CanBeNull]
         protected virtual XmlSchemaSet GetSchema([NotNull] IParseContext context, [NotNull] string schemaFileName, [NotNull] string schemaNamespace)
         {
-            var fileName = Path.Combine(context.Configuration.Get(Constants.Configuration.ToolsDirectory), "schemas\\" + schemaFileName);
+            var fileName = Path.Combine(context.Configuration.GetString(Constants.Configuration.ToolsDirectory), "schemas\\" + schemaFileName);
             if (!context.Project.FileSystem.FileExists(fileName))
             {
                 return null;

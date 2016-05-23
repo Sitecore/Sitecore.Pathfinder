@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using Microsoft.Framework.ConfigurationModel;
 using NUnit.Framework;
+using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Configuration
 {
@@ -23,15 +24,15 @@ namespace Sitecore.Pathfinder.Configuration
 
             configurationService.AddCommandLine(configuration, args);
 
-            Assert.AreEqual("build", configuration.Get("arg0"));
-            Assert.AreEqual("posarg1", configuration.Get("arg1"));
+            Assert.AreEqual("build", configuration.GetString("arg0"));
+            Assert.AreEqual("posarg1", configuration.GetString("arg1"));
 
-            Assert.AreEqual("1", configuration.Get("param1"));
-            Assert.AreEqual("2 2", configuration.Get("param2"));
-            Assert.AreEqual("3", configuration.Get("param3"));
-            Assert.AreEqual("4 4", configuration.Get("param4"));
+            Assert.AreEqual("1", configuration.GetString("param1"));
+            Assert.AreEqual("2 2", configuration.GetString("param2"));
+            Assert.AreEqual("3", configuration.GetString("param3"));
+            Assert.AreEqual("4 4", configuration.GetString("param4"));
 
-            Assert.AreEqual("true", configuration.Get("switch1"));
+            Assert.AreEqual("true", configuration.GetString("switch1"));
         }
     }
 }

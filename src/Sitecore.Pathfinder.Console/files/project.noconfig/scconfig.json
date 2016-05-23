@@ -56,7 +56,7 @@
         // build tasks
         "tasks": "check-project write-exports pack-nuget show-metrics",
 
-        "ignore-directories": "App_Browsers, App_Config, App_Data, Areas, aspnet_client, bin, data, sitecore, temp, upload, .vscode, sitecore.filetemplates, sitecore.project, sitecore.tools, node_modules, roslyn, includes, ExperienceExplorer, Social",
-        "ignore-filenames": "scc.cmd, project.json, readme.md, web.config, web.debug.config, Default.aspx, default.css, default.htm.sitedown, default.js, global.asax"
+        "ignore-directories": "App_Browsers, App_Config, App_Data, Areas, aspnet_client, bin, data, ExperienceExplorer, includes, node_modules, packages, roslyn, sitecore, sitecore.filetemplates, sitecore.project, sitecore.tools, Social, temp, upload, .vscode",
+        "ignore-filenames": "scc.cmd, project.json, readme.md, web.config, web.release.config, web.debug.config, Default.aspx, default.css, default.htm.sitedown, default.js, global.asax"
     }
 }

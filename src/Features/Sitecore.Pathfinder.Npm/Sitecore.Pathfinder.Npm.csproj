@@ -50,7 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Building\PackNpmPackage.cs" />
+    <Compile Include="Tasks\PackNpmPackage.cs" />
     <Compile Include="NpmExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -68,7 +68,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\..\..\packages\ResharperCodeContractNullability.1.0.4\analyzers\dotnet\cs\CodeContractNullability.dll" />
+    <Analyzer Include="..\..\..\packages\ResharperCodeContractNullability.1.0.5\analyzers\dotnet\cs\CodeContractNullability.dll" />
+    <Analyzer Include="..\..\..\packages\ResharperCodeContractNullability.1.0.5\analyzers\dotnet\cs\MsgPack.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

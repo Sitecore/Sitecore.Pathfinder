@@ -1,11 +1,17 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.Composition.Hosting;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Tasks;
+using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder
 {
@@ -40,13 +46,23 @@ namespace Sitecore.Pathfinder
             var rootDirectory = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory())));
             ProjectDirectory = PathHelper.Combine(rootDirectory ?? string.Empty, website);
 
-            var app = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(ProjectDirectory).WithConfigurationOptions(ConfigurationOptions.IncludeModuleConfig).Start();
+            // add scc.exe for tasks
+            var assemblies = new List<string>()
+            {
+                Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "scc.exe")
+            };
+
+            var app = new Startup().AsInteractive().WithToolsDirectory(toolsDirectory).WithProjectDirectory(ProjectDirectory).WithConfigurationOptions(ConfigurationOptions.IncludeModuleConfig).WithAssemblies(assemblies).Start();
             if (app == null)
             {
                 throw new ConfigurationException(@"Oh no, nothing works!");
             }
 
             Services = new Helpers.Services().Start(app, mock);
+
+            var restorePackages = app.CompositionService.ResolveMany<ITask>().First(t => t is RestorePackages);
+            var context = app.CompositionService.Resolve<IBuildContext>();
+            restorePackages.Run(context);
         }
     }
 }

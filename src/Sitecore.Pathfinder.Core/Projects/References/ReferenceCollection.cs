@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections;
 using System.Collections.Generic;
@@ -8,8 +8,7 @@ namespace Sitecore.Pathfinder.Projects.References
 {
     public class ReferenceCollection : ICollection<IReference>
     {
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         private readonly List<IReference> _references = new List<IReference>();
 
         public ReferenceCollection([NotNull] ProjectItem projectItem)
@@ -29,7 +28,7 @@ namespace Sitecore.Pathfinder.Projects.References
             _references.Add(item);
         }
 
-        public void AddRange([NotNull][ItemNotNull] IEnumerable<IReference> items)
+        public void AddRange([NotNull, ItemNotNull] IEnumerable<IReference> items)
         {
             _references.AddRange(items);
         }

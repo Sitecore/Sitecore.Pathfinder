@@ -285,8 +285,7 @@ namespace Sitecore.Pathfinder.Extensions
             return text;
         }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         public static string[] Split([NotNull] this string text, char separator, StringSplitOptions options)
         {
             var s = new[]
@@ -297,8 +296,7 @@ namespace Sitecore.Pathfinder.Extensions
             return text.Split(s, options);
         }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         public static IEnumerable<string> SplitEscaped([CanBeNull] this string str, char separator, StringSplitOptions options = StringSplitOptions.None, char escapeCharacter = '\\')
         {
             if (str == null)
@@ -366,9 +364,7 @@ namespace Sitecore.Pathfinder.Extensions
                 text = text.Mid(2);
             }
 
-            var result = text.Replace(".", " ").Replace(@"_-", "-");
-
-            return result;
+            return text.Replace(".", " ").Replace(@"_-", "-");
         }
 
         private static int GetInt([CanBeNull] object obj, int defaultValue)

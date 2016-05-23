@@ -295,6 +295,9 @@
     <None Include="files\conventions\habitat.design.conventions.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="files\project\bin\readme.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="files\project\items\master\readme.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -712,11 +715,10 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="files\project\bin\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.4\analyzers\dotnet\cs\CodeContractNullability.dll" />
+    <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.5\analyzers\dotnet\cs\CodeContractNullability.dll" />
+    <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.5\analyzers\dotnet\cs\MsgPack.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions />

@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Sitecore.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Packaging;
+using Sitecore.Pathfinder.Packaging.WebsitePackages;
 
 namespace Sitecore.Pathfinder.Controllers
 {
@@ -29,9 +30,9 @@ namespace Sitecore.Pathfinder.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, output.ToString());
                 }
 
-                var packageService = app.CompositionService.Resolve<IPackageService>();
+                var packageService = app.CompositionService.Resolve<IWebsitePackageService>().With(Enumerable.Empty<string>());
 
-                ViewBag.Packages = packageService.CheckForInstalledUpdates(packageService.GetInstalledPackages()).ToList();
+                ViewBag.Packages = packageService.CheckForLocalUpdates(packageService.GetLocalPackages()).ToList();
 
                 return View("~/sitecore/shell/client/Applications/Pathfinder/InstalledPackages.cshtml");
             }

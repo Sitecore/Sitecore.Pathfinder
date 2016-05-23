@@ -1,4 +1,5 @@
 ﻿@using Sitecore.Pathfinder.Packaging
+@using Sitecore.Pathfinder.Packaging.WebsitePackages
 @using Sitecore.Pathfinder.Text
 <!DOCTYPE html>
 @{
@@ -11,8 +12,8 @@
         skip = 0;
     }
 
-    var packageService = (IPackageService)ViewBag.PackageService;
-    var packages = packageService.CheckForUpdates(packageService.GetInstallablePackages(queryText, author, tags, skip)).ToList();
+    var packageService = (IWebsitePackageService)ViewBag.PackageService;
+    var packages = packageService.CheckForRemoteUpdates(packageService.GetRemotePackages(queryText, author, tags, skip)).ToList();
     var totalPackageCount = packageService.GetTotalPackageCount(queryText, author, tags);
 
     var previousButton = skip > 0 ? string.Empty : "disabled=\"disabled\"";

@@ -36,7 +36,7 @@ namespace Sitecore.Pathfinder.Tasks
                 }
 
                 destinationDirectory = PathHelper.NormalizeFilePath(destinationDirectory).TrimStart('\\');
-                destinationDirectory = PathHelper.Combine(context.Configuration.Get(Constants.Configuration.DataFolderDirectory), destinationDirectory);
+                destinationDirectory = PathHelper.Combine(context.Configuration.GetString(Constants.Configuration.DataFolderDirectory), destinationDirectory);
 
                 context.FileSystem.CreateDirectory(destinationDirectory);
 

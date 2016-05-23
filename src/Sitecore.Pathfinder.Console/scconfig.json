@@ -18,7 +18,7 @@
         "content-files": ".js, .map, .css, .htm, .ashx, .asmx, .asax, .eot, .svg, .ttf, .woff, .woff2, .less, .php, .ico",
 
         // comma separated list of files and directories to ignore
-        "ignore-directories": ".vscode, sitecore.filetemplates, sitecore.project, sitecore.tools, node_modules, roslyn, includes",
+        "ignore-directories": ".vscode, sitecore.filetemplates, sitecore.project, sitecore.tools, node_modules, packages, roslyn, includes",
         "ignore-filenames": "scc.cmd, project.json, readme.md, web.config, packages.config",
 
         // default file search pattern
@@ -76,7 +76,7 @@
         // execute Sitecore validators after item or template has been updated
         "run-sitecore-validators": true,
 
-        // poor mans schema for item files.
+        // poor mans schema for item files
         "schema": {
             "Item-attributes": "Name, Id, Database, Path, Icon, Template, IsEmittable, IsExternalReference, Layout.File, Template.CreateFromFields, Template.Id, Template.Icon, Template.BaseTemplates, Template.ShortHelp, Template.LongHelp",
             "Item-childnodes": "Fields, Children, Template",
@@ -112,11 +112,13 @@
 
     "copy-package": {
         "system-0": {
-            "copy-to-directory": "/Pathfinder/packages"
+            "copy-to-directory": "/pathfinder/repository"
         }
     },
 
     "install-package": {
+        // specifies whether the project directories are added as feeds. This requires the website to have read access to the project directory. 
+        "add-project-directories-as-feeds": true,
         // checks that the version of the source bin file is larger than the destination before copying.
         // when developing this should probably be combined with auto-incrementing the file version of the assembly.
         // see http://stackoverflow.com/questions/356543/can-i-automatically-increment-the-file-build-version-when-using-visual-studio
@@ -325,10 +327,10 @@
     // specifies the .NET CultureInfo name to use when parsing date/times and numbers
     "culture": "en-US",
 
-    // nuget dependencies for restore-packages task
+    // dependency packages
     "dependencies": {
         "Sitecore.Pathfinder.Core": "1.0.0"
-    },  
+    },
 
     // extensions directory and dynamically compiled extensions assembly filename
     "extensions": {
@@ -345,8 +347,15 @@
 
     // NuGet source repositories
     "nuget-repositories": {
-        "nuget.org": "https://www.nuget.org/api/v2"
+        // "nuget.org": "https://www.nuget.org/api/v2"
     }, 
+
+    // directories, that hold packages
+    "packages": {
+        "include-packages-config-as-dependencies": true ,
+        "nuget-directory": "packages",
+        "npm-directory": "node_modules"
+    },  
 
     // maps project role to checkers
     "project-role-checkers": {

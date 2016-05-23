@@ -4,6 +4,7 @@ Version next
 * Fix: Cleaned up VSCode build tasks (2016-04-27)
 * Fix: Warning if no layout file compiler was found (2016-04-27)
 * Add: Refactored help system to use Markdown files (2016-04-27)
+* Add: Heavy NuGet refactoring (2016-05-23) - Dmitry Kostenko
 
 Version 0.7.0
 ============

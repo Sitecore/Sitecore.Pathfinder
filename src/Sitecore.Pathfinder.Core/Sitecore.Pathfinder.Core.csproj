@@ -71,6 +71,12 @@
     <Compile Include="AppService.cs" />
     <Compile Include="Checking\Checker.cs" />
     <Compile Include="Compiling\LayoutFileCompilers\TemplateLayoutFileCompiler.cs" />
+    <Compile Include="Packaging\ProjectPackages\ProjectPackageService.cs" />
+    <Compile Include="Packaging\ProjectPackages\IProjectPackageInfo.cs" />
+    <Compile Include="Packaging\ProjectPackages\IProjectPackageService.cs" />
+    <Compile Include="Packaging\ProjectPackages\ProjectPackageInfo.cs" />
+    <Compile Include="Packaging\ProjectPackages\IProjectPackageProvider.cs" />
+    <Compile Include="Packaging\ProjectPackages\ProjectPackageProviderBase.cs" />
     <Compile Include="Projects\IProjectIndexer.cs" />
     <Compile Include="Projects\ProjectIndex.cs" />
     <Compile Include="Projects\ProjectIndexer.cs" />
@@ -126,13 +132,13 @@
     <Compile Include="IO\PathMappers\IProjectToWebsiteFileNameMapper.cs" />
     <Compile Include="Languages\BinFiles\BinFileCompiler.cs" />
     <Compile Include="Packaging\IPackage.cs" />
-    <Compile Include="Packaging\IPackageProvider.cs" />
-    <Compile Include="Packaging\IPackageService.cs" />
+    <Compile Include="Packaging\WebsitePackages\IWebsitePackageProvider.cs" />
+    <Compile Include="Packaging\WebsitePackages\IWebsitePackageService.cs" />
     <Compile Include="Packaging\PackageBase.cs" />
-    <Compile Include="Packaging\PackageDependency.cs" />
-    <Compile Include="Packaging\PackageDependencySet.cs" />
-    <Compile Include="Packaging\PackageProviderBase.cs" />
-    <Compile Include="Packaging\PackageService.cs" />
+    <Compile Include="Packaging\WebsitePackages\WebsitePackageDependency.cs" />
+    <Compile Include="Packaging\WebsitePackages\WebsitePackageDependencySet.cs" />
+    <Compile Include="Packaging\WebsitePackages\WebsitePackageProviderBase.cs" />
+    <Compile Include="Packaging\WebsitePackages\WebsitePackageService.cs" />
     <Compile Include="Parsing\Pipelines\ReferenceParserPipelines\1000 - PathReferenceParser.cs" />
     <Compile Include="Parsing\Pipelines\ReferenceParserPipelines\2000 - GuidReferenceParser.cs" />
     <Compile Include="Parsing\Pipelines\ReferenceParserPipelines\4000 - FileReferenceParser.cs" />
@@ -517,16 +523,16 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.4\analyzers\dotnet\cs\CodeContractNullability.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Features\Sitecore.Pathfinder.Roslyn\Sitecore.Pathfinder.Roslyn.csproj">
       <Project>{2776F71A-6B50-478E-A0A0-E2151EBE8A98}</Project>
       <Name>Sitecore.Pathfinder.Roslyn</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.5\analyzers\dotnet\cs\CodeContractNullability.dll" />
+    <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.5\analyzers\dotnet\cs\MsgPack.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
