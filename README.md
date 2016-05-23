@@ -56,6 +56,9 @@ in a friendly manner._
 * Support for React renderings (.jsx)
 * Code Generation for generating strongly typed item models, factories and unit tests
 
+## FAQ
+Read the [FAQ](FAQ.md)
+
 ## Documentation
 For more documentation see [Pathfinder Documentation](docs/README.md).
 
