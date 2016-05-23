@@ -102,6 +102,36 @@
         // list of enabled and disabled checkers
         "checkers": {
             // "TemplateHelp": "disabled"
+        },
+
+        // reference text that will not be treated as a reference
+        "ignored-references": {
+            "~/icon/": "contains",
+            "~/media/": "contains",
+            "~/xaml/": "contains",
+            "query:": "starts-with",
+            "public class ": "contains",
+            "/sitecore/system/Field types": "starts-with",
+            "/sitecore/system/Settings/Html Editor Profiles/": "starts-with",
+            "{Binding ": "starts-with",
+            "{Filters}": "equals",
+            "{59F53BBB-D1F5-4E38-8EBA-0D73109BB59B}": "equals",
+            "{A0C460F4-DBAE-4A5A-8F3A-C4ADFCDACEEA}": "equals",
+            "{0}": "equals",
+            "{1}": "equals",
+            "{2}": "equals",
+            "{3}": "equals",
+            "{4}": "equals",
+            "{5}": "equals",
+            "{6}": "equals",
+            "{7}": "equals",
+            "{8}": "equals",
+            "{9}": "equals",
+            "{10}": "equals",
+            "{11}": "equals",
+            "{12}": "equals",
+            "{0,2}": "equals",
+            "{1,2}": "equals"
         } 
     },
 

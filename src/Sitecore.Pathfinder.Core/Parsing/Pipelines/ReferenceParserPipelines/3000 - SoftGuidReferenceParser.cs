@@ -18,6 +18,12 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.ReferenceParserPipelines
                 return;
             }
 
+            // ignore formatting specifiers: {0}, {1} etc.
+            if (pipeline.ReferenceText.Length == 3 && char.IsDigit(pipeline.ReferenceText[1]))
+            {
+                return;
+            }
+
             // if the reference also contains a ", it is probably a Json string
             if (pipeline.ReferenceText.IndexOf('\"') >= 0 || pipeline.ReferenceText.IndexOf('\'') >= 0 || pipeline.ReferenceText.IndexOf(':') >= 0) 
             {

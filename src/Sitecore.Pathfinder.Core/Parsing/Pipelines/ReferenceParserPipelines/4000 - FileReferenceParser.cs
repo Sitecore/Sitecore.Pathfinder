@@ -19,16 +19,6 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.ReferenceParserPipelines
                 return;
             }
 
-            if (pipeline.ReferenceText.StartsWith("~/icon/", StringComparison.OrdinalIgnoreCase))
-            {
-                return;
-            }
-
-            if (pipeline.ReferenceText.StartsWith("~/media/", StringComparison.OrdinalIgnoreCase))
-            {
-                return;
-            }
-
             var sourceProperty = new SourceProperty<string>(pipeline.SourceTextNode.Key, string.Empty, SourcePropertyFlags.IsFileName);
             sourceProperty.SetValue(pipeline.SourceTextNode);
 

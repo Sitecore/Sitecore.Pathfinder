@@ -68,7 +68,7 @@ namespace Sitecore.Pathfinder.Checkers
         protected IEnumerable<Diagnostic> TemplateSectionShouldOnlyContainTemplates(ICheckerContext context)
         {
             return from item in context.Project.Items
-                where item.ItemIdOrPath.StartsWith("/sitecore/templates/") && item.ItemIdOrPath.IndexOf("Branches") < 0 && !item.ItemName.Equals("__Standard Values") && !item.TemplateName.Equals("Template") && !item.TemplateName.Equals("Template section") && !item.TemplateName.Equals("Template field") && !item.TemplateName.Equals("Template Folder") && !item.TemplateName.Equals("Node") && !item.TemplateName.Equals("Folder")
+                where item.ItemIdOrPath.StartsWith("/sitecore/templates/") && item.ItemIdOrPath.IndexOf("Branches") < 0 && !item.ItemName.Equals("__Standard Values") && !item.TemplateName.Equals("Template") && !item.TemplateName.Equals("Template section") && !item.TemplateName.Equals("Template field") && !item.TemplateName.Equals("Template Folder") && !item.TemplateName.Equals("Node") && !item.TemplateName.Equals("Folder") && !item.TemplateName.Equals("Command Template")
                 select Warning(Msg.C1000, "The '/sitecore/templates' section should only contain item with template 'Template', 'Template section', 'Template field', 'Template folder' or standard values items. To fix, move the item outside the '/sitecore/templates' section", TraceHelper.GetTextNode(item), item.TemplateName);
         }
 

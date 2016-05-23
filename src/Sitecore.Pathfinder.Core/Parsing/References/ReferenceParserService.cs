@@ -1,20 +1,19 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
+using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing.Pipelines.ReferenceParserPipelines;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Snapshots;
-using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Parsing.References
 {
@@ -22,11 +21,15 @@ namespace Sitecore.Pathfinder.Parsing.References
     public class ReferenceParserService : IReferenceParserService
     {
         [ImportingConstructor]
-        public ReferenceParserService([NotNull] IFactoryService factory, [NotNull] IPipelineService pipelines)
+        public ReferenceParserService([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IPipelineService pipelines)
         {
+            Configuration = configuration;
             Factory = factory;
             Pipelines = pipelines;
         }
+
+        [NotNull]
+        protected IConfiguration Configuration { get; }
 
         [NotNull]
         protected IFactoryService Factory { get; }
@@ -34,8 +37,56 @@ namespace Sitecore.Pathfinder.Parsing.References
         [NotNull]
         protected IPipelineService Pipelines { get; }
 
+        public virtual bool IsIgnoredReference(string referenceText)
+        {
+            // todo: cache this
+            foreach (var pair in Configuration.GetSubKeys(Constants.Configuration.CheckProjectIgnoredReferences))
+            {
+                var op = Configuration.Get(Constants.Configuration.CheckProjectIgnoredReferences + ":" + pair.Key);
+                switch (op)
+                {
+                    case "starts-with":
+                        if (referenceText.StartsWith(pair.Key, StringComparison.OrdinalIgnoreCase))
+                        {
+                            return true;
+                        }
+
+                        break;
+                    case "ends-with":
+                        if (referenceText.EndsWith(pair.Key, StringComparison.OrdinalIgnoreCase))
+                        {
+                            return true;
+                        }
+
+                        break;
+                    case "contains":
+                        if (referenceText.IndexOf(pair.Key, StringComparison.OrdinalIgnoreCase) >= 0)
+                        {
+                            return true;
+                        }
+
+                        break;
+
+                    default:
+                        if (string.Equals(referenceText, pair.Key, StringComparison.OrdinalIgnoreCase))
+                        {
+                            return true;
+                        }
+
+                        break;
+                }
+            }
+
+            return false;
+        }
+
         public virtual IReference ParseReference(IProjectItem projectItem, ITextNode sourceTextNode, string referenceText)
         {
+            if (IsIgnoredReference(referenceText))
+            {
+                return null;
+            }
+
             var pipeline = Pipelines.Resolve<ReferenceParserPipeline>().Execute(Factory, projectItem, sourceTextNode, referenceText);
             return pipeline.Reference;
         }
@@ -51,20 +102,42 @@ namespace Sitecore.Pathfinder.Parsing.References
             return ParseReferences(projectItem, sourceTextNode);
         }
 
-        protected virtual int EndOfItemPath([NotNull] string text, int start)
+        public virtual IEnumerable<IReference> ParseReferences(IProjectItem projectItem, ITextNode textNode)
         {
-            var chars = text.ToCharArray();
+            var referenceText = textNode.Value.Trim();
 
-            for (var i = start; i < text.Length; i++)
+            // query string: ignore
+            if (referenceText.StartsWith("query:"))
             {
-                var c = chars[i];
-                if (!char.IsDigit(c) && !char.IsLetter(c) && c != '/' && c != ' ' && c != '-' && c != '.')
-                {
-                    return i;
-                }
+                yield break;
             }
 
-            return text.Length;
+            // todo: process media links 
+            if (referenceText.StartsWith("/~/media") || referenceText.StartsWith("~/media"))
+            {
+                yield break;
+            }
+
+            // todo: process icon links 
+            if (referenceText.StartsWith("/~/icon") || referenceText.StartsWith("~/icon"))
+            {
+                yield break;
+            }
+
+            foreach (var reference in ParseItemPaths(projectItem, textNode, referenceText))
+            {
+                yield return reference;
+            }
+
+            foreach (var reference in ParseGuids(projectItem, textNode, referenceText))
+            {
+                yield return reference;
+            }
+
+            foreach (var reference in ParseFilePaths(projectItem, textNode, referenceText))
+            {
+                yield return reference;
+            }
         }
 
         protected virtual int EndOfFilePath([NotNull] string text, int start)
@@ -84,42 +157,38 @@ namespace Sitecore.Pathfinder.Parsing.References
             return text.Length;
         }
 
-        public virtual IEnumerable<IReference> ParseReferences(IProjectItem projectItem, ITextNode textNode)
+        protected virtual int EndOfItemPath([NotNull] string text, int start)
         {
-            var text = textNode.Value.Trim();
+            var chars = text.ToCharArray();
 
-            // query string: ignore
-            if (text.StartsWith("query:"))
+            for (var i = start; i < text.Length; i++)
             {
-                yield break;
+                var c = chars[i];
+                if (!char.IsDigit(c) && !char.IsLetter(c) && c != '/' && c != ' ' && c != '-' && c != '.' && c != '_' && c != '~')
+                {
+                    return i;
+                }
             }
 
-            // todo: process media links 
-            if (text.StartsWith("/~/media") || text.StartsWith("~/media"))
-            {
-                yield break;
-            }
+            return text.Length;
+        }
 
-            // todo: process icon links 
-            if (text.StartsWith("/~/icon") || text.StartsWith("~/icon"))
-            {
-                yield break;
-            }
-
-            // look for item paths
+        [ItemNotNull, NotNull]
+        protected virtual IEnumerable<IReference> ParseFilePaths([NotNull] IProjectItem projectItem, [NotNull] ITextNode textNode, [NotNull] string referenceText)
+        {
             var s = 0;
             while (true)
             {
-                var n = text.IndexOf("/sitecore", s, StringComparison.OrdinalIgnoreCase);
+                var n = referenceText.IndexOf("~/", s, StringComparison.Ordinal);
                 if (n < 0)
                 {
                     break;
                 }
 
-                var e = EndOfItemPath(text, n);
-                var referenceText = text.Mid(n, e - n);
+                var e = EndOfFilePath(referenceText, n);
+                var text = referenceText.Mid(n, e - n);
 
-                var reference = ParseReference(projectItem, textNode, referenceText);
+                var reference = ParseReference(projectItem, textNode, text);
                 if (reference != null)
                 {
                     yield return reference;
@@ -127,25 +196,28 @@ namespace Sitecore.Pathfinder.Parsing.References
 
                 s = e;
             }
+        }
 
-            // look for guids and soft guids
-            s = 0;
+        [ItemNotNull, NotNull]
+        protected virtual IEnumerable<IReference> ParseGuids([NotNull] IProjectItem projectItem, [NotNull] ITextNode textNode, [NotNull] string referenceText)
+        {
+            var s = 0;
             while (true)
             {
-                var n = text.IndexOf('{', s);
+                var n = referenceText.IndexOf('{', s);
                 if (n < 0)
                 {
                     break;
                 }
 
                 // ignore uids
-                if (n > 4 && text.Mid(n - 5, 5) == "uid=\"")
+                if (n > 4 && referenceText.Mid(n - 5, 5) == "uid=\"")
                 {
                     s = n + 1;
                     continue;
                 }
 
-                var e = text.IndexOf('}', n);
+                var e = referenceText.IndexOf('}', n);
                 if (e < 0)
                 {
                     break;
@@ -153,9 +225,9 @@ namespace Sitecore.Pathfinder.Parsing.References
 
                 e++;
 
-                var referenceText = text.Mid(n, e - n);
+                var text = referenceText.Mid(n, e - n);
 
-                var reference = ParseReference(projectItem, textNode, referenceText);
+                var reference = ParseReference(projectItem, textNode, text);
                 if (reference != null)
                 {
                     yield return reference;
@@ -163,21 +235,24 @@ namespace Sitecore.Pathfinder.Parsing.References
 
                 s = e;
             }
-            
-            // look for file paths
-            s = 0;
+        }
+
+        [ItemNotNull, NotNull]
+        protected virtual IEnumerable<IReference> ParseItemPaths([NotNull] IProjectItem projectItem, [NotNull] ITextNode textNode, [NotNull] string referenceText)
+        {
+            var s = 0;
             while (true)
             {
-                var n = text.IndexOf("~/", s, StringComparison.Ordinal);
+                var n = referenceText.IndexOf("/sitecore", s, StringComparison.OrdinalIgnoreCase);
                 if (n < 0)
                 {
                     break;
                 }
 
-                var e = EndOfFilePath(text, n);
-                var referenceText = text.Mid(n, e - n);
+                var e = EndOfItemPath(referenceText, n);
+                var text = referenceText.Mid(n, e - n);
 
-                var reference = ParseReference(projectItem, textNode, referenceText);
+                var reference = ParseReference(projectItem, textNode, text);
                 if (reference != null)
                 {
                     yield return reference;
@@ -185,55 +260,6 @@ namespace Sitecore.Pathfinder.Parsing.References
 
                 s = e;
             }
-            
-            /*
-            // pipe seperated list of guids
-            if (text.StartsWith("{") && text.EndsWith("}") && text.IndexOf('|') >= 0 && text.IndexOf('"') < 0)
-            {
-                var parts = text.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries);
-                foreach (var part in parts)
-                {
-                    reference = ParseReference(projectItem, textNode, part);
-                    if (reference != null)
-                    {
-                        yield return reference;
-                    }
-                }
-
-                yield break;
-            }
-
-            // url string
-            if (text.IndexOf('&') >= 0 || text.IndexOf('=') >= 0)
-            {
-                var urlString = new UrlString(text);
-
-                foreach (string key in urlString.Parameters)
-                {
-                    if (string.IsNullOrEmpty(key))
-                    {
-                        continue;
-                    }
-
-                    var parameterValue = urlString.Parameters[key];
-
-                    reference = ParseReference(projectItem, textNode, parameterValue);
-                    if (reference != null)
-                    {
-                        yield return reference;
-                    }
-                }
-
-                yield break;
-            }
-
-            // plain text
-            reference = ParseReference(projectItem, textNode, text);
-            if (reference != null)
-            {
-                yield return reference;
-            }
-            */
         }
     }
 }

@@ -55,7 +55,7 @@ It is a compiler that processes a number of input files and produces an output f
 
 I tried serializing the entire master database to a Pathfinder project to see how many 
 issues it would find - and it found a bunch of issues! However Pathfinder processed
-more than 3000 items in less than 10 seconds, checking about 50 validations.
+more than 4500 items in less than 15 seconds, checking about 38 validations.
 
 #### _Can I use just the checking parts of Pathfinder and not all the other stuff?_
 
