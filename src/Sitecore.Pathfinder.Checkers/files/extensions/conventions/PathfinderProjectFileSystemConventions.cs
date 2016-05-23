@@ -65,15 +65,6 @@ namespace Sitecore.Pathfinder.Checkers
         }
 
         [Export("Check")]
-        protected IEnumerable<Diagnostic> MissingSitecoreProjectPackageDirectory(ICheckerContext context)
-        {
-            if (!context.Project.DirectoryExists("~/sitecore.project/packages"))
-            {
-                yield return Warning(Msg.C1000, "Missing the ~/sitecore.project/packages directory. This directory contains imported packages. To fix, create the ~/sitecore.project/packages directory");
-            }
-        }
-
-        [Export("Check")]
         protected IEnumerable<Diagnostic> MissingSitecoreProjectSchemasDirectory(ICheckerContext context)
         {
             if (!context.Project.DirectoryExists("~/sitecore.project/schemas"))

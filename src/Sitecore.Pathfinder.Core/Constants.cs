@@ -79,6 +79,7 @@ namespace Sitecore.Pathfinder
             public const string Checkers = "checkers";
 
             public const string CheckProjectCheckers = "check-project:checkers";
+            public const string CheckProjectIgnoredReferences = "check-project:ignored-references";
 
             public const string CommandLineConfig = "config";
 

@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
@@ -10,15 +10,15 @@ namespace Sitecore.Pathfinder.Parsing.References
 {
     public interface IReferenceParserService
     {
+        bool IsIgnoredReference([NotNull] string referenceText);
+
         [CanBeNull]
         IReference ParseReference([NotNull] IProjectItem projectItem, [NotNull] ITextNode sourceTextNode, [NotNull] string referenceText);
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         IEnumerable<IReference> ParseReferences<T>([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<T> sourceProperty);
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         IEnumerable<IReference> ParseReferences([NotNull] IProjectItem projectItem, [NotNull] ITextNode textNode);
     }
 }

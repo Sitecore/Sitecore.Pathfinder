@@ -1,10 +1,12 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.ComponentModel.Composition;
 using System.Text;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Parsing.References;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
@@ -14,9 +16,14 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 {
     public class ItemPathCompiler : FieldCompilerBase
     {
-        public ItemPathCompiler() : base(Constants.FieldCompilers.Normal + 10)
+        [ImportingConstructor]
+        public ItemPathCompiler([NotNull] IReferenceParserService referenceParser) : base(Constants.FieldCompilers.Normal + 10)
         {
+            ReferenceParser = referenceParser;
         }
+
+        [NotNull]
+        protected IReferenceParserService ReferenceParser { get; }
 
         public override bool CanCompile(IFieldCompileContext context, Field field)
         {
@@ -54,6 +61,11 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         private string CompileDirectLink([NotNull] IFieldCompileContext context, [NotNull] Field field, [NotNull] string value)
         {
             if (!PathHelper.IsProbablyItemPath(value))
+            {
+                return value;
+            }
+
+            if (ReferenceParser.IsIgnoredReference(value))
             {
                 return value;
             }
@@ -100,6 +112,11 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 return value;
             }
 
+            if (ReferenceParser.IsIgnoredReference(value))
+            {
+                return value;
+            }
+
             var item = field.Item.Project.FindQualifiedItem<IProjectItem>(qualifiedName);
             if (item == null)
             {
@@ -118,7 +135,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             {
                 var path = itemPath;
 
-                if (PathHelper.IsProbablyItemPath(path))
+                if (PathHelper.IsProbablyItemPath(path) && !ReferenceParser.IsIgnoredReference(value))
                 {
                     var i = field.Item.Project.FindQualifiedItem<IProjectItem>(path);
                     if (i != null)
@@ -163,7 +180,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             {
                 var v = url.Parameters[key];
 
-                if (PathHelper.IsProbablyItemPath(v))
+                if (PathHelper.IsProbablyItemPath(v) && !ReferenceParser.IsIgnoredReference(v))
                 {
                     var i = database == null ? project.FindQualifiedItem<IProjectItem>(v) : project.FindQualifiedItem<DatabaseProjectItem>(database, v);
                     if (i != null)

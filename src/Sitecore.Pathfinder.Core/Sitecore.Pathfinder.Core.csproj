@@ -66,6 +66,10 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="ZetaLongPaths, Version=1.0.0.9, Culture=neutral, PublicKeyToken=b764f59068f31f38, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ZetaLongPaths.1.0.0.9\lib\net40-full\ZetaLongPaths.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppService.cs" />
@@ -512,7 +516,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Readme.md" />
   </ItemGroup>
   <ItemGroup>

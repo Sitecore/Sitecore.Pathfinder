@@ -170,7 +170,7 @@ namespace Sitecore.Pathfinder.IO
 
         public virtual DateTime GetLastWriteTimeUtc(string sourceFileName)
         {
-            return File.GetLastWriteTimeUtc(sourceFileName);
+            return ZetaLongPaths.ZlpIOHelper.GetFileLastWriteTime(sourceFileName).ToUniversalTime();
         }
 
         public string GetUniqueFileName(string fileName)
