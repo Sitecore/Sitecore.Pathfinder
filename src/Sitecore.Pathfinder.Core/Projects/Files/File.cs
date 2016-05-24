@@ -42,7 +42,7 @@ namespace Sitecore.Pathfinder.Projects.Files
 
         public override string ShortName => _shortName ?? (_shortName = Path.GetFileName(Snapshots.First().SourceFile.AbsoluteFileName));
 
-        public override void Rename(string newShortName)
+        public override void Rename(IFileSystemService fileSystem, string newShortName)
         {
             var fileName = Snapshots.First().SourceFile.AbsoluteFileName;
 
@@ -51,7 +51,7 @@ namespace Sitecore.Pathfinder.Projects.Files
 
             var newFileName = Path.Combine(Path.GetDirectoryName(fileName) ?? string.Empty, newShortName + extension);
 
-            Project.FileSystem.Rename(fileName, newFileName);
+            fileSystem.Rename(fileName, newFileName);
 
             // todo: update Project Unique ID
         }
@@ -60,7 +60,7 @@ namespace Sitecore.Pathfinder.Projects.Files
         private static ProjectItemUri GetUri([NotNull] IProject project, [NotNull] ISnapshot snapshot)
         {
             // include file extensions in project unique ID for file, so they don't clash with items
-            var filePath = "~/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(project.Options.ProjectDirectory, snapshot.SourceFile.AbsoluteFileName)).TrimStart('/');
+            var filePath = "~/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(project.ProjectDirectory, snapshot.SourceFile.AbsoluteFileName)).TrimStart('/');
             return new ProjectItemUri(project, filePath);
         }
     }

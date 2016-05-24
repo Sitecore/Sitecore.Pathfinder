@@ -13,14 +13,10 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
-            context.IsAborted = true;
-
             foreach (var item in context.Project.Items.OrderBy(i => i.ItemIdOrPath))
             {
                 context.Trace.WriteLine(item.ItemIdOrPath);
             }
-
-            context.DisplayDoneMessage = false;
         }
     }
 }

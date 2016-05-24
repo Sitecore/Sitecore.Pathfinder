@@ -11,6 +11,7 @@ using System.Xml.XPath;
 using Sitecore.Pathfinder.Checking;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.BinFiles;
 using Sitecore.Pathfinder.Languages.ConfigFiles;
 using Sitecore.Pathfinder.Projects;
@@ -20,6 +21,15 @@ namespace Sitecore.Pathfinder.Checkers
 {
     public class ConfigurationChecker : Checker
     {
+        [ImportingConstructor]
+        public ConfigurationChecker([NotNull] IFileSystemService fileSystem)
+        {
+            FileSystem = fileSystem;
+        }
+
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
+
         [Export("Check")]
         public IEnumerable<Diagnostic> TypeNotFound(ICheckerContext context)
         {
@@ -30,7 +40,7 @@ namespace Sitecore.Pathfinder.Checkers
                 XDocument doc;
                 try
                 {
-                    doc = XDocument.Load(fileName, LoadOptions.SetLineInfo);
+                    doc = FileSystem.ReadXml(fileName, LoadOptions.SetLineInfo);
                 }
                 catch (XmlException ex)
                 {

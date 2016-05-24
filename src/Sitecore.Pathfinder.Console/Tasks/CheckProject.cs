@@ -5,6 +5,7 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Checking;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
@@ -15,8 +16,6 @@ namespace Sitecore.Pathfinder.Tasks
         public CheckProject([NotNull] ICheckerService checkerService) : base("check-project")
         {
             CheckerService = checkerService;
-
-            CanRunWithoutConfig = true;
         }
 
         [NotNull]
@@ -26,35 +25,27 @@ namespace Sitecore.Pathfinder.Tasks
         {
             context.Trace.TraceInformation(Msg.C1041, Texts.Checking___);
 
-            TraceDiagnostics(context);
-        }
-        
-        protected virtual void TraceDiagnostics([NotNull] IBuildContext context)
-        {
-            foreach (var diagnostic in context.Project.Diagnostics)
-            {
-                switch (diagnostic.Severity)
-                {
-                    case Severity.Error:
-                        context.Trace.TraceError(diagnostic.Msg, diagnostic.Text, diagnostic.FileName, diagnostic.Span);
-                        break;
-                    case Severity.Warning:
-                        context.Trace.TraceWarning(diagnostic.Msg, diagnostic.Text, diagnostic.FileName, diagnostic.Span);
-                        break;
-                    case Severity.Information:
-                        context.Trace.TraceInformation(diagnostic.Msg, diagnostic.Text, diagnostic.FileName, diagnostic.Span);
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }
+            var treatWarningsAsErrors = context.Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
+
+            context.Trace.TraceDiagnostics(context.Project.Diagnostics, treatWarningsAsErrors);
 
             var errors = context.Project.Diagnostics.Count(d => d.Severity == Severity.Error);
             var warnings = context.Project.Diagnostics.Count(d => d.Severity == Severity.Warning);
             var messages = context.Project.Diagnostics.Count(d => d.Severity == Severity.Information);
             var checkers = CheckerService.EnabledCheckersCount;
 
-            context.Trace.TraceInformation(Msg.C1042, $"Errors: {errors}, warnings: {warnings}, messages: {messages}, checks: {checkers}");
+            if (treatWarningsAsErrors)
+            {
+                errors += warnings;
+                warnings = 0;
+            }
+
+            context.Trace.TraceInformation(Msg.C1042, $"Checks: {checkers}, errors: {errors}, warnings: {warnings}, messages: {messages}");
+
+            if (context.Configuration.GetBool(Constants.Configuration.CheckProject.StopOnErrors, true) && errors > 0)
+            {
+                context.IsAborted = true;
+            }
         }
     }
 }

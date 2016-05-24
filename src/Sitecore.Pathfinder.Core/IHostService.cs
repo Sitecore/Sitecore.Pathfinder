@@ -8,7 +8,7 @@ using Sitecore.Pathfinder.Tasks;
 
 namespace Sitecore.Pathfinder
 {
-    public interface IAppService
+    public interface IHostService
     {
         [NotNull]
         ICompositionService CompositionService { get; }
@@ -16,14 +16,8 @@ namespace Sitecore.Pathfinder
         [NotNull]
         IConfiguration Configuration { get; }
 
-        [NotNull]
-        string ProjectDirectory { get; }
-
         [CanBeNull]
         Stopwatch Stopwatch { get; }
-
-        [NotNull]
-        string ToolsDirectory { get; }
 
         [NotNull]
         T GetTaskRunner<T>() where T : ITaskRunner;

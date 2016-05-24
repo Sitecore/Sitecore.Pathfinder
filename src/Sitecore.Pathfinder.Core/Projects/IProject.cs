@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.Files;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
@@ -20,9 +19,6 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull, ItemNotNull]
         IEnumerable<File> Files { get; }
 
-        [NotNull]
-        IFileSystemService FileSystem { get; }
-
         bool HasErrors { get; }
 
         [NotNull, ItemNotNull]
@@ -30,6 +26,9 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull]
         ProjectOptions Options { get; }
+
+        [NotNull]
+        string ProjectDirectory { get; }
 
         [NotNull, ItemNotNull]
         IEnumerable<IProjectItem> ProjectItems { get; }
@@ -52,6 +51,9 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         IProject Compile();
 
+        [NotNull, ItemNotNull]
+        IEnumerable<T> FindFiles<T>([NotNull] string fileName) where T : File;
+
         [CanBeNull]
         T FindQualifiedItem<T>([NotNull] string qualifiedName) where T : class, IProjectItem;
 
@@ -60,9 +62,6 @@ namespace Sitecore.Pathfinder.Projects
 
         [CanBeNull]
         T FindQualifiedItem<T>([NotNull] ProjectItemUri uri) where T : class, IProjectItem;
-
-        [NotNull, ItemNotNull]
-        IEnumerable<T> FindFiles<T>([NotNull] string fileName) where T : File;
 
         [NotNull]
         Database GetDatabase([NotNull] string databaseName);
@@ -73,9 +72,6 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull, ItemNotNull]
         IEnumerable<Template> GetTemplates([NotNull] Database database);
 
-        [NotNull]
-        IProject With([NotNull] ProjectOptions projectOptions, [NotNull, ItemNotNull] IEnumerable<string> sourceFileNames);
-
         event ProjectChangedEventHandler ProjectChanged;
 
         void Remove([NotNull] IProjectItem projectItem);
@@ -84,5 +80,8 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull]
         IProject SaveChanges();
+
+        [NotNull]
+        IProject With([NotNull] ProjectOptions projectOptions, [NotNull, ItemNotNull] IEnumerable<string> sourceFileNames);
     }
 }

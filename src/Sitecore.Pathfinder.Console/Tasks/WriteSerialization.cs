@@ -1,6 +1,8 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System.ComponentModel.Composition;
 using System.IO;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.Serialization;
@@ -10,27 +12,26 @@ namespace Sitecore.Pathfinder.Tasks
 {
     public class WriteSerialization : BuildTaskBase
     {
-        public WriteSerialization() : base("write-serialization")
+        [NotNull]
+        public IFileSystemService FileSystem { get; }
+
+        [ImportingConstructor]
+        public WriteSerialization([NotNull] IFileSystemService fileSystem) : base("write-serialization")
         {
-            CanRunWithoutConfig = true;
+            FileSystem = fileSystem;
         }
 
         public override void Run(IBuildContext context)
         {
-            if (context.Project.HasErrors)
-            {
-                return;
-            }
-
             context.Trace.TraceInformation(Msg.D1021, Texts.Writing_serialization___);
 
-            var directory = PathHelper.Combine(context.ProjectDirectory, context.Configuration.GetString(Constants.Configuration.WriteSerializationDirectory));
-            if (context.FileSystem.DirectoryExists(directory))
+            var directory = PathHelper.Combine(context.Project.ProjectDirectory, context.Configuration.GetString(Constants.Configuration.WriteSerialization.Directory));
+            if (FileSystem.DirectoryExists(directory))
             {
-                context.FileSystem.DeleteDirectory(directory);
+                FileSystem.DeleteDirectory(directory);
             }
 
-            var flat = context.Configuration.GetBool(Constants.Configuration.WriteSerializationFlat);
+            var flat = context.Configuration.GetBool(Constants.Configuration.WriteSerialization.Flat);
 
             foreach (var item in context.Project.Items)
             {
@@ -44,11 +45,11 @@ namespace Sitecore.Pathfinder.Tasks
                     fileName = Path.Combine(directory, item.DatabaseName + "\\" + PathHelper.NormalizeFilePath(item.ItemIdOrPath).TrimStart('\\') + ".item");
                 }
 
-                fileName = context.FileSystem.GetUniqueFileName(fileName);
+                fileName = FileSystem.GetUniqueFileName(fileName);
 
-                context.FileSystem.CreateDirectoryFromFileName(fileName);
+                FileSystem.CreateDirectoryFromFileName(fileName);
 
-                using (var stream = new StreamWriter(fileName))
+                using (var stream = FileSystem.OpenStreamWriter(fileName))
                 {
                     item.WriteAsSerialization(stream, WriteAsSerializationOptions.WriteCompiledFieldValues);
                 }

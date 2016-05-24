@@ -1,4 +1,4 @@
-﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -72,6 +72,12 @@ namespace Sitecore.Pathfinder.Extensions
         }
 
         [NotNull]
+        public static string GetProjectDirectory([NotNull] this IConfiguration configuration)
+        {
+            return configuration.GetString(Constants.Configuration.ProjectDirectory);
+        }
+
+        [NotNull]
         public static string GetString([NotNull] this IConfiguration configuration, [NotNull] string key, [NotNull] string defaultValue = "")
         {
             var value = configuration.Get(key) ?? defaultValue;
@@ -100,21 +106,37 @@ namespace Sitecore.Pathfinder.Extensions
                 switch (replace.ToLowerInvariant())
                 {
                     case "toolsdirectory":
-                        with = configuration.Get(Constants.Configuration.ToolsDirectory) ?? string.Empty;
+                        with = configuration.GetToolsDirectory();
                         break;
                     case "projectdirectory":
-                        with = configuration.Get(Constants.Configuration.ProjectDirectory) ?? string.Empty;
+                        with = configuration.GetProjectDirectory();
                         break;
                     default:
                         with = configuration.Get(replace) ?? string.Empty;
                         break;
-
                 }
 
                 value = value.Left(n) + with + value.Mid(e + 1);
             }
 
             return value;
+        }
+
+        [NotNull]
+        public static string GetToolsDirectory([NotNull] this IConfiguration configuration)
+        {
+            return configuration.GetString(Constants.Configuration.ToolsDirectory);
+        }
+
+        [NotNull]
+        public static string GetWebsiteDirectory([NotNull] this IConfiguration configuration)
+        {
+            return configuration.GetString(Constants.Configuration.WebsiteDirectory);
+        }
+
+        public static bool IsProjectConfigured([NotNull] this IConfiguration configuration)
+        {
+            return configuration.GetBool(Constants.Configuration.IsProjectConfigured);
         }
 
         [NotNull]

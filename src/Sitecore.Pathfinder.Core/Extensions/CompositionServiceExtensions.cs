@@ -9,8 +9,14 @@ using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Extensions
 {
-    public static class CompositionServiceExtensions
+    public static partial class CompositionServiceExtensions
     {
+        [NotNull]
+        public static T New<T>([NotNull] this ExportFactory<T> factory) where T : class
+        {
+            return factory.CreateExport().Value;
+        }
+
         [NotNull]
         public static T Resolve<T>([NotNull] this ICompositionService compositionService)
         {
@@ -60,6 +66,13 @@ namespace Sitecore.Pathfinder.Extensions
             }
         }
 
+        public static void Set<T>([NotNull] this ICompositionService compositionService, [NotNull] T value)
+        {
+            var compositionContainer = (CompositionContainer)compositionService;
+
+            compositionContainer.ComposeExportedValue(value);
+        }
+
         private static void HandleException([NotNull] Exception ex)
         {
             Console.WriteLine(ex.Message);
@@ -74,13 +87,6 @@ namespace Sitecore.Pathfinder.Extensions
             {
                 Console.WriteLine(loaderException.Message);
             }
-        }
-
-        public static void Set<T>([NotNull] this ICompositionService compositionService, [NotNull] T value)
-        {
-            var compositionContainer = (CompositionContainer)compositionService;
-
-            compositionContainer.ComposeExportedValue(value);
         }
     }
 }

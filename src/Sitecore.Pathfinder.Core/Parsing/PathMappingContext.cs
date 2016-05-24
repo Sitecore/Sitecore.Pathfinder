@@ -48,7 +48,7 @@ namespace Sitecore.Pathfinder.Parsing
             ItemName = PathHelper.GetItemName(sourceFile);
             DatabaseName = project.Options.DatabaseName;
 
-            var projectFileName = "/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(project.Options.ProjectDirectory, sourceFile.AbsoluteFileName)).TrimStart('/');
+            var projectFileName = "/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(project.ProjectDirectory, sourceFile.AbsoluteFileName)).TrimStart('/');
 
             string filePath;
             if (PathMapper.TryGetWebsiteFileName(projectFileName, out filePath))

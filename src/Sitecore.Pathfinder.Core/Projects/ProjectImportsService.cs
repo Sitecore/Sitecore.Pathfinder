@@ -55,7 +55,7 @@ namespace Sitecore.Pathfinder.Projects
         protected virtual void ImportProjectPackages([NotNull] IProject project, [NotNull] IParseContext context)
         {
             // todo: NuGet: handle noconfig
-            foreach (var packageInfo in ProjectPackages.GetPackages(project.Options.ProjectDirectory))
+            foreach (var packageInfo in ProjectPackages.GetPackages(project.ProjectDirectory))
             {
                 var fileName = Path.Combine(packageInfo.ProjectDirectory, "sitecore.project\\exports.xml");
                 if (!FileSystem.FileExists(fileName))
@@ -65,7 +65,7 @@ namespace Sitecore.Pathfinder.Projects
 
                 try
                 {
-                    var doc = XDocument.Load(fileName);
+                    var doc = FileSystem.ReadXml(fileName);
 
                     var root = doc.Root;
                     if (root == null)

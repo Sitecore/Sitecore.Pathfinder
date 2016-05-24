@@ -99,14 +99,14 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
                 fileName = fileName.Mid(2);
             }
 
-            fileName = Path.Combine(project.Options.ProjectDirectory, fileName);
+            fileName = Path.Combine(project.ProjectDirectory, fileName);
             if (!FileSystem.FileExists(fileName))
             {
                 context.Trace.TraceError(Msg.C1061, "File not found", fileName);
                 return;
             }
 
-            var sourceFile = Factory.SourceFile(FileSystem, project.Options.ProjectDirectory, fileName);
+            var sourceFile = Factory.SourceFile(FileSystem, project.ProjectDirectory, fileName);
             var pathMappingContext = new PathMappingContext(PathMapper).Parse(project, sourceFile);
 
             var snapshot = SnapshotService.LoadSnapshot(project, sourceFile, pathMappingContext) as ITextSnapshot;
@@ -116,7 +116,7 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
             }
 
             var layoutResolveContext = new LayoutCompileContext(context.Trace, project, item.Database, snapshot);
-            var layoutCompiler = new LayoutCompiler();
+            var layoutCompiler = new LayoutCompiler(FileSystem);
 
             var xml = layoutCompiler.Compile(layoutResolveContext, snapshot.Root);
 

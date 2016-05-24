@@ -35,29 +35,14 @@ namespace Sitecore.Pathfinder.Checking
         public virtual void CheckProject(IProject project)
         {
             var context = CompositionService.Resolve<ICheckerContext>().With(project);
+            var treatWarningsAsErrors = Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
 
             var checkers = GetEnabledCheckers();
             foreach (var checker in checkers)
             {
                 var diagnostics = checker(context);
 
-                foreach (var diagnostic in diagnostics)
-                {
-                    switch (diagnostic.Severity)
-                    {
-                        case Severity.Error:
-                            context.Trace.TraceError(diagnostic.Msg, diagnostic.Text, diagnostic.FileName, diagnostic.Span);
-                            break;
-                        case Severity.Warning:
-                            context.Trace.TraceWarning(diagnostic.Msg, diagnostic.Text, diagnostic.FileName, diagnostic.Span);
-                            break;
-                        case Severity.Information:
-                            context.Trace.TraceInformation(diagnostic.Msg, diagnostic.Text, diagnostic.FileName, diagnostic.Span);
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-                }
+                context.Trace.TraceDiagnostics(diagnostics, treatWarningsAsErrors);
 
                 EnabledCheckersCount++;
 
@@ -127,7 +112,7 @@ namespace Sitecore.Pathfinder.Checking
             }
 
             // apply check-project:checkers
-            EnableCheckers(checkers, Constants.Configuration.CheckProjectCheckers);
+            EnableCheckers(checkers, Constants.Configuration.CheckProject.Checkers);
 
             // apply checkers
             EnableCheckers(checkers, Constants.Configuration.Checkers);

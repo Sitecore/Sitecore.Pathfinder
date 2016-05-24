@@ -10,9 +10,9 @@ namespace Sitecore.Pathfinder.Tasks
         ActionResult ActionResult { get; set; }
 
         [NotNull]
-        IAppService App { get; }
+        IHostService Host { get; }
 
         [NotNull]
-        IWebsiteTaskContext With([NotNull] IAppService app);
+        IWebsiteTaskContext With([NotNull] IHostService host);
     }
 }

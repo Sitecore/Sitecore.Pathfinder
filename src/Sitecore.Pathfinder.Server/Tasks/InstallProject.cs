@@ -7,24 +7,27 @@ using System.Net;
 using System.Text;
 using System.Web.Mvc;
 using Sitecore.Pathfinder.Emitting;
-using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Tasks
 {
     [Export(nameof(InstallProject), typeof(IWebsiteTask))]
     public class InstallProject : WebsiteTaskBase
     {
-        public InstallProject() : base("server:install-project")
+        [ImportingConstructor]
+        public InstallProject([NotNull] IEmitterService emitter) : base("server:install-project")
         {
+            Emitter = emitter;
         }
+
+        [NotNull]
+        protected IEmitterService Emitter { get; }
 
         public override void Run(IWebsiteTaskContext context)
         {
             var output = new StringWriter();
             Console.SetOut(output);
 
-            var emitter = context.CompositionService.Resolve<IEmitterService>();
-            emitter.Start();
+            Emitter.Start();
 
             var response = output.ToString();
             if (!string.IsNullOrEmpty(response))

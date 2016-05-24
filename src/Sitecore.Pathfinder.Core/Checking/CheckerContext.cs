@@ -6,6 +6,7 @@ using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Checking
@@ -14,10 +15,11 @@ namespace Sitecore.Pathfinder.Checking
     public class CheckerContext : ICheckerContext
     {
         [ImportingConstructor]
-        public CheckerContext([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] IFactoryService factory)
+        public CheckerContext([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] IFileSystemService fileSystem, [NotNull] IFactoryService factory)
         {
             Configuration = configuration;
             Console = console;
+            FileSystem = fileSystem;
             Factory = factory;
 
             Culture = configuration.GetCulture();
@@ -27,6 +29,8 @@ namespace Sitecore.Pathfinder.Checking
         public int CheckCount { get; set; }
 
         public CultureInfo Culture { get; }
+
+        public IFileSystemService FileSystem { get; }
 
         public bool IsAborted { get; set; }
 

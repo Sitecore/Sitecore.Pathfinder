@@ -1,6 +1,5 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
 using Microsoft.Framework.ConfigurationModel;
@@ -10,14 +9,12 @@ using Sitecore.Pathfinder.Tasks;
 
 namespace Sitecore.Pathfinder
 {
-    public class AppService : IAppService
+    public class HostService : IHostService
     {
-        public AppService([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] string toolsDirectory, [NotNull] string projectDirectory, [CanBeNull] Stopwatch stopwatch)
+        public HostService([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [CanBeNull] Stopwatch stopwatch)
         {
             Configuration = configuration;
             CompositionService = compositionService;
-            ToolsDirectory = toolsDirectory;
-            ProjectDirectory = projectDirectory;
             Stopwatch = stopwatch;
         }
 
@@ -25,15 +22,11 @@ namespace Sitecore.Pathfinder
 
         public IConfiguration Configuration { get; }
 
-        public string ProjectDirectory { get; }
-
         public Stopwatch Stopwatch { get; }
-
-        public string ToolsDirectory { get; }
 
         public T GetTaskRunner<T>() where T : ITaskRunner
         {
-            return (T)CompositionService.Resolve<T>().With(this);
+            return CompositionService.Resolve<T>();
         }
     }
 }

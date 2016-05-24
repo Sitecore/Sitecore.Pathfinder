@@ -1,20 +1,33 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System.ComponentModel.Composition;
 using System.IO;
 using System.IO.Compression;
+using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
     public class SynchronizeWebsite : WebBuildTaskBase
     {
-        public SynchronizeWebsite() : base("sync-website")
+        [ImportingConstructor]
+        public SynchronizeWebsite([NotNull] IFileSystemService fileSystem) : base("sync-website")
         {
+            FileSystem = fileSystem;
         }
+
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
 
         public override void Run(IBuildContext context)
         {
             context.Trace.TraceInformation(Msg.S1000, Texts.SynchronizingWebsite);
+
+            if (!IsProjectConfigured(context))
+            {
+                return;
+            }
 
             var webRequest = GetWebRequest(context).AsTask("SynchronizeWebsite");
 
@@ -33,15 +46,15 @@ namespace Sitecore.Pathfinder.Tasks
                 {
                     context.Trace.TraceInformation(Msg.S1002, entry.FullName);
 
-                    var destinationFileName = Path.Combine(context.ProjectDirectory, entry.FullName);
+                    var destinationFileName = Path.Combine(context.Project.ProjectDirectory, entry.FullName);
 
-                    context.FileSystem.CreateDirectoryFromFileName(destinationFileName);
+                    FileSystem.CreateDirectoryFromFileName(destinationFileName);
 
                     entry.ExtractToFile(destinationFileName, true);
                 }
             }
 
-            context.FileSystem.DeleteFile(targetFileName);
+            FileSystem.DeleteFile(targetFileName);
         }
     }
 }

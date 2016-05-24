@@ -180,7 +180,7 @@ namespace Sitecore.Pathfinder.Diagnostics
 
             var fileInfo = !string.IsNullOrEmpty(fileName) ? fileName : "scc.cmd";
 
-            var projectDirectory = Configuration.GetString(Constants.Configuration.ProjectDirectory);
+            var projectDirectory = Configuration.GetProjectDirectory();
             if (!string.IsNullOrEmpty(projectDirectory))
             {
                 if (fileInfo.StartsWith(projectDirectory, StringComparison.OrdinalIgnoreCase))

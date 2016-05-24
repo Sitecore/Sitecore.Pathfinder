@@ -15,7 +15,6 @@ using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
-using Sitecore.Pathfinder.Tasks;
 using Sitecore.Pathfinder.Tasks.Building;
 using T4;
 
@@ -40,10 +39,10 @@ namespace Sitecore.Pathfinder.T4.CodeGeneration
             host.Refs.Add(typeof(Constants).Assembly.Location); // Sitecore.Pathfinder.Core
             host.Refs.Add(typeof(Host).Assembly.Location); // Sitecore.Pathfinder.T4
 
-            host.Refs.AddRange(context.Configuration.GetString(Constants.Configuration.GenerateCodeRefs).Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(r => r.Trim()));
-            host.Imports.AddRange(context.Configuration.GetString(Constants.Configuration.GenerateCodeImports).Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(r => r.Trim()));
-            host.IncludePaths.AddRange(context.Configuration.GetString(Constants.Configuration.GenerateCodeIncludePaths).Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(r => r.Trim()));
-            host.ReferencePaths.AddRange(context.Configuration.GetString(Constants.Configuration.GenerateCodeReferencePaths).Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(r => r.Trim()));
+            host.Refs.AddRange(context.Configuration.GetString(Constants.Configuration.GenerateCode.Refs).Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(r => r.Trim()));
+            host.Imports.AddRange(context.Configuration.GetString(Constants.Configuration.GenerateCode.Imports).Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(r => r.Trim()));
+            host.IncludePaths.AddRange(context.Configuration.GetString(Constants.Configuration.GenerateCode.IncludePaths).Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(r => r.Trim()));
+            host.ReferencePaths.AddRange(context.Configuration.GetString(Constants.Configuration.GenerateCode.ReferencePaths).Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(r => r.Trim()));
 
             return host;
         }
@@ -57,7 +56,7 @@ namespace Sitecore.Pathfinder.T4.CodeGeneration
         {
             foreach (CompilerError error in host.Errors)
             {
-                context.Trace.TraceError(Msg.G1006, error.ErrorText, PathHelper.UnmapPath(context.ProjectDirectory, fileName), new TextSpan(error.Line, error.Column, 0));
+                context.Trace.TraceError(Msg.G1006, error.ErrorText, PathHelper.UnmapPath(context.Project.ProjectDirectory, fileName), new TextSpan(error.Line, error.Column, 0));
             }
         }
     }

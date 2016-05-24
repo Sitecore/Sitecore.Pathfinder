@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -66,20 +66,17 @@ namespace Sitecore.Pathfinder.Projects
         public long Ducats { get; set; }
 
         [NotNull]
-        protected IProjectIndexer Indexer { get; }
-
-        [NotNull]
         public IFactoryService Factory { get; }
 
         public IEnumerable<File> Files => ProjectItems.OfType<File>();
-
-        public IFileSystemService FileSystem { get; }
 
         public bool HasErrors => Diagnostics.Any(d => d.Severity == Severity.Error);
 
         public IEnumerable<Item> Items => ProjectItems.OfType<Item>().Where(i => !i.IsImport);
 
         public ProjectOptions Options { get; private set; }
+
+        public string ProjectDirectory => Options.ProjectDirectory;
 
         public IEnumerable<IProjectItem> ProjectItems => _projectItems;
 
@@ -96,6 +93,12 @@ namespace Sitecore.Pathfinder.Projects
         protected IConfiguration Configuration { get; }
 
         [NotNull]
+        protected IFileSystemService FileSystem { get; }
+
+        [NotNull]
+        protected IProjectIndexer Indexer { get; }
+
+        [NotNull]
         protected IParseService ParseService { get; }
 
         [NotNull]
@@ -103,7 +106,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual IProject Add(string absoluteFileName)
         {
-            if (string.IsNullOrEmpty(Options.ProjectDirectory))
+            if (string.IsNullOrEmpty(ProjectDirectory))
             {
                 throw new InvalidOperationException(Texts.Project_has_not_been_loaded__Call_Load___first);
             }
@@ -113,7 +116,7 @@ namespace Sitecore.Pathfinder.Projects
                 Remove(absoluteFileName);
             }
 
-            var sourceFile = Factory.SourceFile(FileSystem, Options.ProjectDirectory, absoluteFileName);
+            var sourceFile = Factory.SourceFile(FileSystem, ProjectDirectory, absoluteFileName);
             SourceFiles.Add(sourceFile);
 
             try
@@ -174,6 +177,17 @@ namespace Sitecore.Pathfinder.Projects
             return this;
         }
 
+        public IEnumerable<T> FindFiles<T>(string fileName) where T : File
+        {
+            var relativeFileName = PathHelper.NormalizeFilePath(fileName);
+            if (relativeFileName.StartsWith("~\\"))
+            {
+                relativeFileName = relativeFileName.Mid(2);
+            }
+
+            return ProjectItems.OfType<T>().Where(f => string.Equals(f.FilePath, fileName, StringComparison.OrdinalIgnoreCase) || f.Snapshots.Any(s => string.Equals(s.SourceFile.RelativeFileName, relativeFileName, StringComparison.OrdinalIgnoreCase)));
+        }
+
         public T FindQualifiedItem<T>(string qualifiedName) where T : class, IProjectItem
         {
             if (!qualifiedName.StartsWith("{") || !qualifiedName.EndsWith("}"))
@@ -213,17 +227,6 @@ namespace Sitecore.Pathfinder.Projects
             return Indexer.GetByUri<T>(uri);
         }
 
-        public IEnumerable<T> FindFiles<T>(string fileName) where T : File
-        {
-            var relativeFileName = PathHelper.NormalizeFilePath(fileName);
-            if (relativeFileName.StartsWith("~\\"))
-            {
-                relativeFileName = relativeFileName.Mid(2);
-            }
-
-            return ProjectItems.OfType<T>().Where(f => string.Equals(f.FilePath, fileName, StringComparison.OrdinalIgnoreCase) || f.Snapshots.Any(s => string.Equals(s.SourceFile.RelativeFileName, relativeFileName, StringComparison.OrdinalIgnoreCase)));
-        }
-
         public Database GetDatabase(string databaseName)
         {
             var key = databaseName.ToLowerInvariant();
@@ -250,25 +253,6 @@ namespace Sitecore.Pathfinder.Projects
             return Templates.Where(t => string.Equals(t.DatabaseName, databaseName, StringComparison.OrdinalIgnoreCase));
         }
 
-        public virtual IProject With(ProjectOptions projectOptions, IEnumerable<string> sourceFileNames)
-        {
-            Options = projectOptions;
-
-            var context = CompositionService.Resolve<IParseContext>().With(this, Snapshot.Empty, PathMappingContext.Empty);
-
-            var projectImportService = CompositionService.Resolve<ProjectImportsService>();
-            projectImportService.Import(this, context);
-
-            foreach (var sourceFileName in sourceFileNames)
-            {
-                Add(sourceFileName);
-            }
-
-            Compile();
-
-            return this;
-        }
-
         public event ProjectChangedEventHandler ProjectChanged;
 
         public virtual void Remove(IProjectItem projectItem)
@@ -288,7 +272,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual void Remove(string sourceFileName)
         {
-            if (string.IsNullOrEmpty(Options.ProjectDirectory))
+            if (string.IsNullOrEmpty(ProjectDirectory))
             {
                 throw new InvalidOperationException(Texts.Project_has_not_been_loaded__Call_Load___first);
             }
@@ -330,6 +314,25 @@ namespace Sitecore.Pathfinder.Projects
                     snapshot.SaveChanges();
                 }
             }
+
+            return this;
+        }
+
+        public virtual IProject With(ProjectOptions projectOptions, IEnumerable<string> sourceFileNames)
+        {
+            Options = projectOptions;
+
+            var context = CompositionService.Resolve<IParseContext>().With(this, Snapshot.Empty, PathMappingContext.Empty);
+
+            var projectImportService = CompositionService.Resolve<ProjectImportsService>();
+            projectImportService.Import(this, context);
+
+            foreach (var sourceFileName in sourceFileNames)
+            {
+                Add(sourceFileName);
+            }
+
+            Compile();
 
             return this;
         }

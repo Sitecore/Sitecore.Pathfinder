@@ -106,7 +106,7 @@ namespace Sitecore.Pathfinder.Snapshots
                 ["FileNameWithoutExtensions"] = fileNameWithoutExtensions,
                 ["FileName"] = fileName,
                 ["DirectoryName"] = directoryName,
-                ["ProjectDirectory"] = project.Options.ProjectDirectory
+                ["ProjectDirectory"] = project.ProjectDirectory
             };
 
             tokens.AddRange(project.Options.Tokens);

@@ -15,8 +15,13 @@ namespace Sitecore.Pathfinder.Tasks
     [Export(nameof(ResetWebsite), typeof(IWebsiteTask))]
     public class ResetWebsite : WebsiteTaskBase
     {
-        public ResetWebsite() : base("server:reset-website")
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
+
+        [ImportingConstructor]
+        public ResetWebsite([NotNull] IFileSystemService fileSystem) : base("server:reset-website")
         {
+            FileSystem = fileSystem;
         }
 
         [Diagnostics.NotNull, Import]
@@ -31,7 +36,7 @@ namespace Sitecore.Pathfinder.Tasks
 
             foreach (var mapper in PathMapper.WebsiteDirectoryToProjectDirectories)
             {
-                DeleteFiles(context.App.ProjectDirectory, mapper);
+                DeleteFiles(context.Configuration.GetProjectDirectory(), mapper);
             }
 
             foreach (var pair in context.Configuration.GetSubKeys("reset-website"))
@@ -39,7 +44,7 @@ namespace Sitecore.Pathfinder.Tasks
                 var key = "reset-website:" + pair.Key;
 
                 ResetItems(context.Configuration, key);
-                ResetFiles(context.Configuration, context.FileSystem, key);
+                ResetFiles(context.Configuration, key);
             }
         }
 
@@ -52,25 +57,25 @@ namespace Sitecore.Pathfinder.Tasks
         {
             var websiteDirectoryOrFileName = '\\' + PathHelper.UnmapPath(websiteDirectory, directoryOrFileName);
 
-            if (Directory.Exists(directoryOrFileName))
+            if (FileSystem.DirectoryExists(directoryOrFileName))
             {
                 string projectFileName;
                 if (mapper.TryGetProjectFileName(websiteDirectoryOrFileName, out projectFileName))
                 {
-                    Directory.Delete(directoryOrFileName, true);
+                    FileSystem.DeleteDirectory(directoryOrFileName);
                 }
             }
 
-            if (File.Exists(directoryOrFileName))
+            if (FileSystem.FileExists(directoryOrFileName))
             {
                 string projectFileName;
                 if (mapper.TryGetProjectFileName(websiteDirectoryOrFileName, out projectFileName))
                 {
-                    File.Delete(directoryOrFileName);
+                    FileSystem.DeleteFile(directoryOrFileName);
                 }
             }
 
-            if (!Directory.Exists(directoryOrFileName))
+            if (!FileSystem.DirectoryExists(directoryOrFileName))
             {
                 return;
             }
@@ -85,77 +90,6 @@ namespace Sitecore.Pathfinder.Tasks
                 DeleteFiles(mapper, websiteDirectory, directory);
             }
         }
-
-        /*
-        protected virtual void DeleteFiles([Diagnostics.NotNull] IConfiguration configuration, [Diagnostics.NotNull] string area, [Diagnostics.NotNull] string baseDirectory)
-        {
-            foreach (var pair in configuration.GetSubKeys("reset-website:" + area))
-            {
-                var key = "reset-website:" + area + ":" + pair.Key;
-
-                var path = configuration.GetString(key + ":path");
-                var include = configuration.GetString(key + ":include");
-                var exclude = configuration.GetString(key + ":exclude");
-
-                path = PathHelper.NormalizeFilePath(Path.Combine(baseDirectory, PathHelper.NormalizeFilePath(path).TrimStart('\\'))).TrimEnd('\\');
-
-                if (File.Exists(path))
-                {
-                    FileUtil.Delete(path);
-                    continue;
-                }
-
-                if (Directory.Exists(path) && string.IsNullOrEmpty(include) && string.IsNullOrEmpty(exclude))
-                {
-                    FileUtil.DeleteDirectory(path, true);
-                    continue;
-                }
-
-                if (!Directory.Exists(path))
-                {
-                    continue;
-                }
-
-                include = path + "\\" + PathHelper.NormalizeFilePath(include).TrimStart('\\');
-                exclude = path + "\\" + PathHelper.NormalizeFilePath(exclude).TrimStart('\\');
-
-                var matcher = new PathMatcher(include, exclude);
-
-                foreach (var fileName in Directory.GetFiles(path, "*", SearchOption.AllDirectories))
-                {
-                    if (!matcher.IsMatch(fileName))
-                    {
-                        continue;
-                    }
-
-                    try
-                    {
-                        File.Delete(fileName);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-                }
-            }
-        }
-
-        protected virtual void DeleteItems([Diagnostics.NotNull] IConfiguration configuration, [Diagnostics.NotNull] string databaseName)
-        {
-            var database = Factory.GetDatabase(databaseName);
-
-            foreach (var pair in configuration.GetSubKeys("reset-website:" + databaseName))
-            {
-                var queryText = configuration.GetString("reset-website:" + databaseName + ":" + pair.Key + ":query");
-
-                foreach (var item in database.Query(queryText))
-                {
-                    item.Recycle();
-                }
-            }
-        }
-
-        */
 
         protected virtual void DeleteItems([Diagnostics.NotNull] IItemPathToProjectFileNameMapper mapper)
         {
@@ -185,7 +119,7 @@ namespace Sitecore.Pathfinder.Tasks
             }
         }
 
-        private void ResetFiles([Diagnostics.NotNull] IConfiguration configuration, [Diagnostics.NotNull] IFileSystemService fileSystem, [Diagnostics.NotNull] string key)
+        private void ResetFiles([Diagnostics.NotNull] IConfiguration configuration, [Diagnostics.NotNull] string key)
         {
             var filePath = configuration.GetString(key + ":delete-file-name");
             if (string.IsNullOrEmpty(filePath))
@@ -195,14 +129,14 @@ namespace Sitecore.Pathfinder.Tasks
 
             var fileName = FileUtil.MapPath(PathHelper.NormalizeItemPath(filePath).Trim('/'));
 
-            if (fileSystem.FileExists(fileName))
+            if (FileSystem.FileExists(fileName))
             {
-                fileSystem.DeleteFile(fileName);
+                FileSystem.DeleteFile(fileName);
             }
 
-            if (fileSystem.DirectoryExists(fileName))
+            if (FileSystem.DirectoryExists(fileName))
             {
-                fileSystem.DeleteDirectory(fileName);
+                FileSystem.DeleteDirectory(fileName);
             }
         }
 

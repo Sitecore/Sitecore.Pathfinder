@@ -20,8 +20,6 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
-            context.DisplayDoneMessage = false;
-
             var json = context.Configuration.ToJson();
 
             Console.WriteLine(json);

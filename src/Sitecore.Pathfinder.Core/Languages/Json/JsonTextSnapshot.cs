@@ -1,13 +1,13 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Json
@@ -19,11 +19,15 @@ namespace Sitecore.Pathfinder.Languages.Json
         private ITextNode _root;
 
         [ImportingConstructor]
-        public JsonTextSnapshot([NotNull] ISnapshotService snapshotService) : base(snapshotService)
+        public JsonTextSnapshot([NotNull] IFileSystemService fileSystem, [NotNull] ISnapshotService snapshotService) : base(snapshotService)
         {
+            FileSystem = fileSystem;
         }
 
         public override ITextNode Root => _root ?? (_root = RootToken != null ? ParseDirectives(ParseContext, Parse()) : TextNode.Empty);
+
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
 
         [NotNull]
         protected SnapshotParseContext ParseContext { get; private set; }
@@ -38,7 +42,7 @@ namespace Sitecore.Pathfinder.Languages.Json
                 return;
             }
 
-            using (var stream = new StreamWriter(SourceFile.AbsoluteFileName))
+            using (var stream = FileSystem.OpenStreamWriter(SourceFile.AbsoluteFileName))
             {
                 using (var writer = new JsonTextWriter(stream))
                 {
@@ -111,7 +115,7 @@ namespace Sitecore.Pathfinder.Languages.Json
         }
 
         [NotNull]
-        protected virtual ITextNode Parse([NotNull] string name, [NotNull, ItemNotNull]  JObject jobject, [CanBeNull] JsonTextNode parent)
+        protected virtual ITextNode Parse([NotNull] string name, [NotNull, ItemNotNull] JObject jobject, [CanBeNull] JsonTextNode parent)
         {
             var textNodes = parent?.ChildNodes as ICollection<ITextNode>;
 

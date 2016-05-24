@@ -62,7 +62,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
                 return text;
             }
 
-            var transformDirectory = Path.Combine(snapshotParseContext.Project.Options.ProjectDirectory, "sitecore.project\\transforms");
+            var transformDirectory = Path.Combine(snapshotParseContext.Project.ProjectDirectory, "sitecore.project\\transforms");
             if (!FileSystem.DirectoryExists(transformDirectory))
             {
                 return text;
@@ -85,7 +85,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
             var xmlReader = new XmlTextReader(new StringReader(text));
             var xpathDocument = new XPathDocument(xmlReader);
 
-            using (var streamReader = new StreamReader(xsltFileName))
+            using (var streamReader = FileSystem.OpenStreamReader(xsltFileName))
             {
                 var xsltReader = new XmlTextReader(streamReader);
 

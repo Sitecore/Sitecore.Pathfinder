@@ -17,12 +17,15 @@ namespace Sitecore.Pathfinder.Tasks
     public class BeforeBuild : BuildTaskBase
     {
         [ImportingConstructor]
-        public BeforeBuild([NotNull] IPipelineService pipelineService, [ImportMany, NotNull, ItemNotNull] IEnumerable<IExtension> extensions) : base("before-build")
+        public BeforeBuild([NotNull] IFileSystemService fileSystem, [NotNull] IPipelineService pipelineService, [ImportMany, NotNull, ItemNotNull] IEnumerable<IExtension> extensions) : base("before-build")
         {
+            FileSystem = fileSystem;
             PipelineService = pipelineService;
             Extensions = extensions;
-            CanRunWithoutConfig = true;
         }
+
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
 
         [NotNull, ItemNotNull]
         protected IEnumerable<IExtension> Extensions { get; }
@@ -32,8 +35,8 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
-            var projectDirectory = context.ProjectDirectory;
-            if (!context.FileSystem.DirectoryExists(projectDirectory))
+            var projectDirectory = context.Project.ProjectDirectory;
+            if (!FileSystem.DirectoryExists(projectDirectory))
             {
                 return;
             }
@@ -47,7 +50,7 @@ namespace Sitecore.Pathfinder.Tasks
             }
 
             var configFileName = PathHelper.Combine(projectDirectory, context.Configuration.GetString(Constants.Configuration.ProjectConfigFileName));
-            if (!context.FileSystem.FileExists(configFileName))
+            if (!FileSystem.FileExists(configFileName))
             {
                 return;
             }
@@ -100,9 +103,9 @@ namespace Sitecore.Pathfinder.Tasks
             var sourceDirectory = Path.Combine(context.ToolsDirectory, "files\\website");
 
             var coreServerAssemblyFileName = Path.Combine(context.WebsiteDirectory, "bin\\Sitecore.Pathfinder.Core.dll");
-            if (!context.FileSystem.FileExists(coreServerAssemblyFileName))
+            if (!FileSystem.FileExists(coreServerAssemblyFileName))
             {
-                context.FileSystem.XCopy(sourceDirectory, context.WebsiteDirectory);
+                FileSystem.XCopy(sourceDirectory, context.WebsiteDirectory);
                 updated = true;
             }
             else
@@ -116,6 +119,7 @@ namespace Sitecore.Pathfinder.Tasks
             updated |= UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Interfaces.dll");
             updated |= UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Json.dll");
             updated |= UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Xml.dll");
+            updated |= UpdateWebsiteAssembly(context, "ZetaLongPaths.dll");
 
             updated |= UpdateExtensions(context);
 
@@ -130,17 +134,17 @@ namespace Sitecore.Pathfinder.Tasks
             var sourceFileName = Path.Combine(context.ToolsDirectory, fileName);
             var targetFileName = Path.Combine(context.WebsiteDirectory + "\\bin", fileName);
 
-            return context.FileSystem.CopyIfNewer(sourceFileName, targetFileName);
+            return FileSystem.CopyIfNewer(sourceFileName, targetFileName);
         }
 
         protected virtual bool UpdateWebsiteFiles([NotNull] IBuildContext context, [NotNull] string sourceDirectory, [NotNull] string websiteDirectory)
         {
             var updated = false;
 
-            foreach (var sourceFileName in context.FileSystem.GetFiles(sourceDirectory, SearchOption.AllDirectories))
+            foreach (var sourceFileName in FileSystem.GetFiles(sourceDirectory, SearchOption.AllDirectories))
             {
                 var targetFileName = PathHelper.RemapDirectory(sourceFileName, sourceDirectory, websiteDirectory);
-                updated |= context.FileSystem.CopyIfNewer(sourceFileName, targetFileName);
+                updated |= FileSystem.CopyIfNewer(sourceFileName, targetFileName);
             }
 
             return updated;

@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Packaging.WebsitePackages
 {

@@ -99,6 +99,8 @@
     },
 
     "check-project": {
+        "stop-on-errors": true,
+
         // list of enabled and disabled checkers
         "checkers": {
             // "TemplateHelp": "disabled"
@@ -132,7 +134,9 @@
             "{12}": "equals",
             "{0,2}": "equals",
             "{1,2}": "equals"
-        } 
+        },
+
+        "treat-warnings-as-errors": false
     },
 
     "copy-dependencies": {

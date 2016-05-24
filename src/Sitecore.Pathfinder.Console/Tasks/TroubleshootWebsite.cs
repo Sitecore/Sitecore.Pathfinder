@@ -14,6 +14,11 @@ namespace Sitecore.Pathfinder.Tasks
         {
             context.Trace.TraceInformation(Msg.G1010, Texts.Troubleshooting___);
 
+            if (!IsProjectConfigured(context))
+            {
+                return;
+            }
+
             var webRequest = GetWebRequest(context).AsTask("TroubleshootWebsite");
 
             Post(context, webRequest);

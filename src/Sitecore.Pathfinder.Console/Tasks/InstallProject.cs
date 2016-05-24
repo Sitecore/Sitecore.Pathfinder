@@ -13,14 +13,12 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
-            if (context.Project.HasErrors)
+            context.Trace.TraceInformation(Msg.D1011, Texts.Installing_project___);
+
+            if (!IsProjectConfigured(context))
             {
-                context.Trace.TraceInformation(Msg.D1010, Texts.Package_contains_errors_and_will_not_be_deployed);
-                context.IsAborted = true;
                 return;
             }
-
-            context.Trace.TraceInformation(Msg.D1011, Texts.Installing_project___);
 
             var webRequest = GetWebRequest(context).AsTask("InstallProject");
 

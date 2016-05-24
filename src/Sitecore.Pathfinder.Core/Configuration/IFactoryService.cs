@@ -73,12 +73,6 @@ namespace Sitecore.Pathfinder.Configuration
         MediaFile MediaFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemPath, [NotNull] string filePath);
 
         [NotNull]
-        IParseContext ParseContext([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] PathMappingContext pathMappingContext);
-
-        [NotNull]
-        IProject Project([NotNull] ProjectOptions projectOptions, [NotNull, ItemNotNull] List<string> sourceFileNames);
-
-        [NotNull]
         ProjectOptions ProjectOptions([NotNull] string projectDirectory, [NotNull] string databaseName);
 
         [NotNull]

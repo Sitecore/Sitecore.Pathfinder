@@ -42,7 +42,7 @@ namespace Sitecore.Pathfinder.Rules.Conditions.FileSystemConditions
                 throw new ArgumentException("File name must start with '~/'");
             }
 
-            var projectDirectory = Configuration.GetString(Constants.Configuration.ProjectDirectory);
+            var projectDirectory = Configuration.GetProjectDirectory();
             fileName = Path.Combine(projectDirectory, PathHelper.NormalizeFilePath(fileName.Mid(2)));
 
             return FileSystem.FileExists(fileName);

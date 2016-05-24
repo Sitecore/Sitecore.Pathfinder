@@ -1,12 +1,15 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System.ComponentModel.Composition;
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Extensibility
 {
+    [InheritedExport(typeof(IExtension))]
     public abstract class ExtensionBase : IExtension
     {
         public abstract void RemoveWebsiteFiles(IBuildContext context);
@@ -15,8 +18,8 @@ namespace Sitecore.Pathfinder.Extensibility
 
         protected virtual bool CopyProjectFileToWebsiteBinDirectory([NotNull] IBuildContext context, [NotNull] string fileName)
         {
-            var projectDirectory = context.ProjectDirectory;
-            var websiteDirectory = context.WebsiteDirectory;
+            var projectDirectory = context.Project.ProjectDirectory;
+            var websiteDirectory = context.Configuration.GetWebsiteDirectory();
 
             var sourceFileName = PathHelper.Combine(projectDirectory, fileName);
             var targetFileName = PathHelper.Combine(PathHelper.Combine(websiteDirectory, "bin"), Path.GetFileName(fileName));

@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -34,6 +34,14 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             "VaryByQueryString",
             "VaryByUser"
         };
+
+        public LayoutCompiler([NotNull] IFileSystemService fileSystem)
+        {
+            FileSystem = fileSystem;
+        }
+
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
 
         [NotNull]
         public virtual string Compile([NotNull] LayoutCompileContext context, [NotNull] ITextNode textNode)
@@ -416,13 +424,13 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 return Enumerable.Empty<string>();
             }
 
-            var path = PathHelper.Combine(item.Project.Options.ProjectDirectory, pathField.Value.TrimStart('/'));
-            if (!context.Project.FileSystem.FileExists(path))
+            var path = PathHelper.Combine(item.Project.ProjectDirectory, pathField.Value.TrimStart('/'));
+            if (!FileSystem.FileExists(path))
             {
                 return Enumerable.Empty<string>();
             }
 
-            var source = context.Project.FileSystem.ReadAllText(path);
+            var source = FileSystem.ReadAllText(path);
 
             if (string.Compare(Path.GetExtension(path), ".ascx", StringComparison.CurrentCultureIgnoreCase) == 0 || string.Compare(Path.GetExtension(path), ".aspx", StringComparison.CurrentCultureIgnoreCase) == 0)
             {

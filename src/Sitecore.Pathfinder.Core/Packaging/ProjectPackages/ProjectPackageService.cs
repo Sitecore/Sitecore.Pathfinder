@@ -41,7 +41,7 @@ namespace Sitecore.Pathfinder.Packaging.ProjectPackages
                 var version = Configuration.GetString(Constants.Configuration.Dependencies + ":" + id);
 
                 // todo: add support for NPM packages
-                var directory = Path.Combine(projectDirectory, Configuration.GetString(Constants.Configuration.PackagesNugetDirectory) + "\\" + id + "." + version);
+                var directory = Path.Combine(projectDirectory, Configuration.GetString(Constants.Configuration.Packages.NugetDirectory) + "\\" + id + "." + version);
 
                 var project = Path.Combine(directory, "project");
                 yield return new ProjectPackageInfo(id, version, directory, project);

@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -15,14 +15,18 @@ namespace Sitecore.Pathfinder.Tasks
     public class GenerateCode : BuildTaskBase
     {
         [ImportingConstructor]
-        public GenerateCode([NotNull, ImportMany, ItemNotNull]   IEnumerable<IProjectCodeGenerator> projectCodeGenerators, [NotNull, ImportMany, ItemNotNull]   IEnumerable<IProjectItemCodeGenerator> projectItemCodeGenerators) : base("generate-code")
+        public GenerateCode([NotNull] IFileSystemService fileSystem, [NotNull, ImportMany, ItemNotNull] IEnumerable<IProjectCodeGenerator> projectCodeGenerators, [NotNull, ImportMany, ItemNotNull] IEnumerable<IProjectItemCodeGenerator> projectItemCodeGenerators) : base("generate-code")
         {
+            FileSystem = fileSystem;
             ProjectCodeGenerators = projectCodeGenerators;
             ProjectItemCodeGenerators = projectItemCodeGenerators;
         }
 
         [NotNull, ItemNotNull]
         public IEnumerable<IProjectCodeGenerator> ProjectCodeGenerators { get; }
+
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
 
         [NotNull, ItemNotNull]
         protected IEnumerable<IProjectItemCodeGenerator> ProjectItemCodeGenerators { get; }
@@ -53,11 +57,11 @@ namespace Sitecore.Pathfinder.Tasks
             var baseFileName = Path.GetDirectoryName(projectItem.Snapshots.First().SourceFile.AbsoluteFileName) ?? string.Empty;
             baseFileName = Path.Combine(baseFileName, projectItem.ShortName);
 
-            context.FileSystem.CreateDirectoryFromFileName(baseFileName);
+            FileSystem.CreateDirectoryFromFileName(baseFileName);
 
             projectItemCodeGenerator.Generate(baseFileName, projectItem);
 
-            context.Trace.TraceInformation(Msg.G1010, PathHelper.UnmapPath(context.ProjectDirectory, baseFileName));
+            context.Trace.TraceInformation(Msg.G1010, PathHelper.UnmapPath(context.Project.ProjectDirectory, baseFileName));
         }
     }
 }

@@ -11,6 +11,8 @@ namespace Sitecore.Pathfinder.Tasks.Building
         [NotNull]
         string DataFolderDirectory { get; }
 
+        bool IsProjectLoaded { get; }
+
         [NotNull, ItemNotNull]
         IList<IProjectItem> ModifiedProjectItems { get; }
 
@@ -19,9 +21,6 @@ namespace Sitecore.Pathfinder.Tasks.Building
 
         [NotNull]
         IProject Project { get; }
-
-        [NotNull]
-        string ProjectDirectory { get; }
 
         [NotNull]
         string ToolsDirectory { get; }

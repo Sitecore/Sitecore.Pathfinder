@@ -22,13 +22,11 @@ namespace Sitecore.Pathfinder.Tasks
                 var file = projectItem as File;
                 if (file != null)
                 {
-                    qualifiedName = "\\" + PathHelper.UnmapPath(context.ProjectDirectory, qualifiedName);
+                    qualifiedName = "\\" + PathHelper.UnmapPath(context.Project.ProjectDirectory, qualifiedName);
                 }
 
                 context.Trace.WriteLine($"{qualifiedName} ({projectItem.GetType().Name})");
             }
-
-            context.DisplayDoneMessage = false;
         }
     }
 }

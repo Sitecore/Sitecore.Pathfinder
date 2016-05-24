@@ -30,6 +30,11 @@ namespace Sitecore.Pathfinder.Configuration
             AddCommandLine(configurationSourceRoot, commandLineArgs);
         }
 
+        protected virtual bool FileExists([NotNull] string fileName)
+        {
+            return File.Exists(fileName);
+        }
+
         public virtual void AddCommandLine([NotNull] IConfigurationSourceRoot configurationSourceRoot, [NotNull][ItemNotNull] IEnumerable<string> commandLineArgs)
         {
             var args = new List<string>();
@@ -90,7 +95,7 @@ namespace Sitecore.Pathfinder.Configuration
 
             // add system config
             var systemConfigFileName = Path.Combine(toolsDirectory, configurationSourceRoot.GetString(Constants.Configuration.SystemConfigFileName));
-            if (!File.Exists(systemConfigFileName))
+            if (!FileExists(systemConfigFileName))
             {
                 throw new ConfigurationException(Texts.System_configuration_file_not_found, systemConfigFileName);
             }
@@ -101,7 +106,7 @@ namespace Sitecore.Pathfinder.Configuration
             if ((options & ConfigurationOptions.IncludeUserConfig) == ConfigurationOptions.IncludeUserConfig)
             {
                 var userConfigFileName = systemConfigFileName + ".user";
-                if (File.Exists(userConfigFileName))
+                if (FileExists(userConfigFileName))
                 {
                     configurationSourceRoot.AddFile(userConfigFileName, ".json");
                 }
@@ -138,15 +143,16 @@ namespace Sitecore.Pathfinder.Configuration
                 projectConfigFileName = PathHelper.Combine(projectDirectory, configurationProjectConfigFileName);
             }
 
-            if (!string.IsNullOrEmpty(projectConfigFileName) && File.Exists(projectConfigFileName))
+            if (!string.IsNullOrEmpty(projectConfigFileName) && FileExists(projectConfigFileName))
             {
                 configurationSourceRoot.AddFile(projectConfigFileName);
+                configurationSourceRoot.Set(Constants.Configuration.IsProjectConfigured, "True");
             }
             else if (Directory.GetFiles(projectDirectory).Any() || Directory.GetDirectories(projectDirectory).Any())
             {
                 // no config file, but project directory has files, so let's try the default project config file
                 projectConfigFileName = PathHelper.Combine(toolsDirectory, "files\\project.noconfig\\scconfig.json");
-                if (File.Exists(projectConfigFileName))
+                if (FileExists(projectConfigFileName))
                 {
                     configurationSourceRoot.AddFile(projectConfigFileName);
                 }
@@ -175,7 +181,7 @@ namespace Sitecore.Pathfinder.Configuration
                     }
 
                     // filename might be a json config file or the name of a class in an extension
-                    if (File.Exists(conventionsFileName))
+                    if (FileExists(conventionsFileName))
                     {
                         configurationSourceRoot.AddFile(conventionsFileName);
                     }
@@ -199,7 +205,7 @@ namespace Sitecore.Pathfinder.Configuration
             // add machine level config file - scconfig.[machine name].json
             if ((options & ConfigurationOptions.IncludeMachineConfig) == ConfigurationOptions.IncludeMachineConfig)
             {
-                if (File.Exists(machineConfigFileName))
+                if (FileExists(machineConfigFileName))
                 {
                     configurationSourceRoot.AddFile(machineConfigFileName);
                 }
@@ -209,7 +215,7 @@ namespace Sitecore.Pathfinder.Configuration
             if ((options & ConfigurationOptions.IncludeUserConfig) == ConfigurationOptions.IncludeUserConfig)
             {
                 var userConfigFileName = projectConfigFileName + ".user";
-                if (File.Exists(userConfigFileName))
+                if (FileExists(userConfigFileName))
                 {
                     configurationSourceRoot.AddFile(userConfigFileName, ".json");
                 }
@@ -223,9 +229,10 @@ namespace Sitecore.Pathfinder.Configuration
                 if (!string.IsNullOrEmpty(configName))
                 {
                     var configFileName = PathHelper.Combine(projectDirectory, configName);
-                    if (File.Exists(configFileName))
+                    if (FileExists(configFileName))
                     {
                         configurationSourceRoot.AddFile(configFileName);
+                        configurationSourceRoot.Set(Constants.Configuration.IsProjectConfigured, "True");
                     }
                     else
                     {

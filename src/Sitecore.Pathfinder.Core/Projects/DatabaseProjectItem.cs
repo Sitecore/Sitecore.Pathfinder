@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects
@@ -74,7 +75,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public ICollection<ITextNode> SourceTextNodes { get; } = new List<ITextNode>();
 
-        public override void Rename(string newShortName)
+        public override void Rename(IFileSystemService fileSystem, string newShortName)
         {
             var n = ItemIdOrPath.LastIndexOf('/');
             var itemIdOrPath = (n >= 0 ? ItemIdOrPath.Left(n + 1) : string.Empty) + newShortName;

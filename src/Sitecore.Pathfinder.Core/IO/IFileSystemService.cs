@@ -1,9 +1,10 @@
-﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Xml.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.IO
@@ -46,22 +47,37 @@ namespace Sitecore.Pathfinder.IO
 
         void Mirror([NotNull] string sourceDirectory, [NotNull] string destinationDirectory);
 
+        [NotNull]
+        Stream OpenRead([NotNull] string fileName);
+
+        [NotNull]
+        StreamReader OpenStreamReader([NotNull] string fileName);
+
+        [NotNull]
+        StreamWriter OpenStreamWriter([NotNull] string fileName);
+
+        [NotNull]
+        Stream OpenWrite([NotNull] string fileName);
+
         [NotNull, ItemNotNull]
         string[] ReadAllLines([NotNull] string fileName);
 
         [NotNull]
         string ReadAllText([NotNull] string fileName);
 
+        [NotNull]
+        XDocument ReadXml([NotNull] string fileName, LoadOptions loadOptions = LoadOptions.None);
+
         void Rename([NotNull] string oldFileName, [NotNull] string newFileName);
 
         void Unzip([NotNull] string zipFileName, [NotNull] string destinationDirectory);
+
+        void WriteAllBytes([NotNull] string fileName, [NotNull] byte[] bytes);
 
         void WriteAllText([NotNull] string fileName, [NotNull] string contents);
 
         void WriteAllText([NotNull] string fileName, [NotNull] string contents, [NotNull] Encoding encoding);
 
         void XCopy([NotNull] string sourceDirectory, [NotNull] string destinationDirectory);
-
-        void WriteAllBytes([NotNull] string fileName, [NotNull] byte[] bytes);
     }
 }

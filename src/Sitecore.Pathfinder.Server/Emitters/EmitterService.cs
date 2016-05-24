@@ -166,8 +166,9 @@ namespace Sitecore.Pathfinder.Emitters
         protected virtual void Emit([NotNull] IProject project)
         {
             var context = CompositionService.Resolve<IEmitContext>().With(project);
+            var treatWarningsAsErrors = context.Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
 
-            TraceProjectDiagnostics(context);
+            context.Trace.TraceDiagnostics(context.Project.Diagnostics, treatWarningsAsErrors);
 
             var emitters = Emitters.OrderBy(e => e.Sortorder).ToList();
             var retries = new List<Tuple<IProjectItem, Exception>>();
@@ -256,25 +257,6 @@ namespace Sitecore.Pathfinder.Emitters
                 else
                 {
                     Trace.TraceError(Msg.E1003, Texts.An_error_occured, projectItem.Snapshots.First().SourceFile.AbsoluteFileName, TextSpan.Empty);
-                }
-            }
-        }
-
-        protected virtual void TraceProjectDiagnostics([NotNull] IEmitContext context)
-        {
-            foreach (var diagnostic in context.Project.Diagnostics)
-            {
-                switch (diagnostic.Severity)
-                {
-                    case Severity.Error:
-                        context.Trace.TraceError(diagnostic.Msg, diagnostic.Text, diagnostic.FileName, diagnostic.Span);
-                        break;
-                    case Severity.Warning:
-                        context.Trace.TraceWarning(diagnostic.Msg, diagnostic.Text, diagnostic.FileName, diagnostic.Span);
-                        break;
-                    default:
-                        context.Trace.TraceInformation(diagnostic.Msg, diagnostic.Text, diagnostic.FileName, diagnostic.Span);
-                        break;
                 }
             }
         }

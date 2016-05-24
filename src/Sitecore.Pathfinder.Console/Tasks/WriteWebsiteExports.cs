@@ -1,22 +1,33 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System.ComponentModel.Composition;
 using System.IO;
 using System.IO.Compression;
+using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-
     public class WriteWebsiteExports : WebBuildTaskBase
     {
-        public WriteWebsiteExports() : base("write-website-exports")
+        [ImportingConstructor]
+        public WriteWebsiteExports([NotNull] IFileSystemService fileSystem) : base("write-website-exports")
         {
+            FileSystem = fileSystem;
         }
+
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
 
         public override void Run(IBuildContext context)
         {
-            context.IsAborted = true;
             context.Trace.TraceInformation(Msg.M1012, Texts.Writing_website_exports___);
+
+            if (!IsProjectConfigured(context))
+            {
+                return;
+            }
 
             var webRequest = GetWebRequest(context).AsTask("WriteWebsiteExports");
 
@@ -33,14 +44,14 @@ namespace Sitecore.Pathfinder.Tasks
                 {
                     context.Trace.TraceInformation(Msg.M1013, entry.FullName);
 
-                    var fileName = Path.Combine(context.ProjectDirectory, entry.FullName);
-                    context.FileSystem.CreateDirectory(Path.GetDirectoryName(fileName) ?? string.Empty);
+                    var fileName = Path.Combine(context.Project.ProjectDirectory, entry.FullName);
+                    FileSystem.CreateDirectory(Path.GetDirectoryName(fileName) ?? string.Empty);
 
                     entry.ExtractToFile(fileName, true);
                 }
-            }                                                       
+            }
 
-            context.FileSystem.DeleteFile(targetFileName);
+            FileSystem.DeleteFile(targetFileName);
         }
     }
 }

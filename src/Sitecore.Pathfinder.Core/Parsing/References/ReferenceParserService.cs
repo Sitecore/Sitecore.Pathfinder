@@ -40,9 +40,9 @@ namespace Sitecore.Pathfinder.Parsing.References
         public virtual bool IsIgnoredReference(string referenceText)
         {
             // todo: cache this
-            foreach (var pair in Configuration.GetSubKeys(Constants.Configuration.CheckProjectIgnoredReferences))
+            foreach (var pair in Configuration.GetSubKeys(Constants.Configuration.CheckProject.IgnoredReferences))
             {
-                var op = Configuration.Get(Constants.Configuration.CheckProjectIgnoredReferences + ":" + pair.Key);
+                var op = Configuration.Get(Constants.Configuration.CheckProject.IgnoredReferences + ":" + pair.Key);
                 switch (op)
                 {
                     case "starts-with":

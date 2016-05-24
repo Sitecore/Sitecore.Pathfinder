@@ -72,11 +72,11 @@ namespace Sitecore.Pathfinder.Extensibility
                 AddNodeModules(configuration, options, catalogs, coreAssemblyFileName, projectDirectory);
 
                 // add projects extensions
-                var projectExtensionsDirectory = configuration.GetString(Constants.Configuration.ProjectExtensionsDirectory);
+                var projectExtensionsDirectory = configuration.GetString(Constants.Configuration.Extensions.Directory);
                 if (!string.IsNullOrEmpty(projectExtensionsDirectory))
                 {
                     projectExtensionsDirectory = PathHelper.Combine(projectDirectory, projectExtensionsDirectory);
-                    var projectAssemblyFileName = Path.Combine(projectExtensionsDirectory, configuration.GetString(Constants.Configuration.ProjectExtensionsAssemblyFileName));
+                    var projectAssemblyFileName = Path.Combine(projectExtensionsDirectory, configuration.GetString(Constants.Configuration.Extensions.AssemblyFileName));
                     AddDynamicAssembly(catalogs, toolsDirectory, projectAssemblyFileName, projectExtensionsDirectory);
                     AddAssembliesFromDirectory(options, catalogs, projectExtensionsDirectory);
                 }
@@ -192,7 +192,7 @@ namespace Sitecore.Pathfinder.Extensibility
 
         private static void AddNodeModules([NotNull] IConfiguration configuration, CompositionOptions options, [NotNull, ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string coreAssemblyFileName, [NotNull] string projectDirectory)
         {
-            var nodeModules = Path.Combine(projectDirectory, configuration.GetString(Constants.Configuration.PackagesNpmDirectory));
+            var nodeModules = Path.Combine(projectDirectory, configuration.GetString(Constants.Configuration.Packages.NpmDirectory));
             if (!Directory.Exists(nodeModules))
             {
                 return;
@@ -216,7 +216,7 @@ namespace Sitecore.Pathfinder.Extensibility
         private static void AddNugetPackages([NotNull] IConfiguration configuration, CompositionOptions options, [NotNull, ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string coreAssemblyFileName, [NotNull] string projectDirectory)
         {
             // todo: consider only loading directories listed in packages.config or scconfig.json
-            var nugetPackages = Path.Combine(projectDirectory, configuration.GetString(Constants.Configuration.PackagesNugetDirectory));
+            var nugetPackages = Path.Combine(projectDirectory, configuration.GetString(Constants.Configuration.Packages.NugetDirectory));
             if (!Directory.Exists(nugetPackages))
             {
                 return;

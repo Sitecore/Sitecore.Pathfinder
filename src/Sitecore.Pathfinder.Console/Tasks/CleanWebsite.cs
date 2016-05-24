@@ -13,18 +13,26 @@ namespace Sitecore.Pathfinder.Tasks
     public class CleanWebsite : BuildTaskBase
     {
         [ImportingConstructor]
-        public CleanWebsite([ImportMany, NotNull, ItemNotNull] IEnumerable<IExtension> extensions) : base("clean-website")
+        public CleanWebsite([NotNull] IFileSystemService fileSystem, [ImportMany, NotNull, ItemNotNull] IEnumerable<IExtension> extensions) : base("clean-website")
         {
+            FileSystem = fileSystem;
             Extensions = extensions;
         }
+
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
 
         [NotNull, ItemNotNull]
         protected IEnumerable<IExtension> Extensions { get; }
 
         public override void Run(IBuildContext context)
         {
-            context.IsAborted = true;
             context.Trace.TraceInformation(Msg.D1022, Texts.Cleaning_website___);
+
+            if (!IsProjectConfigured(context))
+            {
+                return;
+            }
 
             // todo: remove files from Data Folder as well
 
@@ -47,7 +55,7 @@ namespace Sitecore.Pathfinder.Tasks
         {
             try
             {
-                context.FileSystem.DeleteFile(fileName);
+                FileSystem.DeleteFile(fileName);
                 context.Trace.TraceInformation(Texts.Removed__ + PathHelper.UnmapPath(context.WebsiteDirectory, fileName));
             }
             catch
@@ -60,7 +68,7 @@ namespace Sitecore.Pathfinder.Tasks
         {
             var websiteFileName = Path.Combine(context.WebsiteDirectory, "bin\\" + assemblyFileName);
 
-            if (!context.FileSystem.FileExists(websiteFileName))
+            if (!FileSystem.FileExists(websiteFileName))
             {
                 return;
             }
@@ -72,7 +80,7 @@ namespace Sitecore.Pathfinder.Tasks
         {
             var sourceDirectory = Path.Combine(context.ToolsDirectory, "files\\website");
 
-            foreach (var fileName in context.FileSystem.GetFiles(sourceDirectory, SearchOption.AllDirectories))
+            foreach (var fileName in FileSystem.GetFiles(sourceDirectory, SearchOption.AllDirectories))
             {
                 var websiteFileName = PathHelper.RemapDirectory(fileName, sourceDirectory, context.WebsiteDirectory);
                 DeleteFile(context, websiteFileName);

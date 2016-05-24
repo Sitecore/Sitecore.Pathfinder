@@ -13,10 +13,14 @@ namespace Sitecore.Pathfinder.Tasks
     public class CopyDependencies : BuildTaskBase
     {
         [ImportingConstructor]
-        public CopyDependencies([NotNull] IProjectPackageService projectPackages) : base("copy-dependencies")
+        public CopyDependencies([NotNull] IFileSystemService fileSystem, [NotNull] IProjectPackageService projectPackages) : base("copy-dependencies")
         {
+            FileSystem = fileSystem;
             ProjectPackages = projectPackages;
         }
+
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
 
         [NotNull]
         protected IProjectPackageService ProjectPackages { get; }
@@ -25,9 +29,14 @@ namespace Sitecore.Pathfinder.Tasks
         {
             context.Trace.TraceInformation(Msg.D1000, Texts.Copying_dependencies___);
 
-            var sourceDirectory = context.Configuration.GetString(Constants.Configuration.CopyDependenciesSourceDirectory);
-            sourceDirectory = Path.Combine(context.ProjectDirectory, sourceDirectory);
-            if (!context.FileSystem.DirectoryExists(sourceDirectory))
+            if (!IsProjectConfigured(context))
+            {
+                return;
+            }
+
+            var sourceDirectory = context.Configuration.GetString(Constants.Configuration.CopyDependencies.SourceDirectory);
+            sourceDirectory = Path.Combine(context.Project.ProjectDirectory, sourceDirectory);
+            if (!FileSystem.DirectoryExists(sourceDirectory))
             {
                 context.Trace.TraceInformation(Msg.D1003, Texts.Dependencies_directory_not_found__Skipping, sourceDirectory);
                 return;
@@ -47,9 +56,9 @@ namespace Sitecore.Pathfinder.Tasks
                 destinationDirectory = PathHelper.NormalizeFilePath(destinationDirectory).TrimStart('\\');
                 destinationDirectory = PathHelper.Combine(context.Configuration.GetString(Constants.Configuration.DataFolderDirectory), destinationDirectory);
 
-                context.FileSystem.CreateDirectory(destinationDirectory);
+                FileSystem.CreateDirectory(destinationDirectory);
 
-                foreach (var packageInfo in ProjectPackages.GetPackages(context.ProjectDirectory))
+                foreach (var packageInfo in ProjectPackages.GetPackages(context.Project.ProjectDirectory))
                 {
                     if (ProjectPackages.CopyPackageToWebsite(packageInfo, destinationDirectory))
                     {

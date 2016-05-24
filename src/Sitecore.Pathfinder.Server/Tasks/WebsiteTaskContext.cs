@@ -4,7 +4,6 @@ using System.ComponentModel.Composition;
 using System.Web.Mvc;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Tasks
@@ -13,17 +12,17 @@ namespace Sitecore.Pathfinder.Tasks
     public class WebsiteTaskContext : TaskContext, IWebsiteTaskContext
     {
         [ImportingConstructor]
-        public WebsiteTaskContext([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystem, [NotNull] IPipelineService pipelineService) : base(compositionService, configuration, traceService, fileSystem, pipelineService)
+        public WebsiteTaskContext([NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystem) : base(configuration, traceService, fileSystem)
         {
         }
 
         public ActionResult ActionResult { get; set; }
 
-        public IAppService App { get; private set; }
+        public IHostService Host { get; private set; }
 
-        public IWebsiteTaskContext With(IAppService app)
+        public IWebsiteTaskContext With(IHostService host)
         {
-            App = app;
+            Host = host;
             return this;
         }
     }

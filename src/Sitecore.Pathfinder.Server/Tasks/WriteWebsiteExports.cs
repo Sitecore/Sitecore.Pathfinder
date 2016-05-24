@@ -25,8 +25,13 @@ namespace Sitecore.Pathfinder.Tasks
     [Export(nameof(WriteWebsiteExports), typeof(IWebsiteTask))]
     public class WriteWebsiteExports : WebsiteTaskBase
     {
-        public WriteWebsiteExports() : base("server:write-website-exports")
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
+
+        [ImportingConstructor]
+        public WriteWebsiteExports([NotNull] IFileSystemService fileSystem) : base("server:write-website-exports")
         {
+            FileSystem = fileSystem;
         }
 
         public override void Run(IWebsiteTaskContext context)
@@ -34,12 +39,12 @@ namespace Sitecore.Pathfinder.Tasks
             TempFolder.EnsureFolder();
 
             var tempDirectory = Path.Combine(FileUtil.MapPath(TempFolder.Folder), "Pathfinder.Exports");
-            if (Directory.Exists(tempDirectory))
+            if (FileSystem.DirectoryExists(tempDirectory))
             {
-                FileUtil.DeleteDirectory(tempDirectory, true);
+                FileSystem.DeleteDirectory(tempDirectory);
             }
 
-            Directory.CreateDirectory(tempDirectory);
+            FileSystem.CreateDirectory(tempDirectory);
 
             var exportFileName = Path.Combine(FileUtil.MapPath(tempDirectory), "Pathfinder.Exports.zip");
             using (var zip = new ZipWriter(exportFileName))
@@ -51,7 +56,7 @@ namespace Sitecore.Pathfinder.Tasks
 
                     var fileName = Path.Combine(tempDirectory, PathHelper.NormalizeFilePath(entryName).TrimStart('\\'));
 
-                    context.FileSystem.CreateDirectoryFromFileName(fileName);
+                    FileSystem.CreateDirectoryFromFileName(fileName);
 
                     WriteFile(context.Configuration, tempDirectory, fileName, fileKey);
 
@@ -65,7 +70,7 @@ namespace Sitecore.Pathfinder.Tasks
         protected virtual void WriteFile([Diagnostics.NotNull] IConfiguration configuration, [Diagnostics.NotNull] string tempDirectory, [Diagnostics.NotNull] string fileName, [Diagnostics.NotNull] string fileKey)
         {
             var sourceFileName = Path.ChangeExtension(fileName, ".xml");
-            using (var writer = new StreamWriter(sourceFileName))
+            using (var writer = FileSystem.OpenStreamWriter(sourceFileName))
             {
                 var output = new XmlTextWriter(writer)
                 {
@@ -104,7 +109,7 @@ namespace Sitecore.Pathfinder.Tasks
                 output.WriteEndElement();
             }
 
-            var packageBuilder = new NuGetPackageBuilder();
+            var packageBuilder = new NuGetPackageBuilder(FileSystem);
             packageBuilder.CreateNugetPackage(tempDirectory, fileName, sourceFileName);
         }
 

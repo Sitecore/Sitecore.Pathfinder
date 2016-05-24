@@ -165,6 +165,8 @@
     <Compile Include="Tasks\ListCheckers.cs" />
     <Compile Include="Tasks\ListProjectRoles.cs" />
     <Compile Include="Tasks\RestorePackages.cs" />
+    <Compile Include="Tasks\RunScript.cs" />
+    <Compile Include="Tasks\ShowStatus.cs" />
     <Compile Include="Tasks\ShowWebsite.cs" />
     <Compile Include="Tasks\ShowConfig.cs" />
     <Compile Include="Tasks\WriteExports.cs" />
@@ -176,7 +178,6 @@
     <Compile Include="Tasks\ListItems.cs" />
     <Compile Include="Tasks\ListProject.cs" />
     <Compile Include="Tasks\ListRules.cs" />
-    <Compile Include="Tasks\RunScript.cs" />
     <Compile Include="Tasks\TroubleshootWebsite.cs" />
     <Compile Include="Tasks\CopyPackage.cs" />
     <Compile Include="Tasks\InstallPackage.cs" />
@@ -192,12 +193,11 @@
     <Compile Include="Tasks\InitVisualStudio.cs" />
     <Compile Include="Tasks\InitVsCode.cs" />
     <Compile Include="Tasks\ResetWebsite.cs" />
-    <Compile Include="Tasks\ShowMetrics.cs" />
     <Compile Include="Tasks\SynchronizeWebsite.cs" />
     <Compile Include="Tasks\WriteWebsiteExports.cs" />
     <Compile Include="Tasks\FindReferences.cs" />
     <Compile Include="Tasks\FindUsages.cs" />
-    <Compile Include="Building\BuildRunner.cs" />
+    <Compile Include="Building\Builder.cs" />
     <Compile Include="Tasks\QueryBuildTaskBase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -519,7 +519,7 @@
     <None Include="help\tasks\show-config.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="help\tasks\show-metrics.md">
+    <None Include="help\tasks\show-status.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="help\tasks\show-website.md">

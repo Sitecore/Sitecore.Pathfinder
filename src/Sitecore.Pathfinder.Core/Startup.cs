@@ -8,6 +8,7 @@ using System.Reflection;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility;
+using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder
 {
@@ -78,7 +79,7 @@ namespace Sitecore.Pathfinder
         }
 
         [CanBeNull]
-        public IAppService Start()
+        public IHostService Start()
         {
             var assemblyFileNames = AssemblyFileNames?.Distinct().OrderBy(a => a).ToList() ?? Enumerable.Empty<string>();
 
@@ -104,7 +105,11 @@ namespace Sitecore.Pathfinder
                 return null;
             }
 
-            return new AppService(configuration, compositionService, ToolsDirectory, ProjectDirectory, Stopwatch);
+            // create the host
+            var host = new HostService(configuration, compositionService, Stopwatch);
+            compositionService.Set((IHostService)host);
+
+            return host;
         }
 
         [NotNull]

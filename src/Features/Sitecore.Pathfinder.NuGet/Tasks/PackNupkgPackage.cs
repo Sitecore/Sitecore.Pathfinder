@@ -1,6 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.ComponentModel.Composition;
 using System.IO;
 using System.Text;
 using NuGet;
@@ -12,37 +13,34 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
 {
     public class PackNupkgPackage : BuildTaskBase
     {
-        public PackNupkgPackage() : base("pack-nuget")
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
+
+        [ImportingConstructor]
+        public PackNupkgPackage([NotNull] IFileSystemService fileSystem) : base("pack-nuget")
         {
-            CanRunWithoutConfig = true;
+            FileSystem = fileSystem;
         }
 
         public override void Run(IBuildContext context)
         {
-            if (context.Project.HasErrors)
-            {
-                context.Trace.TraceInformation(Msg.D1017, Texts.Package_contains_errors_and_will_not_be_deployed);
-                context.IsAborted = true;
-                return;
-            }
-
             context.Trace.TraceInformation(Msg.D1018, Texts.Creating_Nupkg_file___);
 
-            var packageDirectory = context.Configuration.GetString(Constants.Configuration.PackNugetDirectory);
+            var packageDirectory = context.Configuration.GetString(Constants.Configuration.PackNuGet.Directory);
 
             string directory;
-            if (context.Configuration.GetBool(Constants.Configuration.BuildingWithNoConfig))
+            if (!context.Configuration.IsProjectConfigured())
             {
                 directory = PathHelper.Combine(context.ToolsDirectory, "files\\project.noconfig\\sitecore.project");
             }
             else
             {
-                directory = PathHelper.Combine(context.ProjectDirectory, packageDirectory);
+                directory = PathHelper.Combine(context.Project.ProjectDirectory, packageDirectory);
             }
 
-            var pathMatcher = new PathMatcher(context.Configuration.GetString(Constants.Configuration.PackNugetInclude), context.Configuration.GetString(Constants.Configuration.PackNugetExclude));
+            var pathMatcher = new PathMatcher(context.Configuration.GetString(Constants.Configuration.PackNuGet.Include), context.Configuration.GetString(Constants.Configuration.PackNuGet.Exclude));
 
-            foreach (var nuspecFileName in context.FileSystem.GetFiles(directory, "*", SearchOption.AllDirectories))
+            foreach (var nuspecFileName in FileSystem.GetFiles(directory, "*", SearchOption.AllDirectories))
             {
                 if (!pathMatcher.IsMatch(nuspecFileName))
                 {
@@ -50,14 +48,15 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
                 }
 
                 string nupkgFileName;
-                if (context.IsRunningWithNoConfig)
+                if (context.Configuration.IsProjectConfigured())
                 {
-                    nupkgFileName = Path.Combine(context.ProjectDirectory, "sitecore.project\\" + Path.GetFileNameWithoutExtension(nuspecFileName) + ".nupkg");
-                    context.FileSystem.CreateDirectoryFromFileName(nupkgFileName);
+                    nupkgFileName = Path.ChangeExtension(nuspecFileName, ".nupkg");
                 }
                 else
                 {
-                    nupkgFileName = Path.ChangeExtension(nuspecFileName, ".nupkg");
+                    // otherwise create the sitecore.tools directory
+                    nupkgFileName = Path.Combine(context.ToolsDirectory, "sitecore.project\\" + Path.GetFileNameWithoutExtension(nuspecFileName) + ".nupkg");
+                    FileSystem.CreateDirectoryFromFileName(nupkgFileName);
                 }
 
                 Pack(context, nuspecFileName, nupkgFileName);
@@ -66,16 +65,16 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
 
         protected virtual void Pack([NotNull] IBuildContext context, [NotNull] string nuspecFileName, [NotNull] string nupkgFileName)
         {
-            if (context.FileSystem.FileExists(nupkgFileName))
+            if (FileSystem.FileExists(nupkgFileName))
             {
-                context.FileSystem.DeleteFile(nupkgFileName);
+                FileSystem.DeleteFile(nupkgFileName);
             }
 
             BuildNupkgFile(context, nuspecFileName, nupkgFileName);
 
             context.OutputFiles.Add(nupkgFileName);
 
-            context.Trace.TraceInformation(Msg.D1019, Texts.NuGet_file_size, $"{PathHelper.UnmapPath(context.ProjectDirectory, nupkgFileName)} ({new FileInfo(nupkgFileName).Length.ToString("#,##0 bytes")})");
+            context.Trace.TraceInformation(Msg.D1019, Texts.NuGet_file_size, $"{PathHelper.UnmapPath(context.Project.ProjectDirectory, nupkgFileName)} ({new FileInfo(nupkgFileName).Length.ToString("#,##0 bytes")})");
         }
 
         protected virtual void BuildNupkgFile([NotNull] IBuildContext context, [NotNull] string nuspecFileName, [NotNull] string nupkgFileName)
@@ -85,9 +84,9 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(nuspec));
             try
             {
-                var packageBuilder = new PackageBuilder(stream, context.ProjectDirectory);
+                var packageBuilder = new PackageBuilder(stream, context.Project.ProjectDirectory);
 
-                using (var nupkg = new FileStream(nupkgFileName, FileMode.Create))
+                using (var nupkg = FileSystem.OpenWrite(nupkgFileName))
                 {
                     packageBuilder.Save(nupkg);
                 }
@@ -103,7 +102,7 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
         {
             var configFileName = Path.Combine(context.ToolsDirectory, context.Configuration.GetString(Constants.Configuration.ProjectConfigFileName));
 
-            var nuspec = context.FileSystem.ReadAllText(nuspecFileName);
+            var nuspec = FileSystem.ReadAllText(nuspecFileName);
 
             nuspec = nuspec.Replace("$global.scconfig.json$", configFileName);
             nuspec = nuspec.Replace("$toolsDirectory$", context.ToolsDirectory);
@@ -136,13 +135,13 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
             }
 
             // load dependencies from packages.config
-            var fileName = Path.Combine(context.ProjectDirectory, "packages.config");
-            if (!context.FileSystem.FileExists(fileName))
+            var fileName = Path.Combine(context.Project.ProjectDirectory, "packages.config");
+            if (!FileSystem.FileExists(fileName))
             {
                 return writer.ToString();
             }
 
-            var text = context.FileSystem.ReadAllText(fileName);
+            var text = FileSystem.ReadAllText(fileName);
             var root = text.ToXElement();
             if (root == null)
             {

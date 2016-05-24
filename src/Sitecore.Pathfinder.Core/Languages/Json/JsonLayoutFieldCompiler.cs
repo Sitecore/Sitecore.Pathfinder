@@ -54,12 +54,16 @@ namespace Sitecore.Pathfinder.Languages.Json
 
             var layoutCompileContext = new LayoutCompileContext(context.Trace, field.Item.Project, field.Database, textSnapshot);
 
-            var compiler = new JsonLayoutCompiler();
+            var compiler = new JsonLayoutCompiler(FileSystem);
             return compiler.Compile(layoutCompileContext, textNode);
         }
 
         protected class JsonLayoutCompiler : LayoutCompiler
         {
+            public JsonLayoutCompiler([NotNull] IFileSystemService fileSystem) : base(fileSystem)
+            {
+            }
+
             protected override string GetPlaceholders(LayoutCompileContext context, ITextNode renderingTextNode, IProjectItem projectItem)
             {
                 var childTextNode = renderingTextNode;

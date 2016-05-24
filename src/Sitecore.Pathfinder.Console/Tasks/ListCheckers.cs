@@ -22,9 +22,6 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
-            context.IsAborted = true;
-            context.DisplayDoneMessage = false;
-
             foreach (var checker in CheckerService.Checkers.OrderBy(c => c.Method.Name))
             {
                 var name = checker.Method.Name;

@@ -10,7 +10,7 @@ namespace Sitecore.Pathfinder.Pipelines.Loader
     {
         public void Process([NotNull] PipelineArgs args)
         {
-            var app = WebsiteHost.App;
+            var app = WebsiteHost.Host;
             if (app == null)
             {
                 return;

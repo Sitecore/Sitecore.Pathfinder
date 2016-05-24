@@ -50,7 +50,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
 
             var layoutResolveContext = new LayoutCompileContext(context.Trace, field.Item.Project, field.Database, textSnapshot);
 
-            var resolver = new LayoutCompiler();
+            var resolver = new LayoutCompiler(FileSystem);
 
             return resolver.Compile(layoutResolveContext, textNode);
         }

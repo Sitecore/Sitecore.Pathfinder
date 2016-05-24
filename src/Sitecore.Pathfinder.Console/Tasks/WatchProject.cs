@@ -48,16 +48,20 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
-            Context = context;
-            Context.IsAborted = true;
+            if (!IsProjectConfigured(context))
+            {
+                return;
+            }
 
-            var include = context.Configuration.GetString(Constants.Configuration.WatchProjectInclude, "**");
-            var exclude = context.Configuration.GetString(Constants.Configuration.WatchProjectExclude, "**");
+            Context = context;
+
+            var include = context.Configuration.GetString(Constants.Configuration.WatchProject.Include, "**");
+            var exclude = context.Configuration.GetString(Constants.Configuration.WatchProject.Exclude, "**");
             _pathMatcher = new PathMatcher(include, exclude);
 
-            _publishDatabase = context.Configuration.GetBool(Constants.Configuration.WatchProjectPublishDatabase, true);
+            _publishDatabase = context.Configuration.GetBool(Constants.Configuration.WatchProject.PublishDatabase, true);
 
-            _fileWatcher = new FileSystemWatcher(context.ProjectDirectory)
+            _fileWatcher = new FileSystemWatcher(context.Project.ProjectDirectory)
             {
                 IncludeSubdirectories = true,
                 NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName
@@ -164,7 +168,7 @@ namespace Sitecore.Pathfinder.Tasks
                 ["db"] = Context.Project.Options.DatabaseName
             };
 
-            var webRequest = GetWebRequest(Context).WithUrl(Context.Configuration.GetString(Constants.Configuration.PublishUrl)).WithQueryString(queryStringParameters);
+            var webRequest = GetWebRequest(Context).WithUrl(Context.Configuration.GetString(Constants.Configuration.PublishDatabases.PublishUrl)).WithQueryString(queryStringParameters);
 
             Post(Context, webRequest);
         }

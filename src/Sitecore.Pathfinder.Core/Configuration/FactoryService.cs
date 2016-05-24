@@ -1,12 +1,9 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.BinFiles;
@@ -16,61 +13,26 @@ using Sitecore.Pathfinder.Languages.Media;
 using Sitecore.Pathfinder.Languages.Renderings;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Parsing.Items;
-using Sitecore.Pathfinder.Parsing.References;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
+using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Configuration
 {
     [Export(typeof(IFactoryService))]
     public class FactoryService : IFactoryService
     {
-        [CanBeNull]
-        private IParseService _parseService;
-
-        [CanBeNull]
-        private IReferenceParserService _referenceParser;
-
         [ImportingConstructor]
-        public FactoryService([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] IConsoleService console, [NotNull] IPipelineService pipelineService, [NotNull] IFileSystemService fileSystem, [NotNull] ISchemaService schemaService)
+        public FactoryService([NotNull] ICompositionService compositionService)
         {
-            Configuration = configuration;
             CompositionService = compositionService;
-            Console = console;
-            PipelineService = pipelineService;
-            FileSystem = fileSystem;
-            SchemaService = schemaService;
         }
 
         [NotNull]
         protected ICompositionService CompositionService { get; }
-
-        [NotNull]
-        protected IConfiguration Configuration { get; }
-
-        [NotNull]
-        protected IConsoleService Console { get; }
-
-        [NotNull]
-        protected IFileSystemService FileSystem { get; }
-
-        [NotNull]
-        protected IParseService ParseService => _parseService ?? (_parseService = CompositionService.Resolve<IParseService>());
-
-        [NotNull]
-        protected IPathMapperService PathMapper { get; }
-
-        [NotNull]
-        protected IPipelineService PipelineService { get; }
-
-        [NotNull]
-        protected IReferenceParserService ReferenceParser => _referenceParser ?? (_referenceParser = CompositionService.Resolve<IReferenceParserService>());
-
-        [NotNull]
-        protected ISchemaService SchemaService { get; }
 
         public virtual BinFile BinFile(IProject project, ISnapshot snapshot, string filePath)
         {
@@ -120,7 +82,7 @@ namespace Sitecore.Pathfinder.Configuration
             return new FieldBuilder(this);
         }
 
-        public virtual FileReference FileReference(IProjectItem owner, SourceProperty<string> sourceSourceProperty, [NotNull] string referenceText)
+        public virtual FileReference FileReference(IProjectItem owner, SourceProperty<string> sourceSourceProperty, string referenceText)
         {
             return new FileReference(owner, sourceSourceProperty, referenceText);
         }
@@ -158,16 +120,6 @@ namespace Sitecore.Pathfinder.Configuration
         public virtual MediaFile MediaFile(IProject project, ISnapshot snapshot, string databaseName, string itemName, string itemPath, string filePath)
         {
             return new MediaFile(project, snapshot, databaseName, itemName, itemPath, filePath);
-        }
-
-        public virtual IParseContext ParseContext(IProject project, ISnapshot snapshot, PathMappingContext pathMappingContext)
-        {
-            return new ParseContext(Configuration, Console, this, PipelineService, SchemaService, ReferenceParser).With(project, snapshot, pathMappingContext);
-        }
-
-        public virtual IProject Project(ProjectOptions projectOptions, List<string> sourceFileNames)
-        {
-            return CompositionService.Resolve<IProject>().With(projectOptions, sourceFileNames);
         }
 
         public virtual ProjectOptions ProjectOptions(string projectDirectory, string databaseName)

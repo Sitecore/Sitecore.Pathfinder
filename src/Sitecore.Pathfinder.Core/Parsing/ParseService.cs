@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -18,13 +18,14 @@ namespace Sitecore.Pathfinder.Parsing
     public class ParseService : IParseService
     {
         [ImportingConstructor]
-        public ParseService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] ISnapshotService snapshotService, [NotNull] IPathMapperService pathMapper, [ImportMany, NotNull, ItemNotNull] IEnumerable<IParser> parsers)
+        public ParseService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] ISnapshotService snapshotService, [NotNull] IPathMapperService pathMapper, [NotNull] ExportFactory<IParseContext> parseContextFactory, [ImportMany, NotNull, ItemNotNull] IEnumerable<IParser> parsers)
         {
             CompositionService = compositionService;
             Configuration = configuration;
             Factory = factory;
             SnapshotService = snapshotService;
             PathMapper = pathMapper;
+            ParseContextFactory = parseContextFactory;
             Parsers = parsers;
         }
 
@@ -37,8 +38,14 @@ namespace Sitecore.Pathfinder.Parsing
         [NotNull]
         protected IFactoryService Factory { get; }
 
+        [NotNull]
+        protected ExportFactory<IParseContext> ParseContextFactory { get; }
+
         [NotNull, ItemNotNull]
         protected IEnumerable<IParser> Parsers { get; }
+
+        [NotNull]
+        protected IPathMapperService PathMapper { get; }
 
         [NotNull]
         protected ISnapshotService SnapshotService { get; }
@@ -48,7 +55,7 @@ namespace Sitecore.Pathfinder.Parsing
             var pathMappingContext = new PathMappingContext(PathMapper);
             pathMappingContext.Parse(project, sourceFile);
 
-            var parseAllFiles = Configuration.GetBool(Constants.Configuration.BuildProjectParseAllFiles);
+            var parseAllFiles = Configuration.GetBool(Constants.Configuration.BuildProject.ParseAllFiles);
             if (!parseAllFiles && !pathMappingContext.IsMapped)
             {
                 return;
@@ -56,7 +63,7 @@ namespace Sitecore.Pathfinder.Parsing
 
             var snapshot = SnapshotService.LoadSnapshot(project, sourceFile, pathMappingContext);
 
-            var parseContext = Factory.ParseContext(project, snapshot, pathMappingContext);
+            var parseContext = ParseContextFactory.New().With(project, snapshot, pathMappingContext);
             var parsed = false;
             foreach (var parser in Parsers.OrderBy(p => p.Priority))
             {
@@ -79,8 +86,5 @@ namespace Sitecore.Pathfinder.Parsing
                 parseContext.Trace.TraceWarning(Msg.P1024, Texts.No_parser_found_for_file__If_the_file_is_a_content_file__add_the_file_extension_to_the__project_website_mappings_content_files__setting, sourceFile);
             }
         }
-
-        [NotNull]
-        protected IPathMapperService PathMapper { get; }
     }
 }

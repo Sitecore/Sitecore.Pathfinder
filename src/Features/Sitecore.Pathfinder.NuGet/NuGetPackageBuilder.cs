@@ -3,12 +3,20 @@
 using System.IO;
 using System.Text;
 using NuGet;
-using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.NuGet
 {
     public class NuGetPackageBuilder
     {
+        public NuGetPackageBuilder([NotNull] IFileSystemService fileSystem)
+        {
+            FileSystem = fileSystem;
+        }
+
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
+
         public virtual void CreateNugetPackage([NotNull] string tempDirectory, [NotNull] string fileName, [NotNull] string sourceFileName)
         {
             var packageId = Path.GetFileNameWithoutExtension(fileName);
@@ -33,7 +41,7 @@ namespace Sitecore.Pathfinder.NuGet
             {
                 var packageBuilder = new PackageBuilder(stream, tempDirectory);
 
-                using (var nupkg = new FileStream(fileName, FileMode.Create))
+                using (var nupkg = FileSystem.OpenWrite(fileName))
                 {
                     packageBuilder.Save(nupkg);
                 }

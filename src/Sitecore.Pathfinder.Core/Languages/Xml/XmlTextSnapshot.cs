@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -9,14 +9,14 @@ using System.Xml.Linq;
 using System.Xml.Schema;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Xml
 {
-    [Export]
-    [PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export, PartCreationPolicy(CreationPolicy.NonShared)]
     public class XmlTextSnapshot : TextSnapshot
     {
         [NotNull]
@@ -26,8 +26,9 @@ namespace Sitecore.Pathfinder.Languages.Xml
         private ITextNode _root;
 
         [ImportingConstructor]
-        public XmlTextSnapshot([NotNull] ISnapshotService snapshotService) : base(snapshotService)
+        public XmlTextSnapshot([NotNull] IFileSystemService fileSystem, [NotNull] ISnapshotService snapshotService) : base(snapshotService)
         {
+            FileSystem = fileSystem;
         }
 
         public override ITextNode Root => _root ?? (_root = RootElement != null ? ParseDirectives(ParseContext, Parse(null, RootElement)) : TextNode.Empty);
@@ -39,13 +40,16 @@ namespace Sitecore.Pathfinder.Languages.Xml
         public string SchemaNamespace { get; private set; }
 
         [NotNull]
+        protected IFileSystemService FileSystem { get; }
+
+        [NotNull]
+        protected SnapshotParseContext ParseContext { get; private set; }
+
+        [NotNull]
         protected IProject Project { get; private set; }
 
         [CanBeNull]
         protected XElement RootElement { get; private set; }
-
-        [NotNull]
-        protected SnapshotParseContext ParseContext { get; private set; }
 
         public override void SaveChanges()
         {
@@ -54,7 +58,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
                 return;
             }
 
-            using (var writer = new StreamWriter(SourceFile.AbsoluteFileName))
+            using (var writer = FileSystem.OpenStreamWriter(SourceFile.AbsoluteFileName))
             {
                 RootElement.Save(writer, SaveOptions.DisableFormatting);
             }
@@ -153,7 +157,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
         protected virtual XmlSchemaSet GetSchema([NotNull] IParseContext context, [NotNull] string schemaFileName, [NotNull] string schemaNamespace)
         {
             var fileName = Path.Combine(context.Configuration.GetString(Constants.Configuration.ToolsDirectory), "schemas\\" + schemaFileName);
-            if (!context.Project.FileSystem.FileExists(fileName))
+            if (!FileSystem.FileExists(fileName))
             {
                 return null;
             }

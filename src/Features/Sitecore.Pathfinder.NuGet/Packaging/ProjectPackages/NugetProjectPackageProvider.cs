@@ -38,29 +38,29 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.ProjectPackages
             var nupkgFileName = projectPackageInfo.Id + "." + projectPackageInfo.Version + ".nupkg";
 
             var srcFileName = Path.Combine(projectPackageInfo.PackageDirectory, nupkgFileName);
-            if (!File.Exists(srcFileName))
+            if (!FileSystem.FileExists(srcFileName))
             {
                 return false;
             }
 
             var destFileName = Path.Combine(destinationDirectory, nupkgFileName);
-            if (File.Exists(destFileName))
+            if (FileSystem.FileExists(destFileName))
             {
                 return false;
             }
 
-            if (File.GetLastWriteTimeUtc(srcFileName) <= File.GetLastWriteTimeUtc(destFileName))
+            if (FileSystem.GetLastWriteTimeUtc(srcFileName) <= FileSystem.GetLastWriteTimeUtc(destFileName))
             {
                 return false;
             }
 
-            File.Copy(srcFileName, destFileName, true);
+            FileSystem.Copy(srcFileName, destFileName);
             return true;
         }
 
         public override IEnumerable<IProjectPackageInfo> GetPackages(string projectDirectory)
         {
-            if (!Configuration.GetBool(Constants.Configuration.PackagesIncludePackagesConfigAsDependencies, true))
+            if (!Configuration.GetBool(Constants.Configuration.Packages.IncludePackagesConfigAsDependencies, true))
             {
                 return Enumerable.Empty<IProjectPackageInfo>();
             }
@@ -75,9 +75,9 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.ProjectPackages
 
             // add packages from packages.config
             var packages = Path.Combine(projectDirectory, "packages.config");
-            if (File.Exists(packages))
+            if (FileSystem.FileExists(packages))
             {
-                var doc = XDocument.Load(packages);
+                var doc = FileSystem.ReadXml(packages);
 
                 var root = doc.Root;
                 if (root != null)
@@ -86,7 +86,7 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.ProjectPackages
                     {
                         var id = element.GetAttributeValue("id");
                         var version = element.GetAttributeValue("version");
-                        var directory = Path.Combine(projectDirectory, Configuration.GetString(Constants.Configuration.PackagesNugetDirectory) + "\\" + id + "." + version);
+                        var directory = Path.Combine(projectDirectory, Configuration.GetString(Constants.Configuration.Packages.NugetDirectory) + "\\" + id + "." + version);
                         var project = Path.Combine(directory, "project");
 
                         projectPackages.Add(new ProjectPackageInfo(id, version, directory, project));
@@ -157,7 +157,7 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.ProjectPackages
                 return false;
             }
 
-            var path = Path.Combine(projectDirectory, Configuration.GetString(Constants.Configuration.PackagesNugetDirectory));
+            var path = Path.Combine(projectDirectory, Configuration.GetString(Constants.Configuration.Packages.NugetDirectory));
 
             var packageManager = new PackageManager(repository, path);
             packageManager.InstallPackage(package, false, true);

@@ -1,10 +1,10 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
@@ -18,12 +18,14 @@ namespace Sitecore.Pathfinder.Tasks.Building
         private IProject _project;
 
         [ImportingConstructor]
-        public BuildContext([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystem, [NotNull] IPipelineService pipelineService, [NotNull] IProjectService projectService) : base(compositionService, configuration, traceService, fileSystem, pipelineService)
+        public BuildContext([NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystem, [NotNull] IProjectService projectService) : base(configuration, traceService, fileSystem)
         {
             ProjectService = projectService;
         }
 
         public string DataFolderDirectory => Configuration.GetString(Constants.Configuration.DataFolderDirectory);
+
+        public bool IsProjectLoaded => _project != null;
 
         public IList<IProjectItem> ModifiedProjectItems { get; } = new List<IProjectItem>();
 
@@ -31,9 +33,7 @@ namespace Sitecore.Pathfinder.Tasks.Building
 
         public IProject Project => _project ?? (_project = ProjectService.LoadProjectFromConfiguration());
 
-        public string ProjectDirectory => Configuration.GetString(Constants.Configuration.ProjectDirectory);
-
-        public string ToolsDirectory => Configuration.GetString(Constants.Configuration.ToolsDirectory);
+        public string ToolsDirectory => Configuration.GetToolsDirectory();
 
         public string WebsiteDirectory => Configuration.GetString(Constants.Configuration.WebsiteDirectory);
 

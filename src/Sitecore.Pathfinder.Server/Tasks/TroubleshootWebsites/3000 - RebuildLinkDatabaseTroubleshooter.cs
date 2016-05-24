@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Tasks.TroubleshootWebsites
         {
         }
 
-        public override void Troubleshoot(IAppService app)
+        public override void Troubleshoot(IHostService host)
         {
             Console.WriteLine(Texts.Rebuilding_link_database___);
             BackgroundJob.Run("Pathfinder Rebuild Link Database", "Link Database", () => RebuildLinkDatabase("master"));

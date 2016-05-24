@@ -8,9 +8,9 @@ namespace Sitecore.Pathfinder
     public static class WebsiteHost
     {
         [CanBeNull]
-        private static IAppService _app;
+        private static IHostService _host;
 
         [CanBeNull]
-        public static IAppService App => _app ?? (_app = new Startup().WithToolsDirectory(FileUtil.MapPath("/bin")).WithProjectDirectory(FileUtil.MapPath("/")).WithWebsiteDirectory(FileUtil.MapPath("/")).WithDataFolderDirectory(FileUtil.MapPath(Settings.DataFolder)).DoNotLoadConfigFiles().Start());
+        public static IHostService Host => _host ?? (_host = new Startup().WithToolsDirectory(FileUtil.MapPath("/bin")).WithProjectDirectory(FileUtil.MapPath("/")).WithWebsiteDirectory(FileUtil.MapPath("/")).WithDataFolderDirectory(FileUtil.MapPath(Settings.DataFolder)).DoNotLoadConfigFiles().Start());
     }
 }

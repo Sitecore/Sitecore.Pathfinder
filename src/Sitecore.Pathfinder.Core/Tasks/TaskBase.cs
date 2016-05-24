@@ -2,6 +2,7 @@
 
 using System.ComponentModel.Composition;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Tasks
 {
@@ -15,10 +16,20 @@ namespace Sitecore.Pathfinder.Tasks
             TaskName = taskName;
         }
 
-        public bool CanRunWithoutConfig { get; protected set; }
-
         public string TaskName { get; }
 
         public abstract void Run(ITaskContext context);
+
+        protected virtual bool IsProjectConfigured([NotNull] ITaskContext context)
+        {
+            if (context.Configuration.IsProjectConfigured())
+            {
+                return true;
+            }
+
+            context.Trace.TraceError(Msg.I1009, Texts.Cannot_run_task_without_a_configuration_file, TaskName);
+            context.IsAborted = true;
+            return false;
+        }
     }
 }

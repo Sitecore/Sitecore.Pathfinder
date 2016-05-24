@@ -85,7 +85,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
 
             var dataItem = itemWriter.Write(context);
 
-            if (context.Configuration.GetBool(Constants.Configuration.BuildProjectRunValidators))
+            if (context.Configuration.GetBool(Constants.Configuration.BuildProject.RunValidators))
             {
                 Validate(context, item, dataItem);
             }

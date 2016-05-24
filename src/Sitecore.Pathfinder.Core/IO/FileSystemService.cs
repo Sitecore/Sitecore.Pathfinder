@@ -6,8 +6,12 @@ using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 using Sitecore.Pathfinder.Diagnostics;
+using ZetaLongPaths;
+using FileHelper = ZetaLongPaths.ZlpIOHelper;
 
 namespace Sitecore.Pathfinder.IO
 {
@@ -40,14 +44,16 @@ namespace Sitecore.Pathfinder.IO
         {
             if (!forceUpdate)
             {
-                var fileInfo1 = new FileInfo(sourceFileName);
-                var fileInfo2 = new FileInfo(destinationFileName);
+                var fileInfo1 = new ZlpFileInfo(sourceFileName);
+                var fileInfo2 = new ZlpFileInfo(destinationFileName);
 
-                if (fileInfo1.Exists && fileInfo2.Exists && fileInfo1.LastWriteTimeUtc == fileInfo2.LastWriteTimeUtc && fileInfo1.Length == fileInfo2.Length)
+                if (fileInfo1.Exists && fileInfo2.Exists && fileInfo1.LastWriteTime.ToUniversalTime() == fileInfo2.LastWriteTime.ToUniversalTime() && fileInfo1.Length == fileInfo2.Length)
                 {
                     return;
                 }
             }
+
+            File.Exists("");
 
             var directoryName = Path.GetDirectoryName(destinationFileName);
             if (string.IsNullOrEmpty(directoryName))
@@ -55,10 +61,10 @@ namespace Sitecore.Pathfinder.IO
                 throw new DirectoryNotFoundException();
             }
 
-            Directory.CreateDirectory(directoryName);
+            FileHelper.CreateDirectory(directoryName);
 
-            File.Copy(sourceFileName, destinationFileName, true);
-            File.SetLastWriteTimeUtc(destinationFileName, File.GetLastWriteTimeUtc(sourceFileName));
+            FileHelper.CopyFile(sourceFileName, destinationFileName, true);
+            FileHelper.SetFileLastWriteTime(destinationFileName, FileHelper.GetFileLastWriteTime(sourceFileName).ToUniversalTime());
         }
 
         public bool CopyIfNewer(string sourceFileName, string targetFileName)
@@ -66,7 +72,7 @@ namespace Sitecore.Pathfinder.IO
             if (!FileExists(targetFileName))
             {
                 CreateDirectoryFromFileName(targetFileName);
-                File.Copy(sourceFileName, targetFileName);
+                FileHelper.CopyFile(sourceFileName, targetFileName, true);
                 return true;
             }
 
@@ -76,7 +82,7 @@ namespace Sitecore.Pathfinder.IO
                 var targetVersion = GetVersion(targetFileName);
                 if (targetVersion < sourceVersion)
                 {
-                    File.Copy(sourceFileName, targetFileName, true);
+                    FileHelper.CopyFile(sourceFileName, targetFileName, true);
                     return true;
                 }
             }
@@ -86,7 +92,7 @@ namespace Sitecore.Pathfinder.IO
             var targetFileInfo = new FileInfo(targetFileName);
             if (sourceFileInfo.Length != targetFileInfo.Length || sourceFileInfo.LastWriteTimeUtc > targetFileInfo.LastWriteTimeUtc)
             {
-                File.Copy(sourceFileName, targetFileName, true);
+                FileHelper.CopyFile(sourceFileName, targetFileName, true);
                 return true;
             }
 
@@ -97,7 +103,7 @@ namespace Sitecore.Pathfinder.IO
         {
             if (!string.IsNullOrEmpty(directory))
             {
-                Directory.CreateDirectory(directory);
+                FileHelper.CreateDirectory(directory);
             }
         }
 
@@ -114,22 +120,22 @@ namespace Sitecore.Pathfinder.IO
 
         public virtual void DeleteDirectory(string directory)
         {
-            Directory.Delete(directory, true);
+            FileHelper.DeleteDirectory(directory, true);
         }
 
         public virtual void DeleteFile(string fileName)
         {
-            File.Delete(fileName);
+            FileHelper.DeleteFile(fileName);
         }
 
         public virtual bool DirectoryExists(string directory)
         {
-            return Directory.Exists(directory);
+            return FileHelper.DirectoryExists(directory);
         }
 
         public virtual bool FileExists(string fileName)
         {
-            return File.Exists(fileName);
+            return FileHelper.FileExists(fileName);
         }
 
         public bool FileExistsInPath(string fileName)
@@ -142,7 +148,7 @@ namespace Sitecore.Pathfinder.IO
             var paths = Environment.GetEnvironmentVariable("PATH") ?? string.Empty;
             foreach (var path in paths.Split(';'))
             {
-                var fullPath = Path.Combine(path, fileName);
+                var fullPath = Path.Combine(path.Trim(), fileName);
 
                 if (FileExists(fullPath))
                 {
@@ -155,22 +161,27 @@ namespace Sitecore.Pathfinder.IO
 
         public virtual IEnumerable<string> GetDirectories(string directory)
         {
-            return Directory.GetDirectories(directory);
+            return FileHelper.GetDirectories(directory).Select(d => d.FullName).ToArray();
         }
 
         public virtual IEnumerable<string> GetFiles(string directory, SearchOption searchOptions = SearchOption.TopDirectoryOnly)
         {
-            return Directory.GetFiles(directory, "*", searchOptions);
+            return FileHelper.GetFiles(directory, "*", searchOptions).Select(f => f.FullName).ToArray();
         }
 
         public virtual IEnumerable<string> GetFiles(string directory, string pattern, SearchOption searchOptions = SearchOption.TopDirectoryOnly)
         {
-            return Directory.GetFiles(directory, pattern, searchOptions);
+            return FileHelper.GetFiles(directory, pattern, searchOptions).Select(d => d.FullName).ToArray();
         }
 
         public virtual DateTime GetLastWriteTimeUtc(string sourceFileName)
         {
-            return ZetaLongPaths.ZlpIOHelper.GetFileLastWriteTime(sourceFileName).ToUniversalTime();
+            if (string.IsNullOrEmpty(sourceFileName))
+            {
+                throw new ArgumentException("sourceFileName cannot be empty", nameof(sourceFileName));
+            }
+
+            return FileHelper.GetFileLastWriteTime(sourceFileName).ToUniversalTime();
         }
 
         public string GetUniqueFileName(string fileName)
@@ -208,19 +219,49 @@ namespace Sitecore.Pathfinder.IO
             proc.WaitForExit();
         }
 
+        public Stream OpenRead(string fileName)
+        {
+            var fileInfo = new ZlpFileInfo(fileName);
+            return fileInfo.OpenRead();
+        }
+
+        public StreamReader OpenStreamReader(string fileName)
+        {
+            var fileInfo = new ZlpFileInfo(fileName);
+            return new StreamReader(fileInfo.OpenRead());
+        }
+
+        public StreamWriter OpenStreamWriter(string fileName)
+        {
+            var fileInfo = new ZlpFileInfo(fileName);
+            return new StreamWriter(fileInfo.OpenWrite());
+        }
+
+        public Stream OpenWrite(string fileName)
+        {
+            var fileInfo = new ZlpFileInfo(fileName);
+            return fileInfo.OpenWrite();
+        }
+
         public virtual string[] ReadAllLines(string fileName)
         {
-            return File.ReadAllLines(fileName);
+            return FileHelper.ReadAllLines(fileName);
         }
 
         public virtual string ReadAllText(string fileName)
         {
-            return File.ReadAllText(fileName);
+            return FileHelper.ReadAllText(fileName);
+        }
+
+        public XDocument ReadXml(string fileName, LoadOptions loadOptions = LoadOptions.None)
+        {
+            var fileInfo = new ZlpFileInfo(fileName);
+            return XDocument.Load(fileInfo.OpenRead(), loadOptions);
         }
 
         public void Rename(string oldFileName, string newFileName)
         {
-            File.Move(oldFileName, newFileName);
+            FileHelper.MoveFile(oldFileName, newFileName);
         }
 
         public void Unzip(string zipFileName, string destinationDirectory)
@@ -233,7 +274,7 @@ namespace Sitecore.Pathfinder.IO
                     {
                         if (entry.FullName.EndsWith("/"))
                         {
-                            Directory.CreateDirectory(Path.Combine(destinationDirectory, entry.FullName));
+                            FileHelper.CreateDirectory(Path.Combine(destinationDirectory, entry.FullName));
                         }
                         else
                         {
@@ -252,17 +293,17 @@ namespace Sitecore.Pathfinder.IO
 
         public virtual void WriteAllBytes(string fileName, byte[] bytes)
         {
-            File.WriteAllBytes(fileName, bytes);
+            FileHelper.WriteAllBytes(fileName, bytes);
         }
 
         public virtual void WriteAllText(string fileName, string contents)
         {
-            File.WriteAllText(fileName, contents, Encoding.UTF8);
+            FileHelper.WriteAllText(fileName, contents, Encoding.UTF8);
         }
 
         public virtual void WriteAllText(string fileName, string contents, Encoding encoding)
         {
-            File.WriteAllText(fileName, contents, encoding);
+            FileHelper.WriteAllText(fileName, contents, encoding);
         }
 
         public virtual void XCopy(string sourceDirectory, string destinationDirectory)

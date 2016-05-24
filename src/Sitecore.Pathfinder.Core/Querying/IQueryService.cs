@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
@@ -12,8 +12,7 @@ namespace Sitecore.Pathfinder.Querying
         [CanBeNull]
         IProjectItem FindProjectItem([NotNull] IProject project, [NotNull] string qualifiedName);
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         IEnumerable<IReference> FindUsages([NotNull] IProject project, [NotNull] string qualifiedName);
     }
 }

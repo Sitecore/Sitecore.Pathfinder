@@ -72,7 +72,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppService.cs" />
+    <Compile Include="Extensions\DiagnosticCollectionExtensions.cs" />
+    <Compile Include="HostService.cs" />
     <Compile Include="Checking\Checker.cs" />
     <Compile Include="Compiling\LayoutFileCompilers\TemplateLayoutFileCompiler.cs" />
     <Compile Include="Packaging\ProjectPackages\ProjectPackageService.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Tasks\Building\BuildContext.cs" />
     <Compile Include="Tasks\Building\IBuildTask.cs" />
     <Compile Include="Tasks\Building\WebRequest.cs" />
+    <Compile Include="Tasks\IScriptTask.cs" />
     <Compile Include="Tasks\ITaskContext.cs" />
     <Compile Include="Tasks\Building\IBuildContext.cs" />
     <Compile Include="Tasks\ITask.cs" />
@@ -99,7 +101,6 @@
     <Compile Include="Checking\Conventions\ConventionChecker.cs" />
     <Compile Include="Checking\Conventions\ConventionRuleContext.cs" />
     <Compile Include="Checking\Checkers\GuidChecker.cs" />
-    <Compile Include="Checking\Conventions\ProjectExtensions.cs" />
     <Compile Include="Checking\ICheckerContext.cs" />
     <Compile Include="Checking\ICheckerService.cs" />
     <Compile Include="CodeGeneration\IProjectCodeGenerator.cs" />
@@ -199,7 +200,7 @@
     <Compile Include="Compiling\Builders\FieldBuilder.cs" />
     <Compile Include="Compiling\Builders\ItemBuilder.cs" />
     <Compile Include="Compiling\Builders\LanguageVersionBuilder.cs" />
-    <Compile Include="IAppService.cs" />
+    <Compile Include="IHostService.cs" />
     <Compile Include="Languages\Serialization\SerializationTextSnapshot.cs" />
     <Compile Include="Languages\Xml\FormatExtensions.cs" />
     <Compile Include="Languages\Xml\XmlLanguage.cs" />

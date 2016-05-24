@@ -14,7 +14,6 @@ namespace Sitecore.Pathfinder.Tasks
         public ListRules([NotNull] IRuleService ruleService) : base("list-rules")
         {
             RuleService = ruleService;
-            CanRunWithoutConfig = true;
         }
 
         [NotNull]
@@ -34,8 +33,6 @@ namespace Sitecore.Pathfinder.Tasks
             {
                 context.Trace.WriteLine(action.Name);
             }
-
-            context.DisplayDoneMessage = false;
         }
     }
 }

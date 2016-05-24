@@ -1,31 +1,38 @@
 // © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System.ComponentModel.Composition;
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
     public class AddProject : BuildTaskBase
     {
-        public AddProject() : base("add-project")
+        [ImportingConstructor]
+        public AddProject([NotNull] IConsoleService console, [NotNull] IFileSystemService fileSystem) : base("add-project")
         {
-            CanRunWithoutConfig = true;
+            Console = console;
+            FileSystem = fileSystem;
         }
+
+        [NotNull]
+        protected IConsoleService Console { get; }
+
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
 
         public override void Run(IBuildContext context)
         {
-            var console = new ConsoleService(context.Configuration);
-            context.IsAborted = true;
-
-            var projectDirectory = context.ProjectDirectory;
-            if (!context.FileSystem.DirectoryExists(projectDirectory))
+            var projectDirectory = context.Project.ProjectDirectory;
+            if (!FileSystem.DirectoryExists(projectDirectory))
             {
-                context.FileSystem.CreateDirectory(projectDirectory);
+                FileSystem.CreateDirectory(projectDirectory);
             }
 
-            console.WriteLine();
-            console.WriteLine(Texts.Adding_project___);
+            Console.WriteLine();
+            Console.WriteLine(Texts.Adding_project___);
 
             CopyProjectTemplate(context, projectDirectory);
         }
@@ -33,7 +40,7 @@ namespace Sitecore.Pathfinder.Tasks
         protected virtual void CopyProjectTemplate([NotNull] IBuildContext context, [NotNull] string projectDirectory)
         {
             var sourceDirectory = Path.Combine(context.ToolsDirectory, "files\\project\\*");
-            context.FileSystem.XCopy(sourceDirectory, projectDirectory);
+            FileSystem.XCopy(sourceDirectory, projectDirectory);
         }
     }
 }

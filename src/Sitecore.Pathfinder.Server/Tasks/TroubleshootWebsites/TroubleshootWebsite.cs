@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Tasks.TroubleshootWebsites
 
             foreach (var troubleshooter in Troubleshooters.OrderBy(t => t.Priority))
             {
-                troubleshooter.Troubleshoot(context.App);
+                troubleshooter.Troubleshoot(context.Host);
             }
         }
     }

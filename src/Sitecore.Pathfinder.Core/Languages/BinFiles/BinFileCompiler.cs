@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Languages.BinFiles
 
         public override void Compile(ICompileContext context, IProjectItem projectItem)
         {
-            var include = context.Configuration.GetString(Constants.Configuration.BuildProjectCompileBinFilesInclude);
+            var include = context.Configuration.GetString(Constants.Configuration.BuildProject.CompileBinFilesInclude);
             if (string.IsNullOrEmpty(include))
             {
                 return;
@@ -34,7 +34,7 @@ namespace Sitecore.Pathfinder.Languages.BinFiles
             var binFile = projectItem as BinFile;
             Assert.Cast(binFile, nameof(binFile));
 
-            var exclude = context.Configuration.GetString(Constants.Configuration.BuildProjectCompileBinFilesExclude);
+            var exclude = context.Configuration.GetString(Constants.Configuration.BuildProject.CompileBinFilesExclude);
 
             var pathMatcher = new PathMatcher(include, exclude);
             if (!pathMatcher.IsMatch(binFile.FilePath))

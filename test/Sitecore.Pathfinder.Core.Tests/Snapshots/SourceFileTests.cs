@@ -19,13 +19,13 @@ namespace Sitecore.Pathfinder.Snapshots
             Start(GoodWebsite);
             Project = Services.ProjectService.LoadProjectFromConfiguration();
 
-            var projectFileName = "~/content/Home/XmlItem.item.xml";
-            var fileName = Path.Combine(ProjectDirectory, "content\\Home\\XmlItem.item.xml");
+            var projectFileName = "~/items/master/sitecore/content/Home/XmlItem.item.xml";
+            var fileName = Path.Combine(ProjectDirectory, "items\\master\\sitecore\\content\\Home\\XmlItem.item.xml");
             var sourceFile = new SourceFile(Services.FileSystem, fileName, fileName, projectFileName);
 
             Assert.AreEqual(fileName, sourceFile.AbsoluteFileName);
             Assert.AreNotEqual(DateTime.MinValue, sourceFile.LastWriteTimeUtc);
-            Assert.AreEqual("~/content/Home/XmlItem.item.xml", sourceFile.ProjectItemName);
+            Assert.AreEqual("~/items/master/sitecore/content/Home/XmlItem.item.xml", sourceFile.ProjectItemName);
         }
     }
 }

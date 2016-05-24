@@ -1154,23 +1154,24 @@ namespace Sitecore.Pathfinder.Tasks
         private string _websiteDirectory = string.Empty;
 
         [ImportingConstructor]
-        public NewProject([NotNull] IConsoleService console) : base("new-project")
+        public NewProject([NotNull] IConsoleService console, [NotNull] IFileSystemService fileSystem) : base("new-project")
         {
             Console = console;
-            CanRunWithoutConfig = true;
+            FileSystem = fileSystem;
         }
 
         [NotNull]
         protected IConsoleService Console { get; }
 
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
+
         public override void Run(IBuildContext context)
         {
-            context.IsAborted = true;
-
-            var projectDirectory = context.ProjectDirectory;
-            if (!context.FileSystem.DirectoryExists(projectDirectory))
+            var projectDirectory = context.Project.ProjectDirectory;
+            if (!FileSystem.DirectoryExists(projectDirectory))
             {
-                context.FileSystem.CreateDirectory(projectDirectory);
+                FileSystem.CreateDirectory(projectDirectory);
             }
 
             Console.WriteLine("Welcome to Sitecore Pathfinder.");
@@ -1182,7 +1183,6 @@ namespace Sitecore.Pathfinder.Tasks
                 Console.WriteLine();
                 if (Console.YesNo("Are you sure you want to create the project in this directory [N]: ", false, "overwrite") != true)
                 {
-                    context.IsAborted = true;
                     return;
                 }
             }
@@ -1210,10 +1210,10 @@ namespace Sitecore.Pathfinder.Tasks
                 projectName = _projectUniqueId;
             }
 
-            var defaultWebsiteDirectory = context.Configuration.GetString(Constants.Configuration.NewProjectDefaultWebsiteDirectory).TrimEnd('\\');
+            var defaultWebsiteDirectory = context.Configuration.GetString(Constants.Configuration.NewProject.DefaultWebsiteDirectory).TrimEnd('\\');
             if (string.IsNullOrEmpty(defaultWebsiteDirectory))
             {
-                var wwwrootDirectory = context.Configuration.GetString(Constants.Configuration.NewProjectWwwrootDirectory, "c:\\inetpub\\wwwroot").TrimEnd('\\');
+                var wwwrootDirectory = context.Configuration.GetString(Constants.Configuration.NewProject.WwwrootDirectory, "c:\\inetpub\\wwwroot").TrimEnd('\\');
                 defaultWebsiteDirectory = $"{wwwrootDirectory}\\{projectName}\\Website";
             }
 
@@ -1226,7 +1226,7 @@ namespace Sitecore.Pathfinder.Tasks
 
             Console.WriteLine();
 
-            var defaultDataFolderDirectory = context.Configuration.GetString(Constants.Configuration.NewProjectDefaultDataFolderDirectory).TrimEnd('\\');
+            var defaultDataFolderDirectory = context.Configuration.GetString(Constants.Configuration.NewProject.DefaultDataFolderDirectory).TrimEnd('\\');
             if (string.IsNullOrEmpty(defaultDataFolderDirectory))
             {
                 defaultDataFolderDirectory = Path.Combine(Path.GetDirectoryName(_websiteDirectory) ?? string.Empty, "Data");
@@ -1242,7 +1242,7 @@ namespace Sitecore.Pathfinder.Tasks
             Console.WriteLine("Finally Pathfinder requires the hostname of the Sitecore website.");
             Console.WriteLine();
 
-            var defaultHostName = context.Configuration.GetString(Constants.Configuration.NewProjectDefaultHostName);
+            var defaultHostName = context.Configuration.GetString(Constants.Configuration.NewProject.DefaultHostName);
             if (string.IsNullOrEmpty(defaultHostName))
             {
                 defaultHostName = $"http://{projectName.ToLowerInvariant()}";
@@ -1295,21 +1295,21 @@ namespace Sitecore.Pathfinder.Tasks
         {
             if (!string.IsNullOrEmpty(_editorFileName))
             {
-                context.FileSystem.Unzip(_editorFileName, projectDirectory);
+                FileSystem.Unzip(_editorFileName, projectDirectory);
             }
         }
 
         protected virtual void CopyProjectTemplate([NotNull] IBuildContext context, [NotNull] string projectDirectory)
         {
             var sourceDirectory = Path.Combine(context.ToolsDirectory, "files\\project\\*");
-            context.FileSystem.XCopy(sourceDirectory, projectDirectory);
+            FileSystem.XCopy(sourceDirectory, projectDirectory);
         }
 
         protected virtual void CopyStarterKit([NotNull] IBuildContext context, [NotNull] string projectDirectory)
         {
             if (!string.IsNullOrEmpty(_starterKitFileName))
             {
-                context.FileSystem.Unzip(_starterKitFileName, projectDirectory);
+                FileSystem.Unzip(_starterKitFileName, projectDirectory);
             }
         }
 
@@ -1317,27 +1317,27 @@ namespace Sitecore.Pathfinder.Tasks
         {
             if (!string.IsNullOrEmpty(_taskRunnerFileName))
             {
-                context.FileSystem.Unzip(_taskRunnerFileName, projectDirectory);
+                FileSystem.Unzip(_taskRunnerFileName, projectDirectory);
             }
         }
 
         protected virtual void UpdateConfigFile([NotNull] IBuildContext context, [NotNull] string projectDirectory)
         {
             var projectConfigFileName = Path.Combine(projectDirectory, context.Configuration.GetString(Constants.Configuration.ProjectConfigFileName));
-            var config = context.FileSystem.ReadAllText(projectConfigFileName);
+            var config = FileSystem.ReadAllText(projectConfigFileName);
 
             config = config.Replace("{project-unique-id}", _projectUniqueId);
             config = config.Replace("c:\\\\inetpub\\\\wwwroot\\\\Sitecore.Default\\\\Website", _websiteDirectory.Replace("\\", "\\\\"));
             config = config.Replace("c:\\\\inetpub\\\\wwwroot\\\\Sitecore.Default\\\\Data", _dataFolderDirectory.Replace("\\", "\\\\"));
             config = config.Replace("http://sitecore.default", _hostName);
 
-            context.FileSystem.WriteAllText(projectConfigFileName, config);
+            FileSystem.WriteAllText(projectConfigFileName, config);
         }
 
         protected virtual bool ValidateDataFolderDirectory([NotNull] IBuildContext context)
         {
             var kernelFileName = Path.Combine(_dataFolderDirectory, "indexes");
-            if (!context.FileSystem.DirectoryExists(kernelFileName))
+            if (!FileSystem.DirectoryExists(kernelFileName))
             {
                 Console.WriteLine("This does not appear to be a valid Sitecore data folder as /indexes does not exist.");
                 return Console.YesNo("Do you want to continue anyway? [N]", false) == true;
@@ -1349,7 +1349,7 @@ namespace Sitecore.Pathfinder.Tasks
         protected virtual bool ValidateWebsiteDirectory([NotNull] IBuildContext context)
         {
             var kernelFileName = Path.Combine(_websiteDirectory, "bin\\Sitecore.Kernel.dll");
-            if (!context.FileSystem.FileExists(kernelFileName))
+            if (!FileSystem.FileExists(kernelFileName))
             {
                 Console.WriteLine("This does not appear to be a valid Sitecore website as /bin/Sitecore.Kernel.dll does not exist.");
                 return Console.YesNo("Do you want to continue anyway? [N]", false) == true;

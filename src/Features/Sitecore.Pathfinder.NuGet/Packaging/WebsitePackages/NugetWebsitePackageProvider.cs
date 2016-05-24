@@ -20,6 +20,7 @@ using Sitecore.IO;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Packaging.WebsitePackages;
 using Sitecore.Pathfinder.Runtime.Caching;
 using Sitecore.SecurityModel;
@@ -29,9 +30,10 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.WebsitePackages
     public class NugetWebsitePackageProvider : WebsitePackageProviderBase
     {
         [ImportingConstructor]
-        public NugetWebsitePackageProvider([NotNull] IConfiguration configuration, [NotNull] ICacheService cache)
+        public NugetWebsitePackageProvider([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem, [NotNull] ICacheService cache)
         {
             Configuration = configuration;
+            FileSystem = fileSystem;
             Cache = cache;
         }
 
@@ -46,6 +48,9 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.WebsitePackages
 
         [NotNull]
         protected IConfiguration Configuration { get; }
+
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
 
         public override IEnumerable<Pathfinder.Packaging.IPackage> FindRemotePackagesById(string packageId, IEnumerable<string> feeds)
         {
@@ -225,7 +230,7 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.WebsitePackages
             var pathfinderDirectory = Path.Combine(Configuration.GetString(Constants.Configuration.DataFolderDirectory), "pathfinder");
 
             LocalRepository = Path.Combine(pathfinderDirectory, "packages");
-            ProjectDirectory = Configuration.GetString(Constants.Configuration.ProjectDirectory);
+            ProjectDirectory = Configuration.GetProjectDirectory();
 
             if (!Directory.Exists(pathfinderDirectory))
             {
@@ -239,7 +244,7 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.WebsitePackages
         }
 
         [NotNull, ItemNotNull]
-        protected virtual IEnumerable<IPackage> GetRemotePackagesQuery([NotNull] string queryText, [NotNull] string author, [NotNull] string tags, IEnumerable<string> feeds)
+        protected virtual IEnumerable<IPackage> GetRemotePackagesQuery([NotNull] string queryText, [NotNull] string author, [NotNull] string tags, [NotNull, ItemNotNull] IEnumerable<string> feeds)
         {
             var remoteRepository = GetRemoteRepository(feeds);
 
@@ -285,7 +290,7 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.WebsitePackages
         {
             // check if this is a Pathfinder NuGet package
             var configFileName = Path.Combine(e.InstallPath, "project\\sitecore.tools\\scconfig.json");
-            if (File.Exists(configFileName))
+            if (FileSystem.FileExists(configFileName))
             {
                 var projectDirectory = Path.Combine(e.InstallPath, "project");
                 var toolsDirectory = Path.Combine(projectDirectory, "sitecore.tools");

@@ -642,4 +642,25 @@
     <data name="Files_imported" xml:space="preserve">
     <value>Files imported</value>
   </data>
+    <data name="Time___0_ms" xml:space="preserve">
+    <value>Time: {0}ms</value>
+  </data>
+    <data name="No_script_specified" xml:space="preserve">
+    <value>No script specified</value>
+  </data>
+    <data name="Script_not_found" xml:space="preserve">
+    <value>Script not found</value>
+  </data>
+    <data name="Running_script_" xml:space="preserve">
+    <value>Running script:</value>
+  </data>
+    <data name="Sorry__I_do_not_know_how_to_run_" xml:space="preserve">
+    <value>Sorry, I do not know how to run </value>
+  </data>
+    <data name="_____if_this_annoys_you__remove_the__show_website__task_from_the__build_project_tasks__setting_" xml:space="preserve">
+    <value>    (if this annoys you, remove the 'show-website' task from the 'build-project:tasks' setting)</value>
+  </data>
+    <data name="Showing_website___" xml:space="preserve">
+    <value>Showing website...</value>
+  </data>
 </root>

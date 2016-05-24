@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Languages.Media
 
             var extension = Path.GetExtension(mediaFile.Snapshots.First().SourceFile.AbsoluteFileName).TrimStart('.').ToLowerInvariant();
 
-            var templateIdOrPath = context.Configuration.GetString(Constants.Configuration.BuildProjectMediaTemplate + ":" + extension, "/sitecore/templates/System/Media/Unversioned/File");
+            var templateIdOrPath = context.Configuration.GetString(Constants.Configuration.BuildProject.MediaTemplate + ":" + extension, "/sitecore/templates/System/Media/Unversioned/File");
 
             var project = mediaFile.Project;
             var snapshot = mediaFile.Snapshots.First();

@@ -13,9 +13,6 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
-            context.IsAborted = true;
-            context.DisplayDoneMessage = false;
-
             foreach (var pair in context.Configuration.GetSubKeys(Constants.Configuration.ProjectRoleCheckers).OrderBy(k => k.Key))
             {
                 context.Trace.WriteLine(pair.Key);

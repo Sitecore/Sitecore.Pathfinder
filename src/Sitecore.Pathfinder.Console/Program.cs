@@ -9,15 +9,15 @@ namespace Sitecore.Pathfinder
     {
         private static int Main([NotNull, ItemNotNull] string[] args)
         {
-            var app = new Startup().WithStopWatch().WithTraceListeners().AsInteractive().WithWebsiteAssemblyResolver().Start();
-            if (app == null)
+            var host = new Startup().WithStopWatch().WithTraceListeners().AsInteractive().WithWebsiteAssemblyResolver().Start();
+            if (host == null)
             {
                 return -1;
             }
 
-            var taskRunner = app.GetTaskRunner<BuildRunner>();
+            var builder = host.GetTaskRunner<Builder>();
 
-            return taskRunner.Start();
+            return builder.Start();
         }
     }
 }

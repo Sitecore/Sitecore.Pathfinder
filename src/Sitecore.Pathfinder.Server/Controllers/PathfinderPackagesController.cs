@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Controllers
                 var output = new StringWriter();
                 Console.SetOut(output);
 
-                var app = WebsiteHost.App;
+                var app = WebsiteHost.Host;
                 if (app == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, output.ToString());

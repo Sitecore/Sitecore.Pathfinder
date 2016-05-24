@@ -1,4 +1,4 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.ComponentModel.Composition;
@@ -8,46 +8,50 @@ using System.Management.Automation.Runspaces;
 using System.Text;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    public class RunScript : BuildTaskBase
+    public class RunScript : BuildTaskBase, IScriptTask
     {
+        [CanBeNull]
+        private string _script;
+
         [ImportingConstructor]
-        public RunScript([NotNull] IConsoleService console) : base("run-script")
+        public RunScript([NotNull] IFileSystemService fileSystem, [NotNull] IConsoleService console) : base("run-script")
         {
+            FileSystem = fileSystem;
             Console = console;
-            CanRunWithoutConfig = true;
         }
 
         [NotNull]
         protected IConsoleService Console { get; }
 
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
+
         public override void Run(IBuildContext context)
         {
-            context.IsAborted = true;
-
-            var script = context.Script;
-            if (string.IsNullOrEmpty(script))
+            if (string.IsNullOrEmpty(_script))
             {
-                Console.WriteLine("No script specified");
+                Console.WriteLine(Texts.No_script_specified);
                 return;
             }
 
-            var scriptFileName = Path.Combine(context.ProjectDirectory, "sitecore.project\\scripts\\" + script);
-            if (!context.FileSystem.FileExists(scriptFileName))
+            var scriptFileName = Path.Combine(context.Project.ProjectDirectory, "sitecore.project\\scripts\\" + _script);
+            if (!FileSystem.FileExists(scriptFileName))
             {
-                scriptFileName = Path.Combine(context.ToolsDirectory, "files\\scripts\\" + script);
+                scriptFileName = Path.Combine(context.ToolsDirectory, "files\\scripts\\" + _script);
             }
 
-            if (!context.FileSystem.FileExists(scriptFileName))
+            if (!FileSystem.FileExists(scriptFileName))
             {
-                Console.WriteLine("Script not found");
+                Console.WriteLine(Texts.Script_not_found);
                 return;
             }
 
-            Console.WriteLine("Running script: " + scriptFileName);
+            Console.WriteLine(Texts.Running_script_ + @" " + scriptFileName);
 
             if (scriptFileName.EndsWith(".ps1", StringComparison.OrdinalIgnoreCase))
             {
@@ -59,7 +63,7 @@ namespace Sitecore.Pathfinder.Tasks
             }
             else
             {
-                Console.WriteLine("Sorry, I do not know how to run " + scriptFileName);
+                Console.WriteLine(Texts.Sorry__I_do_not_know_how_to_run_ + scriptFileName);
             }
         }
 
@@ -74,15 +78,9 @@ namespace Sitecore.Pathfinder.Tasks
             process.StartInfo.StandardOutputEncoding = Encoding.UTF8;
             process.StartInfo.StandardErrorEncoding = Encoding.UTF8;
 
-            process.OutputDataReceived += delegate(object sender, DataReceivedEventArgs args)
-            {
-                Console.WriteLine(args.Data);
-            };
+            process.OutputDataReceived += delegate(object sender, DataReceivedEventArgs args) { Console.WriteLine(args.Data); };
 
-            process.ErrorDataReceived += delegate(object sender, DataReceivedEventArgs args)
-            {
-                Console.WriteLine(args.Data);
-            };
+            process.ErrorDataReceived += delegate(object sender, DataReceivedEventArgs args) { Console.WriteLine(args.Data); };
 
             process.Start();
             process.BeginOutputReadLine();
@@ -94,11 +92,11 @@ namespace Sitecore.Pathfinder.Tasks
         {
             var runspace = RunspaceFactory.CreateRunspace();
             runspace.Open();
-            runspace.SessionStateProxy.Path.SetLocation(context.ProjectDirectory);
+            runspace.SessionStateProxy.Path.SetLocation(context.Project.ProjectDirectory);
 
             runspace.SessionStateProxy.SetVariable("buildContext", context);
             runspace.SessionStateProxy.SetVariable("toolsDirectory", context.ToolsDirectory);
-            runspace.SessionStateProxy.SetVariable("projectDirectory", context.ProjectDirectory);
+            runspace.SessionStateProxy.SetVariable("projectDirectory", context.Project.ProjectDirectory);
             runspace.SessionStateProxy.SetVariable("dataFolderDirectory", context.Configuration.GetString(Constants.Configuration.DataFolderDirectory));
             runspace.SessionStateProxy.SetVariable("websiteDirectory", context.Configuration.GetString(Constants.Configuration.WebsiteDirectory));
 
@@ -108,7 +106,7 @@ namespace Sitecore.Pathfinder.Tasks
                 pipeline.Output.DataReady += WriteOutput;
                 pipeline.Error.DataReady += WriteError;
 
-                var script = context.FileSystem.ReadAllText(scriptFileName);
+                var script = FileSystem.ReadAllText(scriptFileName);
                 pipeline.Commands.AddScript(script);
 
                 pipeline.Invoke();
@@ -139,6 +137,12 @@ namespace Sitecore.Pathfinder.Tasks
             {
                 Console.WriteLine(output.Read().ToString());
             }
+        }
+
+        ITask IScriptTask.With(string script)
+        {
+            _script = script;
+            return this;
         }
     }
 }

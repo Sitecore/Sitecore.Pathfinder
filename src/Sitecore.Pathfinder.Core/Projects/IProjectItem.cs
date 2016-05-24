@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -36,6 +37,6 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         ProjectItemUri Uri { get; }
 
-        void Rename([NotNull] string newShortName);
+        void Rename([NotNull] IFileSystemService fileSystem, [NotNull] string newShortName);
     }
 }

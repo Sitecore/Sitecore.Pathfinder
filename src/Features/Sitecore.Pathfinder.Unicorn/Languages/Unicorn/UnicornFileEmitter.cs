@@ -1,12 +1,13 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.IO;
+using System.ComponentModel.Composition;
 using System.Linq;
 using Rainbow.Storage.Sc.Deserialization;
 using Rainbow.Storage.Yaml;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitting;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 using Unicorn.Deserialization;
 
@@ -14,9 +15,14 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
 {
     public class UnicornFileEmitter : EmitterBase
     {
-        public UnicornFileEmitter() : base(Constants.Emitters.Items)
+        [ImportingConstructor]
+        public UnicornFileEmitter([NotNull] IFileSystemService fileSystem) : base(Constants.Emitters.Items)
         {
+            FileSystem = fileSystem;
         }
+
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
 
         public override bool CanEmit(IEmitContext context, IProjectItem projectItem)
         {
@@ -38,7 +44,7 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
 
             // todo: file has already been read and parsed - do not read it again
             var formatter = new YamlSerializationFormatter(null, null);
-            using (var stream = new FileStream(snapshot.SourceFile.AbsoluteFileName, FileMode.Open))
+            using (var stream = FileSystem.OpenRead(snapshot.SourceFile.AbsoluteFileName))
             {
                 var serializedItem = formatter.ReadSerializedItem(stream, unicornFile.ShortName);
 
@@ -57,8 +63,6 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
                 {
                     throw new RetryableEmitException(Texts.Failed_to_deserialize_item, unicornFile.Snapshots.First(), ex.Message);
                 }
-
-
             }
         }
     }

@@ -1,6 +1,8 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System.ComponentModel.Composition;
 using System.Linq;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Querying;
 using Sitecore.Pathfinder.Snapshots;
@@ -10,14 +12,17 @@ namespace Sitecore.Pathfinder.Tasks
 {
     public class FindReferences : QueryBuildTaskBase
     {
-        public FindReferences() : base("find-references")
+        [ImportingConstructor]
+        public FindReferences([NotNull] IQueryService queryService) : base("find-references")
         {
+            QueryService = queryService;
         }
+
+        [NotNull]
+        protected IQueryService QueryService { get; }
 
         public override void Run(IBuildContext context)
         {
-            context.DisplayDoneMessage = false;
-
             var qualifiedName = context.Configuration.GetCommandLineArg(0);
             if (string.IsNullOrEmpty(qualifiedName))
             {
@@ -25,9 +30,7 @@ namespace Sitecore.Pathfinder.Tasks
                 return;
             }
 
-            var queryService = context.CompositionService.Resolve<IQueryService>();
-
-            var projectItem = queryService.FindProjectItem(context.Project, qualifiedName);
+            var projectItem = QueryService.FindProjectItem(context.Project, qualifiedName);
             if (projectItem == null)
             {
                 context.Trace.WriteLine(Texts.Project_item_not_found__ + qualifiedName);

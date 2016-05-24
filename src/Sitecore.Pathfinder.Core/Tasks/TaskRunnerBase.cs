@@ -13,12 +13,9 @@ namespace Sitecore.Pathfinder.Tasks
 {
     public abstract class TaskRunnerBase : ITaskRunner
     {
-        protected TaskRunnerBase([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] ITraceService trace, [ImportMany, NotNull, ItemNotNull] IEnumerable<ITask> tasks)
+        protected TaskRunnerBase([NotNull] IConfiguration configuration, [ImportMany, NotNull, ItemNotNull] IEnumerable<ITask> tasks)
         {
-            CompositionService = compositionService;
             Configuration = configuration;
-            Console = console;
-            Trace = trace;
             Tasks = tasks;
         }
 
@@ -26,27 +23,9 @@ namespace Sitecore.Pathfinder.Tasks
         public IEnumerable<ITask> Tasks { get; }
 
         [NotNull]
-        protected ICompositionService CompositionService { get; }
-
-        [NotNull]
         protected IConfiguration Configuration { get; }
 
-        [NotNull]
-        protected IConsoleService Console { get; }
-
-        [NotNull]
-        protected IAppService AppService { get; private set; }
-
-        [NotNull]
-        protected ITraceService Trace { get; }
-
         public abstract int Start();
-
-        public ITaskRunner With(IAppService appService)
-        {
-            AppService = appService;
-            return this;
-        }
 
         [NotNull, ItemNotNull]
         protected virtual IEnumerable<string> GetTaskNames([NotNull] ITaskContext context)
@@ -74,7 +53,7 @@ namespace Sitecore.Pathfinder.Tasks
             if (string.IsNullOrEmpty(tasks) || tasks == "build")
             {
                 // use the build-project:tasks configuration 
-                taskList = context.Configuration.GetString(Constants.Configuration.BuildProjectTasks);
+                taskList = context.Configuration.GetString(Constants.Configuration.BuildProject.Tasks);
             }
             else
             {
@@ -98,35 +77,34 @@ namespace Sitecore.Pathfinder.Tasks
         protected virtual bool IsScriptTask([NotNull] ITaskContext context, [NotNull] string taskName)
         {
             var extension = Path.GetExtension(taskName);
-            if (string.IsNullOrEmpty(extension))
-            {
-                return false;
-            }
+            return !string.IsNullOrEmpty(extension) && context.Configuration.GetString(Constants.Configuration.Scripts.Extensions).IndexOf(extension, StringComparison.OrdinalIgnoreCase) >= 0;
+        }
 
-            return context.Configuration.GetString(Constants.Configuration.ScriptExtensions).IndexOf(extension, StringComparison.OrdinalIgnoreCase) >= 0;
+        protected virtual void PauseAfterRun()
+        {
+            if (Configuration.GetBool("pause"))
+            {
+                Console.ReadLine();
+            }
         }
 
         protected virtual void RunTask([NotNull] ITaskContext context, [NotNull] string taskName)
         {
+            ITask task;
+
             // check if the is a script task
             if (IsScriptTask(context, taskName))
             {
-                context.Script = taskName;
-                taskName = "run-script";
+                task = Tasks.OfType<IScriptTask>().First().With(taskName);
             }
-
-            var task = Tasks.FirstOrDefault(t => string.Equals(t.TaskName, taskName, StringComparison.OrdinalIgnoreCase));
-            if (task == null)
+            else
             {
-                context.Trace.TraceError(Msg.I1006, Texts.Task_not_found__Skipping, taskName);
-                return;
-            }
-
-            if (context.IsRunningWithNoConfig && !task.CanRunWithoutConfig)
-            {
-                context.Trace.TraceError(Msg.I1009, Texts.Cannot_run_task_without_a_configuration_file, taskName);
-                context.IsAborted = true;
-                return;
+                task = Tasks.FirstOrDefault(t => string.Equals(t.TaskName, taskName, StringComparison.OrdinalIgnoreCase));
+                if (task == null)
+                {
+                    context.Trace.TraceError(Msg.I1006, Texts.Task_not_found__Skipping, taskName);
+                    return;
+                }
             }
 
             try
@@ -155,6 +133,7 @@ namespace Sitecore.Pathfinder.Tasks
             if (!tasks.Any())
             {
                 context.Trace.TraceWarning(Msg.I1008, Texts.Pipeline_is_empty__There_are_no_tasks_to_execute_);
+                PauseAfterRun();
                 return;
             }
 
@@ -167,9 +146,17 @@ namespace Sitecore.Pathfinder.Tasks
 
                 if (context.IsAborted)
                 {
+                    // set the error code, if it has not yet been set
+                    if (context.ErrorCode == 0)
+                    {
+                        context.ErrorCode = -1;
+                    }
+
                     break;
                 }
             }
+
+            PauseAfterRun();
         }
     }
 }

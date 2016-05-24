@@ -1,12 +1,13 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.IO;
+using System.ComponentModel.Composition;
 using System.Linq;
 using Rainbow.Storage.Yaml;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -14,9 +15,14 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
 {
     public class UnicornFileCompiler : CompilerBase
     {
-        public UnicornFileCompiler() : base(1000)
+        [ImportingConstructor]
+        public UnicornFileCompiler([NotNull] IFileSystemService fileSystem) : base(1000)
         {
+            FileSystem = fileSystem;
         }
+
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
 
         public override bool CanCompile(ICompileContext context, IProjectItem projectItem)
         {
@@ -44,7 +50,7 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
         {
             // todo: use real Unicorn configuration instead of hacking it
             var formatter = new YamlSerializationFormatter(null, new AllFieldFilter());
-            using (var stream = new FileStream(snapshot.SourceFile.AbsoluteFileName, FileMode.Open))
+            using (var stream = FileSystem.OpenRead(snapshot.SourceFile.AbsoluteFileName))
             {
                 var serializedItem = formatter.ReadSerializedItem(stream, unicornFile.ShortName);
 

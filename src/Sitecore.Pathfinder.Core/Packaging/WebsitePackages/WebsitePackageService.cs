@@ -8,6 +8,7 @@ using System.Linq;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Packaging.WebsitePackages
 {
@@ -15,9 +16,10 @@ namespace Sitecore.Pathfinder.Packaging.WebsitePackages
     public class WebsitePackageService : IWebsitePackageService
     {
         [ImportingConstructor]
-        public WebsitePackageService([NotNull] IConfiguration configuration, [NotNull, ItemNotNull, ImportMany(typeof(IWebsitePackageProvider))] IEnumerable<IWebsitePackageProvider> packageProviders)
+        public WebsitePackageService([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem, [NotNull, ItemNotNull, ImportMany(typeof(IWebsitePackageProvider))] IEnumerable<IWebsitePackageProvider> packageProviders)
         {
             Configuration = configuration;
+            FileSystem = fileSystem;
             PackageProviders = packageProviders;
         }
 
@@ -26,6 +28,9 @@ namespace Sitecore.Pathfinder.Packaging.WebsitePackages
 
         [NotNull]
         protected IConfiguration Configuration { get; }
+
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
 
         [NotNull, ItemNotNull]
         protected IEnumerable<IWebsitePackageProvider> PackageProviders { get; }
@@ -152,9 +157,9 @@ namespace Sitecore.Pathfinder.Packaging.WebsitePackages
 
             // add source repositories from sitecore/shell/client/Applications/Pathfinder/PackageSources.txt
             var packageSources = Path.Combine(Configuration.GetString(Constants.Configuration.WebsiteDirectory), "sitecore/shell/client/Applications/Pathfinder/PackageSources.txt");
-            if (File.Exists(packageSources))
+            if (FileSystem.FileExists(packageSources))
             {
-                var sources = File.ReadAllLines(packageSources);
+                var sources = FileSystem.ReadAllLines(packageSources);
                 foreach (var source in sources)
                 {
                     if (string.IsNullOrEmpty(source.Trim()))

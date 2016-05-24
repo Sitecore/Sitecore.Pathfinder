@@ -44,7 +44,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
                 return true;
             }
 
-            if (!context.Configuration.GetBool(Constants.Configuration.CheckBinFileVersion))
+            if (!context.Configuration.GetBool(Constants.Configuration.InstallPackage.CheckBinFileVersion))
             {
                 return true;
             }

@@ -15,15 +15,12 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
-            if (context.Project.HasErrors)
-            {
+            context.Trace.TraceInformation(Msg.D1016, Texts.Publishing___);
 
-                context.Trace.TraceInformation(Msg.D1012, Texts.Package_contains_errors_and_will_not_be_deployed);
-                context.IsAborted = true;
+            if (!IsProjectConfigured(context))
+            {
                 return;
             }
-
-            context.Trace.TraceInformation(Msg.D1016, Texts.Publishing___);
 
             if (string.Equals(context.Project.Options.DatabaseName, "core", StringComparison.OrdinalIgnoreCase))
             {
@@ -39,7 +36,7 @@ namespace Sitecore.Pathfinder.Tasks
                 ["db"] = context.Project.Options.DatabaseName
             };
 
-            var webRequest = GetWebRequest(context).WithQueryString(queryStringParameters).WithUrl(context.Configuration.GetString(Constants.Configuration.PublishUrl));
+            var webRequest = GetWebRequest(context).WithQueryString(queryStringParameters).WithUrl(context.Configuration.GetString(Constants.Configuration.PublishDatabases.PublishUrl));
             Post(context, webRequest);
         }
     }

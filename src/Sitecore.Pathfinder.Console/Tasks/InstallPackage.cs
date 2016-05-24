@@ -16,14 +16,12 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
-            if (context.Project.HasErrors)
+            context.Trace.TraceInformation(Msg.D1008, Texts.Installing___);
+
+            if (!IsProjectConfigured(context))
             {
-                context.Trace.TraceInformation(Msg.D1007, Texts.Package_contains_errors_and_will_not_be_deployed);
-                context.IsAborted = true;
                 return;
             }
-
-            context.Trace.TraceInformation(Msg.D1008, Texts.Installing___);
 
             var failed = false;
 
@@ -36,9 +34,9 @@ namespace Sitecore.Pathfinder.Tasks
                 }
 
                 var feeds = string.Empty;
-                if (context.Configuration.GetBool(Constants.Configuration.InstallPackageAddProjectDirectoriesAsFeeds, true))
+                if (context.Configuration.GetBool(Constants.Configuration.InstallPackage.AddProjectDirectoriesAsFeeds, true))
                 {
-                    var packagesDirectory = Path.Combine(context.ProjectDirectory, context.Configuration.GetString(Constants.Configuration.PackagesNugetDirectory));
+                    var packagesDirectory = Path.Combine(context.Project.ProjectDirectory, context.Configuration.GetString(Constants.Configuration.Packages.NugetDirectory));
                     feeds = Path.GetDirectoryName(fileName) + "," + packagesDirectory;
                 }
 
@@ -49,7 +47,7 @@ namespace Sitecore.Pathfinder.Tasks
                     ["feeds"] = feeds
                 };
 
-                var webRequest = GetWebRequest(context).WithQueryString(queryStringParameters).WithUrl(context.Configuration.GetString(Constants.Configuration.InstallPackageInstallUrl));
+                var webRequest = GetWebRequest(context).WithQueryString(queryStringParameters).WithUrl(context.Configuration.GetString(Constants.Configuration.InstallPackage.InstallUrl));
                 if (Post(context, webRequest))
                 {
                     context.Trace.TraceInformation(Msg.D1009, Texts.Installed, Path.GetFileName(fileName));

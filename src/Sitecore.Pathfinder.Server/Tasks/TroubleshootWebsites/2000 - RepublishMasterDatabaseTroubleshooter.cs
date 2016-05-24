@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Tasks.TroubleshootWebsites
         {
         }
 
-        public override void Troubleshoot(IAppService app)
+        public override void Troubleshoot(IHostService host)
         {
             Console.WriteLine(Texts.Republishing_master_database___);
             BackgroundJob.Run("Pathfinder Republish", "Publishing", Republish);

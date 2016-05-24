@@ -1,8 +1,8 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
-using System.Collections.Generic;
 using System.Globalization;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Checking
@@ -11,6 +11,9 @@ namespace Sitecore.Pathfinder.Checking
     {
         [NotNull]
         CultureInfo Culture { get; }
+
+        [NotNull]
+        IFileSystemService FileSystem { get; }
 
         bool IsAborted { get; set; }
 

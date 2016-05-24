@@ -2,10 +2,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -49,7 +47,7 @@ namespace Sitecore.Pathfinder
             // add scc.exe for tasks
             var assemblies = new List<string>()
             {
-                Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "scc.exe")
+                Path.Combine(toolsDirectory, "scc.exe")
             };
 
             var app = new Startup().AsInteractive().WithToolsDirectory(toolsDirectory).WithProjectDirectory(ProjectDirectory).WithConfigurationOptions(ConfigurationOptions.IncludeModuleConfig).WithAssemblies(assemblies).Start();

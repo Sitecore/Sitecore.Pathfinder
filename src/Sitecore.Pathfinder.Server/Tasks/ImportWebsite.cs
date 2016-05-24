@@ -23,13 +23,18 @@ namespace Sitecore.Pathfinder.Tasks
     public class ImportWebsite : WebsiteTaskBase
     {
         [ImportingConstructor]
-        public ImportWebsite([Diagnostics.NotNull] IFactoryService factory, [Diagnostics.NotNull] ILanguageService languageService, [Diagnostics.NotNull] IPathMapperService pathMapper, [Diagnostics.NotNull] IItemImporterService itemImporter) : base("server:import-website")
+        public ImportWebsite([NotNull] ICompositionService compositionService, [NotNull] IFileSystemService fileSystem, [Diagnostics.NotNull] IFactoryService factory, [Diagnostics.NotNull] ILanguageService languageService, [Diagnostics.NotNull] IPathMapperService pathMapper, [Diagnostics.NotNull] IItemImporterService itemImporter) : base("server:import-website")
         {
+            CompositionService = compositionService;
+            FileSystem = fileSystem;
             Factory = factory;
             LanguageService = languageService;
             PathMapper = pathMapper;
             ItemImporter = itemImporter;
         }
+
+        [NotNull]
+        protected ICompositionService CompositionService { get;  }
 
         [Diagnostics.NotNull]
         protected IFactoryService Factory { get; }
@@ -89,7 +94,7 @@ namespace Sitecore.Pathfinder.Tasks
         {
             var websiteDirectoryOrFileName = '\\' + PathHelper.UnmapPath(websiteDirectory, directoryOrFileName);
 
-            if (context.FileSystem.FileExists(directoryOrFileName))
+            if (FileSystem.FileExists(directoryOrFileName))
             {
                 string projectFileName;
                 if (mapper.TryGetProjectFileName(websiteDirectoryOrFileName, out projectFileName))
@@ -100,12 +105,12 @@ namespace Sitecore.Pathfinder.Tasks
                 return;
             }
 
-            if (context.FileSystem.DirectoryExists(directoryOrFileName))
+            if (FileSystem.DirectoryExists(directoryOrFileName))
             {
                 string projectFileName;
                 if (mapper.TryGetProjectFileName(websiteDirectoryOrFileName, out projectFileName))
                 {
-                    foreach (var fileName in context.FileSystem.GetFiles(websiteDirectoryOrFileName, "*", SearchOption.AllDirectories))
+                    foreach (var fileName in FileSystem.GetFiles(websiteDirectoryOrFileName, "*", SearchOption.AllDirectories))
                     {
                         var f = PathHelper.RemapDirectory(fileName, directoryOrFileName, projectFileName);
                         zip.AddEntry(projectFileName, f);
@@ -115,17 +120,17 @@ namespace Sitecore.Pathfinder.Tasks
                 }
             }
 
-            if (!context.FileSystem.DirectoryExists(directoryOrFileName))
+            if (!FileSystem.DirectoryExists(directoryOrFileName))
             {
                 return;
             }
 
-            foreach (var fileName in context.FileSystem.GetFiles(directoryOrFileName, "*"))
+            foreach (var fileName in FileSystem.GetFiles(directoryOrFileName, "*"))
             {
                 ImportFiles(context, zip, mapper, websiteDirectory, fileName);
             }
 
-            foreach (var directory in context.FileSystem.GetDirectories(directoryOrFileName))
+            foreach (var directory in FileSystem.GetDirectories(directoryOrFileName))
             {
                 ImportFiles(context, zip, mapper, websiteDirectory, directory);
             }
@@ -133,7 +138,7 @@ namespace Sitecore.Pathfinder.Tasks
 
         protected virtual void ImportItems([Diagnostics.NotNull] IWebsiteTaskContext context, [NotNull] ZipWriter zip, [Diagnostics.NotNull] IItemPathToProjectFileNameMapper mapper)
         {
-            var project = context.CompositionService.Resolve<IProject>();
+            var project = CompositionService.Resolve<IProject>();
 
             var databaseName = mapper.DatabaseName;
             var format = mapper.Format;
@@ -150,7 +155,7 @@ namespace Sitecore.Pathfinder.Tasks
                 return;
             }
 
-            var excludedFields = context.Configuration.GetCommaSeparatedStringList(Constants.Configuration.ProjectWebsiteMappingsExcludedFields);
+            var excludedFields = context.Configuration.GetCommaSeparatedStringList(Constants.Configuration.ProjectWebsiteMappings.ExcludedFields);
 
             ImportItems(context, zip, mapper, project, language, item, excludedFields);
         }

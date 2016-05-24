@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -91,7 +92,7 @@ namespace Sitecore.Pathfinder.Projects
         }
 
         /// <summary>Expertimental. Do not use.</summary>
-        public abstract void Rename(string newShortName);
+        public abstract void Rename(IFileSystemService fileSystem, string newShortName);
 
         /// <summary>Sets a value in the property bag.</summary>
         public void SetValue<T>(string name, T value, SetValueOptions options = SetValueOptions.EnableUpdates)

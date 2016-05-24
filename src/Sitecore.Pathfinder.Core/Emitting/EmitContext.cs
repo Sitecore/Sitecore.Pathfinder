@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Emitting
             Trace = traceService;
             FileSystem = fileSystemService;
 
-            ForceUpdate = Configuration.GetBool(Constants.Configuration.BuildProjectForceUpdate, true);
+            ForceUpdate = Configuration.GetBool(Constants.Configuration.BuildProject.ForceUpdate, true);
         }
 
         public IConfiguration Configuration { get; }

@@ -1,5 +1,6 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using Sitecore.Configuration;
@@ -20,9 +21,14 @@ namespace Sitecore.Pathfinder.Emitters.Files
 {
     public class MediaFileEmitter : EmitterBase
     {
-        public MediaFileEmitter() : base(Constants.Emitters.MediaFiles)
+        [ImportingConstructor]
+        public MediaFileEmitter([NotNull] IFileSystemService fileSystem) : base(Constants.Emitters.MediaFiles)
         {
+            FileSystem = fileSystem;
         }
+
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
 
         public override bool CanEmit(IEmitContext context, IProjectItem projectItem)
         {
@@ -91,7 +97,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
                 var item = new MediaItem(destinationItem);
                 var fileInfo = new FileInfo(mediaFile.Snapshots.First().SourceFile.AbsoluteFileName);
 
-                uploadMedia = (item.Size != fileInfo.Length);
+                uploadMedia = item.Size != fileInfo.Length;
             }
 
             if (destinationItem == null)
@@ -107,7 +113,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
 
             if (uploadMedia)
             {
-                using (var stream = new FileStream(mediaFile.Snapshots.First().SourceFile.AbsoluteFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+                using (var stream = FileSystem.OpenRead(mediaFile.Snapshots.First().SourceFile.AbsoluteFileName))
                 {
                     var item = MediaManager.Creator.CreateFromStream(stream, "/upload/" + Path.GetFileName(mediaFile.Snapshots.First().SourceFile.AbsoluteFileName), options);
                     if (item == null)

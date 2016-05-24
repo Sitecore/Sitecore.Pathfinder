@@ -14,6 +14,11 @@ namespace Sitecore.Pathfinder.Tasks
         {
             context.Trace.TraceInformation(Msg.M1009, Texts.Resetting_website___);
 
+            if (!IsProjectConfigured(context))
+            {
+                return;
+            }
+
             var webRequest = GetWebRequest(context).AsTask("ResetWebsite");
 
             Post(context, webRequest);

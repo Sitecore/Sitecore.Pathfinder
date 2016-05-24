@@ -11,6 +11,6 @@ namespace Sitecore.Pathfinder.Tasks.TroubleshootWebsites
 
         public double Priority { get; }
 
-        public abstract void Troubleshoot(IAppService app);
+        public abstract void Troubleshoot(IHostService host);
     }
 }

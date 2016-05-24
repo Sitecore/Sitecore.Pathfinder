@@ -60,10 +60,10 @@ namespace Sitecore.Pathfinder.Helpers
         public IXPathService XPathService { get; set; }
 
         [Diagnostics.NotNull]
-        public Services Start([NotNull] IAppService app, [CanBeNull] Action mock = null)
+        public Services Start([NotNull] IHostService host, [CanBeNull] Action mock = null)
         {
-            Configuration = app.Configuration;
-            CompositionService = app.CompositionService;
+            Configuration = host.Configuration;
+            CompositionService = host.CompositionService;
 
             mock?.Invoke();
 

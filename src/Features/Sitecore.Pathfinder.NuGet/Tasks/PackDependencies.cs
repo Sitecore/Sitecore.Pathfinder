@@ -1,6 +1,7 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.ComponentModel.Composition;
 using System.IO;
 using System.Text;
 using NuGet;
@@ -12,23 +13,28 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
 {
     public class PackDependencies : BuildTaskBase
     {
-        public PackDependencies() : base("pack-dependencies")
+        [ImportingConstructor]
+        public PackDependencies([NotNull] IFileSystemService fileSystem) : base("pack-dependencies")
         {
+            FileSystem = fileSystem;
         }
+
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
 
         public override void Run(IBuildContext context)
         {
             context.Trace.TraceInformation(Msg.M1014, Texts.Packing_dependency_Sitecore_packages_in_Nuget_packages___);
 
-            var packagesDirectory = context.Configuration.GetString(Constants.Configuration.CopyDependenciesSourceDirectory);
-            var sourceDirectory = Path.Combine(context.ProjectDirectory, packagesDirectory);
-            if (!context.FileSystem.DirectoryExists(sourceDirectory))
+            var packagesDirectory = context.Configuration.GetString(Constants.Configuration.CopyDependencies.SourceDirectory);
+            var sourceDirectory = Path.Combine(context.Project.ProjectDirectory, packagesDirectory);
+            if (!FileSystem.DirectoryExists(sourceDirectory))
             {
                 context.Trace.TraceInformation(Msg.M1015, Texts.Dependencies_directory_not_found__Skipping, packagesDirectory);
                 return;
             }
 
-            foreach (var fileName in context.FileSystem.GetFiles(sourceDirectory, "*.zip"))
+            foreach (var fileName in FileSystem.GetFiles(sourceDirectory, "*.zip"))
             {
                 Pack(context, fileName);
             }
@@ -39,7 +45,7 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
             var packageName = Path.GetFileNameWithoutExtension(zipFileName);
             var packageId = packageName.GetSafeCodeIdentifier();
 
-            var srcFileName = PathHelper.UnmapPath(context.ProjectDirectory, zipFileName);
+            var srcFileName = PathHelper.UnmapPath(context.Project.ProjectDirectory, zipFileName);
             var targetFileName = "project\\packages\\" + Path.GetFileName(zipFileName);
 
             context.Trace.TraceInformation(Msg.M1016, Texts.Packing, packageName);
@@ -66,9 +72,9 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
                 var byteArray = Encoding.UTF8.GetBytes(nuspec.ToString());
                 using (var nuspecStream = new MemoryStream(byteArray))
                 {
-                    var packageBuilder = new PackageBuilder(nuspecStream, context.ProjectDirectory);
+                    var packageBuilder = new PackageBuilder(nuspecStream, context.Project.ProjectDirectory);
 
-                    using (var nupkg = new FileStream(nupkgFileName, FileMode.Create))
+                    using (var nupkg = FileSystem.OpenWrite(nupkgFileName))
                     {
                         packageBuilder.Save(nupkg);
                     }

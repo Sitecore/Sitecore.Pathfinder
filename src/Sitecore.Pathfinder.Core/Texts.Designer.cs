@@ -79,6 +79,16 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to     (if this annoys you, remove the &apos;show-website&apos; task from the &apos;build-project:tasks&apos; setting).
+        /// </summary>
+        public static string _____if_this_annoys_you__remove_the__show_website__task_from_the__build_project_tasks__setting_ {
+            get {
+                return ResourceManager.GetString("_____if_this_annoys_you__remove_the__show_website__task_from_the__build_project_t" +
+                        "asks__setting_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to : Boolean parameter must have value &quot;True&quot; or &quot;False&quot;.
         /// </summary>
         public static string @__Boolean_parameter_must_have_value__True__or__False_ {
@@ -1030,6 +1040,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No script specified.
+        /// </summary>
+        public static string No_script_specified {
+            get {
+                return ResourceManager.GetString("No_script_specified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No tests were found.
         /// </summary>
         public static string No_tests_were_found {
@@ -1246,6 +1265,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Running script:.
+        /// </summary>
+        public static string Running_script_ {
+            get {
+                return ResourceManager.GetString("Running_script_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Running unit tests....
         /// </summary>
         public static string Running_unit_tests___ {
@@ -1260,6 +1288,33 @@ namespace Sitecore.Pathfinder {
         public static string scc_cmd_0_0___information_SCC0000__Compiling_checkers___ {
             get {
                 return ResourceManager.GetString("scc_cmd_0_0___information_SCC0000__Compiling_checkers___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Script not found.
+        /// </summary>
+        public static string Script_not_found {
+            get {
+                return ResourceManager.GetString("Script_not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Showing website....
+        /// </summary>
+        public static string Showing_website___ {
+            get {
+                return ResourceManager.GetString("Showing_website___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorry, I do not know how to run .
+        /// </summary>
+        public static string Sorry__I_do_not_know_how_to_run_ {
+            get {
+                return ResourceManager.GetString("Sorry__I_do_not_know_how_to_run_", resourceCulture);
             }
         }
         
@@ -1450,6 +1505,15 @@ namespace Sitecore.Pathfinder {
         public static string There_Is_No_Website_Directory {
             get {
                 return ResourceManager.GetString("There_Is_No_Website_Directory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time: {0}ms.
+        /// </summary>
+        public static string Time___0_ms {
+            get {
+                return ResourceManager.GetString("Time___0_ms", resourceCulture);
             }
         }
         

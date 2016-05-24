@@ -1,4 +1,4 @@
-﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -6,6 +6,8 @@ using System.Collections.ObjectModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Snapshots;
+
+// ReSharper disable MemberHidesStaticFromOuterClass
 
 namespace Sitecore.Pathfinder
 {
@@ -58,32 +60,9 @@ namespace Sitecore.Pathfinder
 
         public static class Configuration
         {
-            public const string BuildingWithNoConfig = "building-with-no-config";
-
-            public const string BuildProjectCompileBinFilesExclude = "build-project:compile-bin-files:exclude";
-
-            public const string BuildProjectCompileBinFilesInclude = "build-project:compile-bin-files:include";
-
-            public const string BuildProjectForceUpdate = "build-project:force-update";
-
-            public const string BuildProjectMediaTemplate = "build-project:media:template";
-
-            public const string BuildProjectParseAllFiles = "build-project:parse-all-files";
-
-            public const string BuildProjectRunValidators = "build-project:run-sitecore-validators";
-
-            public const string BuildProjectTasks = "build-project:tasks";
-
-            public const string CheckBinFileVersion = "install-package:check-bin-file-version";
-
             public const string Checkers = "checkers";
 
-            public const string CheckProjectCheckers = "check-project:checkers";
-            public const string CheckProjectIgnoredReferences = "check-project:ignored-references";
-
             public const string CommandLineConfig = "config";
-
-            public const string CopyDependenciesSourceDirectory = "copy-dependencies:source-directory";
 
             public const string Culture = "culture";
 
@@ -95,57 +74,9 @@ namespace Sitecore.Pathfinder
 
             public const string Dependencies = "dependencies";
 
-            public const string GenerateCodeImports = "generate-code:t4-imports";
-
-            public const string GenerateCodeIncludePaths = "generate-code:t4-include-paths";
-
-            public const string GenerateCodeNameToken = "generate-code:name-replacement-token";
-
-            public const string GenerateCodeReferencePaths = "generate-code:t4-reference-paths";
-
-            public const string GenerateCodeRefs = "generate-code:t4-refs";
-
             public const string HostName = "host-name";
 
-            public const string InstallPackageAddProjectDirectoriesAsFeeds = "install-package:add-project-directories-as-feeds";
-
-            public const string InstallPackageInstallUrl = "install-package:install-url";
-
-            public const string MappingContentFiles = "project-website-mappings:content-files";
-
-            public const string MappingFileSearchPattern = "project-website-mappings:file-search-pattern";
-
-            public const string MappingIgnoreDirectories = "project-website-mappings:ignore-directories";
-
-            public const string MappingIgnoreFileNames = "project-website-mappings:ignore-filenames";
-
-            public const string MessagesDisabled = "messages:disabled";
-
-            public const string NewProjectDefaultDataFolderDirectory = "new-project:default-data-folder-directory";
-
-            public const string NewProjectDefaultHostName = "new-project:default-host-name";
-
-            public const string NewProjectDefaultWebsiteDirectory = "new-project:default-wwwroot-directory";
-
-            public const string NewProjectWwwrootDirectory = "new-project:wwwroot-directory";
-
-            public const string PackageDirectory = "copy-package:package-directory";
-
-            public const string PackagesIncludePackagesConfigAsDependencies = "packages:include-packages-config-as-dependencies";
-
-            public const string PackagesNpmDirectory = "packages:npm-directory";
-
-            public const string PackagesNugetDirectory = "packages:nuget-directory";
-
-            public const string PackNpmOutputFile = "pack-npm:output-file";
-
-            public const string PackNpmPackageJsonFile = "pack-npm:package-json-file";
-
-            public const string PackNugetDirectory = "pack-nuget:directory";
-
-            public const string PackNugetExclude = "pack-nuget:exclude";
-
-            public const string PackNugetInclude = "pack-nuget:include";
+            public const string IsProjectConfigured = "is-project-configured";
 
             public const string Password = "password";
 
@@ -153,27 +84,15 @@ namespace Sitecore.Pathfinder
 
             public const string ProjectDirectory = "project-directory";
 
-            public const string ProjectExtensionsAssemblyFileName = "extensions:project-extensions-assembly-filename";
-
-            public const string ProjectExtensionsDirectory = "extensions:project-extensions-directory";
-
             public const string ProjectRole = "project-role";
 
             public const string ProjectRoleCheckers = "project-role-checkers";
 
             public const string ProjectUniqueId = "project-unique-id";
 
-            public const string ProjectWebsiteMappingsExcludedFields = "project-website-mappings:excluded-fields";
-
-            public const string PublishUrl = "publish-databases:publish-url";
-
             public const string Run = "run";
 
-            public const string ScriptExtensions = "scripts:file-extensions";
-
             public const string SearchAndReplaceTokens = "search-and-replace-tokens";
-
-            public const string ShowWebsiteStartUrl = "show-website:start-url";
 
             public const string StandardTemplateFields = "standard-template-fields";
 
@@ -181,43 +100,167 @@ namespace Sitecore.Pathfinder
 
             public const string ToolsDirectory = "system:toolspath";
 
-            public const string UninstallDirectory = "install-package:uninstall-directory";
-
-            public const string UpdateResourcesUrl = "sync-website:sync-url";
-
             public const string UserName = "user-name";
-
-            public const string WatchProjectExclude = "watch-project:exclude";
-
-            public const string WatchProjectInclude = "watch-project:include";
-
-            public const string WatchProjectPublishDatabase = "watch-project:publish-database";
 
             public const string WebsiteDirectory = "website-directory";
 
-            public const string WriteExportsFieldsToWrite = "write-exports:fields-to-write";
-
-            public const string WriteExportsFileName = "write-exports:filename";
-
-            public const string WriteSerializationDirectory = "write-serialization:directory";
-
-            public const string WriteSerializationFlat = "write-serialization:flat";
-
-            public static class ValidateWebsite
+            public static class BuildProject
             {
-                public const string InactiveValidations = "validate-website:inactive-validations";
+                public const string CompileBinFilesExclude = "build-project:compile-bin-files:exclude";
 
-                public const string Languages = "validate-website:languages";
+                public const string CompileBinFilesInclude = "build-project:compile-bin-files:include";
 
-                public const string ProcessSiteValidation = "validate-website:process-site-validations";
+                public const string ForceUpdate = "build-project:force-update";
 
-                public const string RootItemPath = "validate-website:root-item-path";
+                public const string MediaTemplate = "build-project:media:template";
 
-                public const string Site = "validate-website:site";
+                public const string ParseAllFiles = "build-project:parse-all-files";
 
-                public const string Timeout = "validate-website:timeout";
+                public const string RunValidators = "build-project:run-sitecore-validators";
 
-                public const string Url = "validate-website:url";
+                public const string Tasks = "build-project:tasks";
+            }
+
+            public static class CheckProject
+            {
+                public const string Checkers = "check-project:checkers";
+
+                public const string IgnoredReferences = "check-project:ignored-references";
+
+                public const string StopOnErrors = "check-project:stop-on-errors";
+
+                public const string TreatWarningsAsErrors = "check-project:treat-warnings-as-errors";
+            }
+
+            public static class CopyDependencies
+            {
+                public const string SourceDirectory = "copy-dependencies:source-directory";
+            }
+
+            public static class CopyPackage
+            {
+                public const string PackageDirectory = "copy-package:package-directory";
+            }
+
+            public static class GenerateCode
+            {
+                public const string Imports = "generate-code:t4-imports";
+
+                public const string IncludePaths = "generate-code:t4-include-paths";
+
+                public const string NameToken = "generate-code:name-replacement-token";
+
+                public const string ReferencePaths = "generate-code:t4-reference-paths";
+
+                public const string Refs = "generate-code:t4-refs";
+            }
+
+            public static class InstallPackage
+            {
+                public const string AddProjectDirectoriesAsFeeds = "install-package:add-project-directories-as-feeds";
+
+                public const string CheckBinFileVersion = "install-package:check-bin-file-version";
+
+                public const string InstallUrl = "install-package:install-url";
+            }
+
+            public static class ProjectWebsiteMappings
+            {
+                public const string ContentFiles = "project-website-mappings:content-files";
+
+                public const string ExcludedFields = "project-website-mappings:excluded-fields";
+
+                public const string FileSearchPattern = "project-website-mappings:file-search-pattern";
+
+                public const string IgnoreDirectories = "project-website-mappings:ignore-directories";
+
+                public const string IgnoreFileNames = "project-website-mappings:ignore-filenames";
+            }
+
+            public static class Messages
+            {
+                public const string Disabled = "messages:disabled";
+            }
+
+            public static class NewProject
+            {
+                public const string DefaultDataFolderDirectory = "new-project:default-data-folder-directory";
+
+                public const string DefaultHostName = "new-project:default-host-name";
+
+                public const string DefaultWebsiteDirectory = "new-project:default-wwwroot-directory";
+
+                public const string WwwrootDirectory = "new-project:wwwroot-directory";
+            }
+
+            public static class Packages
+            {
+                public const string IncludePackagesConfigAsDependencies = "packages:include-packages-config-as-dependencies";
+
+                public const string NpmDirectory = "packages:npm-directory";
+
+                public const string NugetDirectory = "packages:nuget-directory";
+            }
+
+            public static class PackNpm
+            {
+                public const string OutputFile = "pack-npm:output-file";
+
+                public const string PackageJsonFile = "pack-npm:package-json-file";
+            }
+
+            public static class PackNuGet
+            {
+                public const string Directory = "pack-nuget:directory";
+
+                public const string Exclude = "pack-nuget:exclude";
+
+                public const string Include = "pack-nuget:include";
+            }
+
+            public static class Extensions
+            {
+                public const string AssemblyFileName = "extensions:project-extensions-assembly-filename";
+
+                public const string Directory = "extensions:project-extensions-directory";
+            }
+
+            public static class PublishDatabases
+            {
+                public const string PublishUrl = "publish-databases:publish-url";
+            }
+
+            public static class Scripts
+            {
+                public const string Extensions = "scripts:file-extensions";
+            }
+
+            public static class ShowWebsite
+            {
+                public const string StartUrl = "show-website:start-url";
+            }
+
+            public static class WatchProject
+            {
+                public const string Exclude = "watch-project:exclude";
+
+                public const string Include = "watch-project:include";
+
+                public const string PublishDatabase = "watch-project:publish-database";
+            }
+
+            public static class WriteExports
+            {
+                public const string FieldsToWrite = "write-exports:fields-to-write";
+
+                public const string FileName = "write-exports:filename";
+            }
+
+            public static class WriteSerialization
+            {
+                public const string Directory = "write-serialization:directory";
+
+                public const string Flat = "write-serialization:flat";
             }
         }
 

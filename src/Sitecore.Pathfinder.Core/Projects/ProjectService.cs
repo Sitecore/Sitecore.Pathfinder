@@ -40,7 +40,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual ProjectOptions GetProjectOptions()
         {
-            var projectDirectory = Configuration.GetString(Constants.Configuration.ProjectDirectory);
+            var projectDirectory = Configuration.GetProjectDirectory();
             var databaseName = Configuration.GetString(Constants.Configuration.Database);
 
             var projectOptions = Factory.ProjectOptions(projectDirectory, databaseName);
