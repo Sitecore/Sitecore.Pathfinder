@@ -1,7 +1,9 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 
@@ -27,18 +29,21 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual void Add(IProjectItem projectItem)
         {
-            GuidIndex.Add(projectItem);
-            QualifiedNameIndex.Add(projectItem);
-            UriIndex.Add(projectItem);
-
-            var item = projectItem as DatabaseProjectItem;
-            if (item == null)
+            lock (this)
             {
-                return;
-            }
+                GuidIndex.Add(projectItem);
+                QualifiedNameIndex.Add(projectItem);
+                UriIndex.Add(projectItem);
 
-            DatabaseGuidIndex.Add(item);
-            DatabaseQualifiedNameIndex.Add(item);
+                var item = projectItem as DatabaseProjectItem;
+                if (item == null)
+                {
+                    return;
+                }
+
+                DatabaseGuidIndex.Add(item);
+                DatabaseQualifiedNameIndex.Add(item);
+            }
         }
 
         public virtual T GetByGuid<T>(Guid guid) where T : class, IProjectItem
@@ -56,6 +61,11 @@ namespace Sitecore.Pathfinder.Projects
             return QualifiedNameIndex.FirstOrDefault<T>(qualifiedName.ToUpperInvariant());
         }
 
+        public IEnumerable<T> GetAllByQualifiedName<T>(Database database, string qualifiedName) where T : DatabaseProjectItem
+        {
+            return DatabaseQualifiedNameIndex.Where<T>(database.DatabaseName.ToUpperInvariant() + ":" + qualifiedName.ToUpperInvariant());
+        }
+
         public virtual T GetByQualifiedName<T>(Database database, string qualifiedName) where T : DatabaseProjectItem
         {
             return DatabaseQualifiedNameIndex.FirstOrDefault<T>(database.DatabaseName.ToUpperInvariant() + ":" + qualifiedName.ToUpperInvariant());
@@ -68,18 +78,21 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual void Remove(IProjectItem projectItem)
         {
-            GuidIndex.Remove(projectItem);
-            UriIndex.Remove(projectItem);
-            QualifiedNameIndex.Remove(projectItem);
-
-            var item = projectItem as DatabaseProjectItem;
-            if (item == null)
+            lock (this)
             {
-                return;
-            }
+                GuidIndex.Remove(projectItem);
+                UriIndex.Remove(projectItem);
+                QualifiedNameIndex.Remove(projectItem);
 
-            DatabaseGuidIndex.Remove(item);
-            DatabaseQualifiedNameIndex.Remove(item);
+                var item = projectItem as DatabaseProjectItem;
+                if (item == null)
+                {
+                    return;
+                }
+
+                DatabaseGuidIndex.Remove(item);
+                DatabaseQualifiedNameIndex.Remove(item);
+            }
         }
     }
 }

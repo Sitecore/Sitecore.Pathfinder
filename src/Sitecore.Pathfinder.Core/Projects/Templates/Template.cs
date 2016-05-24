@@ -17,6 +17,9 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [CanBeNull, ItemNotNull]
         private ID[] _baseTemplates;
 
+        [CanBeNull, ItemNotNull]
+        private List<TemplateField> _allFields;
+
         public Template([NotNull] IProject project, [NotNull] ITextNode textNode, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, textNode, guid, databaseName, itemName, itemIdOrPath)
         {
         }
@@ -70,8 +73,13 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull, ItemNotNull]
         public virtual IEnumerable<TemplateField> GetAllFields()
         {
+            if (_allFields != null)
+            {
+                return _allFields;
+            }
+
             var templates = new List<ProjectItemUri>();
-            return GetAllFields(templates, this);
+            return GetAllFields(templates);
         }
 
         [CanBeNull]
@@ -94,16 +102,22 @@ namespace Sitecore.Pathfinder.Projects.Templates
         }
 
         [NotNull, ItemNotNull]
-        protected virtual IEnumerable<TemplateField> GetAllFields([NotNull, ItemNotNull]  ICollection<ProjectItemUri> templates, [NotNull] Template template)
+        protected virtual IEnumerable<TemplateField> GetAllFields([NotNull, ItemNotNull] ICollection<ProjectItemUri> templates)
         {
-            templates.Add(template.Uri);
-
-            foreach (var field in template.Sections.SelectMany(s => s.Fields))
+            if (_allFields != null)
             {
-                yield return field;
+                return _allFields;
             }
 
-            var baseTemplates = template.BaseTemplates.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries);
+            templates.Add(Uri);
+            _allFields = new List<TemplateField>();
+
+            foreach (var field in Sections.SelectMany(s => s.Fields))
+            {
+                _allFields.Add(field);
+            }
+
+            var baseTemplates = BaseTemplates.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries);
             foreach (var baseTemplateId in baseTemplates)
             {
                 if (baseTemplateId == Constants.NullGuidString)
@@ -122,11 +136,18 @@ namespace Sitecore.Pathfinder.Projects.Templates
                     continue;
                 }
 
-                foreach (var templateField in GetAllFields(templates, baseTemplate))
+
+                foreach (var templateField in baseTemplate.GetAllFields(templates))
                 {
-                    yield return templateField;
+                    var guid = templateField.Uri.Guid;
+                    if (_allFields.All(f => f.Uri.Guid != guid))
+                    {
+                        _allFields.Add(templateField);
+                    }
                 }
             }
+
+            return _allFields;
         }
 
         protected override void Merge(IProjectItem newProjectItem, bool overwrite)

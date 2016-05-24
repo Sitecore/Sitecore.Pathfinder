@@ -10,8 +10,8 @@ namespace Sitecore.Pathfinder.Text
 {
     public static class StringHelper
     {
-        [NotNull]
-        private static readonly MD5 Md5Hash = MD5.Create();
+        // [NotNull]
+        // private static readonly MD5 Md5Hash = MD5.Create();
 
         public static Guid GetGuid([NotNull] IProject project, [NotNull] string id)
         {
@@ -32,8 +32,10 @@ namespace Sitecore.Pathfinder.Text
 
         public static Guid ToGuid([NotNull] string text)
         {
+            var md5 = MD5.Create();
+
             var bytes = Encoding.UTF8.GetBytes(text);
-            var hash = Md5Hash.ComputeHash(bytes);
+            var hash = md5.ComputeHash(bytes);
             return new Guid(hash);
         }
     }

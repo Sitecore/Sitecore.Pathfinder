@@ -23,6 +23,9 @@ namespace Sitecore.Pathfinder.Tasks.Building
         IProject Project { get; }
 
         [NotNull]
+        string ProjectDirectory { get; }
+
+        [NotNull]
         string ToolsDirectory { get; }
 
         [NotNull]

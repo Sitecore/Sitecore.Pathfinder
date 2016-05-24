@@ -344,7 +344,7 @@ namespace Sitecore.Pathfinder.Projects
 
             var itemList = ProjectItems.OfType<Item>().ToList();
 
-            List<Item> items = null;
+            IEnumerable<Item> items = null;
             if (newItem.MergingMatch == MergingMatch.MatchUsingSourceFile)
             {
                 items = itemList.Where(i => i.Snapshots.Any(s => string.Equals(s.SourceFile.GetFileNameWithoutExtensions(), fileNameWithoutExtensions, StringComparison.OrdinalIgnoreCase))).ToList();
@@ -357,7 +357,7 @@ namespace Sitecore.Pathfinder.Projects
 
             if (!items.Any())
             {
-                items = itemList.Where(i => string.Equals(i.ItemIdOrPath, newItem.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) && string.Equals(i.DatabaseName, newItem.DatabaseName, StringComparison.OrdinalIgnoreCase)).ToList();
+                items = Indexer.GetAllByQualifiedName<Item>(newItem.Database, newItem.ItemIdOrPath);
             }
 
             if (!items.Any())
@@ -366,7 +366,7 @@ namespace Sitecore.Pathfinder.Projects
                 return newItem;
             }
 
-            if (items.Count > 1)
+            if (items.Count() > 1)
             {
                 throw new InvalidOperationException("Trying to merge multiple items");
             }

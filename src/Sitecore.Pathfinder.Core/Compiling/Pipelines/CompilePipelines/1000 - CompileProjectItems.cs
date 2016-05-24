@@ -1,7 +1,8 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
@@ -28,13 +29,14 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
                 {
                     projectItem.State = ProjectItemState.Compiled;
 
-                    foreach (var compiler in pipeline.Context.Compilers.OrderBy(c => c.Priority))
+                    Parallel.ForEach(pipeline.Context.Compilers, compiler =>
                     {
-                        if (compiler.CanCompile(context, projectItem))         
+                        if (compiler.CanCompile(context, projectItem))
                         {
                             compiler.Compile(context, projectItem);
                         }
-                    }
+                    });
+
                 }
             }
             while (projectItems.Any());

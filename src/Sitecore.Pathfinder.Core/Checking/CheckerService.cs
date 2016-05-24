@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -37,20 +38,15 @@ namespace Sitecore.Pathfinder.Checking
             var context = CompositionService.Resolve<ICheckerContext>().With(project);
             var treatWarningsAsErrors = Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
 
-            var checkers = GetEnabledCheckers();
-            foreach (var checker in checkers)
+            var checkers = GetEnabledCheckers().ToArray();
+            EnabledCheckersCount = checkers.Length;
+
+            Parallel.ForEach(checkers, checker =>
             {
                 var diagnostics = checker(context);
 
                 context.Trace.TraceDiagnostics(diagnostics, treatWarningsAsErrors);
-
-                EnabledCheckersCount++;
-
-                if (context.IsAborted)
-                {
-                    break;
-                }
-            }
+            });
         }
 
         private void EnableCheckers([NotNull, ItemNotNull] IEnumerable<CheckerInfo> checkers, [NotNull] string configurationKey)

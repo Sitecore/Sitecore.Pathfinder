@@ -38,6 +38,13 @@ namespace Sitecore.Pathfinder.Projects
             return TryGetValue(key, out projectItemList) ? projectItemList.OfType<T>().FirstOrDefault() : null;
         }
 
+        [NotNull, ItemNotNull]
+        public IEnumerable<T> Where<T>([NotNull] string key) where T : class, TV
+        {
+            List<TV> projectItemList;
+            return TryGetValue(key, out projectItemList) ? projectItemList.OfType<T>() : Enumerable.Empty<T>();
+        }
+
         public void Remove([NotNull] TV projectItem)
         {
             var key = _getKey(projectItem);

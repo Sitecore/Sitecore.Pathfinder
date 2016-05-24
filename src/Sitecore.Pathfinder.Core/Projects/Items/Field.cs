@@ -88,8 +88,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public SourceProperty<string> FieldNameProperty { get; } = new SourceProperty<string>("Name", string.Empty);
 
-        [NotNull]
-        [Obsolete("Use FieldId instead", false)]
+        [NotNull, Obsolete("Use FieldId instead", false)]
         public ID ID => new ID(FieldId);
 
         public bool IsCompiled { get; set; }
@@ -107,11 +106,9 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public SourceProperty<string> LanguageProperty { get; } = new SourceProperty<string>("Language", string.Empty);
 
-        [NotNull]
-        [Obsolete("Use FieldName instead", false)]
+        [NotNull, Obsolete("Use FieldName instead", false)]
         public string Name => FieldName;
 
-        [ItemNotNull]
         public ICollection<ITextNode> SourceTextNodes { get; } = new List<ITextNode>();
 
         [NotNull]
@@ -161,7 +158,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         public void Compile([NotNull] IFieldCompileContext context)
         {
-            if (context.FieldCompilers == null || !context.FieldCompilers.Any() || IsCompiled)
+            if (!context.FieldCompilers.Any() || IsCompiled)
             {
                 return;
             }

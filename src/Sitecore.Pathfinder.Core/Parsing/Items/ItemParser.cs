@@ -110,7 +110,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             }
             catch (Exception ex)
             {
-                context.ParseContext.Trace.TraceError(Msg.P1004, string.Empty, context.ParseContext.Snapshot.SourceFile.AbsoluteFileName, TextSpan.Empty, ex.Message);
+                context.ParseContext.Trace.TraceError(Msg.P1004, string.Empty, context.ParseContext.Snapshot.SourceFile.AbsoluteFileName, TextSpan.Empty, ex.Message + Environment.NewLine + ex.StackTrace);
             }
         }
     }

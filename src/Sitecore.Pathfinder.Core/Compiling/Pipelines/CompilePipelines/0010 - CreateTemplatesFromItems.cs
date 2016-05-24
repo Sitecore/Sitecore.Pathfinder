@@ -24,7 +24,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
             foreach (var templateItem in templateItems)
             {
-                if (pipeline.Project.ProjectItems.OfType<Template>().Any(t => t.Uri == templateItem.Uri))
+                if (pipeline.Project.FindQualifiedItem<Template>(templateItem.Uri) != null)
                 {
                     continue;
                 }

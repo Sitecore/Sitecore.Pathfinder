@@ -1,6 +1,7 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Projects
@@ -8,6 +9,9 @@ namespace Sitecore.Pathfinder.Projects
     public interface IProjectIndexer
     {
         void Add([NotNull] IProjectItem projectItem);
+
+        [NotNull, ItemNotNull]
+        IEnumerable<T> GetAllByQualifiedName<T>([NotNull] Database database, [NotNull] string qualifiedName) where T : DatabaseProjectItem;
 
         [CanBeNull]
         T GetByGuid<T>(Guid guid) where T : class, IProjectItem;

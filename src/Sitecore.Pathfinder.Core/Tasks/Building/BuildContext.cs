@@ -1,6 +1,5 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Microsoft.Framework.ConfigurationModel;
@@ -32,6 +31,8 @@ namespace Sitecore.Pathfinder.Tasks.Building
         public IList<string> OutputFiles { get; } = new List<string>();
 
         public IProject Project => _project ?? (_project = ProjectService.LoadProjectFromConfiguration());
+
+        public string ProjectDirectory => Configuration.GetString(Constants.Configuration.ProjectDirectory);
 
         public string ToolsDirectory => Configuration.GetToolsDirectory();
 
