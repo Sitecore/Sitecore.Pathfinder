@@ -110,11 +110,13 @@ namespace Sitecore.Pathfinder.Languages.Xml
             foreach (var section in template.Sections)
             {
                 output.WriteStartElement("Section");
+                output.WriteAttributeString("Id", section.Uri.Guid.Format());
                 output.WriteAttributeString("Name", section.SectionName);
 
                 foreach (var field in section.Fields)
                 {
                     output.WriteStartElement("Field");
+                    output.WriteAttributeString("Id", field.Uri.Guid.Format());
                     output.WriteAttributeString("Name", field.FieldName);
                     output.WriteAttributeString("Type", field.Type);
                     output.WriteEndElement();
