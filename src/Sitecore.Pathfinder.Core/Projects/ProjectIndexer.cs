@@ -159,7 +159,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public IEnumerable<T> WhereShortName<T>(Database database, string shortName) where T : DatabaseProjectItem
         {
-            return DatabaseQualifiedNameIndex.Where<T>(database.DatabaseName.ToUpperInvariant() + ":" + shortName.ToUpperInvariant());
+            return DatabaseShortNameIndex.Where<T>(database.DatabaseName.ToUpperInvariant() + ":" + shortName.ToUpperInvariant());
         }
 
         public virtual IEnumerable<T> Where<T>(ISourceFile sourceFile) where T : class, IProjectItem

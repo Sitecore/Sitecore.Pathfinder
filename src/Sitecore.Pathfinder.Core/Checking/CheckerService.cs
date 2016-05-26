@@ -37,16 +37,27 @@ namespace Sitecore.Pathfinder.Checking
         {
             var context = CompositionService.Resolve<ICheckerContext>().With(project);
             var treatWarningsAsErrors = Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
+            var multiThreaded = Configuration.GetBool(Constants.Configuration.MultiThreaded);
 
             var checkers = GetEnabledCheckers().ToArray();
             EnabledCheckersCount = checkers.Length;
 
-            Parallel.ForEach(checkers, checker =>
+            if (multiThreaded)
             {
-                var diagnostics = checker(context);
-
-                context.Trace.TraceDiagnostics(diagnostics, treatWarningsAsErrors);
-            });
+                Parallel.ForEach(checkers, checker =>
+                {
+                    var diagnostics = checker(context);
+                    context.Trace.TraceDiagnostics(diagnostics, treatWarningsAsErrors);
+                });
+            }
+            else
+            {
+                foreach (var checker in checkers)
+                {
+                    var diagnostics = checker(context);
+                    context.Trace.TraceDiagnostics(diagnostics, treatWarningsAsErrors);
+                }
+            }
         }
 
         private void EnableCheckers([NotNull, ItemNotNull] IEnumerable<CheckerInfo> checkers, [NotNull] string configurationKey)

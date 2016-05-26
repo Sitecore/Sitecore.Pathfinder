@@ -82,8 +82,10 @@ namespace Sitecore.Pathfinder.Extensibility
                 }
             }
 
+            var multiThreaded = configuration.GetBool(Constants.Configuration.MultiThreaded);
+
             // build composition graph - thread-safe
-            var exportProvider = new CatalogExportProvider(new AggregateCatalog(catalogs), true);
+            var exportProvider = new CatalogExportProvider(new AggregateCatalog(catalogs), multiThreaded);
             var compositionContainer = new CompositionContainer(exportProvider);
             exportProvider.SourceProvider = compositionContainer;
 

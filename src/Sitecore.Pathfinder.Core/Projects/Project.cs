@@ -330,17 +330,22 @@ namespace Sitecore.Pathfinder.Projects
             Options = projectOptions;
 
             var context = CompositionService.Resolve<IParseContext>().With(this, Snapshot.Empty, PathMappingContext.Empty);
+            var multiThreaded = Configuration.GetBool(Constants.Configuration.MultiThreaded);
 
             var projectImportService = CompositionService.Resolve<ProjectImportsService>();
             projectImportService.Import(this, context);
 
-            Parallel.ForEach(sourceFileNames, sourceFileName => Add(sourceFileName));
-            /*
-            foreach (var sourceFileName in sourceFileNames)
+            if (multiThreaded)
             {
-                Add(sourceFileName);
+                Parallel.ForEach(sourceFileNames, sourceFileName => Add(sourceFileName));
             }
-            */
+            else
+            {
+                foreach (var sourceFileName in sourceFileNames)
+                {
+                    Add(sourceFileName);
+                }
+            }
 
             Compile();
 

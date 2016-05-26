@@ -62,6 +62,8 @@ namespace Sitecore.Pathfinder
         {
             public const string Checkers = "checkers";
 
+            public const string MultiThreaded = "multi-threaded";
+
             public const string CommandLineConfig = "config";
 
             public const string Culture = "culture";

@@ -379,6 +379,9 @@
         }
     },
 
+    // support for multi-threading
+    "multi-threaded" : false,
+
     // NuGet source repositories
     "nuget-repositories": {
         // "nuget.org": "https://www.nuget.org/api/v2"

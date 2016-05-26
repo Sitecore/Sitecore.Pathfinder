@@ -47,9 +47,9 @@ namespace Sitecore.Pathfinder.Projects
         }
 
         public void Remove([NotNull] TV projectItem)
-        {
+        {                                        
             var key = _getKey(projectItem);
-            Remove(key);
+            Remove(key, projectItem);
         }
 
         public void Remove([NotNull] string key, [NotNull] TV projectItem)
