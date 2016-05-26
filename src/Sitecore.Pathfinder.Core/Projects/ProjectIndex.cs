@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -17,9 +17,17 @@ namespace Sitecore.Pathfinder.Projects
             _getKey = getKey;
         }
 
+        public ProjectIndex()
+        {
+        }
+
         public void Add([NotNull] TV projectItem)
         {
-            var key = _getKey(projectItem);
+            Add(_getKey(projectItem), projectItem);
+        }
+
+        public void Add([NotNull] string key, [NotNull] TV projectItem)
+        {
             List<TV> projectItemList;
 
             if (!TryGetValue(key, out projectItemList))
@@ -38,17 +46,14 @@ namespace Sitecore.Pathfinder.Projects
             return TryGetValue(key, out projectItemList) ? projectItemList.OfType<T>().FirstOrDefault() : null;
         }
 
-        [NotNull, ItemNotNull]
-        public IEnumerable<T> Where<T>([NotNull] string key) where T : class, TV
-        {
-            List<TV> projectItemList;
-            return TryGetValue(key, out projectItemList) ? projectItemList.OfType<T>() : Enumerable.Empty<T>();
-        }
-
         public void Remove([NotNull] TV projectItem)
         {
             var key = _getKey(projectItem);
+            Remove(key);
+        }
 
+        public void Remove([NotNull] string key, [NotNull] TV projectItem)
+        {
             List<TV> projectItemList;
 
             if (!TryGetValue(key, out projectItemList))
@@ -61,6 +66,13 @@ namespace Sitecore.Pathfinder.Projects
             {
                 Remove(key);
             }
+        }
+
+        [NotNull, ItemNotNull]
+        public IEnumerable<T> Where<T>([NotNull] string key) where T : class, TV
+        {
+            List<TV> projectItemList;
+            return TryGetValue(key, out projectItemList) ? projectItemList.OfType<T>() : Enumerable.Empty<T>();
         }
     }
 }

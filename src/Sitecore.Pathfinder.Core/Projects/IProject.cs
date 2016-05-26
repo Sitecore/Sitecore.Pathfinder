@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
@@ -21,6 +21,9 @@ namespace Sitecore.Pathfinder.Projects
 
         bool HasErrors { get; }
 
+        [NotNull]
+        IProjectIndexer Index { get; }
+
         [NotNull, ItemNotNull]
         IEnumerable<Item> Items { get; }
 
@@ -36,8 +39,8 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         string ProjectUniqueId { get; }
 
-        [NotNull, ItemNotNull]
-        ICollection<ISourceFile> SourceFiles { get; }
+        [NotNull]
+        IDictionary<string, ISourceFile> SourceFiles { get; }
 
         [NotNull, ItemNotNull]
         IEnumerable<Template> Templates { get; }
@@ -46,7 +49,7 @@ namespace Sitecore.Pathfinder.Projects
         IProject Add([NotNull] string absoluteFileName);
 
         [NotNull]
-        T AddOrMerge<T>([NotNull] T projectItem) where T : IProjectItem;
+        T AddOrMerge<T>([NotNull] T projectItem) where T : class, IProjectItem;
 
         [NotNull]
         IProject Compile();
@@ -76,7 +79,7 @@ namespace Sitecore.Pathfinder.Projects
 
         void Remove([NotNull] IProjectItem projectItem);
 
-        void Remove([NotNull] string sourceFileName);
+        void Remove([NotNull] string absoluteSourceFileName);
 
         [NotNull]
         IProject SaveChanges();

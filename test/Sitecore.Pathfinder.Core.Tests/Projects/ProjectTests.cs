@@ -42,7 +42,7 @@ namespace Sitecore.Pathfinder.Projects
 
             project.Add(fileName);
             Assert.AreEqual(count + 1, project.SourceFiles.Count);
-            Assert.AreEqual(fileName, project.SourceFiles.Last().AbsoluteFileName);
+            Assert.AreEqual(fileName, project.SourceFiles.Last().Value.AbsoluteFileName);
 
             project.Remove(fileName);
             Assert.AreEqual(count, project.SourceFiles.Count);

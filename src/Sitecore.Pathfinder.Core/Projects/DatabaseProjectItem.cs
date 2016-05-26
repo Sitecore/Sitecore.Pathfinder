@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -22,8 +22,6 @@ namespace Sitecore.Pathfinder.Projects
             ItemName = itemName;
             ItemIdOrPath = itemIdOrPath;
             SourceTextNodes.Add(textNode);
-
-            project.ProjectChanged += OnProjectChanged;
         }
 
         [NotNull]
@@ -115,17 +113,12 @@ namespace Sitecore.Pathfinder.Projects
             References.AddRange(newItemBase.References);
         }
 
-        protected virtual void OnProjectChanged([NotNull] object sender)
-        {
-        }
-
         protected virtual void OnUnload()
         {
         }
 
         void IUnloadable.Unload()
         {
-            Project.ProjectChanged -= OnProjectChanged;
             OnUnload();
         }
     }

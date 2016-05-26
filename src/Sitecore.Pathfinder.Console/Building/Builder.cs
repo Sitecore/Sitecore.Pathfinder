@@ -71,12 +71,12 @@ namespace Sitecore.Pathfinder.Building
             }
 
             // check if already registered
-            if (root.Elements().Any(e => string.Equals(e.GetAttributeValue("projectdirectory"), context.Project.ProjectDirectory, StringComparison.OrdinalIgnoreCase)))
+            if (root.Elements().Any(e => string.Equals(e.GetAttributeValue("projectdirectory"), context.ProjectDirectory, StringComparison.OrdinalIgnoreCase)))
             {
                 return;
             }
 
-            root.Add(new XElement("project", new XAttribute("toolsdirectory", context.ToolsDirectory), new XAttribute("projectdirectory", context.Project.ProjectDirectory)));
+            root.Add(new XElement("project", new XAttribute("toolsdirectory", context.ToolsDirectory), new XAttribute("projectdirectory", context.ProjectDirectory)));
 
             if (root.Document != null)
             {

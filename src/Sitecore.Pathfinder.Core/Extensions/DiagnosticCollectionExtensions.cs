@@ -9,9 +9,9 @@ namespace Sitecore.Pathfinder.Extensions
 {
     public static class DiagnosticCollectionExtensions
     {
-        public static void TraceDiagnostics([NotNull] this ITraceService trace, [NotNull, ItemNotNull] IEnumerable<Diagnostic> collection, bool treatWarningsAsErrors)
+        public static void TraceDiagnostics([NotNull] this ITraceService trace, [NotNull, ItemNotNull] IEnumerable<Diagnostic> diagnostics, bool treatWarningsAsErrors)
         {
-            foreach (var diagnostic in collection)
+            foreach (var diagnostic in diagnostics)
             {
                 switch (diagnostic.Severity)
                 {

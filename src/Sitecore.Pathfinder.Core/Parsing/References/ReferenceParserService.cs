@@ -1,4 +1,4 @@
-// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+// © 2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -20,6 +20,9 @@ namespace Sitecore.Pathfinder.Parsing.References
     [Export(typeof(IReferenceParserService))]
     public class ReferenceParserService : IReferenceParserService
     {
+        [CanBeNull, ItemNotNull]
+        private List<Tuple<string, string>> _ignoreReferences;
+
         [ImportingConstructor]
         public ReferenceParserService([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IPipelineService pipelines)
         {
@@ -39,28 +42,31 @@ namespace Sitecore.Pathfinder.Parsing.References
 
         public virtual bool IsIgnoredReference(string referenceText)
         {
-            // todo: cache this
-            foreach (var pair in Configuration.GetSubKeys(Constants.Configuration.CheckProject.IgnoredReferences))
+            if (_ignoreReferences == null)
             {
-                var op = Configuration.Get(Constants.Configuration.CheckProject.IgnoredReferences + ":" + pair.Key);
-                switch (op)
+                _ignoreReferences = GetIgnoredReferences();
+            }
+
+            foreach (var pair in _ignoreReferences)
+            {
+                switch (pair.Item2)
                 {
                     case "starts-with":
-                        if (referenceText.StartsWith(pair.Key, StringComparison.OrdinalIgnoreCase))
+                        if (referenceText.StartsWith(pair.Item1, StringComparison.OrdinalIgnoreCase))
                         {
                             return true;
                         }
 
                         break;
                     case "ends-with":
-                        if (referenceText.EndsWith(pair.Key, StringComparison.OrdinalIgnoreCase))
+                        if (referenceText.EndsWith(pair.Item1, StringComparison.OrdinalIgnoreCase))
                         {
                             return true;
                         }
 
                         break;
                     case "contains":
-                        if (referenceText.IndexOf(pair.Key, StringComparison.OrdinalIgnoreCase) >= 0)
+                        if (referenceText.IndexOf(pair.Item1, StringComparison.OrdinalIgnoreCase) >= 0)
                         {
                             return true;
                         }
@@ -68,7 +74,7 @@ namespace Sitecore.Pathfinder.Parsing.References
                         break;
 
                     default:
-                        if (string.Equals(referenceText, pair.Key, StringComparison.OrdinalIgnoreCase))
+                        if (string.Equals(referenceText, pair.Item1, StringComparison.OrdinalIgnoreCase))
                         {
                             return true;
                         }
@@ -171,6 +177,20 @@ namespace Sitecore.Pathfinder.Parsing.References
             }
 
             return text.Length;
+        }
+
+        [NotNull, ItemNotNull]
+        protected virtual List<Tuple<string, string>> GetIgnoredReferences()
+        {
+            var ignoreReferences = new List<Tuple<string, string>>();
+
+            foreach (var pair in Configuration.GetSubKeys(Constants.Configuration.CheckProject.IgnoredReferences))
+            {
+                var op = Configuration.Get(Constants.Configuration.CheckProject.IgnoredReferences + ":" + pair.Key);
+                ignoreReferences.Add(new Tuple<string, string>(pair.Key, op));
+            }
+
+            return ignoreReferences;
         }
 
         [ItemNotNull, NotNull]

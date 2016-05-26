@@ -31,16 +31,10 @@ namespace Sitecore.Pathfinder.Projects.Items
         private FieldCollection _fields;
 
         [CanBeNull]
-        private Item _parent;
-
-        [CanBeNull]
         private string _parentPath;
 
         [CanBeNull]
         private ItemPublishing _publishing;
-
-        [CanBeNull]
-        private Template _template;
 
         public Item([NotNull] IProject project, [NotNull] ITextNode textNode, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath) : base(project, textNode, guid, databaseName, itemName, itemIdOrPath)
         {
@@ -103,23 +97,16 @@ namespace Sitecore.Pathfinder.Projects.Items
         {
             get
             {
-                if (_template == null || _template == Template.Empty)
-                {
-                    var templateIdOrPath = TemplateIdOrPath;
+                var templateIdOrPath = TemplateIdOrPath;
 
-                    if (templateIdOrPath.Contains('/') || templateIdOrPath.Contains('{'))
-                    {
-                        _template = Project.FindQualifiedItem<Template>(Database, templateIdOrPath);
-                    }
-                    else
-                    {
-                        // resolve by short name
-                        var templates = Project.ProjectItems.OfType<Template>().Where(t => t.ShortName == templateIdOrPath && string.Equals(t.DatabaseName, DatabaseName, StringComparison.OrdinalIgnoreCase)).ToList();
-                        _template = templates.Count == 1 ? templates.First() : null;
-                    }
+                if (templateIdOrPath.Contains('/') || templateIdOrPath.Contains('{'))
+                {
+                    return Project.FindQualifiedItem<Template>(Database, templateIdOrPath) ?? Template.Empty;
                 }
 
-                return _template ?? Template.Empty;
+                // resolve by short name
+                var templates = Project.Index.WhereShortName<Template>(Database, templateIdOrPath).ToArray();
+                return templates.Length == 1 ? templates.First() : Template.Empty;
             }
         }
 
@@ -133,7 +120,6 @@ namespace Sitecore.Pathfinder.Projects.Items
             set
             {
                 TemplateIdOrPathProperty.SetValue(value);
-                _template = null;
             }
         }
 
@@ -151,7 +137,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull, ItemNotNull]
         public virtual IEnumerable<Item> GetChildren()
         {
-            return Project.GetItems(Database).Where(i => string.Equals(i.ParentItemPath, ItemIdOrPath, StringComparison.OrdinalIgnoreCase));
+            return Project.Index.WhereChildOf(this);
         }
 
         [NotNull]
@@ -170,10 +156,10 @@ namespace Sitecore.Pathfinder.Projects.Items
         [CanBeNull]
         public Item GetParent()
         {
-            return _parent ?? (_parent = Project.FindQualifiedItem<Item>(Database, ParentItemPath));
+            return Project.FindQualifiedItem<Item>(Database, ParentItemPath);
         }
 
-        [NotNull, ItemNotNull]
+        [NotNull]
         public IEnumerable<int> GetVersions([NotNull] string language)
         {
             return Fields.Where(f => string.Equals(f.Language, language, StringComparison.OrdinalIgnoreCase) && f.Version != 0).Select(f => f.Version).Distinct();
@@ -219,12 +205,6 @@ namespace Sitecore.Pathfinder.Projects.Items
 
                 field.ValueProperty.SetValue(newField.ValueProperty, SetValueOptions.DisableUpdates);
             }
-        }
-
-        protected override void OnProjectChanged(object sender)
-        {
-            _parent = null;
-            _template = null;
         }
 
         IEnumerable<IXPathItem> IXPathItem.GetChildren()

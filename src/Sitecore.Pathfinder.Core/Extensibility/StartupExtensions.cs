@@ -82,8 +82,8 @@ namespace Sitecore.Pathfinder.Extensibility
                 }
             }
 
-            // build composition graph
-            var exportProvider = new CatalogExportProvider(new AggregateCatalog(catalogs));
+            // build composition graph - thread-safe
+            var exportProvider = new CatalogExportProvider(new AggregateCatalog(catalogs), true);
             var compositionContainer = new CompositionContainer(exportProvider);
             exportProvider.SourceProvider = compositionContainer;
 

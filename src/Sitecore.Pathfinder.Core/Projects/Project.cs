@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines;
@@ -50,7 +51,7 @@ namespace Sitecore.Pathfinder.Projects
             FileSystem = fileSystem;
             ParseService = parseService;
             PipelineService = pipelineService;
-            Indexer = indexer;
+            Index = indexer;
 
             Options = ProjectOptions.Empty;
         }
@@ -72,7 +73,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public bool HasErrors => Diagnostics.Any(d => d.Severity == Severity.Error);
 
-        public IEnumerable<Item> Items => ProjectItems.OfType<Item>().Where(i => !i.IsImport);
+        public IEnumerable<Item> Items => Index.Items;
 
         public ProjectOptions Options { get; private set; }
 
@@ -82,9 +83,9 @@ namespace Sitecore.Pathfinder.Projects
 
         public string ProjectUniqueId => _projectUniqueId ?? (_projectUniqueId = Configuration.GetString(Constants.Configuration.ProjectUniqueId));
 
-        public ICollection<ISourceFile> SourceFiles { get; } = new List<ISourceFile>();
+        public IDictionary<string, ISourceFile> SourceFiles { get; } = new Dictionary<string, ISourceFile>();
 
-        public IEnumerable<Template> Templates => ProjectItems.OfType<Template>().Where(t => !t.IsImport);
+        public IEnumerable<Template> Templates => Index.Templates;
 
         [NotNull]
         protected ICompositionService CompositionService { get; }
@@ -95,14 +96,19 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         protected IFileSystemService FileSystem { get; }
 
-        [NotNull]
-        protected IProjectIndexer Indexer { get; }
+        public IProjectIndexer Index { get; }
 
         [NotNull]
         protected IParseService ParseService { get; }
 
         [NotNull]
         protected IPipelineService PipelineService { get; }
+
+        [NotNull]
+        private static readonly object _sourceFilesSync = new object();
+
+        [NotNull]
+        private static readonly object _addSync = new object();
 
         public virtual IProject Add(string absoluteFileName)
         {
@@ -111,13 +117,17 @@ namespace Sitecore.Pathfinder.Projects
                 throw new InvalidOperationException(Texts.Project_has_not_been_loaded__Call_Load___first);
             }
 
-            if (SourceFiles.Any(s => string.Equals(s.AbsoluteFileName, absoluteFileName, StringComparison.OrdinalIgnoreCase)))
-            {
-                Remove(absoluteFileName);
-            }
-
             var sourceFile = Factory.SourceFile(FileSystem, ProjectDirectory, absoluteFileName);
-            SourceFiles.Add(sourceFile);
+
+            lock (_sourceFilesSync)
+            {
+                if (SourceFiles.ContainsKey(absoluteFileName.ToUpperInvariant()))
+                {
+                    Remove(absoluteFileName);
+                }
+
+                SourceFiles.Add(absoluteFileName.ToUpperInvariant(), sourceFile);
+            }
 
             try
             {
@@ -131,41 +141,38 @@ namespace Sitecore.Pathfinder.Projects
             return this;
         }
 
-        public virtual T AddOrMerge<T>(T projectItem) where T : IProjectItem
+        public virtual T AddOrMerge<T>(T projectItem) where T : class, IProjectItem
         {
-            Indexer.Remove(projectItem);
+            T addedProjectItem = null;
 
-            var newItem = projectItem as Item;
-            if (newItem != null)
+            lock (_addSync)
             {
-                var addedItem = (T)MergeItem(newItem);
+                Index.Remove(projectItem);
 
-                Indexer.Add(addedItem);
+                var newItem = projectItem as Item;
+                if (newItem != null)
+                {
+                    addedProjectItem = (T)MergeItem(newItem);
+                }
 
-                OnProjectChanged();
+                var newTemplate = projectItem as Template;
+                if (newTemplate != null)
+                {
+                    addedProjectItem = (T)MergeTemplate(newTemplate);
+                }
 
-                return addedItem;
+                if (addedProjectItem == null)
+                {
+                    _projectItems.Add(projectItem);
+                    addedProjectItem = projectItem;
+                }
+
+                Index.Add(addedProjectItem);
             }
-
-            var newTemplate = projectItem as Template;
-            if (newTemplate != null)
-            {
-                var addedTemplate = (T)MergeTemplate(newTemplate);
-
-                Indexer.Add(addedTemplate);
-
-                OnProjectChanged();
-
-                return addedTemplate;
-            }
-
-            _projectItems.Add(projectItem);
-
-            Indexer.Add(projectItem);
 
             OnProjectChanged();
 
-            return projectItem;
+            return addedProjectItem;
         }
 
         public virtual IProject Compile()
@@ -192,39 +199,39 @@ namespace Sitecore.Pathfinder.Projects
         {
             if (!qualifiedName.StartsWith("{") || !qualifiedName.EndsWith("}"))
             {
-                return Indexer.GetByQualifiedName<T>(qualifiedName);
+                return Index.FirstOrDefault<T>(qualifiedName);
             }
 
             Guid guid;
             if (Guid.TryParse(qualifiedName, out guid))
             {
-                return Indexer.GetByGuid<T>(guid);
+                return Index.FirstOrDefault<T>(guid);
             }
 
             guid = StringHelper.ToGuid(qualifiedName);
-            return Indexer.GetByGuid<T>(guid);
+            return Index.FirstOrDefault<T>(guid);
         }
 
         public T FindQualifiedItem<T>(Database database, string qualifiedName) where T : DatabaseProjectItem
         {
             if (!qualifiedName.StartsWith("{") || !qualifiedName.EndsWith("}"))
             {
-                return Indexer.GetByQualifiedName<T>(database, qualifiedName);
+                return Index.FirstOrDefault<T>(database, qualifiedName);
             }
 
             Guid guid;
             if (Guid.TryParse(qualifiedName, out guid))
             {
-                return Indexer.GetByGuid<T>(database, guid);
+                return Index.FirstOrDefault<T>(database, guid);
             }
 
             guid = StringHelper.ToGuid(qualifiedName);
-            return Indexer.GetByGuid<T>(database, guid);
+            return Index.FirstOrDefault<T>(database, guid);
         }
 
         public T FindQualifiedItem<T>(ProjectItemUri uri) where T : class, IProjectItem
         {
-            return Indexer.GetByUri<T>(uri);
+            return Index.FirstOrDefault<T>(uri);
         }
 
         public Database GetDatabase(string databaseName)
@@ -259,7 +266,7 @@ namespace Sitecore.Pathfinder.Projects
         {
             _projectItems.Remove(projectItem);
 
-            Indexer.Remove(projectItem);
+            Index.Remove(projectItem);
 
             var unloadable = projectItem as IUnloadable;
             if (unloadable != null)
@@ -270,21 +277,21 @@ namespace Sitecore.Pathfinder.Projects
             OnProjectChanged();
         }
 
-        public virtual void Remove(string sourceFileName)
+        public virtual void Remove(string absoluteSourceFileName)
         {
             if (string.IsNullOrEmpty(ProjectDirectory))
             {
                 throw new InvalidOperationException(Texts.Project_has_not_been_loaded__Call_Load___first);
             }
 
-            SourceFiles.Remove(SourceFiles.FirstOrDefault(s => string.Equals(s.AbsoluteFileName, sourceFileName, StringComparison.OrdinalIgnoreCase)));
+            SourceFiles.Remove(absoluteSourceFileName.ToUpperInvariant());
 
-            _diagnostics.RemoveAll(d => string.Equals(d.FileName, sourceFileName, StringComparison.OrdinalIgnoreCase));
+            _diagnostics.RemoveAll(d => string.Equals(d.FileName, absoluteSourceFileName, StringComparison.OrdinalIgnoreCase));
 
             foreach (var projectItem in ProjectItems.ToList())
             {
                 // todo: not working
-                if (!string.Equals(projectItem.Snapshots.First().SourceFile.AbsoluteFileName, sourceFileName, StringComparison.OrdinalIgnoreCase))
+                if (!string.Equals(projectItem.Snapshots.First().SourceFile.AbsoluteFileName, absoluteSourceFileName, StringComparison.OrdinalIgnoreCase))
                 {
                     continue;
                 }
@@ -327,10 +334,13 @@ namespace Sitecore.Pathfinder.Projects
             var projectImportService = CompositionService.Resolve<ProjectImportsService>();
             projectImportService.Import(this, context);
 
+            Parallel.ForEach(sourceFileNames, sourceFileName => Add(sourceFileName));
+            /*
             foreach (var sourceFileName in sourceFileNames)
             {
                 Add(sourceFileName);
             }
+            */
 
             Compile();
 
@@ -340,65 +350,69 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         protected virtual IProjectItem MergeItem<T>([NotNull] T newItem) where T : Item
         {
-            var fileNameWithoutExtensions = newItem.Snapshots.First().SourceFile.GetFileNameWithoutExtensions();
+            Item[] items = null;
 
-            var itemList = ProjectItems.OfType<Item>().ToList();
-
-            IEnumerable<Item> items = null;
             if (newItem.MergingMatch == MergingMatch.MatchUsingSourceFile)
             {
-                items = itemList.Where(i => i.Snapshots.Any(s => string.Equals(s.SourceFile.GetFileNameWithoutExtensions(), fileNameWithoutExtensions, StringComparison.OrdinalIgnoreCase))).ToList();
+                items = Index.Where<Item>(newItem.Snapshots.First().SourceFile).ToArray();
             }
 
-            if (items == null)
+            if (items == null || items.Length == 0)
             {
-                items = itemList.Where(i => i.MergingMatch == MergingMatch.MatchUsingSourceFile && i.Snapshots.Any(s => string.Equals(s.SourceFile.GetFileNameWithoutExtensions(), fileNameWithoutExtensions, StringComparison.OrdinalIgnoreCase))).ToList();
+                items = Index.Where<Item>(newItem.Snapshots.First().SourceFile).Where(i => i.MergingMatch == MergingMatch.MatchUsingSourceFile).ToArray();
             }
 
-            if (!items.Any())
+            if (items.Length == 0)
             {
-                items = Indexer.GetAllByQualifiedName<Item>(newItem.Database, newItem.ItemIdOrPath);
+                items = Index.WhereQualifiedName<Item>(newItem.Database, newItem.ItemIdOrPath).ToArray();
             }
 
-            if (!items.Any())
+            if (items.Length == 0)
             {
                 _projectItems.Add(newItem);
                 return newItem;
             }
 
-            if (items.Count() > 1)
+            if (items.Length > 1)
             {
                 throw new InvalidOperationException("Trying to merge multiple items");
             }
 
-            var item = items.First();
+            var item = items[0];
             item.Merge(newItem);
+
             return item;
         }
 
         [NotNull]
         protected virtual IProjectItem MergeTemplate<T>([NotNull] T newTemplate) where T : Template
         {
-            var templates = ProjectItems.OfType<Template>().Where(i => string.Equals(i.ItemIdOrPath, newTemplate.ItemIdOrPath, StringComparison.OrdinalIgnoreCase) && string.Equals(i.DatabaseName, newTemplate.DatabaseName, StringComparison.OrdinalIgnoreCase)).ToList();
-            if (!templates.Any())
+            var templates = Index.WhereQualifiedName<Template>(newTemplate.Database, newTemplate.ItemIdOrPath).ToArray();
+
+            if (templates.Length == 0)
             {
                 _projectItems.Add(newTemplate);
                 return newTemplate;
             }
 
-            if (templates.Count > 1)
+            if (templates.Length > 1)
             {
                 throw new InvalidOperationException("Trying to merge multiple templates");
             }
 
             var template = templates.First();
             template.Merge(newTemplate);
+
             return template;
         }
 
         protected virtual void OnProjectChanged()
         {
-            ProjectChanged?.Invoke(this);
+            var handler = ProjectChanged;
+            if (handler != null)
+            {
+                handler(this);
+            }
         }
     }
 }

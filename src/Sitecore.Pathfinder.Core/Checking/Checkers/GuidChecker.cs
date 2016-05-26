@@ -18,17 +18,27 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         [NotNull, ItemNotNull, Export("Check")]
         public IEnumerable<Diagnostic> GuidClash([NotNull] ICheckerContext context)
         {
-            var items = context.Project.ProjectItems.Where(i => !(i is DatabaseProjectItem) || !((DatabaseProjectItem)i).IsImport).ToArray();
+            var items = context.Project.ProjectItems.ToArray();
 
             for (var i = 0; i < items.Length; i++)
             {
                 var projectItem1 = items[i];
+
                 var item1 = projectItem1 as DatabaseProjectItem;
+                if (item1 != null && item1.IsImport)
+                {
+                    continue;
+                }
 
                 for (var j = i + 1; j < items.Length; j++)
                 {
                     var projectItem2 = items[j];
+
                     var item2 = items[j] as DatabaseProjectItem;
+                    if (item2 != null && item2.IsImport)
+                    {
+                        continue;
+                    }
 
                     if (projectItem1.Uri.Guid != projectItem2.Uri.Guid)
                     {

@@ -1,6 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using Sitecore.Data.Serialization;
@@ -24,6 +25,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
             ForceUpdate = true
         };
 
+        [ImportingConstructor]
         public SerializationFileEmitter([NotNull] IFileSystemService fileSystem) : base(Constants.Emitters.Items)
         {
             FileSystem = fileSystem;
