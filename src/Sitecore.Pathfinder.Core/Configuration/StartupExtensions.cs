@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Configuration
 {
@@ -38,7 +39,11 @@ namespace Sitecore.Pathfinder.Configuration
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    Console.WriteLine(ex.StackTrace);
+                    if (configuration.GetBool(Constants.Configuration.System.ShowStackTrace))
+                    {
+                        Console.WriteLine(ex.StackTrace);
+                    }
+
                     return null;
                 }
             }

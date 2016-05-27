@@ -74,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\DiagnosticCollectionExtensions.cs" />
+    <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="HostService.cs" />
     <Compile Include="Checking\Checker.cs" />
     <Compile Include="Compiling\LayoutFileCompilers\TemplateLayoutFileCompiler.cs" />

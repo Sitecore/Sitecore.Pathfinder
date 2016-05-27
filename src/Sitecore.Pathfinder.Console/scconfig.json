@@ -23,7 +23,7 @@
         },
 
         "ignore-filenames": {
-            "default" :  "scc.cmd, project.json, readme.md, web.config, packages.config"
+            "default": "scc.cmd, project.json, readme.md, web.config, packages.config"
         },
 
         // default file search pattern
@@ -34,10 +34,12 @@
 
         // mapping items and files to website when building a project
         "project-to-website": {
+
         },
 
         // mapping items and files to project when importing a website
         "website-to-project": {
+
         }
     },
 
@@ -109,6 +111,7 @@
         // list of enabled and disabled checkers
         "checkers": {
             // "TemplateHelp": "disabled"
+
         },
 
         // reference text that will not be treated as a reference
@@ -156,7 +159,7 @@
     },
 
     "install-package": {
-        // specifies whether the project directories are added as feeds. This requires the website to have read access to the project directory. 
+        // specifies whether the project directories are added as feeds. This requires the website to have read access to the project directory.
         "add-project-directories-as-feeds": true,
         // checks that the version of the source bin file is larger than the destination before copying.
         // when developing this should probably be combined with auto-incrementing the file version of the assembly.
@@ -209,6 +212,7 @@
     },
 
     "reset-website": {
+
     },
 
     "sync-website": {
@@ -384,20 +388,17 @@
         }
     },
 
-    // support for multi-threading
-    "multi-threaded" : false,
-
     // NuGet source repositories
     "nuget-repositories": {
         // "nuget.org": "https://www.nuget.org/api/v2"
-    }, 
+    },
 
     // directories, that hold packages
     "packages": {
-        "include-packages-config-as-dependencies": true ,
+        "include-packages-config-as-dependencies": true,
         "nuget-directory": "packages",
         "npm-directory": "node_modules"
-    },  
+    },
 
     // maps project role to checkers
     "project-role-checkers": {
@@ -422,6 +423,7 @@
     // global search and replace tokens - case-sensitive
     "search-and-replace-tokens": {
         // "replace" : "with"
+
     },
 
     "standard-template-fields": {
@@ -496,5 +498,16 @@
         "{A4F985D9-98B3-4B52-AAAF-4344F6E747C6}": "__Workflow",
         "{3E431DE1-525E-47A3-B6B0-1CCBEC3A8C98}": "__Workflow state",
         "{86B52EEF-078E-4D9E-80BF-888287070E6C}": "__Workflow Validation Rules"
+    },
+
+    "system": {
+        // support for multi-threading
+        "multi-threaded": true,
+
+        // show stack trace on errors
+        "show-stack-trace": true,
+
+        // show time spent by each task
+        "show-task-time": false
     }
 }

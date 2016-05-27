@@ -62,8 +62,6 @@ namespace Sitecore.Pathfinder
         {
             public const string Checkers = "checkers";
 
-            public const string MultiThreaded = "multi-threaded";
-
             public const string CommandLineConfig = "config";
 
             public const string Culture = "culture";
@@ -144,6 +142,13 @@ namespace Sitecore.Pathfinder
                 public const string PackageDirectory = "copy-package:package-directory";
             }
 
+            public static class Extensions
+            {
+                public const string AssemblyFileName = "extensions:project-extensions-assembly-filename";
+
+                public const string Directory = "extensions:project-extensions-directory";
+            }
+
             public static class GenerateCode
             {
                 public const string Imports = "generate-code:t4-imports";
@@ -164,19 +169,6 @@ namespace Sitecore.Pathfinder
                 public const string CheckBinFileVersion = "install-package:check-bin-file-version";
 
                 public const string InstallUrl = "install-package:install-url";
-            }
-
-            public static class ProjectWebsiteMappings
-            {
-                public const string ContentFiles = "project-website-mappings:content-files";
-
-                public const string ExcludedFields = "project-website-mappings:excluded-fields";
-
-                public const string FileSearchPattern = "project-website-mappings:file-search-pattern";
-
-                public const string IgnoreDirectories = "project-website-mappings:ignore-directories";
-
-                public const string IgnoreFileNames = "project-website-mappings:ignore-filenames";
             }
 
             public static class Messages
@@ -220,11 +212,17 @@ namespace Sitecore.Pathfinder
                 public const string Include = "pack-nuget:include";
             }
 
-            public static class Extensions
+            public static class ProjectWebsiteMappings
             {
-                public const string AssemblyFileName = "extensions:project-extensions-assembly-filename";
+                public const string ContentFiles = "project-website-mappings:content-files";
 
-                public const string Directory = "extensions:project-extensions-directory";
+                public const string ExcludedFields = "project-website-mappings:excluded-fields";
+
+                public const string FileSearchPattern = "project-website-mappings:file-search-pattern";
+
+                public const string IgnoreDirectories = "project-website-mappings:ignore-directories";
+
+                public const string IgnoreFileNames = "project-website-mappings:ignore-filenames";
             }
 
             public static class PublishDatabases
@@ -240,6 +238,15 @@ namespace Sitecore.Pathfinder
             public static class ShowWebsite
             {
                 public const string StartUrl = "show-website:start-url";
+            }
+
+            public static class System
+            {
+                public const string MultiThreaded = "system:multi-threaded";
+
+                public const string ShowStackTrace = "system:show-stack-trace";
+
+                public const string ShowTaskTime = "system:show-task-time";
             }
 
             public static class WatchProject

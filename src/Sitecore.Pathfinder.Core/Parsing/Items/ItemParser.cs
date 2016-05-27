@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -110,7 +111,13 @@ namespace Sitecore.Pathfinder.Parsing.Items
             }
             catch (Exception ex)
             {
-                context.ParseContext.Trace.TraceError(Msg.P1004, string.Empty, context.ParseContext.Snapshot.SourceFile.AbsoluteFileName, TextSpan.Empty, ex.Message + Environment.NewLine + ex.StackTrace);
+                var details = ex.Message;
+                if (context.ParseContext.Configuration.GetBool(Constants.Configuration.System.ShowStackTrace))
+                {
+                    details += Environment.NewLine + ex.StackTrace;
+                }
+
+                context.ParseContext.Trace.TraceError(Msg.P1004, string.Empty, context.ParseContext.Snapshot.SourceFile.AbsoluteFileName, TextSpan.Empty, details);
             }
         }
     }

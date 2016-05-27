@@ -19,7 +19,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
         protected override void Process(CompilePipeline pipeline)
         {
             var context = pipeline.Context.CompositionService.Resolve<ICompileContext>();
-            var multiThreaded = pipeline.Context.Configuration.GetBool(Constants.Configuration.MultiThreaded);
+            var isMultiThreaded = pipeline.Context.Configuration.GetBool(Constants.Configuration.System.MultiThreaded);
 
             List<IProjectItem> projectItems;
             do
@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
                 {
                     projectItem.State = ProjectItemState.Compiled;
 
-                    if (multiThreaded)
+                    if (isMultiThreaded)
                     {
                         Parallel.ForEach(pipeline.Context.Compilers, compiler =>
                         {

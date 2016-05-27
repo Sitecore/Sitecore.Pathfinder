@@ -1,7 +1,7 @@
 // © 2016 Sitecore Corporation A/S. All rights reserved.
 
+using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Sitecore.Pathfinder.Compiling.FieldCompilers;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
@@ -16,20 +16,11 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
         protected override void Process(CompilePipeline pipeline)
         {
+            // tried to use multi-threading here, but compilers update the templates, while then throws an exception
             var context = pipeline.Context.CompositionService.Resolve<IFieldCompileContext>().With(pipeline.Project);
-            var multiThreaded = pipeline.Context.Configuration.GetBool(Constants.Configuration.MultiThreaded);
-
-            if (multiThreaded)
+            foreach (var field in pipeline.Project.Items.SelectMany(item => item.Fields))
             {
-                var fields = pipeline.Project.Items.SelectMany(item => item.Fields).ToArray();
-                Parallel.ForEach(fields, field => field.Compile(context));
-            }                
-            else
-            {
-                foreach (var field in pipeline.Project.Items.SelectMany(item => item.Fields))
-                {
-                    field.Compile(context);
-                }
+                field.Compile(context);
             }
         }
     }

@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Microsoft.Framework.ConfigurationModel;
@@ -107,23 +108,22 @@ namespace Sitecore.Pathfinder.Tasks
                 }
             }
 
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             try
             {
                 task.Run(context);
             }
             catch (Exception ex)
             {
-                context.Trace.TraceError(Msg.I1007, ex.Message);
-
-                var innerException = ex.InnerException;
-                while (innerException != null)
-                {
-                    context.Trace.TraceError(Msg.I1007, innerException.Message);
-                    innerException = innerException.InnerException;
-                }
-
-                context.Trace.WriteLine(ex.StackTrace);
+                ex.Trace(context.Trace, Configuration);
                 context.IsAborted = true;
+            }
+
+            if (context.Configuration.GetBool(Constants.Configuration.System.ShowTaskTime))
+            {
+                Console.WriteLine($"Task '{task.TaskName}': {stopwatch.Elapsed.TotalMilliseconds.ToString("#,##0")}ms");
             }
         }
 
