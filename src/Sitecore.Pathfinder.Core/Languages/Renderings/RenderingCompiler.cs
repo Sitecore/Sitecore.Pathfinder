@@ -39,7 +39,7 @@ namespace Sitecore.Pathfinder.Languages.Renderings
             item.Fields.Add(field);
             item.References.Add(new FileReference(item, field.ValueProperty, field.Value));
 
-            if (rendering.Placeholders.Any())
+            if (rendering.Placeholders.Any() && rendering.Extension != ".aspx")
             {
                 var placeholdersField = context.Factory.Field(item, TextNode.Empty, "Place Holders", string.Join(",", rendering.Placeholders));
                 item.Fields.Add(placeholdersField);

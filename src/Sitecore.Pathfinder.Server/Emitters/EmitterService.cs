@@ -102,7 +102,14 @@ namespace Sitecore.Pathfinder.Emitters
                 }
 
                 var indexName = "sitecore_" + database.Name.ToLowerInvariant() + "_index";
-                var index = ContentSearchManager.GetIndex(indexName);
+                ISearchIndex index = null;
+                try {
+                    index = ContentSearchManager.GetIndex(indexName);
+                }
+                catch {
+                    continue;
+                }
+                
                 if (index == null)
                 {
                     continue;
