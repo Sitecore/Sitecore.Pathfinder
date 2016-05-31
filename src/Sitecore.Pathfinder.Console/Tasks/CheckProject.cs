@@ -16,7 +16,7 @@ namespace Sitecore.Pathfinder.Tasks
         public CheckProject([NotNull] ICheckerService checkerService) : base("check-project")
         {
             CheckerService = checkerService;
-        }
+        }                                   
 
         [NotNull]
         protected ICheckerService CheckerService { get; }
@@ -24,6 +24,8 @@ namespace Sitecore.Pathfinder.Tasks
         public override void Run(IBuildContext context)
         {
             context.Trace.TraceInformation(Msg.C1041, Texts.Checking___);
+
+            context.Project.Check();
 
             var treatWarningsAsErrors = context.Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
 

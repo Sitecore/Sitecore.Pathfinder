@@ -10,6 +10,7 @@ using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Tasks;
 using Sitecore.Pathfinder.Tasks.Building;
 
@@ -19,10 +20,10 @@ namespace Sitecore.Pathfinder.Building
     public class Builder : TaskRunnerBase
     {
         [ImportingConstructor]
-        public Builder([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] IFileSystemService fileSystem, [NotNull, ItemNotNull, ImportMany] IEnumerable<ITask> tasks, [NotNull] ExportFactory<IBuildContext> buildContextFactory) : base(configuration, tasks)
+        public Builder([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem, [NotNull] IProjectService projectService, [NotNull] ExportFactory<IBuildContext> buildContextFactory, [NotNull, ItemNotNull, ImportMany] IEnumerable<ITask> tasks) : base(configuration, tasks)
         {
-            CompositionService = compositionService;
             FileSystem = fileSystem;
+            ProjectService = projectService;
             BuildContextFactory = buildContextFactory;
         }
 
@@ -30,14 +31,16 @@ namespace Sitecore.Pathfinder.Building
         protected IFileSystemService FileSystem { get; }
 
         [NotNull]
-        protected ExportFactory<IBuildContext> BuildContextFactory { get; }
+        protected IProjectService ProjectService { get; }
 
         [NotNull]
-        protected ICompositionService CompositionService { get; }
+        protected ExportFactory<IBuildContext> BuildContextFactory { get; }
 
         public override int Start()
         {
-            var context = BuildContextFactory.New();
+            var project = ProjectService.LoadProjectFromConfiguration();
+                
+            var context = BuildContextFactory.New().With(project);
 
             RegisterProjectDirectory(context);
 

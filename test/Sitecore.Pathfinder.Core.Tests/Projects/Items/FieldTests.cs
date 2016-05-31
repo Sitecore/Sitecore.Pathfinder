@@ -39,7 +39,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         public void Compile_NoMatchingCompiler()
         {
             var compilers = new IFieldCompiler[] { new CheckboxFieldCompiler() };
-            var project = new Project(null, null, null, null, null, null, new ProjectIndexer());
+            var project = new Project(null, null, null, null, null, null, null, new ProjectIndexer());
             var template = CreateTemplate(project);
             var context = CreateContext(compilers);
 
@@ -61,7 +61,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         public void Compile_MatchingCompiler()
         {
             var compilers = new IFieldCompiler[] { new CheckboxFieldCompiler() };
-            var project = new Project(null, null, null, null, null, null, new ProjectIndexer());
+            var project = new Project(null, null, null, null, null, null, null, new ProjectIndexer());
             var template = CreateTemplate(project);
             var context = CreateContext(compilers);
 
@@ -84,7 +84,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         public void Compile_ExclusiveCompiler()
         {
             var compilers = new IFieldCompiler[] { new CheckboxFieldCompiler(), new ReplaceCompiler("alpha") };
-            var project = new Project(null, null, null, null, null, null, new ProjectIndexer());
+            var project = new Project(null, null, null, null, null, null, null, new ProjectIndexer());
             var template = CreateTemplate(project);
             var context = CreateContext(compilers);
 
@@ -107,7 +107,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         public void Compile_NonExclusiveCompiler()
         {
             var compilers = new IFieldCompiler[] { new ReplaceCompiler("alpha"), new ReplaceCompiler("beta"), };
-            var project = new Project(null, null, null, null, null, null, new ProjectIndexer());
+            var project = new Project(null, null, null, null, null, null, null, new ProjectIndexer());
             var template = CreateTemplate(project);
             var context = CreateContext(compilers);
 

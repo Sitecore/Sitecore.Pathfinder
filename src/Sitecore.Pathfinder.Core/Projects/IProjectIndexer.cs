@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -18,6 +19,9 @@ namespace Sitecore.Pathfinder.Projects
         ICollection<Template> Templates { get; }
 
         void Add([NotNull] IProjectItem projectItem);
+
+        [NotNull, ItemNotNull]
+        IEnumerable<IReference> FindUsages([NotNull] string qualifiedName);
 
         [CanBeNull]
         T FirstOrDefault<T>(Guid guid) where T : class, IProjectItem;

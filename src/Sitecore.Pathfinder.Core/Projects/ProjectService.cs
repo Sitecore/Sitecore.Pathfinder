@@ -13,15 +13,12 @@ namespace Sitecore.Pathfinder.Projects
     public class ProjectService : IProjectService
     {
         [ImportingConstructor]
-        public ProjectService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFactoryService factory)
+        public ProjectService([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] ExportFactory<IProjectTree> projectTreeFactory)
         {
-            CompositionService = compositionService;
             Configuration = configuration;
             Factory = factory;
+            ProjectTreeFactory = projectTreeFactory;
         }
-
-        [NotNull]
-        protected ICompositionService CompositionService { get; }
 
         [NotNull]
         protected IConfiguration Configuration { get; }
@@ -29,18 +26,19 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         protected IFactoryService Factory { get; }
 
+        [NotNull]
+        protected ExportFactory<IProjectTree> ProjectTreeFactory { get; }
+
         public IProject LoadProjectFromConfiguration()
         {
-            var projectOptions = GetProjectOptions();
+            var projectDirectory = Configuration.GetProjectDirectory();
 
-            var projectTree = GetProjectTree(projectOptions);
-
-            return projectTree.GetProject(projectOptions);
+            return LoadProjectFromDirectory(projectDirectory);
         }
 
-        public virtual ProjectOptions GetProjectOptions()
+        [NotNull]
+        public IProject LoadProjectFromDirectory([NotNull] string projectDirectory)
         {
-            var projectDirectory = Configuration.GetProjectDirectory();
             var databaseName = Configuration.GetString(Constants.Configuration.Database);
 
             var projectOptions = Factory.ProjectOptions(projectDirectory, databaseName);
@@ -48,12 +46,14 @@ namespace Sitecore.Pathfinder.Projects
             LoadStandardTemplateFields(projectOptions);
             LoadTokens(projectOptions);
 
-            return projectOptions;
+            var projectTree = GetProjectTree(projectOptions);
+
+            return projectTree.GetProject(projectOptions);
         }
 
         public virtual IProjectTree GetProjectTree(ProjectOptions projectOptions)
         {
-            return CompositionService.Resolve<IProjectTree>().With(Configuration.GetString(Constants.Configuration.ToolsDirectory), projectOptions.ProjectDirectory);
+            return ProjectTreeFactory.New().With(Configuration.GetString(Constants.Configuration.ToolsDirectory), projectOptions.ProjectDirectory);
         }
 
         protected virtual void LoadStandardTemplateFields([NotNull] ProjectOptions projectOptions)

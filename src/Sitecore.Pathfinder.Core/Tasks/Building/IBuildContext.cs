@@ -30,5 +30,8 @@ namespace Sitecore.Pathfinder.Tasks.Building
 
         [NotNull]
         string WebsiteDirectory { get; }
+
+        [NotNull]
+        IBuildContext With([NotNull] IProject project);
     }
 }

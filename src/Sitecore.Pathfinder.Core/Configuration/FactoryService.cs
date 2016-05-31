@@ -4,13 +4,13 @@ using System;
 using System.ComponentModel.Composition;
 using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.BinFiles;
 using Sitecore.Pathfinder.Languages.ConfigFiles;
 using Sitecore.Pathfinder.Languages.Content;
 using Sitecore.Pathfinder.Languages.Media;
 using Sitecore.Pathfinder.Languages.Renderings;
+using Sitecore.Pathfinder.Languages.Serialization;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Parsing.Items;
 using Sitecore.Pathfinder.Projects;
@@ -18,7 +18,6 @@ using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
-using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Configuration
 {

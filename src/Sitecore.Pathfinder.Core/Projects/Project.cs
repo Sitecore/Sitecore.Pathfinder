@@ -6,6 +6,7 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Framework.ConfigurationModel;
+using Sitecore.Pathfinder.Checking;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines;
 using Sitecore.Pathfinder.Configuration;
@@ -43,7 +44,7 @@ namespace Sitecore.Pathfinder.Projects
         private string _projectUniqueId;
 
         [ImportingConstructor]
-        public Project([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService, [NotNull] IPipelineService pipelineService, [NotNull] IProjectIndexer indexer)
+        public Project([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService, [NotNull] IPipelineService pipelineService, [NotNull] ICheckerService checker,  [NotNull] IProjectIndexer index)
         {
             CompositionService = compositionService;
             Configuration = configuration;
@@ -51,7 +52,8 @@ namespace Sitecore.Pathfinder.Projects
             FileSystem = fileSystem;
             ParseService = parseService;
             PipelineService = pipelineService;
-            Index = indexer;
+            Checker = checker;
+            Index = index;
 
             Options = ProjectOptions.Empty;
         }
@@ -64,6 +66,17 @@ namespace Sitecore.Pathfinder.Projects
 
         public ICollection<Diagnostic> Diagnostics => _diagnostics;
 
+        public void Check()
+        {
+            if (_isChecked)
+            {
+                return;
+            }
+
+            _isChecked = true;
+            Checker.CheckProject(this);
+        }
+
         public long Ducats { get; set; }
 
         [NotNull]
@@ -71,7 +84,14 @@ namespace Sitecore.Pathfinder.Projects
 
         public IEnumerable<File> Files => ProjectItems.OfType<File>();
 
-        public bool HasErrors => Diagnostics.Any(d => d.Severity == Severity.Error);
+        public bool HasErrors
+        {
+            get
+            {
+                Check();
+                return Diagnostics.Any(d => d.Severity == Severity.Error);
+            }
+        }
 
         public IEnumerable<Item> Items => Index.Items;
 
@@ -105,10 +125,15 @@ namespace Sitecore.Pathfinder.Projects
         protected IPipelineService PipelineService { get; }
 
         [NotNull]
-        private static readonly object _sourceFilesSync = new object();
+        protected ICheckerService Checker { get; }
 
         [NotNull]
-        private static readonly object _addSync = new object();
+        private readonly object _sourceFilesSync = new object();
+
+        [NotNull]
+        private readonly object _addSync = new object();
+
+        private bool _isChecked;
 
         public virtual IProject Add(string absoluteFileName)
         {
@@ -169,6 +194,8 @@ namespace Sitecore.Pathfinder.Projects
 
                 Index.Add(addedProjectItem);
             }
+
+            _isChecked = false;
 
             OnProjectChanged();
 
@@ -252,12 +279,6 @@ namespace Sitecore.Pathfinder.Projects
         {
             var databaseName = database.DatabaseName;
             return Items.Where(i => string.Equals(i.DatabaseName, databaseName, StringComparison.OrdinalIgnoreCase));
-        }
-
-        public IEnumerable<Template> GetTemplates(Database database)
-        {
-            var databaseName = database.DatabaseName;
-            return Templates.Where(t => string.Equals(t.DatabaseName, databaseName, StringComparison.OrdinalIgnoreCase));
         }
 
         public event ProjectChangedEventHandler ProjectChanged;

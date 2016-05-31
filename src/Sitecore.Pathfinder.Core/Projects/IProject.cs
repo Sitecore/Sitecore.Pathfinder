@@ -72,9 +72,6 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull, ItemNotNull]
         IEnumerable<Item> GetItems([NotNull] Database database);
 
-        [NotNull, ItemNotNull]
-        IEnumerable<Template> GetTemplates([NotNull] Database database);
-
         event ProjectChangedEventHandler ProjectChanged;
 
         void Remove([NotNull] IProjectItem projectItem);
@@ -86,5 +83,7 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull]
         IProject With([NotNull] ProjectOptions projectOptions, [NotNull, ItemNotNull] IEnumerable<string> sourceFileNames);
+
+        void Check();
     }
 }

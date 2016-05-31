@@ -9,7 +9,7 @@ using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Extensions
 {
-    public static partial class CompositionServiceExtensions
+    public static class CompositionServiceExtensions
     {
         [NotNull]
         public static T New<T>([NotNull] this ExportFactory<T> factory) where T : class

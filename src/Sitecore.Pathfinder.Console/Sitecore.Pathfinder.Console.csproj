@@ -160,6 +160,7 @@
     </Content>
     <Compile Include="Tasks\AddProject.cs" />
     <Compile Include="Tasks\CleanWebsite.cs" />
+    <Compile Include="Tasks\ComparePackages.cs" />
     <Compile Include="Tasks\InitGrunt.cs" />
     <Compile Include="Tasks\InitGulp.cs" />
     <Compile Include="Tasks\ListCheckers.cs" />

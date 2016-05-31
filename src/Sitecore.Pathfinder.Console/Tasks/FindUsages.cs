@@ -1,10 +1,8 @@
-// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+// © 2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.ComponentModel.Composition;
 using System.Linq;
-using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.Querying;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
@@ -12,13 +10,9 @@ namespace Sitecore.Pathfinder.Tasks
     public class FindUsages : QueryBuildTaskBase
     {
         [ImportingConstructor]
-        public FindUsages([NotNull] IQueryService queryService) : base("find-usages")
+        public FindUsages() : base("find-usages")
         {
-            QueryService = queryService;
         }
-
-        [NotNull]
-        protected IQueryService QueryService { get; }
 
         public override void Run(IBuildContext context)
         {
@@ -29,7 +23,7 @@ namespace Sitecore.Pathfinder.Tasks
                 return;
             }
 
-            var references = QueryService.FindUsages(context.Project, qualifiedName).ToList();
+            var references = context.Project.Index.FindUsages(qualifiedName).ToList();
 
             Display(context, references);
 

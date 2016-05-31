@@ -11,7 +11,6 @@ using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects;
-using Sitecore.Pathfinder.Querying;
 using Sitecore.Pathfinder.Rules;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Pathfinder.Xml.XPath;
@@ -44,9 +43,6 @@ namespace Sitecore.Pathfinder.Helpers
         [NotNull]
         public IProjectService ProjectService { get; private set; }
 
-        [NotNull]
-        public IQueryService QueryService { get; set; }
-
         [Diagnostics.NotNull]
         public IRuleService RuleService { get; set; }
 
@@ -74,7 +70,6 @@ namespace Sitecore.Pathfinder.Helpers
             ConfigurationService = CompositionService.Resolve<IConfigurationService>();
             SnapshotService = CompositionService.Resolve<ISnapshotService>();
             CheckerService = CompositionService.Resolve<ICheckerService>();
-            QueryService = CompositionService.Resolve<IQueryService>();
             LanguageService = CompositionService.Resolve<ILanguageService>();
             RuleService = CompositionService.Resolve<IRuleService>();
             XPathService = CompositionService.Resolve<IXPathService>();

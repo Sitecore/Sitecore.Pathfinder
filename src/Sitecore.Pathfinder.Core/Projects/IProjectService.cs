@@ -8,9 +8,6 @@ namespace Sitecore.Pathfinder.Projects
     public interface IProjectService
     {
         [NotNull]
-        ProjectOptions GetProjectOptions();
-
-        [NotNull]
         IProjectTree GetProjectTree([NotNull] ProjectOptions projectOptions);
 
         [NotNull]

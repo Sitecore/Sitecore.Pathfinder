@@ -50,7 +50,6 @@ namespace Sitecore.Pathfinder.Parsing
 
         public IReferenceParserService ReferenceParser { get; }
 
-        [NotNull]
         public ISchemaService SchemaService { get; }
 
         public ISnapshot Snapshot { get; private set; }

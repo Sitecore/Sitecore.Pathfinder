@@ -9,22 +9,12 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Templates;
-using Sitecore.Pathfinder.Querying;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checkers
 {
     public class TemplatesChecker : Checker
     {
-        [ImportingConstructor]
-        public TemplatesChecker([NotNull] IQueryService queryService)
-        {
-            QueryService = queryService;
-        }
-
-        [NotNull]
-        protected IQueryService QueryService { get; }
-
         [Export("Check")]
         public IEnumerable<Diagnostic> AvoidDeprecatedFieldType(ICheckerContext context)
         {
@@ -129,7 +119,7 @@ namespace Sitecore.Pathfinder.Checkers
         public IEnumerable<Diagnostic> DeleteUnusedTemplates(ICheckerContext context)
         {
             return from template in context.Project.Templates
-                let references = QueryService.FindUsages(context.Project, template.QualifiedName)
+                let references = context.Project.Index.FindUsages(template.QualifiedName)
                 where !references.Any()
                 select Warning(Msg.C1025, "Template is not referenced and can be deleted", TraceHelper.GetTextNode(template), template.ItemName);
         }

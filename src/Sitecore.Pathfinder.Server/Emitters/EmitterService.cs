@@ -175,6 +175,8 @@ namespace Sitecore.Pathfinder.Emitters
             var context = CompositionService.Resolve<IEmitContext>().With(project);
             var treatWarningsAsErrors = context.Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
 
+            context.Project.Check();
+
             context.Trace.TraceDiagnostics(context.Project.Diagnostics, treatWarningsAsErrors);
 
             var emitters = Emitters.OrderBy(e => e.Sortorder).ToList();

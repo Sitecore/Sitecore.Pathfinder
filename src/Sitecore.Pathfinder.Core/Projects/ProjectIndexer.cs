@@ -6,6 +6,7 @@ using System.ComponentModel.Composition;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -41,6 +42,40 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull]
         protected ProjectIndex<DatabaseProjectItem> DatabaseShortNameIndex { get; } = new ProjectIndex<DatabaseProjectItem>(item => item.DatabaseName.ToUpperInvariant() + ":" + item.ShortName.ToUpperInvariant());
+
+        public IEnumerable<IReference> FindUsages(string qualifiedName)
+        {
+            var target = FirstOrDefault<IProjectItem>(qualifiedName);
+            if (target == null)
+            {
+                yield break;
+            }
+
+            foreach (var item in Items)
+            {
+                foreach (var reference in item.References)
+                {
+                    var i = reference.Resolve();
+                    if (i == target)
+                    {
+                        yield return reference;
+                    }
+                }
+            }
+
+            foreach (var item in Templates)
+            {
+                foreach (var reference in item.References)
+                {
+                    var i = reference.Resolve();
+                    if (i == target)
+                    {
+                        yield return reference;
+                    }
+                }
+            }
+        }
+
 
         public virtual void Add(IProjectItem projectItem)
         {

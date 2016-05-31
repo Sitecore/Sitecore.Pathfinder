@@ -13,7 +13,6 @@ namespace Sitecore.Pathfinder.ProjectTrees
             Name = Path.GetFileNameWithoutExtension(fileName);
         }
 
-        [NotNull]
         public string FileName { get; }
 
         public override string Name { get; }

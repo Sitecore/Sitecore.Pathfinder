@@ -191,7 +191,6 @@
     <Compile Include="Compiling\Pipelines\CompilePipelines\1000 - CompileProjectItems.cs" />
     <Compile Include="Compiling\Pipelines\CompilePipelines\2000 - CompileFields.cs" />
     <Compile Include="Compiling\Pipelines\CompilePipelines\3000 - ResolveReferences.cs" />
-    <Compile Include="Compiling\Pipelines\CompilePipelines\4000 - CheckProject.cs" />
     <Compile Include="Compiling\Pipelines\CompilePipelines\0010 - CreateTemplatesFromItems.cs" />
     <Compile Include="Configuration\StartupExtensions.cs" />
     <Compile Include="Diagnostics\ConsoleService.cs" />
@@ -379,8 +378,6 @@
     <Compile Include="Projects\References\DeviceReference.cs" />
     <Compile Include="Projects\References\LayoutReference.cs" />
     <Compile Include="Projects\References\LayoutRenderingReference.cs" />
-    <Compile Include="Querying\IQueryService.cs" />
-    <Compile Include="Querying\QueryService.cs" />
     <Compile Include="Snapshots\Snapshot.cs" />
     <Compile Include="Snapshots\EmptySourceFile.cs" />
     <Compile Include="Projects\IProjectItem.cs" />

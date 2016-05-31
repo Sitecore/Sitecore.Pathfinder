@@ -63,7 +63,6 @@ namespace Sitecore.Pathfinder.Extensions
             string value = string.Empty;
             if (configuration.GetSubKeys(key).Any())
             {
-                List<string> result = new List<string>();
                 foreach (var subkey in configuration.GetSubKeys(key))
                 {
                     if (value.Length > 0)

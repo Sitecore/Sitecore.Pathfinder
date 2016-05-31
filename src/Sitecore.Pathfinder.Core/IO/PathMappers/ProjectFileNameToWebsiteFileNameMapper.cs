@@ -19,7 +19,7 @@ namespace Sitecore.Pathfinder.IO.PathMappers
         [NotNull]
         public string WebsiteFileName { get; }
 
-        public bool TryGetWebsiteFileName([NotNull] string projectFileName, [NotNull] out string websiteFileName)
+        public bool TryGetWebsiteFileName(string projectFileName, out string websiteFileName)
         {
             websiteFileName = string.Empty;
 

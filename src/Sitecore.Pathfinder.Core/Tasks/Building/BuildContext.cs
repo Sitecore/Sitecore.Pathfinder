@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -13,32 +13,32 @@ namespace Sitecore.Pathfinder.Tasks.Building
     [Export(typeof(IBuildContext)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class BuildContext : TaskContext, IBuildContext
     {
-        [CanBeNull]
-        private IProject _project;
-
         [ImportingConstructor]
-        public BuildContext([NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystem, [NotNull] IProjectService projectService) : base(configuration, traceService, fileSystem)
+        public BuildContext([NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystem) : base(configuration, traceService, fileSystem)
         {
-            ProjectService = projectService;
         }
 
         public string DataFolderDirectory => Configuration.GetString(Constants.Configuration.DataFolderDirectory);
 
-        public bool IsProjectLoaded => _project != null;
+        public bool IsProjectLoaded => Project != Projects.Project.Empty;
 
         public IList<IProjectItem> ModifiedProjectItems { get; } = new List<IProjectItem>();
 
         public IList<string> OutputFiles { get; } = new List<string>();
 
-        public IProject Project => _project ?? (_project = ProjectService.LoadProjectFromConfiguration());
+        public IProject Project { get; private set; } = Projects.Project.Empty;
 
-        public string ProjectDirectory => Configuration.GetString(Constants.Configuration.ProjectDirectory);
+        public string ProjectDirectory => Configuration.GetProjectDirectory();
 
         public string ToolsDirectory => Configuration.GetToolsDirectory();
 
         public string WebsiteDirectory => Configuration.GetString(Constants.Configuration.WebsiteDirectory);
 
-        [NotNull]
-        protected IProjectService ProjectService { get; }
+        public IBuildContext With(IProject project)
+        {
+            Project = project;
+
+            return this;
+        }
     }
 }

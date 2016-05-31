@@ -33,7 +33,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
             }
         }
 
-        private void CreateItems([NotNull] ICompileContext context, [NotNull] IProject project, [NotNull] Template template)
+        protected virtual void CreateItems([NotNull] ICompileContext context, [NotNull] IProject project, [NotNull] Template template)
         {
             var templateItem = context.Factory.Item(project, template.SourceTextNodes.First(), template.Uri.Guid, template.DatabaseName, template.ItemName, template.ItemIdOrPath, Constants.Templates.Template);
             templateItem.IsEmittable = false;
