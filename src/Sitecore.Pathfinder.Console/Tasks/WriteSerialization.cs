@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Tasks
         {
             context.Trace.TraceInformation(Msg.D1021, Texts.Writing_serialization___);
 
-            var directory = PathHelper.Combine(context.Project.ProjectDirectory, context.Configuration.GetString(Constants.Configuration.WriteSerialization.Directory));
+            var directory = PathHelper.Combine(context.ProjectDirectory, context.Configuration.GetString(Constants.Configuration.WriteSerialization.Directory));
             if (FileSystem.DirectoryExists(directory))
             {
                 FileSystem.DeleteDirectory(directory);

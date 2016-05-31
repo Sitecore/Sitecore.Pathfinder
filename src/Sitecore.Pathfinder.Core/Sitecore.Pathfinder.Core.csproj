@@ -84,6 +84,7 @@
     <Compile Include="Packaging\ProjectPackages\ProjectPackageInfo.cs" />
     <Compile Include="Packaging\ProjectPackages\IProjectPackageProvider.cs" />
     <Compile Include="Packaging\ProjectPackages\ProjectPackageProviderBase.cs" />
+    <Compile Include="Projects\IDiagnosticContainer.cs" />
     <Compile Include="Projects\IProjectIndexer.cs" />
     <Compile Include="Projects\ProjectIndex.cs" />
     <Compile Include="Projects\ProjectIndexer.cs" />

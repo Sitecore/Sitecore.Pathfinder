@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using NUnit.Framework;
 using Sitecore.Pathfinder.Projects;
 
@@ -33,7 +34,7 @@ namespace Sitecore.Pathfinder.Websites.TodoMvc
                 Console.WriteLine();
             }
 
-            Assert.AreEqual(11, Project.Diagnostics.Count);
+            Assert.AreEqual(12, Project.Diagnostics.Count());
         }
     }
 }

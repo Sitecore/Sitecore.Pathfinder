@@ -25,8 +25,6 @@ namespace Sitecore.Pathfinder.Tasks
         {
             context.Trace.TraceInformation(Msg.C1041, Texts.Checking___);
 
-            context.Project.Check();
-
             var treatWarningsAsErrors = context.Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
 
             context.Trace.TraceDiagnostics(context.Project.Diagnostics, treatWarningsAsErrors);

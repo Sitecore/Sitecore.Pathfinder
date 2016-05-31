@@ -1,9 +1,9 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
-using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
-using System.Threading.Tasks;
 using Sitecore.Pathfinder.Compiling.Compilers;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
@@ -12,47 +12,41 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 {
     public class CompileProjectItems : PipelineProcessorBase<CompilePipeline>
     {
-        public CompileProjectItems() : base(1000)
+        [ImportingConstructor]
+        public CompileProjectItems([NotNull] ExportFactory<ICompileContext> compileContextFactory) : base(1000)
         {
+            CompileContextFactory = compileContextFactory;
         }
+
+        [NotNull]
+        protected ExportFactory<ICompileContext> CompileContextFactory { get; }
 
         protected override void Process(CompilePipeline pipeline)
         {
-            var context = pipeline.Context.CompositionService.Resolve<ICompileContext>();
-            var isMultiThreaded = pipeline.Context.Configuration.GetBool(Constants.Configuration.System.MultiThreaded);
+            var context = CompileContextFactory.New();
 
-            List<IProjectItem> projectItems;
+            IProjectItem[] projectItems;
             do
             {
-                projectItems = pipeline.Project.ProjectItems.Where(i => i.State == ProjectItemState.CompilationPending).ToList();
+                projectItems = pipeline.Project.ProjectItems.Where(i => i.State == ProjectItemState.CompilationPending).ToArray();
 
-                foreach (var projectItem in projectItems)
+                for (var index = projectItems.Length - 1; index >= 0; index--)
                 {
+                    var projectItem = projectItems[index];
+
                     projectItem.State = ProjectItemState.Compiled;
 
-                    if (isMultiThreaded)
+                    // tried to use Parallel.ForEach, but compilers update collections which causes Collection Modified exception
+                    foreach (var compiler in pipeline.Context.Compilers)
                     {
-                        Parallel.ForEach(pipeline.Context.Compilers, compiler =>
+                        if (compiler.CanCompile(context, projectItem))
                         {
-                            if (compiler.CanCompile(context, projectItem))
-                            {
-                                compiler.Compile(context, projectItem);
-                            }
-                        });
-                    }
-                    else
-                    {
-                        foreach (var compiler in pipeline.Context.Compilers)
-                        {
-                            if (compiler.CanCompile(context, projectItem))
-                            {
-                                compiler.Compile(context, projectItem);
-                            }
+                            compiler.Compile(context, projectItem);
                         }
                     }
                 }
             }
-            while (projectItems.Any());
+            while (projectItems.Length > 0);
         }
     }
 }

@@ -77,7 +77,13 @@ namespace Sitecore.Pathfinder.Parsing
                 }
                 catch (Exception ex)
                 {
-                    parseContext.Trace.TraceError(Msg.P1013, ex.Message, sourceFile);
+                    var text = ex.Message;
+                    if (Configuration.GetBool(Constants.Configuration.System.ShowStackTrace))
+                    {
+                        text += Environment.NewLine + ex.StackTrace;
+                    }
+
+                    parseContext.Trace.TraceError(Msg.P1013, text, sourceFile);
                 }
             }
 

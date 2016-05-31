@@ -325,7 +325,7 @@ namespace Sitecore.Pathfinder.IO
         }
 
         [NotNull]
-        private static Version GetVersion([NotNull] string fileName)
+        private Version GetVersion([NotNull] string fileName)
         {
             var fileVersionInfo = FileVersionInfo.GetVersionInfo(fileName);
 

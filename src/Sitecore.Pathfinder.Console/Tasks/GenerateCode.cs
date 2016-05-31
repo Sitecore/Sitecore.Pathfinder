@@ -61,7 +61,7 @@ namespace Sitecore.Pathfinder.Tasks
 
             projectItemCodeGenerator.Generate(baseFileName, projectItem);
 
-            context.Trace.TraceInformation(Msg.G1010, PathHelper.UnmapPath(context.Project.ProjectDirectory, baseFileName));
+            context.Trace.TraceInformation(Msg.G1010, PathHelper.UnmapPath(context.ProjectDirectory, baseFileName));
         }
     }
 }

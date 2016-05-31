@@ -26,10 +26,13 @@ namespace Sitecore.Pathfinder.Projects
     public delegate void ProjectChangedEventHandler([NotNull] object sender);
 
     [Export, Export(typeof(IProject)), PartCreationPolicy(CreationPolicy.NonShared)]
-    public class Project : IProject
+    public class Project : IProject, IDiagnosticContainer
     {
         [NotNull]
         public static readonly IProject Empty = new Project();
+
+        [NotNull]
+        private readonly object _addSync = new object();
 
         [NotNull]
         private readonly Dictionary<string, Database> _databases = new Dictionary<string, Database>();
@@ -40,14 +43,20 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull, ItemNotNull]
         private readonly List<IProjectItem> _projectItems = new List<IProjectItem>();
 
+        [NotNull]
+        private readonly object _sourceFilesSync = new object();
+
+        private bool _isChecked;
+
         [CanBeNull]
         private string _projectUniqueId;
 
         [ImportingConstructor]
-        public Project([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService, [NotNull] IPipelineService pipelineService, [NotNull] ICheckerService checker,  [NotNull] IProjectIndexer index)
+        public Project([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService, [NotNull] IPipelineService pipelineService, [NotNull] ICheckerService checker, [NotNull] IProjectIndexer index)
         {
             CompositionService = compositionService;
             Configuration = configuration;
+            Trace = trace;
             Factory = factory;
             FileSystem = fileSystem;
             ParseService = parseService;
@@ -64,17 +73,13 @@ namespace Sitecore.Pathfinder.Projects
             _projectUniqueId = Guid.Empty.Format();
         }
 
-        public ICollection<Diagnostic> Diagnostics => _diagnostics;
-
-        public void Check()
+        public IEnumerable<Diagnostic> Diagnostics
         {
-            if (_isChecked)
+            get
             {
-                return;
+                Check();
+                return _diagnostics;
             }
-
-            _isChecked = true;
-            Checker.CheckProject(this);
         }
 
         public long Ducats { get; set; }
@@ -88,10 +93,11 @@ namespace Sitecore.Pathfinder.Projects
         {
             get
             {
-                Check();
                 return Diagnostics.Any(d => d.Severity == Severity.Error);
             }
         }
+
+        public IProjectIndexer Index { get; }
 
         public IEnumerable<Item> Items => Index.Items;
 
@@ -108,6 +114,9 @@ namespace Sitecore.Pathfinder.Projects
         public IEnumerable<Template> Templates => Index.Templates;
 
         [NotNull]
+        protected ICheckerService Checker { get; }
+
+        [NotNull]
         protected ICompositionService CompositionService { get; }
 
         [NotNull]
@@ -116,8 +125,6 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         protected IFileSystemService FileSystem { get; }
 
-        public IProjectIndexer Index { get; }
-
         [NotNull]
         protected IParseService ParseService { get; }
 
@@ -125,15 +132,7 @@ namespace Sitecore.Pathfinder.Projects
         protected IPipelineService PipelineService { get; }
 
         [NotNull]
-        protected ICheckerService Checker { get; }
-
-        [NotNull]
-        private readonly object _sourceFilesSync = new object();
-
-        [NotNull]
-        private readonly object _addSync = new object();
-
-        private bool _isChecked;
+        protected ITraceService Trace { get; }
 
         public virtual IProject Add(string absoluteFileName)
         {
@@ -160,7 +159,26 @@ namespace Sitecore.Pathfinder.Projects
             }
             catch (Exception ex)
             {
-                Diagnostics.Add(new Diagnostic(Msg.P1000, absoluteFileName, TextSpan.Empty, Severity.Error, ex.Message));
+                Trace.TraceError(Msg.P1000, ex.Message, absoluteFileName);
+            }
+
+            return this;
+        }
+
+        public virtual IProject Add(IEnumerable<string> sourceFileNames)
+        {
+            var isMultiThreaded = Configuration.GetBool(Constants.Configuration.System.MultiThreaded);
+
+            if (isMultiThreaded)
+            {
+                Parallel.ForEach(sourceFileNames, sourceFileName => Add(sourceFileName));
+            }
+            else
+            {
+                foreach (var sourceFileName in sourceFileNames)
+                {
+                    Add(sourceFileName);
+                }
             }
 
             return this;
@@ -172,8 +190,6 @@ namespace Sitecore.Pathfinder.Projects
 
             lock (_addSync)
             {
-                Index.Remove(projectItem);
-
                 var newItem = projectItem as Item;
                 if (newItem != null)
                 {
@@ -189,10 +205,9 @@ namespace Sitecore.Pathfinder.Projects
                 if (addedProjectItem == null)
                 {
                     _projectItems.Add(projectItem);
+                    Index.Add(projectItem);
                     addedProjectItem = projectItem;
                 }
-
-                Index.Add(addedProjectItem);
             }
 
             _isChecked = false;
@@ -200,6 +215,20 @@ namespace Sitecore.Pathfinder.Projects
             OnProjectChanged();
 
             return addedProjectItem;
+        }
+
+        public IProject Check()
+        {
+            if (_isChecked)
+            {
+                return this;
+            }
+
+            _isChecked = true;
+
+            Checker.CheckProject(this);
+
+            return this;
         }
 
         public virtual IProject Compile()
@@ -350,23 +379,10 @@ namespace Sitecore.Pathfinder.Projects
         {
             Options = projectOptions;
 
-            var context = CompositionService.Resolve<IParseContext>().With(this, Snapshot.Empty, PathMappingContext.Empty);
-            var isMultiThreaded = Configuration.GetBool(Constants.Configuration.System.MultiThreaded);
-
             var projectImportService = CompositionService.Resolve<ProjectImportsService>();
-            projectImportService.Import(this, context);
+            projectImportService.Import(this);
 
-            if (isMultiThreaded)
-            {
-                Parallel.ForEach(sourceFileNames, sourceFileName => Add(sourceFileName));
-            }
-            else
-            {
-                foreach (var sourceFileName in sourceFileNames)
-                {
-                    Add(sourceFileName);
-                }
-            }
+            Add(sourceFileNames);
 
             Compile();
 
@@ -396,6 +412,7 @@ namespace Sitecore.Pathfinder.Projects
             if (items.Length == 0)
             {
                 _projectItems.Add(newItem);
+                Index.Add(newItem);
                 return newItem;
             }
 
@@ -405,7 +422,12 @@ namespace Sitecore.Pathfinder.Projects
             }
 
             var item = items[0];
+
+            Index.Remove(item);
+
             item.Merge(newItem);
+
+            Index.Add(item);
 
             return item;
         }
@@ -418,6 +440,7 @@ namespace Sitecore.Pathfinder.Projects
             if (templates.Length == 0)
             {
                 _projectItems.Add(newTemplate);
+                Index.Add(newTemplate);
                 return newTemplate;
             }
 
@@ -426,8 +449,13 @@ namespace Sitecore.Pathfinder.Projects
                 throw new InvalidOperationException("Trying to merge multiple templates");
             }
 
-            var template = templates.First();
+            var template = templates[0];
+
+            Index.Remove(template);
+
             template.Merge(newTemplate);
+
+            Index.Add(template);
 
             return template;
         }
@@ -439,6 +467,11 @@ namespace Sitecore.Pathfinder.Projects
             {
                 handler(this);
             }
+        }
+
+        void IDiagnosticContainer.Add(Diagnostic diagnostic)
+        {
+            _diagnostics.Add(diagnostic);
         }
     }
 }

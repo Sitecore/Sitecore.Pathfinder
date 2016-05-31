@@ -61,7 +61,7 @@ namespace Sitecore.Pathfinder.Tasks
 
             _publishDatabase = context.Configuration.GetBool(Constants.Configuration.WatchProject.PublishDatabase, true);
 
-            _fileWatcher = new FileSystemWatcher(context.Project.ProjectDirectory)
+            _fileWatcher = new FileSystemWatcher(context.ProjectDirectory)
             {
                 IncludeSubdirectories = true,
                 NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName

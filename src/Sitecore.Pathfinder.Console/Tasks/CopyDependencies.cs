@@ -35,7 +35,7 @@ namespace Sitecore.Pathfinder.Tasks
             }
 
             var sourceDirectory = context.Configuration.GetString(Constants.Configuration.CopyDependencies.SourceDirectory);
-            sourceDirectory = Path.Combine(context.Project.ProjectDirectory, sourceDirectory);
+            sourceDirectory = Path.Combine(context.ProjectDirectory, sourceDirectory);
             if (!FileSystem.DirectoryExists(sourceDirectory))
             {
                 context.Trace.TraceInformation(Msg.D1003, Texts.Dependencies_directory_not_found__Skipping, sourceDirectory);

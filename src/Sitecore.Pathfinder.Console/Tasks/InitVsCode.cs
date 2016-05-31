@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Tasks
         {
             var sourceFileName = Path.Combine(context.ToolsDirectory, "files\\editors\\VSCode.zip");
 
-            FileSystem.Unzip(sourceFileName, context.Project.ProjectDirectory);
+            FileSystem.Unzip(sourceFileName, context.ProjectDirectory);
         }
     }
 }

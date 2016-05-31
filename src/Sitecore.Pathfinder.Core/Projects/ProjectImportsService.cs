@@ -10,7 +10,6 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Packaging.ProjectPackages;
-using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects
@@ -19,8 +18,9 @@ namespace Sitecore.Pathfinder.Projects
     public class ProjectImportsService
     {
         [ImportingConstructor]
-        public ProjectImportsService([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [NotNull] IProjectPackageService projectPackages)
+        public ProjectImportsService([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [NotNull] IProjectPackageService projectPackages)
         {
+            Trace = trace;
             Factory = factory;
             FileSystem = fileSystem;
             ProjectPackages = projectPackages;
@@ -28,6 +28,9 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull]
         protected IConfiguration Configuration { get; }
+
+        [NotNull]
+        protected ITraceService Trace { get; }
 
         [NotNull]
         protected IFactoryService Factory { get; }
@@ -38,21 +41,21 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         protected IProjectPackageService ProjectPackages { get; }
 
-        public virtual void Import([NotNull] IProject project, [NotNull] IParseContext context)
+        public virtual void Import([NotNull] IProject project)
         {
             // todo: consider making this a pipeline
-            ImportProjectPackages(project, context);
+            ImportProjectPackages(project);
         }
 
-        protected virtual void ImportElements([NotNull] IProject project, [NotNull] IParseContext context, [NotNull] string fileName, [NotNull] XElement root)
+        protected virtual void ImportElements([NotNull] IProject project, [NotNull] string fileName, [NotNull] XElement root)
         {
             foreach (var element in root.Elements())
             {
-                ImportElement(project, context, fileName, element);
+                ImportElement(project, fileName, element);
             }
         }
 
-        protected virtual void ImportProjectPackages([NotNull] IProject project, [NotNull] IParseContext context)
+        protected virtual void ImportProjectPackages([NotNull] IProject project)
         {
             // todo: NuGet: handle noconfig
             foreach (var packageInfo in ProjectPackages.GetPackages(project.ProjectDirectory))
@@ -70,25 +73,25 @@ namespace Sitecore.Pathfinder.Projects
                     var root = doc.Root;
                     if (root == null)
                     {
-                        context.Trace.TraceError(Msg.I1001, Texts.Could_not_read_exports_xml_in_dependency_package, fileName);
+                        Trace.TraceError(Msg.I1001, Texts.Could_not_read_exports_xml_in_dependency_package, fileName);
                         continue;
                     }
 
-                    ImportElements(project, context, fileName, root);
+                    ImportElements(project, fileName, root);
                 }
                 catch
                 {
-                    context.Trace.TraceError(Msg.I1002, Texts.Could_not_read_exports_xml_in_dependency_package, fileName);
+                    Trace.TraceError(Msg.I1002, Texts.Could_not_read_exports_xml_in_dependency_package, fileName);
                 }
             }
         }
 
-        private void ImportElement([NotNull] IProject project, [NotNull] IParseContext context, [NotNull] string fileName, [NotNull] XElement element)
+        private void ImportElement([NotNull] IProject project, [NotNull] string fileName, [NotNull] XElement element)
         {
             Guid guid;
             if (!Guid.TryParse(element.GetAttributeValue("Id"), out guid))
             {
-                context.Trace.TraceError(Msg.I1003, Texts.Failed_to_parse_Id_, fileName);
+                Trace.TraceError(Msg.I1003, Texts.Failed_to_parse_Id_, fileName);
                 return;
             }
 
@@ -122,7 +125,7 @@ namespace Sitecore.Pathfinder.Projects
                         Guid sectionGuid;
                         if (!Guid.TryParse(sectionElement.GetAttributeValue("Id"), out sectionGuid))
                         {
-                            context.Trace.TraceError(Msg.I1004, Texts.Failed_to_parse_Id_, fileName);
+                            Trace.TraceError(Msg.I1004, Texts.Failed_to_parse_Id_, fileName);
                             return;
                         }
 
@@ -134,7 +137,7 @@ namespace Sitecore.Pathfinder.Projects
                             Guid fieldGuid;
                             if (!Guid.TryParse(fieldElement.GetAttributeValue("Id"), out fieldGuid))
                             {
-                                context.Trace.TraceError(Msg.I1005, Texts.Failed_to_parse_Id_, fileName);
+                                Trace.TraceError(Msg.I1005, Texts.Failed_to_parse_Id_, fileName);
                                 return;
                             }
 

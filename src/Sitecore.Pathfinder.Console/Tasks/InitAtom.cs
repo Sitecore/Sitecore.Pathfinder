@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Tasks
         {
             var zipFileName = Path.Combine(context.ToolsDirectory, "files\\editors\\Atom.zip");
 
-            FileSystem.Unzip(zipFileName, context.Project.ProjectDirectory);
+            FileSystem.Unzip(zipFileName, context.ProjectDirectory);
         }
     }
 }

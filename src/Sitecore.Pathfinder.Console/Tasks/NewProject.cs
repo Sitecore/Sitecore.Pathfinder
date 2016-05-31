@@ -1168,7 +1168,7 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
-            var projectDirectory = context.Project.ProjectDirectory;
+            var projectDirectory = context.ProjectDirectory;
             if (!FileSystem.DirectoryExists(projectDirectory))
             {
                 FileSystem.CreateDirectory(projectDirectory);

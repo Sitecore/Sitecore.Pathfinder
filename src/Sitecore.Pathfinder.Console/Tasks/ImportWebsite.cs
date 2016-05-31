@@ -48,7 +48,7 @@ namespace Sitecore.Pathfinder.Tasks
 
                 foreach (var entry in zip.Entries)
                 {
-                    var destinationFileName = Path.Combine(context.Project.ProjectDirectory, entry.FullName);
+                    var destinationFileName = Path.Combine(context.ProjectDirectory, entry.FullName);
 
                     FileSystem.CreateDirectoryFromFileName(destinationFileName);
 

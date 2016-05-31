@@ -105,7 +105,7 @@ namespace Sitecore.Pathfinder.Tasks
                 scripts = FileSystem.GetFiles(scriptDirectory).Select(Path.GetFileName).ToList();
             }
 
-            scriptDirectory = Path.Combine(context.Project.ProjectDirectory, "sitecore.project\\scripts");
+            scriptDirectory = Path.Combine(context.ProjectDirectory, "sitecore.project\\scripts");
             if (FileSystem.DirectoryExists(scriptDirectory))
             {
                 scripts.AddRange(FileSystem.GetFiles(scriptDirectory).Select(Path.GetFileName));

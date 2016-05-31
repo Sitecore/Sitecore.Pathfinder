@@ -26,7 +26,7 @@ namespace Sitecore.Pathfinder.Tasks
         public override void Run(IBuildContext context)
         {
             // todo: replace with official NuGet RestorePackages, if such exists
-            foreach (var packageInfo in ProjectPackages.GetPackages(context.Project.ProjectDirectory))
+            foreach (var packageInfo in ProjectPackages.GetPackages(context.ProjectDirectory))
             {
                 if (FileSystem.DirectoryExists(packageInfo.PackageDirectory))
                 {
@@ -35,7 +35,7 @@ namespace Sitecore.Pathfinder.Tasks
 
                 context.Trace.TraceInformation(Msg.D1000, Texts.Restoring, packageInfo.Id + "." + packageInfo.Version);
 
-                ProjectPackages.RestorePackage(packageInfo.Id, packageInfo.Version, context.Project.ProjectDirectory);
+                ProjectPackages.RestorePackage(packageInfo.Id, packageInfo.Version, context.ProjectDirectory);
             }
         }
     }

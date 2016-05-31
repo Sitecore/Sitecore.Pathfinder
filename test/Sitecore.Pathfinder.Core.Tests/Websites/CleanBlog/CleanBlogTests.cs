@@ -1,6 +1,7 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Linq;
 using NUnit.Framework;
 using Sitecore.Pathfinder.Projects;
 
@@ -35,7 +36,7 @@ namespace Sitecore.Pathfinder.Websites.CleanBlog
                 Console.WriteLine();
             }
 
-            Assert.AreEqual(0, Project.Diagnostics.Count);
+            Assert.AreEqual(0, Project.Diagnostics.Count());
         }
     }
 }

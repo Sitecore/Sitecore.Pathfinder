@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Linq;
 using Microsoft.Framework.ConfigurationModel;
@@ -13,20 +13,19 @@ namespace Sitecore.Pathfinder.Projects
         public ProjectDiagnosticTraceService([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] IFactoryService factory) : base(configuration, console)
         {
             Factory = factory;
-
-
         }
+
+        [NotNull]
+        protected IDiagnosticContainer DiagnosticContainer { get; private set; }
 
         [NotNull]
         protected IFactoryService Factory { get; }
 
         [NotNull]
-        protected IProject Project { get; private set; }
-
-        [NotNull]
         public ITraceService With([NotNull] IProject project)
         {
-            Project = project;
+            DiagnosticContainer = (IDiagnosticContainer)project;
+
             return this;
         }
 
@@ -44,7 +43,7 @@ namespace Sitecore.Pathfinder.Projects
 
             var diagnostic = Factory.Diagnostic(msg, fileName, span, severity, text);
 
-            Project.Diagnostics.Add(diagnostic);
+            DiagnosticContainer.Add(diagnostic);
         }
     }
 }

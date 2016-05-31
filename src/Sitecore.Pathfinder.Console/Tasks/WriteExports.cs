@@ -28,7 +28,7 @@ namespace Sitecore.Pathfinder.Tasks
 
             var fieldToWrite = context.Configuration.GetCommaSeparatedStringList(Constants.Configuration.WriteExports.FieldsToWrite).Select(f => f.ToLowerInvariant()).ToList();
 
-            var fileName = PathHelper.Combine(context.Project.ProjectDirectory, context.Configuration.GetString(Constants.Configuration.WriteExports.FileName));
+            var fileName = PathHelper.Combine(context.ProjectDirectory, context.Configuration.GetString(Constants.Configuration.WriteExports.FileName));
             FileSystem.CreateDirectoryFromFileName(fileName);
 
             using (var writer = FileSystem.OpenStreamWriter(fileName))

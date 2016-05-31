@@ -58,10 +58,5 @@
     // tasks to execute when building
     "build-project": {
         "tasks": "restore-packages check-project write-exports pack-nuget install-package publish-database show-website show-status"
-    },
-
-    // tasks to execute when building locally
-    "compile-project": {
-        "tasks": "restore-packages check-project show-metrics"
     }
 }

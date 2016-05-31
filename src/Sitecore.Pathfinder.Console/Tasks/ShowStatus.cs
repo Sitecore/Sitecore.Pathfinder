@@ -1,6 +1,5 @@
 // © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
@@ -13,10 +12,14 @@ namespace Sitecore.Pathfinder.Tasks
     public class ShowStatus : BuildTaskBase
     {
         [ImportingConstructor]
-        public ShowStatus([NotNull] IHostService host) : base("show-status")
+        public ShowStatus([NotNull] IHostService host, [NotNull] IConsoleService console) : base("show-status")
         {
             Host = host;
+            Console = console;
         }
+
+        [NotNull]
+        protected IConsoleService Console { get; }
 
         [NotNull]
         protected IHostService Host { get; }

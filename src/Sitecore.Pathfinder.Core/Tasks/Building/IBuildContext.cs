@@ -1,5 +1,6 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
@@ -32,6 +33,6 @@ namespace Sitecore.Pathfinder.Tasks.Building
         string WebsiteDirectory { get; }
 
         [NotNull]
-        IBuildContext With([NotNull] IProject project);
+        IBuildContext With([NotNull] Func<IProject> loadProject);
     }
 }

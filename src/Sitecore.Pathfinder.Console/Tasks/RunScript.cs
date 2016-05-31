@@ -39,7 +39,7 @@ namespace Sitecore.Pathfinder.Tasks
                 return;
             }
 
-            var scriptFileName = Path.Combine(context.Project.ProjectDirectory, "sitecore.project\\scripts\\" + _script);
+            var scriptFileName = Path.Combine(context.ProjectDirectory, "sitecore.project\\scripts\\" + _script);
             if (!FileSystem.FileExists(scriptFileName))
             {
                 scriptFileName = Path.Combine(context.ToolsDirectory, "files\\scripts\\" + _script);
@@ -92,11 +92,11 @@ namespace Sitecore.Pathfinder.Tasks
         {
             var runspace = RunspaceFactory.CreateRunspace();
             runspace.Open();
-            runspace.SessionStateProxy.Path.SetLocation(context.Project.ProjectDirectory);
+            runspace.SessionStateProxy.Path.SetLocation(context.ProjectDirectory);
 
             runspace.SessionStateProxy.SetVariable("buildContext", context);
             runspace.SessionStateProxy.SetVariable("toolsDirectory", context.ToolsDirectory);
-            runspace.SessionStateProxy.SetVariable("projectDirectory", context.Project.ProjectDirectory);
+            runspace.SessionStateProxy.SetVariable("projectDirectory", context.ProjectDirectory);
             runspace.SessionStateProxy.SetVariable("dataFolderDirectory", context.Configuration.GetString(Constants.Configuration.DataFolderDirectory));
             runspace.SessionStateProxy.SetVariable("websiteDirectory", context.Configuration.GetString(Constants.Configuration.WebsiteDirectory));
 

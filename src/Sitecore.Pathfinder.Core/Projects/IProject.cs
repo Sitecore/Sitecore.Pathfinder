@@ -1,4 +1,4 @@
-﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Projects
     public interface IProject
     {
         [NotNull, ItemNotNull]
-        ICollection<Diagnostic> Diagnostics { get; }
+        IEnumerable<Diagnostic> Diagnostics { get; }
 
         long Ducats { get; set; }
 
@@ -49,7 +49,13 @@ namespace Sitecore.Pathfinder.Projects
         IProject Add([NotNull] string absoluteFileName);
 
         [NotNull]
+        IProject Add([NotNull, ItemNotNull] IEnumerable<string> sourceFileNames);
+
+        [NotNull]
         T AddOrMerge<T>([NotNull] T projectItem) where T : class, IProjectItem;
+
+        [NotNull]
+        IProject Check();
 
         [NotNull]
         IProject Compile();
@@ -83,7 +89,5 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull]
         IProject With([NotNull] ProjectOptions projectOptions, [NotNull, ItemNotNull] IEnumerable<string> sourceFileNames);
-
-        void Check();
     }
 }

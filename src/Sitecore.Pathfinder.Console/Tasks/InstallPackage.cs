@@ -36,7 +36,7 @@ namespace Sitecore.Pathfinder.Tasks
                 var feeds = string.Empty;
                 if (context.Configuration.GetBool(Constants.Configuration.InstallPackage.AddProjectDirectoriesAsFeeds, true))
                 {
-                    var packagesDirectory = Path.Combine(context.Project.ProjectDirectory, context.Configuration.GetString(Constants.Configuration.Packages.NugetDirectory));
+                    var packagesDirectory = Path.Combine(context.ProjectDirectory, context.Configuration.GetString(Constants.Configuration.Packages.NugetDirectory));
                     feeds = Path.GetDirectoryName(fileName) + "," + packagesDirectory;
                 }
 

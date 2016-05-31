@@ -21,7 +21,7 @@ namespace Sitecore.Pathfinder.Tasks
         {
             var sourceFileName = Path.Combine(context.ToolsDirectory, "files\\taskrunners\\Grunt.zip");
 
-            FileSystem.Unzip(sourceFileName, context.Project.ProjectDirectory);
+            FileSystem.Unzip(sourceFileName, context.ProjectDirectory);
         }
 
     }

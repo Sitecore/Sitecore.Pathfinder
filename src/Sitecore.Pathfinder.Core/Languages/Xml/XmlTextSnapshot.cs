@@ -22,6 +22,9 @@ namespace Sitecore.Pathfinder.Languages.Xml
         [NotNull]
         protected static readonly Dictionary<string, XmlSchemaSet> Schemas = new Dictionary<string, XmlSchemaSet>();
 
+        [NotNull]
+        protected static readonly object SchemasSync = new object();
+
         [CanBeNull]
         private ITextNode _root;
 
@@ -78,10 +81,13 @@ namespace Sitecore.Pathfinder.Languages.Xml
             }
 
             XmlSchemaSet schema;
-            if (!Schemas.TryGetValue(SchemaNamespace, out schema))
+            lock (SchemasSync)
             {
-                schema = GetSchema(context, SchemaFileName, SchemaNamespace);
-                Schemas[SchemaNamespace] = schema;
+                if (!Schemas.TryGetValue(SchemaNamespace, out schema))
+                {
+                    schema = GetSchema(context, SchemaFileName, SchemaNamespace);
+                    Schemas[SchemaNamespace] = schema;
+                }
             }
 
             if (schema == null)

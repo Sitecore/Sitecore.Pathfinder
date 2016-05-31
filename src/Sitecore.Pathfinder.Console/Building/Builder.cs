@@ -28,25 +28,29 @@ namespace Sitecore.Pathfinder.Building
         }
 
         [NotNull]
+        protected ExportFactory<IBuildContext> BuildContextFactory { get; }
+
+        [NotNull]
         protected IFileSystemService FileSystem { get; }
 
         [NotNull]
         protected IProjectService ProjectService { get; }
 
-        [NotNull]
-        protected ExportFactory<IBuildContext> BuildContextFactory { get; }
-
         public override int Start()
         {
-            var project = ProjectService.LoadProjectFromConfiguration();
-                
-            var context = BuildContextFactory.New().With(project);
+            var context = BuildContextFactory.New().With(LoadProject);
 
             RegisterProjectDirectory(context);
 
             RunTasks(context);
 
             return context.ErrorCode;
+        }
+
+        [NotNull]
+        protected virtual IProject LoadProject()
+        {
+            return ProjectService.LoadProjectFromConfiguration();
         }
 
         protected virtual void RegisterProjectDirectory([NotNull] IBuildContext context)

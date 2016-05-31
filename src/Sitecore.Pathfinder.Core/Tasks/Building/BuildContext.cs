@@ -1,5 +1,6 @@
-﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Microsoft.Framework.ConfigurationModel;
@@ -13,6 +14,12 @@ namespace Sitecore.Pathfinder.Tasks.Building
     [Export(typeof(IBuildContext)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class BuildContext : TaskContext, IBuildContext
     {
+        [NotNull]
+        private Func<IProject> _loadProject;
+
+        [CanBeNull]
+        private IProject _project;
+
         [ImportingConstructor]
         public BuildContext([NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystem) : base(configuration, traceService, fileSystem)
         {
@@ -26,7 +33,7 @@ namespace Sitecore.Pathfinder.Tasks.Building
 
         public IList<string> OutputFiles { get; } = new List<string>();
 
-        public IProject Project { get; private set; } = Projects.Project.Empty;
+        public IProject Project => _project ?? (_project = _loadProject());
 
         public string ProjectDirectory => Configuration.GetProjectDirectory();
 
@@ -34,10 +41,9 @@ namespace Sitecore.Pathfinder.Tasks.Building
 
         public string WebsiteDirectory => Configuration.GetString(Constants.Configuration.WebsiteDirectory);
 
-        public IBuildContext With(IProject project)
+        public IBuildContext With(Func<IProject> loadProject)
         {
-            Project = project;
-
+            _loadProject = loadProject;
             return this;
         }
     }
