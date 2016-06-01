@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Extensibility
         }
 
         [CanBeNull]
-        public static CompositionContainer RegisterCompositionService([NotNull] this Startup startup, [NotNull] IConfiguration configuration, [NotNull] string projectDirectory, [NotNull] Assembly callingAssembly, [NotNull, ItemNotNull] IEnumerable<string> additionalAssemblyFileNames, CompositionOptions options)
+        public static CompositionContainer RegisterCompositionService([NotNull] this Startup startup, [NotNull] IConfiguration configuration, [NotNull] string projectDirectory, [NotNull, ItemNotNull] IEnumerable<string> additionalAssemblyFileNames, CompositionOptions options)
         {
             var toolsDirectory = configuration.GetString(Constants.Configuration.ToolsDirectory);
 
@@ -46,8 +46,7 @@ namespace Sitecore.Pathfinder.Extensibility
 
             var catalogs = new List<ComposablePartCatalog>
             {
-                new AssemblyCatalog(coreAssembly),
-                new AssemblyCatalog(callingAssembly)
+                new AssemblyCatalog(coreAssembly)
             };
 
             var disableExtensions = configuration.GetBool("disable-extensions");

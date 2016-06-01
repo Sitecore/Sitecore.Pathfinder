@@ -369,6 +369,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not load project: .
+        /// </summary>
+        public static string Could_not_load_project__ {
+            get {
+                return ResourceManager.GetString("Could_not_load_project__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not read exports.xml in dependency package.
         /// </summary>
         public static string Could_not_read_exports_xml_in_dependency_package {
@@ -1030,6 +1039,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Missing project directory to compare with.
+        /// </summary>
+        public static string Missing_project_directory_to_compare_with {
+            get {
+                return ResourceManager.GetString("Missing_project_directory_to_compare_with", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No parser found for file. If the file is a content file, add the file extension to the &apos;project-website-mappings:content-files&apos; setting.
         /// </summary>
         public static string No_parser_found_for_file__If_the_file_is_a_content_file__add_the_file_extension_to_the__project_website_mappings_content_files__setting {
@@ -1135,6 +1153,15 @@ namespace Sitecore.Pathfinder {
         public static string Pipeline_is_empty__There_are_no_tasks_to_execute_ {
             get {
                 return ResourceManager.GetString("Pipeline_is_empty__There_are_no_tasks_to_execute_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project directory not found: .
+        /// </summary>
+        public static string Project_directory_not_found__ {
+            get {
+                return ResourceManager.GetString("Project_directory_not_found__", resourceCulture);
             }
         }
         

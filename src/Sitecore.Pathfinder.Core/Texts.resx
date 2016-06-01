@@ -663,4 +663,13 @@
     <data name="Showing_website___" xml:space="preserve">
     <value>Showing website...</value>
   </data>
+    <data name="Missing_project_directory_to_compare_with" xml:space="preserve">
+    <value>Missing project directory to compare with</value>
+  </data>
+    <data name="Project_directory_not_found__" xml:space="preserve">
+    <value>Project directory not found: </value>
+  </data>
+    <data name="Could_not_load_project__" xml:space="preserve">
+    <value>Could not load project: </value>
+  </data>
 </root>

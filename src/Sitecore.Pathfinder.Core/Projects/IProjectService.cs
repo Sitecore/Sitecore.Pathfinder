@@ -12,5 +12,8 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull]
         IProject LoadProjectFromConfiguration();
+
+        [CanBeNull]
+        IProject LoadProjectFromNewHost([NotNull] string projectDirectory);
     }
 }

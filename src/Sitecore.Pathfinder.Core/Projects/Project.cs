@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Framework.ConfigurationModel;
@@ -25,7 +26,7 @@ namespace Sitecore.Pathfinder.Projects
 {
     public delegate void ProjectChangedEventHandler([NotNull] object sender);
 
-    [Export, Export(typeof(IProject)), PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export, Export(typeof(IProject)), PartCreationPolicy(CreationPolicy.NonShared), DebuggerDisplay("{GetType().Name,nq}: {ProjectDirectory}")]
     public class Project : IProject, IDiagnosticContainer
     {
         [NotNull]

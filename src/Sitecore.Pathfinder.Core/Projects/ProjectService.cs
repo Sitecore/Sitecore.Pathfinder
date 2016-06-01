@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.ComponentModel.Composition;
 using Microsoft.Framework.ConfigurationModel;
@@ -6,6 +6,7 @@ using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.ProjectTrees;
+using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Projects
 {
@@ -13,12 +14,16 @@ namespace Sitecore.Pathfinder.Projects
     public class ProjectService : IProjectService
     {
         [ImportingConstructor]
-        public ProjectService([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] ExportFactory<IProjectTree> projectTreeFactory)
+        public ProjectService([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] ExportFactory<IBuildContext> buildContextFactory, [NotNull] ExportFactory<IProjectTree> projectTreeFactory)
         {
             Configuration = configuration;
             Factory = factory;
+            BuildContextFactory = buildContextFactory;
             ProjectTreeFactory = projectTreeFactory;
         }
+
+        [NotNull]
+        protected ExportFactory<IBuildContext> BuildContextFactory { get; }
 
         [NotNull]
         protected IConfiguration Configuration { get; }
@@ -29,6 +34,28 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         protected ExportFactory<IProjectTree> ProjectTreeFactory { get; }
 
+        public virtual IProjectTree GetProjectTree(ProjectOptions projectOptions)
+        {
+            return ProjectTreeFactory.New().With(Configuration.GetString(Constants.Configuration.ToolsDirectory), projectOptions.ProjectDirectory);
+        }
+
+        public IProject LoadProjectFromNewHost(string projectDirectory)
+        {
+            var host = new Startup().AsInteractive().WithProjectDirectory(projectDirectory).Start();
+            if (host == null)
+            {
+                return null;
+            }
+
+            var projectContext = host.CompositionService.Resolve<IBuildContext>().With(() =>
+            {
+                var projectService = host.CompositionService.Resolve<IProjectService>();
+                return projectService.LoadProjectFromConfiguration();
+            });
+
+            return projectContext.Project;
+        }
+
         public IProject LoadProjectFromConfiguration()
         {
             var projectDirectory = Configuration.GetProjectDirectory();
@@ -37,7 +64,7 @@ namespace Sitecore.Pathfinder.Projects
         }
 
         [NotNull]
-        public IProject LoadProjectFromDirectory([NotNull] string projectDirectory)
+        protected virtual IProject LoadProjectFromDirectory([NotNull] string projectDirectory)
         {
             var databaseName = Configuration.GetString(Constants.Configuration.Database);
 
@@ -49,11 +76,6 @@ namespace Sitecore.Pathfinder.Projects
             var projectTree = GetProjectTree(projectOptions);
 
             return projectTree.GetProject(projectOptions);
-        }
-
-        public virtual IProjectTree GetProjectTree(ProjectOptions projectOptions)
-        {
-            return ProjectTreeFactory.New().With(Configuration.GetString(Constants.Configuration.ToolsDirectory), projectOptions.ProjectDirectory);
         }
 
         protected virtual void LoadStandardTemplateFields([NotNull] ProjectOptions projectOptions)
@@ -69,13 +91,13 @@ namespace Sitecore.Pathfinder.Projects
                 }
             }
         }
+
         protected virtual void LoadTokens([NotNull] ProjectOptions projectOptions)
         {
             foreach (var pair in Configuration.GetSubKeys(Constants.Configuration.SearchAndReplaceTokens))
             {
                 var value = Configuration.GetString(Constants.Configuration.SearchAndReplaceTokens + ":" + pair.Key);
                 projectOptions.Tokens[pair.Key] = value;
-
             }
         }
     }

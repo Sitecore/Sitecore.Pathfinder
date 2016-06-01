@@ -81,7 +81,15 @@ namespace Sitecore.Pathfinder
         [CanBeNull]
         public IHostService Start()
         {
-            var assemblyFileNames = AssemblyFileNames?.Distinct().OrderBy(a => a).ToList() ?? Enumerable.Empty<string>();
+            var assemblyFileNames = new List<string>
+            {
+                Assembly.GetEntryAssembly().Location
+            };
+
+            if (AssemblyFileNames != null)
+            {
+                assemblyFileNames.AddRange(AssemblyFileNames.Distinct().OrderBy(a => a));
+            }
 
             var configuration = this.RegisterConfiguration(ToolsDirectory, ProjectDirectory, SystemConfigurationFileName, ConfigurationOptions);
             if (configuration == null)
@@ -99,7 +107,7 @@ namespace Sitecore.Pathfinder
                 configuration.Set(Constants.Configuration.DataFolderDirectory, DataFolderDirectory);
             }
 
-            var compositionService = this.RegisterCompositionService(configuration, ProjectDirectory, Assembly.GetCallingAssembly(), assemblyFileNames, CompositionOptions);
+            var compositionService = this.RegisterCompositionService(configuration, ProjectDirectory, assemblyFileNames, CompositionOptions);
             if (compositionService == null)
             {
                 return null;

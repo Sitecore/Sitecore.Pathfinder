@@ -430,6 +430,9 @@
     <None Include="help\index.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="help\tasks\compare-projects.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="help\tasks\list-project-roles.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
