@@ -81,6 +81,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{2913B82E-E
 		docs\04.08. Resetting a website.md = docs\04.08. Resetting a website.md
 		docs\04.09. Synchronizing website and project.md = docs\04.09. Synchronizing website and project.md
 		docs\04.10. Code generation.md = docs\04.10. Code generation.md
+		docs\04.11. Comparing projects.md = docs\04.11. Comparing projects.md
 		docs\04.17. Layout engines.md = docs\04.17. Layout engines.md
 		docs\04.19. Extensibility.md = docs\04.19. Extensibility.md
 		docs\04.21. Languages.md = docs\04.21. Languages.md

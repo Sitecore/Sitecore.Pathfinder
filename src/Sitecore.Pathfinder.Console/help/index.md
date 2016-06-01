@@ -6,6 +6,7 @@ For more documentation see [Pathfinder Documentation](https://github.com/JakobCh
 * [before-build](https://github.com/JakobChristensen/Sitecore.Pathfinder/blob/master/src/Sitecore.Pathfinder.Console/help/tasks/before-build.md) - [No help available]
 * [check-project](https://github.com/JakobChristensen/Sitecore.Pathfinder/blob/master/src/Sitecore.Pathfinder.Console/help/tasks/check-project.md) - Checks the project for warnings and errors.
 * [clean-website](https://github.com/JakobChristensen/Sitecore.Pathfinder/blob/master/src/Sitecore.Pathfinder.Console/help/tasks/clean-website.md) - Removes Pathfinder files and assemblies from the website.
+* [compare-projects](https://github.com/JakobChristensen/Sitecore.Pathfinder/blob/master/src/Sitecore.Pathfinder.Console/help/tasks/compare-projects.md) - Compares two projects.
 * [copy-dependencies](https://github.com/JakobChristensen/Sitecore.Pathfinder/blob/master/src/Sitecore.Pathfinder.Console/help/tasks/copy-dependencies.md) - Copies the dependency packages to the website.
 * [copy-package](https://github.com/JakobChristensen/Sitecore.Pathfinder/blob/master/src/Sitecore.Pathfinder.Console/help/tasks/copy-package.md) - Copies the project output to the website.
 * [find-references](https://github.com/JakobChristensen/Sitecore.Pathfinder/blob/master/src/Sitecore.Pathfinder.Console/help/tasks/find-references.md) - Finds all project items that the specified project item references.
@@ -33,7 +34,7 @@ For more documentation see [Pathfinder Documentation](https://github.com/JakobCh
 * [restore-packages](https://github.com/JakobChristensen/Sitecore.Pathfinder/blob/master/src/Sitecore.Pathfinder.Console/help/tasks/restore-packages.md) - Restores dependency packages as specified in the configuration
 * [run-script](https://github.com/JakobChristensen/Sitecore.Pathfinder/blob/master/src/Sitecore.Pathfinder.Console/help/tasks/run-script.md) - Runs a PowerShell, .cmd or .bat script.
 * [show-config](https://github.com/JakobChristensen/Sitecore.Pathfinder/blob/master/src/Sitecore.Pathfinder.Console/help/tasks/show-config.md) - Displays the effective configuration.
-* [show-metrics](https://github.com/JakobChristensen/Sitecore.Pathfinder/blob/master/src/Sitecore.Pathfinder.Console/help/tasks/show-metrics.md) - Shows various information about the build.
+* [show-status](https://github.com/JakobChristensen/Sitecore.Pathfinder/blob/master/src/Sitecore.Pathfinder.Console/help/tasks/show-status.md) - Shows various information about the build.
 * [show-website](https://github.com/JakobChristensen/Sitecore.Pathfinder/blob/master/src/Sitecore.Pathfinder.Console/help/tasks/show-website.md) - Opens the default webpage in a browser, if a start URL has been defined.
 * [sync-website](https://github.com/JakobChristensen/Sitecore.Pathfinder/blob/master/src/Sitecore.Pathfinder.Console/help/tasks/sync-website.md) - [No help available]
 * [troubleshoot-website](https://github.com/JakobChristensen/Sitecore.Pathfinder/blob/master/src/Sitecore.Pathfinder.Console/help/tasks/troubleshoot-website.md) - Tries to fix a non-working website.

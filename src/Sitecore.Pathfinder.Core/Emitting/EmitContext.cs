@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.ComponentModel.Composition;
 using Microsoft.Framework.ConfigurationModel;
@@ -9,8 +9,7 @@ using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Emitting
 {
-    [Export(typeof(IEmitContext))]
-    [PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export(typeof(IEmitContext)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class EmitContext : IEmitContext
     {
         [ImportingConstructor]

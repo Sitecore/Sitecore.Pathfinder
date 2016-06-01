@@ -68,7 +68,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
                 Guid = projectItem.Uri.Guid,
                 ItemName = item.ItemName,
                 ItemIdOrPath = item.ItemIdOrPath,
-                TemplateIdOrPath = templateIdOrPath
+                TemplateIdOrPath = templateIdOrPath,
             };
 
             foreach (var field in item.Fields)
@@ -79,7 +79,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
                     throw new RetryableEmitException(Texts.Template_field_missing, TraceHelper.GetTextNode(field.FieldNameProperty, item.ItemNameProperty), field.FieldName);
                 }
 
-                var fieldWriter = new FieldWriter(field.FieldIdProperty, field.FieldNameProperty, field.Language, field.Version, field.CompiledValue);
+                var fieldWriter = new FieldWriter(itemWriter, field.FieldIdProperty, field.FieldNameProperty, field.Language, field.Version, field.CompiledValue);
                 itemWriter.Fields.Add(fieldWriter);
             }
 

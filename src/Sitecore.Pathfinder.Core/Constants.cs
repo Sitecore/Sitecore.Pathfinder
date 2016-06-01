@@ -169,6 +169,12 @@ namespace Sitecore.Pathfinder
                 public const string CheckBinFileVersion = "install-package:check-bin-file-version";
 
                 public const string InstallUrl = "install-package:install-url";
+
+                public const string ShowDiagnostics = "install-package:show-diagnostics";
+
+                public const string ThreeWayMerge = "install-package:three-way-merge";
+
+                public const string MarkItemsWithPathfinderProjectUniqueId = "install-package:mark-items-with-pathfinder-project-unique-id";
             }
 
             public static class Messages

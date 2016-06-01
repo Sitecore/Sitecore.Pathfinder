@@ -147,10 +147,10 @@
     <Compile Include="Controllers\PathfinderTaskController.cs" />
     <Compile Include="Emitters\EmitterService.cs" />
     <Compile Include="Emitters\Files\ConfigFileEmitter.cs" />
-    <Compile Include="Emitters\Writers\FieldWriter.cs" />
     <Compile Include="Emitters\Items\ItemEmitter.cs" />
     <Compile Include="Emitters\Files\ContentFileEmitter.cs" />
     <Compile Include="Emitters\Files\BinFileEmitter.cs" />
+    <Compile Include="Emitters\Writers\FieldWriter.cs" />
     <Compile Include="Emitters\Writers\ItemWriter.cs" />
     <Compile Include="Emitters\Writers\TemplateWriter.cs" />
     <Compile Include="Emitters\Writers\TemplateFieldWriter.cs" />

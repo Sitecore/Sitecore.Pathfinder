@@ -377,7 +377,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
 
                 item.Appearance.Sortorder = templateFieldWriter.TemplateField.SortOrder;
 
-                item.UpdateProjectUniqueIds(context.Project);
+                item.UpdateProjectUniqueIds(context);
             }
         }
 
@@ -426,7 +426,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
 
                 item[FieldIDs.StandardValues] = Template.StandardValuesItem?.Uri.Guid.Format() ?? string.Empty;
 
-                item.UpdateProjectUniqueIds(context.Project);
+                item.UpdateProjectUniqueIds(context);
             }
 
             foreach (var section in Sections)
@@ -470,7 +470,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                     templateSectionWriter.Item.Appearance.Icon = templateSectionWriter.TemplateSection.Icon;
                 }
 
-                templateSectionWriter.Item.UpdateProjectUniqueIds(context.Project);
+                templateSectionWriter.Item.UpdateProjectUniqueIds(context);
             }
 
             foreach (var fieldWriter in templateSectionWriter.Fields)
@@ -515,7 +515,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                 item.Help.Text = Template.LongHelp;
                 item[FieldIDs.StandardValues] = Template.StandardValuesItem?.Uri.Guid.Format() ?? string.Empty;
 
-                item.UpdateProjectUniqueIds(context.Project);
+                item.UpdateProjectUniqueIds(context);
             }
 
             foreach (var templateSectionWriter in Sections)

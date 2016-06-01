@@ -48,7 +48,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
                     throw new RetryableEmitException(Texts.Failed_to_deserialize_item, itemModel.Snapshots.First(), "Item not created");
                 }
 
-                item.UpdateProjectUniqueIds(context.Project);
+                item.UpdateProjectUniqueIds(context);
             }
             catch (Exception ex)
             {

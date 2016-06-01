@@ -297,18 +297,22 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.WebsitePackages
 
                 var binDirectory = Path.Combine(Configuration.GetString(Constants.Configuration.WebsiteDirectory), "bin");
 
-                var app = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(projectDirectory).WithExtensionsDirectory(binDirectory).Start();
-                if (app == null)
+                var host = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(projectDirectory).WithExtensionsDirectory(binDirectory).Start();
+                if (host == null)
                 {
                     return;
                 }
 
-                var emitter = app.CompositionService.Resolve<IEmitterService>();
+                var pathfinderDirectory = Path.Combine(Configuration.GetString(Constants.Configuration.DataFolderDirectory), "pathfinder");
+
+                var baseDirectory = Path.Combine(pathfinderDirectory, ".base\\" + e.Package.Id);
+
+                var emitter = host.CompositionService.Resolve<IEmitterService>().With(baseDirectory);
                 emitter.Start();
             }
 
             var packagesDirectory = Path.Combine(e.InstallPath, "project\\packages");
-            if (Directory.Exists(packagesDirectory))
+            if (FileSystem.DirectoryExists(packagesDirectory))
             {
                 InstallPackageDirectory(packagesDirectory);
             }

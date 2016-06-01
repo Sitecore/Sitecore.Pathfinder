@@ -1,4 +1,4 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using Sitecore.Pathfinder.Projects;
@@ -7,8 +7,9 @@ namespace Sitecore.Pathfinder.Emitters.Writers
 {
     public class FieldWriter
     {
-        public FieldWriter([Diagnostics.NotNull] SourceProperty<Guid> fieldIdProperty, [Diagnostics.NotNull] SourceProperty<string> fieldNameProperty, [Diagnostics.NotNull] string language, int version, [Diagnostics.NotNull] string databaseValue)
+        public FieldWriter([NotNull] ItemWriter itemWriter, [NotNull] SourceProperty<Guid> fieldIdProperty, [NotNull] SourceProperty<string> fieldNameProperty, [NotNull] string language, int version, [NotNull] string databaseValue)
         {
+            ItemWriter = itemWriter;
             FieldIdProperty = fieldIdProperty;
             FieldNameProperty = fieldNameProperty;
             Language = language;
@@ -16,17 +17,19 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             DatabaseValue = databaseValue;
         }
 
-        [Diagnostics.NotNull]
+        [NotNull]
         public string DatabaseValue { get; set; }
 
-        [Diagnostics.NotNull]
         public Guid FieldId
         {
             get { return FieldIdProperty.GetValue(); }
             set { FieldIdProperty.SetValue(value); }
         }
 
-        [Diagnostics.NotNull]
+        [NotNull]
+        public ItemWriter ItemWriter { get; }
+
+        [NotNull]
         public SourceProperty<Guid> FieldIdProperty { get; }
 
         [NotNull]
@@ -36,10 +39,10 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             set { FieldNameProperty.SetValue(value); }
         }
 
-        [Diagnostics.NotNull]
+        [NotNull]
         public SourceProperty<string> FieldNameProperty { get; }
 
-        [Diagnostics.NotNull]
+        [NotNull]
         public string Language { get; }
 
         public int Version { get; }

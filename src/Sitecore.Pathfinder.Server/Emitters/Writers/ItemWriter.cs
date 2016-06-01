@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -18,6 +18,9 @@ namespace Sitecore.Pathfinder.Emitters.Writers
 {
     public class ItemWriter
     {
+        [NotNull]
+        public Func<Item, FieldWriter, bool> CanWriteField { get; set; } = (item, writer) => true;
+
         [Diagnostics.NotNull]
         public string DatabaseName { get; set; } = string.Empty;
 
@@ -107,8 +110,15 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             return item;
         }
 
-        protected virtual void SetFieldValue([Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string fieldName, [Diagnostics.NotNull] string fieldValue)
+        protected virtual void SetFieldValue([NotNull] IEmitContext context, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] FieldWriter fieldWriter, [NotNull] string fieldName)
         {
+            if (!CanWriteField(item, fieldWriter))
+            {
+                return;
+            }
+
+            var fieldValue = fieldWriter.DatabaseValue;
+
             var field = item.Fields[fieldName];
 
             if (!string.Equals(field.Type, "layout", StringComparison.OrdinalIgnoreCase))
@@ -177,18 +187,18 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                     }
                 }
 
-                foreach (var field in Fields.Where(i => string.IsNullOrEmpty(i.Language) && i.Version == 0))
+                foreach (var fieldWriter in Fields.Where(i => string.IsNullOrEmpty(i.Language) && i.Version == 0))
                 {
-                    var fieldName = field.FieldName;
+                    var fieldName = fieldWriter.FieldName;
                     if (string.IsNullOrEmpty(fieldName))
                     {
-                        fieldName = field.FieldId.Format();
+                        fieldName = fieldWriter.FieldId.Format();
                     }
 
-                    SetFieldValue(item, fieldName, field.DatabaseValue);
+                    SetFieldValue(context, item, fieldWriter, fieldName);
                 }
 
-                item.UpdateProjectUniqueIds(context.Project);
+                item.UpdateProjectUniqueIds(context);
             }
 
             var versionedItems = new List<Item>();
@@ -219,8 +229,8 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                 {
                     fieldName = field.FieldId.Format();
                 }
-                                                      
-                SetFieldValue(versionedItem, fieldName, field.DatabaseValue);
+
+                SetFieldValue(context, versionedItem, field, fieldName);
             }
 
             foreach (var i in versionedItems)
