@@ -305,7 +305,7 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.WebsitePackages
 
                 var pathfinderDirectory = Path.Combine(Configuration.GetString(Constants.Configuration.DataFolderDirectory), "pathfinder");
 
-                var baseDirectory = Path.Combine(pathfinderDirectory, ".base\\" + e.Package.Id);
+                var baseDirectory = Path.Combine(pathfinderDirectory, ".base\\" + e.Package.Id + "." + e.Package.Version);
 
                 var emitter = host.CompositionService.Resolve<IEmitterService>().With(baseDirectory);
                 emitter.Start();

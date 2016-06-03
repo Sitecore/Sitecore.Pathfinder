@@ -32,7 +32,11 @@ namespace Sitecore.Pathfinder.Emitting
 
         public ITraceService Trace { get; }
 
-        public IEmitContext With(IProject project)
+        public virtual void Done()
+        {
+        }
+
+        public virtual IEmitContext With(IProject project)
         {
             Project = project;
 

@@ -11,11 +11,10 @@ using Sitecore.ContentSearch.SearchTypes;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Emitters.Writers;
+using Sitecore.Pathfinder.Emitters.ThreeWayMerge;
 using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
-using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.SecurityModel;
 using Sitecore.Text;
@@ -36,10 +35,13 @@ namespace Sitecore.Pathfinder.Emitters
         }
 
         [NotNull]
-        protected IConfiguration Configuration { get; }
+        protected string BaseDirectory { get; private set; }
 
         [NotNull]
         protected ICompositionService CompositionService { get; }
+
+        [NotNull]
+        protected IConfiguration Configuration { get; }
 
         [NotNull, ItemNotNull]
         protected IEnumerable<IEmitter> Emitters { get; }
@@ -70,47 +72,6 @@ namespace Sitecore.Pathfinder.Emitters
             return this;
         }
 
-        [NotNull]
-        protected string BaseDirectory { get; private set; }
-
-        protected virtual void PrepareWebsiteForPathfinder()
-        {
-            if (!Configuration.GetBool(Constants.Configuration.InstallPackage.MarkItemsWithPathfinderProjectUniqueId, true))
-            {
-                return;
-            }
-
-            using (new SecurityDisabler())
-            {
-                // ensure __PathfinderProjectUniqueIds field is in the Advanced section of all databases.
-                foreach (var database in Factory.GetDatabases())
-                {
-                    if (database.ReadOnly)
-                    {
-                        continue;
-                    }
-
-                    var item = database.GetItem(ServerConstants.ItemIds.PathfinderProjectUniqueId);
-                    if (item != null)
-                    {
-                        continue;
-                    }
-
-                    var parent = database.GetItem("/sitecore/templates/System/Templates/Sections/Advanced/Advanced");
-                    if (parent == null)
-                    {
-                        continue;
-                    }
-
-                    var projectUniqueIdTemplateField = ItemManager.AddFromTemplate(ServerConstants.FieldNames.PathfinderProjectUniqueIds, TemplateIDs.TemplateField, parent, ServerConstants.ItemIds.PathfinderProjectUniqueId);
-                    using (new EditContext(projectUniqueIdTemplateField))
-                    {
-                        projectUniqueIdTemplateField["Shared"] = "1";
-                    }
-                }
-            }
-        }
-
         protected virtual void DeleteProjectItems([NotNull] IProject project)
         {
             if (!Configuration.GetBool(Constants.Configuration.InstallPackage.MarkItemsWithPathfinderProjectUniqueId, true))
@@ -137,7 +98,7 @@ namespace Sitecore.Pathfinder.Emitters
                 {
                     continue;
                 }
-                
+
                 if (index == null)
                 {
                     continue;
@@ -200,18 +161,22 @@ namespace Sitecore.Pathfinder.Emitters
 
         protected virtual void Emit([NotNull] IProject project)
         {
-            var context = CompositionService.Resolve<IEmitContext>().With(project);
+            IEmitContext context;
 
-            if (context.Configuration.GetBool(Constants.Configuration.InstallPackage.ShowDiagnostics))
-            {
-                var treatWarningsAsErrors = context.Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
-                context.Trace.TraceDiagnostics(context.Project.Diagnostics, treatWarningsAsErrors);
-            }
-
-            var threeWayMerge = context.Configuration.GetBool(Constants.Configuration.InstallPackage.ThreeWayMerge);
+            var threeWayMerge = Configuration.GetBool(Constants.Configuration.InstallPackage.ThreeWayMerge);
             if (threeWayMerge)
             {
-                LoadBaseProject(context);
+                context = CompositionService.Resolve<ThreeWayMergeEmitContext>().WithBaseDirectory(BaseDirectory).With(project);
+            }
+            else
+            {
+                context = CompositionService.Resolve<IEmitContext>().With(project);
+            }
+
+            if (Configuration.GetBool(Constants.Configuration.InstallPackage.ShowDiagnostics))
+            {
+                var treatWarningsAsErrors = Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
+                context.Trace.TraceDiagnostics(context.Project.Diagnostics, treatWarningsAsErrors);
             }
 
             var emitters = Emitters.OrderBy(e => e.Sortorder).ToList();
@@ -220,83 +185,7 @@ namespace Sitecore.Pathfinder.Emitters
             Emit(context, project, emitters, retries);
             EmitRetry(context, emitters, retries);
 
-            if (retries.Count == 0 && threeWayMerge)
-            {
-                UpdateBaseProject(context);
-            }
-        }
-
-        private void UpdateBaseProject([NotNull] IEmitContext context)
-        {
-            context.FileSystem.CreateDirectory(BaseDirectory);
-            context.FileSystem.Mirror(context.Project.ProjectDirectory, BaseDirectory);
-        }
-
-        protected virtual void LoadBaseProject([NotNull] IEmitContext context)
-        {
-            if (string.IsNullOrEmpty(BaseDirectory))
-            {
-                return;
-            }
-
-            if (!context.FileSystem.DirectoryExists(BaseDirectory))
-            {
-                return;
-            }
-
-            var baseProject = ProjectService.LoadProjectFromNewHost(BaseDirectory);
-            if (baseProject == null)
-            {
-                return;
-            }
-
-            Func<Data.Items.Item, FieldWriter, bool> threeWayMerge = delegate(Data.Items.Item item, FieldWriter fieldWriter)
-            {
-                var uri = new ProjectItemUri(fieldWriter.ItemWriter.DatabaseName, fieldWriter.ItemWriter.Guid);
-
-                var baseItem = baseProject.FindQualifiedItem<Projects.Items.Item>(uri);
-                if (baseItem == null)
-                {
-                    return true;
-                }
-
-                var projectItem = context.Project.FindQualifiedItem<Projects.Items.Item>(uri);
-                if (projectItem == null)
-                {
-                    throw new InvalidOperationException("Oh no, something went really wrong");
-                }
-
-                var projectField = projectItem.Fields[fieldWriter.FieldName];
-                if (projectField == null)
-                {
-                    throw new InvalidOperationException("Oh no, something went really wrong");
-                }
-
-                var templateField = projectField.TemplateField;
-
-                Field baseField;
-                if (templateField.Shared)
-                {
-                    baseField = baseItem.Fields.FirstOrDefault(f => f.FieldId == fieldWriter.FieldId && f.Language == string.Empty && f.Version == 0);
-                }
-                else if (templateField.Unversioned)
-                {
-                    baseField = baseItem.Fields.FirstOrDefault(f => f.FieldId == fieldWriter.FieldId && f.Language == fieldWriter.Language && f.Version == 0);
-                }
-                else 
-                {
-                    baseField = baseItem.Fields.FirstOrDefault(f => f.FieldId == fieldWriter.FieldId && f.Language == fieldWriter.Language && f.Version == fieldWriter.Version);
-                }
-
-                if (baseField == null)
-                {
-                    return true;
-                }
-
-                var databaseValue = item[fieldWriter.FieldName];
-
-                return baseField.CompiledValue == databaseValue;
-            };
+            context.Done();
         }
 
         protected virtual void Emit([NotNull] IEmitContext context, [NotNull] IProject project, [NotNull, ItemNotNull] List<IEmitter> emitters, [NotNull, ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
@@ -379,6 +268,44 @@ namespace Sitecore.Pathfinder.Emitters
                 else
                 {
                     Trace.TraceError(Msg.E1003, Texts.An_error_occured, projectItem.Snapshots.First().SourceFile.AbsoluteFileName, TextSpan.Empty);
+                }
+            }
+        }
+
+        protected virtual void PrepareWebsiteForPathfinder()
+        {
+            if (!Configuration.GetBool(Constants.Configuration.InstallPackage.MarkItemsWithPathfinderProjectUniqueId, true))
+            {
+                return;
+            }
+
+            using (new SecurityDisabler())
+            {
+                // ensure __PathfinderProjectUniqueIds field is in the Advanced section of all databases.
+                foreach (var database in Factory.GetDatabases())
+                {
+                    if (database.ReadOnly)
+                    {
+                        continue;
+                    }
+
+                    var item = database.GetItem(ServerConstants.ItemIds.PathfinderProjectUniqueId);
+                    if (item != null)
+                    {
+                        continue;
+                    }
+
+                    var parent = database.GetItem("/sitecore/templates/System/Templates/Sections/Advanced/Advanced");
+                    if (parent == null)
+                    {
+                        continue;
+                    }
+
+                    var projectUniqueIdTemplateField = ItemManager.AddFromTemplate(ServerConstants.FieldNames.PathfinderProjectUniqueIds, TemplateIDs.TemplateField, parent, ServerConstants.ItemIds.PathfinderProjectUniqueId);
+                    using (new EditContext(projectUniqueIdTemplateField))
+                    {
+                        projectUniqueIdTemplateField["Shared"] = "1";
+                    }
                 }
             }
         }

@@ -7,7 +7,7 @@ using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Emitting
 {
-    public interface IEmitContext
+    public interface IEmitContext 
     {
         [NotNull]
         IConfiguration Configuration { get; }
@@ -25,5 +25,7 @@ namespace Sitecore.Pathfinder.Emitting
 
         [NotNull]
         IEmitContext With([NotNull] IProject project);
+
+        void Done();
     }
 }

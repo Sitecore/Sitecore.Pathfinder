@@ -9,6 +9,7 @@ using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Emitters.ThreeWayMerge;
 using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -18,9 +19,6 @@ namespace Sitecore.Pathfinder.Emitters.Writers
 {
     public class ItemWriter
     {
-        [NotNull]
-        public Func<Item, FieldWriter, bool> CanWriteField { get; set; } = (item, writer) => true;
-
         [Diagnostics.NotNull]
         public string DatabaseName { get; set; } = string.Empty;
 
@@ -112,29 +110,33 @@ namespace Sitecore.Pathfinder.Emitters.Writers
 
         protected virtual void SetFieldValue([NotNull] IEmitContext context, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] FieldWriter fieldWriter, [NotNull] string fieldName)
         {
-            if (!CanWriteField(item, fieldWriter))
-            {
-                return;
-            }
-
-            var fieldValue = fieldWriter.DatabaseValue;
-
+            var fieldValue = fieldWriter.DatabaseValue.Trim();
             var field = item.Fields[fieldName];
+
+            var canSetFieldValue = context as ICanSetFieldValue;
+            if (canSetFieldValue != null)
+            {
+                if (!canSetFieldValue.CanSetFieldValue(item, fieldWriter, fieldValue))
+                {
+                    return;
+                }
+            }
 
             if (!string.Equals(field.Type, "layout", StringComparison.OrdinalIgnoreCase))
             {
-                field.Value = fieldValue.Trim();
-                return;
+                field.Value = fieldValue;
             }
-
-            // support layout deltas - may throw a MissingMethod exception on older Sitecore systems
-            try
+            else
             {
-                SetLayoutFieldValue(field, fieldValue);
-            }
-            catch
-            {
-                field.Value = fieldValue.Trim();
+                // support layout deltas - may throw a MissingMethod exception on older Sitecore systems
+                try
+                {
+                    SetLayoutFieldValue(field, fieldValue);
+                }
+                catch
+                {
+                    field.Value = fieldValue;
+                }
             }
         }
 

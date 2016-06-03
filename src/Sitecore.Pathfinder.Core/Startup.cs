@@ -81,9 +81,10 @@ namespace Sitecore.Pathfinder
         [CanBeNull]
         public IHostService Start()
         {
+            var assembly = Assembly.GetEntryAssembly() ?? Assembly.GetCallingAssembly();
             var assemblyFileNames = new List<string>
             {
-                Assembly.GetEntryAssembly().Location
+                assembly.Location
             };
 
             if (AssemblyFileNames != null)

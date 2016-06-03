@@ -68,7 +68,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
                 Guid = projectItem.Uri.Guid,
                 ItemName = item.ItemName,
                 ItemIdOrPath = item.ItemIdOrPath,
-                TemplateIdOrPath = templateIdOrPath,
+                TemplateIdOrPath = templateIdOrPath
             };
 
             foreach (var field in item.Fields)
@@ -91,7 +91,43 @@ namespace Sitecore.Pathfinder.Emitters.Items
             }
         }
 
-        protected virtual void Validate([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] Data.Items.Item dataItem)
+        [Diagnostics.CanBeNull]
+        protected string ResolveTemplateIdOrPath([Diagnostics.NotNull] Projects.Items.Item item)
+        {
+            var templateIdOrPath = item.TemplateIdOrPath;
+            if (Data.ID.IsID(templateIdOrPath) || templateIdOrPath.StartsWith("/sitecore", StringComparison.OrdinalIgnoreCase))
+            {
+                return templateIdOrPath;
+            }
+
+            var database = Factory.GetDatabase(item.DatabaseName);
+            var templates = TemplateManager.GetTemplates(database).Values.ToList();
+
+            // try matching by name only
+            var template = templates.FirstOrDefault(t => string.Equals(t.Name, templateIdOrPath, StringComparison.OrdinalIgnoreCase));
+            if (template != null)
+            {
+                return database.GetItem(template.ID)?.Paths.Path;
+            }
+
+            // try matching by Xml safe name
+            template = templates.FirstOrDefault(t => string.Equals(t.Name.EscapeXmlElementName(), templateIdOrPath, StringComparison.OrdinalIgnoreCase));
+            if (template != null)
+            {
+                return database.GetItem(template.ID)?.Paths.Path;
+            }
+
+            // try to see if the item already exists - may have been created elsewhere
+            var i = database.GetItem(item.ItemIdOrPath);
+            if (i != null)
+            {
+                return database.GetItem(i.Template.ID)?.Paths.Path;
+            }
+
+            return null;
+        }
+
+        protected virtual void Validate([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] Projects.Items.Item item, [Diagnostics.NotNull] Data.Items.Item dataItem)
         {
             var validatorCollection = new ValidatorCollection();
             foreach (BaseValidator validator in ValidatorManager.BuildValidators(ValidatorsMode.ValidatorBar, dataItem))
@@ -142,43 +178,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
             }
         }
 
-        [Diagnostics.CanBeNull]
-        protected string ResolveTemplateIdOrPath([Diagnostics.NotNull] Item item)
-        {
-            var templateIdOrPath = item.TemplateIdOrPath;
-            if (Data.ID.IsID(templateIdOrPath) || templateIdOrPath.StartsWith("/sitecore", StringComparison.OrdinalIgnoreCase))
-            {
-                return templateIdOrPath;
-            }
-
-            var database = Factory.GetDatabase(item.DatabaseName);
-            var templates = TemplateManager.GetTemplates(database).Values.ToList();
-
-            // try matching by name only
-            var template = templates.FirstOrDefault(t => string.Equals(t.Name, templateIdOrPath, StringComparison.OrdinalIgnoreCase));
-            if (template != null)
-            {
-                return database.GetItem(template.ID)?.Paths.Path;
-            }
-
-            // try matching by Xml safe name
-            template = templates.FirstOrDefault(t => string.Equals(t.Name.EscapeXmlElementName(), templateIdOrPath, StringComparison.OrdinalIgnoreCase));
-            if (template != null)
-            {
-                return database.GetItem(template.ID)?.Paths.Path;
-            }
-
-            // try to see if the item already exists - may have been created elsewhere
-            var i = database.GetItem(item.ItemIdOrPath);
-            if (i != null)
-            {
-                return database.GetItem(i.Template.ID)?.Paths.Path;
-            }
-
-            return null;
-        }
-
-        protected void ValidateFields([Diagnostics.NotNull] Data.Database database, [Diagnostics.NotNull] Template template, [Diagnostics.NotNull] Item projectItem)
+        protected void ValidateFields([Diagnostics.NotNull] Data.Database database, [Diagnostics.NotNull] Template template, [Diagnostics.NotNull] Projects.Items.Item projectItem)
         {
             var templateFields = template.GetFields(true);
 
