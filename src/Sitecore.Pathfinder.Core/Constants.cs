@@ -174,6 +174,8 @@ namespace Sitecore.Pathfinder
 
                 public const string ThreeWayMerge = "install-package:three-way-merge";
 
+                public const string ThreeWayMergeOverwriteDatabase = "install-package:three-way-merge-overwrite-database";
+
                 public const string MarkItemsWithPathfinderProjectUniqueId = "install-package:mark-items-with-pathfinder-project-unique-id";
             }
 
@@ -253,6 +255,11 @@ namespace Sitecore.Pathfinder
                 public const string ShowStackTrace = "system:show-stack-trace";
 
                 public const string ShowTaskTime = "system:show-task-time";
+
+                public static class WebRequests
+                {
+                    public const string Timeout = "system:web-requests: time-out";
+                }
             }
 
             public static class WatchProject

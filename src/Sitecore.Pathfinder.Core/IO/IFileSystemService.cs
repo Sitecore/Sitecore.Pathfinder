@@ -25,6 +25,9 @@ namespace Sitecore.Pathfinder.IO
 
         void DeleteFile([NotNull] string fileName);
 
+        [CanBeNull]
+        object Deserialize([NotNull] string fileName, [NotNull] Type type);
+
         bool DirectoryExists([NotNull] string directory);
 
         bool FileExists([NotNull] string fileName);
@@ -69,6 +72,8 @@ namespace Sitecore.Pathfinder.IO
         XDocument ReadXml([NotNull] string fileName, LoadOptions loadOptions = LoadOptions.None);
 
         void Rename([NotNull] string oldFileName, [NotNull] string newFileName);
+
+        void Serialize([NotNull] string fileName, [NotNull] Type type, [NotNull] object value);
 
         void Unzip([NotNull] string zipFileName, [NotNull] string destinationDirectory);
 

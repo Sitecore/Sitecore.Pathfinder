@@ -27,11 +27,13 @@ namespace Sitecore.Pathfinder.Tasks
 
             var treatWarningsAsErrors = context.Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
 
-            context.Trace.TraceDiagnostics(context.Project.Diagnostics, treatWarningsAsErrors);
+            var diagnostics = context.Project.Diagnostics.ToArray();
 
-            var errors = context.Project.Diagnostics.Count(d => d.Severity == Severity.Error);
-            var warnings = context.Project.Diagnostics.Count(d => d.Severity == Severity.Warning);
-            var messages = context.Project.Diagnostics.Count(d => d.Severity == Severity.Information);
+            context.Trace.TraceDiagnostics(diagnostics, treatWarningsAsErrors);
+
+            var errors = diagnostics.Count(d => d.Severity == Severity.Error);
+            var warnings = diagnostics.Count(d => d.Severity == Severity.Warning);
+            var messages = diagnostics.Count(d => d.Severity == Severity.Information);
             var checkers = CheckerService.EnabledCheckersCount;
 
             if (treatWarningsAsErrors)

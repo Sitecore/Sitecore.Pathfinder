@@ -42,20 +42,20 @@ namespace Sitecore.Pathfinder.Emitters.Items
             var templateIdOrPath = ResolveTemplateIdOrPath(item);
             if (string.IsNullOrEmpty(templateIdOrPath))
             {
-                throw new RetryableEmitException(Texts.Template_missing, TraceHelper.GetTextNode(item.TemplateIdOrPathProperty, item.ItemNameProperty), item.TemplateIdOrPath);
+                throw new RetryableEmitException(Msg.E1013, Texts.Template_missing, TraceHelper.GetTextNode(item.TemplateIdOrPathProperty, item.ItemNameProperty), item.TemplateIdOrPath);
             }
 
             var database = Factory.GetDatabase(item.DatabaseName);
             var templateItem = database.GetItem(templateIdOrPath);
             if (string.IsNullOrEmpty(templateIdOrPath))
             {
-                throw new RetryableEmitException(Texts.Template_missing, TraceHelper.GetTextNode(item.TemplateIdOrPathProperty), item.TemplateIdOrPath);
+                throw new RetryableEmitException(Msg.E1014, Texts.Template_missing, TraceHelper.GetTextNode(item.TemplateIdOrPathProperty), item.TemplateIdOrPath);
             }
 
             var template = TemplateManager.GetTemplate(templateItem.ID, templateItem.Database);
             if (template == null)
             {
-                throw new RetryableEmitException(Texts.Template_missing, TraceHelper.GetTextNode(item.TemplateIdOrPathProperty), item.TemplateIdOrPath);
+                throw new RetryableEmitException(Msg.E1015, Texts.Template_missing, TraceHelper.GetTextNode(item.TemplateIdOrPathProperty), item.TemplateIdOrPath);
             }
 
             // todo: convert to pipeline
@@ -76,7 +76,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
                 var templateField = template.GetField(field.FieldName);
                 if (templateField == null)
                 {
-                    throw new RetryableEmitException(Texts.Template_field_missing, TraceHelper.GetTextNode(field.FieldNameProperty, item.ItemNameProperty), field.FieldName);
+                    throw new RetryableEmitException(Msg.E1016, Texts.Template_field_missing, TraceHelper.GetTextNode(field.FieldNameProperty, item.ItemNameProperty), field.FieldName);
                 }
 
                 var fieldWriter = new FieldWriter(itemWriter, field.FieldIdProperty, field.FieldNameProperty, field.Language, field.Version, field.CompiledValue);
@@ -186,7 +186,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
             {
                 if (templateFields.All(f => !string.Equals(f.Name, field.FieldName, StringComparison.OrdinalIgnoreCase)))
                 {
-                    throw new RetryableEmitException(Texts.Field_is_not_defined_in_the_template, TraceHelper.GetTextNode(field.FieldNameProperty), field.FieldName);
+                    throw new RetryableEmitException(Msg.E1017, Texts.Field_is_not_defined_in_the_template, TraceHelper.GetTextNode(field.FieldNameProperty), field.FieldName);
                 }
 
                 if (!string.IsNullOrEmpty(field.Language))
@@ -194,7 +194,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
                     var language = LanguageManager.GetLanguage(field.Language, database);
                     if (language == null)
                     {
-                        throw new RetryableEmitException(Texts.Language_not_found, TraceHelper.GetTextNode(field.ValueProperty), field.Language);
+                        throw new RetryableEmitException(Msg.E1018, Texts.Language_not_found, TraceHelper.GetTextNode(field.ValueProperty), field.Language);
                     }
                 }
 
@@ -215,7 +215,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
             var root = value.ToXElement();
             if (root == null)
             {
-                throw new EmitException(Texts.Layout_is_not_valid, TraceHelper.GetTextNode(field.FieldNameProperty, field));
+                throw new EmitException(Msg.E1019, Texts.Layout_is_not_valid, TraceHelper.GetTextNode(field.FieldNameProperty, field));
             }
 
             foreach (var deviceElement in root.Elements())
@@ -224,7 +224,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
                 var device = database.GetItem(deviceId);
                 if (device == null)
                 {
-                    throw new RetryableEmitException(Texts.Device_not_found, TraceHelper.GetTextNode(field.FieldNameProperty, field), deviceId);
+                    throw new RetryableEmitException(Msg.E1020, Texts.Device_not_found, TraceHelper.GetTextNode(field.FieldNameProperty, field), deviceId);
                 }
 
                 var layoutId = deviceElement.GetAttributeValue("l");
@@ -233,7 +233,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
                     var layout = database.GetItem(layoutId);
                     if (layout == null)
                     {
-                        throw new RetryableEmitException(Texts.Layout_not_found, TraceHelper.GetTextNode(field.FieldNameProperty, field), layoutId);
+                        throw new RetryableEmitException(Msg.E1021, Texts.Layout_not_found, TraceHelper.GetTextNode(field.FieldNameProperty, field), layoutId);
                     }
                 }
 
@@ -243,7 +243,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
                     var rendering = database.GetItem(renderingId);
                     if (rendering == null)
                     {
-                        throw new RetryableEmitException(Texts.Rendering_not_found, TraceHelper.GetTextNode(field.FieldNameProperty, field), renderingId);
+                        throw new RetryableEmitException(Msg.E1022, Texts.Rendering_not_found, TraceHelper.GetTextNode(field.FieldNameProperty, field), renderingId);
                     }
                 }
             }

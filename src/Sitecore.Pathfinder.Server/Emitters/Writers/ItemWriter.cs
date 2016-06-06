@@ -45,7 +45,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             var database = Factory.GetDatabase(DatabaseName);
             if (database == null)
             {
-                throw new EmitException(Texts.Database_not_found, Snapshot, DatabaseName);
+                throw new EmitException(Msg.E1023, Texts.Database_not_found, Snapshot, DatabaseName);
             }
 
             var item = database.GetItem(new ID(Guid));
@@ -59,7 +59,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
 
             if (templateItem == null)
             {
-                throw new RetryableEmitException(Texts.Template_missing, Snapshot, TemplateIdOrPath);
+                throw new RetryableEmitException(Msg.E1024, Texts.Template_missing, Snapshot, TemplateIdOrPath);
             }
 
             if (item == null)
@@ -88,19 +88,19 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             var parentItemPath = PathHelper.GetItemParentPath(ItemIdOrPath);
             if (string.IsNullOrEmpty(parentItemPath))
             {
-                throw new EmitException("Parent not found", Snapshot, ItemIdOrPath);
+                throw new EmitException(Msg.E1025, "Parent not found", Snapshot, ItemIdOrPath);
             }
 
             var parentItem = database.CreateItemPath(parentItemPath);
             if (parentItem == null)
             {
-                throw new RetryableEmitException(Texts.Failed_to_create_item_path, Snapshot, parentItemPath);
+                throw new RetryableEmitException(Msg.E1026, Texts.Failed_to_create_item_path, Snapshot, parentItemPath);
             }
 
             var item = ItemManager.AddFromTemplate(ItemName, templateItem.ID, parentItem, new ID(Guid));
             if (item == null)
             {
-                throw new RetryableEmitException(Texts.Failed_to_create_item_path, Snapshot, ItemIdOrPath);
+                throw new RetryableEmitException(Msg.E1027, Texts.Failed_to_create_item_path, Snapshot, ItemIdOrPath);
             }
 
             ItemIdOrPath = item.ID.ToString();
@@ -113,13 +113,18 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             var fieldValue = fieldWriter.DatabaseValue.Trim();
             var field = item.Fields[fieldName];
 
-            var canSetFieldValue = context as ICanSetFieldValue;
+            var canSetFieldValue = context as IFieldValueTracking;
             if (canSetFieldValue != null)
             {
                 if (!canSetFieldValue.CanSetFieldValue(item, fieldWriter, fieldValue))
                 {
                     return;
                 }
+            }
+
+            if (!item.Editing.IsEditing)
+            {
+                item.Editing.BeginEdit();
             }
 
             if (!string.Equals(field.Type, "layout", StringComparison.OrdinalIgnoreCase))
@@ -160,7 +165,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                     parentItem = item.Database.CreateItemPath(parentItemPath);
                     if (parentItem == null)
                     {
-                        throw new RetryableEmitException(Texts.Could_not_create_item, Snapshot, parentItemPath);
+                        throw new RetryableEmitException(Msg.E1028, Texts.Could_not_create_item, Snapshot, parentItemPath);
                     }
                 }
 
@@ -170,8 +175,6 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             // rename and update fields
             using (new EditContext(item))
             {
-                item.Fields.ReadAll();
-
                 if (item.Name != ItemName)
                 {
                     item.Name = ItemName;
@@ -185,7 +188,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                     }
                     catch (Exception ex)
                     {
-                        throw new RetryableEmitException(Texts.Failed_to_change_template_of_the_item, Snapshot, ex.Message);
+                        throw new RetryableEmitException(Msg.E1029, Texts.Failed_to_change_template_of_the_item, Snapshot, ex.Message);
                     }
                 }
 
@@ -221,9 +224,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                         continue;
                     }
 
-                    versionedItem.Editing.BeginEdit();
                     versionedItems.Add(versionedItem);
-                    versionedItem.Fields.ReadAll();
                 }
 
                 var fieldName = field.FieldName;
@@ -237,7 +238,10 @@ namespace Sitecore.Pathfinder.Emitters.Writers
 
             foreach (var i in versionedItems)
             {
-                i.Editing.EndEdit();
+                if (i.Editing.IsEditing)
+                {
+                    i.Editing.EndEdit();
+                }
             }
         }
     }

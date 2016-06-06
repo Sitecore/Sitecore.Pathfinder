@@ -60,7 +60,7 @@ namespace Sitecore.Pathfinder.Extensions
         [NotNull, ItemNotNull]
         public static IEnumerable<string> GetCommaSeparatedStringList([NotNull] this IConfiguration configuration, [NotNull] string key)
         {
-            string value = string.Empty;
+            var value = string.Empty;
             if (configuration.GetSubKeys(key).Any())
             {
                 foreach (var subkey in configuration.GetSubKeys(key))
@@ -86,6 +86,18 @@ namespace Sitecore.Pathfinder.Extensions
         {
             var cultureName = configuration.GetString(Constants.Configuration.Culture);
             return string.IsNullOrEmpty(cultureName) ? CultureInfo.CurrentCulture : new CultureInfo(cultureName);
+        }
+
+        public static int GetInt([NotNull] this IConfiguration configuration, [NotNull] string key, int defaultValue = 0)
+        {
+            string value;
+            if (!configuration.TryGet(key, out value))
+            {
+                return defaultValue;
+            }
+
+            int result;
+            return int.TryParse(value, out result) ? result : defaultValue;
         }
 
         [NotNull]

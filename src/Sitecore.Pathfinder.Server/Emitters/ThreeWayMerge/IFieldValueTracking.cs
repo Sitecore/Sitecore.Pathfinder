@@ -6,7 +6,7 @@ using Sitecore.Pathfinder.Emitting;
 
 namespace Sitecore.Pathfinder.Emitters.ThreeWayMerge
 {
-    public interface ICanSetFieldValue 
+    public interface IFieldValueTracking 
     {
         [NotNull]
         IEmitContext WithBaseDirectory([NotNull] string baseDirectory);

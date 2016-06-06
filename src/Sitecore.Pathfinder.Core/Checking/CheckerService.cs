@@ -46,7 +46,7 @@ namespace Sitecore.Pathfinder.Checking
             {
                 Parallel.ForEach(checkers, checker =>
                 {
-                    var diagnostics = checker(context);
+                    var diagnostics = checker(context).ToArray();
                     context.Trace.TraceDiagnostics(diagnostics, treatWarningsAsErrors);
                 });
             }
@@ -54,7 +54,7 @@ namespace Sitecore.Pathfinder.Checking
             {
                 foreach (var checker in checkers)
                 {
-                    var diagnostics = checker(context);
+                    var diagnostics = checker(context).ToArray();
                     context.Trace.TraceDiagnostics(diagnostics, treatWarningsAsErrors);
                 }
             }

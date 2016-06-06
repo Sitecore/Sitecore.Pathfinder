@@ -182,10 +182,15 @@ namespace Sitecore.Pathfinder.Emitters
             var emitters = Emitters.OrderBy(e => e.Sortorder).ToList();
             var retries = new List<Tuple<IProjectItem, Exception>>();
 
-            Emit(context, project, emitters, retries);
-            EmitRetry(context, emitters, retries);
-
-            context.Done();
+            try
+            {
+                Emit(context, project, emitters, retries);
+                EmitRetry(context, emitters, retries);
+            }
+            finally
+            {
+                context.Done();
+            }
         }
 
         protected virtual void Emit([NotNull] IEmitContext context, [NotNull] IProject project, [NotNull, ItemNotNull] List<IEmitter> emitters, [NotNull, ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
@@ -215,7 +220,7 @@ namespace Sitecore.Pathfinder.Emitters
                 }
                 catch (EmitException ex)
                 {
-                    Trace.TraceError(Msg.E1000, ex.Text, ex.FileName, ex.Span, ex.Details);
+                    Trace.TraceError(ex.Msg, ex.Text, ex.FileName, ex.Span, ex.Details);
                 }
                 catch (Exception ex)
                 {
@@ -259,7 +264,7 @@ namespace Sitecore.Pathfinder.Emitters
                 var buildException = exception as EmitException;
                 if (buildException != null)
                 {
-                    Trace.TraceError(Msg.E1001, buildException.Text, buildException.FileName, buildException.Span, buildException.Details);
+                    Trace.TraceError(buildException.Msg, buildException.Text, buildException.FileName, buildException.Span, buildException.Details);
                 }
                 else if (exception != null)
                 {

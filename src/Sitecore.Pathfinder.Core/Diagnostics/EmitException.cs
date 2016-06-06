@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.ComponentModel;
@@ -8,8 +8,9 @@ namespace Sitecore.Pathfinder.Diagnostics
 {
     public class EmitException : Exception
     {
-        public EmitException([Localizable(true), NotNull]  string text) : base(text)
+        public EmitException(int msg, [Localizable(true), NotNull] string text) : base(text)
         {
+            Msg = msg;
             Text = text;
 
             Details = string.Empty;
@@ -18,16 +19,18 @@ namespace Sitecore.Pathfinder.Diagnostics
             Details = string.Empty;
         }
 
-        public EmitException([Localizable(true), NotNull]  string text, [NotNull] ISnapshot snapshot, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
+        public EmitException(int msg, [Localizable(true), NotNull] string text, [NotNull] ISnapshot snapshot, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
         {
+            Msg = msg;
             Text = text;
             FileName = snapshot.SourceFile.AbsoluteFileName;
             Span = TextSpan.Empty;
             Details = details;
         }
 
-        public EmitException([Localizable(true), NotNull]  string text, [NotNull] ITextNode textNode, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
+        public EmitException(int msg, [Localizable(true), NotNull] string text, [NotNull] ITextNode textNode, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
         {
+            Msg = msg;
             Text = text;
             FileName = textNode.Snapshot.SourceFile.AbsoluteFileName;
             Span = textNode.TextSpan;
@@ -39,6 +42,8 @@ namespace Sitecore.Pathfinder.Diagnostics
 
         [NotNull]
         public string FileName { get; }
+
+        public int Msg { get; }
 
         public TextSpan Span { get; }
 

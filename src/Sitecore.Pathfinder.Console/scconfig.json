@@ -170,8 +170,10 @@
         "mark-items-with-pathfinder-project-unique-id": true,
         // trace project diagnostics from server-side
         "show-project-diagnostics": false,
-        // use 3 way merge for non-destructive updating - may take more time
+        // use three way merge for non-destructive updating - may take more time
         "three-way-merge": false,
+        // overwrite field values in the database in three way merge - ensures database has values from project
+        "three-way-merge-overwrite-database": false,
         "uninstall-directory": "../.uninstall"
     },
 
@@ -429,7 +431,6 @@
     // global search and replace tokens - case-sensitive
     "search-and-replace-tokens": {
         // "replace" : "with"
-
     },
 
     "standard-template-fields": {
@@ -514,6 +515,10 @@
         "show-stack-trace": true,
 
         // show time spent by each task
-        "show-task-time": false
+        "show-task-time": false,
+
+        "web-requests": {
+            "time-out": 300 // seconds
+        } 
     }
 }

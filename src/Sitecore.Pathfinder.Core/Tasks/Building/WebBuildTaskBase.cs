@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Tasks.Building
 
         protected virtual bool DownloadFile([NotNull] ITaskContext context, [NotNull] WebRequest webRequest, [NotNull] string targetFileName)
         {
-            var webClient = new WebClient();
+            var webClient = GetWebClient(context.Configuration);
             try
             {
                 var url = webRequest.GetUrl();
@@ -42,6 +42,12 @@ namespace Sitecore.Pathfinder.Tasks.Building
             }
 
             return false;
+        }
+
+        [NotNull]
+        protected virtual WebClient GetWebClient([NotNull] IConfiguration configuration)
+        {
+            return new WebClientWithTimeout(configuration);
         }
 
         [NotNull]
@@ -85,7 +91,7 @@ namespace Sitecore.Pathfinder.Tasks.Building
 
         protected virtual bool Post([NotNull] ITaskContext context, [NotNull] WebRequest webRequest)
         {
-            var webClient = new WebClient();
+            var webClient = GetWebClient(context.Configuration);
             try
             {
                 var url = webRequest.GetUrl();
@@ -116,6 +122,29 @@ namespace Sitecore.Pathfinder.Tasks.Building
             }
 
             return false;
+        }
+
+        protected class WebClientWithTimeout : WebClient
+        {
+            public WebClientWithTimeout([NotNull] IConfiguration configuration)
+            {
+                Configuration = configuration;
+            }
+
+            [NotNull]
+            protected IConfiguration Configuration { get; }
+
+            protected override System.Net.WebRequest GetWebRequest(Uri uri)
+            {
+                var webRequest = base.GetWebRequest(uri);
+
+                if (webRequest != null)
+                {
+                    webRequest.Timeout = Configuration.GetInt(Constants.Configuration.System.WebRequests.Timeout, 300) * 1000;
+                }
+
+                return webRequest;
+            }
         }
     }
 }

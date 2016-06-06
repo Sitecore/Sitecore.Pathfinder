@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
@@ -12,53 +13,90 @@ using Sitecore.Data.Items;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitters.Writers;
 using Sitecore.Pathfinder.Emitting;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Emitters.ThreeWayMerge
 {
     [Export(typeof(ThreeWayMergeEmitContext)), PartCreationPolicy(CreationPolicy.NonShared)]
-    public class ThreeWayMergeEmitContext : EmitContext, ICanSetFieldValue
+    public class ThreeWayMergeEmitContext : EmitContext, IFieldValueTracking
     {
         private const string FileName = "base.xml";
 
         [NotNull, ItemNotNull]
-        private List<FieldRecord> _fieldRecords;
+        private List<BaseField> _baseFieldValues;
 
         [ImportingConstructor]
         public ThreeWayMergeEmitContext([NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystemService) : base(configuration, traceService, fileSystemService)
         {
+            OverwriteDatabase = Configuration.GetBool(Constants.Configuration.InstallPackage.ThreeWayMergeOverwriteDatabase);
         }
+
+        protected bool OverwriteDatabase { get; }
 
         [NotNull]
         protected string BaseDirectory { get; private set; } = string.Empty;
 
         public virtual bool CanSetFieldValue(Item item, FieldWriter fieldWriter, string fieldValue)
         {
-            var fieldRecord = _fieldRecords.FirstOrDefault(f => f.DatabaseName == fieldWriter.ItemWriter.DatabaseName && f.ItemId == fieldWriter.ItemWriter.Guid && ((f.FieldId != Guid.Empty && f.FieldId == fieldWriter.FieldId) || (!string.IsNullOrEmpty(f.FieldName) && f.FieldName == fieldWriter.FieldName)) && f.Language == fieldWriter.Language && f.Version == fieldWriter.Version);
-            if (fieldRecord == null)
+            var itemId = fieldWriter.ItemWriter.Guid == Guid.Empty ? string.Empty : fieldWriter.ItemWriter.Guid.Format();
+            var fieldId = fieldWriter.FieldId == Guid.Empty ? string.Empty : fieldWriter.FieldId.Format();
+
+            var databaseFieldValue = item[fieldWriter.FieldName];
+
+            // todo: consider making this a dictionary for performance
+            var baseField = _baseFieldValues.FirstOrDefault(f => f.DatabaseName == fieldWriter.ItemWriter.DatabaseName && f.ItemId == itemId && ((!string.IsNullOrEmpty(f.FieldId) && f.FieldId == fieldId) || (!string.IsNullOrEmpty(f.FieldName) && f.FieldName == fieldWriter.FieldName)) && f.Language == fieldWriter.Language && f.Version == fieldWriter.Version);
+            if (baseField == null)
             {
-                fieldRecord = new FieldRecord(fieldWriter.ItemWriter.Guid, fieldWriter.ItemWriter.DatabaseName, fieldWriter.FieldId, fieldWriter.FieldName, fieldWriter.Language, fieldWriter.Version, fieldValue);
-                fieldRecord.IsTouched = true;
-                _fieldRecords.Add(fieldRecord);
+                baseField = new BaseField(fieldWriter.ItemWriter.DatabaseName, itemId, fieldId, fieldWriter.FieldName, fieldWriter.Language, fieldWriter.Version, fieldValue);
+                _baseFieldValues.Add(baseField);
+
+                if (OverwriteDatabase)
+                {
+                    return true;
+                }
+
+                // if database value is empty, set it to the new field value
+                if (string.IsNullOrEmpty(databaseFieldValue))
+                {
+                    return true;
+                }
+
+                // database field already has value - do not overwrite it
+                baseField.Value = databaseFieldValue;
+                return false;
+            }
+            
+            baseField.IsActive = true;
+
+            if (OverwriteDatabase)
+            {
+                baseField.Value = fieldValue;
                 return true;
             }
 
-            fieldRecord.IsTouched = true;
-
-            // check if field value in database has changed since last install
-            if (item[fieldWriter.FieldName] == fieldRecord.Value)
+            // check if field value has changed - if not, ignore field
+            if (fieldValue == baseField.Value)
             {
-                fieldRecord.Value = fieldValue;
-                return true;
+                return false;
             }
 
-            // value in database has changed - do not update
-            return false;
+            // check if both field value and database value has changed - if so, there is a conflict
+            if (databaseFieldValue != baseField.Value)
+            {
+                Trace.TraceError(Msg.E1037, "Merge conflict: Field has changed both in project and in database - skipping", TraceHelper.GetTextNode(fieldWriter.FieldNameProperty, fieldWriter.FieldIdProperty), fieldWriter.FieldName);
+                return false;
+            }
+
+            // all is good - update value
+            baseField.Value = fieldValue;
+            return true;
         }
 
         public override void Done()
         {
-            SaveFieldRecords();
+            SaveBaseFields();
 
             base.Done();
         }
@@ -67,50 +105,41 @@ namespace Sitecore.Pathfinder.Emitters.ThreeWayMerge
         {
             BaseDirectory = baseDirectory;
 
-            LoadFieldRecords();
+            LoadBaseFields();
 
             return this;
         }
 
-        protected virtual void LoadFieldRecords()
+        protected virtual void LoadBaseFields()
         {
             var fileName = Path.Combine(BaseDirectory, FileName);
             if (!FileSystem.FileExists(fileName))
             {
-                _fieldRecords = new List<FieldRecord>();
+                _baseFieldValues = new List<BaseField>();
                 return;
             }
 
-            var serializer = new XmlSerializer(typeof(List<FieldRecord>));
-            using (var stream = FileSystem.OpenRead(fileName))
-            {
-                _fieldRecords = serializer.Deserialize(stream) as List<FieldRecord> ?? new List<FieldRecord>();
-            }
+            _baseFieldValues = FileSystem.Deserialize(fileName, typeof(List<BaseField>)) as List<BaseField> ?? new List<BaseField>();
         }
 
-        protected virtual void SaveFieldRecords()
+        protected virtual void SaveBaseFields()
         {
-            _fieldRecords.RemoveAll(f => !f.IsTouched);
+            _baseFieldValues.RemoveAll(f => !f.IsActive);
 
             var fileName = Path.Combine(BaseDirectory, FileName);
 
             FileSystem.CreateDirectoryFromFileName(fileName);
-
-            var serializer = new XmlSerializer(typeof(List<FieldRecord>));
-            using (var stream = FileSystem.OpenWrite(fileName))
-            {
-                serializer.Serialize(stream, _fieldRecords);
-            }
+            FileSystem.Serialize(fileName, typeof(List<BaseField>), _baseFieldValues);
         }
 
         [UsedImplicitly]
-        public class FieldRecord
+        public class BaseField
         {
-            public FieldRecord()
+            public BaseField()
             {
             }
 
-            public FieldRecord(Guid itemId, [NotNull] string databaseName, Guid fieldId, [NotNull] string fieldName, [NotNull] string language, int version, [NotNull] string value)
+            public BaseField([NotNull] string databaseName, [NotNull] string itemId, [NotNull] string fieldId, [NotNull] string fieldName, [NotNull] string language, int version, [NotNull] string value)
             {
                 ItemId = itemId;
                 DatabaseName = databaseName;
@@ -124,17 +153,17 @@ namespace Sitecore.Pathfinder.Emitters.ThreeWayMerge
             [NotNull, XmlAttribute]
             public string DatabaseName { get; set; } = string.Empty;
 
-            [XmlAttribute]
-            public Guid FieldId { get; set; }
+            [NotNull, XmlAttribute, DefaultValue("")]
+            public string FieldId { get; set; } = string.Empty;
 
             [NotNull, XmlAttribute]
             public string FieldName { get; set; } = string.Empty;
 
             [XmlIgnore]
-            public bool IsTouched { get; set; }
+            public bool IsActive { get; set; } = true;
 
-            [XmlAttribute]
-            public Guid ItemId { get; set; } = Guid.Empty;
+            [NotNull, XmlAttribute, DefaultValue("")]
+            public string ItemId { get; set; } = string.Empty;
 
             [NotNull, DefaultValue(""), XmlAttribute]
             public string Language { get; set; } = string.Empty;

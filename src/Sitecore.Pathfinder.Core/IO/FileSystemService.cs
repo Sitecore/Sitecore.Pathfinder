@@ -9,6 +9,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 using Sitecore.Pathfinder.Diagnostics;
 using ZetaLongPaths;
 using FileHelper = ZetaLongPaths.ZlpIOHelper;
@@ -126,6 +127,15 @@ namespace Sitecore.Pathfinder.IO
         public virtual void DeleteFile(string fileName)
         {
             FileHelper.DeleteFile(fileName);
+        }
+
+        public object Deserialize(string fileName, Type type)
+        {
+            var serializer = new XmlSerializer(type);
+            using (var stream = OpenRead(fileName))
+            {
+                return serializer.Deserialize(stream);
+            }
         }
 
         public virtual bool DirectoryExists(string directory)
@@ -262,6 +272,16 @@ namespace Sitecore.Pathfinder.IO
         public void Rename(string oldFileName, string newFileName)
         {
             FileHelper.MoveFile(oldFileName, newFileName);
+        }
+
+        public void Serialize(string fileName, Type type, object value)
+        {
+            // do not use ZetaLongPath - has weird bug
+            var serializer = new XmlSerializer(type);
+            using (var stream = new StreamWriter(fileName))
+            {
+                serializer.Serialize(stream, value);
+            }
         }
 
         public void Unzip(string zipFileName, string destinationDirectory)

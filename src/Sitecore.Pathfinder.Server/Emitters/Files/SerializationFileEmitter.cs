@@ -45,14 +45,14 @@ namespace Sitecore.Pathfinder.Emitters.Files
                 var item = DoLoadItem(itemModel.Snapshots.First().SourceFile.AbsoluteFileName, LoadOptions);
                 if (item == null)
                 {
-                    throw new RetryableEmitException(Texts.Failed_to_deserialize_item, itemModel.Snapshots.First(), "Item not created");
+                    throw new RetryableEmitException(Msg.E1011, Texts.Failed_to_deserialize_item, itemModel.Snapshots.First(), "Item not created");
                 }
 
                 item.UpdateProjectUniqueIds(context);
             }
             catch (Exception ex)
             {
-                throw new RetryableEmitException(Texts.Failed_to_deserialize_item, itemModel.Snapshots.First(), ex.Message);
+                throw new RetryableEmitException(Msg.E1012, Texts.Failed_to_deserialize_item, itemModel.Snapshots.First(), ex.Message);
             }
         }
 

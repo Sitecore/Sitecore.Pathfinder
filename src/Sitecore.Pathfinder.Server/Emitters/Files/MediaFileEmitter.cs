@@ -118,7 +118,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
                     var item = MediaManager.Creator.CreateFromStream(stream, "/upload/" + Path.GetFileName(mediaFile.Snapshots.First().SourceFile.AbsoluteFileName), options);
                     if (item == null)
                     {
-                        throw new EmitException(Texts.Failed_to_upload_media, mediaFile.Snapshots.First());
+                        throw new EmitException(Msg.E1010, Texts.Failed_to_upload_media, mediaFile.Snapshots.First());
                     }
 
                     if (mediaItem.Uri.Guid != item.ID.ToGuid())
