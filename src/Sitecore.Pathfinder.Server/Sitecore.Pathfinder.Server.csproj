@@ -150,8 +150,9 @@
     <Compile Include="Emitters\Items\ItemEmitter.cs" />
     <Compile Include="Emitters\Files\ContentFileEmitter.cs" />
     <Compile Include="Emitters\Files\BinFileEmitter.cs" />
-    <Compile Include="Emitters\ThreeWayMerge\ThreeWayMergeEmitContext.cs" />
-    <Compile Include="Emitters\ThreeWayMerge\IFieldValueTracking.cs" />
+    <Compile Include="Emitters\ProjectEmitter.cs" />
+    <Compile Include="Emitters\ThreeWayMergeProjectEmitter.cs" />
+    <Compile Include="Emitters\ITrackingProjectEmitter.cs" />
     <Compile Include="Emitters\Writers\FieldWriter.cs" />
     <Compile Include="Emitters\Writers\ItemWriter.cs" />
     <Compile Include="Emitters\Writers\TemplateWriter.cs" />
@@ -235,6 +236,7 @@
     <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.5\analyzers\dotnet\cs\CodeContractNullability.dll" />
     <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.5\analyzers\dotnet\cs\MsgPack.dll" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

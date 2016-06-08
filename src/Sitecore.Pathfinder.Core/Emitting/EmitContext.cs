@@ -30,14 +30,13 @@ namespace Sitecore.Pathfinder.Emitting
 
         public IProject Project { get; private set; }
 
+        public IProjectEmitter ProjectEmitter { get; protected set; }
+
         public ITraceService Trace { get; }
 
-        public virtual void Done()
+        public virtual IEmitContext With(IProjectEmitter projectEmitter, IProject project)
         {
-        }
-
-        public virtual IEmitContext With(IProject project)
-        {
+            ProjectEmitter = projectEmitter;
             Project = project;
 
             return this;

@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
@@ -15,28 +14,48 @@ using Sitecore.Pathfinder.Emitters.Writers;
 using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
 
-namespace Sitecore.Pathfinder.Emitters.ThreeWayMerge
+namespace Sitecore.Pathfinder.Emitters
 {
-    [Export(typeof(ThreeWayMergeEmitContext)), PartCreationPolicy(CreationPolicy.NonShared)]
-    public class ThreeWayMergeEmitContext : EmitContext, IFieldValueTracking
+    [Export(typeof(ThreeWayMergeProjectEmitter))]
+    public class ThreeWayMergeProjectEmitter : ProjectEmitter, ITrackingProjectEmitter
     {
-        private const string FileName = "base.xml";
+        protected const string FileName = "base.xml";
 
         [NotNull, ItemNotNull]
         private List<BaseField> _baseFieldValues;
 
         [ImportingConstructor]
-        public ThreeWayMergeEmitContext([NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystemService) : base(configuration, traceService, fileSystemService)
+        public ThreeWayMergeProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystem, [NotNull, ItemNotNull, ImportMany] IEnumerable<IEmitter> emitters) : base(configuration, compositionService, traceService, emitters)
         {
-            OverwriteDatabase = Configuration.GetBool(Constants.Configuration.InstallPackage.ThreeWayMergeOverwriteDatabase);
+            FileSystem = fileSystem;
         }
-
-        protected bool OverwriteDatabase { get; }
 
         [NotNull]
         protected string BaseDirectory { get; private set; } = string.Empty;
+
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
+
+        protected bool OverwriteDatabase { get; private set; }
+
+        public override void Emit(IProject project)
+        {
+            OverwriteDatabase = Configuration.GetBool(Constants.Configuration.InstallPackage.ThreeWayMergeOverwriteDatabase);
+
+            LoadBaseFields();
+
+            try
+            {
+                base.Emit(project);
+            }
+            finally
+            {
+                SaveBaseFields();
+            }
+        }
 
         public virtual bool CanSetFieldValue(Item item, FieldWriter fieldWriter, string fieldValue)
         {
@@ -67,7 +86,7 @@ namespace Sitecore.Pathfinder.Emitters.ThreeWayMerge
                 baseField.Value = databaseFieldValue;
                 return false;
             }
-            
+
             baseField.IsActive = true;
 
             if (OverwriteDatabase)
@@ -94,19 +113,10 @@ namespace Sitecore.Pathfinder.Emitters.ThreeWayMerge
             return true;
         }
 
-        public override void Done()
-        {
-            SaveBaseFields();
-
-            base.Done();
-        }
-
-        public IEmitContext WithBaseDirectory(string baseDirectory)
+        [NotNull]
+        public IProjectEmitter WithBaseDirectory([NotNull] string baseDirectory)
         {
             BaseDirectory = baseDirectory;
-
-            LoadBaseFields();
-
             return this;
         }
 

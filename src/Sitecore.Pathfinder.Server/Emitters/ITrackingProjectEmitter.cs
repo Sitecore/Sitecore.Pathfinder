@@ -2,15 +2,11 @@
 
 using Sitecore.Data.Items;
 using Sitecore.Pathfinder.Emitters.Writers;
-using Sitecore.Pathfinder.Emitting;
 
-namespace Sitecore.Pathfinder.Emitters.ThreeWayMerge
+namespace Sitecore.Pathfinder.Emitters
 {
-    public interface IFieldValueTracking 
+    public interface ITrackingProjectEmitter
     {
-        [NotNull]
-        IEmitContext WithBaseDirectory([NotNull] string baseDirectory);
-
         bool CanSetFieldValue([NotNull] Item item, [NotNull] FieldWriter fieldWriter, [NotNull] string fieldValue);
     }
 }

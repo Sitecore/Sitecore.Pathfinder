@@ -9,7 +9,6 @@ using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Emitters.ThreeWayMerge;
 using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -113,10 +112,10 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             var fieldValue = fieldWriter.DatabaseValue.Trim();
             var field = item.Fields[fieldName];
 
-            var canSetFieldValue = context as IFieldValueTracking;
-            if (canSetFieldValue != null)
+            var trackingProjectEmitter = context.ProjectEmitter as ITrackingProjectEmitter;
+            if (trackingProjectEmitter != null)
             {
-                if (!canSetFieldValue.CanSetFieldValue(item, fieldWriter, fieldValue))
+                if (!trackingProjectEmitter.CanSetFieldValue(item, fieldWriter, fieldValue))
                 {
                     return;
                 }
