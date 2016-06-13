@@ -62,7 +62,7 @@ namespace Sitecore.Pathfinder.Emitters
             var itemId = fieldWriter.ItemWriter.Guid == Guid.Empty ? string.Empty : fieldWriter.ItemWriter.Guid.Format();
             var fieldId = fieldWriter.FieldId == Guid.Empty ? string.Empty : fieldWriter.FieldId.Format();
 
-            var databaseFieldValue = item[fieldWriter.FieldName];
+            var databaseFieldValueTrimmed = item[fieldWriter.FieldName].Replace("\r\n", " ").Replace("\n\r", " ").Replace('\n', ' ').Replace('\r', ' ').Replace('\t', ' ');
 
             // todo: consider making this a dictionary for performance
             var baseField = _baseFieldValues.FirstOrDefault(f => f.DatabaseName == fieldWriter.ItemWriter.DatabaseName && f.ItemId == itemId && ((!string.IsNullOrEmpty(f.FieldId) && f.FieldId == fieldId) || (!string.IsNullOrEmpty(f.FieldName) && f.FieldName == fieldWriter.FieldName)) && f.Language == fieldWriter.Language && f.Version == fieldWriter.Version);
@@ -77,15 +77,18 @@ namespace Sitecore.Pathfinder.Emitters
                 }
 
                 // if database value is empty, set it to the new field value
-                if (string.IsNullOrEmpty(databaseFieldValue))
+                if (string.IsNullOrEmpty(databaseFieldValueTrimmed))
                 {
                     return true;
                 }
 
                 // database field already has value - do not overwrite it
-                baseField.Value = databaseFieldValue;
+                baseField.Value = item[fieldWriter.FieldName];
                 return false;
             }
+
+            var fieldValueTrimmed = fieldValue.Replace("\r\n", " ").Replace("\n\r", " ").Replace('\n', ' ').Replace('\r', ' ').Replace('\t', ' ');
+            var baseValueTrimmed = baseField.Value.Replace("\r\n", " ").Replace("\n\r", " ").Replace('\n', ' ').Replace('\r', ' ').Replace('\t', ' ');
 
             baseField.IsActive = true;
 
@@ -96,13 +99,13 @@ namespace Sitecore.Pathfinder.Emitters
             }
 
             // check if field value has changed - if not, ignore field
-            if (fieldValue == baseField.Value)
+            if (fieldValueTrimmed == baseValueTrimmed)
             {
                 return false;
             }
 
             // check if both field value and database value has changed - if so, there is a conflict
-            if (databaseFieldValue != baseField.Value)
+            if (databaseFieldValueTrimmed != baseValueTrimmed)
             {
                 Trace.TraceError(Msg.E1037, "Merge conflict: Field has changed both in project and in database - skipping", TraceHelper.GetTextNode(fieldWriter.FieldNameProperty, fieldWriter.FieldIdProperty), fieldWriter.FieldName);
                 return false;
@@ -147,14 +150,14 @@ namespace Sitecore.Pathfinder.Emitters
         {
             public BaseField()
             {
-            }
+            }            
 
             public BaseField([NotNull] string databaseName, [NotNull] string itemId, [NotNull] string fieldId, [NotNull] string fieldName, [NotNull] string language, int version, [NotNull] string value)
             {
                 ItemId = itemId;
                 DatabaseName = databaseName;
                 FieldId = fieldId;
-                FieldName = fieldName;
+                FieldName = fieldName;                    
                 Language = language;
                 Version = version;
                 Value = value;
@@ -175,7 +178,7 @@ namespace Sitecore.Pathfinder.Emitters
             [NotNull, XmlAttribute, DefaultValue("")]
             public string ItemId { get; set; } = string.Empty;
 
-            [NotNull, DefaultValue(""), XmlAttribute]
+            [NotNull, XmlAttribute, DefaultValue("")]
             public string Language { get; set; } = string.Empty;
 
             [NotNull, DefaultValue("")]
