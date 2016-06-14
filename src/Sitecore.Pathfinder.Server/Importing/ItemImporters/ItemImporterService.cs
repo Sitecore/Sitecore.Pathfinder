@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Importing.ItemImporters
         [Diagnostics.NotNull, ItemNotNull]
         protected IEnumerable<IFieldValueImporter> FieldValueImporters { get; }
 
-        public virtual Projects.Items.Item ImportItem(IProject project, Data.Items.Item item, ILanguage language, [ItemNotNull] IEnumerable<string> excludedFields)
+        public virtual Projects.Items.Item ImportItem(IProject project, Item item, ILanguage language, IEnumerable<string> excludedFields)
         {
             var itemBuilder = new ItemBuilder(Factory)
             {
@@ -41,6 +41,8 @@ namespace Sitecore.Pathfinder.Importing.ItemImporters
                 TemplateIdOrPath = item.Template.InnerItem.Paths.Path,
                 ItemIdOrPath = item.Paths.Path
             };
+
+            var databaseLanguages = item.Database.GetLanguages();
 
             var versions = item.Versions.GetVersions(true);
             var sharedFields = item.Fields.Where(f => f.Shared && !excludedFields.Contains(f.Name, StringComparer.OrdinalIgnoreCase) && !f.ContainsStandardValue && !string.IsNullOrEmpty(f.Value)).ToList();
@@ -63,6 +65,11 @@ namespace Sitecore.Pathfinder.Importing.ItemImporters
             // unversioned fields
             foreach (var field in unversionedFields.OrderBy(f => f.Name))
             {
+                if (!databaseLanguages.Contains(field.Language))
+                {
+                    continue;
+                }
+
                 var value = ImportFieldValue(field, item, language);
                 var fieldBuilder = new FieldBuilder(Factory)
                 {
@@ -77,6 +84,11 @@ namespace Sitecore.Pathfinder.Importing.ItemImporters
             // versioned fields
             foreach (var field in versionedFields.OrderBy(f => f.Name))
             {
+                if (!databaseLanguages.Contains(field.Language))
+                {
+                    continue;
+                }
+
                 var value = ImportFieldValue(field, item, language);
                 var fieldBuilder = new FieldBuilder(Factory)
                 {

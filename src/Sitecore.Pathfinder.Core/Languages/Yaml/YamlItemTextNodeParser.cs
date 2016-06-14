@@ -1,6 +1,9 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System.ComponentModel.Composition;
 using System.Linq;
+using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Parsing.Items;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
@@ -9,7 +12,8 @@ namespace Sitecore.Pathfinder.Languages.Yaml
 {
     public class YamlItemTextNodeParser : ItemTextNodeParserBase
     {
-        public YamlItemTextNodeParser() : base(Constants.TextNodeParsers.Items)
+        [ImportingConstructor]
+        public YamlItemTextNodeParser([NotNull] ISchemaService schemaService) : base(schemaService, Constants.TextNodeParsers.Items)
         {
         }
 
@@ -26,7 +30,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
 
         protected override void ParseFieldsTextNode(ItemParseContext context, Item item, ITextNode fieldsTextNode)
         {
-            context.ParseContext.SchemaService.ValidateTextNodeSchema(fieldsTextNode);
+            SchemaService.ValidateTextNodeSchema(fieldsTextNode);
 
             base.ParseFieldsTextNode(context, item, fieldsTextNode);
         }
@@ -53,7 +57,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
         {
             var firstChildNode = textNode.ChildNodes.First();
 
-            context.ParseContext.SchemaService.ValidateTextNodeSchema(firstChildNode);
+            SchemaService.ValidateTextNodeSchema(firstChildNode);
 
             var fieldContext = new LanguageVersionContext();
             fieldContext.LanguageProperty.SetValue(new AttributeNameTextNode(firstChildNode));
@@ -68,7 +72,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
         {
             var firstChildNode = textNode.ChildNodes.First();
 
-            context.ParseContext.SchemaService.ValidateTextNodeSchema(firstChildNode);
+            SchemaService.ValidateTextNodeSchema(firstChildNode);
 
             foreach (var node in firstChildNode.ChildNodes)
             {

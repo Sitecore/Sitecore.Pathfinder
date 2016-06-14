@@ -14,9 +14,13 @@ namespace Sitecore.Pathfinder.Parsing.Items
 {
     public abstract class ItemTextNodeParserBase : TextNodeParserBase
     {
-        protected ItemTextNodeParserBase(double priority) : base(priority)
+        protected ItemTextNodeParserBase([NotNull] ISchemaService schemaService, double priority) : base(priority)
         {
+            SchemaService = schemaService;
         }
+
+        [NotNull]
+        protected ISchemaService SchemaService { get; }
 
         public override void Parse(ItemParseContext context, ITextNode textNode)
         {
@@ -46,7 +50,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
             ParseChildNodes(context, item, textNode);
 
-            context.ParseContext.PipelineService.Resolve<ItemParserPipeline>().Execute(context, item, textNode);
+            context.ParseContext.Pipelines.Resolve<ItemParserPipeline>().Execute(context, item, textNode);
 
             context.ParseContext.Project.AddOrMerge(item);
         }
@@ -145,7 +149,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
         protected virtual void ParseFieldTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] LanguageVersionContext languageVersionContext, [NotNull] ITextNode fieldTextNode, [NotNull] ITextNode fieldNameTextNode, [CanBeNull] ITextNode valueTextNode)
         {
-            context.ParseContext.SchemaService.ValidateTextNodeSchema(fieldTextNode);
+            SchemaService.ValidateTextNodeSchema(fieldTextNode);
 
             var field = context.ParseContext.Factory.Field(item, fieldTextNode);
             field.FieldNameProperty.SetValue(fieldNameTextNode);

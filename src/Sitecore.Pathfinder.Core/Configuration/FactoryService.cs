@@ -33,40 +33,19 @@ namespace Sitecore.Pathfinder.Configuration
         [NotNull]
         protected ICompositionService CompositionService { get; }
 
-        public virtual BinFile BinFile(IProject project, ISnapshot snapshot, string filePath)
-        {
-            return new BinFile(project, snapshot, filePath);
-        }
+        public virtual BinFile BinFile(IProject project, ISnapshot snapshot, string filePath) => new BinFile(project, snapshot, filePath);
 
-        public ConfigFile ConfigFile(IProject project, ISnapshot snapshot, string filePath)
-        {
-            return new ConfigFile(project, snapshot, filePath);
-        }
+        public ConfigFile ConfigFile(IProject project, ISnapshot snapshot, string filePath) => new ConfigFile(project, snapshot, filePath);
 
-        public virtual IProjectItem ContentFile(IProject project, ISnapshot snapshot, string filePath)
-        {
-            return new ContentFile(project, snapshot, filePath);
-        }
+        public virtual IProjectItem ContentFile(IProject project, ISnapshot snapshot, string filePath) => new ContentFile(project, snapshot, filePath);
 
-        public virtual DeviceReference DeviceReference(IProjectItem projectItem, SourceProperty<string> deviceNameSourceProperty)
-        {
-            return new DeviceReference(projectItem, deviceNameSourceProperty, deviceNameSourceProperty.GetValue());
-        }
+        public virtual DeviceReference DeviceReference(IProjectItem projectItem, SourceProperty<string> deviceNameSourceProperty) => new DeviceReference(projectItem, deviceNameSourceProperty, deviceNameSourceProperty.GetValue());
 
-        public virtual Diagnostic Diagnostic(int msg, string fileName, TextSpan span, Severity severity, string text)
-        {
-            return new Diagnostic(msg, fileName, span, severity, text);
-        }
+        public virtual Diagnostic Diagnostic(int msg, string fileName, TextSpan span, Severity severity, string text) => new Diagnostic(msg, fileName, span, severity, text);
 
-        public virtual Field Field(Item item, ITextNode textNode)
-        {
-            return new Field(item, textNode);
-        }
+        public virtual Field Field(Item item, ITextNode textNode) => new Field(item, textNode);
 
-        public Field Field(Item item)
-        {
-            return new Field(item, Snapshots.TextNode.Empty);
-        }
+        public Field Field(Item item) => new Field(item, Snapshots.TextNode.Empty);
 
         public Field Field(Item item, ITextNode textNode, string fieldName, string fieldValue)
         {
@@ -76,75 +55,33 @@ namespace Sitecore.Pathfinder.Configuration
             return field;
         }
 
-        public FieldBuilder FieldBuilder()
-        {
-            return new FieldBuilder(this);
-        }
+        public FieldBuilder FieldBuilder() => new FieldBuilder(this);
 
-        public virtual FileReference FileReference(IProjectItem owner, SourceProperty<string> sourceSourceProperty, string referenceText)
-        {
-            return new FileReference(owner, sourceSourceProperty, referenceText);
-        }
+        public virtual FileReference FileReference(IProjectItem owner, SourceProperty<string> sourceSourceProperty, string referenceText) => new FileReference(owner, sourceSourceProperty, referenceText);
 
-        public virtual Item Item(IProject project, ITextNode textNode, Guid guid, string databaseName, string itemName, string itemIdOrPath, string templateIdOrPath)
-        {
-            return new Item(project, textNode, guid, databaseName, itemName, itemIdOrPath, templateIdOrPath);
-        }
+        public virtual Item Item(IProject project, ITextNode textNode, Guid guid, string databaseName, string itemName, string itemIdOrPath, string templateIdOrPath) => new Item(project, textNode, guid, databaseName, itemName, itemIdOrPath, templateIdOrPath);
 
-        public Item Item(IProject project, ISnapshot snapshot, Guid guid, string databaseName, string itemName, string itemIdOrPath, string templateIdOrPath)
-        {
-            return new Item(project, new SnapshotTextNode(snapshot), guid, databaseName, itemName, itemIdOrPath, templateIdOrPath);
-        }
+        public Item Item(IProject project, ISnapshot snapshot, Guid guid, string databaseName, string itemName, string itemIdOrPath, string templateIdOrPath) => new Item(project, new SnapshotTextNode(snapshot), guid, databaseName, itemName, itemIdOrPath, templateIdOrPath);
 
-        public ItemBuilder ItemBuilder()
-        {
-            return new ItemBuilder(this);
-        }
+        public ItemBuilder ItemBuilder() => new ItemBuilder(this);
 
-        public virtual ItemParseContext ItemParseContext(IParseContext context, ItemParser itemParser, string databaseName, string parentItemPath, bool isImport)
-        {
-            return new ItemParseContext(context, itemParser, databaseName, parentItemPath, isImport);
-        }
+        public virtual ItemParseContext ItemParseContext(IParseContext context, ItemParser itemParser, string databaseName, string parentItemPath, bool isImport) => new ItemParseContext(context, itemParser, databaseName, parentItemPath, isImport);
 
-        public virtual LayoutReference LayoutReference(IProjectItem projectItem, SourceProperty<string> layoutSourceProperty)
-        {
-            return new LayoutReference(projectItem, layoutSourceProperty, layoutSourceProperty.GetValue());
-        }
+        public virtual LayoutReference LayoutReference(IProjectItem projectItem, SourceProperty<string> layoutSourceProperty) => new LayoutReference(projectItem, layoutSourceProperty, layoutSourceProperty.GetValue());
 
-        public virtual LayoutRenderingReference LayoutRenderingReference(IProjectItem projectItem, SourceProperty<string> renderingTextNode)
-        {
-            return new LayoutRenderingReference(projectItem, renderingTextNode, renderingTextNode.GetValue());
-        }
+        public virtual LayoutRenderingReference LayoutRenderingReference(IProjectItem projectItem, SourceProperty<string> renderingTextNode) => new LayoutRenderingReference(projectItem, renderingTextNode, renderingTextNode.GetValue());
 
-        public virtual MediaFile MediaFile(IProject project, ISnapshot snapshot, string databaseName, string itemName, string itemPath, string filePath)
-        {
-            return new MediaFile(project, snapshot, databaseName, itemName, itemPath, filePath);
-        }
+        public virtual MediaFile MediaFile(IProject project, ISnapshot snapshot, string databaseName, string itemName, string itemPath, string filePath) => new MediaFile(project, snapshot, databaseName, itemName, itemPath, filePath);
 
-        public virtual ProjectOptions ProjectOptions(string projectDirectory, string databaseName)
-        {
-            return new ProjectOptions(projectDirectory, databaseName);
-        }
+        public virtual ProjectOptions ProjectOptions(string projectDirectory, string databaseName) => new ProjectOptions(projectDirectory, databaseName);
 
-        public virtual IReference Reference(IProjectItem projectItem, SourceProperty<string> sourceSourceProperty, string referenceText)
-        {
-            return new Reference(projectItem, sourceSourceProperty, referenceText);
-        }
+        public virtual IReference Reference(IProjectItem projectItem, SourceProperty<string> sourceSourceProperty, string referenceText) => new Reference(projectItem, sourceSourceProperty, referenceText);
 
-        public virtual Rendering Rendering(IProject project, ISnapshot snapshot, string databaseName, string itemPath, string itemName, string filePath, string templateIdOrPath)
-        {
-            return new Rendering(project, snapshot, databaseName, itemPath, itemName, filePath, templateIdOrPath);
-        }
+        public virtual Rendering Rendering(IProject project, ISnapshot snapshot, string databaseName, string itemPath, string itemName, string filePath, string templateIdOrPath) => new Rendering(project, snapshot, databaseName, itemPath, itemName, filePath, templateIdOrPath);
 
-        public virtual SerializationFile SerializationFile(IProject project, ISnapshot snapshot, string filePath)
-        {
-            return new SerializationFile(project, snapshot, filePath);
-        }
+        public virtual SerializationFile SerializationFile(IProject project, ISnapshot snapshot, string filePath) => new SerializationFile(project, snapshot, filePath);
 
-        public virtual ISnapshot Snapshot(ISourceFile sourceFile)
-        {
-            return new Snapshot().With(sourceFile);
-        }
+        public virtual ISnapshot Snapshot(ISourceFile sourceFile) => new Snapshot().With(sourceFile);
 
         public virtual ISourceFile SourceFile(IFileSystemService fileSystem, string projectDirectory, string absoluteFileName)
         {
@@ -154,24 +91,12 @@ namespace Sitecore.Pathfinder.Configuration
             return new SourceFile(fileSystem, absoluteFileName, relativeFileName, projectFileName);
         }
 
-        public virtual Template Template(IProject project, Guid guid, ITextNode textNode, string databaseName, string itemName, string itemIdOrPath)
-        {
-            return new Template(project, textNode, guid, databaseName, itemName, itemIdOrPath);
-        }
+        public virtual Template Template(IProject project, Guid guid, ITextNode textNode, string databaseName, string itemName, string itemIdOrPath) => new Template(project, textNode, guid, databaseName, itemName, itemIdOrPath);
 
-        public virtual TemplateField TemplateField(Template template, Guid guid, ITextNode templateFieldTextNode)
-        {
-            return new TemplateField(template, guid, templateFieldTextNode);
-        }
+        public virtual TemplateField TemplateField(Template template, Guid guid, ITextNode templateFieldTextNode) => new TemplateField(template, guid, templateFieldTextNode);
 
-        public virtual TemplateSection TemplateSection(Template template, Guid guid, ITextNode templateSectionTextNode)
-        {
-            return new TemplateSection(template, guid, templateSectionTextNode);
-        }
+        public virtual TemplateSection TemplateSection(Template template, Guid guid, ITextNode templateSectionTextNode) => new TemplateSection(template, guid, templateSectionTextNode);
 
-        public virtual TextNode TextNode(ISnapshot snapshot, TextSpan span, string name, string value)
-        {
-            return new TextNode(snapshot, name, value, span);
-        }
+        public virtual TextNode TextNode(ISnapshot snapshot, TextSpan span, string name, string value) => new TextNode(snapshot, name, value, span);
     }
 }

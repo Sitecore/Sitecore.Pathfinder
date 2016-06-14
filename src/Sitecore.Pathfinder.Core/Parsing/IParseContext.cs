@@ -35,16 +35,13 @@ namespace Sitecore.Pathfinder.Parsing
         string ItemPath { get; }
 
         [NotNull]
-        IPipelineService PipelineService { get; }
+        IPipelineService Pipelines { get; }
 
         [NotNull]
         IProject Project { get; }
 
         [NotNull]
         IReferenceParserService ReferenceParser { get; }
-
-        [NotNull]
-        ISchemaService SchemaService { get; }
 
         [NotNull]
         ISnapshot Snapshot { get; }

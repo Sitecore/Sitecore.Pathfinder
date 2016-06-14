@@ -1,6 +1,7 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
@@ -13,9 +14,14 @@ namespace Sitecore.Pathfinder.Parsing.Items
 {
     public class TemplateTextNodeParser : TextNodeParserBase
     {
-        public TemplateTextNodeParser() : base(Constants.TextNodeParsers.Templates)
+        [ImportingConstructor]
+        public TemplateTextNodeParser([NotNull] ISchemaService schemaService) : base(Constants.TextNodeParsers.Templates)
         {
+            SchemaService = schemaService;
         }
+
+        [NotNull]
+        protected ISchemaService SchemaService { get; }
 
         public override bool CanParse(ItemParseContext context, ITextNode textNode)
         {
@@ -35,6 +41,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             template.IconProperty.Parse(textNode);
             template.ShortHelpProperty.Parse(textNode);
             template.LongHelpProperty.Parse(textNode);
+
             // todo: yuck
             template.IsEmittable = !string.Equals(textNode.GetAttributeValue(Constants.Fields.IsEmittable), "False", StringComparison.OrdinalIgnoreCase);
             template.IsImport = string.Equals(textNode.GetAttributeValue(Constants.Fields.IsImport, context.IsImport.ToString()), "True", StringComparison.OrdinalIgnoreCase);
@@ -60,7 +67,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 }
             }
 
-            context.ParseContext.PipelineService.Resolve<TemplateParserPipeline>().Execute(context, template, textNode);
+            context.ParseContext.Pipelines.Resolve<TemplateParserPipeline>().Execute(context, template, textNode);
 
             context.ParseContext.Project.AddOrMerge(template);
             context.ParseContext.Project.AddOrMerge(standardValuesItem);
@@ -68,7 +75,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
         protected virtual void ParseField([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] TemplateSection templateSection, [NotNull] ITextNode templateFieldTextNode, ref int nextSortOrder)
         {
-            context.ParseContext.SchemaService.ValidateTextNodeSchema(templateFieldTextNode, "TemplateField");
+            SchemaService.ValidateTextNodeSchema(templateFieldTextNode, "TemplateField");
 
             var fieldName = templateFieldTextNode.GetAttribute("Name");
             if (fieldName == null)
@@ -121,7 +128,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
         protected virtual void ParseSection([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] ITextNode templateSectionTextNode)
         {
-            context.ParseContext.SchemaService.ValidateTextNodeSchema(templateSectionTextNode, "TemplateSection");
+            SchemaService.ValidateTextNodeSchema(templateSectionTextNode, "TemplateSection");
 
             var sectionName = templateSectionTextNode.GetAttribute("Name");
             if (sectionName == null)

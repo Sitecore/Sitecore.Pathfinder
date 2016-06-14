@@ -1,8 +1,10 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Parsing.Items;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
@@ -11,25 +13,14 @@ namespace Sitecore.Pathfinder.Languages.Json
 {
     public class JsonItemTextNodeParser : ItemTextNodeParserBase
     {
-        public JsonItemTextNodeParser() : base(Constants.TextNodeParsers.Items)
+        [ImportingConstructor]
+        public JsonItemTextNodeParser([NotNull] ISchemaService schemaService) : base(schemaService, Constants.TextNodeParsers.Items)
         {
         }
 
         public override bool CanParse(ItemParseContext context, ITextNode textNode)
         {
             return textNode.Key == "Item" && textNode.Snapshot is JsonTextSnapshot;
-        }
-
-        protected override void ParseFieldsTextNode(ItemParseContext context, Item item, ITextNode textNode)
-        {
-            var fieldContext = new LanguageVersionContext();
-
-            foreach (var attribute in textNode.Attributes)
-            {
-                ParseFieldTextNode(context, item, fieldContext, attribute);
-            }
-
-            base.ParseFieldsTextNode(context, item, textNode);
         }
 
         protected override void ParseChildrenTextNodes(ItemParseContext context, Item item, ITextNode textNode)
@@ -46,6 +37,18 @@ namespace Sitecore.Pathfinder.Languages.Json
                 var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, PathHelper.CombineItemPath(context.ParentItemPath, item.ItemName), item.IsImport);
                 Parse(newContext, child);
             }
+        }
+
+        protected override void ParseFieldsTextNode(ItemParseContext context, Item item, ITextNode textNode)
+        {
+            var fieldContext = new LanguageVersionContext();
+
+            foreach (var attribute in textNode.Attributes)
+            {
+                ParseFieldTextNode(context, item, fieldContext, attribute);
+            }
+
+            base.ParseFieldsTextNode(context, item, textNode);
         }
 
         protected override void ParseFieldTextNode(ItemParseContext context, Item item, LanguageVersionContext languageVersionContext, ITextNode textNode)
@@ -79,7 +82,7 @@ namespace Sitecore.Pathfinder.Languages.Json
 
         protected override void ParseUnversionedTextNode(ItemParseContext context, Item item, ITextNode textNode)
         {
-            context.ParseContext.SchemaService.ValidateTextNodeSchema(textNode);
+            SchemaService.ValidateTextNodeSchema(textNode);
 
             foreach (var languageChildNode in textNode.ChildNodes)
             {
@@ -91,7 +94,7 @@ namespace Sitecore.Pathfinder.Languages.Json
 
         protected override void ParseVersionedTextNode(ItemParseContext context, Item item, ITextNode textNode)
         {
-            context.ParseContext.SchemaService.ValidateTextNodeSchema(textNode);
+            SchemaService.ValidateTextNodeSchema(textNode);
 
             foreach (var languageChildNode in textNode.ChildNodes)
             {

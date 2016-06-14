@@ -4,11 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Emitters
@@ -56,11 +58,11 @@ namespace Sitecore.Pathfinder.Emitters
 
         protected virtual void Emit([NotNull] IEmitContext context, [NotNull] IProject project, [NotNull, ItemNotNull] List<IEmitter> emitters, [NotNull, ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
         {
-            foreach (var projectItem in project.ProjectItems)
-            {
-                EmitProjectItem(context, projectItem, emitters, retries);
-            }
+            EmitProjectItems(context, project.ProjectItems, emitters, retries);
         }
+
+        [NotNull]
+        private readonly object _syncObject = new object();
 
         protected virtual void EmitProjectItem([NotNull] IEmitContext context, [NotNull] IProjectItem projectItem, [NotNull, ItemNotNull] List<IEmitter> emitters, [NotNull, ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
         {
@@ -77,7 +79,10 @@ namespace Sitecore.Pathfinder.Emitters
                 }
                 catch (RetryableEmitException ex)
                 {
-                    retries.Add(new Tuple<IProjectItem, Exception>(projectItem, ex));
+                    lock (_syncObject)
+                    {
+                        retries.Add(new Tuple<IProjectItem, Exception>(projectItem, ex));
+                    }
                 }
                 catch (EmitException ex)
                 {
@@ -85,7 +90,35 @@ namespace Sitecore.Pathfinder.Emitters
                 }
                 catch (Exception ex)
                 {
-                    retries.Add(new Tuple<IProjectItem, Exception>(projectItem, ex));
+                    lock (_syncObject)
+                    {
+                        retries.Add(new Tuple<IProjectItem, Exception>(projectItem, ex));
+                    }
+                }
+            }
+        }
+
+        protected virtual void EmitProjectItems([NotNull] IEmitContext context, [NotNull, ItemNotNull] IEnumerable<IProjectItem> projectItems, [NotNull, ItemNotNull] List<IEmitter> emitters, [NotNull, ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
+        {
+            // process templates before anything else
+            var templates = projectItems.Where(p => p is Template).ToArray();
+            var nonTemplates = projectItems.Where(p => !(p is Template)).ToArray();
+
+            if (context.Configuration.GetBool(Constants.Configuration.System.MultiThreaded))
+            {
+                Parallel.ForEach(templates, projectItem => EmitProjectItem(context, projectItem, emitters, retries));
+                Parallel.ForEach(nonTemplates, projectItem => EmitProjectItem(context, projectItem, emitters, retries));
+            }
+            else
+            {
+                foreach (var projectItem in templates)
+                {
+                    EmitProjectItem(context, projectItem, emitters, retries);
+                }
+
+                foreach (var projectItem in nonTemplates)
+                {
+                    EmitProjectItem(context, projectItem, emitters, retries);
                 }
             }
         }
@@ -95,17 +128,10 @@ namespace Sitecore.Pathfinder.Emitters
             while (true)
             {
                 var retryAgain = new List<Tuple<IProjectItem, Exception>>();
-                foreach (var projectItem in retries.Reverse().Select(retry => retry.Item1))
-                {
-                    try
-                    {
-                        EmitProjectItem(context, projectItem, emitters, retryAgain);
-                    }
-                    catch (Exception ex)
-                    {
-                        retries.Add(new Tuple<IProjectItem, Exception>(projectItem, ex));
-                    }
-                }
+
+                var projectItems = retries.Reverse().Select(retry => retry.Item1).ToArray();
+
+                EmitProjectItems(context, projectItems, emitters, retryAgain);
 
                 if (retryAgain.Count >= retries.Count)
                 {

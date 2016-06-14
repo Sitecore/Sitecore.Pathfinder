@@ -235,13 +235,13 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             var fields = templateSectionWriter.Fields.ToList();
             for (var index = 0; index < fields.Count; index++)
             {
-                var field = fields.ElementAt(index);
-                if (field.Item == null)
+                var fieldWriter = fields.ElementAt(index);
+                if (fieldWriter.Item == null)
                 {
                     continue;
                 }
 
-                var sortorder = field.Item.Appearance.Sortorder;
+                var sortorder = fieldWriter.Item.Appearance.Sortorder;
 
                 if (sortorder <= lastSortorder)
                 {
@@ -262,9 +262,9 @@ namespace Sitecore.Pathfinder.Emitters.Writers
 
                     sortorder = lastSortorder + (nextSortorder - lastSortorder) / 2;
 
-                    using (new EditContext(field.Item))
+                    using (new EditContext(fieldWriter.Item))
                     {
-                        field.Item.Editing.EndEdit();
+                        fieldWriter.Item.Appearance.Sortorder = sortorder;
                     }
                 }
 
