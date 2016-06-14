@@ -66,7 +66,7 @@ namespace Sitecore.Pathfinder.Checking
             {
                 if (pair.Key == "based-on")
                 {
-                    var baseName = Constants.Configuration.ProjectRoleCheckers + ":" + pair.Key;
+                    var baseName = Constants.Configuration.ProjectRoleCheckers + ":" + Configuration.GetString(configurationKey + ":" + pair.Key);
                     EnableCheckers(checkers, baseName);
                 }
             }
@@ -74,12 +74,12 @@ namespace Sitecore.Pathfinder.Checking
             foreach (var pair in Configuration.GetSubKeys(configurationKey))
             {
                 var key = pair.Key;
-                var isEnabled = Configuration.GetString(configurationKey + ":" + key) == "enabled";
-
                 if (key == "based-on")
                 {
                     continue;
                 }
+
+                var isEnabled = Configuration.GetString(configurationKey + ":" + key) == "enabled";
 
                 if (key == "*")
                 {

@@ -1,6 +1,6 @@
 ﻿{
     // every project must have a unique id, since the project-unique-id is used to calculate item ids
-    "project-unique-id": "TodoMvc",
+    "project-unique-id": "Pulsar (98a5cd26-430f-442a-811c-6ce8814b62b3)",
 
     // website directories and host name
     "website-directory": "e:\\inetpub\\wwwroot\\Pathfinder\\Website",
@@ -14,8 +14,8 @@
     // default Sitecore database name (master, core, or web)
     "database": "master",
 
-    // the project roles enables/disables checkers and conventions. Examples: "pathfinder", "speak", "habitat.website"
-    "project-role": "",
+    // the project roles enables/disables checkers and conventions - comma seperated list of roles
+    "project-role": "default",
 
     // mapping between project files and website files and items
     "project-website-mappings": {
@@ -57,6 +57,6 @@
 
     // tasks to execute when building
     "build-project": {
-        "tasks": "check-project write-exports pack-nuget install-package publish-database show-metrics"
+        "tasks": "restore-packages check-project write-exports pack-nuget install-package publish-database show-status"
     }
 }

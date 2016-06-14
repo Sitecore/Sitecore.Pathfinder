@@ -58,7 +58,7 @@ namespace Sitecore.Pathfinder.Tasks
 
                 FileSystem.CreateDirectory(destinationDirectory);
 
-                foreach (var packageInfo in ProjectPackages.GetPackages(context.Project.ProjectDirectory))
+                foreach (var packageInfo in ProjectPackages.GetPackages())
                 {
                     if (ProjectPackages.CopyPackageToWebsite(packageInfo, destinationDirectory))
                     {

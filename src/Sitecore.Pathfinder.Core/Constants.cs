@@ -78,6 +78,8 @@ namespace Sitecore.Pathfinder
 
             public const string IsProjectConfigured = "is-project-configured";
 
+            public const string NugetPackageRootDirectory = "system:nuget-package-root-directory";
+
             public const string Password = "password";
 
             public const string ProjectConfigFileName = "project";
@@ -170,13 +172,13 @@ namespace Sitecore.Pathfinder
 
                 public const string InstallUrl = "install-package:install-url";
 
+                public const string MarkItemsWithPathfinderProjectUniqueId = "install-package:mark-items-with-pathfinder-project-unique-id";
+
                 public const string ShowDiagnostics = "install-package:show-diagnostics";
 
                 public const string ThreeWayMerge = "install-package:three-way-merge";
 
                 public const string ThreeWayMergeOverwriteDatabase = "install-package:three-way-merge-overwrite-database";
-
-                public const string MarkItemsWithPathfinderProjectUniqueId = "install-package:mark-items-with-pathfinder-project-unique-id";
             }
 
             public static class Messages

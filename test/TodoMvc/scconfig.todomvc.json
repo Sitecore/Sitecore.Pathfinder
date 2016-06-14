@@ -1,6 +1,6 @@
 {
-    "project-role": "speak", 
-    
+    "project-role": "speak",
+
     "project-website-mappings": {
         "project-to-website": {
             "todomvc": {
@@ -23,22 +23,11 @@
         "Sitecore.BusinessComponentLibrary": "1.0.0",
         "Sitecore.Core": "1.0.0",
         "Sitecore.Launchpad": "1.0.0",
+        "Sitecore.Master": "1.0.0",
         "Sitecore.Speak": "1.0.0"
     },  
-    
-    "messages": {
-        "template-help": {
-            "disabled": "3014, 3017, 2020, 2017"
-        },
-        "unused-template": {
-            "disabled": "3025"
-        },
-        "undefined-placeholder": {
-            "disabled": "3034"
-        }
-    },
-    
-    "show-browser": {
+
+    "show-website": {
         "start-url": "/sitecore/client/Applications/TodoMvc/content/TodoMvc"
     }
 }

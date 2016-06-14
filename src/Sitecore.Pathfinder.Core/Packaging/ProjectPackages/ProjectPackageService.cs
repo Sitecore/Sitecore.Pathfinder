@@ -32,8 +32,10 @@ namespace Sitecore.Pathfinder.Packaging.ProjectPackages
             return PackageProviders.Any(packageProvider => packageProvider.CopyPackageToWebsite(projectPackageInfo, destinationDirectory));
         }
 
-        public virtual IEnumerable<IProjectPackageInfo> GetPackages(string projectDirectory)
+        public virtual IEnumerable<IProjectPackageInfo> GetPackages()
         {
+            var packageRootDirectory = Configuration.GetString(Constants.Configuration.NugetPackageRootDirectory);
+
             // add packages from configuration
             foreach (var pair in Configuration.GetSubKeys(Constants.Configuration.Dependencies))
             {
@@ -41,14 +43,14 @@ namespace Sitecore.Pathfinder.Packaging.ProjectPackages
                 var version = Configuration.GetString(Constants.Configuration.Dependencies + ":" + id);
 
                 // todo: add support for NPM packages
-                var directory = Path.Combine(projectDirectory, Configuration.GetString(Constants.Configuration.Packages.NugetDirectory) + "\\" + id + "." + version);
+                var directory = Path.Combine(packageRootDirectory, id + "." + version);
 
                 var project = Path.Combine(directory, "project");
                 yield return new ProjectPackageInfo(id, version, directory, project);
             }
 
             // add packages from package providers
-            foreach (var package in PackageProviders.SelectMany(packageProvider => packageProvider.GetPackages(projectDirectory)))
+            foreach (var package in PackageProviders.SelectMany(packageProvider => packageProvider.GetPackages(packageRootDirectory)))
             {
                 yield return package;
             }

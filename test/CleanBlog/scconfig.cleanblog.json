@@ -1,6 +1,4 @@
 {
-    "project-role" : "none",
-    
     "project-website-mappings": {
         "project-to-website": {
             "cleanblog-img": {
@@ -48,19 +46,7 @@
         "Sitecore.Master": "1.0.0"
     },  
 
-    "messages": {
-        "template-help": {
-            "disabled": "3014, 3017, 2020, 2017"
-        },
-        "lorem-ipsum": {
-            "disabled": "3008"
-        },
-        "server-side-validations": {
-            "disabled": "5008"
-        }
-    },
-    
-    "show-browser": {
+    "show-website": {
         "start-url": "/home/CleanBlog"
     }
 }

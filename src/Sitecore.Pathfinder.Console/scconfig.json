@@ -10,7 +10,7 @@
     "project": "scconfig.json",
 
     // the project roles enables/disables checkers and conventions - comma seperated list of roles
-    "project-role": "pathfinder",
+    "project-role": "default",
 
     // mapping between project files and website files and items
     "project-website-mappings": {
@@ -34,12 +34,10 @@
 
         // mapping items and files to website when building a project
         "project-to-website": {
-
         },
 
         // mapping items and files to project when importing a website
         "website-to-project": {
-
         }
     },
 
@@ -48,14 +46,14 @@
         // default build pipeline - show help
         "tasks": "help",
 
-        // if force-update is true, media will always be uploaded and files always copied during emitting
-        "force-update": false,
-
         // bin files to compile for code generation
         "compile-bin-files": {
             "include": "",
             "exclude": ""
         },
+
+        // if force-update is true, media will always be uploaded and files always copied during emitting
+        "force-update": false,
 
         // file extension to template map
         "media": {
@@ -161,19 +159,26 @@
     "install-package": {
         // specifies whether the project directories are added as feeds. This requires the website to have read access to the project directory.
         "add-project-directories-as-feeds": true,
+
         // checks that the version of the source bin file is larger than the destination before copying.
         // when developing this should probably be combined with auto-incrementing the file version of the assembly.
         // see http://stackoverflow.com/questions/356543/can-i-automatically-increment-the-file-build-version-when-using-visual-studio
         "check-bin-file-version": false,
+
         "install-url": "/sitecore/shell/client/Applications/Pathfinder/InstallPackage",
+
         // marks each updated item with project unique id - this solves deletions and renames
         "mark-items-with-pathfinder-project-unique-id": true,
+
         // trace project diagnostics from server-side
-        "show-project-diagnostics": false,
+        "show-project-diagnostics": true,
+
         // use three way merge for non-destructive updating - may take more time
         "three-way-merge": false,
+
         // overwrite field values in the database in three way merge - ensures database has values from project
         "three-way-merge-overwrite-database": false,
+        
         "uninstall-directory": "../.uninstall"
     },
 
@@ -183,10 +188,13 @@
 
         // comma separated list of absolute assembly filenames to add as references (https://msdn.microsoft.com/en-us/library/gg586946.aspx)
         "t4-refs": "",
+        
         // comma separated list of namespaces to import (https://msdn.microsoft.com/en-us/library/gg586948.aspx)
         "t4-imports": "",
+        
         // comma separated list of filepaths to search for include files
         "t4-include-paths": "",
+        
         // comma separated list of filepaths to search for reference files
         "t4-reference-paths": "",
 
@@ -220,7 +228,6 @@
     },
 
     "reset-website": {
-
     },
 
     "sync-website": {
@@ -410,17 +417,28 @@
 
     // maps project role to checkers
     "project-role-checkers": {
+        // all checkers disabled
         "none": {
             "*": "disabled"
         },
+
+        // default set of checkers
         "default": {
             "SitecoreTemplate": "enabled",
             "TemplateHelp": "disabled"
         },
+
+        // Pathfinder project
         "pathfinder": {
             "based-on": "default",
             "PathfinderProjectFileSystem": "enabled",
             "TemplateHelp": "enabled"
+        },
+
+        // SPEAK project
+        "speak": {
+            "based-on": "default",
+            "SitecoreTemplate": "disabled"
         }
     },
 

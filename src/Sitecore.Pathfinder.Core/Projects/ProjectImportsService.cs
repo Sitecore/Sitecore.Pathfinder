@@ -58,7 +58,7 @@ namespace Sitecore.Pathfinder.Projects
         protected virtual void ImportProjectPackages([NotNull] IProject project)
         {
             // todo: NuGet: handle noconfig
-            foreach (var packageInfo in ProjectPackages.GetPackages(project.ProjectDirectory))
+            foreach (var packageInfo in ProjectPackages.GetPackages())
             {
                 var fileName = Path.Combine(packageInfo.ProjectDirectory, "sitecore.project\\exports.xml");
                 if (!FileSystem.FileExists(fileName))

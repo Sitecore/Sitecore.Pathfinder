@@ -10,7 +10,7 @@ namespace Sitecore.Pathfinder.Packaging.ProjectPackages
         bool CopyPackageToWebsite([NotNull] IProjectPackageInfo projectPackageInfo, [NotNull] string destinationDirectory);
 
         [NotNull, ItemNotNull, Pure]
-        IEnumerable<IProjectPackageInfo> GetPackages([NotNull] string projectDirectory);
+        IEnumerable<IProjectPackageInfo> GetPackages();
 
         void RestorePackage([NotNull] string packageId, [NotNull] string version, [NotNull] string projectDirectory);
     }

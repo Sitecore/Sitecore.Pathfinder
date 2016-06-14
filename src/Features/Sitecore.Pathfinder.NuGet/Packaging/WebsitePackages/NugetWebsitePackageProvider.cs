@@ -294,10 +294,10 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.WebsitePackages
             {
                 var projectDirectory = Path.Combine(e.InstallPath, "project");
                 var toolsDirectory = Path.Combine(projectDirectory, "sitecore.tools");
-
                 var binDirectory = Path.Combine(Configuration.GetString(Constants.Configuration.WebsiteDirectory), "bin");
+                var packageRootDirectory = Path.GetDirectoryName(e.InstallPath) ?? projectDirectory;
 
-                var host = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(projectDirectory).WithExtensionsDirectory(binDirectory).Start();
+                var host = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(projectDirectory).WithExtensionsDirectory(binDirectory).WithPackageRootDirectory(packageRootDirectory).Start();
                 if (host == null)
                 {
                     return;

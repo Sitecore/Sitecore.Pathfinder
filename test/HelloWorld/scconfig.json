@@ -1,6 +1,6 @@
 ﻿{
     // every project must have a unique id, since the project-unique-id is used to calculate item ids
-    "project-unique-id": "HelloWorld",
+    "project-unique-id": "Wildcat (f16055a1-3ade-4493-9e45-3b7df76379ef)",
 
     // website directories and host name
     "website-directory": "e:\\inetpub\\wwwroot\\Pathfinder\\Website",
@@ -14,7 +14,7 @@
     // default Sitecore database name (master, core, or web)
     "database": "master",
 
-    // the project roles enables/disables checkers and conventions. Examples: "pathfinder", "speak", "habitat.website"
+    // the project roles enables/disables checkers and conventions - comma seperated list of roles
     "project-role": "default",
 
     // mapping between project files and website files and items
@@ -38,12 +38,6 @@
                 "file-name-include": "*.dll"
             },
 
-            "jsx": {
-                "project-directory-to-item-path": "/wwwroot/jsx => /sitecore/layout/renderings",
-                "project-directory-to-website-directory": "/wwwroot/jsx => /jsx",
-                "upload-media": false
-            },
-
             "wwwroot": {
                 "project-directory-to-item-path": "/wwwroot => /",
                 "project-directory-to-website-directory": "/wwwroot => /",
@@ -63,6 +57,6 @@
 
     // tasks to execute when building
     "build-project": {
-        "tasks": "restore-packages check-project write-exports pack-nuget install-package publish-database show-metrics"
+        "tasks": "restore-packages check-project write-exports pack-nuget install-package publish-database show-status"
     }
 }

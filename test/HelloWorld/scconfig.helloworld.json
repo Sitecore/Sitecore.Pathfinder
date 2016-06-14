@@ -1,6 +1,4 @@
 {
-    "project-role": "none",
-
     "project-website-mappings": {
         "website-to-project": {
             "helloworld-content": {
@@ -21,17 +19,11 @@
         }
     },
     
-    "dependencies" : {
-      "Sitecore.Master" : "1.0.0",
-    },
-    
-    "messages": {
-        "template-help": {
-            "disabled": "3014, 3017, 2020, 2017"
-        }
-    },
-    
-    "show-browser": {
+    "dependencies": {
+        "Sitecore.Master": "1.0.0"
+    },  
+
+    "show-website": {
         "start-url": "/home/HelloWorld"
     }
 }

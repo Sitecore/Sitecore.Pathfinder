@@ -1,6 +1,6 @@
 ﻿{
     // every project must have a unique id, since the project-unique-id is used to calculate item ids
-    "project-unique-id": "CleanBlog",
+    "project-unique-id": "Quadro (97582724-280b-4ae9-87aa-d77ec29f1da4)",
 
     // website directories and host name
     "website-directory": "e:\\inetpub\\wwwroot\\Pathfinder\\Website",
@@ -14,7 +14,7 @@
     // default Sitecore database name (master, core, or web)
     "database": "master",
 
-    // the project roles enables/disables checkers and conventions. Examples: "pathfinder", "speak", "habitat.website"
+    // the project roles enables/disables checkers and conventions - comma seperated list of roles
     "project-role": "default",
 
     // mapping between project files and website files and items
@@ -57,6 +57,6 @@
 
     // tasks to execute when building
     "build-project": {
-        "tasks": "check-project write-exports pack-nuget copy-dependencies copy-package install-package publish-database show-metrics"
+        "tasks": "restore-packages check-project write-exports pack-nuget install-package publish-database show-website show-status"
     }
 }

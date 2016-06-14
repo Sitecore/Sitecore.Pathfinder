@@ -250,14 +250,14 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             var renderingItems = context.Project.ProjectItems.OfType<Rendering>().Where(r => string.Equals(r.RenderingItemUri.FileOrDatabaseName, databaseName, StringComparison.OrdinalIgnoreCase)).Select(r => context.Project.FindQualifiedItem<Item>(r.RenderingItemUri)).ToList();
             renderingItems.AddRange(context.Project.ProjectItems.OfType<Item>().Where(r => r.IsImport && string.Equals(r.DatabaseName, databaseName, StringComparison.OrdinalIgnoreCase) && string.Equals(r.TemplateIdOrPath, "/sitecore/templates/System/Layout/Renderings/View rendering", StringComparison.OrdinalIgnoreCase)));
 
-            output.WriteStartElement("r");
-
             var devices = layoutTextNode.GetSnapshotLanguageSpecificChildNode("Devices");
             if (devices == null)
             {
                 // silent
                 return;
             }
+
+            output.WriteStartElement("r");
 
             foreach (var deviceTextNode in devices.ChildNodes)
             {

@@ -26,7 +26,7 @@ namespace Sitecore.Pathfinder.Tasks
         public override void Run(IBuildContext context)
         {
             // todo: replace with official NuGet RestorePackages, if such exists
-            foreach (var packageInfo in ProjectPackages.GetPackages(context.ProjectDirectory))
+            foreach (var packageInfo in ProjectPackages.GetPackages())
             {
                 if (FileSystem.DirectoryExists(packageInfo.PackageDirectory))
                 {

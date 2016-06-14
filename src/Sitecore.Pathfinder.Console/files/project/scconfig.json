@@ -15,7 +15,7 @@
     "database": "master",
 
     // the project roles enables/disables checkers and conventions - comma seperated list of roles
-    "project-role": "pathfinder",
+    "project-role": "default",
 
     // mapping between project files and website files and items
     "project-website-mappings": {

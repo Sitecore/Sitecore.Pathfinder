@@ -34,6 +34,9 @@ namespace Sitecore.Pathfinder
         public string DataFolderDirectory { get; private set; } = string.Empty;
 
         [NotNull]
+        public string PackageRootDirectory { get; private set; } = string.Empty;
+
+        [NotNull]
         public string ProjectDirectory { get; private set; }
 
         [CanBeNull]
@@ -108,6 +111,15 @@ namespace Sitecore.Pathfinder
                 configuration.Set(Constants.Configuration.DataFolderDirectory, DataFolderDirectory);
             }
 
+            if (!string.IsNullOrEmpty(PackageRootDirectory))
+            {
+                configuration.Set(Constants.Configuration.NugetPackageRootDirectory, PackageRootDirectory);
+            }
+            else
+            {
+                configuration.Set(Constants.Configuration.NugetPackageRootDirectory, Path.Combine(ProjectDirectory, configuration.GetString(Constants.Configuration.Packages.NugetDirectory)));
+            }
+
             var compositionService = this.RegisterCompositionService(configuration, ProjectDirectory, assemblyFileNames, CompositionOptions);
             if (compositionService == null)
             {
@@ -156,6 +168,13 @@ namespace Sitecore.Pathfinder
                 AssemblyFileNames = AssemblyFileNames.Concat(assemblyFileNames).Distinct().ToList();
             }
 
+            return this;
+        }
+
+        [NotNull]
+        public Startup WithPackageRootDirectory([NotNull] string packageRootDirectory)
+        {
+            PackageRootDirectory = packageRootDirectory;
             return this;
         }
 

@@ -155,24 +155,35 @@ namespace Sitecore.Pathfinder.Emitters.Items
 
             foreach (BaseValidator validator in validatorCollection)
             {
-                var text = validator.Text.TrimEnd('.');
+                var text = validator.Text.TrimEnd('.').Replace('\r', ' ').Replace('\n', ' ');
+
                 var details = validator.GetFieldDisplayName();
                 if (details == "[unknown]")
                 {
                     details = string.Empty;
                 }
 
+                var textNode = item.SourceTextNodes.First();
+                if (!Data.ID.IsNullOrEmpty(validator.FieldID))
+                {
+                    var field = item.Fields.FirstOrDefault(f => f.FieldId == validator.FieldID.Guid);
+                    if (field != null)
+                    {
+                        textNode = TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field, item);
+                    }
+                }
+
                 switch (validator.Result)
                 {
                     case ValidatorResult.Suggestion:
                     case ValidatorResult.Warning:
-                        context.Trace.TraceWarning(Msg.E1008, text, item.SourceTextNodes.First(), details);
+                        context.Trace.TraceWarning(Msg.E1008, text, textNode, details);
                         break;
 
                     case ValidatorResult.Error:
                     case ValidatorResult.CriticalError:
                     case ValidatorResult.FatalError:
-                        context.Trace.TraceError(Msg.E1008, text, item.SourceTextNodes.First(), details);
+                        context.Trace.TraceError(Msg.E1008, text, textNode, details);
                         break;
                 }
             }
@@ -250,3 +261,4 @@ namespace Sitecore.Pathfinder.Emitters.Items
         }
     }
 }
+
