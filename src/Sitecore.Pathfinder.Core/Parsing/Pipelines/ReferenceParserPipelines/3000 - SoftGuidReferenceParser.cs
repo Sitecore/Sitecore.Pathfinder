@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.ReferenceParserPipelines
                 return;
             }
 
-            var sourceProperty = new SourceProperty<string>(pipeline.SourceTextNode.Key, string.Empty, SourcePropertyFlags.IsSoftGuid);
+            var sourceProperty = new SourceProperty<string>(pipeline.ProjectItem, pipeline.SourceTextNode.Key, string.Empty, SourcePropertyFlags.IsSoftGuid);
             sourceProperty.SetValue(pipeline.SourceTextNode);
 
             pipeline.Reference = pipeline.Factory.Reference(pipeline.ProjectItem, sourceProperty, pipeline.ReferenceText);

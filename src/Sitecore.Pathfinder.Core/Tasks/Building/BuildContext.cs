@@ -29,9 +29,9 @@ namespace Sitecore.Pathfinder.Tasks.Building
 
         public bool IsProjectLoaded => Project != Projects.Project.Empty;
 
-        public IList<IProjectItem> ModifiedProjectItems { get; } = new List<IProjectItem>();
+        public ICollection<IProjectItem> ModifiedProjectItems { get; } = new List<IProjectItem>();
 
-        public IList<string> OutputFiles { get; } = new List<string>();
+        public ICollection<string> OutputFiles { get; } = new List<string>();
 
         public IProject Project => _project ?? (_project = _loadProject());
 

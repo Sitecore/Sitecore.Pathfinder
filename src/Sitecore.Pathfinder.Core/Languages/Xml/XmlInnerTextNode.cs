@@ -41,9 +41,9 @@ namespace Sitecore.Pathfinder.Languages.Xml
 
         public string Value => _value ?? (_value = RemoveNamespaces.Replace(string.Join(string.Empty, _element.Nodes().Select(n => n.ToString(SaveOptions.OmitDuplicateNamespaces)).ToArray()).Trim(), string.Empty));
 
-        IList<ITextNode> IMutableTextNode.AttributeList { get; } = Constants.EmptyReadOnlyTextNodeCollection;
+        ICollection<ITextNode> IMutableTextNode.AttributeCollection { get; } = Constants.EmptyReadOnlyTextNodeCollection;
 
-        IList<ITextNode> IMutableTextNode.ChildNodeCollection { get; } = Constants.EmptyReadOnlyTextNodeCollection;
+        ICollection<ITextNode> IMutableTextNode.ChildNodeCollection { get; } = Constants.EmptyReadOnlyTextNodeCollection;
 
         public ITextNode GetAttribute(string attributeName)
         {

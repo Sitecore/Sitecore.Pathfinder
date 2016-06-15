@@ -22,7 +22,7 @@ namespace Sitecore.Pathfinder
         };
 
         [NotNull, ItemNotNull]
-        public static readonly IList<ITextNode> EmptyReadOnlyTextNodeCollection = new ReadOnlyCollection<ITextNode>(new List<ITextNode>());
+        public static readonly ICollection<ITextNode> EmptyReadOnlyTextNodeCollection = new ReadOnlyCollection<ITextNode>(new List<ITextNode>());
 
         [NotNull]
         public static string NullGuidString = Guid.Empty.Format();

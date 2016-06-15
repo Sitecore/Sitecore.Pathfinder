@@ -1,4 +1,4 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Configuration;
@@ -20,9 +20,8 @@ namespace Sitecore.Pathfinder.Compiling.Builders
         [NotNull]
         public string DatabaseName { get; set; } = string.Empty;
 
-        [NotNull]
-        [ItemNotNull]
-        public IList<FieldBuilder> Fields { get; } = new List<FieldBuilder>();
+        [NotNull, ItemNotNull]
+        public ICollection<FieldBuilder> Fields { get; } = new List<FieldBuilder>();
 
         [NotNull]
         public string Guid { get; set; } = string.Empty;

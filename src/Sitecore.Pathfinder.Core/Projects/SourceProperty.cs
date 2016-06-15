@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -48,16 +48,18 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         private T _value;
 
-        public SourceProperty([NotNull] string key, [NotNull] T defaultValue)
+        public SourceProperty([NotNull] ILockable owner, [NotNull] string key, [NotNull] T defaultValue)
         {
+            Owner = owner;
             Key = key;
 
             _value = defaultValue;
             _defaultValue = defaultValue;
         }
 
-        public SourceProperty([NotNull] string key, [NotNull] T defaultValue, SourcePropertyFlags flags)
+        public SourceProperty([NotNull] ILockable owner, [NotNull] string key, [NotNull] T defaultValue, SourcePropertyFlags flags)
         {
+            Owner = owner;
             Key = key;
             Flags = flags;
 
@@ -70,13 +72,23 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         public string Key { get; private set; }
 
+        [NotNull]
+        public ILockable Owner { get; }
+
         [CanBeNull]
         public ITextNode SourceTextNode => SourceTextNodes.LastOrDefault();
 
         public ICollection<ITextNode> SourceTextNodes { get; } = new List<ITextNode>();
 
+        protected Locking Locking => Owner.Locking;
+
         public virtual bool AddSourceTextNode([CanBeNull] ITextNode textNode)
         {
+            if (Locking == Locking.ReadOnly)
+            {
+                throw new InvalidOperationException("SourceProperty cannot be modified as it is frozen: " + Key);
+            }
+
             if (textNode == TextNode.Empty)
             {
                 return true;
@@ -101,6 +113,11 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual void Parse([NotNull] ITextNode textNode, [CanBeNull] T defaultValue = default(T))
         {
+            if (Locking == Locking.ReadOnly)
+            {
+                throw new InvalidOperationException("SourceProperty cannot be modified as it is frozen: " + Key);
+            }
+
             var attribute = textNode.GetAttribute(Key);
             if (attribute != null)
             {
@@ -118,6 +135,11 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual void Parse([NotNull] string newKey, [NotNull] ITextNode textNode, [CanBeNull] T defaultValue = default(T))
         {
+            if (Locking == Locking.ReadOnly)
+            {
+                throw new InvalidOperationException("SourceProperty cannot be modified as it is frozen: " + Key);
+            }
+
             Key = newKey;
             Parse(textNode, defaultValue);
         }
@@ -136,6 +158,11 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual bool ParseIfHasAttribute([NotNull] string newKey, [NotNull] ITextNode textNode)
         {
+            if (Locking == Locking.ReadOnly)
+            {
+                throw new InvalidOperationException("SourceProperty cannot be modified as it is frozen: " + Key);
+            }
+
             Key = newKey;
             return ParseIfHasAttribute(textNode);
         }
@@ -163,6 +190,11 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual void SetValue([NotNull] T value, SetValueOptions options = SetValueOptions.EnableUpdates)
         {
+            if (Locking == Locking.ReadOnly)
+            {
+                throw new InvalidOperationException("SourceProperty cannot be modified as it is frozen: " + Key);
+            }
+
             if (value.Equals(_value))
             {
                 return;

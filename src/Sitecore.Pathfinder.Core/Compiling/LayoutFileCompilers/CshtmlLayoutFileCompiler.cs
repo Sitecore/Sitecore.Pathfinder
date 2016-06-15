@@ -15,13 +15,13 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
     {
         public override bool CanCompile(ICompileContext context, IProjectItem projectItem, SourceProperty<string> property)
         {
-            var item = projectItem as Item;
+            var item = projectItem as ISourcePropertyBag;
             if (item == null)
             {
                 return false;
             }
 
-            if (!item.ContainsProperty(LayoutFileItemParser.LayoutFile))
+            if (!item.ContainsSourceProperty(LayoutFileItemParser.LayoutFile))
             {
                 return false;
             }

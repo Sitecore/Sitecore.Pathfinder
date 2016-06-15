@@ -67,8 +67,8 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="ZetaLongPaths, Version=1.0.0.9, Culture=neutral, PublicKeyToken=b764f59068f31f38, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ZetaLongPaths.1.0.0.9\lib\net40-full\ZetaLongPaths.dll</HintPath>
+    <Reference Include="ZetaLongPaths, Version=1.0.0.10, Culture=neutral, PublicKeyToken=b764f59068f31f38, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ZetaLongPaths.1.0.0.10\lib\net40-full\ZetaLongPaths.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -85,10 +85,13 @@
     <Compile Include="Packaging\ProjectPackages\ProjectPackageInfo.cs" />
     <Compile Include="Packaging\ProjectPackages\IProjectPackageProvider.cs" />
     <Compile Include="Packaging\ProjectPackages\ProjectPackageProviderBase.cs" />
+    <Compile Include="Projects\LockableList.cs" />
     <Compile Include="Projects\IDiagnosticContainer.cs" />
+    <Compile Include="Projects\ILockable.cs" />
     <Compile Include="Projects\IProjectIndexer.cs" />
     <Compile Include="Projects\ProjectIndex.cs" />
     <Compile Include="Projects\ProjectIndexer.cs" />
+    <Compile Include="Projects\SourcePropertyBag.cs" />
     <Compile Include="Runtime\Caching\CacheService.cs" />
     <Compile Include="Runtime\Caching\ICacheService.cs" />
     <Compile Include="Tasks\Building\BuildContext.cs" />
@@ -221,7 +224,6 @@
     <Compile Include="Projects\Items\ChildrenCollection.cs" />
     <Compile Include="Projects\ID.cs" />
     <Compile Include="Projects\Items\ItemPublishing.cs" />
-    <Compile Include="Projects\IUnloadable.cs" />
     <Compile Include="Projects\ProjectImportsService.cs" />
     <Compile Include="ProjectTrees\DirectoryProjectTreeItem.cs" />
     <Compile Include="ProjectTrees\FileProjectTreeItem.cs" />

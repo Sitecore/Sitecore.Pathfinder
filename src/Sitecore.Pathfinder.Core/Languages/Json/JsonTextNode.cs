@@ -29,9 +29,9 @@ namespace Sitecore.Pathfinder.Languages.Json
             _jtoken = jproperty;
         }
 
-        IList<ITextNode> IMutableTextNode.AttributeList => (IList<ITextNode>)Attributes;
+        ICollection<ITextNode> IMutableTextNode.AttributeCollection => (IList<ITextNode>)Attributes;
 
-        IList<ITextNode> IMutableTextNode.ChildNodeCollection => (IList<ITextNode>)ChildNodes;
+        ICollection<ITextNode> IMutableTextNode.ChildNodeCollection => (IList<ITextNode>)ChildNodes;
 
         public override ITextNode GetInnerTextNode()
         {

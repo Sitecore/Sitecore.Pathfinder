@@ -1,19 +1,22 @@
-﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections;
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Projects.References
 {
     public class ReferenceCollection : ICollection<IReference>
     {
         [NotNull, ItemNotNull]
-        private readonly List<IReference> _references = new List<IReference>();
+        private readonly ICollection<IReference> _references;
 
         public ReferenceCollection([NotNull] ProjectItem projectItem)
         {
             ProjectItem = projectItem;
+
+            _references = new LockableList<IReference>(projectItem);
         }
 
         public int Count => _references.Count;

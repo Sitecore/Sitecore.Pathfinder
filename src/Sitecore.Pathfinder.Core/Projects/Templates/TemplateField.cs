@@ -1,4 +1,4 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using Sitecore.Pathfinder.Snapshots;
 namespace Sitecore.Pathfinder.Projects.Templates
 {
     [DebuggerDisplay("{GetType().Name,nq}: {FieldName}")]
-    public class TemplateField : IHasSourceTextNodes, IUnloadable
+    public class TemplateField : SourcePropertyBag, IHasSourceTextNodes
     {
         [NotNull]
         public static readonly TemplateField Empty = new TemplateField(Template.Empty, new Guid("{D269BE69-A982-4415-ABC6-A870F286435A}"), TextNode.Empty);
@@ -20,7 +20,18 @@ namespace Sitecore.Pathfinder.Projects.Templates
         public TemplateField([NotNull] Template template, Guid guid, [NotNull] ITextNode templateFieldTextNode)
         {
             Template = template;
-            SourceTextNodes.Add(templateFieldTextNode);
+
+            FieldNameProperty = NewSourceProperty("Name", string.Empty);
+            LongHelpProperty = NewSourceProperty("LongHelp", string.Empty);
+            ShortHelpProperty = NewSourceProperty("ShortHelp", string.Empty);
+            SortOrderProperty = NewSourceProperty("SortOrder", 0);
+            SourceProperty = NewSourceProperty("Source", string.Empty);
+            TypeProperty = NewSourceProperty("Type", string.Empty);
+
+            SourceTextNodes = new LockableList<ITextNode>(this)
+            {
+                templateFieldTextNode
+            };
 
             Uri = new ProjectItemUri(template.DatabaseName, guid);
         }
@@ -39,10 +50,12 @@ namespace Sitecore.Pathfinder.Projects.Templates
         }
 
         [NotNull]
-        public SourceProperty<string> FieldNameProperty { get; } = new SourceProperty<string>("Name", string.Empty);
+        public SourceProperty<string> FieldNameProperty { get; }
 
         [NotNull, Obsolete("Use Uri.Guid instead", false)]
         public ID ID => _id ?? (_id = new ID(Uri.Guid));
+
+        public override Locking Locking => Template.Locking;
 
         [NotNull]
         public string LongHelp
@@ -52,7 +65,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         }
 
         [NotNull]
-        public SourceProperty<string> LongHelpProperty { get; } = new SourceProperty<string>("LongHelp", string.Empty);
+        public SourceProperty<string> LongHelpProperty { get; }
 
         [NotNull, Obsolete("Use FieldName instead", false)]
         public string Name => FieldName;
@@ -68,7 +81,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         }
 
         [NotNull]
-        public SourceProperty<string> ShortHelpProperty { get; } = new SourceProperty<string>("ShortHelp", string.Empty);
+        public SourceProperty<string> ShortHelpProperty { get; }
 
         public int SortOrder
         {
@@ -77,7 +90,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         }
 
         [NotNull]
-        public SourceProperty<int> SortOrderProperty { get; } = new SourceProperty<int>("SortOrder", 0);
+        public SourceProperty<int> SortOrderProperty { get; }
 
         [NotNull]
         public string Source
@@ -87,9 +100,9 @@ namespace Sitecore.Pathfinder.Projects.Templates
         }
 
         [NotNull]
-        public SourceProperty<string> SourceProperty { get; } = new SourceProperty<string>("Source", string.Empty);
+        public SourceProperty<string> SourceProperty { get; }
 
-        public ICollection<ITextNode> SourceTextNodes { get; } = new List<ITextNode>();
+        public ICollection<ITextNode> SourceTextNodes { get; }
 
         [NotNull]
         public Template Template { get; }
@@ -102,7 +115,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         }
 
         [NotNull]
-        public SourceProperty<string> TypeProperty { get; } = new SourceProperty<string>("Type", string.Empty);
+        public SourceProperty<string> TypeProperty { get; }
 
         public bool Unversioned { get; set; }
 
@@ -146,10 +159,6 @@ namespace Sitecore.Pathfinder.Projects.Templates
             {
                 SortOrderProperty.SetValue(newField.SortOrderProperty, SetValueOptions.DisableUpdates);
             }
-        }
-
-        void IUnloadable.Unload()
-        {
         }
     }
 }

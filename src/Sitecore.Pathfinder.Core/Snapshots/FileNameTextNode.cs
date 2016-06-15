@@ -28,9 +28,9 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public string Value { get; }
 
-        IList<ITextNode> IMutableTextNode.AttributeList { get; } = Constants.EmptyReadOnlyTextNodeCollection;
+        ICollection<ITextNode> IMutableTextNode.AttributeCollection { get; } = Constants.EmptyReadOnlyTextNodeCollection;
 
-        IList<ITextNode> IMutableTextNode.ChildNodeCollection { get; } = Constants.EmptyReadOnlyTextNodeCollection;
+        ICollection<ITextNode> IMutableTextNode.ChildNodeCollection { get; } = Constants.EmptyReadOnlyTextNodeCollection;
 
         public ITextNode GetAttribute(string attributeName)
         {

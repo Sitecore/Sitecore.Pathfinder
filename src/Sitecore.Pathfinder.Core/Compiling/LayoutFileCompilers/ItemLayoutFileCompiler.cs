@@ -25,16 +25,16 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
 
         public override bool CanCompile(ICompileContext context, IProjectItem projectItem)
         {
-            var item = projectItem as Item;
-            return item != null && item.ContainsProperty(LayoutFileItemParser.LayoutFile);
+            var item = projectItem as ISourcePropertyBag;
+            return item != null && item.ContainsSourceProperty(LayoutFileItemParser.LayoutFile);
         }
 
         public override void Compile(ICompileContext context, IProjectItem projectItem)
         {
-            var item = projectItem as Item;
+            var item = projectItem as ISourcePropertyBag;
             Assert.Cast(item, nameof(item));
 
-            var property = item.GetProperty<string>(LayoutFileItemParser.LayoutFile);
+            var property = item.GetSourceProperty<string>(LayoutFileItemParser.LayoutFile);
             if (property == null)
             {
                 return;

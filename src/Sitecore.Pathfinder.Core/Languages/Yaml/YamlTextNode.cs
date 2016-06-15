@@ -12,9 +12,9 @@ namespace Sitecore.Pathfinder.Languages.Yaml
         {
         }
 
-        IList<ITextNode> IMutableTextNode.AttributeList => (IList<ITextNode>)Attributes;
+        ICollection<ITextNode> IMutableTextNode.AttributeCollection => (IList<ITextNode>)Attributes;
 
-        IList<ITextNode> IMutableTextNode.ChildNodeCollection => (IList<ITextNode>)ChildNodes;
+        ICollection<ITextNode> IMutableTextNode.ChildNodeCollection => (IList<ITextNode>)ChildNodes;
 
         bool IMutableTextNode.SetKey(string newKey)
         {

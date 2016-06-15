@@ -11,13 +11,17 @@ using Sitecore.Pathfinder.Snapshots;
 namespace Sitecore.Pathfinder.Projects
 {
     [DebuggerDisplay("{GetType().Name,nq}: {ItemIdOrPath}")]
-    public abstract class DatabaseProjectItem : ProjectItem, IHasSourceTextNodes, IUnloadable
+    public abstract class DatabaseProjectItem : ProjectItem, IHasSourceTextNodes
     {
         [CanBeNull]
         private ID _id;
 
         protected DatabaseProjectItem([NotNull] IProject project, [NotNull] ITextNode textNode, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, textNode.Snapshot, new ProjectItemUri(databaseName, guid))
         {
+            ItemNameProperty = NewSourceProperty("ItemName", string.Empty, SourcePropertyFlags.IsShort);
+            IconProperty = NewSourceProperty("Icon", string.Empty);
+            SourceTextNodes = new LockableList<ITextNode>(this);
+
             DatabaseName = databaseName;
             ItemName = itemName;
             ItemIdOrPath = itemIdOrPath;
@@ -38,7 +42,7 @@ namespace Sitecore.Pathfinder.Projects
         }
 
         [NotNull]
-        public SourceProperty<string> IconProperty { get; } = new SourceProperty<string>("Icon", string.Empty);
+        public SourceProperty<string> IconProperty { get; } 
 
         [NotNull, Obsolete("Use Uri.Guid instead", false)]
         public ID ID => _id ?? (_id = new ID(Uri.Guid));
@@ -61,7 +65,7 @@ namespace Sitecore.Pathfinder.Projects
         }
 
         [NotNull]
-        public SourceProperty<string> ItemNameProperty { get; } = new SourceProperty<string>("ItemName", string.Empty, SourcePropertyFlags.IsShort);
+        public SourceProperty<string> ItemNameProperty { get; }
 
         /// <summary>The name of the item or template. Same as ItemName and ShortName.</summary>
         [NotNull, Obsolete("Use ItemName instead", false)]
@@ -71,7 +75,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public override string ShortName => ItemName;
 
-        public ICollection<ITextNode> SourceTextNodes { get; } = new List<ITextNode>();
+        public ICollection<ITextNode> SourceTextNodes { get; }
 
         public override void Rename(IFileSystemService fileSystem, string newShortName)
         {
@@ -111,15 +115,6 @@ namespace Sitecore.Pathfinder.Projects
             IsImport = IsImport || newItemBase.IsImport;
 
             References.AddRange(newItemBase.References);
-        }
-
-        protected virtual void OnUnload()
-        {
-        }
-
-        void IUnloadable.Unload()
-        {
-            OnUnload();
         }
     }
 }

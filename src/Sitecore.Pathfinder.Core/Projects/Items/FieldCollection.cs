@@ -1,20 +1,15 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Projects.Items
 {
-    public class FieldCollection : List<Field>
+    public class FieldCollection : LockableList<Field>
     {
-        [NotNull]
-        private readonly Item _item;
-
-        public FieldCollection([NotNull] Item item)
+        public FieldCollection([NotNull] Item item) : base(item)
         {
-            _item = item;
         }
 
         [CanBeNull]

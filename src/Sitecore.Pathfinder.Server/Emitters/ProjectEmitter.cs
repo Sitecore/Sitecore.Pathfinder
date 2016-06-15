@@ -18,6 +18,9 @@ namespace Sitecore.Pathfinder.Emitters
     [Export(typeof(ProjectEmitter))]
     public class ProjectEmitter : IProjectEmitter
     {
+        [NotNull]
+        private readonly object _syncObject = new object();
+
         [ImportingConstructor]
         public ProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] ITraceService traceService, [ImportMany, NotNull, ItemNotNull] IEnumerable<IEmitter> emitters)
         {
@@ -49,20 +52,21 @@ namespace Sitecore.Pathfinder.Emitters
                 context.Trace.TraceDiagnostics(context.Project.Diagnostics, treatWarningsAsErrors);
             }
 
+            project.Lock(Projects.Locking.ReadOnly);
+
             var emitters = Emitters.OrderBy(e => e.Sortorder).ToList();
             var retries = new List<Tuple<IProjectItem, Exception>>();
 
             Emit(context, project, emitters, retries);
             EmitRetry(context, emitters, retries);
+
+            project.Lock(Projects.Locking.ReadWrite);
         }
 
         protected virtual void Emit([NotNull] IEmitContext context, [NotNull] IProject project, [NotNull, ItemNotNull] List<IEmitter> emitters, [NotNull, ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
         {
             EmitProjectItems(context, project.ProjectItems, emitters, retries);
         }
-
-        [NotNull]
-        private readonly object _syncObject = new object();
 
         protected virtual void EmitProjectItem([NotNull] IEmitContext context, [NotNull] IProjectItem projectItem, [NotNull, ItemNotNull] List<IEmitter> emitters, [NotNull, ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
         {

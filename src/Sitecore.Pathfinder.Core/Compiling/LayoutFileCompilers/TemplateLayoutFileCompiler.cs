@@ -24,8 +24,8 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
 
         public override bool CanCompile(ICompileContext context, IProjectItem projectItem)
         {
-            var template = projectItem as Template;
-            return template != null && template.ContainsProperty(LayoutFileItemParser.LayoutFile);
+            var template = projectItem as ISourcePropertyBag;
+            return template != null && template.ContainsSourceProperty(LayoutFileItemParser.LayoutFile);
         }
 
         public override void Compile(ICompileContext context, IProjectItem projectItem)
@@ -33,7 +33,7 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
             var template = projectItem as Template;
             Assert.Cast(template, nameof(template));
 
-            var property = template.GetProperty<string>(LayoutFileItemParser.LayoutFile);
+            var property = ((ISourcePropertyBag)template).GetSourceProperty<string>(LayoutFileItemParser.LayoutFile);
             if (property == null)
             {
                 return;

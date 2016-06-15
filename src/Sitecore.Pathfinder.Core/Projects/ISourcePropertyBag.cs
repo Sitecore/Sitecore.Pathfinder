@@ -10,16 +10,16 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         IDictionary<string, object> PropertyBag { get; }
 
-        bool ContainsProperty([NotNull] string name);
+        bool ContainsSourceProperty([NotNull] string name);
 
         [CanBeNull]
-        SourceProperty<T> GetProperty<T>([NotNull] string name);
+        SourceProperty<T> GetSourceProperty<T>([NotNull] string name);
 
         [CanBeNull]
         T GetValue<T>([NotNull] string name);
 
         [NotNull]
-        SourceProperty<T> NewProperty<T>([NotNull] string name, [NotNull] T defaultValue, SourcePropertyFlags flags = SourcePropertyFlags.None);
+        SourceProperty<T> NewSourceProperty<T>([NotNull] string name, [NotNull] T defaultValue, SourcePropertyFlags flags = SourcePropertyFlags.None);
 
         void SetValue<T>([NotNull] string name, [NotNull] T value, SetValueOptions options = SetValueOptions.EnableUpdates);
     }

@@ -41,7 +41,10 @@ namespace Sitecore.Pathfinder.Emitters.Writers
         [Diagnostics.CanBeNull]
         public Item Write([Diagnostics.NotNull] IEmitContext context)
         {
-            var inheritedFields = GetInheritedFields(Template);
+            List<Data.Templates.TemplateField> inheritedFields;
+            string baseTemplates;
+
+            GetInheritedFields(Template, out inheritedFields, out baseTemplates);
 
             if (Item == null)
             {
@@ -50,7 +53,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
 
             if (Item == null)
             {
-                WriteNewTemplate(context, inheritedFields);
+                WriteNewTemplate(context, inheritedFields, baseTemplates);
                 if (Item == null)
                 {
                     return null;
@@ -58,7 +61,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             }
             else
             {
-                WriteTemplate(context, inheritedFields);
+                WriteTemplate(context, inheritedFields, baseTemplates);
                 DeleteSections(context);
             }
 
@@ -142,13 +145,13 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             }
         }
 
-        [Diagnostics.NotNull, ItemNotNull]
-        protected IEnumerable<Data.Templates.TemplateField> GetInheritedFields([Diagnostics.NotNull] Template template)
+        
+        protected void GetInheritedFields([Diagnostics.NotNull] Template template, [Diagnostics.NotNull, ItemNotNull] out List<Data.Templates.TemplateField> fields, [NotNull] out string baseTemplates)
         {
-            var fields = new List<Data.Templates.TemplateField>();
+            fields = new List<Data.Templates.TemplateField>();
 
             var database = Factory.GetDatabase(template.DatabaseName);
-            var baseTemplates = new List<Item>();
+            var baseTemplateList = new List<Item>();
 
             var templates = template.BaseTemplates.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries);
             foreach (var templateId in templates)
@@ -160,7 +163,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                     throw new RetryableEmitException(Msg.E1030, Texts.Base_Template_missing, template.Snapshots.First(), templateId);
                 }
 
-                baseTemplates.Add(baseTemplateItem);
+                baseTemplateList.Add(baseTemplateItem);
 
                 var t = TemplateManager.GetTemplate(baseTemplateItem.ID, database);
                 if (t == null)
@@ -179,10 +182,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                 }
             }
 
-            // todo: hmm
-            template.BaseTemplates = string.Join("|", baseTemplates.Select(t => t.ID.ToString()));
-
-            return fields;
+            baseTemplates = string.Join("|", baseTemplateList.Select(t => t.ID.ToString()));
         }
 
         [Diagnostics.CanBeNull]
@@ -381,7 +381,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             }
         }
 
-        protected virtual void WriteNewTemplate([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull, ItemNotNull] IEnumerable<Data.Templates.TemplateField> inheritedFields)
+        protected virtual void WriteNewTemplate([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull, ItemNotNull] IEnumerable<Data.Templates.TemplateField> inheritedFields, [NotNull] string baseTemplates)
         {
             var database = Factory.GetDatabase(Template.DatabaseName);
             if (database == null)
@@ -404,9 +404,9 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             Item = item;
             using (new EditContext(item))
             {
-                if (!string.IsNullOrEmpty(Template.BaseTemplates))
+                if (!string.IsNullOrEmpty(baseTemplates))
                 {
-                    item[FieldIDs.BaseTemplate] = Template.BaseTemplates;
+                    item[FieldIDs.BaseTemplate] = baseTemplates;
                 }
 
                 if (!string.IsNullOrEmpty(Template.Icon))
@@ -479,7 +479,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             }
         }
 
-        protected virtual void WriteTemplate([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull, ItemNotNull] IEnumerable<Data.Templates.TemplateField> inheritedFields)
+        protected virtual void WriteTemplate([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull, ItemNotNull] IEnumerable<Data.Templates.TemplateField> inheritedFields, [NotNull] string baseTemplates)
         {
             var item = Item;
             if (item == null)
@@ -509,7 +509,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             using (new EditContext(item))
             {
                 item.Name = Template.ItemName;
-                item[FieldIDs.BaseTemplate] = Template.BaseTemplates;
+                item[FieldIDs.BaseTemplate] = baseTemplates;
                 item.Appearance.Icon = Template.Icon;
                 item.Help.ToolTip = Template.ShortHelp;
                 item.Help.Text = Template.LongHelp;

@@ -18,7 +18,7 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.ReferenceParserPipelines
                 return;
             }
 
-            var sourceProperty = new SourceProperty<string>(pipeline.SourceTextNode.Key, string.Empty, SourcePropertyFlags.IsFileName);
+            var sourceProperty = new SourceProperty<string>(pipeline.ProjectItem, pipeline.SourceTextNode.Key, string.Empty, SourcePropertyFlags.IsFileName);
             sourceProperty.SetValue(pipeline.SourceTextNode);
 
             pipeline.Reference = pipeline.Factory.FileReference(pipeline.ProjectItem, sourceProperty, pipeline.ReferenceText);

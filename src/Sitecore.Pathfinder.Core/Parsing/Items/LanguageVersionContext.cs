@@ -1,14 +1,24 @@
+// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Parsing.Items
 {
-    public class LanguageVersionContext
+    public class LanguageVersionContext : ILockable
     {
-        [NotNull]
-        public SourceProperty<string> LanguageProperty { get; } = new SourceProperty<string>("Language", string.Empty);
+        public LanguageVersionContext()
+        {
+            LanguageProperty = new SourceProperty<string>(this, "Language", string.Empty);
+            VersionProperty = new SourceProperty<int>(this, "Number", 0);
+        }
+
+        Locking ILockable.Locking => Locking.ReadWrite;
 
         [NotNull]
-        public SourceProperty<int> VersionProperty { get; } = new SourceProperty<int>("Number", 0);
+        public SourceProperty<string> LanguageProperty { get; }
+
+        [NotNull]
+        public SourceProperty<int> VersionProperty { get; }
     }
 }

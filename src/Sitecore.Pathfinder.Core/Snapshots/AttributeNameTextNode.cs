@@ -32,9 +32,9 @@ namespace Sitecore.Pathfinder.Snapshots
         [NotNull]
         protected ITextNode TextNode { get; }
 
-        IList<ITextNode> IMutableTextNode.AttributeList => (IList<ITextNode>)TextNode.Attributes;
+        ICollection<ITextNode> IMutableTextNode.AttributeCollection => (IList<ITextNode>)TextNode.Attributes;
 
-        IList<ITextNode> IMutableTextNode.ChildNodeCollection => (IList<ITextNode>)TextNode.ChildNodes;
+        ICollection<ITextNode> IMutableTextNode.ChildNodeCollection => (IList<ITextNode>)TextNode.ChildNodes;
 
         public ITextNode GetAttribute(string attributeName)
         {

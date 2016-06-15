@@ -1,4 +1,4 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 {
     // todo: consider basing this on ProjectElement
     [DebuggerDisplay("{GetType().Name,nq}: {FieldName,nq} = {Value}")]
-    public class Field : IHasSourceTextNodes
+    public class Field : SourcePropertyBag, IHasSourceTextNodes
     {
         [CanBeNull]
         private TemplateField _templateField;
@@ -23,7 +23,17 @@ namespace Sitecore.Pathfinder.Projects.Items
         {
             Item = item;
 
-            SourceTextNodes.Add(textNode);
+            FieldIdProperty = NewSourceProperty("Id", Guid.Empty);
+            FieldNameProperty = NewSourceProperty("Name", string.Empty);
+            LanguageProperty = NewSourceProperty("Language", string.Empty);
+            ValueHintProperty = NewSourceProperty("Value.Hint", string.Empty);
+            ValueProperty = NewSourceProperty("Value", string.Empty);
+            VersionProperty = NewSourceProperty("Version", 0);
+
+            SourceTextNodes = new LockableList<ITextNode>(this)
+            {
+                textNode
+            };
 
             ValueProperty.PropertyChanged += HandlePropertyChanged;
         }
@@ -53,14 +63,18 @@ namespace Sitecore.Pathfinder.Projects.Items
                     return Guid.Empty;
                 }
 
-                FieldId = templateField.Uri.Guid;
+                if (Locking == Locking.ReadWrite)
+                {
+                    FieldId = templateField.Uri.Guid;
+                }
+
                 return templateField.Uri.Guid;
             }
             set { FieldIdProperty.SetValue(value); }
         }
 
         [NotNull]
-        public SourceProperty<Guid> FieldIdProperty { get; } = new SourceProperty<Guid>("Id", Guid.Empty);
+        public SourceProperty<Guid> FieldIdProperty { get; }
 
         [NotNull]
         public string FieldName
@@ -79,19 +93,25 @@ namespace Sitecore.Pathfinder.Projects.Items
                     return string.Empty;
                 }
 
-                FieldName = templateField.FieldName;
+                if (Locking == Locking.ReadWrite)
+                {
+                    FieldName = templateField.FieldName;
+                }
+
                 return templateField.FieldName;
             }
             set { FieldNameProperty.SetValue(value); }
         }
 
         [NotNull]
-        public SourceProperty<string> FieldNameProperty { get; } = new SourceProperty<string>("Name", string.Empty);
+        public SourceProperty<string> FieldNameProperty { get; }
 
         [NotNull, Obsolete("Use FieldId instead", false)]
         public ID ID => new ID(FieldId);
 
         public bool IsCompiled { get; set; }
+
+        public override Locking Locking => Item.Locking;
 
         [NotNull]
         public Item Item { get; set; }
@@ -104,12 +124,12 @@ namespace Sitecore.Pathfinder.Projects.Items
         }
 
         [NotNull]
-        public SourceProperty<string> LanguageProperty { get; } = new SourceProperty<string>("Language", string.Empty);
+        public SourceProperty<string> LanguageProperty { get; }
 
         [NotNull, Obsolete("Use FieldName instead", false)]
         public string Name => FieldName;
 
-        public ICollection<ITextNode> SourceTextNodes { get; } = new List<ITextNode>();
+        public ICollection<ITextNode> SourceTextNodes { get; } 
 
         [NotNull]
         public TemplateField TemplateField
@@ -142,10 +162,10 @@ namespace Sitecore.Pathfinder.Projects.Items
         }
 
         [NotNull]
-        public SourceProperty<string> ValueHintProperty { get; } = new SourceProperty<string>("Value.Hint", string.Empty);
+        public SourceProperty<string> ValueHintProperty { get; }
 
         [NotNull]
-        public SourceProperty<string> ValueProperty { get; } = new SourceProperty<string>("Value", string.Empty);
+        public SourceProperty<string> ValueProperty { get; }
 
         public int Version
         {
@@ -154,7 +174,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         }
 
         [NotNull]
-        public SourceProperty<int> VersionProperty { get; } = new SourceProperty<int>("Version", 0);
+        public SourceProperty<int> VersionProperty { get; }
 
         public void Compile([NotNull] IFieldCompileContext context)
         {

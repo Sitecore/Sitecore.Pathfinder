@@ -2,6 +2,7 @@
 
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Parsing.Pipelines.ItemParserPipelines;
+using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Parsing.LayoutFiles
@@ -22,9 +23,9 @@ namespace Sitecore.Pathfinder.Parsing.LayoutFiles
                 return;
             }
 
-            var item = pipeline.Item;
+            var item = pipeline.Item as ISourcePropertyBag;
 
-            var layoutFileProperty = item.GetProperty<string>(LayoutFile) ?? item.NewProperty(LayoutFile, string.Empty);
+            var layoutFileProperty = item.GetSourceProperty<string>(LayoutFile) ?? item.NewSourceProperty(LayoutFile, string.Empty);
             layoutFileProperty.SetValue(layoutFileTextNode);
 
             var fieldValue = layoutFileProperty.GetValue();

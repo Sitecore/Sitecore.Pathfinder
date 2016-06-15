@@ -38,6 +38,8 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         public Item([NotNull] IProject project, [NotNull] ITextNode textNode, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath) : base(project, textNode, guid, databaseName, itemName, itemIdOrPath)
         {
+            TemplateIdOrPathProperty = NewSourceProperty("Template", string.Empty, SourcePropertyFlags.IsQualified);
+
             TemplateIdOrPath = templateIdOrPath;
         }
 
@@ -124,7 +126,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         }
 
         [NotNull]
-        public SourceProperty<string> TemplateIdOrPathProperty { get; } = new SourceProperty<string>("Template", string.Empty, SourcePropertyFlags.IsQualified);
+        public SourceProperty<string> TemplateIdOrPathProperty { get; }
 
         public string TemplateName => Template.ItemName;
 

@@ -27,7 +27,7 @@ namespace Sitecore.Pathfinder.Compiling.Builders
         public string DatabaseName { get; set; } = string.Empty;
 
         [NotNull, ItemNotNull]
-        public IList<FieldBuilder> Fields { get; } = new List<FieldBuilder>();
+        public ICollection<FieldBuilder> Fields { get; } = new List<FieldBuilder>();
 
         [NotNull]
         public string Guid { get; set; } = string.Empty;
@@ -48,7 +48,7 @@ namespace Sitecore.Pathfinder.Compiling.Builders
         public ITextNode LongHelpTextNode { get; set; } = TextNode.Empty;
 
         [NotNull, ItemNotNull]
-        public IList<TemplateSectionBuilder> Sections { get; } = new List<TemplateSectionBuilder>();
+        public ICollection<TemplateSectionBuilder> Sections { get; } = new List<TemplateSectionBuilder>();
 
         [NotNull]
         public string ShortHelp { get; set; } = string.Empty;

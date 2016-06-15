@@ -1,4 +1,4 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -8,19 +8,26 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects.Templates
 {
-    public class TemplateSection : IHasSourceTextNodes, IUnloadable
+    public class TemplateSection : SourcePropertyBag, IHasSourceTextNodes
     {
         public TemplateSection([NotNull] Template template, Guid guid, [NotNull] ITextNode templateSectionTextNode)
         {
             Template = template;
-            SourceTextNodes.Add(templateSectionTextNode);
+
+            IconProperty = NewSourceProperty("Icon", string.Empty);
+            SectionNameProperty = NewSourceProperty("Name", string.Empty);
+            Fields = new LockableList<TemplateField>(this);
+
+            SourceTextNodes = new LockableList<ITextNode>(this)
+            {
+                templateSectionTextNode
+            };
 
             Uri = new ProjectItemUri(template.DatabaseName, guid);
         }
 
-        [NotNull]
-        [ItemNotNull]
-        public IList<TemplateField> Fields { get; } = new List<TemplateField>();
+        [NotNull, ItemNotNull]
+        public ICollection<TemplateField> Fields { get; }
 
         [NotNull]
         public string Icon
@@ -30,7 +37,9 @@ namespace Sitecore.Pathfinder.Projects.Templates
         }
 
         [NotNull]
-        public SourceProperty<string> IconProperty { get; } = new SourceProperty<string>("Icon", string.Empty);
+        public SourceProperty<string> IconProperty { get; }
+
+        public override Locking Locking => Template.Locking;
 
         [NotNull]
         public string SectionName
@@ -40,9 +49,9 @@ namespace Sitecore.Pathfinder.Projects.Templates
         }
 
         [NotNull]
-        public SourceProperty<string> SectionNameProperty { get; } = new SourceProperty<string>("Name", string.Empty);
+        public SourceProperty<string> SectionNameProperty { get; }
 
-        public ICollection<ITextNode> SourceTextNodes { get; } = new List<ITextNode>();
+        public ICollection<ITextNode> SourceTextNodes { get; }
 
         [NotNull]
         public Template Template { get; }
@@ -67,14 +76,6 @@ namespace Sitecore.Pathfinder.Projects.Templates
                 }
 
                 field.Merge(newField, overwrite);
-            }
-        }
-
-        void IUnloadable.Unload()
-        {
-            foreach (var unloadable in Fields.OfType<IUnloadable>())
-            {
-                unloadable.Unload();
             }
         }
     }

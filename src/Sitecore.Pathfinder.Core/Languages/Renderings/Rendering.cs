@@ -16,6 +16,8 @@ namespace Sitecore.Pathfinder.Languages.Renderings
             ItemPath = itemPath;
             ItemName = itemName;
             TemplateIdOrPath = templateIdOrPath;
+
+            Placeholders = new LockableList<string>(this);
         }
 
         [NotNull]
@@ -28,7 +30,7 @@ namespace Sitecore.Pathfinder.Languages.Renderings
         public string ItemPath { get; }
 
         [NotNull, ItemNotNull]
-        public List<string> Placeholders { get; } = new List<string>();
+        public ICollection<string> Placeholders { get; }
 
         [NotNull]
         public ProjectItemUri RenderingItemUri { get; set; } = ProjectItemUri.Empty;

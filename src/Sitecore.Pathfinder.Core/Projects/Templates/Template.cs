@@ -22,6 +22,11 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
         public Template([NotNull] IProject project, [NotNull] ITextNode textNode, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, textNode, guid, databaseName, itemName, itemIdOrPath)
         {
+            BaseTemplatesProperty = NewSourceProperty("BaseTemplates", string.Empty);
+            LongHelpProperty = NewSourceProperty("LongHelp", string.Empty);
+            ShortHelpProperty = NewSourceProperty("ShortHelp", string.Empty);
+
+            Sections = new LockableList<TemplateSection>(this);
         }
 
         [NotNull, ItemNotNull, Obsolete("Use BaseTemplates instead", false)]
@@ -39,7 +44,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         }
 
         [NotNull]
-        public SourceProperty<string> BaseTemplatesProperty { get; } = new SourceProperty<string>("BaseTemplates", string.Empty);
+        public SourceProperty<string> BaseTemplatesProperty { get; }
 
         [NotNull, ItemNotNull]
         public IEnumerable<TemplateField> Fields => Sections.SelectMany(s => s.Fields);
@@ -52,10 +57,10 @@ namespace Sitecore.Pathfinder.Projects.Templates
         }
 
         [NotNull]
-        public SourceProperty<string> LongHelpProperty { get; } = new SourceProperty<string>("LongHelp", string.Empty);
+        public SourceProperty<string> LongHelpProperty { get; }
 
         [NotNull, ItemNotNull]
-        public IList<TemplateSection> Sections { get; } = new List<TemplateSection>();
+        public ICollection<TemplateSection> Sections { get; }
 
         [NotNull]
         public string ShortHelp
@@ -65,7 +70,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         }
 
         [NotNull]
-        public SourceProperty<string> ShortHelpProperty { get; } = new SourceProperty<string>("ShortHelp", string.Empty);
+        public SourceProperty<string> ShortHelpProperty { get; }
 
         [CanBeNull]
         public Item StandardValuesItem { get; set; }
@@ -188,15 +193,6 @@ namespace Sitecore.Pathfinder.Projects.Templates
                 }
 
                 section.Merge(newSection, overwrite);
-            }
-        }
-
-        protected override void OnUnload()
-        {
-            base.OnUnload();
-            foreach (var unloadable in Sections.OfType<IUnloadable>())
-            {
-                unloadable.Unload();
             }
         }
     }

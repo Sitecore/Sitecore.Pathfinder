@@ -9,7 +9,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects
 {
-    public interface IProject
+    public interface IProject : ILockable
     {
         [NotNull, ItemNotNull]
         IEnumerable<Diagnostic> Diagnostics { get; }
@@ -20,6 +20,8 @@ namespace Sitecore.Pathfinder.Projects
         IEnumerable<File> Files { get; }
 
         bool HasErrors { get; }
+
+        void Lock(Locking locking);
 
         [NotNull]
         IProjectIndexer Index { get; }

@@ -38,9 +38,9 @@ namespace Sitecore.Pathfinder.Languages.Json
         [NotNull]
         protected ITextNode TextNode { get; }
 
-        IList<ITextNode> IMutableTextNode.AttributeList { get; } = Constants.EmptyReadOnlyTextNodeCollection;
+        ICollection<ITextNode> IMutableTextNode.AttributeCollection { get; } = Constants.EmptyReadOnlyTextNodeCollection;
 
-        IList<ITextNode> IMutableTextNode.ChildNodeCollection { get; } = Constants.EmptyReadOnlyTextNodeCollection;
+        ICollection<ITextNode> IMutableTextNode.ChildNodeCollection { get; } = Constants.EmptyReadOnlyTextNodeCollection;
 
         public ITextNode GetAttribute(string attributeName)
         {

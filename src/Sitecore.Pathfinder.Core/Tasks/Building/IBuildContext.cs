@@ -15,10 +15,10 @@ namespace Sitecore.Pathfinder.Tasks.Building
         bool IsProjectLoaded { get; }
 
         [NotNull, ItemNotNull]
-        IList<IProjectItem> ModifiedProjectItems { get; }
+        ICollection<IProjectItem> ModifiedProjectItems { get; }
 
         [NotNull, ItemNotNull]
-        IList<string> OutputFiles { get; }
+        ICollection<string> OutputFiles { get; }
 
         [NotNull]
         IProject Project { get; }

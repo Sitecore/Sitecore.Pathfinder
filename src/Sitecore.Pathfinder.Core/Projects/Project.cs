@@ -27,7 +27,7 @@ namespace Sitecore.Pathfinder.Projects
     public delegate void ProjectChangedEventHandler([NotNull] object sender);
 
     [Export, Export(typeof(IProject)), PartCreationPolicy(CreationPolicy.NonShared), DebuggerDisplay("{GetType().Name,nq}: {ProjectDirectory}")]
-    public class Project : IProject, IDiagnosticContainer
+    public class Project : SourcePropertyBag, IProject, IDiagnosticContainer
     {
         [NotNull]
         public static readonly IProject Empty = new Project();
@@ -42,12 +42,14 @@ namespace Sitecore.Pathfinder.Projects
         private readonly List<Diagnostic> _diagnostics = new List<Diagnostic>();
 
         [NotNull, ItemNotNull]
-        private readonly List<IProjectItem> _projectItems = new List<IProjectItem>();
+        private readonly IList<IProjectItem> _projectItems;
 
         [NotNull]
         private readonly object _sourceFilesSync = new object();
 
         private bool _isChecked;
+
+        private Locking _locking;
 
         [CanBeNull]
         private string _projectUniqueId;
@@ -64,6 +66,8 @@ namespace Sitecore.Pathfinder.Projects
             PipelineService = pipelineService;
             Checker = checker;
             Index = index;
+
+            _projectItems = new LockableList<IProjectItem>(this);
 
             Options = ProjectOptions.Empty;
         }
@@ -92,13 +96,12 @@ namespace Sitecore.Pathfinder.Projects
 
         public bool HasErrors
         {
-            get
-            {
-                return Diagnostics.Any(d => d.Severity == Severity.Error);
-            }
+            get { return Diagnostics.Any(d => d.Severity == Severity.Error); }
         }
 
         public IProjectIndexer Index { get; }
+
+        public override Locking Locking => _locking;
 
         public IEnumerable<Item> Items => Index.Items;
 
@@ -137,6 +140,11 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual IProject Add(string absoluteFileName)
         {
+            if (Locking == Locking.ReadOnly)
+            {
+                throw new InvalidOperationException("Project is locked");
+            }
+
             if (string.IsNullOrEmpty(ProjectDirectory))
             {
                 throw new InvalidOperationException(Texts.Project_has_not_been_loaded__Call_Load___first);
@@ -168,6 +176,11 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual IProject Add(IEnumerable<string> sourceFileNames)
         {
+            if (Locking == Locking.ReadOnly)
+            {
+                throw new InvalidOperationException("Project is locked");
+            }
+
             var isMultiThreaded = Configuration.GetBool(Constants.Configuration.System.MultiThreaded);
 
             if (isMultiThreaded)
@@ -187,6 +200,11 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual T AddOrMerge<T>(T projectItem) where T : class, IProjectItem
         {
+            if (Locking == Locking.ReadOnly)
+            {
+                throw new InvalidOperationException("Project is locked");
+            }
+
             T addedProjectItem = null;
 
             lock (_addSync)
@@ -227,13 +245,18 @@ namespace Sitecore.Pathfinder.Projects
 
             _isChecked = true;
 
+            Lock(Locking.ReadOnly);
+
             Checker.CheckProject(this);
+
+            Lock(Locking.ReadWrite);
 
             return this;
         }
 
         public virtual IProject Compile()
         {
+
             var context = CompositionService.Resolve<ICompileContext>();
 
             PipelineService.Resolve<CompilePipeline>().Execute(context, this);
@@ -291,6 +314,21 @@ namespace Sitecore.Pathfinder.Projects
             return Index.FirstOrDefault<T>(uri);
         }
 
+        public void Lock(Locking locking)
+        {
+            if ((locking != Locking.ReadWrite) && (_locking != Locking.ReadWrite))
+            {
+                throw new InvalidOperationException("Project is already unlocked");
+            }
+
+            if (locking == Locking.ReadWrite && _locking == Locking.ReadWrite)
+            {
+                throw new InvalidOperationException("Project is not locked");
+            }
+
+            _locking = locking;
+        }
+
         public Database GetDatabase(string databaseName)
         {
             var key = databaseName.ToLowerInvariant();
@@ -315,21 +353,25 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual void Remove(IProjectItem projectItem)
         {
+            if (Locking == Locking.ReadOnly)
+            {
+                throw new InvalidOperationException("Project is locked");
+            }
+
             _projectItems.Remove(projectItem);
 
             Index.Remove(projectItem);
-
-            var unloadable = projectItem as IUnloadable;
-            if (unloadable != null)
-            {
-                unloadable.Unload();
-            }
 
             OnProjectChanged();
         }
 
         public virtual void Remove(string absoluteSourceFileName)
         {
+            if (Locking == Locking.ReadOnly)
+            {
+                throw new InvalidOperationException("Project is locked");
+            }
+
             if (string.IsNullOrEmpty(ProjectDirectory))
             {
                 throw new InvalidOperationException(Texts.Project_has_not_been_loaded__Call_Load___first);

@@ -78,12 +78,11 @@ namespace Sitecore.Pathfinder.Snapshots
             }
 
 
-            var childNodes = mutableParentTextNode.ChildNodeCollection;
+            // todo: remove direct cast
+            var childNodes = (List<ITextNode>)mutableParentTextNode.ChildNodeCollection;
             var index = childNodes.IndexOf(textNode);
             childNodes.Remove(textNode);
-            
-            // todo: remove direct cast
-            ((List<ITextNode>)childNodes).InsertRange(index, newTextNodes);
+            childNodes.InsertRange(index, newTextNodes);
 
             foreach (var newTextNode in newTextNodes)
             {

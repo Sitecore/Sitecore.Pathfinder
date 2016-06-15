@@ -1,4 +1,4 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -16,9 +16,8 @@ namespace Sitecore.Pathfinder.Compiling.Builders
             Factory = factory;
         }
 
-        [NotNull]
-        [ItemNotNull]
-        public IList<TemplateFieldBuilder> Fields { get; } = new List<TemplateFieldBuilder>();
+        [NotNull, ItemNotNull]
+        public ICollection<TemplateFieldBuilder> Fields { get; } = new List<TemplateFieldBuilder>();
 
         [NotNull]
         public string SectionId { get; set; } = string.Empty;

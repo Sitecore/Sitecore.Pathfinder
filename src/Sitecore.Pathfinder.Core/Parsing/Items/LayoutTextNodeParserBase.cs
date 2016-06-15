@@ -54,11 +54,11 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
         protected virtual void ParseDeviceReferences([NotNull] ItemParseContext context, [NotNull, ItemNotNull]  ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode deviceTextNode)
         {
-            var deviceNameProperty = new SourceProperty<string>("Name", string.Empty, SourcePropertyFlags.IsShort);
+            var deviceNameProperty = new SourceProperty<string>(projectItem, "Name", string.Empty, SourcePropertyFlags.IsShort);
             deviceNameProperty.Parse(deviceTextNode);
             references.Add(context.ParseContext.Factory.DeviceReference(projectItem, deviceNameProperty));
 
-            var layoutProperty = new SourceProperty<string>("Layout", string.Empty, SourcePropertyFlags.IsShort);
+            var layoutProperty = new SourceProperty<string>(projectItem, "Layout", string.Empty, SourcePropertyFlags.IsShort);
             layoutProperty.Parse(deviceTextNode);
             references.Add(context.ParseContext.Factory.LayoutReference(projectItem, layoutProperty));
 
@@ -97,7 +97,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
         {
             if (!string.IsNullOrEmpty(renderingTextNode.Key))
             {
-                var sourceProperty = new SourceProperty<string>(renderingTextNode.Key, string.Empty, SourcePropertyFlags.IsShort);
+                var sourceProperty = new SourceProperty<string>(projectItem, renderingTextNode.Key, string.Empty, SourcePropertyFlags.IsShort);
                 sourceProperty.SetValue(new AttributeNameTextNode(renderingTextNode));
 
                 references.Add(context.ParseContext.Factory.LayoutRenderingReference(projectItem, sourceProperty));

@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Projects
         Compiled
     }
 
-    public interface IProjectItem
+    public interface IProjectItem : ILockable
     {
         [NotNull]
         IProject Project { get; }
