@@ -20,12 +20,15 @@ namespace Sitecore.Pathfinder.Projects
         {
             ItemNameProperty = NewSourceProperty("ItemName", string.Empty, SourcePropertyFlags.IsShort);
             IconProperty = NewSourceProperty("Icon", string.Empty);
-            SourceTextNodes = new LockableList<ITextNode>(this);
+
+            SourceTextNodes = new LockableList<ITextNode>(this)
+            {
+                textNode
+            };
 
             DatabaseName = databaseName;
             ItemName = itemName;
             ItemIdOrPath = itemIdOrPath;
-            SourceTextNodes.Add(textNode);
         }
 
         [NotNull]

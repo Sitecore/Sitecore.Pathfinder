@@ -17,7 +17,9 @@ namespace Sitecore.Pathfinder
 
             var builder = host.GetTaskRunner<Builder>();
 
-            return builder.Start();
+            var errorCode = builder.Start();
+
+            return errorCode;
         }
     }
 }

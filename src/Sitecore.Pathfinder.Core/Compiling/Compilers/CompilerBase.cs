@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
 
         protected virtual void RetryCompilation([NotNull] IProjectItem projectItem)
         {
-            projectItem.State = ProjectItemState.CompilationPending;
+            projectItem.CompilationState = CompiltationState.Pending;
         }
     }
 }

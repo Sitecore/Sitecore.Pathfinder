@@ -109,7 +109,6 @@
         // list of enabled and disabled checkers
         "checkers": {
             // "TemplateHelp": "disabled"
-
         },
 
         // reference text that will not be treated as a reference
@@ -415,7 +414,7 @@
         "npm-directory": "node_modules"
     },
 
-    // maps project role to checkers
+    // maps project role to checkers - checkers are enabled by default
     "project-role-checkers": {
         // all checkers disabled
         "none": {

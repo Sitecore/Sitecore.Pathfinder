@@ -8,9 +8,9 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects
 {
-    public enum ProjectItemState
+    public enum CompiltationState
     {
-        CompilationPending,
+        Pending,
 
         Compiled
     }
@@ -32,7 +32,7 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull, ItemNotNull]
         ICollection<ISnapshot> Snapshots { get; }
 
-        ProjectItemState State { get; set; }
+        CompiltationState CompilationState { get; set; }
 
         [NotNull]
         ProjectItemUri Uri { get; }

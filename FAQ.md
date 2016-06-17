@@ -53,9 +53,30 @@ However there is nothing in the architecture of Pathfinder, that prevents it fro
 
 It is a compiler that processes a number of input files and produces an output file.
 
-I tried serializing the entire master database to a Pathfinder project to see how many 
-issues it would find - and it found a bunch of issues! However Pathfinder processed
-more than 4500 items in less than 15 seconds, checking about 38 validations.
+In a project with 5.000 items, Pathfinder runs like this:
+
+```cmd
+Task 'restore-packages': 4ms
+scc.cmd(0,0): information SCC3041: Checking project...
+scc.cmd(0,0): information SCC3042: Checks: 44, errors: 0, warnings: 0, messages: 0
+Task 'check-project': 2.958ms
+scc.cmd(0,0): information SCC4015: Writing package exports...
+Task 'write-exports': 20ms
+scc.cmd(0,0): information SCC4018: Creating packages...
+scc.cmd(0,0): information SCC4019: Created: sitecore.project\Sitecore.nupkg (2.837.414 bytes)
+Task 'pack-nuget': 25.753ms
+scc.cmd(0,0): information SCC4008: Installing packages...
+scc.cmd(0,0): information SCC4009: Installed: Sitecore.nupkg
+Task 'install-package': 31.140ms
+scc.cmd(0,0): information SCC4016: Publishing database...
+scc.cmd(0,0): information SCC4014: Database: master
+Task 'publish-database': 65ms
+Project metrics: 5057 items, 0 templates, 0 media files, 0 renderings, 0 files
+Time: 60.233ms, Ducats earned: 0
+Task 'show-status': 5ms
+```
+
+Overall the performance is acceptable.
 
 #### _Can I use just the checking parts of Pathfinder and not all the other stuff?_
 

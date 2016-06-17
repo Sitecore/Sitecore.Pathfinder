@@ -33,7 +33,7 @@ namespace Sitecore.Pathfinder.Projects
         public static readonly IProject Empty = new Project();
 
         [NotNull]
-        private readonly object _addSync = new object();
+        private readonly object _syncObject = new object();
 
         [NotNull]
         private readonly Dictionary<string, Database> _databases = new Dictionary<string, Database>();
@@ -45,7 +45,7 @@ namespace Sitecore.Pathfinder.Projects
         private readonly IList<IProjectItem> _projectItems;
 
         [NotNull]
-        private readonly object _sourceFilesSync = new object();
+        private readonly object _sourceFilesSyncObject = new object();
 
         private bool _isChecked;
 
@@ -55,7 +55,7 @@ namespace Sitecore.Pathfinder.Projects
         private string _projectUniqueId;
 
         [ImportingConstructor]
-        public Project([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService, [NotNull] IPipelineService pipelineService, [NotNull] ICheckerService checker, [NotNull] IProjectIndexer index)
+        public Project([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService, [NotNull] IPipelineService pipelines, [NotNull] ICheckerService checker, [NotNull] IProjectIndexer index)
         {
             CompositionService = compositionService;
             Configuration = configuration;
@@ -63,7 +63,7 @@ namespace Sitecore.Pathfinder.Projects
             Factory = factory;
             FileSystem = fileSystem;
             ParseService = parseService;
-            PipelineService = pipelineService;
+            Pipelines = pipelines;
             Checker = checker;
             Index = index;
 
@@ -133,7 +133,7 @@ namespace Sitecore.Pathfinder.Projects
         protected IParseService ParseService { get; }
 
         [NotNull]
-        protected IPipelineService PipelineService { get; }
+        protected IPipelineService Pipelines { get; }
 
         [NotNull]
         protected ITraceService Trace { get; }
@@ -152,7 +152,7 @@ namespace Sitecore.Pathfinder.Projects
 
             var sourceFile = Factory.SourceFile(FileSystem, ProjectDirectory, absoluteFileName);
 
-            lock (_sourceFilesSync)
+            lock (_sourceFilesSyncObject)
             {
                 if (SourceFiles.ContainsKey(absoluteFileName.ToUpperInvariant()))
                 {
@@ -182,7 +182,6 @@ namespace Sitecore.Pathfinder.Projects
             }
 
             var isMultiThreaded = Configuration.GetBool(Constants.Configuration.System.MultiThreaded);
-
             if (isMultiThreaded)
             {
                 Parallel.ForEach(sourceFileNames, sourceFileName => Add(sourceFileName));
@@ -207,7 +206,7 @@ namespace Sitecore.Pathfinder.Projects
 
             T addedProjectItem = null;
 
-            lock (_addSync)
+            lock (_syncObject)
             {
                 var newItem = projectItem as Item;
                 if (newItem != null)
@@ -256,10 +255,9 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual IProject Compile()
         {
-
             var context = CompositionService.Resolve<ICompileContext>();
 
-            PipelineService.Resolve<CompilePipeline>().Execute(context, this);
+            Pipelines.Resolve<CompilePipeline>().Execute(context, this);
 
             return this;
         }

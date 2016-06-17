@@ -1,4 +1,4 @@
-﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -15,6 +15,13 @@ namespace Sitecore.Pathfinder.Projects
     [Export(typeof(IProjectIndexer))]
     public class ProjectIndexer : IProjectIndexer
     {
+        public ICollection<Item> Items { get; } = new List<Item>();
+
+        public ICollection<Template> Templates { get; } = new List<Template>();
+
+        [NotNull]
+        protected ProjectIndex<Item> ChildIndex { get; } = new ProjectIndex<Item>(item => item.DatabaseName.ToUpperInvariant() + ":" + item.ParentItemPath.ToUpperInvariant());
+
         [NotNull]
         protected ProjectIndex<DatabaseProjectItem> DatabaseGuidIndex { get; } = new ProjectIndex<DatabaseProjectItem>(item => item.DatabaseName.ToUpperInvariant() + ":" + item.Uri.Guid.Format());
 
@@ -22,9 +29,10 @@ namespace Sitecore.Pathfinder.Projects
         protected ProjectIndex<DatabaseProjectItem> DatabaseQualifiedNameIndex { get; } = new ProjectIndex<DatabaseProjectItem>(item => item.DatabaseName.ToUpperInvariant() + ":" + item.QualifiedName.ToUpperInvariant());
 
         [NotNull]
-        protected ProjectIndex<IProjectItem> GuidIndex { get; } = new ProjectIndex<IProjectItem>(projectItem => projectItem.Uri.Guid.Format());
+        protected ProjectIndex<DatabaseProjectItem> DatabaseShortNameIndex { get; } = new ProjectIndex<DatabaseProjectItem>(item => item.DatabaseName.ToUpperInvariant() + ":" + item.ShortName.ToUpperInvariant());
 
-        public ICollection<Item> Items { get; } = new List<Item>();
+        [NotNull]
+        protected ProjectIndex<IProjectItem> GuidIndex { get; } = new ProjectIndex<IProjectItem>(projectItem => projectItem.Uri.Guid.Format());
 
         [NotNull]
         protected ProjectIndex<IProjectItem> QualifiedNameIndex { get; } = new ProjectIndex<IProjectItem>(projectItem => projectItem.QualifiedName.ToUpperInvariant());
@@ -32,50 +40,8 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         protected ProjectIndex<IProjectItem> SourceFileIndex { get; } = new ProjectIndex<IProjectItem>();
 
-        public ICollection<Template> Templates { get; } = new List<Template>();
-
         [NotNull]
         protected ProjectIndex<IProjectItem> UriIndex { get; } = new ProjectIndex<IProjectItem>(projectItem => projectItem.Uri.ToString());
-
-        [NotNull]
-        protected ProjectIndex<Item> ChildIndex { get; } = new ProjectIndex<Item>(item => item.DatabaseName.ToUpperInvariant() + ":" + item.ParentItemPath.ToUpperInvariant());
-
-        [NotNull]
-        protected ProjectIndex<DatabaseProjectItem> DatabaseShortNameIndex { get; } = new ProjectIndex<DatabaseProjectItem>(item => item.DatabaseName.ToUpperInvariant() + ":" + item.ShortName.ToUpperInvariant());
-
-        public IEnumerable<IReference> FindUsages(string qualifiedName)
-        {
-            var target = FirstOrDefault<IProjectItem>(qualifiedName);
-            if (target == null)
-            {
-                yield break;
-            }
-
-            foreach (var item in Items)
-            {
-                foreach (var reference in item.References)
-                {
-                    var i = reference.Resolve();
-                    if (i == target)
-                    {
-                        yield return reference;
-                    }
-                }
-            }
-
-            foreach (var item in Templates)
-            {
-                foreach (var reference in item.References)
-                {
-                    var i = reference.Resolve();
-                    if (i == target)
-                    {
-                        yield return reference;
-                    }
-                }
-            }
-        }
-
 
         public virtual void Add(IProjectItem projectItem)
         {
@@ -117,6 +83,39 @@ namespace Sitecore.Pathfinder.Projects
             }
         }
 
+        public IEnumerable<IReference> FindUsages(string qualifiedName)
+        {
+            var target = FirstOrDefault<IProjectItem>(qualifiedName);
+            if (target == null)
+            {
+                yield break;
+            }
+
+            foreach (var item in Items)
+            {
+                foreach (var reference in item.References)
+                {
+                    var i = reference.Resolve();
+                    if (i == target)
+                    {
+                        yield return reference;
+                    }
+                }
+            }
+
+            foreach (var item in Templates)
+            {
+                foreach (var reference in item.References)
+                {
+                    var i = reference.Resolve();
+                    if (i == target)
+                    {
+                        yield return reference;
+                    }
+                }
+            }
+        }
+
         public virtual T FirstOrDefault<T>(Guid guid) where T : class, IProjectItem
         {
             return GuidIndex.FirstOrDefault<T>(guid.Format());
@@ -140,11 +139,6 @@ namespace Sitecore.Pathfinder.Projects
         public virtual T FirstOrDefault<T>(ProjectItemUri uri) where T : class, IProjectItem
         {
             return UriIndex.FirstOrDefault<T>(uri.ToString());
-        }
-
-        public IEnumerable<Item> WhereChildOf(Item item)
-        {
-            return ChildIndex.Where<Item>(item.DatabaseName.ToUpperInvariant() + ":" + item.ItemIdOrPath.ToUpperInvariant());
         }
 
         public virtual void Remove(IProjectItem projectItem)
@@ -187,6 +181,16 @@ namespace Sitecore.Pathfinder.Projects
             }
         }
 
+        public virtual IEnumerable<T> Where<T>(ISourceFile sourceFile) where T : class, IProjectItem
+        {
+            return SourceFileIndex.Where<T>(sourceFile.GetFileNameWithoutExtensions().ToUpperInvariant());
+        }
+
+        public IEnumerable<Item> WhereChildOf(Item item)
+        {
+            return ChildIndex.Where<Item>(item.DatabaseName.ToUpperInvariant() + ":" + item.ItemIdOrPath.ToUpperInvariant());
+        }
+
         public IEnumerable<T> WhereQualifiedName<T>(Database database, string qualifiedName) where T : DatabaseProjectItem
         {
             return DatabaseQualifiedNameIndex.Where<T>(database.DatabaseName.ToUpperInvariant() + ":" + qualifiedName.ToUpperInvariant());
@@ -195,11 +199,6 @@ namespace Sitecore.Pathfinder.Projects
         public IEnumerable<T> WhereShortName<T>(Database database, string shortName) where T : DatabaseProjectItem
         {
             return DatabaseShortNameIndex.Where<T>(database.DatabaseName.ToUpperInvariant() + ":" + shortName.ToUpperInvariant());
-        }
-
-        public virtual IEnumerable<T> Where<T>(ISourceFile sourceFile) where T : class, IProjectItem
-        {
-            return SourceFileIndex.Where<T>(sourceFile.GetFileNameWithoutExtensions().ToUpperInvariant());
         }
     }
 }

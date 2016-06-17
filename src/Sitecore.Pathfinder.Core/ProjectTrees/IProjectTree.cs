@@ -1,10 +1,9 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.IO;
-using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.ProjectTrees
 {
@@ -31,8 +30,8 @@ namespace Sitecore.Pathfinder.ProjectTrees
         [NotNull]
         string ToolsDirectory { get; }
 
-        [NotNull]
-        IProject GetProject([NotNull] ProjectOptions projectOptions);
+        [NotNull, ItemNotNull]
+        IEnumerable<string> GetSourceFiles();
 
         [NotNull]
         IProjectTree With([NotNull] string toolsDirectory, [NotNull] string projectDirectory);

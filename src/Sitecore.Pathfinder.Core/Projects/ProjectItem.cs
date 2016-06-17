@@ -38,7 +38,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public ICollection<ISnapshot> Snapshots { get; } 
 
-        public ProjectItemState State { get; set; }
+        public CompiltationState CompilationState { get; set; }
 
         /// <summary>The unique identification of the project item. For items the Uri.Guid is the ID of the item.</summary>
         public ProjectItemUri Uri { get; private set; }

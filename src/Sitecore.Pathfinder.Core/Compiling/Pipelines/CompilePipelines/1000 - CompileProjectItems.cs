@@ -28,13 +28,13 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
             IProjectItem[] projectItems;
             do
             {
-                projectItems = pipeline.Project.ProjectItems.Where(i => i.State == ProjectItemState.CompilationPending).ToArray();
+                projectItems = pipeline.Project.ProjectItems.Where(i => i.CompilationState == CompiltationState.Pending).ToArray();
 
                 for (var index = projectItems.Length - 1; index >= 0; index--)
                 {
                     var projectItem = projectItems[index];
 
-                    projectItem.State = ProjectItemState.Compiled;
+                    projectItem.CompilationState = CompiltationState.Compiled;
 
                     // tried to use Parallel.ForEach, but compilers update collections which causes Collection Modified exception
                     foreach (var compiler in pipeline.Context.Compilers)

@@ -1,14 +1,14 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.ProjectTrees;
 
 namespace Sitecore.Pathfinder.Projects
 {
     public interface IProjectService
     {
         [NotNull]
-        IProjectTree GetProjectTree([NotNull] ProjectOptions projectOptions);
+        IProject LoadProject([NotNull] ProjectOptions projectOptions, [NotNull, ItemNotNull] IEnumerable<string> sourceFiles);
 
         [NotNull]
         IProject LoadProjectFromConfiguration();

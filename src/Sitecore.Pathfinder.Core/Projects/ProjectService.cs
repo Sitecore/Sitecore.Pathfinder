@@ -1,5 +1,6 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Configuration;
@@ -14,16 +15,13 @@ namespace Sitecore.Pathfinder.Projects
     public class ProjectService : IProjectService
     {
         [ImportingConstructor]
-        public ProjectService([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] ExportFactory<IBuildContext> buildContextFactory, [NotNull] ExportFactory<IProjectTree> projectTreeFactory)
+        public ProjectService([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] ExportFactory<IProject> projectFactory, [NotNull] ExportFactory<IProjectTree> projectTreeFactory)
         {
             Configuration = configuration;
             Factory = factory;
-            BuildContextFactory = buildContextFactory;
+            ProjectFactory = projectFactory;
             ProjectTreeFactory = projectTreeFactory;
         }
-
-        [NotNull]
-        protected ExportFactory<IBuildContext> BuildContextFactory { get; }
 
         [NotNull]
         protected IConfiguration Configuration { get; }
@@ -32,14 +30,33 @@ namespace Sitecore.Pathfinder.Projects
         protected IFactoryService Factory { get; }
 
         [NotNull]
+        protected ExportFactory<IProject> ProjectFactory { get; }
+
+        [NotNull]
         protected ExportFactory<IProjectTree> ProjectTreeFactory { get; }
 
-        public virtual IProjectTree GetProjectTree(ProjectOptions projectOptions)
+        public virtual IProject LoadProject(ProjectOptions projectOptions, IEnumerable<string> sourceFiles)
         {
-            return ProjectTreeFactory.New().With(Configuration.GetString(Constants.Configuration.ToolsDirectory), projectOptions.ProjectDirectory);
+            return ProjectFactory.New().With(projectOptions, sourceFiles);
         }
 
-        public IProject LoadProjectFromNewHost(string projectDirectory)
+        public virtual IProject LoadProjectFromConfiguration()
+        {
+            var projectDirectory = Configuration.GetProjectDirectory();
+            var databaseName = Configuration.GetString(Constants.Configuration.Database);
+
+            var projectOptions = Factory.ProjectOptions(projectDirectory, databaseName);
+
+            projectOptions.LoadStandardTemplateFields(Configuration);
+            projectOptions.LoadTokens(Configuration);
+
+            var projectTree = GetProjectTree(projectOptions);
+            var sourceFiles = projectTree.GetSourceFiles();
+
+            return LoadProject(projectOptions, sourceFiles);
+        }
+
+        public virtual IProject LoadProjectFromNewHost(string projectDirectory)
         {
             var host = new Startup().AsInteractive().WithProjectDirectory(projectDirectory).Start();
             if (host == null)
@@ -47,58 +64,19 @@ namespace Sitecore.Pathfinder.Projects
                 return null;
             }
 
-            var projectContext = host.CompositionService.Resolve<IBuildContext>().With(() =>
+            var context = host.CompositionService.Resolve<IBuildContext>().With(() =>
             {
                 var projectService = host.CompositionService.Resolve<IProjectService>();
                 return projectService.LoadProjectFromConfiguration();
             });
 
-            return projectContext.Project;
-        }
-
-        public IProject LoadProjectFromConfiguration()
-        {
-            var projectDirectory = Configuration.GetProjectDirectory();
-
-            return LoadProjectFromDirectory(projectDirectory);
+            return context.Project;
         }
 
         [NotNull]
-        protected virtual IProject LoadProjectFromDirectory([NotNull] string projectDirectory)
+        protected virtual IProjectTree GetProjectTree([NotNull] ProjectOptions projectOptions)
         {
-            var databaseName = Configuration.GetString(Constants.Configuration.Database);
-
-            var projectOptions = Factory.ProjectOptions(projectDirectory, databaseName);
-
-            LoadStandardTemplateFields(projectOptions);
-            LoadTokens(projectOptions);
-
-            var projectTree = GetProjectTree(projectOptions);
-
-            return projectTree.GetProject(projectOptions);
-        }
-
-        protected virtual void LoadStandardTemplateFields([NotNull] ProjectOptions projectOptions)
-        {
-            foreach (var pair in Configuration.GetSubKeys(Constants.Configuration.StandardTemplateFields))
-            {
-                projectOptions.StandardTemplateFields.Add(pair.Key);
-
-                var value = Configuration.GetString(Constants.Configuration.StandardTemplateFields + ":" + pair.Key);
-                if (!string.IsNullOrEmpty(value))
-                {
-                    projectOptions.StandardTemplateFields.Add(value);
-                }
-            }
-        }
-
-        protected virtual void LoadTokens([NotNull] ProjectOptions projectOptions)
-        {
-            foreach (var pair in Configuration.GetSubKeys(Constants.Configuration.SearchAndReplaceTokens))
-            {
-                var value = Configuration.GetString(Constants.Configuration.SearchAndReplaceTokens + ":" + pair.Key);
-                projectOptions.Tokens[pair.Key] = value;
-            }
+            return ProjectTreeFactory.New().With(Configuration.GetToolsDirectory(), projectOptions.ProjectDirectory);
         }
     }
 }

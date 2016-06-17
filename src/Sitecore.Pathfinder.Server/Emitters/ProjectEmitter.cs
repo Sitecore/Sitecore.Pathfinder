@@ -52,7 +52,7 @@ namespace Sitecore.Pathfinder.Emitters
                 context.Trace.TraceDiagnostics(context.Project.Diagnostics, treatWarningsAsErrors);
             }
 
-            project.Lock(Projects.Locking.ReadOnly);
+            project.Lock(Locking.ReadOnly);
 
             var emitters = Emitters.OrderBy(e => e.Sortorder).ToList();
             var retries = new List<Tuple<IProjectItem, Exception>>();
@@ -60,7 +60,7 @@ namespace Sitecore.Pathfinder.Emitters
             Emit(context, project, emitters, retries);
             EmitRetry(context, emitters, retries);
 
-            project.Lock(Projects.Locking.ReadWrite);
+            project.Lock(Locking.ReadWrite);
         }
 
         protected virtual void Emit([NotNull] IEmitContext context, [NotNull] IProject project, [NotNull, ItemNotNull] List<IEmitter> emitters, [NotNull, ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
@@ -108,18 +108,19 @@ namespace Sitecore.Pathfinder.Emitters
             var templates = projectItems.Where(p => p is Template).ToArray();
             var nonTemplates = projectItems.Where(p => !(p is Template)).ToArray();
 
-            if (context.Configuration.GetBool(Constants.Configuration.System.MultiThreaded))
+            // always emit templates synchronized - Sitecore Template Engine does not perform well 
+            foreach (var projectItem in templates)
             {
-                Parallel.ForEach(templates, projectItem => EmitProjectItem(context, projectItem, emitters, retries));
+                EmitProjectItem(context, projectItem, emitters, retries);
+            }
+
+            var isMultiThreaded = context.Configuration.GetBool(Constants.Configuration.System.MultiThreaded);
+            if (isMultiThreaded)
+            {
                 Parallel.ForEach(nonTemplates, projectItem => EmitProjectItem(context, projectItem, emitters, retries));
             }
             else
             {
-                foreach (var projectItem in templates)
-                {
-                    EmitProjectItem(context, projectItem, emitters, retries);
-                }
-
                 foreach (var projectItem in nonTemplates)
                 {
                     EmitProjectItem(context, projectItem, emitters, retries);

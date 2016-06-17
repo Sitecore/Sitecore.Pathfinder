@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -9,7 +9,6 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
-using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.ProjectTrees
 {
@@ -23,12 +22,11 @@ namespace Sitecore.Pathfinder.ProjectTrees
         private HashSet<string> _ignoreFileNames;
 
         [ImportingConstructor]
-        public ProjectTree([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem, [NotNull] IPipelineService pipelines, [NotNull] ExportFactory<IProject> projectFactory, [NotNull] ExportFactory<ProjectTreeVisitor> projectTreeVisitorFactory)
+        public ProjectTree([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem, [NotNull] IPipelineService pipelines, [NotNull] ExportFactory<ProjectTreeVisitor> projectTreeVisitorFactory)
         {
             Configuration = configuration;
             FileSystem = fileSystem;
             Pipelines = pipelines;
-            ProjectFactory = projectFactory;
             ProjectTreeVisitorFactory = projectTreeVisitorFactory;
         }
 
@@ -39,12 +37,6 @@ namespace Sitecore.Pathfinder.ProjectTrees
         public HashSet<string> IgnoreFileNames => _ignoreFileNames ?? (_ignoreFileNames = GetIgnoreDirectories());
 
         public IPipelineService Pipelines { get; }
-
-        [NotNull]
-        protected ExportFactory<IProject> ProjectFactory { get; }
-
-        [NotNull]
-        protected ExportFactory<ProjectTreeVisitor> ProjectTreeVisitorFactory { get; }
 
         public string ProjectDirectory { get; private set; } = string.Empty;
 
@@ -65,7 +57,10 @@ namespace Sitecore.Pathfinder.ProjectTrees
         [NotNull]
         protected IConfiguration Configuration { get; }
 
-        public virtual IProject GetProject(ProjectOptions projectOptions)
+        [NotNull]
+        protected ExportFactory<ProjectTreeVisitor> ProjectTreeVisitorFactory { get; }
+
+        public virtual IEnumerable<string> GetSourceFiles()
         {
             var sourceFileNames = new List<string>();
 
@@ -74,7 +69,7 @@ namespace Sitecore.Pathfinder.ProjectTrees
 
             sourceFileNames.Reverse();
 
-            return ProjectFactory.New().With(projectOptions, sourceFileNames);
+            return sourceFileNames;
         }
 
         public virtual IProjectTree With(string toolsDirectory, string projectDirectory)

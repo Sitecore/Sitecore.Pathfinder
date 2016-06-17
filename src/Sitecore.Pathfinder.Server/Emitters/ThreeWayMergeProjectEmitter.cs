@@ -137,7 +137,7 @@ namespace Sitecore.Pathfinder.Emitters
 
         protected virtual void SaveBaseFields()
         {
-            _baseFieldValues.RemoveAll(f => !f.IsActive);
+            _baseFieldValues.RemoveAll(f => f == null || !f.IsActive);
 
             var fileName = Path.Combine(BaseDirectory, FileName);
 
