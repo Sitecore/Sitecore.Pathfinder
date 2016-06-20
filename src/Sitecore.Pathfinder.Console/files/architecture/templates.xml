@@ -89,7 +89,7 @@
                     <Item Template="Template field" MinOccurs="1" />
                 </Children>
             </Item>
-            <Item Name="__Standard Values" MaxOccurs="1" MinOccurs="2" />
+            <Item Name="__Standard Values" MaxOccurs="1" MinOccurs="0" />
         </Element>
     </Elements>
 </Architecture>
