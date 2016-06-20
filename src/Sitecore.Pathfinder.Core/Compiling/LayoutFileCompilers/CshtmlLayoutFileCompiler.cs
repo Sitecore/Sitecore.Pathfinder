@@ -15,18 +15,19 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
     {
         public override bool CanCompile(ICompileContext context, IProjectItem projectItem, SourceProperty<string> property)
         {
-            var item = projectItem as ISourcePropertyBag;
+            var item = projectItem as Item;
             if (item == null)
             {
                 return false;
             }
 
-            if (!item.ContainsSourceProperty(LayoutFileItemParser.LayoutFile))
+            var sourcePropertyBag = (ISourcePropertyBag)item;
+            if (!sourcePropertyBag.ContainsSourceProperty(LayoutFileItemParser.LayoutFile))
             {
                 return false;
             }
 
-            var extension = item.GetValue<string>(LayoutFileItemParser.LayoutFile);
+            var extension = sourcePropertyBag.GetValue<string>(LayoutFileItemParser.LayoutFile);
             return !string.IsNullOrEmpty(extension) && string.Equals(PathHelper.GetExtension(extension), ".cshtml", StringComparison.OrdinalIgnoreCase);
         }
 

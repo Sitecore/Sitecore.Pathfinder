@@ -57,6 +57,11 @@ namespace Sitecore.Pathfinder.Languages.Json
             return null;
         }
 
+        public bool HasAttribute(string attributeName)
+        {
+            return false;
+        }
+
         public ITextNode GetInnerTextNode()
         {
             return null;

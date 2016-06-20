@@ -24,8 +24,13 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
 
         public override bool CanCompile(ICompileContext context, IProjectItem projectItem)
         {
-            var template = projectItem as ISourcePropertyBag;
-            return template != null && template.ContainsSourceProperty(LayoutFileItemParser.LayoutFile);
+            var template = projectItem as Template;
+            if (template == null)
+            {
+                return false;
+            }
+
+            return ((ISourcePropertyBag)projectItem).ContainsSourceProperty(LayoutFileItemParser.LayoutFile);
         }
 
         public override void Compile(ICompileContext context, IProjectItem projectItem)

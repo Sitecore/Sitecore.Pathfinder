@@ -88,7 +88,7 @@ namespace Sitecore.Pathfinder.Configuration
         ISnapshot Snapshot([NotNull] ISourceFile sourceFile);
 
         [NotNull]
-        ISourceFile SourceFile([NotNull] IFileSystemService fileSystem, [NotNull] string projectDirectory, [NotNull] string absoluteFileName);
+        ISourceFile SourceFile([NotNull] IFileSystemService fileSystem, [NotNull] string absoluteFileName);
 
         // todo: swap guid and textnode parameters
         [NotNull]

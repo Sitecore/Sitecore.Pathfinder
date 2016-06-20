@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Snapshots
         DateTime LastWriteTimeUtc { get; }
 
         [NotNull]
-        string ProjectItemName { get; }
+        string ProjectFileName { get; }
 
         [NotNull]
         string RelativeFileName { get; }

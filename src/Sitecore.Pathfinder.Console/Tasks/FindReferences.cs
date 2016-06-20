@@ -32,7 +32,7 @@ namespace Sitecore.Pathfinder.Tasks
 
             foreach (var reference in projectItem.References)
             {
-                string line = $"{reference.Owner.Snapshots.First().SourceFile.ProjectItemName}";
+                string line = $"{reference.Owner.Snapshots.First().SourceFile.ProjectFileName}";
 
                 var textNode = TraceHelper.GetTextNode(reference.SourceProperty);
                 line += $"({textNode.TextSpan.LineNumber},{textNode.TextSpan.LineNumber})";

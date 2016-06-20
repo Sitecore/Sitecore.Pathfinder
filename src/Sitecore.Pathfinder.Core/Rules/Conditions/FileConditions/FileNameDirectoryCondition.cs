@@ -14,7 +14,7 @@ namespace Sitecore.Pathfinder.Rules.Conditions.FileConditions
         protected override string GetValue(IRuleContext ruleContext, IDictionary<string, object> parameters)
         {
             var file = ruleContext.Object as Projects.Files.File;
-            return file == null ? string.Empty : Path.GetDirectoryName(file.Snapshots.First().SourceFile.ProjectItemName) ?? string.Empty;
+            return file == null ? string.Empty : Path.GetDirectoryName(file.Snapshots.First().SourceFile.ProjectFileName) ?? string.Empty;
         }
     }
 }

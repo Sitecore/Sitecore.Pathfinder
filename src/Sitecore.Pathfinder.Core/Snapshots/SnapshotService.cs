@@ -45,7 +45,7 @@ namespace Sitecore.Pathfinder.Snapshots
         public virtual ITextNode LoadIncludeFile(SnapshotParseContext snapshotParseContext, ISnapshot snapshot, string includeFileName)
         {
             var extension = PathHelper.GetExtension(snapshot.SourceFile.AbsoluteFileName);
-            var projectDirectory = snapshot.SourceFile.AbsoluteFileName.Left(snapshot.SourceFile.AbsoluteFileName.Length - snapshot.SourceFile.ProjectItemName.Length - extension.Length + 1);
+            var projectDirectory = snapshot.SourceFile.AbsoluteFileName.Left(snapshot.SourceFile.AbsoluteFileName.Length - snapshot.SourceFile.ProjectFileName.Length - extension.Length + 1);
 
             string absoluteFileName;
             if (includeFileName.StartsWith("~/"))
@@ -62,7 +62,7 @@ namespace Sitecore.Pathfinder.Snapshots
                 throw new FileNotFoundException("Include file not found", absoluteFileName);
             }
 
-            var sourceFile = Factory.SourceFile(FileSystem, projectDirectory, absoluteFileName);
+            var sourceFile = Factory.SourceFile(FileSystem, absoluteFileName);
 
             var includeSnapshot = LoadSnapshot(snapshotParseContext, sourceFile) as TextSnapshot;
             Assert.Cast(includeSnapshot, nameof(includeSnapshot));

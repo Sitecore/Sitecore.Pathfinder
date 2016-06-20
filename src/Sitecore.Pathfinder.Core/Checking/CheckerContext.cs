@@ -40,8 +40,7 @@ namespace Sitecore.Pathfinder.Checking
 
         public ITraceService Trace { get; private set; }
 
-        [NotNull]
-        protected IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get; }
 
         [NotNull]
         protected IConsoleService Console { get; }

@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Snapshots
 
             Assert.AreEqual(fileName, sourceFile.AbsoluteFileName);
             Assert.AreNotEqual(DateTime.MinValue, sourceFile.LastWriteTimeUtc);
-            Assert.AreEqual("~/items/master/sitecore/content/Home/XmlItem.item.xml", sourceFile.ProjectItemName);
+            Assert.AreEqual("~/items/master/sitecore/content/Home/XmlItem.item.xml", sourceFile.ProjectFileName);
         }
     }
 }

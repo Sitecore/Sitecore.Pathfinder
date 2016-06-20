@@ -14,12 +14,12 @@ namespace Sitecore.Pathfinder.Snapshots
         [CanBeNull]
         private string _fileNameWithoutExtensions;
 
-        public SourceFile([NotNull] IFileSystemService fileSystem, [NotNull] string absoluteFileName, [NotNull] string relativeFileName, [NotNull] string projectItemName)
+        public SourceFile([NotNull] IFileSystemService fileSystem, [NotNull] string absoluteFileName, [NotNull] string relativeFileName, [NotNull] string projectFileName)
         {
             FileSystem = fileSystem;
             AbsoluteFileName = absoluteFileName;
             RelativeFileName = relativeFileName;
-            ProjectItemName = projectItemName;
+            ProjectFileName = projectFileName;
 
             LastWriteTimeUtc = FileSystem.GetLastWriteTimeUtc(AbsoluteFileName);
         }
@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public DateTime LastWriteTimeUtc { get; }
 
-        public string ProjectItemName { get; }
+        public string ProjectFileName { get; }
 
         public virtual string GetFileNameWithoutExtensions()
         {

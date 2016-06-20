@@ -35,13 +35,13 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
         protected virtual void CreateItems([NotNull] ICompileContext context, [NotNull] IProject project, [NotNull] Template template)
         {
-            var templateItem = context.Factory.Item(project, template.SourceTextNodes.First(), template.Uri.Guid, template.DatabaseName, template.ItemName, template.ItemIdOrPath, Constants.Templates.Template);
-            templateItem.IsEmittable = false;
-            templateItem.IsImport = template.IsImport;
-            templateItem.IconProperty.SetValue(template.IconProperty);
-            templateItem.Fields.Add(context.Factory.Field(templateItem, template.BaseTemplatesProperty.SourceTextNode ?? TextNode.Empty, "__Base template", template.BaseTemplates));
-            templateItem.Fields.Add(context.Factory.Field(templateItem, template.LongHelpProperty.SourceTextNode ?? TextNode.Empty, "__Long description", template.LongHelp));
-            templateItem.Fields.Add(context.Factory.Field(templateItem, template.ShortHelpProperty.SourceTextNode ?? TextNode.Empty, "__Short description", template.ShortHelp));
+            var item = context.Factory.Item(project, template.SourceTextNodes.First(), template.Uri.Guid, template.DatabaseName, template.ItemName, template.ItemIdOrPath, Constants.Templates.Template);
+            item.IsEmittable = false;
+            item.IsImport = template.IsImport;
+            item.IconProperty.SetValue(template.IconProperty);
+            item.Fields.Add(context.Factory.Field(item, template.BaseTemplatesProperty.SourceTextNode ?? TextNode.Empty, "__Base template", template.BaseTemplates));
+            item.Fields.Add(context.Factory.Field(item, template.LongHelpProperty.SourceTextNode ?? TextNode.Empty, "__Long description", template.LongHelp));
+            item.Fields.Add(context.Factory.Field(item, template.ShortHelpProperty.SourceTextNode ?? TextNode.Empty, "__Short description", template.ShortHelp));
 
             foreach (var templateSection in template.Sections)
             {
@@ -72,7 +72,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
                 project.AddOrMerge(templateSectionItem);
             }
 
-            project.AddOrMerge(templateItem);
+            project.AddOrMerge(item);
         }
     }
 }

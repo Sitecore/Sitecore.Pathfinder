@@ -2,8 +2,10 @@
 
 using System;
 using System.ComponentModel.Composition;
+using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.BinFiles;
 using Sitecore.Pathfinder.Languages.ConfigFiles;
@@ -25,10 +27,14 @@ namespace Sitecore.Pathfinder.Configuration
     public class FactoryService : IFactoryService
     {
         [ImportingConstructor]
-        public FactoryService([NotNull] ICompositionService compositionService)
+        public FactoryService([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService)
         {
+            Configuration = configuration;
             CompositionService = compositionService;
         }
+
+        [NotNull]
+        protected IConfiguration Configuration { get; }
 
         [NotNull]
         protected ICompositionService CompositionService { get; }
@@ -83,8 +89,10 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual ISnapshot Snapshot(ISourceFile sourceFile) => new Snapshot().With(sourceFile);
 
-        public virtual ISourceFile SourceFile(IFileSystemService fileSystem, string projectDirectory, string absoluteFileName)
+        public virtual ISourceFile SourceFile(IFileSystemService fileSystem, string absoluteFileName)
         {
+            var projectDirectory = Configuration.GetProjectDirectory();
+
             var relativeFileName = PathHelper.NormalizeFilePath(PathHelper.UnmapPath(projectDirectory, absoluteFileName)).TrimStart('\\');
             var projectFileName = "~/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(projectDirectory, PathHelper.GetDirectoryAndFileNameWithoutExtensions(absoluteFileName))).TrimStart('/');
 

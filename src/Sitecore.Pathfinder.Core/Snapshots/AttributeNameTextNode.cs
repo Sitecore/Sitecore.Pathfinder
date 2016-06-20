@@ -51,6 +51,11 @@ namespace Sitecore.Pathfinder.Snapshots
             return null;
         }
 
+        public bool HasAttribute(string attributeName)
+        {
+            return GetAttribute(attributeName) != null;
+        }
+
         public ITextNode GetInnerTextNode()
         {
             return null;

@@ -73,6 +73,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Checking\Checkers\ArchitectureChecker.cs" />
     <Compile Include="Emitting\IProjectEmitter.cs" />
     <Compile Include="Extensions\DiagnosticCollectionExtensions.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />

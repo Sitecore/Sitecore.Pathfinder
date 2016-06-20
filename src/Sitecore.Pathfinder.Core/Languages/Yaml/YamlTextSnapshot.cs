@@ -7,8 +7,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Yaml
 {
-    [Export]
-    [PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export, PartCreationPolicy(CreationPolicy.NonShared)]
     public partial class YamlTextSnapshot : TextSnapshot
     {
         [ImportingConstructor]

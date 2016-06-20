@@ -23,9 +23,9 @@ namespace Sitecore.Pathfinder.Parsing.LayoutFiles
                 return;
             }
 
-            var item = pipeline.Item as ISourcePropertyBag;
+            var sourcePropertyBag = (ISourcePropertyBag)pipeline.Item;
 
-            var layoutFileProperty = item.GetSourceProperty<string>(LayoutFile) ?? item.NewSourceProperty(LayoutFile, string.Empty);
+            var layoutFileProperty = sourcePropertyBag.GetSourceProperty<string>(LayoutFile) ?? sourcePropertyBag.NewSourceProperty(LayoutFile, string.Empty);
             layoutFileProperty.SetValue(layoutFileTextNode);
 
             var fieldValue = layoutFileProperty.GetValue();

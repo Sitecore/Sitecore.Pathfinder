@@ -42,18 +42,19 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
 
         public override bool CanCompile(ICompileContext context, IProjectItem projectItem, SourceProperty<string> property)
         {
-            var item = projectItem as ISourcePropertyBag;
+            var item = projectItem as Item;
             if (item == null)
             {
                 return false;
             }
 
-            if (!item.ContainsSourceProperty(LayoutFileItemParser.LayoutFile))
+            var sourcePropertyBag = (ISourcePropertyBag)item;
+            if (!sourcePropertyBag.ContainsSourceProperty(LayoutFileItemParser.LayoutFile))
             {
                 return false;
             }
 
-            var fileName = item.GetValue<string>(LayoutFileItemParser.LayoutFile);
+            var fileName = sourcePropertyBag.GetValue<string>(LayoutFileItemParser.LayoutFile);
             if (string.IsNullOrEmpty(fileName))
             {
                 return false;
@@ -106,7 +107,7 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
                 return;
             }
 
-            var sourceFile = Factory.SourceFile(FileSystem, project.ProjectDirectory, fileName);
+            var sourceFile = Factory.SourceFile(FileSystem, fileName);
             var pathMappingContext = new PathMappingContext(PathMapper).Parse(project, sourceFile);
 
             var snapshot = SnapshotService.LoadSnapshot(project, sourceFile, pathMappingContext) as ITextSnapshot;

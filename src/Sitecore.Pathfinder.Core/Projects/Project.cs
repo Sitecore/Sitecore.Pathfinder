@@ -150,7 +150,7 @@ namespace Sitecore.Pathfinder.Projects
                 throw new InvalidOperationException(Texts.Project_has_not_been_loaded__Call_Load___first);
             }
 
-            var sourceFile = Factory.SourceFile(FileSystem, ProjectDirectory, absoluteFileName);
+            var sourceFile = Factory.SourceFile(FileSystem, absoluteFileName);
 
             lock (_sourceFilesSyncObject)
             {
