@@ -159,7 +159,7 @@ namespace Sitecore.Pathfinder.Configuration
             }
 
             // add project role configs 
-            var projectRoles = configurationSourceRoot.GetCommaSeparatedStringList(Constants.Configuration.ProjectRole);
+            var projectRoles = configurationSourceRoot.GetStringList(Constants.Configuration.ProjectRole);
             foreach (var projectRole in projectRoles)
             {
                 foreach (var pair in configurationSourceRoot.GetSubKeys("project-role-conventions:" + projectRole))

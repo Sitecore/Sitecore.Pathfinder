@@ -1,6 +1,7 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.IO;
 using Sitecore.Pathfinder.Parsing;
 
 namespace Sitecore.Pathfinder.Languages.ConfigFiles
@@ -11,6 +12,8 @@ namespace Sitecore.Pathfinder.Languages.ConfigFiles
 
         private const string DisabledConfigFileExtension = ".config.disabled";
 
+        private const string AssemblyConfigFileExtension = ".dll.config";
+
         private const string ExampleConfigFileExtension = ".config.example";
 
         public ConfigFileParser() : base(Constants.Parsers.Templates)
@@ -20,6 +23,17 @@ namespace Sitecore.Pathfinder.Languages.ConfigFiles
         public override bool CanParse(IParseContext context)
         {
             var fileName = context.Snapshot.SourceFile.AbsoluteFileName;
+
+            if (string.Equals(Path.GetFileName(fileName), "app.config", StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            if (fileName.EndsWith(AssemblyConfigFileExtension, StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
             if (fileName.EndsWith(ConfigFileExtension, StringComparison.OrdinalIgnoreCase))
             {
                 return true;

@@ -155,7 +155,7 @@ namespace Sitecore.Pathfinder.Tasks
                 return;
             }
 
-            var excludedFields = context.Configuration.GetCommaSeparatedStringList(Constants.Configuration.ProjectWebsiteMappings.ExcludedFields);
+            var excludedFields = context.Configuration.GetStringList(Constants.Configuration.ProjectWebsiteMappings.ExcludedFields);
 
             ImportItems(context, zip, mapper, project, language, item, excludedFields);
         }

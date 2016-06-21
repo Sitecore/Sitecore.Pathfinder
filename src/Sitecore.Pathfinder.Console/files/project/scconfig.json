@@ -57,6 +57,6 @@
 
     // tasks to execute when building
     "build-project": {
-        "tasks": "restore-packages check-project write-exports pack-nuget install-package publish-database show-website show-status"
+        "tasks": "restore-packages check-project write-exports pack-nuget copy-package install-package publish-database show-website show-status"
     }
 }

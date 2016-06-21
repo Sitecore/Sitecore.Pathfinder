@@ -1,9 +1,11 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using NuGet;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -81,10 +83,12 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
         {
             var nuspec = GetNuspec(context, nuspecFileName);
 
+            var basePath = PathHelper.Combine(context.Project.ProjectDirectory, context.Configuration.GetString(Constants.Configuration.PackNuGet.BasePath));
+
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(nuspec));
             try
             {
-                var packageBuilder = new PackageBuilder(stream, context.Project.ProjectDirectory);
+                var packageBuilder = new PackageBuilder(stream, basePath);
 
                 using (var nupkg = FileSystem.OpenWrite(nupkgFileName))
                 {
@@ -100,18 +104,46 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
         [Diagnostics.NotNull]
         protected virtual string GetNuspec([NotNull] IBuildContext context, [NotNull] string nuspecFileName)
         {
-            var configFileName = Path.Combine(context.ToolsDirectory, context.Configuration.GetString(Constants.Configuration.ProjectConfigFileName));
-
             var nuspec = FileSystem.ReadAllText(nuspecFileName);
 
-            nuspec = nuspec.Replace("$global.scconfig.json$", configFileName);
-            nuspec = nuspec.Replace("$toolsDirectory$", context.ToolsDirectory);
-
-            // replace dependencies macro with dependencies from /packages.config
-            var packagesConfig = GetDependencies(context, nuspec);
-            nuspec = nuspec.Replace("<dependency id=\"$packages.config\" version=\"1.0.0\" />", packagesConfig);
+            var tokens = GetTokens(context, nuspec);
+            foreach (var token in tokens)
+            {
+                nuspec = nuspec.Replace(token.Key, token.Value);
+            }
 
             return nuspec;
+        }
+
+        [NotNull]
+        protected virtual IDictionary<string, string> GetTokens([NotNull] IBuildContext context, [NotNull] string nuspec)
+        {
+            // replace dependencies macro with dependencies from /packages.config
+            var dependencies = GetDependencies(context, nuspec);
+
+            var safeProjectUniqueId = context.Project.ProjectUniqueId;
+            if (safeProjectUniqueId.EndsWith("}") && safeProjectUniqueId.Mid(safeProjectUniqueId.Length - 41, 5) == " - {")
+            {
+                safeProjectUniqueId = safeProjectUniqueId.Left(safeProjectUniqueId.Length - 41);
+            }
+
+            safeProjectUniqueId = Regex.Replace(safeProjectUniqueId, @"[^a-zA-Z0-9_\.]", string.Empty);
+
+            var tokens = new Dictionary<string, string>
+            {
+                ["$toolsDirectory$"] = context.ToolsDirectory,
+                ["$projectDirectory$"] = context.ProjectDirectory,
+                ["$projectUniqueId$"] = context.Project.ProjectUniqueId,
+                ["$safeProjectUniqueId$"] = safeProjectUniqueId,
+                ["<dependency id=\"$packages.config$\" version=\"1.0.0\" />"] = dependencies
+            };
+
+            foreach (var pair in context.Configuration.GetDictionary(Constants.Configuration.PackNuGet.Tokens))
+            {
+                tokens[pair.Key] = pair.Value;
+            }
+
+            return tokens;
         }
 
         [Diagnostics.NotNull]

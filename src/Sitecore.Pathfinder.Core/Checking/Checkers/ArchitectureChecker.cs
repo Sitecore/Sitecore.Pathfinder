@@ -50,7 +50,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                 {
                     foreach (var schemaTextNode in root.ChildNodes)
                     {
-                        if (schemaTextNode.Key != "Item")
+                        if (schemaTextNode.Key != "item")
                         {
                             continue;
                         }
@@ -76,12 +76,12 @@ namespace Sitecore.Pathfinder.Checking.Checkers
             {
                 switch (childNode.Key)
                 {
-                    case "Item":
+                    case "item":
                         yield return childNode;
                         break;
 
-                    case "Element":
-                        foreach (var textNode in GetRefs(childNode, childNode.GetAttributeValue("Ref")))
+                    case "element":
+                        foreach (var textNode in GetRefs(childNode, childNode.GetAttributeValue("ref")))
                         {
                             yield return textNode;
                         }
@@ -97,13 +97,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         [NotNull, ItemNotNull]
         private IEnumerable<ITextNode> GetRefs([NotNull] ITextNode textNode, [NotNull] string reference)
         {
-            var elements = ((ITextSnapshot)textNode.Snapshot).Root.ChildNodes.FirstOrDefault(c => c.Key == "Elements");
-            if (elements == null)
-            {
-                throw new InvalidOperationException("Element definition not found: " + reference);
-            }
-
-            var element = elements.ChildNodes.FirstOrDefault(e => e.Key == "Element" && e.GetAttributeValue("Name") == reference);
+            var element = ((ITextSnapshot)textNode.Snapshot).Root.ChildNodes.FirstOrDefault(e => e.Key == "element" && e.GetAttributeValue("name") == reference);
             if (element == null)
             {
                 throw new InvalidOperationException("Element definition not found: " + reference);
@@ -120,19 +114,19 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         {
             var texts = new List<string>();
 
-            var itemName = textNode.GetAttributeValue("Name");
+            var itemName = textNode.GetAttributeValue("name");
             if (!string.IsNullOrEmpty(itemName))
             {
                 texts.Add("named '" + itemName + "'");
             }
 
-            var templateName = textNode.GetAttributeValue("Template");
+            var templateName = textNode.GetAttributeValue("template");
             if (!string.IsNullOrEmpty(templateName))
             {
                 texts.Add("with template '" + templateName + "'");
             }
 
-            var itemPath = textNode.GetAttributeValue("Path");
+            var itemPath = textNode.GetAttributeValue("path");
             if (!string.IsNullOrEmpty(itemPath))
             {
                 texts.Add("with path '" + itemPath + "'");
@@ -145,7 +139,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         {
             var isMatch = true;
 
-            var itemName = textNode.GetAttributeValue("Name");
+            var itemName = textNode.GetAttributeValue("name");
             if (!string.IsNullOrEmpty(itemName))
             {
                 if (itemName != item.ItemName)
@@ -154,7 +148,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                 }
             }
 
-            var templateName = textNode.GetAttributeValue("Template");
+            var templateName = textNode.GetAttributeValue("template");
             if (!string.IsNullOrEmpty(templateName))
             {
                 if (templateName != item.TemplateName)
@@ -163,7 +157,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                 }
             }
 
-            var itemPath = textNode.GetAttributeValue("Path");
+            var itemPath = textNode.GetAttributeValue("path");
             if (!string.IsNullOrEmpty(itemPath))
             {
                 if (!string.Equals(itemPath, item.ItemIdOrPath, StringComparison.OrdinalIgnoreCase))
@@ -199,7 +193,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         {
             var textNode = schemaTextNode;
 
-            var reference = textNode.GetAttributeValue("Ref");
+            var reference = textNode.GetAttributeValue("ref");
             if (!string.IsNullOrEmpty(reference))
             {
                 var refs = GetRefs(textNode, reference).ToArray();
@@ -212,7 +206,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
             }
 
             // check MinOccurs and MaxOccurs
-            var childrenTextNode = textNode.ChildNodes.FirstOrDefault(n => n.Key == "Children");
+            var childrenTextNode = textNode.ChildNodes.FirstOrDefault(n => n.Key == "children");
             if (childrenTextNode == null)
             {
                 yield break;
@@ -223,7 +217,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
 
             foreach (var schemaChildNode in schemaChildNodes)
             {
-                if (schemaChildNode.Key != "Item")
+                if (schemaChildNode.Key != "item")
                 {
                     throw new InvalidOperationException("Unexpected node: " + schemaChildNode.Key);
                 }
@@ -233,24 +227,24 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                 var minOccurs = 0;
                 var maxOccurs = 0;
 
-                if (schemaChildNode.HasAttribute("MinOccurs"))
+                if (schemaChildNode.HasAttribute("minOccurs"))
                 {
-                    minOccurs = int.Parse(schemaChildNode.GetAttributeValue("MinOccurs", "0"));
+                    minOccurs = int.Parse(schemaChildNode.GetAttributeValue("minOccurs", "0"));
                 }
 
-                if (schemaTextNode.HasAttribute("MinOccurs"))
+                if (schemaTextNode.HasAttribute("minOccurs"))
                 {
-                    minOccurs = int.Parse(schemaTextNode.GetAttributeValue("MinOccurs", "0"));
+                    minOccurs = int.Parse(schemaTextNode.GetAttributeValue("minOccurs", "0"));
                 }
 
-                if (schemaChildNode.HasAttribute("MaxOccurs"))
+                if (schemaChildNode.HasAttribute("maxOccurs"))
                 {
-                    maxOccurs = int.Parse(schemaChildNode.GetAttributeValue("MaxOccurs", "0"));
+                    maxOccurs = int.Parse(schemaChildNode.GetAttributeValue("maxOccurs", "0"));
                 }
 
-                if (schemaTextNode.HasAttribute("MaxOccurs"))
+                if (schemaTextNode.HasAttribute("maxOccurs"))
                 {
-                    maxOccurs = int.Parse(schemaTextNode.GetAttributeValue("MaxOccurs", "0"));
+                    maxOccurs = int.Parse(schemaTextNode.GetAttributeValue("maxOccurs", "0"));
                 }
 
                 if (minOccurs <= 0 && maxOccurs <= 0)
@@ -262,12 +256,12 @@ namespace Sitecore.Pathfinder.Checking.Checkers
 
                 if (minOccurs > 0 && count < minOccurs)
                 {
-                    yield return new Diagnostic(Msg.D1025, item.Snapshots.First().SourceFile.RelativeFileName, TraceHelper.GetTextNode(item).TextSpan, Severity.Error, $"Item {GetText(schemaChildNode)} must occur at least {minOccurs} times");
+                    yield return new Diagnostic(Msg.D1025, item.Snapshots.First().SourceFile.RelativeFileName, TraceHelper.GetTextNode(item).TextSpan, Severity.Error, $"Item {GetText(schemaChildNode)} must occur at least {minOccurs} times [ArchitectureChecker]");
                 }
 
                 if (maxOccurs > 0 && count > maxOccurs)
                 {
-                    yield return new Diagnostic(Msg.D1025, item.Snapshots.First().SourceFile.RelativeFileName, TraceHelper.GetTextNode(item).TextSpan, Severity.Error, $"Item {GetText(schemaChildNode)} must not occur more than {maxOccurs} times");
+                    yield return new Diagnostic(Msg.D1025, item.Snapshots.First().SourceFile.RelativeFileName, TraceHelper.GetTextNode(item).TextSpan, Severity.Error, $"Item {GetText(schemaChildNode)} must not occur more than {maxOccurs} times [ArchitectureChecker]");
                 }
             }
 
@@ -276,7 +270,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
             {
                 if (!schemaChildNodes.Any(c => IsMatch(child, c)))
                 {
-                    yield return new Diagnostic(Msg.D1025, item.Snapshots.First().SourceFile.RelativeFileName, TraceHelper.GetTextNode(item).TextSpan, Severity.Error, "Unexpected item: " + child.ItemIdOrPath);
+                    yield return new Diagnostic(Msg.D1025, item.Snapshots.First().SourceFile.RelativeFileName, TraceHelper.GetTextNode(item).TextSpan, Severity.Error, "Unexpected item: " + child.ItemIdOrPath + " [ArchitectureChecker]");
                 }
             }
 

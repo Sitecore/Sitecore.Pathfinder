@@ -64,6 +64,8 @@ namespace Sitecore.Pathfinder
 
             public const string CommandLineConfig = "config";
 
+            public const string CopyPackage = "copy-package";
+
             public const string Culture = "culture";
 
             public const string Database = "database";
@@ -79,6 +81,8 @@ namespace Sitecore.Pathfinder
             public const string IsProjectConfigured = "is-project-configured";
 
             public const string NugetPackageRootDirectory = "system:nuget-package-root-directory";
+
+            public const string NugetRepositories = "nuget-repositories";
 
             public const string Password = "password";
 
@@ -127,6 +131,8 @@ namespace Sitecore.Pathfinder
             {
                 public const string Checkers = "check-project:checkers";
 
+                public const string ConfigurationCheckerDevAssemblies = "check-project:ConfigurationChecker:dev-assemblies";
+
                 public const string IgnoredReferences = "check-project:ignored-references";
 
                 public const string StopOnErrors = "check-project:stop-on-errors";
@@ -137,11 +143,6 @@ namespace Sitecore.Pathfinder
             public static class CopyDependencies
             {
                 public const string SourceDirectory = "copy-dependencies:source-directory";
-            }
-
-            public static class CopyPackage
-            {
-                public const string PackageDirectory = "copy-package:package-directory";
             }
 
             public static class Extensions
@@ -215,11 +216,15 @@ namespace Sitecore.Pathfinder
 
             public static class PackNuGet
             {
+                public const string BasePath = "pack-nuget:base-path";
+
                 public const string Directory = "pack-nuget:directory";
 
                 public const string Exclude = "pack-nuget:exclude";
 
                 public const string Include = "pack-nuget:include";
+
+                public const string Tokens = "pack-nuget:tokens";
             }
 
             public static class ProjectWebsiteMappings

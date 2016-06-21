@@ -15,6 +15,21 @@ namespace Sitecore.Pathfinder.Checking
     [Export(typeof(ICheckerService))]
     public class CheckerService : ICheckerService
     {
+        public enum CheckerSeverity
+        {
+            Disabled,
+
+            Default,
+
+            Information,
+
+            Warning,
+
+            Error
+        }
+
+        private const string BasedOn = "based-on";
+
         [ImportingConstructor]
         public CheckerService([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull, ItemNotNull, ImportMany("Check")] IEnumerable<Func<ICheckerContext, IEnumerable<Diagnostic>>> checkers)
         {
@@ -23,9 +38,9 @@ namespace Sitecore.Pathfinder.Checking
             Checkers = checkers;
         }
 
-        public int EnabledCheckersCount { get; protected set; }
-
         public IEnumerable<Func<ICheckerContext, IEnumerable<Diagnostic>>> Checkers { get; }
+
+        public int EnabledCheckersCount { get; protected set; }
 
         [NotNull]
         protected ICompositionService CompositionService { get; }
@@ -39,32 +54,57 @@ namespace Sitecore.Pathfinder.Checking
             var treatWarningsAsErrors = Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
             var isMultiThreaded = Configuration.GetBool(Constants.Configuration.System.MultiThreaded);
 
-            var checkers = GetEnabledCheckers().ToArray();
+            var checkers = GetCheckers().ToArray();
             EnabledCheckersCount = checkers.Length;
 
             if (isMultiThreaded)
             {
                 Parallel.ForEach(checkers, checker =>
                 {
-                    var diagnostics = checker(context).ToArray();
-                    context.Trace.TraceDiagnostics(diagnostics, treatWarningsAsErrors);
+                    var diagnostics = checker.Checker(context).ToArray();
+                    TraceDiagnostics(context, checker, diagnostics, treatWarningsAsErrors);
                 });
             }
             else
             {
                 foreach (var checker in checkers)
                 {
-                    var diagnostics = checker(context).ToArray();
-                    context.Trace.TraceDiagnostics(diagnostics, treatWarningsAsErrors);
+                    var diagnostics = checker.Checker(context).ToArray();
+                    TraceDiagnostics(context, checker, diagnostics, treatWarningsAsErrors);
                 }
             }
+        }
+
+        protected virtual void TraceDiagnostics([NotNull] ICheckerContext context, [NotNull] CheckerInfo checker, [NotNull, ItemNotNull] Diagnostic[] diagnostics, bool treatWarningsAsErrors)
+        {
+            if (checker.Severity == CheckerSeverity.Default)
+            {
+                context.Trace.TraceDiagnostics(diagnostics, treatWarningsAsErrors);
+                return;
+            }
+
+            var severity = Severity.Information;
+            switch (checker.Severity)
+            {
+                case CheckerSeverity.Information:
+                    severity = Severity.Information;
+                    break;
+                case CheckerSeverity.Warning:
+                    severity = Severity.Warning;
+                    break;
+                case CheckerSeverity.Error:
+                    severity = Severity.Error;
+                    break;
+            }
+
+            context.Trace.TraceDiagnostics(diagnostics, severity, treatWarningsAsErrors);
         }
 
         private void EnableCheckers([NotNull, ItemNotNull] IEnumerable<CheckerInfo> checkers, [NotNull] string configurationKey)
         {
             foreach (var pair in Configuration.GetSubKeys(configurationKey))
             {
-                if (pair.Key == "based-on")
+                if (pair.Key == BasedOn)
                 {
                     var baseName = Constants.Configuration.ProjectRoleCheckers + ":" + Configuration.GetString(configurationKey + ":" + pair.Key);
                     EnableCheckers(checkers, baseName);
@@ -74,18 +114,36 @@ namespace Sitecore.Pathfinder.Checking
             foreach (var pair in Configuration.GetSubKeys(configurationKey))
             {
                 var key = pair.Key;
-                if (key == "based-on")
+                if (key == BasedOn)
                 {
                     continue;
                 }
 
-                var isEnabled = Configuration.GetString(configurationKey + ":" + key) == "enabled";
+                var severity = CheckerSeverity.Default;
+                switch (Configuration.GetString(configurationKey + ":" + key).ToLowerInvariant())
+                {
+                    case "disabled":
+                        severity = CheckerSeverity.Disabled;
+                        break;
+                    case "enabled":
+                        severity = CheckerSeverity.Default;
+                        break;
+                    case "information":
+                        severity = CheckerSeverity.Information;
+                        break;
+                    case "warning":
+                        severity = CheckerSeverity.Warning;
+                        break;
+                    case "error":
+                        severity = CheckerSeverity.Error;
+                        break;
+                }
 
                 if (key == "*")
                 {
                     foreach (var c in checkers)
                     {
-                        c.IsEnabled = isEnabled;
+                        c.Severity = severity;
                     }
 
                     continue;
@@ -93,26 +151,26 @@ namespace Sitecore.Pathfinder.Checking
 
                 if (!checkers.Any(c => c.Name == key || c.Category == key))
                 {
-                  throw new ConfigurationException("Checker not found: " + key);
+                    throw new ConfigurationException("Checker not found: " + key);
                 }
 
                 foreach (var checker in checkers)
                 {
                     if (checker.Name == key || checker.Category == key)
                     {
-                        checker.IsEnabled = isEnabled;
+                        checker.Severity = severity;
                     }
                 }
             }
         }
 
         [NotNull, ItemNotNull]
-        private IEnumerable<Func<ICheckerContext, IEnumerable<Diagnostic>>> GetEnabledCheckers()
+        private IEnumerable<CheckerInfo> GetCheckers()
         {
             var checkers = Checkers.Select(c => new CheckerInfo(c)).ToList();
 
             // apply project roles
-            var projectRoles = Configuration.GetCommaSeparatedStringList(Constants.Configuration.ProjectRole);
+            var projectRoles = Configuration.GetStringList(Constants.Configuration.ProjectRole);
             foreach (var projectRole in projectRoles)
             {
                 EnableCheckers(checkers, Constants.Configuration.ProjectRoleCheckers + ":" + projectRole);
@@ -124,10 +182,10 @@ namespace Sitecore.Pathfinder.Checking
             // apply checkers
             EnableCheckers(checkers, Constants.Configuration.Checkers);
 
-            return checkers.Where(c => c.IsEnabled).Select(c => c.Checker).ToList();
+            return checkers.Where(c => c.Severity != CheckerSeverity.Disabled).ToArray();
         }
 
-        private class CheckerInfo
+        protected class CheckerInfo
         {
             public CheckerInfo([NotNull] Func<ICheckerContext, IEnumerable<Diagnostic>> checker)
             {
@@ -153,10 +211,10 @@ namespace Sitecore.Pathfinder.Checking
             [NotNull]
             public Func<ICheckerContext, IEnumerable<Diagnostic>> Checker { get; }
 
-            public bool IsEnabled { get; set; } = true;
-
             [NotNull]
             public string Name { get; }
+
+            public CheckerSeverity Severity { get; set; } = CheckerSeverity.Default;
         }
     }
 }

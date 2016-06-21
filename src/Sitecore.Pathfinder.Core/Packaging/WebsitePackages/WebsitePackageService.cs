@@ -172,10 +172,15 @@ namespace Sitecore.Pathfinder.Packaging.WebsitePackages
             }
 
             // add source repositories from configuration
-            foreach (var pair in Configuration.GetSubKeys("nuget-repositories"))
+            foreach (var pair in Configuration.GetSubKeys(Constants.Configuration.NugetRepositories))
             {
-                var source = Configuration.GetString("nuget-repositories:" + pair.Key);
-                list.Add(source);
+                var source = Configuration.GetString(Constants.Configuration.NugetRepositories + ":" + pair.Key);
+
+                // skip project relative sources
+                if (source.IndexOf("://", StringComparison.Ordinal) >= 0)
+                {
+                    list.Add(source);
+                }
             }
 
             Feeds = list;

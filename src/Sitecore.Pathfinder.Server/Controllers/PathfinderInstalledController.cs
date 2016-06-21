@@ -7,7 +7,6 @@ using System.Net;
 using System.Web.Mvc;
 using Sitecore.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.Packaging;
 using Sitecore.Pathfinder.Packaging.WebsitePackages;
 
 namespace Sitecore.Pathfinder.Controllers

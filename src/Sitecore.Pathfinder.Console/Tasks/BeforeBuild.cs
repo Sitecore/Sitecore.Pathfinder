@@ -14,7 +14,7 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    public class BeforeBuild : BuildTaskBase
+    public class BeforeBuild : BuildTaskBase, IPreRunTask, IAlwaysRunTask
     {
         [ImportingConstructor]
         public BeforeBuild([NotNull] IFileSystemService fileSystem, [NotNull] IPipelineService pipelineService, [ImportMany, NotNull, ItemNotNull] IEnumerable<IExtension> extensions) : base("before-build")

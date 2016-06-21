@@ -47,6 +47,19 @@ namespace Sitecore.Pathfinder.Building
             return context.ErrorCode;
         }
 
+        protected override IList<string> GetTaskNames(ITaskContext context)
+        {
+            var tasks = base.GetTaskNames(context);
+
+            // todo: fix this
+            if (tasks.Count > 1)
+            {
+                tasks.Insert(0, "before-build");
+            }
+
+            return tasks;
+        }
+
         [NotNull]
         protected virtual IProject LoadProject()
         {

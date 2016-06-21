@@ -98,6 +98,9 @@
     <Compile Include="Tasks\Building\BuildContext.cs" />
     <Compile Include="Tasks\Building\IBuildTask.cs" />
     <Compile Include="Tasks\Building\WebRequest.cs" />
+    <Compile Include="Tasks\IAlwaysRunTask.cs" />
+    <Compile Include="Tasks\IPostRunTask.cs" />
+    <Compile Include="Tasks\IPreRunTask.cs" />
     <Compile Include="Tasks\IScriptTask.cs" />
     <Compile Include="Tasks\ITaskContext.cs" />
     <Compile Include="Tasks\Building\IBuildContext.cs" />

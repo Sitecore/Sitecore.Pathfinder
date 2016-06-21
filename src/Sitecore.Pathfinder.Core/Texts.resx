@@ -171,8 +171,8 @@
   <data name="Package_contains_errors_and_will_not_be_deployed" xml:space="preserve">
     <value>Package contains errors and will not be deployed</value>
   </data>
-  <data name="Copying_package_to_website___" xml:space="preserve">
-    <value>Copying packages to website...</value>
+  <data name="Copying_package___" xml:space="preserve">
+    <value>Copying packages...</value>
   </data>
   <data name="Creating_Nupkg_file___" xml:space="preserve">
     <value>Creating packages...</value>

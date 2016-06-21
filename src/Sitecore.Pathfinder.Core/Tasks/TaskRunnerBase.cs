@@ -29,7 +29,7 @@ namespace Sitecore.Pathfinder.Tasks
         public abstract int Start();
 
         [NotNull, ItemNotNull]
-        protected virtual IEnumerable<string> GetTaskNames([NotNull] ITaskContext context)
+        protected virtual IList<string> GetTaskNames([NotNull] ITaskContext context)
         {
             string taskList;
 
@@ -45,7 +45,7 @@ namespace Sitecore.Pathfinder.Tasks
             // check if the is a script task
             if (IsScriptTask(context, tasks))
             {
-                return new[]
+                return new List<string>
                 {
                     tasks
                 };
@@ -62,7 +62,7 @@ namespace Sitecore.Pathfinder.Tasks
                 var task = Tasks.FirstOrDefault(t => string.Equals(t.TaskName, tasks, StringComparison.OrdinalIgnoreCase));
                 if (task != null)
                 {
-                    return new[]
+                    return new List<string>
                     {
                         tasks
                     };
@@ -89,7 +89,7 @@ namespace Sitecore.Pathfinder.Tasks
             }
         }
 
-        protected virtual void RunTask([NotNull] ITaskContext context, [NotNull] string taskName)
+        protected virtual void RunTask([NotNull] ITaskContext context, [NotNull] string taskName, LifeCycle lifeCycle)
         {
             ITask task;
 
@@ -106,6 +106,26 @@ namespace Sitecore.Pathfinder.Tasks
                     context.Trace.TraceError(Msg.I1006, Texts.Task_not_found__Skipping, taskName);
                     return;
                 }
+            }
+
+            if (context.IsAborted && !(task is IAlwaysRunTask))
+            {
+                return;
+            }
+
+            if (lifeCycle == LifeCycle.PreRun && !(task is IPreRunTask))
+            {
+                return;
+            }
+
+            if (lifeCycle == LifeCycle.PostRun && !(task is IPostRunTask))
+            {
+                return;
+            }
+
+            if (lifeCycle == LifeCycle.Run && (task is IPreRunTask || task is IPostRunTask))
+            {
+                return;
             }
 
             var stopwatch = new Stopwatch();
@@ -137,26 +157,40 @@ namespace Sitecore.Pathfinder.Tasks
                 return;
             }
 
-            // always run the before-build task
-            RunTask(context, "before-build");
+            foreach (var taskName in tasks)
+            {
+                RunTask(context, taskName, LifeCycle.PreRun);
+            }
 
             foreach (var taskName in tasks)
             {
-                RunTask(context, taskName);
+                RunTask(context, taskName, LifeCycle.Run);
+            }
 
-                if (context.IsAborted)
+            foreach (var taskName in tasks)
+            {
+                RunTask(context, taskName, LifeCycle.PostRun);
+            }
+
+            if (context.IsAborted)
+            {
+                // set the error code, if it has not yet been set
+                if (context.ErrorCode == 0)
                 {
-                    // set the error code, if it has not yet been set
-                    if (context.ErrorCode == 0)
-                    {
-                        context.ErrorCode = -1;
-                    }
-
-                    break;
+                    context.ErrorCode = -1;
                 }
             }
 
             PauseAfterRun();
+        }
+
+        protected enum LifeCycle
+        {
+            PreRun,
+
+            Run,
+
+            PostRun
         }
     }
 }

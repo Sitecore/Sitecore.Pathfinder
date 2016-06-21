@@ -32,7 +32,7 @@ namespace Sitecore.Pathfinder.ProjectTrees
 
         public IFileSystemService FileSystem { get; }
 
-        public HashSet<string> IgnoreDirectories => _ignoreDirectories ?? (_ignoreDirectories = new HashSet<string>(Configuration.GetCommaSeparatedStringList(Constants.Configuration.ProjectWebsiteMappings.IgnoreDirectories)));
+        public HashSet<string> IgnoreDirectories => _ignoreDirectories ?? (_ignoreDirectories = new HashSet<string>(Configuration.GetStringList(Constants.Configuration.ProjectWebsiteMappings.IgnoreDirectories)));
 
         public HashSet<string> IgnoreFileNames => _ignoreFileNames ?? (_ignoreFileNames = GetIgnoreDirectories());
 
@@ -83,7 +83,7 @@ namespace Sitecore.Pathfinder.ProjectTrees
         [NotNull, ItemNotNull]
         protected virtual HashSet<string> GetIgnoreDirectories()
         {
-            var ignoreDirectories = Configuration.GetCommaSeparatedStringList(Constants.Configuration.ProjectWebsiteMappings.IgnoreFileNames).ToList();
+            var ignoreDirectories = Configuration.GetStringList(Constants.Configuration.ProjectWebsiteMappings.IgnoreFileNames).ToList();
 
             ignoreDirectories.Add(Path.GetFileName(Configuration.GetString(Constants.Configuration.ToolsDirectory)));
 

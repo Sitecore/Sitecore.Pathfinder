@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Parsing
 
             foreach (var pair in Configuration.GetSubKeys("build-project:schema"))
             {
-                var attributes = configuration.GetCommaSeparatedStringList("build-project:schema:" + pair.Key);
+                var attributes = configuration.GetStringList("build-project:schema:" + pair.Key);
                 _schema[pair.Key] = new HashSet<string>(attributes);
             }
         }

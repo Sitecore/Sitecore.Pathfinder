@@ -4,13 +4,15 @@ Copies the project output to the website.
 
 Remarks
 -------
-The `copy-package` task copies any NuGet packages, that are built, to the website.
+The `copy-package` task copies any output packages (NuGet or Npm), that are built, to the specified directories.
+
+This is useful when having multiple project the references each other.
 
 Settings
 --------
 | Setting name                   | Description                                             | 
 |--------------------------------|---------------------------------------------------------|
-| copy-package:package-directory | The directory under the website Data Folder to copy to. |
+| copy-package:*                 | List of file patterns and target directories.           |
 
 Example
 -------

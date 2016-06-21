@@ -36,8 +36,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
                     projectItem.CompilationState = CompiltationState.Compiled;
 
-                    // tried to use Parallel.ForEach, but compilers update collections which causes Collection Modified exception
-                    foreach (var compiler in pipeline.Context.Compilers)
+                    foreach (var compiler in pipeline.Context.Compilers.OrderBy(c => c.Priority))
                     {
                         if (compiler.CanCompile(context, projectItem))
                         {

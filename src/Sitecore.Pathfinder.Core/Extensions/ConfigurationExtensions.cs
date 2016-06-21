@@ -11,6 +11,14 @@ using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Extensions
 {
+    [Flags]
+    public enum GetStringListOptions
+    {
+        UseKey = 0x01,
+
+        UseValue = 0x02
+    }
+
     public static class ConfigurationExtensions
     {
         [NotNull]
@@ -57,35 +65,24 @@ namespace Sitecore.Pathfinder.Extensions
             return configuration.GetString("arg" + position);
         }
 
-        [NotNull, ItemNotNull]
-        public static IEnumerable<string> GetCommaSeparatedStringList([NotNull] this IConfiguration configuration, [NotNull] string key)
-        {
-            var value = string.Empty;
-            if (configuration.GetSubKeys(key).Any())
-            {
-                foreach (var subkey in configuration.GetSubKeys(key))
-                {
-                    if (value.Length > 0)
-                    {
-                        value += ",";
-                    }
-
-                    value += configuration.Get(key + ":" + subkey.Key);
-                }
-            }
-            else
-            {
-                value = configuration.GetString(key);
-            }
-
-            return value.Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToList();
-        }
-
         [NotNull]
         public static CultureInfo GetCulture([NotNull] this IConfiguration configuration)
         {
             var cultureName = configuration.GetString(Constants.Configuration.Culture);
             return string.IsNullOrEmpty(cultureName) ? CultureInfo.CurrentCulture : new CultureInfo(cultureName);
+        }
+
+        [NotNull, ItemNotNull]
+        public static IDictionary<string, string> GetDictionary([NotNull] this IConfiguration configuration, [NotNull] string key)
+        {
+            var dictionary = new Dictionary<string, string>();
+
+            foreach (var subkey in configuration.GetSubKeys(key))
+            {
+                dictionary[subkey.Key] = configuration.GetString(key + ":" + subkey.Key);
+            }
+
+            return dictionary;
         }
 
         public static int GetInt([NotNull] this IConfiguration configuration, [NotNull] string key, int defaultValue = 0)
@@ -130,7 +127,7 @@ namespace Sitecore.Pathfinder.Extensions
                     break;
                 }
 
-                var replace = value.Mid(n + 1, e - n - 2);
+                var replace = value.Mid(n + 1, e - n - 1);
                 string with;
                 switch (replace.ToLowerInvariant())
                 {
@@ -141,7 +138,8 @@ namespace Sitecore.Pathfinder.Extensions
                         with = configuration.GetProjectDirectory();
                         break;
                     default:
-                        with = configuration.Get(replace) ?? string.Empty;
+                        // danger: might be recursive
+                        with = configuration.GetString(replace);
                         break;
                 }
 
@@ -149,6 +147,38 @@ namespace Sitecore.Pathfinder.Extensions
             }
 
             return value;
+        }
+
+        [NotNull, ItemNotNull]
+        public static IEnumerable<string> GetStringList([NotNull] this IConfiguration configuration, [NotNull] string key, GetStringListOptions options = GetStringListOptions.UseValue)
+        {
+            var value = string.Empty;
+
+            if (configuration.GetSubKeys(key).Any())
+            {
+                foreach (var subkey in configuration.GetSubKeys(key))
+                {
+                    if (value.Length > 0)
+                    {
+                        value += ",";
+                    }
+
+                    if ((options & GetStringListOptions.UseValue) == GetStringListOptions.UseValue)
+                    {
+                        value += configuration.Get(key + ":" + subkey.Key);
+                    }
+                    else if ((options & GetStringListOptions.UseKey) == GetStringListOptions.UseKey)
+                    {
+                        value += subkey.Key;
+                    }
+                }
+            }
+            else
+            {
+                value = configuration.GetString(key);
+            }
+
+            return value.Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToList();
         }
 
         [NotNull]

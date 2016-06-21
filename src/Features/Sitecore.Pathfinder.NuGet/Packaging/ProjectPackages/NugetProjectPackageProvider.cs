@@ -1,5 +1,6 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
@@ -112,9 +113,16 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.ProjectPackages
                 };
 
                 // add source repositories from configuration
-                foreach (var pair in Configuration.GetSubKeys("nuget-repositories"))
+                foreach (var pair in Configuration.GetSubKeys(Constants.Configuration.NugetRepositories))
                 {
-                    var source = Configuration.GetString("nuget-repositories:" + pair.Key);
+                    var source = Configuration.GetString(Constants.Configuration.NugetRepositories + ":" + pair.Key);
+
+                    // make relative to project directory, unless the source has a protocol
+                    if (source.IndexOf("://", StringComparison.Ordinal) < 0)
+                    {
+                        source = PathHelper.Combine(projectDirectory, source);
+                    }
+
                     repositories.Add(PackageRepositoryFactory.Default.CreateRepository(source));
                 }
 

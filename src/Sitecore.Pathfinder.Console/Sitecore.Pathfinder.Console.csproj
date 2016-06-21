@@ -163,6 +163,7 @@
     <Compile Include="Tasks\ComparePackages.cs" />
     <Compile Include="Tasks\InitGrunt.cs" />
     <Compile Include="Tasks\InitGulp.cs" />
+    <Compile Include="Tasks\InitHabitat.cs" />
     <Compile Include="Tasks\ListCheckers.cs" />
     <Compile Include="Tasks\ListProjectRoles.cs" />
     <Compile Include="Tasks\RestorePackages.cs" />
@@ -297,6 +298,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="files\conventions\habitat.design.conventions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\habitat\habitat.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="files\project\bin\readme.md">

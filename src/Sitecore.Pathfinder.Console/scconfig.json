@@ -19,7 +19,7 @@
 
         // comma separated list of files and directories to ignore
         "ignore-directories": {
-            "default": ".vscode, sitecore.filetemplates, sitecore.project, sitecore.tools, node_modules, packages, roslyn, includes"
+            "default": ".vscode, sitecore.filetemplates, sitecore.project, sitecore.tools, node_modules, bower_components, packages, roslyn, includes, Properties, obj"
         },
 
         "ignore-filenames": {
@@ -141,6 +141,15 @@
             "{1,2}": "equals"
         },
 
+        "ConfigurationChecker": {
+            "dev-assemblies": {
+                "Rainbow": "ignore",
+                "Unicorn": "ignore",
+                "Unicorn.Roles": "ignore",
+                "": "ignore"
+            }
+        },
+
         "treat-warnings-as-errors": false
     },
 
@@ -150,9 +159,7 @@
     },
 
     "copy-package": {
-        "system-0": {
-            "copy-to-directory": "/pathfinder/repository"
-        }
+        // "*.nupkg" :  "..\\..\\packages"
     },
 
     "install-package": {
@@ -177,7 +184,7 @@
 
         // overwrite field values in the database in three way merge - ensures database has values from project
         "three-way-merge-overwrite-database": false,
-        
+
         "uninstall-directory": "../.uninstall"
     },
 
@@ -187,14 +194,14 @@
 
         // comma separated list of absolute assembly filenames to add as references (https://msdn.microsoft.com/en-us/library/gg586946.aspx)
         "t4-refs": "",
-        
+
         // comma separated list of namespaces to import (https://msdn.microsoft.com/en-us/library/gg586948.aspx)
         "t4-imports": "",
-        
+
         // comma separated list of filepaths to search for include files
         "t4-include-paths": "",
-        
-        // comma separated list of filepaths to search for reference files
+
+        // comma separated list of filepaths to search for reference fifffles
         "t4-reference-paths": "",
 
         // mapping between T4 template extensions and project item types.
@@ -212,9 +219,18 @@
     },
 
     "pack-nuget": {
+        // base path relative to the project directory
+        "base-path": "",
+
+        // all .nuspec files in this directory are created
         "directory": "sitecore.project",
+        "exclude": "",
         "include": "**/*.nuspec",
-        "exclude": ""
+
+        // tokens to be replaced
+        "tokens": {
+            // "replace" : "with"
+        }
     },
 
     "pack-npm": {
@@ -414,7 +430,7 @@
         "npm-directory": "node_modules"
     },
 
-    // maps project role to checkers - checkers are enabled by default
+    // maps project role to checkers - checkers are enabled by default - possible values: "disabled", "enabled", "error", "warning", "information"
     "project-role-checkers": {
         // all checkers disabled
         "none": {
@@ -424,12 +440,15 @@
         // default set of checkers
         "default": {
             "SitecoreTemplate": "enabled",
+
+            "PathfinderProjectFileSystem": "disabled",
             "TemplateHelp": "disabled"
         },
 
         // Pathfinder project
         "pathfinder": {
             "based-on": "default",
+
             "PathfinderProjectFileSystem": "enabled",
             "TemplateHelp": "enabled"
         },
@@ -437,6 +456,7 @@
         // SPEAK project
         "speak": {
             "based-on": "default",
+
             "SitecoreTemplate": "disabled"
         }
     },
@@ -536,6 +556,6 @@
 
         "web-requests": {
             "time-out": 300 // seconds
-        } 
+        }
     }
 }

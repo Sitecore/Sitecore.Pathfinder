@@ -2,6 +2,7 @@
 
 using System.ComponentModel.Composition;
 using System.IO;
+using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -22,32 +23,32 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
-            context.Trace.TraceInformation(Msg.D1005, Texts.Copying_package_to_website___);
+            var dictionary = context.Configuration.GetDictionary(Constants.Configuration.CopyPackage);
+            if (!dictionary.Any())
+            {
+                return;
+            }
+
+            context.Trace.TraceInformation(Msg.D1005, Texts.Copying_package___);
 
             if (!IsProjectConfigured(context))
             {
                 return;
             }
 
-            foreach (var pair in context.Configuration.GetSubKeys("copy-package"))
+            foreach (var pair in dictionary)
             {
-                var key = "copy-package:" + pair.Key;
-
-                var destinationDirectory = context.Configuration.GetString(key + ":copy-to-directory");
-                if (string.IsNullOrEmpty(destinationDirectory))
-                {
-                    context.Trace.TraceError(Msg.D1006, Texts.Destination_directory_not_found, key + ":copy-to-directory");
-                    continue;
-                }
-
-                destinationDirectory = PathHelper.NormalizeFilePath(destinationDirectory).TrimStart('\\');
-                destinationDirectory = PathHelper.Combine(context.Configuration.GetString(Constants.Configuration.DataFolderDirectory), destinationDirectory);
-
-                FileSystem.CreateDirectory(destinationDirectory);
-
                 foreach (var fileName in context.OutputFiles)
                 {
-                    var destinationFileName = PathHelper.Combine(destinationDirectory, Path.GetFileName(fileName));
+                    if (!PathHelper.MatchesPattern(fileName, pair.Key))
+                    {
+                        continue;
+                    }
+
+                    var destinationDirectory = PathHelper.Combine(context.ProjectDirectory, pair.Value);
+                    var destinationFileName = Path.Combine(destinationDirectory, Path.GetFileName(fileName));
+
+                    FileSystem.CreateDirectoryFromFileName(destinationFileName);
                     FileSystem.Copy(fileName, destinationFileName);
                 }
             }

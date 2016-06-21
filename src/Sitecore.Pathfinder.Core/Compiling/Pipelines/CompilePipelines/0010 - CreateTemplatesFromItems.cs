@@ -13,7 +13,9 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 {
     public class CreateTemplatesFromItems : PipelineProcessorBase<CompilePipeline>
     {
-        public CreateTemplatesFromItems() : base(10)
+        public const int CreateTemplatesFromItemsPriority = 10;
+
+        public CreateTemplatesFromItems() : base(CreateTemplatesFromItemsPriority)
         {
         }
 

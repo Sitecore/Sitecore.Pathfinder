@@ -33,6 +33,8 @@ namespace Sitecore.Pathfinder.Checkers
         [Export("Check")]
         public IEnumerable<Diagnostic> TypeNotFound(ICheckerContext context)
         {
+            var ignoreAssemblies = context.Configuration.GetStringList(Constants.Configuration.CheckProject.ConfigurationCheckerDevAssemblies, GetStringListOptions.UseKey).ToArray();
+
             foreach (var configFile in context.Project.ProjectItems.OfType<ConfigFile>())
             {
                 var fileName = configFile.Snapshots.First().SourceFile.AbsoluteFileName;
@@ -75,6 +77,16 @@ namespace Sitecore.Pathfinder.Checkers
                     {
                         assemblyName = typeName.Mid(n + 1).Trim();
                         typeName = typeName.Left(n).Trim();
+                    }
+
+                    if (string.IsNullOrEmpty(assemblyName))
+                    {
+                        continue;
+                    }
+
+                    if (ignoreAssemblies.Any(a => string.Equals(a, assemblyName, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        continue;
                     }
 
                     // add '.dll' extension

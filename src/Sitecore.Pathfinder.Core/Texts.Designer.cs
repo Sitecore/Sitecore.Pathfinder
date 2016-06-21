@@ -324,11 +324,11 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copying packages to website....
+        ///   Looks up a localized string similar to Copying packages....
         /// </summary>
-        public static string Copying_package_to_website___ {
+        public static string Copying_package___ {
             get {
-                return ResourceManager.GetString("Copying_package_to_website___", resourceCulture);
+                return ResourceManager.GetString("Copying_package___", resourceCulture);
             }
         }
         

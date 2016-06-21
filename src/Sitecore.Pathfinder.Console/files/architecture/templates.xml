@@ -1,95 +1,93 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Architecture version="1.0">
+<schema version="1.0">
 
-    <Item Template="Root">
-        <Children>
-            <Item Name="client" MaxOccurs="1" />
-            <Item Name="content" MaxOccurs="1" />
-            <Item Name="layout" MaxOccurs="1">
-                <Children>
-                    <Item Name="Controllers" Template="Node" MaxOccurs="1" />
-                    <Item Name="Devices" Template="Node" MaxOccurs="1" />
-                    <Item Name="Layouts" Template="Node" MaxOccurs="1" />
-                    <Item Name="Models" Template="Node" MaxOccurs="1" />
-                    <Item Name="Placeholder Settings" Template="Folder" MaxOccurs="1" />
-                    <Item Name="Renderings" Template="Node" MaxOccurs="1" />
-                    <Item Name="Sublayouts" Template="Node" MaxOccurs="1" />
-                    <Item Name="Simulators" Template="Folder" MaxOccurs="1" />
-                </Children>
-            </Item>
-            <Item Name="media library" MaxOccurs="1">
-                <Children>
-                    <Element Name="MediaFolder" />
-                </Children>
-            </Item>
-            <Item Name="social" MaxOccurs="1" />
-            <Item Name="system" MaxOccurs="1" />
-            <Item Name="templates" MaxOccurs="1">
-                <Children>
-                    <Item Name="Branches" Template="Branch Folder" MaxOccurs="1" /> 
-                    <Item Name="System" Template="TemplateFolder" MaxOccurs="1" Ref="TemplateFolder" /> 
-                    <Item />
-                </Children>
-            </Item>
-            <Item Name="unit testing" MaxOccurs="1" />
-        </Children>
-    </Item>
+    <item template="Root">
+        <children>
+            <item name="client" maxOccurs="1" />
+            <item name="content" maxOccurs="1" />
+            <item name="layout" maxOccurs="1">
+                <children>
+                    <Item name="Controllers" template="Node" maxOccurs="1" />
+                    <Item name="Devices" template="Node" maxOccurs="1" />
+                    <Item name="Layouts" template="Node" maxOccurs="1" />
+                    <Item name="Models" template="Node" maxOccurs="1" />
+                    <Item name="Placeholder Settings" template="Folder" maxOccurs="1" />
+                    <Item name="Renderings" template="Node" maxOccurs="1" />
+                    <Item name="Sublayouts" template="Node" maxOccurs="1" />
+                    <Item name="Simulators" template="Folder" maxOccurs="1" />
+                </children>
+            </item>
+            <item name="media library" maxOccurs="1">
+                <children>
+                    <element name="MediaFolder" />
+                </children>
+            </item>
+            <item name="social" maxOccurs="1" />
+            <item name="system" maxOccurs="1" />
+            <item name="templates" maxOccurs="1">
+                <children>
+                    <item name="Branches" template="Branch Folder" maxOccurs="1" /> 
+                    <item name="System" template="TemplateFolder" maxOccurs="1" ref="TemplateFolder" /> 
+                    <item />
+                </children>
+            </item>
+            <item name="unit testing" maxOccurs="1" />
+        </children>
+    </item>
 
-    <Item Template="Template" Ref="Template" />
+    <item template="template" ref="Template" />
     
-    <Item Template="Template Folder" Ref="TemplateFolder" />
+    <item template="Template Folder" ref="TemplateFolder" />
                              
-    <Item Template="Jpeg">
-        <Children>
-            <Item MaxOccurs="0" />
-        </Children>
-    </Item>
+    <item template="Jpeg">
+        <children>
+            <item maxOccurs="0" />
+        </children>
+    </item>
 
-    <Elements>
-        <Element Name="MediaFolder">
-            <Item Template="Media Folder">
-                <Children>
-                    <Element Ref="MediaFolder" />
-                    <Item Template="Audio" />
-                    <Item Template="Doc" />
-                    <Item Template="Document" />
-                    <Item Template="Docx" />
-                    <Item Template="File" />
-                    <Item Template="Flash" />
-                    <Item Template="Image" />
-                    <Item Template="Jpeg" />
-                    <Item Template="Movie" />
-                    <Item Template="Mp3" />
-                    <Item Template="Pdf" />
-                    <Item Template="Zip" />
-                </Children>
-            </Item>
-        </Element>
+    <element name="MediaFolder">
+        <item template="Media Folder">
+            <children>
+                <element ref="MediaFolder" />
+                <item template="Audio" />
+                <item template="Doc" />
+                <item template="Document" />
+                <item template="Docx" />
+                <item template="File" />
+                <item template="Flash" />
+                <item template="Image" />
+                <item template="Jpeg" />
+                <item template="Movie" />
+                <item template="Mp3" />
+                <item template="Pdf" />
+                <item template="Zip" />
+            </children>
+        </item>
+    </element>
         
-        <Element Name="TemplateFolder">
-            <Item Template="Template Folder">
-                <Children>
-                    <Element Name="TemplateFolder" />
-                    <Element Name="Template" />
-                </Children>
-            </Item>
-        </Element>
+    <element name="TemplateFolder">
+        <item template="Template Folder">
+            <children>
+                <element ref="TemplateFolder" />
+                <element ref="Template" />
+            </children>
+        </item>
+    </element>
         
-        <Element Name="Template">
-            <Item Template="Template">
-                <Children>
-                    <Element Ref="TemplateSection" />
-                </Children>
-            </Item>
-        </Element>
+    <element name="Template">
+        <item template="Template">
+            <children>
+                <element ref="TemplateSection" />
+            </children>
+        </item>
+    </element>
         
-        <Element Name="TemplateSection">
-            <Item Template="Template section">
-                <Children>
-                    <Item Template="Template field" MinOccurs="1" />
-                </Children>
-            </Item>
-            <Item Name="__Standard Values" MaxOccurs="1" MinOccurs="0" />
-        </Element>
-    </Elements>
-</Architecture>
+    <element name="TemplateSection">
+        <item template="Template section">
+            <children>
+                <item template="Template field" minOccurs="1" />
+            </children>
+        </item>
+        <item name="__Standard Values" maxOccurs="1" />
+    </element>
+</schema>
