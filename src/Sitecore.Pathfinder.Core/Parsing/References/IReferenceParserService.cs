@@ -16,6 +16,9 @@ namespace Sitecore.Pathfinder.Parsing.References
         IReference ParseReference([NotNull] IProjectItem projectItem, [NotNull] ITextNode sourceTextNode, [NotNull] string referenceText);
 
         [NotNull, ItemNotNull]
+        IEnumerable<IReference> ParseReferences([NotNull] IProjectItem projectItem, [NotNull] string referenceText);
+
+        [NotNull, ItemNotNull]
         IEnumerable<IReference> ParseReferences<T>([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<T> sourceProperty);
 
         [NotNull, ItemNotNull]

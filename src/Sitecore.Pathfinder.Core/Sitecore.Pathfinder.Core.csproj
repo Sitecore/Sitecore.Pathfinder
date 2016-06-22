@@ -95,6 +95,7 @@
     <Compile Include="Projects\SourcePropertyBag.cs" />
     <Compile Include="Runtime\Caching\CacheService.cs" />
     <Compile Include="Runtime\Caching\ICacheService.cs" />
+    <Compile Include="Snapshots\StringTextNode.cs" />
     <Compile Include="Tasks\Building\BuildContext.cs" />
     <Compile Include="Tasks\Building\IBuildTask.cs" />
     <Compile Include="Tasks\Building\WebRequest.cs" />

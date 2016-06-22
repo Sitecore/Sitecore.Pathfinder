@@ -48,6 +48,11 @@ namespace Sitecore.Pathfinder.Tasks
         protected virtual void UpdateConfigFile([NotNull] IBuildContext context, [NotNull] string projectDirectory)
         {
             var projectConfigFileName = Path.Combine(projectDirectory, context.Configuration.GetString(Constants.Configuration.ProjectConfigFileName));
+            if (!FileSystem.FileExists(projectConfigFileName))
+            {
+                return;
+            }
+
             var config = FileSystem.ReadAllText(projectConfigFileName);
 
             var defaultWebsiteDirectory = context.Configuration.GetString(Constants.Configuration.NewProject.DefaultWebsiteDirectory).TrimEnd('\\');

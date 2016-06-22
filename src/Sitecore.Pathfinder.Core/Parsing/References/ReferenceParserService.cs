@@ -1,4 +1,4 @@
-// © 2016 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -97,6 +97,11 @@ namespace Sitecore.Pathfinder.Parsing.References
             return pipeline.Reference;
         }
 
+        public IEnumerable<IReference> ParseReferences(IProjectItem projectItem, string referenceText)
+        {
+            return ParseReferences(projectItem, new StringTextNode(referenceText, projectItem.Snapshots.First()));
+        }
+
         public virtual IEnumerable<IReference> ParseReferences<T>(IProjectItem projectItem, SourceProperty<T> sourceProperty)
         {
             var sourceTextNode = sourceProperty.SourceTextNode;
@@ -112,38 +117,7 @@ namespace Sitecore.Pathfinder.Parsing.References
         {
             var referenceText = textNode.Value.Trim();
 
-            // query string: ignore
-            if (referenceText.StartsWith("query:"))
-            {
-                yield break;
-            }
-
-            // todo: process media links 
-            if (referenceText.StartsWith("/~/media") || referenceText.StartsWith("~/media"))
-            {
-                yield break;
-            }
-
-            // todo: process icon links 
-            if (referenceText.StartsWith("/~/icon") || referenceText.StartsWith("~/icon"))
-            {
-                yield break;
-            }
-
-            foreach (var reference in ParseItemPaths(projectItem, textNode, referenceText))
-            {
-                yield return reference;
-            }
-
-            foreach (var reference in ParseGuids(projectItem, textNode, referenceText))
-            {
-                yield return reference;
-            }
-
-            foreach (var reference in ParseFilePaths(projectItem, textNode, referenceText))
-            {
-                yield return reference;
-            }
+            return ParseReferences(projectItem, textNode, referenceText);
         }
 
         protected virtual int EndOfFilePath([NotNull] string text, int start)
@@ -279,6 +253,43 @@ namespace Sitecore.Pathfinder.Parsing.References
                 }
 
                 s = e;
+            }
+        }
+
+        [ItemNotNull, NotNull]
+        protected virtual IEnumerable<IReference> ParseReferences([NotNull] IProjectItem projectItem, [NotNull] ITextNode textNode, [NotNull] string referenceText)
+        {
+            // query string: ignore
+            if (referenceText.StartsWith("query:"))
+            {
+                yield break;
+            }
+
+            // todo: process media links 
+            if (referenceText.StartsWith("/~/media") || referenceText.StartsWith("~/media"))
+            {
+                yield break;
+            }
+
+            // todo: process icon links 
+            if (referenceText.StartsWith("/~/icon") || referenceText.StartsWith("~/icon"))
+            {
+                yield break;
+            }
+
+            foreach (var reference in ParseItemPaths(projectItem, textNode, referenceText))
+            {
+                yield return reference;
+            }
+
+            foreach (var reference in ParseGuids(projectItem, textNode, referenceText))
+            {
+                yield return reference;
+            }
+
+            foreach (var reference in ParseFilePaths(projectItem, textNode, referenceText))
+            {
+                yield return reference;
             }
         }
     }
