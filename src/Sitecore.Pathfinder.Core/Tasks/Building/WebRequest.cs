@@ -75,7 +75,7 @@ namespace Sitecore.Pathfinder.Tasks.Building
         [NotNull]
         public virtual WebRequest WithConfiguration()
         {
-            PostData["configuration"] = Configuration.ToJson();
+            // PostData["configuration"] = Configuration.ToJson();
             return this;
         }
 

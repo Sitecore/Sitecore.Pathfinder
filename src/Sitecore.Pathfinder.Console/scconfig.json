@@ -458,9 +458,10 @@
             "based-on": "default",
 
             "AvoidSpacesInItemNames": "disabled",
+            "AvoidSpacesInTemplateNames": "disabled",
             "DeleteUnusedTemplates": "disabled",
             "AvoidEmptyTemplateSection": "disabled",
-            "TemplateShouldHaveIcon": "disabled" 
+            "TemplateShouldHaveIcon": "disabled"
         },
 
         // SPEAK project

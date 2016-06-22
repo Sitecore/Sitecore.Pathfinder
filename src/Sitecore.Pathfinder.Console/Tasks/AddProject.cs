@@ -32,7 +32,6 @@ namespace Sitecore.Pathfinder.Tasks
                 FileSystem.CreateDirectory(projectDirectory);
             }
 
-            Console.WriteLine();
             Console.WriteLine(Texts.Adding_project___);
 
             CopyProjectTemplate(context, projectDirectory);

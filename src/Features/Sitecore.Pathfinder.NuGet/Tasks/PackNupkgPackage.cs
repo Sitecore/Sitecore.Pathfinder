@@ -94,9 +94,9 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
 
                 FileSystem.CreateDirectoryFromFileName(nupkgFileName);
 
-                if (FileSystem.FileExists(nupkgDirectory))
+                if (FileSystem.FileExists(nupkgFileName))
                 {
-                    FileSystem.DeleteFile(nupkgDirectory);
+                    FileSystem.DeleteFile(nupkgFileName);
                 }
 
                 using (var nupkg = FileSystem.OpenWrite(nupkgFileName))

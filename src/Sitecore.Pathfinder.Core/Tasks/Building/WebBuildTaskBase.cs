@@ -123,9 +123,9 @@ namespace Sitecore.Pathfinder.Tasks.Building
 
             return false;
         }
-
+                                                                
         protected class WebClientWithTimeout : WebClient
-        {
+        {                                                      
             public WebClientWithTimeout([NotNull] IConfiguration configuration)
             {
                 Configuration = configuration;
