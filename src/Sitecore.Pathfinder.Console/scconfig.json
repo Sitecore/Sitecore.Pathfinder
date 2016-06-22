@@ -453,6 +453,16 @@
             "TemplateHelp": "enabled"
         },
 
+        // Habitat project
+        "habitat": {
+            "based-on": "default",
+
+            "AvoidSpacesInItemNames": "disabled",
+            "DeleteUnusedTemplates": "disabled",
+            "AvoidEmptyTemplateSection": "disabled",
+            "TemplateShouldHaveIcon": "disabled" 
+        },
+
         // SPEAK project
         "speak": {
             "based-on": "default",

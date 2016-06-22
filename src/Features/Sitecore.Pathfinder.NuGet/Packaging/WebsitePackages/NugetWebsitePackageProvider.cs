@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Microsoft.Framework.ConfigurationModel;
 using NuGet;
 using Sitecore.Data.Engines;
@@ -118,7 +119,8 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.WebsitePackages
         public override bool InstallOrUpdatePackage(string packageId, IEnumerable<string> feeds)
         {
             var remoteRepository = GetRemoteRepository(feeds);
-            var remotePackage = remoteRepository.FindPackage(packageId);
+
+            var remotePackage = FindPackage(remoteRepository, packageId);
             if (remotePackage == null)
             {
                 return false;
@@ -149,6 +151,23 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.WebsitePackages
             }
 
             return true;
+        }
+
+        [CanBeNull]
+        protected virtual IPackage FindPackage([NotNull] IPackageRepository remoteRepository, [NotNull] string packageId)
+        {
+            var match = Regex.Match(packageId, "\\.(\\d\\.\\d\\.\\d(-.*)*)$");
+            if (!match.Success)
+            {
+                return remoteRepository.FindPackage(packageId);
+            }
+
+            var value = match.Groups[1].Value;
+
+            var version = new SemanticVersion(value);
+            var id = packageId.Left(packageId.Length - value.Length - 1);
+
+            return remoteRepository.FindPackage(id, version);
         }
 
         public override bool InstallPackage(string packageId, string version, IEnumerable<string> feeds)

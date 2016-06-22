@@ -49,46 +49,55 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
                     continue;
                 }
 
-                string nupkgFileName;
+                string nupkgDirectory;
                 if (context.Configuration.IsProjectConfigured())
                 {
-                    nupkgFileName = Path.ChangeExtension(nuspecFileName, ".nupkg");
+                    nupkgDirectory = Path.GetDirectoryName(nuspecFileName) ?? string.Empty;
                 }
                 else
                 {
                     // otherwise create the sitecore.tools directory
-                    nupkgFileName = Path.Combine(context.ToolsDirectory, "sitecore.project\\" + Path.GetFileNameWithoutExtension(nuspecFileName) + ".nupkg");
-                    FileSystem.CreateDirectoryFromFileName(nupkgFileName);
+                    nupkgDirectory = Path.Combine(context.ToolsDirectory, "sitecore.project\\" + Path.GetFileNameWithoutExtension(nuspecFileName) + ".nupkg");
                 }
 
-                Pack(context, nuspecFileName, nupkgFileName);
+                Pack(context, nuspecFileName, nupkgDirectory);
             }
         }
 
-        protected virtual void Pack([NotNull] IBuildContext context, [NotNull] string nuspecFileName, [NotNull] string nupkgFileName)
+        protected virtual void Pack([NotNull] IBuildContext context, [NotNull] string nuspecFileName, [NotNull] string nupkgDirectory)
         {
-            if (FileSystem.FileExists(nupkgFileName))
+            var nupkgFileName = BuildNupkgFile(context, nuspecFileName, nupkgDirectory);
+            if (string.IsNullOrEmpty(nupkgFileName))
             {
-                FileSystem.DeleteFile(nupkgFileName);
+                return;
             }
 
-            BuildNupkgFile(context, nuspecFileName, nupkgFileName);
-
             context.OutputFiles.Add(nupkgFileName);
-
             context.Trace.TraceInformation(Msg.D1019, Texts.NuGet_file_size, $"{PathHelper.UnmapPath(context.Project.ProjectDirectory, nupkgFileName)} ({new FileInfo(nupkgFileName).Length.ToString("#,##0 bytes")})");
         }
 
-        protected virtual void BuildNupkgFile([NotNull] IBuildContext context, [NotNull] string nuspecFileName, [NotNull] string nupkgFileName)
+        [NotNull]
+        protected virtual string BuildNupkgFile([NotNull] IBuildContext context, [NotNull] string nuspecFileName, [NotNull] string nupkgDirectory)
         {
             var nuspec = GetNuspec(context, nuspecFileName);
 
             var basePath = PathHelper.Combine(context.Project.ProjectDirectory, context.Configuration.GetString(Constants.Configuration.PackNuGet.BasePath));
 
+            var nupkgFileName = string.Empty;
+
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(nuspec));
             try
             {
                 var packageBuilder = new PackageBuilder(stream, basePath);
+
+                nupkgFileName = Path.Combine(nupkgDirectory, packageBuilder.Id + "." + packageBuilder.Version + ".nupkg");
+
+                FileSystem.CreateDirectoryFromFileName(nupkgFileName);
+
+                if (FileSystem.FileExists(nupkgDirectory))
+                {
+                    FileSystem.DeleteFile(nupkgDirectory);
+                }
 
                 using (var nupkg = FileSystem.OpenWrite(nupkgFileName))
                 {
@@ -99,6 +108,8 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
             {
                 context.Trace.TraceError(Msg.D1020, Texts.Failed_to_create_the_Nupkg_file, ex.Message);
             }
+
+            return nupkgFileName;
         }
 
         [Diagnostics.NotNull]
@@ -120,14 +131,7 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
         {
             // replace dependencies macro with dependencies from /packages.config
             var dependencies = GetDependencies(context, nuspec);
-
-            var safeProjectUniqueId = context.Project.ProjectUniqueId;
-            if (safeProjectUniqueId.EndsWith("}") && safeProjectUniqueId.Mid(safeProjectUniqueId.Length - 41, 5) == " - {")
-            {
-                safeProjectUniqueId = safeProjectUniqueId.Left(safeProjectUniqueId.Length - 41);
-            }
-
-            safeProjectUniqueId = Regex.Replace(safeProjectUniqueId, @"[^a-zA-Z0-9_\.]", string.Empty);
+            var safeProjectUniqueId = Regex.Replace(context.Project.ProjectUniqueId, Constants.SafeProjectUniqueIdRegex, string.Empty);
 
             var tokens = new Dictionary<string, string>
             {
