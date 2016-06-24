@@ -70,7 +70,7 @@ namespace Sitecore.Pathfinder.Packaging.WebsitePackages
                 {
                     continue;
                 }
-
+                                                                  
                 installablePackage.IsInstalled = true;
 
                 if (installedPackage.CompareTo(installablePackage) < 0)

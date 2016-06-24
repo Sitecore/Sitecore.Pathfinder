@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Tasks.Building;
@@ -28,6 +29,11 @@ namespace Sitecore.Pathfinder.Tasks
             if (string.IsNullOrEmpty(hostName))
             {
                 throw new ConfigurationException(Texts.Host_not_found);
+            }
+
+            if (hostName.IndexOf("://", StringComparison.Ordinal) < 0)
+            {
+                hostName = "http://" + hostName;
             }
 
             var result = hostName.TrimEnd('/') + "/" + url.TrimStart('/');

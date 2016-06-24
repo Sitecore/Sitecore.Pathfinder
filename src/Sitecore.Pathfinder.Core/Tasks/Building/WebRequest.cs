@@ -1,5 +1,6 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Web;
@@ -39,6 +40,11 @@ namespace Sitecore.Pathfinder.Tasks.Building
         public virtual string GetUrl()
         {
             var hostName = Configuration.GetString(Constants.Configuration.HostName);
+            if (hostName.IndexOf("://", StringComparison.Ordinal) < 0)
+            {
+                hostName = "http://" + hostName;
+            }
+
             if (string.IsNullOrEmpty(hostName))
             {
                 throw new ConfigurationException(Texts.Host_not_found);
@@ -75,7 +81,7 @@ namespace Sitecore.Pathfinder.Tasks.Building
         [NotNull]
         public virtual WebRequest WithConfiguration()
         {
-            // PostData["configuration"] = Configuration.ToJson();
+            PostData["configuration"] = Configuration.ToJson();
             return this;
         }
 
