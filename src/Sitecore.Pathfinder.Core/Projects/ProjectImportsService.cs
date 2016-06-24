@@ -121,6 +121,11 @@ namespace Sitecore.Pathfinder.Projects
                     template.IsEmittable = false;
                     template.BaseTemplates = element.GetAttributeValue("BaseTemplates");
 
+                    if (string.IsNullOrEmpty(template.BaseTemplates))
+                    {
+                        template.BaseTemplates = Constants.Templates.StandardTemplate;
+                    }
+
                     foreach (var sectionElement in element.Elements())
                     {
                         Guid sectionGuid;

@@ -77,6 +77,8 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
                     field.FieldId = sharedField.FieldId;
                     field.Value = sharedField.Value;
 
+                    item.Fields.Add(field);
+
                     item.References.AddRange(context.ReferenceParser.ParseReferences(item, field.Value));
                 }
 
@@ -95,6 +97,8 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
                         field.Value = versionedField.Value;
                         field.Language = version.Language.ToString();
                         field.Version = version.VersionNumber;
+
+                        item.Fields.Add(field);
 
                         item.References.AddRange(context.ReferenceParser.ParseReferences(item, field.Value));
                     }

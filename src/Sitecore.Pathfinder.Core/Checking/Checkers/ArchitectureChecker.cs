@@ -60,7 +60,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                             continue;
                         }
 
-                        foreach (var diagnostic in Match(item, schemaTextNode))
+                        foreach (var diagnostic in Match(item, schemaTextNode).ToArray())
                         {
                             yield return diagnostic;
                         }
@@ -91,21 +91,6 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                     default:
                         throw new InvalidOperationException("Unexpected schema element: " + childNode.Key);
                 }
-            }
-        }
-
-        [NotNull, ItemNotNull]
-        private IEnumerable<ITextNode> GetRefs([NotNull] ITextNode textNode, [NotNull] string reference)
-        {
-            var element = ((ITextSnapshot)textNode.Snapshot).Root.ChildNodes.FirstOrDefault(e => e.Key == "element" && e.GetAttributeValue("name") == reference);
-            if (element == null)
-            {
-                throw new InvalidOperationException("Element definition not found: " + reference);
-            }
-
-            foreach (var schemaChildNode in GetSchemaChildNodes(element))
-            {
-                yield return schemaChildNode;
             }
         }
 
@@ -142,7 +127,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
             var itemName = textNode.GetAttributeValue("name");
             if (!string.IsNullOrEmpty(itemName))
             {
-                if (itemName != item.ItemName)
+                if (!string.Equals(itemName, item.ItemName, StringComparison.OrdinalIgnoreCase))
                 {
                     isMatch = false;
                 }
@@ -151,7 +136,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
             var templateName = textNode.GetAttributeValue("template");
             if (!string.IsNullOrEmpty(templateName))
             {
-                if (templateName != item.TemplateName)
+                if (!string.Equals(templateName, item.TemplateName, StringComparison.OrdinalIgnoreCase))
                 {
                     isMatch = false;
                 }
@@ -199,10 +184,19 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                 var refs = GetRefs(textNode, reference).ToArray();
                 if (refs.Length > 1)
                 {
-                     throw new InvalidOperationException("Referenced element may only contain one element");
+                    throw new InvalidOperationException("Referenced element may only contain one element");
                 }
 
                 textNode = refs.First();
+            }
+
+            var fieldsTextNode = textNode.ChildNodes.FirstOrDefault(n => n.Key == "fields");
+            if (fieldsTextNode != null)
+            {
+                foreach (var diagnostic in MatchFields(item, fieldsTextNode))
+                {
+                    yield return diagnostic;
+                }
             }
 
             // check MinOccurs and MaxOccurs
@@ -215,6 +209,86 @@ namespace Sitecore.Pathfinder.Checking.Checkers
             var schemaChildNodes = GetSchemaChildNodes(childrenTextNode).ToArray();
             var children = item.Children.ToArray();
 
+            foreach (var diagnostic in MatchMinMaxOccurs(item, schemaTextNode, schemaChildNodes, children))
+            {
+                yield return diagnostic;
+            }
+
+            foreach (var diagnostic in MatchUnexpectedItems(item, children, schemaChildNodes))
+            {
+                yield return diagnostic;
+            }
+
+            // descend into child items
+            foreach (var child in children)
+            {
+                foreach (var schemaChildNode in schemaChildNodes)
+                {
+                    if (!IsMatch(child, schemaChildNode))
+                    {
+                        continue;
+                    }
+
+                    foreach (var diagnostic in Match(child, schemaChildNode))
+                    {
+                        yield return diagnostic;
+                    }
+                }
+            }
+        }
+
+        [ItemNotNull, NotNull]
+        protected virtual IEnumerable<Diagnostic> MatchUnexpectedItems([NotNull] Item item, [NotNull] Item[] children, [NotNull] ITextNode[] schemaChildNodes)
+        {
+            foreach (var child in children)
+            {
+                if (!schemaChildNodes.Any(c => IsMatch(child, c)))
+                {
+                    yield return new Diagnostic(Msg.D1025, item.Snapshots.First().SourceFile.RelativeFileName, TraceHelper.GetTextNode(item).TextSpan, Severity.Error, "Unexpected item: " + child.ItemIdOrPath + " [ArchitectureChecker]");
+                }
+            }
+        }
+
+        [NotNull, ItemNotNull]
+        private IEnumerable<ITextNode> GetRefs([NotNull] ITextNode textNode, [NotNull] string reference)
+        {
+            var element = ((ITextSnapshot)textNode.Snapshot).Root.ChildNodes.FirstOrDefault(e => e.Key == "element" && e.GetAttributeValue("name") == reference);
+            if (element == null)
+            {
+                throw new InvalidOperationException("Element definition not found: " + reference);
+            }
+
+            foreach (var schemaChildNode in GetSchemaChildNodes(element))
+            {
+                yield return schemaChildNode;
+            }
+        }
+
+        [ItemNotNull, NotNull]
+        private IEnumerable<Diagnostic> MatchFields([NotNull] Item item, [NotNull] ITextNode fieldsTextNode)
+        {
+            foreach (var childNode in fieldsTextNode.ChildNodes)
+            {
+                var fieldName = childNode.GetAttributeValue("name");
+                if (string.IsNullOrEmpty(fieldName))
+                {
+                    throw new InvalidOperationException("Schema 'field' element must have 'name' attribute");
+                }
+
+                var use = childNode.GetAttributeValue("use");
+
+                var fieldValue = item[fieldName];
+
+                if (use == "required" && string.IsNullOrEmpty(fieldValue))
+                {
+                    yield return new Diagnostic(Msg.C1065, item.Snapshots.First().SourceFile.RelativeFileName, TraceHelper.GetTextNode(item.Fields[fieldName], item).TextSpan, Severity.Error, $"Field '{fieldName}' is required [ArchitectureChecker]");
+                }
+            }
+        }
+
+        [ItemNotNull, NotNull]
+        private IEnumerable<Diagnostic> MatchMinMaxOccurs([NotNull] Item item, [NotNull] ITextNode schemaTextNode, [NotNull, ItemNotNull] ITextNode[] schemaChildNodes, [NotNull, ItemNotNull] Item[] children)
+        {
             foreach (var schemaChildNode in schemaChildNodes)
             {
                 if (schemaChildNode.Key != "item")
@@ -262,32 +336,6 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                 if (maxOccurs > 0 && count > maxOccurs)
                 {
                     yield return new Diagnostic(Msg.D1025, item.Snapshots.First().SourceFile.RelativeFileName, TraceHelper.GetTextNode(item).TextSpan, Severity.Error, $"Item {GetText(schemaChildNode)} must not occur more than {maxOccurs} times [ArchitectureChecker]");
-                }
-            }
-
-            // check unexpected item
-            foreach (var child in children)
-            {
-                if (!schemaChildNodes.Any(c => IsMatch(child, c)))
-                {
-                    yield return new Diagnostic(Msg.D1025, item.Snapshots.First().SourceFile.RelativeFileName, TraceHelper.GetTextNode(item).TextSpan, Severity.Error, "Unexpected item: " + child.ItemIdOrPath + " [ArchitectureChecker]");
-                }
-            }
-
-            // descend into child items
-            foreach (var child in children)
-            {
-                foreach (var schemaChildNode in schemaChildNodes)
-                {
-                    if (!IsMatch(child, schemaChildNode))
-                    {
-                        continue;
-                    }
-
-                    foreach (var diagnostic in Match(child, schemaChildNode))
-                    {
-                        yield return diagnostic;
-                    }
                 }
             }
         }

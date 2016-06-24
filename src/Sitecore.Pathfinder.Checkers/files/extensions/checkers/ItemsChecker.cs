@@ -46,11 +46,12 @@ namespace Sitecore.Pathfinder.Checkers
         public IEnumerable<Diagnostic> FieldIsNotDefinedInTemplate(ICheckerContext context)
         {
             return from item in context.Project.Items
+                where item.Template != Template.Empty
                 let templateFields = item.Template.GetAllFields().ToList()
                 from field in item.Fields
                 let templateField = templateFields.FirstOrDefault(f => string.Equals(f.FieldName, field.FieldName, StringComparison.OrdinalIgnoreCase))
                 where templateField == null
-                select Error(Msg.C1005, "Field is not defined in the template", TraceHelper.GetTextNode(field.FieldNameProperty, field.Item), field.FieldName);
+                select Error(Msg.C1005, "Field is not defined in the template", TraceHelper.GetTextNode(field.FieldNameProperty, field.Item), "field: " + field.FieldName + ", template: " + item.TemplateName);
         }
 
         [Export("Check")]

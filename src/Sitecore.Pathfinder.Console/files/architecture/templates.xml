@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <schema version="1.0">
 
+    <!--  root -->
+
     <item template="Root">
         <children>
             <item name="client" maxOccurs="1" />
@@ -35,16 +37,30 @@
         </children>
     </item>
 
-    <item template="template" ref="Template" />
-    
-    <item template="Template Folder" ref="TemplateFolder" />
-                             
+    <!--  templates -->
+
     <item template="Jpeg">
         <children>
             <item maxOccurs="0" />
         </children>
     </item>
 
+    <item template="Template" ref="Template" />
+
+    <item template="Template Folder" ref="TemplateFolder" />
+
+    <item template="View Rendering">
+        <fields>
+            <field name="Path" use="required" />
+        </fields>
+        
+        <children>
+            <item maxOccurs="0" />
+        </children>
+    </item>
+
+    <!--  elements -->
+    
     <element name="MediaFolder">
         <item template="Media Folder">
             <children>
@@ -64,20 +80,20 @@
             </children>
         </item>
     </element>
-        
+
+    <element name="Template">
+        <item template="Template">
+            <children>
+                <element ref="TemplateSection" />
+            </children>
+        </item>
+    </element>
+
     <element name="TemplateFolder">
         <item template="Template Folder">
             <children>
                 <element ref="TemplateFolder" />
                 <element ref="Template" />
-            </children>
-        </item>
-    </element>
-        
-    <element name="Template">
-        <item template="Template">
-            <children>
-                <element ref="TemplateSection" />
             </children>
         </item>
     </element>
