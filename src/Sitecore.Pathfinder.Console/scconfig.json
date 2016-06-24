@@ -288,7 +288,7 @@
     },
 
     "write-exports": {
-        "filename": "sitecore.project/exports.xml",
+        "filename": "sitecore.project/build/exports.xml",
         "fields-to-write": "Place Holders"
     },
 

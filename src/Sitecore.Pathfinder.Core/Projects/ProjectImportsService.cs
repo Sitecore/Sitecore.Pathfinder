@@ -20,6 +20,7 @@ namespace Sitecore.Pathfinder.Projects
         [ImportingConstructor]
         public ProjectImportsService([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [NotNull] IProjectPackageService projectPackages)
         {
+            Configuration = configuration;
             Trace = trace;
             Factory = factory;
             FileSystem = fileSystem;
@@ -54,13 +55,13 @@ namespace Sitecore.Pathfinder.Projects
                 ImportElement(project, fileName, element);
             }
         }
-
+                                                                                                
         protected virtual void ImportProjectPackages([NotNull] IProject project)
         {
             // todo: NuGet: handle noconfig
             foreach (var packageInfo in ProjectPackages.GetPackages())
             {
-                var fileName = Path.Combine(packageInfo.ProjectDirectory, "sitecore.project\\exports.xml");
+                var fileName = Path.Combine(packageInfo.ProjectDirectory, Configuration.GetString(Constants.Configuration.WriteExports.FileName));
                 if (!FileSystem.FileExists(fileName))
                 {
                     continue;

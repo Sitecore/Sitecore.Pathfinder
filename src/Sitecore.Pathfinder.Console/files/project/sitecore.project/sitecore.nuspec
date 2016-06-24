@@ -17,7 +17,7 @@
         <file src="bin\**\*.dll" target="lib\net40" exclude="bin\**\Sitecore*.*;bin\**\System*.*;bin\**\Microsoft*.*;bin\**\Lucene.Net.dll;bin\**\Newtonsoft.Json.dll;" />
         <file src="**" target="project" exclude="scc.cmd;sitecore.filetemplates\**;sitecore.project\**;**\bin\**;**\.vscode\**;**\node_modules\**;**\.vs\**;**\packages\**;**\obj\**;**\Properties\**;**\Components\**;**\*.sln;**\*.suo;**\*.csproj;**\*.user;**\*.csproj.sitecore;**\packages.config;**\gulpfile.js;**\readme.md;**\web.config;**\web.*.config;**\*.cs;" />
 
-        <file src="$projectDirectory$\sitecore.project\exports.xml" target="project\sitecore.project\exports.xml" />
+        <file src="$projectDirectory$\sitecore.project\build\exports.xml" target="project\sitecore.project\build\exports.xml" />
         <file src="$projectDirectory$\sitecore.project\extensions\**\*.dll" target="project\sitecore.project\extensions" />
         <file src="$toolsDirectory$\files\extensions\**\*.dll" target="project\sitecore.tools\files\extensions" />
         <file src="$toolsDirectory$\scconfig.json" target="project\sitecore.tools\scconfig.json" />

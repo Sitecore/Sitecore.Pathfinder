@@ -52,12 +52,12 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
                 string nupkgDirectory;
                 if (context.Configuration.IsProjectConfigured())
                 {
-                    nupkgDirectory = Path.GetDirectoryName(nuspecFileName) ?? string.Empty;
+                    nupkgDirectory = Path.Combine(context.ProjectDirectory, "sitecore.project\\build"); 
                 }
                 else
                 {
                     // otherwise create the sitecore.tools directory
-                    nupkgDirectory = Path.Combine(context.ToolsDirectory, "sitecore.project\\" + Path.GetFileNameWithoutExtension(nuspecFileName) + ".nupkg");
+                    nupkgDirectory = Path.Combine(context.ToolsDirectory, "sitecore.project\\build");
                 }
 
                 Pack(context, nuspecFileName, nupkgDirectory);
