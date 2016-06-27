@@ -1,4 +1,4 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using Sitecore.Pathfinder.Diagnostics;
@@ -9,6 +9,8 @@ namespace Sitecore.Pathfinder.IO.PathMappers
     {
         public WebsiteItemPathToProjectDirectoryMapper([NotNull] string databaseName, [NotNull] string itemPath, [NotNull] string projectDirectory, [NotNull] string format, [NotNull] string itemNameInclude, [NotNull] string itemNameExclude, [NotNull] string templateNameInclude, [NotNull] string templateNameExclude)
         {
+            IsMapped = !string.IsNullOrEmpty(projectDirectory);
+
             ItemPath = '/' + PathHelper.NormalizeItemPath(itemPath).Trim('/');
             ProjectDirectory = '\\' + PathHelper.NormalizeFilePath(projectDirectory).Trim('\\');
             DatabaseName = databaseName;
@@ -53,6 +55,8 @@ namespace Sitecore.Pathfinder.IO.PathMappers
 
         public string Format { get; }
 
+        public bool IsMapped { get; }
+
         [NotNull]
         public string ItemNameExclude { get; }
 
@@ -80,6 +84,11 @@ namespace Sitecore.Pathfinder.IO.PathMappers
         {
             projectFileName = string.Empty;
             format = string.Empty;
+
+            if (!IsMapped)
+            {
+                return false;
+            }
 
             if (!itemPath.StartsWith(ItemPath, StringComparison.OrdinalIgnoreCase))
             {

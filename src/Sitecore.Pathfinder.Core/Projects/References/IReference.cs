@@ -1,6 +1,7 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects.References
 {
@@ -14,8 +15,11 @@ namespace Sitecore.Pathfinder.Projects.References
         [NotNull]
         string ReferenceText { get; }
 
-        [NotNull]
+        [CanBeNull]
         SourceProperty<string> SourceProperty { get; }
+
+        [NotNull]
+        ITextNode TextNode { get; }
 
         void Invalidate();
 

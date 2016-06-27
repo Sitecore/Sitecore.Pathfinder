@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -12,11 +13,8 @@ namespace Sitecore.Pathfinder.Parsing.References
     {
         bool IsIgnoredReference([NotNull] string referenceText);
 
-        [CanBeNull]
-        IReference ParseReference([NotNull] IProjectItem projectItem, [NotNull] ITextNode sourceTextNode, [NotNull] string referenceText);
-
         [NotNull, ItemNotNull]
-        IEnumerable<IReference> ParseReferences([NotNull] IProjectItem projectItem, [NotNull] string referenceText);
+        IEnumerable<IReference> ParseReferences([NotNull] Field field);
 
         [NotNull, ItemNotNull]
         IEnumerable<IReference> ParseReferences<T>([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<T> sourceProperty);

@@ -139,6 +139,8 @@ namespace Sitecore.Pathfinder
                 public const string StopOnErrors = "check-project:stop-on-errors";
 
                 public const string TreatWarningsAsErrors = "check-project:treat-warnings-as-errors";
+
+                public const string PathFields= "check-project:path-fields";
             }
 
             public static class CopyDependencies

@@ -1,7 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
 using Sitecore.Pathfinder.Parsing;
 
 namespace Sitecore.Pathfinder.Languages.BinFiles
@@ -16,6 +15,11 @@ namespace Sitecore.Pathfinder.Languages.BinFiles
 
         public override bool CanParse(IParseContext context)
         {
+            if (string.IsNullOrEmpty(context.FilePath))
+            {
+                return false;
+            }
+
             return context.Snapshot.SourceFile.AbsoluteFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
         }
 

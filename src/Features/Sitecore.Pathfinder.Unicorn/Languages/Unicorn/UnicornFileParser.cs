@@ -26,6 +26,11 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
 
         public override bool CanParse(IParseContext context)
         {
+            if (string.IsNullOrEmpty(context.ItemPath))
+            {
+                return false;
+            }
+
             return context.Snapshot.SourceFile.AbsoluteFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
         }
 
@@ -67,40 +72,52 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
 
                 foreach (var sharedField in serializedItem.SharedFields)
                 {
-                    var field = context.Factory.Field(item);
+                    var field = context.Factory.Field(item, new StringTextNode(sharedField.Value, snapshot));
 
                     if (!string.IsNullOrEmpty(sharedField.NameHint))
                     {
                         field.FieldName = sharedField.NameHint;
                     }
 
+                    var value = sharedField.Value;
+                    if (sharedField.FieldType == "tree list")
+                    {
+                        value = value.Replace("\r\n", "|");
+                    }
+
                     field.FieldId = sharedField.FieldId;
-                    field.Value = sharedField.Value;
+                    field.Value = value;
 
                     item.Fields.Add(field);
 
-                    item.References.AddRange(context.ReferenceParser.ParseReferences(item, field.Value));
+                    item.References.AddRange(context.ReferenceParser.ParseReferences(field));
                 }
 
                 foreach (var version in serializedItem.Versions)
                 {
                     foreach (var versionedField in version.Fields)
                     {
-                        var field = context.Factory.Field(item);
+                        var field = context.Factory.Field(item, new StringTextNode(versionedField.Value, snapshot));
 
                         if (!string.IsNullOrEmpty(versionedField.NameHint))
                         {
                             field.FieldName = versionedField.NameHint;
                         }
 
+                        var value = versionedField.Value;
+                        if (versionedField.FieldType == "tree list")
+                        {
+                            value = value.Replace("\r\n", "|");
+                        }
+
                         field.FieldId = versionedField.FieldId;
-                        field.Value = versionedField.Value;
+                        field.Value = value;
                         field.Language = version.Language.ToString();
                         field.Version = version.VersionNumber;
 
                         item.Fields.Add(field);
 
-                        item.References.AddRange(context.ReferenceParser.ParseReferences(item, field.Value));
+                        item.References.AddRange(context.ReferenceParser.ParseReferences(field));
                     }
                 }
 

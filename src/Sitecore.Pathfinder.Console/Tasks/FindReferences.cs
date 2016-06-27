@@ -34,10 +34,10 @@ namespace Sitecore.Pathfinder.Tasks
             {
                 string line = $"{reference.Owner.Snapshots.First().SourceFile.ProjectFileName}";
 
-                var textNode = TraceHelper.GetTextNode(reference.SourceProperty);
+                var textNode = reference.TextNode;
                 line += $"({textNode.TextSpan.LineNumber},{textNode.TextSpan.LineNumber})";
 
-                line += ": " + reference.SourceProperty.GetValue();
+                line += ": " + reference.ReferenceText;
 
                 if (!reference.IsValid)
                 {

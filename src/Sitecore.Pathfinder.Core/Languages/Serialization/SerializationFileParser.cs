@@ -15,6 +15,11 @@ namespace Sitecore.Pathfinder.Languages.Serialization
 
         public override bool CanParse(IParseContext context)
         {
+            if (string.IsNullOrEmpty(context.ItemPath))
+            {
+                return false;
+            }
+
             return context.Snapshot.SourceFile.AbsoluteFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
         }
 

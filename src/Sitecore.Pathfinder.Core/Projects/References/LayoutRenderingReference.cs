@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Projects.References
 
         public override IProjectItem Resolve()
         {
-            var layoutName = SourceProperty.GetValue();
+            var layoutName = ReferenceText;
             foreach (var projectItem in Owner.Project.ProjectItems.Where(i => string.Equals(i.ShortName, layoutName, StringComparison.OrdinalIgnoreCase)))
             {
                 var item = projectItem as Item;

@@ -22,6 +22,11 @@ namespace Sitecore.Pathfinder.Languages.ConfigFiles
 
         public override bool CanParse(IParseContext context)
         {
+            if (string.IsNullOrEmpty(context.FilePath))
+            {
+                return false;
+            }
+
             var fileName = context.Snapshot.SourceFile.AbsoluteFileName;
 
             if (string.Equals(Path.GetFileName(fileName), "app.config", StringComparison.OrdinalIgnoreCase))

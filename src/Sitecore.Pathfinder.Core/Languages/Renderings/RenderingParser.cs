@@ -31,6 +31,11 @@ namespace Sitecore.Pathfinder.Languages.Renderings
 
         public override bool CanParse(IParseContext context)
         {
+            if (string.IsNullOrEmpty(context.FilePath) && string.IsNullOrEmpty(context.ItemPath))
+            {
+                return false;
+            }
+
             var extension = PathHelper.GetExtension(context.Snapshot.SourceFile.AbsoluteFileName);
             return string.Equals(extension, FileExtension, StringComparison.OrdinalIgnoreCase);
         }

@@ -26,6 +26,11 @@ namespace Sitecore.Pathfinder.Languages.Renderings
             var rendering = projectItem as Rendering;
             Assert.Cast(rendering, nameof(rendering));
 
+            if (string.IsNullOrEmpty(rendering.ItemPath))
+            {
+                return;
+            }
+
             var project = rendering.Project;
             var snapshot = rendering.Snapshots.First();
             var snapshotTextNode = new SnapshotTextNode(snapshot);

@@ -34,10 +34,10 @@ namespace Sitecore.Pathfinder.Configuration
         }
 
         [NotNull]
-        protected IConfiguration Configuration { get; }
+        protected ICompositionService CompositionService { get; }
 
         [NotNull]
-        protected ICompositionService CompositionService { get; }
+        protected IConfiguration Configuration { get; }
 
         public virtual BinFile BinFile(IProject project, ISnapshot snapshot, string filePath) => new BinFile(project, snapshot, filePath);
 
@@ -65,6 +65,8 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual FileReference FileReference(IProjectItem owner, SourceProperty<string> sourceSourceProperty, string referenceText) => new FileReference(owner, sourceSourceProperty, referenceText);
 
+        public virtual FileReference FileReference(IProjectItem owner, ITextNode textNode, string referenceText) => new FileReference(owner, textNode, referenceText);
+
         public virtual Item Item(IProject project, ITextNode textNode, Guid guid, string databaseName, string itemName, string itemIdOrPath, string templateIdOrPath) => new Item(project, textNode, guid, databaseName, itemName, itemIdOrPath, templateIdOrPath);
 
         public Item Item(IProject project, ISnapshot snapshot, Guid guid, string databaseName, string itemName, string itemIdOrPath, string templateIdOrPath) => new Item(project, new SnapshotTextNode(snapshot), guid, databaseName, itemName, itemIdOrPath, templateIdOrPath);
@@ -82,6 +84,8 @@ namespace Sitecore.Pathfinder.Configuration
         public virtual ProjectOptions ProjectOptions(string projectDirectory, string databaseName) => new ProjectOptions(projectDirectory, databaseName);
 
         public virtual IReference Reference(IProjectItem projectItem, SourceProperty<string> sourceSourceProperty, string referenceText) => new Reference(projectItem, sourceSourceProperty, referenceText);
+
+        public virtual IReference Reference(IProjectItem projectItem, ITextNode textNode, string referenceText) => new Reference(projectItem, textNode, referenceText);
 
         public virtual Rendering Rendering(IProject project, ISnapshot snapshot, string databaseName, string itemPath, string itemName, string filePath, string templateIdOrPath) => new Rendering(project, snapshot, databaseName, itemPath, itemName, filePath, templateIdOrPath);
 

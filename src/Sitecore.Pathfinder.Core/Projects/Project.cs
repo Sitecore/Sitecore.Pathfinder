@@ -270,6 +270,11 @@ namespace Sitecore.Pathfinder.Projects
                 relativeFileName = relativeFileName.Mid(2);
             }
 
+            if (relativeFileName.StartsWith("\\"))
+            {
+                relativeFileName = relativeFileName.Mid(1);
+            }
+
             return ProjectItems.OfType<T>().Where(f => string.Equals(f.FilePath, fileName, StringComparison.OrdinalIgnoreCase) || f.Snapshots.Any(s => string.Equals(s.SourceFile.RelativeFileName, relativeFileName, StringComparison.OrdinalIgnoreCase)));
         }
 

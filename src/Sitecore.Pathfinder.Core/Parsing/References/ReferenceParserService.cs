@@ -10,8 +10,10 @@ using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing.Pipelines.ReferenceParserPipelines;
 using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -86,20 +88,28 @@ namespace Sitecore.Pathfinder.Parsing.References
             return false;
         }
 
-        public virtual IReference ParseReference(IProjectItem projectItem, ITextNode sourceTextNode, string referenceText)
+        public IEnumerable<IReference> ParseReferences(Field field)
         {
-            if (IsIgnoredReference(referenceText))
+            var value = field.Value;
+
+            var pathFields = Configuration.GetStringList(Constants.Configuration.CheckProject.PathFields);
+            if (pathFields.Contains(field.FieldId.Format()))
             {
-                return null;
+                var sourceProperty = field.ValueProperty;
+                if (sourceProperty.SourceTextNode == TextNode.Empty)
+                {
+                    sourceProperty = field.FieldNameProperty;
+                }
+
+                yield return Factory.FileReference(field.Item, sourceProperty, "~/" + PathHelper.NormalizeItemPath(value).TrimStart('/'));
+                yield break;
             }
 
-            var pipeline = Pipelines.Resolve<ReferenceParserPipeline>().Execute(Factory, projectItem, sourceTextNode, referenceText);
-            return pipeline.Reference;
-        }
-
-        public IEnumerable<IReference> ParseReferences(IProjectItem projectItem, string referenceText)
-        {
-            return ParseReferences(projectItem, new StringTextNode(referenceText, projectItem.Snapshots.First()));
+            var textNode = TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field);
+            foreach (var reference in ParseReferences(field.Item, textNode, field.Value))
+            {
+                yield return reference;
+            }
         }
 
         public virtual IEnumerable<IReference> ParseReferences<T>(IProjectItem projectItem, SourceProperty<T> sourceProperty)
@@ -110,7 +120,7 @@ namespace Sitecore.Pathfinder.Parsing.References
                 return Enumerable.Empty<IReference>();
             }
 
-            return ParseReferences(projectItem, sourceTextNode);
+            return ParseReferences(projectItem, sourceTextNode, sourceTextNode.Value);
         }
 
         public virtual IEnumerable<IReference> ParseReferences(IProjectItem projectItem, ITextNode textNode)
@@ -254,6 +264,18 @@ namespace Sitecore.Pathfinder.Parsing.References
 
                 s = e;
             }
+        }
+
+        [CanBeNull]
+        protected virtual IReference ParseReference([NotNull] IProjectItem projectItem, [NotNull] ITextNode sourceTextNode, [NotNull] string referenceText)
+        {
+            if (IsIgnoredReference(referenceText))
+            {
+                return null;
+            }
+
+            var pipeline = Pipelines.Resolve<ReferenceParserPipeline>().Execute(Factory, projectItem, sourceTextNode, referenceText);
+            return pipeline.Reference;
         }
 
         [ItemNotNull, NotNull]

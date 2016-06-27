@@ -92,7 +92,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
         }
 
         [Diagnostics.CanBeNull]
-        protected string ResolveTemplateIdOrPath([Diagnostics.NotNull] Projects.Items.Item item)
+        protected string ResolveTemplateIdOrPath([Diagnostics.NotNull] Item item)
         {
             var templateIdOrPath = item.TemplateIdOrPath;
             if (Data.ID.IsID(templateIdOrPath) || templateIdOrPath.StartsWith("/sitecore", StringComparison.OrdinalIgnoreCase))
@@ -127,7 +127,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
             return null;
         }
 
-        protected virtual void Validate([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] Projects.Items.Item item, [Diagnostics.NotNull] Data.Items.Item dataItem)
+        protected virtual void Validate([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] Data.Items.Item dataItem)
         {
             var validatorCollection = new ValidatorCollection();
             foreach (BaseValidator validator in ValidatorManager.BuildValidators(ValidatorsMode.ValidatorBar, dataItem))
@@ -189,7 +189,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
             }
         }
 
-        protected void ValidateFields([Diagnostics.NotNull] Data.Database database, [Diagnostics.NotNull] Template template, [Diagnostics.NotNull] Projects.Items.Item projectItem)
+        protected void ValidateFields([Diagnostics.NotNull] Data.Database database, [Diagnostics.NotNull] Template template, [Diagnostics.NotNull] Item projectItem)
         {
             var templateFields = template.GetFields(true);
 
@@ -197,7 +197,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
             {
                 if (templateFields.All(f => !string.Equals(f.Name, field.FieldName, StringComparison.OrdinalIgnoreCase)))
                 {
-                    throw new RetryableEmitException(Msg.E1017, Texts.Field_is_not_defined_in_the_template, TraceHelper.GetTextNode(field.FieldNameProperty), field.FieldName);
+                    throw new RetryableEmitException(Msg.E1017, Texts.Field_is_not_defined_in_the_template, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), field.FieldName);
                 }
 
                 if (!string.IsNullOrEmpty(field.Language))
@@ -261,4 +261,3 @@ namespace Sitecore.Pathfinder.Emitters.Items
         }
     }
 }
-

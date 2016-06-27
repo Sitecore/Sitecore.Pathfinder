@@ -6,7 +6,6 @@ using System.Linq;
 using Sitecore.Pathfinder.Checking;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.References;
-using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checkers
 {
@@ -18,7 +17,7 @@ namespace Sitecore.Pathfinder.Checkers
             return from projectItem in context.Project.ProjectItems
                 from reference in projectItem.References
                 where !reference.IsValid
-                select Error(Msg.C1000, "Reference not found", TraceHelper.GetTextNode(reference.SourceProperty), (reference is FileReference ? "file:/" : string.Empty) + reference.ReferenceText);
+                select Error(Msg.C1000, "Reference not found", reference.TextNode, (reference is FileReference ? "file:/" : string.Empty) + reference.ReferenceText);
         }
     }
 }

@@ -3,8 +3,6 @@
 using System;
 using System.ComponentModel.Composition;
 using System.Linq;
-using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Rules;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
@@ -12,24 +10,39 @@ namespace Sitecore.Pathfinder.Tasks
     public class ListOutput : BuildTaskBase
     {
         [ImportingConstructor]
-        public ListOutput([NotNull] IRuleService ruleService) : base("list-output")
+        public ListOutput() : base("list-output")
         {
-            RuleService = ruleService;
         }
-
-        [NotNull]
-        protected IRuleService RuleService { get; }
 
         public override void Run(IBuildContext context)
         {
-            foreach (var item in context.Project.Items.Where(i => i.IsEmittable).OrderBy(i => i.ItemIdOrPath))
+            foreach (var item in context.Project.Items.Where(i => !i.IsImport).OrderBy(i => i.ItemIdOrPath))
             {
-                Console.WriteLine(item.ItemIdOrPath);
+                var text = item.ItemIdOrPath;
+                if (string.IsNullOrEmpty(text))
+                {
+                    text = item.ItemName;
+                }
+
+                text += " [" + item.TemplateName + "]";
+
+                if (string.IsNullOrEmpty(text))
+                {
+                    text = "? [Item]";
+                }
+
+                Console.WriteLine(text);
             }
 
-            foreach (var item in context.Project.Files.OrderBy(i => i.FilePath))
+            foreach (var filePath in context.Project.Files.OrderBy(i => i.FilePath))
             {
-                Console.WriteLine(item.FilePath);
+                var fileName = filePath.FilePath;
+                if (string.IsNullOrEmpty(fileName))
+                {
+                    continue;
+                }
+
+                Console.WriteLine(fileName);
             }
         }
     }

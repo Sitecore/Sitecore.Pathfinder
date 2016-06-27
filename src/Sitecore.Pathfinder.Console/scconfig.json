@@ -150,6 +150,8 @@
             }
         },
 
+        "path-fields": "{E42081B6-8A95-4A11-89CE-DF70ED502F57},{51B435BC-F7B9-478A-9C51-52916AF96FF5},{78783F79-1411-4B91-958D-AD81F81E2485}",
+
         "treat-warnings-as-errors": false
     },
 
