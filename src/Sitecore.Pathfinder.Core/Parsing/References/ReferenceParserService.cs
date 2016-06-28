@@ -101,7 +101,13 @@ namespace Sitecore.Pathfinder.Parsing.References
                     sourceProperty = field.FieldNameProperty;
                 }
 
-                yield return Factory.FileReference(field.Item, sourceProperty, "~/" + PathHelper.NormalizeItemPath(value).TrimStart('/'));
+                var referenceText = PathHelper.NormalizeItemPath(value);
+                if (!referenceText.StartsWith("~/"))
+                {
+                    referenceText = "~/" + referenceText.TrimStart('/');
+                }
+
+                yield return Factory.FileReference(field.Item, sourceProperty, referenceText);
                 yield break;
             }
 

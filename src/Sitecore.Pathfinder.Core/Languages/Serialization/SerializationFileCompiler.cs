@@ -7,7 +7,6 @@ using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
-using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Serialization
@@ -43,6 +42,12 @@ namespace Sitecore.Pathfinder.Languages.Serialization
 
             var item = itemBuilder.Build(serializationFile.Project, rootTextNode);
             item.IsEmittable = false;
+
+            item.References.AddRange(context.ReferenceParser.ParseReferences(item, item.TemplateIdOrPathProperty));
+            foreach (var field in item.Fields)
+            {
+                item.References.AddRange(context.ReferenceParser.ParseReferences(field));
+            }
 
             var addedItem = serializationFile.Project.AddOrMerge(item);
             serializationFile.SerializationItemUri = addedItem.Uri;

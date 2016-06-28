@@ -1,6 +1,7 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 
@@ -48,7 +49,7 @@ namespace Sitecore.Pathfinder.Extensibility.Pipelines
         }
 
         [CanBeNull]
-        private IPipelineProcessor<T> GetNextProcessor([NotNull][ItemNotNull] IList<IPipelineProcessor<T>> processors, [CanBeNull] IPipelineProcessor<T> currentProcessor)
+        private IPipelineProcessor<T> GetNextProcessor([NotNull, ItemNotNull] IList<IPipelineProcessor<T>> processors, [CanBeNull] IPipelineProcessor<T> currentProcessor)
         {
             if (currentProcessor == null)
             {

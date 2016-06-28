@@ -136,7 +136,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
             if (!item.IsImport)
             {
-                item.References.AddRange(context.ParseContext.ReferenceParser.ParseReferences(item, field.ValueProperty));
+                item.References.AddRange(context.ParseContext.ReferenceParser.ParseReferences(field));
             }
         }
     }

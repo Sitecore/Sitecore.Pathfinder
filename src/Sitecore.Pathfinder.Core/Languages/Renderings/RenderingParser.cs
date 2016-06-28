@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Languages.Renderings
 
         public override bool CanParse(IParseContext context)
         {
-            if (string.IsNullOrEmpty(context.FilePath) && string.IsNullOrEmpty(context.ItemPath))
+            if (string.IsNullOrEmpty(context.FilePath))
             {
                 return false;
             }
@@ -42,6 +42,11 @@ namespace Sitecore.Pathfinder.Languages.Renderings
 
         public override void Parse(IParseContext context)
         {
+            if (string.IsNullOrEmpty(context.ItemPath))
+            {
+                return;
+            }
+
             var rendering = context.Factory.Rendering(context.Project, context.Snapshot, context.DatabaseName, context.ItemPath, context.ItemName, context.FilePath, TemplateIdOrPath);
             context.Project.AddOrMerge(rendering);
 
