@@ -26,25 +26,32 @@
 
 using Sitecore.Data;
 
-namespace Sitecore
+namespace Sitecore.Feature.News
 {
     #region Designer generated code
 
-    public struct TemplateIds
+    public struct Templates
     {
-<# foreach(var template in project.Templates.OrderBy(t => t.Name))
-{
-#>
+<# foreach(var template in project.Templates.OrderBy(t => t.Name)) { #>
         public struct <# Write(template.Name.GetSafeCodeIdentifier()); #>
         
         {
             public static ID ID = new ID("<# Write(template.ID.ToString()); #>");
+<# if (template.Fields.Any()) { #>
+
+            public struct Fields
+            {
+<# foreach(var templateField in template.Fields.OrderBy(t => t.Name)) { #>
+                public static readonly ID <# Write(templateField.Name.GetSafeCodeIdentifier()); #> = new ID("<# Write(templateField.ID.ToString()); #>");
+                public const string <# Write(templateField.Name.GetSafeCodeIdentifier()); #>_FieldName = "<# Write(templateField.Name); #>";
+
+<# } #>
+            }
+
+<# } #>
         }
         
-<#
-}
-#>
-
+<# } #>
     }
 
     #endregion
