@@ -12,6 +12,7 @@ Watch the videos on YouTube:
 
 * [01 - Idea and concepts](https://www.youtube.com/watch?v=TcJ0IoI7sVM)
 * [06 - Visual Studio, T4 templates, unit testing with FakeDB](https://youtu.be/_v6-1NKgxT0)
+* [07 - Linting a Habitat project with Pathfinder](https://www.youtube.com/watch?v=KS4Mq-fm9aU)
 
 _Please notice that some details in these videos are out of date._
 
