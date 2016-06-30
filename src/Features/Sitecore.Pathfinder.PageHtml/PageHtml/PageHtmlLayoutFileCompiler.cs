@@ -61,7 +61,7 @@ namespace Sitecore.Pathfinder.PageHtml.PageHtml
             var renderingItemUri = rendering.RenderingItemUri;
             if (renderingItemUri == ProjectItemUri.Empty)
             {
-                RetryCompilation(projectItem);
+                // RetryCompilation(projectItem);
                 return;
             }
 

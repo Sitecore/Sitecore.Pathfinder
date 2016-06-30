@@ -1,6 +1,5 @@
 // © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
@@ -29,14 +28,6 @@ namespace Sitecore.Pathfinder.Checkers
             return from rendering in context.Project.ProjectItems.OfType<Rendering>()
                 where rendering.ItemName != PathHelper.GetFileNameWithoutExtensions(rendering.FilePath)
                 select Warning(Msg.C1000, "Rendering item name should match file name", rendering.Snapshots.First().SourceFile, $"To fix, rename the rendering file or rename the rendering item");
-        }
-
-        [Export("Check")]
-        public IEnumerable<Diagnostic> RenderingShouldBeInViewsFolder(ICheckerContext context)
-        {
-            return from rendering in context.Project.ProjectItems.OfType<Rendering>()
-                where !rendering.FilePath.StartsWith("~/views/", StringComparison.OrdinalIgnoreCase)
-                select Warning(Msg.C1000, "View rendering should be located in the ~/views/ directory", rendering.Snapshots.First().SourceFile, $"To fix, move the file to the ~/views/ directory");
         }
     }
 }

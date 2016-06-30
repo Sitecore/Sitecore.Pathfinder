@@ -18,9 +18,11 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checkers
 {
-    [Export]   
+    [Export]
     public class HabitatConventions : Checker
     {
+        protected static readonly Guid StandardRenderingParametersGuid = new Guid("{8CA06D6A-B353-44E8-BC31-B528C7306971}");
+
         private string _layerName;
 
         private string _moduleName;
@@ -39,6 +41,37 @@ namespace Sitecore.Pathfinder.Checkers
 
         [NotNull]
         protected string Module => _moduleName ?? (_moduleName = Configuration.GetString("habitat:module"));
+
+        [Export("Check")]
+        public IEnumerable<Diagnostic> AvoidUsingFolderTemplate(ICheckerContext context)
+        {
+            return from item in context.Project.Items
+                where item.TemplateName == "Folder"
+                select Warning(Msg.C1000, $"Avoid using the 'Folder' template. To fix, create a new 'Folder' template, assign Insert Options and change the template of this item", TraceHelper.GetTextNode(item));
+        }
+
+        [Export("Check")]
+        public IEnumerable<Diagnostic> ConfigFileMustBeInCorrectModuleDirectory(ICheckerContext context)
+        {
+            var path = "/App_Config/include/" + Layer + "/" + Module;
+
+            return from configFile in context.Project.ProjectItems.OfType<ConfigFile>()
+                where !configFile.FilePath.StartsWith(path, StringComparison.OrdinalIgnoreCase)
+                select Error(Msg.C1000, $"Config file must be the correct module directory", configFile.Snapshots.First().SourceFile, $"To fix, move the file to the '{path}' directory");
+        }
+
+        [Export("Check")]
+        public IEnumerable<Diagnostic> ControllerRenderingNotAllowedInLayer(ICheckerContext context)
+        {
+            if (Configuration.GetBool("habitat:" + Layer.ToLowerInvariant() + ":allow-controller-rendering"))
+            {
+                return Enumerable.Empty<Diagnostic>();
+            }
+
+            return from item in context.Project.Items
+                where item.TemplateName == "Controller"
+                select Error(Msg.C1000, $"Controller renderings are not allowed in the '{Layer}' layer", TraceHelper.GetTextNode(item));
+        }
 
         [Export("Check")]
         public IEnumerable<Diagnostic> DataSourceTemplatesMustInheritFromDataTemplates(ICheckerContext context)
@@ -109,6 +142,14 @@ namespace Sitecore.Pathfinder.Checkers
             return from template in context.Project.Templates
                 where template.ItemName.EndsWith("Folder") && template.Fields.Any()
                 select Error(Msg.C1000, $"Folder templates must not have any fields. To fix, remove the fields", TraceHelper.GetTextNode(template));
+        }
+
+        [Export("Check")]
+        public IEnumerable<Diagnostic> FolderTemplatesShouldHaveInsertOptions(ICheckerContext context)
+        {
+            return from template in context.Project.Templates
+                where template.ItemName.EndsWith("Folder") && template.StandardValuesItem != null && string.IsNullOrEmpty(template.StandardValuesItem["__Masters"])
+                select Error(Msg.C1000, $"Folder templates should specify Insert Options on their Standard Values item. To fix, assign appropriate Insert Options to the Standard Values item", TraceHelper.GetTextNode(template));
         }
 
         [Export("Check")]
@@ -242,6 +283,31 @@ namespace Sitecore.Pathfinder.Checkers
         }
 
         [Export("Check")]
+        public IEnumerable<Diagnostic> RenderingParametersTemplateMustDeriveFromStandardRenderingParameters(ICheckerContext context)
+        {
+            var standardRenderingParametersTemplate = context.Project.ProjectItems.OfType<Template>().FirstOrDefault(t => t.Uri.Guid == StandardRenderingParametersGuid);
+            if (standardRenderingParametersTemplate == null)
+            {
+                return new[]
+                {
+                    Error(Msg.C1000, "'StandardRenderingParameters' template not found. Are you missing an import?", SourceFile.Empty)
+                };
+            }
+
+            return from template in context.Project.Templates
+                where IsRenderingParametersTemplate(template) && !template.Is(standardRenderingParametersTemplate)
+                select Error(Msg.C1000, $"Folder templates should specify Insert Options on their Standard Values item. To fix, assign appropriate Insert Options to the Standard Values item", TraceHelper.GetTextNode(template));
+        }
+
+        [Export("Check")]
+        public IEnumerable<Diagnostic> RenderingShouldBeInViewsFolder(ICheckerContext context)
+        {
+            return from rendering in context.Project.ProjectItems.OfType<Rendering>()
+                where !rendering.FilePath.StartsWith("~/views/", StringComparison.OrdinalIgnoreCase)
+                select Warning(Msg.C1000, "View rendering should be located in the ~/views/ directory", rendering.Snapshots.First().SourceFile, $"To fix, move the file to the ~/views/ directory");
+        }                                      
+
+        [Export("Check")]
         public IEnumerable<Diagnostic> RenderingsMustBeInCorrectLayer(ICheckerContext context)
         {
             var path = "/sitecore/layout/Renderings/" + Layer;
@@ -319,61 +385,6 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1000, $"Templates should be located in the correct module '{path}'. To fix, move the template into the '{path}' module", TraceHelper.GetTextNode(template));
         }
 
-        [Export("Check")]
-        public IEnumerable<Diagnostic> AvoidUsingFolderTemplate(ICheckerContext context)
-        {
-            return from item in context.Project.Items
-                where item.TemplateName == "Folder"
-                select Warning(Msg.C1000, $"Avoid using the 'Folder' template. To fix, create a new 'Folder' template, assign Insert Options and change the template of this item", TraceHelper.GetTextNode(item));
-        }
-
-        [Export("Check")]
-        public IEnumerable<Diagnostic> FolderTemplatesShouldHaveInsertOptions(ICheckerContext context)
-        {
-            return from template in context.Project.Templates
-                where template.ItemName.EndsWith("Folder") && template.StandardValuesItem != null && string.IsNullOrEmpty(template.StandardValuesItem["__Masters"])
-                select Error(Msg.C1000, $"Folder templates should specify Insert Options on their Standard Values item. To fix, assign appropriate Insert Options to the Standard Values item", TraceHelper.GetTextNode(template));
-        }
-
-        protected static readonly Guid StandardRenderingParametersGuid = new Guid("{8CA06D6A-B353-44E8-BC31-B528C7306971}");
-
-        [Export("Check")]
-        public IEnumerable<Diagnostic> RenderingParametersTemplateMustDeriveFromStandardRenderingParameters(ICheckerContext context)
-        {
-            var standardRenderingParametersTemplate = context.Project.ProjectItems.OfType<Template>().FirstOrDefault(t => t.Uri.Guid == StandardRenderingParametersGuid);
-            if (standardRenderingParametersTemplate == null)
-            {
-                return new[] { Error(Msg.C1000, "'StandardRenderingParameters' template not found. Are you missing an import?", SourceFile.Empty) };
-            }
-
-            return from template in context.Project.Templates
-                where IsRenderingParametersTemplate(template) && !template.Is(standardRenderingParametersTemplate)
-                select Error(Msg.C1000, $"Folder templates should specify Insert Options on their Standard Values item. To fix, assign appropriate Insert Options to the Standard Values item", TraceHelper.GetTextNode(template));
-        }
-
-        [Export("Check")]                                    
-        public IEnumerable<Diagnostic> ControllerRenderingNotAllowedInLayer(ICheckerContext context)
-        {
-            if (Configuration.GetBool("habitat:" + Layer.ToLowerInvariant() + ":allow-controller-rendering"))
-            {
-                return Enumerable.Empty<Diagnostic>();
-            }
-
-            return from item in context.Project.Items
-                where item.TemplateName == "Controller"
-                select Error(Msg.C1000, $"Controller renderings are not allowed in the '{Layer}' layer", TraceHelper.GetTextNode(item));
-        }
-
-        [Export("Check")]                                    
-        public IEnumerable<Diagnostic> ConfigFileMustBeInCorrectModuleDirectory(ICheckerContext context)
-        {
-            var path = "/App_Config/include/" + Layer + "/" + Module;
-
-            return from configFile in context.Project.ProjectItems.OfType<ConfigFile>()
-                where !configFile.FilePath.StartsWith(path, StringComparison.OrdinalIgnoreCase)
-                select Error(Msg.C1000, $"Config file must be the correct module directory", configFile.Snapshots.First().SourceFile, $"To fix, move the file to the '{path}' directory");
-        }
-
         protected virtual bool HasLayout(Template template)
         {
             return template.StandardValuesItem != null && !string.IsNullOrEmpty(template.StandardValuesItem["__Renderings"]);
@@ -396,13 +407,14 @@ namespace Sitecore.Pathfinder.Checkers
             return !template.ItemName.StartsWith("_") && !template.Fields.Any() && HasLayout(template);
         }
 
-        protected virtual bool IsSettingsItem(Item item)
-        {
-            return item.ItemIdOrPath.StartsWith("/sitecore/system/Settings", StringComparison.OrdinalIgnoreCase);
-        }
         protected virtual bool IsRenderingParametersTemplate(Template template)
         {
             return template.ItemName.StartsWith("ParametersTemplate_");
+        }
+
+        protected virtual bool IsSettingsItem(Item item)
+        {
+            return item.ItemIdOrPath.StartsWith("/sitecore/system/Settings", StringComparison.OrdinalIgnoreCase);
         }
     }
 }
