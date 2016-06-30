@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Checking;
-using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Templates;
@@ -131,7 +130,7 @@ namespace Sitecore.Pathfinder.Checkers
                 from field in item.Fields
                 let templateField = field.TemplateField
                 where templateField != TemplateField.Empty && templateField.Uri.Guid != field.FieldId
-                select Warning(Msg.C1024, "Field ID and Template Field ID differs", TraceHelper.GetTextNode(field.FieldIdProperty, field), $"FieldId: {field.FieldId.Format()}, TemplateFieldId: {templateField.Uri.Guid.Format()}");
+                select Warning(Msg.C1024, "Field ID and Template Field ID differ", TraceHelper.GetTextNode(field.FieldIdProperty, field), $"FieldId: {field.FieldId.Format()}, TemplateFieldId: {templateField.Uri.Guid.Format()}");
         }
 
         [Export("Check")]

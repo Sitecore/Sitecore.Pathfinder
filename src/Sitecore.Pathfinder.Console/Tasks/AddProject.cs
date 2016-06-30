@@ -61,6 +61,11 @@ namespace Sitecore.Pathfinder.Tasks
             }
 
             var defaultDataFolderDirectory = context.Configuration.GetString(Constants.Configuration.NewProject.DefaultDataFolderDirectory).TrimEnd('\\');
+            if (string.IsNullOrEmpty(defaultDataFolderDirectory) && !string.IsNullOrEmpty(defaultWebsiteDirectory))
+            {
+                defaultDataFolderDirectory = Path.Combine(Path.GetDirectoryName(defaultWebsiteDirectory) ?? string.Empty, "Data");
+            }
+
             if (!string.IsNullOrEmpty(defaultDataFolderDirectory))
             {
                 config = config.Replace("c:\\\\inetpub\\\\wwwroot\\\\Sitecore.Default\\\\Data", defaultDataFolderDirectory.Replace("\\", "\\\\"));

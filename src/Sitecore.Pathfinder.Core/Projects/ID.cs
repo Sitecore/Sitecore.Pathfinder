@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using Sitecore.Pathfinder.Diagnostics;
@@ -49,6 +49,11 @@ namespace Sitecore.Pathfinder.Projects
         public static bool operator !=([CanBeNull] ID left, [CanBeNull] ID right)
         {
             return !Equals(left, right);
+        }
+
+        public Guid ToGuid()
+        {
+            return _guid;
         }
 
         public override string ToString()

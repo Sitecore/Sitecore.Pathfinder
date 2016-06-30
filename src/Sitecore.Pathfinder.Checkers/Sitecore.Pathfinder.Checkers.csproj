@@ -54,9 +54,12 @@
     <Compile Include="files\extensions\checkers\FieldsChecker.cs" />
     <Compile Include="files\extensions\checkers\FilesChecker.cs" />
     <Compile Include="files\extensions\checkers\ItemsChecker.cs" />
+    <Compile Include="files\extensions\checkers\LayoutsChecker.cs" />
+    <Compile Include="files\extensions\checkers\ProjectChecker.cs" />
     <Compile Include="files\extensions\checkers\TemplateHelpChecker.cs" />
     <Compile Include="files\extensions\checkers\TemplatesChecker.cs" />
     <Compile Include="files\extensions\checkers\ReferencesChecker.cs" />
+    <Compile Include="files\extensions\conventions\HabitatConventions.cs" />
     <Compile Include="files\extensions\conventions\PathfinderProjectFileSystemConventions.cs" />
     <Compile Include="files\extensions\conventions\SitecoreTemplateConventions.cs" />
     <Compile Include="files\project\sitecore.filetemplates\codegenerators\PocoTemplate.cs" />

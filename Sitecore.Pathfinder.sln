@@ -89,6 +89,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{2913B82E-E
 		docs\06. Package Installer UI.md = docs\06. Package Installer UI.md
 		docs\07. Developer Environment.md = docs\07. Developer Environment.md
 		docs\08. External Tools.md = docs\08. External Tools.md
+		docs\09. Checkers.md = docs\09. Checkers.md
 		docs\README.md = docs\README.md
 	EndProjectSection
 EndProject

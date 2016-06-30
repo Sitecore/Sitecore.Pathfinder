@@ -1,4 +1,4 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -15,10 +15,10 @@ namespace Sitecore.Pathfinder.Projects.Templates
         public static readonly Template Empty = new Template(Projects.Project.Empty, TextNode.Empty, new Guid("{00000000-0000-0000-0000-000000000000}"), string.Empty, string.Empty, string.Empty);
 
         [CanBeNull, ItemNotNull]
-        private ID[] _baseTemplates;
+        private List<TemplateField> _allFields;
 
         [CanBeNull, ItemNotNull]
-        private List<TemplateField> _allFields;
+        private ID[] _baseTemplateIDs;
 
         public Template([NotNull] IProject project, [NotNull] ITextNode textNode, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, textNode, guid, databaseName, itemName, itemIdOrPath)
         {
@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         }
 
         [NotNull, ItemNotNull, Obsolete("Use BaseTemplates instead", false)]
-        public ID[] BaseTemplateIDs => _baseTemplates ?? (_baseTemplates = BaseTemplates.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries).Select(id => new ID(id)).ToArray());
+        public ID[] BaseTemplateIDs => _baseTemplateIDs ?? (_baseTemplateIDs = BaseTemplates.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries).Select(id => new ID(id)).ToArray());
 
         [NotNull]
         public string BaseTemplates
@@ -39,7 +39,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
             set
             {
                 BaseTemplatesProperty.SetValue(value);
-                _baseTemplates = null;
+                _baseTemplateIDs = null;
             }
         }
 
@@ -87,6 +87,21 @@ namespace Sitecore.Pathfinder.Projects.Templates
             return GetAllFields(templates);
         }
 
+        [ItemNotNull, NotNull]
+        public virtual IEnumerable<Template> GetBaseTemplates()
+        {
+            var baseTemplates = BaseTemplates.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var baseTemplate in baseTemplates)
+            {
+                var template = Project.FindQualifiedItem<Template>(new ProjectItemUri(Database.DatabaseName, new Guid(baseTemplate)));
+                if (template != null)
+                {
+                    yield return template;
+                }
+            }
+        }
+
         [CanBeNull]
         public virtual TemplateField GetField([NotNull] string fieldName)
         {
@@ -99,6 +114,11 @@ namespace Sitecore.Pathfinder.Projects.Templates
             }
 
             return null;
+        }
+
+        public bool Is([NotNull] Template template)
+        {
+            return GetBaseTemplates().Any(t => t.Uri == template.Uri);
         }
 
         public void Merge([NotNull] Template newTemplate)
@@ -140,7 +160,6 @@ namespace Sitecore.Pathfinder.Projects.Templates
                 {
                     continue;
                 }
-
 
                 foreach (var templateField in baseTemplate.GetAllFields(templates))
                 {

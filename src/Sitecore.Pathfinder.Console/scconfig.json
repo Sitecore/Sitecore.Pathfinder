@@ -78,6 +78,10 @@
         // if true, all files are parsed and processed, otherwise only mapped files are processed (mapped files are specifed in project-website-mappings:project-to-website)
         "parse-all-files": true,
 
+        "renderings": {
+            "create-items-for-partial-views": false
+        },
+
         // execute Sitecore validators after item or template has been updated
         "run-sitecore-validators": true,
 
@@ -413,6 +417,36 @@
         "project-extensions-assembly-filename": "Sitecore.Pathfinder.Extensions.dll"
     },
 
+    // settings for habitat projects
+    "habitat": {                                         
+        "layer": "",
+        "module": "",
+
+        "foundation": {
+            "allow-data-templates": true,
+            "allow-page-type-templates": false,
+            "allow-data-source-templates": false,
+            "allow-settings-items": true,
+            "allow-controller-rendering": true
+        },
+
+        "feature": {
+            "allow-data-templates": true,
+            "allow-page-type-templates": false,
+            "allow-data-source-templates": false,
+            "allow-settings-items": true,
+            "allow-controller-rendering": true
+        },
+
+        "project": {
+            "allow-data-templates": false,
+            "allow-page-type-templates": true,
+            "allow-data-source-templates": true,
+            "allow-settings-items": false,
+            "allow-controller-rendering": false
+        }
+    },
+
     "messages": {
         "system-0": {
             // comma separated list of message numbers to ignore
@@ -443,6 +477,7 @@
         "default": {
             "SitecoreTemplate": "enabled",
 
+            "Habitat": "disabled" ,
             "PathfinderProjectFileSystem": "disabled",
             "TemplateHelp": "disabled"
         },
@@ -459,10 +494,12 @@
         "habitat": {
             "based-on": "default",
 
+            "Habitat": "enabled",
+            "AvoidEmptyTemplate": "disabled",
+            "AvoidEmptyTemplateSection": "disabled",
             "AvoidSpacesInItemNames": "disabled",
             "AvoidSpacesInTemplateNames": "disabled",
             "DeleteUnusedTemplates": "disabled",
-            "AvoidEmptyTemplateSection": "disabled",
             "TemplateShouldHaveIcon": "disabled"
         },
 

@@ -177,7 +177,7 @@ namespace Sitecore.Pathfinder.Checkers
                 let validFrom = item.Publishing.ValidFrom
                 let validTo = item.Publishing.ValidTo
                 where validFrom != DateTime.MinValue && validTo != DateTime.MinValue && validFrom > validTo
-                select Warning(Msg.C1021, "he Valid From date is after the Valid To date", TraceHelper.GetTextNode(item.Fields[Constants.Fields.ValidFrom], item.Fields[Constants.Fields.ValidTo], item), "Change either the Valid From date or the Valid To date");
+                select Warning(Msg.C1021, "The Valid From date is after the Valid To date", TraceHelper.GetTextNode(item.Fields[Constants.Fields.ValidFrom], item.Fields[Constants.Fields.ValidTo], item), "Change either the Valid From date or the Valid To date");
         }
     }
 }

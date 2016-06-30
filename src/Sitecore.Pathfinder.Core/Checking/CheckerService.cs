@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Framework.ConfigurationModel;
@@ -185,6 +186,7 @@ namespace Sitecore.Pathfinder.Checking
             return checkers.Where(c => c.Severity != CheckerSeverity.Disabled).ToArray();
         }
 
+        [DebuggerDisplay("{GetType().Name,nq}: {Name}, {Category}")]
         protected class CheckerInfo
         {
             public CheckerInfo([NotNull] Func<ICheckerContext, IEnumerable<Diagnostic>> checker)

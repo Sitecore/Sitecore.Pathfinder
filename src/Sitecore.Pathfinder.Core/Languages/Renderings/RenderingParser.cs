@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -42,7 +43,8 @@ namespace Sitecore.Pathfinder.Languages.Renderings
 
         public override void Parse(IParseContext context)
         {
-            if (string.IsNullOrEmpty(context.ItemPath))
+            // check if creating items for partial views (file name starts with '_')
+            if (Path.GetFileName(context.FilePath).StartsWith("_") && !context.Configuration.GetBool(Constants.Configuration.BuildProject.Renderings.CreateItemsForPartialViews))
             {
                 return;
             }

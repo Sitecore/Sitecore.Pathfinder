@@ -14,6 +14,7 @@ namespace Sitecore.Pathfinder
     public static class Constants
     {
         public const string ExtensionsAssemblyFileName = "Sitecore.Pathfinder.Checker.dll";
+
         public const string SafeProjectUniqueIdRegex = @"[^a-zA-Z0-9_\.]";
 
         [NotNull]
@@ -126,6 +127,11 @@ namespace Sitecore.Pathfinder
                 public const string RunValidators = "build-project:run-sitecore-validators";
 
                 public const string Tasks = "build-project:tasks";
+
+                public static class Renderings
+                {
+                    public const string CreateItemsForPartialViews = "build-project:renderings:create-items-for-partial-views";
+                }
             }
 
             public static class CheckProject
@@ -136,11 +142,11 @@ namespace Sitecore.Pathfinder
 
                 public const string IgnoredReferences = "check-project:ignored-references";
 
+                public const string PathFields = "check-project:path-fields";
+
                 public const string StopOnErrors = "check-project:stop-on-errors";
 
                 public const string TreatWarningsAsErrors = "check-project:treat-warnings-as-errors";
-
-                public const string PathFields= "check-project:path-fields";
             }
 
             public static class CopyDependencies
