@@ -58,7 +58,7 @@ namespace Sitecore.Pathfinder.Parsing
         [NotNull]
         protected IConsoleService Console { get; }
 
-        public IParseContext With(IProject project, ISnapshot snapshot, PathMappingContext pathMappingContext)
+        public IParseContext With(IProject project, IDiagnosticCollector diagnosticColletor, ISnapshot snapshot, PathMappingContext pathMappingContext)
         {
             Project = project;
             Snapshot = snapshot;
@@ -69,7 +69,7 @@ namespace Sitecore.Pathfinder.Parsing
             DatabaseName = pathMappingContext.DatabaseName;
             UploadMedia = pathMappingContext.UploadMedia;
 
-            Trace = new ProjectDiagnosticTraceService(Configuration, Console, Factory).With(Project);
+            Trace = new DiagnosticTraceService(Configuration, Console, Factory).With(diagnosticColletor);
 
             return this;
         }

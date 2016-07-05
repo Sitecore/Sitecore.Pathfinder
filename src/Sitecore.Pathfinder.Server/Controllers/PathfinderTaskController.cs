@@ -3,6 +3,7 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Reflection;
 using System.Web.Mvc;
 using Sitecore.Diagnostics;
 using Sitecore.IO;
@@ -64,6 +65,15 @@ namespace Sitecore.Pathfinder.Controllers
                 instance.Run(context);
 
                 return context.ActionResult ?? Content(output.ToString(), "text/plain");
+            }
+            catch (ReflectionTypeLoadException ex)
+            {
+                foreach (var loaderException in ex.LoaderExceptions)
+                {
+                    Console.WriteLine(loaderException.Message);
+                }
+
+                throw;
             }
             catch (Exception ex)
             {

@@ -27,7 +27,7 @@ namespace Sitecore.Pathfinder.Projects
     public delegate void ProjectChangedEventHandler([NotNull] object sender);
 
     [Export, Export(typeof(IProject)), PartCreationPolicy(CreationPolicy.NonShared), DebuggerDisplay("{GetType().Name,nq}: {ProjectDirectory}")]
-    public class Project : SourcePropertyBag, IProject, IDiagnosticContainer
+    public class Project : SourcePropertyBag, IProject, IDiagnosticCollector
     {
         [NotNull]
         public static readonly IProjectBase Empty = new Project();
@@ -159,7 +159,7 @@ namespace Sitecore.Pathfinder.Projects
 
             try
             {
-                ParseService.Parse(this, sourceFile);
+                ParseService.Parse(this, this, sourceFile);
             }
             catch (Exception ex)
             {
@@ -241,7 +241,7 @@ namespace Sitecore.Pathfinder.Projects
 
             Lock(Locking.ReadOnly);
 
-            Checker.CheckProject(this);
+            Checker.CheckProject(this, this);
 
             Lock(Locking.ReadWrite);
 
@@ -261,24 +261,24 @@ namespace Sitecore.Pathfinder.Projects
         {
             if (!qualifiedName.StartsWith("{") || !qualifiedName.EndsWith("}"))
             {
-                return Index.FirstOrDefault<T>(qualifiedName);
+                return Index.FindQualifiedItem<T>(qualifiedName);
             }
 
             Guid guid;
             if (Guid.TryParse(qualifiedName, out guid))
             {
-                return Index.FirstOrDefault<T>(guid);
+                return Index.FindQualifiedItem<T>(guid);
             }
 
             guid = StringHelper.ToGuid(qualifiedName);
-            return Index.FirstOrDefault<T>(guid);
+            return Index.FindQualifiedItem<T>(guid);
         }
 
         public T FindQualifiedItem<T>(Database database, string qualifiedName) where T : DatabaseProjectItem
         {
             if (!qualifiedName.StartsWith("{") || !qualifiedName.EndsWith("}"))
             {
-                return Index.FirstOrDefault<T>(database, qualifiedName);
+                return Index.FindQualifiedItem<T>(database, qualifiedName);
             }
 
             Guid guid;
@@ -293,7 +293,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public T FindQualifiedItem<T>(IProjectItemUri uri) where T : class, IProjectItem
         {
-            return Index.FirstOrDefault<T>(uri);
+            return Index.FindQualifiedItem<T>(uri);
         }
 
         public IEnumerable<T> GetByFileName<T>(string fileName) where T : File
@@ -314,27 +314,27 @@ namespace Sitecore.Pathfinder.Projects
 
         public IEnumerable<T> GetByQualifiedName<T>(string qualifiedName) where T : class, IProjectItem
         {
-            return Index.WhereQualifiedName<T>(qualifiedName);
+            return Index.GetByQualifiedName<T>(qualifiedName);
         }
 
         public IEnumerable<T> GetByQualifiedName<T>(Database database, string qualifiedName) where T : DatabaseProjectItem
         {
-            return Index.WhereQualifiedName<T>(database, qualifiedName);
+            return Index.GetByQualifiedName<T>(database, qualifiedName);
         }
 
         public IEnumerable<T> GetByShortName<T>(string shortName) where T : class, IProjectItem
         {
-            return Index.WhereShortName<T>(shortName);
+            return Index.GetByShortName<T>(shortName);
         }
 
         public IEnumerable<T> GetByShortName<T>(Database database, string shortName) where T : DatabaseProjectItem
         {
-            return Index.WhereShortName<T>(database, shortName);
+            return Index.GetByShortName<T>(database, shortName);
         }
 
         public IEnumerable<Item> GetChildren(Item item)
         {
-            return Index.WhereChildOf(item);
+            return Index.GetChildren(item);
         }
 
         public Database GetDatabase(string databaseName)
@@ -458,7 +458,7 @@ namespace Sitecore.Pathfinder.Projects
 
             if (items.Length == 0)
             {
-                items = Index.WhereQualifiedName<Item>(newItem.Database, newItem.ItemIdOrPath).ToArray();
+                items = Index.GetByQualifiedName<Item>(newItem.Database, newItem.ItemIdOrPath).ToArray();
             }
 
             if (items.Length == 0)
@@ -487,7 +487,7 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         protected virtual IProjectItem MergeTemplate<T>([NotNull] T newTemplate) where T : Template
         {
-            var templates = Index.WhereQualifiedName<Template>(newTemplate.Database, newTemplate.ItemIdOrPath).ToArray();
+            var templates = Index.GetByQualifiedName<Template>(newTemplate.Database, newTemplate.ItemIdOrPath).ToArray();
 
             if (templates.Length == 0)
             {
@@ -521,7 +521,7 @@ namespace Sitecore.Pathfinder.Projects
             }
         }
 
-        void IDiagnosticContainer.Add(Diagnostic diagnostic)
+        void IDiagnosticCollector.Add(Diagnostic diagnostic)
         {
             _diagnostics.Add(diagnostic);
         }

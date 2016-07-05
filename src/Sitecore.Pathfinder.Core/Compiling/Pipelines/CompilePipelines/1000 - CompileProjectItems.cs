@@ -23,12 +23,12 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
         protected override void Process(CompilePipeline pipeline)
         {
-            var context = CompileContextFactory.New().With(pipeline.Project);
+            var context = CompileContextFactory.New().With(pipeline.Context.Project);
 
             IProjectItem[] projectItems;
             do
             {
-                projectItems = pipeline.Project.ProjectItems.Where(i => i.CompilationState == CompiltationState.Pending).ToArray();
+                projectItems = pipeline.Context.Project.ProjectItems.Where(i => i.CompilationState == CompiltationState.Pending).ToArray();
 
                 for (var index = projectItems.Length - 1; index >= 0; index--)
                 {

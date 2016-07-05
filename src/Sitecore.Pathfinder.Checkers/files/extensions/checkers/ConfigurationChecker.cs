@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Checking;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -22,10 +23,14 @@ namespace Sitecore.Pathfinder.Checkers
     public class ConfigurationChecker : Checker
     {
         [ImportingConstructor]
-        public ConfigurationChecker([NotNull] IFileSystemService fileSystem)
+        public ConfigurationChecker([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem)
         {
+            Configuration = configuration;
             FileSystem = fileSystem;
         }
+
+        [NotNull]
+        protected IConfiguration Configuration { get; }
 
         [NotNull]
         protected IFileSystemService FileSystem { get; }
@@ -33,7 +38,7 @@ namespace Sitecore.Pathfinder.Checkers
         [Export("Check")]
         public IEnumerable<Diagnostic> TypeNotFound(ICheckerContext context)
         {
-            var ignoreAssemblies = context.Configuration.GetStringList(Constants.Configuration.CheckProject.ConfigurationCheckerDevAssemblies, GetStringListOptions.UseKey).ToArray();
+            var ignoreAssemblies = Configuration.GetStringList(Constants.Configuration.CheckProject.ConfigurationCheckerDevAssemblies, GetStringListOptions.UseKey).ToArray();
 
             foreach (var configFile in context.Project.ProjectItems.OfType<ConfigFile>())
             {

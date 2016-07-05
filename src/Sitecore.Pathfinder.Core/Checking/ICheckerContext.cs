@@ -1,7 +1,6 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Globalization;
-using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
@@ -10,9 +9,6 @@ namespace Sitecore.Pathfinder.Checking
 {
     public interface ICheckerContext
     {
-        [NotNull]
-        IConfiguration Configuration { get; }
-
         [NotNull]
         CultureInfo Culture { get; }
 
@@ -30,6 +26,6 @@ namespace Sitecore.Pathfinder.Checking
         ITraceService Trace { get; }
 
         [NotNull]
-        ICheckerContext With([NotNull] IProjectBase project);
+        ICheckerContext With([NotNull] IProjectBase project, [CanBeNull] IDiagnosticCollector collector);
     }
 }

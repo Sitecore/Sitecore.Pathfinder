@@ -91,7 +91,7 @@
     <Compile Include="Projects\IProject.cs" />
     <Compile Include="Projects\IProjectItemUri.cs" />
     <Compile Include="Projects\LockableList.cs" />
-    <Compile Include="Projects\IDiagnosticContainer.cs" />
+    <Compile Include="Projects\IDiagnosticCollector.cs" />
     <Compile Include="Projects\ILockable.cs" />
     <Compile Include="Projects\IProjectIndexer.cs" />
     <Compile Include="Projects\ProjectIndex.cs" />
@@ -104,7 +104,8 @@
     <Compile Include="Tasks\Building\BuildContext.cs" />
     <Compile Include="Tasks\Building\IBuildTask.cs" />
     <Compile Include="Tasks\Building\WebRequest.cs" />
-    <Compile Include="Tasks\IAlwaysRunTask.cs" />
+    <Compile Include="Tasks\ISetupTask.cs" />
+    <Compile Include="Tasks\IIgnoreAbortedTask.cs" />
     <Compile Include="Tasks\IPostRunTask.cs" />
     <Compile Include="Tasks\IPreRunTask.cs" />
     <Compile Include="Tasks\IScriptTask.cs" />
@@ -385,7 +386,7 @@
     <Compile Include="Languages\Serialization\SerializationFileParser.cs" />
     <Compile Include="Parsing\IParseService.cs" />
     <Compile Include="Projects\Diagnostic.cs" />
-    <Compile Include="Projects\ProjectDiagnosticTraceService.cs" />
+    <Compile Include="Projects\DiagnosticTraceService.cs" />
     <Compile Include="Projects\ProjectOptions.cs" />
     <Compile Include="Projects\References\FileReference.cs" />
     <Compile Include="Projects\References\IReference.cs" />

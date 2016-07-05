@@ -108,7 +108,7 @@ namespace Sitecore.Pathfinder.Tasks
                 }
             }
 
-            if (context.IsAborted && !(task is IAlwaysRunTask))
+            if (context.IsAborted && !(task is IIgnoreAbortedTask))
             {
                 return;
             }

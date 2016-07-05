@@ -1,6 +1,5 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Checking;
@@ -16,7 +15,7 @@ namespace Sitecore.Pathfinder.Tasks
         public CheckProject([NotNull] ICheckerService checkerService) : base("check-project")
         {
             CheckerService = checkerService;
-        }                                   
+        }
 
         [NotNull]
         protected ICheckerService CheckerService { get; }

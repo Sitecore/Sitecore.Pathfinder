@@ -48,11 +48,11 @@ namespace Sitecore.Pathfinder.Checking
         [NotNull]
         protected IFactoryService Factory { get; }
 
-        public ICheckerContext With(IProjectBase project)
+        public ICheckerContext With(IProjectBase project, IDiagnosticCollector collector)
         {
             Project = project;
 
-            Trace = new ProjectDiagnosticTraceService(Configuration, Console, Factory).With(Project);
+            Trace = new DiagnosticTraceService(Configuration, Console, Factory).With(collector);
 
             return this;
         }

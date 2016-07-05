@@ -1,5 +1,6 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System.Reflection;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pipelines;
@@ -16,8 +17,15 @@ namespace Sitecore.Pathfinder.Pipelines.Loader
                 return;
             }
 
-            var pipelines = app.CompositionService.Resolve<IPipelineService>();
-            pipelines.Resolve<LoaderPipeline>().Execute();
+            try
+            {
+                var pipelines = app.CompositionService.Resolve<IPipelineService>();
+                pipelines.Resolve<LoaderPipeline>().Execute();
+            }
+            catch (ReflectionTypeLoadException ex)
+            {
+                throw;
+            }
         }
     }
 }

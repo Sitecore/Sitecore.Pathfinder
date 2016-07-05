@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
+using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -19,8 +20,9 @@ namespace Sitecore.Pathfinder.Checking.Checkers
     public class ArchitectureChecker : Checker
     {
         [ImportingConstructor]
-        public ArchitectureChecker([NotNull] IFileSystemService fileSystem, [NotNull] ISnapshotService snapshotService, [NotNull] IFactoryService factory, [NotNull] IPathMapperService pathMapper)
+        public ArchitectureChecker([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem, [NotNull] ISnapshotService snapshotService, [NotNull] IFactoryService factory, [NotNull] IPathMapperService pathMapper)
         {
+            Configuration = configuration;
             FileSystem = fileSystem;
             SnapshotService = snapshotService;
             Factory = factory;
@@ -29,6 +31,9 @@ namespace Sitecore.Pathfinder.Checking.Checkers
 
         [NotNull]
         protected IFactoryService Factory { get; }
+
+        [NotNull]
+        protected IConfiguration Configuration { get; }
 
         [NotNull]
         protected IFileSystemService FileSystem { get; }
@@ -159,7 +164,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         {
             var pathMappingContext = new PathMappingContext(PathMapper);
 
-            var directory = Path.Combine(context.Configuration.GetToolsDirectory(), "files\\architecture");
+            var directory = Path.Combine(Configuration.GetToolsDirectory(), "files\\architecture");
 
             foreach (var fileName in FileSystem.GetFiles(directory, "*.xml", SearchOption.AllDirectories))
             {

@@ -171,6 +171,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Compile Include="Tasks\AddProject.cs" />
+    <Compile Include="Tasks\CheckWebsite.cs" />
     <Compile Include="Tasks\CleanWebsite.cs" />
     <Compile Include="Tasks\ComparePackages.cs" />
     <Compile Include="Tasks\InitGrunt.cs" />
@@ -184,6 +185,7 @@
     <Compile Include="Tasks\ShowStatus.cs" />
     <Compile Include="Tasks\ShowWebsite.cs" />
     <Compile Include="Tasks\ShowConfig.cs" />
+    <Compile Include="Tasks\UpdateWebsiteFiles.cs" />
     <Compile Include="Tasks\WriteExports.cs" />
     <Compile Include="Tasks\WriteSerialization.cs" />
     <Compile Include="Tasks\CheckProject.cs" />
@@ -199,7 +201,7 @@
     <Compile Include="Tasks\InstallProject.cs" />
     <Compile Include="Tasks\PublishDatabase.cs" />
     <Compile Include="Tasks\WatchProject.cs" />
-    <Compile Include="Tasks\BeforeBuild.cs" />
+    <Compile Include="Tasks\CheckScconfig.cs" />
     <Compile Include="Pipelines\BeforeBuildPipelines\BeforeBuildPipeline.cs" />
     <Compile Include="Tasks\Help.cs" />
     <Compile Include="Tasks\CopyDependencies.cs" />
@@ -454,6 +456,9 @@
     <None Include="help\index.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="help\tasks\update-website-files.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="help\tasks\compare-projects.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -463,7 +468,7 @@
     <None Include="help\tasks\list-checkers.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="help\tasks\before-build.md">
+    <None Include="help\tasks\check-scconfig.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="help\tasks\import-website.md">

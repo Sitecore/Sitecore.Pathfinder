@@ -5,7 +5,7 @@ using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Projects
 {
-    public interface IDiagnosticContainer
+    public interface IDiagnosticCollector
     {
         [NotNull, ItemNotNull]
         IEnumerable<Diagnostic> Diagnostics { get; }

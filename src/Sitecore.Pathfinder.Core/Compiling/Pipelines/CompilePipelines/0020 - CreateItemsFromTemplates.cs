@@ -19,16 +19,16 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
         protected override void Process(CompilePipeline pipeline)
         {
             // todo: consider if imports should be omitted or not
-            var templates = pipeline.Project.Templates.ToList();
+            var templates = pipeline.Context.Project.Templates.ToList();
 
             foreach (var template in templates)
             {
-                if (pipeline.Project.FindQualifiedItem<Item>(template.Uri) != null)
+                if (pipeline.Context.Project.FindQualifiedItem<Item>(template.Uri) != null)
                 {
                     continue;
                 }
 
-                CreateItems(pipeline.Context, pipeline.Project, template);
+                CreateItems(pipeline.Context, pipeline.Context.Project, template);
             }
         }
 
