@@ -162,7 +162,7 @@ namespace Sitecore.Pathfinder.IO
         }
 
         [NotNull]
-        public static string GetItemPath([NotNull] IProject project, [NotNull] ISourceFile sourceFile, [NotNull] string localFileDirectory, [NotNull] string itemPath)
+        public static string GetItemPath([NotNull] IProjectBase project, [NotNull] ISourceFile sourceFile, [NotNull] string localFileDirectory, [NotNull] string itemPath)
         {
             var result = "/" + NormalizeItemPath(UnmapPath(project.ProjectDirectory, sourceFile.AbsoluteFileName)).TrimStart('/');
 

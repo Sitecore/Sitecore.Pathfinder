@@ -50,7 +50,7 @@ namespace Sitecore.Pathfinder.Languages.Renderings
                 item.Fields.Add(placeholdersField);
             }
 
-            var addedItem = rendering.Project.AddOrMerge(item);
+            var addedItem = context.Project.AddOrMerge(item);
             rendering.RenderingItemUri = addedItem.Uri;
         }
     }

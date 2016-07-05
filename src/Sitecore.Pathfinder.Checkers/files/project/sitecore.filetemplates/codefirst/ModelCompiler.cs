@@ -13,7 +13,7 @@ using Sitecore.Pathfinder.Languages.BinFiles.Pipelines;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Pathfinder.Text;
 
-namespace Sitecore.Pathfinder.files.project.sitecore.filetemplates.codefirst
+namespace Sitecore.Pathfinder
 {
     public class ModelScanner : PipelineProcessorBase<BinFileCompilerPipeline>
     {
@@ -185,7 +185,7 @@ namespace Sitecore.Pathfinder.files.project.sitecore.filetemplates.codefirst
                 template.Sections.Add(templateSection);
             }
 
-            pipeline.BinFile.Project.AddOrMerge(template);
+            pipeline.Context.Project.AddOrMerge(template);
         }
     }
 }

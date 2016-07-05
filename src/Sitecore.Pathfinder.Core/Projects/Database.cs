@@ -1,6 +1,8 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.Items;
 
@@ -8,7 +10,7 @@ namespace Sitecore.Pathfinder.Projects
 {
     public class Database
     {
-        public Database([NotNull] IProject project, [NotNull] string databaseName)
+        public Database([NotNull] IProjectBase project, [NotNull] string databaseName)
         {
             Project = project;
             DatabaseName = databaseName;
@@ -21,7 +23,7 @@ namespace Sitecore.Pathfinder.Projects
         public string Name => DatabaseName;
 
         [NotNull]
-        public IProject Project { get; }
+        public IProjectBase Project { get; }
 
         public override bool Equals([CanBeNull] object obj)
         {
@@ -49,6 +51,12 @@ namespace Sitecore.Pathfinder.Projects
         public Item GetItem([NotNull] string path)
         {
             return Project.FindQualifiedItem<Item>(this, path);
+        }
+
+        [NotNull, ItemNotNull]
+        public IEnumerable<Item> GetItems()
+        {
+            return Project.Items.Where(i => string.Equals(i.DatabaseName, DatabaseName, StringComparison.OrdinalIgnoreCase));
         }
 
         public static bool operator ==([CanBeNull] Database left, [CanBeNull] Database right)

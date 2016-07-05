@@ -22,7 +22,7 @@ namespace Sitecore.Pathfinder.Projects
         protected IFactoryService Factory { get; }
 
         [NotNull]
-        public ITraceService With([NotNull] IProject project)
+        public ITraceService With([NotNull] IProjectBase project)
         {
             DiagnosticContainer = (IDiagnosticContainer)project;
 

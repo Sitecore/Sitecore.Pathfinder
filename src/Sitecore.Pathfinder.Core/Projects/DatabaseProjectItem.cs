@@ -16,7 +16,7 @@ namespace Sitecore.Pathfinder.Projects
         [CanBeNull]
         private ID _id;
 
-        protected DatabaseProjectItem([NotNull] IProject project, [NotNull] ITextNode textNode, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, textNode.Snapshot, new ProjectItemUri(databaseName, guid))
+        protected DatabaseProjectItem([NotNull] IProjectBase project, [NotNull] ITextNode textNode, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, textNode.Snapshot, new ProjectItemUri(databaseName, guid))
         {
             ItemNameProperty = NewSourceProperty("ItemName", string.Empty, SourcePropertyFlags.IsShort);
             IconProperty = NewSourceProperty("Icon", string.Empty);

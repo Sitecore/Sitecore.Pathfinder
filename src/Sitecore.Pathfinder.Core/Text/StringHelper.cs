@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Text
         // [NotNull]
         // private static readonly MD5 Md5Hash = MD5.Create();
 
-        public static Guid GetGuid([NotNull] IProject project, [NotNull] string id)
+        public static Guid GetGuid([NotNull] IProjectBase project, [NotNull] string id)
         {
             Guid guid;
             if (Guid.TryParse(id, out guid))

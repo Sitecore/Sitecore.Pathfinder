@@ -24,12 +24,12 @@ namespace Sitecore.Pathfinder.Checking
         bool IsDeployable { get; set; }
 
         [NotNull]
-        IProject Project { get; }
+        IProjectBase Project { get; }
 
         [NotNull]
         ITraceService Trace { get; }
 
         [NotNull]
-        ICheckerContext With([NotNull] IProject project);
+        ICheckerContext With([NotNull] IProjectBase project);
     }
 }

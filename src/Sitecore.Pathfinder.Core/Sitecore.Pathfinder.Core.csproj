@@ -86,6 +86,7 @@
     <Compile Include="Packaging\ProjectPackages\ProjectPackageInfo.cs" />
     <Compile Include="Packaging\ProjectPackages\IProjectPackageProvider.cs" />
     <Compile Include="Packaging\ProjectPackages\ProjectPackageProviderBase.cs" />
+    <Compile Include="Projects\IProject.cs" />
     <Compile Include="Projects\LockableList.cs" />
     <Compile Include="Projects\IDiagnosticContainer.cs" />
     <Compile Include="Projects\ILockable.cs" />
@@ -394,7 +395,7 @@
     <Compile Include="Projects\Items\Item.cs" />
     <Compile Include="Snapshots\ISnapshot.cs" />
     <Compile Include="Languages\Renderings\Rendering.cs" />
-    <Compile Include="Projects\IProject.cs" />
+    <Compile Include="Projects\IProjectBase.cs" />
     <Compile Include="Snapshots\ISourceFile.cs" />
     <Compile Include="Projects\References\Reference.cs" />
     <Compile Include="Projects\Project.cs" />

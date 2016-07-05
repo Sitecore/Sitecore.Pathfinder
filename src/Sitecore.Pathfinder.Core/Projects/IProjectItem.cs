@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -18,7 +17,7 @@ namespace Sitecore.Pathfinder.Projects
     public interface IProjectItem : ILockable
     {
         [NotNull]
-        IProject Project { get; }
+        IProjectBase Project { get; }
 
         [NotNull]
         string QualifiedName { get; }
@@ -36,7 +35,5 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull]
         ProjectItemUri Uri { get; }
-
-        void Rename([NotNull] IFileSystemService fileSystem, [NotNull] string newShortName);
     }
 }

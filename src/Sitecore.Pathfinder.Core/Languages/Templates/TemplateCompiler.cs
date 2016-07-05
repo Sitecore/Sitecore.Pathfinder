@@ -114,7 +114,7 @@ namespace Sitecore.Pathfinder.Languages.Templates
                 }
             }
 
-            item.Project.AddOrMerge(template);
+            context.Project.AddOrMerge(template);
         }
     }
 }

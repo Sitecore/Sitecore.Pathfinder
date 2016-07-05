@@ -49,7 +49,7 @@ namespace Sitecore.Pathfinder.Emitters
             if (Configuration.GetBool(Constants.Configuration.InstallPackage.ShowDiagnostics))
             {
                 var treatWarningsAsErrors = Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
-                context.Trace.TraceDiagnostics(context.Project.Diagnostics, treatWarningsAsErrors);
+                context.Trace.TraceDiagnostics(project.Diagnostics, treatWarningsAsErrors);
             }
 
             project.Lock(Locking.ReadOnly);
@@ -63,7 +63,7 @@ namespace Sitecore.Pathfinder.Emitters
             project.Lock(Locking.ReadWrite);
         }
 
-        protected virtual void Emit([NotNull] IEmitContext context, [NotNull] IProject project, [NotNull, ItemNotNull] List<IEmitter> emitters, [NotNull, ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
+        protected virtual void Emit([NotNull] IEmitContext context, [NotNull] IProjectBase project, [NotNull, ItemNotNull] List<IEmitter> emitters, [NotNull, ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
         {
             EmitProjectItems(context, project.ProjectItems, emitters, retries);
         }

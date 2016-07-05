@@ -38,7 +38,7 @@ namespace Sitecore.Pathfinder.Projects.References
 
             IsResolved = true;
 
-            var projectItem = Owner.Project.FindFiles<File>(ReferenceText).FirstOrDefault();
+            var projectItem = Owner.Project.GetByFileName<File>(ReferenceText).FirstOrDefault();
             if (projectItem == null)
             {
                 IsValid = false;

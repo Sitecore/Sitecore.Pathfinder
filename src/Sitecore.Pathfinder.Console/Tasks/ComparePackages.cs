@@ -136,7 +136,7 @@ namespace Sitecore.Pathfinder.Tasks
             }
         }
 
-        protected virtual void Compare([NotNull] IBuildContext context, [NotNull] IProject project1, [NotNull] IProject project2)
+        protected virtual void Compare([NotNull] IBuildContext context, [NotNull] IProjectBase project1, [NotNull] IProjectBase project2)
         {
             foreach (var i in project1.ProjectItems.OrderBy(p => p.QualifiedName))
             {

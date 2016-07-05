@@ -1,4 +1,4 @@
-﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -47,7 +47,13 @@ namespace Sitecore.Pathfinder.Projects
         IEnumerable<Item> WhereChildOf([NotNull] Item item);
 
         [NotNull, ItemNotNull]
+        IEnumerable<T> WhereQualifiedName<T>([NotNull] string qualifiedName) where T : class, IProjectItem;
+
+        [NotNull, ItemNotNull]
         IEnumerable<T> WhereQualifiedName<T>([NotNull] Database database, [NotNull] string qualifiedName) where T : DatabaseProjectItem;
+
+        [NotNull, ItemNotNull]
+        IEnumerable<T> WhereShortName<T>([NotNull] string shortName) where T : class, IProjectItem;
 
         [NotNull, ItemNotNull]
         IEnumerable<T> WhereShortName<T>([NotNull] Database database, [NotNull] string shortName) where T : DatabaseProjectItem;

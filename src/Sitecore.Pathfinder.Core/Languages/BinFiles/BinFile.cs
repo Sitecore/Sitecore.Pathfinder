@@ -9,7 +9,7 @@ namespace Sitecore.Pathfinder.Languages.BinFiles
 {
     public class BinFile : File
     {
-        public BinFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath) : base(project, snapshot, filePath)
+        public BinFile([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] string filePath) : base(project, snapshot, filePath)
         {
         }
     }

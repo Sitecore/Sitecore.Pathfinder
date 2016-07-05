@@ -38,6 +38,9 @@ namespace Sitecore.Pathfinder.Projects
         protected ProjectIndex<IProjectItem> QualifiedNameIndex { get; } = new ProjectIndex<IProjectItem>(projectItem => projectItem.QualifiedName.ToUpperInvariant());
 
         [NotNull]
+        protected ProjectIndex<IProjectItem> ShortNameIndex { get; } = new ProjectIndex<IProjectItem>(item => item.ShortName.ToUpperInvariant());
+
+        [NotNull]
         protected ProjectIndex<IProjectItem> SourceFileIndex { get; } = new ProjectIndex<IProjectItem>();
 
         [NotNull]
@@ -48,8 +51,9 @@ namespace Sitecore.Pathfinder.Projects
             lock (this)
             {
                 GuidIndex.Add(projectItem);
-                QualifiedNameIndex.Add(projectItem);
                 UriIndex.Add(projectItem);
+                QualifiedNameIndex.Add(projectItem);
+                ShortNameIndex.Add(projectItem);
 
                 foreach (var snapshot in projectItem.Snapshots)
                 {
@@ -148,6 +152,7 @@ namespace Sitecore.Pathfinder.Projects
                 GuidIndex.Remove(projectItem);
                 UriIndex.Remove(projectItem);
                 QualifiedNameIndex.Remove(projectItem);
+                ShortNameIndex.Remove(projectItem);
 
                 foreach (var snapshot in projectItem.Snapshots)
                 {
@@ -196,9 +201,19 @@ namespace Sitecore.Pathfinder.Projects
             return DatabaseQualifiedNameIndex.Where<T>(database.DatabaseName.ToUpperInvariant() + ":" + qualifiedName.ToUpperInvariant());
         }
 
+        public IEnumerable<T> WhereQualifiedName<T>(string qualifiedName) where T : class, IProjectItem
+        {
+            return QualifiedNameIndex.Where<T>(qualifiedName.ToUpperInvariant());
+        }
+
         public IEnumerable<T> WhereShortName<T>(Database database, string shortName) where T : DatabaseProjectItem
         {
             return DatabaseShortNameIndex.Where<T>(database.DatabaseName.ToUpperInvariant() + ":" + shortName.ToUpperInvariant());
+        }
+
+        public IEnumerable<T> WhereShortName<T>(string shortName) where T : class, IProjectItem
+        {
+            return ShortNameIndex.Where<T>(shortName.ToUpperInvariant());
         }
     }
 }

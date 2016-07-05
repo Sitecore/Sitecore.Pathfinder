@@ -71,7 +71,7 @@ namespace Sitecore.Pathfinder.Compiling.Builders
         protected IFactoryService Factory { get; }
 
         [NotNull]
-        public Item Build([NotNull] IProject project, [NotNull] ITextNode rootTextNode)
+        public Item Build([NotNull] IProjectBase project, [NotNull] ITextNode rootTextNode)
         {
             var guid = StringHelper.GetGuid(project, Guid);
 

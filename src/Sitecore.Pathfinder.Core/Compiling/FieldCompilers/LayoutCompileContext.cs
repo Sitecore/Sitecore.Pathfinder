@@ -8,7 +8,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 {
     public class LayoutCompileContext
     {
-        public LayoutCompileContext([NotNull] ITraceService trace, [NotNull] IProject project, [NotNull] Database database, [NotNull] ITextSnapshot snapshot)
+        public LayoutCompileContext([NotNull] ITraceService trace, [NotNull] IProjectBase project, [NotNull] Database database, [NotNull] ITextSnapshot snapshot)
         {
             Trace = trace;
             Project = project;
@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         public Database Database { get; }
 
         [NotNull]
-        public IProject Project { get; }
+        public IProjectBase Project { get; }
 
         [NotNull]
         public ITextSnapshot Snapshot { get; }

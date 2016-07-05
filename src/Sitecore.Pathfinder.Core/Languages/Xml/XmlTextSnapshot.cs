@@ -49,7 +49,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
         protected SnapshotParseContext ParseContext { get; private set; }
 
         [NotNull]
-        protected IProject Project { get; private set; }
+        protected IProjectBase Project { get; private set; }
 
         [CanBeNull]
         protected XElement RootElement { get; private set; }

@@ -118,8 +118,8 @@ namespace Sitecore.Pathfinder.Checkers
         public IEnumerable<Diagnostic> DeleteUnusedTemplates(ICheckerContext context)
         {
             return from template in context.Project.Templates
-                let references = context.Project.Index.FindUsages(template.QualifiedName)
-                where !references.Any()
+                let items = context.Project.GetUsages(template.QualifiedName)
+                where !items.Any()
                 select Warning(Msg.C1025, "Template is not referenced and can be deleted", TraceHelper.GetTextNode(template), template.ItemName);
         }
 

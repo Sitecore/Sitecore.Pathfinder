@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Projects
     [DebuggerDisplay("{GetType().Name,nq}: {Uri}")]
     public abstract class ProjectItem : SourcePropertyBag, IProjectItem
     {
-        protected ProjectItem([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] ProjectItemUri uri)
+        protected ProjectItem([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] ProjectItemUri uri)
         {
             Project = project;
             Uri = uri;
@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public override Locking Locking => Project.Locking;
 
-        public IProject Project { get; }
+        public IProjectBase Project { get; }
 
         /// <summary>The qualified name of the project item. For items it is the path of the item.</summary>
         public abstract string QualifiedName { get; }

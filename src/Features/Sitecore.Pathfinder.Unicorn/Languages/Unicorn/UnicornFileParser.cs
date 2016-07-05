@@ -121,7 +121,7 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
                     }
                 }
 
-                unicornFile.Project.AddOrMerge(item);
+                context.Project.AddOrMerge(item);
             }
         }
     }

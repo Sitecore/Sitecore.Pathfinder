@@ -32,7 +32,7 @@ namespace Sitecore.Pathfinder.Languages.Media
 
             var templateIdOrPath = context.Configuration.GetString(Constants.Configuration.BuildProject.MediaTemplate + ":" + extension, "/sitecore/templates/System/Media/Unversioned/File");
 
-            var project = mediaFile.Project;
+            var project = context.Project;
             var snapshot = mediaFile.Snapshots.First();
 
             var guid = StringHelper.GetGuid(project, mediaFile.ItemPath);

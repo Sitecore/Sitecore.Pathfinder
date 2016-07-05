@@ -14,6 +14,6 @@ namespace Sitecore.Pathfinder.Checking
 
         int EnabledCheckersCount { get; }
 
-        void CheckProject([NotNull] IProject project);
+        void CheckProject([NotNull] IProjectBase project);
     }
 }

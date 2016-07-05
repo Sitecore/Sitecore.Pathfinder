@@ -11,7 +11,7 @@ namespace Sitecore.Pathfinder.Snapshots
         [NotNull]
         public static readonly SnapshotParseContext Empty = new SnapshotParseContext(null, Projects.Project.Empty, new Dictionary<string, string>(), new Dictionary<string, List<ITextNode>>());
 
-        public SnapshotParseContext([NotNull] ISnapshotService snapshotService, [NotNull] IProject project, [NotNull] IDictionary<string, string> tokens, [NotNull] IDictionary<string, List<ITextNode>> placeholderTextNodes)
+        public SnapshotParseContext([NotNull] ISnapshotService snapshotService, [NotNull] IProjectBase project, [NotNull] IDictionary<string, string> tokens, [NotNull] IDictionary<string, List<ITextNode>> placeholderTextNodes)
         {
             SnapshotService = snapshotService;
             Project = project;
@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Snapshots
         public IDictionary<string, List<ITextNode>> PlaceholderTextNodes { get; }
 
         [NotNull]
-        public IProject Project { get; }
+        public IProjectBase Project { get; }
 
         [NotNull]
         public ISnapshotService SnapshotService { get; }

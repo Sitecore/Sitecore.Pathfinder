@@ -7,6 +7,6 @@ namespace Sitecore.Pathfinder.CodeGeneration
     [InheritedExport(typeof(IProjectCodeGenerator))]
     public abstract class ProjectCodeGeneratorBase : IProjectCodeGenerator
     {
-        public abstract void Generate(IBuildContext context, IProject project);
+        public abstract void Generate(IBuildContext context, IProjectBase project);
     }
 }

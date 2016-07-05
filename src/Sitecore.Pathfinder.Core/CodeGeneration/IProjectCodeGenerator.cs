@@ -8,6 +8,6 @@ namespace Sitecore.Pathfinder.CodeGeneration
 {
     public interface IProjectCodeGenerator
     {
-        void Generate([NotNull] IBuildContext context, [NotNull] IProject project);
+        void Generate([NotNull] IBuildContext context, [NotNull] IProjectBase project);
     }
 }

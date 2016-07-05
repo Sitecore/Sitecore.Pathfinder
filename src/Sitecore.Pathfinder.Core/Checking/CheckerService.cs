@@ -49,7 +49,7 @@ namespace Sitecore.Pathfinder.Checking
         [NotNull]
         protected IConfiguration Configuration { get; }
 
-        public virtual void CheckProject(IProject project)
+        public virtual void CheckProject(IProjectBase project)
         {
             var context = CompositionService.Resolve<ICheckerContext>().With(project);
             var treatWarningsAsErrors = Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);

@@ -30,10 +30,7 @@ namespace Sitecore.Pathfinder.Projects
     public class Project : SourcePropertyBag, IProject, IDiagnosticContainer
     {
         [NotNull]
-        public static readonly IProject Empty = new Project();
-
-        [NotNull]
-        private readonly object _syncObject = new object();
+        public static readonly IProjectBase Empty = new Project();
 
         [NotNull]
         private readonly Dictionary<string, Database> _databases = new Dictionary<string, Database>();
@@ -46,6 +43,9 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull]
         private readonly object _sourceFilesSyncObject = new object();
+
+        [NotNull]
+        private readonly object _syncObject = new object();
 
         private bool _isChecked;
 
@@ -94,16 +94,11 @@ namespace Sitecore.Pathfinder.Projects
 
         public IEnumerable<File> Files => ProjectItems.OfType<File>();
 
-        public bool HasErrors
-        {
-            get { return Diagnostics.Any(d => d.Severity == Severity.Error); }
-        }
-
         public IProjectIndexer Index { get; }
 
-        public override Locking Locking => _locking;
-
         public IEnumerable<Item> Items => Index.Items;
+
+        public override Locking Locking => _locking;
 
         public ProjectOptions Options { get; private set; }
 
@@ -138,7 +133,7 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         protected ITraceService Trace { get; }
 
-        public virtual IProject Add(string absoluteFileName)
+        public virtual IProjectBase Add(string absoluteFileName)
         {
             if (Locking == Locking.ReadOnly)
             {
@@ -174,7 +169,7 @@ namespace Sitecore.Pathfinder.Projects
             return this;
         }
 
-        public virtual IProject Add(IEnumerable<string> sourceFileNames)
+        public virtual IProjectBase Add(IEnumerable<string> sourceFileNames)
         {
             if (Locking == Locking.ReadOnly)
             {
@@ -235,7 +230,7 @@ namespace Sitecore.Pathfinder.Projects
             return addedProjectItem;
         }
 
-        public IProject Check()
+        public IProjectBase Check()
         {
             if (_isChecked)
             {
@@ -253,29 +248,13 @@ namespace Sitecore.Pathfinder.Projects
             return this;
         }
 
-        public virtual IProject Compile()
+        public virtual IProjectBase Compile()
         {
-            var context = CompositionService.Resolve<ICompileContext>();
+            var context = CompositionService.Resolve<ICompileContext>().With(this);
 
             Pipelines.Resolve<CompilePipeline>().Execute(context, this);
 
             return this;
-        }
-
-        public IEnumerable<T> FindFiles<T>(string fileName) where T : File
-        {
-            var relativeFileName = PathHelper.NormalizeFilePath(fileName);
-            if (relativeFileName.StartsWith("~\\"))
-            {
-                relativeFileName = relativeFileName.Mid(2);
-            }
-
-            if (relativeFileName.StartsWith("\\"))
-            {
-                relativeFileName = relativeFileName.Mid(1);
-            }
-
-            return ProjectItems.OfType<T>().Where(f => string.Equals(f.FilePath, fileName, StringComparison.OrdinalIgnoreCase) || f.Snapshots.Any(s => string.Equals(s.SourceFile.RelativeFileName, relativeFileName, StringComparison.OrdinalIgnoreCase)));
         }
 
         public T FindQualifiedItem<T>(string qualifiedName) where T : class, IProjectItem
@@ -317,19 +296,45 @@ namespace Sitecore.Pathfinder.Projects
             return Index.FirstOrDefault<T>(uri);
         }
 
-        public void Lock(Locking locking)
+        public IEnumerable<T> GetByFileName<T>(string fileName) where T : File
         {
-            if ((locking != Locking.ReadWrite) && (_locking != Locking.ReadWrite))
+            var relativeFileName = PathHelper.NormalizeFilePath(fileName);
+            if (relativeFileName.StartsWith("~\\"))
             {
-                throw new InvalidOperationException("Project is already unlocked");
+                relativeFileName = relativeFileName.Mid(2);
             }
 
-            if (locking == Locking.ReadWrite && _locking == Locking.ReadWrite)
+            if (relativeFileName.StartsWith("\\"))
             {
-                throw new InvalidOperationException("Project is not locked");
+                relativeFileName = relativeFileName.Mid(1);
             }
 
-            _locking = locking;
+            return ProjectItems.OfType<T>().Where(f => string.Equals(f.FilePath, fileName, StringComparison.OrdinalIgnoreCase) || f.Snapshots.Any(s => string.Equals(s.SourceFile.RelativeFileName, relativeFileName, StringComparison.OrdinalIgnoreCase)));
+        }
+
+        public IEnumerable<T> GetByQualifiedName<T>(string qualifiedName) where T : class, IProjectItem
+        {
+            return Index.WhereQualifiedName<T>(qualifiedName);
+        }
+
+        public IEnumerable<T> GetByQualifiedName<T>(Database database, string qualifiedName) where T : DatabaseProjectItem
+        {
+            return Index.WhereQualifiedName<T>(database, qualifiedName);
+        }
+
+        public IEnumerable<T> GetByShortName<T>(string shortName) where T : class, IProjectItem
+        {
+            return Index.WhereShortName<T>(shortName);
+        }
+
+        public IEnumerable<T> GetByShortName<T>(Database database, string shortName) where T : DatabaseProjectItem
+        {
+            return Index.WhereShortName<T>(database, shortName);
+        }
+
+        public IEnumerable<Item> GetChildren(Item item)
+        {
+            return Index.WhereChildOf(item);
         }
 
         public Database GetDatabase(string databaseName)
@@ -346,10 +351,24 @@ namespace Sitecore.Pathfinder.Projects
             return database;
         }
 
-        public IEnumerable<Item> GetItems(Database database)
+        public IEnumerable<IProjectItem> GetUsages(string qualifiedName)
         {
-            var databaseName = database.DatabaseName;
-            return Items.Where(i => string.Equals(i.DatabaseName, databaseName, StringComparison.OrdinalIgnoreCase));
+            return Index.FindUsages(qualifiedName).Select(r => r.Resolve());
+        }
+
+        public void Lock(Locking locking)
+        {
+            if ((locking != Locking.ReadWrite) && (_locking != Locking.ReadWrite))
+            {
+                throw new InvalidOperationException("Project is already unlocked");
+            }
+
+            if (locking == Locking.ReadWrite && _locking == Locking.ReadWrite)
+            {
+                throw new InvalidOperationException("Project is not locked");
+            }
+
+            _locking = locking;
         }
 
         public event ProjectChangedEventHandler ProjectChanged;
@@ -408,7 +427,7 @@ namespace Sitecore.Pathfinder.Projects
             }
         }
 
-        public virtual IProject SaveChanges()
+        public virtual IProjectBase SaveChanges()
         {
             foreach (var snapshot in ProjectItems.SelectMany(i => i.Snapshots))
             {

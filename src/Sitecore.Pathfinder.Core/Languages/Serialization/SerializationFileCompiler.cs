@@ -49,7 +49,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
                 item.References.AddRange(context.ReferenceParser.ParseReferences(field));
             }
 
-            var addedItem = serializationFile.Project.AddOrMerge(item);
+            var addedItem = context.Project.AddOrMerge(item);
             serializationFile.SerializationItemUri = addedItem.Uri;
         }
 

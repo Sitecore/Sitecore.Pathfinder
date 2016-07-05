@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.T4.CodeGeneration
     public abstract class T4GeneratorBase : ProjectCodeGeneratorBase
     {
         [NotNull]
-        protected virtual Host GetHost([NotNull] IBuildContext context, [NotNull] IProject project)
+        protected virtual Host GetHost([NotNull] IBuildContext context, [NotNull] IProjectBase project)
         {
             var host = new Host(context, project);
 

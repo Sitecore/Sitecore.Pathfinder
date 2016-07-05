@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.T4.CodeGeneration
         protected IFileSystemService FileSystem { get; }
 
 
-        public override void Generate(IBuildContext context, IProject project)
+        public override void Generate(IBuildContext context, IProjectBase project)
         {
             var host = GetHost(context, project);
 

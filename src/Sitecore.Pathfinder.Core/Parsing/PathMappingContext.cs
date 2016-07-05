@@ -43,7 +43,7 @@ namespace Sitecore.Pathfinder.Parsing
         protected IPathMapperService PathMapper { get; }
 
         [NotNull]
-        public PathMappingContext Parse([NotNull] IProject project, [NotNull] ISourceFile sourceFile)
+        public PathMappingContext Parse([NotNull] IProjectBase project, [NotNull] ISourceFile sourceFile)
         {
             ItemName = PathHelper.GetItemName(sourceFile);
             DatabaseName = project.Options.DatabaseName;

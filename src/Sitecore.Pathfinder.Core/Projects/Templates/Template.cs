@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [CanBeNull, ItemNotNull]
         private ID[] _baseTemplateIDs;
 
-        public Template([NotNull] IProject project, [NotNull] ITextNode textNode, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, textNode, guid, databaseName, itemName, itemIdOrPath)
+        public Template([NotNull] IProjectBase project, [NotNull] ITextNode textNode, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, textNode, guid, databaseName, itemName, itemIdOrPath)
         {
             BaseTemplatesProperty = NewSourceProperty("BaseTemplates", string.Empty);
             LongHelpProperty = NewSourceProperty("LongHelp", string.Empty);

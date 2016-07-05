@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Importing.ItemImporters
         [Diagnostics.NotNull, ItemNotNull]
         protected IEnumerable<IFieldValueImporter> FieldValueImporters { get; }
 
-        public virtual Projects.Items.Item ImportItem(IProject project, Item item, ILanguage language, IEnumerable<string> excludedFields)
+        public virtual Projects.Items.Item ImportItem(IProjectBase project, Item item, ILanguage language, IEnumerable<string> excludedFields)
         {
             var itemBuilder = new ItemBuilder(Factory)
             {
@@ -104,7 +104,7 @@ namespace Sitecore.Pathfinder.Importing.ItemImporters
             return itemBuilder.Build(project, TextNode.Empty);
         }
 
-        public virtual Template ImportTemplate(IProject project, Data.Items.Item item)
+        public virtual Template ImportTemplate(IProjectBase project, Data.Items.Item item)
         {
             var templateItem = new TemplateItem(item);
 

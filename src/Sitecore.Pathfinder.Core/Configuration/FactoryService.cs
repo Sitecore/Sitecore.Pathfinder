@@ -39,11 +39,11 @@ namespace Sitecore.Pathfinder.Configuration
         [NotNull]
         protected IConfiguration Configuration { get; }
 
-        public virtual BinFile BinFile(IProject project, ISnapshot snapshot, string filePath) => new BinFile(project, snapshot, filePath);
+        public virtual BinFile BinFile(IProjectBase project, ISnapshot snapshot, string filePath) => new BinFile(project, snapshot, filePath);
 
-        public ConfigFile ConfigFile(IProject project, ISnapshot snapshot, string filePath) => new ConfigFile(project, snapshot, filePath);
+        public ConfigFile ConfigFile(IProjectBase project, ISnapshot snapshot, string filePath) => new ConfigFile(project, snapshot, filePath);
 
-        public virtual IProjectItem ContentFile(IProject project, ISnapshot snapshot, string filePath) => new ContentFile(project, snapshot, filePath);
+        public virtual IProjectItem ContentFile(IProjectBase project, ISnapshot snapshot, string filePath) => new ContentFile(project, snapshot, filePath);
 
         public virtual DeviceReference DeviceReference(IProjectItem projectItem, SourceProperty<string> deviceNameSourceProperty) => new DeviceReference(projectItem, deviceNameSourceProperty, deviceNameSourceProperty.GetValue());
 
@@ -67,9 +67,9 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual FileReference FileReference(IProjectItem owner, ITextNode textNode, string referenceText) => new FileReference(owner, textNode, referenceText);
 
-        public virtual Item Item(IProject project, ITextNode textNode, Guid guid, string databaseName, string itemName, string itemIdOrPath, string templateIdOrPath) => new Item(project, textNode, guid, databaseName, itemName, itemIdOrPath, templateIdOrPath);
+        public virtual Item Item(IProjectBase project, ITextNode textNode, Guid guid, string databaseName, string itemName, string itemIdOrPath, string templateIdOrPath) => new Item(project, textNode, guid, databaseName, itemName, itemIdOrPath, templateIdOrPath);
 
-        public Item Item(IProject project, ISnapshot snapshot, Guid guid, string databaseName, string itemName, string itemIdOrPath, string templateIdOrPath) => new Item(project, new SnapshotTextNode(snapshot), guid, databaseName, itemName, itemIdOrPath, templateIdOrPath);
+        public Item Item(IProjectBase project, ISnapshot snapshot, Guid guid, string databaseName, string itemName, string itemIdOrPath, string templateIdOrPath) => new Item(project, new SnapshotTextNode(snapshot), guid, databaseName, itemName, itemIdOrPath, templateIdOrPath);
 
         public ItemBuilder ItemBuilder() => new ItemBuilder(this);
 
@@ -79,7 +79,7 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual LayoutRenderingReference LayoutRenderingReference(IProjectItem projectItem, SourceProperty<string> renderingTextNode) => new LayoutRenderingReference(projectItem, renderingTextNode, renderingTextNode.GetValue());
 
-        public virtual MediaFile MediaFile(IProject project, ISnapshot snapshot, string databaseName, string itemName, string itemPath, string filePath) => new MediaFile(project, snapshot, databaseName, itemName, itemPath, filePath);
+        public virtual MediaFile MediaFile(IProjectBase project, ISnapshot snapshot, string databaseName, string itemName, string itemPath, string filePath) => new MediaFile(project, snapshot, databaseName, itemName, itemPath, filePath);
 
         public virtual ProjectOptions ProjectOptions(string projectDirectory, string databaseName) => new ProjectOptions(projectDirectory, databaseName);
 
@@ -87,9 +87,9 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual IReference Reference(IProjectItem projectItem, ITextNode textNode, string referenceText) => new Reference(projectItem, textNode, referenceText);
 
-        public virtual Rendering Rendering(IProject project, ISnapshot snapshot, string databaseName, string itemPath, string itemName, string filePath, string templateIdOrPath) => new Rendering(project, snapshot, databaseName, itemPath, itemName, filePath, templateIdOrPath);
+        public virtual Rendering Rendering(IProjectBase project, ISnapshot snapshot, string databaseName, string itemPath, string itemName, string filePath, string templateIdOrPath) => new Rendering(project, snapshot, databaseName, itemPath, itemName, filePath, templateIdOrPath);
 
-        public virtual SerializationFile SerializationFile(IProject project, ISnapshot snapshot, string filePath) => new SerializationFile(project, snapshot, filePath);
+        public virtual SerializationFile SerializationFile(IProjectBase project, ISnapshot snapshot, string filePath) => new SerializationFile(project, snapshot, filePath);
 
         public virtual ISnapshot Snapshot(ISourceFile sourceFile) => new Snapshot().With(sourceFile);
 
@@ -103,7 +103,7 @@ namespace Sitecore.Pathfinder.Configuration
             return new SourceFile(fileSystem, absoluteFileName, relativeFileName, projectFileName);
         }
 
-        public virtual Template Template(IProject project, Guid guid, ITextNode textNode, string databaseName, string itemName, string itemIdOrPath) => new Template(project, textNode, guid, databaseName, itemName, itemIdOrPath);
+        public virtual Template Template(IProjectBase project, Guid guid, ITextNode textNode, string databaseName, string itemName, string itemIdOrPath) => new Template(project, textNode, guid, databaseName, itemName, itemIdOrPath);
 
         public virtual TemplateField TemplateField(Template template, Guid guid, ITextNode templateFieldTextNode) => new TemplateField(template, guid, templateFieldTextNode);
 

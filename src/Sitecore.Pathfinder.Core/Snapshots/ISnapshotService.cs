@@ -20,6 +20,6 @@ namespace Sitecore.Pathfinder.Snapshots
         ISnapshot LoadSnapshot([NotNull] SnapshotParseContext snapshotParseContext, [NotNull] ISourceFile sourceFile);
 
         [NotNull]
-        ISnapshot LoadSnapshot([NotNull] IProject project, [NotNull] ISourceFile sourceFile, [NotNull] PathMappingContext pathMappingContext);
+        ISnapshot LoadSnapshot([NotNull] IProjectBase project, [NotNull] ISourceFile sourceFile, [NotNull] PathMappingContext pathMappingContext);
     }
 }
