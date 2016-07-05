@@ -7,10 +7,10 @@ using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Projects
 {
-    public sealed class ProjectItemUri
+    public sealed class ProjectItemUri : IProjectItemUri
     {
         [NotNull]
-        public static readonly ProjectItemUri Empty = new ProjectItemUri();
+        public static readonly IProjectItemUri Empty = new ProjectItemUri();
 
         public ProjectItemUri([NotNull] IProjectBase project, [NotNull] string filePath)
         {
@@ -34,7 +34,6 @@ namespace Sitecore.Pathfinder.Projects
             Guid = Guid.Empty;
         }
 
-        [NotNull]
         public string FileOrDatabaseName { get; }
 
         public Guid Guid { get; }
@@ -51,7 +50,7 @@ namespace Sitecore.Pathfinder.Projects
                 return true;
             }
 
-            return obj is ProjectItemUri && Equals((ProjectItemUri)obj);
+            return obj is IProjectItemUri && Equals((IProjectItemUri)obj);
         }
 
         public override int GetHashCode()
@@ -77,7 +76,7 @@ namespace Sitecore.Pathfinder.Projects
             return $"{FileOrDatabaseName}/{Guid.Format()}";
         }
 
-        private bool Equals([NotNull] ProjectItemUri other)
+        private bool Equals([NotNull] IProjectItemUri other)
         {
             return Guid == other.Guid && string.Equals(FileOrDatabaseName, other.FileOrDatabaseName, StringComparison.OrdinalIgnoreCase);
         }

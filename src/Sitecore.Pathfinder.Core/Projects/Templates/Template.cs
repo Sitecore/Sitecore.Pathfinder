@@ -83,7 +83,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
                 return _allFields;
             }
 
-            var templates = new List<ProjectItemUri>();
+            var templates = new List<IProjectItemUri>();
             return GetAllFields(templates);
         }
 
@@ -127,7 +127,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         }
 
         [NotNull, ItemNotNull]
-        protected virtual IEnumerable<TemplateField> GetAllFields([NotNull, ItemNotNull] ICollection<ProjectItemUri> templates)
+        protected virtual IEnumerable<TemplateField> GetAllFields([NotNull, ItemNotNull] ICollection<IProjectItemUri> templates)
         {
             if (_allFields != null)
             {

@@ -33,7 +33,7 @@ namespace Sitecore.Pathfinder.Languages.Renderings
         public ICollection<string> Placeholders { get; }
 
         [NotNull]
-        public ProjectItemUri RenderingItemUri { get; set; } = ProjectItemUri.Empty;
+        public IProjectItemUri RenderingItemUri { get; set; } = ProjectItemUri.Empty;
 
         [NotNull]
         public string TemplateIdOrPath { get; }

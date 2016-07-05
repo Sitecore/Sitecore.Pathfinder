@@ -28,7 +28,7 @@ namespace Sitecore.Pathfinder.Languages.Media
         public string ItemPath { get; }
 
         [NotNull]
-        public ProjectItemUri MediaItemUri { get; set; } = ProjectItemUri.Empty;
+        public IProjectItemUri MediaItemUri { get; set; } = ProjectItemUri.Empty;
 
         public bool UploadMedia { get; set; }
     }

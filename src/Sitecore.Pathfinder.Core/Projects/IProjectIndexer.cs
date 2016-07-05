@@ -36,7 +36,7 @@ namespace Sitecore.Pathfinder.Projects
         T FirstOrDefault<T>([NotNull] Database database, [NotNull] string qualifiedName) where T : DatabaseProjectItem;
 
         [CanBeNull]
-        T FirstOrDefault<T>([NotNull] ProjectItemUri uri) where T : class, IProjectItem;
+        T FirstOrDefault<T>([NotNull] IProjectItemUri uri) where T : class, IProjectItem;
 
         void Remove([NotNull] IProjectItem projectItem);
 

@@ -60,7 +60,7 @@ namespace Sitecore.Pathfinder.Projects.References
         public string ReferenceText { get; }
 
         [CanBeNull]
-        protected ProjectItemUri ResolvedUri { get; set; }
+        protected IProjectItemUri ResolvedUri { get; set; }
 
         public void Invalidate()
         {

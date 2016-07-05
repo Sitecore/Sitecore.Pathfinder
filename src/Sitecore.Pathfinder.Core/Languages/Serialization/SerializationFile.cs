@@ -14,6 +14,6 @@ namespace Sitecore.Pathfinder.Languages.Serialization
         }
 
         [NotNull]
-        public ProjectItemUri SerializationItemUri { get; set; } = ProjectItemUri.Empty;
+        public IProjectItemUri SerializationItemUri { get; set; } = ProjectItemUri.Empty;
     }
 }

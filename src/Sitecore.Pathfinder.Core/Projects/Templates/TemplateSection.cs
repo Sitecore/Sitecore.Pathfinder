@@ -57,7 +57,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         public Template Template { get; }
 
         [NotNull]
-        public ProjectItemUri Uri { get; private set; }
+        public IProjectItemUri Uri { get; private set; }
 
         public void Merge([NotNull] TemplateSection newSection, bool overwrite)
         {

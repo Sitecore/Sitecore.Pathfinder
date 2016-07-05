@@ -32,7 +32,7 @@ namespace Sitecore.Pathfinder.Projects
         IEnumerable<Template> Templates { get; }
 
         [CanBeNull]
-        T FindQualifiedItem<T>([NotNull] ProjectItemUri uri) where T : class, IProjectItem;
+        T FindQualifiedItem<T>([NotNull] IProjectItemUri uri) where T : class, IProjectItem;
 
         [CanBeNull]
         T FindQualifiedItem<T>([NotNull] string qualifiedName) where T : class, IProjectItem;

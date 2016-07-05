@@ -34,6 +34,6 @@ namespace Sitecore.Pathfinder.Projects
         CompiltationState CompilationState { get; set; }
 
         [NotNull]
-        ProjectItemUri Uri { get; }
+        IProjectItemUri Uri { get; }
     }
 }

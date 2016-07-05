@@ -140,7 +140,7 @@ namespace Sitecore.Pathfinder.Projects
             return DatabaseQualifiedNameIndex.FirstOrDefault<T>(database.DatabaseName.ToUpperInvariant() + ":" + qualifiedName.ToUpperInvariant());
         }
 
-        public virtual T FirstOrDefault<T>(ProjectItemUri uri) where T : class, IProjectItem
+        public virtual T FirstOrDefault<T>(IProjectItemUri uri) where T : class, IProjectItem
         {
             return UriIndex.FirstOrDefault<T>(uri.ToString());
         }

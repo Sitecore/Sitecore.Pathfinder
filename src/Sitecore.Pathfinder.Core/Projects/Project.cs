@@ -291,7 +291,7 @@ namespace Sitecore.Pathfinder.Projects
             return Index.FirstOrDefault<T>(database, guid);
         }
 
-        public T FindQualifiedItem<T>(ProjectItemUri uri) where T : class, IProjectItem
+        public T FindQualifiedItem<T>(IProjectItemUri uri) where T : class, IProjectItem
         {
             return Index.FirstOrDefault<T>(uri);
         }
@@ -339,7 +339,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public Database GetDatabase(string databaseName)
         {
-            var key = databaseName.ToLowerInvariant();
+            var key = databaseName.ToUpperInvariant();
 
             Database database;
             if (!_databases.TryGetValue(key, out database))

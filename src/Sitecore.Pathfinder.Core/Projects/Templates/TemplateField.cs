@@ -120,7 +120,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         public bool Unversioned { get; set; }
 
         [NotNull]
-        public ProjectItemUri Uri { get; }
+        public IProjectItemUri Uri { get; }
 
         public void Merge([NotNull] TemplateField newField, bool overwrite)
         {

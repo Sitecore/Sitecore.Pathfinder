@@ -1,9 +1,9 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Projects
     [DebuggerDisplay("{GetType().Name,nq}: {Uri}")]
     public abstract class ProjectItem : SourcePropertyBag, IProjectItem
     {
-        protected ProjectItem([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] ProjectItemUri uri)
+        protected ProjectItem([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] IProjectItemUri uri)
         {
             Project = project;
             Uri = uri;
@@ -40,10 +40,7 @@ namespace Sitecore.Pathfinder.Projects
         public CompiltationState CompilationState { get; set; }
 
         /// <summary>The unique identification of the project item. For items the Uri.Guid is the ID of the item.</summary>
-        public ProjectItemUri Uri { get; private set; }
-
-        /// <summary>Expertimental. Do not use.</summary>
-        public abstract void Rename(IFileSystemService fileSystem, string newShortName);
+        public IProjectItemUri Uri { get; private set; }
 
         public override string ToString()
         {
