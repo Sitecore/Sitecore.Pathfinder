@@ -2,9 +2,7 @@
 
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -22,8 +20,9 @@ namespace Sitecore.Pathfinder.Projects.Files
         [CanBeNull]
         private string _shortName;
 
-        public File([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] string filePath) : base(project, snapshot, GetUri(project, snapshot))
+        public File([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] string filePath) : base(project, GetUri(project, snapshot))
         {
+            AddSnapshot(snapshot);
             FilePath = filePath;
         }
 
@@ -38,9 +37,9 @@ namespace Sitecore.Pathfinder.Projects.Files
         [NotNull]
         public string FilePath { get; }
 
-        public override string QualifiedName => Snapshots.First().SourceFile.AbsoluteFileName;
+        public override string QualifiedName => Snapshot.SourceFile.AbsoluteFileName;
 
-        public override string ShortName => _shortName ?? (_shortName = Path.GetFileName(Snapshots.First().SourceFile.AbsoluteFileName));
+        public override string ShortName => _shortName ?? (_shortName = Path.GetFileName(Snapshot.SourceFile.AbsoluteFileName));
 
         [NotNull]
         private static IProjectItemUri GetUri([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot)

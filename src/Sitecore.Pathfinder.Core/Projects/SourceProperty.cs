@@ -32,18 +32,14 @@ namespace Sitecore.Pathfinder.Projects
         ConvertToCodelIdentifier = 0x12
     }
 
-    public enum SetValueOptions
-    {
-        DisableUpdates,
-
-        EnableUpdates
-    }
-
     [DebuggerDisplay("\\{{GetType().Name,nq}\\}: {Key,nq} = {GetValue()}")]
     public class SourceProperty<T> : INotifyPropertyChanged, IHasSourceTextNodes
     {
         [NotNull]
         private readonly T _defaultValue;
+
+        [NotNull, ItemNotNull]
+        private readonly ICollection<ITextNode> _additionalSourceTextNodes;
 
         [NotNull]
         private T _value;
@@ -55,6 +51,7 @@ namespace Sitecore.Pathfinder.Projects
 
             _value = defaultValue;
             _defaultValue = defaultValue;
+            _additionalSourceTextNodes = new List<ITextNode>();
         }
 
         public SourceProperty([NotNull] ILockable owner, [NotNull] string key, [NotNull] T defaultValue, SourcePropertyFlags flags)
@@ -65,6 +62,7 @@ namespace Sitecore.Pathfinder.Projects
 
             _value = defaultValue;
             _defaultValue = defaultValue;
+            _additionalSourceTextNodes = new List<ITextNode>();
         }
 
         public SourcePropertyFlags Flags { get; set; }
@@ -75,37 +73,66 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         public ILockable Owner { get; }
 
-        [CanBeNull]
-        public ITextNode SourceTextNode => SourceTextNodes.LastOrDefault();
+        public ITextNode SourceTextNode { get; private set; } = TextNode.Empty;
 
-        public ICollection<ITextNode> SourceTextNodes { get; } = new List<ITextNode>();
+        public IEnumerable<ITextNode> AdditionalSourceTextNodes => _additionalSourceTextNodes;
 
         protected Locking Locking => Owner.Locking;
 
-        public virtual bool AddSourceTextNode([CanBeNull] ITextNode textNode)
+        [NotNull]
+        public virtual SourceProperty<T> AddSourceTextNode([CanBeNull] ITextNode textNode)
         {
             if (Locking == Locking.ReadOnly)
             {
-                throw new InvalidOperationException("SourceProperty cannot be modified as it is frozen: " + Key);
+                throw new InvalidOperationException("SourceProperty cannot be modified as it is read only: " + Key);
             }
 
-            if (textNode == TextNode.Empty)
+            if (textNode == TextNode.Empty || textNode == null)
             {
-                return true;
+                return this;
             }
 
-            if (SourceTextNodes.Contains(textNode))
+            if (SourceTextNode != TextNode.Empty && !AdditionalSourceTextNodes.Contains(SourceTextNode))
             {
-                return true;
+                _additionalSourceTextNodes.Add(SourceTextNode);
             }
 
-            SourceTextNodes.Add(textNode);
-            return true;
+            SourceTextNode = textNode;
+
+            return this;
         }
 
-        public virtual bool AddSourceTextNode([NotNull] ISnapshot snapshot)
+        [NotNull]
+        public virtual SourceProperty<T> AddAdditionalSourceTextNode([CanBeNull] ITextNode textNode)
         {
-            return AddSourceTextNode(new FileNameTextNode(PathHelper.GetFileNameWithoutExtensions(snapshot.SourceFile.AbsoluteFileName), snapshot));
+            if (Locking == Locking.ReadOnly)
+            {
+                throw new InvalidOperationException("SourceProperty cannot be modified as it is read only: " + Key);
+            }
+
+            if (textNode == TextNode.Empty || textNode == null)
+            {
+                return this;
+            }
+
+            if (SourceTextNode == TextNode.Empty)
+            {
+                SourceTextNode = textNode;
+                return this;
+            }
+
+            if (!AdditionalSourceTextNodes.Contains(textNode))
+            {
+                _additionalSourceTextNodes.Add(textNode);
+            }
+
+            return this;
+        }
+
+        [NotNull]
+        public virtual SourceProperty<T> AddSourceTextNode([NotNull] ISnapshot snapshot)
+        {
+            return AddAdditionalSourceTextNode(new FileNameTextNode(PathHelper.GetFileNameWithoutExtensions(snapshot.SourceFile.AbsoluteFileName), snapshot));
         }
 
         [NotNull]
@@ -115,21 +142,21 @@ namespace Sitecore.Pathfinder.Projects
         {
             if (Locking == Locking.ReadOnly)
             {
-                throw new InvalidOperationException("SourceProperty cannot be modified as it is frozen: " + Key);
+                throw new InvalidOperationException("SourceProperty cannot be modified as it is read only: " + Key);
             }
 
             var attribute = textNode.GetAttribute(Key);
             if (attribute != null)
             {
-                SetValue(attribute, SetValueOptions.DisableUpdates);
+                SetValue(attribute);
             }
             else if (defaultValue != null)
             {
-                SetValue(defaultValue, SetValueOptions.DisableUpdates);
+                SetValue(defaultValue);
             }
             else
             {
-                SetValue(_defaultValue, SetValueOptions.DisableUpdates);
+                SetValue(_defaultValue);
             }
         }
 
@@ -137,7 +164,7 @@ namespace Sitecore.Pathfinder.Projects
         {
             if (Locking == Locking.ReadOnly)
             {
-                throw new InvalidOperationException("SourceProperty cannot be modified as it is frozen: " + Key);
+                throw new InvalidOperationException("SourceProperty cannot be modified as it is read only: " + Key);
             }
 
             Key = newKey;
@@ -160,7 +187,7 @@ namespace Sitecore.Pathfinder.Projects
         {
             if (Locking == Locking.ReadOnly)
             {
-                throw new InvalidOperationException("SourceProperty cannot be modified as it is frozen: " + Key);
+                throw new InvalidOperationException("SourceProperty cannot be modified as it is read only: " + Key);
             }
 
             Key = newKey;
@@ -169,30 +196,35 @@ namespace Sitecore.Pathfinder.Projects
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public virtual bool SetValue([NotNull] SourceProperty<T> sourceProperty, SetValueOptions options = SetValueOptions.EnableUpdates)
+        public virtual bool SetValue([NotNull] SourceProperty<T> sourceProperty)
         {
-            SetValue(sourceProperty.GetValue(), options);
+            SetValue(sourceProperty.GetValue());
 
-            foreach (var sourceTextNode in sourceProperty.SourceTextNodes)
+            if (sourceProperty.SourceTextNode != TextNode.Empty)
             {
-                AddSourceTextNode(sourceTextNode);
+                AddAdditionalSourceTextNode(sourceProperty.SourceTextNode);
+            }
+
+            foreach (var sourceTextNode in sourceProperty.AdditionalSourceTextNodes)
+            {
+                AddAdditionalSourceTextNode(sourceTextNode);
             }
 
             return true;
         }
 
-        public virtual bool SetValue([NotNull] ITextNode textNode, SetValueOptions options = SetValueOptions.EnableUpdates)
+        public virtual bool SetValue([NotNull] ITextNode textNode)
         {
-            SetValue((T)Convert.ChangeType(textNode.Value, typeof(T)), options);
-            AddSourceTextNode(textNode);
+            SetValue((T)Convert.ChangeType(textNode.Value, typeof(T)));
+            AddAdditionalSourceTextNode(textNode);
             return true;
         }
 
-        public virtual void SetValue([NotNull] T value, SetValueOptions options = SetValueOptions.EnableUpdates)
+        public virtual void SetValue([NotNull] T value)
         {
             if (Locking == Locking.ReadOnly)
             {
-                throw new InvalidOperationException("SourceProperty cannot be modified as it is frozen: " + Key);
+                throw new InvalidOperationException("SourceProperty cannot be modified as it is read only: " + Key);
             }
 
             if (value.Equals(_value))
@@ -201,14 +233,6 @@ namespace Sitecore.Pathfinder.Projects
             }
 
             _value = value;
-
-            if (options == SetValueOptions.EnableUpdates)
-            {
-                foreach (var sourceTextNode in SourceTextNodes.OfType<IMutableTextNode>())
-                {
-                    sourceTextNode.SetValue(ToSourceValue(_value.ToString()));
-                }
-            }
 
             // ReSharper disable once NotResolvedInText
             OnPropertyChanged("Value");
@@ -223,28 +247,6 @@ namespace Sitecore.Pathfinder.Projects
         protected virtual void OnPropertyChanged([CanBeNull] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        [NotNull]
-        protected virtual string ToSourceValue([NotNull] string value)
-        {
-            if ((Flags & SourcePropertyFlags.IsShort) == SourcePropertyFlags.IsShort)
-            {
-                var n = value.LastIndexOf('/');
-                value = n < 0 ? value : value.Mid(n + 1);
-            }
-
-            if ((Flags & SourcePropertyFlags.ConvertToXmlIdentifier) == SourcePropertyFlags.ConvertToXmlIdentifier)
-            {
-                value = value.EscapeXmlElementName();
-            }
-
-            if ((Flags & SourcePropertyFlags.ConvertToCodelIdentifier) == SourcePropertyFlags.ConvertToCodelIdentifier)
-            {
-                value = value.GetSafeCodeIdentifier();
-            }
-
-            return value;
         }
     }
 }

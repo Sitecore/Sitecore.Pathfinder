@@ -42,8 +42,6 @@ namespace Sitecore.Pathfinder.Projects
 
         void Remove([NotNull] string absoluteSourceFileName);
 
-        [NotNull]
-        IProjectBase SaveChanges();
 
         [NotNull]
         IProject With([NotNull] ProjectOptions projectOptions, [NotNull, ItemNotNull] IEnumerable<string> sourceFileNames);

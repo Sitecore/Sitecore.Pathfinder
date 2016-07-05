@@ -19,7 +19,7 @@ namespace Sitecore.Pathfinder.Checkers
             return from rendering in context.Project.ProjectItems.OfType<Rendering>()
                 from placeholder in rendering.Placeholders
                 where context.Project.Items.FirstOrDefault(i => i.ItemName == placeholder && i.TemplateName == "Placeholder") == null
-                select Warning(Msg.C1000, "Placeholders should have a Placeholder Settings item", new StringTextNode("Placeholder(\""+ placeholder + "\")", rendering.Snapshots.First()), $"To fix, create a '/sitecore/layout/Placeholder Settings/{placeholder}' item");
+                select Warning(Msg.C1000, "Placeholders should have a Placeholder Settings item", new StringTextNode("Placeholder(\""+ placeholder + "\")", rendering.Snapshot), $"To fix, create a '/sitecore/layout/Placeholder Settings/{placeholder}' item");
         }
 
         [Export("Check")]
@@ -27,7 +27,7 @@ namespace Sitecore.Pathfinder.Checkers
         {
             return from rendering in context.Project.ProjectItems.OfType<Rendering>()
                 where rendering.ItemName != PathHelper.GetFileNameWithoutExtensions(rendering.FilePath)
-                select Warning(Msg.C1000, "Rendering item name should match file name", rendering.Snapshots.First().SourceFile, $"To fix, rename the rendering file or rename the rendering item");
+                select Warning(Msg.C1000, "Rendering item name should match file name", rendering.Snapshot.SourceFile, $"To fix, rename the rendering file or rename the rendering item");
         }
     }
 }

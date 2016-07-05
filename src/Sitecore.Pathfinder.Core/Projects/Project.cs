@@ -309,7 +309,7 @@ namespace Sitecore.Pathfinder.Projects
                 relativeFileName = relativeFileName.Mid(1);
             }
 
-            return ProjectItems.OfType<T>().Where(f => string.Equals(f.FilePath, fileName, StringComparison.OrdinalIgnoreCase) || f.Snapshots.Any(s => string.Equals(s.SourceFile.RelativeFileName, relativeFileName, StringComparison.OrdinalIgnoreCase)));
+            return ProjectItems.OfType<T>().Where(f => string.Equals(f.FilePath, fileName, StringComparison.OrdinalIgnoreCase) || f.GetSnapshots().Any(s => string.Equals(s.SourceFile.RelativeFileName, relativeFileName, StringComparison.OrdinalIgnoreCase)));
         }
 
         public IEnumerable<T> GetByQualifiedName<T>(string qualifiedName) where T : class, IProjectItem
@@ -406,7 +406,7 @@ namespace Sitecore.Pathfinder.Projects
             foreach (var projectItem in ProjectItems.ToList())
             {
                 // todo: not working
-                if (!string.Equals(projectItem.Snapshots.First().SourceFile.AbsoluteFileName, absoluteSourceFileName, StringComparison.OrdinalIgnoreCase))
+                if (!string.Equals(projectItem.Snapshot.SourceFile.AbsoluteFileName, absoluteSourceFileName, StringComparison.OrdinalIgnoreCase))
                 {
                     continue;
                 }
@@ -425,19 +425,6 @@ namespace Sitecore.Pathfinder.Projects
 
                 _projectItems.Remove(projectItem);
             }
-        }
-
-        public virtual IProjectBase SaveChanges()
-        {
-            foreach (var snapshot in ProjectItems.SelectMany(i => i.Snapshots))
-            {
-                if (snapshot.IsModified)
-                {
-                    snapshot.SaveChanges();
-                }
-            }
-
-            return this;
         }
 
         public virtual IProject With(ProjectOptions projectOptions, IEnumerable<string> sourceFileNames)
@@ -461,12 +448,12 @@ namespace Sitecore.Pathfinder.Projects
 
             if (newItem.MergingMatch == MergingMatch.MatchUsingSourceFile)
             {
-                items = Index.Where<Item>(newItem.Snapshots.First().SourceFile).ToArray();
+                items = Index.Where<Item>(newItem.Snapshot.SourceFile).ToArray();
             }
 
             if (items == null || items.Length == 0)
             {
-                items = Index.Where<Item>(newItem.Snapshots.First().SourceFile).Where(i => i.MergingMatch == MergingMatch.MatchUsingSourceFile).ToArray();
+                items = Index.Where<Item>(newItem.Snapshot.SourceFile).Where(i => i.MergingMatch == MergingMatch.MatchUsingSourceFile).ToArray();
             }
 
             if (items.Length == 0)

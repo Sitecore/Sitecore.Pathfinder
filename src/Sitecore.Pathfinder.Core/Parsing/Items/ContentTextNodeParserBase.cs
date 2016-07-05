@@ -5,7 +5,6 @@ using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
-using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Pathfinder.Text;
@@ -27,7 +26,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             var databaseName = textNode.GetAttributeValue("Database", context.DatabaseName);
             var templateIdOrPath = textNode.Key.UnescapeXmlElementName();
 
-            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, textNode, guid, databaseName, itemNameTextNode.Value, itemIdOrPath, templateIdOrPath);
+            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, guid, databaseName, itemNameTextNode.Value, itemIdOrPath, templateIdOrPath).With(textNode);
             item.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
             item.TemplateIdOrPathProperty.AddSourceTextNode(new AttributeNameTextNode(textNode));
             item.IsEmittable = !string.Equals(textNode.GetAttributeValue(Constants.Fields.IsEmittable), "False", StringComparison.OrdinalIgnoreCase);
@@ -117,10 +116,10 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 return;
             }
 
-            var field = context.ParseContext.Factory.Field(item, textNode);
+            var field = context.ParseContext.Factory.Field(item).With(textNode);
             field.FieldNameProperty.SetValue(new AttributeNameTextNode(textNode));
-            field.LanguageProperty.SetValue(languageVersionContext.LanguageProperty, SetValueOptions.DisableUpdates);
-            field.VersionProperty.SetValue(languageVersionContext.VersionProperty, SetValueOptions.DisableUpdates);
+            field.LanguageProperty.SetValue(languageVersionContext.LanguageProperty);
+            field.VersionProperty.SetValue(languageVersionContext.VersionProperty);
             field.ValueProperty.SetValue(textNode);
 
             // check if field is already defined

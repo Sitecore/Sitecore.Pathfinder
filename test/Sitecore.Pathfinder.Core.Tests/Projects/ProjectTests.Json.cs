@@ -53,10 +53,11 @@ namespace Sitecore.Pathfinder.Projects
             Assert.AreEqual("JsonItem", item.ItemName);
             Assert.AreEqual("/sitecore/content/Home/JsonItem", item.ItemIdOrPath);
             Assert.AreEqual("/sitecore/templates/Sample/JsonItem", item.TemplateIdOrPath);
-            Assert.AreEqual(1, item.ItemNameProperty.SourceTextNodes.Count);
+            Assert.AreNotEqual(item.ItemNameProperty.SourceTextNode, TextNode.Empty);
+            Assert.AreEqual(0, item.ItemNameProperty.AdditionalSourceTextNodes.Count());
             Assert.IsInstanceOf<FileNameTextNode>(item.ItemNameProperty.SourceTextNode);
 
-            var textDocument = projectItem.Snapshots.First() as ITextSnapshot;
+            var textDocument = projectItem.Snapshot as ITextSnapshot;
             Assert.IsNotNull(textDocument);
 
             var treeNode = textDocument.Root;

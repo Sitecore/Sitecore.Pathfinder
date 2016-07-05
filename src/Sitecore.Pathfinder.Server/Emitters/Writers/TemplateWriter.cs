@@ -160,7 +160,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                 var baseTemplateItem = database.GetItem(templateId);
                 if (baseTemplateItem == null)
                 {
-                    throw new RetryableEmitException(Msg.E1030, Texts.Base_Template_missing, template.Snapshots.First(), templateId);
+                    throw new RetryableEmitException(Msg.E1030, Texts.Base_Template_missing, template.Snapshot, templateId);
                 }
 
                 baseTemplateList.Add(baseTemplateItem);
@@ -168,7 +168,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                 var t = TemplateManager.GetTemplate(baseTemplateItem.ID, database);
                 if (t == null)
                 {
-                    throw new RetryableEmitException(Msg.E1031, Texts.Template_missing, template.Snapshots.First(), templateId);
+                    throw new RetryableEmitException(Msg.E1031, Texts.Template_missing, template.Snapshot, templateId);
                 }
 
                 var templateFields = t.GetFields(true);
@@ -392,13 +392,13 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             var parentItem = GetParentItem(context, database);
             if (parentItem == null)
             {
-                throw new RetryableEmitException(Msg.E1033, Texts.Failed_to_create_template, Template.Snapshots.First());
+                throw new RetryableEmitException(Msg.E1033, Texts.Failed_to_create_template, Template.Snapshot);
             }
 
             var item = ItemManager.AddFromTemplate(Template.ItemName, new TemplateID(TemplateIDs.Template), parentItem, new ID(Template.Uri.Guid));
             if (item == null)
             {
-                throw new EmitException(Msg.E1034, Texts.Failed_to_add_new_template, Template.Snapshots.First());
+                throw new EmitException(Msg.E1034, Texts.Failed_to_add_new_template, Template.Snapshot);
             }
 
             Item = item;
@@ -498,7 +498,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                     parentItem = item.Database.CreateItemPath(parentItemPath);
                     if (parentItem == null)
                     {
-                        throw new RetryableEmitException(Msg.E1036, Texts.Could_not_create_item, Template.Snapshots.First(), parentItemPath);
+                        throw new RetryableEmitException(Msg.E1036, Texts.Could_not_create_item, Template.Snapshot, parentItemPath);
                     }
                 }
 

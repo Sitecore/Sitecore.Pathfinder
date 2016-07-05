@@ -63,7 +63,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
 
             var itemWriter = new ItemWriter
             {
-                Snapshot = item.Snapshots.First(),
+                Snapshot = item.Snapshot,
                 DatabaseName = item.DatabaseName,
                 Guid = projectItem.Uri.Guid,
                 ItemName = item.ItemName,
@@ -163,7 +163,7 @@ namespace Sitecore.Pathfinder.Emitters.Items
                     details = string.Empty;
                 }
 
-                var textNode = item.SourceTextNodes.First();
+                var textNode = item.SourceTextNode;
                 if (!Data.ID.IsNullOrEmpty(validator.FieldID))
                 {
                     var field = item.Fields.FirstOrDefault(f => f.FieldId == validator.FieldID.Guid);

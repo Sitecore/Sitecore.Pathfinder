@@ -32,21 +32,21 @@ namespace Sitecore.Pathfinder.Languages.Renderings
             }
 
             var project = rendering.Project;
-            var snapshot = rendering.Snapshots.First();
+            var snapshot = rendering.Snapshot;
             var snapshotTextNode = new SnapshotTextNode(snapshot);
             var guid = StringHelper.GetGuid(project, rendering.ItemPath);
-            var item = context.Factory.Item(project, snapshotTextNode, guid, rendering.DatabaseName, rendering.ItemName, rendering.ItemPath, rendering.TemplateIdOrPath);
+            var item = context.Factory.Item(project, guid, rendering.DatabaseName, rendering.ItemName, rendering.ItemPath, rendering.TemplateIdOrPath).With(snapshotTextNode);
             item.ItemNameProperty.AddSourceTextNode(new FileNameTextNode(rendering.ItemName, snapshot));
             item.OverwriteWhenMerging = true;
 
-            var field = context.Factory.Field(item, snapshotTextNode, "Path", rendering.FilePath);
+            var field = context.Factory.Field(item, "Path", rendering.FilePath).With(snapshotTextNode);
             field.ValueProperty.Flags = SourcePropertyFlags.IsFileName;
             item.Fields.Add(field);
             item.References.Add(new FileReference(item, field.ValueProperty, field.Value));
 
             if (rendering.Placeholders.Any() && rendering.Extension != ".aspx")
             {
-                var placeholdersField = context.Factory.Field(item, TextNode.Empty, "Place Holders", string.Join(",", rendering.Placeholders));
+                var placeholdersField = context.Factory.Field(item, "Place Holders", string.Join(",", rendering.Placeholders));
                 item.Fields.Add(placeholdersField);
             }
 

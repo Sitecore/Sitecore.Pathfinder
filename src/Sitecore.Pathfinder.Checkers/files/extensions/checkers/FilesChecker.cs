@@ -17,9 +17,9 @@ namespace Sitecore.Pathfinder.Checkers
         public IEnumerable<Diagnostic> AvoidLargeMediaFiles(ICheckerContext context)
         {
             return from mediaFile in context.Project.ProjectItems.OfType<MediaFile>()
-                let fileInfo = new FileInfo(mediaFile.Snapshots.First().SourceFile.AbsoluteFileName)
+                let fileInfo = new FileInfo(mediaFile.Snapshot.SourceFile.AbsoluteFileName)
                 where fileInfo.Length > 5 * 1025 * 1025
-                select Warning(Msg.C1027, "Media file size exceeds 5MB. Consider reducing the size of the file", mediaFile.Snapshots.First().SourceFile.AbsoluteFileName, TextSpan.Empty);
+                select Warning(Msg.C1027, "Media file size exceeds 5MB. Consider reducing the size of the file", mediaFile.Snapshot.SourceFile.AbsoluteFileName, TextSpan.Empty);
         }
     }
 }

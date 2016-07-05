@@ -49,7 +49,7 @@ namespace Sitecore.Pathfinder.Compiling.Builders
                 throw new InvalidOperationException("Template Section Guid is not valid");
             }
 
-            var section = Factory.TemplateSection(template, sectionIdGuid, SectionTextNode);
+            var section = Factory.TemplateSection(template, sectionIdGuid).With(SectionTextNode);
 
             section.SectionName = SectionName;
             if (SectionNameTextNode != TextNode.Empty)

@@ -103,20 +103,20 @@ namespace Sitecore.Pathfinder.Projects
             switch (element.Name.LocalName)
             {
                 case "Item":
-                    var item = Factory.Item(project, TextNode.Empty, guid, databaseName, itemName, itemIdOrPath, element.GetAttributeValue("Template"));
+                    var item = Factory.Item(project, guid, databaseName, itemName, itemIdOrPath, element.GetAttributeValue("Template"));
                     item.IsImport = true;
                     item.IsEmittable = false;
 
                     foreach (var field in element.Elements())
                     {
-                        item.Fields.Add(Factory.Field(item, TextNode.Empty, field.GetAttributeValue("Name"), field.GetAttributeValue("Value")));
+                        item.Fields.Add(Factory.Field(item, field.GetAttributeValue("Name"), field.GetAttributeValue("Value")));
                     }
 
                     project.AddOrMerge(item);
                     break;
 
                 case "Template":
-                    var template = Factory.Template(project, guid, TextNode.Empty, databaseName, itemName, itemIdOrPath);
+                    var template = Factory.Template(project, guid, databaseName, itemName, itemIdOrPath);
                     template.IsImport = true;
                     template.IsEmittable = false;
                     template.BaseTemplates = element.GetAttributeValue("BaseTemplates");
@@ -135,7 +135,7 @@ namespace Sitecore.Pathfinder.Projects
                             return;
                         }
 
-                        var templateSection = Factory.TemplateSection(template, sectionGuid, TextNode.Empty);
+                        var templateSection = Factory.TemplateSection(template, sectionGuid);
                         templateSection.SectionName = sectionElement.GetAttributeValue("Name");
 
                         foreach (var fieldElement in sectionElement.Elements())
@@ -147,7 +147,7 @@ namespace Sitecore.Pathfinder.Projects
                                 return;
                             }
 
-                            var templateField = Factory.TemplateField(template, fieldGuid, TextNode.Empty);
+                            var templateField = Factory.TemplateField(template, fieldGuid);
                             templateField.FieldName = fieldElement.GetAttributeValue("Name");
                             templateField.Type = fieldElement.GetAttributeValue("Type");
 

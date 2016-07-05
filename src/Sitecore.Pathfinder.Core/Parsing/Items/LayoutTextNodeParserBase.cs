@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             var guid = StringHelper.GetGuid(context.ParseContext.Project, textNode.GetAttributeValue("Id", itemIdOrPath));
             var databaseName = textNode.GetAttributeValue("Database", context.DatabaseName);
 
-            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, textNode, guid, databaseName, itemNameTextNode.Value, itemIdOrPath, string.Empty);
+            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, guid, databaseName, itemNameTextNode.Value, itemIdOrPath, string.Empty).With(textNode);
             item.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
 
             Parse(context, textNode, item);
@@ -35,7 +35,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
         public virtual void Parse([NotNull] ItemParseContext context, [NotNull] ITextNode textNode, [NotNull] Item item)
         {
-            var field = context.ParseContext.Factory.Field(item, textNode, "__Renderings", string.Empty);
+            var field = context.ParseContext.Factory.Field(item, "__Renderings", string.Empty).With(textNode);
 
             // todo: set template field
 

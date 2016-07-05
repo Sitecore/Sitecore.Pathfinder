@@ -77,6 +77,8 @@
     <Compile Include="Emitting\IProjectEmitter.cs" />
     <Compile Include="Extensions\DiagnosticCollectionExtensions.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
+    <Compile Include="Extensions\SnapshotExtensions.cs" />
+    <Compile Include="Extensions\TextNodeExtensions.cs" />
     <Compile Include="HostService.cs" />
     <Compile Include="Checking\Checker.cs" />
     <Compile Include="Compiling\LayoutFileCompilers\TemplateLayoutFileCompiler.cs" />
@@ -95,6 +97,7 @@
     <Compile Include="Projects\ProjectIndex.cs" />
     <Compile Include="Projects\ProjectIndexer.cs" />
     <Compile Include="Projects\SourcePropertyBag.cs" />
+    <Compile Include="Projects\TextNodeSourcePropertyBag.cs" />
     <Compile Include="Runtime\Caching\CacheService.cs" />
     <Compile Include="Runtime\Caching\ICacheService.cs" />
     <Compile Include="Snapshots\StringTextNode.cs" />

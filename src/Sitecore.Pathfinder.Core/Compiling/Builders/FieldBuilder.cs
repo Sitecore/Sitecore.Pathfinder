@@ -74,7 +74,7 @@ namespace Sitecore.Pathfinder.Compiling.Builders
         [NotNull]
         public Field Build([NotNull] Item item)
         {
-            var field = Factory.Field(item, FieldTextNode);
+            var field = Factory.Field(item).With(FieldTextNode);
 
             Guid fieldIdGuid;
             if (Guid.TryParse(FieldId, out fieldIdGuid))

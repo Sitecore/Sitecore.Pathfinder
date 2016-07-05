@@ -82,13 +82,13 @@ namespace Sitecore.Pathfinder.Emitters.Items
                 {
                     case ValidatorResult.Suggestion:
                     case ValidatorResult.Warning:
-                        context.Trace.TraceWarning(Msg.E1008, text, template.SourceTextNodes.First(), details);
+                        context.Trace.TraceWarning(Msg.E1008, text, template.SourceTextNode, details);
                         break;
 
                     case ValidatorResult.Error:
                     case ValidatorResult.CriticalError:
                     case ValidatorResult.FatalError:
-                        context.Trace.TraceError(Msg.E1008, text, template.SourceTextNodes.First(), details);
+                        context.Trace.TraceError(Msg.E1008, text, template.SourceTextNode, details);
                         break;
                 }
             }

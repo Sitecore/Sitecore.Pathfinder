@@ -8,20 +8,15 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects.Templates
 {
-    public class TemplateSection : SourcePropertyBag, IHasSourceTextNodes
+    public class TemplateSection : TextNodeSourcePropertyBag
     {
-        public TemplateSection([NotNull] Template template, Guid guid, [NotNull] ITextNode templateSectionTextNode)
+        public TemplateSection([NotNull] Template template, Guid guid)
         {
             Template = template;
 
             IconProperty = NewSourceProperty("Icon", string.Empty);
             SectionNameProperty = NewSourceProperty("Name", string.Empty);
             Fields = new LockableList<TemplateField>(this);
-
-            SourceTextNodes = new LockableList<ITextNode>(this)
-            {
-                templateSectionTextNode
-            };
 
             Uri = new ProjectItemUri(template.DatabaseName, guid);
         }
@@ -51,8 +46,6 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull]
         public SourceProperty<string> SectionNameProperty { get; }
 
-        public ICollection<ITextNode> SourceTextNodes { get; }
-
         [NotNull]
         public Template Template { get; }
 
@@ -63,7 +56,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         {
             if (!string.IsNullOrEmpty(newSection.Icon))
             {
-                IconProperty.SetValue(newSection.IconProperty, SetValueOptions.DisableUpdates);
+                IconProperty.SetValue(newSection.IconProperty);
             }
 
             foreach (var newField in newSection.Fields)
@@ -77,6 +70,13 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
                 field.Merge(newField, overwrite);
             }
+        }
+
+        [NotNull]
+        public TemplateSection With([NotNull] ITextNode sourceTextNode)
+        {
+            WithSourceTextNode(sourceTextNode);
+            return this;
         }
     }
 }

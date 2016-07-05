@@ -47,7 +47,7 @@ namespace Sitecore.Pathfinder.Checkers
         {
             return from item in context.Project.Items
                 where item.TemplateName == "Folder"
-                select Warning(Msg.C1000, $"Avoid using the 'Folder' template. To fix, create a new 'Folder' template, assign Insert Options and change the template of this item", TraceHelper.GetTextNode(item));
+                select Warning(Msg.C1000, "Avoid using the 'Folder' template. To fix, create a new 'Folder' template, assign Insert Options and change the template of this item", TraceHelper.GetTextNode(item));
         }
 
         [Export("Check")]
@@ -57,7 +57,7 @@ namespace Sitecore.Pathfinder.Checkers
 
             return from configFile in context.Project.ProjectItems.OfType<ConfigFile>()
                 where !configFile.FilePath.StartsWith(path, StringComparison.OrdinalIgnoreCase)
-                select Error(Msg.C1000, $"Config file must be the correct module directory", configFile.Snapshots.First().SourceFile, $"To fix, move the file to the '{path}' directory");
+                select Error(Msg.C1000, "Config file must be the correct module directory", configFile.Snapshot.SourceFile, $"To fix, move the file to the '{path}' directory");
         }
 
         [Export("Check")]
@@ -88,7 +88,7 @@ namespace Sitecore.Pathfinder.Checkers
         {
             return from template in context.Project.Templates
                 where IsDataSourceTemplate(template) && template.Fields.Any()
-                select Error(Msg.C1000, $"Page Type Templates must not have fields. To fix, move the fields to a Data Template", TraceHelper.GetTextNode(template));
+                select Error(Msg.C1000, "Page Type Templates must not have fields. To fix, move the fields to a Data Template", TraceHelper.GetTextNode(template));
         }
 
         [Export("Check")]
@@ -96,7 +96,7 @@ namespace Sitecore.Pathfinder.Checkers
         {
             return from template in context.Project.Templates
                 where IsDataSourceTemplate(template) && HasLayout(template)
-                select Error(Msg.C1000, $"Data Source Templates must not have a layout. To fix, remove the layout from the template", TraceHelper.GetTextNode(template));
+                select Error(Msg.C1000, "Data Source Templates must not have a layout. To fix, remove the layout from the template", TraceHelper.GetTextNode(template));
         }
 
         [Export("Check")]
@@ -104,7 +104,7 @@ namespace Sitecore.Pathfinder.Checkers
         {
             return from item in context.Project.Items
                 where IsDataTemplate(item.Template)
-                select Error(Msg.C1000, $"Data Templates must not be instantiated. To fix, change the template of the item to a Page Type template or Data Source template", TraceHelper.GetTextNode(item));
+                select Error(Msg.C1000, "Data Templates must not be instantiated. To fix, change the template of the item to a Page Type template or Data Source template", TraceHelper.GetTextNode(item));
         }
 
         [Export("Check")]
@@ -112,7 +112,7 @@ namespace Sitecore.Pathfinder.Checkers
         {
             return from template in context.Project.Templates
                 where IsDataTemplate(template) && HasLayout(template)
-                select Error(Msg.C1000, $"Data Templates must not have a layout. To fix, create a Page Type Template that inherits from this template and assign the layout to that template", TraceHelper.GetTextNode(template));
+                select Error(Msg.C1000, "Data Templates must not have a layout. To fix, create a Page Type Template that inherits from this template and assign the layout to that template", TraceHelper.GetTextNode(template));
         }
 
         [Export("Check")]
@@ -141,7 +141,7 @@ namespace Sitecore.Pathfinder.Checkers
         {
             return from template in context.Project.Templates
                 where template.ItemName.EndsWith("Folder") && template.Fields.Any()
-                select Error(Msg.C1000, $"Folder templates must not have any fields. To fix, remove the fields", TraceHelper.GetTextNode(template));
+                select Error(Msg.C1000, "Folder templates must not have any fields. To fix, remove the fields", TraceHelper.GetTextNode(template));
         }
 
         [Export("Check")]
@@ -149,7 +149,7 @@ namespace Sitecore.Pathfinder.Checkers
         {
             return from template in context.Project.Templates
                 where template.ItemName.EndsWith("Folder") && template.StandardValuesItem != null && string.IsNullOrEmpty(template.StandardValuesItem["__Masters"])
-                select Error(Msg.C1000, $"Folder templates should specify Insert Options on their Standard Values item. To fix, assign appropriate Insert Options to the Standard Values item", TraceHelper.GetTextNode(template));
+                select Error(Msg.C1000, "Folder templates should specify Insert Options on their Standard Values item. To fix, assign appropriate Insert Options to the Standard Values item", TraceHelper.GetTextNode(template));
         }
 
         [Export("Check")]
@@ -222,7 +222,7 @@ namespace Sitecore.Pathfinder.Checkers
         {
             return from template in context.Project.Templates
                 where IsPageTypeTemplate(template) && !HasLayout(template)
-                select Error(Msg.C1000, $"Page Type Templates must have a layout. To fix, assign a layout to the template", TraceHelper.GetTextNode(template));
+                select Error(Msg.C1000, "Page Type Templates must have a layout. To fix, assign a layout to the template", TraceHelper.GetTextNode(template));
         }
 
         [Export("Check")]
@@ -240,7 +240,7 @@ namespace Sitecore.Pathfinder.Checkers
         {
             return from template in context.Project.Templates
                 where IsPageTypeTemplate(template) && template.Fields.Any()
-                select Error(Msg.C1000, $"Page Type Templates must not have fields. To fix, move the fields to a Data Template", TraceHelper.GetTextNode(template));
+                select Error(Msg.C1000, "Page Type Templates must not have fields. To fix, move the fields to a Data Template", TraceHelper.GetTextNode(template));
         }
 
         [Export("Check")]
@@ -261,7 +261,7 @@ namespace Sitecore.Pathfinder.Checkers
         {
             return from template in context.Project.Templates
                 where IsPageTypeTemplate(template) && template.StandardValuesItem == null
-                select Error(Msg.C1000, $"Page Type templates should have a Standard Values item. To fix, create a Standard Value item", TraceHelper.GetTextNode(template));
+                select Error(Msg.C1000, "Page Type templates should have a Standard Values item. To fix, create a Standard Value item", TraceHelper.GetTextNode(template));
         }
 
         [Export("Check")]
@@ -296,7 +296,7 @@ namespace Sitecore.Pathfinder.Checkers
 
             return from template in context.Project.Templates
                 where IsRenderingParametersTemplate(template) && !template.Is(standardRenderingParametersTemplate)
-                select Error(Msg.C1000, $"Folder templates should specify Insert Options on their Standard Values item. To fix, assign appropriate Insert Options to the Standard Values item", TraceHelper.GetTextNode(template));
+                select Error(Msg.C1000, "Folder templates should specify Insert Options on their Standard Values item. To fix, assign appropriate Insert Options to the Standard Values item", TraceHelper.GetTextNode(template));
         }
 
         [Export("Check")]
@@ -304,7 +304,7 @@ namespace Sitecore.Pathfinder.Checkers
         {
             return from rendering in context.Project.ProjectItems.OfType<Rendering>()
                 where !rendering.FilePath.StartsWith("~/views/", StringComparison.OrdinalIgnoreCase)
-                select Warning(Msg.C1000, "View rendering should be located in the ~/views/ directory", rendering.Snapshots.First().SourceFile, $"To fix, move the file to the ~/views/ directory");
+                select Warning(Msg.C1000, "View rendering should be located in the ~/views/ directory", rendering.Snapshot.SourceFile, "To fix, move the file to the ~/views/ directory");
         }                                      
 
         [Export("Check")]

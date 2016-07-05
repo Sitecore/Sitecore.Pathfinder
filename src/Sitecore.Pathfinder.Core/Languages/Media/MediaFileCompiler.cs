@@ -28,16 +28,16 @@ namespace Sitecore.Pathfinder.Languages.Media
             var mediaFile = projectItem as MediaFile;
             Assert.Cast(mediaFile, nameof(mediaFile));
 
-            var extension = Path.GetExtension(mediaFile.Snapshots.First().SourceFile.AbsoluteFileName).TrimStart('.').ToLowerInvariant();
+            var extension = Path.GetExtension(mediaFile.Snapshot.SourceFile.AbsoluteFileName).TrimStart('.').ToLowerInvariant();
 
             var templateIdOrPath = context.Configuration.GetString(Constants.Configuration.BuildProject.MediaTemplate + ":" + extension, "/sitecore/templates/System/Media/Unversioned/File");
 
             var project = context.Project;
-            var snapshot = mediaFile.Snapshots.First();
+            var snapshot = mediaFile.Snapshot;
 
             var guid = StringHelper.GetGuid(project, mediaFile.ItemPath);
 
-            var item = context.Factory.Item(project, new SnapshotTextNode(snapshot), guid, mediaFile.DatabaseName, mediaFile.ItemName, mediaFile.ItemPath, string.Empty);
+            var item = context.Factory.Item(project, guid, mediaFile.DatabaseName, mediaFile.ItemName, mediaFile.ItemPath, string.Empty).With(new SnapshotTextNode(snapshot));
             item.IsEmittable = false;
             item.OverwriteWhenMerging = true;
             item.MergingMatch = MergingMatch.MatchUsingSourceFile;

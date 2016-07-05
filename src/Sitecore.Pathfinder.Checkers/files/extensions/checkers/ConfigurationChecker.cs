@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Checkers
 
             foreach (var configFile in context.Project.ProjectItems.OfType<ConfigFile>())
             {
-                var fileName = configFile.Snapshots.First().SourceFile.AbsoluteFileName;
+                var fileName = configFile.Snapshot.SourceFile.AbsoluteFileName;
 
                 XDocument doc;
                 try
@@ -139,7 +139,7 @@ namespace Sitecore.Pathfinder.Checkers
         [CanBeNull]
         protected virtual Type GetTypeFromAssembly([NotNull] BinFile binFile, [NotNull] string typeName)
         {
-            var assembly = Assembly.LoadFrom(binFile.Snapshots.First().SourceFile.AbsoluteFileName);
+            var assembly = Assembly.LoadFrom(binFile.Snapshot.SourceFile.AbsoluteFileName);
             return assembly == null ? null : assembly.GetType(typeName, false);
         }
     }

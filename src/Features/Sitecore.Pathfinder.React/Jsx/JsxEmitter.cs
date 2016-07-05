@@ -35,7 +35,7 @@ namespace Sitecore.Pathfinder.React.Jsx
             var reactFileName = Path.Combine(binDirectory, "React.Core.dll");
             if (!context.FileSystem.FileExists(reactFileName))
             {
-                context.Trace.TraceWarning(Msg.E1007, "React.Core.dll is missing from the website /bin directory. ReactJS.net is probably not installed correctly, and .jsx renderings will not work.", projectItem.Snapshots.First().SourceFile);
+                context.Trace.TraceWarning(Msg.E1007, "React.Core.dll is missing from the website /bin directory. ReactJS.net is probably not installed correctly, and .jsx renderings will not work.", projectItem.Snapshot.SourceFile);
             }
         }
     }

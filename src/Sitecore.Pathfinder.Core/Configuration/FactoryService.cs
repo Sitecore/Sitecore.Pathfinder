@@ -49,13 +49,11 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual Diagnostic Diagnostic(int msg, string fileName, TextSpan span, Severity severity, string text) => new Diagnostic(msg, fileName, span, severity, text);
 
-        public virtual Field Field(Item item, ITextNode textNode) => new Field(item, textNode);
+        public virtual Field Field(Item item) => new Field(item);
 
-        public Field Field(Item item) => new Field(item, Snapshots.TextNode.Empty);
-
-        public Field Field(Item item, ITextNode textNode, string fieldName, string fieldValue)
+        public Field Field(Item item, string fieldName, string fieldValue)
         {
-            var field = new Field(item, textNode);
+            var field = new Field(item);
             field.FieldNameProperty.SetValue(fieldName);
             field.ValueProperty.SetValue(fieldValue);
             return field;
@@ -67,9 +65,7 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual FileReference FileReference(IProjectItem owner, ITextNode textNode, string referenceText) => new FileReference(owner, textNode, referenceText);
 
-        public virtual Item Item(IProjectBase project, ITextNode textNode, Guid guid, string databaseName, string itemName, string itemIdOrPath, string templateIdOrPath) => new Item(project, textNode, guid, databaseName, itemName, itemIdOrPath, templateIdOrPath);
-
-        public Item Item(IProjectBase project, ISnapshot snapshot, Guid guid, string databaseName, string itemName, string itemIdOrPath, string templateIdOrPath) => new Item(project, new SnapshotTextNode(snapshot), guid, databaseName, itemName, itemIdOrPath, templateIdOrPath);
+        public Item Item(IProjectBase project, Guid guid, string databaseName, string itemName, string itemIdOrPath, string templateIdOrPath) => new Item(project, guid, databaseName, itemName, itemIdOrPath, templateIdOrPath);
 
         public ItemBuilder ItemBuilder() => new ItemBuilder(this);
 
@@ -103,11 +99,11 @@ namespace Sitecore.Pathfinder.Configuration
             return new SourceFile(fileSystem, absoluteFileName, relativeFileName, projectFileName);
         }
 
-        public virtual Template Template(IProjectBase project, Guid guid, ITextNode textNode, string databaseName, string itemName, string itemIdOrPath) => new Template(project, textNode, guid, databaseName, itemName, itemIdOrPath);
+        public virtual Template Template(IProjectBase project, Guid guid, string databaseName, string itemName, string itemIdOrPath) => new Template(project, guid, databaseName, itemName, itemIdOrPath);
 
-        public virtual TemplateField TemplateField(Template template, Guid guid, ITextNode templateFieldTextNode) => new TemplateField(template, guid, templateFieldTextNode);
+        public virtual TemplateField TemplateField(Template template, Guid guid) => new TemplateField(template, guid);
 
-        public virtual TemplateSection TemplateSection(Template template, Guid guid, ITextNode templateSectionTextNode) => new TemplateSection(template, guid, templateSectionTextNode);
+        public virtual TemplateSection TemplateSection(Template template, Guid guid) => new TemplateSection(template, guid);
 
         public virtual TextNode TextNode(ISnapshot snapshot, TextSpan span, string name, string value) => new TextNode(snapshot, name, value, span);
     }

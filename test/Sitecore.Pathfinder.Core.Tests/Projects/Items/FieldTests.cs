@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         public void Compile_NullCompilers()
         {
             var context = CreateContext(new IFieldCompiler[0]);
-            var field = new Field(Item.Empty, null) { Value = "Lorem Ipsum" };
+            var field = new Field(Item.Empty) { Value = "Lorem Ipsum" };
 
             field.Compile(context);
 
@@ -28,7 +28,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         public void Compile_EmptyCompilers()
         {
             var context = CreateContext(new IFieldCompiler[0]);
-            var field = new Field(Item.Empty, null) { Value = "Lorem Ipsum" };
+            var field = new Field(Item.Empty) { Value = "Lorem Ipsum" };
 
             field.Compile(context);
 
@@ -43,10 +43,10 @@ namespace Sitecore.Pathfinder.Projects.Items
             var template = CreateTemplate(project);
             var context = CreateContext(compilers);
 
-            var item = new Item(project, TextNode.Empty, Guid.NewGuid(), "master", "item", "/sitecore/item", template.ItemIdOrPath);
+            var item = new Item(project, Guid.NewGuid(), "master", "item", "/sitecore/item", template.ItemIdOrPath);
             project.AddOrMerge(item);
 
-            var field = new Field(item, null)
+            var field = new Field(item)
             {
                 FieldName = "Text",
                 Value = "Lorem Ipsum"
@@ -65,10 +65,10 @@ namespace Sitecore.Pathfinder.Projects.Items
             var template = CreateTemplate(project);
             var context = CreateContext(compilers);
 
-            var item = new Item(project, TextNode.Empty, Guid.NewGuid(), "master", "item", "/sitecore/item", template.ItemName);
+            var item = new Item(project, Guid.NewGuid(), "master", "item", "/sitecore/item", template.ItemName);
             project.AddOrMerge(item);
 
-            var field = new Field(item, null)
+            var field = new Field(item)
             {
                 FieldName = "Checkbox",
                 Value = "True"
@@ -88,10 +88,10 @@ namespace Sitecore.Pathfinder.Projects.Items
             var template = CreateTemplate(project);
             var context = CreateContext(compilers);
 
-            var item = new Item(project, TextNode.Empty, Guid.NewGuid(), "master", "item", "/sitecore/item", template.ItemName);
+            var item = new Item(project, Guid.NewGuid(), "master", "item", "/sitecore/item", template.ItemName);
             project.AddOrMerge(item);
 
-            var field = new Field(item, null)
+            var field = new Field(item)
             {
                 FieldName = "Checkbox",
                 Value = "True"
@@ -111,10 +111,10 @@ namespace Sitecore.Pathfinder.Projects.Items
             var template = CreateTemplate(project);
             var context = CreateContext(compilers);
 
-            var item = new Item(project, TextNode.Empty, Guid.NewGuid(), "master", "item", "/sitecore/item", template.ItemName);
+            var item = new Item(project, Guid.NewGuid(), "master", "item", "/sitecore/item", template.ItemName);
             project.AddOrMerge(item);
 
-            var field = new Field(item, null)
+            var field = new Field(item)
             {
                 FieldName = "Text",
                 Value = "True"
@@ -136,20 +136,20 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         private Template CreateTemplate([NotNull] IProject project)
         {
-            var template = new Template(project, TextNode.Empty, Guid.NewGuid(), "master", "dummy template", Guid.NewGuid().ToString());
-            var stringField = new TemplateField(template, Guid.NewGuid(), null)
+            var template = new Template(project, Guid.NewGuid(), "master", "dummy template", Guid.NewGuid().ToString());
+            var stringField = new TemplateField(template, Guid.NewGuid())
             {
                 Type = "Single-Line Text",
                 FieldName = "Text"
             };
 
-            var checkboxField = new TemplateField(template, Guid.NewGuid(), null)
+            var checkboxField = new TemplateField(template, Guid.NewGuid())
             {
                 Type = "Checkbox",
                 FieldName = "Checkbox"
             };
 
-            var section = new TemplateSection(template, Guid.NewGuid(), null);
+            var section = new TemplateSection(template, Guid.NewGuid());
             section.Fields.Add(stringField);
             section.Fields.Add(checkboxField);
 

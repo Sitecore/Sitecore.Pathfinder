@@ -1,6 +1,7 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Linq;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
@@ -28,7 +29,7 @@ namespace Sitecore.Pathfinder.Tasks
                 return;
             }
 
-            foreach (var snapshot in context.Project.ProjectItems.SelectMany(i => i.Snapshots))
+            foreach (var snapshot in context.Project.ProjectItems.SelectMany(i => i.GetSnapshots()))
             {
                 snapshot.SourceFile.IsModified = false;
             }

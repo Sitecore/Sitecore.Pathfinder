@@ -2,7 +2,6 @@
 
 using System;
 using System.ComponentModel.Composition;
-using System.Linq;
 using Sitecore.Data.Serialization;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitting;
@@ -10,7 +9,6 @@ using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.Serialization;
 using Sitecore.Pathfinder.Projects;
-using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Emitters.Files
 {
@@ -42,17 +40,17 @@ namespace Sitecore.Pathfinder.Emitters.Files
 
             try
             {
-                var item = DoLoadItem(itemModel.Snapshots.First().SourceFile.AbsoluteFileName, LoadOptions);
+                var item = DoLoadItem(itemModel.Snapshot.SourceFile.AbsoluteFileName, LoadOptions);
                 if (item == null)
                 {
-                    throw new RetryableEmitException(Msg.E1011, Texts.Failed_to_deserialize_item, itemModel.Snapshots.First(), "Item not created");
+                    throw new RetryableEmitException(Msg.E1011, Texts.Failed_to_deserialize_item, itemModel.Snapshot, "Item not created");
                 }
 
                 item.UpdateProjectUniqueIds(context);
             }
             catch (Exception ex)
             {
-                throw new RetryableEmitException(Msg.E1012, Texts.Failed_to_deserialize_item, itemModel.Snapshots.First(), ex.Message);
+                throw new RetryableEmitException(Msg.E1012, Texts.Failed_to_deserialize_item, itemModel.Snapshot, ex.Message);
             }
         }
 

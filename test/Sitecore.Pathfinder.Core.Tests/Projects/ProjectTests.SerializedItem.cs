@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Projects
             Assert.AreEqual("SerializedItem", item.ItemName);
             Assert.AreEqual("/sitecore/content/Home/SerializedItem", item.ItemIdOrPath);
             Assert.AreEqual("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}", item.TemplateIdOrPath);
-            Assert.IsNotNull(item.ItemNameProperty.SourceTextNodes);
+            Assert.AreNotEqual(item.ItemNameProperty.SourceTextNode, TextNode.Empty);
             Assert.IsInstanceOf<TextNode>(item.ItemNameProperty.SourceTextNode);
             Assert.IsInstanceOf<TextNode>(item.TemplateIdOrPathProperty.SourceTextNode);
             Assert.AreEqual("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}", TraceHelper.GetTextNode(item.TemplateIdOrPathProperty).Value);
@@ -36,7 +36,7 @@ namespace Sitecore.Pathfinder.Projects
             Assert.IsInstanceOf<TextNode>(field.ValueProperty.SourceTextNode);
             Assert.AreEqual("Pip 2", field.ValueProperty.SourceTextNode?.Value);
 
-            var textDocument = projectItem.Snapshots.First() as ITextSnapshot;
+            var textDocument = projectItem.Snapshot as ITextSnapshot;
             Assert.IsNotNull(textDocument);
         }
 

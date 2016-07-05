@@ -37,9 +37,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
         protected virtual void CreateTemplate([NotNull] ICompileContext context, [NotNull] IProject project, [NotNull] Item templateItem)
         {
-            var template = context.Factory.Template(project, templateItem.Uri.Guid, templateItem.SourceTextNodes.First(), templateItem.DatabaseName, templateItem.ItemName, templateItem.ItemIdOrPath);
-            template.IsEmittable = false;
-            template.IsImport = templateItem.IsImport;
+            var template = context.Factory.Template(project, templateItem.Uri.Guid, templateItem.DatabaseName, templateItem.ItemName, templateItem.ItemIdOrPath).With(templateItem.SourceTextNode, false, templateItem.IsImport);
 
             var baseTemplateField = templateItem.Fields.FirstOrDefault(f => f.FieldName == "__Base template");
             if (baseTemplateField != null)
@@ -55,7 +53,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
             foreach (var sectionItem in templateItem.GetChildren())
             {
-                var templateSection = context.Factory.TemplateSection(template, sectionItem.Uri.Guid, sectionItem.SourceTextNodes.First());
+                var templateSection = context.Factory.TemplateSection(template, sectionItem.Uri.Guid).With(sectionItem.SourceTextNode);
                 template.Sections.Add(templateSection);
                 templateSection.SectionNameProperty.SetValue(sectionItem.ItemNameProperty);
 
@@ -67,7 +65,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
                 foreach (var fieldItem in sectionItem.GetChildren())
                 {
-                    var templateField = context.Factory.TemplateField(template, fieldItem.Uri.Guid, fieldItem.SourceTextNodes.First());
+                    var templateField = context.Factory.TemplateField(template, fieldItem.Uri.Guid).With(fieldItem.SourceTextNode);
                     templateSection.Fields.Add(templateField);
                     templateField.FieldNameProperty.SetValue(fieldItem.ItemNameProperty);
 

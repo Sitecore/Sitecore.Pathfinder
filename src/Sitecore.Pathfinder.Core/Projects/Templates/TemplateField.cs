@@ -1,7 +1,6 @@
 // © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Snapshots;
@@ -9,15 +8,15 @@ using Sitecore.Pathfinder.Snapshots;
 namespace Sitecore.Pathfinder.Projects.Templates
 {
     [DebuggerDisplay("{GetType().Name,nq}: {FieldName}")]
-    public class TemplateField : SourcePropertyBag, IHasSourceTextNodes
+    public class TemplateField : TextNodeSourcePropertyBag
     {
         [NotNull]
-        public static readonly TemplateField Empty = new TemplateField(Template.Empty, new Guid("{D269BE69-A982-4415-ABC6-A870F286435A}"), TextNode.Empty);
+        public static readonly TemplateField Empty = new TemplateField(Template.Empty, new Guid("{D269BE69-A982-4415-ABC6-A870F286435A}"));
 
         [CanBeNull]
         private ID _id;
 
-        public TemplateField([NotNull] Template template, Guid guid, [NotNull] ITextNode templateFieldTextNode)
+        public TemplateField([NotNull] Template template, Guid guid)
         {
             Template = template;
 
@@ -27,11 +26,6 @@ namespace Sitecore.Pathfinder.Projects.Templates
             SortOrderProperty = NewSourceProperty("SortOrder", 0);
             SourceProperty = NewSourceProperty("Source", string.Empty);
             TypeProperty = NewSourceProperty("Type", string.Empty);
-
-            SourceTextNodes = new LockableList<ITextNode>(this)
-            {
-                templateFieldTextNode
-            };
 
             Uri = new ProjectItemUri(template.DatabaseName, guid);
         }
@@ -102,8 +96,6 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull]
         public SourceProperty<string> SourceProperty { get; }
 
-        public ICollection<ITextNode> SourceTextNodes { get; }
-
         [NotNull]
         public Template Template { get; }
 
@@ -124,15 +116,17 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
         public void Merge([NotNull] TemplateField newField, bool overwrite)
         {
+            base.Merge(newField, overwrite);
+
             // todo: consider making a strict and loose mode
             if (!string.IsNullOrEmpty(newField.Type))
             {
-                TypeProperty.SetValue(newField.TypeProperty, SetValueOptions.DisableUpdates);
+                TypeProperty.SetValue(newField.TypeProperty);
             }
 
             if (!string.IsNullOrEmpty(newField.Source))
             {
-                SourceProperty.SetValue(newField.SourceProperty, SetValueOptions.DisableUpdates);
+                SourceProperty.SetValue(newField.SourceProperty);
             }
 
             if (newField.Shared)
@@ -147,18 +141,25 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
             if (!string.IsNullOrEmpty(newField.ShortHelp))
             {
-                ShortHelpProperty.SetValue(newField.ShortHelpProperty, SetValueOptions.DisableUpdates);
+                ShortHelpProperty.SetValue(newField.ShortHelpProperty);
             }
 
             if (!string.IsNullOrEmpty(newField.LongHelp))
             {
-                LongHelpProperty.SetValue(newField.LongHelpProperty, SetValueOptions.DisableUpdates);
+                LongHelpProperty.SetValue(newField.LongHelpProperty);
             }
 
             if (newField.SortOrder != 0)
             {
-                SortOrderProperty.SetValue(newField.SortOrderProperty, SetValueOptions.DisableUpdates);
+                SortOrderProperty.SetValue(newField.SortOrderProperty);
             }
+        }
+
+        [NotNull]
+        public TemplateField With([NotNull] ITextNode sourceTextNode)
+        {
+            WithSourceTextNode(sourceTextNode);
+            return this;
         }
     }
 }

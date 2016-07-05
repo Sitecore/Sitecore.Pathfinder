@@ -34,13 +34,13 @@ namespace Sitecore.Pathfinder.Rules.Actions
             var itemBase = context.Object as DatabaseProjectItem;
             if (itemBase != null)
             {
-                textNode = itemBase.SourceTextNodes.FirstOrDefault();
+                textNode = itemBase.SourceTextNode;
             }
 
             var projectItem = context.Object as IProjectItem;
             if (projectItem != null)
             {
-                snapshot = projectItem.Snapshots.FirstOrDefault();
+                snapshot = projectItem.Snapshot;
             }
 
             TraceLine(context.Trace, msg, text, textNode, snapshot, details ?? string.Empty);

@@ -1,7 +1,6 @@
 // © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -14,12 +13,12 @@ namespace Sitecore.Pathfinder.Projects.Items
 {
     // todo: consider basing this on ProjectElement
     [DebuggerDisplay("{GetType().Name,nq}: {FieldName,nq} = {Value}")]
-    public class Field : SourcePropertyBag, IHasSourceTextNodes
+    public class Field : TextNodeSourcePropertyBag
     {
         [CanBeNull]
         private TemplateField _templateField;
 
-        public Field([NotNull] Item item, [NotNull] ITextNode textNode)
+        public Field([NotNull] Item item)
         {
             Item = item;
 
@@ -29,11 +28,6 @@ namespace Sitecore.Pathfinder.Projects.Items
             ValueHintProperty = NewSourceProperty("Value.Hint", string.Empty);
             ValueProperty = NewSourceProperty("Value", string.Empty);
             VersionProperty = NewSourceProperty("Version", 0);
-
-            SourceTextNodes = new LockableList<ITextNode>(this)
-            {
-                textNode
-            };
 
             ValueProperty.PropertyChanged += HandlePropertyChanged;
         }
@@ -111,8 +105,6 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         public bool IsCompiled { get; set; }
 
-        public override Locking Locking => Item.Locking;
-
         [NotNull]
         public Item Item { get; set; }
 
@@ -126,10 +118,10 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public SourceProperty<string> LanguageProperty { get; }
 
+        public override Locking Locking => Item.Locking;
+
         [NotNull, Obsolete("Use FieldName instead", false)]
         public string Name => FieldName;
-
-        public ICollection<ITextNode> SourceTextNodes { get; } 
 
         [NotNull]
         public TemplateField TemplateField
@@ -211,6 +203,13 @@ namespace Sitecore.Pathfinder.Projects.Items
             {
                 Invalidate();
             }
+        }
+
+        [NotNull]
+        public Field With([NotNull] ITextNode textNode)
+        {
+            WithSourceTextNode(textNode);
+            return this;
         }
     }
 }

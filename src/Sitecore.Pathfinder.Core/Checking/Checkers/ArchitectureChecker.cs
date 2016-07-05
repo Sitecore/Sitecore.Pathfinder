@@ -244,7 +244,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
             {
                 if (!schemaChildNodes.Any(c => IsMatch(child, c)))
                 {
-                    yield return new Diagnostic(Msg.D1025, item.Snapshots.First().SourceFile.RelativeFileName, TraceHelper.GetTextNode(item).TextSpan, Severity.Error, "Unexpected item: " + child.ItemIdOrPath + " [ArchitectureChecker]");
+                    yield return new Diagnostic(Msg.D1025, item.Snapshot.SourceFile.RelativeFileName, TraceHelper.GetTextNode(item).TextSpan, Severity.Error, "Unexpected item: " + child.ItemIdOrPath + " [ArchitectureChecker]");
                 }
             }
         }
@@ -281,7 +281,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
 
                 if (use == "required" && string.IsNullOrEmpty(fieldValue))
                 {
-                    yield return new Diagnostic(Msg.C1065, item.Snapshots.First().SourceFile.RelativeFileName, TraceHelper.GetTextNode(item.Fields[fieldName], item).TextSpan, Severity.Error, $"Field '{fieldName}' is required [ArchitectureChecker]");
+                    yield return new Diagnostic(Msg.C1065, item.Snapshot.SourceFile.RelativeFileName, TraceHelper.GetTextNode(item.Fields[fieldName], item).TextSpan, Severity.Error, $"Field '{fieldName}' is required [ArchitectureChecker]");
                 }
             }
         }
@@ -330,12 +330,12 @@ namespace Sitecore.Pathfinder.Checking.Checkers
 
                 if (minOccurs > 0 && count < minOccurs)
                 {
-                    yield return new Diagnostic(Msg.D1025, item.Snapshots.First().SourceFile.RelativeFileName, TraceHelper.GetTextNode(item).TextSpan, Severity.Error, $"Item {GetText(schemaChildNode)} must occur at least {minOccurs} times [ArchitectureChecker]");
+                    yield return new Diagnostic(Msg.D1025, item.Snapshot.SourceFile.RelativeFileName, TraceHelper.GetTextNode(item).TextSpan, Severity.Error, $"Item {GetText(schemaChildNode)} must occur at least {minOccurs} times [ArchitectureChecker]");
                 }
 
                 if (maxOccurs > 0 && count > maxOccurs)
                 {
-                    yield return new Diagnostic(Msg.D1025, item.Snapshots.First().SourceFile.RelativeFileName, TraceHelper.GetTextNode(item).TextSpan, Severity.Error, $"Item {GetText(schemaChildNode)} must not occur more than {maxOccurs} times [ArchitectureChecker]");
+                    yield return new Diagnostic(Msg.D1025, item.Snapshot.SourceFile.RelativeFileName, TraceHelper.GetTextNode(item).TextSpan, Severity.Error, $"Item {GetText(schemaChildNode)} must not occur more than {maxOccurs} times [ArchitectureChecker]");
                 }
             }
         }

@@ -37,13 +37,10 @@ namespace Sitecore.Pathfinder.Configuration
         Diagnostic Diagnostic(int msg, [NotNull] string fileName, TextSpan span, Severity severity, [NotNull] string text);
 
         [NotNull]
-        Field Field([NotNull] Item item, [NotNull] ITextNode textNode);
-
-        [NotNull]
         Field Field([NotNull] Item item);
 
         [NotNull]
-        Field Field([NotNull] Item item, [NotNull] ITextNode textNode, [NotNull] string fieldName, [NotNull] string fieldValue);
+        Field Field([NotNull] Item item, [NotNull] string fieldName, [NotNull] string fieldValue);
 
         [NotNull]
         FieldBuilder FieldBuilder();
@@ -55,10 +52,7 @@ namespace Sitecore.Pathfinder.Configuration
         FileReference FileReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceSourceProperty, [NotNull] string referenceText);
 
         [NotNull]
-        Item Item([NotNull] IProjectBase project, [NotNull] ITextNode textNode, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath);
-
-        [NotNull]
-        Item Item([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath);
+        Item Item([NotNull] IProjectBase project, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath);
 
         [NotNull]
         ItemBuilder ItemBuilder();
@@ -98,13 +92,13 @@ namespace Sitecore.Pathfinder.Configuration
 
         // todo: swap guid and textnode parameters
         [NotNull]
-        Template Template([NotNull] IProjectBase project, Guid guid, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath);
+        Template Template([NotNull] IProjectBase project, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath);
 
         [NotNull]
-        TemplateField TemplateField([NotNull] Template template, Guid guid, [NotNull] ITextNode templateFieldTextNode);
+        TemplateField TemplateField([NotNull] Template template, Guid guid);
 
         [NotNull]
-        TemplateSection TemplateSection([NotNull] Template template, Guid guid, [NotNull] ITextNode templateSectionTextNode);
+        TemplateSection TemplateSection([NotNull] Template template, Guid guid);
 
         [NotNull]
         TextNode TextNode([NotNull] ISnapshot snapshot, TextSpan span, [NotNull] string name, [NotNull] string value);

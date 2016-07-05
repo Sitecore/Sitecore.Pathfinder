@@ -55,7 +55,7 @@ namespace Sitecore.Pathfinder.Projects
                 QualifiedNameIndex.Add(projectItem);
                 ShortNameIndex.Add(projectItem);
 
-                foreach (var snapshot in projectItem.Snapshots)
+                foreach (var snapshot in projectItem.GetSnapshots())
                 {
                     SourceFileIndex.Add(snapshot.SourceFile.GetFileNameWithoutExtensions().ToUpperInvariant(), projectItem);
                 }
@@ -154,7 +154,7 @@ namespace Sitecore.Pathfinder.Projects
                 QualifiedNameIndex.Remove(projectItem);
                 ShortNameIndex.Remove(projectItem);
 
-                foreach (var snapshot in projectItem.Snapshots)
+                foreach (var snapshot in projectItem.GetSnapshots())
                 {
                     SourceFileIndex.Remove(snapshot.SourceFile.GetFileNameWithoutExtensions().ToUpperInvariant());
                 }

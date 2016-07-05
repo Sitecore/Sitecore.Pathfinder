@@ -63,7 +63,7 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
                 var itemName = serializedItem.Name;
                 var templateIdOrPath = serializedItem.TemplateId.Format();
 
-                var item = context.Factory.Item(unicornFile.Project, snapshot, guid, databaseName, itemName, itemIdOrPath, templateIdOrPath);
+                var item = context.Factory.Item(unicornFile.Project, guid, databaseName, itemName, itemIdOrPath, templateIdOrPath).With(new SnapshotTextNode(snapshot));
                 item.ItemNameProperty.AddSourceTextNode(snapshot);
                 item.IsEmittable = false;
                 item.IsImport = false;
@@ -72,7 +72,7 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
 
                 foreach (var sharedField in serializedItem.SharedFields)
                 {
-                    var field = context.Factory.Field(item, new StringTextNode(sharedField.Value, snapshot));
+                    var field = context.Factory.Field(item).With(new StringTextNode(sharedField.Value, snapshot));
 
                     if (!string.IsNullOrEmpty(sharedField.NameHint))
                     {
@@ -97,7 +97,7 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
                 {
                     foreach (var versionedField in version.Fields)
                     {
-                        var field = context.Factory.Field(item, new StringTextNode(versionedField.Value, snapshot));
+                        var field = context.Factory.Field(item).With(new StringTextNode(versionedField.Value, snapshot));
 
                         if (!string.IsNullOrEmpty(versionedField.NameHint))
                         {

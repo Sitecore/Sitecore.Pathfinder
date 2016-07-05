@@ -17,11 +17,7 @@ namespace Sitecore.Pathfinder.Snapshots
                     continue;
                 }
 
-                var textNode = sourceTextNode.SourceTextNodes.LastOrDefault(f => f != TextNode.Empty);
-                if (textNode != null)
-                {
-                    return textNode;
-                }
+                return sourceTextNode.SourceTextNode;
             }
 
             return TextNode.Empty;
