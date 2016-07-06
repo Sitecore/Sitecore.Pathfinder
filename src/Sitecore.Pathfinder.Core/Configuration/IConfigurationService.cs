@@ -25,7 +25,9 @@ namespace Sitecore.Pathfinder.Configuration
 
         DoNotLoadConfig = 64,
 
-        Interactive = IncludeCommandLine | IncludeEnvironment | IncludeMachineConfig | IncludeUserConfig | IncludeCommandLineConfig | IncludeModuleConfig,
+        Recursive = 128,
+
+        Interactive = IncludeCommandLine | IncludeEnvironment | IncludeMachineConfig | IncludeUserConfig | IncludeCommandLineConfig | IncludeModuleConfig | Recursive,
 
         Noninteractive = IncludeEnvironment | IncludeMachineConfig | IncludeModuleConfig
     }
@@ -35,6 +37,6 @@ namespace Sitecore.Pathfinder.Configuration
         [NotNull]
         IConfiguration Configuration { get; }
 
-        void Load(ConfigurationOptions options, [CanBeNull] string projectDirectory = null);
+        void Load(ConfigurationOptions options, [NotNull] string toolsDirectory, [NotNull] string projectDirectory, [NotNull] string systemConfigFileName);
     }
 }

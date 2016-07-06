@@ -47,6 +47,9 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         private readonly object _sourceFilesSyncObject = new object();
 
+        [NotNull]
+        private readonly object _databasesSyncObject = new object();
+
         private bool _isChecked;
 
         private Locking _locking;
@@ -337,10 +340,14 @@ namespace Sitecore.Pathfinder.Projects
             var key = databaseName.ToLowerInvariant();
 
             Database database;
-            if (!_databases.TryGetValue(key, out database))
+
+            lock (_databasesSyncObject)
             {
-                database = new Database(this, databaseName);
-                _databases[key] = database;
+                if (!_databases.TryGetValue(key, out database))
+                {
+                    database = new Database(this, databaseName);
+                    _databases[key] = database;
+                }
             }
 
             return database;

@@ -95,7 +95,7 @@ namespace Sitecore.Pathfinder
                 assemblyFileNames.AddRange(AssemblyFileNames.Distinct().OrderBy(a => a));
             }
 
-            var configuration = this.RegisterConfiguration(ToolsDirectory, ProjectDirectory, SystemConfigurationFileName, ConfigurationOptions);
+            var configuration = this.RegisterConfiguration(ConfigurationOptions, ToolsDirectory, ProjectDirectory, SystemConfigurationFileName);
             if (configuration == null)
             {
                 return null;
