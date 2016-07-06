@@ -62,7 +62,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
                     templateFieldItem.Fields.Add(context.Factory.Field(templateFieldItem, "Shared", templateField.Shared ? "True" : "False"));
                     templateFieldItem.Fields.Add(context.Factory.Field(templateFieldItem, "Unversioned", templateField.Unversioned ? "True" : "False"));
                     templateFieldItem.Fields.Add(context.Factory.Field(templateFieldItem, "Source", templateField.Source).With(templateField.SourceProperty.SourceTextNode));
-                    templateFieldItem.Fields.Add(context.Factory.Field(templateFieldItem, "__Sortorder", templateField.SortOrder.ToString()).With(templateField.SortOrderProperty.SourceTextNode));
+                    templateFieldItem.Fields.Add(context.Factory.Field(templateFieldItem, "__Sortorder", templateField.Sortorder.ToString()).With(templateField.SortorderProperty.SourceTextNode));
                     templateFieldItem.Fields.Add(context.Factory.Field(templateFieldItem, "Type", templateField.Type).With(templateField.TypeProperty.SourceTextNode));
 
                     project.AddOrMerge(templateFieldItem);

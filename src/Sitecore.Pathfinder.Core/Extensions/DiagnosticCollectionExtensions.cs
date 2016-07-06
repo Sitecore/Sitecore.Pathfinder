@@ -47,7 +47,10 @@ namespace Sitecore.Pathfinder.Extensions
         {
             foreach (var diagnostic in diagnostics)
             {
-                TraceDiagnostic(trace, diagnostic, diagnostic.Severity, treatWarningsAsErrors);
+                if (diagnostic != null)
+                {
+                    TraceDiagnostic(trace, diagnostic, diagnostic.Severity, treatWarningsAsErrors);
+                }
             }
         }
 
@@ -55,7 +58,10 @@ namespace Sitecore.Pathfinder.Extensions
         {
             foreach (var diagnostic in diagnostics)
             {
-                TraceDiagnostic(trace, diagnostic, severity, treatWarningsAsErrors);
+                if (diagnostic != null)
+                {
+                    TraceDiagnostic(trace, diagnostic, severity, treatWarningsAsErrors);
+                }
             }
         }
     }

@@ -63,6 +63,16 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
                     templateSection.IconProperty.SetValue(sectionIconField.ValueProperty);
                 }
 
+                var sectionSortorderField = sectionItem.Fields.FirstOrDefault(f => f.FieldName == "__Sort order");
+                if (sectionSortorderField != null)
+                {
+                    int sortorder;
+                    if (int.TryParse(sectionSortorderField.Value, out sortorder))
+                    {
+                        templateSection.SortorderProperty.SetValue(sortorder);
+                    }
+                }
+
                 foreach (var fieldItem in sectionItem.GetChildren())
                 {
                     var templateField = context.Factory.TemplateField(template, fieldItem.Uri.Guid).With(fieldItem.SourceTextNode);

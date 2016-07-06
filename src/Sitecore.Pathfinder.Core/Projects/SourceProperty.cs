@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -35,11 +34,11 @@ namespace Sitecore.Pathfinder.Projects
     [DebuggerDisplay("\\{{GetType().Name,nq}\\}: {Key,nq} = {GetValue()}")]
     public class SourceProperty<T> : INotifyPropertyChanged, IHasSourceTextNodes
     {
-        [NotNull]
-        private readonly T _defaultValue;
-
         [NotNull, ItemNotNull]
         private readonly ICollection<ITextNode> _additionalSourceTextNodes;
+
+        [NotNull]
+        private readonly T _defaultValue;
 
         [NotNull]
         private T _value;
@@ -65,6 +64,8 @@ namespace Sitecore.Pathfinder.Projects
             _additionalSourceTextNodes = new List<ITextNode>();
         }
 
+        public IEnumerable<ITextNode> AdditionalSourceTextNodes => _additionalSourceTextNodes;
+
         public SourcePropertyFlags Flags { get; set; }
 
         [NotNull]
@@ -75,32 +76,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public ITextNode SourceTextNode { get; private set; } = TextNode.Empty;
 
-        public IEnumerable<ITextNode> AdditionalSourceTextNodes => _additionalSourceTextNodes;
-
         protected Locking Locking => Owner.Locking;
-
-        [NotNull]
-        public virtual SourceProperty<T> AddSourceTextNode([CanBeNull] ITextNode textNode)
-        {
-            if (Locking == Locking.ReadOnly)
-            {
-                throw new InvalidOperationException("SourceProperty cannot be modified as it is read only: " + Key);
-            }
-
-            if (textNode == TextNode.Empty || textNode == null)
-            {
-                return this;
-            }
-
-            if (SourceTextNode != TextNode.Empty && !AdditionalSourceTextNodes.Contains(SourceTextNode))
-            {
-                _additionalSourceTextNodes.Add(SourceTextNode);
-            }
-
-            SourceTextNode = textNode;
-
-            return this;
-        }
 
         [NotNull]
         public virtual SourceProperty<T> AddAdditionalSourceTextNode([CanBeNull] ITextNode textNode)
@@ -125,6 +101,29 @@ namespace Sitecore.Pathfinder.Projects
             {
                 _additionalSourceTextNodes.Add(textNode);
             }
+
+            return this;
+        }
+
+        [NotNull]
+        public virtual SourceProperty<T> AddSourceTextNode([CanBeNull] ITextNode textNode)
+        {
+            if (Locking == Locking.ReadOnly)
+            {
+                throw new InvalidOperationException("SourceProperty cannot be modified as it is read only: " + Key);
+            }
+
+            if (textNode == TextNode.Empty || textNode == null)
+            {
+                return this;
+            }
+
+            if (SourceTextNode != TextNode.Empty && !AdditionalSourceTextNodes.Contains(SourceTextNode))
+            {
+                _additionalSourceTextNodes.Add(SourceTextNode);
+            }
+
+            SourceTextNode = textNode;
 
             return this;
         }
@@ -196,7 +195,8 @@ namespace Sitecore.Pathfinder.Projects
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public virtual bool SetValue([NotNull] SourceProperty<T> sourceProperty)
+        [NotNull]
+        public virtual SourceProperty<T> SetValue([NotNull] SourceProperty<T> sourceProperty)
         {
             SetValue(sourceProperty.GetValue());
 
@@ -210,17 +210,19 @@ namespace Sitecore.Pathfinder.Projects
                 AddAdditionalSourceTextNode(sourceTextNode);
             }
 
-            return true;
+            return this;
         }
 
-        public virtual bool SetValue([NotNull] ITextNode textNode)
+        [NotNull]
+        public virtual SourceProperty<T> SetValue([NotNull] ITextNode textNode)
         {
             SetValue((T)Convert.ChangeType(textNode.Value, typeof(T)));
             AddAdditionalSourceTextNode(textNode);
-            return true;
+            return this;
         }
 
-        public virtual void SetValue([NotNull] T value)
+        [NotNull]
+        public virtual SourceProperty<T> SetValue([NotNull] T value)
         {
             if (Locking == Locking.ReadOnly)
             {
@@ -229,13 +231,15 @@ namespace Sitecore.Pathfinder.Projects
 
             if (value.Equals(_value))
             {
-                return;
+                return this;
             }
 
             _value = value;
 
             // ReSharper disable once NotResolvedInText
             OnPropertyChanged("Value");
+
+            return this;
         }
 
         public override string ToString()

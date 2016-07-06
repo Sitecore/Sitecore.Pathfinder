@@ -56,11 +56,11 @@ namespace Sitecore.Pathfinder.Parsing.Items
         {
             var deviceNameProperty = new SourceProperty<string>(projectItem, "Name", string.Empty, SourcePropertyFlags.IsShort);
             deviceNameProperty.Parse(deviceTextNode);
-            references.Add(context.ParseContext.Factory.DeviceReference(projectItem, deviceNameProperty));
+            references.Add(context.ParseContext.Factory.DeviceReference(projectItem, deviceNameProperty, string.Empty));
 
             var layoutProperty = new SourceProperty<string>(projectItem, "Layout", string.Empty, SourcePropertyFlags.IsShort);
             layoutProperty.Parse(deviceTextNode);
-            references.Add(context.ParseContext.Factory.LayoutReference(projectItem, layoutProperty));
+            references.Add(context.ParseContext.Factory.LayoutReference(projectItem, layoutProperty, string.Empty));
 
             var renderingsTextNode = deviceTextNode.GetSnapshotLanguageSpecificChildNode("Renderings");
             if (renderingsTextNode == null)
@@ -100,7 +100,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 var sourceProperty = new SourceProperty<string>(projectItem, renderingTextNode.Key, string.Empty, SourcePropertyFlags.IsShort);
                 sourceProperty.SetValue(new AttributeNameTextNode(renderingTextNode));
 
-                references.Add(context.ParseContext.Factory.LayoutRenderingReference(projectItem, sourceProperty));
+                references.Add(context.ParseContext.Factory.LayoutRenderingReference(projectItem, sourceProperty, string.Empty));
             }
 
             // parse references for rendering properties

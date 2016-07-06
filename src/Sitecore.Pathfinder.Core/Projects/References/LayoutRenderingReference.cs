@@ -9,7 +9,7 @@ namespace Sitecore.Pathfinder.Projects.References
 {
     public class LayoutRenderingReference : Reference
     {
-        public LayoutRenderingReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceProperty, [NotNull] string referenceText) : base(owner, sourceProperty, referenceText)
+        public LayoutRenderingReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceProperty, [NotNull] string referenceText, [NotNull] string databaseName) : base(owner, sourceProperty, referenceText, databaseName)
         {
         }
 
@@ -30,8 +30,6 @@ namespace Sitecore.Pathfinder.Projects.References
                 //     continue;
                 // }
 
-                IsResolved = true;
-                IsValid = true;
                 return projectItem;
             }
 

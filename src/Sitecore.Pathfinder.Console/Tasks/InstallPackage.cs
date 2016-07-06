@@ -23,8 +23,6 @@ namespace Sitecore.Pathfinder.Tasks
                 return;
             }
 
-            var failed = false;
-
             foreach (var fileName in context.OutputFiles)
             {
                 var packageId = Path.GetFileNameWithoutExtension(fileName);
@@ -52,20 +50,6 @@ namespace Sitecore.Pathfinder.Tasks
                 {
                     context.Trace.TraceInformation(Msg.D1009, Texts.Installed, Path.GetFileName(fileName));
                 }
-                else
-                {
-                    failed = true;
-                }
-            }
-
-            if (failed)
-            {
-                return;
-            }
-
-            foreach (var snapshot in context.Project.ProjectItems.SelectMany(i => i.GetSnapshots()))
-            {
-                snapshot.SourceFile.IsModified = false;
             }
         }
     }

@@ -54,23 +54,32 @@ namespace Sitecore.Pathfinder.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, output.ToString());
                 }
 
-                var instance = app.CompositionService.Resolve<IWebsiteTask>(route);
-                if (instance == null)
+                try
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Route not found: " + route);
+                    var instance = app.CompositionService.Resolve<IWebsiteTask>(route);
+                    if (instance == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Route not found: " + route);
+                    }
+
+                    var context = app.CompositionService.Resolve<IWebsiteTaskContext>().With(app);
+
+                    instance.Run(context);
+
+                    return context.ActionResult ?? Content(output.ToString(), "text/plain");
                 }
-
-                var context = app.CompositionService.Resolve<IWebsiteTaskContext>().With(app);
-
-                instance.Run(context);
-
-                return context.ActionResult ?? Content(output.ToString(), "text/plain");
+                finally
+                {
+                    app.CompositionService.Dispose();
+                }
             }
             catch (ReflectionTypeLoadException ex)
             {
+                Log.Error("An error occurred", ex, GetType());
+
                 foreach (var loaderException in ex.LoaderExceptions)
                 {
-                    Console.WriteLine(loaderException.Message);
+                    Log.Error("Loader Exception: ", loaderException, GetType());
                 }
 
                 throw;

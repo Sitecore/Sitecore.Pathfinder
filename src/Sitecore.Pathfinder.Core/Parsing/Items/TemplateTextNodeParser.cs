@@ -101,9 +101,9 @@ namespace Sitecore.Pathfinder.Parsing.Items
             templateField.SourceProperty.Parse(templateFieldTextNode);
             templateField.ShortHelpProperty.Parse(templateFieldTextNode);
             templateField.LongHelpProperty.Parse(templateFieldTextNode);
-            templateField.SortOrderProperty.Parse(templateFieldTextNode, nextSortOrder);
+            templateField.SortorderProperty.Parse(templateFieldTextNode, nextSortOrder);
 
-            nextSortOrder = templateField.SortOrder + 100;
+            nextSortOrder = templateField.Sortorder + 100;
 
             var standardValueTextNode = templateFieldTextNode.GetAttribute("StandardValue");
             if (standardValueTextNode != null && !string.IsNullOrEmpty(standardValueTextNode.Value))

@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Configuration
         IProjectItem ContentFile([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] string filePath);
 
         [NotNull]
-        DeviceReference DeviceReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> deviceNameSourceProperty);
+        DeviceReference DeviceReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> deviceNameSourceProperty, [NotNull] string databaseName);
 
         [NotNull]
         Diagnostic Diagnostic(int msg, [NotNull] string fileName, TextSpan span, Severity severity, [NotNull] string text);
@@ -61,10 +61,10 @@ namespace Sitecore.Pathfinder.Configuration
         ItemParseContext ItemParseContext([NotNull] IParseContext context, [NotNull] ItemParser itemParser, [NotNull] string databaseName, [NotNull] string parentItemPath, bool isImport);
 
         [NotNull]
-        LayoutReference LayoutReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> layoutSourceProperty);
+        LayoutReference LayoutReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> layoutSourceProperty, [NotNull] string databaseName);
 
         [NotNull]
-        LayoutRenderingReference LayoutRenderingReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> layoutTextNode);
+        LayoutRenderingReference LayoutRenderingReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> layoutTextNode, [NotNull] string databaseName);
 
         [NotNull]
         MediaFile MediaFile([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemPath, [NotNull] string filePath);
@@ -73,10 +73,10 @@ namespace Sitecore.Pathfinder.Configuration
         ProjectOptions ProjectOptions([NotNull] string projectDirectory, [NotNull] string databaseName);
 
         [NotNull]
-        IReference Reference([NotNull] IProjectItem projectItem, [NotNull] ITextNode textNode, [NotNull] string referenceText);
+        IReference Reference([NotNull] IProjectItem projectItem, [NotNull] ITextNode textNode, [NotNull] string referenceText, [NotNull] string databaseName);
 
         [NotNull]
-        IReference Reference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> sourceSourceProperty, [NotNull] string referenceText);
+        IReference Reference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> sourceSourceProperty, [NotNull] string referenceText, [NotNull] string databaseName);
 
         [NotNull]
         Rendering Rendering([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] string databaseName, [NotNull] string itemPath, [NotNull] string itemName, [NotNull] string filePath, [NotNull] string templateIdOrPath);

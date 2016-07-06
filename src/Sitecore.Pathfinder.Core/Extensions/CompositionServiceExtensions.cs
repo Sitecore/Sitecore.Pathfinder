@@ -12,6 +12,14 @@ namespace Sitecore.Pathfinder.Extensions
     public static class CompositionServiceExtensions
     {
         [NotNull]
+        public static void Dispose([NotNull] this ICompositionService compositionService)
+        {
+            var compositionContainer = (CompositionContainer)compositionService;
+
+            compositionContainer.Dispose();
+        }
+
+        [NotNull]
         public static T New<T>([NotNull] this ExportFactory<T> factory) where T : class
         {
             return factory.CreateExport().Value;

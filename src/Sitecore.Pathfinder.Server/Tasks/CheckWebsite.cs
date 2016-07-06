@@ -38,7 +38,7 @@ namespace Sitecore.Pathfinder.Tasks
 
             var options = new ProjectOptions(context.Host.Configuration.GetProjectDirectory(), "master");
 
-            var project = new WebsiteProject(Factory.GetDatabase("master"), options, context.Host.Configuration.GetProjectDirectory(), "WebsiteChecker");
+            var project = context.Host.CompositionService.Resolve<WebsiteProject>().With(Factory.GetDatabase("master"), options, context.Host.Configuration.GetProjectDirectory(), "WebsiteChecker");
 
             checkerService.CheckProject(project, this);
 

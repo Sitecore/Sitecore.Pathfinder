@@ -16,7 +16,7 @@ namespace Sitecore.Pathfinder.Checkers
         {
             return from item in context.Project.Items
                 where item.TemplateName.Equals("Template field") && item["Shared"].Equals("True") && item["Unversioned"].Equals("True")
-                select Warning(Msg.C1000, "In a template field, the 'Shared' field overrides the 'Unversioned' field. To fix, clear the 'Unversioned' field (the field remains shared)", TraceHelper.GetTextNode(item));
+                select Warning(Msg.C1000, "In a template field, the 'Shared' field overrides the 'Unversioned' field. To fix, clear the 'Unversioned' field (the field remains shared)", TraceHelper.GetTextNode(item), item.ItemName);
         }
 
         [Export("Check")]
@@ -26,7 +26,7 @@ namespace Sitecore.Pathfinder.Checkers
                 from templateSection in template.Sections
                 from templateField in templateSection.Fields
                 where templateField.Shared && templateField.Unversioned
-                select Warning(Msg.C1000, "In a template field, the 'Shared' field overrides the 'Unversioned' field. To fix, clear the 'Unversioned' field (the field remains shared)", TraceHelper.GetTextNode(templateField, template));
+                select Warning(Msg.C1000, "In a template field, the 'Shared' field overrides the 'Unversioned' field. To fix, clear the 'Unversioned' field (the field remains shared)", TraceHelper.GetTextNode(templateField, template), templateField.FieldName);
         }
 
         [Export("Check")]
@@ -36,7 +36,7 @@ namespace Sitecore.Pathfinder.Checkers
                 where item.TemplateName.Equals("Template field")
                 let defaultValueField = item.Fields["Default Value"]
                 where defaultValueField != null && defaultValueField.Value != string.Empty
-                select Warning(Msg.C1000, "In a template field, the 'Default value' field is no longer used. To fix, clear the 'Default value' field and set the value on the Standard Values item", TraceHelper.GetTextNode(defaultValueField, item));
+                select Warning(Msg.C1000, "In a template field, the 'Default value' field is no longer used. To fix, clear the 'Default value' field and set the value on the Standard Values item", TraceHelper.GetTextNode(defaultValueField, item), item.ItemName);
         }
 
         [Export("Check")]
@@ -45,7 +45,7 @@ namespace Sitecore.Pathfinder.Checkers
             return from item in context.Project.Items
                 let parent = item.GetParent()
                 where parent != null && item.ItemName.Equals("__Standard Values") && item.Template.Uri.Guid != parent.Uri.Guid
-                select Warning(Msg.C1000, "The Template ID of a Standard Values item should be match the ID of the parent item. To fix, moved the Standard Values item under the correct template", TraceHelper.GetTextNode(item));
+                select Warning(Msg.C1000, "The Template ID of a Standard Values item should be match the ID of the parent item. To fix, moved the Standard Values item under the correct template", TraceHelper.GetTextNode(item), item.ItemName);
         }
 
         [Export("Check")]
@@ -53,7 +53,7 @@ namespace Sitecore.Pathfinder.Checkers
         {
             return from template in context.Project.Templates
                 where !template.ItemIdOrPath.StartsWith("/sitecore/templates/")
-                select Warning(Msg.C1000, "All templates should be located in the '/sitecore/templates' section. To fix, move the template into the '/sitecore/templates' section", TraceHelper.GetTextNode(template));
+                select Warning(Msg.C1000, "All templates should be located in the '/sitecore/templates' section. To fix, move the template into the '/sitecore/templates' section", TraceHelper.GetTextNode(template), template.ItemName);
         }
 
         [Export("Check")]

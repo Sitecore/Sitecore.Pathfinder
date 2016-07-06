@@ -67,8 +67,6 @@ namespace Sitecore.Pathfinder.Languages.Json
                 var newProperty = new JProperty(newKey, property.Value);
                 property.Replace(newProperty);
                 _jtoken = newProperty;
-
-                Snapshot.IsModified = true;
                 return true;
             }
 
@@ -81,8 +79,6 @@ namespace Sitecore.Pathfinder.Languages.Json
                     var newProperty = new JProperty(newKey, jobject);
                     prop.Replace(newProperty);
                     _jtoken = newProperty;
-
-                    Snapshot.IsModified = true;
                     return true;
                 }
             }
@@ -96,7 +92,6 @@ namespace Sitecore.Pathfinder.Languages.Json
             if (property != null)
             {
                 property.Value = newValue;
-                Snapshot.IsModified = true;
                 return true;
             }
 

@@ -23,9 +23,10 @@ namespace Sitecore.Pathfinder.Projects.Templates
             FieldNameProperty = NewSourceProperty("Name", string.Empty);
             LongHelpProperty = NewSourceProperty("LongHelp", string.Empty);
             ShortHelpProperty = NewSourceProperty("ShortHelp", string.Empty);
-            SortOrderProperty = NewSourceProperty("SortOrder", 0);
+            SortorderProperty = NewSourceProperty("SortOrder", 0);
             SourceProperty = NewSourceProperty("Source", string.Empty);
             TypeProperty = NewSourceProperty("Type", string.Empty);
+            IconProperty = NewSourceProperty("Icon", string.Empty);
 
             Uri = new ProjectItemUri(template.DatabaseName, guid);
         }
@@ -45,6 +46,16 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
         [NotNull]
         public SourceProperty<string> FieldNameProperty { get; }
+
+        [NotNull]
+        public string Icon
+        {
+            get { return IconProperty.GetValue(); }
+            set { IconProperty.SetValue(value); }
+        }
+
+        [NotNull]
+        public SourceProperty<string> IconProperty { get; }
 
         [NotNull, Obsolete("Use Uri.Guid instead", false)]
         public ID ID => _id ?? (_id = new ID(Uri.Guid));
@@ -77,14 +88,14 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull]
         public SourceProperty<string> ShortHelpProperty { get; }
 
-        public int SortOrder
+        public int Sortorder
         {
-            get { return SortOrderProperty.GetValue(); }
-            set { SortOrderProperty.SetValue(value); }
+            get { return SortorderProperty.GetValue(); }
+            set { SortorderProperty.SetValue(value); }
         }
 
         [NotNull]
-        public SourceProperty<int> SortOrderProperty { get; }
+        public SourceProperty<int> SortorderProperty { get; }
 
         [NotNull]
         public string Source
@@ -149,9 +160,14 @@ namespace Sitecore.Pathfinder.Projects.Templates
                 LongHelpProperty.SetValue(newField.LongHelpProperty);
             }
 
-            if (newField.SortOrder != 0)
+            if (newField.Sortorder != 0)
             {
-                SortOrderProperty.SetValue(newField.SortOrderProperty);
+                SortorderProperty.SetValue(newField.SortorderProperty);
+            }
+
+            if (!string.IsNullOrEmpty(newField.Icon))
+            {
+                IconProperty.SetValue(newField.IconProperty);
             }
         }
 

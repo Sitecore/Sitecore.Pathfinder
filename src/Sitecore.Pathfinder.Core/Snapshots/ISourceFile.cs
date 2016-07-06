@@ -15,8 +15,6 @@ namespace Sitecore.Pathfinder.Snapshots
         [NotNull]
         IFileSystemService FileSystem { get; }
 
-        bool IsModified { get; set; }
-
         DateTime LastWriteTimeUtc { get; }
 
         [NotNull]

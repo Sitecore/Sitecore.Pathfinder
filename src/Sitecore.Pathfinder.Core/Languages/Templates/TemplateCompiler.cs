@@ -91,14 +91,14 @@ namespace Sitecore.Pathfinder.Languages.Templates
 
                         templateField.FieldNameProperty.SetValue(field.FieldNameProperty);
                         templateField.TypeProperty.Parse("Field.Type", childNode, "Single-Line Text");
-                        templateField.SortOrderProperty.Parse("Field.SortOrder", childNode, nextSortOrder);
+                        templateField.SortorderProperty.Parse("Field.SortOrder", childNode, nextSortOrder);
                     }
                     else
                     {
                         // todo: multiple sources?
                         templateField.FieldNameProperty.AddSourceTextNode(field.FieldNameProperty.SourceTextNode);
                         templateField.TypeProperty.ParseIfHasAttribute("Field.Type", childNode);
-                        templateField.SortOrderProperty.ParseIfHasAttribute("Field.SortOrder", childNode);
+                        templateField.SortorderProperty.ParseIfHasAttribute("Field.SortOrder", childNode);
                     }
 
                     templateField.Shared |= string.Equals(childNode.GetAttributeValue("Field.Sharing"), "Shared", StringComparison.OrdinalIgnoreCase);
@@ -107,7 +107,7 @@ namespace Sitecore.Pathfinder.Languages.Templates
                     templateField.ShortHelpProperty.ParseIfHasAttribute("Field.ShortHelp", childNode);
                     templateField.LongHelpProperty.ParseIfHasAttribute("Field.LongHelp", childNode);
 
-                    nextSortOrder = templateField.SortOrder + 100;
+                    nextSortOrder = templateField.Sortorder + 100;
 
                     // todo: added multiple times if merged
                     template.References.AddRange(context.ReferenceParser.ParseReferences(template, templateField.SourceProperty));

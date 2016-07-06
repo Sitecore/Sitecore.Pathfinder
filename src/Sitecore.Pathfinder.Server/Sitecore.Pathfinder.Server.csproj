@@ -139,6 +139,11 @@
     <Content Include="sitecore\shell\client\Applications\Pathfinder\PackageSources.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Checking\FieldNameTextNode.cs" />
+    <Compile Include="Checking\FieldTextNode.cs" />
+    <Compile Include="Checking\FieldValueTextNode.cs" />
+    <Compile Include="Checking\ItemSourceFile.cs" />
+    <Compile Include="Checking\ItemTextNode.cs" />
     <Compile Include="Checking\WebsiteProject.cs" />
     <Compile Include="Controllers\PathfinderInstalledController.cs" />
     <Compile Include="Controllers\PathfinderInstallPackageController.cs" />

@@ -54,19 +54,6 @@ namespace Sitecore.Pathfinder.Languages.Xml
         [CanBeNull]
         protected XElement RootElement { get; private set; }
 
-        public override void SaveChanges()
-        {
-            if (RootElement == null)
-            {
-                return;
-            }
-
-            using (var writer = FileSystem.OpenStreamWriter(SourceFile.AbsoluteFileName))
-            {
-                RootElement.Save(writer, SaveOptions.DisableFormatting);
-            }
-        }
-
         public override bool ValidateSchema(IParseContext context)
         {
             if (string.IsNullOrEmpty(SchemaFileName) || string.IsNullOrEmpty(SchemaNamespace))

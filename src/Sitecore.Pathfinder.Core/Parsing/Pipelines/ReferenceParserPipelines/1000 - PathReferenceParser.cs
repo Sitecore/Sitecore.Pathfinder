@@ -22,7 +22,7 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.ReferenceParserPipelines
             var sourceProperty = new SourceProperty<string>(pipeline.ProjectItem, pipeline.SourceTextNode.Key, string.Empty, SourcePropertyFlags.IsQualified);
             sourceProperty.SetValue(pipeline.SourceTextNode);
 
-            pipeline.Reference = pipeline.Factory.Reference(pipeline.ProjectItem, sourceProperty, pipeline.ReferenceText);
+            pipeline.Reference = pipeline.Factory.Reference(pipeline.ProjectItem, sourceProperty, pipeline.ReferenceText, pipeline.DatabaseName);
             pipeline.IsAborted = true;
         }
     }

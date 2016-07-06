@@ -45,7 +45,7 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual IProjectItem ContentFile(IProjectBase project, ISnapshot snapshot, string filePath) => new ContentFile(project, snapshot, filePath);
 
-        public virtual DeviceReference DeviceReference(IProjectItem projectItem, SourceProperty<string> deviceNameSourceProperty) => new DeviceReference(projectItem, deviceNameSourceProperty, deviceNameSourceProperty.GetValue());
+        public virtual DeviceReference DeviceReference(IProjectItem projectItem, SourceProperty<string> deviceNameSourceProperty, string databaseName) => new DeviceReference(projectItem, deviceNameSourceProperty, deviceNameSourceProperty.GetValue(), databaseName);
 
         public virtual Diagnostic Diagnostic(int msg, string fileName, TextSpan span, Severity severity, string text) => new Diagnostic(msg, fileName, span, severity, text);
 
@@ -71,17 +71,17 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual ItemParseContext ItemParseContext(IParseContext context, ItemParser itemParser, string databaseName, string parentItemPath, bool isImport) => new ItemParseContext(context, itemParser, databaseName, parentItemPath, isImport);
 
-        public virtual LayoutReference LayoutReference(IProjectItem projectItem, SourceProperty<string> layoutSourceProperty) => new LayoutReference(projectItem, layoutSourceProperty, layoutSourceProperty.GetValue());
+        public virtual LayoutReference LayoutReference(IProjectItem projectItem, SourceProperty<string> layoutSourceProperty, string databaseName) => new LayoutReference(projectItem, layoutSourceProperty, layoutSourceProperty.GetValue(), databaseName);
 
-        public virtual LayoutRenderingReference LayoutRenderingReference(IProjectItem projectItem, SourceProperty<string> renderingTextNode) => new LayoutRenderingReference(projectItem, renderingTextNode, renderingTextNode.GetValue());
+        public virtual LayoutRenderingReference LayoutRenderingReference(IProjectItem projectItem, SourceProperty<string> renderingTextNode, string databaseName) => new LayoutRenderingReference(projectItem, renderingTextNode, renderingTextNode.GetValue(), databaseName);
 
         public virtual MediaFile MediaFile(IProjectBase project, ISnapshot snapshot, string databaseName, string itemName, string itemPath, string filePath) => new MediaFile(project, snapshot, databaseName, itemName, itemPath, filePath);
 
         public virtual ProjectOptions ProjectOptions(string projectDirectory, string databaseName) => new ProjectOptions(projectDirectory, databaseName);
 
-        public virtual IReference Reference(IProjectItem projectItem, SourceProperty<string> sourceSourceProperty, string referenceText) => new Reference(projectItem, sourceSourceProperty, referenceText);
+        public virtual IReference Reference(IProjectItem projectItem, SourceProperty<string> sourceSourceProperty, string referenceText, string databaseName) => new Reference(projectItem, sourceSourceProperty, referenceText, databaseName);
 
-        public virtual IReference Reference(IProjectItem projectItem, ITextNode textNode, string referenceText) => new Reference(projectItem, textNode, referenceText);
+        public virtual IReference Reference(IProjectItem projectItem, ITextNode textNode, string referenceText, string databaseName) => new Reference(projectItem, textNode, referenceText, databaseName);
 
         public virtual Rendering Rendering(IProjectBase project, ISnapshot snapshot, string databaseName, string itemPath, string itemName, string filePath, string templateIdOrPath) => new Rendering(project, snapshot, databaseName, itemPath, itemName, filePath, templateIdOrPath);
 

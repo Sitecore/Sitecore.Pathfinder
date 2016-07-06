@@ -375,7 +375,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                     item.Help.Text = templateFieldWriter.TemplateField.LongHelp;
                 }
 
-                item.Appearance.Sortorder = templateFieldWriter.TemplateField.SortOrder;
+                item.Appearance.Sortorder = templateFieldWriter.TemplateField.Sortorder;
 
                 item.UpdateProjectUniqueIds(context);
             }

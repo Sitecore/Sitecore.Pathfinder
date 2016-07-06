@@ -33,8 +33,6 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public IFileSystemService FileSystem { get; }
 
-        public bool IsModified { get; set; }
-
         public DateTime LastWriteTimeUtc { get; }
 
         public string ProjectFileName { get; }

@@ -32,14 +32,7 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public SnapshotCapabilities Capabilities { get; protected set; }
 
-        public bool IsModified { get; set; }
-
-        public ISourceFile SourceFile { get; private set; }
-
-        public virtual void SaveChanges()
-        {
-            throw new InvalidOperationException("Cannot save file: " + SourceFile.AbsoluteFileName);
-        }
+        public ISourceFile SourceFile { get; private set; } = Snapshots.SourceFile.Empty;
 
         [NotNull]
         public virtual ISnapshot With([NotNull] ISourceFile sourceFile)

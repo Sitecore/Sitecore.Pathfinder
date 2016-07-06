@@ -16,10 +16,14 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
             IconProperty = NewSourceProperty("Icon", string.Empty);
             SectionNameProperty = NewSourceProperty("Name", string.Empty);
+            SortorderProperty = NewSourceProperty("Sortorder", 0);
             Fields = new LockableList<TemplateField>(this);
 
             Uri = new ProjectItemUri(template.DatabaseName, guid);
         }
+
+        [NotNull]
+        public SourceProperty<int> SortorderProperty { get;  }
 
         [NotNull, ItemNotNull]
         public ICollection<TemplateField> Fields { get; }
@@ -29,6 +33,11 @@ namespace Sitecore.Pathfinder.Projects.Templates
         {
             get { return IconProperty.GetValue(); }
             set { IconProperty.SetValue(value); }
+        }
+        public int Sortorder
+{
+            get { return SortorderProperty.GetValue(); }
+            set { SortorderProperty.SetValue(value); }
         }
 
         [NotNull]
@@ -57,6 +66,11 @@ namespace Sitecore.Pathfinder.Projects.Templates
             if (!string.IsNullOrEmpty(newSection.Icon))
             {
                 IconProperty.SetValue(newSection.IconProperty);
+            }
+
+            if (newSection.Sortorder != 0)
+            {
+                SortorderProperty.SetValue(newSection.SortorderProperty);
             }
 
             foreach (var newField in newSection.Fields)

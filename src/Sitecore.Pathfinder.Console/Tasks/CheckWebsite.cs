@@ -12,11 +12,6 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
-            if (!IsProjectConfigured(context))
-            {
-                return;
-            }
-
             var webRequest = GetWebRequest(context).AsTask("CheckWebsite");
 
             Post(context, webRequest);

@@ -100,6 +100,7 @@
     <Compile Include="Projects\TextNodeSourcePropertyBag.cs" />
     <Compile Include="Runtime\Caching\CacheService.cs" />
     <Compile Include="Runtime\Caching\ICacheService.cs" />
+    <Compile Include="Snapshots\IMutableTextNode.cs" />
     <Compile Include="Snapshots\StringTextNode.cs" />
     <Compile Include="Tasks\Building\BuildContext.cs" />
     <Compile Include="Tasks\Building\IBuildTask.cs" />
@@ -308,7 +309,6 @@
     <Compile Include="Rules\RuleCondition.cs" />
     <Compile Include="Rules\RuleService.cs" />
     <Compile Include="Rules\Conditions\XPathConditions\XPathCondition.cs" />
-    <Compile Include="Snapshots\IMutableTextNode.cs" />
     <Compile Include="Languages\Yaml\YamlContentTextNodeParser.cs" />
     <Compile Include="Languages\Yaml\YamlLayoutTextNodeParser.cs" />
     <Compile Include="Languages\Yaml\YamlItemTextNodeParser.cs" />

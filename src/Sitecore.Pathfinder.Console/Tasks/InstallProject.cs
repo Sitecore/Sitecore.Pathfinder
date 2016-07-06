@@ -23,16 +23,7 @@ namespace Sitecore.Pathfinder.Tasks
 
             var webRequest = GetWebRequest(context).AsTask("InstallProject");
 
-            var success = Post(context, webRequest);
-            if (!success)
-            {
-                return;
-            }
-
-            foreach (var snapshot in context.Project.ProjectItems.SelectMany(i => i.GetSnapshots()))
-            {
-                snapshot.SourceFile.IsModified = false;
-            }
+            Post(context, webRequest);
         }
     }
 }

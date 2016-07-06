@@ -1,5 +1,6 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Sitecore.Pathfinder.Checkers
             return from projectItem in context.Project.ProjectItems
                 from reference in projectItem.References
                 where !reference.IsValid
-                select Error(Msg.C1000, "Reference not found", reference.TextNode, (reference is FileReference ? "file:/" : string.Empty) + reference.ReferenceText);
+                select Error(Msg.C1000, "Reference not found", reference.TextNode, (reference is FileReference ? "file:/" : string.Empty) + reference.ReferenceText + (!string.IsNullOrEmpty(reference.DatabaseName) ? " [" + reference.DatabaseName + "]" : string.Empty));
         }
     }
 }

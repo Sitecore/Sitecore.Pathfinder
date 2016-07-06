@@ -60,7 +60,7 @@ namespace Sitecore.Pathfinder.Checkers
 
                     if (!string.IsNullOrEmpty(newType))
                     {
-                        yield return Warning(Msg.C1022, "Avoid deprecated field type", TraceHelper.GetTextNode(field.TypeProperty, field), $"The field type \"{type}\" is deprecated. Use the \"{newType}\" field type instead");
+                        yield return Warning(Msg.C1022, "Avoid deprecated field type", TraceHelper.GetTextNode(field.TypeProperty, field, template), $"The field type \"{type}\" is deprecated. Use the \"{newType}\" field type instead");
                     }
                 }
             }
@@ -82,7 +82,7 @@ namespace Sitecore.Pathfinder.Checkers
 
                         if (string.Equals(field0.FieldName, field1.FieldName, StringComparison.OrdinalIgnoreCase))
                         {
-                            yield return Warning(Msg.C1023, "Avoid duplicate template field names", TraceHelper.GetTextNode(field0.FieldNameProperty, field1.FieldNameProperty, field0, field1), $"The template contains two or more field with the same name \"{field0.FieldName}\". Even if these fields are located in different sections, it is still not recommended as the name is ambiguous. Rename one or more of the fields");
+                            yield return Warning(Msg.C1023, "Avoid duplicate template field names", TraceHelper.GetTextNode(field0.FieldNameProperty, field1.FieldNameProperty, field0, field1, template), $"The template contains two or more field with the same name \"{field0.FieldName}\". Even if these fields are located in different sections, it is still not recommended as the name is ambiguous. Rename one or more of the fields");
                         }
                     }
                 }
@@ -103,7 +103,7 @@ namespace Sitecore.Pathfinder.Checkers
             return from template in context.Project.Templates
                 from section in template.Sections
                 where !section.Fields.Any()
-                select Warning(Msg.C1023, "Avoid empty template section", TraceHelper.GetTextNode(section), section.SectionName);
+                select Warning(Msg.C1023, "Avoid empty template section", TraceHelper.GetTextNode(section, template), section.SectionName);
         }
 
         [Export("Check")]
@@ -111,7 +111,7 @@ namespace Sitecore.Pathfinder.Checkers
         {
             return from template in context.Project.Templates
                 where template.ItemName.IndexOf(' ') >= 0
-                select Warning(Msg.C1012, "Avoid spaces in template names. Use a display name instead", TraceHelper.GetTextNode(template.ItemNameProperty), template.ItemName);
+                select Warning(Msg.C1012, "Avoid spaces in template names. Use a display name instead", TraceHelper.GetTextNode(template.ItemNameProperty, template), template.ItemName);
         }
 
         [Export("Check")]
@@ -130,7 +130,7 @@ namespace Sitecore.Pathfinder.Checkers
                 from field in item.Fields
                 let templateField = field.TemplateField
                 where templateField != TemplateField.Empty && templateField.Uri.Guid != field.FieldId
-                select Warning(Msg.C1024, "Field ID and Template Field ID differ", TraceHelper.GetTextNode(field.FieldIdProperty, field), $"FieldId: {field.FieldId.Format()}, TemplateFieldId: {templateField.Uri.Guid.Format()}");
+                select Warning(Msg.C1024, "Field ID and Template Field ID differ", TraceHelper.GetTextNode(field.FieldIdProperty, field, item), $"FieldId: {field.FieldId.Format()}, TemplateFieldId: {templateField.Uri.Guid.Format()}");
         }
 
         [Export("Check")]
