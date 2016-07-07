@@ -73,7 +73,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Checking\Checkers\ArchitectureChecker.cs" />
+    <Compile Include="Checking\Checkers\ArchitectureCheckers.cs" />
     <Compile Include="Emitting\IProjectEmitter.cs" />
     <Compile Include="Extensions\DiagnosticCollectionExtensions.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
@@ -117,9 +117,8 @@
     <Compile Include="Tasks\Building\BuildTaskBase.cs" />
     <Compile Include="Checking\CheckerContext.cs" />
     <Compile Include="Checking\CheckerService.cs" />
-    <Compile Include="Checking\Conventions\ConventionChecker.cs" />
-    <Compile Include="Checking\Conventions\ConventionRuleContext.cs" />
-    <Compile Include="Checking\Checkers\GuidChecker.cs" />
+    <Compile Include="Checking\Checkers\ConventionCheckers.cs" />
+    <Compile Include="Checking\Checkers\GuidCheckers.cs" />
     <Compile Include="Checking\ICheckerContext.cs" />
     <Compile Include="Checking\ICheckerService.cs" />
     <Compile Include="CodeGeneration\IProjectCodeGenerator.cs" />

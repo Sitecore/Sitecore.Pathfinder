@@ -19,7 +19,7 @@ using Sitecore.Pathfinder.Snapshots;
 namespace Sitecore.Pathfinder.Checkers
 {
     [Export]
-    public class HabitatConventions : Checker
+    public class HabitatCheckers : Checker
     {
         protected static readonly Guid StandardRenderingParametersGuid = new Guid("{8CA06D6A-B353-44E8-BC31-B528C7306971}");
 
@@ -28,7 +28,7 @@ namespace Sitecore.Pathfinder.Checkers
         private string _moduleName;
 
         [ImportingConstructor]
-        public HabitatConventions([NotNull] IConfiguration configuration)
+        public HabitatCheckers([NotNull] IConfiguration configuration)
         {
             Configuration = configuration;
         }

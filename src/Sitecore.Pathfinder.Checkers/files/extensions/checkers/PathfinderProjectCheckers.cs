@@ -7,7 +7,7 @@ using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Checkers
 {
-    public class PathfinderProjectFileSystemConventions : Checker
+    public class PathfinderProjectCheckers : Checker
     {
         [Export("Check")]
         protected IEnumerable<Diagnostic> MissingCoreSitecoreDirectory(ICheckerContext context)

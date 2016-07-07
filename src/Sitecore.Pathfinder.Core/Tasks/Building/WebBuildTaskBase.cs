@@ -59,7 +59,7 @@ namespace Sitecore.Pathfinder.Tasks.Building
         [NotNull]
         protected virtual WebRequest GetWebRequest([NotNull] IBuildContext context)
         {
-            return GetWebRequest(context.Configuration).WithCredentials().WithProjectDirectory(context.Project.ProjectDirectory).WithToolsDirectory(context.ToolsDirectory).WithConfiguration();
+            return GetWebRequest(context.Configuration).WithCredentials().WithProjectDirectory(context.Project.ProjectDirectory).WithToolsDirectory(context.ToolsDirectory).WithCommandLine();
         }
 
         protected virtual void HandleWebException([NotNull] ITaskContext context, [NotNull] WebException ex)
@@ -123,9 +123,9 @@ namespace Sitecore.Pathfinder.Tasks.Building
 
             return false;
         }
-                                                                
+
         protected class WebClientWithTimeout : WebClient
-        {                                                      
+        {
             public WebClientWithTimeout([NotNull] IConfiguration configuration)
             {
                 Configuration = configuration;

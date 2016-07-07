@@ -10,7 +10,7 @@ using Sitecore.Pathfinder.Projects.References;
 
 namespace Sitecore.Pathfinder.Checkers
 {
-    public class ReferencesChecker : Checker
+    public class ReferenceCheckers : Checker
     {
         [Export("Check")]
         public IEnumerable<Diagnostic> ReferenceNotFound(ICheckerContext context)

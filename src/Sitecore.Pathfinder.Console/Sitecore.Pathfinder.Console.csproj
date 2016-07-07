@@ -122,52 +122,48 @@
       <Link>files\project\sitecore.filetemplates\codegenerators\PocoTemplate.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\ConfigurationChecker.cs">
-      <Link>files\extensions\checkers\ConfigurationChecker.cs</Link>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\ConfigurationCheckers.cs">
+      <Link>files\extensions\checkers\ConfigurationCheckers.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\FieldsChecker.cs">
-      <Link>files\extensions\checkers\FieldsChecker.cs</Link>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\FieldCheckers.cs">
+      <Link>files\extensions\checkers\FieldCheckers.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\FilesChecker.cs">
-      <Link>files\extensions\checkers\FilesChecker.cs</Link>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\FileCheckers.cs">
+      <Link>files\extensions\checkers\FileCheckers.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\ItemsChecker.cs">
-      <Link>files\extensions\checkers\ItemsChecker.cs</Link>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\HabitatCheckers.cs">
+      <Link>files\extensions\checkers\HabitatCheckers.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\ReferencesChecker.cs">
-      <Link>files\extensions\checkers\ReferencesChecker.cs</Link>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\ItemCheckers.cs">
+      <Link>files\extensions\checkers\ItemCheckers.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\TemplateHelpChecker.cs">
-      <Link>files\extensions\checkers\TemplateHelpChecker.cs</Link>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\LayoutCheckers.cs">
+      <Link>files\extensions\checkers\LayoutCheckers.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\TemplatesChecker.cs">
-      <Link>files\extensions\checkers\TemplatesChecker.cs</Link>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\PathfinderProjectCheckers.cs">
+      <Link>files\extensions\checkers\PathfinderProjectCheckers.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\conventions\PathfinderProjectFileSystemConventions.cs">
-      <Link>files\extensions\conventions\PathfinderProjectFileSystemConventions.cs</Link>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\ProjectCheckers.cs">
+      <Link>files\extensions\checkers\ProjectCheckers.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\conventions\SitecoreTemplateConventions.cs">
-      <Link>files\extensions\conventions\SitecoreTemplateConventions.cs</Link>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\ReferenceCheckers.cs">
+      <Link>files\extensions\checkers\ReferenceCheckers.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\conventions\HabitatConventions.cs">
-      <Link>files\extensions\conventions\HabitatConventions.cs</Link>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\TemplateCheckers.cs">
+      <Link>files\extensions\checkers\TemplateCheckers.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\LayoutsChecker.cs">
-      <Link>files\extensions\checkers\LayoutsChecker.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\ProjectChecker.cs">
-      <Link>files\extensions\checkers\ProjectChecker.cs</Link>
+    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\TemplateHelpCheckers.cs">
+      <Link>files\extensions\checkers\TemplateHelpCheckers.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Compile Include="Tasks\AddProject.cs" />
@@ -308,18 +304,6 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="files\conventions\habitat.domain.conventions.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="files\conventions\habitat.framework.conventions.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="files\conventions\habitat.website.conventions.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="files\conventions\habitat.design.conventions.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="files\habitat\habitat.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -679,9 +663,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="files\website\App_Config\include\Sitecore.Pathfinder\Sitecore.Pathfinder.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="files\conventions\speak.conventions.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="scconfig.json">

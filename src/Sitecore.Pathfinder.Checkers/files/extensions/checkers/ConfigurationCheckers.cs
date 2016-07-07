@@ -20,10 +20,10 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checkers
 {
-    public class ConfigurationChecker : Checker
+    public class ConfigurationCheckers : Checker
     {
         [ImportingConstructor]
-        public ConfigurationChecker([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem)
+        public ConfigurationCheckers([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem)
         {
             Configuration = configuration;
             FileSystem = fileSystem;

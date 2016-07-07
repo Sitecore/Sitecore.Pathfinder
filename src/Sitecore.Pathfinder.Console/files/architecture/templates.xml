@@ -9,14 +9,14 @@
             <item name="content" maxOccurs="1" />
             <item name="layout" maxOccurs="1">
                 <children>
-                    <Item name="Controllers" template="Node" maxOccurs="1" />
-                    <Item name="Devices" template="Node" maxOccurs="1" />
-                    <Item name="Layouts" template="Node" maxOccurs="1" />
-                    <Item name="Models" template="Node" maxOccurs="1" />
-                    <Item name="Placeholder Settings" template="Folder" maxOccurs="1" />
-                    <Item name="Renderings" template="Node" maxOccurs="1" />
-                    <Item name="Sublayouts" template="Node" maxOccurs="1" />
-                    <Item name="Simulators" template="Folder" maxOccurs="1" />
+                    <item name="Controllers" template="Node" maxOccurs="1" />
+                    <item name="Devices" template="Node" maxOccurs="1" />
+                    <item name="Layouts" template="Node" maxOccurs="1" />
+                    <item name="Models" template="Node" maxOccurs="1" />
+                    <item name="Placeholder Settings" template="Folder" maxOccurs="1" />
+                    <item name="Renderings" template="Node" maxOccurs="1" />
+                    <item name="Sublayouts" template="Node" maxOccurs="1" />
+                    <item name="Simulators" template="Folder" maxOccurs="1" />
                 </children>
             </item>
             <item name="media library" maxOccurs="1">

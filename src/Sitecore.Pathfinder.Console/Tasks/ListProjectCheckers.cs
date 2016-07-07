@@ -4,7 +4,6 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Checking;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
@@ -30,17 +29,6 @@ namespace Sitecore.Pathfinder.Tasks
                 if (type != null)
                 {
                     var category = type.Name;
-
-                    if (category.EndsWith("Checker"))
-                    {
-                        category = category.Left(category.Length - 7);
-                    }
-
-                    if (category.EndsWith("Conventions"))
-                    {
-                        category = category.Left(category.Length - 11);
-                    }
-
                     name += " [" + category + "]";
                 }
 

@@ -13,7 +13,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checkers
 {
-    public class ItemsChecker : Checker
+    public class ItemCheckers : Checker
     {
         [Export("Check")]
         public IEnumerable<Diagnostic> AvoidManyChildren(ICheckerContext context)

@@ -66,6 +66,62 @@ namespace Sitecore.Pathfinder.Extensions
             return configuration.GetString("arg" + position);
         }
 
+        [NotNull, ItemNotNull]
+        public static string[] GetCommandLine([NotNull] this IConfiguration configuration)
+        {
+            var commandLineArgs = Environment.GetCommandLineArgs().Skip(1).ToList();
+            return GetCommandLine(configuration, commandLineArgs);
+        }
+
+        [NotNull, ItemNotNull]
+        public static string[] GetCommandLine([NotNull] this IConfiguration configuration, [NotNull, ItemNotNull] IEnumerable<string> commandLineArgs)
+        {
+            var args = new List<string>();
+
+            var positionalArg = 0;
+            for (var n = 0; n < commandLineArgs.Count(); n++)
+            {
+                var arg = commandLineArgs.ElementAt(n);
+
+                // if the arg is not a switch, add it to the list of position args
+                if (!arg.StartsWith("-") && !arg.StartsWith("/"))
+                {
+                    args.Add("/arg" + positionalArg);
+                    args.Add(arg);
+
+                    positionalArg++;
+
+                    continue;
+                }
+
+                // if the arg is a switch, add it to the list of args to pass to the commandline configuration
+                args.Add(arg);
+                if (arg.IndexOf('=') >= 0)
+                {
+                    continue;
+                }
+
+                n++;
+                if (n >= commandLineArgs.Count())
+                {
+                    args.Add("true");
+                    continue;
+                }
+
+                arg = commandLineArgs.ElementAt(n);
+                if (arg.StartsWith("-") || arg.StartsWith("/"))
+                {
+                    args.Add("true");
+                    n--;
+                    continue;
+                }
+
+                args.Add(commandLineArgs.ElementAt(n));
+            }
+
+            return args.ToArray();
+        }
+
         [NotNull]
         public static CultureInfo GetCulture([NotNull] this IConfiguration configuration)
         {
@@ -73,7 +129,7 @@ namespace Sitecore.Pathfinder.Extensions
             return string.IsNullOrEmpty(cultureName) ? CultureInfo.CurrentCulture : new CultureInfo(cultureName);
         }
 
-        [NotNull, ItemNotNull]
+        [NotNull]
         public static IDictionary<string, string> GetDictionary([NotNull] this IConfiguration configuration, [NotNull] string key)
         {
             var dictionary = new Dictionary<string, string>();
@@ -139,6 +195,7 @@ namespace Sitecore.Pathfinder.Extensions
                         with = configuration.GetProjectDirectory();
                         break;
                     default:
+
                         // danger: might be recursive
                         with = configuration.GetString(replace);
                         break;

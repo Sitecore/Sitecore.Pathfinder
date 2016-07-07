@@ -140,6 +140,7 @@
     <Content Include="sitecore\shell\client\Applications\Pathfinder\PackageSources.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Checking\Checkers\WebsiteCheckers.cs" />
     <Compile Include="Checking\ItemSourceFile.cs" />
     <Compile Include="Checking\WebsiteProject.cs" />
     <Compile Include="Controllers\PathfinderInstalledController.cs" />

@@ -1,7 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.IO;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -11,15 +10,7 @@ namespace Sitecore.Pathfinder.Configuration
     public static class StartupExtensions
     {
         [CanBeNull]
-        public static IConfigurationSourceRoot RegisterConfiguration([NotNull] this Startup startup, ConfigurationOptions options, [NotNull] string projectDirectory, [NotNull] string systemConfigFileName)
-        {
-            var toolsDirectory = Path.Combine(projectDirectory, "sitecore.tools");
-
-            return RegisterConfiguration(startup, options, toolsDirectory, projectDirectory, systemConfigFileName);
-        }
-
-        [CanBeNull]
-        public static IConfigurationSourceRoot RegisterConfiguration([NotNull] this Startup startup, ConfigurationOptions options, [NotNull] string toolsDirectory, [NotNull] string projectDirectory, [NotNull] string systemConfigFileName)
+        public static IConfigurationSourceRoot RegisterConfiguration([NotNull] this Startup startup, ConfigurationOptions options, [NotNull] string toolsDirectory, [NotNull] string projectDirectory, [NotNull] string systemConfigFileName, [CanBeNull, ItemNotNull] string[] commandLine)
         {
             var configuration = new Microsoft.Framework.ConfigurationModel.Configuration();
             configuration.Add(new MemoryConfigurationSource());
@@ -33,10 +24,15 @@ namespace Sitecore.Pathfinder.Configuration
                 return configuration;
             }
 
+            if (commandLine == null)
+            {
+                commandLine = configuration.GetCommandLine();
+            }
+
             var configurationService = new ConfigurationService(configuration);
             try
-            {                       
-                configurationService.Load(options, toolsDirectory, projectDirectory, systemConfigFileName);
+            {
+                configurationService.Load(options, toolsDirectory, projectDirectory, systemConfigFileName, commandLine);
             }
             catch (Exception ex)
             {

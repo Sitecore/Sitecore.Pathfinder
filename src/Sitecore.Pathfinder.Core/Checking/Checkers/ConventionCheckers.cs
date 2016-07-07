@@ -5,20 +5,20 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Microsoft.Framework.ConfigurationModel;
-using Sitecore.Pathfinder.Checking.Checkers;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Files;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Rules;
+using Sitecore.Pathfinder.Rules.Contexts;
 
-namespace Sitecore.Pathfinder.Checking.Conventions
+namespace Sitecore.Pathfinder.Checking.Checkers
 {
-    public class ConventionChecker : Checker
+    public class ConventionCheckers : Checker
     {
         [ImportingConstructor]
-        public ConventionChecker([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] IRuleService ruleService)
+        public ConventionCheckers([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] IRuleService ruleService)
         {
             Configuration = configuration;
             CompositionService = compositionService;
@@ -125,5 +125,21 @@ namespace Sitecore.Pathfinder.Checking.Conventions
                 }
             }
         }
+
+        public class ConventionRuleContext : IRuleContext
+        {
+            public ConventionRuleContext([NotNull] ITraceService trace, [NotNull] object obj)
+            {
+                Trace = trace;
+                Object = obj;
+            }
+
+            public bool IsAborted { get; set; }
+
+            public object Object { get; }
+
+            public ITraceService Trace { get; }
+        }
+
     }
 }

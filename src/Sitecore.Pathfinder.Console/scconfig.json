@@ -479,23 +479,16 @@
 
         // default set of checkers
         "default": {
-            "SitecoreTemplate": "enabled",
-            "Habitat": "disabled" ,
-            "PathfinderProjectFileSystem": "disabled",
-            "TemplateHelp": "disabled"
-        },
-
-        // Pathfinder project
-        "pathfinder": {
-            "based-on": "default",
-            "PathfinderProjectFileSystem": "enabled",
-            "TemplateHelp": "enabled"
+            "HabitatCheckers": "disabled",
+            "PathfinderProjectCheckers": "disabled",
+            "TemplateCheckers": "enabled",
+            "TemplateHelpCheckers": "disabled"
         },
 
         // Habitat project
         "habitat": {
             "based-on": "default",
-            "Habitat": "enabled",
+            "HabitatCheckers": "enabled",
             "AvoidEmptyTemplate": "disabled",
             "AvoidEmptyTemplateSection": "disabled",
             "AvoidSpacesInItemNames": "disabled",
@@ -504,10 +497,30 @@
             "TemplateShouldHaveIcon": "disabled"
         },
 
+        // Pathfinder project
+        "pathfinder": {
+            "based-on": "default",
+            "PathfinderProjectCheckers": "enabled",
+            "TemplateHelpCheckers": "enabled"
+        },
+
         // SPEAK project
         "speak": {
             "based-on": "default",
-            "SitecoreTemplate": "disabled"
+            "TemplateCheckers": "disabled"
+        },
+
+        // website checkers
+        "website": {
+            "based-on": "default",
+            "AvoidSettingSharedAndUnversionedInTemplates": "disabled",
+            "AvoidDeprecatedFieldType": "disabled",
+            "AvoidEmptyTemplate": "disabled",
+            "AvoidSpacesInTemplateNames": "disabled",
+            "DeleteUnusedTemplates": "disabled",
+            "AvoidEmptyTemplateSection": "disabled",
+            "AvoidSpacesInItemNames": "disabled",
+            "ArchitectureCheckers": "disabled"
         }
     },
 

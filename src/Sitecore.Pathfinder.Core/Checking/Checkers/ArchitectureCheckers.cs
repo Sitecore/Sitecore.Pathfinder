@@ -17,10 +17,10 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checking.Checkers
 {
-    public class ArchitectureChecker : Checker
+    public class ArchitectureCheckers : Checker
     {
         [ImportingConstructor]
-        public ArchitectureChecker([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem, [NotNull] ISnapshotService snapshotService, [NotNull] IFactoryService factory, [NotNull] IPathMapperService pathMapper)
+        public ArchitectureCheckers([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem, [NotNull] ISnapshotService snapshotService, [NotNull] IFactoryService factory, [NotNull] IPathMapperService pathMapper)
         {
             Configuration = configuration;
             FileSystem = fileSystem;

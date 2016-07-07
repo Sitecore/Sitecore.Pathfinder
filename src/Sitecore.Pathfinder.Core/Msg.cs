@@ -160,6 +160,7 @@ namespace Sitecore.Pathfinder
         public const int G1014 = G + 14;
         public const int G1015 = G + 15;
         public const int G1016 = G + 16;
+        public const int G1017 = G + 17;
 
         private const int I = 1000;
         public const int I1001 = I + 1;

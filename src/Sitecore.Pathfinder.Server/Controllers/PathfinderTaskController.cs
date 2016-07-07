@@ -32,6 +32,7 @@ namespace Sitecore.Pathfinder.Controllers
                 var projectDirectory = WebUtil.GetQueryString("pd");
                 var toolsDirectory = WebUtil.GetQueryString("td");
                 var binDirectory = FileUtil.MapPath("/bin");
+                var commandLine = WebUtil.GetFormValue("commandline").Split('|');
 
                 if (!Directory.Exists(toolsDirectory))
                 {
@@ -48,8 +49,7 @@ namespace Sitecore.Pathfinder.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest, $"The website server do not have write access to the project directory ({projectDirectory})");
                 }
 
-                // todo: get command line from post data and add it to configuration
-                var host = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(projectDirectory).WithBinDirectory(binDirectory).WithExtensionsDirectory(binDirectory).Start();
+                var host = new Startup().WithToolsDirectory(toolsDirectory).WithProjectDirectory(projectDirectory).WithBinDirectory(binDirectory).WithExtensionsDirectory(binDirectory).WithCommandLine(commandLine).Start();
                 if (host == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, output.ToString());

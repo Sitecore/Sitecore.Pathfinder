@@ -9,7 +9,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checkers
 {
-    public class TemplateHelpChecker : Checker
+    public class TemplateHelpCheckers : Checker
     {
         [Export("Check")]
         public IEnumerable<Diagnostic> TemplateFieldLongHelpShouldEndWithDot(ICheckerContext context)

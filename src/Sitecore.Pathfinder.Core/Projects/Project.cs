@@ -35,6 +35,9 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         private readonly Dictionary<string, Database> _databases = new Dictionary<string, Database>();
 
+        [NotNull]
+        private readonly object _databasesSyncObject = new object();
+
         [NotNull, ItemNotNull]
         private readonly IList<Diagnostic> _diagnostics = new SynchronizedCollection<Diagnostic>();
 
@@ -342,10 +345,13 @@ namespace Sitecore.Pathfinder.Projects
             var key = databaseName.ToUpperInvariant();
 
             Database database;
-            if (!_databases.TryGetValue(key, out database))
+            lock (_databasesSyncObject)
             {
-                database = new Database(this, databaseName);
-                _databases[key] = database;
+                if (!_databases.TryGetValue(key, out database))
+                {
+                    database = new Database(this, databaseName);
+                    _databases[key] = database;
+                }
             }
 
             return database;

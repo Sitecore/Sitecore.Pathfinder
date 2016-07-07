@@ -7,7 +7,7 @@ using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Checkers
 {
-    public class ProjectChecker : Checker
+    public class ProjectCheckers : Checker
     {
         [Export("Check")]
         public IEnumerable<Diagnostic> ProjectMustBeOutsideWebsite(ICheckerContext context)

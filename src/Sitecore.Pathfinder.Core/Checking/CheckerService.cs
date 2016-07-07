@@ -200,16 +200,6 @@ namespace Sitecore.Pathfinder.Checking
 
                 Name = checker.Method.Name;
                 Category = checker.Method.DeclaringType?.Name ?? string.Empty;
-
-                if (Category.EndsWith("Checker"))
-                {
-                    Category = Category.Left(Category.Length - 7);
-                }
-
-                if (Category.EndsWith("Conventions"))
-                {
-                    Category = Category.Left(Category.Length - 11);
-                }
             }
 
             [NotNull]

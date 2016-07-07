@@ -11,7 +11,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checkers
 {
-    public class LayoutsChecker : Checker
+    public class LayoutCheckers : Checker
     {
         [Export("Check")]
         public IEnumerable<Diagnostic> PlaceholdersShouldHaveAPlaceholderSettingsName(ICheckerContext context)

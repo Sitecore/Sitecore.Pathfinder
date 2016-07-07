@@ -11,7 +11,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checkers
 {
-    public class FilesChecker : Checker
+    public class FileCheckers : Checker
     {
         [Export("Check")]
         public IEnumerable<Diagnostic> AvoidLargeMediaFiles(ICheckerContext context)

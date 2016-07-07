@@ -13,7 +13,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checking.Checkers
 {
-    public class GuidChecker : Checker
+    public class GuidCheckers : Checker
     {
         [NotNull, ItemNotNull, Export("Check")]
         public IEnumerable<Diagnostic> GuidClash([NotNull] ICheckerContext context)

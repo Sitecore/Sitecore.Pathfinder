@@ -11,7 +11,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checkers
 {
-    public class FieldsChecker : Checker
+    public class FieldCheckers : Checker
     {
         [Export("Check")]
         public IEnumerable<Diagnostic> FieldContainsLoremIpsum(ICheckerContext context)

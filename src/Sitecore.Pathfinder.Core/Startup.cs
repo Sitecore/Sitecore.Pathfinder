@@ -26,6 +26,9 @@ namespace Sitecore.Pathfinder
         [NotNull]
         public string BinDirectory { get; private set; } = string.Empty;
 
+        [CanBeNull, ItemNotNull]
+        public string[] CommandLine { get; private set; }
+
         public Extensibility.StartupExtensions.CompositionOptions CompositionOptions { get; private set; } = Extensibility.StartupExtensions.CompositionOptions.None;
 
         [NotNull]
@@ -98,7 +101,7 @@ namespace Sitecore.Pathfinder
                 assemblyFileNames.AddRange(AssemblyFileNames.Distinct().OrderBy(a => a));
             }
 
-            var configuration = this.RegisterConfiguration(ConfigurationOptions, ToolsDirectory, ProjectDirectory, SystemConfigurationFileName);
+            var configuration = this.RegisterConfiguration(ConfigurationOptions, ToolsDirectory, ProjectDirectory, SystemConfigurationFileName, CommandLine);
             if (configuration == null)
             {
                 return null;
@@ -152,6 +155,13 @@ namespace Sitecore.Pathfinder
         public Startup WithBinDirectory([NotNull] string binDirectory)
         {
             BinDirectory = binDirectory;
+            return this;
+        }
+
+        [NotNull]
+        public Startup WithCommandLine([NotNull, ItemNotNull] string[] commandLine)
+        {
+            CommandLine = commandLine;
             return this;
         }
 

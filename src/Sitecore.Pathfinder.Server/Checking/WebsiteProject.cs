@@ -39,7 +39,7 @@ namespace Sitecore.Pathfinder.Checking
 
         public IEnumerable<File> Files => Enumerable.Empty<File>();
 
-        public IEnumerable<Item> Items => Enumerable.Empty<Item>();
+        public IEnumerable<Item> Items => Index.Items;
 
         public Locking Locking => Locking.ReadWrite;
 
@@ -192,14 +192,24 @@ namespace Sitecore.Pathfinder.Checking
 
         private void LoadItems([NotNull] Data.Items.Item databaseItem)
         {
+            var templateItem = databaseItem.Database.GetItem(databaseItem.TemplateID);
+            var templateIdOrPath = templateItem != null ? templateItem.Paths.Path : databaseItem.Template.FullName;
+
             var snapshot = new Snapshot().With(new ItemSourceFile(databaseItem));
-            var item = new Item(this, databaseItem.ID.ToGuid(), databaseItem.Database.Name, databaseItem.Name, databaseItem.Paths.Path, databaseItem.Template.FullName).With(new SnapshotTextNode(snapshot));
+            var item = new Item(this, databaseItem.ID.ToGuid(), databaseItem.Database.Name, databaseItem.Name, databaseItem.Paths.Path, templateIdOrPath).With(new SnapshotTextNode(snapshot));
 
             item.IconProperty.SetValue(new TextNode(snapshot, "__Icon", databaseItem.Appearance.Icon, TextSpan.Empty));
 
+            if (databaseItem.TemplateName == "Template field" && databaseItem.Name == "Effect")
+            {
+                Console.Write("123");
+            }
+
+            databaseItem.Fields.ReadAll();
+
             foreach (Data.Fields.Field databaseField in databaseItem.Fields)
             {
-                if (databaseField.Shared && !databaseField.ContainsStandardValue)
+                if (databaseField.Shared && !databaseField.ContainsStandardValue && !string.IsNullOrEmpty(databaseField.Value))
                 {
                     AddField(snapshot, item, databaseField);
                 }
@@ -213,19 +223,23 @@ namespace Sitecore.Pathfinder.Checking
                     continue;
                 }
 
+                languageItem.Fields.ReadAll();
+
                 foreach (Data.Fields.Field databaseField in languageItem.Fields)
                 {
-                    if (!databaseField.Shared && databaseField.Unversioned && !databaseField.ContainsStandardValue)
+                    if (!databaseField.Shared && databaseField.Unversioned && !databaseField.ContainsStandardValue && !string.IsNullOrEmpty(databaseField.Value))
                     {
                         AddField(snapshot, item, databaseField);
                     }
                 }
 
-                foreach (var version in languageItem.Versions.GetVersions())
+                foreach (var versionItem in languageItem.Versions.GetVersions())
                 {
-                    foreach (Data.Fields.Field databaseField in version.Fields)
+                    versionItem.Fields.ReadAll();
+
+                    foreach (Data.Fields.Field databaseField in versionItem.Fields)
                     {
-                        if (!databaseField.Shared && !databaseField.Unversioned && !databaseField.ContainsStandardValue)
+                        if (!databaseField.Shared && !databaseField.Unversioned && !databaseField.ContainsStandardValue && !string.IsNullOrEmpty(databaseField.Value))
                         {
                             AddField(snapshot, item, databaseField);
                         }
