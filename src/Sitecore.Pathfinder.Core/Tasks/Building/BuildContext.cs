@@ -39,7 +39,7 @@ namespace Sitecore.Pathfinder.Tasks.Building
 
         public string ToolsDirectory => Configuration.GetToolsDirectory();
 
-        public string WebsiteDirectory => Configuration.GetString(Constants.Configuration.WebsiteDirectory);
+        public string WebsiteDirectory => Configuration.GetWebsiteDirectory();
 
         public IBuildContext With(Func<IProject> loadProject)
         {

@@ -156,7 +156,7 @@ namespace Sitecore.Pathfinder.Packaging.WebsitePackages
             var list = new List<string>(feeds);
 
             // add source repositories from sitecore/shell/client/Applications/Pathfinder/PackageSources.txt
-            var packageSources = Path.Combine(Configuration.GetString(Constants.Configuration.WebsiteDirectory), "sitecore/shell/client/Applications/Pathfinder/PackageSources.txt");
+            var packageSources = Path.Combine(Configuration.GetWebsiteDirectory(), "sitecore/shell/client/Applications/Pathfinder/PackageSources.txt");
             if (FileSystem.FileExists(packageSources))
             {
                 var sources = FileSystem.ReadAllLines(packageSources);

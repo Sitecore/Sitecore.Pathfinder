@@ -149,7 +149,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
         [CanBeNull]
         protected virtual XmlSchemaSet GetSchema([NotNull] IParseContext context, [NotNull] string schemaFileName, [NotNull] string schemaNamespace)
         {
-            var fileName = Path.Combine(context.Configuration.GetString(Constants.Configuration.ToolsDirectory), "schemas\\" + schemaFileName);
+            var fileName = Path.Combine(context.Configuration.GetToolsDirectory(), "schemas\\" + schemaFileName);
             if (!FileSystem.FileExists(fileName))
             {
                 return null;

@@ -26,7 +26,7 @@ namespace Sitecore.Pathfinder.React.Jsx
         public override void Emit(IEmitContext context, IProjectItem projectItem)
         {
             // validate the ReactJS.NET is installed
-            var binDirectory = Path.Combine(context.Configuration.GetString(Constants.Configuration.WebsiteDirectory), "bin");
+            var binDirectory = Path.Combine(context.Configuration.GetWebsiteDirectory(), "bin");
             if (!context.FileSystem.DirectoryExists(binDirectory))
             {
                 return;

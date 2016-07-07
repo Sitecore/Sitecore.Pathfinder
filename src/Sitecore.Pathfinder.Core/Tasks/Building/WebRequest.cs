@@ -120,5 +120,12 @@ namespace Sitecore.Pathfinder.Tasks.Building
             QueryStringParameters["p"] = Configuration.GetString(Constants.Configuration.Password);
             return this;
         }
+
+        [NotNull]
+        public WebRequest WithCommandLine()
+        {
+            // todo: pass command line to the server
+            return this;
+        }
     }
 }

@@ -29,13 +29,19 @@ namespace Sitecore.Pathfinder.Tasks
         public override void Run(IBuildContext context)
         {
             var projectDirectory = context.ProjectDirectory;
-            if (!FileSystem.DirectoryExists(projectDirectory))
+            if (string.IsNullOrEmpty(projectDirectory) || !FileSystem.DirectoryExists(projectDirectory))
             {
                 return;
             }
 
-            var configFileName = PathHelper.Combine(projectDirectory, context.Configuration.GetString(Constants.Configuration.ProjectConfigFileName));
-            if (!FileSystem.FileExists(configFileName))
+            var websiteDirectory = context.Configuration.GetWebsiteDirectory();
+            if (string.IsNullOrEmpty(websiteDirectory))
+            {
+                return;
+            }
+
+            websiteDirectory = PathHelper.Combine(projectDirectory, websiteDirectory);
+            if (!FileSystem.DirectoryExists(websiteDirectory))
             {
                 return;
             }

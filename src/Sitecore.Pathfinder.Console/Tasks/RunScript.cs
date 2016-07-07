@@ -98,7 +98,7 @@ namespace Sitecore.Pathfinder.Tasks
             runspace.SessionStateProxy.SetVariable("toolsDirectory", context.ToolsDirectory);
             runspace.SessionStateProxy.SetVariable("projectDirectory", context.ProjectDirectory);
             runspace.SessionStateProxy.SetVariable("dataFolderDirectory", context.Configuration.GetString(Constants.Configuration.DataFolderDirectory));
-            runspace.SessionStateProxy.SetVariable("websiteDirectory", context.Configuration.GetString(Constants.Configuration.WebsiteDirectory));
+            runspace.SessionStateProxy.SetVariable("websiteDirectory", context.Configuration.GetWebsiteDirectory());
 
             try
             {

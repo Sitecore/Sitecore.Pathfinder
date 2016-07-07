@@ -17,8 +17,11 @@ using Sitecore.Pathfinder.Text;
 namespace Sitecore.Pathfinder.Checking
 {
     [Export]
-    public class WebsiteProject : IProjectBase
+    public class WebsiteProject : IProjectBase, IDiagnosticCollector
     {
+        [NotNull, ItemNotNull]
+        private readonly IList<Diagnostic> _diagnostics = new SynchronizedCollection<Diagnostic>();
+
         [NotNull, ItemNotNull]
         private readonly List<IProjectItem> _projectItems = new List<IProjectItem>();
 
@@ -31,6 +34,8 @@ namespace Sitecore.Pathfinder.Checking
             Index = index;
             ReferenceParser = referenceParser;
         }
+
+        public IEnumerable<Diagnostic> Diagnostics => _diagnostics;
 
         public IEnumerable<File> Files => Enumerable.Empty<File>();
 
@@ -151,6 +156,11 @@ namespace Sitecore.Pathfinder.Checking
             return this;
         }
 
+        void IDiagnosticCollector.Add(Diagnostic diagnostic)
+        {
+            _diagnostics.Add(diagnostic);
+        }
+
         private void Add([NotNull] IProjectItem projectItem)
         {
             _projectItems.Add(projectItem);
@@ -159,14 +169,19 @@ namespace Sitecore.Pathfinder.Checking
 
         private void AddField([NotNull] ISnapshot snapshot, [NotNull] Item item, [NotNull] Data.Fields.Field databaseField)
         {
-            var field = new Field(item).With(new FieldTextNode(snapshot, databaseField));
+            var field = new Field(item).With(new TextNode(snapshot, databaseField.Name, databaseField.Value, TextSpan.Empty));
             field.FieldId = databaseField.ID.ToGuid();
-            field.FieldNameProperty.SetValue(new FieldNameTextNode(snapshot, databaseField));
-            field.ValueProperty.SetValue(new FieldValueTextNode(snapshot, databaseField));
+            field.FieldNameProperty.SetValue(new TextNode(snapshot, "Name", databaseField.Name, TextSpan.Empty));
+            field.ValueProperty.SetValue(new TextNode(snapshot, "Value", databaseField.Value, TextSpan.Empty));
 
             item.Fields.Add(field);
 
             item.References.AddRange(ReferenceParser.ParseReferences(field));
+        }
+
+        void IDiagnosticCollector.Clear()
+        {
+            _diagnostics.Clear();
         }
 
         private void LoadDatabase([NotNull] Data.Database database)
@@ -276,6 +291,11 @@ namespace Sitecore.Pathfinder.Checking
 
                 Add(template);
             }
+        }
+
+        void IDiagnosticCollector.Remove(Diagnostic diagnostic)
+        {
+            _diagnostics.Remove(diagnostic);
         }
     }
 }

@@ -64,7 +64,7 @@ namespace Sitecore.Pathfinder.Tasks
                 return;
             }
 
-            var websiteDirectory = context.Configuration.GetString(Constants.Configuration.WebsiteDirectory);
+            var websiteDirectory = context.Configuration.GetWebsiteDirectory();
             if (string.Equals(websiteDirectory, "c:\\inetpub\\wwwroot\\Sitecore.Default\\Website", StringComparison.OrdinalIgnoreCase))
             {
                 context.Trace.WriteLine(Texts.Hey___you_haven_t_changed_the_the__project_unique_id____wwwroot__or__hostname__in_the___0___configuration_file_, context.Configuration.GetString(Constants.Configuration.ProjectConfigFileName));

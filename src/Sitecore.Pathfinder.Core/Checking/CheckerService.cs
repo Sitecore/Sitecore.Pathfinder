@@ -76,32 +76,12 @@ namespace Sitecore.Pathfinder.Checking
             }
         }
 
-        protected virtual void TraceDiagnostics([NotNull] ICheckerContext context, [NotNull] CheckerInfo checker, [NotNull, ItemNotNull] Diagnostic[] diagnostics, bool treatWarningsAsErrors)
+        public virtual IEnumerable<Func<ICheckerContext, IEnumerable<Diagnostic>>> GetEnabledCheckers()
         {
-            if (checker.Severity == CheckerSeverity.Default)
-            {
-                context.Trace.TraceDiagnostics(diagnostics, treatWarningsAsErrors);
-                return;
-            }
-
-            var severity = Severity.Information;
-            switch (checker.Severity)
-            {
-                case CheckerSeverity.Information:
-                    severity = Severity.Information;
-                    break;
-                case CheckerSeverity.Warning:
-                    severity = Severity.Warning;
-                    break;
-                case CheckerSeverity.Error:
-                    severity = Severity.Error;
-                    break;
-            }
-
-            context.Trace.TraceDiagnostics(diagnostics, severity, treatWarningsAsErrors);
+            return GetCheckers().Select(c => c.Checker);
         }
 
-        private void EnableCheckers([NotNull, ItemNotNull] IEnumerable<CheckerInfo> checkers, [NotNull] string configurationKey)
+        protected virtual void EnableCheckers([NotNull, ItemNotNull] IEnumerable<CheckerInfo> checkers, [NotNull] string configurationKey)
         {
             foreach (var pair in Configuration.GetSubKeys(configurationKey))
             {
@@ -166,7 +146,7 @@ namespace Sitecore.Pathfinder.Checking
         }
 
         [NotNull, ItemNotNull]
-        private IEnumerable<CheckerInfo> GetCheckers()
+        protected virtual IEnumerable<CheckerInfo> GetCheckers()
         {
             var checkers = Checkers.Select(c => new CheckerInfo(c)).ToList();
 
@@ -184,6 +164,31 @@ namespace Sitecore.Pathfinder.Checking
             EnableCheckers(checkers, Constants.Configuration.Checkers);
 
             return checkers.Where(c => c.Severity != CheckerSeverity.Disabled).ToArray();
+        }
+
+        protected virtual void TraceDiagnostics([NotNull] ICheckerContext context, [NotNull] CheckerInfo checker, [NotNull, ItemNotNull] Diagnostic[] diagnostics, bool treatWarningsAsErrors)
+        {
+            if (checker.Severity == CheckerSeverity.Default)
+            {
+                context.Trace.TraceDiagnostics(diagnostics, treatWarningsAsErrors);
+                return;
+            }
+
+            var severity = Severity.Information;
+            switch (checker.Severity)
+            {
+                case CheckerSeverity.Information:
+                    severity = Severity.Information;
+                    break;
+                case CheckerSeverity.Warning:
+                    severity = Severity.Warning;
+                    break;
+                case CheckerSeverity.Error:
+                    severity = Severity.Error;
+                    break;
+            }
+
+            context.Trace.TraceDiagnostics(diagnostics, severity, treatWarningsAsErrors);
         }
 
         [DebuggerDisplay("{GetType().Name,nq}: {Name}, {Category}")]

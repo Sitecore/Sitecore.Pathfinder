@@ -1,6 +1,8 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -80,6 +82,17 @@ namespace Sitecore.Pathfinder.Extensions
 
             list1.Remove(first);
             list1.Insert(0, first);
+        }
+
+        public static void RemoveAll<T>([NotNull, ItemNotNull] this ICollection<T> collection, [NotNull] Func<T, bool> match)
+        {
+            foreach (var item in collection.ToList())
+            {
+                if (match(item))
+                {
+                    collection.Remove(item);
+                }
+            }
         }
     }
 }

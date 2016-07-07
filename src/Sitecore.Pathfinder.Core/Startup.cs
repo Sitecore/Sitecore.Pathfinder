@@ -23,6 +23,9 @@ namespace Sitecore.Pathfinder
         [CanBeNull, ItemNotNull]
         public IEnumerable<string> AssemblyFileNames { get; private set; }
 
+        [NotNull]
+        public string BinDirectory { get; private set; } = string.Empty;
+
         public Extensibility.StartupExtensions.CompositionOptions CompositionOptions { get; private set; } = Extensibility.StartupExtensions.CompositionOptions.None;
 
         [NotNull]
@@ -111,6 +114,11 @@ namespace Sitecore.Pathfinder
                 configuration.Set(Constants.Configuration.DataFolderDirectory, DataFolderDirectory);
             }
 
+            if (!string.IsNullOrEmpty(BinDirectory))
+            {
+                configuration.Set(Constants.Configuration.BinDirectory, BinDirectory);
+            }
+
             if (!string.IsNullOrEmpty(PackageRootDirectory))
             {
                 configuration.Set(Constants.Configuration.NugetPackageRootDirectory, PackageRootDirectory);
@@ -137,6 +145,13 @@ namespace Sitecore.Pathfinder
         public virtual Startup WithAssemblies([NotNull, ItemNotNull] IEnumerable<string> assemblyFileNames)
         {
             AssemblyFileNames = assemblyFileNames;
+            return this;
+        }
+
+        [NotNull]
+        public Startup WithBinDirectory([NotNull] string binDirectory)
+        {
+            BinDirectory = binDirectory;
             return this;
         }
 

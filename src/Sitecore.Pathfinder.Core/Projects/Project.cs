@@ -36,7 +36,7 @@ namespace Sitecore.Pathfinder.Projects
         private readonly Dictionary<string, Database> _databases = new Dictionary<string, Database>();
 
         [NotNull, ItemNotNull]
-        private readonly List<Diagnostic> _diagnostics = new List<Diagnostic>();
+        private readonly IList<Diagnostic> _diagnostics = new SynchronizedCollection<Diagnostic>();
 
         [NotNull, ItemNotNull]
         private readonly IList<IProjectItem> _projectItems;
@@ -524,6 +524,16 @@ namespace Sitecore.Pathfinder.Projects
         void IDiagnosticCollector.Add(Diagnostic diagnostic)
         {
             _diagnostics.Add(diagnostic);
+        }
+
+        void IDiagnosticCollector.Clear()
+        {
+            _diagnostics.Clear();
+        }
+
+        void IDiagnosticCollector.Remove(Diagnostic diagnostic)
+        {
+            _diagnostics.Remove(diagnostic);
         }
     }
 }

@@ -178,6 +178,7 @@
     <Compile Include="Tasks\InitGulp.cs" />
     <Compile Include="Tasks\InitHabitat.cs" />
     <Compile Include="Tasks\ListCheckers.cs" />
+    <Compile Include="Tasks\ListProjectCheckers.cs" />
     <Compile Include="Tasks\ListOutput.cs" />
     <Compile Include="Tasks\ListProjectRoles.cs" />
     <Compile Include="Tasks\RestorePackages.cs" />

@@ -62,6 +62,8 @@ namespace Sitecore.Pathfinder
 
         public static class Configuration
         {
+            public const string BinDirectory = "bin-directory";
+
             public const string Checkers = "checkers";
 
             public const string CommandLineConfig = "config";
@@ -77,6 +79,10 @@ namespace Sitecore.Pathfinder
             public const string Debug = "debug";
 
             public const string Dependencies = "dependencies";
+
+            public const string DisableExtensions = "disable-extensions";
+
+            public const string FeaturesDirectory = "features-directory";
 
             public const string HostName = "host-name";
 

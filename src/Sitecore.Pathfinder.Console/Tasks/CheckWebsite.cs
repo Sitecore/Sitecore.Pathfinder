@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
-            var webRequest = GetWebRequest(context).AsTask("CheckWebsite");
+            var webRequest = GetWebRequest(context).AsTask("CheckWebsite").WithCommandLine();
 
             Post(context, webRequest);
         }

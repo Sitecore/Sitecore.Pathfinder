@@ -48,7 +48,7 @@ namespace Sitecore.Pathfinder.Configuration
                 if (!arg.StartsWith("-") && !arg.StartsWith("/"))
                 {
                     args.Add("/arg" + positionalArg);
-                    args.Add(arg);
+                    args.Add(arg.Trim());
 
                     positionalArg++;
 
@@ -77,7 +77,7 @@ namespace Sitecore.Pathfinder.Configuration
                     continue;
                 }
 
-                args.Add(commandLineArgs.ElementAt(n));
+                args.Add(commandLineArgs.ElementAt(n).Trim());
             }
 
             configurationSourceRoot.AddCommandLine(args.ToArray());
@@ -91,7 +91,7 @@ namespace Sitecore.Pathfinder.Configuration
                 throw new ConfigurationException(Texts.Configuration_failed_spectacularly);
             }
 
-            var toolsDirectory = configurationSourceRoot.GetString(Constants.Configuration.ToolsDirectory);
+            var toolsDirectory = configurationSourceRoot.GetToolsDirectory();
 
             // add system config
             var systemConfigFileName = Path.Combine(toolsDirectory, configurationSourceRoot.GetString(Constants.Configuration.SystemConfigFileName));
@@ -110,12 +110,6 @@ namespace Sitecore.Pathfinder.Configuration
                 {
                     configurationSourceRoot.AddFile(userConfigFileName, ".json");
                 }
-            }
-
-            // add command line
-            if ((options & ConfigurationOptions.IncludeCommandLine) == ConfigurationOptions.IncludeCommandLine)
-            {
-                AddCommandLine(configurationSourceRoot);
             }
 
             // add environment variables
@@ -172,7 +166,7 @@ namespace Sitecore.Pathfinder.Configuration
 
                     if (conventionsFileName.StartsWith("$tools/", StringComparison.OrdinalIgnoreCase))
                     {
-                        conventionsFileName = Path.Combine(configurationSourceRoot.GetString(Constants.Configuration.ToolsDirectory), PathHelper.NormalizeFilePath(conventionsFileName.Mid(7)));
+                        conventionsFileName = Path.Combine(configurationSourceRoot.GetToolsDirectory(), PathHelper.NormalizeFilePath(conventionsFileName.Mid(7)));
                     }
 
                     if (conventionsFileName.StartsWith("~/", StringComparison.OrdinalIgnoreCase))
@@ -239,6 +233,12 @@ namespace Sitecore.Pathfinder.Configuration
                         throw new ConfigurationException(Texts.Config_file_not_found__ + configFileName);
                     }
                 }
+            }
+
+            // add command line
+            if ((options & ConfigurationOptions.IncludeCommandLine) == ConfigurationOptions.IncludeCommandLine)
+            {
+                AddCommandLine(configurationSourceRoot);
             }
         }
     }

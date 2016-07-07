@@ -11,5 +11,9 @@ namespace Sitecore.Pathfinder.Projects
         IEnumerable<Diagnostic> Diagnostics { get; }
 
         void Add([NotNull] Diagnostic diagnostic);
+
+        void Clear();
+
+        void Remove([NotNull] Diagnostic diagnostic);
     }
 }
