@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -23,19 +23,7 @@ namespace Sitecore.Pathfinder.Configuration
 
         public IConfiguration Configuration { get; }
 
-        public virtual void AddCommandLine([NotNull] IConfigurationSourceRoot configurationSourceRoot)
-        {
-            // cut off executable name
-            var commandLineArgs = Environment.GetCommandLineArgs().Skip(1).ToList();
-            AddCommandLine(configurationSourceRoot, commandLineArgs);
-        }
-
-        protected virtual bool FileExists([NotNull] string fileName)
-        {
-            return File.Exists(fileName);
-        }
-
-        public virtual void AddCommandLine([NotNull] IConfigurationSourceRoot configurationSourceRoot, [NotNull][ItemNotNull] IEnumerable<string> commandLineArgs)
+        public virtual void AddCommandLine([NotNull] IConfigurationSourceRoot configurationSourceRoot, [NotNull, ItemNotNull] IEnumerable<string> commandLineArgs)
         {
             var args = new List<string>();
 
@@ -48,7 +36,7 @@ namespace Sitecore.Pathfinder.Configuration
                 if (!arg.StartsWith("-") && !arg.StartsWith("/"))
                 {
                     args.Add("/arg" + positionalArg);
-                    args.Add(arg.Trim());
+                    args.Add(arg);
 
                     positionalArg++;
 
@@ -77,39 +65,44 @@ namespace Sitecore.Pathfinder.Configuration
                     continue;
                 }
 
-                args.Add(commandLineArgs.ElementAt(n).Trim());
+                args.Add(commandLineArgs.ElementAt(n));
             }
 
             configurationSourceRoot.AddCommandLine(args.ToArray());
         }
 
-        public virtual void Load(ConfigurationOptions options, string projectDirectory = null)
+        public virtual void Load(ConfigurationOptions options, string toolsDirectory, string projectDirectory, string systemConfigFileName)
         {
-            var configurationSourceRoot = Configuration as IConfigurationSourceRoot;
+            var configurationFileNames = new List<string>();
+
+            GetConfigurationFileNames(configurationFileNames, options, toolsDirectory, projectDirectory, systemConfigFileName);
+
+            BuildConfiguration(Configuration, configurationFileNames, options, toolsDirectory, projectDirectory, systemConfigFileName);
+        }
+
+        protected virtual void AddCommandLine([NotNull] IConfigurationSourceRoot configurationSourceRoot)
+        {
+            // cut off executable name
+            var commandLineArgs = Environment.GetCommandLineArgs().Skip(1).ToList();
+
+            AddCommandLine(configurationSourceRoot, commandLineArgs);
+        }
+
+        protected virtual void BuildConfiguration([NotNull] IConfiguration configuration, [NotNull, ItemNotNull] List<string> configurationFileNames, ConfigurationOptions options, [NotNull] string toolsDirectory, [NotNull] string projectDirectory, [NotNull] string systemConfigFileName)
+        {
+            var configurationSourceRoot = configuration as IConfigurationSourceRoot;
             if (configurationSourceRoot == null)
             {
                 throw new ConfigurationException(Texts.Configuration_failed_spectacularly);
             }
 
-            var toolsDirectory = configurationSourceRoot.GetToolsDirectory();
+            configurationSourceRoot.Set(Constants.Configuration.ToolsDirectory, toolsDirectory);
+            configurationSourceRoot.Set(Constants.Configuration.ProjectDirectory, projectDirectory);
 
-            // add system config
-            var systemConfigFileName = Path.Combine(toolsDirectory, configurationSourceRoot.GetString(Constants.Configuration.SystemConfigFileName));
-            if (!FileExists(systemConfigFileName))
+            // check if there are project configuration files
+            if (!configurationFileNames.All(f => f.StartsWith(toolsDirectory, StringComparison.OrdinalIgnoreCase)))
             {
-                throw new ConfigurationException(Texts.System_configuration_file_not_found, systemConfigFileName);
-            }
-
-            configurationSourceRoot.AddJsonFile(systemConfigFileName);
-
-            // add system user config file located next to the system config file - scconfig.json.user
-            if ((options & ConfigurationOptions.IncludeUserConfig) == ConfigurationOptions.IncludeUserConfig)
-            {
-                var userConfigFileName = systemConfigFileName + ".user";
-                if (FileExists(userConfigFileName))
-                {
-                    configurationSourceRoot.AddFile(userConfigFileName, ".json");
-                }
+                configurationSourceRoot.Set(Constants.Configuration.IsProjectConfigured, "True");
             }
 
             // add environment variables
@@ -118,101 +111,10 @@ namespace Sitecore.Pathfinder.Configuration
                 configurationSourceRoot.AddEnvironmentVariables();
             }
 
-            // set project directory
-            if (projectDirectory != null)
+            // add configuration files (distinctly)
+            foreach (var configurationFileName in configurationFileNames.Distinct())
             {
-                configurationSourceRoot.Set(Constants.Configuration.ProjectDirectory, projectDirectory);
-            }
-            else
-            {
-                projectDirectory = configurationSourceRoot.GetString(Constants.Configuration.ProjectDirectory);
-            }
-
-            // add project config file - scconfig.json
-            var projectConfigFileName = string.Empty;
-
-            var configurationProjectConfigFileName = configurationSourceRoot.GetString(Constants.Configuration.ProjectConfigFileName);
-            if (!string.IsNullOrEmpty(configurationProjectConfigFileName))
-            {
-                projectConfigFileName = PathHelper.Combine(projectDirectory, configurationProjectConfigFileName);
-            }
-
-            if (!string.IsNullOrEmpty(projectConfigFileName) && FileExists(projectConfigFileName))
-            {
-                configurationSourceRoot.AddFile(projectConfigFileName);
-                configurationSourceRoot.Set(Constants.Configuration.IsProjectConfigured, "True");
-            }
-            else if (Directory.GetFiles(projectDirectory).Any() || Directory.GetDirectories(projectDirectory).Any())
-            {
-                // no config file, but project directory has files, so let's try the default project config file
-                projectConfigFileName = PathHelper.Combine(toolsDirectory, "files\\project.noconfig\\scconfig.json");
-                if (FileExists(projectConfigFileName))
-                {
-                    configurationSourceRoot.AddFile(projectConfigFileName);
-                }
-            }
-
-            // add project role configs 
-            var projectRoles = configurationSourceRoot.GetStringList(Constants.Configuration.ProjectRole);
-            foreach (var projectRole in projectRoles)
-            {
-                foreach (var pair in configurationSourceRoot.GetSubKeys("project-role-conventions:" + projectRole))
-                {
-                    var conventionsFileName = configurationSourceRoot.GetString("project-role-conventions:" + projectRole + ":" + pair.Key);
-                    if (string.IsNullOrEmpty(conventionsFileName))
-                    {
-                        continue;
-                    }
-
-                    if (conventionsFileName.StartsWith("$tools/", StringComparison.OrdinalIgnoreCase))
-                    {
-                        conventionsFileName = Path.Combine(configurationSourceRoot.GetToolsDirectory(), PathHelper.NormalizeFilePath(conventionsFileName.Mid(7)));
-                    }
-
-                    if (conventionsFileName.StartsWith("~/", StringComparison.OrdinalIgnoreCase))
-                    {
-                        conventionsFileName = Path.Combine(configurationSourceRoot.GetString(Constants.Configuration.ProjectDirectory), PathHelper.NormalizeFilePath(conventionsFileName.Mid(2)));
-                    }
-
-                    // filename might be a json config file or the name of a class in an extension
-                    if (FileExists(conventionsFileName))
-                    {
-                        configurationSourceRoot.AddFile(conventionsFileName);
-                    }
-                }
-            }
-
-            var machineConfigFileName = Path.GetFileNameWithoutExtension(projectConfigFileName) + "." + Environment.MachineName + ".json";
-
-            // add module configs (ignore machine config - it will be added last) - scconfig.[module].json 
-            if ((options & ConfigurationOptions.IncludeModuleConfig) == ConfigurationOptions.IncludeModuleConfig)
-            {
-                foreach (var moduleFileName in Directory.GetFiles(projectDirectory, "scconfig.*.json").OrderBy(f => f))
-                {
-                    if (!string.Equals(moduleFileName, machineConfigFileName, StringComparison.OrdinalIgnoreCase))
-                    {
-                        configurationSourceRoot.AddFile(moduleFileName);
-                    }
-                }
-            }
-
-            // add machine level config file - scconfig.[machine name].json
-            if ((options & ConfigurationOptions.IncludeMachineConfig) == ConfigurationOptions.IncludeMachineConfig)
-            {
-                if (FileExists(machineConfigFileName))
-                {
-                    configurationSourceRoot.AddFile(machineConfigFileName);
-                }
-            }
-
-            // add user config file - scconfig.json.user
-            if ((options & ConfigurationOptions.IncludeUserConfig) == ConfigurationOptions.IncludeUserConfig)
-            {
-                var userConfigFileName = projectConfigFileName + ".user";
-                if (FileExists(userConfigFileName))
-                {
-                    configurationSourceRoot.AddFile(userConfigFileName, ".json");
-                }
+                configurationSourceRoot.AddFile(configurationFileName);
             }
 
             // add config file specified on the command line: /config myconfig.xml
@@ -223,10 +125,9 @@ namespace Sitecore.Pathfinder.Configuration
                 if (!string.IsNullOrEmpty(configName))
                 {
                     var configFileName = PathHelper.Combine(projectDirectory, configName);
-                    if (FileExists(configFileName))
+                    if (File.Exists(configFileName))
                     {
                         configurationSourceRoot.AddFile(configFileName);
-                        configurationSourceRoot.Set(Constants.Configuration.IsProjectConfigured, "True");
                     }
                     else
                     {
@@ -240,6 +141,107 @@ namespace Sitecore.Pathfinder.Configuration
             {
                 AddCommandLine(configurationSourceRoot);
             }
+        }
+
+        protected virtual void GetConfigurationFileNames([NotNull, ItemNotNull] List<string> configurationFileNames, ConfigurationOptions options, [NotNull] string toolsDirectory, [NotNull] string projectDirectory, [NotNull] string systemConfigFileName)
+        {
+            // add system config
+            systemConfigFileName = Path.Combine(toolsDirectory, systemConfigFileName);
+            if (!File.Exists(systemConfigFileName))
+            {
+                throw new ConfigurationException(Texts.System_configuration_file_not_found, systemConfigFileName);
+            }
+
+            configurationFileNames.Add(systemConfigFileName);
+
+            // add system user config file located next to the system config file - scconfig.json.user
+            if ((options & ConfigurationOptions.IncludeUserConfig) == ConfigurationOptions.IncludeUserConfig)
+            {
+                var userConfigFileName = systemConfigFileName + ".user";
+                if (File.Exists(userConfigFileName))
+                {
+                    configurationFileNames.Add(userConfigFileName);
+                }
+            }
+
+            // get project configuration files
+            if ((options & ConfigurationOptions.Recursive) == ConfigurationOptions.Recursive)
+            {
+                GetProjectConfigurationFilesRecursive(configurationFileNames, options, toolsDirectory, projectDirectory);
+            }
+            else
+            {
+                GetProjectConfigurationFiles(configurationFileNames, options, toolsDirectory, projectDirectory);
+            }
+
+            // check if there are only tool configuration files
+            if (configurationFileNames.All(f => f.StartsWith(toolsDirectory, StringComparison.OrdinalIgnoreCase)))
+            {
+                // check if project directory is empty or not
+                if (Directory.GetFiles(projectDirectory).Any() || Directory.GetDirectories(projectDirectory).Any())
+                {
+                    // there are files or directories, but no config file, so let's try the default project config file
+                    var projectConfigFileName = PathHelper.Combine(toolsDirectory, "files\\project.noconfig\\scconfig.json");
+                    if (File.Exists(projectConfigFileName))
+                    {
+                        configurationFileNames.Add(projectConfigFileName);
+                    }
+                }
+            }
+        }
+
+        protected virtual void GetProjectConfigurationFiles([NotNull, ItemNotNull] List<string> configurationFileNames, ConfigurationOptions options, [NotNull] string toolsDirectory, [NotNull] string directory)
+        {
+            var projectConfigFileName = Path.Combine(directory, "scconfig.json");
+            var machineConfigFileName = Path.GetFileNameWithoutExtension(projectConfigFileName) + "." + Environment.MachineName + ".json";
+
+            // add project config file - scconfig.json
+            if (!string.IsNullOrEmpty(projectConfigFileName) && File.Exists(projectConfigFileName))
+            {
+                configurationFileNames.Add(projectConfigFileName);
+            }
+            
+            // add module configs (ignore machine config - it will be added last) - scconfig.[module].json 
+            if ((options & ConfigurationOptions.IncludeModuleConfig) == ConfigurationOptions.IncludeModuleConfig)
+            {
+                foreach (var moduleFileName in Directory.GetFiles(directory, "scconfig.*.json").OrderBy(f => f))
+                {
+                    if (!string.Equals(moduleFileName, machineConfigFileName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        configurationFileNames.Add(moduleFileName);
+                    }
+                }
+            }
+
+            // add machine level config file - scconfig.[machine name].json
+            if ((options & ConfigurationOptions.IncludeMachineConfig) == ConfigurationOptions.IncludeMachineConfig)
+            {
+                if (File.Exists(machineConfigFileName))
+                {
+                    configurationFileNames.Add(machineConfigFileName);
+                }
+            }
+
+            // add user config file - scconfig.json.user
+            if ((options & ConfigurationOptions.IncludeUserConfig) == ConfigurationOptions.IncludeUserConfig)
+            {
+                var userConfigFileName = projectConfigFileName + ".user";
+                if (File.Exists(userConfigFileName))
+                {
+                    configurationFileNames.Add(userConfigFileName);
+                }
+            }
+        }
+
+        protected virtual void GetProjectConfigurationFilesRecursive([NotNull, ItemNotNull] List<string> configurationFileNames, ConfigurationOptions options, [NotNull] string toolsDirectory, [NotNull] string directory)
+        {
+            var parentDirectory = Path.GetDirectoryName(directory);
+            if (parentDirectory != null)
+            {
+                GetProjectConfigurationFilesRecursive(configurationFileNames, options, toolsDirectory, parentDirectory);
+            }
+
+            GetProjectConfigurationFiles(configurationFileNames, options, toolsDirectory, directory);
         }
     }
 }

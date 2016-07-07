@@ -42,6 +42,7 @@ namespace Sitecore.Pathfinder.Extensions
 
                 case ".json":
                 case ".js":
+                case ".user":
                     configuration.AddJsonFile(path);
                     break;
 

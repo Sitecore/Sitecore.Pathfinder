@@ -107,6 +107,7 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
             catch (Exception ex)
             {
                 context.Trace.TraceError(Msg.D1020, Texts.Failed_to_create_the_Nupkg_file, ex.Message);
+                nupkgFileName = string.Empty;
             }
 
             return nupkgFileName;
