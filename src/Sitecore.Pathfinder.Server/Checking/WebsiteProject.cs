@@ -200,11 +200,6 @@ namespace Sitecore.Pathfinder.Checking
 
             item.IconProperty.SetValue(new TextNode(snapshot, "__Icon", databaseItem.Appearance.Icon, TextSpan.Empty));
 
-            if (databaseItem.TemplateName == "Template field" && databaseItem.Name == "Effect")
-            {
-                Console.Write("123");
-            }
-
             databaseItem.Fields.ReadAll();
 
             foreach (Data.Fields.Field databaseField in databaseItem.Fields)
