@@ -200,7 +200,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
 
                 if (!site.CacheHtml)
                 {
-                    yield return Warning(Msg.G1000, $"Html caching is disabled for the site \"{siteName}\". Performance may suffer", $"To fix, Set the \"cacheHtml\" setting to \"true\" for the site \"{siteName}\" in the web.config.");
+                    yield return Warning(Msg.G1000, $"Html caching is disabled for the site \"{siteName}\". Performance may suffer", $"To fix, set the \"cacheHtml\" setting to \"true\" for the site \"{siteName}\" in the web.config.");
                 }
             }
         }

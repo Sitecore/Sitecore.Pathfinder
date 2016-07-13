@@ -99,6 +99,8 @@ namespace Sitecore.Pathfinder.Tasks
             updated |= UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Xml.dll");
             updated |= UpdateWebsiteAssembly(context, "ZetaLongPaths.dll");
 
+            updated |= UpdateWebsiteAssembly(context, "files\\extensions\\Sitecore.Pathfinder.Core.Extensions.dll", "Sitecore.Pathfinder.Core.Extensions.dll");
+
             updated |= UpdateExtensions(context);
 
             if (updated)
@@ -107,10 +109,15 @@ namespace Sitecore.Pathfinder.Tasks
             }
         }
 
-        protected virtual bool UpdateWebsiteAssembly([NotNull] IBuildContext context, [NotNull] string fileName)
+        protected virtual bool UpdateWebsiteAssembly([NotNull] IBuildContext context, [NotNull] string fileName, [NotNull] string newFileName = "")
         {
+            if (string.IsNullOrEmpty(newFileName))
+            {
+                newFileName = fileName;
+            }
+
             var sourceFileName = Path.Combine(context.ToolsDirectory, fileName);
-            var targetFileName = Path.Combine(context.WebsiteDirectory + "\\bin", fileName);
+            var targetFileName = Path.Combine(context.WebsiteDirectory + "\\bin", newFileName);
 
             return FileSystem.CopyIfNewer(sourceFileName, targetFileName);
         }

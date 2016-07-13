@@ -11,6 +11,6 @@ namespace Sitecore.Pathfinder
         private static IHostService _host;
 
         [CanBeNull]
-        public static IHostService Host => _host ?? (_host = new Startup().WithToolsDirectory(FileUtil.MapPath("/bin")).WithProjectDirectory(FileUtil.MapPath("/")).WithWebsiteDirectory(FileUtil.MapPath("/")).WithDataFolderDirectory(FileUtil.MapPath(Settings.DataFolder)).DoNotLoadConfigFiles().Start());
+        public static IHostService Host => _host ?? (_host = new Startup().WithToolsDirectory(FileUtil.MapPath("/bin")).WithBinDirectory(FileUtil.MapPath("/bin")).WithProjectDirectory(FileUtil.MapPath("/")).WithWebsiteDirectory(FileUtil.MapPath("/")).WithDataFolderDirectory(FileUtil.MapPath(Settings.DataFolder)).DoNotLoadConfigFiles().Start());
     }
 }

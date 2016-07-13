@@ -55,6 +55,13 @@ namespace Sitecore.Pathfinder.Extensibility
                 // add additional assemblies - this is used in Sitecore.Pathfinder.Server to load assemblies from the /bin folder
                 AddAdditionalAssemblies(catalogs, additionalAssemblyFileNames);
 
+                // add core extensions - must come before feature assemblies to ensure the correct Sitecore.Pathfinder.Core.Extensions.dll is loaded
+                var coreExtensionsDirectory = Path.Combine(toolsDirectory, "files\\extensions");
+                var coreAssemblyFileName = Path.Combine(coreExtensionsDirectory, "Sitecore.Pathfinder.Core.Extensions.dll");
+
+                AddDynamicAssembly(catalogs, toolsDirectory, coreAssemblyFileName, coreExtensionsDirectory);
+                AddAssembliesFromDirectory(options, catalogs, coreExtensionsDirectory);
+
                 // add feature assemblies from the same directory as Sitecore.Pathfinder.Core
                 var binDirectory = configuration.GetString(Constants.Configuration.BinDirectory);
                 if (string.IsNullOrEmpty(binDirectory))
@@ -66,13 +73,6 @@ namespace Sitecore.Pathfinder.Extensibility
                 {
                     AddFeatureAssemblies(options, catalogs, binDirectory);
                 }
-
-                // add core extensions
-                var coreExtensionsDirectory = Path.Combine(toolsDirectory, "files\\extensions");
-                var coreAssemblyFileName = Path.Combine(coreExtensionsDirectory, "Sitecore.Pathfinder.Core.Extensions.dll");
-
-                AddDynamicAssembly(catalogs, toolsDirectory, coreAssemblyFileName, coreExtensionsDirectory);
-                AddAssembliesFromDirectory(options, catalogs, coreExtensionsDirectory);
 
                 // add extension from [Project]/packages directory
                 AddNugetPackages(configuration, options, catalogs, coreAssemblyFileName, projectDirectory);

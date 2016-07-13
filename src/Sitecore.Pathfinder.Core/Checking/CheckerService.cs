@@ -53,9 +53,26 @@ namespace Sitecore.Pathfinder.Checking
         {
             var context = CompositionService.Resolve<ICheckerContext>().With(project, diagnosticCollector);
             var treatWarningsAsErrors = Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
-            var isMultiThreaded = Configuration.GetBool(Constants.Configuration.System.MultiThreaded);
+            var isMultiThreaded = Configuration.GetBool(Constants.Configuration.System.MultiThreaded, true);
 
             var checkers = GetCheckers().ToArray();
+
+            CheckProject(context, checkers, isMultiThreaded, treatWarningsAsErrors);
+        }
+
+        public void CheckProject(IProjectBase project, IDiagnosticCollector diagnosticCollector, IEnumerable<string> checkerNames)
+        {
+            var context = CompositionService.Resolve<ICheckerContext>().With(project, diagnosticCollector);
+            var treatWarningsAsErrors = Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
+            var isMultiThreaded = Configuration.GetBool(Constants.Configuration.System.MultiThreaded, true);
+
+            var checkers = Checkers.Where(c => checkerNames.Contains(c.Method.Name)).Select(c => new CheckerInfo(c)).ToArray();
+
+            CheckProject(context, checkers, isMultiThreaded, treatWarningsAsErrors);
+        }
+
+        protected virtual void CheckProject([NotNull] ICheckerContext context, [NotNull, ItemNotNull] CheckerInfo[] checkers, bool isMultiThreaded, bool treatWarningsAsErrors)
+        {
             EnabledCheckersCount = checkers.Length;
 
             if (isMultiThreaded)
