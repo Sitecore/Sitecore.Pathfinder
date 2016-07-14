@@ -25,70 +25,21 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual void AddCommandLine([NotNull] IConfigurationSourceRoot configurationSourceRoot, [NotNull, ItemNotNull] IEnumerable<string> commandLineArgs)
         {
-            var args = new List<string>();
-
-            var positionalArg = 0;
-            for (var n = 0; n < commandLineArgs.Count(); n++)
-            {
-                var arg = commandLineArgs.ElementAt(n);
-
-                // if the arg is not a switch, add it to the list of position args
-                if (!arg.StartsWith("-") && !arg.StartsWith("/"))
-                {
-                    args.Add("/arg" + positionalArg);
-                    args.Add(arg);
-
-                    positionalArg++;
-
-                    continue;
-                }
-
-                // if the arg is a switch, add it to the list of args to pass to the commandline configuration
-                args.Add(arg);
-                if (arg.IndexOf('=') >= 0)
-                {
-                    continue;
-                }
-
-                n++;
-                if (n >= commandLineArgs.Count())
-                {
-                    args.Add("true");
-                    continue;
-                }
-
-                arg = commandLineArgs.ElementAt(n);
-                if (arg.StartsWith("-") || arg.StartsWith("/"))
-                {
-                    args.Add("true");
-                    n--;
-                    continue;
-                }
-
-                args.Add(commandLineArgs.ElementAt(n));
-            }
+            var args = configurationSourceRoot.GetCommandLine(commandLineArgs);
 
             configurationSourceRoot.AddCommandLine(args.ToArray());
         }
 
-        public virtual void Load(ConfigurationOptions options, string toolsDirectory, string projectDirectory, string systemConfigFileName)
+        public virtual void Load(ConfigurationOptions options, string toolsDirectory, string projectDirectory, string systemConfigFileName, string[] commandLine)
         {
             var configurationFileNames = new List<string>();
 
             GetConfigurationFileNames(configurationFileNames, options, toolsDirectory, projectDirectory, systemConfigFileName);
 
-            BuildConfiguration(Configuration, configurationFileNames, options, toolsDirectory, projectDirectory, systemConfigFileName);
+            BuildConfiguration(Configuration, configurationFileNames, options, toolsDirectory, projectDirectory, systemConfigFileName, commandLine);
         }
 
-        protected virtual void AddCommandLine([NotNull] IConfigurationSourceRoot configurationSourceRoot)
-        {
-            // cut off executable name
-            var commandLineArgs = Environment.GetCommandLineArgs().Skip(1).ToList();
-
-            AddCommandLine(configurationSourceRoot, commandLineArgs);
-        }
-
-        protected virtual void BuildConfiguration([NotNull] IConfiguration configuration, [NotNull, ItemNotNull] List<string> configurationFileNames, ConfigurationOptions options, [NotNull] string toolsDirectory, [NotNull] string projectDirectory, [NotNull] string systemConfigFileName)
+        protected virtual void BuildConfiguration([NotNull] IConfiguration configuration, [NotNull, ItemNotNull] List<string> configurationFileNames, ConfigurationOptions options, [NotNull] string toolsDirectory, [NotNull] string projectDirectory, [NotNull] string systemConfigFileName, [NotNull, ItemNotNull] string[] commandLine)
         {
             var configurationSourceRoot = configuration as IConfigurationSourceRoot;
             if (configurationSourceRoot == null)
@@ -139,7 +90,7 @@ namespace Sitecore.Pathfinder.Configuration
             // add command line
             if ((options & ConfigurationOptions.IncludeCommandLine) == ConfigurationOptions.IncludeCommandLine)
             {
-                AddCommandLine(configurationSourceRoot);
+                configurationSourceRoot.AddCommandLine(commandLine);
             }
         }
 
@@ -200,7 +151,7 @@ namespace Sitecore.Pathfinder.Configuration
             {
                 configurationFileNames.Add(projectConfigFileName);
             }
-            
+
             // add module configs (ignore machine config - it will be added last) - scconfig.[module].json 
             if ((options & ConfigurationOptions.IncludeModuleConfig) == ConfigurationOptions.IncludeModuleConfig)
             {

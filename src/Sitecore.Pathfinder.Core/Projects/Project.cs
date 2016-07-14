@@ -27,19 +27,19 @@ namespace Sitecore.Pathfinder.Projects
     public delegate void ProjectChangedEventHandler([NotNull] object sender);
 
     [Export, Export(typeof(IProject)), PartCreationPolicy(CreationPolicy.NonShared), DebuggerDisplay("{GetType().Name,nq}: {ProjectDirectory}")]
-    public class Project : SourcePropertyBag, IProject, IDiagnosticContainer
+    public class Project : SourcePropertyBag, IProject, IDiagnosticCollector
     {
         [NotNull]
-        public static readonly IProject Empty = new Project();
-
-        [NotNull]
-        private readonly object _syncObject = new object();
+        public static readonly IProjectBase Empty = new Project();
 
         [NotNull]
         private readonly Dictionary<string, Database> _databases = new Dictionary<string, Database>();
 
+        [NotNull]
+        private readonly object _databasesSyncObject = new object();
+
         [NotNull, ItemNotNull]
-        private readonly List<Diagnostic> _diagnostics = new List<Diagnostic>();
+        private readonly IList<Diagnostic> _diagnostics = new SynchronizedCollection<Diagnostic>();
 
         [NotNull, ItemNotNull]
         private readonly IList<IProjectItem> _projectItems;
@@ -48,7 +48,7 @@ namespace Sitecore.Pathfinder.Projects
         private readonly object _sourceFilesSyncObject = new object();
 
         [NotNull]
-        private readonly object _databasesSyncObject = new object();
+        private readonly object _syncObject = new object();
 
         private bool _isChecked;
 
@@ -97,16 +97,11 @@ namespace Sitecore.Pathfinder.Projects
 
         public IEnumerable<File> Files => ProjectItems.OfType<File>();
 
-        public bool HasErrors
-        {
-            get { return Diagnostics.Any(d => d.Severity == Severity.Error); }
-        }
-
         public IProjectIndexer Index { get; }
 
-        public override Locking Locking => _locking;
-
         public IEnumerable<Item> Items => Index.Items;
+
+        public override Locking Locking => _locking;
 
         public ProjectOptions Options { get; private set; }
 
@@ -141,7 +136,7 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         protected ITraceService Trace { get; }
 
-        public virtual IProject Add(string absoluteFileName)
+        public virtual IProjectBase Add(string absoluteFileName)
         {
             if (Locking == Locking.ReadOnly)
             {
@@ -167,7 +162,7 @@ namespace Sitecore.Pathfinder.Projects
 
             try
             {
-                ParseService.Parse(this, sourceFile);
+                ParseService.Parse(this, this, sourceFile);
             }
             catch (Exception ex)
             {
@@ -177,7 +172,7 @@ namespace Sitecore.Pathfinder.Projects
             return this;
         }
 
-        public virtual IProject Add(IEnumerable<string> sourceFileNames)
+        public virtual IProjectBase Add(IEnumerable<string> sourceFileNames)
         {
             if (Locking == Locking.ReadOnly)
             {
@@ -238,7 +233,7 @@ namespace Sitecore.Pathfinder.Projects
             return addedProjectItem;
         }
 
-        public IProject Check()
+        public IProjectBase Check()
         {
             if (_isChecked)
             {
@@ -249,60 +244,44 @@ namespace Sitecore.Pathfinder.Projects
 
             Lock(Locking.ReadOnly);
 
-            Checker.CheckProject(this);
+            Checker.CheckProject(this, this);
 
             Lock(Locking.ReadWrite);
 
             return this;
         }
 
-        public virtual IProject Compile()
+        public virtual IProjectBase Compile()
         {
-            var context = CompositionService.Resolve<ICompileContext>();
+            var context = CompositionService.Resolve<ICompileContext>().With(this);
 
             Pipelines.Resolve<CompilePipeline>().Execute(context, this);
 
             return this;
         }
 
-        public IEnumerable<T> FindFiles<T>(string fileName) where T : File
-        {
-            var relativeFileName = PathHelper.NormalizeFilePath(fileName);
-            if (relativeFileName.StartsWith("~\\"))
-            {
-                relativeFileName = relativeFileName.Mid(2);
-            }
-
-            if (relativeFileName.StartsWith("\\"))
-            {
-                relativeFileName = relativeFileName.Mid(1);
-            }
-
-            return ProjectItems.OfType<T>().Where(f => string.Equals(f.FilePath, fileName, StringComparison.OrdinalIgnoreCase) || f.Snapshots.Any(s => string.Equals(s.SourceFile.RelativeFileName, relativeFileName, StringComparison.OrdinalIgnoreCase)));
-        }
-
         public T FindQualifiedItem<T>(string qualifiedName) where T : class, IProjectItem
         {
             if (!qualifiedName.StartsWith("{") || !qualifiedName.EndsWith("}"))
             {
-                return Index.FirstOrDefault<T>(qualifiedName);
+                return Index.FindQualifiedItem<T>(qualifiedName);
             }
 
             Guid guid;
             if (Guid.TryParse(qualifiedName, out guid))
             {
-                return Index.FirstOrDefault<T>(guid);
+                return Index.FindQualifiedItem<T>(guid);
             }
 
             guid = StringHelper.ToGuid(qualifiedName);
-            return Index.FirstOrDefault<T>(guid);
+            return Index.FindQualifiedItem<T>(guid);
         }
 
         public T FindQualifiedItem<T>(Database database, string qualifiedName) where T : DatabaseProjectItem
         {
             if (!qualifiedName.StartsWith("{") || !qualifiedName.EndsWith("}"))
             {
-                return Index.FirstOrDefault<T>(database, qualifiedName);
+                return Index.FindQualifiedItem<T>(database, qualifiedName);
             }
 
             Guid guid;
@@ -315,9 +294,72 @@ namespace Sitecore.Pathfinder.Projects
             return Index.FirstOrDefault<T>(database, guid);
         }
 
-        public T FindQualifiedItem<T>(ProjectItemUri uri) where T : class, IProjectItem
+        public T FindQualifiedItem<T>(IProjectItemUri uri) where T : class, IProjectItem
         {
-            return Index.FirstOrDefault<T>(uri);
+            return Index.FindQualifiedItem<T>(uri);
+        }
+
+        public IEnumerable<T> GetByFileName<T>(string fileName) where T : File
+        {
+            var relativeFileName = PathHelper.NormalizeFilePath(fileName);
+            if (relativeFileName.StartsWith("~\\"))
+            {
+                relativeFileName = relativeFileName.Mid(2);
+            }
+
+            if (relativeFileName.StartsWith("\\"))
+            {
+                relativeFileName = relativeFileName.Mid(1);
+            }
+
+            return ProjectItems.OfType<T>().Where(f => string.Equals(f.FilePath, fileName, StringComparison.OrdinalIgnoreCase) || f.GetSnapshots().Any(s => string.Equals(s.SourceFile.RelativeFileName, relativeFileName, StringComparison.OrdinalIgnoreCase)));
+        }
+
+        public IEnumerable<T> GetByQualifiedName<T>(string qualifiedName) where T : class, IProjectItem
+        {
+            return Index.GetByQualifiedName<T>(qualifiedName);
+        }
+
+        public IEnumerable<T> GetByQualifiedName<T>(Database database, string qualifiedName) where T : DatabaseProjectItem
+        {
+            return Index.GetByQualifiedName<T>(database, qualifiedName);
+        }
+
+        public IEnumerable<T> GetByShortName<T>(string shortName) where T : class, IProjectItem
+        {
+            return Index.GetByShortName<T>(shortName);
+        }
+
+        public IEnumerable<T> GetByShortName<T>(Database database, string shortName) where T : DatabaseProjectItem
+        {
+            return Index.GetByShortName<T>(database, shortName);
+        }
+
+        public IEnumerable<Item> GetChildren(Item item)
+        {
+            return Index.GetChildren(item);
+        }
+
+        public Database GetDatabase(string databaseName)
+        {
+            var key = databaseName.ToUpperInvariant();
+
+            Database database;
+            lock (_databasesSyncObject)
+            {
+                if (!_databases.TryGetValue(key, out database))
+                {
+                    database = new Database(this, databaseName);
+                    _databases[key] = database;
+                }
+            }
+
+            return database;
+        }
+
+        public IEnumerable<IProjectItem> GetUsages(string qualifiedName)
+        {
+            return Index.FindUsages(qualifiedName).Select(r => r.Resolve());
         }
 
         public void Lock(Locking locking)
@@ -333,30 +375,6 @@ namespace Sitecore.Pathfinder.Projects
             }
 
             _locking = locking;
-        }
-
-        public Database GetDatabase(string databaseName)
-        {
-            var key = databaseName.ToLowerInvariant();
-
-            Database database;
-
-            lock (_databasesSyncObject)
-            {
-                if (!_databases.TryGetValue(key, out database))
-                {
-                    database = new Database(this, databaseName);
-                    _databases[key] = database;
-                }
-            }
-
-            return database;
-        }
-
-        public IEnumerable<Item> GetItems(Database database)
-        {
-            var databaseName = database.DatabaseName;
-            return Items.Where(i => string.Equals(i.DatabaseName, databaseName, StringComparison.OrdinalIgnoreCase));
         }
 
         public event ProjectChangedEventHandler ProjectChanged;
@@ -394,7 +412,7 @@ namespace Sitecore.Pathfinder.Projects
             foreach (var projectItem in ProjectItems.ToList())
             {
                 // todo: not working
-                if (!string.Equals(projectItem.Snapshots.First().SourceFile.AbsoluteFileName, absoluteSourceFileName, StringComparison.OrdinalIgnoreCase))
+                if (!string.Equals(projectItem.Snapshot.SourceFile.AbsoluteFileName, absoluteSourceFileName, StringComparison.OrdinalIgnoreCase))
                 {
                     continue;
                 }
@@ -413,19 +431,6 @@ namespace Sitecore.Pathfinder.Projects
 
                 _projectItems.Remove(projectItem);
             }
-        }
-
-        public virtual IProject SaveChanges()
-        {
-            foreach (var snapshot in ProjectItems.SelectMany(i => i.Snapshots))
-            {
-                if (snapshot.IsModified)
-                {
-                    snapshot.SaveChanges();
-                }
-            }
-
-            return this;
         }
 
         public virtual IProject With(ProjectOptions projectOptions, IEnumerable<string> sourceFileNames)
@@ -449,17 +454,17 @@ namespace Sitecore.Pathfinder.Projects
 
             if (newItem.MergingMatch == MergingMatch.MatchUsingSourceFile)
             {
-                items = Index.Where<Item>(newItem.Snapshots.First().SourceFile).ToArray();
+                items = Index.Where<Item>(newItem.Snapshot.SourceFile).ToArray();
             }
 
             if (items == null || items.Length == 0)
             {
-                items = Index.Where<Item>(newItem.Snapshots.First().SourceFile).Where(i => i.MergingMatch == MergingMatch.MatchUsingSourceFile).ToArray();
+                items = Index.Where<Item>(newItem.Snapshot.SourceFile).Where(i => i.MergingMatch == MergingMatch.MatchUsingSourceFile).ToArray();
             }
 
             if (items.Length == 0)
             {
-                items = Index.WhereQualifiedName<Item>(newItem.Database, newItem.ItemIdOrPath).ToArray();
+                items = Index.GetByQualifiedName<Item>(newItem.Database, newItem.ItemIdOrPath).ToArray();
             }
 
             if (items.Length == 0)
@@ -488,7 +493,7 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         protected virtual IProjectItem MergeTemplate<T>([NotNull] T newTemplate) where T : Template
         {
-            var templates = Index.WhereQualifiedName<Template>(newTemplate.Database, newTemplate.ItemIdOrPath).ToArray();
+            var templates = Index.GetByQualifiedName<Template>(newTemplate.Database, newTemplate.ItemIdOrPath).ToArray();
 
             if (templates.Length == 0)
             {
@@ -522,9 +527,19 @@ namespace Sitecore.Pathfinder.Projects
             }
         }
 
-        void IDiagnosticContainer.Add(Diagnostic diagnostic)
+        void IDiagnosticCollector.Add(Diagnostic diagnostic)
         {
             _diagnostics.Add(diagnostic);
+        }
+
+        void IDiagnosticCollector.Clear()
+        {
+            _diagnostics.Clear();
+        }
+
+        void IDiagnosticCollector.Remove(Diagnostic diagnostic)
+        {
+            _diagnostics.Remove(diagnostic);
         }
     }
 }

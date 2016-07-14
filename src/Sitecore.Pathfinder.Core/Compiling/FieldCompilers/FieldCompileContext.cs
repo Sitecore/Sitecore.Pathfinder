@@ -41,9 +41,9 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         [NotNull]
         protected IConsoleService Console { get; }
 
-        public IFieldCompileContext With(IProject project)
+        public IFieldCompileContext With(IDiagnosticCollector diagnosticCollector)
         {
-            Trace = new ProjectDiagnosticTraceService(Configuration, Console, Factory).With(project);
+            Trace = new DiagnosticTraceService(Configuration, Console, Factory).With(diagnosticCollector);
             return this;
         }
     }

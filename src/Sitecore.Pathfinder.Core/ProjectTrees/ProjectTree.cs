@@ -85,7 +85,7 @@ namespace Sitecore.Pathfinder.ProjectTrees
         {
             var ignoreDirectories = Configuration.GetStringList(Constants.Configuration.ProjectWebsiteMappings.IgnoreFileNames).ToList();
 
-            ignoreDirectories.Add(Path.GetFileName(Configuration.GetString(Constants.Configuration.ToolsDirectory)));
+            ignoreDirectories.Add(Path.GetFileName(Configuration.GetToolsDirectory()));
 
             return new HashSet<string>(ignoreDirectories);
         }

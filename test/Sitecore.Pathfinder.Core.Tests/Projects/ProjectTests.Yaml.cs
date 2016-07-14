@@ -2,9 +2,7 @@
 
 using System.IO;
 using System.Linq;
-using System.Xml;
 using NUnit.Framework;
-using Sitecore.Pathfinder.Languages.Xml;
 using Sitecore.Pathfinder.Languages.Yaml;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
@@ -27,7 +25,7 @@ namespace Sitecore.Pathfinder.Projects
             Assert.AreEqual("YamlContentItem", item.ItemName);
             Assert.AreEqual("/sitecore/content/YamlContentItem", item.ItemIdOrPath);
             Assert.AreEqual("Sample Item", item.TemplateIdOrPath);
-            Assert.IsNotNull(item.ItemNameProperty.SourceTextNodes);
+            Assert.AreNotEqual(item.ItemNameProperty.SourceTextNode, TextNode.Empty);
             Assert.IsInstanceOf<FileNameTextNode>(item.ItemNameProperty.SourceTextNode);
             Assert.IsInstanceOf<AttributeNameTextNode>(item.TemplateIdOrPathProperty.SourceTextNode);
             Assert.AreEqual("Sample Item", TraceHelper.GetTextNode(item.TemplateIdOrPathProperty).Value);
@@ -36,10 +34,10 @@ namespace Sitecore.Pathfinder.Projects
             Assert.IsNotNull(field);
             Assert.AreEqual("Hello World", field.Value);
             Assert.IsInstanceOf<TextNode>(field.ValueProperty.SourceTextNode);
-            Assert.AreEqual("Hello World", field.ValueProperty.SourceTextNode?.Value);
-            Assert.AreEqual("Text", field.ValueProperty.SourceTextNode?.Key);
+            Assert.AreEqual("Hello World", field.ValueProperty.SourceTextNode.Value);
+            Assert.AreEqual("Text", field.ValueProperty.SourceTextNode.Key);
 
-            var textDocument = projectItem.Snapshots.First() as ITextSnapshot;
+            var textDocument = projectItem.Snapshot as ITextSnapshot;
             Assert.IsNotNull(textDocument);
 
             var treeNode = textDocument.Root;
@@ -83,13 +81,13 @@ namespace Sitecore.Pathfinder.Projects
             Assert.AreEqual("YamlItem", item.ItemName);
             Assert.AreEqual("/sitecore/content/Home/YamlItem", item.ItemIdOrPath);
             Assert.AreEqual("/sitecore/templates/Sample/YamlItemTemplate", item.TemplateIdOrPath);
-            Assert.IsNotNull(item.ItemNameProperty.SourceTextNodes);
+            Assert.AreNotEqual(item.ItemNameProperty.SourceTextNode, TextNode.Empty);
             Assert.IsInstanceOf<FileNameTextNode>(item.ItemNameProperty.SourceTextNode);
             Assert.IsInstanceOf<TextNode>(item.TemplateIdOrPathProperty.SourceTextNode);
-            Assert.AreEqual("/sitecore/templates/Sample/YamlItemTemplate", item.TemplateIdOrPathProperty.SourceTextNode?.Value);
-            Assert.AreEqual("Template", item.TemplateIdOrPathProperty.SourceTextNode?.Key);
+            Assert.AreEqual("/sitecore/templates/Sample/YamlItemTemplate", item.TemplateIdOrPathProperty.SourceTextNode.Value);
+            Assert.AreEqual("Template", item.TemplateIdOrPathProperty.SourceTextNode.Key);
 
-            var textDocument = projectItem.Snapshots.First() as ITextSnapshot;
+            var textDocument = projectItem.Snapshot as ITextSnapshot;
             Assert.IsNotNull(textDocument);
 
             var treeNode = textDocument.Root;

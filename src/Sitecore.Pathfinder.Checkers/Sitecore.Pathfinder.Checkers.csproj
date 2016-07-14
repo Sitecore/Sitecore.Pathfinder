@@ -50,18 +50,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="files\extensions\checkers\ConfigurationChecker.cs" />
-    <Compile Include="files\extensions\checkers\FieldsChecker.cs" />
-    <Compile Include="files\extensions\checkers\FilesChecker.cs" />
-    <Compile Include="files\extensions\checkers\ItemsChecker.cs" />
-    <Compile Include="files\extensions\checkers\LayoutsChecker.cs" />
-    <Compile Include="files\extensions\checkers\ProjectChecker.cs" />
-    <Compile Include="files\extensions\checkers\TemplateHelpChecker.cs" />
-    <Compile Include="files\extensions\checkers\TemplatesChecker.cs" />
-    <Compile Include="files\extensions\checkers\ReferencesChecker.cs" />
-    <Compile Include="files\extensions\conventions\HabitatConventions.cs" />
-    <Compile Include="files\extensions\conventions\PathfinderProjectFileSystemConventions.cs" />
-    <Compile Include="files\extensions\conventions\SitecoreTemplateConventions.cs" />
+    <Compile Include="files\extensions\checkers\ConfigurationCheckers.cs" />
+    <Compile Include="files\extensions\checkers\FieldCheckers.cs" />
+    <Compile Include="files\extensions\checkers\FileCheckers.cs" />
+    <Compile Include="files\extensions\checkers\ItemCheckers.cs" />
+    <Compile Include="files\extensions\checkers\LayoutCheckers.cs" />
+    <Compile Include="files\extensions\checkers\ProjectCheckers.cs" />
+    <Compile Include="files\extensions\checkers\TemplateHelpCheckers.cs" />
+    <Compile Include="files\extensions\checkers\TemplateCheckers.cs" />
+    <Compile Include="files\extensions\checkers\ReferenceCheckers.cs" />
+    <Compile Include="files\extensions\checkers\HabitatCheckers.cs" />
+    <Compile Include="files\extensions\checkers\PathfinderProjectCheckers.cs" />
     <Compile Include="files\project\sitecore.filetemplates\codegenerators\PocoTemplate.cs" />
     <Compile Include="files\project\sitecore.filetemplates\codefirst\ModelCompiler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

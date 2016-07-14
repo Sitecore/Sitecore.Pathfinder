@@ -7,7 +7,7 @@ namespace Sitecore.Pathfinder.Languages.ConfigFiles
 {
     public class ConfigFile : File
     {
-        public ConfigFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath) : base(project, snapshot, filePath)
+        public ConfigFile([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] string filePath) : base(project, snapshot, filePath)
         {
         }
     }

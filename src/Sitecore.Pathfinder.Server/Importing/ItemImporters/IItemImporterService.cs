@@ -12,9 +12,9 @@ namespace Sitecore.Pathfinder.Importing.ItemImporters
     public interface IItemImporterService
     {
         [Diagnostics.NotNull]
-        Template ImportTemplate([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Item item);
+        Template ImportTemplate([Diagnostics.NotNull] IProjectBase project, [Diagnostics.NotNull] Item item);
 
         [Diagnostics.NotNull]
-        Projects.Items.Item ImportItem([Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull, ItemNotNull] IEnumerable<string> excludedFields);
+        Projects.Items.Item ImportItem([Diagnostics.NotNull] IProjectBase project, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull, ItemNotNull] IEnumerable<string> excludedFields);
     }
 }

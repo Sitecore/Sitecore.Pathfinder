@@ -3,7 +3,6 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using Sitecore.IO;
 using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
@@ -34,7 +33,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
             }
 
             context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName) ?? string.Empty);
-            context.FileSystem.Copy(projectItem.Snapshots.First().SourceFile.AbsoluteFileName, destinationFileName, context.ForceUpdate);
+            context.FileSystem.Copy(projectItem.Snapshot.SourceFile.AbsoluteFileName, destinationFileName, context.ForceUpdate);
         }
 
         private bool CanCopyBinFile([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] IProjectItem projectItem, [Diagnostics.NotNull] string destinationFileName)
@@ -50,7 +49,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
             }
 
             var destinationVersion = GetFileVersion(destinationFileName);
-            var sourceVersion = GetFileVersion(projectItem.Snapshots.First().SourceFile.AbsoluteFileName);
+            var sourceVersion = GetFileVersion(projectItem.Snapshot.SourceFile.AbsoluteFileName);
 
             return sourceVersion > destinationVersion;
         }

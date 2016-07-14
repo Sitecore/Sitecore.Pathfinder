@@ -106,7 +106,7 @@ namespace Sitecore.Pathfinder.NuGet.Packaging.ProjectPackages
             if (repository == null)
             {
                 // add default repository which is located in the tools directory
-                var packageDirectory = PathHelper.NormalizeFilePath(Path.Combine(Configuration.GetString(Constants.Configuration.ToolsDirectory), "files/repository/sitecore.project/packages"));
+                var packageDirectory = PathHelper.NormalizeFilePath(Path.Combine(Configuration.GetToolsDirectory(), "files/repository/sitecore.project/packages"));
                 var repositories = new List<IPackageRepository>
                 {
                     PackageRepositoryFactory.Default.CreateRepository(packageDirectory)

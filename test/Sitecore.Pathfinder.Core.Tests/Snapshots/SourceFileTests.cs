@@ -11,7 +11,7 @@ namespace Sitecore.Pathfinder.Snapshots
     public class SourceFileTests : Tests
     {
         [Diagnostics.NotNull]
-        public IProject Project { get; set; }
+        public IProjectBase Project { get; set; }
 
         [Test]
         public void ConstructorTest()

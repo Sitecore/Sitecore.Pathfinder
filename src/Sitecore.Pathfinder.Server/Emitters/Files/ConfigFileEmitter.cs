@@ -26,7 +26,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
             var destinationFileName = FileUtil.MapPath(configFile.FilePath);
 
             context.FileSystem.CreateDirectoryFromFileName(destinationFileName);
-            context.FileSystem.Copy(projectItem.Snapshots.First().SourceFile.AbsoluteFileName, destinationFileName, context.ForceUpdate);
+            context.FileSystem.Copy(projectItem.Snapshot.SourceFile.AbsoluteFileName, destinationFileName, context.ForceUpdate);
         }
     }
 }

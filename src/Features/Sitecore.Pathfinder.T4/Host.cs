@@ -11,7 +11,7 @@ namespace T4
 {
     public class Host : TemplateGenerator
     {
-        public Host([NotNull] IBuildContext context, [NotNull] IProject project)
+        public Host([NotNull] IBuildContext context, [NotNull] IProjectBase project)
         {
             Context = context;
             Project = project;
@@ -24,6 +24,6 @@ namespace T4
         public IProjectItem Item { get; internal set; }
 
         [NotNull]
-        public IProject Project { get; }
+        public IProjectBase Project { get; }
     }
 }

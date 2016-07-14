@@ -49,23 +49,10 @@ namespace Sitecore.Pathfinder.Languages.Xml
         protected SnapshotParseContext ParseContext { get; private set; }
 
         [NotNull]
-        protected IProject Project { get; private set; }
+        protected IProjectBase Project { get; private set; }
 
         [CanBeNull]
         protected XElement RootElement { get; private set; }
-
-        public override void SaveChanges()
-        {
-            if (RootElement == null)
-            {
-                return;
-            }
-
-            using (var writer = FileSystem.OpenStreamWriter(SourceFile.AbsoluteFileName))
-            {
-                RootElement.Save(writer, SaveOptions.DisableFormatting);
-            }
-        }
 
         public override bool ValidateSchema(IParseContext context)
         {
@@ -162,7 +149,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
         [CanBeNull]
         protected virtual XmlSchemaSet GetSchema([NotNull] IParseContext context, [NotNull] string schemaFileName, [NotNull] string schemaNamespace)
         {
-            var fileName = Path.Combine(context.Configuration.GetString(Constants.Configuration.ToolsDirectory), "schemas\\" + schemaFileName);
+            var fileName = Path.Combine(context.Configuration.GetToolsDirectory(), "schemas\\" + schemaFileName);
             if (!FileSystem.FileExists(fileName))
             {
                 return null;

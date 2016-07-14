@@ -58,7 +58,6 @@ namespace Sitecore.Pathfinder.Languages.Xml
             if (element != null)
             {
                 element.Name = newKey;
-                Snapshot.IsModified = true;
                 return true;
             }
 
@@ -83,8 +82,6 @@ namespace Sitecore.Pathfinder.Languages.Xml
 
                 _node = newAttribute;
                 Key = newKey;
-
-                Snapshot.IsModified = true;
                 return true;
             }
 
@@ -97,7 +94,6 @@ namespace Sitecore.Pathfinder.Languages.Xml
             if (element != null)
             {
                 element.Value = newValue;
-                Snapshot.IsModified = true;
                 return true;
             }
 
@@ -105,7 +101,6 @@ namespace Sitecore.Pathfinder.Languages.Xml
             if (attribute != null)
             {
                 attribute.Value = newValue;
-                Snapshot.IsModified = true;
                 return true;
             }
 
@@ -113,7 +108,6 @@ namespace Sitecore.Pathfinder.Languages.Xml
             if (node?.Parent != null)
             {
                 node.Parent.Value = newValue;
-                Snapshot.IsModified = true;
                 return true;
             }
 

@@ -49,7 +49,7 @@ namespace Sitecore.Pathfinder.Emitters
             if (Configuration.GetBool(Constants.Configuration.InstallPackage.ShowDiagnostics))
             {
                 var treatWarningsAsErrors = Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
-                context.Trace.TraceDiagnostics(context.Project.Diagnostics, treatWarningsAsErrors);
+                context.Trace.TraceDiagnostics(project.Diagnostics, treatWarningsAsErrors);
             }
 
             project.Lock(Locking.ReadOnly);
@@ -63,7 +63,7 @@ namespace Sitecore.Pathfinder.Emitters
             project.Lock(Locking.ReadWrite);
         }
 
-        protected virtual void Emit([NotNull] IEmitContext context, [NotNull] IProject project, [NotNull, ItemNotNull] List<IEmitter> emitters, [NotNull, ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
+        protected virtual void Emit([NotNull] IEmitContext context, [NotNull] IProjectBase project, [NotNull, ItemNotNull] List<IEmitter> emitters, [NotNull, ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
         {
             EmitProjectItems(context, project.ProjectItems, emitters, retries);
         }
@@ -160,11 +160,11 @@ namespace Sitecore.Pathfinder.Emitters
                 }
                 else if (exception != null)
                 {
-                    Trace.TraceError(Msg.E1002, exception.Message, projectItem.Snapshots.First().SourceFile.AbsoluteFileName, TextSpan.Empty);
+                    Trace.TraceError(Msg.E1002, exception.Message, projectItem.Snapshot.SourceFile.AbsoluteFileName, TextSpan.Empty);
                 }
                 else
                 {
-                    Trace.TraceError(Msg.E1003, Texts.An_error_occured, projectItem.Snapshots.First().SourceFile.AbsoluteFileName, TextSpan.Empty);
+                    Trace.TraceError(Msg.E1003, Texts.An_error_occured, projectItem.Snapshot.SourceFile.AbsoluteFileName, TextSpan.Empty);
                 }
             }
         }

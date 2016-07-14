@@ -25,7 +25,8 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             var value = field.Value.Trim();
 
             if (!string.Equals(value, "true", StringComparison.OrdinalIgnoreCase) && !string.Equals(value, "false", StringComparison.OrdinalIgnoreCase) && 
-                field.Item.Snapshots.All(s => s.Capabilities.HasFlag(SnapshotCapabilities.SupportsTrueAndFalseForBooleanFields)))
+                field.Item.Snapshot.Capabilities.HasFlag(SnapshotCapabilities.SupportsTrueAndFalseForBooleanFields) &&
+                field.Item.AdditionalSnapshots.All(s => s.Capabilities.HasFlag(SnapshotCapabilities.SupportsTrueAndFalseForBooleanFields)))
             {
                 context.Trace.TraceError(Msg.C1043, Texts.Checkbox_field_value_must_be__true__or__false__, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), value);
             }

@@ -10,7 +10,7 @@ namespace Sitecore.Pathfinder.Languages.Renderings
 {
     public class Rendering : ContentFile
     {
-        public Rendering([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string databaseName, [NotNull] string itemPath, [NotNull] string itemName, [NotNull] string filePath, [NotNull] string templateIdOrPath) : base(project, snapshot, filePath)
+        public Rendering([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] string databaseName, [NotNull] string itemPath, [NotNull] string itemName, [NotNull] string filePath, [NotNull] string templateIdOrPath) : base(project, snapshot, filePath)
         {
             DatabaseName = databaseName;
             ItemPath = itemPath;
@@ -33,7 +33,7 @@ namespace Sitecore.Pathfinder.Languages.Renderings
         public ICollection<string> Placeholders { get; }
 
         [NotNull]
-        public ProjectItemUri RenderingItemUri { get; set; } = ProjectItemUri.Empty;
+        public IProjectItemUri RenderingItemUri { get; set; } = ProjectItemUri.Empty;
 
         [NotNull]
         public string TemplateIdOrPath { get; }

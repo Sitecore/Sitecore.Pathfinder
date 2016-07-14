@@ -2,7 +2,6 @@
 
 using System;
 using System.ComponentModel.Composition;
-using System.Linq;
 using Rainbow.Storage.Sc.Deserialization;
 using Rainbow.Storage.Yaml;
 using Sitecore.Pathfinder.Diagnostics;
@@ -34,7 +33,7 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
             var unicornFile = projectItem as UnicornFile;
             Assert.Cast(unicornFile, nameof(unicornFile));
 
-            var snapshot = unicornFile.Snapshots.First();
+            var snapshot = unicornFile.Snapshot;
 
             // todo: use real Unicorn configuration instead of hacking it
             var log = new TraceLogger(context.Trace);
@@ -61,7 +60,7 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
                 }
                 catch (Exception ex)
                 {
-                    throw new RetryableEmitException(Msg.E1009, Texts.Failed_to_deserialize_item, unicornFile.Snapshots.First(), ex.Message);
+                    throw new RetryableEmitException(Msg.E1009, Texts.Failed_to_deserialize_item, unicornFile.Snapshot, ex.Message);
                 }
             }
         }

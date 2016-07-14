@@ -1,11 +1,11 @@
-﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects
@@ -13,23 +13,27 @@ namespace Sitecore.Pathfinder.Projects
     [DebuggerDisplay("{GetType().Name,nq}: {ItemIdOrPath}")]
     public abstract class DatabaseProjectItem : ProjectItem, IHasSourceTextNodes
     {
+        [NotNull, ItemNotNull]
+        private readonly IList<ITextNode> _sourceTextNodes;
+
         [CanBeNull]
         private ID _id;
 
-        protected DatabaseProjectItem([NotNull] IProject project, [NotNull] ITextNode textNode, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, textNode.Snapshot, new ProjectItemUri(databaseName, guid))
+        protected DatabaseProjectItem([NotNull] IProjectBase project, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, new ProjectItemUri(databaseName, guid))
         {
             ItemNameProperty = NewSourceProperty("ItemName", string.Empty, SourcePropertyFlags.IsShort);
             IconProperty = NewSourceProperty("Icon", string.Empty);
 
-            SourceTextNodes = new LockableList<ITextNode>(this)
-            {
-                textNode
-            };
+            _sourceTextNodes = new LockableList<ITextNode>(this);
 
             DatabaseName = databaseName;
             ItemName = itemName;
             ItemIdOrPath = itemIdOrPath;
         }
+
+        public override IEnumerable<ISnapshot> AdditionalSnapshots => AdditionalSourceTextNodes.Select(s => s.Snapshot);
+
+        public IEnumerable<ITextNode> AdditionalSourceTextNodes => _sourceTextNodes.Skip(1);
 
         [NotNull]
         public Database Database => Project.GetDatabase(DatabaseName);
@@ -45,7 +49,7 @@ namespace Sitecore.Pathfinder.Projects
         }
 
         [NotNull]
-        public SourceProperty<string> IconProperty { get; } 
+        public SourceProperty<string> IconProperty { get; }
 
         [NotNull, Obsolete("Use Uri.Guid instead", false)]
         public ID ID => _id ?? (_id = new ID(Uri.Guid));
@@ -78,46 +82,61 @@ namespace Sitecore.Pathfinder.Projects
 
         public override string ShortName => ItemName;
 
-        public ICollection<ITextNode> SourceTextNodes { get; }
+        public override ISnapshot Snapshot => SourceTextNode.Snapshot;
 
-        public override void Rename(IFileSystemService fileSystem, string newShortName)
-        {
-            var n = ItemIdOrPath.LastIndexOf('/');
-            var itemIdOrPath = (n >= 0 ? ItemIdOrPath.Left(n + 1) : string.Empty) + newShortName;
-
-            ItemIdOrPath = itemIdOrPath;
-            ItemName = itemIdOrPath;
-        }
+        public ITextNode SourceTextNode => _sourceTextNodes.FirstOrDefault() ?? TextNode.Empty;
 
         protected override void Merge(IProjectItem newProjectItem, bool overwrite)
         {
             base.Merge(newProjectItem, overwrite);
 
-            var newItemBase = newProjectItem as DatabaseProjectItem;
-            Assert.Cast(newItemBase, nameof(newItemBase));
+            var databaseProjectItem = newProjectItem as DatabaseProjectItem;
+            Assert.Cast(databaseProjectItem, nameof(databaseProjectItem));
+
+            _sourceTextNodes.Merge(SourceTextNode, databaseProjectItem.AdditionalSourceTextNodes, databaseProjectItem.SourceTextNode, overwrite);
 
             if (overwrite)
             {
-                ItemNameProperty.SetValue(newItemBase.ItemNameProperty);
+                ItemNameProperty.SetValue(databaseProjectItem.ItemNameProperty);
 
-                ItemIdOrPath = newItemBase.ItemIdOrPath;
-                DatabaseName = newItemBase.DatabaseName;
+                ItemIdOrPath = databaseProjectItem.ItemIdOrPath;
+                DatabaseName = databaseProjectItem.DatabaseName;
             }
 
-            if (!string.IsNullOrEmpty(newItemBase.DatabaseName))
+            if (!string.IsNullOrEmpty(databaseProjectItem.DatabaseName))
             {
-                DatabaseName = newItemBase.DatabaseName;
+                DatabaseName = databaseProjectItem.DatabaseName;
             }
 
-            if (!string.IsNullOrEmpty(newItemBase.Icon))
+            if (!string.IsNullOrEmpty(databaseProjectItem.Icon))
             {
-                IconProperty.SetValue(newItemBase.IconProperty, SetValueOptions.DisableUpdates);
+                IconProperty.SetValue(databaseProjectItem.IconProperty);
             }
 
-            IsEmittable = IsEmittable || newItemBase.IsEmittable;
-            IsImport = IsImport || newItemBase.IsImport;
+            IsEmittable = IsEmittable || databaseProjectItem.IsEmittable;
+            IsImport = IsImport || databaseProjectItem.IsImport;
 
-            References.AddRange(newItemBase.References);
+            References.AddRange(databaseProjectItem.References);
+        }
+
+        [NotNull]
+        protected DatabaseProjectItem AddSourceTextNode([NotNull] ITextNode textNode)
+        {
+            _sourceTextNodes.Remove(textNode);
+            _sourceTextNodes.Insert(0, textNode);
+
+            return this;
+        }
+
+        [NotNull]
+        protected DatabaseProjectItem AddAdditionalSourceTextNode([NotNull] ITextNode textNode)
+        {
+            if (!_sourceTextNodes.Contains(textNode))
+            {
+                _sourceTextNodes.Add(textNode);
+            }
+
+            return this;
         }
     }
 }

@@ -8,23 +8,22 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects.Templates
 {
-    public class TemplateSection : SourcePropertyBag, IHasSourceTextNodes
+    public class TemplateSection : TextNodeSourcePropertyBag
     {
-        public TemplateSection([NotNull] Template template, Guid guid, [NotNull] ITextNode templateSectionTextNode)
+        public TemplateSection([NotNull] Template template, Guid guid)
         {
             Template = template;
 
             IconProperty = NewSourceProperty("Icon", string.Empty);
             SectionNameProperty = NewSourceProperty("Name", string.Empty);
+            SortorderProperty = NewSourceProperty("Sortorder", 0);
             Fields = new LockableList<TemplateField>(this);
-
-            SourceTextNodes = new LockableList<ITextNode>(this)
-            {
-                templateSectionTextNode
-            };
 
             Uri = new ProjectItemUri(template.DatabaseName, guid);
         }
+
+        [NotNull]
+        public SourceProperty<int> SortorderProperty { get;  }
 
         [NotNull, ItemNotNull]
         public ICollection<TemplateField> Fields { get; }
@@ -34,6 +33,11 @@ namespace Sitecore.Pathfinder.Projects.Templates
         {
             get { return IconProperty.GetValue(); }
             set { IconProperty.SetValue(value); }
+        }
+        public int Sortorder
+{
+            get { return SortorderProperty.GetValue(); }
+            set { SortorderProperty.SetValue(value); }
         }
 
         [NotNull]
@@ -51,19 +55,22 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull]
         public SourceProperty<string> SectionNameProperty { get; }
 
-        public ICollection<ITextNode> SourceTextNodes { get; }
-
         [NotNull]
         public Template Template { get; }
 
         [NotNull]
-        public ProjectItemUri Uri { get; private set; }
+        public IProjectItemUri Uri { get; private set; }
 
         public void Merge([NotNull] TemplateSection newSection, bool overwrite)
         {
             if (!string.IsNullOrEmpty(newSection.Icon))
             {
-                IconProperty.SetValue(newSection.IconProperty, SetValueOptions.DisableUpdates);
+                IconProperty.SetValue(newSection.IconProperty);
+            }
+
+            if (newSection.Sortorder != 0)
+            {
+                SortorderProperty.SetValue(newSection.SortorderProperty);
             }
 
             foreach (var newField in newSection.Fields)
@@ -77,6 +84,13 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
                 field.Merge(newField, overwrite);
             }
+        }
+
+        [NotNull]
+        public TemplateSection With([NotNull] ITextNode sourceTextNode)
+        {
+            WithSourceTextNode(sourceTextNode);
+            return this;
         }
     }
 }

@@ -44,7 +44,7 @@ namespace Sitecore.Pathfinder.Html.Html
                 return;
             }
 
-            var renderings = item.Project.FindFiles<Rendering>(value).ToList();
+            var renderings = item.Project.GetByFileName<Rendering>(value).ToList();
             if (!renderings.Any())
             {
                 context.Trace.TraceError(Msg.C1060, Texts.Rendering_reference_not_found, TraceHelper.GetTextNode(property), value);

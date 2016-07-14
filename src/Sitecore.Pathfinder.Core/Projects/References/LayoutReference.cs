@@ -6,16 +6,12 @@ namespace Sitecore.Pathfinder.Projects.References
 {
     public class LayoutReference : Reference
     {
-        public LayoutReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceProperty, [NotNull] string referenceText) : base(owner, sourceProperty, referenceText)
+        public LayoutReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceProperty, [NotNull] string referenceText, [NotNull] string databaseName) : base(owner, sourceProperty, referenceText, databaseName)
         {
         }
 
         public override IProjectItem Resolve()
         {
-            // todo: actually resolve the layout
-            IsResolved = true;
-            IsValid = true;
-
             return Owner;
         }
     }

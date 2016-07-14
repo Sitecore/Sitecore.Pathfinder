@@ -23,6 +23,12 @@ namespace Sitecore.Pathfinder
         [CanBeNull, ItemNotNull]
         public IEnumerable<string> AssemblyFileNames { get; private set; }
 
+        [NotNull]
+        public string BinDirectory { get; private set; } = string.Empty;
+
+        [CanBeNull, ItemNotNull]
+        public string[] CommandLine { get; private set; }
+
         public Extensibility.StartupExtensions.CompositionOptions CompositionOptions { get; private set; } = Extensibility.StartupExtensions.CompositionOptions.None;
 
         [NotNull]
@@ -95,7 +101,7 @@ namespace Sitecore.Pathfinder
                 assemblyFileNames.AddRange(AssemblyFileNames.Distinct().OrderBy(a => a));
             }
 
-            var configuration = this.RegisterConfiguration(ConfigurationOptions, ToolsDirectory, ProjectDirectory, SystemConfigurationFileName);
+            var configuration = this.RegisterConfiguration(ConfigurationOptions, ToolsDirectory, ProjectDirectory, SystemConfigurationFileName, CommandLine);
             if (configuration == null)
             {
                 return null;
@@ -109,6 +115,11 @@ namespace Sitecore.Pathfinder
             if (!string.IsNullOrEmpty(DataFolderDirectory))
             {
                 configuration.Set(Constants.Configuration.DataFolderDirectory, DataFolderDirectory);
+            }
+
+            if (!string.IsNullOrEmpty(BinDirectory))
+            {
+                configuration.Set(Constants.Configuration.BinDirectory, BinDirectory);
             }
 
             if (!string.IsNullOrEmpty(PackageRootDirectory))
@@ -137,6 +148,20 @@ namespace Sitecore.Pathfinder
         public virtual Startup WithAssemblies([NotNull, ItemNotNull] IEnumerable<string> assemblyFileNames)
         {
             AssemblyFileNames = assemblyFileNames;
+            return this;
+        }
+
+        [NotNull]
+        public Startup WithBinDirectory([NotNull] string binDirectory)
+        {
+            BinDirectory = binDirectory;
+            return this;
+        }
+
+        [NotNull]
+        public Startup WithCommandLine([NotNull, ItemNotNull] string[] commandLine)
+        {
+            CommandLine = commandLine;
             return this;
         }
 

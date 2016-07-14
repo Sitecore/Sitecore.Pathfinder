@@ -22,24 +22,22 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
         protected override void Process(CompilePipeline pipeline)
         {
             // todo: consider if imports should be omitted
-            var templateItems = pipeline.Project.ProjectItems.OfType<Item>().Where(i => i.TemplateIdOrPath == Constants.Templates.Template || string.Equals(i.TemplateIdOrPath, Constants.Templates.TemplatePath, StringComparison.OrdinalIgnoreCase)).ToList();
+            var templateItems = pipeline.Context.Project.ProjectItems.OfType<Item>().Where(i => i.TemplateIdOrPath == Constants.Templates.Template || string.Equals(i.TemplateIdOrPath, Constants.Templates.TemplatePath, StringComparison.OrdinalIgnoreCase)).ToList();
 
             foreach (var templateItem in templateItems)
             {
-                if (pipeline.Project.FindQualifiedItem<Template>(templateItem.Uri) != null)
+                if (pipeline.Context.Project.FindQualifiedItem<Template>(templateItem.Uri) != null)
                 {
                     continue;
                 }
 
-                CreateTemplate(pipeline.Context, pipeline.Project, templateItem);
+                CreateTemplate(pipeline.Context, pipeline.Context.Project, templateItem);
             }
         }
 
         protected virtual void CreateTemplate([NotNull] ICompileContext context, [NotNull] IProject project, [NotNull] Item templateItem)
         {
-            var template = context.Factory.Template(project, templateItem.Uri.Guid, templateItem.SourceTextNodes.First(), templateItem.DatabaseName, templateItem.ItemName, templateItem.ItemIdOrPath);
-            template.IsEmittable = false;
-            template.IsImport = templateItem.IsImport;
+            var template = context.Factory.Template(project, templateItem.Uri.Guid, templateItem.DatabaseName, templateItem.ItemName, templateItem.ItemIdOrPath).With(templateItem.SourceTextNode, false, templateItem.IsImport);
 
             var baseTemplateField = templateItem.Fields.FirstOrDefault(f => f.FieldName == "__Base template");
             if (baseTemplateField != null)
@@ -55,7 +53,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
             foreach (var sectionItem in templateItem.GetChildren())
             {
-                var templateSection = context.Factory.TemplateSection(template, sectionItem.Uri.Guid, sectionItem.SourceTextNodes.First());
+                var templateSection = context.Factory.TemplateSection(template, sectionItem.Uri.Guid).With(sectionItem.SourceTextNode);
                 template.Sections.Add(templateSection);
                 templateSection.SectionNameProperty.SetValue(sectionItem.ItemNameProperty);
 
@@ -65,9 +63,19 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
                     templateSection.IconProperty.SetValue(sectionIconField.ValueProperty);
                 }
 
+                var sectionSortorderField = sectionItem.Fields.FirstOrDefault(f => f.FieldName == "__Sort order");
+                if (sectionSortorderField != null)
+                {
+                    int sortorder;
+                    if (int.TryParse(sectionSortorderField.Value, out sortorder))
+                    {
+                        templateSection.SortorderProperty.SetValue(sortorder);
+                    }
+                }
+
                 foreach (var fieldItem in sectionItem.GetChildren())
                 {
-                    var templateField = context.Factory.TemplateField(template, fieldItem.Uri.Guid, fieldItem.SourceTextNodes.First());
+                    var templateField = context.Factory.TemplateField(template, fieldItem.Uri.Guid).With(fieldItem.SourceTextNode);
                     templateSection.Fields.Add(templateField);
                     templateField.FieldNameProperty.SetValue(fieldItem.ItemNameProperty);
 

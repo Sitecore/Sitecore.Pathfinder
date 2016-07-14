@@ -21,6 +21,6 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         SourceProperty<T> NewSourceProperty<T>([NotNull] string name, [NotNull] T defaultValue, SourcePropertyFlags flags = SourcePropertyFlags.None);
 
-        void SetValue<T>([NotNull] string name, [NotNull] T value, SetValueOptions options = SetValueOptions.EnableUpdates);
+        void SetValue<T>([NotNull] string name, [NotNull] T value);
     }
 }

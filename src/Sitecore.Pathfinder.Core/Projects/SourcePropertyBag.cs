@@ -71,7 +71,7 @@ namespace Sitecore.Pathfinder.Projects
         }
 
         /// <summary>Sets a value in the property bag.</summary>
-        void ISourcePropertyBag.SetValue<T>(string name, T value, SetValueOptions options)
+        void ISourcePropertyBag.SetValue<T>(string name, T value)
         {
             if (Locking == Locking.ReadOnly)
             {
@@ -84,7 +84,7 @@ namespace Sitecore.Pathfinder.Projects
                 throw new KeyNotFoundException();
             }
 
-            ((SourceProperty<T>)property).SetValue(value, options);
+            ((SourceProperty<T>)property).SetValue(value);
         }
     }
 }

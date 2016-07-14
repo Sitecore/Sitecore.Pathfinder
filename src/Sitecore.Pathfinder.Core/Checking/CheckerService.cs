@@ -49,13 +49,30 @@ namespace Sitecore.Pathfinder.Checking
         [NotNull]
         protected IConfiguration Configuration { get; }
 
-        public virtual void CheckProject(IProject project)
+        public virtual void CheckProject(IProjectBase project, IDiagnosticCollector diagnosticCollector)
         {
-            var context = CompositionService.Resolve<ICheckerContext>().With(project);
+            var context = CompositionService.Resolve<ICheckerContext>().With(project, diagnosticCollector);
             var treatWarningsAsErrors = Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
-            var isMultiThreaded = Configuration.GetBool(Constants.Configuration.System.MultiThreaded);
+            var isMultiThreaded = Configuration.GetBool(Constants.Configuration.System.MultiThreaded, true);
 
             var checkers = GetCheckers().ToArray();
+
+            CheckProject(context, checkers, isMultiThreaded, treatWarningsAsErrors);
+        }
+
+        public void CheckProject(IProjectBase project, IDiagnosticCollector diagnosticCollector, IEnumerable<string> checkerNames)
+        {
+            var context = CompositionService.Resolve<ICheckerContext>().With(project, diagnosticCollector);
+            var treatWarningsAsErrors = Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
+            var isMultiThreaded = Configuration.GetBool(Constants.Configuration.System.MultiThreaded, true);
+
+            var checkers = Checkers.Where(c => checkerNames.Contains(c.Method.Name)).Select(c => new CheckerInfo(c)).ToArray();
+
+            CheckProject(context, checkers, isMultiThreaded, treatWarningsAsErrors);
+        }
+
+        protected virtual void CheckProject([NotNull] ICheckerContext context, [NotNull, ItemNotNull] CheckerInfo[] checkers, bool isMultiThreaded, bool treatWarningsAsErrors)
+        {
             EnabledCheckersCount = checkers.Length;
 
             if (isMultiThreaded)
@@ -76,32 +93,12 @@ namespace Sitecore.Pathfinder.Checking
             }
         }
 
-        protected virtual void TraceDiagnostics([NotNull] ICheckerContext context, [NotNull] CheckerInfo checker, [NotNull, ItemNotNull] Diagnostic[] diagnostics, bool treatWarningsAsErrors)
+        public virtual IEnumerable<Func<ICheckerContext, IEnumerable<Diagnostic>>> GetEnabledCheckers()
         {
-            if (checker.Severity == CheckerSeverity.Default)
-            {
-                context.Trace.TraceDiagnostics(diagnostics, treatWarningsAsErrors);
-                return;
-            }
-
-            var severity = Severity.Information;
-            switch (checker.Severity)
-            {
-                case CheckerSeverity.Information:
-                    severity = Severity.Information;
-                    break;
-                case CheckerSeverity.Warning:
-                    severity = Severity.Warning;
-                    break;
-                case CheckerSeverity.Error:
-                    severity = Severity.Error;
-                    break;
-            }
-
-            context.Trace.TraceDiagnostics(diagnostics, severity, treatWarningsAsErrors);
+            return GetCheckers().Select(c => c.Checker);
         }
 
-        private void EnableCheckers([NotNull, ItemNotNull] IEnumerable<CheckerInfo> checkers, [NotNull] string configurationKey)
+        protected virtual void EnableCheckers([NotNull, ItemNotNull] IEnumerable<CheckerInfo> checkers, [NotNull] string configurationKey)
         {
             foreach (var pair in Configuration.GetSubKeys(configurationKey))
             {
@@ -166,7 +163,7 @@ namespace Sitecore.Pathfinder.Checking
         }
 
         [NotNull, ItemNotNull]
-        private IEnumerable<CheckerInfo> GetCheckers()
+        protected virtual IEnumerable<CheckerInfo> GetCheckers()
         {
             var checkers = Checkers.Select(c => new CheckerInfo(c)).ToList();
 
@@ -186,6 +183,31 @@ namespace Sitecore.Pathfinder.Checking
             return checkers.Where(c => c.Severity != CheckerSeverity.Disabled).ToArray();
         }
 
+        protected virtual void TraceDiagnostics([NotNull] ICheckerContext context, [NotNull] CheckerInfo checker, [NotNull, ItemNotNull] Diagnostic[] diagnostics, bool treatWarningsAsErrors)
+        {
+            if (checker.Severity == CheckerSeverity.Default)
+            {
+                context.Trace.TraceDiagnostics(diagnostics, treatWarningsAsErrors);
+                return;
+            }
+
+            var severity = Severity.Information;
+            switch (checker.Severity)
+            {
+                case CheckerSeverity.Information:
+                    severity = Severity.Information;
+                    break;
+                case CheckerSeverity.Warning:
+                    severity = Severity.Warning;
+                    break;
+                case CheckerSeverity.Error:
+                    severity = Severity.Error;
+                    break;
+            }
+
+            context.Trace.TraceDiagnostics(diagnostics, severity, treatWarningsAsErrors);
+        }
+
         [DebuggerDisplay("{GetType().Name,nq}: {Name}, {Category}")]
         protected class CheckerInfo
         {
@@ -195,16 +217,6 @@ namespace Sitecore.Pathfinder.Checking
 
                 Name = checker.Method.Name;
                 Category = checker.Method.DeclaringType?.Name ?? string.Empty;
-
-                if (Category.EndsWith("Checker"))
-                {
-                    Category = Category.Left(Category.Length - 7);
-                }
-
-                if (Category.EndsWith("Conventions"))
-                {
-                    Category = Category.Left(Category.Length - 11);
-                }
             }
 
             [NotNull]

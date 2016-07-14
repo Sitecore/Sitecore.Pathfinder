@@ -5,7 +5,6 @@ using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing.Pipelines.ItemParserPipelines;
-using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Pathfinder.Text;
@@ -31,7 +30,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             var templateIdOrPathTextNode = textNode.GetAttribute("Template");
             var templateIdOrPath = templateIdOrPathTextNode?.Value ?? string.Empty;
 
-            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, textNode, guid, databaseName, itemNameTextNode.Value, itemIdOrPath, templateIdOrPath);
+            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, guid, databaseName, itemNameTextNode.Value, itemIdOrPath, templateIdOrPath).With(textNode);
             item.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
             item.IconProperty.Parse(textNode);
             // todo: yuck
@@ -151,10 +150,10 @@ namespace Sitecore.Pathfinder.Parsing.Items
         {
             SchemaService.ValidateTextNodeSchema(fieldTextNode);
 
-            var field = context.ParseContext.Factory.Field(item, fieldTextNode);
+            var field = context.ParseContext.Factory.Field(item).With(fieldTextNode);
             field.FieldNameProperty.SetValue(fieldNameTextNode);
-            field.LanguageProperty.SetValue(languageVersionContext.LanguageProperty, SetValueOptions.DisableUpdates);
-            field.VersionProperty.SetValue(languageVersionContext.VersionProperty, SetValueOptions.DisableUpdates);
+            field.LanguageProperty.SetValue(languageVersionContext.LanguageProperty);
+            field.VersionProperty.SetValue(languageVersionContext.VersionProperty);
             field.ValueHintProperty.Parse(fieldTextNode);
 
             if (valueTextNode != null)

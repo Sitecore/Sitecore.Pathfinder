@@ -1,8 +1,7 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -17,8 +16,13 @@ namespace Sitecore.Pathfinder.Projects
 
     public interface IProjectItem : ILockable
     {
+        [NotNull, ItemNotNull]
+        IEnumerable<ISnapshot> AdditionalSnapshots { get; }
+
+        CompiltationState CompilationState { get; set; }
+
         [NotNull]
-        IProject Project { get; }
+        IProjectBase Project { get; }
 
         [NotNull]
         string QualifiedName { get; }
@@ -29,14 +33,10 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         string ShortName { get; }
 
-        [NotNull, ItemNotNull]
-        ICollection<ISnapshot> Snapshots { get; }
-
-        CompiltationState CompilationState { get; set; }
+        [NotNull]
+        ISnapshot Snapshot { get; }
 
         [NotNull]
-        ProjectItemUri Uri { get; }
-
-        void Rename([NotNull] IFileSystemService fileSystem, [NotNull] string newShortName);
+        IProjectItemUri Uri { get; }
     }
 }

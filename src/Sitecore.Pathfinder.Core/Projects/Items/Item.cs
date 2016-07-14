@@ -22,7 +22,7 @@ namespace Sitecore.Pathfinder.Projects.Items
     public class Item : DatabaseProjectItem, IXPathItem
     {
         [NotNull]
-        public static readonly Item Empty = new Item(Projects.Project.Empty, TextNode.Empty, new Guid("{935B8D6C-D25A-48B8-8167-2C0443D77027}"), "emptydatabase", string.Empty, string.Empty, string.Empty);
+        public static readonly Item Empty = new Item(Projects.Project.Empty, new Guid("{935B8D6C-D25A-48B8-8167-2C0443D77027}"), "emptydatabase", string.Empty, string.Empty, string.Empty);
 
         [CanBeNull, ItemNotNull]
         private ChildrenCollection _children;
@@ -36,7 +36,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         [CanBeNull]
         private ItemPublishing _publishing;
 
-        public Item([NotNull] IProject project, [NotNull] ITextNode textNode, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath) : base(project, textNode, guid, databaseName, itemName, itemIdOrPath)
+        public Item([NotNull] IProjectBase project, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath) : base(project, guid, databaseName, itemName, itemIdOrPath)
         {
             TemplateIdOrPathProperty = NewSourceProperty("Template", string.Empty, SourcePropertyFlags.IsQualified);
 
@@ -107,7 +107,7 @@ namespace Sitecore.Pathfinder.Projects.Items
                 }
 
                 // resolve by short name
-                var templates = Project.Index.WhereShortName<Template>(Database, templateIdOrPath).ToArray();
+                var templates = Project.GetByShortName<Template>(Database, templateIdOrPath).ToArray();
                 return templates.Length == 1 ? templates.First() : Template.Empty;
             }
         }
@@ -139,7 +139,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull, ItemNotNull]
         public virtual IEnumerable<Item> GetChildren()
         {
-            return Project.Index.WhereChildOf(this);
+            return Project.GetChildren(this);
         }
 
         [NotNull]
@@ -181,7 +181,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
             if (!string.IsNullOrEmpty(newItem.TemplateIdOrPath))
             {
-                TemplateIdOrPathProperty.SetValue(newItem.TemplateIdOrPathProperty, SetValueOptions.DisableUpdates);
+                TemplateIdOrPathProperty.SetValue(newItem.TemplateIdOrPathProperty);
             }
 
             OverwriteWhenMerging = OverwriteWhenMerging && newItem.OverwriteWhenMerging;
@@ -205,7 +205,7 @@ namespace Sitecore.Pathfinder.Projects.Items
                 }
                 */
 
-                field.ValueProperty.SetValue(newField.ValueProperty, SetValueOptions.DisableUpdates);
+                field.ValueProperty.SetValue(newField.ValueProperty);
             }
         }
 
@@ -221,7 +221,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
             // yield virtual paths that are used by items deeper in the hierachy - tricky, tricky
             var itemIdOrPath = ItemIdOrPath + "/";
-            foreach (var descendent in Project.GetItems(Database).Where(i => i.ItemIdOrPath.StartsWith(itemIdOrPath, StringComparison.OrdinalIgnoreCase)))
+            foreach (var descendent in Database.GetItems().Where(i => i.ItemIdOrPath.StartsWith(itemIdOrPath, StringComparison.OrdinalIgnoreCase)))
             {
                 var n = descendent.ItemIdOrPath.IndexOf('/', itemIdOrPath.Length);
                 if (n < 0)
@@ -254,6 +254,13 @@ namespace Sitecore.Pathfinder.Projects.Items
             }
 
             return new XPathItem(Project, DatabaseName, ParentItemPath);
+        }
+
+        [NotNull]
+        public Item With([NotNull] ITextNode textNode)
+        {
+            AddSourceTextNode(textNode);
+            return this;
         }
     }
 }

@@ -51,10 +51,15 @@ namespace Sitecore.Pathfinder.Building
         {
             var tasks = base.GetTaskNames(context);
 
-            // todo: fix this
-            if (tasks.Count > 1)
+            // insert setup tasks
+            foreach (var task in Tasks.OrderBy(t => t.TaskName))
             {
-                tasks.Insert(0, "before-build");
+                if (!(task is ISetupTask))
+                {
+                    continue;
+                }
+
+                tasks.Insert(0, task.TaskName);
             }
 
             return tasks;

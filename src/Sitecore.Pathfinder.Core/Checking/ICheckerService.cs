@@ -14,6 +14,11 @@ namespace Sitecore.Pathfinder.Checking
 
         int EnabledCheckersCount { get; }
 
-        void CheckProject([NotNull] IProject project);
+        void CheckProject([NotNull] IProjectBase project, [NotNull] IDiagnosticCollector diagnosticCollector);
+
+        void CheckProject([NotNull] IProjectBase project, [NotNull] IDiagnosticCollector diagnosticCollector, [NotNull, ItemNotNull] IEnumerable<string> checkerNames);
+
+        [NotNull, ItemNotNull]
+        IEnumerable<Func<ICheckerContext, IEnumerable<Diagnostic>>> GetEnabledCheckers();
     }
 }

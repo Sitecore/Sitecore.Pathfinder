@@ -73,10 +73,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Checking\Checkers\ArchitectureChecker.cs" />
+    <Compile Include="Checking\Checkers\ArchitectureCheckers.cs" />
     <Compile Include="Emitting\IProjectEmitter.cs" />
     <Compile Include="Extensions\DiagnosticCollectionExtensions.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
+    <Compile Include="Extensions\SnapshotExtensions.cs" />
+    <Compile Include="Extensions\TextNodeExtensions.cs" />
     <Compile Include="HostService.cs" />
     <Compile Include="Checking\Checker.cs" />
     <Compile Include="Compiling\LayoutFileCompilers\TemplateLayoutFileCompiler.cs" />
@@ -86,20 +88,25 @@
     <Compile Include="Packaging\ProjectPackages\ProjectPackageInfo.cs" />
     <Compile Include="Packaging\ProjectPackages\IProjectPackageProvider.cs" />
     <Compile Include="Packaging\ProjectPackages\ProjectPackageProviderBase.cs" />
+    <Compile Include="Projects\IProject.cs" />
+    <Compile Include="Projects\IProjectItemUri.cs" />
     <Compile Include="Projects\LockableList.cs" />
-    <Compile Include="Projects\IDiagnosticContainer.cs" />
+    <Compile Include="Projects\IDiagnosticCollector.cs" />
     <Compile Include="Projects\ILockable.cs" />
     <Compile Include="Projects\IProjectIndexer.cs" />
     <Compile Include="Projects\ProjectIndex.cs" />
     <Compile Include="Projects\ProjectIndexer.cs" />
     <Compile Include="Projects\SourcePropertyBag.cs" />
+    <Compile Include="Projects\TextNodeSourcePropertyBag.cs" />
     <Compile Include="Runtime\Caching\CacheService.cs" />
     <Compile Include="Runtime\Caching\ICacheService.cs" />
+    <Compile Include="Snapshots\IMutableTextNode.cs" />
     <Compile Include="Snapshots\StringTextNode.cs" />
     <Compile Include="Tasks\Building\BuildContext.cs" />
     <Compile Include="Tasks\Building\IBuildTask.cs" />
     <Compile Include="Tasks\Building\WebRequest.cs" />
-    <Compile Include="Tasks\IAlwaysRunTask.cs" />
+    <Compile Include="Tasks\ISetupTask.cs" />
+    <Compile Include="Tasks\IIgnoreAbortedTask.cs" />
     <Compile Include="Tasks\IPostRunTask.cs" />
     <Compile Include="Tasks\IPreRunTask.cs" />
     <Compile Include="Tasks\IScriptTask.cs" />
@@ -110,9 +117,8 @@
     <Compile Include="Tasks\Building\BuildTaskBase.cs" />
     <Compile Include="Checking\CheckerContext.cs" />
     <Compile Include="Checking\CheckerService.cs" />
-    <Compile Include="Checking\Conventions\ConventionChecker.cs" />
-    <Compile Include="Checking\Conventions\ConventionRuleContext.cs" />
-    <Compile Include="Checking\Checkers\GuidChecker.cs" />
+    <Compile Include="Checking\Checkers\ConventionCheckers.cs" />
+    <Compile Include="Checking\Checkers\GuidCheckers.cs" />
     <Compile Include="Checking\ICheckerContext.cs" />
     <Compile Include="Checking\ICheckerService.cs" />
     <Compile Include="CodeGeneration\IProjectCodeGenerator.cs" />
@@ -302,7 +308,6 @@
     <Compile Include="Rules\RuleCondition.cs" />
     <Compile Include="Rules\RuleService.cs" />
     <Compile Include="Rules\Conditions\XPathConditions\XPathCondition.cs" />
-    <Compile Include="Snapshots\IMutableTextNode.cs" />
     <Compile Include="Languages\Yaml\YamlContentTextNodeParser.cs" />
     <Compile Include="Languages\Yaml\YamlLayoutTextNodeParser.cs" />
     <Compile Include="Languages\Yaml\YamlItemTextNodeParser.cs" />
@@ -380,7 +385,7 @@
     <Compile Include="Languages\Serialization\SerializationFileParser.cs" />
     <Compile Include="Parsing\IParseService.cs" />
     <Compile Include="Projects\Diagnostic.cs" />
-    <Compile Include="Projects\ProjectDiagnosticTraceService.cs" />
+    <Compile Include="Projects\DiagnosticTraceService.cs" />
     <Compile Include="Projects\ProjectOptions.cs" />
     <Compile Include="Projects\References\FileReference.cs" />
     <Compile Include="Projects\References\IReference.cs" />
@@ -394,7 +399,7 @@
     <Compile Include="Projects\Items\Item.cs" />
     <Compile Include="Snapshots\ISnapshot.cs" />
     <Compile Include="Languages\Renderings\Rendering.cs" />
-    <Compile Include="Projects\IProject.cs" />
+    <Compile Include="Projects\IProjectBase.cs" />
     <Compile Include="Snapshots\ISourceFile.cs" />
     <Compile Include="Projects\References\Reference.cs" />
     <Compile Include="Projects\Project.cs" />

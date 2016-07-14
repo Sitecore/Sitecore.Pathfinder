@@ -31,6 +31,6 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         ITraceService Trace { get; }
 
         [NotNull]
-        IFieldCompileContext With([NotNull] IProject project);
+        IFieldCompileContext With([NotNull] IDiagnosticCollector diagnosticCollector);
     }
 }

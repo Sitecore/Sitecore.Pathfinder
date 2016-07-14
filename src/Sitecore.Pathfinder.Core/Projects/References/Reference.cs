@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Diagnostics;
 using Sitecore.Pathfinder.Diagnostics;
@@ -9,19 +9,21 @@ namespace Sitecore.Pathfinder.Projects.References
     [DebuggerDisplay("{GetType().Name,nq}: {ReferenceText}")]
     public class Reference : IReference
     {
-        private bool _isValid;
+        [NotNull]
+        private readonly object _syncRoot = new object();
 
-        public Reference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceProperty, [NotNull] string referenceText)
+        public Reference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceProperty, [NotNull] string referenceText, [NotNull] string databaseName)
         {
             // the reference text might be different from the source property value. 
             // e.g. the source property value might be a list of guids while the reference text is a single Guid.
             Owner = owner;
             SourceProperty = sourceProperty;
-            TextNode = sourceProperty.SourceTextNode ?? Snapshots.TextNode.Empty;
+            TextNode = sourceProperty.SourceTextNode;
             ReferenceText = referenceText;
+            DatabaseName = databaseName;
         }
 
-        public Reference([NotNull] IProjectItem owner, [NotNull] ITextNode textNode, [NotNull] string referenceText)
+        public Reference([NotNull] IProjectItem owner, [NotNull] ITextNode textNode, [NotNull] string referenceText, [NotNull] string databaseName)
         {
             // the reference text might be different from the source property value. 
             // e.g. the source property value might be a list of guids while the reference text is a single Guid.
@@ -29,79 +31,28 @@ namespace Sitecore.Pathfinder.Projects.References
             SourceProperty = null;
             TextNode = textNode;
             ReferenceText = referenceText;
+            DatabaseName = databaseName;
         }
 
-        public bool IsResolved { get; set; }
+        public string DatabaseName { get; }
 
-        public bool IsValid
-        {
-            get
-            {
-                if (!IsResolved)
-                {
-                    Resolve();
-                }
-
-                return _isValid;
-            }
-
-            protected set
-            {
-                _isValid = value;
-            }
-        }
+        public bool IsValid => Resolve() != null;
 
         public IProjectItem Owner { get; }
+
+        public string ReferenceText { get; }
 
         public SourceProperty<string> SourceProperty { get; }
 
         public ITextNode TextNode { get; }
 
-        public string ReferenceText { get; }
-
-        [CanBeNull]
-        protected ProjectItemUri ResolvedUri { get; set; }
-
         public void Invalidate()
         {
-            IsResolved = false;
-            IsValid = false;
-            ResolvedUri = null;
         }
 
         public virtual IProjectItem Resolve()
         {
-            if (IsResolved && ResolvedUri != null)
-            {
-                if (!IsValid)
-                {
-                    return null;
-                }
-
-                var result = Owner.Project.FindQualifiedItem<IProjectItem>(ResolvedUri);
-                if (result == null)
-                {
-                    IsValid = false;
-                    ResolvedUri = null;
-                }
-
-                return result;
-            }
-
-            IsResolved = true;
-
-            var projectItem = Owner.Project.FindQualifiedItem<IProjectItem>(ReferenceText);
-            if (projectItem == null)
-            {
-                IsValid = false;
-                ResolvedUri = null;
-                return null;
-            }
-
-            ResolvedUri = projectItem.Uri;
-            IsValid = true;
-
-            return projectItem;
+            return Owner.Project.FindQualifiedItem<IProjectItem>(ReferenceText);
         }
     }
 }

@@ -1,6 +1,7 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Linq;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
@@ -22,16 +23,7 @@ namespace Sitecore.Pathfinder.Tasks
 
             var webRequest = GetWebRequest(context).AsTask("InstallProject");
 
-            var success = Post(context, webRequest);
-            if (!success)
-            {
-                return;
-            }
-
-            foreach (var snapshot in context.Project.ProjectItems.SelectMany(i => i.Snapshots))
-            {
-                snapshot.SourceFile.IsModified = false;
-            }
+            Post(context, webRequest);
         }
     }
 }

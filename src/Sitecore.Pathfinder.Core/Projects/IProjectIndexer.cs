@@ -1,4 +1,4 @@
-﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -24,19 +24,19 @@ namespace Sitecore.Pathfinder.Projects
         IEnumerable<IReference> FindUsages([NotNull] string qualifiedName);
 
         [CanBeNull]
-        T FirstOrDefault<T>(Guid guid) where T : class, IProjectItem;
+        T FindQualifiedItem<T>(Guid guid) where T : class, IProjectItem;
 
         [CanBeNull]
         T FirstOrDefault<T>([NotNull] Database database, Guid guid) where T : DatabaseProjectItem;
 
         [CanBeNull]
-        T FirstOrDefault<T>([NotNull] string qualifiedName) where T : class, IProjectItem;
+        T FindQualifiedItem<T>([NotNull] string qualifiedName) where T : class, IProjectItem;
 
         [CanBeNull]
-        T FirstOrDefault<T>([NotNull] Database database, [NotNull] string qualifiedName) where T : DatabaseProjectItem;
+        T FindQualifiedItem<T>([NotNull] Database database, [NotNull] string qualifiedName) where T : DatabaseProjectItem;
 
         [CanBeNull]
-        T FirstOrDefault<T>([NotNull] ProjectItemUri uri) where T : class, IProjectItem;
+        T FindQualifiedItem<T>([NotNull] IProjectItemUri uri) where T : class, IProjectItem;
 
         void Remove([NotNull] IProjectItem projectItem);
 
@@ -44,12 +44,18 @@ namespace Sitecore.Pathfinder.Projects
         IEnumerable<T> Where<T>([NotNull] ISourceFile sourceFile) where T : class, IProjectItem;
 
         [NotNull, ItemNotNull]
-        IEnumerable<Item> WhereChildOf([NotNull] Item item);
+        IEnumerable<Item> GetChildren([NotNull] Item item);
 
         [NotNull, ItemNotNull]
-        IEnumerable<T> WhereQualifiedName<T>([NotNull] Database database, [NotNull] string qualifiedName) where T : DatabaseProjectItem;
+        IEnumerable<T> GetByQualifiedName<T>([NotNull] string qualifiedName) where T : class, IProjectItem;
 
         [NotNull, ItemNotNull]
-        IEnumerable<T> WhereShortName<T>([NotNull] Database database, [NotNull] string shortName) where T : DatabaseProjectItem;
+        IEnumerable<T> GetByQualifiedName<T>([NotNull] Database database, [NotNull] string qualifiedName) where T : DatabaseProjectItem;
+
+        [NotNull, ItemNotNull]
+        IEnumerable<T> GetByShortName<T>([NotNull] string shortName) where T : class, IProjectItem;
+
+        [NotNull, ItemNotNull]
+        IEnumerable<T> GetByShortName<T>([NotNull] Database database, [NotNull] string shortName) where T : DatabaseProjectItem;
     }
 }

@@ -18,10 +18,6 @@ namespace Sitecore.Pathfinder.Languages.Yaml
         [NotNull]
         protected SnapshotParseContext ParseContext { get; private set; }
 
-        public override void SaveChanges()
-        {
-        }
-
         [NotNull]
         public virtual YamlTextSnapshot With([NotNull] SnapshotParseContext parseContext, [NotNull] ISourceFile sourceFile, [NotNull] string contents)
         {

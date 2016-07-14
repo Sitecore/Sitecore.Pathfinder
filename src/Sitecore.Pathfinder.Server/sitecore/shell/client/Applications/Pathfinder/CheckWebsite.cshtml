@@ -1,0 +1,234 @@
+﻿@using Sitecore.Pathfinder.Snapshots
+@using Sitecore.Pathfinder.Projects
+@{
+    var state = (string)ViewBag.State;
+    var checkerNames = (IEnumerable<Tuple<string, string>>)ViewBag.CheckerNames;
+    var enabledCheckerNames = (IEnumerable<string>)ViewBag.EnabledCheckerNames;
+    var diagnostics = (IEnumerable<Diagnostic>)ViewBag.Diagnostics;
+}
+<!DOCTYPE html>
+<html class="fuelux">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>Sitecore Pathfinder</title>
+
+    <link href="/sitecore/shell/client/Speak/Assets/css/speak-default-theme.css" rel="stylesheet" type="text/css"/>
+
+    @if (state == "Checking")
+    {
+        <meta http-equiv="refresh" content="2">
+    }
+</head>
+<body class="sc sc-fullWidth">
+<form method="post" action="/pathfinder/check-website">
+    <div class="sc-list">
+        <div class="container-narrow">
+            <header class="sc-globalHeader">
+                <div class="row sc-globalHeader-content">
+                    <div class="col-md-6">
+                        <div class="sc-globalHeader-startButton">
+                            <a class="sc-global-logo medium" href="/sitecore/shell/sitecore/client/Applications/Launchpad"></a>
+                        </div>
+                        <div class="sc-globalHeader-navigationToggler">
+                            <div class="sc-navigationPanelToggleButton">
+                                <button class="btn sc-togglebutton btn-default noText" type="button">
+                                    <div class="sc-icon" style="background-image: url(/sitecore/shell/client/Speak/Assets/img/Speak/NavigationPanelToggleButton/navigationPanelToggleIcon.png); background-position: 50% 50%;">
+                                    </div>
+                                    <span class="sc-togglebutton-text"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="sc-globalHeader-loginInfo">
+                            <ul class="sc-accountInformation">
+                                <li>
+                                    <a class="logout" href="/api/sitecore/Authentication/Logout?sc_database=master">Logout</a>
+                                </li>
+                                <li>
+                                    @Sitecore.Context.User.Profile.FullName
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <section class="sc-applicationContent">
+                <div class="sc-navigation-wrapper">
+                    <nav class="sc-applicationContent-navigation sc-navigation-menu">
+
+                        <div class="sc-menu">
+                            <div class="menuroot">
+                                <div class="header menuItem open">
+                                    <a href="#">
+                                        <img class="menuicon" src="/~/icon/OfficeWhite/24x24/checkbox_selected.png" alt="Navigation"><span class="toplevel">Pathfinder</span>
+                                    </a>
+                                    <img class="menuchevron">
+                                </div>
+                                <div class="toplevelcontainer itemsContainer" style="display: block;">
+                                    <div>
+                                        <div class="itemRow menuItem depth2">
+                                            <div class="leftcolumn">&nbsp;</div>
+                                            <div class="rightcolumn">
+                                                <!-- <a href="/sitecore/shell/client/Applications/Pathfinder/Packages" class="sc-hyperlinkbutton">Available Packages</a> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </nav>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div class="sc-navigation-content">
+        <header class="sc-applicationHeader">
+            <div class="sc-applicationHeader-row1">
+                <div class="sc-applicationHeader-content">
+                    <div class="sc-applicationHeader-title">
+                        <span class="sc-text">Website Check</span>
+                    </div>
+                </div>
+
+                <!--
+                <div class="sc-applicationHeader-content breadcrumb">
+                    <div class="sc-applicationHeader-breadCrumb">
+                        <div class="sc-breadcrumb">
+                            <ul>
+                                <li>
+                                    <a href="/sitecore/shell/client/Applications/Pathfinder/CheckWebsite">Check Website</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                -->
+            </div>
+
+            <div class="sc-applicationHeader-row2">
+                <div class="sc-applicationHeader-back">
+                </div>
+                <div class="sc-applicationHeader-contextSwitcher">
+                </div>
+                <div class="sc-applicationHeader-actions">
+                    @if (state == "Unchecked")
+                    {
+                        <input class="btn sc-button btn-primary" type="submit" value="Start" name="StartButton" id="StartButton"/>
+                    }
+                    @if (state == "Checking")
+                    {
+                        <input class="btn sc-button btn-primary" disabled="disabled" type="submit" value="Start" name="StartButton" id="StartButton"/>
+                    }
+                    @if (state == "Checked")
+                    {
+                        <a href="/pathfinder/check-website" class="btn sc-button btn-primary">New</a>
+                    }
+                </div>
+            </div>
+        </header>
+
+        <section class="sc-applicationContent-main">
+            <div class="sc-border">
+                @if (state == "Unchecked")
+                {
+                    <p>Pathfinder checks a website by creating a pseudo project from all items and templates in the database. Pathfinder then executes all checkers on this website project.</p>
+                    <p>Since the website project is located on the webserver, Pathfinder can run additional checks, that cannot be run in a normal project.</p>
+                    <p>Number of checks: @checkerNames.Count()</p>
+
+                    <table class="table">
+                        <tr>
+                            <th>Checker</th>
+                            <th style="width: 100%">Category</th>
+                        </tr>
+
+                        @if (!checkerNames.Any())
+                        {
+                            <tr>
+                                <td colspan="2">
+                                    <i>There are no checkers to show.</i>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var checker in checkerNames.OrderBy(c => c.Item2).ThenBy(c => c.Item1))
+                            {
+                                var isChecked = enabledCheckerNames.Contains(checker.Item1) ? " checked=\"checked\"" : string.Empty;
+                                <tr>
+                                    <td style="white-space: nowrap">
+                                        <input type="checkbox" value="1" @(isChecked) name="checker_@checker.Item1" id="checker_@checker.Item1"/>
+                                        <label for="checker_@checker.Item1">
+                                            @checker.Item1
+                                        </label>
+                                    </td>
+                                    <td>
+                                        @checker.Item2
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </table>
+                }
+
+                @if (state == "Checking")
+                {
+                    <div align="center" style="padding-top: 64px">
+                        <h2>Checking website...</h2>
+                        <p>(page refreshes every 2 seconds)</p>
+                    </div>
+                }
+
+                @if (state == "Checked")
+                {
+                    <p>Number of diagnostics: @diagnostics.Count()</p>
+                    <table class="table">
+                        <tr>
+                            <th>Severity</th>
+                            <th>Diagnostic</th>
+                            <th>Location</th>
+                        </tr>
+
+                        @if (!diagnostics.Any())
+                        {
+                            <tr>
+                                <td colspan="3">
+                                    <i>There are no diagnostics to show.</i>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var diagnostic in diagnostics)
+                            {
+                                <tr>
+                                    <td>
+                                        @diagnostic.Severity
+                                    </td>
+                                    <td>
+                                        @diagnostic.Text
+                                    </td>
+                                    <td>
+                                        @diagnostic.FileName
+
+                                        @if (diagnostic.Span != TextSpan.Empty)
+                                        {
+                                            @diagnostic.Span.ToString()
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </table>
+                }
+
+            </div>
+        </section>
+    </div>
+</form>
+</body>
+</html>

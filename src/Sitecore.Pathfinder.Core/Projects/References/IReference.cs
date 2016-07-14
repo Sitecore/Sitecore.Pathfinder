@@ -7,6 +7,9 @@ namespace Sitecore.Pathfinder.Projects.References
 {
     public interface IReference
     {
+        [NotNull]
+        string DatabaseName { get; }
+
         bool IsValid { get; }
 
         [NotNull]

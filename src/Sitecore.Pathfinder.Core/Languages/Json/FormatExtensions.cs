@@ -169,7 +169,7 @@ namespace Sitecore.Pathfinder.Languages.Json
                     output.WriteStartObject(field.FieldName);
                     output.WritePropertyStringIf("Id", field.Uri.Guid.Format());
                     output.WritePropertyStringIf("Name", field.FieldName);
-                    output.WritePropertyStringIf("Sortorder", field.SortOrder);
+                    output.WritePropertyStringIf("Sortorder", field.Sortorder);
                     output.WritePropertyStringIf("Type", field.Type);
                     output.WritePropertyStringIf("Source", field.Source);
                     output.WritePropertyStringIf("Sharing", field.Shared ? "Shared" : field.Unversioned ? "Unversioned" : string.Empty);

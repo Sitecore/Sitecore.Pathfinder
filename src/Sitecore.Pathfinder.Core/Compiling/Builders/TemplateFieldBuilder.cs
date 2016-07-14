@@ -69,7 +69,7 @@ namespace Sitecore.Pathfinder.Compiling.Builders
                 throw new InvalidOperationException("Template Field Guid is not valid");
             }
 
-            var field = Factory.TemplateField(template, fieldIdGuid, FieldTextNode);
+            var field = Factory.TemplateField(template, fieldIdGuid).With(FieldTextNode);
 
             field.FieldName = FieldName;
             if (FieldNameTextNode != TextNode.Empty)

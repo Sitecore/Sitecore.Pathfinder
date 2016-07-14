@@ -299,7 +299,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
                     output.WriteStartElement("Field");
                     output.WriteAttributeString("Name", field.FieldName);
                     output.WriteAttributeStringIf("Id", field.Uri.Guid.Format());
-                    output.WriteAttributeStringIf("Sortorder", field.SortOrder);
+                    output.WriteAttributeStringIf("Sortorder", field.Sortorder);
                     output.WriteAttributeStringIf("Type", field.Type);
                     output.WriteAttributeStringIf("Source", field.Source);
                     output.WriteAttributeStringIf("Sharing", field.Shared ? "Shared" : field.Unversioned ? "Unversioned" : string.Empty);

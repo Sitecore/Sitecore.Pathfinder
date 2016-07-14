@@ -9,7 +9,7 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
 {
     public class UnicornFile : File
     {
-        public UnicornFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath, [NotNull] string databaseName) : base(project, snapshot, filePath)
+        public UnicornFile([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] string filePath, [NotNull] string databaseName) : base(project, snapshot, filePath)
         {
             DatabaseName = databaseName;
         }

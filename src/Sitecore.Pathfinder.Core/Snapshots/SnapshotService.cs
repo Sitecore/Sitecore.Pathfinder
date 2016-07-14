@@ -83,7 +83,7 @@ namespace Sitecore.Pathfinder.Snapshots
             return Factory.Snapshot(sourceFile);
         }
 
-        public virtual ISnapshot LoadSnapshot(IProject project, ISourceFile sourceFile, PathMappingContext pathMappingContext)
+        public virtual ISnapshot LoadSnapshot(IProjectBase project, ISourceFile sourceFile, PathMappingContext pathMappingContext)
         {
             var itemName = PathHelper.GetItemName(sourceFile);
             var filePath = pathMappingContext.FilePath;

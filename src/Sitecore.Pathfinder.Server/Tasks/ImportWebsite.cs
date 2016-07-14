@@ -138,7 +138,7 @@ namespace Sitecore.Pathfinder.Tasks
 
         protected virtual void ImportItems([Diagnostics.NotNull] IWebsiteTaskContext context, [NotNull] ZipWriter zip, [Diagnostics.NotNull] IItemPathToProjectFileNameMapper mapper)
         {
-            var project = CompositionService.Resolve<IProject>();
+            var project = CompositionService.Resolve<IProjectBase>();
 
             var databaseName = mapper.DatabaseName;
             var format = mapper.Format;
@@ -160,7 +160,7 @@ namespace Sitecore.Pathfinder.Tasks
             ImportItems(context, zip, mapper, project, language, item, excludedFields);
         }
 
-        protected virtual void ImportItems([Diagnostics.NotNull] IWebsiteTaskContext context, [NotNull] ZipWriter zip, [Diagnostics.NotNull] IItemPathToProjectFileNameMapper mapper, [Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull, ItemNotNull] IEnumerable<string> excludedFields)
+        protected virtual void ImportItems([Diagnostics.NotNull] IWebsiteTaskContext context, [NotNull] ZipWriter zip, [Diagnostics.NotNull] IItemPathToProjectFileNameMapper mapper, [Diagnostics.NotNull] IProjectBase project, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull, ItemNotNull] IEnumerable<string> excludedFields)
         {
             string projectFileName;
             string format;
@@ -186,7 +186,7 @@ namespace Sitecore.Pathfinder.Tasks
             }
         }
 
-        protected virtual void WriteItem([NotNull] ZipWriter zip, [Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string projectFileName, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull, ItemNotNull] IEnumerable<string> excludedFields)
+        protected virtual void WriteItem([NotNull] ZipWriter zip, [Diagnostics.NotNull] IProjectBase project, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string projectFileName, [Diagnostics.NotNull] ILanguage language, [Diagnostics.NotNull, ItemNotNull] IEnumerable<string> excludedFields)
         {
             var itemToWrite = ItemImporter.ImportItem(project, item, language, excludedFields);
 
@@ -206,7 +206,7 @@ namespace Sitecore.Pathfinder.Tasks
             }
         }
 
-        protected virtual void WriteTemplate([NotNull] ZipWriter zip, [Diagnostics.NotNull] IProject project, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string projectFileName, [Diagnostics.NotNull] ILanguage language)
+        protected virtual void WriteTemplate([NotNull] ZipWriter zip, [Diagnostics.NotNull] IProjectBase project, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] string projectFileName, [Diagnostics.NotNull] ILanguage language)
         {
             var template = ItemImporter.ImportTemplate(project, item);
 

@@ -16,6 +16,7 @@ using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.References;
 using Sitecore.Pathfinder.Snapshots;
+using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Parsing.References
 {
@@ -90,8 +91,26 @@ namespace Sitecore.Pathfinder.Parsing.References
 
         public IEnumerable<IReference> ParseReferences(Field field)
         {
+            var databaseName = string.Empty;
             var value = field.Value;
 
+            // look for database name
+            if (field.TemplateField.Source.IndexOf("database", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                var parameters = new UrlString(field.TemplateField.Source);
+                databaseName = parameters["databasename"];
+                if (string.IsNullOrEmpty(databaseName))
+                {
+                    databaseName = parameters["database"];
+                }
+
+                if (string.IsNullOrEmpty(databaseName))
+                {
+                    databaseName = string.Empty;
+                }
+            }
+
+            // check for fields that contains paths
             var pathFields = Configuration.GetStringList(Constants.Configuration.CheckProject.PathFields);
             if (pathFields.Contains(field.FieldId.Format()))
             {
@@ -112,7 +131,7 @@ namespace Sitecore.Pathfinder.Parsing.References
             }
 
             var textNode = TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field);
-            foreach (var reference in ParseReferences(field.Item, textNode, field.Value))
+            foreach (var reference in ParseReferences(field.Item, textNode, field.Value, databaseName))
             {
                 yield return reference;
             }
@@ -121,19 +140,14 @@ namespace Sitecore.Pathfinder.Parsing.References
         public virtual IEnumerable<IReference> ParseReferences<T>(IProjectItem projectItem, SourceProperty<T> sourceProperty)
         {
             var sourceTextNode = sourceProperty.SourceTextNode;
-            if (sourceTextNode == null)
-            {
-                return Enumerable.Empty<IReference>();
-            }
-
-            return ParseReferences(projectItem, sourceTextNode, sourceTextNode.Value);
+            return ParseReferences(projectItem, sourceTextNode, sourceTextNode.Value, string.Empty);
         }
 
         public virtual IEnumerable<IReference> ParseReferences(IProjectItem projectItem, ITextNode textNode)
         {
             var referenceText = textNode.Value.Trim();
 
-            return ParseReferences(projectItem, textNode, referenceText);
+            return ParseReferences(projectItem, textNode, referenceText, string.Empty);
         }
 
         protected virtual int EndOfFilePath([NotNull] string text, int start)
@@ -184,7 +198,7 @@ namespace Sitecore.Pathfinder.Parsing.References
         }
 
         [ItemNotNull, NotNull]
-        protected virtual IEnumerable<IReference> ParseFilePaths([NotNull] IProjectItem projectItem, [NotNull] ITextNode textNode, [NotNull] string referenceText)
+        protected virtual IEnumerable<IReference> ParseFilePaths([NotNull] IProjectItem projectItem, [NotNull] ITextNode textNode, [NotNull] string referenceText, [NotNull] string databaseName)
         {
             var s = 0;
             while (true)
@@ -198,7 +212,7 @@ namespace Sitecore.Pathfinder.Parsing.References
                 var e = EndOfFilePath(referenceText, n);
                 var text = referenceText.Mid(n, e - n);
 
-                var reference = ParseReference(projectItem, textNode, text);
+                var reference = ParseReference(projectItem, textNode, text, databaseName);
                 if (reference != null)
                 {
                     yield return reference;
@@ -209,7 +223,7 @@ namespace Sitecore.Pathfinder.Parsing.References
         }
 
         [ItemNotNull, NotNull]
-        protected virtual IEnumerable<IReference> ParseGuids([NotNull] IProjectItem projectItem, [NotNull] ITextNode textNode, [NotNull] string referenceText)
+        protected virtual IEnumerable<IReference> ParseGuids([NotNull] IProjectItem projectItem, [NotNull] ITextNode textNode, [NotNull] string referenceText, [NotNull] string databaseName)
         {
             var s = 0;
             while (true)
@@ -237,7 +251,7 @@ namespace Sitecore.Pathfinder.Parsing.References
 
                 var text = referenceText.Mid(n, e - n);
 
-                var reference = ParseReference(projectItem, textNode, text);
+                var reference = ParseReference(projectItem, textNode, text, databaseName);
                 if (reference != null)
                 {
                     yield return reference;
@@ -248,7 +262,7 @@ namespace Sitecore.Pathfinder.Parsing.References
         }
 
         [ItemNotNull, NotNull]
-        protected virtual IEnumerable<IReference> ParseItemPaths([NotNull] IProjectItem projectItem, [NotNull] ITextNode textNode, [NotNull] string referenceText)
+        protected virtual IEnumerable<IReference> ParseItemPaths([NotNull] IProjectItem projectItem, [NotNull] ITextNode textNode, [NotNull] string referenceText, [NotNull] string databaseName)
         {
             var s = 0;
             while (true)
@@ -262,7 +276,7 @@ namespace Sitecore.Pathfinder.Parsing.References
                 var e = EndOfItemPath(referenceText, n);
                 var text = referenceText.Mid(n, e - n);
 
-                var reference = ParseReference(projectItem, textNode, text);
+                var reference = ParseReference(projectItem, textNode, text, databaseName);
                 if (reference != null)
                 {
                     yield return reference;
@@ -273,19 +287,19 @@ namespace Sitecore.Pathfinder.Parsing.References
         }
 
         [CanBeNull]
-        protected virtual IReference ParseReference([NotNull] IProjectItem projectItem, [NotNull] ITextNode sourceTextNode, [NotNull] string referenceText)
+        protected virtual IReference ParseReference([NotNull] IProjectItem projectItem, [NotNull] ITextNode sourceTextNode, [NotNull] string referenceText, [NotNull] string databaseName)
         {
             if (IsIgnoredReference(referenceText))
             {
                 return null;
             }
 
-            var pipeline = Pipelines.Resolve<ReferenceParserPipeline>().Execute(Factory, projectItem, sourceTextNode, referenceText);
+            var pipeline = Pipelines.Resolve<ReferenceParserPipeline>().Execute(Factory, projectItem, sourceTextNode, referenceText, databaseName);
             return pipeline.Reference;
         }
 
         [ItemNotNull, NotNull]
-        protected virtual IEnumerable<IReference> ParseReferences([NotNull] IProjectItem projectItem, [NotNull] ITextNode textNode, [NotNull] string referenceText)
+        protected virtual IEnumerable<IReference> ParseReferences([NotNull] IProjectItem projectItem, [NotNull] ITextNode textNode, [NotNull] string referenceText, [NotNull] string databaseName)
         {
             // query string: ignore
             if (referenceText.StartsWith("query:"))
@@ -305,17 +319,17 @@ namespace Sitecore.Pathfinder.Parsing.References
                 yield break;
             }
 
-            foreach (var reference in ParseItemPaths(projectItem, textNode, referenceText))
+            foreach (var reference in ParseItemPaths(projectItem, textNode, referenceText, databaseName))
             {
                 yield return reference;
             }
 
-            foreach (var reference in ParseGuids(projectItem, textNode, referenceText))
+            foreach (var reference in ParseGuids(projectItem, textNode, referenceText, databaseName))
             {
                 yield return reference;
             }
 
-            foreach (var reference in ParseFilePaths(projectItem, textNode, referenceText))
+            foreach (var reference in ParseFilePaths(projectItem, textNode, referenceText, databaseName))
             {
                 yield return reference;
             }

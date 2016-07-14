@@ -13,12 +13,12 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
         public ICompileContext Context { get; private set; }
 
         [NotNull]
-        public IProject Project { get; private set; }
+        public IDiagnosticCollector DiagnosticCollector { get; private set; }
 
-        public void Execute([NotNull] ICompileContext context, [NotNull] IProject project)
+        public void Execute([NotNull] ICompileContext context, [NotNull] IDiagnosticCollector diagnosticCollector)
         {
             Context = context;
-            Project = project;
+            DiagnosticCollector = diagnosticCollector;
 
             Execute();
         }

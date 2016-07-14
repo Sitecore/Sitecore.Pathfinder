@@ -1,6 +1,5 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
-using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Snapshots
@@ -8,7 +7,7 @@ namespace Sitecore.Pathfinder.Snapshots
     public static class TraceHelper
     {
         [NotNull]
-        public static ITextNode GetTextNode([NotNull, ItemCanBeNull]  params IHasSourceTextNodes[] sourceTextNodes)
+        public static ITextNode GetTextNode([NotNull, ItemCanBeNull] params IHasSourceTextNodes[] sourceTextNodes)
         {
             foreach (var sourceTextNode in sourceTextNodes)
             {
@@ -17,10 +16,9 @@ namespace Sitecore.Pathfinder.Snapshots
                     continue;
                 }
 
-                var textNode = sourceTextNode.SourceTextNodes.LastOrDefault(f => f != TextNode.Empty);
-                if (textNode != null)
+                if (sourceTextNode.SourceTextNode != TextNode.Empty)
                 {
-                    return textNode;
+                    return sourceTextNode.SourceTextNode;
                 }
             }
 

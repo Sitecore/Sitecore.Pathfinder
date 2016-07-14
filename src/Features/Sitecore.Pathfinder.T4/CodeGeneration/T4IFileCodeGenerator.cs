@@ -24,7 +24,7 @@ namespace Sitecore.Pathfinder.T4.CodeGeneration
         [NotNull]
         protected IFileSystemService FileSystem { get; }
 
-        public override void Generate(IBuildContext context, IProject project)
+        public override void Generate(IBuildContext context, IProjectBase project)
         {
             var itmNameToken = context.Configuration.GetString(Constants.Configuration.GenerateCode.NameToken);
 

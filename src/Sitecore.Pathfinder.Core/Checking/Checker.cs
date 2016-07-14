@@ -45,6 +45,12 @@ namespace Sitecore.Pathfinder.Checking
             return new Diagnostic(msg, textNode.Snapshot.SourceFile.AbsoluteFileName, textNode.TextSpan, Severity.Error, GetText(text, details, checkerName));
         }
 
+        [NotNull]
+        protected Diagnostic Error(int msg, [NotNull] string text, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
+        {
+            return new Diagnostic(msg, string.Empty, TextSpan.Empty, Severity.Error, GetText(text, details, checkerName));
+        }
+
         protected virtual bool FileExists([NotNull] ICheckerContext context, [NotNull] string fileName)
         {
             Assert.IsNotNullOrEmpty(fileName);

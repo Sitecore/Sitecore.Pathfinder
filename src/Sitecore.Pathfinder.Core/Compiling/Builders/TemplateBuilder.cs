@@ -66,11 +66,11 @@ namespace Sitecore.Pathfinder.Compiling.Builders
         protected IFactoryService Factory { get; }
 
         [NotNull]
-        public Template Build([NotNull] IProject project, [NotNull] ITextNode rootTextNode)
+        public Template Build([NotNull] IProjectBase project, [NotNull] ITextNode rootTextNode)
         {
             var guid = StringHelper.GetGuid(project, Guid);
 
-            var template = Factory.Template(project, guid, rootTextNode, DatabaseName, TemplateName, ItemIdOrPath);
+            var template = Factory.Template(project, guid, DatabaseName, TemplateName, ItemIdOrPath).With(rootTextNode);
             if (TemplateNameTextNode != TextNode.Empty)
             {
                 template.ItemNameProperty.AddSourceTextNode(TemplateNameTextNode);

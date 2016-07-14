@@ -13,7 +13,7 @@ using Sitecore.Pathfinder.Languages.BinFiles.Pipelines;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Pathfinder.Text;
 
-namespace Sitecore.Pathfinder.files.project.sitecore.filetemplates.codefirst
+namespace Sitecore.Pathfinder
 {
     public class ModelScanner : PipelineProcessorBase<BinFileCompilerPipeline>
     {
@@ -96,7 +96,7 @@ namespace Sitecore.Pathfinder.files.project.sitecore.filetemplates.codefirst
                 return;
             }
 
-            var snapshotTextNode = new SnapshotTextNode(pipeline.BinFile.Snapshots.First());
+            var snapshotTextNode = new SnapshotTextNode(pipeline.BinFile.Snapshot);
 
             var itemName = GetDisplayNameAttribute(pipeline.Type);
             if (string.IsNullOrEmpty(itemName))
@@ -119,7 +119,7 @@ namespace Sitecore.Pathfinder.files.project.sitecore.filetemplates.codefirst
                 guid = StringHelper.GetGuid(pipeline.BinFile.Project, typeName);
             }
 
-            var template = pipeline.Context.Factory.Template(pipeline.BinFile.Project, guid, snapshotTextNode, databaseName, itemName, itemIdOrPath);
+            var template = pipeline.Context.Factory.Template(pipeline.BinFile.Project, guid, databaseName, itemName, itemIdOrPath).With(snapshotTextNode);
             template.IsEmittable = true;
             template.IsImport = false;
 
@@ -155,13 +155,13 @@ namespace Sitecore.Pathfinder.files.project.sitecore.filetemplates.codefirst
             foreach (var pair in fields)
             {
                 guid = StringHelper.GetGuid(pipeline.BinFile.Project, itemIdOrPath + "/" + pair.Key);
-                var templateSection = pipeline.Context.Factory.TemplateSection(template, guid, snapshotTextNode);
+                var templateSection = pipeline.Context.Factory.TemplateSection(template, guid).With(snapshotTextNode);
                 templateSection.SectionName = pair.Key;
 
                 foreach (var propertyInfo in pair.Value.OrderBy(p => p.Name))
                 {
                     guid = StringHelper.GetGuid(pipeline.BinFile.Project, itemIdOrPath + "/" + pair.Key + "/" + propertyInfo.Name);
-                    var templateField = pipeline.Context.Factory.TemplateField(template, guid, snapshotTextNode);
+                    var templateField = pipeline.Context.Factory.TemplateField(template, guid).With(snapshotTextNode);
 
                     var fieldName = GetDisplayNameAttribute(propertyInfo);
                     if (string.IsNullOrEmpty(fieldName))
@@ -185,7 +185,7 @@ namespace Sitecore.Pathfinder.files.project.sitecore.filetemplates.codefirst
                 template.Sections.Add(templateSection);
             }
 
-            pipeline.BinFile.Project.AddOrMerge(template);
+            pipeline.Context.Project.AddOrMerge(template);
         }
     }
 }

@@ -79,9 +79,27 @@ namespace Sitecore.Pathfinder.Tasks.Building
         }
 
         [NotNull]
+        public WebRequest WithCommandLine()
+        {
+            var commandLine = Configuration.GetCommandLine();
+
+            PostData["commandline"] = string.Join("|", commandLine);
+
+            return this;
+        }
+
+        [NotNull]
         public virtual WebRequest WithConfiguration()
         {
             PostData["configuration"] = Configuration.ToJson();
+            return this;
+        }
+
+        [NotNull]
+        public virtual WebRequest WithCredentials()
+        {
+            QueryStringParameters["u"] = Configuration.GetString(Constants.Configuration.UserName);
+            QueryStringParameters["p"] = Configuration.GetString(Constants.Configuration.Password);
             return this;
         }
 
@@ -110,14 +128,6 @@ namespace Sitecore.Pathfinder.Tasks.Building
         public WebRequest WithUrl([NotNull] string url)
         {
             Url = url;
-            return this;
-        }
-
-        [NotNull]
-        public virtual WebRequest WithCredentials()
-        {
-            QueryStringParameters["u"] = Configuration.GetString(Constants.Configuration.UserName);
-            QueryStringParameters["p"] = Configuration.GetString(Constants.Configuration.Password);
             return this;
         }
     }

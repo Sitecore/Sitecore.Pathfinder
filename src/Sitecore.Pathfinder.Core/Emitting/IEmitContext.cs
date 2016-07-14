@@ -18,7 +18,7 @@ namespace Sitecore.Pathfinder.Emitting
         bool ForceUpdate { get; }
 
         [NotNull]
-        IProject Project { get; }
+        IProjectBase Project { get; }
 
         [NotNull]
         IProjectEmitter ProjectEmitter { get; }
@@ -27,6 +27,6 @@ namespace Sitecore.Pathfinder.Emitting
         ITraceService Trace { get; }
 
         [NotNull]
-        IEmitContext With([NotNull] IProjectEmitter projectEmitter, [NotNull] IProject project);
+        IEmitContext With([NotNull] IProjectEmitter projectEmitter, [NotNull] IProjectBase project);
     }
 }

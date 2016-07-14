@@ -44,7 +44,7 @@ namespace Sitecore.Pathfinder.Languages.BinFiles
 
             try
             {
-                var assembly = Assembly.LoadFrom(binFile.Snapshots.First().SourceFile.AbsoluteFileName);
+                var assembly = Assembly.LoadFrom(binFile.Snapshot.SourceFile.AbsoluteFileName);
 
                 foreach (var type in assembly.GetExportedTypes())
                 {

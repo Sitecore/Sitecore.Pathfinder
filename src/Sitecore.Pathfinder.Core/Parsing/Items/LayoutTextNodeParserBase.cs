@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             var guid = StringHelper.GetGuid(context.ParseContext.Project, textNode.GetAttributeValue("Id", itemIdOrPath));
             var databaseName = textNode.GetAttributeValue("Database", context.DatabaseName);
 
-            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, textNode, guid, databaseName, itemNameTextNode.Value, itemIdOrPath, string.Empty);
+            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, guid, databaseName, itemNameTextNode.Value, itemIdOrPath, string.Empty).With(textNode);
             item.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
 
             Parse(context, textNode, item);
@@ -35,7 +35,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
         public virtual void Parse([NotNull] ItemParseContext context, [NotNull] ITextNode textNode, [NotNull] Item item)
         {
-            var field = context.ParseContext.Factory.Field(item, textNode, "__Renderings", string.Empty);
+            var field = context.ParseContext.Factory.Field(item, "__Renderings", string.Empty).With(textNode);
 
             // todo: set template field
 
@@ -56,11 +56,11 @@ namespace Sitecore.Pathfinder.Parsing.Items
         {
             var deviceNameProperty = new SourceProperty<string>(projectItem, "Name", string.Empty, SourcePropertyFlags.IsShort);
             deviceNameProperty.Parse(deviceTextNode);
-            references.Add(context.ParseContext.Factory.DeviceReference(projectItem, deviceNameProperty));
+            references.Add(context.ParseContext.Factory.DeviceReference(projectItem, deviceNameProperty, string.Empty));
 
             var layoutProperty = new SourceProperty<string>(projectItem, "Layout", string.Empty, SourcePropertyFlags.IsShort);
             layoutProperty.Parse(deviceTextNode);
-            references.Add(context.ParseContext.Factory.LayoutReference(projectItem, layoutProperty));
+            references.Add(context.ParseContext.Factory.LayoutReference(projectItem, layoutProperty, string.Empty));
 
             var renderingsTextNode = deviceTextNode.GetSnapshotLanguageSpecificChildNode("Renderings");
             if (renderingsTextNode == null)
@@ -100,7 +100,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 var sourceProperty = new SourceProperty<string>(projectItem, renderingTextNode.Key, string.Empty, SourcePropertyFlags.IsShort);
                 sourceProperty.SetValue(new AttributeNameTextNode(renderingTextNode));
 
-                references.Add(context.ParseContext.Factory.LayoutRenderingReference(projectItem, sourceProperty));
+                references.Add(context.ParseContext.Factory.LayoutRenderingReference(projectItem, sourceProperty, string.Empty));
             }
 
             // parse references for rendering properties

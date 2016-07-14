@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Languages
     public class LanguageTests : Tests
     {
         [Diagnostics.NotNull]
-        public IProject Project { get; set; }
+        public IProjectBase Project { get; set; }
 
         [TestFixtureSetUp]
         public void Startup()

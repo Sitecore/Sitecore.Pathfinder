@@ -54,7 +54,7 @@ namespace Sitecore.Pathfinder.Tasks
 
         protected virtual void Generate([NotNull] IBuildContext context, [NotNull] IProjectItemCodeGenerator projectItemCodeGenerator, [NotNull] IProjectItem projectItem)
         {
-            var baseFileName = Path.GetDirectoryName(projectItem.Snapshots.First().SourceFile.AbsoluteFileName) ?? string.Empty;
+            var baseFileName = Path.GetDirectoryName(projectItem.Snapshot.SourceFile.AbsoluteFileName) ?? string.Empty;
             baseFileName = Path.Combine(baseFileName, projectItem.ShortName);
 
             FileSystem.CreateDirectoryFromFileName(baseFileName);

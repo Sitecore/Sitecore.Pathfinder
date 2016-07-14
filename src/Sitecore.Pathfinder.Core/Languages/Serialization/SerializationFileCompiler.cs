@@ -27,7 +27,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
             var serializationFile = projectItem as SerializationFile;
             Assert.Cast(serializationFile, nameof(serializationFile));
 
-            var textDocument = (ITextSnapshot)serializationFile.Snapshots.First();
+            var textDocument = (ITextSnapshot)serializationFile.Snapshot;
             var rootTextNode = textDocument.Root;
             if (rootTextNode == TextNode.Empty)
             {
@@ -49,7 +49,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
                 item.References.AddRange(context.ReferenceParser.ParseReferences(field));
             }
 
-            var addedItem = serializationFile.Project.AddOrMerge(item);
+            var addedItem = context.Project.AddOrMerge(item);
             serializationFile.SerializationItemUri = addedItem.Uri;
         }
 

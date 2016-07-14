@@ -35,24 +35,6 @@ namespace Sitecore.Pathfinder.Languages.Json
         [CanBeNull, ItemNotNull]
         protected JToken RootToken { get; private set; }
 
-        public override void SaveChanges()
-        {
-            if (RootToken == null)
-            {
-                return;
-            }
-
-            using (var stream = FileSystem.OpenStreamWriter(SourceFile.AbsoluteFileName))
-            {
-                using (var writer = new JsonTextWriter(stream))
-                {
-                    writer.Formatting = Formatting.Indented;
-
-                    RootToken.WriteTo(writer);
-                }
-            }
-        }
-
         [NotNull]
         public virtual JsonTextSnapshot With([NotNull] SnapshotParseContext snapshotParseContext, [NotNull] ISourceFile sourceFile, [NotNull] string contents)
         {

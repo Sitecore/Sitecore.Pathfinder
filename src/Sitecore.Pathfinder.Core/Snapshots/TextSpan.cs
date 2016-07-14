@@ -1,8 +1,10 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Diagnostics;
+using System.Linq;
 using System.Xml;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
@@ -36,6 +38,11 @@ namespace Sitecore.Pathfinder.Snapshots
             return Length == other.Length && LineNumber == other.LineNumber && LinePosition == other.LinePosition;
         }
 
+        public override string ToString()
+        {
+            return Length == 0 ? $"({LineNumber},{LinePosition})" : $"({LineNumber},{LinePosition},{LineNumber},{LinePosition + Length})";
+        }
+
         public override bool Equals([CanBeNull] object obj)
         {
             if (ReferenceEquals(null, obj))
@@ -65,6 +72,47 @@ namespace Sitecore.Pathfinder.Snapshots
         public static bool operator !=(TextSpan c1, TextSpan c2)
         {
             return !c1.Equals(c2);
+        }
+
+        public static bool TryParse([NotNull] string text, out TextSpan span)
+        {
+            span = Empty;
+            if (!text.StartsWith("(") || !text.EndsWith(")"))
+            {
+                return false;
+            }
+
+            var parts = text.Mid(1, text.Length - 2).Split(',').Select(s => s.Trim()).ToArray();
+            if (parts.Length != 2 && parts.Length != 4)
+            {
+                return false;
+            }
+
+            int lineNumber;
+            if (!int.TryParse(parts[0], out lineNumber))
+            {
+                return false;
+            }
+
+            int linePosition;
+            if (!int.TryParse(parts[1], out linePosition))
+            {
+                return false;
+            }
+
+            var length = 0;
+            if (parts.Length == 4)
+            {
+                if (!int.TryParse(parts[3], out length))
+                {
+                    return false;
+                }
+
+                length -= linePosition;
+            }
+
+            span = new TextSpan(lineNumber, linePosition, length);
+            return true;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
@@ -11,6 +11,9 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.ReferenceParserPipelines
 {
     public class ReferenceParserPipeline : PipelineBase<ReferenceParserPipeline>
     {
+        [NotNull]
+        public string DatabaseName { get; private set; }
+
         [NotNull]
         public IFactoryService Factory { get; private set; }
 
@@ -27,12 +30,13 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.ReferenceParserPipelines
         public ITextNode SourceTextNode { get; private set; }
 
         [NotNull]
-        public ReferenceParserPipeline Execute([NotNull] IFactoryService factory, [NotNull] IProjectItem projectItem, [NotNull] ITextNode sourceTextNode, [NotNull] string referenceText)
+        public ReferenceParserPipeline Execute([NotNull] IFactoryService factory, [NotNull] IProjectItem projectItem, [NotNull] ITextNode sourceTextNode, [NotNull] string referenceText, string databaseName)
         {
             Factory = factory;
             ProjectItem = projectItem;
             SourceTextNode = sourceTextNode;
             ReferenceText = referenceText;
+            DatabaseName = databaseName;
 
             Execute();
 

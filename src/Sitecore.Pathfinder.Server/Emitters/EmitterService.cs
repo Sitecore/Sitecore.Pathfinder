@@ -70,7 +70,7 @@ namespace Sitecore.Pathfinder.Emitters
             return this;
         }
 
-        protected virtual void DeleteProjectItems([NotNull] IProject project)
+        protected virtual void DeleteProjectItems([NotNull] IProjectBase project)
         {
             if (!Configuration.GetBool(Constants.Configuration.InstallPackage.MarkItemsWithPathfinderProjectUniqueId, true))
             {

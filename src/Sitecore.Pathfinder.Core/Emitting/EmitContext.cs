@@ -28,13 +28,13 @@ namespace Sitecore.Pathfinder.Emitting
 
         public bool ForceUpdate { get; }
 
-        public IProject Project { get; private set; }
+        public IProjectBase Project { get; private set; }
 
         public IProjectEmitter ProjectEmitter { get; protected set; }
 
         public ITraceService Trace { get; }
 
-        public virtual IEmitContext With(IProjectEmitter projectEmitter, IProject project)
+        public virtual IEmitContext With(IProjectEmitter projectEmitter, IProjectBase project)
         {
             ProjectEmitter = projectEmitter;
             Project = project;

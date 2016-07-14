@@ -92,7 +92,7 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
             var field = item.Fields["__Renderings"];
             if (field == null)
             {
-                field = context.Factory.Field(item, TextNode.Empty, "__Renderings", value);
+                field = context.Factory.Field(item, "__Renderings", value);
                 item.Fields.Add(field);
             }
             else

@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using Microsoft.Framework.ConfigurationModel;
@@ -29,7 +29,7 @@ namespace Sitecore.Pathfinder.Configuration
 
         Interactive = IncludeCommandLine | IncludeEnvironment | IncludeMachineConfig | IncludeUserConfig | IncludeCommandLineConfig | IncludeModuleConfig | Recursive,
 
-        Noninteractive = IncludeEnvironment | IncludeMachineConfig | IncludeModuleConfig
+        Noninteractive = IncludeCommandLine | IncludeEnvironment | IncludeMachineConfig | IncludeModuleConfig
     }
 
     public interface IConfigurationService
@@ -37,6 +37,6 @@ namespace Sitecore.Pathfinder.Configuration
         [NotNull]
         IConfiguration Configuration { get; }
 
-        void Load(ConfigurationOptions options, [NotNull] string toolsDirectory, [NotNull] string projectDirectory, [NotNull] string systemConfigFileName);
+        void Load(ConfigurationOptions options, [NotNull] string toolsDirectory, [NotNull] string projectDirectory, [NotNull] string systemConfigFileName, [NotNull, ItemNotNull] string[] commandLine);
     }
 }

@@ -9,7 +9,7 @@ namespace Sitecore.Pathfinder.Languages.Content
 {
     public class ContentFile : File
     {
-        public ContentFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath) : base(project, snapshot, filePath)
+        public ContentFile([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] string filePath) : base(project, snapshot, filePath)
         {
         }
     }

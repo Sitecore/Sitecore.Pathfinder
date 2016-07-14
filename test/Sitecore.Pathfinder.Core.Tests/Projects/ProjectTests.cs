@@ -78,11 +78,10 @@ namespace Sitecore.Pathfinder.Projects
         public void MergeByProjectUniqueIdTest()
         {
             var project = Resolve<IProject>();
-            var context = Services.CompositionService.Resolve<IParseContext>().With(project, Snapshot.Empty, PathMappingContext.Empty);
 
             var sameGuid = new Guid("{11CDDC59-0F73-4A6E-90E2-6614418F173E}");
-            var projectItem1 = new Item(project, TextNode.Empty, sameGuid, string.Empty, "SameId", string.Empty, string.Empty);
-            var projectItem2 = new Item(project, TextNode.Empty, sameGuid, string.Empty, "SameId", string.Empty, string.Empty);
+            var projectItem1 = new Item(project, sameGuid, string.Empty, "SameId", string.Empty, string.Empty);
+            var projectItem2 = new Item(project, sameGuid, string.Empty, "SameId", string.Empty, string.Empty);
 
             project.AddOrMerge(projectItem1);
             project.AddOrMerge(projectItem2);
@@ -116,7 +115,7 @@ namespace Sitecore.Pathfinder.Projects
             Assert.AreEqual("SerializedItem", projectItem.ShortName);
             Assert.AreEqual("/sitecore/content/Home/SerializedItem", projectItem.QualifiedName);
             Assert.AreEqual("{CEABE4B1-E915-4904-B396-BBC0C081F111}", projectItem.Uri.Guid.Format());
-            Assert.AreEqual(1, projectItem.Snapshots.Count);
+            Assert.AreEqual(1, projectItem.GetSnapshots().Count());
 
             var item = projectItem as Item;
             Assert.IsNotNull(item);

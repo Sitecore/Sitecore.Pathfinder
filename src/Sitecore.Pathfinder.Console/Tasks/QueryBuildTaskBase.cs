@@ -19,7 +19,7 @@ namespace Sitecore.Pathfinder.Tasks
         {
             foreach (var reference in references)
             {
-                string line = $"{reference.Owner.Snapshots.First().SourceFile.ProjectFileName}";
+                string line = $"{reference.Owner.Snapshot.SourceFile.ProjectFileName}";
 
                 var textNode = reference.TextNode;
                 line += $"({textNode.TextSpan.LineNumber},{textNode.TextSpan.LineNumber})";

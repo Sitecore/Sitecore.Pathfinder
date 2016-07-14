@@ -41,7 +41,7 @@ namespace Sitecore.Pathfinder.Projects
             Assert.IsNotNull("Long Help.", templateField.LongHelp);
             Assert.IsTrue(templateField.Shared);
             Assert.IsFalse(templateField.Unversioned);
-            Assert.AreEqual(100, templateField.SortOrder);
+            Assert.AreEqual(100, templateField.Sortorder);
             Assert.AreEqual("/sitecore/content", templateField.Source);
 
             var field = standardValuesItem.Fields.FirstOrDefault(f => f.FieldName == "Text");

@@ -53,6 +53,13 @@ namespace Sitecore.Pathfinder.Pipelines.Loader
                 action = "Index",
                 route = ""
             });
+
+            RouteTable.Routes.MapRoute("Sitecore.Pathfinder.CheckWebsite", "pathfinder/check-website", new
+            {
+                controller = "PathfinderCheckWebsite",
+                action = "Index",
+                route = ""
+            });
         }
     }
 }

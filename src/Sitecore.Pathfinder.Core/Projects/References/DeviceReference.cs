@@ -6,16 +6,12 @@ namespace Sitecore.Pathfinder.Projects.References
 {
     public class DeviceReference : Reference
     {
-        public DeviceReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceProperty, [NotNull] string referenceText) : base(owner, sourceProperty, referenceText)
+        public DeviceReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceProperty, [NotNull] string referenceText, [NotNull] string databaseName) : base(owner, sourceProperty, referenceText, databaseName)
         {
         }
 
         public override IProjectItem Resolve()
         {
-            // todo: actually resolve the device
-            IsResolved = true;
-            IsValid = true;
-
             return Owner;
         }
     }

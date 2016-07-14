@@ -22,28 +22,25 @@ namespace Sitecore.Pathfinder.Configuration
     public interface IFactoryService
     {
         [NotNull]
-        BinFile BinFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath);
+        BinFile BinFile([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] string filePath);
 
         [NotNull]
-        ConfigFile ConfigFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath);
+        ConfigFile ConfigFile([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] string filePath);
 
         [NotNull]
-        IProjectItem ContentFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath);
+        IProjectItem ContentFile([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] string filePath);
 
         [NotNull]
-        DeviceReference DeviceReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> deviceNameSourceProperty);
+        DeviceReference DeviceReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> deviceNameSourceProperty, [NotNull] string databaseName);
 
         [NotNull]
         Diagnostic Diagnostic(int msg, [NotNull] string fileName, TextSpan span, Severity severity, [NotNull] string text);
 
         [NotNull]
-        Field Field([NotNull] Item item, [NotNull] ITextNode textNode);
-
-        [NotNull]
         Field Field([NotNull] Item item);
 
         [NotNull]
-        Field Field([NotNull] Item item, [NotNull] ITextNode textNode, [NotNull] string fieldName, [NotNull] string fieldValue);
+        Field Field([NotNull] Item item, [NotNull] string fieldName, [NotNull] string fieldValue);
 
         [NotNull]
         FieldBuilder FieldBuilder();
@@ -55,10 +52,7 @@ namespace Sitecore.Pathfinder.Configuration
         FileReference FileReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceSourceProperty, [NotNull] string referenceText);
 
         [NotNull]
-        Item Item([NotNull] IProject project, [NotNull] ITextNode textNode, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath);
-
-        [NotNull]
-        Item Item([NotNull] IProject project, [NotNull] ISnapshot snapshot, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath);
+        Item Item([NotNull] IProjectBase project, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath);
 
         [NotNull]
         ItemBuilder ItemBuilder();
@@ -67,28 +61,28 @@ namespace Sitecore.Pathfinder.Configuration
         ItemParseContext ItemParseContext([NotNull] IParseContext context, [NotNull] ItemParser itemParser, [NotNull] string databaseName, [NotNull] string parentItemPath, bool isImport);
 
         [NotNull]
-        LayoutReference LayoutReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> layoutSourceProperty);
+        LayoutReference LayoutReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> layoutSourceProperty, [NotNull] string databaseName);
 
         [NotNull]
-        LayoutRenderingReference LayoutRenderingReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> layoutTextNode);
+        LayoutRenderingReference LayoutRenderingReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> layoutTextNode, [NotNull] string databaseName);
 
         [NotNull]
-        MediaFile MediaFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemPath, [NotNull] string filePath);
+        MediaFile MediaFile([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemPath, [NotNull] string filePath);
 
         [NotNull]
         ProjectOptions ProjectOptions([NotNull] string projectDirectory, [NotNull] string databaseName);
 
         [NotNull]
-        IReference Reference([NotNull] IProjectItem projectItem, [NotNull] ITextNode textNode, [NotNull] string referenceText);
+        IReference Reference([NotNull] IProjectItem projectItem, [NotNull] ITextNode textNode, [NotNull] string referenceText, [NotNull] string databaseName);
 
         [NotNull]
-        IReference Reference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> sourceSourceProperty, [NotNull] string referenceText);
+        IReference Reference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> sourceSourceProperty, [NotNull] string referenceText, [NotNull] string databaseName);
 
         [NotNull]
-        Rendering Rendering([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string databaseName, [NotNull] string itemPath, [NotNull] string itemName, [NotNull] string filePath, [NotNull] string templateIdOrPath);
+        Rendering Rendering([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] string databaseName, [NotNull] string itemPath, [NotNull] string itemName, [NotNull] string filePath, [NotNull] string templateIdOrPath);
 
         [NotNull]
-        SerializationFile SerializationFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath);
+        SerializationFile SerializationFile([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] string filePath);
 
         [NotNull]
         ISnapshot Snapshot([NotNull] ISourceFile sourceFile);
@@ -98,13 +92,13 @@ namespace Sitecore.Pathfinder.Configuration
 
         // todo: swap guid and textnode parameters
         [NotNull]
-        Template Template([NotNull] IProject project, Guid guid, [NotNull] ITextNode textNode, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath);
+        Template Template([NotNull] IProjectBase project, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath);
 
         [NotNull]
-        TemplateField TemplateField([NotNull] Template template, Guid guid, [NotNull] ITextNode templateFieldTextNode);
+        TemplateField TemplateField([NotNull] Template template, Guid guid);
 
         [NotNull]
-        TemplateSection TemplateSection([NotNull] Template template, Guid guid, [NotNull] ITextNode templateSectionTextNode);
+        TemplateSection TemplateSection([NotNull] Template template, Guid guid);
 
         [NotNull]
         TextNode TextNode([NotNull] ISnapshot snapshot, TextSpan span, [NotNull] string name, [NotNull] string value);

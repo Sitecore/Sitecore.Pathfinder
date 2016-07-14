@@ -112,7 +112,7 @@ namespace Sitecore.Pathfinder.Tasks
                     WriteCompare(context, "Type [Template Field]", field1.Type, field2.Type);
                     WriteCompare(context, "Shared [Template Field]", field1.Shared.ToString(), field2.Shared.ToString());
                     WriteCompare(context, "Unversioned [Template Field]", field1.Unversioned.ToString(), field2.Unversioned.ToString());
-                    WriteCompare(context, "SortOrder [Template Field]", field1.SortOrder.ToString(), field2.SortOrder.ToString());
+                    WriteCompare(context, "SortOrder [Template Field]", field1.Sortorder.ToString(), field2.Sortorder.ToString());
                 }
 
                 foreach (var field2 in section2.Fields)
@@ -136,7 +136,7 @@ namespace Sitecore.Pathfinder.Tasks
             }
         }
 
-        protected virtual void Compare([NotNull] IBuildContext context, [NotNull] IProject project1, [NotNull] IProject project2)
+        protected virtual void Compare([NotNull] IBuildContext context, [NotNull] IProjectBase project1, [NotNull] IProjectBase project2)
         {
             foreach (var i in project1.ProjectItems.OrderBy(p => p.QualifiedName))
             {

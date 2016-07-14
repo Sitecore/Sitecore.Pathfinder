@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
     public class Template : DatabaseProjectItem
     {
         [NotNull]
-        public static readonly Template Empty = new Template(Projects.Project.Empty, TextNode.Empty, new Guid("{00000000-0000-0000-0000-000000000000}"), string.Empty, string.Empty, string.Empty);
+        public static readonly Template Empty = new Template(Projects.Project.Empty, new Guid("{00000000-0000-0000-0000-000000000000}"), string.Empty, string.Empty, string.Empty);
 
         [CanBeNull, ItemNotNull]
         private List<TemplateField> _allFields;
@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [CanBeNull, ItemNotNull]
         private ID[] _baseTemplateIDs;
 
-        public Template([NotNull] IProject project, [NotNull] ITextNode textNode, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, textNode, guid, databaseName, itemName, itemIdOrPath)
+        public Template([NotNull] IProjectBase project, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, guid, databaseName, itemName, itemIdOrPath)
         {
             BaseTemplatesProperty = NewSourceProperty("BaseTemplates", string.Empty);
             LongHelpProperty = NewSourceProperty("LongHelp", string.Empty);
@@ -83,7 +83,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
                 return _allFields;
             }
 
-            var templates = new List<ProjectItemUri>();
+            var templates = new List<IProjectItemUri>();
             return GetAllFields(templates);
         }
 
@@ -127,7 +127,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         }
 
         [NotNull, ItemNotNull]
-        protected virtual IEnumerable<TemplateField> GetAllFields([NotNull, ItemNotNull] ICollection<ProjectItemUri> templates)
+        protected virtual IEnumerable<TemplateField> GetAllFields([NotNull, ItemNotNull] ICollection<IProjectItemUri> templates)
         {
             if (_allFields != null)
             {
@@ -184,22 +184,22 @@ namespace Sitecore.Pathfinder.Projects.Templates
             if (!string.IsNullOrEmpty(newTemplate.BaseTemplates))
             {
                 // todo: join base templates
-                BaseTemplatesProperty.SetValue(newTemplate.BaseTemplatesProperty, SetValueOptions.DisableUpdates);
+                BaseTemplatesProperty.SetValue(newTemplate.BaseTemplatesProperty);
             }
 
             if (!string.IsNullOrEmpty(newTemplate.Icon))
             {
-                IconProperty.SetValue(newTemplate.IconProperty, SetValueOptions.DisableUpdates);
+                IconProperty.SetValue(newTemplate.IconProperty);
             }
 
             if (!string.IsNullOrEmpty(newTemplate.ShortHelp))
             {
-                ShortHelpProperty.SetValue(newTemplate.ShortHelpProperty, SetValueOptions.DisableUpdates);
+                ShortHelpProperty.SetValue(newTemplate.ShortHelpProperty);
             }
 
             if (!string.IsNullOrEmpty(newTemplate.LongHelp))
             {
-                LongHelpProperty.SetValue(newTemplate.LongHelpProperty, SetValueOptions.DisableUpdates);
+                LongHelpProperty.SetValue(newTemplate.LongHelpProperty);
             }
 
             foreach (var newSection in newTemplate.Sections)
@@ -213,6 +213,15 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
                 section.Merge(newSection, overwrite);
             }
+        }
+
+        [NotNull]
+        public Template With([NotNull] ITextNode sourceTextNode, bool isEmiitable = true, bool isImport = false)
+        {
+            AddSourceTextNode(sourceTextNode);
+            IsEmittable = isEmiitable;
+            IsImport = isImport;
+            return this;
         }
     }
 }

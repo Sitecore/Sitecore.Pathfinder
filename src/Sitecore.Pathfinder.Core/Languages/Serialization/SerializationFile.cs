@@ -9,11 +9,11 @@ namespace Sitecore.Pathfinder.Languages.Serialization
 {
     public class SerializationFile : File
     {
-        public SerializationFile([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] string filePath) : base(project, snapshot, filePath)
+        public SerializationFile([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] string filePath) : base(project, snapshot, filePath)
         {
         }
 
         [NotNull]
-        public ProjectItemUri SerializationItemUri { get; set; } = ProjectItemUri.Empty;
+        public IProjectItemUri SerializationItemUri { get; set; } = ProjectItemUri.Empty;
     }
 }
