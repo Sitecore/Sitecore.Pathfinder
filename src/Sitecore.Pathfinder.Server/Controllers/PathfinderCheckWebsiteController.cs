@@ -151,7 +151,14 @@ namespace Sitecore.Pathfinder.Controllers
 
             var project = host.CompositionService.Resolve<WebsiteProject>().With(Factory.GetDatabase("master"), options, host.Configuration.GetProjectDirectory(), "WebsiteChecker");
 
-            checkerService.CheckProject(project, project, checkerNames);
+            try
+            {
+                checkerService.CheckProject(project, project, checkerNames);
+            }
+            catch (Exception ex)
+            {
+                ((IDiagnosticCollector)project).Add(new Diagnostic(Msg.G1000, string.Empty, TextSpan.Empty, Severity.Error, ex.Message));
+            }
 
             var fileName = FileUtil.MapPath(Path.Combine(TempFolder.Folder, "Pathfinder.CheckWebsite." + Context.Job.Handle + ".xml"));
 
@@ -206,7 +213,7 @@ namespace Sitecore.Pathfinder.Controllers
 
             var handle = BackgroundJob.Run("Pathfinder Check Website", "Check Website", () => RunCheckWebsite(checkerNames));
 
-            return new RedirectResult("/sitecore/shell/client/Applications/Pathfinder/CheckWebsite?job=" + handle);
+            return new RedirectResult("/pathfinder/check-website?job=" + handle);
         }
     }
 }

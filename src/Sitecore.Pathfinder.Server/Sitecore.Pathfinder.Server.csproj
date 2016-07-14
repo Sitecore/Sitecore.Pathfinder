@@ -141,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Checking\Checkers\SecurityCheckers.cs" />
+    <Compile Include="Checking\WebsiteChecker.cs" />
     <Compile Include="Checking\Checkers\WorkflowCheckers.cs" />
     <Compile Include="Checking\Checkers\WebConfigCheckers.cs" />
     <Compile Include="Checking\Checkers\WebsiteCheckers.cs" />

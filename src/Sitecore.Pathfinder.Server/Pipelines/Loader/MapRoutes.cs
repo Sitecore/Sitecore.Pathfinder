@@ -54,7 +54,7 @@ namespace Sitecore.Pathfinder.Pipelines.Loader
                 route = ""
             });
 
-            RouteTable.Routes.MapRoute("Sitecore.Pathfinder.CheckWebsite", "sitecore/shell/client/Applications/Pathfinder/CheckWebsite", new
+            RouteTable.Routes.MapRoute("Sitecore.Pathfinder.CheckWebsite", "pathfinder/check-website", new
             {
                 controller = "PathfinderCheckWebsite",
                 action = "Index",

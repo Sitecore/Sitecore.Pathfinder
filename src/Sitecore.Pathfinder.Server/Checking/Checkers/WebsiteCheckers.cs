@@ -18,7 +18,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checking.Checkers
 {
-    public class WebsiteCheckers : Checker
+    public class WebsiteCheckers : WebsiteChecker
     {
         [Export("Check"), NotNull, ItemNotNull]
         public IEnumerable<Diagnostic> FolderIsReadOnly([NotNull] ICheckerContext context)
@@ -27,27 +27,12 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         }
 
         [Export("Check"), NotNull, ItemNotNull]
-        public IEnumerable<Diagnostic> Validators([NotNull] ICheckerContext context)
+        public IEnumerable<Diagnostic> Validators([NotNull] ICheckerContext context) => ForEachItem(context, Validators);
+
+        [Diagnostics.NotNull, ItemNotNull]
+        public IEnumerable<Diagnostic> Validators([NotNull] ICheckerContext context, [NotNull] Item item, [NotNull] Data.Items.Item databaseItem)
         {
-            foreach (var item in context.Project.Items)
-            {
-                var database = Factory.GetDatabase(item.DatabaseName);
-                var databaseItem = database.GetItem(new Data.ID(item.Uri.Guid));
-                if (databaseItem == null)
-                {
-                    continue;
-                }
-
-                if (StandardValuesManager.IsStandardValuesHolder(databaseItem))
-                {
-                    continue;
-                }
-
-                foreach (var diagnostic in Validate(item, databaseItem))
-                {
-                    yield return diagnostic;
-                }
-            }
+            return StandardValuesManager.IsStandardValuesHolder(databaseItem) ? Enumerable.Empty<Diagnostic>() : Validate(item, databaseItem);
         }
 
         [CanBeNull]

@@ -13,6 +13,7 @@ using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Pathfinder.Text;
+using Sitecore.SecurityModel;
 
 namespace Sitecore.Pathfinder.Checking
 {
@@ -161,10 +162,16 @@ namespace Sitecore.Pathfinder.Checking
             _diagnostics.Add(diagnostic);
         }
 
+        [NotNull]
+        private readonly object _syncObject = new object();
+
         private void Add([NotNull] IProjectItem projectItem)
         {
-            _projectItems.Add(projectItem);
-            Index.Add(projectItem);
+            lock (_syncObject)
+            {
+                _projectItems.Add(projectItem);
+                Index.Add(projectItem);
+            }
         }
 
         private void AddField([NotNull] ISnapshot snapshot, [NotNull] Item item, [NotNull] Data.Fields.Field databaseField)
@@ -186,8 +193,12 @@ namespace Sitecore.Pathfinder.Checking
 
         private void LoadDatabase([NotNull] Data.Database database)
         {
-            LoadTemplates(database);
-            LoadItems(database.GetRootItem());
+            // todo: reconsider using SecurityDisabler
+            using (new SecurityDisabler())
+            {
+                LoadTemplates(database);
+                LoadItems(database.GetRootItem());
+            }
         }
 
         private void LoadItems([NotNull] Data.Items.Item databaseItem)

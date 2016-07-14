@@ -8,25 +8,19 @@ using Sitecore.Configuration;
 using Sitecore.IO;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Security.AccessControl;
+using Sitecore.Security.Accounts;
 using Sitecore.Security.Authentication;
 using Sitecore.SecurityModel.License;
 using Sitecore.Xml;
 
 namespace Sitecore.Pathfinder.Checking.Checkers
 {
-    public class SecurityCheckers : Checker
+    public class SecurityCheckers : WebsiteChecker
     {
         [Export("Check"), NotNull, ItemNotNull]
-        public IEnumerable<Diagnostic> DataFolderIsUnderWebsiteFolder([NotNull] ICheckerContext context)
-        {
-            if (FileUtil.MapPath(Settings.DataFolder).StartsWith(FileUtil.MapPath("/"), StringComparison.InvariantCultureIgnoreCase))
-            {
-                yield return Warning(Msg.G1000, $"The Data folder is located inside the web site root in \"{Settings.DataFolder}\". This is a potential security risk.", "To fix, move the Data folder outside the web site root and change the \"DataFolder\" setting in the web.config to point to the new location.");
-            }
-        }
-
-        [Export("Check"), NotNull, ItemNotNull]
-        public IEnumerable<Diagnostic> DefaultAdminPassword([NotNull] ICheckerContext context)
+        public IEnumerable<Diagnostic> AvoidDefaultAdminPassword([NotNull] ICheckerContext context)
         {
             var isValid = false;
             Exception exception = null;
@@ -65,6 +59,54 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         }
 
         [Export("Check"), NotNull, ItemNotNull]
+        public IEnumerable<Diagnostic> AvoidExplicitSecurityDenies([NotNull] ICheckerContext context) => ForEachItem(context, AvoidExplicitSecurityDenies);
+
+        [NotNull, ItemNotNull]
+        public IEnumerable<Diagnostic> AvoidExplicitSecurityDenies([NotNull] ICheckerContext context, [NotNull] Item item, [NotNull] Data.Items.Item databaseItem)
+        {
+            var rules = databaseItem.Security.GetAccessRules();
+
+            foreach (var rule in rules)
+            {
+                if (rule.SecurityPermission != SecurityPermission.DenyAccess)
+                {
+                    continue;
+                }
+
+                if (rule.AccessRight.IsFieldRight)
+                {
+                    continue;
+                }
+
+                yield return Warning(Msg.G1000, $"\"{rule.AccessRight.Title}\" is explicitly denied which is not recommended.", databaseItem, "To fix, use inheritance to restrict permission.");
+            }
+        }
+
+        [Export("Check"), NotNull, ItemNotNull]
+        public IEnumerable<Diagnostic> AvoidUsingPartnerLicense([NotNull] ICheckerContext context)
+        {
+            var license = License.VerifiedLicense();
+            if (license == null)
+            {
+                yield break;
+            }
+
+            if (License.Purpose.Contains("The Sitecore partner"))
+            {
+                yield return Warning(Msg.G1000, $"The active license belongs to the partner \"{License.Licensee}\".", "To fix, obtain a valid customer license from your partner or Sitecore.");
+            }
+        }
+
+        [Export("Check"), NotNull, ItemNotNull]
+        public IEnumerable<Diagnostic> DataFolderShouldNotBeUnderWebsiteFolder([NotNull] ICheckerContext context)
+        {
+            if (FileUtil.MapPath(Settings.DataFolder).StartsWith(FileUtil.MapPath("/"), StringComparison.InvariantCultureIgnoreCase))
+            {
+                yield return Warning(Msg.G1000, $"The Data folder is located inside the web site root in \"{Settings.DataFolder}\". This is a potential security risk.", "To fix, move the Data folder outside the web site root and change the \"DataFolder\" setting in the web.config to point to the new location.");
+            }
+        }
+
+        [Export("Check"), NotNull, ItemNotNull]
         public IEnumerable<Diagnostic> LicenseIsAboutToExpire([NotNull] ICheckerContext context)
         {
             var license = License.VerifiedLicense();
@@ -94,17 +136,153 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         }
 
         [Export("Check"), NotNull, ItemNotNull]
-        public IEnumerable<Diagnostic> UsingPartnerLicense([NotNull] ICheckerContext context)
+        public IEnumerable<Diagnostic> LockedByNonExistingUser([NotNull] ICheckerContext context) => ForEachItem(context, LockedByNonExistingUser);
+
+        [NotNull, ItemNotNull]
+        public IEnumerable<Diagnostic> LockedByNonExistingUser([NotNull] ICheckerContext context, [NotNull] Item item, [NotNull] Data.Items.Item databaseItem)
         {
-            var license = License.VerifiedLicense();
-            if (license == null)
+            if (!databaseItem.Locking.IsLocked())
             {
                 yield break;
             }
 
-            if (License.Purpose.Contains("The Sitecore partner"))
+            var owner = databaseItem.Locking.GetOwner();
+            if (string.IsNullOrEmpty(owner))
             {
-                yield return Warning(Msg.G1000, $"The active license belongs to the partner \"{License.Licensee}\".", "To fix, obtain a valid customer license from your partner or Sitecore.");
+                yield break;
+            }
+
+            if (User.Exists(owner))
+            {
+                yield break;
+            }
+
+            yield return Warning(Msg.G1000, "The item is locked by the non-existing user", databaseItem, $"{owner}. To fix, unlock the item.");
+        }
+
+        [Export("Check"), NotNull, ItemNotNull]
+        public IEnumerable<Diagnostic> OwnedByNonExistingUser([NotNull] ICheckerContext context) => ForEachItem(context, OwnedByNonExistingUser);
+
+        [NotNull, ItemNotNull]
+        public IEnumerable<Diagnostic> OwnedByNonExistingUser([NotNull] ICheckerContext context, [NotNull] Item item, [NotNull] Data.Items.Item databaseItem)
+        {
+            if (!databaseItem.Locking.IsLocked())
+            {
+                yield break;
+            }
+
+            var owner = databaseItem[FieldIDs.Owner];
+            if (string.IsNullOrEmpty(owner))
+            {
+                yield break;
+            }
+
+            if (User.Exists(owner))
+            {
+                yield break;
+            }
+
+            yield return Warning(Msg.G1000, "Item is owned by non-existing user", databaseItem, $"{owner}. To fix, remove the ownership");
+        }
+
+        [Export("Check"), NotNull, ItemNotNull]
+        public IEnumerable<Diagnostic> SecurityOnUser([NotNull] ICheckerContext context) => ForEachItem(context, SecurityOnUser);
+
+        [NotNull, ItemNotNull]
+        public IEnumerable<Diagnostic> SecurityOnUser([NotNull] ICheckerContext context, [NotNull] Item item, [NotNull] Data.Items.Item databaseItem)
+        {
+            var rules = databaseItem.Security.GetAccessRules();
+
+            foreach (var rule in rules)
+            {
+                if (rule.Account.AccountType != AccountType.User)
+                {
+                    continue;
+                }
+
+                if (rule.Account.Name == "sitecore\\Anonymous")
+                {
+                    continue;
+                }
+
+                if (rule.Account.Name == "$currentuser")
+                {
+                    continue;
+                }
+
+                yield return Warning(Msg.G1000, "Security assigned to user", databaseItem, $"\"{rule.AccessRight.Title}\" is assigned to the user \"{rule.Account.DisplayName}\". It is recommended to assign security to roles only. To fix, assign security to a role");
+            }
+        }
+
+        [Export("Check"), NotNull, ItemNotNull]
+        public IEnumerable<Diagnostic> SecurityOnNonExistingRole([NotNull] ICheckerContext context) => ForEachItem(context, SecurityOnNonExistingRole);
+
+        [NotNull, ItemNotNull]
+        public IEnumerable<Diagnostic> SecurityOnNonExistingRole([NotNull] ICheckerContext context, [NotNull] Item item, [NotNull] Data.Items.Item databaseItem)
+        {
+            var rules = databaseItem.Security.GetAccessRules();
+
+            foreach (var rule in rules)
+            {
+                if (rule.Account.AccountType != AccountType.Role)
+                {
+                    continue;
+                }
+
+                if (Role.Exists(rule.Account.Name))
+                {
+                    continue;
+                }
+
+                var role = Role.FromName(rule.Account.Name);
+                if (role != null)
+                {
+                    if (role.IsEveryone)
+                    {
+                        continue;
+                    }
+
+                    if (role.IsGlobal)
+                    {
+                        continue;
+                    }
+                }
+
+                yield return Warning(Msg.G1000, "Security set on non-existing role", databaseItem, $"\"{rule.AccessRight.Title}\" is assigned to the non-existing role: {rule.Account.DisplayName}. To fix, remove the security assignment.");
+            }
+        }
+
+        [Export("Check"), NotNull, ItemNotNull]
+        public IEnumerable<Diagnostic> SecurityOnNonExistingUser([NotNull] ICheckerContext context) => ForEachItem(context, SecurityOnNonExistingUser);
+
+        [NotNull, ItemNotNull]
+        public IEnumerable<Diagnostic> SecurityOnNonExistingUser([NotNull] ICheckerContext context, [NotNull] Item item, [NotNull] Data.Items.Item databaseItem)
+        {
+            var rules = databaseItem.Security.GetAccessRules();
+
+            foreach (var rule in rules)
+            {
+                if (rule.Account.AccountType != AccountType.User)
+                {
+                    continue;
+                }
+
+                if (User.Exists(rule.Account.Name))
+                {
+                    continue;
+                }
+
+                if (rule.Account.Name == "sitecore\\Anonymous")
+                {
+                    continue;
+                }
+
+                if (rule.Account.Name == "$currentuser")
+                {
+                    continue;
+                }
+
+                yield return Warning(Msg.G1000, "Security set on non-existing user", databaseItem, $"\"{rule.AccessRight.Title}\" assigned to the non-existing user \"{rule.Account.DisplayName}\". To fix, remove the security assignment.");
             }
         }
 
