@@ -4,7 +4,7 @@ This walkthrough shows how to setup Pathfinder initially.
 
 ## Download Pathfinder
 
-You can download Pathfinder from [here](http://vsplugins.sitecore.net/Pathfinder/Sitecore.Pathfinder.0.6.0.zip). Unzip
+You can download Pathfinder from [here](https://github.com/JakobChristensen/Sitecore.Pathfinder/releases). Unzip
 the file to the Program Files folder, e.g. `C:\Program Files (x86)\SitecorePathfinder`.
 
 The path of the scc.exe file should be something like `C:\Program Files (x86)\SitecorePathfinder\scc.exe`.

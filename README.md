@@ -22,7 +22,7 @@ _Please notice that some details in these videos are out of date._
 * [04 - Html Templates](https://www.youtube.com/watch?v=9aTGhW6ErYM)
 * [05 - Code Generation, Visual Studio and Grunt](http://youtu.be/ZM3ve1WhwwQ)
 
-Download [the latest Pathfinder build](https://ci.appveyor.com/project/JakobChristensen/sitecore-pathfinder/build/artifacts) to 
+Download [the latest Pathfinder build](https://github.com/JakobChristensen/Sitecore.Pathfinder/releases) to 
 try it out.
 
 Follow the walk-throughs:
