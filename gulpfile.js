@@ -133,5 +133,5 @@ gulp.task("publish", function() {
 });
 
 gulp.task("appveyor", function() {
-    runSequence("build-dist-directory", ["build-zip-file", "build-npm-package", "build-nuget-package"]);
+    runSequence("build-dist-directory", ["build-zip-file", "build-npm-package", "build-nuget-package"], ["publish-nuget-package", "publish-npm-package"]);
 });
