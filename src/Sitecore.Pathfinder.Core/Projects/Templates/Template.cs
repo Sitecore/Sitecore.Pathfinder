@@ -14,6 +14,9 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull]
         public static readonly Template Empty = new Template(Projects.Project.Empty, new Guid("{00000000-0000-0000-0000-000000000000}"), string.Empty, string.Empty, string.Empty);
 
+        [NotNull]
+        private readonly object _syncObject = new object();
+
         [CanBeNull, ItemNotNull]
         private List<TemplateField> _allFields;
 
@@ -78,13 +81,51 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull, ItemNotNull]
         public virtual IEnumerable<TemplateField> GetAllFields()
         {
-            if (_allFields != null)
+            // ReSharper disable once InvertIf
+            if (_allFields == null)
             {
-                return _allFields;
+                lock (_syncObject)
+                {
+                    // ReSharper disable once InvertIf
+                    if (_allFields == null)
+                    {
+                        var allFields = new List<TemplateField>();
+
+                        foreach (var field in Sections.SelectMany(s => s.Fields))
+                        {
+                            allFields.Add(field);
+                        }
+
+                        var baseTemplates = BaseTemplates.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries);
+                        foreach (var baseTemplateId in baseTemplates)
+                        {
+                            if (baseTemplateId == Constants.NullGuidString)
+                            {
+                                continue;
+                            }
+
+                            var baseTemplate = Project.FindQualifiedItem<Template>(Database, baseTemplateId);
+                            if (baseTemplate == null)
+                            {
+                                continue;
+                            }
+
+                            foreach (var templateField in baseTemplate.GetAllFields())
+                            {
+                                var guid = templateField.Uri.Guid;
+                                if (allFields.All(f => f.Uri.Guid != guid))
+                                {
+                                    allFields.Add(templateField);
+                                }
+                            }
+                        }
+
+                        _allFields = allFields;
+                    }
+                }
             }
 
-            var templates = new List<IProjectItemUri>();
-            return GetAllFields(templates);
+            return _allFields;
         }
 
         [ItemNotNull, NotNull]
@@ -126,52 +167,13 @@ namespace Sitecore.Pathfinder.Projects.Templates
             Merge(newTemplate, true);
         }
 
-        [NotNull, ItemNotNull]
-        protected virtual IEnumerable<TemplateField> GetAllFields([NotNull, ItemNotNull] ICollection<IProjectItemUri> templates)
+        [NotNull]
+        public Template With([NotNull] ITextNode sourceTextNode, bool isEmiitable = true, bool isImport = false)
         {
-            if (_allFields != null)
-            {
-                return _allFields;
-            }
-
-            templates.Add(Uri);
-            _allFields = new List<TemplateField>();
-
-            foreach (var field in Sections.SelectMany(s => s.Fields))
-            {
-                _allFields.Add(field);
-            }
-
-            var baseTemplates = BaseTemplates.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var baseTemplateId in baseTemplates)
-            {
-                if (baseTemplateId == Constants.NullGuidString)
-                {
-                    continue;
-                }
-
-                var baseTemplate = Project.FindQualifiedItem<Template>(Database, baseTemplateId);
-                if (baseTemplate == null)
-                {
-                    continue;
-                }
-
-                if (templates.Contains(baseTemplate.Uri))
-                {
-                    continue;
-                }
-
-                foreach (var templateField in baseTemplate.GetAllFields(templates))
-                {
-                    var guid = templateField.Uri.Guid;
-                    if (_allFields.All(f => f.Uri.Guid != guid))
-                    {
-                        _allFields.Add(templateField);
-                    }
-                }
-            }
-
-            return _allFields;
+            AddSourceTextNode(sourceTextNode);
+            IsEmittable = isEmiitable;
+            IsImport = isImport;
+            return this;
         }
 
         protected override void Merge(IProjectItem newProjectItem, bool overwrite)
@@ -213,15 +215,6 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
                 section.Merge(newSection, overwrite);
             }
-        }
-
-        [NotNull]
-        public Template With([NotNull] ITextNode sourceTextNode, bool isEmiitable = true, bool isImport = false)
-        {
-            AddSourceTextNode(sourceTextNode);
-            IsEmittable = isEmiitable;
-            IsImport = isImport;
-            return this;
         }
     }
 }

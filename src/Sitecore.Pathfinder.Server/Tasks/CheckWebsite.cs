@@ -31,6 +31,8 @@ namespace Sitecore.Pathfinder.Tasks
 
             var project = host.CompositionService.Resolve<WebsiteProject>().With(Factory.GetDatabase("master"), options, host.Configuration.GetProjectDirectory(), "WebsiteChecker");
 
+            project.Locking = Locking.ReadOnly;
+
             checkerService.CheckProject(project, project);
 
             Trace.TraceDiagnostics(project.Diagnostics, false);

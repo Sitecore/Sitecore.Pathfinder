@@ -170,7 +170,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         public void Compile([NotNull] IFieldCompileContext context)
         {
-            if (!context.FieldCompilers.Any() || IsCompiled)
+            if (IsCompiled || !context.FieldCompilers.Any())
             {
                 return;
             }
@@ -179,15 +179,17 @@ namespace Sitecore.Pathfinder.Projects.Items
 
             foreach (var compiler in context.FieldCompilers.OrderBy(r => r.Priority))
             {
-                if (compiler.CanCompile(context, this))
+                if (!compiler.CanCompile(context, this))
                 {
-                    CompiledValue = compiler.Compile(context, this);
-                    IsCompiled = true;
+                    continue;
+                }
 
-                    if (compiler.IsExclusive)
-                    {
-                        break;
-                    }
+                CompiledValue = compiler.Compile(context, this);
+                IsCompiled = true;
+
+                if (compiler.IsExclusive)
+                {
+                    break;
                 }
             }
         }

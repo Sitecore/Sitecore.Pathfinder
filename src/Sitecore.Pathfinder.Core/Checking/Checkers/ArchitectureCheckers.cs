@@ -30,10 +30,10 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         }
 
         [NotNull]
-        protected IFactoryService Factory { get; }
+        protected IConfiguration Configuration { get; }
 
         [NotNull]
-        protected IConfiguration Configuration { get; }
+        protected IFactoryService Factory { get; }
 
         [NotNull]
         protected IFileSystemService FileSystem { get; }
@@ -86,7 +86,13 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                         break;
 
                     case "element":
-                        foreach (var textNode in GetRefs(childNode, childNode.GetAttributeValue("ref")))
+                        var refs = childNode.GetAttributeValue("ref");
+                        if (string.IsNullOrEmpty(refs))
+                        {
+                            throw new InvalidOperationException($"'ref' attribute expected at {childNode.Snapshot.SourceFile.AbsoluteFileName} {childNode.TextSpan}");
+                        }
+
+                        foreach (var textNode in GetRefs(childNode, refs))
                         {
                             yield return textNode;
                         }
@@ -94,7 +100,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                         break;
 
                     default:
-                        throw new InvalidOperationException("Unexpected schema element: " + childNode.Key);
+                        throw new InvalidOperationException($"Unexpected schema element '{childNode.Key} at {childNode.Snapshot.SourceFile.AbsoluteFileName} {childNode.TextSpan}");
                 }
             }
         }
@@ -189,7 +195,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                 var refs = GetRefs(textNode, reference).ToArray();
                 if (refs.Length > 1)
                 {
-                    throw new InvalidOperationException("Referenced element may only contain one element");
+                    throw new InvalidOperationException($"Referenced element may only contain one element at {textNode.Snapshot.SourceFile.AbsoluteFileName} {textNode.TextSpan}");
                 }
 
                 textNode = refs.First();
@@ -243,13 +249,13 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         }
 
         [ItemNotNull, NotNull]
-        protected virtual IEnumerable<Diagnostic> MatchUnexpectedItems([NotNull] Item item, [NotNull] Item[] children, [NotNull] ITextNode[] schemaChildNodes)
+        protected virtual IEnumerable<Diagnostic> MatchUnexpectedItems([NotNull] Item item, [NotNull, ItemNotNull] Item[] children, [NotNull, ItemNotNull] ITextNode[] schemaChildNodes)
         {
             foreach (var child in children)
             {
                 if (!schemaChildNodes.Any(c => IsMatch(child, c)))
                 {
-                    yield return new Diagnostic(Msg.D1025, item.Snapshot.SourceFile.RelativeFileName, TraceHelper.GetTextNode(item).TextSpan, Severity.Error, "Unexpected item: " + child.ItemIdOrPath + " [ArchitectureChecker]");
+                    yield return new Diagnostic(Msg.D1025, item.Snapshot.SourceFile.RelativeFileName, TraceHelper.GetTextNode(item).TextSpan, Severity.Error, $"Unexpected item '{child.ItemIdOrPath}'");
                 }
             }
         }
@@ -260,7 +266,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
             var element = ((ITextSnapshot)textNode.Snapshot).Root.ChildNodes.FirstOrDefault(e => e.Key == "element" && e.GetAttributeValue("name") == reference);
             if (element == null)
             {
-                throw new InvalidOperationException("Element definition not found: " + reference);
+                throw new InvalidOperationException($"Element definition '{reference}' not found at {textNode.Snapshot.SourceFile.AbsoluteFileName} {textNode.TextSpan}");
             }
 
             foreach (var schemaChildNode in GetSchemaChildNodes(element))
@@ -277,7 +283,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                 var fieldName = childNode.GetAttributeValue("name");
                 if (string.IsNullOrEmpty(fieldName))
                 {
-                    throw new InvalidOperationException("Schema 'field' element must have 'name' attribute");
+                    throw new InvalidOperationException($"Schema 'field' element must have 'name' attribute at {childNode.Snapshot.SourceFile.AbsoluteFileName} {childNode.TextSpan}");
                 }
 
                 var use = childNode.GetAttributeValue("use");
@@ -298,7 +304,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
             {
                 if (schemaChildNode.Key != "item")
                 {
-                    throw new InvalidOperationException("Unexpected node: " + schemaChildNode.Key);
+                    throw new InvalidOperationException($"Unexpected node {schemaChildNode.Key} at {schemaChildNode.Snapshot.SourceFile.AbsoluteFileName} {schemaChildNode.TextSpan}");
                 }
 
                 // in references, the referring text node may overwrite the referred text nodes

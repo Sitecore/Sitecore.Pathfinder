@@ -21,7 +21,7 @@
             </item>
             <item name="media library" maxOccurs="1">
                 <children>
-                    <element name="MediaFolder" />
+                    <element ref="MediaFolder" />
                 </children>
             </item>
             <item name="social" maxOccurs="1" />

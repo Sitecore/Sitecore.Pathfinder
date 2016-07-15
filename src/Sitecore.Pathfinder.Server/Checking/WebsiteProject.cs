@@ -34,6 +34,7 @@ namespace Sitecore.Pathfinder.Checking
         {
             Index = index;
             ReferenceParser = referenceParser;
+            Locking = Locking.ReadWrite;
         }
 
         public IEnumerable<Diagnostic> Diagnostics => _diagnostics;
@@ -42,7 +43,7 @@ namespace Sitecore.Pathfinder.Checking
 
         public IEnumerable<Item> Items => Index.Items;
 
-        public Locking Locking => Locking.ReadWrite;
+        public Locking Locking { get; set; }
 
         public ProjectOptions Options { get; private set; }
 

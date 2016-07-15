@@ -78,7 +78,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Checking\Checkers\ArchitectureCheckers.cs" />
-    <Compile Include="Compiling\Pipelines\CompilePipelines\0500 - CompileTemplates.cs" />
     <Compile Include="Emitting\IProjectEmitter.cs" />
     <Compile Include="Extensions\DiagnosticCollectionExtensions.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
