@@ -31,8 +31,6 @@ namespace Sitecore.Pathfinder.Tasks
         [NotNull, ItemNotNull]
         protected virtual IList<string> GetTaskNames([NotNull] ITaskContext context)
         {
-            string taskList;
-
             // get first positional command line argument or the run parameter
             var tasks = context.Configuration.GetCommandLineArg(0);
 
@@ -51,7 +49,9 @@ namespace Sitecore.Pathfinder.Tasks
                 };
             }
 
-            if (string.IsNullOrEmpty(tasks) || tasks == "build")
+            var taskList = tasks;
+
+            if (string.IsNullOrEmpty(tasks) || tasks == "build" || tasks == "build-project")
             {
                 // use the build-project:tasks configuration 
                 taskList = context.Configuration.GetString(Constants.Configuration.BuildProject.Tasks);
@@ -69,10 +69,42 @@ namespace Sitecore.Pathfinder.Tasks
                 }
 
                 // look for '*:tasks' in configuration
-                taskList = context.Configuration.GetString(tasks + ":tasks");
+                var alias = context.Configuration.GetString(tasks + ":tasks");
+                if (!string.IsNullOrEmpty(alias))
+                {
+                    taskList = alias;
+                }
             }
 
             return taskList.Split(Constants.Space, StringSplitOptions.RemoveEmptyEntries).Select(t => t.Trim()).ToList();
+        }
+
+        [CanBeNull, ItemNotNull]
+        protected virtual IEnumerable<ITask> GetTasks([NotNull] ITaskContext context, [NotNull, ItemNotNull] IEnumerable<string> taskNames)
+        {
+            var tasks = new List<ITask>();
+
+            foreach (var taskName in taskNames)
+            {
+                ITask task;
+                if (IsScriptTask(context, taskName))
+                {
+                    task = Tasks.OfType<IScriptTask>().First().With(taskName);
+                }
+                else
+                {
+                    task = Tasks.FirstOrDefault(t => string.Equals(t.TaskName, taskName, StringComparison.OrdinalIgnoreCase));
+                    if (task == null)
+                    {
+                        context.Trace.TraceError(Msg.I1006, Texts.Task_not_found__Skipping, taskName);
+                        return null;
+                    }
+                }
+
+                tasks.Add(task);
+            }
+
+            return tasks;
         }
 
         protected virtual bool IsScriptTask([NotNull] ITaskContext context, [NotNull] string taskName)
@@ -89,25 +121,8 @@ namespace Sitecore.Pathfinder.Tasks
             }
         }
 
-        protected virtual void RunTask([NotNull] ITaskContext context, [NotNull] string taskName, LifeCycle lifeCycle)
+        protected virtual void RunTask([NotNull] ITaskContext context, [NotNull] ITask task, LifeCycle lifeCycle)
         {
-            ITask task;
-
-            // check if the is a script task
-            if (IsScriptTask(context, taskName))
-            {
-                task = Tasks.OfType<IScriptTask>().First().With(taskName);
-            }
-            else
-            {
-                task = Tasks.FirstOrDefault(t => string.Equals(t.TaskName, taskName, StringComparison.OrdinalIgnoreCase));
-                if (task == null)
-                {
-                    context.Trace.TraceError(Msg.I1006, Texts.Task_not_found__Skipping, taskName);
-                    return;
-                }
-            }
-
             if (context.IsAborted && !(task is IIgnoreAbortedTask))
             {
                 return;
@@ -149,27 +164,33 @@ namespace Sitecore.Pathfinder.Tasks
 
         protected virtual void RunTasks([NotNull] ITaskContext context)
         {
-            var tasks = GetTaskNames(context);
-            if (!tasks.Any())
+            var taskNames = GetTaskNames(context);
+            if (!taskNames.Any())
             {
                 context.Trace.TraceWarning(Msg.I1008, Texts.Pipeline_is_empty__There_are_no_tasks_to_execute_);
                 PauseAfterRun();
                 return;
             }
 
-            foreach (var taskName in tasks)
+            var tasks = GetTasks(context, taskNames);
+            if (tasks == null)
             {
-                RunTask(context, taskName, LifeCycle.PreRun);
+                return;
             }
 
-            foreach (var taskName in tasks)
+            foreach (var task in tasks)
             {
-                RunTask(context, taskName, LifeCycle.Run);
+                RunTask(context, task, LifeCycle.PreRun);
             }
 
-            foreach (var taskName in tasks)
+            foreach (var task in tasks)
             {
-                RunTask(context, taskName, LifeCycle.PostRun);
+                RunTask(context, task, LifeCycle.Run);
+            }
+
+            foreach (var task in tasks)
+            {
+                RunTask(context, task, LifeCycle.PostRun);
             }
 
             if (context.IsAborted)

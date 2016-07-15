@@ -75,6 +75,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="help\tasks\pack-nuget.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

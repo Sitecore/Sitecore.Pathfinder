@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Tasks.Building
 
         public ICollection<IProjectItem> ModifiedProjectItems { get; } = new List<IProjectItem>();
 
-        public ICollection<string> OutputFiles { get; } = new List<string>();
+        public ICollection<OutputFile> OutputFiles { get; } = new List<OutputFile>();
 
         public IProject Project => _project ?? (_project = _loadProject());
 

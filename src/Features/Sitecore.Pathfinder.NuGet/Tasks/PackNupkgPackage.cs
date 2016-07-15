@@ -67,13 +67,10 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
         protected virtual void Pack([NotNull] IBuildContext context, [NotNull] string nuspecFileName, [NotNull] string nupkgDirectory)
         {
             var nupkgFileName = BuildNupkgFile(context, nuspecFileName, nupkgDirectory);
-            if (string.IsNullOrEmpty(nupkgFileName))
+            if (!string.IsNullOrEmpty(nupkgFileName))
             {
-                return;
+                context.Trace.TraceInformation(Msg.D1019, Texts.NuGet_file_size, $"{PathHelper.UnmapPath(context.Project.ProjectDirectory, nupkgFileName)} ({new FileInfo(nupkgFileName).Length.ToString("#,##0 bytes")})");
             }
-
-            context.OutputFiles.Add(nupkgFileName);
-            context.Trace.TraceInformation(Msg.D1019, Texts.NuGet_file_size, $"{PathHelper.UnmapPath(context.Project.ProjectDirectory, nupkgFileName)} ({new FileInfo(nupkgFileName).Length.ToString("#,##0 bytes")})");
         }
 
         [NotNull]
@@ -83,7 +80,7 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
 
             var basePath = PathHelper.Combine(context.Project.ProjectDirectory, context.Configuration.GetString(Constants.Configuration.PackNuGet.BasePath));
 
-            var nupkgFileName = string.Empty;
+            string nupkgFileName;
 
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(nuspec));
             try
@@ -103,6 +100,8 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
                 {
                     packageBuilder.Save(nupkg);
                 }
+
+                context.OutputFiles.Add(new NugetOutputFile(nupkgFileName, packageBuilder.Id));
             }
             catch (Exception ex)
             {

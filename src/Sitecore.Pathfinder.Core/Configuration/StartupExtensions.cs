@@ -26,7 +26,7 @@ namespace Sitecore.Pathfinder.Configuration
 
             if (commandLine == null)
             {
-                commandLine = configuration.GetCommandLine();
+                commandLine = (options & ConfigurationOptions.Interactive) == ConfigurationOptions.Interactive ? configuration.GetCommandLine() : new string[0];
             }
 
             var configurationService = new ConfigurationService(configuration);

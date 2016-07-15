@@ -1,6 +1,6 @@
 {
     "name": "sitecore-pathfinder-dependencies",
-    "version": "0.6.0",
+    "version": "0.8.0",
     "description": "Sitecore Pathfinder Node Dependencies",
     "main": "gulpfile.js",
     "dependencies": {

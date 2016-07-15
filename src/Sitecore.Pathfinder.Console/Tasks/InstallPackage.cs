@@ -23,19 +23,15 @@ namespace Sitecore.Pathfinder.Tasks
                 return;
             }
 
-            foreach (var fileName in context.OutputFiles)
+            foreach (var outputFile in context.OutputFiles.OfType<NugetOutputFile>())
             {
-                var packageId = Path.GetFileNameWithoutExtension(fileName);
-                if (string.IsNullOrEmpty(packageId))
-                {
-                    continue;
-                }
+                var packageId = outputFile.PackageId;
 
                 var feeds = string.Empty;
                 if (context.Configuration.GetBool(Constants.Configuration.InstallPackage.AddProjectDirectoriesAsFeeds, true))
                 {
                     var packagesDirectory = Path.Combine(context.ProjectDirectory, context.Configuration.GetString(Constants.Configuration.Packages.NugetDirectory));
-                    feeds = Path.GetDirectoryName(fileName) + "," + packagesDirectory;
+                    feeds = Path.GetDirectoryName(outputFile.FileName) + "," + packagesDirectory;
                 }
 
                 var queryStringParameters = new Dictionary<string, string>
@@ -48,7 +44,7 @@ namespace Sitecore.Pathfinder.Tasks
                 var webRequest = GetWebRequest(context).WithQueryString(queryStringParameters).WithUrl(context.Configuration.GetString(Constants.Configuration.InstallPackage.InstallUrl));
                 if (Post(context, webRequest))
                 {
-                    context.Trace.TraceInformation(Msg.D1009, Texts.Installed, Path.GetFileName(fileName));
+                    context.Trace.TraceInformation(Msg.D1009, Texts.Installed, Path.GetFileName(outputFile.FileName));
                 }
             }
         }

@@ -441,6 +441,18 @@
     <None Include="help\index.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="help\tasks\sync-website.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="help\tasks\init-habitat.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="help\tasks\list-output.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="help\tasks\check-website.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="help\tasks\update-website-files.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

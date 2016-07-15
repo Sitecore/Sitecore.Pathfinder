@@ -18,7 +18,7 @@ namespace Sitecore.Pathfinder.Tasks.Building
         ICollection<IProjectItem> ModifiedProjectItems { get; }
 
         [NotNull, ItemNotNull]
-        ICollection<string> OutputFiles { get; }
+        ICollection<OutputFile> OutputFiles { get; }
 
         [NotNull]
         IProject Project { get; }

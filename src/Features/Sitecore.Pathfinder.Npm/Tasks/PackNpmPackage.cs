@@ -48,7 +48,7 @@ namespace Sitecore.Pathfinder.Npm.Tasks
             var outputFileName = GetOutputFileName(context, npmFileName);
             if (!string.IsNullOrEmpty(outputFileName) && FileSystem.FileExists(outputFileName))
             {
-                context.OutputFiles.Add(outputFileName);
+                context.OutputFiles.Add(new OutputFile(outputFileName));
             }
         }
 

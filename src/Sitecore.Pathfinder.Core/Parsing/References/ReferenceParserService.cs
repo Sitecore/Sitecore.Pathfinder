@@ -94,6 +94,7 @@ namespace Sitecore.Pathfinder.Parsing.References
             var databaseName = string.Empty;
             var value = field.Value;
 
+            /*
             // look for database name
             if (field.TemplateField.Source.IndexOf("database", StringComparison.OrdinalIgnoreCase) >= 0)
             {
@@ -129,6 +130,7 @@ namespace Sitecore.Pathfinder.Parsing.References
                 yield return Factory.FileReference(field.Item, sourceProperty, referenceText);
                 yield break;
             }
+            */
 
             var textNode = TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field);
             foreach (var reference in ParseReferences(field.Item, textNode, field.Value, databaseName))

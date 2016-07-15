@@ -38,18 +38,18 @@ namespace Sitecore.Pathfinder.Tasks
 
             foreach (var pair in dictionary)
             {
-                foreach (var fileName in context.OutputFiles)
+                foreach (var outputFile in context.OutputFiles)
                 {
-                    if (!PathHelper.MatchesPattern(fileName, pair.Key))
+                    if (!PathHelper.MatchesPattern(outputFile.FileName, pair.Key))
                     {
                         continue;
                     }
 
                     var destinationDirectory = PathHelper.Combine(context.ProjectDirectory, pair.Value);
-                    var destinationFileName = Path.Combine(destinationDirectory, Path.GetFileName(fileName));
+                    var destinationFileName = Path.Combine(destinationDirectory, Path.GetFileName(outputFile.FileName));
 
                     FileSystem.CreateDirectoryFromFileName(destinationFileName);
-                    FileSystem.Copy(fileName, destinationFileName);
+                    FileSystem.Copy(outputFile.FileName, destinationFileName);
                 }
             }
         }

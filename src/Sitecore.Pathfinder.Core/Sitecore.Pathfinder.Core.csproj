@@ -57,6 +57,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Collections.Immutable, Version=1.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Collections.Immutable.1.2.0\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression" />
@@ -74,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Checking\Checkers\ArchitectureCheckers.cs" />
+    <Compile Include="Compiling\Pipelines\CompilePipelines\0500 - CompileTemplates.cs" />
     <Compile Include="Emitting\IProjectEmitter.cs" />
     <Compile Include="Extensions\DiagnosticCollectionExtensions.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
@@ -104,6 +109,8 @@
     <Compile Include="Snapshots\StringTextNode.cs" />
     <Compile Include="Tasks\Building\BuildContext.cs" />
     <Compile Include="Tasks\Building\IBuildTask.cs" />
+    <Compile Include="Tasks\Building\NuGetOutputFile.cs" />
+    <Compile Include="Tasks\Building\OutputFile.cs" />
     <Compile Include="Tasks\Building\WebRequest.cs" />
     <Compile Include="Tasks\ISetupTask.cs" />
     <Compile Include="Tasks\IIgnoreAbortedTask.cs" />

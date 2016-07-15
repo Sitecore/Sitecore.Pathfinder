@@ -23,12 +23,10 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
             foreach (var template in templates)
             {
-                if (pipeline.Context.Project.FindQualifiedItem<Item>(template.Uri) != null)
+                if (pipeline.Context.Project.FindQualifiedItem<Item>(template.Uri) == null)
                 {
-                    continue;
+                    CreateItems(pipeline.Context, pipeline.Context.Project, template);
                 }
-
-                CreateItems(pipeline.Context, pipeline.Context.Project, template);
             }
         }
 
