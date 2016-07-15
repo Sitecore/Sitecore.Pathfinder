@@ -19,17 +19,19 @@
                     <item name="Simulators" template="Folder" maxOccurs="1" />
                 </children>
             </item>
-            <item name="media library" maxOccurs="1">
-                <children>
-                    <element ref="MediaFolder" />
-                </children>
-            </item>
+            <item name="media library" maxOccurs="1" ref="MediaFolder" />
             <item name="social" maxOccurs="1" />
             <item name="system" maxOccurs="1" />
             <item name="templates" maxOccurs="1">
                 <children>
-                    <item name="Branches" template="Branch Folder" maxOccurs="1" /> 
-                    <item name="System" template="TemplateFolder" maxOccurs="1" ref="TemplateFolder" /> 
+                    <item name="Branches" template="Branch Folder" maxOccurs="1" />
+                    <item name="System" template="TemplateFolder" maxOccurs="1">
+                        <children>
+                            <element ref="TemplateFolder" />
+                            <element ref="Template/Node" />
+                            <element ref="Template/Folder" />
+                        </children>
+                    </item>
                     <item />
                 </children>
             </item>
@@ -49,7 +51,7 @@
 
     <item template="Template Folder" ref="TemplateFolder" />
 
-    <item template="View Rendering">
+    <item template="View rendering">
         <fields>
             <field name="Path" use="required" />
         </fields>
@@ -89,15 +91,39 @@
         </item>
     </element>
 
-    <element name="TemplateFolder">
-        <item template="Template Folder">
+    <element name="Template/Node">
+        <item template="Node">
             <children>
                 <element ref="TemplateFolder" />
+                <element ref="Template/Node" />
+                <element ref="Template/Folder" />
                 <element ref="Template" />
             </children>
         </item>
     </element>
-        
+
+    <element name="Template/Folder">
+        <item template="Folder">
+            <children>
+                <element ref="TemplateFolder" />
+                <element ref="Template/Node" />
+                <element ref="Template/Folder" />
+                <element ref="Template" />
+            </children>
+        </item>
+    </element>
+
+    <element name="TemplateFolder">
+        <item template="Template Folder">
+            <children>
+                <element ref="TemplateFolder" />
+                <element ref="Template/Node" />
+                <element ref="Template/Folder" />
+                <element ref="Template" />
+            </children>
+        </item>
+    </element>
+
     <element name="TemplateSection">
         <item template="Template section">
             <children>

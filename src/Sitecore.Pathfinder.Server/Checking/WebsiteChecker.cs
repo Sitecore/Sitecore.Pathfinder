@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Sitecore.Configuration;
 using Sitecore.Data.Items;
@@ -15,9 +16,9 @@ namespace Sitecore.Pathfinder.Checking
     public abstract class WebsiteChecker : Checker
     {
         [NotNull]
-        protected Diagnostic Error(int msg, [NotNull] string text, [NotNull] Item item, [NotNull] string details = "")
+        protected Diagnostic Error(int msg, [NotNull] string text, [NotNull] Item item, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
         {
-            return Error(msg, text, item.Paths.Path, TextSpan.Empty, details);
+            return Error(msg, text, item.Paths.Path, TextSpan.Empty, details, checkerName);
         }
 
         [ItemNotNull, Diagnostics.NotNull]
@@ -67,9 +68,9 @@ namespace Sitecore.Pathfinder.Checking
         }
 
         [NotNull]
-        protected Diagnostic Warning(int msg, [NotNull] string text, [NotNull] Item item, [NotNull] string details = "")
+        protected Diagnostic Warning(int msg, [NotNull] string text, [NotNull] Item item, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
         {
-            return Warning(msg, text, item.Paths.Path, TextSpan.Empty, details);
+            return Warning(msg, text, item.Paths.Path, TextSpan.Empty, details, checkerName);
         }
     }
 }
