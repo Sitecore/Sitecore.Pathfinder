@@ -11,7 +11,7 @@ namespace Sitecore.Pathfinder.Tasks
     public class InitHabitat : BuildTaskBase
     {
         [ImportingConstructor]
-        public InitHabitat(IConsoleService console, [NotNull] IFileSystemService fileSystem) : base("init-habitat")
+        public InitHabitat([NotNull] IConsoleService console, [NotNull] IFileSystemService fileSystem) : base("init-habitat")
         {
             Console = console;
             FileSystem = fileSystem;

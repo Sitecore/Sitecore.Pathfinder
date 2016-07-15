@@ -252,6 +252,10 @@
     "reset-website": {
     },
 
+    "restore-packages": {
+        "directory": "files/packages"
+    },
+
     "sync-website": {
         "files": {
             "system-0": {
@@ -306,7 +310,7 @@
 
     "write-website-exports": {
         "system-0": {
-            "filename": "sitecore.project/repository/Sitecore.Master.nupkg",
+            "filename": "sitecore.project/packages/Sitecore.Master.nupkg",
             "queries": {
                 "system-0": {
                     "query": "/sitecore",
@@ -344,7 +348,7 @@
         },
 
         "system-1": {
-            "filename": "sitecore.project/repository/Sitecore.Core.nupkg",
+            "filename": "sitecore.project/packages/Sitecore.Core.nupkg",
             "queries": {
                 "system-0": {
                     "query": "/sitecore",
@@ -371,7 +375,7 @@
         },
 
         "system-2": {
-            "filename": "sitecore.project/repository/Sitecore.Speak.nupkg",
+            "filename": "sitecore.project/packages/Sitecore.Speak.nupkg",
             "queries": {
                 "system-1": {
                     "query": "/sitecore/client/Speak//*[@@templatekey='template' or @@templatekey='view rendering' or @@templatekey='layout']",
@@ -382,7 +386,7 @@
         },
 
         "system-3": {
-            "filename": "sitecore.project/repository/Sitecore.BusinessComponentLibrary.nupkg",
+            "filename": "sitecore.project/packages/Sitecore.BusinessComponentLibrary.nupkg",
             "queries": {
                 "system-1": {
                     "query": "/sitecore/client/Business Component Library//*[@@templatekey='template' or @@templatekey='view rendering' or @@templatekey='layout']",
@@ -393,7 +397,7 @@
         },
 
         "system-4": {
-            "filename": "sitecore.project/repository/Sitecore.Launchpad.nupkg",
+            "filename": "sitecore.project/packages/Sitecore.Launchpad.nupkg",
             "queries": {
                 "system-1": {
                     "query": "/sitecore/client/Applications/Launchpad//*[@@templatekey='template' or @@templatekey='view rendering' or @@templatekey='layout']",

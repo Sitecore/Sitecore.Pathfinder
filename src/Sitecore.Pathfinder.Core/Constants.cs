@@ -260,6 +260,11 @@ namespace Sitecore.Pathfinder
                 public const string PublishUrl = "publish-databases:publish-url";
             }
 
+            public static class RestorePackages
+            {
+                public const string Directory = "restore-packages:directory";
+            }
+
             public static class Scripts
             {
                 public const string Extensions = "scripts:file-extensions";

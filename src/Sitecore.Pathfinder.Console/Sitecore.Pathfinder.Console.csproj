@@ -94,9 +94,9 @@
       <HintPath>..\..\packages\Microsoft.Framework.ConfigurationModel.Xml.1.0.0-beta4\lib\net45\Microsoft.Framework.ConfigurationModel.Xml.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -343,23 +343,23 @@
     <None Include="files\project\sitecore.project\extensions\readme.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\repository\sitecore.project\Legoland.nuspec" />
-    <None Include="files\repository\sitecore.project\packages\Sitecore.BusinessComponentLibrary.1.0.0.nupkg">
+    <None Include="files\nuget\Legoland.nuspec" />
+    <None Include="files\packages\Sitecore.BusinessComponentLibrary.1.0.0.nupkg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\repository\sitecore.project\packages\Sitecore.Core.1.0.0.nupkg">
+    <None Include="files\packages\Sitecore.Core.1.0.0.nupkg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\repository\sitecore.project\packages\Sitecore.Launchpad.1.0.0.nupkg">
+    <None Include="files\packages\Sitecore.Launchpad.1.0.0.nupkg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\repository\sitecore.project\packages\Sitecore.Master.1.0.0.nupkg">
+    <None Include="files\packages\Sitecore.Master.1.0.0.nupkg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\repository\sitecore.project\packages\Sitecore.Speak.1.0.0.nupkg">
+    <None Include="files\packages\Sitecore.Speak.1.0.0.nupkg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\repository\sitecore.project\packages\Sitecore.Pathfinder.Core.1.0.0.nupkg">
+    <None Include="files\packages\Sitecore.Pathfinder.Core.1.0.0.nupkg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="files\project\sitecore.project\packages\readme.md">
