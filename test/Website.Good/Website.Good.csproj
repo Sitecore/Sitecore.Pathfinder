@@ -94,7 +94,6 @@
     <Content Include="items\master\sitecore\templates\JsonTemplate.item.json" />
     <Content Include="items\master\sitecore\content\Home\YamlLayout.layout.yaml" />
     <Content Include="scconfig.rules.json" />
-    <Content Include="packages.config" />
     <Content Include="sitecore.project\packages\Sitecore.Master.8.0.nupkg" />
     <Content Include="sitecore.project\packages\SitecorePathfinderCore.nupkg" />
   </ItemGroup>

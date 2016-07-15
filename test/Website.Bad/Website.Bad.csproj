@@ -67,7 +67,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="scconfig.json" />
-    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="items\master\sitecore\content\Home\XmlItem.item.xml" />
