@@ -50,7 +50,7 @@ namespace Sitecore.Pathfinder
                 Path.Combine(toolsDirectory, "scc.exe")
             };
 
-            var app = new Startup().AsInteractive().WithToolsDirectory(toolsDirectory).WithProjectDirectory(ProjectDirectory).WithConfigurationOptions(ConfigurationOptions.IncludeModuleConfig).WithAssemblies(assemblies).Start();
+            var app = new Startup().AsInteractive().WithToolsDirectory(toolsDirectory).WithBinDirectory(toolsDirectory).WithProjectDirectory(ProjectDirectory).WithConfigurationOptions(ConfigurationOptions.IncludeModuleConfig).WithAssemblies(assemblies).Start();
             if (app == null)
             {
                 throw new ConfigurationException(@"Oh no, nothing works!");
@@ -58,6 +58,7 @@ namespace Sitecore.Pathfinder
 
             Services = new Helpers.Services().Start(app, mock);
 
+            /*
             Console.WriteLine("**************:2: " + toolsDirectory);
             Console.WriteLine("**************:3: " + ProjectDirectory);
 
@@ -66,6 +67,7 @@ namespace Sitecore.Pathfinder
             {
                 Console.WriteLine("**************:5: " + fileName);
             }
+            */
 
             var restorePackages = app.CompositionService.ResolveMany<ITask>().First(t => t is RestorePackages);
             var context = app.CompositionService.Resolve<IBuildContext>();
