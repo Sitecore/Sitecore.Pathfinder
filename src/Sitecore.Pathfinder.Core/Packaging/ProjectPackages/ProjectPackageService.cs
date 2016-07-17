@@ -58,10 +58,7 @@ namespace Sitecore.Pathfinder.Packaging.ProjectPackages
 
         public void RestorePackage(string packageId, string version, string projectDirectory)
         {
-            Console.WriteLine("**************:6: " + PackageProviders.Count());
-
             var restored = PackageProviders.Any(packageProvider => packageProvider.RestorePackage(packageId, version, projectDirectory));
-
             if (!restored)
             {
                 throw new InvalidOperationException("Package not found: " + packageId);

@@ -109,6 +109,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "buildfiles", "buildfiles", 
 	ProjectSection(SolutionItems) = preProject
 		gulpfile.js = gulpfile.js
 		package.json = package.json
+		src\buildfiles\npm\package.json = src\buildfiles\npm\package.json
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.NuGet", "src\Features\Sitecore.Pathfinder.NuGet\Sitecore.Pathfinder.NuGet.csproj", "{A67C9ED1-949C-49D8-8D1A-B3774F38C128}"
