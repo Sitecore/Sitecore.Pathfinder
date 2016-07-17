@@ -84,7 +84,7 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
 
         protected virtual void RetryCompilation([NotNull] IProjectItem projectItem)
         {
-            projectItem.CompilationState = CompiltationState.Pending;
+            projectItem.CompilationState = CompilationState.Pending;
         }
 
         protected void SetRenderingsField([NotNull] ICompileContext context, [NotNull] Item item, [NotNull] string value)

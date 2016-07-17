@@ -242,7 +242,7 @@ namespace Sitecore.Pathfinder.Diagnostics
                     return false;
                 }
 
-                WriteLine("Enter 'Y' or 'N'.");
+                WriteLine(Texts.Enter__Y__or__N__);
             }
         }
     }

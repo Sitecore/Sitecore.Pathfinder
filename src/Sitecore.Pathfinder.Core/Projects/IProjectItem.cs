@@ -7,7 +7,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects
 {
-    public enum CompiltationState
+    public enum CompilationState
     {
         Pending,
 
@@ -19,7 +19,7 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull, ItemNotNull]
         IEnumerable<ISnapshot> AdditionalSnapshots { get; }
 
-        CompiltationState CompilationState { get; set; }
+        CompilationState CompilationState { get; set; }
 
         [NotNull]
         IProjectBase Project { get; }

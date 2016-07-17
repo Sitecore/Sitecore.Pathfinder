@@ -1,4 +1,4 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -24,6 +24,9 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public static readonly Item Empty = new Item(Projects.Project.Empty, new Guid("{935B8D6C-D25A-48B8-8167-2C0443D77027}"), "emptydatabase", string.Empty, string.Empty, string.Empty);
 
+        [CanBeNull]
+        private ItemAppearance _appearance;
+
         [CanBeNull, ItemNotNull]
         private ChildrenCollection _children;
 
@@ -31,23 +34,37 @@ namespace Sitecore.Pathfinder.Projects.Items
         private FieldCollection _fields;
 
         [CanBeNull]
+        private ItemHelp _help;
+
+        [CanBeNull]
         private string _parentPath;
+
+        [CanBeNull]
+        private ItemPath _paths;
 
         [CanBeNull]
         private ItemPublishing _publishing;
 
+        [CanBeNull]
+        private ItemStatistics _statistics;
+
         public Item([NotNull] IProjectBase project, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath) : base(project, guid, databaseName, itemName, itemIdOrPath)
         {
             TemplateIdOrPathProperty = NewSourceProperty("Template", string.Empty, SourcePropertyFlags.IsQualified);
-
             TemplateIdOrPath = templateIdOrPath;
         }
+
+        [NotNull]
+        public ItemAppearance Appearance => _appearance ?? (_appearance = new ItemAppearance(this));
 
         [NotNull, ItemNotNull]
         public ChildrenCollection Children => _children ?? (_children = new ChildrenCollection(this));
 
         [NotNull, ItemNotNull]
         public FieldCollection Fields => _fields ?? (_fields = new FieldCollection(this));
+
+        [NotNull]
+        public ItemHelp Help => _help ?? (_help = new ItemHelp(this));
 
         public string this[string fieldName]
         {
@@ -92,7 +109,13 @@ namespace Sitecore.Pathfinder.Projects.Items
         public string ParentItemPath => _parentPath ?? (_parentPath = PathHelper.GetItemParentPath(ItemIdOrPath));
 
         [NotNull]
+        public ItemPath Paths => _paths ?? (_paths = new ItemPath(this));
+
+        [NotNull]
         public ItemPublishing Publishing => _publishing ?? (_publishing = new ItemPublishing(this));
+
+        [NotNull]
+        public ItemStatistics Statistics => _statistics ?? (_statistics = new ItemStatistics(this));
 
         [NotNull]
         public Template Template
@@ -119,10 +142,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         public string TemplateIdOrPath
         {
             get { return TemplateIdOrPathProperty.GetValue(); }
-            set
-            {
-                TemplateIdOrPathProperty.SetValue(value);
-            }
+            set { TemplateIdOrPathProperty.SetValue(value); }
         }
 
         [NotNull]
@@ -170,6 +190,13 @@ namespace Sitecore.Pathfinder.Projects.Items
         public void Merge([NotNull] Item newProjectItem)
         {
             Merge(newProjectItem, OverwriteWhenMerging);
+        }
+
+        [NotNull]
+        public Item With([NotNull] ITextNode textNode)
+        {
+            AddSourceTextNode(textNode);
+            return this;
         }
 
         protected override void Merge(IProjectItem newProjectItem, bool overwrite)
@@ -254,13 +281,6 @@ namespace Sitecore.Pathfinder.Projects.Items
             }
 
             return new XPathItem(Project, DatabaseName, ParentItemPath);
-        }
-
-        [NotNull]
-        public Item With([NotNull] ITextNode textNode)
-        {
-            AddSourceTextNode(textNode);
-            return this;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -10,6 +10,8 @@ namespace Sitecore.Pathfinder.IO
 {
     public class PathMatcher
     {
+        private const RegexOptions Options = RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase;
+
         public PathMatcher([NotNull] string include, [NotNull] string exclude)
         {
             Includes = include.Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(GetRegex).ToList();
@@ -34,9 +36,8 @@ namespace Sitecore.Pathfinder.IO
         {
             // todo: consider caching this
             var pattern = '^' + Regex.Escape(wildcard).Replace("/", @"\\").Replace(@"\*\*\\", ".*").Replace(@"\*\*", ".*").Replace(@"\*", @"[^\\]*(\\)?").Replace(@"\?", ".") + '$';
-            var options = RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase;
 
-            return new Regex(pattern, options);
+            return new Regex(pattern, Options);
         }
     }
 }

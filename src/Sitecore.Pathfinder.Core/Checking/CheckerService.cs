@@ -149,7 +149,7 @@ namespace Sitecore.Pathfinder.Checking
 
                 if (!checkers.Any(c => c.Name == key || c.Category == key))
                 {
-                    throw new ConfigurationException("Checker not found: " + key);
+                    throw new ConfigurationException(Texts.Checker_not_found__ + key);
                 }
 
                 foreach (var checker in checkers)

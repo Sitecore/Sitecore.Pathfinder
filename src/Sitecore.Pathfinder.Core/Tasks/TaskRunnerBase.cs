@@ -175,6 +175,7 @@ namespace Sitecore.Pathfinder.Tasks
             var tasks = GetTasks(context, taskNames);
             if (tasks == null)
             {
+                PauseAfterRun();
                 return;
             }
 

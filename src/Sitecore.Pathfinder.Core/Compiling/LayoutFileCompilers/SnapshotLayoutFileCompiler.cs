@@ -103,7 +103,7 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
             fileName = Path.Combine(project.ProjectDirectory, fileName);
             if (!FileSystem.FileExists(fileName))
             {
-                context.Trace.TraceError(Msg.C1061, "File not found", fileName);
+                context.Trace.TraceError(Msg.C1061, Texts.File_not_found, fileName);
                 return;
             }
 

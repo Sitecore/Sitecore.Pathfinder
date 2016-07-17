@@ -11,7 +11,7 @@ namespace Sitecore.Pathfinder.React.Jsx
     {
         private static readonly Regex PlaceholderRegex = new Regex("\\{[\\s]*this\\.props\\.placeholders\\.([^\\}]*)[\\s]*\\}", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-        public JsxRenderingParser() : base(".jsx", Constants.Templates.ViewRendering)
+        public JsxRenderingParser() : base(".jsx", Constants.Templates.ViewRenderingId)
         {                       
         }
 

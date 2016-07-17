@@ -29,7 +29,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual IEnumerable<ISnapshot> AdditionalSnapshots => _snapshots.Skip(1);
 
-        public CompiltationState CompilationState { get; set; }
+        public CompilationState CompilationState { get; set; }
 
         public override Locking Locking => Project.Locking;
 

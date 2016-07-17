@@ -46,7 +46,7 @@ namespace Sitecore.Pathfinder.Checkers
                 where !string.IsNullOrEmpty(field.Value)
                 let dateTime = field.Value.FromIsoToDateTime(DateTime.MaxValue)
                 where dateTime == DateTime.MaxValue
-                select Warning(Msg.C1057, "Date is not valid", TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), $"The field \"{field.FieldName}\" has a type of 'Date', but the value is not a valid date. Replace or remove the value.");
+                select Warning(Msg.C1066, "Date is not valid", TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), $"The field \"{field.FieldName}\" has a type of 'Date', but the value is not a valid date. Replace or remove the value.");
         }
 
         [Export("Check")]
@@ -56,7 +56,7 @@ namespace Sitecore.Pathfinder.Checkers
                 where !string.IsNullOrEmpty(field.Value)
                 let dateTime = field.Value.FromIsoToDateTime(DateTime.MaxValue)
                 where dateTime == DateTime.MaxValue
-                select Warning(Msg.C1057, "Datetime is not valid", TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), $"The field \"{field.FieldName}\" has a type of 'Datetime', but the value is not a valid date. Replace or remove the value.");
+                select Warning(Msg.C1067, "Datetime is not valid", TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), $"The field \"{field.FieldName}\" has a type of 'Datetime', but the value is not a valid date. Replace or remove the value.");
         }
     }
 }

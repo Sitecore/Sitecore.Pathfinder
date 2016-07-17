@@ -50,11 +50,11 @@ namespace Sitecore.Pathfinder.Extensibility
             try
             {
                 context.FileSystem.DeleteFile(fileName);
-                context.Trace.TraceInformation("Removed: " + PathHelper.UnmapPath(context.WebsiteDirectory, fileName));
+                context.Trace.TraceInformation(Texts.Removed__ + PathHelper.UnmapPath(context.WebsiteDirectory, fileName));
             }
             catch
             {
-                context.Trace.TraceInformation("Failed to remove: " + PathHelper.UnmapPath(context.WebsiteDirectory, fileName));
+                context.Trace.TraceInformation(Texts.Failed_to_remove__ + PathHelper.UnmapPath(context.WebsiteDirectory, fileName));
             }
         }
     }

@@ -22,7 +22,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
         protected override void Process(CompilePipeline pipeline)
         {
             // todo: consider if imports should be omitted
-            var templateItems = pipeline.Context.Project.ProjectItems.OfType<Item>().Where(i => i.TemplateIdOrPath == Constants.Templates.Template || string.Equals(i.TemplateIdOrPath, Constants.Templates.TemplatePath, StringComparison.OrdinalIgnoreCase)).ToList();
+            var templateItems = pipeline.Context.Project.ProjectItems.OfType<Item>().Where(i => i.TemplateIdOrPath == Constants.Templates.TemplateId || string.Equals(i.TemplateIdOrPath, Constants.Templates.TemplatePathId, StringComparison.OrdinalIgnoreCase)).ToList();
 
             foreach (var templateItem in templateItems)
             {

@@ -94,6 +94,10 @@
     <Compile Include="Packaging\ProjectPackages\ProjectPackageProviderBase.cs" />
     <Compile Include="Projects\IProject.cs" />
     <Compile Include="Projects\IProjectItemUri.cs" />
+    <Compile Include="Projects\Items\ItemAppearance.cs" />
+    <Compile Include="Projects\Items\ItemHelp.cs" />
+    <Compile Include="Projects\Items\ItemPath.cs" />
+    <Compile Include="Projects\Items\ItemStatistics.cs" />
     <Compile Include="Projects\LockableList.cs" />
     <Compile Include="Projects\IDiagnosticCollector.cs" />
     <Compile Include="Projects\ILockable.cs" />

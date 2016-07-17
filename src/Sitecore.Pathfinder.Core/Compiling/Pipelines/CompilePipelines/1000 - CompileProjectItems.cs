@@ -28,13 +28,13 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
             IProjectItem[] projectItems;
             do
             {
-                projectItems = pipeline.Context.Project.ProjectItems.Where(i => i.CompilationState == CompiltationState.Pending).ToArray();
+                projectItems = pipeline.Context.Project.ProjectItems.Where(i => i.CompilationState == CompilationState.Pending).ToArray();
 
                 for (var index = projectItems.Length - 1; index >= 0; index--)
                 {
                     var projectItem = projectItems[index];
 
-                    projectItem.CompilationState = CompiltationState.Compiled;
+                    projectItem.CompilationState = CompilationState.Compiled;
 
                     foreach (var compiler in pipeline.Context.Compilers.OrderBy(c => c.Priority))
                     {

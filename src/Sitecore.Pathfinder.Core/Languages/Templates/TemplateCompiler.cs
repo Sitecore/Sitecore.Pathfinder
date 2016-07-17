@@ -49,7 +49,7 @@ namespace Sitecore.Pathfinder.Languages.Templates
             template.ItemNameProperty.Flags = SourcePropertyFlags.IsQualified;
 
             template.IconProperty.Parse("Template.Icon", itemTextNode);
-            template.BaseTemplatesProperty.Parse("Template.BaseTemplates", itemTextNode, Constants.Templates.StandardTemplate);
+            template.BaseTemplatesProperty.Parse("Template.BaseTemplates", itemTextNode, Constants.Templates.StandardTemplateId);
             template.ShortHelpProperty.Parse("Template.ShortHelp", itemTextNode);
             template.LongHelpProperty.Parse("Template.LongHelp", itemTextNode);
             template.IsEmittable = item.IsEmittable;

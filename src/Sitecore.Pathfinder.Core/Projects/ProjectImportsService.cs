@@ -123,7 +123,7 @@ namespace Sitecore.Pathfinder.Projects
 
                     if (string.IsNullOrEmpty(template.BaseTemplates))
                     {
-                        template.BaseTemplates = Constants.Templates.StandardTemplate;
+                        template.BaseTemplates = Constants.Templates.StandardTemplateId;
                     }
 
                     foreach (var sectionElement in element.Elements())

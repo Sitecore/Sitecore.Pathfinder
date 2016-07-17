@@ -71,6 +71,67 @@ namespace Sitecore.Pathfinder
         public const int C1063 = C + 63;
         public const int C1064 = C + 64;
         public const int C1065 = C + 65;
+        public const int C1066 = C + 66;
+        public const int C1067 = C + 67;
+        public const int C1068 = C + 68;
+        public const int C1069 = C + 69;
+        public const int C1070 = C + 70;
+        public const int C1071 = C + 71;
+        public const int C1072 = C + 72;
+        public const int C1073 = C + 73;
+        public const int C1074 = C + 74;
+        public const int C1075 = C + 75;
+        public const int C1076 = C + 76;
+        public const int C1077 = C + 77;
+        public const int C1078 = C + 78;
+        public const int C1079 = C + 79;
+        public const int C1080 = C + 80;
+        public const int C1081 = C + 81;
+        public const int C1082 = C + 82;
+        public const int C1083 = C + 83;
+        public const int C1084 = C + 84;
+        public const int C1085 = C + 85;
+        public const int C1086 = C + 86;
+        public const int C1087 = C + 87;
+        public const int C1088 = C + 88;
+        public const int C1089 = C + 89;
+        public const int C1090 = C + 90;
+        public const int C1091 = C + 91;
+        public const int C1092 = C + 92;
+        public const int C1093 = C + 93;
+        public const int C1094 = C + 94;
+        public const int C1095 = C + 95;
+        public const int C1096 = C + 96;
+        public const int C1097 = C + 97;
+        public const int C1098 = C + 98;
+        public const int C1099 = C + 99;
+        public const int C1100 = C + 100;
+        public const int C1101 = C + 101;
+        public const int C1102 = C + 102;
+        public const int C1103 = C + 103;
+        public const int C1104 = C + 104;
+        public const int C1105 = C + 105;
+        public const int C1106 = C + 106;
+        public const int C1107 = C + 107;
+        public const int C1108 = C + 108;
+        public const int C1109 = C + 109;
+        public const int C1110 = C + 110;
+        public const int C1111 = C + 111;
+        public const int C1112 = C + 112;
+        public const int C1113 = C + 113;
+        public const int C1114 = C + 114;
+        public const int C1115 = C + 115;
+        public const int C1116 = C + 116;
+        public const int C1117 = C + 117;
+        public const int C1118 = C + 118;
+        public const int C1119 = C + 119;
+        public const int C1120 = C + 120;
+        public const int C1121 = C + 121;
+        public const int C1122 = C + 122;
+        public const int C1123 = C + 123;
+        public const int C1124 = C + 124;
+        public const int C1125 = C + 125;
+        public const int C1126 = C + 126;
 
         private const int D = 4000;
         public const int D1000 = D;
@@ -191,12 +252,7 @@ namespace Sitecore.Pathfinder
         public const int M1014 = M + 14;
         public const int M1015 = M + 15;
         public const int M1016 = M + 16;
-        public const int M1017 = M + 17;
-        public const int M1018 = M + 18;
-        public const int M1019 = M + 19;
-        public const int M1020 = M + 20;
         public const int M1021 = M + 21;
-        public const int M1022 = M + 22;
 
         private const int P = 2000;
         public const int P1000 = P;
@@ -230,6 +286,5 @@ namespace Sitecore.Pathfinder
         public const int S1000 = S;
         public const int S1001 = S + 1;
         public const int S1002 = S + 2;
-
     }
 }

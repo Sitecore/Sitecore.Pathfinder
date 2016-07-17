@@ -189,6 +189,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ambiguous file name.
+        /// </summary>
+        public static string Ambiguous_file_name {
+            get {
+                return ResourceManager.GetString("Ambiguous_file_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An error occured.
         /// </summary>
         public static string An_error_occured {
@@ -239,6 +248,15 @@ namespace Sitecore.Pathfinder {
         public static string Checkbox_field_value_must_be__true__or__false__ {
             get {
                 return ResourceManager.GetString("Checkbox_field_value_must_be__true__or__false__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checker not found: .
+        /// </summary>
+        public static string Checker_not_found__ {
+            get {
+                return ResourceManager.GetString("Checker_not_found__", resourceCulture);
             }
         }
         
@@ -441,6 +459,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date field must contain a valid date value.
+        /// </summary>
+        public static string Date_field_must_contain_a_valid_date_value {
+            get {
+                return ResourceManager.GetString("Date_field_must_contain_a_valid_date_value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DateTime field must contain a valid date/time value.
         /// </summary>
         public static string DateTime_field_must_contain_a_valid_date_time_value {
@@ -531,11 +558,29 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Element has a &apos;Layout.File&apos; attribute, but it could not be compiled.
+        /// </summary>
+        public static string Element_has_a__Layout_File__attribute__but_it_could_not_be_compiled {
+            get {
+                return ResourceManager.GetString("Element_has_a__Layout_File__attribute__but_it_could_not_be_compiled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Element type expected.
         /// </summary>
         public static string Element_type_expected {
             get {
                 return ResourceManager.GetString("Element_type_expected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter &apos;Y&apos; or &apos;N&apos;..
+        /// </summary>
+        public static string Enter__Y__or__N__ {
+            get {
+                return ResourceManager.GetString("Enter__Y__or__N__", resourceCulture);
             }
         }
         
@@ -671,6 +716,15 @@ namespace Sitecore.Pathfinder {
         public static string Field_name_expected {
             get {
                 return ResourceManager.GetString("Field_name_expected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File not found.
+        /// </summary>
+        public static string File_not_found {
+            get {
+                return ResourceManager.GetString("File_not_found", resourceCulture);
             }
         }
         
@@ -880,6 +934,15 @@ namespace Sitecore.Pathfinder {
         public static string Item_path_reference_not_found {
             get {
                 return ResourceManager.GetString("Item_path_reference_not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item path reference not found, but may be in another database.
+        /// </summary>
+        public static string Item_path_reference_not_found__but_may_be_in_another_database {
+            get {
+                return ResourceManager.GetString("Item_path_reference_not_found__but_may_be_in_another_database", resourceCulture);
             }
         }
         
@@ -1274,7 +1337,7 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Restoring dependency package.
+        ///   Looks up a localized string similar to Restoring package.
         /// </summary>
         public static string Restoring {
             get {
@@ -1360,6 +1423,15 @@ namespace Sitecore.Pathfinder {
         public static string Source_files_changed {
             get {
                 return ResourceManager.GetString("Source_files_changed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sourceFileName cannot be empty.
+        /// </summary>
+        public static string sourceFileName_cannot_be_empty {
+            get {
+                return ResourceManager.GetString("sourceFileName_cannot_be_empty", resourceCulture);
             }
         }
         
@@ -1586,6 +1658,15 @@ namespace Sitecore.Pathfinder {
         public static string Unique_ID_clash {
             get {
                 return ResourceManager.GetString("Unique_ID_clash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown text node.
+        /// </summary>
+        public static string Unknown_text_node {
+            get {
+                return ResourceManager.GetString("Unknown_text_node", resourceCulture);
             }
         }
         
