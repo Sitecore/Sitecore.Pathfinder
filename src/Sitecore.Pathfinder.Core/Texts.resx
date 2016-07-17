@@ -634,7 +634,7 @@
     <value>Restoring packages...</value>
   </data>
     <data name="Restoring" xml:space="preserve">
-    <value>Restoring dependency package</value>
+    <value>Restoring package</value>
   </data>
     <data name="Writing_files_and_items___" xml:space="preserve">
     <value>Writing files and items...</value>

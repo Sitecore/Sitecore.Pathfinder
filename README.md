@@ -67,6 +67,3 @@ Read the [FAQ](FAQ.md)
 
 ## Documentation
 For more documentation see [Pathfinder Documentation](docs/README.md).
-
-### Build history
-[![Build History](https://ci-buildstats.azurewebsites.net/appveyor/chart/JakobChristensen/sitecore-pathfinder?branch=master&includeBuildsFromPullRequest=false)](https://ci.appveyor.com/project/JakobChristensen/sitecore-pathfinder) 

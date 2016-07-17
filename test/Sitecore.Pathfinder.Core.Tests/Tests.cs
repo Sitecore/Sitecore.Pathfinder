@@ -58,6 +58,15 @@ namespace Sitecore.Pathfinder
 
             Services = new Helpers.Services().Start(app, mock);
 
+            Console.WriteLine("**************:2: " + toolsDirectory);
+            Console.WriteLine("**************:3: " + ProjectDirectory);
+
+            Console.WriteLine("**************:4: " + Directory.Exists(toolsDirectory + "\\files\\packages"));
+            foreach (var fileName in Directory.GetFiles(toolsDirectory + "\\files\\packages"))
+            {
+                Console.WriteLine("**************:5: " + fileName);
+            }
+
             var restorePackages = app.CompositionService.ResolveMany<ITask>().First(t => t is RestorePackages);
             var context = app.CompositionService.Resolve<IBuildContext>();
             restorePackages.Run(context);
