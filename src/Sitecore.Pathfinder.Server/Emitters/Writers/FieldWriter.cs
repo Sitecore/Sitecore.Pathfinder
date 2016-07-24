@@ -1,13 +1,14 @@
-// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+// © 2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Emitters.Writers
 {
     public class FieldWriter
     {
-        public FieldWriter([NotNull] ItemWriter itemWriter, [NotNull] SourceProperty<Guid> fieldIdProperty, [NotNull] SourceProperty<string> fieldNameProperty, [NotNull] string language, int version, [NotNull] string databaseValue)
+        public FieldWriter([NotNull] ItemWriter itemWriter, [NotNull] SourceProperty<Guid> fieldIdProperty, [NotNull] SourceProperty<string> fieldNameProperty, [NotNull] Language language, [Diagnostics.NotNull] Projects.Items.Version version, [NotNull] string databaseValue)
         {
             ItemWriter = itemWriter;
             FieldIdProperty = fieldIdProperty;
@@ -27,9 +28,6 @@ namespace Sitecore.Pathfinder.Emitters.Writers
         }
 
         [NotNull]
-        public ItemWriter ItemWriter { get; }
-
-        [NotNull]
         public SourceProperty<Guid> FieldIdProperty { get; }
 
         [NotNull]
@@ -43,8 +41,12 @@ namespace Sitecore.Pathfinder.Emitters.Writers
         public SourceProperty<string> FieldNameProperty { get; }
 
         [NotNull]
-        public string Language { get; }
+        public ItemWriter ItemWriter { get; }
 
-        public int Version { get; }
+        [NotNull]
+        public Language Language { get; }
+
+        [Diagnostics.NotNull]
+        public Projects.Items.Version Version { get; }
     }
 }

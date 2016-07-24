@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.ReferenceParserPipelines
         public ITextNode SourceTextNode { get; private set; }
 
         [NotNull]
-        public ReferenceParserPipeline Execute([NotNull] IFactoryService factory, [NotNull] IProjectItem projectItem, [NotNull] ITextNode sourceTextNode, [NotNull] string referenceText, string databaseName)
+        public ReferenceParserPipeline Execute([NotNull] IFactoryService factory, [NotNull] IProjectItem projectItem, [NotNull] ITextNode sourceTextNode, [NotNull] string referenceText, [NotNull] string databaseName)
         {
             Factory = factory;
             ProjectItem = projectItem;

@@ -26,9 +26,9 @@ namespace Sitecore.Pathfinder.Languages.Xml
 
             // todo: write parent item path
 
-            var sharedFields = item.Fields.Where(f => string.IsNullOrEmpty(f.Language) && f.Version == 0).ToList();
-            var unversionedFields = item.Fields.Where(f => !string.IsNullOrEmpty(f.Language) && f.Version == 0).ToList();
-            var versionedFields = item.Fields.Where(f => !string.IsNullOrEmpty(f.Language) && f.Version != 0).ToList();
+            var sharedFields = item.Fields.Where(f => f.Language == Language.Undefined && f.Version == Projects.Items.Version.Undefined).ToList();
+            var unversionedFields = item.Fields.Where(f => f.Language != Language.Undefined && f.Version == Projects.Items.Version.Undefined).ToList();
+            var versionedFields = item.Fields.Where(f => f.Language != Language.Undefined && f.Version != Projects.Items.Version.Undefined).ToList();
 
             foreach (var field in sharedFields)
             {
@@ -38,7 +38,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
             foreach (var language in unversionedFields.Select(f => f.Language).Distinct())
             {
                 output.WriteStartElement("Fields.Unversioned");
-                output.WriteAttributeString("Language", language);
+                output.WriteAttributeString("Language", language.LanguageName);
 
                 foreach (var field in unversionedFields.Where(f => f.Language == language))
                 {
@@ -53,7 +53,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
                 foreach (var version in versionedFields.Where(f => f.Language == language).Select(f => f.Version).Distinct())
                 {
                     output.WriteStartElement("Fields.Versioned");
-                    output.WriteAttributeString("Language", language);
+                    output.WriteAttributeString("Language", language.LanguageName);
                     output.WriteAttributeString("Version", version.ToString());
 
                     foreach (var field in versionedFields.Where(f => f.Language == language && f.Version == version))
@@ -73,7 +73,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
             output.WriteEndElement();
         }
 
-        public static void WriteAsExportXml([NotNull] this Item item, [NotNull] XmlTextWriter output, [ItemNotNull] [NotNull] IEnumerable<string> fieldsToWrite)
+        public static void WriteAsExportXml([NotNull] this Item item, [NotNull] XmlTextWriter output, [NotNull, ItemNotNull]  IEnumerable<string> fieldsToWrite)
         {
             output.WriteStartElement("Item");
             output.WriteAttributeString("Id", item.Uri.Guid.Format());
@@ -170,9 +170,9 @@ namespace Sitecore.Pathfinder.Languages.Xml
 
             output.WriteStartElement("Fields");
 
-            var sharedFields = item.Fields.Where(f => string.IsNullOrEmpty(f.Language) && f.Version == 0).ToList();
-            var unversionedFields = item.Fields.Where(f => !string.IsNullOrEmpty(f.Language) && f.Version == 0).ToList();
-            var versionedFields = item.Fields.Where(f => !string.IsNullOrEmpty(f.Language) && f.Version != 0).ToList();
+            var sharedFields = item.Fields.Where(f => f.Language == Language.Undefined && f.Version == Projects.Items.Version.Undefined).ToList();
+            var unversionedFields = item.Fields.Where(f => f.Language != Language.Undefined && f.Version == Projects.Items.Version.Undefined).ToList();
+            var versionedFields = item.Fields.Where(f => f.Language != Language.Undefined && f.Version != Projects.Items.Version.Undefined).ToList();
 
             foreach (var field in sharedFields)
             {
@@ -182,7 +182,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
             foreach (var language in unversionedFields.Select(f => f.Language).Distinct())
             {
                 output.WriteStartElement("Unversioned");
-                output.WriteAttributeString("Language", language);
+                output.WriteAttributeString("Language", language.LanguageName);
 
                 foreach (var field in unversionedFields.Where(f => f.Language == language))
                 {
@@ -195,7 +195,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
             foreach (var language in versionedFields.Select(f => f.Language).Distinct())
             {
                 output.WriteStartElement("Versioned");
-                output.WriteAttributeString("Language", language);
+                output.WriteAttributeString("Language", language.LanguageName);
 
                 foreach (var version in versionedFields.Where(f => f.Language == language).Select(f => f.Version).Distinct())
                 {

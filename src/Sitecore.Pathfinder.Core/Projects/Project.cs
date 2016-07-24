@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -40,6 +40,12 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull, ItemNotNull]
         private readonly IList<Diagnostic> _diagnostics = new SynchronizedCollection<Diagnostic>();
+
+        [NotNull]
+        private readonly Dictionary<string, Language> _languages = new Dictionary<string, Language>();
+
+        [NotNull]
+        private readonly object _languagesSyncObject = new object();
 
         [NotNull, ItemNotNull]
         private readonly IList<IProjectItem> _projectItems;
@@ -294,10 +300,7 @@ namespace Sitecore.Pathfinder.Projects
             return Index.FirstOrDefault<T>(database, guid);
         }
 
-        public T FindQualifiedItem<T>(IProjectItemUri uri) where T : class, IProjectItem
-        {
-            return Index.FindQualifiedItem<T>(uri);
-        }
+        public T FindQualifiedItem<T>(IProjectItemUri uri) where T : class, IProjectItem => Index.FindQualifiedItem<T>(uri);
 
         public IEnumerable<T> GetByFileName<T>(string fileName) where T : File
         {
@@ -315,30 +318,15 @@ namespace Sitecore.Pathfinder.Projects
             return ProjectItems.OfType<T>().Where(f => string.Equals(f.FilePath, fileName, StringComparison.OrdinalIgnoreCase) || f.GetSnapshots().Any(s => string.Equals(s.SourceFile.RelativeFileName, relativeFileName, StringComparison.OrdinalIgnoreCase)));
         }
 
-        public IEnumerable<T> GetByQualifiedName<T>(string qualifiedName) where T : class, IProjectItem
-        {
-            return Index.GetByQualifiedName<T>(qualifiedName);
-        }
+        public IEnumerable<T> GetByQualifiedName<T>(string qualifiedName) where T : class, IProjectItem => Index.GetByQualifiedName<T>(qualifiedName);
 
-        public IEnumerable<T> GetByQualifiedName<T>(Database database, string qualifiedName) where T : DatabaseProjectItem
-        {
-            return Index.GetByQualifiedName<T>(database, qualifiedName);
-        }
+        public IEnumerable<T> GetByQualifiedName<T>(Database database, string qualifiedName) where T : DatabaseProjectItem => Index.GetByQualifiedName<T>(database, qualifiedName);
 
-        public IEnumerable<T> GetByShortName<T>(string shortName) where T : class, IProjectItem
-        {
-            return Index.GetByShortName<T>(shortName);
-        }
+        public IEnumerable<T> GetByShortName<T>(string shortName) where T : class, IProjectItem => Index.GetByShortName<T>(shortName);
 
-        public IEnumerable<T> GetByShortName<T>(Database database, string shortName) where T : DatabaseProjectItem
-        {
-            return Index.GetByShortName<T>(database, shortName);
-        }
+        public IEnumerable<T> GetByShortName<T>(Database database, string shortName) where T : DatabaseProjectItem => Index.GetByShortName<T>(database, shortName);
 
-        public IEnumerable<Item> GetChildren(Item item)
-        {
-            return Index.GetChildren(item);
-        }
+        public IEnumerable<Item> GetChildren(Item item) => Index.GetChildren(item);
 
         public Database GetDatabase(string databaseName)
         {
@@ -357,10 +345,24 @@ namespace Sitecore.Pathfinder.Projects
             return database;
         }
 
-        public IEnumerable<IProjectItem> GetUsages(string qualifiedName)
+        public Language GetLanguage(string languageName)
         {
-            return Index.FindUsages(qualifiedName).Select(r => r.Resolve());
+            var key = languageName.ToUpperInvariant();
+
+            Language language;
+            lock (_languagesSyncObject)
+            {
+                if (!_languages.TryGetValue(key, out language))
+                {
+                    language = new Language(languageName);
+                    _languages[key] = language;
+                }
+            }
+
+            return language;
         }
+
+        public IEnumerable<IProjectItem> GetUsages(string qualifiedName) => Index.FindUsages(qualifiedName).Select(r => r.Resolve());
 
         public void Lock(Locking locking)
         {
@@ -527,19 +529,10 @@ namespace Sitecore.Pathfinder.Projects
             }
         }
 
-        void IDiagnosticCollector.Add(Diagnostic diagnostic)
-        {
-            _diagnostics.Add(diagnostic);
-        }
+        void IDiagnosticCollector.Add(Diagnostic diagnostic) => _diagnostics.Add(diagnostic);
 
-        void IDiagnosticCollector.Clear()
-        {
-            _diagnostics.Clear();
-        }
+        void IDiagnosticCollector.Clear() => _diagnostics.Clear();
 
-        void IDiagnosticCollector.Remove(Diagnostic diagnostic)
-        {
-            _diagnostics.Remove(diagnostic);
-        }
+        void IDiagnosticCollector.Remove(Diagnostic diagnostic) => _diagnostics.Remove(diagnostic);
     }
 }

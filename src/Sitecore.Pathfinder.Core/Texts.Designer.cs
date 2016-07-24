@@ -1084,6 +1084,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Merge conflict: Field has changed both in project and in database - skipping.
+        /// </summary>
+        public static string Merge_conflict__Field_has_changed_both_in_project_and_in_database___skipping {
+            get {
+                return ResourceManager.GetString("Merge_conflict__Field_has_changed_both_in_project_and_in_database___skipping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Microsoft.CodeAnalysis.dll is missing. Extensions will not be compiled..
         /// </summary>
         public static string Microsoft_CodeAnalysis_dll_is_missing__Extensions_will_not_be_loaded_ {
@@ -1207,6 +1216,15 @@ namespace Sitecore.Pathfinder {
         public static string Parent_name_expected {
             get {
                 return ResourceManager.GetString("Parent_name_expected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parent not found.
+        /// </summary>
+        public static string Parent_not_found {
+            get {
+                return ResourceManager.GetString("Parent_not_found", resourceCulture);
             }
         }
         

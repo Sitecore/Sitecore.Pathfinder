@@ -98,6 +98,9 @@
     <Compile Include="Projects\Items\ItemHelp.cs" />
     <Compile Include="Projects\Items\ItemPath.cs" />
     <Compile Include="Projects\Items\ItemStatistics.cs" />
+    <Compile Include="Projects\Items\IVersioned.cs" />
+    <Compile Include="Projects\Items\Language.cs" />
+    <Compile Include="Projects\Items\Version.cs" />
     <Compile Include="Projects\LockableList.cs" />
     <Compile Include="Projects\IDiagnosticCollector.cs" />
     <Compile Include="Projects\ILockable.cs" />

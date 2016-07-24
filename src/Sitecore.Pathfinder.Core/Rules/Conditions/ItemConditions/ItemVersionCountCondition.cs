@@ -16,14 +16,16 @@ namespace Sitecore.Pathfinder.Rules.Conditions.ItemConditions
 
         protected override int GetValue(IRuleContext ruleContext, IDictionary<string, object> parameters)
         {
-            object language;
-            if (!parameters.TryGetValue("language", out language))
+            object languageObject;
+            if (!parameters.TryGetValue("language", out languageObject))
             {
                 throw new InvalidOperationException("Language missing");
             }
 
+            var language = new Language(languageObject.ToString());
             var item = ruleContext.Object as Item;
-            return item == null ? 0 : item.GetVersions(language.ToString()).Count();
+
+            return item?.GetVersions(language).Count() ?? 0;
         }
     }
 }

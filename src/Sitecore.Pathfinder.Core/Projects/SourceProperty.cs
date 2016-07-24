@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects
@@ -216,7 +217,45 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         public virtual SourceProperty<T> SetValue([NotNull] ITextNode textNode)
         {
-            SetValue((T)Convert.ChangeType(textNode.Value, typeof(T)));
+            object value;
+            if (typeof(T) == typeof(string))
+            {
+                value = textNode.Value;
+            }
+            else if (typeof(T) == typeof(int))
+            {
+                int i;
+                if (!int.TryParse(textNode.Value, out i))
+                {
+                    throw new InvalidOperationException("Cannot convert string to int");
+                }
+
+                value = i;
+            }
+            else if (typeof(T) == typeof(bool))
+            {
+                value = textNode.Value == "True";
+            }
+            else if (typeof(T) == typeof(Language))
+            {
+                value = new Language(textNode.Value);
+            }
+            else if (typeof(T) == typeof(Items.Version))
+            {
+                Items.Version version;
+                if (!Items.Version.TryParse(textNode.Value, out version))
+                {
+                    throw new InvalidOperationException("Cannot convert string to version");
+                }
+
+                value = version;
+            }
+            else
+            {
+                value = (T)Convert.ChangeType(textNode.Value, typeof(T));
+            }
+
+            SetValue((T)value);
             AddAdditionalSourceTextNode(textNode);
             return this;
         }

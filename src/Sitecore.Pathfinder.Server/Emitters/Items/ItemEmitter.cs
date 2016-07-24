@@ -200,12 +200,12 @@ namespace Sitecore.Pathfinder.Emitters.Items
                     throw new RetryableEmitException(Msg.E1017, Texts.Field_is_not_defined_in_the_template, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), field.FieldName);
                 }
 
-                if (!string.IsNullOrEmpty(field.Language))
+                if (field.Language != Language.Undefined)
                 {
-                    var language = LanguageManager.GetLanguage(field.Language, database);
+                    var language = LanguageManager.GetLanguage(field.Language.LanguageName, database);
                     if (language == null)
                     {
-                        throw new RetryableEmitException(Msg.E1018, Texts.Language_not_found, TraceHelper.GetTextNode(field.ValueProperty), field.Language);
+                        throw new RetryableEmitException(Msg.E1018, Texts.Language_not_found, TraceHelper.GetTextNode(field.ValueProperty), field.Language.LanguageName);
                     }
                 }
 

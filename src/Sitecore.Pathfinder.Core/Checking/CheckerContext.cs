@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.ComponentModel.Composition;
 using System.Globalization;
@@ -40,7 +40,8 @@ namespace Sitecore.Pathfinder.Checking
 
         public ITraceService Trace { get; private set; }
 
-        public IConfiguration Configuration { get; }
+        [NotNull]
+        protected IConfiguration Configuration { get; }
 
         [NotNull]
         protected IConsoleService Console { get; }

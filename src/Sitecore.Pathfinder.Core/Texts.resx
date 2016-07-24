@@ -699,4 +699,10 @@
     <data name="Unknown_text_node" xml:space="preserve">
     <value>Unknown text node</value>
   </data>
+    <data name="Parent_not_found" xml:space="preserve">
+    <value>Parent not found</value>
+  </data>
+    <data name="Merge_conflict__Field_has_changed_both_in_project_and_in_database___skipping" xml:space="preserve">
+    <value>Merge conflict: Field has changed both in project and in database - skipping</value>
+  </data>
 </root>

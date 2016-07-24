@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Linq;
@@ -13,21 +13,56 @@ namespace Sitecore.Pathfinder.Projects.Items
         }
 
         [CanBeNull]
-        public Field this[[NotNull] string fieldName] => this.FirstOrDefault(f => string.Equals(f.FieldName, fieldName, StringComparison.OrdinalIgnoreCase));
+        public Field this[[NotNull] string fieldName] => GetField(fieldName);
 
         [CanBeNull]
-        public Field this[Guid fieldId] => this.FirstOrDefault(f => f.FieldId == fieldId);
+        public Field this[Guid fieldId] => GetField(fieldId);
 
-        [NotNull]
-        public string GetFieldValue([NotNull] string fieldName, [NotNull] string language, int version)
+        [CanBeNull]
+        public Field GetField([NotNull] string fieldName)
         {
-            return this.FirstOrDefault(f => string.Equals(f.FieldName, fieldName, StringComparison.OrdinalIgnoreCase) && string.Equals(f.Language, language, StringComparison.OrdinalIgnoreCase) && f.Version == version)?.Value ?? string.Empty;
+            // todo: handle languages and versions
+            if (fieldName.StartsWith("{") && fieldName.StartsWith("}"))
+            {
+                Guid guid;
+                if (Guid.TryParse(fieldName, out guid))
+                {
+                    return GetField(guid);
+                }
+            }
+
+            return this.FirstOrDefault(f => string.Equals(f.FieldName, fieldName, StringComparison.OrdinalIgnoreCase));
+        }
+
+        [CanBeNull]
+        public Field GetField(Guid fieldId)
+        {
+            // todo: handle languages and versions
+            return this.FirstOrDefault(f => f.FieldId == fieldId);
         }
 
         [NotNull]
-        public string GetFieldValue(Guid fieldId, [NotNull] string language, int version)
+        public string GetFieldValue([NotNull] string fieldName)
         {
-            return this.FirstOrDefault(f => f.FieldId == fieldId && string.Equals(f.Language, language, StringComparison.OrdinalIgnoreCase) && f.Version == version)?.Value ?? string.Empty;
+            return GetField(fieldName)?.Value ?? string.Empty;
+        }
+
+        [NotNull]
+        public string GetFieldValue(Guid fieldId)
+        {
+            return GetField(fieldId)?.Value ?? string.Empty;
+        }
+
+        [NotNull]
+        public string GetFieldValue([NotNull] string fieldName, [NotNull] Language language, [NotNull] Version version)
+        {
+            return this.FirstOrDefault(f => string.Equals(f.FieldName, fieldName, StringComparison.OrdinalIgnoreCase) && f.Language == language && f.Version == version)?.Value ?? string.Empty;
+        }
+
+        [NotNull]
+        public string GetFieldValue(Guid fieldId, [NotNull] Language language, [NotNull] Version version)
+        {
+            return this.FirstOrDefault(f => f.FieldId == fieldId && f.Language == language && f.Version == version)?.Value ?? string.Empty;
         }
     }
 }

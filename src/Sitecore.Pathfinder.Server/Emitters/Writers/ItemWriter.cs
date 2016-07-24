@@ -12,6 +12,7 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Emitters.Writers
@@ -39,7 +40,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
         public string TemplateIdOrPath { get; set; } = string.Empty;
 
         [Diagnostics.NotNull]
-        public virtual Item Write([Diagnostics.NotNull] IEmitContext context)
+        public virtual Data.Items.Item Write([Diagnostics.NotNull] IEmitContext context)
         {
             var database = Factory.GetDatabase(DatabaseName);
             if (database == null)
@@ -70,7 +71,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
 
             if (existingItem != null && existingItem.ID != item.ID)
             {
-                foreach (Item child in existingItem.Children)
+                foreach (Data.Items.Item child in existingItem.Children)
                 {
                     child.MoveTo(item);
                 }
@@ -82,12 +83,12 @@ namespace Sitecore.Pathfinder.Emitters.Writers
         }
 
         [Diagnostics.NotNull]
-        protected virtual Item CreateNewItem([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] Database database, [Diagnostics.NotNull] Item templateItem)
+        protected virtual Data.Items.Item CreateNewItem([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] Database database, [Diagnostics.NotNull] Data.Items.Item templateItem)
         {
             var parentItemPath = PathHelper.GetItemParentPath(ItemIdOrPath);
             if (string.IsNullOrEmpty(parentItemPath))
             {
-                throw new EmitException(Msg.E1025, "Parent not found", Snapshot, ItemIdOrPath);
+                throw new EmitException(Msg.E1025, Texts.Parent_not_found, Snapshot, ItemIdOrPath);
             }
 
             var parentItem = database.CreateItemPath(parentItemPath);
@@ -107,7 +108,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             return item;
         }
 
-        protected virtual void SetFieldValue([NotNull] IEmitContext context, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] FieldWriter fieldWriter, [NotNull] string fieldName)
+        protected virtual void SetFieldValue([NotNull] IEmitContext context, [Diagnostics.NotNull] Data.Items.Item item, [Diagnostics.NotNull] FieldWriter fieldWriter, [NotNull] string fieldName)
         {
             var fieldValue = fieldWriter.DatabaseValue.Trim();
             var field = item.Fields[fieldName];
@@ -144,14 +145,14 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             }
         }
 
-        protected virtual void SetLayoutFieldValue([Diagnostics.NotNull] Field field, [Diagnostics.NotNull] string value)
+        protected virtual void SetLayoutFieldValue([Diagnostics.NotNull] Data.Fields.Field field, [Diagnostics.NotNull] string value)
         {
             // handle layout deltas
             var layoutField = new LayoutField(field);
             layoutField.Value = value;
         }
 
-        protected virtual void UpdateItem([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] Item item, [Diagnostics.NotNull] Item templateItem)
+        protected virtual void UpdateItem([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] Data.Items.Item item, [Diagnostics.NotNull] Data.Items.Item templateItem)
         {
             // move
             if (!string.Equals(item.Paths.Path, ItemIdOrPath, StringComparison.OrdinalIgnoreCase) && !string.Equals(item.ID.ToString(), ItemIdOrPath, StringComparison.OrdinalIgnoreCase))
@@ -191,7 +192,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                     }
                 }
 
-                foreach (var fieldWriter in Fields.Where(i => string.IsNullOrEmpty(i.Language) && i.Version == 0))
+                foreach (var fieldWriter in Fields.Where(i => i.Language == Language.Undefined && i.Version == Projects.Items.Version.Undefined))
                 {
                     var fieldName = fieldWriter.FieldName;
                     if (string.IsNullOrEmpty(fieldName))
@@ -205,17 +206,17 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                 item.UpdateProjectUniqueIds(context);
             }
 
-            var versionedItems = new List<Item>();
+            var versionedItems = new List<Data.Items.Item>();
 
-            foreach (var field in Fields.Where(i => !string.IsNullOrEmpty(i.Language) || i.Version != 0))
+            foreach (var field in Fields.Where(i => i.Language != Language.Undefined || i.Version != Projects.Items.Version.Undefined))
             {
                 // language has already been validated
-                var language = LanguageManager.GetLanguage(field.Language, item.Database);
+                var language = LanguageManager.GetLanguage(field.Language.LanguageName, item.Database);
 
-                var versionedItem = versionedItems.FirstOrDefault(i => i.Language == language && i.Version.Number == field.Version);
+                var versionedItem = versionedItems.FirstOrDefault(i => i.Language == language && i.Version.Number == field.Version.Number);
                 if (versionedItem == null)
                 {
-                    versionedItem = item.Database.GetItem(item.ID, language, new Data.Version(field.Version));
+                    versionedItem = item.Database.GetItem(item.ID, language, new Data.Version(field.Version.Number));
                     if (versionedItem == null)
                     {
                         // todo: validate this before updating the item

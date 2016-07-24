@@ -48,8 +48,8 @@ namespace Sitecore.Pathfinder.Languages.Serialization
             writer.WriteLine("templatekey: " + item.Template.ItemName);
             writer.WriteLine();
 
-            var sharedFields = item.Fields.Where(f => f.Version == 0 && string.IsNullOrEmpty(f.Language)).ToList();
-            var versionedFields = item.Fields.Where(f => !string.IsNullOrEmpty(f.Language)).ToList();
+            var sharedFields = item.Fields.Where(f => f.Language == Language.Undefined && f.Version == Projects.Items.Version.Undefined).ToList();
+            var versionedFields = item.Fields.Where(f => f.Language != Language.Undefined).ToList();
 
             foreach (var field in sharedFields)
             {

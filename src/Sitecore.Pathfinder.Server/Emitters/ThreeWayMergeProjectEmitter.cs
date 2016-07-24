@@ -65,10 +65,10 @@ namespace Sitecore.Pathfinder.Emitters
             var databaseFieldValueTrimmed = item[fieldWriter.FieldName].Replace("\r\n", " ").Replace("\n\r", " ").Replace('\n', ' ').Replace('\r', ' ').Replace('\t', ' ');
 
             // todo: consider making this a dictionary for performance
-            var baseField = _baseFieldValues.FirstOrDefault(f => f.DatabaseName == fieldWriter.ItemWriter.DatabaseName && f.ItemId == itemId && ((!string.IsNullOrEmpty(f.FieldId) && f.FieldId == fieldId) || (!string.IsNullOrEmpty(f.FieldName) && f.FieldName == fieldWriter.FieldName)) && f.Language == fieldWriter.Language && f.Version == fieldWriter.Version);
+            var baseField = _baseFieldValues.FirstOrDefault(f => f.DatabaseName == fieldWriter.ItemWriter.DatabaseName && f.ItemId == itemId && ((!string.IsNullOrEmpty(f.FieldId) && f.FieldId == fieldId) || (!string.IsNullOrEmpty(f.FieldName) && f.FieldName == fieldWriter.FieldName)) && f.Language == fieldWriter.Language.LanguageName && f.Version == fieldWriter.Version.Number);
             if (baseField == null)
             {
-                baseField = new BaseField(fieldWriter.ItemWriter.DatabaseName, itemId, fieldId, fieldWriter.FieldName, fieldWriter.Language, fieldWriter.Version, fieldValue);
+                baseField = new BaseField(fieldWriter.ItemWriter.DatabaseName, itemId, fieldId, fieldWriter.FieldName, fieldWriter.Language.LanguageName, fieldWriter.Version.Number, fieldValue);
                 _baseFieldValues.Add(baseField);
 
                 if (OverwriteDatabase)
@@ -107,7 +107,7 @@ namespace Sitecore.Pathfinder.Emitters
             // check if both field value and database value has changed - if so, there is a conflict
             if (databaseFieldValueTrimmed != baseValueTrimmed)
             {
-                Trace.TraceError(Msg.E1037, "Merge conflict: Field has changed both in project and in database - skipping", TraceHelper.GetTextNode(fieldWriter.FieldNameProperty, fieldWriter.FieldIdProperty), fieldWriter.FieldName);
+                Trace.TraceError(Msg.E1037, Texts.Merge_conflict__Field_has_changed_both_in_project_and_in_database___skipping, TraceHelper.GetTextNode(fieldWriter.FieldNameProperty, fieldWriter.FieldIdProperty), fieldWriter.FieldName);
                 return false;
             }
 

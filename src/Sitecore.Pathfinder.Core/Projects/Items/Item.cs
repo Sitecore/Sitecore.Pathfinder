@@ -66,37 +66,10 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public ItemHelp Help => _help ?? (_help = new ItemHelp(this));
 
-        public string this[string fieldName]
-        {
-            get
-            {
-                // todo: handle languages and versions
-                Field field;
-                if (fieldName.StartsWith("{") && fieldName.StartsWith("}"))
-                {
-                    Guid guid;
-                    if (Guid.TryParse(fieldName, out guid))
-                    {
-                        field = Fields.FirstOrDefault(f => f.FieldId == guid);
-                        return field?.Value ?? string.Empty;
-                    }
-                }
-
-                field = Fields.FirstOrDefault(f => string.Equals(f.FieldName, fieldName, StringComparison.OrdinalIgnoreCase));
-                return field?.Value ?? string.Empty;
-            }
-        }
+        public string this[string fieldName] => Fields.GetFieldValue(fieldName);
 
         [NotNull]
-        public string this[Guid guid]
-        {
-            get
-            {
-                // todo: handle languages and versions
-                var field = Fields.FirstOrDefault(f => f.FieldId == guid);
-                return field?.Value ?? string.Empty;
-            }
-        }
+        public string this[Guid guid] => Fields.GetFieldValue(guid);
 
         public MergingMatch MergingMatch { get; set; }
 
@@ -163,16 +136,16 @@ namespace Sitecore.Pathfinder.Projects.Items
         }
 
         [NotNull]
-        public string GetDisplayName([NotNull] string language, int version)
+        public string GetDisplayName([NotNull] Language language, [NotNull] Version version)
         {
             var displayName = Fields.GetFieldValue("__Display Name", language, version);
             return string.IsNullOrEmpty(displayName) ? ItemName : displayName;
         }
 
         [NotNull, ItemNotNull]
-        public IEnumerable<string> GetLanguages()
+        public IEnumerable<Language> GetLanguages()
         {
-            return Fields.Where(f => !string.IsNullOrEmpty(f.Language)).Select(f => f.Language).Distinct();
+            return Fields.Where(f => f.Language != Language.Undefined).Select(f => f.Language).Distinct();
         }
 
         [CanBeNull]
@@ -181,10 +154,10 @@ namespace Sitecore.Pathfinder.Projects.Items
             return Project.FindQualifiedItem<Item>(Database, ParentItemPath);
         }
 
-        [NotNull]
-        public IEnumerable<int> GetVersions([NotNull] string language)
-        {
-            return Fields.Where(f => string.Equals(f.Language, language, StringComparison.OrdinalIgnoreCase) && f.Version != 0).Select(f => f.Version).Distinct();
+        [NotNull, ItemNotNull]
+        public IEnumerable<Version> GetVersions([NotNull] Language language)
+        {                 
+            return Fields.Where(f => f.Language == language && f.Version != Version.Undefined).Select(f => f.Version).Distinct();
         }
 
         public void Merge([NotNull] Item newProjectItem)
@@ -216,7 +189,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
             foreach (var newField in newItem.Fields)
             {
-                var field = Fields.FirstOrDefault(f => string.Equals(f.FieldName, newField.FieldName, StringComparison.OrdinalIgnoreCase) && string.Equals(f.Language, newField.Language, StringComparison.OrdinalIgnoreCase) && f.Version == newField.Version);
+                var field = Fields.FirstOrDefault(f => string.Equals(f.FieldName, newField.FieldName, StringComparison.OrdinalIgnoreCase) && f.Language == newField.Language && f.Version == newField.Version);
                 if (field == null)
                 {
                     newField.Item = this;
