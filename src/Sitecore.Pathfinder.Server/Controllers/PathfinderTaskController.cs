@@ -79,7 +79,7 @@ namespace Sitecore.Pathfinder.Controllers
                 Log.Error("An error occurred", ex, GetType());
                 foreach (var loaderException in ex.LoaderExceptions)
                 {
-                    Log.Error("Loader Exception: ", loaderException, GetType());
+                    Log.Error("    Loader Exception: ", loaderException, GetType());
                 }
 
                 var statusDescription = new StringWriter();

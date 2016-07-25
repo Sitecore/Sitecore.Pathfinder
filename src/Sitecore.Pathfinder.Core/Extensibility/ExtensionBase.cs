@@ -12,9 +12,18 @@ namespace Sitecore.Pathfinder.Extensibility
     [InheritedExport(typeof(IExtension))]
     public abstract class ExtensionBase : IExtension
     {
-        public abstract void RemoveWebsiteFiles(IBuildContext context);
+        public virtual void RemoveWebsiteFiles(IBuildContext context)
+        {
+        }
 
-        public abstract bool UpdateWebsiteFiles(IBuildContext context);
+        public virtual void Start()
+        {
+        }
+
+        public virtual bool UpdateWebsiteFiles(IBuildContext context)
+        {
+            return false;
+        }
 
         protected virtual bool CopyProjectFileToWebsiteBinDirectory([NotNull] IBuildContext context, [NotNull] string fileName)
         {

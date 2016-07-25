@@ -93,7 +93,7 @@ namespace Sitecore.Pathfinder.Extensions
 
             foreach (var loaderException in typeLoadException.LoaderExceptions)
             {
-                Console.WriteLine(loaderException.Message);
+                Console.WriteLine($"    LoaderException: {loaderException.Message}");
             }
         }
     }

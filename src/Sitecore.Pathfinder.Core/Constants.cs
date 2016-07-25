@@ -165,6 +165,8 @@ namespace Sitecore.Pathfinder
                 public const string AssemblyFileName = "extensions:project-extensions-assembly-filename";
 
                 public const string Directory = "extensions:project-extensions-directory";
+
+                public const string ExternalAssemblyDirectories = "extensions:external-assembly-directories";
             }
 
             public static class GenerateCode

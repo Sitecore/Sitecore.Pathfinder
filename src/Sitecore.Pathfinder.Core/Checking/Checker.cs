@@ -84,6 +84,12 @@ namespace Sitecore.Pathfinder.Checking
         }
 
         [NotNull]
+        protected Diagnostic Information(int msg, [NotNull] string text, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
+        {
+            return new Diagnostic(msg, string.Empty, TextSpan.Empty, Severity.Information, GetText(text, details, checkerName));
+        }
+
+        [NotNull]
         protected Diagnostic Warning(int msg, [NotNull] string text, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
         {
             return new Diagnostic(msg, string.Empty, TextSpan.Empty, Severity.Warning, GetText(text, details, checkerName));

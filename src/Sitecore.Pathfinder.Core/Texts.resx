@@ -705,4 +705,7 @@
     <data name="Merge_conflict__Field_has_changed_both_in_project_and_in_database___skipping" xml:space="preserve">
     <value>Merge conflict: Field has changed both in project and in database - skipping</value>
   </data>
+    <data name="The_DiagnosticsToolset_checker_requires_elevated_rights_to_run" xml:space="preserve">
+    <value>The DiagnosticsToolset checker requires elevated rights to run</value>
+  </data>
 </root>

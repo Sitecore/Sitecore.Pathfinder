@@ -1,4 +1,4 @@
-﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -38,7 +38,18 @@ namespace Sitecore.Pathfinder.Extensibility
             if (options.HasFlag(CompositionOptions.AddWebsiteAssemblyResolver))
             {
                 // add an assembly resolver that points to the website/bin directory - this will load files like Sitecore.Kernel.dll
-                AppDomain.CurrentDomain.AssemblyResolve += (sender, args) => ResolveAssembly(args, configuration);
+                var websiteDirectory = configuration.GetWebsiteDirectory();
+                if (!string.IsNullOrEmpty(websiteDirectory))
+                {
+                    AppDomain.CurrentDomain.AssemblyResolve += (sender, args) => ResolveWebsiteAssembly(args, websiteDirectory);
+                }
+            }
+
+            // add an assembly resolver for external assemblies
+            var directories = configuration.GetDictionary(Constants.Configuration.Extensions.ExternalAssemblyDirectories);
+            if (directories.Count > 0)
+            {
+                AppDomain.CurrentDomain.AssemblyResolve += (sender, args) => ResolveAssembly(args, directories.Values);
             }
 
             // add application assemblies
@@ -151,7 +162,26 @@ namespace Sitecore.Pathfinder.Extensibility
 
             try
             {
-                catalogs.Add(new AssemblyCatalog(assemblyFileName));
+                var assemblyCatalog = new AssemblyCatalog(Assembly.LoadFrom(assemblyFileName));
+
+                // check that assembly can be loaded
+                if (assemblyCatalog.Any())
+                {
+                    catalogs.Add(assemblyCatalog);
+                }
+            }
+            catch (ReflectionTypeLoadException ex)
+            {
+                // ignore the Diagnostics Toolset feature as it requires a path to the SDT installation
+                if (fileName != "Sitecore.Pathfinder.DiagnosticsToolset.dll")
+                {
+                    Console.WriteLine(Texts.Failed_to_load_assembly___0____1_, ex.Message, assemblyFileName);
+
+                    foreach (var loaderException in ex.LoaderExceptions)
+                    {
+                        Console.WriteLine($"    LoaderException: {loaderException.Message}");
+                    }
+                }
             }
             catch (FileLoadException ex)
             {
@@ -247,14 +277,35 @@ namespace Sitecore.Pathfinder.Extensibility
         }
 
         [CanBeNull]
-        private static Assembly ResolveAssembly([NotNull] ResolveEventArgs args, [NotNull] IConfiguration configuration)
+        private static Assembly ResolveAssembly([NotNull] ResolveEventArgs args, [ItemNotNull, NotNull] IEnumerable<string> directories)
         {
-            var websiteDirectory = configuration.GetWebsiteDirectory();
-            if (string.IsNullOrEmpty(websiteDirectory))
+            var fileName = args.Name;
+            var n = fileName.IndexOf(',');
+            if (n >= 0)
             {
-                return null;
+                fileName = fileName.Left(n).Trim();
             }
 
+            if (!fileName.EndsWith(".dll", StringComparison.OrdinalIgnoreCase))
+            {
+                fileName += ".dll";
+            }
+
+            foreach (var directory in directories)
+            {
+                var assemblyFileName = Path.Combine(directory, fileName);
+                if (File.Exists(assemblyFileName))
+                {
+                    return Assembly.LoadFrom(assemblyFileName);
+                }
+            }
+
+            return null;
+        }
+
+        [CanBeNull]
+        private static Assembly ResolveWebsiteAssembly([NotNull] ResolveEventArgs args, [NotNull] string websiteDirectory)
+        {
             var fileName = args.Name;
             var n = fileName.IndexOf(',');
             if (n >= 0)

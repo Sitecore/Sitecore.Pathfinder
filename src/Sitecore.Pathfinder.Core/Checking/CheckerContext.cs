@@ -1,5 +1,6 @@
-﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Globalization;
 using Microsoft.Framework.ConfigurationModel;
@@ -27,6 +28,8 @@ namespace Sitecore.Pathfinder.Checking
         }
 
         public int CheckCount { get; set; }
+
+        public IDictionary<string, CheckerSeverity> Checkers { get; } = new Dictionary<string, CheckerSeverity>();
 
         public CultureInfo Culture { get; }
 

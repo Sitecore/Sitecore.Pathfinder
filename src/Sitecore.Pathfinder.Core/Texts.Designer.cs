@@ -1590,6 +1590,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The DiagnosticsToolset checker requires elevated rights to run.
+        /// </summary>
+        public static string The_DiagnosticsToolset_checker_requires_elevated_rights_to_run {
+            get {
+                return ResourceManager.GetString("The_DiagnosticsToolset_checker_requires_elevated_rights_to_run", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The file does not contain valid XML.
         /// </summary>
         public static string The_file_does_not_contain_valid_XML {
