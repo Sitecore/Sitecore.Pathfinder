@@ -188,7 +188,7 @@ namespace Sitecore.Pathfinder.IO
         {
             if (string.IsNullOrEmpty(sourceFileName))
             {
-                throw new ArgumentException("sourceFileName cannot be empty", nameof(sourceFileName));
+                throw new ArgumentException(Texts.sourceFileName_cannot_be_empty, nameof(sourceFileName));
             }
 
             return FileHelper.GetFileLastWriteTime(sourceFileName).ToUniversalTime();

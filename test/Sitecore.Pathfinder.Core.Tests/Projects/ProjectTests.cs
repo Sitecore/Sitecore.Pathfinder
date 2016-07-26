@@ -133,8 +133,8 @@ namespace Sitecore.Pathfinder.Projects
             Assert.AreEqual("Text", field.FieldName);
             Assert.AreEqual("Pip 2", field.Value);
             Assert.AreEqual("Pip 2", field.CompiledValue);
-            Assert.AreEqual("en", field.Language);
-            Assert.AreEqual(1, field.Version);
+            Assert.AreEqual("en", field.Language.LanguageName);
+            Assert.AreEqual(1, field.Version.Number);
         }
 
         [Test]

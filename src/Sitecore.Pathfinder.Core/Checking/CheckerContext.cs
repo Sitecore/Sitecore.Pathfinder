@@ -1,5 +1,6 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Globalization;
 using Microsoft.Framework.ConfigurationModel;
@@ -28,6 +29,8 @@ namespace Sitecore.Pathfinder.Checking
 
         public int CheckCount { get; set; }
 
+        public IDictionary<string, CheckerSeverity> Checkers { get; } = new Dictionary<string, CheckerSeverity>();
+
         public CultureInfo Culture { get; }
 
         public IFileSystemService FileSystem { get; }
@@ -40,7 +43,8 @@ namespace Sitecore.Pathfinder.Checking
 
         public ITraceService Trace { get; private set; }
 
-        public IConfiguration Configuration { get; }
+        [NotNull]
+        protected IConfiguration Configuration { get; }
 
         [NotNull]
         protected IConsoleService Console { get; }

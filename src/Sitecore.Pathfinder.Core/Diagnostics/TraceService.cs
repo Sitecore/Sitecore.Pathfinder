@@ -210,7 +210,7 @@ namespace Sitecore.Pathfinder.Diagnostics
             Console.Write(severity.ToString().ToLowerInvariant());
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.Write(" SCC{0}: ", msg.ToString("0000"));
+            Console.Write(@" SCC{0}: ", msg.ToString("0000"));
 
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(text);

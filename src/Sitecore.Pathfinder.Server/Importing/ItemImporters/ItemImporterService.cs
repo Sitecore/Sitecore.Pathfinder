@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Importing.ItemImporters
         [Diagnostics.NotNull, ItemNotNull]
         protected IEnumerable<IFieldValueImporter> FieldValueImporters { get; }
 
-        public virtual Projects.Items.Item ImportItem(IProjectBase project, Item item, ILanguage language, IEnumerable<string> excludedFields)
+        public virtual Projects.Items.Item ImportItem(IProjectBase project, Data.Items.Item item, ILanguage language, IEnumerable<string> excludedFields)
         {
             var itemBuilder = new ItemBuilder(Factory)
             {
@@ -75,7 +75,7 @@ namespace Sitecore.Pathfinder.Importing.ItemImporters
                 {
                     FieldName = field.Name,
                     Value = value,
-                    Language = field.Language.Name
+                    Language = project.GetLanguage(field.Language.Name)
                 };
 
                 itemBuilder.Fields.Add(fieldBuilder);
@@ -94,8 +94,8 @@ namespace Sitecore.Pathfinder.Importing.ItemImporters
                 {
                     FieldName = field.Name,
                     Value = value,
-                    Language = field.Language.Name,
-                    Version = field.Item.Version.Number
+                    Language = project.GetLanguage(field.Language.Name),
+                    Version = new Projects.Items.Version(field.Item.Version.Number)
                 };
 
                 itemBuilder.Fields.Add(fieldBuilder);

@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -23,8 +23,14 @@ namespace Sitecore.Pathfinder.Checking
         [NotNull, ItemNotNull]
         private readonly IList<Diagnostic> _diagnostics = new SynchronizedCollection<Diagnostic>();
 
+        [NotNull]
+        private readonly Dictionary<string, Language> _languages = new Dictionary<string, Language>();
+
         [NotNull, ItemNotNull]
         private readonly List<IProjectItem> _projectItems = new List<IProjectItem>();
+
+        [NotNull]
+        private readonly object _syncObject = new object();
 
         [NotNull]
         private Database _database;
@@ -108,40 +114,34 @@ namespace Sitecore.Pathfinder.Checking
             yield break;
         }
 
-        public IEnumerable<T> GetByQualifiedName<T>(string qualifiedName) where T : class, IProjectItem
+        public IEnumerable<T> GetByQualifiedName<T>(string qualifiedName) where T : class, IProjectItem => Index.GetByQualifiedName<T>(qualifiedName);
+
+        public IEnumerable<T> GetByQualifiedName<T>(Database database, string qualifiedName) where T : DatabaseProjectItem => Index.GetByQualifiedName<T>(database, qualifiedName);
+
+        public IEnumerable<T> GetByShortName<T>(string shortName) where T : class, IProjectItem => Index.GetByShortName<T>(shortName);
+
+        public IEnumerable<T> GetByShortName<T>(Database database, string shortName) where T : DatabaseProjectItem => Index.GetByShortName<T>(database, shortName);
+
+        public IEnumerable<Item> GetChildren(Item item) => Index.GetChildren(item);
+
+        public Database GetDatabase(string databaseName) => _database;
+
+        public Language GetLanguage(string languageName)
         {
-            return Index.GetByQualifiedName<T>(qualifiedName);
+            var key = languageName.ToUpperInvariant();
+
+            Language language;
+            if (_languages.TryGetValue(key, out language))
+            {
+                return language;
+            }
+
+            language = new Language(languageName);
+            _languages[key] = language;
+            return language;
         }
 
-        public IEnumerable<T> GetByQualifiedName<T>(Database database, string qualifiedName) where T : DatabaseProjectItem
-        {
-            return Index.GetByQualifiedName<T>(database, qualifiedName);
-        }
-
-        public IEnumerable<T> GetByShortName<T>(string shortName) where T : class, IProjectItem
-        {
-            return Index.GetByShortName<T>(shortName);
-        }
-
-        public IEnumerable<T> GetByShortName<T>(Database database, string shortName) where T : DatabaseProjectItem
-        {
-            return Index.GetByShortName<T>(database, shortName);
-        }
-
-        public IEnumerable<Item> GetChildren(Item item)
-        {
-            return Index.GetChildren(item);
-        }
-
-        public Database GetDatabase(string databaseName)
-        {
-            return _database;
-        }
-
-        public IEnumerable<IProjectItem> GetUsages(string qualifiedName)
-        {
-            return Index.FindUsages(qualifiedName).Select(r => r.Resolve());
-        }
+        public IEnumerable<IProjectItem> GetUsages(string qualifiedName) => Index.FindUsages(qualifiedName).Select(r => r.Resolve());
 
         [NotNull]
         public WebsiteProject With([NotNull] Data.Database database, [NotNull] ProjectOptions options, [NotNull] string projectDirectory, [NotNull] string projectUniqueId)
@@ -158,13 +158,7 @@ namespace Sitecore.Pathfinder.Checking
             return this;
         }
 
-        void IDiagnosticCollector.Add(Diagnostic diagnostic)
-        {
-            _diagnostics.Add(diagnostic);
-        }
-
-        [NotNull]
-        private readonly object _syncObject = new object();
+        void IDiagnosticCollector.Add(Diagnostic diagnostic) => _diagnostics.Add(diagnostic);
 
         private void Add([NotNull] IProjectItem projectItem)
         {
@@ -187,10 +181,7 @@ namespace Sitecore.Pathfinder.Checking
             item.References.AddRange(ReferenceParser.ParseReferences(field));
         }
 
-        void IDiagnosticCollector.Clear()
-        {
-            _diagnostics.Clear();
-        }
+        void IDiagnosticCollector.Clear() => _diagnostics.Clear();
 
         private void LoadDatabase([NotNull] Data.Database database)
         {
@@ -290,7 +281,6 @@ namespace Sitecore.Pathfinder.Checking
                     templateSection.SectionNameProperty.SetValue(new TextNode(snapshot, "Name", databaseTemplateSection.Name, TextSpan.Empty));
                     templateSection.IconProperty.SetValue(new TextNode(snapshot, "__Icon", databaseTemplateSection.Icon, TextSpan.Empty));
                     templateSection.SortorderProperty.SetValue(new TextNode(snapshot, "__Sort order", databaseTemplateSection.Sortorder.ToString(), TextSpan.Empty));
-                    ;
 
                     template.Sections.Add(templateSection);
 
@@ -314,9 +304,6 @@ namespace Sitecore.Pathfinder.Checking
             }
         }
 
-        void IDiagnosticCollector.Remove(Diagnostic diagnostic)
-        {
-            _diagnostics.Remove(diagnostic);
-        }
+        void IDiagnosticCollector.Remove(Diagnostic diagnostic) => _diagnostics.Remove(diagnostic);
     }
 }

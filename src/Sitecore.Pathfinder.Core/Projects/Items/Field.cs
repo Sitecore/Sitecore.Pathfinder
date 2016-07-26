@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 {
     // todo: consider basing this on ProjectElement
     [DebuggerDisplay("{GetType().Name,nq}: {FieldName,nq} = {Value}")]
-    public class Field : TextNodeSourcePropertyBag
+    public class Field : TextNodeSourcePropertyBag, IVersioned
     {
         [CanBeNull]
         private TemplateField _templateField;
@@ -24,10 +24,10 @@ namespace Sitecore.Pathfinder.Projects.Items
 
             FieldIdProperty = NewSourceProperty("Id", Guid.Empty);
             FieldNameProperty = NewSourceProperty("Name", string.Empty);
-            LanguageProperty = NewSourceProperty("Language", string.Empty);
+            LanguageProperty = NewSourceProperty("Language", Language.Undefined);
             ValueHintProperty = NewSourceProperty("Value.Hint", string.Empty);
             ValueProperty = NewSourceProperty("Value", string.Empty);
-            VersionProperty = NewSourceProperty("Version", 0);
+            VersionProperty = NewSourceProperty("Version", Version.Undefined);
 
             ValueProperty.PropertyChanged += HandlePropertyChanged;
         }
@@ -108,15 +108,14 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public Item Item { get; set; }
 
-        [NotNull]
-        public string Language
+        public Language Language
         {
             get { return LanguageProperty.GetValue(); }
             set { LanguageProperty.SetValue(value); }
         }
 
         [NotNull]
-        public SourceProperty<string> LanguageProperty { get; }
+        public SourceProperty<Language> LanguageProperty { get; }
 
         public override Locking Locking => Item.Locking;
 
@@ -159,14 +158,14 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public SourceProperty<string> ValueProperty { get; }
 
-        public int Version
+        public Version Version
         {
             get { return VersionProperty.GetValue(); }
             set { VersionProperty.SetValue(value); }
         }
 
         [NotNull]
-        public SourceProperty<int> VersionProperty { get; }
+        public SourceProperty<Version> VersionProperty { get; }
 
         public void Compile([NotNull] IFieldCompileContext context)
         {

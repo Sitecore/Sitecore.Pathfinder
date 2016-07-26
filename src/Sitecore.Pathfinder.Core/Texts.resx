@@ -672,4 +672,40 @@
     <data name="Could_not_load_project__" xml:space="preserve">
     <value>Could not load project: </value>
   </data>
+    <data name="Element_has_a__Layout_File__attribute__but_it_could_not_be_compiled" xml:space="preserve">
+    <value>Element has a 'Layout.File' attribute, but it could not be compiled</value>
+  </data>
+    <data name="Ambiguous_file_name" xml:space="preserve">
+    <value>Ambiguous file name</value>
+  </data>
+    <data name="File_not_found" xml:space="preserve">
+    <value>File not found</value>
+  </data>
+    <data name="Date_field_must_contain_a_valid_date_value" xml:space="preserve">
+    <value>Date field must contain a valid date value</value>
+  </data>
+    <data name="Checker_not_found__" xml:space="preserve">
+    <value>Checker not found: </value>
+  </data>
+    <data name="sourceFileName_cannot_be_empty" xml:space="preserve">
+    <value>sourceFileName cannot be empty</value>
+  </data>
+    <data name="Item_path_reference_not_found__but_may_be_in_another_database" xml:space="preserve">
+    <value>Item path reference not found, but may be in another database</value>
+  </data>
+    <data name="Enter__Y__or__N__" xml:space="preserve">
+    <value>Enter 'Y' or 'N'.</value>
+  </data>
+    <data name="Unknown_text_node" xml:space="preserve">
+    <value>Unknown text node</value>
+  </data>
+    <data name="Parent_not_found" xml:space="preserve">
+    <value>Parent not found</value>
+  </data>
+    <data name="Merge_conflict__Field_has_changed_both_in_project_and_in_database___skipping" xml:space="preserve">
+    <value>Merge conflict: Field has changed both in project and in database - skipping</value>
+  </data>
+    <data name="The_DiagnosticsToolset_checker_requires_elevated_rights_to_run" xml:space="preserve">
+    <value>The DiagnosticsToolset checker requires elevated rights to run</value>
+  </data>
 </root>

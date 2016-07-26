@@ -112,21 +112,21 @@ namespace Sitecore.Pathfinder.Projects
             var unversionedFields = item.Fields.Where(f => f.FieldName == "UnversionedField").ToList();
             Assert.AreEqual(1, unversionedFields.Count);
             var unversionedField = unversionedFields.First();
-            Assert.AreEqual("da-DK", unversionedField.Language);
-            Assert.AreEqual(0, unversionedField.Version);
+            Assert.AreEqual("da-DK", unversionedField.Language.LanguageName);
+            Assert.AreEqual(Version.Undefined, unversionedField.Version);
 
             // versioned field
             var versionedFields = item.Fields.Where(f => f.FieldName == "VersionedField").ToList();
             Assert.AreEqual(2, versionedFields.Count);
             var versionedField0 = versionedFields.First();
             Assert.AreEqual("Version 1", versionedField0.Value);
-            Assert.AreEqual("da-DK", versionedField0.Language);
-            Assert.AreEqual(1, versionedField0.Version);
+            Assert.AreEqual("da-DK", versionedField0.Language.LanguageName);
+            Assert.AreEqual(1, versionedField0.Version.Number);
 
             var versionedField1 = versionedFields.Last();
             Assert.AreEqual("Version 2", versionedField1.Value);
-            Assert.AreEqual("da-DK", versionedField1.Language);
-            Assert.AreEqual(2, versionedField1.Version);
+            Assert.AreEqual("da-DK", versionedField1.Language.LanguageName);
+            Assert.AreEqual(2, versionedField1.Version.Number);
 
             // included field
             var includedFields = item.Fields.Where(f => f.FieldName == "IncludeField").ToList();

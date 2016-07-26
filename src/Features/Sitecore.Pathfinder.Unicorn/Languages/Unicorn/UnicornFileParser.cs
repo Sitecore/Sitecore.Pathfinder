@@ -112,8 +112,8 @@ namespace Sitecore.Pathfinder.Unicorn.Languages.Unicorn
 
                         field.FieldId = versionedField.FieldId;
                         field.Value = value;
-                        field.Language = version.Language.ToString();
-                        field.Version = version.VersionNumber;
+                        field.Language = context.Project.GetLanguage(version.Language.ToString());
+                        field.Version = new Projects.Items.Version(version.VersionNumber);
 
                         item.Fields.Add(field);
 

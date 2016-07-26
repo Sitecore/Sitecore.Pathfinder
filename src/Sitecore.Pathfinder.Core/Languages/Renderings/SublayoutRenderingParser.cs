@@ -4,7 +4,7 @@ namespace Sitecore.Pathfinder.Languages.Renderings
 {
     public class SublayoutRenderingParser : WebFormsRenderingParser
     {
-        public SublayoutRenderingParser() : base(".ascx", Constants.Templates.Sublayout)
+        public SublayoutRenderingParser() : base(".ascx", Constants.Templates.SublayoutId)
         {
         }
     }

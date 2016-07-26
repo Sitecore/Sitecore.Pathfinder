@@ -191,7 +191,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                     {
                         if (database != null && !string.Equals(database.DatabaseName, field.Item.DatabaseName, StringComparison.OrdinalIgnoreCase))
                         {
-                            context.Trace.TraceWarning(Msg.C1064, "Item path reference not found, but may be in another database", TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), database.DatabaseName + ":/" + v);
+                            context.Trace.TraceWarning(Msg.C1064, Texts.Item_path_reference_not_found__but_may_be_in_another_database, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), database.DatabaseName + ":/" + v);
                         }
                         else
                         {

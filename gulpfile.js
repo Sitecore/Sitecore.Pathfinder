@@ -7,7 +7,6 @@
 //
 // 6. Run 'gulp' to build Pathfinder without publishing
 // 7. Or run 'gulp publish' to publish Pathfinder to npmjs.com, Nuget.org and the zip file directory
-// 8. Or run 'gulp nightly' to publish Pathfinder to the nightly directory
 //
 // 9. Done
 
@@ -20,6 +19,10 @@ var nugetpack = require("gulp-nuget-pack");
 var runSequence = require("run-sequence");
 var spawn = require("child_process").spawn;
 var zip = require("gulp-zip");
+
+if (process.env.APPVEYOR_BUILD_VERSION) {
+    version = process.env.APPVEYOR_BUILD_VERSION;
+}
 
 // build project
 

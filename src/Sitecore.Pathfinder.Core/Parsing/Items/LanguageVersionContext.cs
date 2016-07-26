@@ -2,6 +2,7 @@
 
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Parsing.Items
 {
@@ -9,16 +10,16 @@ namespace Sitecore.Pathfinder.Parsing.Items
     {
         public LanguageVersionContext()
         {
-            LanguageProperty = new SourceProperty<string>(this, "Language", string.Empty);
-            VersionProperty = new SourceProperty<int>(this, "Number", 0);
+            LanguageProperty = new SourceProperty<Language>(this, "Language", Language.Undefined);
+            VersionProperty = new SourceProperty<Version>(this, "Number", Version.Undefined);
         }
 
         Locking ILockable.Locking => Locking.ReadWrite;
 
         [NotNull]
-        public SourceProperty<string> LanguageProperty { get; }
+        public SourceProperty<Language> LanguageProperty { get; }
 
         [NotNull]
-        public SourceProperty<int> VersionProperty { get; }
+        public SourceProperty<Version> VersionProperty { get; }
     }
 }

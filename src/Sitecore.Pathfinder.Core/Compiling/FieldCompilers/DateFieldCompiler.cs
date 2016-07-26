@@ -36,7 +36,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             DateTime dateTime;
             if (!DateTime.TryParse(value, context.Culture, DateTimeStyles.None, out dateTime))
             {
-                context.Trace.TraceError(Msg.C1058, "Date field must contain a valid date value", TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), value);
+                context.Trace.TraceError(Msg.C1058, Texts.Date_field_must_contain_a_valid_date_value, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), value);
                 return string.Empty;
             }
 

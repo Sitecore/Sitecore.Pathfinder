@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Languages.Renderings
         [NotNull]
         private static readonly Regex PlaceholderRegex = new Regex("\\@Html\\.Sitecore\\(\\)\\.Placeholder\\(([^\"\\)]*)\"([^\"]*)\"\\)", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-        public ViewRenderingParser() : base(".cshtml", Constants.Templates.ViewRendering)
+        public ViewRenderingParser() : base(".cshtml", Constants.Templates.ViewRenderingId)
         {
         }
 

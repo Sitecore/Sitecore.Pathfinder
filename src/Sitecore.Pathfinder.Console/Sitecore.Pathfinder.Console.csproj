@@ -698,6 +698,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Features\Sitecore.Pathfinder.DiagnosticsToolset\Sitecore.Pathfinder.DiagnosticsToolset.csproj">
+      <Project>{65e69d35-394e-4c48-885e-6ca5449938be}</Project>
+      <Name>Sitecore.Pathfinder.DiagnosticsToolset</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Features\Sitecore.Pathfinder.HtmlFile\Sitecore.Pathfinder.Html.csproj">
       <Project>{7287e9e2-cab5-4de4-87b5-237b65020dc4}</Project>
       <Name>Sitecore.Pathfinder.Html</Name>

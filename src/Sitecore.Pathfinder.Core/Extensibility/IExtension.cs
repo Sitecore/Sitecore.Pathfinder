@@ -10,5 +10,7 @@ namespace Sitecore.Pathfinder.Extensibility
         void RemoveWebsiteFiles([NotNull] IBuildContext context);
 
         bool UpdateWebsiteFiles([NotNull] IBuildContext context);
+
+        void Start();
     }
 }

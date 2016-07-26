@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
             var template = context.ParseContext.Factory.Template(context.ParseContext.Project, guid, databaseName, itemNameTextNode.Value, itemIdOrPath).With(textNode);
             template.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
-            template.BaseTemplatesProperty.Parse(textNode, Constants.Templates.StandardTemplate);
+            template.BaseTemplatesProperty.Parse(textNode, Constants.Templates.StandardTemplateId);
             template.IconProperty.Parse(textNode);
             template.ShortHelpProperty.Parse(textNode);
             template.LongHelpProperty.Parse(textNode);

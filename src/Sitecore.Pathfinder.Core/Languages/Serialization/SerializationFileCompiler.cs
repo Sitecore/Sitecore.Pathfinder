@@ -7,6 +7,7 @@ using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Serialization
@@ -58,7 +59,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
             return new TextSpan(lineNumber + 1, linePosition, length);
         }
 
-        protected virtual int ParseField([NotNull] ICompileContext context, [NotNull] ITextSnapshot textSnapshot, [NotNull] ItemBuilder itemBuilder, [NotNull] LanguageVersionBuilder languageVersionBuilder, [NotNull] [ItemNotNull] string[] lines, int lineNumber)
+        protected virtual int ParseField([NotNull] ICompileContext context, [NotNull] ITextSnapshot textSnapshot, [NotNull] ItemBuilder itemBuilder, [NotNull] LanguageVersionBuilder languageVersionBuilder, [NotNull, ItemNotNull]  string[] lines, int lineNumber)
         {
             var textNode = context.Factory.TextNode(textSnapshot, GetTextSpan(lineNumber, 0, 0), string.Empty, string.Empty);
 
@@ -118,7 +119,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
             return n;
         }
 
-        protected virtual int ParseFieldValue([NotNull] ICompileContext context, [NotNull] ITextSnapshot textSnapshot, [NotNull] [ItemNotNull] string[] lines, [NotNull] FieldBuilder fieldBuilder, int startIndex, int contentLength, ref int lineLength)
+        protected virtual int ParseFieldValue([NotNull] ICompileContext context, [NotNull] ITextSnapshot textSnapshot, [NotNull, ItemNotNull] string[] lines, [NotNull] FieldBuilder fieldBuilder, int startIndex, int contentLength, ref int lineLength)
         {
             string value;
             var sb = new StringBuilder();
@@ -152,7 +153,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
             return lines.Length;
         }
 
-        protected virtual int ParseItem([NotNull] ICompileContext context, [NotNull] ITextSnapshot textSnapshot, [NotNull] ItemBuilder itemBuilder, [NotNull] [ItemNotNull] string[] lines)
+        protected virtual int ParseItem([NotNull] ICompileContext context, [NotNull] ITextSnapshot textSnapshot, [NotNull] ItemBuilder itemBuilder, [NotNull, ItemNotNull] string[] lines)
         {
             var languageVersionBuilder = new LanguageVersionBuilder();
 
@@ -223,7 +224,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
             return lines.Length;
         }
 
-        protected virtual int ParseVersion([NotNull] ICompileContext context, [NotNull] ITextSnapshot textSnapshot, [NotNull] LanguageVersionBuilder languageVersionBuilder, [NotNull] [ItemNotNull] string[] lines, int lineNumber)
+        protected virtual int ParseVersion([NotNull] ICompileContext context, [NotNull] ITextSnapshot textSnapshot, [NotNull] LanguageVersionBuilder languageVersionBuilder, [NotNull, ItemNotNull]  string[] lines, int lineNumber)
         {
             for (var n = lineNumber; n < lines.Length; n++)
             {
@@ -245,12 +246,16 @@ namespace Sitecore.Pathfinder.Languages.Serialization
                 switch (name)
                 {
                     case "language":
-                        languageVersionBuilder.Language = value;
+                        languageVersionBuilder.Language = context.Project.GetLanguage(value);
                         languageVersionBuilder.LanguageTextNode = context.Factory.TextNode(textSnapshot, GetTextSpan(n, 0, line.Length), "language", value);
                         break;
                     case "version":
-                        languageVersionBuilder.Version = int.Parse(value);
-                        languageVersionBuilder.VersionTextNode = context.Factory.TextNode(textSnapshot, GetTextSpan(n, 0, line.Length), "version", value);
+                        Version version;
+                        if (Version.TryParse(value, out version))
+                        {
+                            languageVersionBuilder.Version = version;
+                            languageVersionBuilder.VersionTextNode = context.Factory.TextNode(textSnapshot, GetTextSpan(n, 0, line.Length), "version", value);
+                        }
                         break;
                     case "revision":
                         break;

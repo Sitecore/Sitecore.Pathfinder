@@ -162,7 +162,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             }
 
             // check if field is already defined
-            var duplicate = item.Fields.FirstOrDefault(f => string.Equals(f.FieldName, field.FieldName, StringComparison.OrdinalIgnoreCase) && string.Equals(f.Language, field.Language, StringComparison.OrdinalIgnoreCase) && f.Version == field.Version);
+            var duplicate = item.Fields.FirstOrDefault(f => string.Equals(f.FieldName, field.FieldName, StringComparison.OrdinalIgnoreCase) && f.Language == field.Language && f.Version == field.Version);
             if (duplicate == null)
             {
                 item.Fields.Add(field);

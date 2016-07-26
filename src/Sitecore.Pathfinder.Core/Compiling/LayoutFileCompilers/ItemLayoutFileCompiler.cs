@@ -60,7 +60,7 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
 
             if (!compiled)
             {
-                context.Trace.TraceError(Msg.C1063, "Element has a 'Layout.File' attribute, but it could not be compiled", TraceHelper.GetTextNode(property), property.GetValue());
+                context.Trace.TraceError(Msg.C1063, Texts.Element_has_a__Layout_File__attribute__but_it_could_not_be_compiled, TraceHelper.GetTextNode(property), property.GetValue());
             }
         }
     }

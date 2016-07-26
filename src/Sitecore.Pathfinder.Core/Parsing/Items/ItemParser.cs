@@ -110,7 +110,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
                 if (!parsed)
                 {
-                    context.ParseContext.Trace.TraceError(Msg.P1025, "Unknown text node", textNode, textNode.Key);
+                    context.ParseContext.Trace.TraceError(Msg.P1025, Texts.Unknown_text_node, textNode, textNode.Key);
 
                 }
             }

@@ -8,7 +8,7 @@ namespace Sitecore.Pathfinder.PageHtml.PageHtml
 {
     public class PageHtmlRenderingParser : RenderingParser
     {
-        public PageHtmlRenderingParser() : base(".page.html", Constants.Templates.ViewRendering)
+        public PageHtmlRenderingParser() : base(".page.html", Constants.Templates.ViewRenderingId)
         {
         }
 

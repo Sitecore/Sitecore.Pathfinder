@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
@@ -60,6 +60,9 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull]
         Database GetDatabase([NotNull] string databaseName);
+
+        [NotNull]
+        Language GetLanguage([NotNull] string languageName);
 
         [NotNull, ItemNotNull]
         IEnumerable<IProjectItem> GetUsages([NotNull] string qualifiedName);

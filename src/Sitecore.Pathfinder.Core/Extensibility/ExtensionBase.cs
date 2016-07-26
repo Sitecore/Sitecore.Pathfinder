@@ -12,9 +12,18 @@ namespace Sitecore.Pathfinder.Extensibility
     [InheritedExport(typeof(IExtension))]
     public abstract class ExtensionBase : IExtension
     {
-        public abstract void RemoveWebsiteFiles(IBuildContext context);
+        public virtual void RemoveWebsiteFiles(IBuildContext context)
+        {
+        }
 
-        public abstract bool UpdateWebsiteFiles(IBuildContext context);
+        public virtual void Start()
+        {
+        }
+
+        public virtual bool UpdateWebsiteFiles(IBuildContext context)
+        {
+            return false;
+        }
 
         protected virtual bool CopyProjectFileToWebsiteBinDirectory([NotNull] IBuildContext context, [NotNull] string fileName)
         {
@@ -50,11 +59,11 @@ namespace Sitecore.Pathfinder.Extensibility
             try
             {
                 context.FileSystem.DeleteFile(fileName);
-                context.Trace.TraceInformation("Removed: " + PathHelper.UnmapPath(context.WebsiteDirectory, fileName));
+                context.Trace.TraceInformation(Texts.Removed__ + PathHelper.UnmapPath(context.WebsiteDirectory, fileName));
             }
             catch
             {
-                context.Trace.TraceInformation("Failed to remove: " + PathHelper.UnmapPath(context.WebsiteDirectory, fileName));
+                context.Trace.TraceInformation(Texts.Failed_to_remove__ + PathHelper.UnmapPath(context.WebsiteDirectory, fileName));
             }
         }
     }

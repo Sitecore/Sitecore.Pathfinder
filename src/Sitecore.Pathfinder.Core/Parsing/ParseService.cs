@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Microsoft.Framework.ConfigurationModel;
-using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -18,11 +17,9 @@ namespace Sitecore.Pathfinder.Parsing
     public class ParseService : IParseService
     {
         [ImportingConstructor]
-        public ParseService([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] ISnapshotService snapshotService, [NotNull] IPathMapperService pathMapper, [NotNull] ExportFactory<IParseContext> parseContextFactory, [ImportMany, NotNull, ItemNotNull] IEnumerable<IParser> parsers)
+        public ParseService([NotNull] IConfiguration configuration, [NotNull] ISnapshotService snapshotService, [NotNull] IPathMapperService pathMapper, [NotNull] ExportFactory<IParseContext> parseContextFactory, [ImportMany, NotNull, ItemNotNull] IEnumerable<IParser> parsers)
         {
-            CompositionService = compositionService;
             Configuration = configuration;
-            Factory = factory;
             SnapshotService = snapshotService;
             PathMapper = pathMapper;
             ParseContextFactory = parseContextFactory;
@@ -30,13 +27,7 @@ namespace Sitecore.Pathfinder.Parsing
         }
 
         [NotNull]
-        protected ICompositionService CompositionService { get; }
-
-        [NotNull]
         protected IConfiguration Configuration { get; }
-
-        [NotNull]
-        protected IFactoryService Factory { get; }
 
         [NotNull]
         protected ExportFactory<IParseContext> ParseContextFactory { get; }

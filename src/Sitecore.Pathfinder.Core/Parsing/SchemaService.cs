@@ -65,7 +65,7 @@ namespace Sitecore.Pathfinder.Parsing
                 {
                     if (!hashSet.Contains(attribute.Key))
                     {
-                        Trace.TraceError("'" + textNode.Key + "' element has unexpected attribute", attribute, attribute.Key);
+                        Trace.TraceError($"\'{textNode.Key}\' element has unexpected attribute", attribute, attribute.Key);
                         result = false;
                     }
                 }
@@ -77,7 +77,7 @@ namespace Sitecore.Pathfinder.Parsing
                 {
                     if (!hashSet.Contains(childNode.Key))
                     {
-                        Trace.TraceError("'" + textNode.Key + "' element has unexpected child node", childNode, childNode.Key);
+                        Trace.TraceError($"\'{textNode.Key}\' element has unexpected child node", childNode, childNode.Key);
                         result = false;
                     }
                 }

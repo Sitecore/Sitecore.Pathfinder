@@ -14,7 +14,7 @@ namespace Sitecore.Pathfinder.Checkers
         {
             if (FileExists(context, "~/sitecore/shell/sitecore.version.xml"))
             {
-                yield return Warning(Msg.C1000, "Project should not be located inside the website. To fix, move the project to a new directory");
+                yield return Warning(Msg.C1117, "Project should not be located inside the website. To fix, move the project to a new directory");
             }
         }
     }

@@ -34,7 +34,7 @@ namespace Sitecore.Pathfinder.Compiling.Builders
         public ItemBuilder ItemBuilder { get; private set; }
 
         [NotNull]
-        public string Language { get; set; } = string.Empty;
+        public Language Language { get; set; } = Language.Undefined;
 
         [NotNull]
         public ITextNode LanguageTextNode { get; set; } = TextNode.Empty;
@@ -63,12 +63,13 @@ namespace Sitecore.Pathfinder.Compiling.Builders
         [NotNull]
         public ITextNode ValueTextNode { get; set; } = TextNode.Empty;
 
-        public int Version { get; set; }
+        [NotNull]
+        public Projects.Items.Version Version { get; set; } = Projects.Items.Version.Undefined;
 
         [NotNull]
         public ITextNode VersionTextNode { get; set; } = TextNode.Empty;
 
-        [NotNull]
+        [NotNull]                                                                                                               
         protected IFactoryService Factory { get; }
 
         [NotNull]

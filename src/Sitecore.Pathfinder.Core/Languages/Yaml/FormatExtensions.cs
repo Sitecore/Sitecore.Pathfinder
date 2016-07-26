@@ -40,9 +40,9 @@ namespace Sitecore.Pathfinder.Languages.Yaml
         {
             var output = new YamlTextWriter(writer);
 
-            var sharedFields = item.Fields.Where(f => string.IsNullOrEmpty(f.Language) && f.Version == 0).ToList();
-            var unversionedFields = item.Fields.Where(f => !string.IsNullOrEmpty(f.Language) && f.Version == 0).ToList();
-            var versionedFields = item.Fields.Where(f => !string.IsNullOrEmpty(f.Language) && f.Version != 0).ToList();
+            var sharedFields = item.Fields.Where(f => f.Language == Language.Undefined && f.Version == Projects.Items.Version.Undefined).ToList();
+            var unversionedFields = item.Fields.Where(f => f.Language != Language.Undefined && f.Version == Projects.Items.Version.Undefined).ToList();
+            var versionedFields = item.Fields.Where(f => f.Language != Language.Undefined && f.Version != Projects.Items.Version.Undefined).ToList();
 
             output.WriteStartElement("Item");
 
@@ -67,7 +67,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
 
                 foreach (var language in unversionedFields.Select(f => f.Language).Distinct())
                 {
-                    output.WriteStartElement(language);
+                    output.WriteStartElement(language.LanguageName);
 
                     foreach (var field in unversionedFields.Where(f => f.Language == language))
                     {
@@ -88,7 +88,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
 
                 foreach (var language in versionedFields.Select(f => f.Language).Distinct())
                 {
-                    output.WriteStartElement(language);
+                    output.WriteStartElement(language.LanguageName);
 
                     foreach (var version in versionedFields.Where(f => f.Language == language).Select(f => f.Version).Distinct())
                     {

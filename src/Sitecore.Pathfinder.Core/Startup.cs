@@ -141,6 +141,12 @@ namespace Sitecore.Pathfinder
             var host = new HostService(configuration, compositionService, Stopwatch);
             compositionService.Set((IHostService)host);
 
+            // initialize extension - only called at start up
+            foreach (var extension in compositionService.GetExportedValues<IExtension>())
+            {
+                extension.Start();
+            }
+
             return host;
         }
 

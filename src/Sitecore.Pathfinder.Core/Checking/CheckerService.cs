@@ -13,22 +13,22 @@ using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Checking
 {
+    public enum CheckerSeverity
+    {
+        Disabled,
+
+        Default,
+
+        Information,
+
+        Warning,
+
+        Error
+    }
+
     [Export(typeof(ICheckerService))]
     public class CheckerService : ICheckerService
     {
-        public enum CheckerSeverity
-        {
-            Disabled,
-
-            Default,
-
-            Information,
-
-            Warning,
-
-            Error
-        }
-
         private const string BasedOn = "based-on";
 
         [ImportingConstructor]
@@ -52,10 +52,11 @@ namespace Sitecore.Pathfinder.Checking
         public virtual void CheckProject(IProjectBase project, IDiagnosticCollector diagnosticCollector)
         {
             var context = CompositionService.Resolve<ICheckerContext>().With(project, diagnosticCollector);
+
             var treatWarningsAsErrors = Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
             var isMultiThreaded = Configuration.GetBool(Constants.Configuration.System.MultiThreaded, true);
 
-            var checkers = GetCheckers().ToArray();
+            var checkers = GetCheckers(context).ToArray();
 
             CheckProject(context, checkers, isMultiThreaded, treatWarningsAsErrors);
         }
@@ -95,17 +96,18 @@ namespace Sitecore.Pathfinder.Checking
 
         public virtual IEnumerable<Func<ICheckerContext, IEnumerable<Diagnostic>>> GetEnabledCheckers()
         {
-            return GetCheckers().Select(c => c.Checker);
+            var context = CompositionService.Resolve<ICheckerContext>();
+            return GetCheckers(context).Select(c => c.Checker);
         }
 
-        protected virtual void EnableCheckers([NotNull, ItemNotNull] IEnumerable<CheckerInfo> checkers, [NotNull] string configurationKey)
+        protected virtual void EnableCheckers([NotNull] ICheckerContext context, [NotNull, ItemNotNull] IEnumerable<CheckerInfo> checkers, [NotNull] string configurationKey)
         {
             foreach (var pair in Configuration.GetSubKeys(configurationKey))
             {
                 if (pair.Key == BasedOn)
                 {
                     var baseName = Constants.Configuration.ProjectRoleCheckers + ":" + Configuration.GetString(configurationKey + ":" + pair.Key);
-                    EnableCheckers(checkers, baseName);
+                    EnableCheckers(context, checkers, baseName);
                 }
             }
 
@@ -144,13 +146,15 @@ namespace Sitecore.Pathfinder.Checking
                         c.Severity = severity;
                     }
 
+                    foreach (var c in context.Checkers)
+                    {
+                        context.Checkers[c.Key] = severity;
+                    }
+
                     continue;
                 }
 
-                if (!checkers.Any(c => c.Name == key || c.Category == key))
-                {
-                    throw new ConfigurationException("Checker not found: " + key);
-                }
+                context.Checkers[key] = severity;
 
                 foreach (var checker in checkers)
                 {
@@ -163,22 +167,28 @@ namespace Sitecore.Pathfinder.Checking
         }
 
         [NotNull, ItemNotNull]
-        protected virtual IEnumerable<CheckerInfo> GetCheckers()
+        protected virtual IEnumerable<CheckerInfo> GetCheckers([NotNull] ICheckerContext context)
         {
             var checkers = Checkers.Select(c => new CheckerInfo(c)).ToList();
+
+            foreach (var checker in checkers)
+            {
+                context.Checkers[checker.Name] = CheckerSeverity.Default;
+                context.Checkers[checker.Category] = CheckerSeverity.Default;
+            }
 
             // apply project roles
             var projectRoles = Configuration.GetStringList(Constants.Configuration.ProjectRole);
             foreach (var projectRole in projectRoles)
             {
-                EnableCheckers(checkers, Constants.Configuration.ProjectRoleCheckers + ":" + projectRole);
+                EnableCheckers(context, checkers, Constants.Configuration.ProjectRoleCheckers + ":" + projectRole);
             }
 
             // apply check-project:checkers
-            EnableCheckers(checkers, Constants.Configuration.CheckProject.Checkers);
+            EnableCheckers(context, checkers, Constants.Configuration.CheckProject.Checkers);
 
             // apply checkers
-            EnableCheckers(checkers, Constants.Configuration.Checkers);
+            EnableCheckers(context, checkers, Constants.Configuration.Checkers);
 
             return checkers.Where(c => c.Severity != CheckerSeverity.Disabled).ToArray();
         }

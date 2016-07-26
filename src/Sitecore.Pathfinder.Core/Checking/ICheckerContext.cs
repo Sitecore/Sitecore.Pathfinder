@@ -1,5 +1,6 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System.Collections.Generic;
 using System.Globalization;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
@@ -9,6 +10,9 @@ namespace Sitecore.Pathfinder.Checking
 {
     public interface ICheckerContext
     {
+        [NotNull]
+        IDictionary<string, CheckerSeverity> Checkers { get; }
+
         [NotNull]
         CultureInfo Culture { get; }
 

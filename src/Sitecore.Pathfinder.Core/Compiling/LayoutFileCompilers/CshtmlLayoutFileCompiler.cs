@@ -50,7 +50,7 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
             }
             if (renderings.Count > 1)
             {
-                context.Trace.TraceError(Msg.C1062, "Ambiguous file name", TraceHelper.GetTextNode(property), value);
+                context.Trace.TraceError(Msg.C1062, Texts.Ambiguous_file_name, TraceHelper.GetTextNode(property), value);
                 return;
             }
 
