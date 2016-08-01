@@ -1,10 +1,19 @@
 new-project
 ===========
-Creates a new Pathfinder project.
+Creates a new Pathfinder solution.
 
 Remarks
 -------
-The `new-project` task is a wizard that generates a new Pathfinder project by asking a number of questions.
+A solution may contain one or more projects.
+
+The `new-solution` task is a wizard that generates a new Pathfinder solution by asking a number of questions.
+
+In addition to creating a scconfig.json, the task also creates a scconfig.solution.json that contains references
+to the file location of the projects to compile. By default the task scans all subdirectories for scconfig.json files
+and .csproj files.
+
+If a project is located in a directory named 'code', Pathfinder will use the parent directory as project directory
+to support Habitat conventions.
 
 Settings
 --------
@@ -12,12 +21,12 @@ Settings
 |---------------------------------------|----------------------------------------|
 | new-project:default-host-name         | The default host name.                 |
 | new-project:default-wwwroot-directory | The default directory of the wwwwroot. |
-| new-project:wwwroot-directory         | The wwwroot  directory.                |
+| new-project:wwwroot-directory         | The wwwroot directory.                |
 
 Example
 -------
 ```cmd
-> scc new-project
+> scc new-solution
 
 Welcome to Sitecore Pathfinder.
 
@@ -41,21 +50,6 @@ Enter the directory of the DataFolder [e:\inetpub\wwwroot\Pathfinder\Data]:
 Finally Pathfinder requires the hostname of the Sitecore website.
 
 Enter the hostname of the website [pathfinder]:
-
-Do you want to install an editor configuration [Y]:
-
-1: Atom
-2: VisualStudio.ClassLibrary
-3: VisualStudio.Website
-4: VSCode
-Select editor [1]: 4
-
-Do you want to install a starter kit [Y]:
-
-1: CleanBlog
-2: HelloWorld
-3: TodoMvc
-Select starter kit [1]: 1
 
 Creating project...
 ```

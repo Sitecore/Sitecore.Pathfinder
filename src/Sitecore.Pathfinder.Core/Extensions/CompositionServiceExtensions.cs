@@ -81,6 +81,13 @@ namespace Sitecore.Pathfinder.Extensions
             compositionContainer.ComposeExportedValue(value);
         }
 
+        public static void Set<T>([NotNull] this ICompositionService compositionService, [NotNull] string contractName, [NotNull] T value)
+        {
+            var compositionContainer = (CompositionContainer)compositionService;
+
+            compositionContainer.ComposeExportedValue(contractName, value);
+        }
+
         private static void HandleException([NotNull] Exception ex)
         {
             Console.WriteLine(ex.Message);

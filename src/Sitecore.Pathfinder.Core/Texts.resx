@@ -708,4 +708,58 @@
     <data name="The_DiagnosticsToolset_checker_requires_elevated_rights_to_run" xml:space="preserve">
     <value>The DiagnosticsToolset checker requires elevated rights to run</value>
   </data>
+    <data name="Creating_project___" xml:space="preserve">
+    <value>Creating project...</value>
+  </data>
+    <data name="Select_starter_kit__1___" xml:space="preserve">
+    <value>Select starter kit [1]: </value>
+  </data>
+    <data name="Do_you_want_to_install_a_starter_kit__Y___" xml:space="preserve">
+    <value>Do you want to install a starter kit [Y]: </value>
+  </data>
+    <data name="Do_you_want_to_install_a_task_runner__N___" xml:space="preserve">
+    <value>Do you want to install a task runner [N]: </value>
+  </data>
+    <data name="Select_task_runner__1___" xml:space="preserve">
+    <value>Select task runner [1]: </value>
+  </data>
+    <data name="Select_editor__1___" xml:space="preserve">
+    <value>Select editor [1]: </value>
+  </data>
+    <data name="Do_you_want_to_install_an_editor_configuration__Y___" xml:space="preserve">
+    <value>Do you want to install an editor configuration [Y]: </value>
+  </data>
+    <data name="Finally_Pathfinder_requires_the_hostname_of_the_Sitecore_website_" xml:space="preserve">
+    <value>Finally Pathfinder requires the hostname of the Sitecore website.</value>
+  </data>
+    <data name="Pathfinder_requires_physical_access_to_both_the_Website_and_DataFolder_directories_to_deploy_packages_" xml:space="preserve">
+    <value>Pathfinder requires physical access to both the Website and DataFolder directories to deploy packages.</value>
+  </data>
+    <data name="Pathfinder_needs_4_pieces_of_information_to_create_a_new_project__a_unique_Id_for_the_project__the_Sitecore_website_and_data_folder_directories_to_deploy_to__and_the_hostname_of_the_website__If_you_have_not_yet_created_a_Sitecore_website__use_a_tool_like_Sitecore_Instance_Manager_to_create_it_for_you_" xml:space="preserve">
+    <value>Pathfinder needs 4 pieces of information to create a new project; a unique Id for the project, the Sitecore website and data folder directories to deploy to, and the hostname of the website. If you have not yet created a Sitecore website, use a tool like Sitecore Instance Manager to create it for you.</value>
+  </data>
+    <data name="UniqueID" xml:space="preserve">
+    <value>The project’s unique ID can be a unique string (like MyCompany.MyProject) or a Guid. If you do not specify a unique ID, Pathfinder will generate a Guid for you.</value>
+  </data>
+    <data name="You_should__not__change_the_project_unique_ID_at_a_later_point__since_Sitecore_item_IDs_are_dependent_on_it_" xml:space="preserve">
+    <value>You should *not* change the project unique ID at a later point, since Sitecore item IDs are dependent on it.</value>
+  </data>
+    <data name="Welcome_to_Sitecore_Pathfinder_" xml:space="preserve">
+    <value>Welcome to Sitecore Pathfinder.</value>
+  </data>
+    <data name="The_current_directory_is_not_empty__It_is_recommended_to_create_a_new_project_in_an_empty_directory_" xml:space="preserve">
+    <value>The current directory is not empty. It is recommended to create a new project in an empty directory.</value>
+  </data>
+    <data name="Are_you_sure_you_want_to_create_the_project_in_this_directory__N___" xml:space="preserve">
+    <value>Are you sure you want to create the project in this directory [N]: </value>
+  </data>
+    <data name="This_does_not_appear_to_be_a_valid_Sitecore_data_folder_as__indexes_does_not_exist_" xml:space="preserve">
+    <value>This does not appear to be a valid Sitecore data folder as /indexes does not exist.</value>
+  </data>
+    <data name="Do_you_want_to_continue_anyway___N_" xml:space="preserve">
+    <value>Do you want to continue anyway? [N]</value>
+  </data>
+    <data name="This_does_not_appear_to_be_a_valid_Sitecore_website_as__bin_Sitecore_Kernel_dll_does_not_exist_" xml:space="preserve">
+    <value>This does not appear to be a valid Sitecore website as /bin/Sitecore.Kernel.dll does not exist.</value>
+  </data>
 </root>

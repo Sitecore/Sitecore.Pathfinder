@@ -20,8 +20,9 @@ namespace Sitecore.Pathfinder.Building
     public class Builder : TaskRunnerBase
     {
         [ImportingConstructor]
-        public Builder([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem, [NotNull] IProjectService projectService, [NotNull] ExportFactory<IBuildContext> buildContextFactory, [NotNull, ItemNotNull, ImportMany] IEnumerable<ITask> tasks) : base(configuration, tasks)
+        public Builder([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] IFileSystemService fileSystem, [NotNull] IProjectService projectService, [NotNull] ExportFactory<IBuildContext> buildContextFactory, [NotNull, ItemNotNull, ImportMany] IEnumerable<ITask> tasks) : base(configuration, tasks)
         {
+            Console = console;
             FileSystem = fileSystem;
             ProjectService = projectService;
             BuildContextFactory = buildContextFactory;
@@ -31,12 +32,25 @@ namespace Sitecore.Pathfinder.Building
         protected ExportFactory<IBuildContext> BuildContextFactory { get; }
 
         [NotNull]
+        protected IConsoleService Console { get; }
+
+        [NotNull]
         protected IFileSystemService FileSystem { get; }
 
         [NotNull]
         protected IProjectService ProjectService { get; }
 
         public override int Start()
+        {
+            if (IsSolution())
+            {
+                return BuildSolution();
+            }
+
+            return BuildProject();
+        }
+
+        protected virtual int BuildProject()
         {
             var context = BuildContextFactory.New().With(LoadProject);
 
@@ -45,6 +59,46 @@ namespace Sitecore.Pathfinder.Building
             RunTasks(context);
 
             return context.ErrorCode;
+        }
+
+        protected virtual int BuildSolution()
+        {
+            var failed = 0;
+            var succeeded = 0;
+            var solutionDirectory = Configuration.GetProjectDirectory();
+
+            foreach (var pair in Configuration.GetSubKeys("projects"))
+            {
+                Console.WriteLine($"========== Compiling project: {pair.Key} ==========");
+
+                var relativePath = Configuration.GetString("projects:" + pair.Key);
+                var projectDirectory = PathHelper.Combine(solutionDirectory, PathHelper.NormalizeFilePath(relativePath));
+
+                // create a new host for each project, so they do not interfer
+                var host = new Startup().WithStopWatch().WithTraceListeners().AsInteractive().WithWebsiteAssemblyResolver().WithProjectDirectory(projectDirectory).Start();
+                if (host == null)
+                {
+                    return -1;
+                }
+
+                var builder = host.GetTaskRunner<Builder>();
+
+                var code = builder.Start();
+                if (code != 0)
+                {
+                    failed++;
+                }
+                else
+                {
+                    succeeded++;
+                }
+
+                Console.WriteLine();
+            }
+
+            Console.WriteLine($"========== Build solution: {succeeded} succeeded, {failed} failed ==========");
+
+            return failed > 0 ? -1 : 0;
         }
 
         protected override IList<string> GetTaskNames(ITaskContext context)
@@ -61,6 +115,11 @@ namespace Sitecore.Pathfinder.Building
             }
 
             return tasks;
+        }
+
+        protected virtual bool IsSolution()
+        {
+            return FileSystem.FileExists(Path.Combine(Configuration.GetProjectDirectory(), "scconfig.solution.json"));
         }
 
         [NotNull]

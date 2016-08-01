@@ -6,6 +6,9 @@ Version next
 * Add: Refactored help system to use Markdown files (2016-04-27)
 * Add: Heavy NuGet refactoring (2016-05-23) - Dmitry Kostenko
 * Add: check-website task (2016-07-15) - Anders Laub
+* Add: Support for Sitecore Diagnostics Toolset tests (2016-07-25)
+* Add: Solution support (2016-08-01)
+* Add: 'new-solution' task (2016-08-01)
 
 Version 0.7.0
 ============

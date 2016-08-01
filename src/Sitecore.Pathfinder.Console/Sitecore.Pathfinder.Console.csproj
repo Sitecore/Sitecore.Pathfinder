@@ -177,6 +177,8 @@
     <Compile Include="Tasks\ListProjectCheckers.cs" />
     <Compile Include="Tasks\ListOutput.cs" />
     <Compile Include="Tasks\ListProjectRoles.cs" />
+    <Compile Include="Tasks\NewProjectBase.cs" />
+    <Compile Include="Tasks\NewSolution.cs" />
     <Compile Include="Tasks\RestorePackages.cs" />
     <Compile Include="Tasks\RunScript.cs" />
     <Compile Include="Tasks\ShowStatus.cs" />
@@ -439,6 +441,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="help\index.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="help\tasks\new-solution.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="help\tasks\sync-website.md">

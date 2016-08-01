@@ -207,6 +207,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to create the project in this directory [N]: .
+        /// </summary>
+        public static string Are_you_sure_you_want_to_create_the_project_in_this_directory__N___ {
+            get {
+                return ResourceManager.GetString("Are_you_sure_you_want_to_create_the_project_in_this_directory__N___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Assembly not found in T4 type name in the config setting &apos;generate-code:items&apos;.
         /// </summary>
         public static string Assembly_not_found_in_T4_type_name_in_the_config_setting__generate_code_items_ {
@@ -423,6 +432,24 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Creating project....
+        /// </summary>
+        public static string Creating_project___ {
+            get {
+                return ResourceManager.GetString("Creating_project___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ==========.
+        /// </summary>
+        public static string Dashes {
+            get {
+                return ResourceManager.GetString("Dashes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Database.
         /// </summary>
         public static string Database {
@@ -527,6 +554,42 @@ namespace Sitecore.Pathfinder {
         public static string Devices_not_found_in_database_ {
             get {
                 return ResourceManager.GetString("Devices_not_found_in_database_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to continue anyway? [N].
+        /// </summary>
+        public static string Do_you_want_to_continue_anyway___N_ {
+            get {
+                return ResourceManager.GetString("Do_you_want_to_continue_anyway___N_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to install a starter kit [Y]: .
+        /// </summary>
+        public static string Do_you_want_to_install_a_starter_kit__Y___ {
+            get {
+                return ResourceManager.GetString("Do_you_want_to_install_a_starter_kit__Y___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to install a task runner [N]: .
+        /// </summary>
+        public static string Do_you_want_to_install_a_task_runner__N___ {
+            get {
+                return ResourceManager.GetString("Do_you_want_to_install_a_task_runner__N___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to install an editor configuration [Y]: .
+        /// </summary>
+        public static string Do_you_want_to_install_an_editor_configuration__Y___ {
+            get {
+                return ResourceManager.GetString("Do_you_want_to_install_an_editor_configuration__Y___", resourceCulture);
             }
         }
         
@@ -752,6 +815,15 @@ namespace Sitecore.Pathfinder {
         public static string Files_imported {
             get {
                 return ResourceManager.GetString("Files_imported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finally Pathfinder requires the hostname of the Sitecore website..
+        /// </summary>
+        public static string Finally_Pathfinder_requires_the_hostname_of_the_Sitecore_website_ {
+            get {
+                return ResourceManager.GetString("Finally_Pathfinder_requires_the_hostname_of_the_Sitecore_website_", resourceCulture);
             }
         }
         
@@ -1229,6 +1301,25 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pathfinder needs 4 pieces of information to create a new project; a unique Id for the project, the Sitecore website and data folder directories to deploy to, and the hostname of the website. If you have not yet created a Sitecore website, use a tool like Sitecore Instance Manager to create it for you..
+        /// </summary>
+        public static string Pathfinder_needs_4_pieces_of_information_to_create_a_new_project__a_unique_Id_for_the_project__the_Sitecore_website_and_data_folder_directories_to_deploy_to__and_the_hostname_of_the_website__If_you_have_not_yet_created_a_Sitecore_website__use_a_tool_like_Sitecore_Instance_Manager_to_create_it_for_you_ {
+            get {
+                return ResourceManager.GetString(@"Pathfinder_needs_4_pieces_of_information_to_create_a_new_project__a_unique_Id_for_the_project__the_Sitecore_website_and_data_folder_directories_to_deploy_to__and_the_hostname_of_the_website__If_you_have_not_yet_created_a_Sitecore_website__use_a_tool_like_Sitecore_Instance_Manager_to_create_it_for_you_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pathfinder requires physical access to both the Website and DataFolder directories to deploy packages..
+        /// </summary>
+        public static string Pathfinder_requires_physical_access_to_both_the_Website_and_DataFolder_directories_to_deploy_packages_ {
+            get {
+                return ResourceManager.GetString("Pathfinder_requires_physical_access_to_both_the_Website_and_DataFolder_directorie" +
+                        "s_to_deploy_packages_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are no tasks to execute..
         /// </summary>
         public static string Pipeline_is_empty__There_are_no_tasks_to_execute_ {
@@ -1405,6 +1496,33 @@ namespace Sitecore.Pathfinder {
         public static string Script_not_found {
             get {
                 return ResourceManager.GetString("Script_not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select editor [1]: .
+        /// </summary>
+        public static string Select_editor__1___ {
+            get {
+                return ResourceManager.GetString("Select_editor__1___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select starter kit [1]: .
+        /// </summary>
+        public static string Select_starter_kit__1___ {
+            get {
+                return ResourceManager.GetString("Select_starter_kit__1___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select task runner [1]: .
+        /// </summary>
+        public static string Select_task_runner__1___ {
+            get {
+                return ResourceManager.GetString("Select_task_runner__1___", resourceCulture);
             }
         }
         
@@ -1590,6 +1708,16 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The current directory is not empty. It is recommended to create a new project in an empty directory..
+        /// </summary>
+        public static string The_current_directory_is_not_empty__It_is_recommended_to_create_a_new_project_in_an_empty_directory_ {
+            get {
+                return ResourceManager.GetString("The_current_directory_is_not_empty__It_is_recommended_to_create_a_new_project_in_" +
+                        "an_empty_directory_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The DiagnosticsToolset checker requires elevated rights to run.
         /// </summary>
         public static string The_DiagnosticsToolset_checker_requires_elevated_rights_to_run {
@@ -1631,6 +1759,26 @@ namespace Sitecore.Pathfinder {
         public static string There_Is_No_Website_Directory {
             get {
                 return ResourceManager.GetString("There_Is_No_Website_Directory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This does not appear to be a valid Sitecore data folder as /indexes does not exist..
+        /// </summary>
+        public static string This_does_not_appear_to_be_a_valid_Sitecore_data_folder_as__indexes_does_not_exist_ {
+            get {
+                return ResourceManager.GetString("This_does_not_appear_to_be_a_valid_Sitecore_data_folder_as__indexes_does_not_exis" +
+                        "t_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This does not appear to be a valid Sitecore website as /bin/Sitecore.Kernel.dll does not exist..
+        /// </summary>
+        public static string This_does_not_appear_to_be_a_valid_Sitecore_website_as__bin_Sitecore_Kernel_dll_does_not_exist_ {
+            get {
+                return ResourceManager.GetString("This_does_not_appear_to_be_a_valid_Sitecore_website_as__bin_Sitecore_Kernel_dll_d" +
+                        "oes_not_exist_", resourceCulture);
             }
         }
         
@@ -1685,6 +1833,15 @@ namespace Sitecore.Pathfinder {
         public static string Unique_ID_clash {
             get {
                 return ResourceManager.GetString("Unique_ID_clash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The project’s unique ID can be a unique string (like MyCompany.MyProject) or a Guid. If you do not specify a unique ID, Pathfinder will generate a Guid for you..
+        /// </summary>
+        public static string UniqueID {
+            get {
+                return ResourceManager.GetString("UniqueID", resourceCulture);
             }
         }
         
@@ -1749,6 +1906,15 @@ namespace Sitecore.Pathfinder {
             get {
                 return ResourceManager.GetString("Value_is_specified_in_both__Value__attribute_and_in_element__Using_value_from_att" +
                         "ribute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome to Sitecore Pathfinder..
+        /// </summary>
+        public static string Welcome_to_Sitecore_Pathfinder_ {
+            get {
+                return ResourceManager.GetString("Welcome_to_Sitecore_Pathfinder_", resourceCulture);
             }
         }
         
@@ -1821,6 +1987,16 @@ namespace Sitecore.Pathfinder {
         public static string You_must_specific_the___to_argument {
             get {
                 return ResourceManager.GetString("You_must_specific_the___to_argument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You should *not* change the project unique ID at a later point, since Sitecore item IDs are dependent on it..
+        /// </summary>
+        public static string You_should__not__change_the_project_unique_ID_at_a_later_point__since_Sitecore_item_IDs_are_dependent_on_it_ {
+            get {
+                return ResourceManager.GetString("You_should__not__change_the_project_unique_ID_at_a_later_point__since_Sitecore_it" +
+                        "em_IDs_are_dependent_on_it_", resourceCulture);
             }
         }
         
