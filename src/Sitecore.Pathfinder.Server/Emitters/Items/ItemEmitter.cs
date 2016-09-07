@@ -68,7 +68,8 @@ namespace Sitecore.Pathfinder.Emitters.Items
                 Guid = projectItem.Uri.Guid,
                 ItemName = item.ItemName,
                 ItemIdOrPath = item.ItemIdOrPath,
-                TemplateIdOrPath = templateIdOrPath
+                TemplateIdOrPath = templateIdOrPath,
+                Sortorder = item.Sortorder
             };
 
             foreach (var field in item.Fields)

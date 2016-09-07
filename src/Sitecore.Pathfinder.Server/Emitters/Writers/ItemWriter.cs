@@ -36,6 +36,8 @@ namespace Sitecore.Pathfinder.Emitters.Writers
         [Diagnostics.NotNull]
         public ISnapshot Snapshot { get; set; }
 
+        public int Sortorder { get; set; }
+
         [Diagnostics.NotNull]
         public string TemplateIdOrPath { get; set; } = string.Empty;
 
@@ -97,7 +99,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                 throw new RetryableEmitException(Msg.E1026, Texts.Failed_to_create_item_path, Snapshot, parentItemPath);
             }
 
-            var item = ItemManager.AddFromTemplate(ItemName, templateItem.ID, parentItem, new ID(Guid));
+            var item = database.AddFromTemplateSynchronized(ItemName, templateItem.ID, parentItem, new ID(Guid));
             if (item == null)
             {
                 throw new RetryableEmitException(Msg.E1027, Texts.Failed_to_create_item_path, Snapshot, ItemIdOrPath);
@@ -190,6 +192,11 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                     {
                         throw new RetryableEmitException(Msg.E1029, Texts.Failed_to_change_template_of_the_item, Snapshot, ex.Message);
                     }
+                }
+
+                if (item.Appearance.Sortorder!= Sortorder)
+                {
+                    item.Appearance.Sortorder = Sortorder;
                 }
 
                 foreach (var fieldWriter in Fields.Where(i => i.Language == Language.Undefined && i.Version == Projects.Items.Version.Undefined))

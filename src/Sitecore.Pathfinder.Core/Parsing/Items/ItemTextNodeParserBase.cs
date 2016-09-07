@@ -47,6 +47,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             // todo: yuck
             item.IsEmittable = !string.Equals(textNode.GetAttributeValue(Constants.Fields.IsEmittable), "False", StringComparison.OrdinalIgnoreCase);
             item.IsImport = string.Equals(textNode.GetAttributeValue(Constants.Fields.IsImport, context.IsImport.ToString()), "True", StringComparison.OrdinalIgnoreCase);
+            item.SortorderProperty.Parse(textNode, context.Sortorder);
 
             if (templateIdOrPathTextNode != null)
             {
@@ -89,10 +90,12 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
         protected virtual void ParseChildrenTextNodes([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode textNode)
         {
+            var sortorder = 100;
             foreach (var childNode in textNode.ChildNodes)
             {
-                var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, PathHelper.CombineItemPath(context.ParentItemPath, item.ItemName), item.IsImport);
+                var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, PathHelper.CombineItemPath(context.ParentItemPath, item.ItemName), item.IsImport).With(sortorder);
                 context.Parser.ParseTextNode(newContext, childNode);
+                sortorder += 100;
             }
         }
 

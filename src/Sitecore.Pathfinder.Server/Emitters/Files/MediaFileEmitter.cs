@@ -107,7 +107,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
                 var parent = database.CreateItemPath(parentPath, mediaFolderTemplate);
 
                 // create media item with correct ID, but probably wrong template
-                ItemManager.AddFromTemplate(name, TemplateIDs.Folder, parent, new Data.ID(mediaItem.Uri.Guid));
+                parent.Database.AddFromTemplateSynchronized(name, TemplateIDs.Folder, parent, new Data.ID(mediaItem.Uri.Guid));
             }
 
             if (uploadMedia)

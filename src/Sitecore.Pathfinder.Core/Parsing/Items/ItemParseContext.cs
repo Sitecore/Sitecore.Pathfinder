@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Snapshots;
@@ -32,5 +32,14 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
         [NotNull]
         public ITextSnapshot Snapshot => (ITextSnapshot)ParseContext.Snapshot;
+
+        public int Sortorder { get; private set; }
+
+        [NotNull]
+        public ItemParseContext With(int sortorder)
+        {
+            Sortorder = sortorder;
+            return this;
+        }
     }
 }

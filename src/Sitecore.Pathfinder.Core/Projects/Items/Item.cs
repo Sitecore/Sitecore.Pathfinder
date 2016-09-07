@@ -52,6 +52,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         {
             TemplateIdOrPathProperty = NewSourceProperty("Template", string.Empty, SourcePropertyFlags.IsQualified);
             TemplateIdOrPath = templateIdOrPath;
+            SortorderProperty = NewSourceProperty("Sortorder", 0);
         }
 
         [NotNull]
@@ -118,8 +119,17 @@ namespace Sitecore.Pathfinder.Projects.Items
             set { TemplateIdOrPathProperty.SetValue(value); }
         }
 
+        public int Sortorder
+        {
+            get { return SortorderProperty.GetValue(); }
+            set { SortorderProperty.SetValue(value); }
+        }
+
         [NotNull]
         public SourceProperty<string> TemplateIdOrPathProperty { get; }
+
+        [NotNull]
+        public SourceProperty<int> SortorderProperty { get; }
 
         public string TemplateName => Template.ItemName;
 
@@ -182,6 +192,11 @@ namespace Sitecore.Pathfinder.Projects.Items
             if (!string.IsNullOrEmpty(newItem.TemplateIdOrPath))
             {
                 TemplateIdOrPathProperty.SetValue(newItem.TemplateIdOrPathProperty);
+            }
+
+            if (newItem.Sortorder != 0)
+            {
+                SortorderProperty.SetValue(newItem.SortorderProperty);
             }
 
             OverwriteWhenMerging = OverwriteWhenMerging && newItem.OverwriteWhenMerging;

@@ -25,6 +25,7 @@ namespace Sitecore.Pathfinder.Languages.Json
 
         protected override void ParseChildrenTextNodes(ItemParseContext context, Item item, ITextNode textNode)
         {
+            var sortorder = 100;
             foreach (var childNode in textNode.ChildNodes)
             {
                 // id child node is blank and first child is "Item", then this is probably an File.Include item
@@ -34,8 +35,9 @@ namespace Sitecore.Pathfinder.Languages.Json
                     child = childNode.ChildNodes.First();
                 }
 
-                var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, PathHelper.CombineItemPath(context.ParentItemPath, item.ItemName), item.IsImport);
+                var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, PathHelper.CombineItemPath(context.ParentItemPath, item.ItemName), item.IsImport).With(sortorder);
                 Parse(newContext, child);
+                sortorder += 100;
             }
         }
 

@@ -6,6 +6,7 @@ using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.SearchTypes;
 using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Data.Managers;
 using Sitecore.Data.Query;
 using Sitecore.Pathfinder.Diagnostics;
 
@@ -15,6 +16,15 @@ namespace Sitecore.Pathfinder.Extensions
     {
         [NotNull]
         private static readonly object SyncRoot = new object();
+
+        [Diagnostics.CanBeNull]
+        public static Item AddFromTemplateSynchronized([Diagnostics.NotNull] this Database database, [NotNull] string itemName, [NotNull] ID templateId, [NotNull] Item destination, [NotNull] ID newItemId)
+        {
+            lock (SyncRoot)
+            {
+                return ItemManager.AddFromTemplate(itemName, templateId, destination, newItemId);
+            }
+        }
 
         [Diagnostics.CanBeNull]
         public static Item CreateItemPathSynchronized([Diagnostics.NotNull] this Database database, [NotNull] string path)

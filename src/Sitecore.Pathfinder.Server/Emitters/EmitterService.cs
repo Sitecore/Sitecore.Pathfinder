@@ -189,7 +189,7 @@ namespace Sitecore.Pathfinder.Emitters
                         continue;
                     }
 
-                    var projectUniqueIdTemplateField = ItemManager.AddFromTemplate(ServerConstants.FieldNames.PathfinderProjectUniqueIds, TemplateIDs.TemplateField, parent, ServerConstants.ItemIds.PathfinderProjectUniqueId);
+                    var projectUniqueIdTemplateField = parent.Database.AddFromTemplateSynchronized(ServerConstants.FieldNames.PathfinderProjectUniqueIds, TemplateIDs.TemplateField, parent, ServerConstants.ItemIds.PathfinderProjectUniqueId);
                     using (new EditContext(projectUniqueIdTemplateField))
                     {
                         projectUniqueIdTemplateField["Shared"] = "1";

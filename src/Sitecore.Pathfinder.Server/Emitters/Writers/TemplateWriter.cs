@@ -331,7 +331,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             if (isNew)
             {
                 var id = new ID(templateFieldWriter.TemplateField.Uri.Guid);
-                item = ItemManager.AddFromTemplate(templateFieldWriter.TemplateField.FieldName, new TemplateID(TemplateIDs.TemplateField), templateSectionWriter.Item, id);
+                item = templateSectionWriter.Item.Database.AddFromTemplateSynchronized(templateFieldWriter.TemplateField.FieldName, new TemplateID(TemplateIDs.TemplateField), templateSectionWriter.Item, id);
                 if (item == null)
                 {
                     throw new EmitException(Msg.E1032, Texts.Could_not_create_template_field, TraceHelper.GetTextNode(templateFieldWriter.TemplateField.FieldNameProperty), templateFieldWriter.TemplateField.FieldName);
@@ -395,7 +395,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                 throw new RetryableEmitException(Msg.E1033, Texts.Failed_to_create_template, Template.Snapshot);
             }
 
-            var item = ItemManager.AddFromTemplate(Template.ItemName, new TemplateID(TemplateIDs.Template), parentItem, new ID(Template.Uri.Guid));
+            var item = parentItem.Database.AddFromTemplateSynchronized(Template.ItemName, new TemplateID(TemplateIDs.Template), parentItem, new ID(Template.Uri.Guid));
             if (item == null)
             {
                 throw new EmitException(Msg.E1034, Texts.Failed_to_add_new_template, Template.Snapshot);
@@ -446,7 +446,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
             if (isNew)
             {
                 var id = new ID(templateSectionWriter.TemplateSection.Uri.Guid);
-                templateSectionWriter.Item = ItemManager.AddFromTemplate(templateSectionWriter.TemplateSection.SectionName, new TemplateID(TemplateIDs.TemplateSection), Item, id);
+                templateSectionWriter.Item = Item.Database.AddFromTemplateSynchronized(templateSectionWriter.TemplateSection.SectionName, new TemplateID(TemplateIDs.TemplateSection), Item, id);
                 if (templateSectionWriter.Item == null)
                 {
                     throw new EmitException(Msg.E1035, Texts.Could_not_create_section_item, TraceHelper.GetTextNode(Template.ItemNameProperty));
