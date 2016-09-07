@@ -184,7 +184,7 @@ namespace Sitecore.Pathfinder.Extensions
                     break;
                 }
 
-                var replace = value.Mid(n + 1, e - n - 1);
+                var replace = value.Mid(n + 1, e - n - 1);                               
                 string with;
                 switch (replace.ToLowerInvariant())
                 {
@@ -195,7 +195,6 @@ namespace Sitecore.Pathfinder.Extensions
                         with = configuration.GetProjectDirectory();
                         break;
                     default:
-
                         // danger: might be recursive
                         with = configuration.GetString(replace);
                         break;

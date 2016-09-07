@@ -144,7 +144,7 @@ namespace Sitecore.Pathfinder.Checkers
         public IEnumerable<Diagnostic> ItemTemplateNotFound(ICheckerContext context)
         {
             return from item in context.Project.Items
-                where item.Project.FindQualifiedItem<Template>(item.Database, item.TemplateIdOrPath) == null
+                where item.Template == Template.Empty
                 select Error(Msg.C1004, "Template not found", TraceHelper.GetTextNode(item.TemplateIdOrPathProperty, item, item.ItemNameProperty), item.TemplateIdOrPath);
         }
 

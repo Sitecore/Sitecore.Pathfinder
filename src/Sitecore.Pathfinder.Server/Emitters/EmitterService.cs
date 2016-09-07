@@ -59,7 +59,10 @@ namespace Sitecore.Pathfinder.Emitters
 
             projectEmitter.Emit(project);
 
-            DeleteProjectItems(project);
+            if (Configuration.GetBool(Constants.Configuration.InstallPackage.DeleteProjectItems))
+            {
+                DeleteProjectItems(project);
+            }
 
             return 0;
         }

@@ -197,6 +197,8 @@ namespace Sitecore.Pathfinder
                 public const string ThreeWayMerge = "install-package:three-way-merge";
 
                 public const string ThreeWayMergeOverwriteDatabase = "install-package:three-way-merge-overwrite-database";
+
+                public const string DeleteProjectItems = "install-package:delete-project-items";
             }
 
             public static class Messages
