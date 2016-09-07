@@ -79,7 +79,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
             output.WriteAttributeString("Id", item.Uri.Guid.Format());
             output.WriteAttributeString("Database", item.DatabaseName);
             output.WriteAttributeString("Name", item.ItemName);
-            output.WriteAttributeString("Path", item.ItemIdOrPath);
+            output.WriteAttributeString("ItemPath", item.ItemIdOrPath);
             output.WriteAttributeString("Template", item.TemplateIdOrPath);
 
             foreach (var field in item.Fields)
@@ -104,7 +104,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
             output.WriteAttributeString("Id", template.Uri.Guid.Format());
             output.WriteAttributeString("Database", template.DatabaseName);
             output.WriteAttributeString("Name", template.ItemName);
-            output.WriteAttributeString("Path", template.ItemIdOrPath);
+            output.WriteAttributeString("ItemPath", template.ItemIdOrPath);
             output.WriteAttributeString("BaseTemplates", template.BaseTemplates);
 
             foreach (var section in template.Sections)
@@ -165,7 +165,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
             output.WriteAttributeStringIf("Id", item.Uri.Guid.Format());
             output.WriteAttributeStringIf("Database", item.DatabaseName);
             output.WriteAttributeStringIf("Name", item.ItemName);
-            output.WriteAttributeStringIf("Path", item.ItemIdOrPath);
+            output.WriteAttributeStringIf("ItemPath", item.ItemIdOrPath);
             output.WriteAttributeStringIf("Template", item.TemplateIdOrPath);
 
             output.WriteStartElement("Fields");
@@ -282,7 +282,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
             output.WriteAttributeString("Name", template.ItemName);
             output.WriteAttributeStringIf("Id", template.Uri.Guid.Format());
             output.WriteAttributeStringIf("Database", template.DatabaseName);
-            output.WriteAttributeStringIf("Path", template.ItemIdOrPath);
+            output.WriteAttributeStringIf("ItemPath", template.ItemIdOrPath);
             output.WriteAttributeStringIf("BaseTemplates", template.BaseTemplates);
             output.WriteAttributeStringIf("ShortHelp", template.ShortHelp);
             output.WriteAttributeStringIf("LongHelp", template.LongHelp);

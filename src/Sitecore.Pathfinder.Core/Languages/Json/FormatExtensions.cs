@@ -58,7 +58,7 @@ namespace Sitecore.Pathfinder.Languages.Json
             output.WritePropertyString("Name", item.ItemName);
             output.WritePropertyStringIf("Id", item.Uri.Guid.Format());
             output.WritePropertyStringIf("Database", item.DatabaseName);
-            output.WritePropertyStringIf("Path", item.ItemIdOrPath);
+            output.WritePropertyStringIf("ItemPath", item.ItemIdOrPath);
             output.WritePropertyStringIf("Template", item.TemplateIdOrPath);
 
             output.WriteStartObject("Fields");
@@ -150,7 +150,7 @@ namespace Sitecore.Pathfinder.Languages.Json
             output.WritePropertyString("Name", template.ItemName);
             output.WritePropertyStringIf("Id", template.Uri.Guid.Format());
             output.WritePropertyStringIf("Database", template.DatabaseName);
-            output.WritePropertyStringIf("Path", template.ItemIdOrPath);
+            output.WritePropertyStringIf("ItemPath", template.ItemIdOrPath);
             output.WritePropertyStringIf("BaseTemplates", template.BaseTemplates);
 
             output.WriteStartObject("Sections");

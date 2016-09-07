@@ -1,6 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -21,7 +22,16 @@ namespace Sitecore.Pathfinder.Parsing.Items
         {
             var itemNameTextNode = GetItemNameTextNode(context.ParseContext, textNode);
             var parentItemPath = textNode.GetAttributeValue("ParentItemPath", context.ParentItemPath);
-            var itemIdOrPath = PathHelper.CombineItemPath(parentItemPath, itemNameTextNode.Value);
+            var itemIdOrPath = textNode.GetAttributeValue("ItemPath");
+            if (string.IsNullOrEmpty(itemIdOrPath))
+            {
+                itemIdOrPath = PathHelper.CombineItemPath(parentItemPath, itemNameTextNode.Value);
+            }
+            else if (itemNameTextNode.Value != Path.GetFileName(itemIdOrPath))
+            {
+                context.ParseContext.Trace.TraceError(Msg.P1000, "Item name in 'ItemPath' and 'Name' does not match. Using 'Name'");
+            }
+
             var guid = StringHelper.GetGuid(context.ParseContext.Project, textNode.GetAttributeValue("Id", itemIdOrPath));
             var databaseName = textNode.GetAttributeValue("Database", context.DatabaseName);
             var templateIdOrPath = textNode.Key.UnescapeXmlElementName();
@@ -111,7 +121,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
         protected virtual void ParseFieldTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] LanguageVersionContext languageVersionContext, [NotNull] ITextNode textNode)
         {
             var fieldName = textNode.Key.UnescapeXmlElementName();
-            if (fieldName == "Name" || fieldName == "Id" || fieldName == "ParentItemPath" || fieldName == Constants.Fields.IsEmittable || fieldName == Constants.Fields.IsImport || fieldName == "Database")
+            if (fieldName == "Name" || fieldName == "Id" || fieldName == "ItemPath" || fieldName == "ParentItemPath" || fieldName == Constants.Fields.IsEmittable || fieldName == Constants.Fields.IsImport || fieldName == "Database")
             {
                 return;
             }

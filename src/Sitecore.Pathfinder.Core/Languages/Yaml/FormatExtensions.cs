@@ -49,7 +49,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
             output.WriteAttributeString("Id", item.Uri.Guid.Format());
             output.WriteAttributeStringIf("Database", item.DatabaseName);
             output.WriteAttributeStringIf("Name", item.ItemName);
-            output.WriteAttributeStringIf("Path", item.ItemIdOrPath);
+            output.WriteAttributeStringIf("ItemPath", item.ItemIdOrPath);
             output.WriteAttributeStringIf("Template", item.TemplateIdOrPath);
 
             output.WriteStartElement("Fields");
@@ -124,7 +124,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
             output.WriteAttributeString("Name", template.ItemName);
             output.WriteAttributeStringIf("Id", template.Uri.Guid.Format());
             output.WriteAttributeStringIf("Database", template.DatabaseName);
-            output.WriteAttributeStringIf("Path", template.ItemIdOrPath);
+            output.WriteAttributeStringIf("ItemPath", template.ItemIdOrPath);
             output.WriteAttributeStringIf("BaseTemplates", template.BaseTemplates);
 
             foreach (var section in template.Sections)

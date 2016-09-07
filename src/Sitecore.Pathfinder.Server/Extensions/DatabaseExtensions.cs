@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +13,20 @@ namespace Sitecore.Pathfinder.Extensions
 {
     public static class DatabaseExtensions
     {
+        [NotNull]
+        private static readonly object SyncRoot = new object();
+
+        [Diagnostics.CanBeNull]
+        public static Item CreateItemPathSynchronized([Diagnostics.NotNull] this Database database, [NotNull] string path)
+        {
+            lock (SyncRoot)
+            {
+                return database.CreateItemPath(path);
+            }
+        }
+
         [Diagnostics.NotNull, ItemNotNull]
-        public static IEnumerable<Item> GetItemsByTemplate([Diagnostics.NotNull] this Data.Database database, [Diagnostics.NotNull, ItemNotNull]  params Data.ID[] templateId)
+        public static IEnumerable<Item> GetItemsByTemplate([Diagnostics.NotNull] this Database database, [Diagnostics.NotNull, ItemNotNull] params ID[] templateId)
         {
             var indexName = "sitecore_" + database.Name.ToLowerInvariant() + "_index";
 
@@ -28,7 +40,7 @@ namespace Sitecore.Pathfinder.Extensions
         }
 
         [ItemNotNull, Diagnostics.NotNull]
-        public static IEnumerable<Item> Query([Diagnostics.NotNull] this Data.Database database, [Diagnostics.NotNull] string queryText)
+        public static IEnumerable<Item> Query([Diagnostics.NotNull] this Database database, [Diagnostics.NotNull] string queryText)
         {
             var query = new Query(queryText)
             {

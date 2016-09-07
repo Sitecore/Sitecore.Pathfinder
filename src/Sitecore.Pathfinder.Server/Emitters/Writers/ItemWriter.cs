@@ -91,7 +91,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                 throw new EmitException(Msg.E1025, Texts.Parent_not_found, Snapshot, ItemIdOrPath);
             }
 
-            var parentItem = database.CreateItemPath(parentItemPath);
+            var parentItem = database.CreateItemPathSynchronized(parentItemPath);
             if (parentItem == null)
             {
                 throw new RetryableEmitException(Msg.E1026, Texts.Failed_to_create_item_path, Snapshot, parentItemPath);
@@ -162,7 +162,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                 var parentItem = item.Database.GetItem(parentItemPath);
                 if (parentItem == null)
                 {
-                    parentItem = item.Database.CreateItemPath(parentItemPath);
+                    parentItem = item.Database.CreateItemPathSynchronized(parentItemPath);
                     if (parentItem == null)
                     {
                         throw new RetryableEmitException(Msg.E1028, Texts.Could_not_create_item, Snapshot, parentItemPath);

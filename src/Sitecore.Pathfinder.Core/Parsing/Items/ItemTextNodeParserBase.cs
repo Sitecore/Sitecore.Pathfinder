@@ -1,6 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
@@ -24,7 +25,17 @@ namespace Sitecore.Pathfinder.Parsing.Items
         public override void Parse(ItemParseContext context, ITextNode textNode)
         {
             var itemNameTextNode = GetItemNameTextNode(context.ParseContext, textNode);
-            var itemIdOrPath = PathHelper.CombineItemPath(context.ParentItemPath, itemNameTextNode.Value);
+            var parentItemPath = textNode.GetAttributeValue("ParentItemPath", context.ParentItemPath);
+            var itemIdOrPath = textNode.GetAttributeValue("ItemPath");
+            if (string.IsNullOrEmpty(itemIdOrPath))
+            {
+                itemIdOrPath = PathHelper.CombineItemPath(parentItemPath, itemNameTextNode.Value);
+            }
+            else if (itemNameTextNode.Value != Path.GetFileName(itemIdOrPath))
+            {
+               context.ParseContext.Trace.TraceError(Msg.P1000, "Item name in 'ItemPath' and 'Name' does not match. Using 'Name'");
+            }
+
             var guid = StringHelper.GetGuid(context.ParseContext.Project, textNode.GetAttributeValue("Id", itemIdOrPath));
             var databaseName = textNode.GetAttributeValue("Database", context.DatabaseName);
             var templateIdOrPathTextNode = textNode.GetAttribute("Template");

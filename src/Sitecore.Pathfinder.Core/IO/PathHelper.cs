@@ -50,6 +50,11 @@ namespace Sitecore.Pathfinder.IO
         [NotNull]
         public static string CombineItemPath([NotNull] string path1, [NotNull] string path2)
         {
+            if (path2.StartsWith("/"))
+            {
+                return path2.TrimEnd('/');
+            }
+
             return path1.TrimEnd('/') + "/" + path2.Trim('/');
         }
 

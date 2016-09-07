@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.ComponentModel.Composition;
 using System.Linq;
@@ -22,10 +22,9 @@ namespace Sitecore.Pathfinder.Languages.Yaml
             return textNode.Key == "Item" && textNode.Snapshot is YamlTextSnapshot;
         }
 
-        protected override void ParseUnknownTextNode(ItemParseContext context, Item item, LanguageVersionContext languageVersionContext, ITextNode textNode)
+        protected override ITextNode GetItemNameTextNode(IParseContext context, ITextNode textNode, string attributeName = "Name")
         {
-            var fieldNameTextNode = new AttributeNameTextNode(textNode);
-            ParseFieldTextNode(context, item, languageVersionContext, textNode, fieldNameTextNode);
+            return string.IsNullOrEmpty(textNode.Value) ? base.GetItemNameTextNode(context, textNode, attributeName) : textNode;
         }
 
         protected override void ParseFieldsTextNode(ItemParseContext context, Item item, ITextNode fieldsTextNode)
@@ -51,6 +50,12 @@ namespace Sitecore.Pathfinder.Languages.Yaml
         {
             var parser = new YamlLayoutTextNodeParser();
             parser.Parse(context, textNode, item);
+        }
+
+        protected override void ParseUnknownTextNode(ItemParseContext context, Item item, LanguageVersionContext languageVersionContext, ITextNode textNode)
+        {
+            var fieldNameTextNode = new AttributeNameTextNode(textNode);
+            ParseFieldTextNode(context, item, languageVersionContext, textNode, fieldNameTextNode);
         }
 
         protected override void ParseUnversionedTextNode(ItemParseContext context, Item item, ITextNode textNode)

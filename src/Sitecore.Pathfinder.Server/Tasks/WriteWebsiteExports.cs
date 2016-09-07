@@ -119,7 +119,7 @@ namespace Sitecore.Pathfinder.Tasks
             output.WriteAttributeString("Id", item.ID.ToString());
             output.WriteAttributeString("Database", item.Database.Name);
             output.WriteAttributeString("Name", item.Name);
-            output.WriteAttributeString("Path", item.Paths.Path);
+            output.WriteAttributeString("ItemPath", item.Paths.Path);
             output.WriteAttributeString("Template", item.Template.InnerItem.Paths.Path);
 
             foreach (Field field in item.Fields)
@@ -145,7 +145,7 @@ namespace Sitecore.Pathfinder.Tasks
             output.WriteAttributeString("Id", templateItem.ID.ToString());
             output.WriteAttributeString("Database", templateItem.Database.Name);
             output.WriteAttributeString("Name", templateItem.Name);
-            output.WriteAttributeString("Path", templateItem.Paths.Path);
+            output.WriteAttributeString("ItemPath", templateItem.Paths.Path);
             output.WriteAttributeString("BaseTemplates", templateItem[FieldIDs.BaseTemplate]);
 
             var template = TemplateManager.GetTemplate(templateItem.ID, templateItem.Database);

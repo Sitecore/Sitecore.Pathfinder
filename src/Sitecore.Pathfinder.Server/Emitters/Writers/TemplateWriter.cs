@@ -495,7 +495,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                 var parentItem = item.Database.GetItem(parentItemPath);
                 if (parentItem == null)
                 {
-                    parentItem = item.Database.CreateItemPath(parentItemPath);
+                    parentItem = item.Database.CreateItemPathSynchronized(parentItemPath);
                     if (parentItem == null)
                     {
                         throw new RetryableEmitException(Msg.E1036, Texts.Could_not_create_item, Template.Snapshot, parentItemPath);
