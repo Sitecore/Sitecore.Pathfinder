@@ -188,6 +188,8 @@ namespace Sitecore.Pathfinder
 
                 public const string CheckBinFileVersion = "install-package:check-bin-file-version";
 
+                public const string CheckBinFileSizeAndTimestamp = "install-package:check-bin-file-size-and-timestamp";
+
                 public const string InstallUrl = "install-package:install-url";
 
                 public const string MarkItemsWithPathfinderProjectUniqueId = "install-package:mark-items-with-pathfinder-project-unique-id";

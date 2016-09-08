@@ -114,6 +114,7 @@ namespace Sitecore.Pathfinder.Emitters
                 EmitProjectItem(context, projectItem, emitters, retries);
             }
 
+            /*
             var isMultiThreaded = context.Configuration.GetBool(Constants.Configuration.System.MultiThreaded);
             if (isMultiThreaded)
             {
@@ -125,6 +126,11 @@ namespace Sitecore.Pathfinder.Emitters
                 {
                     EmitProjectItem(context, projectItem, emitters, retries);
                 }
+            }
+            */
+            foreach (var projectItem in nonTemplates)
+            {
+                EmitProjectItem(context, projectItem, emitters, retries);
             }
         }
 
@@ -161,6 +167,7 @@ namespace Sitecore.Pathfinder.Emitters
                 else if (exception != null)
                 {
                     Trace.TraceError(Msg.E1002, exception.Message, projectItem.Snapshot.SourceFile.AbsoluteFileName, TextSpan.Empty);
+                    Trace.WriteLine(exception.StackTrace);
                 }
                 else
                 {

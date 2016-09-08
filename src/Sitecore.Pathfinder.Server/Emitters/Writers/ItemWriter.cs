@@ -41,6 +41,8 @@ namespace Sitecore.Pathfinder.Emitters.Writers
         [Diagnostics.NotNull]
         public string TemplateIdOrPath { get; set; } = string.Empty;
 
+        private static readonly object SyncRoot = new object();
+
         [Diagnostics.NotNull]
         public virtual Data.Items.Item Write([Diagnostics.NotNull] IEmitContext context)
         {
@@ -50,23 +52,31 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                 throw new EmitException(Msg.E1023, Texts.Database_not_found, Snapshot, DatabaseName);
             }
 
-            var item = database.GetItem(new ID(Guid));
             var existingItem = database.GetItem(ItemIdOrPath);
 
-            var templateItem = database.GetItem(TemplateIdOrPath);
-            if (templateItem == null && item != null)
-            {
-                templateItem = item.Template;
-            }
+            Data.Items.Item item;
+            Data.Items.Item templateItem;
 
-            if (templateItem == null)
+            // make sure items are only create once
+            // todo: hackish!
+            lock (SyncRoot)
             {
-                throw new RetryableEmitException(Msg.E1024, Texts.Template_missing, Snapshot, TemplateIdOrPath);
-            }
+                item = database.GetItem(new ID(Guid));
+                templateItem = database.GetItem(TemplateIdOrPath);
+                if (templateItem == null && item != null)
+                {
+                    templateItem = item.Template;
+                }
 
-            if (item == null)
-            {
-                item = CreateNewItem(context, database, templateItem);
+                if (templateItem == null)
+                {
+                    throw new RetryableEmitException(Msg.E1024, Texts.Template_missing, Snapshot, TemplateIdOrPath);
+                }
+
+                if (item == null)
+                {
+                    item = CreateNewItem(context, database, templateItem);
+                }
             }
 
             UpdateItem(context, item, templateItem);

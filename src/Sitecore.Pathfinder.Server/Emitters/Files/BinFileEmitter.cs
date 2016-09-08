@@ -43,15 +43,29 @@ namespace Sitecore.Pathfinder.Emitters.Files
                 return true;
             }
 
-            if (!context.Configuration.GetBool(Constants.Configuration.InstallPackage.CheckBinFileVersion))
+            if (context.Configuration.GetBool(Constants.Configuration.InstallPackage.CheckBinFileVersion))
             {
-                return true;
+                var destinationVersion = GetFileVersion(destinationFileName);
+                var sourceVersion = GetFileVersion(projectItem.Snapshot.SourceFile.AbsoluteFileName);
+
+                if (sourceVersion <= destinationVersion)
+                {
+                    return false;
+                }
             }
 
-            var destinationVersion = GetFileVersion(destinationFileName);
-            var sourceVersion = GetFileVersion(projectItem.Snapshot.SourceFile.AbsoluteFileName);
+            if (context.Configuration.GetBool(Constants.Configuration.InstallPackage.CheckBinFileSizeAndTimestamp, true))
+            {
+                var destinationFileInfo = new FileInfo(destinationFileName);
+                var sourceFileInfo = new FileInfo(projectItem.Snapshot.SourceFile.AbsoluteFileName);
 
-            return sourceVersion > destinationVersion;
+                if (sourceFileInfo.Length == destinationFileInfo.Length && sourceFileInfo.LastWriteTimeUtc <= destinationFileInfo.LastWriteTimeUtc)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         [Diagnostics.NotNull]

@@ -178,6 +178,9 @@
         // see http://stackoverflow.com/questions/356543/can-i-automatically-increment-the-file-build-version-when-using-visual-studio
         "check-bin-file-version": false,
 
+        // checks that the size and timestamp of the source bin file is larger than the destination before copying
+        "check-bin-file-size-and-timestamp": true,
+
         // deletes items, that are no longer in the project, from the website after installation
         "delete-projects-items": false,
 
