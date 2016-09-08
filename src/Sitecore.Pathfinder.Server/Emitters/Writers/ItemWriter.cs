@@ -41,6 +41,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
         [Diagnostics.NotNull]
         public string TemplateIdOrPath { get; set; } = string.Empty;
 
+        [NotNull]
         private static readonly object SyncRoot = new object();
 
         [Diagnostics.NotNull]

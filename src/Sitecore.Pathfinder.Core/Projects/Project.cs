@@ -58,7 +58,7 @@ namespace Sitecore.Pathfinder.Projects
 
         private bool _isChecked;
 
-        private Locking _locking;
+        private Locking _locking = Locking.ReadWrite;
 
         [CanBeNull]
         private string _projectUniqueId;
@@ -249,10 +249,14 @@ namespace Sitecore.Pathfinder.Projects
             _isChecked = true;
 
             Lock(Locking.ReadOnly);
-
-            Checker.CheckProject(this, this);
-
-            Lock(Locking.ReadWrite);
+            try
+            {
+                Checker.CheckProject(this, this);
+            }
+            finally
+            {
+                Lock(Locking.ReadWrite);
+            }
 
             return this;
         }

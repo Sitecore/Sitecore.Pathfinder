@@ -243,7 +243,8 @@ namespace Sitecore.Pathfinder.IO
 
         public StreamWriter OpenStreamWriter(string fileName)
         {
-            var fileInfo = new ZlpFileInfo(fileName);
+            // todo: there is a weird bug in ZetaLongPath that does not truncate the file
+            var fileInfo = new FileInfo(fileName);
             return new StreamWriter(fileInfo.OpenWrite());
         }
 

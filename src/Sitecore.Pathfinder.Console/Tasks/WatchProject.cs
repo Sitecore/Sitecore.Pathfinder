@@ -1,4 +1,4 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -27,6 +27,8 @@ namespace Sitecore.Pathfinder.Tasks
         private PathMatcher _pathMatcher;
 
         private bool _publishDatabase;
+
+        private bool _resetWebsite;
 
         [ImportingConstructor]
         public WatchProject([NotNull] IConsoleService console) : base("watch-project")
@@ -59,6 +61,7 @@ namespace Sitecore.Pathfinder.Tasks
             var exclude = context.Configuration.GetString(Constants.Configuration.WatchProject.Exclude, "**");
             _pathMatcher = new PathMatcher(include, exclude);
 
+            _resetWebsite = context.Configuration.GetBool(Constants.Configuration.WatchProject.ResetWebsite, true);
             _publishDatabase = context.Configuration.GetBool(Constants.Configuration.WatchProject.PublishDatabase, true);
 
             _fileWatcher = new FileSystemWatcher(context.ProjectDirectory)
@@ -101,6 +104,11 @@ namespace Sitecore.Pathfinder.Tasks
             try
             {
                 Console.WriteLine();
+
+                if (_resetWebsite)
+                {
+                    ResetWebsite();
+                }
 
                 InstallProject();
 
@@ -169,6 +177,15 @@ namespace Sitecore.Pathfinder.Tasks
             };
 
             var webRequest = GetWebRequest(Context).WithUrl(Context.Configuration.GetString(Constants.Configuration.PublishDatabases.PublishUrl)).WithQueryString(queryStringParameters);
+
+            Post(Context, webRequest);
+        }
+
+        private void ResetWebsite()
+        {
+            Console.WriteLine(Texts.Resetting_website___);
+
+            var webRequest = GetWebRequest(Context).AsTask("ResetWebsite");
 
             Post(Context, webRequest);
         }

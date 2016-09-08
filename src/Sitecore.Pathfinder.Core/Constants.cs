@@ -186,9 +186,11 @@ namespace Sitecore.Pathfinder
             {
                 public const string AddProjectDirectoriesAsFeeds = "install-package:add-project-directories-as-feeds";
 
+                public const string CheckBinFileSizeAndTimestamp = "install-package:check-bin-file-size-and-timestamp";
+
                 public const string CheckBinFileVersion = "install-package:check-bin-file-version";
 
-                public const string CheckBinFileSizeAndTimestamp = "install-package:check-bin-file-size-and-timestamp";
+                public const string DeleteProjectItems = "install-package:delete-project-items";
 
                 public const string InstallUrl = "install-package:install-url";
 
@@ -199,8 +201,6 @@ namespace Sitecore.Pathfinder
                 public const string ThreeWayMerge = "install-package:three-way-merge";
 
                 public const string ThreeWayMergeOverwriteDatabase = "install-package:three-way-merge-overwrite-database";
-
-                public const string DeleteProjectItems = "install-package:delete-project-items";
             }
 
             public static class Messages
@@ -302,6 +302,8 @@ namespace Sitecore.Pathfinder
                 public const string Include = "watch-project:include";
 
                 public const string PublishDatabase = "watch-project:publish-database";
+
+                public const string ResetWebsite = "watch-project:reset-website";
             }
 
             public static class WriteExports

@@ -79,7 +79,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
             output.WriteAttributeString("Id", item.Uri.Guid.Format());
             output.WriteAttributeString("Database", item.DatabaseName);
             output.WriteAttributeString("Name", item.ItemName);
-            output.WriteAttributeString("ItemPath", item.ItemIdOrPath);
+            output.WriteAttributeString("Path", item.ItemIdOrPath);
             output.WriteAttributeString("Template", item.TemplateIdOrPath);
 
             foreach (var field in item.Fields)
@@ -104,7 +104,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
             output.WriteAttributeString("Id", template.Uri.Guid.Format());
             output.WriteAttributeString("Database", template.DatabaseName);
             output.WriteAttributeString("Name", template.ItemName);
-            output.WriteAttributeString("ItemPath", template.ItemIdOrPath);
+            output.WriteAttributeString("Path", template.ItemIdOrPath);
             output.WriteAttributeString("BaseTemplates", template.BaseTemplates);
 
             foreach (var section in template.Sections)

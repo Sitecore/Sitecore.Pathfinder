@@ -301,7 +301,10 @@
         "include": "**/*",
 
         // specifies if the database should be published
-        "publish-database": true
+        "publish-database": true,
+        
+        // specifies if the website is reset before installing
+        "reset-website": false
     },
 
     "write-exports": {
