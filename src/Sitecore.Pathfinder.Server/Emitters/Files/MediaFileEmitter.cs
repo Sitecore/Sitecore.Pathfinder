@@ -74,8 +74,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
                 FileBased = false,
                 IncludeExtensionInItemName = false,
 
-                // keep existing item - but the KeepExisting flag is flipped - must be an issue in the CMS
-                KeepExisting = false,
+                OverwriteExisting = false,
                 Language = LanguageManager.DefaultLanguage,
                 Versioned = false,
                 Destination = mediaItem.ItemIdOrPath

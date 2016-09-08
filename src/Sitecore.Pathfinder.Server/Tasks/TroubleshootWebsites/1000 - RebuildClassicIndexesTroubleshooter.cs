@@ -25,6 +25,7 @@ namespace Sitecore.Pathfinder.Tasks.TroubleshootWebsites
 
         protected virtual void RebuildClassicIndex([NotNull] string databaseName)
         {
+            /*
 #pragma warning disable 618
             var database = Factory.GetDatabase(databaseName);
 
@@ -53,6 +54,7 @@ namespace Sitecore.Pathfinder.Tasks.TroubleshootWebsites
                 }
             }
 #pragma warning restore 618
+            */
         }
 
         protected virtual void RebuildContentSearchIndexes()

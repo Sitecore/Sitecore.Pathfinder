@@ -233,7 +233,7 @@ namespace Sitecore.Pathfinder.Emitters.Writers
                 var versionedItem = versionedItems.FirstOrDefault(i => i.Language == language && i.Version.Number == field.Version.Number);
                 if (versionedItem == null)
                 {
-                    versionedItem = item.Database.GetItem(item.ID, language, new Data.Version(field.Version.Number));
+                    versionedItem = item.Database.GetItem(item.ID, language, Data.Version.Parse(field.Version.Number));
                     if (versionedItem == null)
                     {
                         // todo: validate this before updating the item

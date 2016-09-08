@@ -42,7 +42,7 @@ namespace Sitecore.Pathfinder.Markdown.Compiling.FieldCompilers
             // trim indicator
             var wip = field.Value.Mid(indicator.Length);
 
-            var transformer = new MarkdownSharp.Markdown();
+            var transformer = new HeyRed.MarkdownSharp.Markdown();
             wip = transformer.Transform(wip);
 
             return wip;
