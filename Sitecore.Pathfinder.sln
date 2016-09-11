@@ -142,6 +142,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "SitecorePathfinderCore", "t
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.DiagnosticsToolset", "src\Features\Sitecore.Pathfinder.DiagnosticsToolset\Sitecore.Pathfinder.DiagnosticsToolset.csproj", "{65E69D35-394E-4C48-885E-6CA5449938BE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.WebServer", "src\Features\Sitecore.Pathfinder.WebServer\Sitecore.Pathfinder.WebServer.csproj", "{D7F596A0-7F6E-4576-877C-82CF316834A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -218,6 +220,10 @@ Global
 		{65E69D35-394E-4C48-885E-6CA5449938BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65E69D35-394E-4C48-885E-6CA5449938BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65E69D35-394E-4C48-885E-6CA5449938BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7F596A0-7F6E-4576-877C-82CF316834A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7F596A0-7F6E-4576-877C-82CF316834A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7F596A0-7F6E-4576-877C-82CF316834A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7F596A0-7F6E-4576-877C-82CF316834A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -241,5 +247,6 @@ Global
 		{9FA3A409-FBE3-4F65-8D5B-D8510CA6348D} = {5325B39E-6883-47AA-BD17-291B7608E834}
 		{A746E909-84DD-409F-9900-C0BF80FAD1D5} = {049B9C99-6613-43BB-BF14-A60D7C9F7F57}
 		{65E69D35-394E-4C48-885E-6CA5449938BE} = {5325B39E-6883-47AA-BD17-291B7608E834}
+		{D7F596A0-7F6E-4576-877C-82CF316834A6} = {5325B39E-6883-47AA-BD17-291B7608E834}
 	EndGlobalSection
 EndGlobal

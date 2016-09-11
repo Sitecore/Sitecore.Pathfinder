@@ -471,6 +471,7 @@
     <Compile Include="Tasks\TaskBase.cs" />
     <Compile Include="Tasks\TaskContext.cs" />
     <Compile Include="Tasks\TaskRunnerBase.cs" />
+    <Compile Include="Tasks\WatchTaskBase.cs" />
     <Compile Include="Texts.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

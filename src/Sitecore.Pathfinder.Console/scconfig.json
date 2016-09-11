@@ -15,7 +15,7 @@
     // mapping between project files and website files and items
     "project-website-mappings": {
         // files to copy to website
-        "content-files": ".js, .map, .css, .htm, .ashx, .asmx, .asax, .eot, .svg, .ttf, .woff, .woff2, .less, .php, .ico",
+        "content-files": ".js, .map, .css, .htm, .ashx, .asmx, .asax, .eot, .svg, .ttf, .woff, .woff2, .less, .php, .ico, .gif",
 
         // comma separated list of files and directories to ignore
         "ignore-directories": {
@@ -260,6 +260,15 @@
 
     "restore-packages": {
         "directory": "files/packages"
+    },
+
+    "start-website": {
+        // specifies the port, e.g. "http://localhost:3000/"
+        "port": 3000,
+
+        // specifies which files to watch for
+        "exclude": "**/*",
+        "include": "**/*"
     },
 
     "sync-website": {

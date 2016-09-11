@@ -281,6 +281,15 @@ namespace Sitecore.Pathfinder
                 public const string StartUrl = "show-website:start-url";
             }
 
+            public static class StartWebsite
+            {
+                public const string Exclude = "start-website:exclude";
+
+                public const string Include = "start-website:include";
+
+                public const string Port = "start-website:port";
+            }
+
             public static class System
             {
                 public const string MultiThreaded = "system:multi-threaded";

@@ -739,6 +739,10 @@
       <Project>{e707e44a-9f34-41e2-90e2-7065ef60cb03}</Project>
       <Name>Sitecore.Pathfinder.Unicorn</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Features\Sitecore.Pathfinder.WebServer\Sitecore.Pathfinder.WebServer.csproj">
+      <Project>{d7f596a0-7f6e-4576-877c-82cf316834a6}</Project>
+      <Name>Sitecore.Pathfinder.WebServer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sitecore.Pathfinder.Core\Sitecore.Pathfinder.Core.csproj">
       <Project>{c674eebf-bbf6-4eda-af5b-a4d58d0be986}</Project>
       <Name>Sitecore.Pathfinder.Core</Name>

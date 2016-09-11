@@ -441,15 +441,6 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ==========.
-        /// </summary>
-        public static string Dashes {
-            get {
-                return ResourceManager.GetString("Dashes", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Database.
         /// </summary>
         public static string Database {
@@ -1138,6 +1129,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loading project....
+        /// </summary>
+        public static string Loading_project___ {
+            get {
+                return ResourceManager.GetString("Loading_project___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Media item created with wrong ID.
         /// </summary>
         public static string Media_item_created_with_wrong_ID {
@@ -1568,6 +1568,15 @@ namespace Sitecore.Pathfinder {
         public static string sourceFileName_cannot_be_empty {
             get {
                 return ResourceManager.GetString("sourceFileName_cannot_be_empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Starting website....
+        /// </summary>
+        public static string Starting_website___ {
+            get {
+                return ResourceManager.GetString("Starting_website___", resourceCulture);
             }
         }
         

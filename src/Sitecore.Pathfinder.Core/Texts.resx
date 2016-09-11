@@ -762,4 +762,10 @@
     <data name="This_does_not_appear_to_be_a_valid_Sitecore_website_as__bin_Sitecore_Kernel_dll_does_not_exist_" xml:space="preserve">
     <value>This does not appear to be a valid Sitecore website as /bin/Sitecore.Kernel.dll does not exist.</value>
   </data>
+    <data name="Starting_website___" xml:space="preserve">
+    <value>Starting website...</value>
+  </data>
+    <data name="Loading_project___" xml:space="preserve">
+    <value>Loading project...</value>
+  </data>
 </root>
