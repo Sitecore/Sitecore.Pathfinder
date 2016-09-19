@@ -32,7 +32,7 @@ namespace Sitecore.Pathfinder.Controllers
                 var projectDirectory = WebUtil.GetQueryString("pd");
                 var toolsDirectory = WebUtil.GetQueryString("td");
                 var binDirectory = FileUtil.MapPath("/bin");
-                var commandLine = WebUtil.GetFormValue("commandline").Split('|');
+                var commandLine = WebUtil.GetFormValue("commandline").Split('|', StringSplitOptions.RemoveEmptyEntries);
 
                 if (!Directory.Exists(toolsDirectory))
                 {
