@@ -74,7 +74,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
                 FileBased = false,
                 IncludeExtensionInItemName = false,
 
-                OverwriteExisting = false,
+                OverwriteExisting = true,
                 Language = LanguageManager.DefaultLanguage,
                 Versioned = false,
                 Destination = mediaItem.ItemIdOrPath

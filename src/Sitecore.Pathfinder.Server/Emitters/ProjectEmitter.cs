@@ -94,6 +94,8 @@ namespace Sitecore.Pathfinder.Emitters
                 }
                 catch (Exception ex)
                 {
+                    Trace.TraceError(ex.Message);
+
                     lock (_syncObject)
                     {
                         retries.Add(new Tuple<IProjectItem, Exception>(projectItem, ex));
