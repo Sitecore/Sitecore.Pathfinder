@@ -11,12 +11,20 @@ namespace Sitecore.Pathfinder.Tasks
     [InheritedExport(typeof(ITask))]
     public abstract class TaskBase : ITask
     {
-        /// <summary>Createa new task.</summary>
+        /// <summary>Creates new task.</summary>
         /// <param name="taskName">The name of the task. This should have the format "verb-noun" like PowerShell. See approved PowerShell verbs: https://technet.microsoft.com/en-us/library/ms714428%28v=vs.85%29.aspx</param>
         protected TaskBase([NotNull] string taskName)
         {
             TaskName = taskName;
         }
+
+        protected TaskBase([NotNull] string taskName, [NotNull] string alias)
+        {
+            TaskName = taskName;
+            Alias = alias;
+        }
+
+        public string Alias { get; set; } = string.Empty;
 
         public string TaskName { get; }
 

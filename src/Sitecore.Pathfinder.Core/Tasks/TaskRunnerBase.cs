@@ -94,6 +94,13 @@ namespace Sitecore.Pathfinder.Tasks
                 else
                 {
                     task = Tasks.FirstOrDefault(t => string.Equals(t.TaskName, taskName, StringComparison.OrdinalIgnoreCase));
+
+                    // find task by alias
+                    if (task == null)
+                    {
+                        task = Tasks.FirstOrDefault(t => string.Equals(t.Alias, taskName, StringComparison.OrdinalIgnoreCase));
+                    }
+
                     if (task == null)
                     {
                         context.Trace.TraceError(Msg.I1006, Texts.Task_not_found__Skipping, taskName);
