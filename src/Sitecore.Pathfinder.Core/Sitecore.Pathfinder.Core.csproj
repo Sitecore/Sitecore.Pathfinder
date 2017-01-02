@@ -468,6 +468,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Msg.cs" />
     <Compile Include="Tasks\ITaskRunner.cs" />
+    <Compile Include="Tasks\OptionAttribute.cs" />
     <Compile Include="Tasks\TaskBase.cs" />
     <Compile Include="Tasks\TaskContext.cs" />
     <Compile Include="Tasks\TaskRunnerBase.cs" />
@@ -564,8 +565,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.5\analyzers\dotnet\cs\CodeContractNullability.dll" />
-    <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.5\analyzers\dotnet\cs\MsgPack.dll" />
+    <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.6\analyzers\dotnet\cs\CodeContractNullability.dll" />
+    <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.6\analyzers\dotnet\cs\MsgPack.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

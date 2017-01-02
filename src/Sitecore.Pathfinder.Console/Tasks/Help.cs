@@ -1,4 +1,4 @@
-// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -125,6 +125,37 @@ namespace Sitecore.Pathfinder.Tasks
             }
         }
 
+        protected virtual void WriteSwitches([NotNull] StringWriter helpText, [NotNull] ITask task)
+        {
+            var hasHeader = false;
+
+            var properties = GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.SetProperty).OrderBy(p => p.Name);
+            foreach (var property in properties)
+            {
+                var attribute = property.GetCustomAttribute<OptionAttribute>();
+                if (attribute == null)
+                {
+                    continue;
+                }
+
+                if (!hasHeader)
+                {
+                    helpText.WriteLine();
+                    helpText.WriteLine("Command Line Switches");
+                    hasHeader = true;
+                }
+
+                helpText.Write("--" + attribute.Name);
+
+                if (!string.IsNullOrEmpty(attribute.Alias))
+                {
+                    helpText.Write("(or --" + attribute.Alias + ')');
+                }
+
+                helpText.WriteLine(": " + attribute.HelpText);
+            }
+        }
+
         private void WriteCommandHelp([NotNull] IBuildContext context, [NotNull] string taskName)
         {
             var build = CompositionService.Resolve<Builder>();
@@ -153,6 +184,7 @@ namespace Sitecore.Pathfinder.Tasks
 
             var helpText = new StringWriter();
             var lines = FileSystem.ReadAllLines(fileName);
+            var switches = false;
             foreach (var line in lines)
             {
                 if (line.StartsWith("```"))
@@ -164,6 +196,13 @@ namespace Sitecore.Pathfinder.Tasks
                 {
                     helpText.WriteLine();
                     helpText.WriteLine();
+                    continue;
+                }
+
+                if (string.Equals(line, "# Command Line Switches", StringComparison.OrdinalIgnoreCase))
+                {
+                    WriteSwitches(helpText, task);
+                    switches = true;
                     continue;
                 }
 
@@ -182,6 +221,11 @@ namespace Sitecore.Pathfinder.Tasks
 
                 helpText.Write(line);
                 helpText.Write(' ');
+            }
+
+            if (!switches)
+            {
+                WriteSwitches(helpText, task);
             }
 
             context.Trace.WriteLine(helpText.ToString());

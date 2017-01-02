@@ -11,14 +11,17 @@ namespace Sitecore.Pathfinder.Tasks
     public class TaskContext : ITaskContext
     {
         [ImportingConstructor]
-        public TaskContext([NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystem)
+        public TaskContext([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystem)
         {
             Configuration = configuration;
+            Console = console;
             Trace = traceService;
             FileSystem = fileSystem;
         }
 
         public IConfiguration Configuration { get; }
+
+        public IConsoleService Console { get; }
 
         public int ErrorCode { get; set; }
 

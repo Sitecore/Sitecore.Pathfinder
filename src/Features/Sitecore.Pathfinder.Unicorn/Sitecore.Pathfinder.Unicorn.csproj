@@ -88,8 +88,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\..\..\packages\ResharperCodeContractNullability.1.0.5\analyzers\dotnet\cs\CodeContractNullability.dll" />
-    <Analyzer Include="..\..\..\packages\ResharperCodeContractNullability.1.0.5\analyzers\dotnet\cs\MsgPack.dll" />
+    <Analyzer Include="..\..\..\packages\ResharperCodeContractNullability.1.0.6\analyzers\dotnet\cs\CodeContractNullability.dll" />
+    <Analyzer Include="..\..\..\packages\ResharperCodeContractNullability.1.0.6\analyzers\dotnet\cs\MsgPack.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

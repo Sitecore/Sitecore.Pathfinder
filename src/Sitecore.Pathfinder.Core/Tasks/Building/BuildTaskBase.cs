@@ -19,6 +19,8 @@ namespace Sitecore.Pathfinder.Tasks.Building
             var buildContext = context as IBuildContext;
             Assert.Cast(buildContext);
 
+            ProcessOptions(context);
+
             Run(buildContext);
         }
     }

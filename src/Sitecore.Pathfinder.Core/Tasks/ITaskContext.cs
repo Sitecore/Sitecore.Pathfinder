@@ -11,6 +11,9 @@ namespace Sitecore.Pathfinder.Tasks
         [NotNull]
         IConfiguration Configuration { get; }
 
+        [NotNull]
+        IConsoleService Console { get; }
+
         int ErrorCode { get; set; }
 
         [NotNull]

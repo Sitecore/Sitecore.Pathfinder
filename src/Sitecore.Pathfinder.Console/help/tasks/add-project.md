@@ -17,4 +17,3 @@ Example
 ```cmd
 > scc add-project
 ```
-
