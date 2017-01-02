@@ -9,13 +9,12 @@ using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 
-namespace Sitecore.Pathfinder.Emitters.Writers
+namespace Sitecore.Pathfinder.Emitting.Writers
 {
     public class ItemWriter
     {

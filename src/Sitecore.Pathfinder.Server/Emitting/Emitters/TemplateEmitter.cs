@@ -1,17 +1,15 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
-using System.Linq;
 using Sitecore.Data.Items;
 using Sitecore.Data.Validators;
 using Sitecore.Data.Validators.FieldValidators;
 using Sitecore.Data.Validators.ItemValidators;
-using Sitecore.Pathfinder.Emitters.Writers;
-using Sitecore.Pathfinder.Emitting;
+using Sitecore.Pathfinder.Emitting.Writers;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Templates;
 
-namespace Sitecore.Pathfinder.Emitters.Items
+namespace Sitecore.Pathfinder.Emitting.Emitters
 {
     public class TemplateEmitter : EmitterBase
     {

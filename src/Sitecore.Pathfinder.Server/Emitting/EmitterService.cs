@@ -8,14 +8,12 @@ using Sitecore.Configuration;
 using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.SearchTypes;
 using Sitecore.Data.Items;
-using Sitecore.Data.Managers;
-using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.SecurityModel;
 using Sitecore.Text;
 
-namespace Sitecore.Pathfinder.Emitters
+namespace Sitecore.Pathfinder.Emitting
 {
     [Export(typeof(IEmitterService))]
     public class EmitterService : IEmitterService

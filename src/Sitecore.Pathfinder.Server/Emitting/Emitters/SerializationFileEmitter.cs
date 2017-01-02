@@ -4,13 +4,12 @@ using System;
 using System.ComponentModel.Composition;
 using Sitecore.Data.Serialization;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.Serialization;
 using Sitecore.Pathfinder.Projects;
 
-namespace Sitecore.Pathfinder.Emitters.Files
+namespace Sitecore.Pathfinder.Emitting.Emitters
 {
     public class SerializationFileEmitter : EmitterBase
     {

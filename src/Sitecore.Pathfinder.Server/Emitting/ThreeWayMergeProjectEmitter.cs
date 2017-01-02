@@ -10,14 +10,13 @@ using System.Xml.Serialization;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Data.Items;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Emitters.Writers;
-using Sitecore.Pathfinder.Emitting;
+using Sitecore.Pathfinder.Emitting.Writers;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
 
-namespace Sitecore.Pathfinder.Emitters
+namespace Sitecore.Pathfinder.Emitting
 {
     [Export(typeof(ThreeWayMergeProjectEmitter))]
     public class ThreeWayMergeProjectEmitter : ProjectEmitter, ITrackingProjectEmitter

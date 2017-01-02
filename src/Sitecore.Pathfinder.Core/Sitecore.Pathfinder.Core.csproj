@@ -78,7 +78,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Checking\Checkers\ArchitectureCheckers.cs" />
+    <Compile Include="Emitting\Emitters\BinFileEmitter.cs" />
+    <Compile Include="Emitting\Emitters\ConfigFileEmitter.cs" />
+    <Compile Include="Emitting\Emitters\ContentFileEmitter.cs" />
+    <Compile Include="Emitting\FileAndSqlEmitting\FileAndSqlProjectEmitter.cs" />
+    <Compile Include="Emitting\FileAndSqlEmitting\SqlItemEmitter.cs" />
     <Compile Include="Emitting\IProjectEmitter.cs" />
+    <Compile Include="Emitting\ProjectEmitter.cs" />
     <Compile Include="Extensions\DiagnosticCollectionExtensions.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\SnapshotExtensions.cs" />

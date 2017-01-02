@@ -4,7 +4,7 @@ using System;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 
-namespace Sitecore.Pathfinder.Emitters.Writers
+namespace Sitecore.Pathfinder.Emitting.Writers
 {
     public class FieldWriter
     {

@@ -163,6 +163,7 @@ namespace Sitecore.Pathfinder
         public const int D1024 = D + 24;
         public const int D1025 = D + 25;
         public const int D1026 = D + 26;
+        public const int D1027 = D + 27;
 
         private const int E = 5000;
         public const int E1000 = E;
@@ -204,6 +205,7 @@ namespace Sitecore.Pathfinder
         public const int E1036 = E + 36;
         public const int E1037 = E + 37;
         public const int E1038 = E + 38;
+        public const int E1039 = E + 39;
 
         private const int G = 7000;
         public const int G1000 = G;

@@ -7,8 +7,6 @@ using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.IO;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Emitters.Items;
-using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.Media;
@@ -16,7 +14,7 @@ using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Resources.Media;
 
-namespace Sitecore.Pathfinder.Emitters.Files
+namespace Sitecore.Pathfinder.Emitting.Emitters
 {
     public class MediaFileEmitter : EmitterBase
     {

@@ -170,6 +170,7 @@
     <Compile Include="Tasks\CheckWebsite.cs" />
     <Compile Include="Tasks\CleanWebsite.cs" />
     <Compile Include="Tasks\ComparePackages.cs" />
+    <Compile Include="Tasks\CopyProject.cs" />
     <Compile Include="Tasks\InitGrunt.cs" />
     <Compile Include="Tasks\InitGulp.cs" />
     <Compile Include="Tasks\InitHabitat.cs" />

@@ -4,16 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 
-namespace Sitecore.Pathfinder.Emitters
+namespace Sitecore.Pathfinder.Emitting
 {
     [Export(typeof(ProjectEmitter))]
     public class ProjectEmitter : IProjectEmitter
@@ -70,6 +68,7 @@ namespace Sitecore.Pathfinder.Emitters
 
         protected virtual void EmitProjectItem([NotNull] IEmitContext context, [NotNull] IProjectItem projectItem, [NotNull, ItemNotNull] List<IEmitter> emitters, [NotNull, ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
         {
+            var isEmitted = false;
             foreach (var emitter in emitters)
             {
                 if (!emitter.CanEmit(context, projectItem))
@@ -77,6 +76,7 @@ namespace Sitecore.Pathfinder.Emitters
                     continue;
                 }
 
+                isEmitted = true;
                 try
                 {
                     emitter.Emit(context, projectItem);
@@ -99,6 +99,11 @@ namespace Sitecore.Pathfinder.Emitters
                         retries.Add(new Tuple<IProjectItem, Exception>(projectItem, ex));
                     }
                 }
+            }
+
+            if (!isEmitted)
+            {
+                Trace.TraceWarning(Msg.E1039, "No emitter found", projectItem.Snapshot.SourceFile);
             }
         }
 

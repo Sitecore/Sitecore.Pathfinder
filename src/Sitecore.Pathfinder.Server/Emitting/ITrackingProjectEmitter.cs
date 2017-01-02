@@ -1,9 +1,9 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using Sitecore.Data.Items;
-using Sitecore.Pathfinder.Emitters.Writers;
+using Sitecore.Pathfinder.Emitting.Writers;
 
-namespace Sitecore.Pathfinder.Emitters
+namespace Sitecore.Pathfinder.Emitting
 {
     public interface ITrackingProjectEmitter
     {

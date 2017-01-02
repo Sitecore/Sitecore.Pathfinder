@@ -4,10 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Data.Items;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Projects.Templates;
 
-namespace Sitecore.Pathfinder.Emitters.Writers
+namespace Sitecore.Pathfinder.Emitting.Writers
 {
     public class TemplateSectionWriter
     {

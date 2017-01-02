@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitters;
+using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 

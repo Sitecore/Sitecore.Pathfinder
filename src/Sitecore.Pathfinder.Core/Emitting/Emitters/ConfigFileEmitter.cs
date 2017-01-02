@@ -1,7 +1,6 @@
-﻿using System.IO;
-using System.Linq;
-using Sitecore.IO;
-using Sitecore.Pathfinder.Emitting;
+﻿using Sitecore.Pathfinder.Emitting;
+using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.ConfigFiles;
 using Sitecore.Pathfinder.Projects;
 
@@ -23,7 +22,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
         {
             var configFile = (ConfigFile)projectItem;
 
-            var destinationFileName = FileUtil.MapPath(configFile.FilePath);
+            var destinationFileName = PathHelper.Combine(context.Configuration.GetWebsiteDirectory(), configFile.FilePath);
 
             context.FileSystem.CreateDirectoryFromFileName(destinationFileName);
             context.FileSystem.Copy(projectItem.Snapshot.SourceFile.AbsoluteFileName, destinationFileName, context.ForceUpdate);

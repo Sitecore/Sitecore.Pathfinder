@@ -3,9 +3,9 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using Sitecore.IO;
 using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.BinFiles;
 using Sitecore.Pathfinder.Projects;
 
@@ -25,14 +25,14 @@ namespace Sitecore.Pathfinder.Emitters.Files
         public override void Emit(IEmitContext context, IProjectItem projectItem)
         {
             var binFile = (BinFile)projectItem;
-            var destinationFileName = FileUtil.MapPath(binFile.FilePath);
+            var destinationFileName = PathHelper.Combine(context.Configuration.GetWebsiteDirectory(), binFile.FilePath);
 
             if (!CanCopyBinFile(context, binFile, destinationFileName))
             {
                 return;
             }
 
-            context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName) ?? string.Empty);
+            context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName));
             context.FileSystem.Copy(projectItem.Snapshot.SourceFile.AbsoluteFileName, destinationFileName, context.ForceUpdate);
         }
 

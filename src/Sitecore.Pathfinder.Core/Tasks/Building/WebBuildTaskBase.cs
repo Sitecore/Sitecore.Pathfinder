@@ -18,6 +18,10 @@ namespace Sitecore.Pathfinder.Tasks.Building
         {
         }
 
+        protected WebBuildTaskBase([NotNull] string taskName, [NotNull] string alias) : base(taskName, alias)
+        {
+        }
+
         protected virtual bool DownloadFile([NotNull] ITaskContext context, [NotNull] WebRequest webRequest, [NotNull] string targetFileName)
         {
             var webClient = GetWebClient(context.Configuration);

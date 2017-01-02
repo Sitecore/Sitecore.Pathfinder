@@ -1,8 +1,8 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.Linq;
-using Sitecore.IO;
 using Sitecore.Pathfinder.Emitting;
+using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.Content;
 using Sitecore.Pathfinder.Projects;
 
@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Emitters.Files
         {
             var contentFile = (ContentFile)projectItem;
 
-            var destinationFileName = FileUtil.MapPath(contentFile.FilePath);
+            var destinationFileName = PathHelper.Combine(context.Configuration.GetWebsiteDirectory(), contentFile.FilePath);
 
             context.FileSystem.CreateDirectoryFromFileName(destinationFileName);
             context.FileSystem.Copy(projectItem.Snapshot.SourceFile.AbsoluteFileName, destinationFileName, context.ForceUpdate);

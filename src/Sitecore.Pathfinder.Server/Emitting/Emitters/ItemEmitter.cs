@@ -9,14 +9,13 @@ using Sitecore.Data.Validators;
 using Sitecore.Data.Validators.FieldValidators;
 using Sitecore.Data.Validators.ItemValidators;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Emitters.Writers;
-using Sitecore.Pathfinder.Emitting;
+using Sitecore.Pathfinder.Emitting.Writers;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 
-namespace Sitecore.Pathfinder.Emitters.Items
+namespace Sitecore.Pathfinder.Emitting.Emitters
 {
     public class ItemEmitter : EmitterBase
     {
