@@ -36,7 +36,7 @@ namespace Sitecore.Pathfinder.Websites.CleanBlog
                 Console.WriteLine();
             }
 
-            Assert.AreEqual(1, Project.Diagnostics.Count());
+            Assert.AreEqual(2, Project.Diagnostics.Count());
         }
     }
 }

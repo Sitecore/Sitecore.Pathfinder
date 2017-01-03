@@ -58,7 +58,7 @@ namespace Sitecore.Pathfinder.Roslyn.Extensibility
 
             var syntaxTrees = sourceFileNames.Select(File.ReadAllText).Select(code => CSharpSyntaxTree.ParseText(code)).ToList();
 
-            var references = AppDomain.CurrentDomain.GetAssemblies().Select(assembly => MetadataReference.CreateFromFile(assembly.Location)).ToList();
+            var references = AppDomain.CurrentDomain.GetAssemblies().Where(assembly => !string.IsNullOrEmpty(assembly.Location)).Select(assembly => MetadataReference.CreateFromFile(assembly.Location)).ToList();
 
             // todo: add references from scconfig.json
             references.Add(MetadataReference.CreateFromFile(typeof(XDocument).Assembly.Location)); // add System.Xml.Linq assembly
