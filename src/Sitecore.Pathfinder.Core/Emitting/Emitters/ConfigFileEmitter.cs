@@ -1,10 +1,9 @@
-﻿using Sitecore.Pathfinder.Emitting;
-using Sitecore.Pathfinder.Extensions;
+﻿using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.ConfigFiles;
 using Sitecore.Pathfinder.Projects;
 
-namespace Sitecore.Pathfinder.Emitters.Files
+namespace Sitecore.Pathfinder.Emitting.Emitters
 {
     public class ConfigFileEmitter : EmitterBase
     {
@@ -22,7 +21,15 @@ namespace Sitecore.Pathfinder.Emitters.Files
         {
             var configFile = (ConfigFile)projectItem;
 
-            var destinationFileName = PathHelper.Combine(context.Configuration.GetWebsiteDirectory(), configFile.FilePath);
+            var filePath = PathHelper.NormalizeFilePath(configFile.FilePath);
+            if (filePath.StartsWith("~\\"))
+            {
+                filePath = filePath.Mid(2);
+            }
+
+            var destinationFileName = PathHelper.Combine(context.Configuration.GetWebsiteDirectory(), filePath);
+
+            context.Trace.TraceInformation(Msg.I1011, "Publishing config file", filePath);
 
             context.FileSystem.CreateDirectoryFromFileName(destinationFileName);
             context.FileSystem.Copy(projectItem.Snapshot.SourceFile.AbsoluteFileName, destinationFileName, context.ForceUpdate);

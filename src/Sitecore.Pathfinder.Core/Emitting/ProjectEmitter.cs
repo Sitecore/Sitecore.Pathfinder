@@ -103,7 +103,7 @@ namespace Sitecore.Pathfinder.Emitting
 
             if (!isEmitted)
             {
-                Trace.TraceWarning(Msg.E1039, "No emitter found", projectItem.Snapshot.SourceFile);
+                // Trace.TraceWarning(Msg.E1039, "No emitter found", projectItem.Snapshot.SourceFile, projectItem.QualifiedName);
             }
         }
 

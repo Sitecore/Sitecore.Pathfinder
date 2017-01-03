@@ -191,7 +191,7 @@ namespace Sitecore.Pathfinder.Checkers
         {
             return from item in context.Project.Items
                 where item.ItemIdOrPath.StartsWith("/sitecore/templates/") && (item.TemplateName.Equals("Folder") || item.TemplateName.Equals("Node"))
-                select Warning(Msg.C1124, "In the '/sitecore/templates' section, folder items use the 'Template folder' template - not the 'Folder' or 'Node' template. To fix, change the template of the item to 'Template Folder", TraceHelper.GetTextNode(item), item.TemplateName);
+                select Warning(Msg.C1124, "In the '/sitecore/templates' section, folder items use the 'Template folder' template - not the 'Folder' or 'Node' template. To fix, change the template of the item to 'Template Folder", TraceHelper.GetTextNode(item), item.ItemIdOrPath);
         }
 
         [Export("Check")]

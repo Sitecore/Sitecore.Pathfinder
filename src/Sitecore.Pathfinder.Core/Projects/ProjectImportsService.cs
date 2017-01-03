@@ -64,6 +64,7 @@ namespace Sitecore.Pathfinder.Projects
                 var fileName = Path.Combine(packageInfo.ProjectDirectory, Configuration.GetString(Constants.Configuration.WriteExports.FileName));
                 if (!FileSystem.FileExists(fileName))
                 {
+                    Trace.TraceError(Msg.I1010, "Could not find dependency package", fileName);
                     continue;
                 }
 

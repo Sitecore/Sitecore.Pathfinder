@@ -3,13 +3,12 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.BinFiles;
 using Sitecore.Pathfinder.Projects;
 
-namespace Sitecore.Pathfinder.Emitters.Files
+namespace Sitecore.Pathfinder.Emitting.Emitters
 {
     public class BinFileEmitter : EmitterBase
     {
@@ -25,12 +24,21 @@ namespace Sitecore.Pathfinder.Emitters.Files
         public override void Emit(IEmitContext context, IProjectItem projectItem)
         {
             var binFile = (BinFile)projectItem;
-            var destinationFileName = PathHelper.Combine(context.Configuration.GetWebsiteDirectory(), binFile.FilePath);
+
+            var filePath = PathHelper.NormalizeFilePath(binFile.FilePath);
+            if (filePath.StartsWith("~\\"))
+            {
+                filePath = filePath.Mid(2);
+            }
+
+            var destinationFileName = PathHelper.Combine(context.Configuration.GetWebsiteDirectory(), filePath);
 
             if (!CanCopyBinFile(context, binFile, destinationFileName))
             {
                 return;
             }
+
+            context.Trace.TraceInformation(Msg.I1011, "Publishing bin file", filePath);
 
             context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName));
             context.FileSystem.Copy(projectItem.Snapshot.SourceFile.AbsoluteFileName, destinationFileName, context.ForceUpdate);

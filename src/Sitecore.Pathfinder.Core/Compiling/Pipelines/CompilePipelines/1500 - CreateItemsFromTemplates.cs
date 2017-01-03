@@ -11,9 +11,10 @@ using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 {
+    // must come after CompileProjectItems as CreateTemplateFromFields may create a new template
     public class CreateItemsFromTemplates : PipelineProcessorBase<CompilePipeline>
     {
-        public CreateItemsFromTemplates() : base(20)
+        public CreateItemsFromTemplates() : base(1500)
         {
         }
 
@@ -40,6 +41,8 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
             item.Fields.Add(context.Factory.Field(item, "__Base template", template.BaseTemplates).With(template.BaseTemplatesProperty.SourceTextNode));
             item.Fields.Add(context.Factory.Field(item, "__Long description", template.LongHelp).With(template.LongHelpProperty.SourceTextNode));
             item.Fields.Add(context.Factory.Field(item, "__Short description", template.ShortHelp).With(template.ShortHelpProperty.SourceTextNode));
+            ((ISourcePropertyBag)item).NewSourceProperty("__origin", item.Uri);
+            ((ISourcePropertyBag)item).NewSourceProperty("__origin_reason", nameof(CreateItemsFromTemplates));
 
             foreach (var templateSection in template.Sections)
             {
@@ -48,6 +51,8 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
                 templateSectionItem.IsEmittable = false;
                 templateSectionItem.IsImport = template.IsImport;
                 templateSectionItem.IconProperty.SetValue(templateSection.IconProperty);
+                ((ISourcePropertyBag)templateSectionItem).NewSourceProperty("__origin", item.Uri);
+                ((ISourcePropertyBag)templateSectionItem).NewSourceProperty("__origin_reason", nameof(CreateItemsFromTemplates));
 
                 foreach (var templateField in templateSection.Fields)
                 {
@@ -63,6 +68,8 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
                     templateFieldItem.Fields.Add(context.Factory.Field(templateFieldItem, "Source", templateField.Source).With(templateField.SourceProperty.SourceTextNode));
                     templateFieldItem.Fields.Add(context.Factory.Field(templateFieldItem, "__Sortorder", templateField.Sortorder.ToString()).With(templateField.SortorderProperty.SourceTextNode));
                     templateFieldItem.Fields.Add(context.Factory.Field(templateFieldItem, "Type", templateField.Type).With(templateField.TypeProperty.SourceTextNode));
+                    ((ISourcePropertyBag)templateFieldItem).NewSourceProperty("__origin", item.Uri);
+                    ((ISourcePropertyBag)templateFieldItem).NewSourceProperty("__origin_reason", nameof(CreateItemsFromTemplates));
 
                     project.AddOrMerge(templateFieldItem);
                 }

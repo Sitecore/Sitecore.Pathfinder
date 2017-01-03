@@ -63,6 +63,7 @@
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Runtime.Caching" />
@@ -78,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Checking\Checkers\ArchitectureCheckers.cs" />
+    <Compile Include="Compiling\Pipelines\CompilePipelines\1600 - CreateMissingParentItems.cs" />
     <Compile Include="Emitting\Emitters\BinFileEmitter.cs" />
     <Compile Include="Emitting\Emitters\ConfigFileEmitter.cs" />
     <Compile Include="Emitting\Emitters\ContentFileEmitter.cs" />
@@ -154,7 +156,7 @@
     <Compile Include="Compiling\FieldCompilers\ReferenceFieldCompiler.cs" />
     <Compile Include="Compiling\LayoutFileCompilers\CshtmlLayoutFileCompiler.cs" />
     <Compile Include="Compiling\LayoutFileCompilers\SnapshotLayoutFileCompiler.cs" />
-    <Compile Include="Compiling\Pipelines\CompilePipelines\0020 - CreateItemsFromTemplates.cs" />
+    <Compile Include="Compiling\Pipelines\CompilePipelines\1500 - CreateItemsFromTemplates.cs" />
     <Compile Include="Emitting\IEmitterService.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Compiling\LayoutFileCompilers\AspxLayoutFileCompiler.cs" />

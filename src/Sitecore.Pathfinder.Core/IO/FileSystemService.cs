@@ -45,16 +45,16 @@ namespace Sitecore.Pathfinder.IO
         {
             if (!forceUpdate)
             {
-                var fileInfo1 = new ZlpFileInfo(sourceFileName);
-                var fileInfo2 = new ZlpFileInfo(destinationFileName);
+                // var fileInfo1 = new ZlpFileInfo(sourceFileName);
+                // var fileInfo2 = new ZlpFileInfo(destinationFileName);
+                var fileInfo1 = new FileInfo(sourceFileName);
+                var fileInfo2 = new FileInfo(destinationFileName);
 
                 if (fileInfo1.Exists && fileInfo2.Exists && fileInfo1.LastWriteTime.ToUniversalTime() == fileInfo2.LastWriteTime.ToUniversalTime() && fileInfo1.Length == fileInfo2.Length)
                 {
                     return;
                 }
             }
-
-            File.Exists("");
 
             var directoryName = Path.GetDirectoryName(destinationFileName);
             if (string.IsNullOrEmpty(directoryName))

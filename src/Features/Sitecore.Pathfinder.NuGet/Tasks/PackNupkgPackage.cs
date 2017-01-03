@@ -158,9 +158,8 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
             // load dependencies from scconfig.json
             foreach (var pair in context.Configuration.GetSubKeys(Constants.Configuration.Dependencies))
             {
-                // todo: work-around ConfigurationService replacing "." with "/"
-                var id = pair.Key.Replace("-", ".");
-                var version = context.Configuration.GetString(Constants.Configuration.Dependencies + ":" + pair.Key);
+                var id = context.Configuration.GetString(Constants.Configuration.Dependencies + ":" + pair.Key + ":id");
+                var version = context.Configuration.GetString(Constants.Configuration.Dependencies + ":" + pair.Key + ":version");
 
                 // check if the "Sitecore.Pathfinder.Core" package is already included in the nuspec
                 if (id == "Sitecore.Pathfinder.Core" && nuspec.IndexOf(" id=\"Sitecore.Pathfinder.Core\" ", StringComparison.Ordinal) >= 0)

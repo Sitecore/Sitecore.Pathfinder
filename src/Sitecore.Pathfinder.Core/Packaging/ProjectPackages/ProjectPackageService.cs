@@ -39,9 +39,8 @@ namespace Sitecore.Pathfinder.Packaging.ProjectPackages
             // add packages from configuration
             foreach (var pair in Configuration.GetSubKeys(Constants.Configuration.Dependencies))
             {
-                // todo: work-around ConfigurationService replacing "." with "/"
-                var id = pair.Key.Replace("-", ".");
-                var version = Configuration.GetString(Constants.Configuration.Dependencies + ":" + pair.Key);
+                var id = Configuration.GetString(Constants.Configuration.Dependencies + ":" + pair.Key + ":id");
+                var version = Configuration.GetString(Constants.Configuration.Dependencies + ":" + pair.Key + ":version");
 
                 // todo: add support for NPM packages
                 var directory = Path.Combine(packageRootDirectory, id + "." + version);

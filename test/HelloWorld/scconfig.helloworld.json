@@ -20,7 +20,7 @@
     },
     
     "dependencies": {
-        "Sitecore.Master": "1.0.0"
+        "sitecore-master": { "id": "Sitecore.Master", "version": "1.0.0" }
     },  
 
     "show-website": {

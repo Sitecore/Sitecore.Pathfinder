@@ -54,7 +54,15 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 
         protected virtual void CopyFile([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] MediaFile mediaFile)
         {
-            var destinationFileName = FileUtil.MapPath(mediaFile.FilePath);
+            var filePath = PathHelper.NormalizeFilePath(mediaFile.FilePath);
+            if (filePath.StartsWith("~\\"))
+            {
+                filePath = filePath.Mid(2);
+            }
+
+            var destinationFileName = FileUtil.MapPath(filePath);
+
+            context.Trace.TraceInformation(Msg.I1011, "Publishing media file", filePath);
 
             context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName) ?? string.Empty);
             context.FileSystem.Copy(mediaFile.Snapshot.SourceFile.AbsoluteFileName, destinationFileName, context.ForceUpdate);
@@ -64,19 +72,6 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
         {
             var database = Factory.GetDatabase(mediaItem.DatabaseName);
             var name = mediaItem.ItemName;
-
-            var options = new MediaCreatorOptions
-            {
-                AlternateText = name,
-                Database = database,
-                FileBased = false,
-                IncludeExtensionInItemName = false,
-
-                OverwriteExisting = false,
-                Language = LanguageManager.DefaultLanguage,
-                Versioned = false,
-                Destination = mediaItem.ItemIdOrPath
-            };
 
             var destinationItem = database.GetItem(mediaItem.ItemIdOrPath);
 
@@ -107,8 +102,23 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
                 parent.Database.AddFromTemplateSynchronized(name, TemplateIDs.Folder, parent, new Data.ID(mediaItem.Uri.Guid));
             }
 
+            context.Trace.TraceInformation(Msg.I1011, "Publishing media item", mediaItem.Paths.Path);
+
             if (uploadMedia)
             {
+                var options = new MediaCreatorOptions
+                {
+                    AlternateText = name,
+                    Database = database,
+                    FileBased = false,
+                    IncludeExtensionInItemName = false,
+
+                    OverwriteExisting = true,
+                    Language = LanguageManager.DefaultLanguage,
+                    Versioned = false,
+                    Destination = mediaItem.ItemIdOrPath
+                };
+
                 using (var stream = FileSystem.OpenRead(mediaFile.Snapshot.SourceFile.AbsoluteFileName))
                 {
                     var item = MediaManager.Creator.CreateFromStream(stream, "/upload/" + Path.GetFileName(mediaFile.Snapshot.SourceFile.AbsoluteFileName), options);

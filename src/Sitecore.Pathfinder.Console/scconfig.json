@@ -431,7 +431,7 @@
 
     // dependency packages
     "dependencies": {
-        "Sitecore-Pathfinder-Core": "1.0.0"
+        "sitecore-pathfinder-core": { "id": "Sitecore.Pathfinder.Core", "version": "1.0.0" }
     },
 
     // if true, disable all extensions and just load Sitecore.Pathfinder.Core.dll

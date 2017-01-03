@@ -8,10 +8,10 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    public class CopyProject : BuildTaskBase
+    public class PublishProject : BuildTaskBase
     {
         [ImportingConstructor]
-        public CopyProject([NotNull] ICompositionService compositionService) : base("copy-project")
+        public PublishProject([NotNull] ICompositionService compositionService) : base("publish-project")
         {
             CompositionService = compositionService;
         }
@@ -21,7 +21,7 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
-            context.Trace.TraceInformation(Msg.D1027, "Copying project to website...");
+            context.Trace.TraceInformation(Msg.D1027, "Publishing project to website...");
 
             var projectEmitter = CompositionService.Resolve<FileAndSqlProjectEmitter>();
 

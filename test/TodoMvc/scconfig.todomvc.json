@@ -20,11 +20,11 @@
     },
     
     "dependencies": {
-        "Sitecore.BusinessComponentLibrary": "1.0.0",
-        "Sitecore.Core": "1.0.0",
-        "Sitecore.Launchpad": "1.0.0",
-        "Sitecore.Master": "1.0.0",
-        "Sitecore.Speak": "1.0.0"
+        "sitecore-business-component-library": { "id": "Sitecore.BusinessComponentLibrary", "version": "1.0.0" },
+        "sitecore-core": { "id": "Sitecore.Core", "version": "1.0.0" },
+        "sitecore-launchpad": { "id": "Sitecore.Launchpad", "version": "1.0.0" },
+        "sitecore-master": { "id": "Sitecore.Master", "version": "1.0.0" },
+        "sitecore-speak": { "id": "Sitecore.Speak", "version": "1.0.0" }
     },  
 
     "show-website": {
