@@ -32,26 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Framework.ConfigurationModel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Framework.ConfigurationModel.1.0.0-beta4\lib\net45\Microsoft.Framework.ConfigurationModel.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Microsoft.Framework.ConfigurationModel.Interfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Framework.ConfigurationModel.Interfaces.1.0.0-beta4\lib\net45\Microsoft.Framework.ConfigurationModel.Interfaces.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Microsoft.Framework.ConfigurationModel.Json, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Framework.ConfigurationModel.Json.1.0.0-beta4\lib\net45\Microsoft.Framework.ConfigurationModel.Json.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Microsoft.Framework.ConfigurationModel.Xml, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Framework.ConfigurationModel.Xml.1.0.0-beta4\lib\net45\Microsoft.Framework.ConfigurationModel.Xml.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
@@ -80,6 +60,29 @@
   <ItemGroup>
     <Compile Include="Checking\Checkers\ArchitectureCheckers.cs" />
     <Compile Include="Compiling\Pipelines\CompilePipelines\1600 - CreateMissingParentItems.cs" />
+    <Compile Include="Configuration\ConfigurationModel\CommandLineConfigurationSource.cs" />
+    <Compile Include="Configuration\ConfigurationModel\Configuration.cs" />
+    <Compile Include="Configuration\ConfigurationModel\ConfigurationExtensions.cs" />
+    <Compile Include="Configuration\ConfigurationModel\ConfigurationSource.cs" />
+    <Compile Include="Configuration\ConfigurationModel\Constants.cs" />
+    <Compile Include="Configuration\ConfigurationModel\EnvironmentVariablesConfigurationSource.cs" />
+    <Compile Include="Configuration\ConfigurationModel\IConfiguration.cs" />
+    <Compile Include="Configuration\ConfigurationModel\IConfigurationSource.cs" />
+    <Compile Include="Configuration\ConfigurationModel\IConfigurationSourceRoot.cs" />
+    <Compile Include="Configuration\ConfigurationModel\IniFileConfigurationSource.cs" />
+    <Compile Include="Configuration\ConfigurationModel\Internal\ConfigurationFocus.cs" />
+    <Compile Include="Configuration\ConfigurationModel\Json\JsonConfigurationExtension.cs" />
+    <Compile Include="Configuration\ConfigurationModel\Json\JsonConfigurationSource.cs" />
+    <Compile Include="Configuration\ConfigurationModel\Json\Json\Resources.cs" />
+    <Compile Include="Configuration\ConfigurationModel\Json\PathResolver.cs" />
+    <Compile Include="Configuration\ConfigurationModel\MemoryConfigurationSource.cs" />
+    <Compile Include="Configuration\ConfigurationModel\PathResolver.cs" />
+    <Compile Include="Configuration\ConfigurationModel\Resources.cs" />
+    <Compile Include="Configuration\ConfigurationModel\Xml\PathResolver.cs" />
+    <Compile Include="Configuration\ConfigurationModel\Xml\XmlConfigurationExtension.cs" />
+    <Compile Include="Configuration\ConfigurationModel\Xml\XmlConfigurationSource.cs" />
+    <Compile Include="Configuration\ConfigurationModel\Xml\XmlDocumentDecrypter.cs" />
+    <Compile Include="Configuration\ConfigurationModel\Xml\Xml\Resources.cs" />
     <Compile Include="Emitting\Emitters\BinFileEmitter.cs" />
     <Compile Include="Emitting\Emitters\ConfigFileEmitter.cs" />
     <Compile Include="Emitting\Emitters\ContentFileEmitter.cs" />
@@ -559,6 +562,15 @@
     <None Include="Readme.md" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Configuration\ConfigurationModel\Json\Json\Resources.resx">
+      <DependentUpon>Resources.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuration\ConfigurationModel\Resources.resx">
+      <DependentUpon>Resources.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuration\ConfigurationModel\Xml\Xml\Resources.resx">
+      <DependentUpon>Resources.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Texts.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Texts.Designer.cs</LastGenOutput>

@@ -61,6 +61,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
                         var newItem = pipeline.Context.Factory.Item(pipeline.Context.Project, guid, item.DatabaseName, parts[newIndex], newPath, Constants.Templates.Folder.Format());
                         newItem.IsEmittable = false;
                         newItem.IsImport = item.IsImport;
+                        newItem.OverwriteWhenMerging = true;
                         pipeline.Context.Project.AddOrMerge(newItem);
 
                         ((ISourcePropertyBag)newItem).NewSourceProperty("__origin", item.Uri);

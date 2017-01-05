@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Sitecore.Pathfinder.Cli": {
+      "commandName": "Project",
+      "workingDirectory": "E:\\Sitecore\\Sitecore.Pathfinder\\websites\\CleanBlog"
+    }
+  }
+}
