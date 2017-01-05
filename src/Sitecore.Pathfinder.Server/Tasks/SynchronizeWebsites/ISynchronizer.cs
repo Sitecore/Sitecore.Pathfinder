@@ -1,7 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.ComponentModel.Composition;
-using Microsoft.Framework.ConfigurationModel;
+using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Zip;
 
 namespace Sitecore.Pathfinder.Tasks.SynchronizeWebsites

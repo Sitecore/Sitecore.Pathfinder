@@ -1,21 +1,17 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: Microsoft.Framework.ConfigurationModel.IConfigurationSource
-// Assembly: Microsoft.Framework.ConfigurationModel.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: FB4573E8-9F09-49F3-B2EF-6350D9165C25
-// Assembly location: E:\Sitecore\Sitecore.Pathfinder\code\bin\Microsoft.Framework.ConfigurationModel.Interfaces.dll
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 
-namespace Microsoft.Framework.ConfigurationModel
+namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
 {
-  public interface IConfigurationSource
-  {
-    bool TryGet(string key, out string value);
+    public interface IConfigurationSource
+    {
+        void Load();
 
-    void Set(string key, string value);
+        IEnumerable<string> ProduceSubKeys(IEnumerable<string> earlierKeys, string prefix, string delimiter);
 
-    void Load();
+        void Set(string key, string value);
 
-    IEnumerable<string> ProduceSubKeys(IEnumerable<string> earlierKeys, string prefix, string delimiter);
-  }
+        bool TryGet(string key, out string value);
+    }
 }

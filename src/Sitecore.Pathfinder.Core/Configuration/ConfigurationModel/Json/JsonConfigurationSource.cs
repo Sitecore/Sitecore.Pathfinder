@@ -1,122 +1,131 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: Microsoft.Framework.ConfigurationModel.JsonConfigurationSource
-// Assembly: Microsoft.Framework.ConfigurationModel.Json, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 29E3F8BD-4D3C-4C9D-8840-A11A97E69911
-// Assembly location: E:\Sitecore\Sitecore.Pathfinder\code\bin\Microsoft.Framework.ConfigurationModel.Json.dll
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Newtonsoft.Json;
 
-namespace Microsoft.Framework.ConfigurationModel
+namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Json
 {
-  public class JsonConfigurationSource : ConfigurationSource
-  {
-    public bool Optional { get; private set; }
-
-    public string Path { get; private set; }
-
-    public JsonConfigurationSource(string path)
-      : this(path, false)
+    public class JsonConfigurationSource : ConfigurationSource
     {
-    }
-
-    public JsonConfigurationSource(string path, bool optional)
-    {
-      if (string.IsNullOrEmpty(path))
-        throw new ArgumentException(Microsoft.Framework.ConfigurationModel.Json.Resources.Error_InvalidFilePath, "path");
-      this.Optional = optional;
-      this.Path = JsonPathResolver.ResolveAppRelativePath(path);
-    }
-
-    public override void Load()
-    {
-      if (!File.Exists(this.Path))
-      {
-        if (!this.Optional)
-          throw new FileNotFoundException(string.Format(Microsoft.Framework.ConfigurationModel.Json.Resources.Error_FileNotFound, (object) this.Path), this.Path);
-        this.Data = (IDictionary<string, string>) new Dictionary<string, string>((IEqualityComparer<string>) StringComparer.OrdinalIgnoreCase);
-      }
-      else
-      {
-        using (FileStream fileStream = new FileStream(this.Path, FileMode.Open, FileAccess.Read))
-          this.Load((Stream) fileStream);
-      }
-    }
-
-    internal void Load(Stream stream)
-    {
-      Dictionary<string, string> dictionary = new Dictionary<string, string>((IEqualityComparer<string>) StringComparer.OrdinalIgnoreCase);
-      using (JsonTextReader jsonTextReader = new JsonTextReader((TextReader) new StreamReader(stream)))
-      {
-        int num = 0;
-        jsonTextReader.DateParseHandling = DateParseHandling.None;
-        jsonTextReader.Read();
-        this.SkipComments((JsonReader) jsonTextReader);
-        if (jsonTextReader.TokenType != JsonToken.StartObject)
-          throw new FormatException(Microsoft.Framework.ConfigurationModel.Json.Resources.FormatError_RootMustBeAnObject((object) jsonTextReader.Path, (object) jsonTextReader.LineNumber, (object) jsonTextReader.LinePosition));
-        do
+        public JsonConfigurationSource(string path) : this(path, false)
         {
-          this.SkipComments((JsonReader) jsonTextReader);
-          switch (jsonTextReader.TokenType)
-          {
-            case JsonToken.None:
-              throw new FormatException(Microsoft.Framework.ConfigurationModel.Json.Resources.FormatError_UnexpectedEnd((object) jsonTextReader.Path, (object) jsonTextReader.LineNumber, (object) jsonTextReader.LinePosition));
-            case JsonToken.StartObject:
-              ++num;
-              goto case JsonToken.PropertyName;
-            case JsonToken.PropertyName:
-              jsonTextReader.Read();
-              continue;
-            case JsonToken.Raw:
-            case JsonToken.Integer:
-            case JsonToken.Float:
-            case JsonToken.String:
-            case JsonToken.Boolean:
-            case JsonToken.Null:
-            case JsonToken.Bytes:
-              string key = this.GetKey(jsonTextReader.Path);
-              if (dictionary.ContainsKey(key))
-                throw new FormatException(Microsoft.Framework.ConfigurationModel.Json.Resources.FormatError_KeyIsDuplicated((object) key));
-              dictionary[key] = jsonTextReader.Value.ToString();
-              goto case JsonToken.PropertyName;
-            case JsonToken.EndObject:
-              --num;
-              goto case JsonToken.PropertyName;
-            default:
-              throw new FormatException(Microsoft.Framework.ConfigurationModel.Json.Resources.FormatError_UnsupportedJSONToken((object) jsonTextReader.TokenType, (object) jsonTextReader.Path, (object) jsonTextReader.LineNumber, (object) jsonTextReader.LinePosition));
-          }
         }
-        while (num > 0);
-      }
-      this.Data = (IDictionary<string, string>) dictionary;
-    }
 
-    private string GetKey(string jsonPath)
-    {
-      List<string> stringList = new List<string>();
-      int num;
-      for (int startIndex1 = 0; startIndex1 < jsonPath.Length; startIndex1 = num + 2)
-      {
-        int startIndex2 = jsonPath.IndexOf("['", startIndex1);
-        if (startIndex2 < 0)
+        public JsonConfigurationSource(string path, bool optional)
         {
-          stringList.Add(jsonPath.Substring(startIndex1).Replace('.', ':'));
-          break;
+            if (string.IsNullOrEmpty(path))
+            {
+                throw new ArgumentException(Json.Resources.Error_InvalidFilePath, "path");
+            }
+            Optional = optional;
+            Path = JsonPathResolver.ResolveAppRelativePath(path);
         }
-        if (startIndex2 > startIndex1)
-          stringList.Add(jsonPath.Substring(startIndex1, startIndex2 - startIndex1).Replace('.', ':'));
-        num = jsonPath.IndexOf("']", startIndex2);
-        stringList.Add(jsonPath.Substring(startIndex2 + 2, num - startIndex2 - 2));
-      }
-      return string.Join(string.Empty, (IEnumerable<string>) stringList);
-    }
 
-    private void SkipComments(JsonReader reader)
-    {
-      while (reader.TokenType == JsonToken.Comment)
-        reader.Read();
+        public bool Optional { get; private set; }
+
+        public string Path { get; private set; }
+
+        public override void Load()
+        {
+            if (!File.Exists(Path))
+            {
+                if (!Optional)
+                {
+                    throw new FileNotFoundException(string.Format(Json.Resources.Error_FileNotFound, Path), Path);
+                }
+                Data = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            }
+            else
+            {
+                using (var fileStream = new FileStream(Path, FileMode.Open, FileAccess.Read))
+                {
+                    Load(fileStream);
+                }
+            }
+        }
+
+        internal void Load(Stream stream)
+        {
+            var dictionary = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            using (var jsonTextReader = new JsonTextReader(new StreamReader(stream)))
+            {
+                var num = 0;
+                jsonTextReader.DateParseHandling = DateParseHandling.None;
+                jsonTextReader.Read();
+                SkipComments(jsonTextReader);
+                if (jsonTextReader.TokenType != JsonToken.StartObject)
+                {
+                    throw new FormatException(Json.Resources.FormatError_RootMustBeAnObject(jsonTextReader.Path, jsonTextReader.LineNumber, jsonTextReader.LinePosition));
+                }
+                do
+                {
+                    SkipComments(jsonTextReader);
+                    switch (jsonTextReader.TokenType)
+                    {
+                        case JsonToken.None:
+                            throw new FormatException(Json.Resources.FormatError_UnexpectedEnd(jsonTextReader.Path, jsonTextReader.LineNumber, jsonTextReader.LinePosition));
+                        case JsonToken.StartObject:
+                            ++num;
+                            goto case JsonToken.PropertyName;
+                        case JsonToken.PropertyName:
+                            jsonTextReader.Read();
+                            continue;
+                        case JsonToken.Raw:
+                        case JsonToken.Integer:
+                        case JsonToken.Float:
+                        case JsonToken.String:
+                        case JsonToken.Boolean:
+                        case JsonToken.Null:
+                        case JsonToken.Bytes:
+                            var key = GetKey(jsonTextReader.Path);
+                            if (dictionary.ContainsKey(key))
+                            {
+                                throw new FormatException(Json.Resources.FormatError_KeyIsDuplicated(key));
+                            }
+                            dictionary[key] = jsonTextReader.Value.ToString();
+                            goto case JsonToken.PropertyName;
+                        case JsonToken.EndObject:
+                            --num;
+                            goto case JsonToken.PropertyName;
+                        default:
+                            throw new FormatException(Json.Resources.FormatError_UnsupportedJSONToken(jsonTextReader.TokenType, jsonTextReader.Path, jsonTextReader.LineNumber, jsonTextReader.LinePosition));
+                    }
+                }
+                while (num > 0);
+            }
+            Data = dictionary;
+        }
+
+        private string GetKey(string jsonPath)
+        {
+            var stringList = new List<string>();
+            int num;
+            for (var startIndex1 = 0; startIndex1 < jsonPath.Length; startIndex1 = num + 2)
+            {
+                var startIndex2 = jsonPath.IndexOf("['", startIndex1);
+                if (startIndex2 < 0)
+                {
+                    stringList.Add(jsonPath.Substring(startIndex1).Replace('.', ':'));
+                    break;
+                }
+                if (startIndex2 > startIndex1)
+                {
+                    stringList.Add(jsonPath.Substring(startIndex1, startIndex2 - startIndex1).Replace('.', ':'));
+                }
+                num = jsonPath.IndexOf("']", startIndex2);
+                stringList.Add(jsonPath.Substring(startIndex2 + 2, num - startIndex2 - 2));
+            }
+            return string.Join(string.Empty, stringList);
+        }
+
+        private void SkipComments(JsonReader reader)
+        {
+            while (reader.TokenType == JsonToken.Comment)
+            {
+                reader.Read();
+            }
+        }
     }
-  }
 }

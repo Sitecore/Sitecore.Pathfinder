@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using Microsoft.Framework.ConfigurationModel;
 using Newtonsoft.Json;
+using Sitecore.Pathfinder.Configuration.ConfigurationModel;
+using Sitecore.Pathfinder.Configuration.ConfigurationModel.Json;
+using Sitecore.Pathfinder.Configuration.ConfigurationModel.Xml;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Extensions

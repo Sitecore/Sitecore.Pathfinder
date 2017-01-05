@@ -3,11 +3,11 @@
 using System;
 using System.ComponentModel.Composition;
 using System.Linq;
-using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Configuration;
 using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.SearchTypes;
 using Sitecore.Data.Items;
+using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.SecurityModel;

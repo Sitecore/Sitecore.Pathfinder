@@ -129,7 +129,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         private IFieldCompileContext CreateContext([CanBeNull,ItemNotNull] IFieldCompiler[] compilers)
         {
-            var config = new Microsoft.Framework.ConfigurationModel.Configuration();
+            var config = new Configuration.ConfigurationModel.Configuration();
             return new FieldCompileContext(config, null, null, null, compilers);
         }
 

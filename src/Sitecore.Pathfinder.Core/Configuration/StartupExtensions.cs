@@ -1,7 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using Microsoft.Framework.ConfigurationModel;
+using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 
@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Configuration
         [CanBeNull]
         public static IConfigurationSourceRoot RegisterConfiguration([NotNull] this Startup startup, ConfigurationOptions options, [NotNull] string toolsDirectory, [NotNull] string projectDirectory, [NotNull] string systemConfigFileName, [CanBeNull, ItemNotNull] string[] commandLine)
         {
-            var configuration = new Microsoft.Framework.ConfigurationModel.Configuration();
+            var configuration = new ConfigurationModel.Configuration();
             configuration.Add(new MemoryConfigurationSource());
 
             if ((options & ConfigurationOptions.DoNotLoadConfig) == ConfigurationOptions.DoNotLoadConfig)

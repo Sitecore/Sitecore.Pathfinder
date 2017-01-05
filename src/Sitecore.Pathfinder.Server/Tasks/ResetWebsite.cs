@@ -2,10 +2,10 @@
 
 using System.ComponentModel.Composition;
 using System.IO;
-using Microsoft.Framework.ConfigurationModel;
 using Sitecore.Configuration;
 using Sitecore.Data.Items;
 using Sitecore.IO;
+using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.IO.PathMappers;

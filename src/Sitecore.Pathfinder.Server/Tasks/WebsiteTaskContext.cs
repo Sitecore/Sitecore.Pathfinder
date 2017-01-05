@@ -2,7 +2,7 @@
 
 using System.ComponentModel.Composition;
 using System.Web.Mvc;
-using Microsoft.Framework.ConfigurationModel;
+using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 

@@ -1,8 +1,8 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
-using Microsoft.Framework.ConfigurationModel;
 using NUnit.Framework;
+using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Configuration
@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Configuration
         [Test]
         public void AddCommandLineTest()
         {
-            var configuration = new Microsoft.Framework.ConfigurationModel.Configuration();
+            var configuration = new ConfigurationModel.Configuration();
             configuration.Add(new MemoryConfigurationSource());
             var configurationService = new ConfigurationService(configuration);
 

@@ -1,124 +1,133 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: Microsoft.Framework.ConfigurationModel.Configuration
-// Assembly: Microsoft.Framework.ConfigurationModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: AF6551BA-D3EF-49B9-9DB1-FD9EE239F6F6
-// Assembly location: E:\Sitecore\Sitecore.Pathfinder\code\bin\Microsoft.Framework.ConfigurationModel.dll
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
-using Microsoft.Framework.ConfigurationModel.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sitecore.Pathfinder.Configuration.ConfigurationModel.Internal;
 
-namespace Microsoft.Framework.ConfigurationModel
+namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
 {
-  public class Configuration : IConfiguration, IConfigurationSourceRoot
-  {
-    private readonly IList<IConfigurationSource> _sources = (IList<IConfigurationSource>) new List<IConfigurationSource>();
-
-    public string this[string key]
+    public class Configuration : IConfiguration, IConfigurationSourceRoot
     {
-      get
-      {
-        return this.Get(key);
-      }
-      set
-      {
-        this.Set(key, value);
-      }
-    }
+        private readonly IList<IConfigurationSource> _sources = new List<IConfigurationSource>();
 
-    public IEnumerable<IConfigurationSource> Sources
-    {
-      get
-      {
-        return (IEnumerable<IConfigurationSource>) this._sources;
-      }
-    }
+        public Configuration(params IConfigurationSource[] sources)
+        {
+            if (sources == null)
+            {
+                return;
+            }
+            foreach (var source in sources)
+            {
+                Add(source);
+            }
+        }
 
-    public Configuration(params IConfigurationSource[] sources)
-    {
-      if (sources == null)
-        return;
-      foreach (IConfigurationSource source in sources)
-        this.Add(source);
-    }
+        public string this[string key]
+        {
+            get { return Get(key); }
+            set { Set(key, value); }
+        }
 
-    public string Get(string key)
-    {
-      if (key == null)
-        throw new ArgumentNullException("key");
-      string str;
-      if (!this.TryGet(key, out str))
-        return (string) null;
-      return str;
-    }
+        public IEnumerable<IConfigurationSource> Sources
+        {
+            get { return _sources; }
+        }
 
-    public bool TryGet(string key, out string value)
-    {
-      if (key == null)
-        throw new ArgumentNullException("key");
-      foreach (IConfigurationSource configurationSource in this._sources.Reverse<IConfigurationSource>())
-      {
-        if (configurationSource.TryGet(key, out value))
-          return true;
-      }
-      value = (string) null;
-      return false;
-    }
+        public IConfigurationSourceRoot Add(IConfigurationSource configurationSource)
+        {
+            configurationSource.Load();
+            return AddLoadedSource(configurationSource);
+        }
 
-    public void Set(string key, string value)
-    {
-      if (key == null)
-        throw new ArgumentNullException("key");
-      if (value == null)
-        throw new ArgumentNullException("value");
-      foreach (IConfigurationSource source in (IEnumerable<IConfigurationSource>) this._sources)
-        source.Set(key, value);
-    }
+        public string Get(string key)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException("key");
+            }
+            string str;
+            if (!TryGet(key, out str))
+            {
+                return null;
+            }
+            return str;
+        }
 
-    public void Reload()
-    {
-      foreach (IConfigurationSource source in (IEnumerable<IConfigurationSource>) this._sources)
-        source.Load();
-    }
+        public IConfiguration GetSubKey(string key)
+        {
+            return new ConfigurationFocus(this, key + Constants.KeyDelimiter);
+        }
 
-    public IConfiguration GetSubKey(string key)
-    {
-      return (IConfiguration) new ConfigurationFocus((IConfiguration) this, key + Constants.KeyDelimiter);
-    }
+        public IEnumerable<KeyValuePair<string, IConfiguration>> GetSubKeys()
+        {
+            return GetSubKeysImplementation(string.Empty);
+        }
 
-    public IEnumerable<KeyValuePair<string, IConfiguration>> GetSubKeys()
-    {
-      return this.GetSubKeysImplementation(string.Empty);
-    }
+        public IEnumerable<KeyValuePair<string, IConfiguration>> GetSubKeys(string key)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException("key");
+            }
+            return GetSubKeysImplementation(key + Constants.KeyDelimiter);
+        }
 
-    public IEnumerable<KeyValuePair<string, IConfiguration>> GetSubKeys(string key)
-    {
-      if (key == null)
-        throw new ArgumentNullException("key");
-      return this.GetSubKeysImplementation(key + Constants.KeyDelimiter);
-    }
+        public void Reload()
+        {
+            foreach (var source in _sources)
+            {
+                source.Load();
+            }
+        }
 
-    private IEnumerable<KeyValuePair<string, IConfiguration>> GetSubKeysImplementation(string prefix)
-    {
-      return this._sources.Aggregate<IConfigurationSource, IEnumerable<string>>(Enumerable.Empty<string>(), (Func<IEnumerable<string>, IConfigurationSource, IEnumerable<string>>) ((seed, source) => source.ProduceSubKeys(seed, prefix, Constants.KeyDelimiter))).Distinct<string>().Select<string, KeyValuePair<string, IConfiguration>>((Func<string, KeyValuePair<string, IConfiguration>>) (segment => this.CreateConfigurationFocus(prefix, segment)));
-    }
+        public void Set(string key, string value)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException("key");
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException("value");
+            }
+            foreach (var source in _sources)
+            {
+                source.Set(key, value);
+            }
+        }
 
-    private KeyValuePair<string, IConfiguration> CreateConfigurationFocus(string prefix, string segment)
-    {
-      return new KeyValuePair<string, IConfiguration>(segment, (IConfiguration) new ConfigurationFocus((IConfiguration) this, prefix + segment + Constants.KeyDelimiter));
-    }
+        public bool TryGet(string key, out string value)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException("key");
+            }
+            foreach (var configurationSource in _sources.Reverse())
+            {
+                if (configurationSource.TryGet(key, out value))
+                {
+                    return true;
+                }
+            }
+            value = null;
+            return false;
+        }
 
-    public IConfigurationSourceRoot Add(IConfigurationSource configurationSource)
-    {
-      configurationSource.Load();
-      return this.AddLoadedSource(configurationSource);
-    }
+        internal IConfigurationSourceRoot AddLoadedSource(IConfigurationSource configurationSource)
+        {
+            _sources.Add(configurationSource);
+            return this;
+        }
 
-    internal IConfigurationSourceRoot AddLoadedSource(IConfigurationSource configurationSource)
-    {
-      this._sources.Add(configurationSource);
-      return (IConfigurationSourceRoot) this;
+        private KeyValuePair<string, IConfiguration> CreateConfigurationFocus(string prefix, string segment)
+        {
+            return new KeyValuePair<string, IConfiguration>(segment, new ConfigurationFocus(this, prefix + segment + Constants.KeyDelimiter));
+        }
+
+        private IEnumerable<KeyValuePair<string, IConfiguration>> GetSubKeysImplementation(string prefix)
+        {
+            return _sources.Aggregate(Enumerable.Empty<string>(), (seed, source) => source.ProduceSubKeys(seed, prefix, Constants.KeyDelimiter)).Distinct().Select(segment => CreateConfigurationFocus(prefix, segment));
+        }
     }
-  }
 }
