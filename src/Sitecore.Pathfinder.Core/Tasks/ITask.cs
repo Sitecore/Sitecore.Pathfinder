@@ -9,6 +9,9 @@ namespace Sitecore.Pathfinder.Tasks
         [NotNull]
         string Alias { get; }
 
+        [NotNull]
+        string Shortcut { get; }
+
         /// <summary>The name of the task.</summary>
         /// <remarks>This should have the format "verb-noun" like PowerShell. See approved PowerShell verbs: https://technet.microsoft.com/en-us/library/ms714428%28v=vs.85%29.aspx</remarks>
         [NotNull]

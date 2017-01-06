@@ -51,7 +51,7 @@ namespace Sitecore.Pathfinder.Tasks
 
             var taskList = tasks;
 
-            if (string.IsNullOrEmpty(tasks) || tasks == "build" || tasks == "build-project")
+            if (string.IsNullOrEmpty(tasks) || tasks == "b" || tasks == "build" || tasks == "build-project")
             {
                 // use the build-project:tasks configuration 
                 taskList = context.Configuration.GetString(Constants.Configuration.BuildProject.Tasks);
@@ -99,6 +99,12 @@ namespace Sitecore.Pathfinder.Tasks
                     if (task == null)
                     {
                         task = Tasks.FirstOrDefault(t => string.Equals(t.Alias, taskName, StringComparison.OrdinalIgnoreCase));
+                    }
+
+                    // find task by shortcut
+                    if (task == null)
+                    {
+                        task = Tasks.FirstOrDefault(t => string.Equals(t.Shortcut, taskName, StringComparison.OrdinalIgnoreCase));
                     }
 
                     if (task == null)

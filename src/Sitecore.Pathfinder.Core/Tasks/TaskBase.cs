@@ -26,6 +26,8 @@ namespace Sitecore.Pathfinder.Tasks
 
         public string Alias { get; set; } = string.Empty;
 
+        public string Shortcut { get; set; } = string.Empty;
+
         public string TaskName { get; }
 
         public abstract void Run(ITaskContext context);
@@ -37,7 +39,7 @@ namespace Sitecore.Pathfinder.Tasks
             string value;
             if (context.Configuration.TryGet(attribute.Name, out value))
             {
-                return value;
+                return value ?? string.Empty;
             }
 
             // get from configuration by alias
@@ -45,7 +47,16 @@ namespace Sitecore.Pathfinder.Tasks
             {
                 if (context.Configuration.TryGet(attribute.Alias, out value))
                 {
-                    return value;
+                    return value ?? string.Empty;
+                }
+            }
+
+            // get positional argument from command line
+            if (attribute.PositionalArg > 0)
+            {
+                if (context.Configuration.TryGet("arg" + attribute.PositionalArg, out value))
+                {
+                    return value ?? string.Empty;
                 }
             }
 
@@ -55,8 +66,31 @@ namespace Sitecore.Pathfinder.Tasks
                 return attribute.DefaultValue;
             }
 
+            // get from user using pick list
+            if (attribute.GetOptions != null)
+            {
+                var options = attribute.GetOptions();
+                do
+                {
+                    value = context.Console.Pick(attribute.PromptText + @": ", options);
+                    if (!string.IsNullOrEmpty(value) || !attribute.IsRequired)
+                    {
+                        return value;
+                    }
+                }
+                while (true);
+            }
+
             // get from user using console
-            return context.Console.ReadLine(attribute.PromptText, string.Empty);
+            do
+            {
+                value = context.Console.ReadLine(attribute.PromptText + @": ", string.Empty);
+                if (!string.IsNullOrEmpty(value) || !attribute.IsRequired)
+                {
+                    return value;
+                }
+            }
+            while (true);
         }
 
         protected virtual bool IsProjectConfigured([NotNull] ITaskContext context)
@@ -73,7 +107,7 @@ namespace Sitecore.Pathfinder.Tasks
 
         protected virtual void ProcessOptions([NotNull] ITaskContext context)
         {
-            var properties = GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.SetProperty).OrderBy(p => p.Name);
+            var properties = GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.SetProperty | BindingFlags.Instance).OrderBy(p => p.Name);
             foreach (var property in properties)
             {
                 var attribute = property.GetCustomAttribute<OptionAttribute>();

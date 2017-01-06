@@ -154,6 +154,7 @@
     <Compile Include="Tasks\CheckWebsite.cs" />
     <Compile Include="Tasks\CleanWebsite.cs" />
     <Compile Include="Tasks\ComparePackages.cs" />
+    <Compile Include="Tasks\InitProject.cs" />
     <Compile Include="Tasks\PublishProject.cs" />
     <Compile Include="Tasks\InitGrunt.cs" />
     <Compile Include="Tasks\InitGulp.cs" />
@@ -426,6 +427,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="help\index.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="help\tasks\init-project.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="help\tasks\new-solution.md">

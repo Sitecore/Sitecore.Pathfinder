@@ -1229,7 +1229,16 @@ namespace Sitecore.Pathfinder.Tasks
 
         protected virtual bool CreateProject([NotNull] IBuildContext context, NewProjectOptions options)
         {
+            return CreateProject(context, string.Empty, options);
+        }
+
+        protected virtual bool CreateProject([NotNull] IBuildContext context, [NotNull] string appName, NewProjectOptions options)
+        {
             var projectDirectory = context.ProjectDirectory;
+            if (!string.IsNullOrEmpty(appName))
+            {
+                projectDirectory = Path.Combine(projectDirectory, appName);
+            }
 
             Console.WriteLine();
             Console.WriteLine(Texts.Pathfinder_needs_4_pieces_of_information_to_create_a_new_project__a_unique_Id_for_the_project__the_Sitecore_website_and_data_folder_directories_to_deploy_to__and_the_hostname_of_the_website__If_you_have_not_yet_created_a_Sitecore_website__use_a_tool_like_Sitecore_Instance_Manager_to_create_it_for_you_);

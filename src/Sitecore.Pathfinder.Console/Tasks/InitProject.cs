@@ -1,5 +1,3 @@
-// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
-
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
@@ -9,18 +7,14 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    public class NewProject : NewProjectTaskBase
+    public class InitProject : NewProjectTaskBase
     {
         [ImportingConstructor]
-        protected NewProject([NotNull] IConsoleService console, [NotNull] IFileSystemService fileSystem) : base(console, fileSystem, "new-project")
+        protected InitProject([NotNull] IConsoleService console, [NotNull] IFileSystemService fileSystem) : base(console, fileSystem, "init-project")
         {
-            Alias = "new";
-            Shortcut = "n";
+            Alias = "init";
+            Shortcut = "i";
         }
-
-        [NotNull, Option("name", Alias = "n", IsRequired = true, PromptText = "Enter application name", PositionalArg = 1)]
-        public string AppName { get; set; } = string.Empty;
-
 
         public override void Run(IBuildContext context)
         {
@@ -32,13 +26,7 @@ namespace Sitecore.Pathfinder.Tasks
                 FileSystem.CreateDirectory(projectDirectory);
             }
 
-            var appDirectory = Path.Combine(projectDirectory, AppName);
-            if (!FileSystem.DirectoryExists(appDirectory))
-            {
-                FileSystem.CreateDirectory(appDirectory);
-            }
-
-            if (FileSystem.GetFiles(appDirectory).Any() || FileSystem.GetDirectories(appDirectory).Any())
+            if (FileSystem.GetFiles(projectDirectory).Any() || FileSystem.GetDirectories(projectDirectory).Any())
             {
                 Console.WriteLine();
                 Console.WriteLine(Texts.The_current_directory_is_not_empty__It_is_recommended_to_create_a_new_project_in_an_empty_directory_);
@@ -49,7 +37,7 @@ namespace Sitecore.Pathfinder.Tasks
                 }
             }
 
-            CreateProject(context, AppName, NewProjectOptions.CreateEditor | NewProjectOptions.CreateStarterKit | NewProjectOptions.CreateTaskRunner | NewProjectOptions.CopyProjectTemplate);
+            CreateProject(context, NewProjectOptions.CreateEditor | NewProjectOptions.CreateStarterKit | NewProjectOptions.CreateTaskRunner | NewProjectOptions.CopyProjectTemplate);
         }
     }
 }

@@ -1,15 +1,15 @@
-new-project
-===========
-Creates a new Pathfinder project in a subdirectory.
-
-Remarks
--------
-The `new-project` task is a wizard that generates a new Pathfinder project by asking a number of questions.
+init-project
+============
+Creates a new Pathfinder project in the current directory.
 
 Aliases
 -------
-* new
-* n
+* init
+* i
+
+Remarks
+-------
+The `init-project` task is a wizard that generates a new Pathfinder project by asking a number of questions.
 
 Settings
 --------
@@ -22,7 +22,7 @@ Settings
 Example
 -------
 ```cmd
-> scc new-project MyApp
+> scc init-project
 
 Welcome to Sitecore Pathfinder.
 
@@ -64,4 +64,3 @@ Select starter kit [1]: 1
 
 Creating project...
 ```
-
