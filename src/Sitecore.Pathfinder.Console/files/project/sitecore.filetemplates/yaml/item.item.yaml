@@ -1,5 +1,0 @@
-﻿Item :
-    Template : /sitecore/templates/Sample/Sample Item
-    - Fields :
-        - Field : Title
-          Value : Hello friend
