@@ -3,31 +3,32 @@
 using System;
 using System.IO;
 using System.Xml;
+using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Xml
 {
     internal class XmlDocumentDecryptor
     {
-        /// <summary>Accesses the singleton decryptor instance.</summary>
+        [NotNull]
         public static readonly XmlDocumentDecryptor Instance = new XmlDocumentDecryptor();
 
         protected XmlDocumentDecryptor()
         {
         }
 
-        /// <summary>
-        /// Returns an XmlReader that decrypts data transparently.
-        /// </summary>
-        public XmlReader CreateDecryptingXmlReader(Stream input, XmlReaderSettings settings)
+        [NotNull]
+        public XmlReader CreateDecryptingXmlReader([NotNull] Stream input, [NotNull] XmlReaderSettings settings)
         {
             var memoryStream = new MemoryStream();
             input.CopyTo(memoryStream);
             memoryStream.Position = 0L;
+
             var document = new XmlDocument();
             using (var reader = XmlReader.Create(memoryStream, settings))
             {
                 document.Load(reader);
             }
+
             memoryStream.Position = 0L;
 
             // if (XmlDocumentDecryptor.ContainsEncryptedData(document))
@@ -35,12 +36,13 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Xml
             return XmlReader.Create(memoryStream, settings);
         }
 
-        protected virtual XmlReader DecryptDocumentAndCreateXmlReader(XmlDocument document)
+        [NotNull]
+        protected virtual XmlReader DecryptDocumentAndCreateXmlReader([NotNull] XmlDocument document)
         {
             throw new PlatformNotSupportedException(Xml.Resources.Error_EncryptedXmlNotSupported);
         }
 
-        private static bool ContainsEncryptedData(XmlDocument document)
+        private static bool ContainsEncryptedData([NotNull] XmlDocument document)
         {
             var nsmgr = new XmlNamespaceManager(document.NameTable);
             nsmgr.AddNamespace("enc", "http://www.w3.org/2001/04/xmlenc#");

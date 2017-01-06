@@ -2,27 +2,32 @@
 
 using System;
 using System.IO;
+using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Json
 {
     public static class JsonConfigurationExtension
     {
-        public static IConfigurationSourceRoot AddJsonFile(this IConfigurationSourceRoot configuration, string path)
+        [NotNull]
+        public static IConfigurationSourceRoot AddJsonFile([NotNull] this IConfigurationSourceRoot configuration, [NotNull] string path)
         {
             return configuration.AddJsonFile(path, false);
         }
 
-        public static IConfigurationSourceRoot AddJsonFile(this IConfigurationSourceRoot configuration, string path, bool optional)
+        [NotNull]
+        public static IConfigurationSourceRoot AddJsonFile([NotNull] this IConfigurationSourceRoot configuration, [NotNull] string path, bool optional)
         {
             if (string.IsNullOrEmpty(path))
             {
-                throw new ArgumentException(Json.Resources.Error_InvalidFilePath, "path");
+                throw new ArgumentException(Json.Resources.Error_InvalidFilePath, nameof(path));
             }
-            var str = JsonPathResolver.ResolveAppRelativePath(path);
-            if (!optional && !File.Exists(str))
+
+            var s = JsonPathResolver.ResolveAppRelativePath(path);
+            if (!optional && !File.Exists(s))
             {
-                throw new FileNotFoundException(Json.Resources.Error_FileNotFound, str);
+                throw new FileNotFoundException(Json.Resources.Error_FileNotFound, s);
             }
+
             configuration.Add(new JsonConfigurationSource(path, optional));
             return configuration;
         }

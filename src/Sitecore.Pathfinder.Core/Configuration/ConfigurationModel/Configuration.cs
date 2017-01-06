@@ -4,19 +4,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel.Internal;
+using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
 {
-    public class Configuration : IConfiguration, IConfigurationSourceRoot
+    public class Configuration : IConfigurationSourceRoot
     {
+        [ItemNotNull, NotNull]
         private readonly IList<IConfigurationSource> _sources = new List<IConfigurationSource>();
 
-        public Configuration(params IConfigurationSource[] sources)
+        public Configuration([ItemNotNull, CanBeNull] params IConfigurationSource[] sources)
         {
             if (sources == null)
             {
                 return;
             }
+
             foreach (var source in sources)
             {
                 Add(source);
@@ -29,10 +32,7 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
             set { Set(key, value); }
         }
 
-        public IEnumerable<IConfigurationSource> Sources
-        {
-            get { return _sources; }
-        }
+        public IEnumerable<IConfigurationSource> Sources => _sources;
 
         public IConfigurationSourceRoot Add(IConfigurationSource configurationSource)
         {
@@ -44,16 +44,14 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
         {
             if (key == null)
             {
-                throw new ArgumentNullException("key");
+                throw new ArgumentNullException(nameof(key));
             }
-            string str;
-            if (!TryGet(key, out str))
-            {
-                return null;
-            }
-            return str;
+
+            string s;
+            return !TryGet(key, out s) ? null : s;
         }
 
+        [NotNull]
         public IConfiguration GetSubKey(string key)
         {
             return new ConfigurationFocus(this, key + Constants.KeyDelimiter);
@@ -68,8 +66,9 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
         {
             if (key == null)
             {
-                throw new ArgumentNullException("key");
+                throw new ArgumentNullException(nameof(key));
             }
+
             return GetSubKeysImplementation(key + Constants.KeyDelimiter);
         }
 
@@ -85,12 +84,14 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
         {
             if (key == null)
             {
-                throw new ArgumentNullException("key");
+                throw new ArgumentNullException(nameof(key));
             }
+
             if (value == null)
             {
-                throw new ArgumentNullException("value");
+                throw new ArgumentNullException(nameof(value));
             }
+
             foreach (var source in _sources)
             {
                 source.Set(key, value);
@@ -101,8 +102,9 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
         {
             if (key == null)
             {
-                throw new ArgumentNullException("key");
+                throw new ArgumentNullException(nameof(key));
             }
+
             foreach (var configurationSource in _sources.Reverse())
             {
                 if (configurationSource.TryGet(key, out value))
@@ -110,22 +112,25 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
                     return true;
                 }
             }
+
             value = null;
             return false;
         }
 
-        internal IConfigurationSourceRoot AddLoadedSource(IConfigurationSource configurationSource)
+        [NotNull]
+        internal IConfigurationSourceRoot AddLoadedSource([NotNull] IConfigurationSource configurationSource)
         {
             _sources.Add(configurationSource);
             return this;
         }
 
-        private KeyValuePair<string, IConfiguration> CreateConfigurationFocus(string prefix, string segment)
+        private KeyValuePair<string, IConfiguration> CreateConfigurationFocus([NotNull] string prefix, [NotNull] string segment)
         {
             return new KeyValuePair<string, IConfiguration>(segment, new ConfigurationFocus(this, prefix + segment + Constants.KeyDelimiter));
         }
 
-        private IEnumerable<KeyValuePair<string, IConfiguration>> GetSubKeysImplementation(string prefix)
+        [NotNull]
+        private IEnumerable<KeyValuePair<string, IConfiguration>> GetSubKeysImplementation([NotNull] string prefix)
         {
             return _sources.Aggregate(Enumerable.Empty<string>(), (seed, source) => source.ProduceSubKeys(seed, prefix, Constants.KeyDelimiter)).Distinct().Select(segment => CreateConfigurationFocus(prefix, segment));
         }

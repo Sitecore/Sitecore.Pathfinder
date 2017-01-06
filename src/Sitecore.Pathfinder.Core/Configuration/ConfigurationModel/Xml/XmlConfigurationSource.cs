@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
+using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Xml
 {
@@ -12,34 +13,37 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Xml
     {
         private const string NameAttributeKey = "Name";
 
+        [NotNull]
         private readonly XmlDocumentDecryptor _xmlDocumentDecryptor;
 
-        public XmlConfigurationSource(string path) : this(path, null, false)
+        public XmlConfigurationSource([NotNull] string path) : this(path, null, false)
         {
         }
 
-        internal XmlConfigurationSource(string path, bool optional) : this(path, null, optional)
+        internal XmlConfigurationSource([NotNull] string path, bool optional) : this(path, null, optional)
         {
         }
 
-        internal XmlConfigurationSource(string path, XmlDocumentDecryptor xmlDocumentDecryptor) : this(path, xmlDocumentDecryptor, false)
+        internal XmlConfigurationSource([NotNull] string path, [CanBeNull] XmlDocumentDecryptor xmlDocumentDecryptor) : this(path, xmlDocumentDecryptor, false)
         {
         }
 
-        internal XmlConfigurationSource(string path, XmlDocumentDecryptor xmlDocumentDecryptor, bool optional)
+        internal XmlConfigurationSource([NotNull] string path, [CanBeNull] XmlDocumentDecryptor xmlDocumentDecryptor, bool optional)
         {
             if (string.IsNullOrEmpty(path))
             {
-                throw new ArgumentException(Xml.Resources.Error_InvalidFilePath, "path");
+                throw new ArgumentException(Xml.Resources.Error_InvalidFilePath, nameof(path));
             }
+
             Optional = optional;
             Path = XmlPathResolver.ResolveAppRelativePath(path);
             _xmlDocumentDecryptor = xmlDocumentDecryptor ?? XmlDocumentDecryptor.Instance;
         }
 
-        public bool Optional { get; private set; }
+        public bool Optional { get; }
 
-        public string Path { get; private set; }
+        [NotNull]
+        public string Path { get; }
 
         public override void Load()
         {
@@ -60,7 +64,7 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Xml
             }
         }
 
-        internal void Load(Stream stream)
+        internal void Load([NotNull] Stream stream)
         {
             var dictionary = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             var settings = new XmlReaderSettings
@@ -74,8 +78,8 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Xml
             {
                 var stringStack = new Stack<string>();
                 SkipUntilRootElement(decryptingXmlReader);
-                ProcessAttributes(decryptingXmlReader, stringStack, dictionary, AddNamePrefix, null);
-                ProcessAttributes(decryptingXmlReader, stringStack, dictionary, AddAttributePair, null);
+                ProcessAttributes(decryptingXmlReader, stringStack, dictionary, AddNamePrefix);
+                ProcessAttributes(decryptingXmlReader, stringStack, dictionary, AddAttributePair);
                 var xmlNodeType = decryptingXmlReader.NodeType;
                 while (decryptingXmlReader.Read())
                 {
@@ -83,8 +87,8 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Xml
                     {
                         case XmlNodeType.Element:
                             stringStack.Push(decryptingXmlReader.LocalName);
-                            ProcessAttributes(decryptingXmlReader, stringStack, dictionary, AddNamePrefix, null);
-                            ProcessAttributes(decryptingXmlReader, stringStack, dictionary, AddAttributePair, null);
+                            ProcessAttributes(decryptingXmlReader, stringStack, dictionary, AddNamePrefix);
+                            ProcessAttributes(decryptingXmlReader, stringStack, dictionary, AddAttributePair);
                             if (decryptingXmlReader.IsEmptyElement)
                             {
                                 stringStack.Pop();
@@ -185,11 +189,10 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Xml
             reader.MoveToElement();
         }
 
-        private void SkipUntilRootElement(XmlReader reader)
+        private void SkipUntilRootElement([NotNull] XmlReader reader)
         {
             do
             {
-                ;
             }
             while (reader.Read() && (reader.NodeType == XmlNodeType.XmlDeclaration || reader.NodeType == XmlNodeType.ProcessingInstruction));
         }

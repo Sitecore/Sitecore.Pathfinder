@@ -3,56 +3,66 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
 {
     public static class ConfigurationExtensions
     {
-        public static IConfigurationSourceRoot AddCommandLine(this IConfigurationSourceRoot configuration, string[] args)
+        [NotNull]
+        public static IConfigurationSourceRoot AddCommandLine([NotNull] this IConfigurationSourceRoot configuration, string[] args)
         {
-            configuration.Add(new CommandLineConfigurationSource(args, null));
+            configuration.Add(new CommandLineConfigurationSource(args));
             return configuration;
         }
 
-        public static IConfigurationSourceRoot AddCommandLine(this IConfigurationSourceRoot configuration, string[] args, IDictionary<string, string> switchMappings)
+        [NotNull]
+        public static IConfigurationSourceRoot AddCommandLine([NotNull] this IConfigurationSourceRoot configuration, string[] args, IDictionary<string, string> switchMappings)
         {
             configuration.Add(new CommandLineConfigurationSource(args, switchMappings));
             return configuration;
         }
 
-        public static IConfigurationSourceRoot AddEnvironmentVariables(this IConfigurationSourceRoot configuration)
+        [NotNull]
+        public static IConfigurationSourceRoot AddEnvironmentVariables([NotNull] this IConfigurationSourceRoot configuration)
         {
             configuration.Add(new EnvironmentVariablesConfigurationSource());
             return configuration;
         }
 
-        public static IConfigurationSourceRoot AddEnvironmentVariables(this IConfigurationSourceRoot configuration, string prefix)
+        [NotNull]
+        public static IConfigurationSourceRoot AddEnvironmentVariables([NotNull] this IConfigurationSourceRoot configuration, [NotNull] string prefix)
         {
             configuration.Add(new EnvironmentVariablesConfigurationSource(prefix));
             return configuration;
         }
 
-        public static IConfigurationSourceRoot AddIniFile(this IConfigurationSourceRoot configuration, string path)
+        [NotNull]
+        public static IConfigurationSourceRoot AddIniFile([NotNull] this IConfigurationSourceRoot configuration, [NotNull] string path)
         {
             return configuration.AddIniFile(path, false);
         }
 
-        public static IConfigurationSourceRoot AddIniFile(this IConfigurationSourceRoot configuration, string path, bool optional)
+        [NotNull]
+        public static IConfigurationSourceRoot AddIniFile([NotNull] this IConfigurationSourceRoot configuration, [NotNull] string path, bool optional)
         {
             if (string.IsNullOrEmpty(path))
             {
-                throw new ArgumentException(Resources.Error_InvalidFilePath, "path");
+                throw new ArgumentException(Resources.Error_InvalidFilePath, nameof(path));
             }
+
             var str = PathResolver.ResolveAppRelativePath(path);
             if (!optional && !File.Exists(str))
             {
                 throw new FileNotFoundException(Resources.Error_FileNotFound, str);
             }
+
             configuration.Add(new IniFileConfigurationSource(path, optional));
             return configuration;
         }
 
-        public static T Get<T>(this IConfiguration configuration, string key)
+        [CanBeNull]
+        public static T Get<T>([NotNull] this IConfiguration configuration, [NotNull] string key)
         {
             return (T)Convert.ChangeType(configuration.Get(key), typeof(T));
         }

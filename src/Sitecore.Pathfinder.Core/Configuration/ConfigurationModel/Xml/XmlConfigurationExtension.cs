@@ -2,21 +2,24 @@
 
 using System;
 using System.IO;
+using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Xml
 {
     public static class XmlConfigurationExtension
     {
-        public static IConfigurationSourceRoot AddXmlFile(this IConfigurationSourceRoot configuration, string path)
+        [NotNull]
+        public static IConfigurationSourceRoot AddXmlFile([NotNull] this IConfigurationSourceRoot configuration, [NotNull] string path)
         {
             return configuration.AddXmlFile(path, false);
         }
 
-        public static IConfigurationSourceRoot AddXmlFile(this IConfigurationSourceRoot configuration, string path, bool optional)
+        [NotNull]
+        public static IConfigurationSourceRoot AddXmlFile([NotNull] this IConfigurationSourceRoot configuration, [NotNull] string path, bool optional)
         {
             if (string.IsNullOrEmpty(path))
             {
-                throw new ArgumentException(Xml.Resources.Error_InvalidFilePath, "path");
+                throw new ArgumentException(Xml.Resources.Error_InvalidFilePath, nameof(path));
             }
             var str = XmlPathResolver.ResolveAppRelativePath(path);
             if (!optional && !File.Exists(str))

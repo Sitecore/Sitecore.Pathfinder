@@ -2,19 +2,16 @@
 
 using System;
 using System.IO;
+using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Xml
 {
     internal static class XmlPathResolver
     {
-        private static string ApplicationBaseDirectory
-        {
-            get { return AppDomain.CurrentDomain.BaseDirectory; }
-        }
+        [NotNull]
+        private static string ApplicationBaseDirectory => AppDomain.CurrentDomain.BaseDirectory;
 
-        public static string ResolveAppRelativePath(string path)
-        {
-            return Path.Combine(ApplicationBaseDirectory, path);
-        }
+        [NotNull]
+        public static string ResolveAppRelativePath([NotNull] string path) => Path.Combine(ApplicationBaseDirectory, path);
     }
 }

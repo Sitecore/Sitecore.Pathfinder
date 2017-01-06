@@ -3,48 +3,31 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
 {
     public class IniFileConfigurationSource : ConfigurationSource
     {
-        /// <summary>
-        /// Files are simple line structures
-        /// [Section:Header]
-        /// key1=value1
-        /// key2 = " value2 "
-        /// ; comment
-        /// # comment
-        /// / comment
-        /// </summary>
-        /// <param name="path">The path and file name to load.</param>
-        public IniFileConfigurationSource(string path) : this(path, false)
+        public IniFileConfigurationSource([CanBeNull] string path) : this(path, false)
         {
         }
 
-        /// <summary>
-        /// Files are simple line structures
-        /// [Section:Header]
-        /// key1=value1
-        /// key2 = " value2 "
-        /// ; comment
-        /// # comment
-        /// / comment
-        /// </summary>
-        /// <param name="path">The path and file name to load.</param>
-        public IniFileConfigurationSource(string path, bool optional)
+        public IniFileConfigurationSource([CanBeNull] string path, bool optional)
         {
             if (string.IsNullOrEmpty(path))
             {
-                throw new ArgumentException(Resources.Error_InvalidFilePath, "path");
+                throw new ArgumentException(Resources.Error_InvalidFilePath, nameof(path));
             }
+
             Optional = optional;
             Path = PathResolver.ResolveAppRelativePath(path);
         }
 
-        public bool Optional { get; private set; }
+        public bool Optional { get;  }
 
-        public string Path { get; private set; }
+        [NotNull]
+        public string Path { get; }
 
         public override void Load()
         {
@@ -65,15 +48,15 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
             }
         }
 
-        internal void Load(Stream stream)
+        internal void Load([NotNull] Stream stream)
         {
             var dictionary = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             using (var streamReader = new StreamReader(stream))
             {
-                var str1 = string.Empty;
+                var s = string.Empty;
                 while (streamReader.Peek() != -1)
                 {
-                    var str2 = streamReader.ReadLine();
+                    var str2 = streamReader.ReadLine() ?? string.Empty;
                     var str3 = str2.Trim();
                     if (!string.IsNullOrWhiteSpace(str3) && str3[0] != 59 && str3[0] != 35 && str3[0] != 47)
                     {
@@ -83,7 +66,7 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
                             var index = str4.Length - 1;
                             if (str4[index] == 93)
                             {
-                                str1 = str3.Substring(1, str3.Length - 2) + ":";
+                                s = str3.Substring(1, str3.Length - 2) + ":";
                                 continue;
                             }
                         }
@@ -94,7 +77,7 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
                             throw new FormatException(Resources.FormatError_UnrecognizedLineFormat(str2));
                         }
 
-                        var key = str1 + str3.Substring(0, length).Trim();
+                        var key = s + str3.Substring(0, length).Trim();
                         var str5 = str3.Substring(length + 1).Trim();
                         if (str5.Length > 1 && str5[0] == 34)
                         {
@@ -115,6 +98,7 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
                     }
                 }
             }
+
             Data = dictionary;
         }
     }

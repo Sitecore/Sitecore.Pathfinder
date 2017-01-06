@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
 {
@@ -21,9 +22,10 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
 
         private const string SqlServerPrefix = "SQLCONNSTR_";
 
+        [NotNull]
         private readonly string _prefix;
 
-        public EnvironmentVariablesConfigurationSource(string prefix)
+        public EnvironmentVariablesConfigurationSource([NotNull] string prefix)
         {
             _prefix = prefix;
         }
@@ -38,7 +40,7 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
             Load(Environment.GetEnvironmentVariables());
         }
 
-        internal void Load(IDictionary envVariables)
+        internal void Load([ItemNotNull, NotNull] IDictionary envVariables)
         {
             var source = envVariables.Cast<DictionaryEntry>().SelectMany(AzureEnvToAppEnv).Where(entry => ((string)entry.Key).StartsWith(_prefix, StringComparison.OrdinalIgnoreCase));
             var keySelector = (Func<DictionaryEntry, string>)(entry => ((string)entry.Key).Substring(_prefix.Length));
@@ -46,6 +48,7 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
             Data = source.ToDictionary(keySelector, entry => (string)entry.Value, ordinalIgnoreCase);
         }
 
+        [NotNull]
         private static IEnumerable<DictionaryEntry> AzureEnvToAppEnv(DictionaryEntry entry)
         {
             var key = (string)entry.Key;
@@ -75,10 +78,10 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
                 yield return entry;
                 yield break;
             }
-            yield return new DictionaryEntry(string.Format("Data:{0}:ConnectionString", key.Substring(prefix.Length)), entry.Value);
+            yield return new DictionaryEntry($"Data:{key.Substring(prefix.Length)}:ConnectionString", entry.Value);
             if (!string.IsNullOrEmpty(provider))
             {
-                yield return new DictionaryEntry(string.Format("Data:{0}:ProviderName", key.Substring(prefix.Length)), provider);
+                yield return new DictionaryEntry($"Data:{key.Substring(prefix.Length)}:ProviderName", provider);
             }
         }
     }

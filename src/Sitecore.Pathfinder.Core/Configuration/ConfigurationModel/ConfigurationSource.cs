@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
 {
@@ -13,6 +14,7 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
             Data = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         }
 
+        [NotNull]
         protected IDictionary<string, string> Data { get; set; }
 
         public virtual void Load()
@@ -34,13 +36,15 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
             return Data.TryGetValue(key, out value);
         }
 
-        private static string Segment(string key, string prefix, string delimiter)
+        [NotNull]
+        private static string Segment([NotNull] string key, [NotNull] string prefix, [NotNull] string delimiter)
         {
-            var num = key.IndexOf(delimiter, prefix.Length, StringComparison.OrdinalIgnoreCase);
-            if (num >= 0)
+            var n = key.IndexOf(delimiter, prefix.Length, StringComparison.OrdinalIgnoreCase);
+            if (n >= 0)
             {
-                return key.Substring(prefix.Length, num - prefix.Length);
+                return key.Substring(prefix.Length, n - prefix.Length);
             }
+
             return key.Substring(prefix.Length);
         }
     }

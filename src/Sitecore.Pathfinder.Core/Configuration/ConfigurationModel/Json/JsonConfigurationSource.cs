@@ -4,28 +4,31 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
+using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Json
 {
     public class JsonConfigurationSource : ConfigurationSource
     {
-        public JsonConfigurationSource(string path) : this(path, false)
+        public JsonConfigurationSource([NotNull] string path) : this(path, false)
         {
         }
 
-        public JsonConfigurationSource(string path, bool optional)
+        public JsonConfigurationSource([NotNull] string path, bool optional)
         {
             if (string.IsNullOrEmpty(path))
             {
-                throw new ArgumentException(Json.Resources.Error_InvalidFilePath, "path");
+                throw new ArgumentException(Json.Resources.Error_InvalidFilePath, nameof(path));
             }
+
             Optional = optional;
             Path = JsonPathResolver.ResolveAppRelativePath(path);
         }
 
-        public bool Optional { get; private set; }
+        public bool Optional { get; }
 
-        public string Path { get; private set; }
+        [NotNull]
+        public string Path { get; }
 
         public override void Load()
         {
@@ -46,7 +49,7 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Json
             }
         }
 
-        internal void Load(Stream stream)
+        internal void Load([NotNull] Stream stream)
         {
             var dictionary = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             using (var jsonTextReader = new JsonTextReader(new StreamReader(stream)))
@@ -98,11 +101,13 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Json
             Data = dictionary;
         }
 
-        private string GetKey(string jsonPath)
+        [NotNull]
+        private string GetKey([NotNull] string jsonPath)
         {
             var stringList = new List<string>();
-            int num;
-            for (var startIndex1 = 0; startIndex1 < jsonPath.Length; startIndex1 = num + 2)
+
+            int n;
+            for (var startIndex1 = 0; startIndex1 < jsonPath.Length; startIndex1 = n + 2)
             {
                 var startIndex2 = jsonPath.IndexOf("['", startIndex1);
                 if (startIndex2 < 0)
@@ -110,17 +115,20 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Json
                     stringList.Add(jsonPath.Substring(startIndex1).Replace('.', ':'));
                     break;
                 }
+
                 if (startIndex2 > startIndex1)
                 {
                     stringList.Add(jsonPath.Substring(startIndex1, startIndex2 - startIndex1).Replace('.', ':'));
                 }
-                num = jsonPath.IndexOf("']", startIndex2);
-                stringList.Add(jsonPath.Substring(startIndex2 + 2, num - startIndex2 - 2));
+
+                n = jsonPath.IndexOf("']", startIndex2);
+                stringList.Add(jsonPath.Substring(startIndex2 + 2, n - startIndex2 - 2));
             }
+
             return string.Join(string.Empty, stringList);
         }
 
-        private void SkipComments(JsonReader reader)
+        private void SkipComments([NotNull] JsonReader reader)
         {
             while (reader.TokenType == JsonToken.Comment)
             {

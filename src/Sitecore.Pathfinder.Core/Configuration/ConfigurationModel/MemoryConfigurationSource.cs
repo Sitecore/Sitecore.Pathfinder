@@ -2,16 +2,17 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
 {
-    public class MemoryConfigurationSource : ConfigurationSource, IEnumerable<KeyValuePair<string, string>>, IEnumerable
+    public class MemoryConfigurationSource : ConfigurationSource, IEnumerable<KeyValuePair<string, string>>
     {
         public MemoryConfigurationSource()
         {
         }
 
-        public MemoryConfigurationSource(IEnumerable<KeyValuePair<string, string>> initialData)
+        public MemoryConfigurationSource([NotNull] IEnumerable<KeyValuePair<string, string>> initialData)
         {
             foreach (var keyValuePair in initialData)
             {
@@ -19,7 +20,7 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
             }
         }
 
-        public void Add(string key, string value)
+        public void Add([NotNull] string key, [NotNull] string value)
         {
             Data.Add(key, value);
         }
