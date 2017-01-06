@@ -182,6 +182,11 @@ namespace Sitecore.Pathfinder
                 public const string Refs = "generate-code:t4-refs";
             }
 
+            public static class GenerateFile
+            {
+                public const string TextFileExtensions = "generate-file:text-file-extensions";
+            }
+
             public static class InstallPackage
             {
                 public const string AddProjectDirectoriesAsFeeds = "install-package:add-project-directories-as-feeds";

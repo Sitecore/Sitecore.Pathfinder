@@ -67,9 +67,11 @@ namespace Sitecore.Pathfinder.Tasks
             }
 
             // get from user using pick list
-            if (attribute.GetOptions != null)
+            if (attribute.HasOptions)
             {
-                var options = attribute.GetOptions();
+                var optionPicker = (IOptionPicker)this;
+
+                var options = optionPicker.GetOptions(attribute.Name, context);
                 do
                 {
                     value = context.Console.Pick(attribute.PromptText + @": ", options);

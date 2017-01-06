@@ -129,6 +129,7 @@
     <Compile Include="Tasks\Building\NuGetOutputFile.cs" />
     <Compile Include="Tasks\Building\OutputFile.cs" />
     <Compile Include="Tasks\Building\WebRequest.cs" />
+    <Compile Include="Tasks\IOptionPicker.cs" />
     <Compile Include="Tasks\ISetupTask.cs" />
     <Compile Include="Tasks\IIgnoreAbortedTask.cs" />
     <Compile Include="Tasks\IPostRunTask.cs" />

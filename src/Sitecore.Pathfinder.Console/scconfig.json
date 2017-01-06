@@ -225,6 +225,10 @@
         }
     },
 
+    "generate-file": {
+        "text-file-extensions": ".txt, .json, .xml, .yaml, .js, .html, .htm, .css, .cs, .config, .aspx, .ascx, .ashx"
+    },
+
     "new-project": {
         "default-host-name": "",
         "default-wwwroot-directory": "",
