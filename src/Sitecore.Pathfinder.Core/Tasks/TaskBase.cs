@@ -69,18 +69,20 @@ namespace Sitecore.Pathfinder.Tasks
             // get from user using pick list
             if (attribute.HasOptions)
             {
-                var optionPicker = (IOptionPicker)this;
-
-                var options = optionPicker.GetOptions(attribute.Name, context);
-                do
+                var optionPicker = this as IOptionPicker;
+                if (optionPicker != null)
                 {
-                    value = context.Console.Pick(attribute.PromptText + @": ", options);
-                    if (!string.IsNullOrEmpty(value) || !attribute.IsRequired)
+                    var options = optionPicker.GetOptions(attribute.Name, context);
+                    do
                     {
-                        return value;
+                        value = context.Console.Pick(attribute.PromptText + @": ", options);
+                        if (!string.IsNullOrEmpty(value) || !attribute.IsRequired)
+                        {
+                            return value;          
+                        }
                     }
+                    while (true);
                 }
-                while (true);
             }
 
             // get from user using console

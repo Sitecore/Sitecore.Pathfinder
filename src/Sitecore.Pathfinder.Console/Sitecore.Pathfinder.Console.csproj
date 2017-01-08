@@ -98,14 +98,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\files\project\sitecore.filetemplates\codefirst\ModelCompiler.cs">
-      <Link>files\project\sitecore.filetemplates\codefirst\ModelCompiler.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\files\project\sitecore.filetemplates\codegenerators\PocoTemplate.cs">
-      <Link>files\project\sitecore.filetemplates\codegenerators\PocoTemplate.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\ConfigurationCheckers.cs">
       <Link>files\extensions\checkers\ConfigurationCheckers.cs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
