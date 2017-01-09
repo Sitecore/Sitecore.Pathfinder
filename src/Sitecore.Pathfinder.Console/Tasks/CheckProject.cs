@@ -15,6 +15,8 @@ namespace Sitecore.Pathfinder.Tasks
         public CheckProject([NotNull] ICheckerService checkerService) : base("check-project")
         {
             CheckerService = checkerService;
+            Alias = "test";
+             Shortcut = "t";
         }
 
         [NotNull]

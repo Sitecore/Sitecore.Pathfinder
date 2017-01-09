@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -279,6 +279,12 @@ namespace Sitecore.Pathfinder
             public static class Scripts
             {
                 public const string Extensions = "scripts:file-extensions";
+            }
+
+            public static class ServeWebsite
+            {
+                public const string Port = "serve-website:port";
+                public const string DefaultPort = "serve-website:default-port";
             }
 
             public static class ShowWebsite

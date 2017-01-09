@@ -49,7 +49,8 @@ namespace Sitecore.Pathfinder.Tasks
                 }
             }
 
-            CreateProject(context, AppName, NewProjectOptions.CreateEditor | NewProjectOptions.CreateStarterKit | NewProjectOptions.CreateTaskRunner | NewProjectOptions.CopyProjectTemplate);
+            // CreateProject(context, AppName, NewProjectOptions.CreateEditor | NewProjectOptions.CreateStarterKit | NewProjectOptions.CreateTaskRunner | NewProjectOptions.CopyProjectTemplate);
+            CreateProject(context, AppName, NewProjectOptions.CreateStarterKit | NewProjectOptions.CopyProjectTemplate);
         }
     }
 }

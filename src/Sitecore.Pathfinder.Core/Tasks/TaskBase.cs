@@ -1,5 +1,6 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Reflection;
@@ -32,8 +33,65 @@ namespace Sitecore.Pathfinder.Tasks
 
         public abstract void Run(ITaskContext context);
 
+        protected virtual bool GetOptionBoolValue([NotNull] ITaskContext context, [NotNull] PropertyInfo property, [NotNull] OptionAttribute attribute)
+        {
+            // get from configuration
+            string value;
+            if (context.Configuration.TryGet(attribute.Name, out value))
+            {
+                bool b;
+                if (bool.TryParse(value, out b))
+                {
+                    return b;
+                }
+            }
+
+            // get from configuration by alias
+            if (!string.IsNullOrEmpty(attribute.Alias))
+            {
+                if (context.Configuration.TryGet(attribute.Alias, out value))
+                {
+                    bool b;
+                    if (bool.TryParse(value, out b))
+                    {
+                        return b;
+                    }
+                }
+            }
+
+            // get positional argument from command line
+            if (attribute.PositionalArg > 0)
+            {
+                if (context.Configuration.TryGet("arg" + attribute.PositionalArg, out value))
+                {
+                    bool b;
+                    if (bool.TryParse(value, out b))
+                    {
+                        return b;
+                    }
+                }
+            }
+
+            // use default value, if any
+            if (attribute.DefaultValue != null)
+            {
+                return (bool)attribute.DefaultValue;
+            }
+
+            // get from user using console
+            do
+            {
+                var b = context.Console.YesNo(attribute.PromptText + @": ", false);
+                if (b != null)
+                {
+                    return b == true;
+                }
+            }
+            while (true);
+        }
+
         [NotNull]
-        protected virtual string GetOptionValue([NotNull] ITaskContext context, [NotNull] OptionAttribute attribute)
+        protected virtual string GetOptionStringValue([NotNull] ITaskContext context, [NotNull] PropertyInfo property, [NotNull] OptionAttribute attribute)
         {
             // get from configuration
             string value;
@@ -61,9 +119,9 @@ namespace Sitecore.Pathfinder.Tasks
             }
 
             // use default value, if any
-            if (!string.IsNullOrEmpty(attribute.DefaultValue))
+            if (attribute.DefaultValue != null)
             {
-                return attribute.DefaultValue;
+                return (string)attribute.DefaultValue;
             }
 
             // get from user using pick list
@@ -118,7 +176,20 @@ namespace Sitecore.Pathfinder.Tasks
                     continue;
                 }
 
-                var value = GetOptionValue(context, attribute);
+                object value;
+
+                if (property.PropertyType == typeof(bool))
+                {
+                    value = GetOptionBoolValue(context, property, attribute);
+                }
+                else if (property.PropertyType == typeof(bool))
+                {
+                    value = GetOptionStringValue(context, property, attribute);
+                }
+                else
+                {
+                    throw new InvalidOperationException("Task option can only be bool or string");
+                }
 
                 property.SetValue(this, value);
             }

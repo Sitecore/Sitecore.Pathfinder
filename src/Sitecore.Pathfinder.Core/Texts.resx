@@ -768,4 +768,13 @@
     <data name="Loading_project___" xml:space="preserve">
     <value>Loading project...</value>
   </data>
+  <data name="Please_install_IIS_Express" xml:space="preserve">
+    <value>Please install IIS Express</value>
+  </data>
+  <data name="IIS_Express_not_found" xml:space="preserve">
+    <value>IIS Express not found</value>
+  </data>
+  <data name="Serving_website___" xml:space="preserve">
+    <value>Serving website...</value>
+  </data>
 </root>

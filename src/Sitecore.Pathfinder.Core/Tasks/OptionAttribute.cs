@@ -16,8 +16,8 @@ namespace Sitecore.Pathfinder.Tasks
         [NotNull]
         public string Alias { get; set; } = string.Empty;
 
-        [NotNull]
-        public string DefaultValue { get; set; } = string.Empty;
+        [CanBeNull]
+        public object DefaultValue { get; set; }
 
         public bool HasOptions { get; set; }
 

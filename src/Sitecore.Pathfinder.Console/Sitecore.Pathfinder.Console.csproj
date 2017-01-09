@@ -172,6 +172,7 @@
     <Compile Include="Tasks\NewSolution.cs" />
     <Compile Include="Tasks\RestorePackages.cs" />
     <Compile Include="Tasks\RunScript.cs" />
+    <Compile Include="Tasks\ServeWebsite.cs" />
     <Compile Include="Tasks\ShowStatus.cs" />
     <Compile Include="Tasks\ShowWebsite.cs" />
     <Compile Include="Tasks\ShowConfig.cs" />

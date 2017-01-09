@@ -93,10 +93,6 @@ namespace Sitecore.Pathfinder.Tasks
 
             updated |= UpdateWebsiteAssembly(context, "Sitecore.Pathfinder.Core.dll");
             updated |= UpdateWebsiteAssembly(context, "Sitecore.Pathfinder.Roslyn.dll");
-            updated |= UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.dll");
-            updated |= UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Interfaces.dll");
-            updated |= UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Json.dll");
-            updated |= UpdateWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Xml.dll");
             updated |= UpdateWebsiteAssembly(context, "ZetaLongPaths.dll");
 
             updated |= UpdateWebsiteAssembly(context, "files\\extensions\\Sitecore.Pathfinder.Core.Extensions.dll", "Sitecore.Pathfinder.Core.Extensions.dll");

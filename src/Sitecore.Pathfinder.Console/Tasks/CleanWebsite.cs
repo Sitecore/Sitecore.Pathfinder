@@ -40,10 +40,6 @@ namespace Sitecore.Pathfinder.Tasks
 
             RemoveWebsiteAssembly(context, "Sitecore.Pathfinder.Core.dll");
             RemoveWebsiteAssembly(context, "Sitecore.Pathfinder.Roslyn.dll");
-            RemoveWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.dll");
-            RemoveWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Interfaces.dll");
-            RemoveWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Json.dll");
-            RemoveWebsiteAssembly(context, "Microsoft.Framework.ConfigurationModel.Xml.dll");
 
             foreach (var extension in Extensions)
             {

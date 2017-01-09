@@ -266,6 +266,11 @@
         "directory": "files/packages"
     },
 
+    "serve-website": {
+        "port": 4200,
+        "default-port": 4200
+    },
+
     "start-website": {
         // specifies the port, e.g. "http://localhost:3000/"
         "port": 3000,

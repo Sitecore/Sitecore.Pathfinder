@@ -15,9 +15,9 @@ namespace Sitecore.Pathfinder.Tasks
     {
         None = 0x00,
 
-        CreateEditor = 0x01,
+        // CreateEditor = 0x01,
 
-        CreateTaskRunner = 0x02,
+        // CreateTaskRunner = 0x02,
 
         CreateStarterKit = 0x04,
 
@@ -1153,8 +1153,8 @@ namespace Sitecore.Pathfinder.Tasks
         [NotNull]
         private string _dataFolderDirectory = string.Empty;
 
-        [NotNull]
-        private string _editorFileName = string.Empty;
+        // [NotNull]
+        // private string _editorFileName = string.Empty;
 
         [NotNull]
         private string _hostName = string.Empty;
@@ -1165,8 +1165,8 @@ namespace Sitecore.Pathfinder.Tasks
         [NotNull]
         private string _starterKitFileName = string.Empty;
 
-        [NotNull]
-        private string _taskRunnerFileName = string.Empty;
+        // [NotNull]
+        // private string _taskRunnerFileName = string.Empty;
 
         [NotNull]
         private string _websiteDirectory = string.Empty;
@@ -1197,6 +1197,7 @@ namespace Sitecore.Pathfinder.Tasks
             FileSystem.Copy(source, destination);
         }
 
+        /*
         protected virtual void CopyEditor([NotNull] IBuildContext context, [NotNull] string projectDirectory)
         {
             if (!string.IsNullOrEmpty(_editorFileName))
@@ -1204,6 +1205,7 @@ namespace Sitecore.Pathfinder.Tasks
                 FileSystem.Unzip(_editorFileName, projectDirectory);
             }
         }
+        */
 
         protected virtual void CopyProjectTemplate([NotNull] IBuildContext context, [NotNull] string projectDirectory)
         {
@@ -1219,6 +1221,7 @@ namespace Sitecore.Pathfinder.Tasks
             }
         }
 
+        /*
         protected virtual void CopyTaskRunner([NotNull] IBuildContext context, [NotNull] string projectDirectory)
         {
             if (!string.IsNullOrEmpty(_taskRunnerFileName))
@@ -1226,6 +1229,7 @@ namespace Sitecore.Pathfinder.Tasks
                 FileSystem.Unzip(_taskRunnerFileName, projectDirectory);
             }
         }
+        */
 
         protected virtual bool CreateProject([NotNull] IBuildContext context, NewProjectOptions options)
         {
@@ -1282,7 +1286,7 @@ namespace Sitecore.Pathfinder.Tasks
             var defaultDataFolderDirectory = context.Configuration.GetString(Constants.Configuration.NewProject.DefaultDataFolderDirectory).TrimEnd('\\');
             if (string.IsNullOrEmpty(defaultDataFolderDirectory))
             {
-                defaultDataFolderDirectory = Path.Combine(Path.GetDirectoryName(_websiteDirectory) ?? string.Empty, "Data");
+                defaultDataFolderDirectory = Path.Combine(Path.GetDirectoryName(_websiteDirectory), "Data");
             }
 
             do
@@ -1307,6 +1311,7 @@ namespace Sitecore.Pathfinder.Tasks
                 _hostName = Uri.UriSchemeHttp + Uri.SchemeDelimiter + _hostName.TrimStart('/');
             }
 
+            /*
             if ((options & NewProjectOptions.CreateEditor) == NewProjectOptions.CreateEditor)
             {
                 Console.WriteLine();
@@ -1330,6 +1335,7 @@ namespace Sitecore.Pathfinder.Tasks
                     _taskRunnerFileName = Console.Pick(Texts.Select_task_runner__1___, taskRunners, "taskrunner");
                 }
             }
+            */
 
             if ((options & NewProjectOptions.CreateStarterKit) == NewProjectOptions.CreateStarterKit)
             {
@@ -1366,6 +1372,7 @@ namespace Sitecore.Pathfinder.Tasks
                 CopyStarterKit(context, projectDirectory);
             }
 
+            /*
             if ((options & NewProjectOptions.CreateEditor) == NewProjectOptions.CreateEditor)
             {
                 CopyEditor(context, projectDirectory);
@@ -1375,6 +1382,7 @@ namespace Sitecore.Pathfinder.Tasks
             {
                 CopyTaskRunner(context, projectDirectory);
             }
+            */
 
             UpdateConfigFile(context, projectDirectory);
 

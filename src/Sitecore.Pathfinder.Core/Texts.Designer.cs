@@ -911,6 +911,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to IIS Express not found.
+        /// </summary>
+        public static string IIS_Express_not_found {
+            get {
+                return ResourceManager.GetString("IIS_Express_not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Image reference not found.
         /// </summary>
         public static string Image_reference_not_found {
@@ -1329,6 +1338,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please install IIS Express.
+        /// </summary>
+        public static string Please_install_IIS_Express {
+            get {
+                return ResourceManager.GetString("Please_install_IIS_Express", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Project directory not found: .
         /// </summary>
         public static string Project_directory_not_found__ {
@@ -1523,6 +1541,15 @@ namespace Sitecore.Pathfinder {
         public static string Select_task_runner__1___ {
             get {
                 return ResourceManager.GetString("Select_task_runner__1___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Serving website....
+        /// </summary>
+        public static string Serving_website___ {
+            get {
+                return ResourceManager.GetString("Serving_website___", resourceCulture);
             }
         }
         
