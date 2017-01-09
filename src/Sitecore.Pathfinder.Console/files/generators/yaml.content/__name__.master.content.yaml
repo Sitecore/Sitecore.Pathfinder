@@ -1,2 +1,3 @@
 ﻿Sample Item :
+    ItemPath : <%= itemPath %>
     Text : Hello friend

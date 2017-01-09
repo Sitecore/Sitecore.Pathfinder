@@ -855,11 +855,29 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Generating files....
+        /// </summary>
+        public static string Generating_files___ {
+            get {
+                return ResourceManager.GetString("Generating_files___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Generating unit tests....
         /// </summary>
         public static string Generating_unit_tests___ {
             get {
                 return ResourceManager.GetString("Generating_unit_tests___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generator not found.
+        /// </summary>
+        public static string Generator_not_found {
+            get {
+                return ResourceManager.GetString("Generator_not_found", resourceCulture);
             }
         }
         
@@ -988,6 +1006,15 @@ namespace Sitecore.Pathfinder {
         public static string Item_is_not_in_root_item_path__Skipping_ {
             get {
                 return ResourceManager.GetString("Item_is_not_in_root_item_path__Skipping_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item name in &apos;ItemPath&apos; and &apos;Name&apos; does not match. Using &apos;Name&apos;.
+        /// </summary>
+        public static string Item_name_in__ItemPath__and__Name__does_not_match__Using__Name_ {
+            get {
+                return ResourceManager.GetString("Item_name_in__ItemPath__and__Name__does_not_match__Using__Name_", resourceCulture);
             }
         }
         

@@ -1,4 +1,6 @@
-﻿<Item xmlns="http://www.sitecore.net/pathfinder/item" Template="/sitecore/templates/Sample/Sample Item">
+﻿<Item xmlns="http://www.sitecore.net/pathfinder/item" 
+    Template="/sitecore/templates/Sample/Sample Item"
+    ItemPath="<%= itemPath %>">
     <Fields>
         <Field Name="Title" Value="Hello friend" />
     </Fields>

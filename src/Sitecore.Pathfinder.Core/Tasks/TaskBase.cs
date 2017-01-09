@@ -184,7 +184,7 @@ namespace Sitecore.Pathfinder.Tasks
                 {
                     value = GetOptionBoolValue(context, property, attribute);
                 }
-                else if (property.PropertyType == typeof(bool))
+                else if (property.PropertyType == typeof(string))
                 {
                     value = GetOptionStringValue(context, property, attribute);
                 }

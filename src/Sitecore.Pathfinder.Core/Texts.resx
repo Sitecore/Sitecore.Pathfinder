@@ -777,4 +777,13 @@
   <data name="Serving_website___" xml:space="preserve">
     <value>Serving website...</value>
   </data>
+  <data name="Item_name_in__ItemPath__and__Name__does_not_match__Using__Name_" xml:space="preserve">
+    <value>Item name in 'ItemPath' and 'Name' does not match. Using 'Name'</value>
+  </data>
+  <data name="Generating_files___" xml:space="preserve">
+    <value>Generating files...</value>
+  </data>
+  <data name="Generator_not_found" xml:space="preserve">
+    <value>Generator not found</value>
+  </data>
 </root>

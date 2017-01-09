@@ -1,6 +1,7 @@
 {
     "Item": {
         "Template": "/sitecore/templates/Sample/Sample Item",
+        "ItemPath": "<%= itemPath %>",
         "Fields": {
             "Title": "Hello friend"
             /*

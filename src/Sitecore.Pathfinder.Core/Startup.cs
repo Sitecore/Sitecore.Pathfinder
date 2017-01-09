@@ -17,7 +17,6 @@ namespace Sitecore.Pathfinder
         public Startup()
         {
             ToolsDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
-            ProjectDirectory = Directory.GetCurrentDirectory();
         }
 
         [CanBeNull, ItemNotNull]
@@ -43,7 +42,7 @@ namespace Sitecore.Pathfinder
         public string PackageRootDirectory { get; private set; } = string.Empty;
 
         [NotNull]
-        public string ProjectDirectory { get; private set; }
+        public string ProjectDirectory { get; private set; } = string.Empty;
 
         [CanBeNull]
         public Stopwatch Stopwatch { get; private set; }
@@ -90,6 +89,11 @@ namespace Sitecore.Pathfinder
         [CanBeNull]
         public IHostService Start()
         {
+            if (string.IsNullOrEmpty(ProjectDirectory))
+            {
+                ProjectDirectory = GetProjectDirectory();
+            }
+
             var assembly = Assembly.GetEntryAssembly() ?? Assembly.GetCallingAssembly();
             var assemblyFileNames = new List<string>
             {
@@ -148,6 +152,26 @@ namespace Sitecore.Pathfinder
             }
 
             return host;
+        }
+
+        [NotNull]
+        protected virtual string GetProjectDirectory()
+        {
+            // search in current and parent directories for scconfig.json
+            var projectDirectory = new DirectoryInfo(Directory.GetCurrentDirectory());
+            do
+            {
+                var configurationFileName = Path.Combine(projectDirectory.FullName, SystemConfigurationFileName);
+                if (File.Exists(configurationFileName))
+                {
+                    return projectDirectory.FullName;
+                }
+
+                projectDirectory = projectDirectory.Parent;
+            }
+            while (projectDirectory != null);
+
+            return Directory.GetCurrentDirectory();
         }
 
         [NotNull]

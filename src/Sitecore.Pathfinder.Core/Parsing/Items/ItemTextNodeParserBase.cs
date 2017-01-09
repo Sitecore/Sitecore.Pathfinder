@@ -27,13 +27,14 @@ namespace Sitecore.Pathfinder.Parsing.Items
             var itemNameTextNode = GetItemNameTextNode(context.ParseContext, textNode);
             var parentItemPath = textNode.GetAttributeValue("ParentItemPath", context.ParentItemPath);
             var itemIdOrPath = textNode.GetAttributeValue("ItemPath");
+
             if (string.IsNullOrEmpty(itemIdOrPath))
             {
                 itemIdOrPath = PathHelper.CombineItemPath(parentItemPath, itemNameTextNode.Value);
             }
             else if (itemNameTextNode.Value != Path.GetFileName(itemIdOrPath))
             {
-               context.ParseContext.Trace.TraceError(Msg.P1000, "Item name in 'ItemPath' and 'Name' does not match. Using 'Name'");
+               context.ParseContext.Trace.TraceError(Msg.P1000, Texts.Item_name_in__ItemPath__and__Name__does_not_match__Using__Name_);
             }
 
             var guid = StringHelper.GetGuid(context.ParseContext.Project, textNode.GetAttributeValue("Id", itemIdOrPath));

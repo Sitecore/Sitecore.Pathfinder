@@ -10,6 +10,18 @@ Version next
 * Add: Solution support (2016-08-01)
 * Add: 'new-solution' task (2016-08-01)
 
+Sitecore-Cli like functionality
+* Add: Commandline options through C# attributes (2017-01-09)
+* Add: Tasks can have an alias and a shortcut (2017-01-09)
+* Add: Task "new-project" creates subdirectory (2017-01-09)
+* Add: Task "init-project" (2017-01-09)
+* Add: Task "generate-file" for generating various files (2017-01-09)
+* Removed: Other file generating tasks like "init-vscode" (2017-01-09)
+* Add: Task "serve-website" for starting IIS Express in the website directory (2017-01-09)
+* Add: Promoted ItemPath so Path Mapping can be removed from configuration (2017-01-09)
+* Removed: Dependency on Microsoft.Framework.Configuration - embedded the code instead (2017-01-09)
+* Fix: dots in configuration keys (2017-01-09)
+
 Version 0.7.0
 ============
 * Add: Added add-project task for creating a Pathfinder project in an existing directory (2015-12-20)

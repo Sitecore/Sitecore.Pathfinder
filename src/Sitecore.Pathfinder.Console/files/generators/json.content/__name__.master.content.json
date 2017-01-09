@@ -1,6 +1,7 @@
 ﻿[
     {
         "Sample Item": {
+            "ItemPath": "<%= itemPath %>",
             "Text": "Hello World"
         }
     }

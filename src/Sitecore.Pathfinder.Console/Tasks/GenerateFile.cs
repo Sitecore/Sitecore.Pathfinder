@@ -7,6 +7,8 @@ using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
@@ -14,8 +16,10 @@ namespace Sitecore.Pathfinder.Tasks
     public class GenerateFile : BuildTaskBase, IOptionPicker
     {
         [ImportingConstructor]
-        public GenerateFile() : base("generate-file")
+        public GenerateFile([NotNull] IPathMapperService pathMapper) : base("generate-file")
         {
+            PathMapper = pathMapper;
+
             Alias = "generate";
             Shortcut = "g";
         }
@@ -26,11 +30,15 @@ namespace Sitecore.Pathfinder.Tasks
         [NotNull, Option("name", Alias = "n", PositionalArg = 2, DefaultValue = "file")]
         public string Name { get; set; } = string.Empty;
 
+        [NotNull]
+        protected IPathMapperService PathMapper { get; }
+
+
         public override void Run(IBuildContext context)
         {
             var generatorsDirectory = Path.Combine(context.Configuration.GetToolsDirectory(), "files\\generators");
 
-            context.Trace.TraceInformation(Msg.G1009, "Generating files...");
+            context.Trace.TraceInformation(Msg.G1009, Texts.Generating_files___);
 
             if (!context.FileSystem.DirectoryExists(GeneratorDirectory))
             {
@@ -62,7 +70,7 @@ namespace Sitecore.Pathfinder.Tasks
 
             if (!context.FileSystem.DirectoryExists(GeneratorDirectory))
             {
-                context.Trace.TraceError(Msg.G1018, "Generator not found", GeneratorDirectory);
+                context.Trace.TraceError(Msg.G1018, Texts.Generator_not_found, GeneratorDirectory);
                 return;
             }
 
@@ -71,7 +79,7 @@ namespace Sitecore.Pathfinder.Tasks
 
             var textFileExtensions = context.Configuration.GetStringList(Constants.Configuration.GenerateFile.TextFileExtensions);
 
-            Copy(context, GeneratorDirectory, context.ProjectDirectory, macros, textFileExtensions);
+            Copy(context, GeneratorDirectory, Directory.GetCurrentDirectory(), macros, textFileExtensions);
         }
 
         protected virtual void Copy([NotNull] IBuildContext context, [NotNull] string sourceDirectory, [NotNull] string destinationDirectory, [NotNull] Dictionary<string, string> macros, [ItemNotNull, NotNull] IEnumerable<string> textFileExtensions)
@@ -85,6 +93,20 @@ namespace Sitecore.Pathfinder.Tasks
                 var extension = Path.GetExtension(sourceFileName);
                 if (textFileExtensions.Any(t => string.Equals(t, extension, StringComparison.OrdinalIgnoreCase)))
                 {
+                    var projectFileName = PathHelper.UnmapPath(context.Configuration.GetProjectDirectory(), destinationFileName);
+
+                    string itemPath;
+                    string databaseName;
+                    bool isImport;
+                    bool uploadMedia;
+                    PathMapper.TryGetWebsiteItemPath(projectFileName, out databaseName, out itemPath, out isImport, out uploadMedia);
+                    macros["itemPath"] = itemPath;
+                    macros["database"] = databaseName;
+
+                    string websiteFileName;
+                    PathMapper.TryGetWebsiteFileName(projectFileName, out websiteFileName);
+                    macros["fileName"] = websiteFileName;
+
                     var content = context.FileSystem.ReadAllText(sourceFileName);
 
                     content = ReplaceMacros(content, macros, "<%= ", " %>");
