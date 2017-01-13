@@ -3,7 +3,7 @@
 using System;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
-using System.IO;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Tasks.Building;
 
@@ -21,13 +21,29 @@ namespace Sitecore.Pathfinder.Tasks
         [Option("log", Alias = "l", DefaultValue = false, HelpText = "Show log in a window")]
         public bool Log { get; set; } = false;
 
+        [NotNull, Option("path", Alias = "p", HelpText = "Path to website directory", PositionalArg = 2)]
+        public string Path { get; set; } = string.Empty;
+
+        [Option("port", Alias = "o", HelpText = "Port number", PositionalArg = 1)]
+        public int Port { get; set; } = 0;
+
         public override void Run(IBuildContext context)
         {
             context.Trace.TraceInformation(Msg.C1041, Texts.Serving_website___);
 
-            var fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "IIS Express\\iisexpress.exe");
-            var port = context.Configuration.GetInt(Constants.Configuration.ServeWebsite.Port, context.Configuration.GetInt(Constants.Configuration.ServeWebsite.DefaultPort));
-            var path = context.Configuration.GetWebsiteDirectory();
+            var port = Port;
+            if (port == 0)
+            {
+                port = context.Configuration.GetInt(Constants.Configuration.ServeWebsite.Port, context.Configuration.GetInt(Constants.Configuration.ServeWebsite.DefaultPort));
+            }
+
+            var path = Path;
+            if (string.IsNullOrEmpty(path))
+            {
+                path = context.Configuration.GetWebsiteDirectory();
+            }
+
+            var fileName = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "IIS Express\\iisexpress.exe");
 
             if (!context.FileSystem.FileExists(fileName))
             {

@@ -177,6 +177,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerConstants.cs" />
     <Compile Include="Tasks\CheckWebsite.cs" />
+    <Compile Include="Tasks\ClearCaches.cs" />
     <Compile Include="Tasks\ImportWebsite.cs" />
     <Compile Include="Importing\FieldImporters\FieldValueImporterBase.cs" />
     <Compile Include="Importing\FieldImporters\IdFieldValueImporter.cs" />

@@ -129,7 +129,7 @@ namespace Sitecore.Pathfinder.Tasks
         {
             var hasHeader = false;
 
-            var properties = GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.SetProperty).OrderBy(p => p.Name);
+            var properties = task.GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.SetProperty | BindingFlags.Instance).OrderBy(p => p.Name);
             foreach (var property in properties)
             {
                 var attribute = property.GetCustomAttribute<OptionAttribute>();
@@ -142,6 +142,7 @@ namespace Sitecore.Pathfinder.Tasks
                 {
                     helpText.WriteLine();
                     helpText.WriteLine("Command Line Switches");
+                    helpText.WriteLine("---------------------");
                     hasHeader = true;
                 }
 
@@ -149,7 +150,7 @@ namespace Sitecore.Pathfinder.Tasks
 
                 if (!string.IsNullOrEmpty(attribute.Alias))
                 {
-                    helpText.Write("(or --" + attribute.Alias + ')');
+                    helpText.Write(" (or --" + attribute.Alias + ')');
                 }
 
                 helpText.WriteLine(": " + attribute.HelpText);
@@ -225,6 +226,7 @@ namespace Sitecore.Pathfinder.Tasks
 
             if (!switches)
             {
+                helpText.WriteLine();
                 WriteSwitches(helpText, task);
             }
 

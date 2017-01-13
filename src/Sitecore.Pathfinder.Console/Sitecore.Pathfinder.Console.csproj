@@ -151,10 +151,11 @@
     <Compile Include="Tasks\AddProject.cs" />
     <Compile Include="Tasks\CheckWebsite.cs" />
     <Compile Include="Tasks\CleanWebsite.cs" />
+    <Compile Include="Tasks\ClearCaches.cs" />
     <Compile Include="Tasks\ComparePackages.cs" />
     <Compile Include="Tasks\GenerateFile.cs" />
     <Compile Include="Tasks\InitProject.cs" />
-    <Compile Include="Tasks\PublishProject.cs" />
+    <Compile Include="Tasks\InstallItemsAndFiles.cs" />
     <Compile Include="Tasks\InitHabitat.cs" />
     <Compile Include="Tasks\ListCheckers.cs" />
     <Compile Include="Tasks\ListProjectCheckers.cs" />
@@ -443,12 +444,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="files\scripts\install-cleanblog.cmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="files\scripts\install-grunt.cmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="files\scripts\install-nunit-runners.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="files\scripts\install-fakedb.ps1">

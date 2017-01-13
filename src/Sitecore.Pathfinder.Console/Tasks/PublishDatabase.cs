@@ -1,7 +1,8 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Tasks.Building;
 
@@ -13,6 +14,12 @@ namespace Sitecore.Pathfinder.Tasks
         {
         }
 
+        [NotNull, Option("database", Alias = "d", HelpText = "Name of database to publish", PositionalArg = 1)]
+        public string DatabaseName { get; set; } = string.Empty;
+
+        [NotNull, Option("mode", Alias = "m", DefaultValue = "i", HelpText = "Publishing mode (r, i, s or b)")]
+        public string Mode { get; set; } = string.Empty;
+
         public override void Run(IBuildContext context)
         {
             context.Trace.TraceInformation(Msg.D1016, Texts.Publishing___);
@@ -22,18 +29,24 @@ namespace Sitecore.Pathfinder.Tasks
                 return;
             }
 
-            if (string.Equals(context.Project.Options.DatabaseName, "core", StringComparison.OrdinalIgnoreCase))
+            var databaseName = DatabaseName;
+            if (string.IsNullOrEmpty(databaseName))
+            {
+                databaseName = context.Project.Options.DatabaseName;
+            }
+
+            if (string.Equals(databaseName, "core", StringComparison.OrdinalIgnoreCase))
             {
                 context.Trace.TraceInformation(Msg.D1013, Texts.Database_is__core___Skipping_);
                 return;
             }
 
-            context.Trace.TraceInformation(Msg.D1014, Texts.Database, context.Project.Options.DatabaseName);
+            context.Trace.TraceInformation(Msg.D1014, Texts.Database, databaseName);
 
             var queryStringParameters = new Dictionary<string, string>
             {
-                ["m"] = "i",
-                ["db"] = context.Project.Options.DatabaseName
+                ["m"] = Mode,
+                ["db"] = databaseName
             };
 
             var webRequest = GetWebRequest(context).WithQueryString(queryStringParameters).WithUrl(context.Configuration.GetString(Constants.Configuration.PublishDatabases.PublishUrl));

@@ -2,6 +2,7 @@
 
 using Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Emitting.ItemsAndFilesEmitting;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 
@@ -15,7 +16,7 @@ namespace Sitecore.Pathfinder.Emitting.FileAndSqlEmitting
 
         public override bool CanEmit(IEmitContext context, IProjectItem projectItem)
         {
-            return projectItem is Item && context.ProjectEmitter is FileAndSqlProjectEmitter;
+            return projectItem is Item && context.ProjectEmitter is ItemsAndFilesProjectEmitter;
         }
 
         public override void Emit(IEmitContext context, IProjectItem projectItem)
@@ -40,10 +41,10 @@ namespace Sitecore.Pathfinder.Emitting.FileAndSqlEmitting
                 return;
             }
 
-            var projectEmitter = context.ProjectEmitter as FileAndSqlProjectEmitter;
+            var projectEmitter = context.ProjectEmitter as ItemsAndFilesProjectEmitter;
             Assert.Cast(projectEmitter, nameof(projectEmitter));
 
-            context.Trace.TraceInformation(Msg.I1011, "Publishing item", item.Paths.Path);
+            context.Trace.TraceInformation(Msg.I1011, "Installing item", item.Paths.Path);
 
             projectEmitter.WriteItem(item);
         }

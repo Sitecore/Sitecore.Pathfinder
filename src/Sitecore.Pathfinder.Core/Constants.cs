@@ -77,6 +77,7 @@ namespace Sitecore.Pathfinder
             public const string DataFolderDirectory = "data-folder-directory";
 
             public const string Debug = "debug";
+            public const string DefaultLanguage= "default-language";
 
             public const string Dependencies = "dependencies";
 

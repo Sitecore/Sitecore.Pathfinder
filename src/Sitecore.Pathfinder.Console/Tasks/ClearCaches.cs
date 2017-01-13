@@ -4,22 +4,22 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    public class InstallProject : WebBuildTaskBase
+    public class ClearCaches : WebBuildTaskBase
     {
-        public InstallProject() : base("install-project")
+        public ClearCaches() : base("clear-website-caches")
         {
         }
 
         public override void Run(IBuildContext context)
         {
-            context.Trace.TraceInformation(Msg.D1011, Texts.Installing_project___);
+            context.Trace.TraceInformation(Msg.M1017, Texts.Clearing_caches___);
 
             if (!IsProjectConfigured(context))
             {
                 return;
             }
 
-            var webRequest = GetWebRequest(context).AsTask("InstallProject");
+            var webRequest = GetWebRequest(context).AsTask("ClearCaches");
 
             Post(context, webRequest);
         }

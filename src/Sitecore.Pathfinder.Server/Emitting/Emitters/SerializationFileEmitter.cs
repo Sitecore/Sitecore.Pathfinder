@@ -45,7 +45,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
                     throw new RetryableEmitException(Msg.E1011, Texts.Failed_to_deserialize_item, itemModel.Snapshot, "Item not created");
                 }
 
-                context.Trace.TraceInformation(Msg.I1011, "Publishing item", item.Paths.Path);
+                context.Trace.TraceInformation(Msg.I1011, "Installing item", item.Paths.Path);
 
                 item.UpdateProjectUniqueIds(context);
             }

@@ -8,7 +8,6 @@ using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
-using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
@@ -32,7 +31,6 @@ namespace Sitecore.Pathfinder.Tasks
 
         [NotNull]
         protected IPathMapperService PathMapper { get; }
-
 
         public override void Run(IBuildContext context)
         {

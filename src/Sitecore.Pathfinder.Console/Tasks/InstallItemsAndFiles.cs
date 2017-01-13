@@ -2,16 +2,16 @@
 
 using System.ComponentModel.Composition;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Emitting.FileAndSqlEmitting;
+using Sitecore.Pathfinder.Emitting.ItemsAndFilesEmitting;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    public class PublishProject : BuildTaskBase
+    public class InstallItemsAndFiles : BuildTaskBase
     {
         [ImportingConstructor]
-        public PublishProject([NotNull] ICompositionService compositionService) : base("publish-project")
+        public InstallItemsAndFiles([NotNull] ICompositionService compositionService) : base("install-items-and-files")
         {
             CompositionService = compositionService;
         }
@@ -21,9 +21,9 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
-            context.Trace.TraceInformation(Msg.D1027, "Publishing project to website...");
+            context.Trace.TraceInformation(Msg.D1027, "Installing items and files...");
 
-            var projectEmitter = CompositionService.Resolve<FileAndSqlProjectEmitter>();
+            var projectEmitter = CompositionService.Resolve<ItemsAndFilesProjectEmitter>();
 
             projectEmitter.Emit(context.Project);
         }

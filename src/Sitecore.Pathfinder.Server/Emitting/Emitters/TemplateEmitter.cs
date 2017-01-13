@@ -32,7 +32,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 
             var templateWriter = new TemplateWriter(template);
 
-            context.Trace.TraceInformation(Msg.I1011, "Publishing template", template.ItemIdOrPath);
+            context.Trace.TraceInformation(Msg.I1011, "Installing template", template.ItemIdOrPath);
 
             var dataItem = templateWriter.Write(context);
 

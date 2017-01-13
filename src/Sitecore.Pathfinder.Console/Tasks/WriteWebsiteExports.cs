@@ -45,7 +45,7 @@ namespace Sitecore.Pathfinder.Tasks
                     context.Trace.TraceInformation(Msg.M1013, entry.FullName);
 
                     var fileName = Path.Combine(context.ProjectDirectory, entry.FullName);
-                    FileSystem.CreateDirectory(Path.GetDirectoryName(fileName) ?? string.Empty);
+                    FileSystem.CreateDirectory(Path.GetDirectoryName(fileName));
 
                     entry.ExtractToFile(fileName, true);
                 }

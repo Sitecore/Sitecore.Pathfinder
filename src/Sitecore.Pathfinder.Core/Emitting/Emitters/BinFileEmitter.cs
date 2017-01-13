@@ -38,7 +38,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
                 return;
             }
 
-            context.Trace.TraceInformation(Msg.I1011, "Publishing bin file", filePath);
+            context.Trace.TraceInformation(Msg.I1011, "Installing bin file", filePath);
 
             context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName));
             context.FileSystem.Copy(projectItem.Snapshot.SourceFile.AbsoluteFileName, destinationFileName, context.ForceUpdate);

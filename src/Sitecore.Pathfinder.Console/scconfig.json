@@ -438,6 +438,9 @@
     // specifies the .NET CultureInfo name to use when parsing date/times and numbers
     "culture": "en-US",
 
+    // specifies the default language
+    "default-language": "en",
+
     // dependency packages
     "dependencies": {
         "sitecore-pathfinder-core": { "id": "Sitecore.Pathfinder.Core", "version": "1.0.0" }
@@ -652,7 +655,7 @@
         "show-stack-trace": true,
 
         // show time spent by each task
-        "show-task-time": false,
+        "show-task-time": true,
 
         "web-requests": {
             "time-out": 300 // seconds

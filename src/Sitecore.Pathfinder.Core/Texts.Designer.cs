@@ -297,6 +297,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clearing caches....
+        /// </summary>
+        public static string Clearing_caches___ {
+            get {
+                return ResourceManager.GetString("Clearing_caches___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Condition not found: .
         /// </summary>
         public static string Condition_not_found__ {

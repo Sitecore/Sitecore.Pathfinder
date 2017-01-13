@@ -18,9 +18,8 @@ namespace Sitecore.Pathfinder.Tasks
             Shortcut = "n";
         }
 
-        [NotNull, Option("name", Alias = "n", IsRequired = true, PromptText = "Enter application name", PositionalArg = 1)]
+        [NotNull, Option("name", Alias = "n", IsRequired = true, PromptText = "Enter application name", HelpText = "Name of the application", PositionalArg = 1)]
         public string AppName { get; set; } = string.Empty;
-
 
         public override void Run(IBuildContext context)
         {

@@ -1,10 +1,8 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
-using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.References;
-using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks

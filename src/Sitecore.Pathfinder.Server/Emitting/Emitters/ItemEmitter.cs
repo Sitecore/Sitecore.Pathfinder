@@ -83,7 +83,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
                 itemWriter.Fields.Add(fieldWriter);
             }
 
-            context.Trace.TraceInformation(Msg.I1011, "Publishing item", item.Paths.Path);
+            context.Trace.TraceInformation(Msg.I1011, "Installing item", item.Paths.Path);
 
             var dataItem = itemWriter.Write(context);
 

@@ -786,4 +786,7 @@
   <data name="Generator_not_found" xml:space="preserve">
     <value>Generator not found</value>
   </data>
+  <data name="Clearing_caches___" xml:space="preserve">
+    <value>Clearing caches...</value>
+  </data>
 </root>

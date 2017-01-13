@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -39,6 +39,7 @@ namespace Sitecore.Pathfinder.Projects
             {
                 return false;
             }
+
             return Equals((Database)obj);
         }
 
@@ -57,6 +58,12 @@ namespace Sitecore.Pathfinder.Projects
         public IEnumerable<Item> GetItems()
         {
             return Project.Items.Where(i => string.Equals(i.DatabaseName, DatabaseName, StringComparison.OrdinalIgnoreCase));
+        }
+
+        [NotNull]
+        public Language GetLanguage([NotNull] string languageName)
+        {
+            return Project.GetLanguage(languageName);
         }
 
         public static bool operator ==([CanBeNull] Database left, [CanBeNull] Database right)

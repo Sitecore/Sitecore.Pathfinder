@@ -263,6 +263,7 @@ namespace Sitecore.Pathfinder
         public const int M1014 = M + 14;
         public const int M1015 = M + 15;
         public const int M1016 = M + 16;
+        public const int M1017 = M + 17;
         public const int M1021 = M + 21;
 
         private const int P = 2000;

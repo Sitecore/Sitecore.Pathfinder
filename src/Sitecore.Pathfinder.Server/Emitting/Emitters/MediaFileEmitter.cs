@@ -62,7 +62,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 
             var destinationFileName = FileUtil.MapPath(filePath);
 
-            context.Trace.TraceInformation(Msg.I1011, "Publishing media file", filePath);
+            context.Trace.TraceInformation(Msg.I1011, "Installing media file", filePath);
 
             context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName) ?? string.Empty);
             context.FileSystem.Copy(mediaFile.Snapshot.SourceFile.AbsoluteFileName, destinationFileName, context.ForceUpdate);
@@ -102,7 +102,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
                 parent.Database.AddFromTemplateSynchronized(name, TemplateIDs.Folder, parent, new Data.ID(mediaItem.Uri.Guid));
             }
 
-            context.Trace.TraceInformation(Msg.I1011, "Publishing media item", mediaItem.Paths.Path);
+            context.Trace.TraceInformation(Msg.I1011, "Installing media item", mediaItem.Paths.Path);
 
             if (uploadMedia)
             {

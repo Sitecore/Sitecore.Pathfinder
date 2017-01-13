@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 
             var destinationFileName = PathHelper.Combine(context.Configuration.GetWebsiteDirectory(), filePath);
 
-            context.Trace.TraceInformation(Msg.I1011, "Publishing content file", "~\\" + filePath);
+            context.Trace.TraceInformation(Msg.I1011, "Installing content file", "~\\" + filePath);
 
             context.FileSystem.CreateDirectoryFromFileName(destinationFileName);
             context.FileSystem.Copy(projectItem.Snapshot.SourceFile.AbsoluteFileName, destinationFileName, context.ForceUpdate);
