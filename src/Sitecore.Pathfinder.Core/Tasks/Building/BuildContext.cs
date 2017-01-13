@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -27,19 +27,30 @@ namespace Sitecore.Pathfinder.Tasks.Building
 
         public string DataFolderDirectory => Configuration.GetString(Constants.Configuration.DataFolderDirectory);
 
-        public bool IsProjectLoaded => Project != Projects.Project.Empty;
+        public bool IsProjectLoaded => _project != null;
 
         public ICollection<IProjectItem> ModifiedProjectItems { get; } = new List<IProjectItem>();
 
         public ICollection<OutputFile> OutputFiles { get; } = new List<OutputFile>();
-
-        public IProject Project => _project ?? (_project = _loadProject());
 
         public string ProjectDirectory => Configuration.GetProjectDirectory();
 
         public string ToolsDirectory => Configuration.GetToolsDirectory();
 
         public string WebsiteDirectory => Configuration.GetWebsiteDirectory();
+
+        public IProject LoadProject()
+        {
+            if (_project != null)
+            {
+                return _project;
+            }
+
+            var project = _loadProject();
+
+            _project = project;
+            return project;
+        }
 
         public IBuildContext With(Func<IProject> loadProject)
         {

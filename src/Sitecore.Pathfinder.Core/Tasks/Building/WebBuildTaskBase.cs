@@ -63,7 +63,7 @@ namespace Sitecore.Pathfinder.Tasks.Building
         [NotNull]
         protected virtual WebRequest GetWebRequest([NotNull] IBuildContext context)
         {
-            return GetWebRequest(context.Configuration).WithCredentials().WithProjectDirectory(context.Project.ProjectDirectory).WithToolsDirectory(context.ToolsDirectory).WithCommandLine();
+            return GetWebRequest(context.Configuration).WithCredentials().WithProjectDirectory(context.ProjectDirectory).WithToolsDirectory(context.ToolsDirectory).WithCommandLine();
         }
 
         protected virtual void HandleWebException([NotNull] ITaskContext context, [NotNull] WebException ex)

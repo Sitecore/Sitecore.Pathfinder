@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -21,9 +21,6 @@ namespace Sitecore.Pathfinder.Tasks.Building
         ICollection<OutputFile> OutputFiles { get; }
 
         [NotNull]
-        IProject Project { get; }
-
-        [NotNull]
         string ProjectDirectory { get; }
 
         [NotNull]
@@ -31,6 +28,9 @@ namespace Sitecore.Pathfinder.Tasks.Building
 
         [NotNull]
         string WebsiteDirectory { get; }
+
+        [NotNull]
+        IProject LoadProject();
 
         [NotNull]
         IBuildContext With([NotNull] Func<IProject> loadProject);

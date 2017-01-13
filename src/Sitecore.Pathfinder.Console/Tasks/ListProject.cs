@@ -15,14 +15,16 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
-            foreach (var projectItem in context.Project.ProjectItems.OrderBy(i => i.GetType().Name))
+            var project = context.LoadProject();
+
+            foreach (var projectItem in project.ProjectItems.OrderBy(i => i.GetType().Name))
             {
                 var qualifiedName = projectItem.QualifiedName;
 
                 var file = projectItem as File;
                 if (file != null)
                 {
-                    qualifiedName = "\\" + PathHelper.UnmapPath(context.Project.ProjectDirectory, qualifiedName);
+                    qualifiedName = "\\" + PathHelper.UnmapPath(project.ProjectDirectory, qualifiedName);
                 }
 
                 context.Trace.WriteLine($"{qualifiedName} ({projectItem.GetType().Name})");

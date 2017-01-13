@@ -16,7 +16,9 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
-            foreach (var item in context.Project.Items.Where(i => !i.IsImport).OrderBy(i => i.ItemIdOrPath))
+            var project = context.LoadProject();
+
+            foreach (var item in project.Items.Where(i => !i.IsImport).OrderBy(i => i.ItemIdOrPath))
             {
                 var text = item.ItemIdOrPath;
                 if (string.IsNullOrEmpty(text))
@@ -34,7 +36,7 @@ namespace Sitecore.Pathfinder.Tasks
                 Console.WriteLine(text);
             }
 
-            foreach (var filePath in context.Project.Files.OrderBy(i => i.FilePath))
+            foreach (var filePath in project.Files.OrderBy(i => i.FilePath))
             {
                 var fileName = filePath.FilePath;
                 if (string.IsNullOrEmpty(fileName))

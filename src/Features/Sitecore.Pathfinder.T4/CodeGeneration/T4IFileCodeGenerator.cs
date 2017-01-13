@@ -28,7 +28,7 @@ namespace Sitecore.Pathfinder.T4.CodeGeneration
         {
             var itmNameToken = context.Configuration.GetString(Constants.Configuration.GenerateCode.NameToken);
 
-            foreach (var fileName in FileSystem.GetFiles(context.Project.ProjectDirectory, "*.tt", SearchOption.AllDirectories))
+            foreach (var fileName in FileSystem.GetFiles(context.ProjectDirectory, "*.tt", SearchOption.AllDirectories))
             {
                 if (fileName.EndsWith(".project.tt", StringComparison.OrdinalIgnoreCase))
                 {
@@ -52,7 +52,7 @@ namespace Sitecore.Pathfinder.T4.CodeGeneration
                 var typeName = context.Configuration.GetString("generate-code:items:" + itemType);
                 if (string.IsNullOrEmpty(typeName))
                 {
-                    context.Trace.TraceWarning(Msg.G1001, Texts.T4_item_type_not_found_in_the_config_setting__generate_code_items_, PathHelper.UnmapPath(context.Project.ProjectDirectory, fileName));
+                    context.Trace.TraceWarning(Msg.G1001, Texts.T4_item_type_not_found_in_the_config_setting__generate_code_items_, PathHelper.UnmapPath(context.ProjectDirectory, fileName));
                     continue;
                 }
 
@@ -69,18 +69,18 @@ namespace Sitecore.Pathfinder.T4.CodeGeneration
                 var assembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => string.Equals(Path.GetFileName(a.Location), assemblyName, StringComparison.OrdinalIgnoreCase));
                 if (assembly == null)
                 {
-                    context.Trace.TraceInformation(Msg.G1003, Texts.Assembly_not_found_in_T4_type_name_in_the_config_setting__generate_code_items_, PathHelper.UnmapPath(context.Project.ProjectDirectory, typeName));
+                    context.Trace.TraceInformation(Msg.G1003, Texts.Assembly_not_found_in_T4_type_name_in_the_config_setting__generate_code_items_, PathHelper.UnmapPath(context.ProjectDirectory, typeName));
                     continue;
                 }
 
                 var type = assembly.GetType(typeName, false, true);
                 if (type == null)              
                 {
-                    context.Trace.TraceInformation(Msg.G1004, Texts.T4_type_name_not_found_in_the_config_setting__generate_code_items_, PathHelper.UnmapPath(context.Project.ProjectDirectory, typeName));
+                    context.Trace.TraceInformation(Msg.G1004, Texts.T4_type_name_not_found_in_the_config_setting__generate_code_items_, PathHelper.UnmapPath(context.ProjectDirectory, typeName));
                     continue;
                 }
 
-                context.Trace.TraceInformation(Msg.G1005, Texts.Generating_code, PathHelper.UnmapPath(context.Project.ProjectDirectory, fileName));
+                context.Trace.TraceInformation(Msg.G1005, Texts.Generating_code, PathHelper.UnmapPath(context.ProjectDirectory, fileName));
 
                 foreach (var projectItem in project.ProjectItems.Where(i => i.GetType() == type || i.GetType().IsSubclassOf(type)))
                 {

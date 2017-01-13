@@ -3,7 +3,6 @@
 using System.ComponentModel.Composition;
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Tasks.Building;
 
@@ -27,8 +26,8 @@ namespace Sitecore.Pathfinder.Extensibility
 
         protected virtual bool CopyProjectFileToWebsiteBinDirectory([NotNull] IBuildContext context, [NotNull] string fileName)
         {
-            var projectDirectory = context.Project.ProjectDirectory;
-            var websiteDirectory = context.Configuration.GetWebsiteDirectory();
+            var projectDirectory = context.ProjectDirectory;
+            var websiteDirectory = context.WebsiteDirectory;
 
             var sourceFileName = PathHelper.Combine(projectDirectory, fileName);
             var targetFileName = PathHelper.Combine(PathHelper.Combine(websiteDirectory, "bin"), Path.GetFileName(fileName));

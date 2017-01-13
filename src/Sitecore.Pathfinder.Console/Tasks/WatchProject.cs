@@ -82,7 +82,9 @@ namespace Sitecore.Pathfinder.Tasks
 
         private void PublishDatabase()
         {
-            if (string.Equals(Context.Project.Options.DatabaseName, "core", StringComparison.OrdinalIgnoreCase))
+            var project = Context.LoadProject();
+
+            if (string.Equals(project.Options.DatabaseName, "core", StringComparison.OrdinalIgnoreCase))
             {
                 return;
             }
@@ -92,7 +94,7 @@ namespace Sitecore.Pathfinder.Tasks
             var queryStringParameters = new Dictionary<string, string>
             {
                 ["m"] = "i",
-                ["db"] = Context.Project.Options.DatabaseName
+                ["db"] = project.Options.DatabaseName
             };
 
             var webRequest = GetWebRequest(Context).WithUrl(Context.Configuration.GetString(Constants.Configuration.PublishDatabases.PublishUrl)).WithQueryString(queryStringParameters);

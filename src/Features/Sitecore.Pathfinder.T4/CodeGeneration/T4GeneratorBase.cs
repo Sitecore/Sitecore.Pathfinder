@@ -56,7 +56,7 @@ namespace Sitecore.Pathfinder.T4.CodeGeneration
         {
             foreach (CompilerError error in host.Errors)
             {
-                context.Trace.TraceError(Msg.G1006, error.ErrorText, PathHelper.UnmapPath(context.Project.ProjectDirectory, fileName), new TextSpan(error.Line, error.Column, 0));
+                context.Trace.TraceError(Msg.G1006, error.ErrorText, PathHelper.UnmapPath(context.ProjectDirectory, fileName), new TextSpan(error.Line, error.Column, 0));
             }
         }
     }

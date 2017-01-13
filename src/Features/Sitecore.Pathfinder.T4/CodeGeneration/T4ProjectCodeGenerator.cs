@@ -29,14 +29,14 @@ namespace Sitecore.Pathfinder.T4.CodeGeneration
         {
             var host = GetHost(context, project);
 
-            foreach (var fileName in FileSystem.GetFiles(context.Project.ProjectDirectory, "*.project.tt", SearchOption.AllDirectories))
+            foreach (var fileName in FileSystem.GetFiles(context.ProjectDirectory, "*.project.tt", SearchOption.AllDirectories))
             {
                 if (Ignore(fileName))
                 {
                     continue;
                 }
 
-                context.Trace.TraceInformation(Msg.G1008, Texts.Generating_code, PathHelper.UnmapPath(context.Project.ProjectDirectory, fileName));
+                context.Trace.TraceInformation(Msg.G1008, Texts.Generating_code, PathHelper.UnmapPath(context.ProjectDirectory, fileName));
 
                 try
                 {

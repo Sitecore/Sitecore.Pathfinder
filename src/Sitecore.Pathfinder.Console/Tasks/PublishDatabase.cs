@@ -32,7 +32,8 @@ namespace Sitecore.Pathfinder.Tasks
             var databaseName = DatabaseName;
             if (string.IsNullOrEmpty(databaseName))
             {
-                databaseName = context.Project.Options.DatabaseName;
+                var project = context.LoadProject();
+                databaseName = project.Options.DatabaseName;
             }
 
             if (string.Equals(databaseName, "core", StringComparison.OrdinalIgnoreCase))

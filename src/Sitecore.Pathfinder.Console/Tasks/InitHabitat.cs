@@ -29,7 +29,7 @@ namespace Sitecore.Pathfinder.Tasks
 
             CopyFiles(context);
 
-            UpdateConfigFile(context, context.Project.ProjectDirectory);
+            UpdateConfigFile(context, context.ProjectDirectory);
         }
 
         protected virtual void CopyFiles([NotNull] IBuildContext context)

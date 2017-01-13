@@ -34,12 +34,14 @@ namespace Sitecore.Pathfinder.Tasks
         {
             context.Trace.TraceInformation(Msg.G1009, Texts.Generating_code___);
 
+            var project = context.LoadProject();
+
             foreach (var projectCodeGenerator in ProjectCodeGenerators)
             {
-                projectCodeGenerator.Generate(context, context.Project);
+                projectCodeGenerator.Generate(context, project);
             }
 
-            foreach (var projectItem in context.Project.ProjectItems)
+            foreach (var projectItem in project.ProjectItems)
             {
                 foreach (var projectItemCodeGenerator in ProjectItemCodeGenerators)
                 {

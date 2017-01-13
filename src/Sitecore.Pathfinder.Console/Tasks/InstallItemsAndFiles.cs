@@ -24,8 +24,9 @@ namespace Sitecore.Pathfinder.Tasks
             context.Trace.TraceInformation(Msg.D1027, "Installing items and files...");
 
             var projectEmitter = CompositionService.Resolve<ItemsAndFilesProjectEmitter>();
+            var project = context.LoadProject();
 
-            projectEmitter.Emit(context.Project);
+            projectEmitter.Emit(project);
         }
     }
 }

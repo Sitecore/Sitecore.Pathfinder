@@ -33,7 +33,9 @@ namespace Sitecore.Pathfinder.Tasks
 
             var flat = context.Configuration.GetBool(Constants.Configuration.WriteSerialization.Flat);
 
-            foreach (var item in context.Project.Items)
+            var project = context.LoadProject();
+
+            foreach (var item in project.Items)
             {
                 string fileName;
                 if (flat)

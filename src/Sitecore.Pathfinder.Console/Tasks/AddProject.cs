@@ -26,7 +26,9 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
-            var projectDirectory = context.Project.ProjectDirectory;
+            var project = context.LoadProject();
+
+            var projectDirectory = project.ProjectDirectory;
             if (!FileSystem.DirectoryExists(projectDirectory))
             {
                 FileSystem.CreateDirectory(projectDirectory);
@@ -63,7 +65,7 @@ namespace Sitecore.Pathfinder.Tasks
             var defaultDataFolderDirectory = context.Configuration.GetString(Constants.Configuration.NewProject.DefaultDataFolderDirectory).TrimEnd('\\');
             if (string.IsNullOrEmpty(defaultDataFolderDirectory) && !string.IsNullOrEmpty(defaultWebsiteDirectory))
             {
-                defaultDataFolderDirectory = Path.Combine(Path.GetDirectoryName(defaultWebsiteDirectory) ?? string.Empty, "Data");
+                defaultDataFolderDirectory = Path.Combine(Path.GetDirectoryName(defaultWebsiteDirectory), "Data");
             }
 
             if (!string.IsNullOrEmpty(defaultDataFolderDirectory))

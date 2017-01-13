@@ -21,7 +21,9 @@ namespace Sitecore.Pathfinder.Tasks
                 return;
             }
 
-            var projectItem = context.Project.FindQualifiedItem<IProjectItem>(qualifiedName);
+            var project = context.LoadProject();
+
+            var projectItem = project.FindQualifiedItem<IProjectItem>(qualifiedName);
             if (projectItem == null)
             {
                 context.Trace.WriteLine(Texts.Project_item_not_found__ + qualifiedName);

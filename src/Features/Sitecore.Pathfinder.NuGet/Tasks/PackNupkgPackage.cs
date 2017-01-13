@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
             }
             else
             {
-                directory = PathHelper.Combine(context.Project.ProjectDirectory, packageDirectory);
+                directory = PathHelper.Combine(context.ProjectDirectory, packageDirectory);
             }
 
             var pathMatcher = new PathMatcher(context.Configuration.GetString(Constants.Configuration.PackNuGet.Include), context.Configuration.GetString(Constants.Configuration.PackNuGet.Exclude));
@@ -69,7 +69,7 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
             var nupkgFileName = BuildNupkgFile(context, nuspecFileName, nupkgDirectory);
             if (!string.IsNullOrEmpty(nupkgFileName))
             {
-                context.Trace.TraceInformation(Msg.D1019, Texts.NuGet_file_size, $"{PathHelper.UnmapPath(context.Project.ProjectDirectory, nupkgFileName)} ({new FileInfo(nupkgFileName).Length.ToString("#,##0 bytes")})");
+                context.Trace.TraceInformation(Msg.D1019, Texts.NuGet_file_size, $"{PathHelper.UnmapPath(context.ProjectDirectory, nupkgFileName)} ({new FileInfo(nupkgFileName).Length.ToString("#,##0 bytes")})");
             }
         }
 
@@ -78,7 +78,7 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
         {
             var nuspec = GetNuspec(context, nuspecFileName);
 
-            var basePath = PathHelper.Combine(context.Project.ProjectDirectory, context.Configuration.GetString(Constants.Configuration.PackNuGet.BasePath));
+            var basePath = PathHelper.Combine(context.ProjectDirectory, context.Configuration.GetString(Constants.Configuration.PackNuGet.BasePath));
 
             string nupkgFileName;
 
@@ -129,15 +129,17 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
         [NotNull]
         protected virtual IDictionary<string, string> GetTokens([NotNull] IBuildContext context, [NotNull] string nuspec)
         {
+            var project = context.LoadProject();
+
             // replace dependencies macro with dependencies from /packages.config
             var dependencies = GetDependencies(context, nuspec);
-            var safeProjectUniqueId = Regex.Replace(context.Project.ProjectUniqueId, Constants.SafeProjectUniqueIdRegex, string.Empty);
+            var safeProjectUniqueId = Regex.Replace(project.ProjectUniqueId, Constants.SafeProjectUniqueIdRegex, string.Empty);
 
             var tokens = new Dictionary<string, string>
             {
                 ["$toolsDirectory$"] = context.ToolsDirectory,
                 ["$projectDirectory$"] = context.ProjectDirectory,
-                ["$projectUniqueId$"] = context.Project.ProjectUniqueId,
+                ["$projectUniqueId$"] = project.ProjectUniqueId,
                 ["$safeProjectUniqueId$"] = safeProjectUniqueId,
                 ["<dependency id=\"$packages.config$\" version=\"1.0.0\" />"] = dependencies
             };
@@ -171,7 +173,7 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
             }
 
             // load dependencies from packages.config
-            var fileName = Path.Combine(context.Project.ProjectDirectory, "packages.config");
+            var fileName = Path.Combine(context.ProjectDirectory, "packages.config");
             if (!FileSystem.FileExists(fileName))
             {
                 return writer.ToString();

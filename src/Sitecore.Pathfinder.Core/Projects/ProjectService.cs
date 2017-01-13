@@ -70,7 +70,7 @@ namespace Sitecore.Pathfinder.Projects
                 return projectService.LoadProjectFromConfiguration();
             });
 
-            return context.Project;
+            return context.LoadProject();
         }
 
         [NotNull]

@@ -31,6 +31,8 @@ namespace Sitecore.Pathfinder.Tasks
             var fileName = PathHelper.Combine(context.ProjectDirectory, context.Configuration.GetString(Constants.Configuration.WriteExports.FileName));
             FileSystem.CreateDirectoryFromFileName(fileName);
 
+            var project = context.LoadProject();
+
             using (var writer = FileSystem.OpenStreamWriter(fileName))
             {
                 using (var output = new XmlTextWriter(writer))
@@ -39,12 +41,12 @@ namespace Sitecore.Pathfinder.Tasks
 
                     output.WriteStartElement("Exports");
 
-                    foreach (var template in context.Project.Templates)
+                    foreach (var template in project.Templates)
                     {
                         template.WriteAsExportXml(output);
                     }
 
-                    foreach (var item in context.Project.Items)
+                    foreach (var item in project.Items)
                     {
                         item.WriteAsExportXml(output, fieldToWrite);
                     }

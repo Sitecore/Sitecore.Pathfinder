@@ -31,15 +31,17 @@ namespace Sitecore.Pathfinder.Tasks
                 return;
             }
 
-            var items = context.Project.Items.Count();
-            var templates = context.Project.Templates.Count();
-            var renderings = context.Project.ProjectItems.OfType<Rendering>().Count();
-            var media = context.Project.ProjectItems.OfType<MediaFile>().Count();
-            var files = context.Project.Files.Count();
+            var project = context.LoadProject();
+
+            var items = project.Items.Count();
+            var templates = project.Templates.Count();
+            var renderings = project.ProjectItems.OfType<Rendering>().Count();
+            var media = project.ProjectItems.OfType<MediaFile>().Count();
+            var files = project.Files.Count();
 
             context.Trace.WriteLine($"Project metrics: {items} items, {templates} templates, {media} media files, {renderings} renderings, {files} files");
 
-            context.ErrorCode = context.Project.Diagnostics.Any(d => d.Severity == Severity.Warning || d.Severity == Severity.Error) ? 1 : 0;
+            context.ErrorCode = project.Diagnostics.Any(d => d.Severity == Severity.Warning || d.Severity == Severity.Error) ? 1 : 0;
 
             if (Host.Stopwatch != null)
             {
@@ -48,7 +50,7 @@ namespace Sitecore.Pathfinder.Tasks
                 Console.Write(@", ");
             }
 
-            Console.Write(Texts.Ducats___0_, context.Project.Ducats.ToString("#,##0"));
+            Console.Write(Texts.Ducats___0_, project.Ducats.ToString("#,##0"));
             Console.WriteLine();
         }
     }

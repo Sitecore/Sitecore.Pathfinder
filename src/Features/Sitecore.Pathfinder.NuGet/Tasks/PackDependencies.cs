@@ -27,7 +27,7 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
             context.Trace.TraceInformation(Msg.M1014, Texts.Packing_dependency_Sitecore_packages_in_Nuget_packages___);
 
             var packagesDirectory = context.Configuration.GetString(Constants.Configuration.CopyDependencies.SourceDirectory);
-            var sourceDirectory = Path.Combine(context.Project.ProjectDirectory, packagesDirectory);
+            var sourceDirectory = Path.Combine(context.ProjectDirectory, packagesDirectory);
             if (!FileSystem.DirectoryExists(sourceDirectory))
             {
                 context.Trace.TraceInformation(Msg.M1015, Texts.Dependencies_directory_not_found__Skipping, packagesDirectory);
@@ -45,7 +45,7 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
             var packageName = Path.GetFileNameWithoutExtension(zipFileName);
             var packageId = packageName.GetSafeCodeIdentifier();
 
-            var srcFileName = PathHelper.UnmapPath(context.Project.ProjectDirectory, zipFileName);
+            var srcFileName = PathHelper.UnmapPath(context.ProjectDirectory, zipFileName);
             var targetFileName = "project\\packages\\" + Path.GetFileName(zipFileName);
 
             context.Trace.TraceInformation(Msg.M1016, Texts.Packing, packageName);
@@ -65,14 +65,14 @@ namespace Sitecore.Pathfinder.NuGet.Tasks
             nuspec.WriteLine("    </files>");
             nuspec.WriteLine("</package>");
 
-            var nupkgFileName = Path.Combine(Path.GetDirectoryName(zipFileName) ?? string.Empty, packageId + ".nupkg");
+            var nupkgFileName = Path.Combine(Path.GetDirectoryName(zipFileName), packageId + ".nupkg");
 
             try
             {
                 var byteArray = Encoding.UTF8.GetBytes(nuspec.ToString());
                 using (var nuspecStream = new MemoryStream(byteArray))
                 {
-                    var packageBuilder = new PackageBuilder(nuspecStream, context.Project.ProjectDirectory);
+                    var packageBuilder = new PackageBuilder(nuspecStream, context.ProjectDirectory);
 
                     using (var nupkg = FileSystem.OpenWrite(nupkgFileName))
                     {

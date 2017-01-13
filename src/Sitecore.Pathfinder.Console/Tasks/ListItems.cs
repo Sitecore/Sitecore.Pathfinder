@@ -13,7 +13,9 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
-            foreach (var item in context.Project.Items.OrderBy(i => i.ItemIdOrPath))
+            var project = context.LoadProject();
+
+            foreach (var item in project.Items.OrderBy(i => i.ItemIdOrPath))
             {
                 context.Trace.WriteLine(item.ItemIdOrPath);
             }

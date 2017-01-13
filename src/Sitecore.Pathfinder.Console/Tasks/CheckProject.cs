@@ -28,7 +28,9 @@ namespace Sitecore.Pathfinder.Tasks
 
             var treatWarningsAsErrors = context.Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
 
-            var diagnostics = context.Project.Diagnostics.ToArray();
+            var project = context.LoadProject();
+
+            var diagnostics = project.Diagnostics.ToArray();
 
             context.Trace.TraceDiagnostics(diagnostics, treatWarningsAsErrors);
 
@@ -36,7 +38,7 @@ namespace Sitecore.Pathfinder.Tasks
             var warnings = diagnostics.Count(d => d.Severity == Severity.Warning);
             var messages = diagnostics.Count(d => d.Severity == Severity.Information);
             var checkers = CheckerService.EnabledCheckersCount;
-            var references = context.Project.ProjectItems.Sum(i => i.References.Count);
+            var references = project.ProjectItems.Sum(i => i.References.Count);
 
             if (treatWarningsAsErrors)
             {

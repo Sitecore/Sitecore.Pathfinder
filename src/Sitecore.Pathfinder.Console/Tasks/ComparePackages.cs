@@ -47,7 +47,7 @@ namespace Sitecore.Pathfinder.Tasks
                 return;
             }
 
-            var project1 = context.Project;
+            var project1 = context.LoadProject();
 
             var project2 = ProjectService.LoadProjectFromNewHost(projectDirectory);
             if (project2 == null)
