@@ -1,21 +1,19 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using Sitecore.Pathfinder.Extensibility;
-using Sitecore.Pathfinder.IO;
-using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Html
 {
     public class HtmlExtension : ExtensionBase
     {
-        public override void RemoveWebsiteFiles(IBuildContext context)
+        public override void RemoveWebsiteFiles(IExtensionContext context)
         {
             RemoveWebsiteAssembly(context, "Sitecore.Pathfinder.Html.dll");
         }
 
-        public override bool UpdateWebsiteFiles(IBuildContext context)
+        public override bool UpdateWebsiteFiles(IExtensionContext context)
         {
             return CopyToolsFileToWebsiteBinDirectory(context, "Sitecore.Pathfinder.Html.dll");
-        }                               
+        }
     }
 }

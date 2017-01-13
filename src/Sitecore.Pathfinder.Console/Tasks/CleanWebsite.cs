@@ -5,6 +5,7 @@ using System.ComponentModel.Composition;
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Tasks.Building;
 
@@ -41,9 +42,10 @@ namespace Sitecore.Pathfinder.Tasks
             RemoveWebsiteAssembly(context, "Sitecore.Pathfinder.Core.dll");
             RemoveWebsiteAssembly(context, "Sitecore.Pathfinder.Roslyn.dll");
 
+            var extensionContext = context.CompositionService.Resolve<IExtensionContext>();
             foreach (var extension in Extensions)
             {
-                extension.RemoveWebsiteFiles(context);
+                extension.RemoveWebsiteFiles(extensionContext);
             }
         }
 

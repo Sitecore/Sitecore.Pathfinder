@@ -1,14 +1,12 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using Sitecore.Pathfinder.Extensibility;
-using Sitecore.Pathfinder.Tasks;
-using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Unicorn
 {
     public class UnicornExtension : ExtensionBase
     {
-        public override void RemoveWebsiteFiles(IBuildContext context)
+        public override void RemoveWebsiteFiles(IExtensionContext context)
         {
             RemoveWebsiteAssembly(context, "Sitecore.Pathfinder.Unicorn.dll");
             RemoveWebsiteAssembly(context, "Unicorn.dll");
@@ -17,7 +15,7 @@ namespace Sitecore.Pathfinder.Unicorn
             RemoveWebsiteAssembly(context, "Rainbow.dll");
         }
 
-        public override bool UpdateWebsiteFiles(IBuildContext context)
+        public override bool UpdateWebsiteFiles(IExtensionContext context)
         {
             var updated = false;
 

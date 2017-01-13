@@ -101,22 +101,6 @@ namespace Sitecore.Pathfinder.Building
             return failed > 0 ? -1 : 0;
         }
 
-        protected override IList<string> GetTaskNames(ITaskContext context)
-        {
-            var tasks = base.GetTaskNames(context);
-
-            // insert setup tasks
-            foreach (var task in Tasks.OrderBy(t => t.TaskName))
-            {
-                if (task is ISetupTask)
-                {
-                    tasks.Insert(0, task.TaskName);
-                }
-            }
-
-            return tasks;
-        }
-
         protected virtual bool IsSolution()
         {
             return FileSystem.FileExists(Path.Combine(Configuration.GetProjectDirectory(), "scconfig.solution.json"));

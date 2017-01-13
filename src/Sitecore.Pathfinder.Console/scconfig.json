@@ -655,7 +655,7 @@
         "show-stack-trace": true,
 
         // show time spent by each task
-        "show-task-time": true,
+        "show-task-time": false,
 
         "web-requests": {
             "time-out": 300 // seconds

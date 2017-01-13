@@ -90,6 +90,8 @@
     <Compile Include="Emitting\ItemsAndFilesEmitting\SqlItemEmitter.cs" />
     <Compile Include="Emitting\IProjectEmitter.cs" />
     <Compile Include="Emitting\ProjectEmitter.cs" />
+    <Compile Include="Extensibility\ExtensionContext.cs" />
+    <Compile Include="Extensibility\IExtensionContext.cs" />
     <Compile Include="Extensions\DiagnosticCollectionExtensions.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\SnapshotExtensions.cs" />
@@ -126,11 +128,12 @@
     <Compile Include="Snapshots\StringTextNode.cs" />
     <Compile Include="Tasks\Building\BuildContext.cs" />
     <Compile Include="Tasks\Building\IBuildTask.cs" />
+    <Compile Include="Tasks\Building\IWebsiteUpdateService.cs" />
     <Compile Include="Tasks\Building\NuGetOutputFile.cs" />
     <Compile Include="Tasks\Building\OutputFile.cs" />
     <Compile Include="Tasks\Building\WebRequest.cs" />
+    <Compile Include="Tasks\Building\WebsiteUpdateService.cs" />
     <Compile Include="Tasks\IOptionPicker.cs" />
-    <Compile Include="Tasks\ISetupTask.cs" />
     <Compile Include="Tasks\IIgnoreAbortedTask.cs" />
     <Compile Include="Tasks\IPostRunTask.cs" />
     <Compile Include="Tasks\IPreRunTask.cs" />

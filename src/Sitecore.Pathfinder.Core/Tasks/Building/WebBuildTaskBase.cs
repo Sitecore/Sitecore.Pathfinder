@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.IO;
@@ -49,21 +49,11 @@ namespace Sitecore.Pathfinder.Tasks.Building
         }
 
         [NotNull]
-        protected virtual WebClient GetWebClient([NotNull] IConfiguration configuration)
+        protected virtual WebRequest GetWebRequest([NotNull] ITaskContext context)
         {
-            return new WebClientWithTimeout(configuration);
-        }
+            UpdateWebsiteFiles(context);
 
-        [NotNull]
-        protected virtual WebRequest GetWebRequest([NotNull] IConfiguration configuration)
-        {
-            return new WebRequest(configuration);
-        }
-
-        [NotNull]
-        protected virtual WebRequest GetWebRequest([NotNull] IBuildContext context)
-        {
-            return GetWebRequest(context.Configuration).WithCredentials().WithProjectDirectory(context.ProjectDirectory).WithToolsDirectory(context.ToolsDirectory).WithCommandLine();
+            return new WebRequest(context.Configuration).WithCredentials().WithProjectDirectory(context.Configuration.GetProjectDirectory()).WithToolsDirectory(context.Configuration.GetToolsDirectory()).WithCommandLine();
         }
 
         protected virtual void HandleWebException([NotNull] ITaskContext context, [NotNull] WebException ex)
@@ -73,7 +63,7 @@ namespace Sitecore.Pathfinder.Tasks.Building
             var stream = ex.Response?.GetResponseStream();
             if (stream != null)
             {
-                message = HttpUtility.HtmlDecode(new StreamReader(stream).ReadToEnd()) ?? string.Empty;
+                message = HttpUtility.HtmlDecode(new StreamReader(stream).ReadToEnd());
             }
 
             var bodyStart = message.IndexOf("<body", StringComparison.OrdinalIgnoreCase);
@@ -95,6 +85,8 @@ namespace Sitecore.Pathfinder.Tasks.Building
 
         protected virtual bool Post([NotNull] ITaskContext context, [NotNull] WebRequest webRequest)
         {
+            UpdateWebsiteFiles(context);
+
             var webClient = GetWebClient(context.Configuration);
             try
             {
@@ -126,6 +118,18 @@ namespace Sitecore.Pathfinder.Tasks.Building
             }
 
             return false;
+        }
+
+        [NotNull]
+        private WebClient GetWebClient([NotNull] IConfiguration configuration)
+        {
+            return new WebClientWithTimeout(configuration);
+        }
+
+        protected virtual void UpdateWebsiteFiles([NotNull] ITaskContext context)
+        {
+            var websiteUpdateService = context.CompositionService.Resolve<IWebsiteUpdateService>();
+            websiteUpdateService.UpdateWebsiteFiles();
         }
 
         protected class WebClientWithTimeout : WebClient

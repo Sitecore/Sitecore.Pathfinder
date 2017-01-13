@@ -21,7 +21,7 @@ namespace Sitecore.Pathfinder.Tasks.Building
         private IProject _project;
 
         [ImportingConstructor]
-        public BuildContext([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystem) : base(configuration, console, traceService, fileSystem)
+        public BuildContext([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] IConsoleService console, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystem) : base(configuration, compositionService, console, traceService, fileSystem)
         {
         }
 

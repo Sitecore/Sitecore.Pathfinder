@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Tasks
     public class WebsiteTaskContext : TaskContext, IWebsiteTaskContext
     {
         [ImportingConstructor]
-        public WebsiteTaskContext([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystem) : base(configuration, console, traceService, fileSystem)
+        public WebsiteTaskContext([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] IConsoleService console, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystem) : base(configuration, compositionService, console, traceService, fileSystem)
         {
         }
 

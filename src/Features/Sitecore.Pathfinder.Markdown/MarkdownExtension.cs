@@ -1,19 +1,18 @@
-﻿using Sitecore.Pathfinder.Extensibility;
-using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Tasks;
-using Sitecore.Pathfinder.Tasks.Building;
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
+
+using Sitecore.Pathfinder.Extensibility;
 
 namespace Sitecore.Pathfinder.Markdown
 {
     public class MarkdownExtension : ExtensionBase
     {
-        public override void RemoveWebsiteFiles([NotNull] IBuildContext context)
+        public override void RemoveWebsiteFiles(IExtensionContext context)
         {
             RemoveWebsiteAssembly(context, "Sitecore.Pathfinder.Markdown.dll");
             RemoveWebsiteAssembly(context, "MarkdownSharp.dll");
         }
 
-        public override bool UpdateWebsiteFiles([NotNull] IBuildContext context)
+        public override bool UpdateWebsiteFiles(IExtensionContext context)
         {
             var updated = false;
 
