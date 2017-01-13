@@ -789,4 +789,7 @@
   <data name="Clearing_caches___" xml:space="preserve">
     <value>Clearing caches...</value>
   </data>
+  <data name="Installing_items_and_files___" xml:space="preserve">
+    <value>Installing items and files...</value>
+  </data>
 </root>

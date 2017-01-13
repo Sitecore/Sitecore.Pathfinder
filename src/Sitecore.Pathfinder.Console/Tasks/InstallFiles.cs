@@ -8,10 +8,10 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    public class InstallItemsAndFiles : BuildTaskBase
+    public class InstallFiles : BuildTaskBase
     {
         [ImportingConstructor]
-        public InstallItemsAndFiles([NotNull] ICompositionService compositionService) : base("install-items-and-files")
+        public InstallFiles([NotNull] ICompositionService compositionService) : base("install-files")
         {
             CompositionService = compositionService;
         }
@@ -21,9 +21,9 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
-            context.Trace.TraceInformation(Msg.D1027, Texts.Installing_items_and_files___);
+            context.Trace.TraceInformation(Msg.D1028, "Installing files...");
 
-            var projectEmitter = CompositionService.Resolve<ItemsAndFilesProjectEmitter>();
+            var projectEmitter = CompositionService.Resolve<FilesProjectEmitter>();
             var project = context.LoadProject();
 
             projectEmitter.Emit(project);

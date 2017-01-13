@@ -155,6 +155,7 @@
     <Compile Include="Tasks\ComparePackages.cs" />
     <Compile Include="Tasks\GenerateFile.cs" />
     <Compile Include="Tasks\InitProject.cs" />
+    <Compile Include="Tasks\InstallFiles.cs" />
     <Compile Include="Tasks\InstallItemsAndFiles.cs" />
     <Compile Include="Tasks\InitHabitat.cs" />
     <Compile Include="Tasks\ListCheckers.cs" />

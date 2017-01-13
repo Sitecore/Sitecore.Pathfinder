@@ -86,6 +86,7 @@
     <Compile Include="Emitting\Emitters\BinFileEmitter.cs" />
     <Compile Include="Emitting\Emitters\ConfigFileEmitter.cs" />
     <Compile Include="Emitting\Emitters\ContentFileEmitter.cs" />
+    <Compile Include="Emitting\ItemsAndFilesEmitting\FilesProjectEmitter.cs" />
     <Compile Include="Emitting\ItemsAndFilesEmitting\ItemsAndFilesProjectEmitter.cs" />
     <Compile Include="Emitting\ItemsAndFilesEmitting\SqlItemEmitter.cs" />
     <Compile Include="Emitting\IProjectEmitter.cs" />

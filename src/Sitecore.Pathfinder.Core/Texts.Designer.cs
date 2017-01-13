@@ -1001,6 +1001,15 @@ namespace Sitecore.Pathfinder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Installing items and files....
+        /// </summary>
+        public static string Installing_items_and_files___ {
+            get {
+                return ResourceManager.GetString("Installing_items_and_files___", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Installing project....
         /// </summary>
         public static string Installing_project___ {

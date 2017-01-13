@@ -33,7 +33,7 @@ namespace Sitecore.Pathfinder.Tasks.Building
         protected ICompositionService CompositionService { get; }
 
         [NotNull]
-        public ITraceService Trace { get; }
+        protected ITraceService Trace { get; }
 
         [NotNull, ItemNotNull]
         protected IEnumerable<IExtension> Extensions { get; }
