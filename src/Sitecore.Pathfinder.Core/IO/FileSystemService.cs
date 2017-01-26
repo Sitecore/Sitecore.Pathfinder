@@ -231,27 +231,24 @@ namespace Sitecore.Pathfinder.IO
 
         public Stream OpenRead(string fileName)
         {
-            var fileInfo = new ZlpFileInfo(fileName);
-            return fileInfo.OpenRead();
+            return new FileStream(fileName, FileMode.Open, FileAccess.Read);
         }
 
         public StreamReader OpenStreamReader(string fileName)
         {
-            var fileInfo = new ZlpFileInfo(fileName);
-            return new StreamReader(fileInfo.OpenRead());
+            return new StreamReader(fileName);
         }
 
         public StreamWriter OpenStreamWriter(string fileName)
         {
             // todo: there is a weird bug in ZetaLongPath that does not truncate the file
-            var fileInfo = new FileInfo(fileName);
-            return new StreamWriter(fileInfo.OpenWrite());
+            return new StreamWriter(fileName);
         }
 
         public Stream OpenWrite(string fileName)
         {
-            var fileInfo = new ZlpFileInfo(fileName);
-            return fileInfo.OpenWrite();
+            // todo: there is a weird bug in ZetaLongPath that does not truncate the file
+            return new FileStream(fileName, FileMode.Create);
         }
 
         public virtual string[] ReadAllLines(string fileName)

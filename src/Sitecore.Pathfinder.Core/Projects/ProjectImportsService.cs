@@ -61,7 +61,7 @@ namespace Sitecore.Pathfinder.Projects
             // todo: NuGet: handle noconfig
             foreach (var packageInfo in ProjectPackages.GetPackages())
             {
-                var fileName = Path.Combine(packageInfo.ProjectDirectory, Configuration.GetString(Constants.Configuration.WriteExports.FileName));
+                var fileName = Path.Combine(packageInfo.ProjectDirectory, PathHelper.NormalizeFilePath(Configuration.GetString(Constants.Configuration.WriteExports.FileName)));
                 if (!FileSystem.FileExists(fileName))
                 {
                     Trace.TraceError(Msg.I1010, "Could not find dependency package", fileName);
