@@ -43,7 +43,14 @@ namespace Sitecore.Pathfinder.Languages.Yaml
                 return;
             }
 
-            ParseFieldTextNode(context, item, languageVersionContext, textNode, fieldNameTextNode);
+            if (!fieldNameTextNode.Attributes.Any())
+            {
+                ParseFieldTextNode(context, item, languageVersionContext, textNode, new AttributeNameTextNode(fieldNameTextNode), fieldNameTextNode);
+            }
+            else
+            {
+                ParseFieldTextNode(context, item, languageVersionContext, textNode, fieldNameTextNode);
+            }
         }
 
         protected override void ParseLayoutTextNode(ItemParseContext context, Item item, ITextNode textNode)
@@ -60,35 +67,37 @@ namespace Sitecore.Pathfinder.Languages.Yaml
 
         protected override void ParseUnversionedTextNode(ItemParseContext context, Item item, ITextNode textNode)
         {
-            var firstChildNode = textNode.ChildNodes.First();
-
-            SchemaService.ValidateTextNodeSchema(firstChildNode);
-
-            var fieldContext = new LanguageVersionContext();
-            fieldContext.LanguageProperty.SetValue(new AttributeNameTextNode(firstChildNode));
-
-            foreach (var unversionedChildNode in firstChildNode.ChildNodes)
+            foreach (var languageNode in textNode.ChildNodes)
             {
-                ParseFieldTextNode(context, item, fieldContext, unversionedChildNode);
+                SchemaService.ValidateTextNodeSchema(languageNode);
+
+                var fieldContext = new LanguageVersionContext();
+                fieldContext.LanguageProperty.SetValue(new AttributeNameTextNode(languageNode));
+
+                foreach (var unversionedChildNode in languageNode.ChildNodes)
+                {
+                    ParseFieldTextNode(context, item, fieldContext, unversionedChildNode);
+                }
             }
         }
 
         protected override void ParseVersionedTextNode(ItemParseContext context, Item item, ITextNode textNode)
         {
-            var firstChildNode = textNode.ChildNodes.First();
-
-            SchemaService.ValidateTextNodeSchema(firstChildNode);
-
-            foreach (var node in firstChildNode.ChildNodes)
+            foreach (var languageNode in textNode.ChildNodes)
             {
-                var fieldContext = new LanguageVersionContext();
+                SchemaService.ValidateTextNodeSchema(languageNode);
 
-                fieldContext.LanguageProperty.SetValue(new AttributeNameTextNode(firstChildNode));
-                fieldContext.VersionProperty.SetValue(new AttributeNameTextNode(node));
-
-                foreach (var versionedChildNode in node.ChildNodes)
+                foreach (var node in languageNode.ChildNodes)
                 {
-                    ParseFieldTextNode(context, item, fieldContext, versionedChildNode);
+                    var fieldContext = new LanguageVersionContext();
+
+                    fieldContext.LanguageProperty.SetValue(new AttributeNameTextNode(languageNode));
+                    fieldContext.VersionProperty.SetValue(new AttributeNameTextNode(node));
+
+                    foreach (var versionedChildNode in node.ChildNodes)
+                    {
+                        ParseFieldTextNode(context, item, fieldContext, versionedChildNode);
+                    }
                 }
             }
         }

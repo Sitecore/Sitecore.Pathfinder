@@ -46,13 +46,7 @@
           Field.LongHelp  : Long help.
           Field.Type      : Checkbox
           Value           : False
-
-        - File.Include : ~/includes/Field.include.item.xml
-        
-        - File.Include : ~/includes/ParameterizedField.include.item.xml
-          Name  : ParameterizedField
-          Value : Parameterized Value
-
+       
         - Unversioned :
             - da-DK :
                 - Field : UnversionedField
@@ -60,6 +54,12 @@
                   Field.LongHelp  : Long help.
                   Value: >
                         Hello
+            - en :
+                - Field : UnversionedField
+                  Field.ShortHelp : Kort hjælp. 
+                  Field.LongHelp  : Lang hjælp.
+                  Value: >
+                        Hallo
 
         - Versioned :
             - da-DK :

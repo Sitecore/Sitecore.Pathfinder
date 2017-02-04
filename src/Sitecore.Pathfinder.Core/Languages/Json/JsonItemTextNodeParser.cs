@@ -35,7 +35,19 @@ namespace Sitecore.Pathfinder.Languages.Json
                     child = childNode.ChildNodes.First();
                 }
 
-                var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, PathHelper.CombineItemPath(context.ParentItemPath, item.ItemName), item.IsImport).With(sortorder);
+                var itemIdOrPath = item.ItemIdOrPath;
+                if (itemIdOrPath.StartsWith("{") && itemIdOrPath.StartsWith("}"))
+                {
+                    context.ParseContext.Trace.TraceError(Msg.E1042, "Cannot create child item of item with ID item path");
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(itemIdOrPath))
+                {
+                    itemIdOrPath = PathHelper.CombineItemPath(context.ParentItemPath, item.ItemName);
+                }
+
+                var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, itemIdOrPath, item.IsImport).With(sortorder);
                 Parse(newContext, child);
                 sortorder += 100;
             }

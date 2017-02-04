@@ -77,6 +77,14 @@ namespace Sitecore.Pathfinder.Parsing.Items
                         ParseFieldsTextNode(context, item, childNode);
                         break;
 
+                    case "Unversioned-Fields":
+                        ParseUnversionedTextNode(context, item, childNode);
+                        break;
+
+                    case "Versioned-Fields":
+                        ParseVersionedTextNode(context, item, childNode);
+                        break;
+
                     case "Children":
                         ParseChildrenTextNodes(context, item, childNode);
                         break;
@@ -94,7 +102,19 @@ namespace Sitecore.Pathfinder.Parsing.Items
             var sortorder = 100;
             foreach (var childNode in textNode.ChildNodes)
             {
-                var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, PathHelper.CombineItemPath(context.ParentItemPath, item.ItemName), item.IsImport).With(sortorder);
+                var itemIdOrPath = item.ItemIdOrPath;
+                if (itemIdOrPath.StartsWith("{") && itemIdOrPath.EndsWith("}"))
+                {
+                    context.ParseContext.Trace.TraceError(Msg.E1042, "Cannot create child item of item with ID item path");
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(itemIdOrPath))
+                {
+                    itemIdOrPath = PathHelper.CombineItemPath(context.ParentItemPath, item.ItemName);
+                }
+
+                var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, itemIdOrPath, item.IsImport).With(sortorder);
                 context.Parser.ParseTextNode(newContext, childNode);
                 sortorder += 100;
             }
