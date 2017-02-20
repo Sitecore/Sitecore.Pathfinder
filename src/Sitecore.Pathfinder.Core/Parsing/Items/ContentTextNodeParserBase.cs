@@ -106,19 +106,19 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
         protected virtual void ParseUnversionedTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode childNode)
         {
-            var fieldContext = new LanguageVersionContext();
-            fieldContext.LanguageProperty.Parse(childNode);
+            var languageVersionContext = new LanguageVersionContext();
+            languageVersionContext.LanguageProperty.Parse(childNode);
 
-            ParseAttributes(context, item, fieldContext, childNode);
+            ParseAttributes(context, item, languageVersionContext, childNode);
         }
 
         protected virtual void ParseVersionedTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode childNode)
         {
-            var fieldContext = new LanguageVersionContext();
-            fieldContext.LanguageProperty.Parse(childNode);
-            fieldContext.VersionProperty.Parse("Version", childNode);
+            var languageVersionContext = new LanguageVersionContext();
+            languageVersionContext.LanguageProperty.Parse(childNode);
+            languageVersionContext.VersionProperty.Parse("Version", childNode);
 
-            ParseAttributes(context, item, fieldContext, childNode);
+            ParseAttributes(context, item, languageVersionContext, childNode);
         }
 
         protected virtual void ParseFieldTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] LanguageVersionContext languageVersionContext, [NotNull] ITextNode textNode)

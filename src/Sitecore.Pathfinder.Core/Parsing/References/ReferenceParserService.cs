@@ -243,6 +243,13 @@ namespace Sitecore.Pathfinder.Parsing.References
                     continue;
                 }
 
+                // ignore {{
+                if (referenceText.Mid(n, 2) == "{{")
+                {
+                    s = n + 2;
+                    continue;
+                }
+
                 var e = referenceText.IndexOf('}', n);
                 if (e < 0)
                 {

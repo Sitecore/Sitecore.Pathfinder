@@ -1,5 +1,6 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Parsing.Items;
 using Sitecore.Pathfinder.Projects.Items;
@@ -16,6 +17,14 @@ namespace Sitecore.Pathfinder.Languages.Yaml
         public override bool CanParse(ItemParseContext context, ITextNode textNode)
         {
             return textNode.Snapshot is YamlTextSnapshot;
+        }
+
+        protected override void ParseUnversionedTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode childNode)
+        {
+            var languageVersionContext = new LanguageVersionContext();
+            languageVersionContext.LanguageProperty.SetValue(childNode);
+
+            ParseAttributes(context, item, languageVersionContext, childNode);
         }
 
         protected override ITextNode GetItemNameTextNode(IParseContext context, ITextNode textNode, string attributeName = "Name")
