@@ -74,18 +74,26 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 switch (childNode.Key)
                 {
                     case "Fields":
+                    case "...Fields":
+                    case "...fields":
                         ParseFieldsTextNode(context, item, childNode);
                         break;
 
-                    case "Unversioned-Fields":
+                    case "Fields.Unversioned":
+                    case "...Unversioned":
+                    case "...unversioned":
                         ParseUnversionedTextNode(context, item, childNode);
                         break;
 
-                    case "Versioned-Fields":
+                    case "Fields.Versioned":
+                    case "...Versioned":
+                    case "...versioned":
                         ParseVersionedTextNode(context, item, childNode);
                         break;
 
                     case "Children":
+                    case "...Children":
+                    case "...children":
                         ParseChildrenTextNodes(context, item, childNode);
                         break;
 
