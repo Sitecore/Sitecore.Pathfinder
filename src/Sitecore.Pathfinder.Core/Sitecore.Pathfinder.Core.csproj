@@ -427,8 +427,6 @@
     </Compile>
     <Compile Include="Text\StringHelper.cs" />
     <Compile Include="Text\UrlString.cs" />
-    <Compile Include="Tasks\TroubleshootWebsites\ITroubleshooter.cs" />
-    <Compile Include="Tasks\TroubleshootWebsites\TroubleshooterBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -134,7 +134,6 @@
     <Compile Include="Tasks\ListFiles.cs" />
     <Compile Include="Tasks\ListItems.cs" />
     <Compile Include="Tasks\ListProject.cs" />
-    <Compile Include="Tasks\TroubleshootWebsite.cs" />
     <Compile Include="Tasks\CopyPackage.cs" />
     <Compile Include="Tasks\InstallPackage.cs" />
     <Compile Include="Tasks\InstallProject.cs" />
@@ -455,9 +454,6 @@
     <None Include="help\tasks\copy-package.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="help\tasks\copy-dependencies.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="help\tasks\clean-website.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -485,9 +481,6 @@
     <None Include="help\tasks\install-package.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="help\tasks\list-rules.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="help\tasks\new-project.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -495,9 +488,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="help\tasks\reset-website.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="help\tasks\restore-packages.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="help\tasks\run-script.md">
@@ -513,9 +503,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="help\tasks\synchronize-website.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="help\tasks\troubleshoot-website.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="help\tasks\watch-project.md">
