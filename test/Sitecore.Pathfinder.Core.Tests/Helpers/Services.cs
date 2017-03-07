@@ -11,9 +11,7 @@ using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects;
-using Sitecore.Pathfinder.Rules;
 using Sitecore.Pathfinder.Snapshots;
-using Sitecore.Pathfinder.Xml.XPath;
 
 namespace Sitecore.Pathfinder.Helpers
 {
@@ -43,17 +41,11 @@ namespace Sitecore.Pathfinder.Helpers
         [NotNull]
         public IProjectService ProjectService { get; private set; }
 
-        [Diagnostics.NotNull]
-        public IRuleService RuleService { get; set; }
-
         [NotNull]
         public ISnapshotService SnapshotService { get; set; }
 
         [NotNull]
         public ITraceService Trace { get; private set; }
-
-        [Diagnostics.NotNull]
-        public IXPathService XPathService { get; set; }
 
         [Diagnostics.NotNull]
         public Services Start([NotNull] IHostService host, [CanBeNull] Action mock = null)
@@ -71,8 +63,6 @@ namespace Sitecore.Pathfinder.Helpers
             SnapshotService = CompositionService.Resolve<ISnapshotService>();
             CheckerService = CompositionService.Resolve<ICheckerService>();
             LanguageService = CompositionService.Resolve<ILanguageService>();
-            RuleService = CompositionService.Resolve<IRuleService>();
-            XPathService = CompositionService.Resolve<IXPathService>();
 
             return this;
         }

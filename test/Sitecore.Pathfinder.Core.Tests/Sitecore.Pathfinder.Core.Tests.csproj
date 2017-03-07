@@ -116,8 +116,6 @@
     <Compile Include="Languages\LanguageTests.cs" />
     <Compile Include="Projects\Items\FieldTests.cs" />
     <Compile Include="Projects\ProjectTests.XmlTransform.cs" />
-    <Compile Include="Projects\ProjectTests.XPath.cs" />
-    <Compile Include="Rules\RuleTests.cs" />
     <Compile Include="Projects\ProjectTests.Json.cs" />
     <Compile Include="Projects\ProjectTests.SerializedItem.cs" />
     <Compile Include="Projects\ProjectTests.Yaml.cs" />

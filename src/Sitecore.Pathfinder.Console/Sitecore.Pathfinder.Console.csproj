@@ -134,7 +134,6 @@
     <Compile Include="Tasks\ListFiles.cs" />
     <Compile Include="Tasks\ListItems.cs" />
     <Compile Include="Tasks\ListProject.cs" />
-    <Compile Include="Tasks\ListRules.cs" />
     <Compile Include="Tasks\TroubleshootWebsite.cs" />
     <Compile Include="Tasks\CopyPackage.cs" />
     <Compile Include="Tasks\InstallPackage.cs" />
