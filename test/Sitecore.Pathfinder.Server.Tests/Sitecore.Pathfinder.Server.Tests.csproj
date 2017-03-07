@@ -46,7 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\PathfinderSettingsTests.cs" />
-    <Compile Include="Emitters\EmitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -83,10 +82,6 @@
     <ProjectReference Include="..\..\src\Sitecore.Pathfinder.Core\Sitecore.Pathfinder.Core.csproj">
       <Project>{c674eebf-bbf6-4eda-af5b-a4d58d0be986}</Project>
       <Name>Sitecore.Pathfinder.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Sitecore.Pathfinder.Server\Sitecore.Pathfinder.Server.csproj">
-      <Project>{42808013-7a25-4c07-91fa-be4f7aa8e0b1}</Project>
-      <Name>Sitecore.Pathfinder.Server</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

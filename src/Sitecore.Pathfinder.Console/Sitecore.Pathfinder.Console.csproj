@@ -98,50 +98,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\ConfigurationCheckers.cs">
-      <Link>files\extensions\checkers\ConfigurationCheckers.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\FieldCheckers.cs">
-      <Link>files\extensions\checkers\FieldCheckers.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\FileCheckers.cs">
-      <Link>files\extensions\checkers\FileCheckers.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\HabitatCheckers.cs">
-      <Link>files\extensions\checkers\HabitatCheckers.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\ItemCheckers.cs">
-      <Link>files\extensions\checkers\ItemCheckers.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\LayoutCheckers.cs">
-      <Link>files\extensions\checkers\LayoutCheckers.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\PathfinderProjectCheckers.cs">
-      <Link>files\extensions\checkers\PathfinderProjectCheckers.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\ProjectCheckers.cs">
-      <Link>files\extensions\checkers\ProjectCheckers.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\ReferenceCheckers.cs">
-      <Link>files\extensions\checkers\ReferenceCheckers.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\TemplateCheckers.cs">
-      <Link>files\extensions\checkers\TemplateCheckers.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Checkers\files\extensions\checkers\TemplateHelpCheckers.cs">
-      <Link>files\extensions\checkers\TemplateHelpCheckers.cs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="files\generators\Visual-Studio-Class-Library\Properties\AssemblyInfo.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -298,9 +254,6 @@
     </Content>
     <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\Package.cshtml">
       <Link>files\website\sitecore\shell\client\Applications\Pathfinder\Package.cshtml</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="nuget.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="files\project.noconfig\sitecore.project\Sitecore.nuspec">
@@ -692,30 +645,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Features\Sitecore.Pathfinder.DiagnosticsToolset\Sitecore.Pathfinder.DiagnosticsToolset.csproj">
-      <Project>{65e69d35-394e-4c48-885e-6ca5449938be}</Project>
-      <Name>Sitecore.Pathfinder.DiagnosticsToolset</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Features\Sitecore.Pathfinder.HtmlFile\Sitecore.Pathfinder.Html.csproj">
-      <Project>{7287e9e2-cab5-4de4-87b5-237b65020dc4}</Project>
-      <Name>Sitecore.Pathfinder.Html</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Features\Sitecore.Pathfinder.Markdown\Sitecore.Pathfinder.Markdown.csproj">
-      <Project>{37d4ea12-aeb1-4bfa-a5c8-76185f68dd25}</Project>
-      <Name>Sitecore.Pathfinder.Markdown</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Features\Sitecore.Pathfinder.Npm\Sitecore.Pathfinder.Npm.csproj">
-      <Project>{543470a3-c795-4e05-9e38-d0a827ff4546}</Project>
-      <Name>Sitecore.Pathfinder.Npm</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Features\Sitecore.Pathfinder.NuGet\Sitecore.Pathfinder.NuGet.csproj">
-      <Project>{a67c9ed1-949c-49d8-8d1a-b3774f38c128}</Project>
-      <Name>Sitecore.Pathfinder.NuGet</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Features\Sitecore.Pathfinder.PageHtml\Sitecore.Pathfinder.PageHtml.csproj">
-      <Project>{9fa3a409-fbe3-4f65-8d5b-d8510ca6348d}</Project>
-      <Name>Sitecore.Pathfinder.PageHtml</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Features\Sitecore.Pathfinder.Roslyn\Sitecore.Pathfinder.Roslyn.csproj">
       <Project>{2776f71a-6b50-478e-a0a0-e2151ebe8a98}</Project>
       <Name>Sitecore.Pathfinder.Roslyn</Name>
@@ -723,14 +652,6 @@
     <ProjectReference Include="..\Features\Sitecore.Pathfinder.T4\Sitecore.Pathfinder.T4.csproj">
       <Project>{bc0ec297-60e6-4d8f-a846-e1da920cfc26}</Project>
       <Name>Sitecore.Pathfinder.T4</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Features\Sitecore.Pathfinder.Unicorn\Sitecore.Pathfinder.Unicorn.csproj">
-      <Project>{e707e44a-9f34-41e2-90e2-7065ef60cb03}</Project>
-      <Name>Sitecore.Pathfinder.Unicorn</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Features\Sitecore.Pathfinder.WebServer\Sitecore.Pathfinder.WebServer.csproj">
-      <Project>{d7f596a0-7f6e-4576-877c-82cf316834a6}</Project>
-      <Name>Sitecore.Pathfinder.WebServer</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sitecore.Pathfinder.Core\Sitecore.Pathfinder.Core.csproj">
       <Project>{c674eebf-bbf6-4eda-af5b-a4d58d0be986}</Project>
@@ -744,7 +665,9 @@
     <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.6\analyzers\dotnet\cs\CodeContractNullability.dll" />
     <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.6\analyzers\dotnet\cs\MsgPack.dll" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="files\extensions\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions />
   <PropertyGroup>

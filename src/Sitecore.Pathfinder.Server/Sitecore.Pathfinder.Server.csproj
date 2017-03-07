@@ -201,18 +201,12 @@
     <Compile Include="Tasks\TroubleshootWebsites\TroubleshootWebsite.cs" />
     <Compile Include="Tasks\WebsiteTaskBase.cs" />
     <Compile Include="Tasks\WebsiteTaskContext.cs" />
-    <Compile Include="Tasks\WriteWebsiteExports.cs" />
     <Compile Include="WebsiteHost.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Features\Sitecore.Pathfinder.NuGet\Sitecore.Pathfinder.NuGet.csproj">
-      <Project>{a67c9ed1-949c-49d8-8d1a-b3774f38c128}</Project>
-      <Name>Sitecore.Pathfinder.NuGet</Name>
-      <Private>False</Private>
-    </ProjectReference>
     <ProjectReference Include="..\Sitecore.Pathfinder.Core\Sitecore.Pathfinder.Core.csproj">
       <Project>{c674eebf-bbf6-4eda-af5b-a4d58d0be986}</Project>
       <Name>Sitecore.Pathfinder.Core</Name>

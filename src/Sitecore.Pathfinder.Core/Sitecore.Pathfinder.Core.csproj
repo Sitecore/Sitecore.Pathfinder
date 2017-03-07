@@ -59,6 +59,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Checking\Checkers\ArchitectureCheckers.cs" />
+    <Compile Include="Checking\Checkers\ConfigurationCheckers.cs" />
+    <Compile Include="Checking\Checkers\FieldCheckers.cs" />
+    <Compile Include="Checking\Checkers\FileCheckers.cs" />
+    <Compile Include="Checking\Checkers\HabitatCheckers.cs" />
+    <Compile Include="Checking\Checkers\ItemCheckers.cs" />
+    <Compile Include="Checking\Checkers\LayoutCheckers.cs" />
+    <Compile Include="Checking\Checkers\PathfinderProjectCheckers.cs" />
+    <Compile Include="Checking\Checkers\ProjectCheckers.cs" />
+    <Compile Include="Checking\Checkers\ReferenceCheckers.cs" />
+    <Compile Include="Checking\Checkers\TemplateCheckers.cs" />
+    <Compile Include="Checking\Checkers\TemplateHelpCheckers.cs" />
     <Compile Include="Compiling\Pipelines\CompilePipelines\1600 - CreateMissingParentItems.cs" />
     <Compile Include="Configuration\ConfigurationModel\CommandLineConfigurationSource.cs" />
     <Compile Include="Configuration\ConfigurationModel\Configuration.cs" />
