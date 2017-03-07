@@ -1,9 +1,7 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.IO;
-using System.Linq;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
@@ -15,12 +13,6 @@ namespace Sitecore.Pathfinder.ProjectTrees
     [Export(typeof(IProjectTree))]
     public class ProjectTree : IProjectTree
     {
-        [CanBeNull, ItemNotNull]
-        private HashSet<string> _ignoreDirectories;
-
-        [CanBeNull, ItemNotNull]
-        private HashSet<string> _ignoreFileNames;
-
         [ImportingConstructor]
         public ProjectTree([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem, [NotNull] IPipelineService pipelines, [NotNull] ExportFactory<ProjectTreeVisitor> projectTreeVisitorFactory)
         {
@@ -28,13 +20,11 @@ namespace Sitecore.Pathfinder.ProjectTrees
             FileSystem = fileSystem;
             Pipelines = pipelines;
             ProjectTreeVisitorFactory = projectTreeVisitorFactory;
+
+            PathMatcher = new PathMatcher(Configuration.GetString(Constants.Configuration.Files.Include), Configuration.GetString(Constants.Configuration.Files.Exclude));
         }
 
         public IFileSystemService FileSystem { get; }
-
-        public HashSet<string> IgnoreDirectories => _ignoreDirectories ?? (_ignoreDirectories = new HashSet<string>(Configuration.GetStringList(Constants.Configuration.ProjectWebsiteMappings.IgnoreDirectories)));
-
-        public HashSet<string> IgnoreFileNames => _ignoreFileNames ?? (_ignoreFileNames = GetIgnoreDirectories());
 
         public IPipelineService Pipelines { get; }
 
@@ -58,6 +48,9 @@ namespace Sitecore.Pathfinder.ProjectTrees
         protected IConfiguration Configuration { get; }
 
         [NotNull]
+        protected PathMatcher PathMatcher { get; }
+
+        [NotNull]
         protected ExportFactory<ProjectTreeVisitor> ProjectTreeVisitorFactory { get; }
 
         public virtual IEnumerable<string> GetSourceFiles()
@@ -72,22 +65,22 @@ namespace Sitecore.Pathfinder.ProjectTrees
             return sourceFileNames;
         }
 
+        public virtual bool IsDirectoryIncluded(string directory)
+        {
+            return PathMatcher.IsMatch(directory);
+        }
+
+        public virtual bool IsFileIncluded(string fileName)
+        {
+            return PathMatcher.IsMatch(fileName);
+        }
+
         public virtual IProjectTree With(string toolsDirectory, string projectDirectory)
         {
             ToolsDirectory = toolsDirectory;
             ProjectDirectory = projectDirectory;
 
             return this;
-        }
-
-        [NotNull, ItemNotNull]
-        protected virtual HashSet<string> GetIgnoreDirectories()
-        {
-            var ignoreDirectories = Configuration.GetStringList(Constants.Configuration.ProjectWebsiteMappings.IgnoreFileNames).ToList();
-
-            ignoreDirectories.Add(Path.GetFileName(Configuration.GetToolsDirectory()));
-
-            return new HashSet<string>(ignoreDirectories);
         }
     }
 }

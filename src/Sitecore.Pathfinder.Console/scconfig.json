@@ -1,4 +1,24 @@
 {
+    // external references
+    "references": {
+        "sitecore-pathfinder-core": {
+            "id": "Sitecore.Pathfinder.Core",
+            "version": "1.0.0"
+        },
+        "sitecore-master": {
+            "id": "Sitecore.Master",
+            "version": "1.0.0"
+        }
+    },
+
+    // comma separated list of files and directories to ignore
+    "files": {
+        "include": "**/*",
+        "exclude": ".vscode, .git, node_modules, bower_components, packages, roslyn, includes, Properties, obj, scc.cmd, project.json, readme.md, web.config, packages.config"
+    },
+
+    // old stuff =========================================================================
+
     "website-directory": "",
     "data-folder-directory": "",
     "host-name": "",
@@ -17,15 +37,6 @@
         // files to copy to website
         "content-files": ".js, .map, .css, .htm, .ashx, .asmx, .asax, .eot, .svg, .ttf, .woff, .woff2, .less, .php, .ico, .gif",
 
-        // comma separated list of files and directories to ignore
-        "ignore-directories": {
-            "default": ".vscode, .git, sitecore.filetemplates, sitecore.project, sitecore.tools, node_modules, bower_components, packages, roslyn, includes, Properties, obj"
-        },
-
-        "ignore-filenames": {
-            "default": "scc.cmd, project.json, readme.md, web.config, packages.config"
-        },
-
         // default file search pattern
         "search-pattern": "*",
 
@@ -39,12 +50,6 @@
         // mapping items and files to project when importing a website
         "website-to-project": {
         }
-    },
-
-    // external references
-    "references": {
-        "sitecore-pathfinder-core": { "id": "Sitecore.Pathfinder.Core", "version": "1.0.0" },
-        "sitecore-master": { "id": "Sitecore.Master", "version": "1.0.0" }
     },
 
     // tasks

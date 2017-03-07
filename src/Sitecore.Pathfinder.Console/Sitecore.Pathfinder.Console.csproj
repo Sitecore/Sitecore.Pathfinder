@@ -220,7 +220,7 @@
       <LastGenOutput>TemplateIds.project1.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="files\references\Sitecore..BusinessComponentLibrary.1.0.0exports.xml">
+    <Content Include="files\references\Sitecore..BusinessComponentLibrary.1.0.0.exports.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="files\references\Sitecore.Core.1.0.0.exports.xml">
@@ -269,10 +269,6 @@
     </Content>
     <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\Package.cshtml">
       <Link>files\website\sitecore\shell\client\Applications\Pathfinder\Package.cshtml</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\project.noconfig\sitecore.project\Sitecore.nuspec">
-      <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="files\generators\Atom-configuration\.atom-build.json">
@@ -341,9 +337,6 @@
     <None Include="files\project\scc.cmd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\project.noconfig\scconfig.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="files\filetemplates\codefirst\readme.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -351,25 +344,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="files\project\sitecore.project\extensions\readme.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="files\nuget\Legoland.nuspec" />
-    <None Include="files\packages\Sitecore.BusinessComponentLibrary.1.0.0.nupkg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="files\packages\Sitecore.Core.1.0.0.nupkg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="files\packages\Sitecore.Launchpad.1.0.0.nupkg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="files\packages\Sitecore.Master.1.0.0.nupkg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="files\packages\Sitecore.Speak.1.0.0.nupkg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="files\packages\Sitecore.Pathfinder.Core.1.0.0.nupkg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="files\project\sitecore.project\packages\readme.md">
@@ -676,9 +650,7 @@
     <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.6\analyzers\dotnet\cs\CodeContractNullability.dll" />
     <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.6\analyzers\dotnet\cs\MsgPack.dll" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="files\extensions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions />
   <PropertyGroup>

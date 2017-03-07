@@ -77,10 +77,10 @@ namespace Sitecore.Pathfinder
             public const string DataFolderDirectory = "data-folder-directory";
 
             public const string Debug = "debug";
-            public const string DefaultLanguage= "default-language";
+
+            public const string DefaultLanguage = "default-language";
 
             public const string Dependencies = "dependencies";
-            public const string References = "references";
 
             public const string DisableExtensions = "disable-extensions";
 
@@ -105,6 +105,8 @@ namespace Sitecore.Pathfinder
             public const string ProjectRoleCheckers = "project-role-checkers";
 
             public const string ProjectUniqueId = "project-unique-id";
+
+            public const string References = "references";
 
             public const string Run = "run";
 
@@ -169,6 +171,13 @@ namespace Sitecore.Pathfinder
                 public const string Directory = "extensions:project-extensions-directory";
 
                 public const string ExternalAssemblyDirectories = "extensions:external-assembly-directories";
+            }
+
+            public static class Files
+            {
+                public const string Exclude = "files:exclude";
+
+                public const string Include = "files:include";
             }
 
             public static class GenerateCode
@@ -285,8 +294,9 @@ namespace Sitecore.Pathfinder
 
             public static class ServeWebsite
             {
-                public const string Port = "serve-website:port";
                 public const string DefaultPort = "serve-website:default-port";
+
+                public const string Port = "serve-website:port";
             }
 
             public static class ShowWebsite

@@ -12,12 +12,6 @@ namespace Sitecore.Pathfinder.ProjectTrees
         [NotNull]
         IFileSystemService FileSystem { get; }
 
-        [NotNull, ItemNotNull]
-        HashSet<string> IgnoreDirectories { get; }
-
-        [NotNull, ItemNotNull]
-        HashSet<string> IgnoreFileNames { get; }
-
         [NotNull]
         IPipelineService Pipelines { get; }
 
@@ -35,5 +29,9 @@ namespace Sitecore.Pathfinder.ProjectTrees
 
         [NotNull]
         IProjectTree With([NotNull] string toolsDirectory, [NotNull] string projectDirectory);
+
+        bool IsDirectoryIncluded([NotNull] string directory);
+
+        bool IsFileIncluded([NotNull] string fileName);
     }
 }
