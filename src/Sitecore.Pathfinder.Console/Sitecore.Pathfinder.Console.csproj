@@ -120,7 +120,6 @@
     <Compile Include="Tasks\ListProjectRoles.cs" />
     <Compile Include="Tasks\NewProjectBase.cs" />
     <Compile Include="Tasks\NewSolution.cs" />
-    <Compile Include="Tasks\RestorePackages.cs" />
     <Compile Include="Tasks\RunScript.cs" />
     <Compile Include="Tasks\ServeWebsite.cs" />
     <Compile Include="Tasks\ShowStatus.cs" />
@@ -145,7 +144,6 @@
     <Compile Include="Tasks\CheckScconfig.cs" />
     <Compile Include="Pipelines\BeforeBuildPipelines\BeforeBuildPipeline.cs" />
     <Compile Include="Tasks\Help.cs" />
-    <Compile Include="Tasks\CopyDependencies.cs" />
     <Compile Include="Tasks\NewProject.cs" />
     <Compile Include="Tasks\ResetWebsite.cs" />
     <Compile Include="Tasks\SynchronizeWebsite.cs" />

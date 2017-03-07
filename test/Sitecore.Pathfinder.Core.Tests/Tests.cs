@@ -58,9 +58,9 @@ namespace Sitecore.Pathfinder
 
             Services = new Helpers.Services().Start(app, mock);
 
-            var restorePackages = app.CompositionService.ResolveMany<ITask>().First(t => t is RestorePackages);
-            var context = app.CompositionService.Resolve<IBuildContext>();
-            restorePackages.Run(context);
+            // var restorePackages = app.CompositionService.ResolveMany<ITask>().First(t => t is RestorePackages);
+            // var context = app.CompositionService.Resolve<IBuildContext>();
+            // restorePackages.Run(context);
         }
     }
 }

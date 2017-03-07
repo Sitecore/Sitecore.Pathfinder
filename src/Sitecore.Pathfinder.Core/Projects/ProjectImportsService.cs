@@ -9,7 +9,6 @@ using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
-using Sitecore.Pathfinder.Packaging.ProjectPackages;
 
 namespace Sitecore.Pathfinder.Projects
 {
@@ -17,13 +16,12 @@ namespace Sitecore.Pathfinder.Projects
     public class ProjectImportsService
     {
         [ImportingConstructor]
-        public ProjectImportsService([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [NotNull] IProjectPackageService projectPackages)
+        public ProjectImportsService([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem)
         {
             Configuration = configuration;
             Trace = trace;
             Factory = factory;
             FileSystem = fileSystem;
-            ProjectPackages = projectPackages;
         }
 
         [NotNull]
@@ -34,9 +32,6 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull]
         protected IFileSystemService FileSystem { get; }
-
-        [NotNull]
-        protected IProjectPackageService ProjectPackages { get; }
 
         [NotNull]
         protected ITraceService Trace { get; }
