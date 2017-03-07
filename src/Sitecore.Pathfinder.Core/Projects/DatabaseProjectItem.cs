@@ -114,7 +114,7 @@ namespace Sitecore.Pathfinder.Projects
             }
 
             IsEmittable = IsEmittable || databaseProjectItem.IsEmittable;
-            IsImport = IsImport || databaseProjectItem.IsImport;
+            IsImport = IsImport && databaseProjectItem.IsImport;
 
             References.AddRange(databaseProjectItem.References);
         }

@@ -60,16 +60,6 @@ namespace Sitecore.Pathfinder.Parsing.Items
         {
             foreach (var childNode in textNode.Attributes)
             {
-                if (childNode.Key == "Language")
-                {
-                    continue;
-                }
-
-                if (childNode.Key == "Version")
-                {
-                    continue;
-                }
-
                 ParseFieldTextNode(context, item, languageVersionContext, childNode);
             }
         }
@@ -81,21 +71,13 @@ namespace Sitecore.Pathfinder.Parsing.Items
             {
                 switch (childNode.Key)
                 {
-                    case "Fields.Unversioned":
-                    case "...Unversioned":
-                    case "...unversioned":
+                    case "..Versions":
+                    case "..versions":
                         ParseUnversionedTextNode(context, item, childNode);
                         break;
 
-                    case "Fields.Versioned":
-                    case "...Versioned":
-                    case "...versioned":
-                        ParseVersionedTextNode(context, item, childNode);
-                        break;
-
-                    case "Fields.Layout":
-                    case "...Layout":
-                    case "...layout":
+                    case "..Layout":
+                    case "..layout":
                         ParseLayoutTextNode(context, item, childNode);
                         break;
 

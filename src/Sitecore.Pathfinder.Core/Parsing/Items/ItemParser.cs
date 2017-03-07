@@ -43,11 +43,6 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
         public override bool CanParse(IParseContext context)
         {
-            if (string.IsNullOrEmpty(context.ItemPath))
-            {
-                return false;
-            }
-
             var fileName = context.Snapshot.SourceFile.AbsoluteFileName;
             return FileExtensions.Any(extension => fileName.EndsWith(extension, StringComparison.OrdinalIgnoreCase)) && context.Snapshot is ITextSnapshot;
         }
