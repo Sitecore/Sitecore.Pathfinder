@@ -145,10 +145,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Features\Sitecore.Pathfinder.Roslyn\Sitecore.Pathfinder.Roslyn.csproj">
-      <Project>{2776f71a-6b50-478e-a0a0-e2151ebe8a98}</Project>
-      <Name>Sitecore.Pathfinder.Roslyn</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\Features\Sitecore.Pathfinder.T4\Sitecore.Pathfinder.T4.csproj">
       <Project>{bc0ec297-60e6-4d8f-a846-e1da920cfc26}</Project>
       <Name>Sitecore.Pathfinder.T4</Name>

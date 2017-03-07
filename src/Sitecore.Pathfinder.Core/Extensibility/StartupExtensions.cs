@@ -12,7 +12,6 @@ using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
-using Sitecore.Pathfinder.Roslyn.Extensibility;
 
 namespace Sitecore.Pathfinder.Extensibility
 {
@@ -68,9 +67,7 @@ namespace Sitecore.Pathfinder.Extensibility
 
                 // add core extensions - must come before feature assemblies to ensure the correct Sitecore.Pathfinder.Core.Extensions.dll is loaded
                 var coreExtensionsDirectory = Path.Combine(toolsDirectory, "files\\extensions");
-                var coreAssemblyFileName = Path.Combine(coreExtensionsDirectory, "Sitecore.Pathfinder.Core.Extensions.dll");
 
-                AddDynamicAssembly(catalogs, toolsDirectory, coreAssemblyFileName, coreExtensionsDirectory);
                 AddAssembliesFromDirectory(options, catalogs, coreExtensionsDirectory);
 
                 // add feature assemblies from the same directory as Sitecore.Pathfinder.Core
@@ -86,19 +83,17 @@ namespace Sitecore.Pathfinder.Extensibility
                 }
 
                 // add extension from [Project]/packages directory
-                AddNugetPackages(configuration, options, catalogs, coreAssemblyFileName, projectDirectory);
+                AddNugetPackages(configuration, options, catalogs, projectDirectory);
 
                 // add extension from [Project]/node_modules directory
-                AddNodeModules(configuration, options, catalogs, coreAssemblyFileName, projectDirectory);
+                AddNodeModules(configuration, options, catalogs, projectDirectory);
 
                 // add projects extensions
                 var projectExtensionsDirectory = configuration.GetString(Constants.Configuration.Extensions.Directory);
                 if (!string.IsNullOrEmpty(projectExtensionsDirectory))
                 {
                     projectExtensionsDirectory = PathHelper.Combine(projectDirectory, projectExtensionsDirectory);
-                    var projectAssemblyFileName = Path.Combine(projectExtensionsDirectory, configuration.GetString(Constants.Configuration.Extensions.AssemblyFileName));
 
-                    AddDynamicAssembly(catalogs, toolsDirectory, projectAssemblyFileName, projectExtensionsDirectory);
                     AddAssembliesFromDirectory(options, catalogs, projectExtensionsDirectory);
                 }
             }
@@ -189,28 +184,6 @@ namespace Sitecore.Pathfinder.Extensibility
             }
         }
 
-        private static void AddDynamicAssembly([NotNull, ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string toolsDirectory, [NotNull] string assemblyFileName, [NotNull] string directory)
-        {
-            if (!Directory.Exists(directory))
-            {
-                return;
-            }
-
-            var compilerService = new CsharpCompilerService();
-
-            var fileNames = Directory.GetFiles(directory, "*.cs", SearchOption.AllDirectories);
-            if (!fileNames.Any())
-            {
-                return;
-            }
-
-            var assembly = compilerService.Compile(toolsDirectory, assemblyFileName, fileNames);
-            if (assembly != null)
-            {
-                AddAssembly(catalogs, assemblyFileName);
-            }
-        }
-
         private static void AddFeatureAssemblies(CompositionOptions options, [NotNull, ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string toolsDirectory)
         {
             // only load Sitecore.Pathfinder.*.dll assemblies for performance
@@ -232,7 +205,7 @@ namespace Sitecore.Pathfinder.Extensibility
             }
         }
 
-        private static void AddNodeModules([NotNull] IConfiguration configuration, CompositionOptions options, [NotNull, ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string coreAssemblyFileName, [NotNull] string projectDirectory)
+        private static void AddNodeModules([NotNull] IConfiguration configuration, CompositionOptions options, [NotNull, ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string projectDirectory)
         {
             var nodeModules = Path.Combine(projectDirectory, configuration.GetString(Constants.Configuration.Packages.NpmDirectory));
             if (!Directory.Exists(nodeModules))
@@ -250,12 +223,11 @@ namespace Sitecore.Pathfinder.Extensibility
 
                 // todo: exclude nested node_modules directories
 
-                AddDynamicAssembly(catalogs, directory, coreAssemblyFileName, directory);
                 AddAssembliesFromDirectory(options, catalogs, directory);
             }
         }
 
-        private static void AddNugetPackages([NotNull] IConfiguration configuration, CompositionOptions options, [NotNull, ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string coreAssemblyFileName, [NotNull] string projectDirectory)
+        private static void AddNugetPackages([NotNull] IConfiguration configuration, CompositionOptions options, [NotNull, ItemNotNull] ICollection<ComposablePartCatalog> catalogs, [NotNull] string projectDirectory)
         {
             // todo: consider only loading directories listed in packages.config or scconfig.json
             var nugetPackages = Path.Combine(projectDirectory, configuration.GetString(Constants.Configuration.Packages.NugetDirectory));

@@ -1,0 +1,332 @@
+<Exports>
+  <Item Id="{759BEFD1-3323-404D-A243-E0ED81163C03}" Database="core" Name="Speak-EmptyLayout" Path="/sitecore/client/Speak/Layouts/Layouts/Speak-EmptyLayout" Template="/sitecore/templates/System/Layout/Layout">
+    <Field Id="{3DFC14ED-3B91-4D2C-86CF-88B42EA0F7D5}" Name="Place Holders" Value="Page.Body" />
+    <Field Id="{A036B2BC-BA04-44F6-A75F-BAE6CD242ABF}" Name="Path" Value="/sitecore/shell/client/Speak/Layouts/Layouts/Speak-EmptyLayout.cshtml" />
+  </Item>
+  <Item Id="{4F72A793-BDBC-4262-9523-6AADD8FEA487}" Database="core" Name="Speak-Layout" Path="/sitecore/client/Speak/Layouts/Layouts/Speak-Layout" Template="/sitecore/templates/System/Layout/Layout">
+    <Field Id="{3DFC14ED-3B91-4D2C-86CF-88B42EA0F7D5}" Name="Place Holders" Value="Page.Stylesheets, Page.Scripts, Page.Code, Page.Body" />
+    <Field Id="{A036B2BC-BA04-44F6-A75F-BAE6CD242ABF}" Name="Path" Value="/sitecore/shell/client/Speak/Layouts/Layouts/Speak-Layout.cshtml" />
+  </Item>
+  <Item Id="{D569AC90-6D70-4714-B31A-1F959BF4BD08}" Database="core" Name="ChildRenderer" Path="/sitecore/client/Speak/Layouts/Renderings/Common/ChildRenderer" Template="/sitecore/templates/System/Layout/Renderings/View rendering">
+    <Field Id="{51B435BC-F7B9-478A-9C51-52916AF96FF5}" Name="Path" Value="/sitecore/shell/client/Speak/Layouts/Renderings/Common/ChildRenderers/ChildRenderer.cshtml" />
+    <Field Id="{7D24E54F-5C16-4314-90C9-6051AA1A7DA1}" Name="Parameters Template" Value="{EF3C8172-A5D3-49B9-A88E-BF5F2A129BE6}" />
+  </Item>
+  <Template Id="{EF3C8172-A5D3-49B9-A88E-BF5F2A129BE6}" Database="core" Name="ChildRenderer Parameters" Path="/sitecore/client/Speak/Layouts/Renderings/Common/ChildRenderer/ChildRenderer Parameters" BaseTemplates="{182B5F9C-B563-4826-BE6B-89799DCE186B}">
+    <Section Id="{5391FB91-8CE4-4872-86FF-76F34835D476}" Name="Appearance">
+      <Field Id="{125F4922-72DA-4E6F-9D31-21330D8252D8}" Name="Before" Type="Single-Line Text" />
+      <Field Id="{EC9359E2-907E-4FFD-B380-8F3EE13FCA7C}" Name="After" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Item Id="{8B4238F3-D5CD-464D-8DE6-4A69E05CD55B}" Database="core" Name="ItemRenderer" Path="/sitecore/client/Speak/Layouts/Renderings/Common/ItemRenderer" Template="/sitecore/templates/System/Layout/Renderings/View rendering">
+    <Field Id="{51B435BC-F7B9-478A-9C51-52916AF96FF5}" Name="Path" Value="/sitecore/shell/client/Speak/Layouts/Renderings/Common/ItemRenderers/ItemRenderer.cshtml" />
+    <Field Id="{7D24E54F-5C16-4314-90C9-6051AA1A7DA1}" Name="Parameters Template" Value="{182B5F9C-B563-4826-BE6B-89799DCE186B}" />
+  </Item>
+  <Template Id="{182B5F9C-B563-4826-BE6B-89799DCE186B}" Database="core" Name="ItemRenderer Parameters" Path="/sitecore/client/Speak/Layouts/Renderings/Common/ItemRenderer/ItemRenderer Parameters" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{81950B9E-3EAA-46E9-89E9-76C516A39EBE}" Name="Behavior">
+      <Field Id="{75AE5B74-BCCC-4084-8A3F-EF8A8E88BC13}" Name="UsePlaceholders" Type="Checkbox" />
+    </Section>
+  </Template>
+  <Item Id="{DAFAFFB8-74AF-4141-A96A-70B16834CEC6}" Database="core" Name="PageCode" Path="/sitecore/client/Speak/Layouts/Renderings/Common/PageCode" Template="/sitecore/templates/System/Layout/Renderings/View rendering">
+    <Field Id="{51B435BC-F7B9-478A-9C51-52916AF96FF5}" Name="Path" Value="/sitecore/shell/client/Speak/Layouts/Renderings/Common/PageCodes/PageCode.cshtml" />
+    <Field Id="{7D24E54F-5C16-4314-90C9-6051AA1A7DA1}" Name="Parameters Template" Value="{E6C51495-D83A-4E0A-BB8C-A05A7D6085C7}" />
+  </Item>
+  <Template Id="{E6C51495-D83A-4E0A-BB8C-A05A7D6085C7}" Database="core" Name="PageCode Parameters" Path="/sitecore/client/Speak/Layouts/Renderings/Common/PageCode/PageCode Parameters" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{591241F5-FEB1-4F92-B18A-5C6D77A8F46B}" Name="Data">
+      <Field Id="{E1018C26-698B-4773-AE2B-52A229C0C492}" Name="PageCodeScriptFileName" Type="server file" />
+      <Field Id="{AE2F5F07-5A16-4014-8D6C-D16264BF0219}" Name="PageCodeTypeName" Type="Single-Line Text" />
+      <Field Id="{5C3DA71F-CEF3-47B6-A691-F570067EB076}" Name="SpeakCoreVersion" Type="Droplink" />
+      <Field Id="{7C9E3A05-016E-4EA0-9D58-855EA6033F77}" Name="AssetsLoadingType" Type="Droplink" />
+    </Section>
+  </Template>
+  <Template Id="{C1B05B3A-689F-474A-918B-5FD50F12849C}" Database="core" Name="Speak Core 1-1" Path="/sitecore/client/Speak/Layouts/Renderings/Common/PageCode/SpeakCoreVersion/Speak Core 1-1" BaseTemplates="" />
+  <Template Id="{3F937240-C16E-4229-9641-4CE5B4CB4ABA}" Database="core" Name="Speak Core 1-3" Path="/sitecore/client/Speak/Layouts/Renderings/Common/PageCode/SpeakCoreVersion/Speak Core 1-3" BaseTemplates="" />
+  <Template Id="{6C0818B0-587E-4027-9DDB-96C5D66F9C1A}" Database="core" Name="Development Mode" Path="/sitecore/client/Speak/Layouts/Renderings/Common/PageCode/AssetsLoadingType/Development Mode" BaseTemplates="" />
+  <Template Id="{3A0CC262-E84F-4F0F-98E9-BCA5F6BEE829}" Database="core" Name="Minified Mode" Path="/sitecore/client/Speak/Layouts/Renderings/Common/PageCode/AssetsLoadingType/Minified Mode" BaseTemplates="" />
+  <Template Id="{84F1BE3E-02A3-42F8-AEB2-E73768790E45}" Database="core" Name="CDN Mode" Path="/sitecore/client/Speak/Layouts/Renderings/Common/PageCode/AssetsLoadingType/CDN Mode" BaseTemplates="" />
+  <Template Id="{5A598A7A-CBE9-470F-AD2B-4FD7E0561307}" Database="core" Name="Bundled Mode" Path="/sitecore/client/Speak/Layouts/Renderings/Common/PageCode/AssetsLoadingType/Bundled Mode" BaseTemplates="" />
+  <Item Id="{4B77BB29-C937-4620-A6CC-A14B1A38DE8A}" Database="core" Name="RenderView" Path="/sitecore/client/Speak/Layouts/Renderings/Common/RenderView" Template="/sitecore/templates/System/Layout/Renderings/View rendering">
+    <Field Id="{51B435BC-F7B9-478A-9C51-52916AF96FF5}" Name="Path" Value="/sitecore/shell/client/Speak/Layouts/Renderings/Common/RenderViews/RenderView.cshtml" />
+    <Field Id="{7D24E54F-5C16-4314-90C9-6051AA1A7DA1}" Name="Parameters Template" Value="{9B1FB9D0-AFCA-4B79-AE82-3008F7517798}" />
+  </Item>
+  <Template Id="{9B1FB9D0-AFCA-4B79-AE82-3008F7517798}" Database="core" Name="RenderView Parameters" Path="/sitecore/client/Speak/Layouts/Renderings/Common/RenderView/RenderView Parameters" BaseTemplates="{6A9A5956-5354-48B4-A25A-DABABA738424}">
+    <Section Id="{763EF3DD-DBC0-4FCF-93CC-867373597FC0}" Name="Appearance">
+      <Field Id="{6EC1DD65-4E87-4554-BBD2-B2B03C0E9F79}" Name="Path" Type="server file" />
+    </Section>
+  </Template>
+  <Item Id="{CB83D434-31ED-4AC3-A280-CCE2B63F9743}" Database="core" Name="SubPageCode" Path="/sitecore/client/Speak/Layouts/Renderings/Common/SubPageCode" Template="/sitecore/templates/System/Layout/Renderings/View rendering">
+    <Field Id="{51B435BC-F7B9-478A-9C51-52916AF96FF5}" Name="Path" Value="/sitecore/shell/client/Speak/Layouts/Renderings/Common/PageCodes/SubPageCode.cshtml" />
+    <Field Id="{7D24E54F-5C16-4314-90C9-6051AA1A7DA1}" Name="Parameters Template" Value="{A94036BB-0D61-4657-85B4-C2311F4BD64F}" />
+  </Item>
+  <Template Id="{A94036BB-0D61-4657-85B4-C2311F4BD64F}" Database="core" Name="SubPageCode Parameters" Path="/sitecore/client/Speak/Layouts/Renderings/Common/SubPageCode/SubPageCode Parameters" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{9363B269-1136-4602-9BB5-4507EBD7A3C8}" Name="Data">
+      <Field Id="{CE23DEF5-312A-4438-932A-BE2424B6D845}" Name="PageCodeScriptFileName" Type="server file" />
+      <Field Id="{12D2F239-228C-4449-BC8F-5DD1C517F4D1}" Name="PageCodeTypeName" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Item Id="{33A02142-2DBD-4034-AEA2-BDF215EB2451}" Database="core" Name="QueryDataSource" Path="/sitecore/client/Speak/Layouts/Renderings/Data/QueryDataSource" Template="/sitecore/templates/System/Layout/Renderings/View rendering">
+    <Field Id="{51B435BC-F7B9-478A-9C51-52916AF96FF5}" Name="Path" Value="/sitecore/shell/client/Speak/Layouts/Renderings/Data/QueryDataSources/QueryDataSource.cshtml" />
+    <Field Id="{7D24E54F-5C16-4314-90C9-6051AA1A7DA1}" Name="Parameters Template" Value="{7FFC8FBA-FA5E-41B3-9ACE-B0B1F9FAA56B}" />
+  </Item>
+  <Template Id="{7FFC8FBA-FA5E-41B3-9ACE-B0B1F9FAA56B}" Database="core" Name="QueryDataSource Parameters" Path="/sitecore/client/Speak/Layouts/Renderings/Data/QueryDataSource/QueryDataSource Parameters" BaseTemplates="{52A5A8DD-CE8F-462B-83FE-B225EFA52C6A}">
+    <Section Id="{6B90EE47-C3F3-49CF-AD4B-97F420D14355}" Name="Appearance">
+      <Field Id="{EED1B3AA-DC3F-496C-BFD2-B6DAFCE11694}" Name="Formatting" Type="Single-Line Text" />
+    </Section>
+    <Section Id="{5E39DEB8-8E7E-44E7-BFC3-6ED7560A337D}" Name="Data">
+      <Field Id="{7B909162-BBC2-42D2-9466-476E408D2C09}" Name="Query" Type="Single-Line Text" />
+      <Field Id="{6216AA1F-C0EC-4EE9-8145-5C7842CD985B}" Name="Items" Type="Single-Line Text" />
+    </Section>
+    <Section Id="{E878DBEA-AD5C-4BD3-A3CD-FE4F2375E648}" Name="State">
+      <Field Id="{C13966AE-D318-4B37-84C1-67E09A0FE313}" Name="HasItems" Type="Checkbox" />
+      <Field Id="{C0E40D79-45EE-4BB0-B49C-DA9B46BA0E4F}" Name="HasMoreItems" Type="Checkbox" />
+      <Field Id="{E7467DA4-3028-4495-81F0-9B5BE1177FE7}" Name="HasNoItems" Type="Checkbox" />
+      <Field Id="{5909076F-1716-4025-8DA4-6D5DBBFA6FE4}" Name="IsBusy" Type="Checkbox" />
+    </Section>
+  </Template>
+  <Item Id="{D47D6BFD-4F1F-4715-9FD1-5957EC0259F5}" Database="core" Name="SearchDataSource" Path="/sitecore/client/Speak/Layouts/Renderings/Data/SearchDataSource" Template="/sitecore/templates/System/Layout/Renderings/View rendering">
+    <Field Id="{51B435BC-F7B9-478A-9C51-52916AF96FF5}" Name="Path" Value="/sitecore/shell/client/Speak/Layouts/Renderings/Data/SearchDataSources/SearchDataSource.cshtml" />
+    <Field Id="{7D24E54F-5C16-4314-90C9-6051AA1A7DA1}" Name="Parameters Template" Value="{54BB351C-067B-45BD-A0BC-8E29498F1CCF}" />
+  </Item>
+  <Template Id="{8786A4C8-9089-4B3D-BDCA-ECA709D4DAEA}" Database="core" Name="Facet" Path="/sitecore/client/Speak/Layouts/Renderings/Data/SearchDataSource/Facet" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{6229B149-BD88-41C1-9913-9061F6715C70}" Name="Data">
+      <Field Id="{57DBB7C0-9801-46EE-BFD9-B0035632FC44}" Name="FieldName" Type="Single-Line Text" />
+      <Field Id="{763B8725-C029-483F-A4D9-750AE2349CD4}" Name="FacetProviderType" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{B95680D6-7B34-408E-B5DB-212FEA7B8BB7}" Database="core" Name="Search" Path="/sitecore/client/Speak/Layouts/Renderings/Data/SearchDataSource/Search" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{4B6C3254-B517-42D7-8F8B-CBFC62FC4C44}" Name="Data">
+      <Field Id="{6D4CCDEE-0E09-4B59-B643-F379BAFD4C5A}" Name="EnableFacets" Type="Checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{54BB351C-067B-45BD-A0BC-8E29498F1CCF}" Database="core" Name="SearchDataSource Parameters" Path="/sitecore/client/Speak/Layouts/Renderings/Data/SearchDataSource/SearchDataSource Parameters" BaseTemplates="{52A5A8DD-CE8F-462B-83FE-B225EFA52C6A}">
+    <Section Id="{C89403DA-CA8C-4CD2-9E3B-2EFDB4D47411}" Name="Appearance">
+      <Field Id="{FE79A976-CBDC-4AAC-84E0-697146089882}" Name="Formatting" Type="Single-Line Text" />
+      <Field Id="{5CA5BF63-F362-4764-BE9A-95ECB3E47685}" Name="Sorting" Type="Single-Line Text" />
+    </Section>
+    <Section Id="{762D9E00-9A06-4A9F-956B-BEC7D75838D9}" Name="Data">
+      <Field Id="{0B9A7A30-4511-417F-A007-84DF96A09D21}" Name="Text" Type="Single-Line Text" />
+      <Field Id="{23F44B06-2339-4E81-A57F-6B222E131D89}" Name="FacetsRootItemId" Type="Internal Link" />
+      <Field Id="{D473F5C6-895B-4A6F-A80F-28EFA8AF84F2}" Name="Facets" Type="Single-Line Text" />
+      <Field Id="{FDD4A2D8-0417-41B5-B108-1E17E71502A6}" Name="SearchConfigItemId" Type="Droptree" />
+      <Field Id="{71F3D94F-B3D9-4A4F-9029-52747D9ED83C}" Name="Items" Type="Single-Line Text" />
+      <Field Id="{75F91E7F-48F3-485C-B1C7-0CF0B3036747}" Name="RootItemId" Type="Internal Link" />
+      <Field Id="{4D51F81E-D12B-4096-BD08-197E3D0B371E}" Name="SelectedFacets" Type="Single-Line Text" />
+      <Field Id="{F70F52F7-D96F-4525-93B8-21DF1483E167}" Name="ShowHiddenItems" Type="Checkbox" />
+    </Section>
+    <Section Id="{55537597-7116-44E0-B793-3DD4A36ACE93}" Name="State">
+      <Field Id="{159E0EB9-7E5F-4A1A-B5AA-BAF4A3E0CE68}" Name="IsBusy" Type="Checkbox" />
+      <Field Id="{3A3FB3D5-5855-49A5-B9AD-78C5492EDB70}" Name="HasItems" Type="Checkbox" />
+      <Field Id="{A998A88B-4139-4C09-8F26-D0125D137070}" Name="HasNoItems" Type="Checkbox" />
+      <Field Id="{10669B91-149A-45ED-A209-207B3EE9D966}" Name="HasMoreItems" Type="Checkbox" />
+    </Section>
+  </Template>
+  <Item Id="{73A06518-3FE7-410D-8876-33CA70DAD0B6}" Database="core" Name="WebServiceDataSource" Path="/sitecore/client/Speak/Layouts/Renderings/Data/WebServiceDataSource" Template="/sitecore/templates/System/Layout/Renderings/View rendering">
+    <Field Id="{51B435BC-F7B9-478A-9C51-52916AF96FF5}" Name="Path" Value="/sitecore/shell/client/Speak/Layouts/Renderings/Data/WebServiceDataSources/WebServiceDataSource.cshtml" />
+    <Field Id="{7D24E54F-5C16-4314-90C9-6051AA1A7DA1}" Name="Parameters Template" Value="{C606B3D6-267F-4C43-8902-9213BE74217D}" />
+  </Item>
+  <Template Id="{C606B3D6-267F-4C43-8902-9213BE74217D}" Database="core" Name="WebServiceDataSource Parameters" Path="/sitecore/client/Speak/Layouts/Renderings/Data/WebServiceDataSource/WebServiceDataSource Parameters" BaseTemplates="{6A9A5956-5354-48B4-A25A-DABABA738424}">
+    <Section Id="{E3B173DC-4862-48CD-B7A3-3C4D859227B8}" Name="Data">
+      <Field Id="{A8C78D59-93BC-470F-A4E1-5702906DDD49}" Name="Url" Type="Single-Line Text" />
+      <Field Id="{520EB8C1-FA23-43FD-8A09-8F45104711BD}" Name="MethodName" Type="Single-Line Text" />
+      <Field Id="{4951E2A9-BEE6-4717-A668-360AF5A53273}" Name="Parameters" Type="Single-Line Text" />
+      <Field Id="{A4791432-367B-44AA-9073-1F9E44FEB68D}" Name="Namespace" Type="Single-Line Text" />
+    </Section>
+    <Section Id="{7F8780EA-C78A-499B-AF31-58BC124ACEE6}" Name="Behavior">
+      <Field Id="{7E53CDEA-7470-404E-8515-7467ABFACBDD}" Name="HasResponse" Type="Checkbox" />
+    </Section>
+    <Section Id="{20AEC818-D747-4644-9D42-1125AC311159}" Name="State">
+      <Field Id="{46346B55-FC67-4152-8EB7-68B6C0F9EC37}" Name="IsBusy" Type="Checkbox" />
+    </Section>
+  </Template>
+  <Item Id="{5E3B31F7-FE96-40FB-BE38-94418E4B789A}" Database="core" Name="ChartDataProvider" Path="/sitecore/client/Speak/Layouts/Renderings/Data/ChartDataProvider" Template="/sitecore/templates/System/Layout/Renderings/View rendering">
+    <Field Id="{51B435BC-F7B9-478A-9C51-52916AF96FF5}" Name="Path" Value="/sitecore/shell/client/Speak/Layouts/Renderings/Data/DataProviders/ChartDataProvider.cshtml" />
+    <Field Id="{7D24E54F-5C16-4314-90C9-6051AA1A7DA1}" Name="Parameters Template" Value="{A94EE467-4B90-4652-BB90-7E77AB85D0D3}" />
+  </Item>
+  <Template Id="{A94EE467-4B90-4652-BB90-7E77AB85D0D3}" Database="core" Name="ChartDataProvider Parameters" Path="/sitecore/client/Speak/Layouts/Renderings/Data/ChartDataProvider/ChartDataProvider Parameters" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}|{6A9A5956-5354-48B4-A25A-DABABA738424}|{ECF833D8-481C-4A33-93FA-6EC9BC8C9CD5}">
+    <Section Id="{7C03E9EC-0F36-4676-B6A1-7F1F8037B989}" Name="Filters">
+      <Field Id="{C46AAFEE-A227-4E1C-AE84-0A8369898F2E}" Name="DateFrom" Type="Date" />
+      <Field Id="{E7686859-718A-44CC-9317-AC733854DBCD}" Name="DateTo" Type="Date" />
+      <Field Id="{CBAD3801-5CA7-433B-B185-456B8886D752}" Name="Resolution" Type="Droplist" />
+      <Field Id="{9414CE70-1DB5-4CCB-85EF-DBC510E25D7B}" Name="ResolutionRange" Type="Integer" />
+    </Section>
+  </Template>
+  <Item Id="{A91523CD-6E56-4F08-8B21-C39018E0134A}" Database="core" Name="GenericDataProvider" Path="/sitecore/client/Speak/Layouts/Renderings/Data/GenericDataProvider" Template="/sitecore/templates/System/Layout/Renderings/View rendering">
+    <Field Id="{51B435BC-F7B9-478A-9C51-52916AF96FF5}" Name="Path" Value="/sitecore/shell/client/Speak/Layouts/Renderings/Data/DataProviders/GenericDataProvider.cshtml" />
+    <Field Id="{7D24E54F-5C16-4314-90C9-6051AA1A7DA1}" Name="Parameters Template" Value="{337B6A98-7544-463D-B64F-049446B8016C}" />
+  </Item>
+  <Template Id="{337B6A98-7544-463D-B64F-049446B8016C}" Database="core" Name="GenericDataProvider Parameters" Path="/sitecore/client/Speak/Layouts/Renderings/Data/GenericDataProvider/GenericDataProvider Parameters" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}|{6A9A5956-5354-48B4-A25A-DABABA738424}|{ECF833D8-481C-4A33-93FA-6EC9BC8C9CD5}">
+    <Section Id="{48FDADD4-6E34-496E-9948-FF01DE3CFB8B}" Name="Data">
+      <Field Id="{FE0AA986-6F4E-456C-98FC-68B5F6F37741}" Name="ServerSorting" Type="Single-Line Text" />
+      <Field Id="{367B51F6-9597-45BF-830C-00FA1BFB1D4A}" Name="Paging" Type="Single-Line Text" />
+    </Section>
+    <Section Id="{0E32139F-A66D-4C3C-8EDA-1D2C80F3C5A6}" Name="State">
+      <Field Id="{6974E452-6729-4EB2-92B6-3DB91FAB2E2F}" Name="TotalRecordCount" Type="Integer" />
+      <Field Id="{1A55C7BE-BA88-41D5-B9D8-AE9A57D27A86}" Name="HasMoreData" Type="Checkbox" />
+    </Section>
+    <Section Id="{44DC4360-C8A1-4863-B12E-7BA3A252A537}" Name="Behavior">
+      <Field Id="{ADAC5748-00AD-432D-AD41-BF37138E7F75}" Name="PageSize" Type="Integer" />
+      <Field Id="{8C3A8EDD-2D8C-4B3C-8780-3CF35F2BF40D}" Name="PageNumber" Type="Integer" />
+      <Field Id="{51B820AA-8897-4EE1-BD37-C1348DCFA2AA}" Name="ListSorting" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Item Id="{21E86498-6C8E-4F3B-83F2-B49E5E0ABE16}" Database="core" Name="Pipeline" Path="/sitecore/client/Speak/Layouts/Renderings/Resources/Pipeline" Template="/sitecore/templates/System/Layout/Renderings/View rendering">
+    <Field Id="{51B435BC-F7B9-478A-9C51-52916AF96FF5}" Name="Path" Value="/sitecore/shell/client/Speak/Layouts/Renderings/Resources/Pipelines/Pipeline.cshtml" />
+    <Field Id="{7D24E54F-5C16-4314-90C9-6051AA1A7DA1}" Name="Parameters Template" Value="{619C35E5-F9F2-467D-A3FC-13A6F13C0B61}" />
+  </Item>
+  <Template Id="{FF017587-89BD-4578-B3E4-0FE4944C903F}" Database="core" Name="Pipeline" Path="/sitecore/client/Speak/Layouts/Renderings/Resources/Pipeline/Pipeline" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{2F414EE0-42D5-4F71-A792-7BB70D29C031}" Name="Pipeline">
+      <Field Id="{F0F36FDD-D818-4A1B-8273-7B1D1E7EE053}" Name="PipelineName" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{619C35E5-F9F2-467D-A3FC-13A6F13C0B61}" Database="core" Name="Pipeline-Parameters" Path="/sitecore/client/Speak/Layouts/Renderings/Resources/Pipeline/Pipeline-Parameters" BaseTemplates="{BB940A88-C18F-4F87-88D1-227F0A8CA8B0}">
+    <Section Id="{8734FC7E-8BE5-45D8-AEE7-0ADF0BBD6665}" Name="Pipeline">
+      <Field Id="{629FDE90-EB08-49A5-83F2-71D33BC1B753}" Name="PipelineItemId" Type="Droptree" />
+      <Field Id="{0C25787E-E27F-4756-AEB6-5172931C7C48}" Name="PipelineArgs" Type="Single-Line Text" />
+      <Field Id="{BB6F887E-0ED5-49AA-A030-6BC8DA6D8A59}" Name="Trigger" Type="Single-Line Text" />
+      <Field Id="{F1573CF8-ED93-46A1-A9D6-F2229B8839A9}" Name="TargetControl" Type="Single-Line Text" />
+      <Field Id="{119BCD92-A284-42C8-85CF-3595EF0D36B7}" Name="LoadMode" Type="Droplist" />
+      <Field Id="{4C8160A2-2B8A-42A3-9293-A8AF1A7D047D}" Name="UseBundle" Type="Checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{8861A098-F3CD-4FD3-9557-0BC6C33D738E}" Database="core" Name="PipelineProcessor" Path="/sitecore/client/Speak/Layouts/Renderings/Resources/Pipeline/PipelineProcessor" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{BA9F6DE6-EE9F-4628-B033-AD1ABEF7A528}" Name="Processor">
+      <Field Id="{20D0BB88-0649-4714-A6DD-585DD4CA5B4E}" Name="ProcessorFile" Type="Single-Line Text" />
+      <Field Id="{9E91BAA8-5CAC-48E0-8AB2-04219118BF08}" Name="ProcessorName" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Item Id="{1169C5EF-E49C-4B59-848D-9C9204E40D12}" Database="core" Name="Rule" Path="/sitecore/client/Speak/Layouts/Renderings/Resources/Rule" Template="/sitecore/templates/System/Layout/Renderings/View rendering">
+    <Field Id="{51B435BC-F7B9-478A-9C51-52916AF96FF5}" Name="Path" Value="/sitecore/shell/client/Speak/Layouts/Renderings/Resources/Rules/Rule.cshtml" />
+    <Field Id="{7D24E54F-5C16-4314-90C9-6051AA1A7DA1}" Name="Parameters Template" Value="{C9C47C41-09E3-4BE9-98E0-D5A179406C59}" />
+  </Item>
+  <Template Id="{C9C47C41-09E3-4BE9-98E0-D5A179406C59}" Database="core" Name="Rule Parameters" Path="/sitecore/client/Speak/Layouts/Renderings/Resources/Rule/Rule Parameters" BaseTemplates="{BB940A88-C18F-4F87-88D1-227F0A8CA8B0}">
+    <Section Id="{C560A103-DB8B-416A-BAB7-CCC316059AC8}" Name="Data">
+      <Field Id="{A9610697-3222-439A-AEFE-02DE964099F7}" Name="Trigger" Type="Single-Line Text" />
+      <Field Id="{B1A2CEF9-0D73-470C-AA7E-60DD4E65536A}" Name="RuleItemId" Type="Droptree" />
+      <Field Id="{39EA6CBF-7AF5-4483-A592-0FC0E6D2D09A}" Name="Field" Type="Single-Line Text" />
+      <Field Id="{04580D30-DD3D-4A42-88FC-65179EAE031C}" Name="TargetControl" Type="Single-Line Text" />
+      <Field Id="{3A00975E-24B7-42FC-AC78-1C0750A905EF}" Name="LoadMode" Type="Droplist" />
+      <Field Id="{0DC33E87-5373-408B-A5D7-6EE21D54DD87}" Name="UseBundle" Type="Checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{1F99AE6E-22B8-419E-81DB-A983E619325E}" Database="core" Name="RuleDefinition" Path="/sitecore/client/Speak/Layouts/Renderings/Resources/Rule/RuleDefinition" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{8BFED1E4-93ED-48AA-9FFE-1A7DB3EDFF8A}" Name="Data">
+      <Field Id="{1CB967B6-8720-4F39-9779-147C3CBCFC78}" Name="Trigger" Type="Single-Line Text" />
+      <Field Id="{431A0113-9D08-4DAE-8C5B-AC8301512BD8}" Name="Rule" Type="Rules" />
+    </Section>
+  </Template>
+  <Item Id="{8BE75D0B-EA4E-4FEE-976C-A5CCB5BE5011}" Database="core" Name="SettingsDictionary" Path="/sitecore/client/Speak/Layouts/Renderings/Resources/SettingsDictionary" Template="/sitecore/templates/System/Layout/Renderings/View rendering">
+    <Field Id="{51B435BC-F7B9-478A-9C51-52916AF96FF5}" Name="Path" Value="/sitecore/shell/client/Speak/Layouts/Renderings/Resources/SettingsDictionaries/SettingsDictionary.cshtml" />
+    <Field Id="{7D24E54F-5C16-4314-90C9-6051AA1A7DA1}" Name="Parameters Template" Value="{F329F5A5-0691-4901-937A-EA420F188BFA}" />
+  </Item>
+  <Template Id="{F329F5A5-0691-4901-937A-EA420F188BFA}" Database="core" Name="SettingsDictionary Parameters" Path="/sitecore/client/Speak/Layouts/Renderings/Resources/SettingsDictionary/SettingsDictionary Parameters" BaseTemplates="{BB940A88-C18F-4F87-88D1-227F0A8CA8B0}">
+    <Section Id="{2250475A-110B-463B-99C3-EB821B8A2668}" Name="Dictionary">
+      <Field Id="{7C0C70AD-C2C7-4673-BA70-4558CDB8A783}" Name="Settings" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Item Id="{A82840D0-633E-4D1A-B7FE-8C0062AA22F1}" Database="core" Name="StringDictionary" Path="/sitecore/client/Speak/Layouts/Renderings/Resources/StringDictionary" Template="/sitecore/templates/System/Layout/Renderings/View rendering">
+    <Field Id="{51B435BC-F7B9-478A-9C51-52916AF96FF5}" Name="Path" Value="/sitecore/shell/client/Speak/Layouts/Renderings/Resources/StringDictionaries/StringDictionary.cshtml" />
+    <Field Id="{7D24E54F-5C16-4314-90C9-6051AA1A7DA1}" Name="Parameters Template" Value="{27A16AA3-F74C-405A-B260-71981D1FCA5F}" />
+  </Item>
+  <Template Id="{27A16AA3-F74C-405A-B260-71981D1FCA5F}" Database="core" Name="StringDictionary Parameters" Path="/sitecore/client/Speak/Layouts/Renderings/Resources/StringDictionary/StringDictionary Parameters" BaseTemplates="{BB940A88-C18F-4F87-88D1-227F0A8CA8B0}">
+    <Section Id="{0AB41BF5-54F7-4FC5-90AA-3E8494218C87}" Name="Dictionary">
+      <Field Id="{432869AE-8C21-4508-B7FB-9AF760C13726}" Name="Phrases" Type="Single-Line Text" />
+      <Field Id="{A5840A65-B6CD-41FD-B3BA-2F05F64DA824}" Name="Dictionary" Type="TreelistEx" />
+    </Section>
+  </Template>
+  <Template Id="{D19EBB63-B85B-4F6D-835C-5202366B1430}" Database="core" Name="Command" Path="/sitecore/client/Speak/Templates/Common/Command" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{8D1AC050-9737-45B5-AA09-71D9B828C3C6}" Name="Data">
+      <Field Id="{EEEAD5FE-196A-4748-8526-CA47D8C5DA5D}" Name="Text" Type="Single-Line Text" />
+      <Field Id="{B8AB2432-8586-4350-B97C-CD1A1E7D1D48}" Name="Command Name" Type="Single-Line Text" />
+      <Field Id="{B266CEE6-C569-4384-9E8B-FCAD9ECA90E9}" Name="Control ID" Type="Single-Line Text" />
+      <Field Id="{3EC044E3-6204-4F54-98E1-F2D9A81A0BC3}" Name="Is Favorite" Type="Checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{BAAD9D10-19E7-4878-A96F-E290B914BF5F}" Database="core" Name="Speak-RenderingFolder" Path="/sitecore/client/Speak/Templates/Common/Speak-RenderingFolder" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{B68C1F0E-6305-4542-A956-6BE89CA3F121}" Name="Data">
+      <Field Id="{6DEBFA99-B44C-4321-AE86-B79735D047AB}" Name="SpeakCoreVersion" Type="Droplink" />
+    </Section>
+  </Template>
+  <Template Id="{48E6131F-5633-45A3-B155-A42EB2AD928E}" Database="core" Name="Stateful" Path="/sitecore/client/Speak/Templates/Common/Stateful" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{99A31CDE-1507-4029-B93B-A7F24CB552F2}" Name="State">
+      <Field Id="{BAA2D292-4F8D-4040-9BAF-040503BEE153}" Name="IsStateDiscarded" Type="Checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{ECF833D8-481C-4A33-93FA-6EC9BC8C9CD5}" Database="core" Name="BaseDataProvider" Path="/sitecore/client/Speak/Templates/Data/BaseDataProvider" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}|{6A9A5956-5354-48B4-A25A-DABABA738424}">
+    <Section Id="{C1BB29A7-F03D-4885-ADA0-D4EA9836A610}" Name="Data">
+      <Field Id="{6F6C4B55-7D0F-458A-976E-EBA4DDC50AC8}" Name="DataURL" Type="Single-Line Text" />
+      <Field Id="{4AFE9C8B-522D-4ABA-87D2-C281405D331A}" Name="QueryParameters" Type="Single-Line Text" />
+      <Field Id="{57514DE4-941F-4F28-B9E9-D690E82F775C}" Name="Data" Type="Single-Line Text" />
+      <Field Id="{0703C792-3322-4CDD-8209-A72909434BD5}" Name="Messages" Type="Single-Line Text" />
+    </Section>
+    <Section Id="{976D7124-D9A3-4242-B339-B37A05F49F6A}" Name="State">
+      <Field Id="{DB9D56D9-1AE8-4D3A-A1E1-BA35F4FEEC53}" Name="HasData" Type="Checkbox" />
+      <Field Id="{DB5C1C3D-A990-4114-A468-86A37D0B70AF}" Name="HasNoData" Type="Checkbox" />
+      <Field Id="{0E20E7C8-149C-463C-B157-170182B18D3D}" Name="IsBusy" Type="Checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{AEC414E7-5B71-4A3C-9233-CAB275C65EC8}" Database="core" Name="Dimensions" Path="/sitecore/client/Speak/Templates/Dialogs/Dimensions" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{05084271-291D-4A20-94EF-7E3337966527}" Name="Data">
+      <Field Id="{876BF304-0AFD-4D10-A9DE-00D8B31AD762}" Name="Width" Type="Single-Line Text" />
+      <Field Id="{A369C9A9-F144-437B-AD31-DE4702F6924F}" Name="Height" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{193C7F11-BEF6-47DD-946D-E673A92A9C13}" Database="core" Name="Page-Script-File" Path="/sitecore/client/Speak/Templates/Pages/Page-Script-File" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{CDB7959E-502C-4FB0-BB34-5F9361F4692E}" Name="Data">
+      <Field Id="{CE2F73F5-DA75-4835-B6AE-D134BCBC6831}" Name="File" Type="server file" />
+      <Field Id="{12BD77C6-38C5-4047-9785-3FFBAE462B45}" Name="UseAMD" Type="Checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{B1B19F4E-E65F-4495-A408-1E8811CF56AD}" Database="core" Name="Page-Script-Folder" Path="/sitecore/client/Speak/Templates/Pages/Page-Script-Folder" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{A2190867-0A51-4241-B528-2B0162BB1416}" Name="Data">
+      <Field Id="{0246D341-2B1F-436E-9810-6AA59190F5D1}" Name="Folder" Type="server file" />
+    </Section>
+  </Template>
+  <Template Id="{E35EAA2D-EDEA-431C-A9E6-488272B53782}" Database="core" Name="PageSettings" Path="/sitecore/client/Speak/Templates/Pages/PageSettings" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{27C78269-CEF0-483F-9E7A-AF27ED04CE5D}" Database="core" Name="Page-Stylesheet-File" Path="/sitecore/client/Speak/Templates/Pages/Page-Stylesheet-File" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{DEEC4209-414A-46DF-ADA7-83DBAE7CEF4C}" Name="Data">
+      <Field Id="{834B2406-24A9-4376-9350-CBE6DA96C51A}" Name="Stylesheet" Type="server file" />
+    </Section>
+  </Template>
+  <Template Id="{56B55137-0C0E-4DD2-BE87-175455F67B69}" Database="core" Name="Page-Stylesheet-Folder" Path="/sitecore/client/Speak/Templates/Pages/Page-Stylesheet-Folder" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{D7EBB61A-2294-4940-9ED8-CB76B3EA26B6}" Name="Data">
+      <Field Id="{26129056-48D7-4F0C-97B3-7887067AF16C}" Name="Folder" Type="server file" />
+    </Section>
+  </Template>
+  <Template Id="{5F2C442F-2554-4C80-B1D9-2195FA6168B1}" Database="core" Name="Speak-BasePage" Path="/sitecore/client/Speak/Templates/Pages/Speak-BasePage" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{80380C18-C0A0-4F04-AF21-3C91ABFFD41F}" Name="Appearance">
+      <Field Id="{7205A57F-93B4-413A-AA9A-6B16BBC59565}" Name="BrowserTitle" Type="Single-Line Text" />
+      <Field Id="{5E642935-A6FC-48E9-B039-FE1136CED488}" Name="Theme" Type="Droplist" />
+      <Field Id="{F7B4EBC1-2335-4EB8-AFAE-3444923A38BE}" Name="Subthemes" Type="Checklist" />
+      <Field Id="{3A67AD0F-9530-4B1B-9B70-9230C36AE8D6}" Name="UseFullWidth" Type="Checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{150C757B-2FB0-4945-A9FC-A7543425F2F3}" Database="core" Name="ButtonControlBase" Path="/sitecore/client/Speak/Templates/Rendering Parameters/ButtonControlBase" BaseTemplates="{6A9A5956-5354-48B4-A25A-DABABA738424}">
+    <Section Id="{6740E4FB-0431-4F90-B47E-E588D059A5F2}" Name="Appearance">
+      <Field Id="{7C3A596D-C0C6-4831-86D9-D43327023A65}" Name="IsEnabled" Type="Checkbox" />
+    </Section>
+    <Section Id="{6D1F9D54-B365-4B66-A5A3-85248C468F22}" Name="Events">
+      <Field Id="{9F2E12C5-F236-441D-AE2F-1DF11A343D81}" Name="Click" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{BB940A88-C18F-4F87-88D1-227F0A8CA8B0}" Database="core" Name="ComponentBase" Path="/sitecore/client/Speak/Templates/Rendering Parameters/ComponentBase" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{DF0B3523-0708-4D62-9A06-4EDA52F1938E}" Name="Design">
+      <Field Id="{AC264D78-D730-4C59-8B10-2D8A67E76AE4}" Name="Id" Type="Single-Line Text" />
+    </Section>
+    <Section Id="{DD895498-5103-4F92-849E-F65F2080BEEC}" Name="Appearance">
+      <Field Id="{1CA5B2CF-CFDA-4753-9A47-CD5D1E9505E5}" Name="Behaviors" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{6A9A5956-5354-48B4-A25A-DABABA738424}" Database="core" Name="ControlBase" Path="/sitecore/client/Speak/Templates/Rendering Parameters/ControlBase" BaseTemplates="{BB940A88-C18F-4F87-88D1-227F0A8CA8B0}">
+    <Section Id="{6BAA13F4-62F3-4E9B-A214-5F1A80D1C727}" Name="Appearance">
+      <Field Id="{E17D3534-A424-47E3-8F2C-3DBBA705565F}" Name="Tooltip" Type="Single-Line Text" />
+      <Field Id="{6D0C0AB0-BC40-4BD0-8ACB-16612A180F14}" Name="IsVisible" Type="Checkbox" />
+    </Section>
+    <Section Id="{0F82C80F-219B-494A-BBDD-9FCB6C044093}" Name="Behavior">
+      <Field Id="{6B587761-C7FB-43BD-BB6C-2B03D19B69A2}" Name="AccessKey" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{ED2A8100-A9CA-4BB9-B0CA-C5CDD10EE95A}" Database="core" Name="InputControlBase" Path="/sitecore/client/Speak/Templates/Rendering Parameters/InputControlBase" BaseTemplates="{6A9A5956-5354-48B4-A25A-DABABA738424}">
+    <Section Id="{FE43B2A8-5884-4966-8E71-EA7C7B15B7F1}" Name="Appearance">
+      <Field Id="{08C91ADE-048F-4D5D-A77C-28F2EF4A458F}" Name="IsEnabled" Type="Checkbox" />
+    </Section>
+  </Template>
+</Exports>

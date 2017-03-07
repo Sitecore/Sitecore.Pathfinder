@@ -124,21 +124,6 @@ namespace Sitecore.Pathfinder.Configuration
             {
                 GetProjectConfigurationFiles(configurationFileNames, options, toolsDirectory, projectDirectory);
             }
-
-            // check if there are only tool configuration files
-            if (configurationFileNames.All(f => f.StartsWith(toolsDirectory, StringComparison.OrdinalIgnoreCase)))
-            {
-                // check if project directory is empty or not
-                if (Directory.GetFiles(projectDirectory).Any() || Directory.GetDirectories(projectDirectory).Any())
-                {
-                    // there are files or directories, but no config file, so let's try the default project config file
-                    var projectConfigFileName = PathHelper.Combine(toolsDirectory, "files\\project.noconfig\\scconfig.json");
-                    if (File.Exists(projectConfigFileName))
-                    {
-                        configurationFileNames.Add(projectConfigFileName);
-                    }
-                }
-            }
         }
 
         protected virtual void GetProjectConfigurationFiles([NotNull, ItemNotNull] List<string> configurationFileNames, ConfigurationOptions options, [NotNull] string toolsDirectory, [NotNull] string directory)

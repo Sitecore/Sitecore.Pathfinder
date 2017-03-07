@@ -1,0 +1,1654 @@
+<Exports>
+  <Item Id="{11111111-1111-1111-1111-111111111111}" Database="core" Name="sitecore" Path="/sitecore" Template="/sitecore/templates/System/Root" />
+  <Item Id="{31056D46-2FAA-4EA2-8759-BE93EAE10001}" Database="core" Name="client" Path="/sitecore/client" Template="/sitecore/templates/System/Main section" />
+  <Item Id="{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}" Database="core" Name="content" Path="/sitecore/content" Template="/sitecore/templates/System/Main section" />
+  <Item Id="{EB2E4FFD-2761-4653-B052-26A64D385227}" Database="core" Name="layout" Path="/sitecore/layout" Template="/sitecore/templates/System/Main section" />
+  <Item Id="{BAD98E0E-C1B5-4598-AC13-21B06218B30C}" Database="core" Name="masters" Path="/sitecore/masters" Template="/sitecore/templates/System/Main section" />
+  <Item Id="{3D6658D8-A0BF-4E75-B3E2-D050FABCF4E1}" Database="core" Name="media library" Path="/sitecore/media library" Template="/sitecore/templates/System/Main section" />
+  <Item Id="{13D6D6C6-C50B-4BBD-B331-2B04F1A58F21}" Database="core" Name="system" Path="/sitecore/system" Template="/sitecore/templates/System/Main section" />
+  <Item Id="{3C1715FE-6A13-4FCF-845F-DE308BA9741D}" Database="core" Name="templates" Path="/sitecore/templates" Template="/sitecore/templates/System/Main section" />
+  <Item Id="{C9F2921F-AA54-4B20-8D1B-2FBB11598B8E}" Database="core" Name="unit testing" Path="/sitecore/unit testing" Template="/sitecore/templates/System/Main section" />
+  <Item Id="{9CBE9270-1377-48CC-87B6-263F4C705C7D}" Database="core" Name="Applications" Path="/sitecore/client/Applications" Template="/sitecore/templates/System/Node" />
+  <Template Id="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" Database="core" Name="Folder" Path="/sitecore/templates/Common/Folder" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{00DC91DE-502D-6AB7-B88A-AA71E114B2DA}" Database="core" Name="Sample Item" Path="/sitecore/templates/Sample/Sample Item" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{50B60441-F828-4996-8F0E-6C4B74B28975}" Name="Fields">
+      <Field Id="{CD1F8502-5E10-4B3A-8543-B45BBB78945E}" Name="Title" Type="" />
+      <Field Id="{68493FA8-AE3E-4E2A-8ABB-C9249A5AFF1A}" Name="Watermark" Type="" />
+    </Section>
+  </Template>
+  <Template Id="{EB06CEC0-5E2D-4DC4-875B-01ADCC577D13}" Database="core" Name="Application" Path="/sitecore/templates/Sitecore Client/Applications/Application" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{57DFCE43-2C9E-44DD-9C3F-8A052E2A0F81}" Name="Data">
+      <Field Id="{F9814588-762B-4D57-932D-2D6DE100A59A}" Name="Application" Type="link" />
+      <Field Id="{67B6378B-C9F1-47C7-9CAC-BFA79B0727D9}" Name="Display name" Type="text" />
+      <Field Id="{FC2B18B3-1631-4C3F-9E47-51DF05030026}" Name="Icon" Type="Icon" />
+      <Field Id="{14DCA483-AAC7-4D87-AE27-3163D21798B7}" Name="Tool tip" Type="text" />
+    </Section>
+    <Section Id="{44A84FD5-B9AB-4A10-92F7-1F3728F02BA2}" Name="Appearance">
+      <Field Id="{C687AA26-A85D-4C42-B32E-11E5FAECDF05}" Name="Chrome" Type="valuelookup" />
+      <Field Id="{094829C2-D7A7-4C38-B025-B99FF2001B56}" Name="Disable close" Type="checkbox" />
+      <Field Id="{B4E951EE-906F-4249-B2C6-68E31C82E118}" Name="Disable maximize" Type="checkbox" />
+      <Field Id="{F54C1557-F8CE-4130-90A7-B89575C4CDBE}" Name="Disable minimize" Type="checkbox" />
+      <Field Id="{2B3ECBBC-432A-4CEA-BB75-CE481B644FF8}" Name="Disable resize" Type="checkbox" />
+      <Field Id="{3549BD09-8F13-4563-8113-4D50AE5D3717}" Name="Height" Type="text" />
+      <Field Id="{53F846B3-F26A-4D37-896B-2F744A802DFE}" Name="Width" Type="text" />
+      <Field Id="{BDE5F757-A8A4-4FFD-A38B-E0DCCA84F210}" Name="Window type" Type="valuelookup" />
+      <Field Id="{7C90BFDE-F50C-4CDA-94CA-CE712C9675C6}" Name="Window Mode" Type="valuelookup" />
+    </Section>
+  </Template>
+  <Template Id="{C20ED30F-D974-4C65-AE57-CE745C37940E}" Database="core" Name="Application folder" Path="/sitecore/templates/Sitecore Client/Applications/Application folder" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{72450C9C-98C4-4117-88B7-573110C7E0C0}" Database="core" Name="Application shortcut" Path="/sitecore/templates/Sitecore Client/Applications/Application shortcut" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{083717FD-6F16-46D5-B47C-076202165910}" Name="Data">
+      <Field Id="{8A1AC797-0304-4C50-AAAC-4D9DBBFF435F}" Name="Application" Type="link" />
+      <Field Id="{C032DB76-CC34-4F8F-BE2D-D2FB35237AAB}" Name="Display name" Type="text" />
+      <Field Id="{238A40DA-15F2-4412-B720-8F192FFA7491}" Name="Icon" Type="text" />
+      <Field Id="{90A4607C-71B4-4D46-A921-25EF798193D8}" Name="Parameters" Type="text" />
+      <Field Id="{BB865E67-0BE3-49D8-B8BD-1DB4B34AB2E3}" Name="Tool tip" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{D592084B-F776-4764-8843-604F779B6624}" Database="core" Name="Click" Path="/sitecore/templates/Sitecore Client/Click" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{D6DF1698-3011-4F52-A9B0-FD0AA5FB97F6}" Name="Data">
+      <Field Id="{14BB9DE9-DCB8-47AE-BA9E-0A5E2B2DB301}" Name="Header" Type="" />
+      <Field Id="{AA38B514-FC05-4372-BE15-811D15FC8595}" Name="Icon" Type="icon" />
+      <Field Id="{40F2647D-1876-4995-AEB1-DBC5CD946EE7}" Name="Click" Type="text" />
+      <Field Id="{2E3F0081-5743-41F3-B618-F3BC8B899650}" Name="Tool Tip" Type="" />
+      <Field Id="{92B9A727-3590-4D26-A77C-1D286DD85FEC}" Name="Custom Data" Type="memo" />
+    </Section>
+  </Template>
+  <Template Id="{4EFE99E4-A41B-4EEC-9FBF-9CF82A4B1350}" Database="core" Name="Content Editor Application" Path="/sitecore/templates/Sitecore Client/Content editor/Content Editor Application" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{5F4BD907-5021-4D04-8BDC-94F599AAE514}" Name="Data">
+      <Field Id="{438471BB-1514-4637-B50A-DE6ABAF999DE}" Name="Header" Type="text" />
+      <Field Id="{6D91E6FB-7277-4563-ABE0-33A2045BD77F}" Name="Source" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{A5AACA0D-77C0-4741-AB77-211CFBDD9E5C}" Database="core" Name="Editor" Path="/sitecore/templates/Sitecore Client/Content editor/Editor" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{64FA9BD0-31A6-45B3-B22C-F65230AB9E44}" Name="Data">
+      <Field Id="{F7C42332-728E-48B7-BB3C-0D6883E45628}" Name="Header" Type="text" />
+      <Field Id="{AB8D0102-91F3-43B6-90AA-5A0641DC8521}" Name="Icon" Type="icon" />
+      <Field Id="{6F371C74-5BD5-4EBD-B10A-FC54716021AE}" Name="Url" Type="text" />
+      <Field Id="{0824803B-77DA-4F7C-B94C-B3314C465897}" Name="Refresh On Show" Type="checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{F5D247E0-80E6-4F31-9921-D30D00B61B3C}" Database="core" Name="Gutter Renderer" Path="/sitecore/templates/Sitecore Client/Content editor/Gutter Renderer" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{76998662-F191-4AFD-898A-BB7A29137510}" Name="Data">
+      <Field Id="{5024402F-0B92-4C13-A7D2-86ED85FF3560}" Name="Header" Type="text" />
+      <Field Id="{7A108204-DC61-4D25-A138-FD6F53F48ABF}" Name="Type" Type="text" />
+      <Field Id="{2CE6B04C-B2C5-45B8-9E3C-BF22A65FC8E8}" Name="Parameters" Type="memo" />
+    </Section>
+  </Template>
+  <Template Id="{7FFCF7D2-F1F8-4538-9301-785566FF4139}" Database="core" Name="Summary Control" Path="/sitecore/templates/Sitecore Client/Content editor/Summary Control" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{53675E3C-1267-4FD7-9DB2-2C9A06DBAF58}" Name="Data">
+      <Field Id="{92106E5A-916E-45C9-8C58-D0819B85F5EC}" Name="Control" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{8D1A4154-CE5F-42F9-9CB2-C3B71A0A20AC}" Database="core" Name="Viewer" Path="/sitecore/templates/Sitecore Client/Content editor/Viewer" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{A59EB033-6C84-43F0-A01A-92D259CD866B}" Name="Data">
+      <Field Id="{27B567B6-C91B-4C92-A212-A3F3E06EFBB0}" Name="Title" Type="text" />
+      <Field Id="{C41BFDC3-36DB-48E1-AC34-160CE41E3C79}" Name="Icon" Type="icon" />
+      <Field Id="{5D6809FE-FA5A-4773-AF32-323C7F870339}" Name="Control" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{6073E5B2-8B53-4A0F-8353-C2DE393932AE}" Database="core" Name="Favorite" Path="/sitecore/templates/Sitecore Client/Favorites/Favorite" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{4E36C000-B7EC-47BC-A7C2-F36F4CEC445A}" Name="Data">
+      <Field Id="{6A758569-88B0-4682-A4B6-96A2515AC504}" Name="Display name" Type="text" />
+      <Field Id="{66D0F9FC-AD56-40D8-BAFE-7E18D4D6261B}" Name="Link" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}" Database="core" Name="Home" Path="/sitecore/templates/Sitecore Client/Home" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{AE76A034-9491-4B83-99F5-39F227D6FB59}" Name="Data">
+      <Field Id="{75577384-3C97-45DA-A847-81B00500E250}" Name="Title" Type="text" />
+      <Field Id="{D97D88A6-EAB7-4F79-B150-C689C7FD7D22}" Name="Text" Type="rich text" />
+    </Section>
+  </Template>
+  <Template Id="{BED9217F-5590-47AF-B5B4-3F0D946A562C}" Database="core" Name="Layouter file type" Path="/sitecore/templates/Sitecore Client/IDE/Layouter file type" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{696B3C41-C17D-4C50-8BE3-BFCFC7B5F4E2}" Name="Data">
+      <Field Id="{401B1262-102D-46F1-8F71-21C1C61E9470}" Name="File type" Type="text" />
+      <Field Id="{D5BA208A-DD41-4D3E-A74E-77C4E293DE34}" Name="Frame source" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{A43D15EF-1B70-4F36-99C5-9410E4515B96}" Database="core" Name="Page Designer Predefined Grid" Path="/sitecore/templates/Sitecore Client/IDE/Page Designer Predefined Grid" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{9AE3AF3F-B54A-4331-BBDE-C9C668E5276D}" Name="Data">
+      <Field Id="{A2A159F3-BFD4-45D8-8A19-67A6B7DC5728}" Name="Title" Type="text" />
+      <Field Id="{0104DA0E-57B0-4CDD-BA9F-462FD35B0EBF}" Name="Icon" Type="icon" />
+      <Field Id="{31368772-E792-4606-B643-61DE4504BE76}" Name="Description" Type="memo" />
+      <Field Id="{2596347E-FB07-40A3-BFE2-33388698AAA3}" Name="Grid" Type="memo" />
+    </Section>
+  </Template>
+  <Template Id="{AB306F6C-B5FC-46A1-9325-837296558FAE}" Database="core" Name="Toolwindow" Path="/sitecore/templates/Sitecore Client/IDE/Toolwindow" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{1BB18550-3C6E-4F16-992B-6505DBE75276}" Name="Data">
+      <Field Id="{2804CB88-1CA6-44A7-B94E-EF1972A14D57}" Name="Title" Type="text" />
+      <Field Id="{339B1170-CEB5-4977-B86A-DE84E28F510A}" Name="Icon" Type="icon" />
+      <Field Id="{2231D160-8BDE-43C3-ACE3-F5787BA7AED5}" Name="Control" Type="text" />
+      <Field Id="{EAB4B2F9-1D25-4132-82C9-B97B05BD60E4}" Name="Frame Name" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{AF80D64F-6E65-46C9-BC44-04E620FE0B46}" Database="core" Name="Installer Object" Path="/sitecore/templates/Sitecore Client/Installer/Installer Object" BaseTemplates="">
+    <Section Id="{548BAE5B-4071-45B7-8B46-F94A8213DE22}" Name="Data">
+      <Field Id="{7E946B95-BED8-4FC0-8217-1C1F95E2A9DF}" Name="ElementName" Type="text" />
+      <Field Id="{20B13801-D5F1-493C-A587-C8F29233D8DD}" Name="Type" Type="text" />
+      <Field Id="{9DF6245B-8B2F-4B4C-AABC-209E24527897}" Name="EditorControl" Type="text" />
+      <Field Id="{8F5DD385-D191-4AF5-9677-30E056A7E1CA}" Name="VisualizerType" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{E59EF871-2550-4F41-BF2B-749BF4D67DE7}" Database="core" Name="Key Map" Path="/sitecore/templates/Sitecore Client/Key Map" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{2D67ABA6-C906-4E88-A26F-1248A7FE039B}" Name="Data">
+      <Field Id="{A8CA48B2-A15F-4187-9F97-B879344CBB01}" Name="KeyCode" Type="Single-Line Text" />
+      <Field Id="{9D8DC3DC-8E67-4739-9717-95386E6FF3D7}" Name="Click" Type="Single-Line Text" />
+      <Field Id="{C91AE7D9-8C2D-48CB-A60C-6EC249939C18}" Name="Group" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{7AE4DE28-D0FA-4887-9914-B3C2EE67DA26}" Database="core" Name="Login" Path="/sitecore/templates/Sitecore Client/Login" BaseTemplates="">
+    <Section Id="{07346476-E00C-4C5A-A880-DD0A5FAF5A33}" Name="Data">
+      <Field Id="{1EAB0E4A-228E-40D3-A1B7-F483B7ABCEF9}" Name="Title" Type="Single-Line Text" />
+      <Field Id="{EC87F55F-50BD-4B78-9E6C-98FF24DC9328}" Name="Partner Logo" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{1AFC0527-13E5-42FB-92CF-00449B523B12}" Database="core" Name="Reporter" Path="/sitecore/templates/Sitecore Client/Reporter/Reporter" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{2BEB0E4F-F9AA-4FAC-BA9F-81A331C03522}" Database="core" Name="Reporter report" Path="/sitecore/templates/Sitecore Client/Reporter/Reporter report" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{DC4C340E-21F0-4FC5-A873-791B28763B88}" Name="Data">
+      <Field Id="{E5C086FD-BE03-45A4-9B0F-142D2E1DA7F5}" Name="Formatter parameters" Type="text" />
+      <Field Id="{20856335-8EC3-4EF9-BF40-E1E4CA578F12}" Name="Formatter type" Type="text" />
+      <Field Id="{BFDE627B-8859-4A89-A4E3-236C421BEE98}" Name="Icon" Type="" />
+      <Field Id="{E96C1313-2D1F-4022-BE9D-F3576FE44FC6}" Name="Source parameters" Type="text" />
+      <Field Id="{607401A9-E8BA-4A14-9BE6-FDE7F076D021}" Name="Source type" Type="text" />
+      <Field Id="{1595BDF2-1007-4F6A-80F5-F45DBE79E0F3}" Name="Title" Type="" />
+    </Section>
+  </Template>
+  <Template Id="{F58958D2-555B-4F56-946C-589E8866880C}" Database="core" Name="Start menu action" Path="/sitecore/templates/Sitecore Client/Start menu/Start menu action" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{F6B79037-774B-428D-9D8B-95B56A587339}" Name="Data">
+      <Field Id="{326CD362-CB1C-4E81-B5F2-5EFA940351F7}" Name="Display name" Type="text" />
+      <Field Id="{9EFED9BB-2EC8-498A-91B9-655091224E4D}" Name="Icon" Type="text" />
+      <Field Id="{6BA1018F-9794-4798-963E-601D413B9CA3}" Name="Message" Type="text" />
+      <Field Id="{E7D3348B-8323-42BA-BC9C-48E1F4E994DC}" Name="Tool tip" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{706F1BB3-647E-4173-9D49-7A64CED6F3D7}" Database="core" Name="Start menu divider" Path="/sitecore/templates/Sitecore Client/Start menu/Start menu divider" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{579BAD93-BFEF-43E0-9A2E-C3FF30B87987}" Database="core" Name="Start menu folder" Path="/sitecore/templates/Sitecore Client/Start menu/Start menu folder" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{88A0565B-F214-4A41-9E45-8D896988B7E4}" Name="Data">
+      <Field Id="{B27C8AC7-1044-4911-BFB3-F38A9703B93F}" Name="Display name" Type="text" />
+      <Field Id="{092E08F3-8863-40B1-A17C-EF10351AA4F6}" Name="Icon" Type="icon" />
+    </Section>
+  </Template>
+  <Template Id="{25B77D8B-A43D-4890-95F7-3D17FAD72CE1}" Database="core" Name="Feed" Path="/sitecore/templates/Sitecore Client/Syndication/Feed" BaseTemplates="">
+    <Section Id="{A31A8741-6682-4D44-9669-D5683B2D2BA1}" Name="Data">
+      <Field Id="{516CBC73-A35A-4342-8B40-DE55A5B4CC3A}" Name="Type" Type="Single-Line Text" />
+      <Field Id="{DCEA8297-404E-447A-BEE2-A892A3DA7E04}" Name="Sections" Type="Treelist" />
+    </Section>
+  </Template>
+  <Template Id="{D814E3C3-3A73-4E20-BAEB-B4C158804F89}" Database="core" Name="Section" Path="/sitecore/templates/Sitecore Client/Syndication/Section" BaseTemplates="">
+    <Section Id="{BFB2E838-8723-4224-9CF1-18235C4E798D}" Name="Data">
+      <Field Id="{0BD734F3-6A8F-4079-98FD-BEBFFC89E58F}" Name="Type" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{BA3E0EAC-8D9A-4E97-AD84-D01CF62A11F8}" Database="core" Name="Task link" Path="/sitecore/templates/Sitecore Client/Tasks/Task link" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{024A5167-250E-43AC-9C84-99179EA9BC4F}" Name="Data">
+      <Field Id="{3A3CDD58-7A11-422C-A229-F408CE20C6E6}" Name="Click" Type="text" />
+      <Field Id="{BE5F6ADD-7ED7-47D2-BEA4-349EACD4A9D0}" Name="Header" Type="text" />
+      <Field Id="{FCF7BFEA-D646-4835-9FE0-7E8820DA70B1}" Name="Icon" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{BDB6FA46-2F76-4BDE-8138-52B56C2FC47E}" Database="core" Name="Task option" Path="/sitecore/templates/Sitecore Client/Tasks/Task option" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{1C1A0A27-E374-4385-AD4D-B77A66D99176}" Name="Data">
+      <Field Id="{20F47B0C-B146-4847-AC4D-0B25983514B3}" Name="Click" Type="text" />
+      <Field Id="{48323B75-9F6A-4779-AC8B-A01DA56B35B3}" Name="Header" Type="text" />
+      <Field Id="{05065BB9-2FFC-4457-BB83-09BA78C2E4AB}" Name="ID" Type="text" />
+    </Section>
+    <Section Id="{04892707-8C37-4FAA-8210-E25F5F52F68E}" Name="Launch Pad">
+      <Field Id="{8308A893-7DE3-4103-9669-A0289C96191D}" Name="Url" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{08173C9E-EF72-4385-9634-51411B739E41}" Database="core" Name="Task page" Path="/sitecore/templates/Sitecore Client/Tasks/Task page" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{468A0733-6BB4-4FFF-93C0-A51B34235390}" Name="Data">
+      <Field Id="{0E9B4BA1-3CB0-491D-8D51-B81429552E00}" Name="Header" Type="text" />
+      <Field Id="{67ED5AE7-C768-48A4-96D9-698BA64CDD76}" Name="Icon" Type="Icon" />
+    </Section>
+  </Template>
+  <Template Id="{2FBB9D9E-1D57-4C6F-B2E1-5AFB94D771EE}" Database="core" Name="Tool option" Path="/sitecore/templates/Sitecore Client/Tasks/Tool option" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{A6ADE59C-D712-4119-A3A3-4F176E9D6C98}" Name="Data">
+      <Field Id="{0510F728-5E88-4AC3-BFFE-312488FD0793}" Name="Click" Type="text" />
+      <Field Id="{77EEA9AA-B7A6-4484-BE9E-F70B1C249B71}" Name="Header" Type="text" />
+      <Field Id="{C7932039-EC4D-409B-A002-354AEF5002AE}" Name="Icon" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{9288FCAD-5AB8-48D5-965D-3094F793241D}" Database="core" Name="Toolbar" Path="/sitecore/templates/Sitecore Client/Toolbars/Toolbar" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{047A3759-1DB3-4105-B56D-1D6AB081CE5A}" Database="core" Name="Toolbar divider" Path="/sitecore/templates/Sitecore Client/Toolbars/Toolbar divider" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{79E55CB1-FDB0-460A-AB97-B629069F15DA}" Database="core" Name="Toolbutton" Path="/sitecore/templates/Sitecore Client/Toolbars/Toolbutton" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{AA9BD436-03E8-4616-876B-46A6EE1CA6B4}" Name="Data">
+      <Field Id="{46BD0EDB-25FA-49B3-8271-AB0130A59150}" Name="Action" Type="text" />
+      <Field Id="{95DCE7F7-107B-4E53-BE87-F16E707A5D3F}" Name="Click" Type="text" />
+      <Field Id="{209C346C-7393-4580-AD29-3E245A26C8AB}" Name="Context menu" Type="text" />
+      <Field Id="{B9515E27-8AE8-4BCB-BF22-11C5E0C1103F}" Name="DblClick" Type="text" />
+      <Field Id="{474E4AA6-C8C1-48A4-89C5-68C6506703EF}" Name="Disabled" Type="checkbox" />
+      <Field Id="{8AE4373A-4522-461F-BCCF-855EC333D4B2}" Name="Down" Type="checkbox" />
+      <Field Id="{0243B5CA-1A92-4093-9EAD-B4F7B8AD2594}" Name="Header" Type="text" />
+      <Field Id="{4850AD67-0F1E-4889-9D6C-3F32290FD19F}" Name="Hidden" Type="checkbox" />
+      <Field Id="{0A9EC22E-C3C1-42E4-875D-C31AEAF28216}" Name="Icon" Type="text" />
+      <Field Id="{ED097C2E-5CD6-44B5-B71B-188EABD9F167}" Name="ID" Type="text" />
+      <Field Id="{A2AC79D5-0BC3-458F-8E24-486AB54A90C0}" Name="KeyCode" Type="text" />
+      <Field Id="{229A2C13-A3D9-4665-AF1D-8F9788476FF8}" Name="Radiogroup" Type="text" />
+      <Field Id="{F8203177-E6C4-45AE-BD67-C8AF6D7D0450}" Name="Toggle" Type="checkbox" />
+      <Field Id="{49B67F65-B00E-47E4-AE41-04ED250BD614}" Name="Tool tip" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{B40EE369-172F-4A95-BCF5-2A740DEA8F06}" Database="core" Name="Toolmenu" Path="/sitecore/templates/Sitecore Client/Toolbars/Toolmenu" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{424B38B3-6B1F-4DA0-B16A-06506737717D}" Name="Data">
+      <Field Id="{0E4FC82F-C803-4489-80EA-91B705A6F1D9}" Name="Action" Type="text" />
+      <Field Id="{53844988-4B9F-4176-BF7E-C6E4F6B270E3}" Name="Click" Type="text" />
+      <Field Id="{2391BD0F-07E3-4D17-9EFC-9756A2A06653}" Name="Context menu" Type="text" />
+      <Field Id="{6EBBA722-E105-4879-9550-8D35BA1CC77B}" Name="Datasource" Type="text" />
+      <Field Id="{A6AE41FD-C1FD-4A0D-B714-E032C7F8783D}" Name="DblClick" Type="text" />
+      <Field Id="{4E0B3A94-6197-4384-A819-A64D0751F3A8}" Name="Disabled" Type="checkbox" />
+      <Field Id="{1425B5FC-9A5B-4E86-AB9C-23A3CCFE627B}" Name="Down" Type="checkbox" />
+      <Field Id="{72A56DA7-0F41-4789-B585-473206D4D407}" Name="Header" Type="text" />
+      <Field Id="{CAFDD848-9197-466C-B644-B5B1DD4A2676}" Name="Hidden" Type="checkbox" />
+      <Field Id="{02EE1EED-3F23-4C2D-A13B-E651AA163184}" Name="Icon" Type="text" />
+      <Field Id="{4C5C0771-B284-470D-83E5-CA72EB8C74A6}" Name="ID" Type="text" />
+      <Field Id="{E69521E2-E2DC-4501-B70E-69B44E44F38B}" Name="Radiogroup" Type="text" />
+      <Field Id="{239C7317-A584-483F-B419-332489711DB1}" Name="Toggle" Type="checkbox" />
+      <Field Id="{8685832E-2397-4F2B-AA6C-071520FE7E32}" Name="Tool tip" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{721C20B6-6E85-4702-8C5E-678A8FC4FA94}" Database="core" Name="Toolmenubutton" Path="/sitecore/templates/Sitecore Client/Toolbars/Toolmenubutton" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{2742A826-02EE-48AA-A5F1-9AEC7AF5AEF5}" Name="Data">
+      <Field Id="{B55949A9-AAED-4633-8294-F22B1908445C}" Name="Action" Type="text" />
+      <Field Id="{9FEA3476-38AC-4433-B77A-1175C91EE5D7}" Name="Click" Type="text" />
+      <Field Id="{3AAE27B6-033C-40CF-A606-8677ADC19608}" Name="Context menu" Type="text" />
+      <Field Id="{F1055418-7592-43D6-9091-4B60490883A5}" Name="Datasource" Type="text" />
+      <Field Id="{B7AE4436-80E0-4859-A5F4-2CBEC2373C5F}" Name="DblClick" Type="text" />
+      <Field Id="{42D40E75-91D7-4E69-A388-83D40AAEFC98}" Name="Disabled" Type="checkbox" />
+      <Field Id="{6D506A51-9449-4FCA-B133-63B57376E55E}" Name="Down" Type="checkbox" />
+      <Field Id="{BBEBD348-F08B-45C6-A4C8-08AAF60F2EAA}" Name="Header" Type="text" />
+      <Field Id="{C46B3D12-0861-426F-BC5E-B35899B7801D}" Name="Hidden" Type="checkbox" />
+      <Field Id="{44375FDD-6386-4664-B76D-8DA7F9E094C4}" Name="Icon" Type="text" />
+      <Field Id="{FA30D548-711B-44CF-B01B-F57D3DE1F8FF}" Name="ID" Type="text" />
+      <Field Id="{01B7B72C-1A1D-465F-8ECB-6EBCEA5B46EE}" Name="Radiogroup" Type="text" />
+      <Field Id="{05451881-422D-4E59-8BC9-B0D1F5C55DFA}" Name="Toggle" Type="checkbox" />
+      <Field Id="{EA780544-FBDF-45DE-B51D-011E586E869A}" Name="Tool tip" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{54BCFFB7-8F46-4948-AE74-DA5B6B5AFA86}" Database="core" Name="Alias" Path="/sitecore/templates/System/Alias" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{2FC219EA-03AE-4AB0-BCBA-EF036F999F0D}" Name="Data">
+      <Field Id="{8CBAB1DF-CF26-4C80-9002-62AA153D1E4C}" Name="Linked item" Type="link" />
+    </Section>
+  </Template>
+  <Template Id="{D71B5DE1-867A-43A0-8ADD-6EEEC59E3805}" Database="core" Name="Badge" Path="/sitecore/templates/System/Analytics/Badge" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{8E05F52E-B144-41FF-9373-C940C7603ADC}" Name="Data">
+      <Field Id="{EF2832C0-48CE-4887-984A-8DEB1A305C7E}" Name="Action" Type="Single-Line Text" />
+      <Field Id="{52A426E1-B700-496A-A201-6221CDD8474C}" Name="Icon" Type="Icon" />
+      <Field Id="{E1C78490-0533-4F9C-80AE-961D009F3E0C}" Name="Description" Type="Multi-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{38EE693F-C33F-45D8-B06E-5E8355655336}" Database="core" Name="Report Schedule" Path="/sitecore/templates/System/Analytics/Report Schedule" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{3083CA78-DAE1-4DD9-9893-68AAF89BF4AF}" Name="Data">
+      <Field Id="{5946DA66-4E02-41C2-B54D-C0D600C0598F}" Name="Schedule" Type="Multi-Line Text" />
+      <Field Id="{BCF18FB9-E44A-4A0D-BD17-9338A3665200}" Name="Last Run" Type="Datetime" />
+    </Section>
+  </Template>
+  <Template Id="{BF2B8DA2-3CBA-485D-8F85-3788B8AFBDBF}" Database="core" Name="Archived item" Path="/sitecore/templates/System/Archiving/Archived item" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{61FF15C9-CDC8-4492-A137-F2A7210F0DF2}" Name="Data">
+      <Field Id="{38E9A00A-933B-4A9A-9D82-E2171CA52756}" Name="Archive date" Type="datetime" />
+      <Field Id="{A42AD672-680A-47C0-899D-04238C8F15BC}" Name="Completed" Type="checkbox" />
+      <Field Id="{1897F98D-6DCD-4083-B1D3-BC9C4B11DD27}" Name="Database name" Type="text" />
+      <Field Id="{2F093D15-FD21-47A0-ACC0-E153B9BA508C}" Name="Item ID" Type="text" />
+      <Field Id="{67A5FC75-1996-44E2-B226-A7F92AC9F9C7}" Name="Item xml" Type="memo" />
+      <Field Id="{1F4412CC-609C-4D3C-AF8C-D5C849202916}" Name="Parent ID" Type="text" />
+      <Field Id="{FE3A1E84-098D-41FE-9652-3F7821A8889A}" Name="User name" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{6A10B7B1-48F6-48F2-B3AE-4AE3061F3448}" Database="core" Name="Script" Path="/sitecore/templates/System/Browsers/Script" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{F93A92DB-1631-45A8-9301-8AF02327416F}" Name="Data">
+      <Field Id="{7D0DB605-C3EC-4F69-8F23-F15478B41124}" Name="Source" Type="server file" />
+      <Field Id="{958B0134-77EE-4148-A6CE-7457830D1877}" Name="Defer" Type="checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{1349EB63-C41D-439C-AB9D-F86D2E1AEAC9}" Database="core" Name="Stylesheet" Path="/sitecore/templates/System/Browsers/Stylesheet" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{66DFB7B4-2192-488C-BFB4-3F25ECBF5543}" Name="Data">
+      <Field Id="{753D9148-734A-4F0F-8EE2-AC3E61E8B27F}" Name="Source" Type="server file" />
+    </Section>
+  </Template>
+  <Template Id="{F0CBFD8C-D5EF-43E1-A4D7-8B386C77B9E4}" Database="core" Name="Child Sorting" Path="/sitecore/templates/System/Child Sorting" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{BD06D3A6-C40D-482F-8D34-8EF4FC205D84}" Name="Data">
+      <Field Id="{7AC90661-4B41-4501-9D66-01B69EC5F627}" Name="Type" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{E7142FE9-4DF3-48B5-86C0-2E1FB728059C}" Database="core" Name="Click" Path="/sitecore/templates/System/Click" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{F64386E5-91B2-4B4C-B13E-D15D1222B4B1}" Name="Data">
+      <Field Id="{52635E27-9E6B-4BE6-A571-3A419A93102C}" Name="Header" Type="text" />
+      <Field Id="{BD3D128A-A690-4D91-A553-E33B3EF8CC39}" Name="Icon" Type="icon" />
+      <Field Id="{083228AD-C969-40BE-A14A-0CF42F39C3B2}" Name="Command" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{0A2847E6-9885-450B-B61E-F9E6528480EF}" Database="core" Name="Dictionary Domain" Path="/sitecore/templates/System/Dictionary/Dictionary Domain" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{D6969719-BA62-451E-BB38-CAB1306DDE70}" Name="Data">
+      <Field Id="{CD72E892-D8BB-487C-9EB1-6A57C48C72CC}" Name="Fallback Domain" Type="Droplink" />
+    </Section>
+  </Template>
+  <Template Id="{6D1CD897-1936-4A3A-A511-289A94C2A7B1}" Database="core" Name="Dictionary entry" Path="/sitecore/templates/System/Dictionary/Dictionary entry" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{224562F4-3041-4E45-9553-7149F3E365E8}" Name="Data">
+      <Field Id="{580C75A8-C01A-4580-83CB-987776CEB3AF}" Name="Key" Type="memo" />
+      <Field Id="{2BA3454A-9A9C-4CDF-A9F8-107FD484EB6E}" Name="Phrase" Type="memo" />
+    </Section>
+  </Template>
+  <Template Id="{267D9AC7-5D85-4E9D-AF89-99AB296CC218}" Database="core" Name="Dictionary folder" Path="/sitecore/templates/System/Dictionary/Dictionary folder" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{11A111FF-4343-4AF8-91DC-3C49DBEDD9C6}" Database="core" Name="Help Text" Path="/sitecore/templates/System/Help Text/Help Text" BaseTemplates="">
+    <Section Id="{9500E896-D82C-4426-89A4-A42E49BAAEAC}" Name="Data">
+      <Field Id="{86238E01-03FA-4AC2-84AA-DD106281E85B}" Name="Key" Type="Single-Line Text" />
+      <Field Id="{18D518F5-4B35-4BC8-9700-741C26AE76B7}" Name="Title" Type="Multi-Line Text" />
+      <Field Id="{FFF72FE1-626A-4D01-AAB6-F157BC97B4AF}" Name="Header" Type="Multi-Line Text" />
+      <Field Id="{2411011D-885F-4561-BA09-C08E467B7996}" Name="Body" Type="Multi-Line Text" />
+      <Field Id="{40A8A4C3-9BF8-4E74-8183-DF61AC2CD863}" Name="Image" Type="Image" />
+    </Section>
+  </Template>
+  <Template Id="{5380D907-A1BC-41FB-BBB6-4B04E83E25D1}" Database="core" Name="HTML Class" Path="/sitecore/templates/System/Html editor/HTML Class" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{D4AB953E-FEBB-4AF3-85D8-2E511AE4B30F}" Name="Data">
+      <Field Id="{F13401AB-2997-4CCB-9B13-929A834B269C}" Name="Display class" Type="text" />
+      <Field Id="{B1678F64-EC56-418F-BCF0-A4F6CE0033BE}" Name="Reference class" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{90844A48-C3A2-4C0E-8A02-7777FFB6080A}" Database="core" Name="Html Custom Button" Path="/sitecore/templates/System/Html editor/Html Custom Button" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{9DEC54BE-ABB0-428A-9CC7-F29E2971E0FF}" Name="Data">
+      <Field Id="{D0A17094-2524-4C76-8950-56A67C5AE73A}" Name="Name" Type="text" />
+      <Field Id="{6940B82A-907A-4F81-A46C-8239D90ED2A3}" Name="Icon" Type="icon" />
+      <Field Id="{862FD996-0AE7-4982-A426-BDE64711BE70}" Name="Tooltip" Type="text" />
+      <Field Id="{FB99A9E2-CD0D-484E-9682-2F355476D09F}" Name="Click" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{A87C6D3F-D797-4147-9292-899A9DB561B3}" Database="core" Name="HTML Font" Path="/sitecore/templates/System/Html editor/HTML Font" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{F8081F9B-51F2-4E3B-9CD2-B1EB4243C1ED}" Name="Data">
+      <Field Id="{C01BCFF7-4C64-423F-9846-0CF1E0360B25}" Name="Display name" Type="text" />
+      <Field Id="{43FE2907-F04C-47DF-BC10-AE4DDA4865FD}" Name="Reference name" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{6922F86A-74B1-45D9-9CF5-57C04E72A243}" Database="core" Name="HTML Size" Path="/sitecore/templates/System/Html editor/HTML Size" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{70A022AF-0B9D-47CF-947E-7F2A66F5D047}" Name="Data">
+      <Field Id="{D5C77F91-DC0B-4228-A137-C6AEFE1963DD}" Name="Display size" Type="text" />
+      <Field Id="{0013ED97-2131-4954-A46D-D7FAE9521D36}" Name="Reference size" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{C645E9C4-5ED6-4BDB-96C0-02E5ACE00602}" Database="core" Name="HTML Tidy" Path="/sitecore/templates/System/Html editor/HTML Tidy" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{A8A461D2-05F6-4FCD-AE33-D349C6C55FDF}" Name="Data">
+      <Field Id="{65BE1933-491F-42C6-A8B8-DEF7844FE7B4}" Name="Allowed tags" Type="text" />
+      <Field Id="{B0D50E0A-FAFA-4F37-96A9-DF6124AA197B}" Name="Clean on button" Type="checkbox" />
+      <Field Id="{CD48EE5C-18FF-4E2A-8E0B-97ADB9833043}" Name="Clean on drop" Type="checkbox" />
+      <Field Id="{5FAC4B12-EE3B-44AF-B6B0-95A3C7EDE9B1}" Name="Clean on paste" Type="checkbox" />
+      <Field Id="{5A816942-FEEA-432E-8EEA-06B77B448FF9}" Name="Clean on save" Type="checkbox" />
+      <Field Id="{BF430C9D-C50F-4C64-B34B-4E2C5D3FD0B1}" Name="Filter on button" Type="checkbox" />
+      <Field Id="{811C0C47-7441-4A83-83B6-C86F3F011A59}" Name="Filter on drop" Type="checkbox" />
+      <Field Id="{CF8ACDA9-59C4-444A-B120-A1759A15176D}" Name="Filter on paste" Type="checkbox" />
+      <Field Id="{B52C4EC8-B179-460F-B6A3-DD2926482636}" Name="Filter on save" Type="checkbox" />
+      <Field Id="{97FFCE5D-A80F-470B-B26A-A7861AC39CA6}" Name="Tidy on button" Type="checkbox" />
+      <Field Id="{6687DF0A-EF02-4111-98E1-0809C39D7DD4}" Name="Tidy on drop" Type="checkbox" />
+      <Field Id="{7D87CB7F-2990-4B28-84A1-02C6152477A7}" Name="Tidy on paste" Type="checkbox" />
+      <Field Id="{AD43A1C4-3ADF-4097-9265-897369A113CE}" Name="Tidy on save" Type="checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{B5A33A4A-7A5D-4D83-BBD3-AF9CA4582827}" Database="core" Name="HTML Translation" Path="/sitecore/templates/System/Html editor/HTML Translation" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{F06FA7F2-F012-4D4D-95DA-A2AC8E6EA5C4}" Name="Data">
+      <Field Id="{1A8C5638-F605-475C-89D3-B4DD288E1D6A}" Name="New class" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{B2A1FF6C-6B1F-41EF-B2E1-AA598CF7335F}" Database="core" Name="Setting group" Path="/sitecore/templates/System/Html editor/Setting group" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{498A0829-F86C-449F-9723-3691CBBF5035}" Name="Data">
+      <Field Id="{8F4DDC2D-9C99-45C9-815D-D0FE45D15BCE}" Name="Disabled" Type="checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{3C8BD8A1-280B-4278-BB8B-21FA3B87AF0F}" Database="core" Name="Html Editor Button" Path="/sitecore/templates/System/Html Editor Profiles/Html Editor Button" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{024D1832-6586-47E8-AB24-915BD7C04522}" Name="Data">
+      <Field Id="{7CF6DA87-047D-447D-99E9-D1E355330DB3}" Name="Click" Type="text" />
+      <Field Id="{316701FC-E42F-4D51-8FE2-7BF01C4E8159}" Name="Shortcut" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{10863561-7398-4C5D-8A99-B075B90C4E41}" Database="core" Name="Html Editor Class Translation" Path="/sitecore/templates/System/Html Editor Profiles/Html Editor Class Translation" BaseTemplates="">
+    <Section Id="{73BFD63C-C8E1-4003-A333-E22134AD8489}" Name="Data">
+      <Field Id="{2B6BD0BD-7B87-4E8D-99C8-16BBE70E7DE0}" Name="Key" Type="" />
+      <Field Id="{CAF92D8D-E76C-41A0-9567-6C5F86B63ABF}" Name="Value" Type="" />
+    </Section>
+  </Template>
+  <Template Id="{ECA6E291-BB55-47AB-BD02-BE76B1BC884F}" Database="core" Name="Html Editor Configuration Type" Path="/sitecore/templates/System/Html Editor Profiles/Html Editor Configuration Type" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{1B1E44D9-16DD-4B3C-82BB-FBF7A2AD8D37}" Name="Data">
+      <Field Id="{FF617570-33A4-4D0E-931E-FFEB9FAB450F}" Name="Type" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{336C8252-DC1C-41F3-86EE-2A116F4DBEA1}" Database="core" Name="Html Editor Custom Drop Down" Path="/sitecore/templates/System/Html Editor Profiles/Html Editor Custom Drop Down" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{77B3C389-433D-4D9C-B731-FB7B37AB612D}" Name="Data">
+      <Field Id="{3A5A9EFB-AF76-4466-8AC1-F8536744E135}" Name="Click" Type="text" />
+      <Field Id="{393C8800-FC1A-47BA-A2E0-1A3F83F4FD85}" Name="Shortcut" Type="text" />
+      <Field Id="{8D507ED0-521B-4894-94CD-5B388C1FA293}" Name="Suppress Icon" Type="Checkbox" />
+      <Field Id="{534D71B6-813E-4A0A-809B-27FC3B6B2A74}" Name="Width" Type="Single-Line Text" />
+      <Field Id="{738A5C0D-9F2D-4360-AA33-4C07280D7F37}" Name="Height" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{749ADA5B-E9EC-4CE4-AE0E-CA1AD852A8B0}" Database="core" Name="Html Editor Custom Drop Down Button" Path="/sitecore/templates/System/Html Editor Profiles/Html Editor Custom Drop Down Button" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{B330D7AB-26C0-49E4-9D67-95624191856B}" Name="Data">
+      <Field Id="{44DD6CEC-13A6-42D8-B1AD-E47471F9BB93}" Name="Click" Type="text" />
+      <Field Id="{84E64AAC-EC01-4F0E-A9AC-5C5088F56A43}" Name="Shortcut" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{7BEF6918-EFF5-48DB-937F-914BD2EEB15D}" Database="core" Name="Html Editor Divider" Path="/sitecore/templates/System/Html Editor Profiles/Html Editor Divider" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{73AB3D58-6BF7-4DB5-BEDD-5EB7072D11B7}" Database="core" Name="Html Editor Drop Down" Path="/sitecore/templates/System/Html Editor Profiles/Html Editor Drop Down" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{AD093202-68C9-439F-B0D0-040E5B311AC1}" Name="Data">
+      <Field Id="{3EAB3EA1-8FF5-45D4-827C-31EC72BAEE3B}" Name="Click" Type="text" />
+      <Field Id="{FC45BBA8-6D03-410B-BDEA-B85A164BB629}" Name="Shortcut" Type="text" />
+      <Field Id="{927C3328-11CD-4AFF-BE39-13AB15DDB88A}" Name="Suppress Icon" Type="Checkbox" />
+      <Field Id="{9B88F7F0-2243-4039-95D8-70CC176C54E8}" Name="Width" Type="Single-Line Text" />
+      <Field Id="{BCD35AA7-987F-4711-ACCC-538A5D0466FE}" Name="Height" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{A473CBD2-4E48-41B3-8B1B-5695DAF90B5C}" Database="core" Name="Html Editor Drop Down Button" Path="/sitecore/templates/System/Html Editor Profiles/Html Editor Drop Down Button" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{F6F2FB44-FEFB-4584-9C1B-C839116C0516}" Name="Data">
+      <Field Id="{8D4F1B9F-D46B-4842-845D-4A3795DA1C0B}" Name="Click" Type="text" />
+      <Field Id="{B4B5D1A5-7BB9-4313-9FEE-EEF1387C6634}" Name="Shortcut" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{D73319BC-E3DF-45B9-B545-A255AA7E3C88}" Database="core" Name="Html Editor Html Item" Path="/sitecore/templates/System/Html Editor Profiles/Html Editor Html Item" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{CCC99B2A-BDA4-48E9-8364-3B237FC8EF40}" Name="Data">
+      <Field Id="{4BFAA1D9-C66A-45AC-BE10-99DFE91739D8}" Name="Header" Type="memo" />
+      <Field Id="{CA0ADFC1-B5D8-4338-AAEC-F0DADD0F5C55}" Name="Value" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{2B421E6F-E820-4A04-9A4A-E421A0262B61}" Database="core" Name="Html Editor List Item" Path="/sitecore/templates/System/Html Editor Profiles/Html Editor List Item" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{06696A3D-ED32-43D5-AEE6-38FFD3837712}" Name="Data">
+      <Field Id="{519CD02A-A857-4894-9C9B-AC9BDC472937}" Name="Header" Type="text" />
+      <Field Id="{433E22B5-06AA-4A97-A4AC-7CB059EBBAC6}" Name="Value" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{3825FE6A-6CA1-489B-A7C9-C3B4B3B38272}" Database="core" Name="Html Editor Snippet" Path="/sitecore/templates/System/Html Editor Profiles/Html Editor Snippet" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{591B4E28-CD1A-47E6-AAF9-591BE2143881}" Name="Data">
+      <Field Id="{8E5179B0-2A09-4624-885D-619C0E3D0390}" Name="Header" Type="memo" />
+      <Field Id="{7DFF83D2-E609-4C5F-99A9-13EC8536D65B}" Name="Value" Type="memo" />
+    </Section>
+  </Template>
+  <Template Id="{99F6B171-53A6-4860-BF66-3C77E0A1BBBF}" Database="core" Name="Html Editor Tidy" Path="/sitecore/templates/System/Html Editor Profiles/Html Editor Tidy" BaseTemplates="">
+    <Section Id="{DBAC74F4-91A3-4FFB-A01F-2CDC240611FA}" Name="Data">
+      <Field Id="{083EB068-252C-48A6-B4DB-CC13CA21B2C0}" Name="Allowed Tags" Type="" />
+      <Field Id="{46EF45A7-B810-4AAF-B29E-8CE687CFFEDA}" Name="Clean" Type="" />
+      <Field Id="{E528641A-8F11-4A5C-834A-F5829EC87652}" Name="Filter" Type="" />
+      <Field Id="{D8078D2D-CEAB-4FD1-BDAC-E1574634EE21}" Name="Tidy" Type="" />
+      <Field Id="{A861EC04-2A2A-4A02-9A50-C68C5E3193B1}" Name="Tidy Configuration Path" Type="" />
+    </Section>
+  </Template>
+  <Template Id="{0E0DA701-BC94-4855-A0C3-92063E64BA1F}" Database="core" Name="Html Editor Toolbar" Path="/sitecore/templates/System/Html Editor Profiles/Html Editor Toolbar" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{B174990B-37B1-4A60-9C7D-891B521E1B76}" Database="core" Name="Item" Path="/sitecore/templates/System/Item" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{7B8CC824-2E4B-4A00-85F5-CCCC3354DB15}" Database="core" Name="Boosting Rule" Path="/sitecore/templates/System/Item Buckets/Boosting Rule" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{02B04BBA-7827-41C2-869C-F8091308DB17}" Name="Data">
+      <Field Id="{69A0209B-5702-465E-91A1-A525728F57DA}" Name="Name" Type="Single-Line Text" />
+      <Field Id="{93B12B44-8BF0-440A-901F-945E34EC79FF}" Name="Rule" Type="Rules" />
+    </Section>
+  </Template>
+  <Template Id="{ADB6CA4F-03EF-4F47-B9AC-9CE2BA53FF97}" Database="core" Name="Bucket" Path="/sitecore/templates/System/Item Buckets/Bucket" BaseTemplates="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" />
+  <Template Id="{AEC7D5B1-CE97-46CA-8E52-B3BC8031BD86}" Database="core" Name="Clientside Hook" Path="/sitecore/templates/System/Item Buckets/Clientside Hook" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{A189767C-39C6-4B3A-B185-D6C113AEF69D}" Name="Details">
+      <Field Id="{CF80D1C3-F889-46DF-9BF8-D593B17C284D}" Name="Name" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{9F63F3ED-BFB8-49A3-B370-1830E0A5920F}" Database="core" Name="Dropdown List" Path="/sitecore/templates/System/Item Buckets/Dropdown List" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{47A7A2E8-E380-41D7-909D-D5DA52E19B15}" Name="Dropdown List">
+      <Field Id="{CCD35091-1A66-4CE5-A1D3-77A2CCD29142}" Name="Type" Type="Single-Line Text" />
+      <Field Id="{D9BDF564-FF37-4564-B943-00D4D89C19F1}" Name="List Name" Type="Single-Line Text" />
+      <Field Id="{37FE9542-C8E7-41D6-95B0-AE559A48EB04}" Name="Command Name" Type="Single-Line Text" />
+      <Field Id="{5E34A660-3099-4E49-87DF-80EB1DECF2A6}" Name="Enabled" Type="Checkbox" />
+      <Field Id="{39D0A502-8AEC-4EE6-8B9E-3C31CCB579C8}" Name="Display Text" Type="Single-Line Text" />
+      <Field Id="{B23E7557-10FB-4288-9D4F-371F6A83602E}" Name="Icon" Type="Icon" />
+    </Section>
+  </Template>
+  <Template Id="{5C125B6D-C481-4C24-B5B9-9A23FE396BF0}" Database="core" Name="Facet" Path="/sitecore/templates/System/Item Buckets/Facet" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{503ADFAA-5FCE-444F-A9F1-B241E3A06ECA}" Name="Facet">
+      <Field Id="{31CA077F-EF38-4980-8A24-05408031B2BC}" Name="Name" Type="Single-Line Text" />
+      <Field Id="{5DE17054-0141-4E58-935B-FEC623A60806}" Name="DisplayName" Type="Single-Line Text" />
+      <Field Id="{FAE92C1E-9E2C-4209-89EB-C256D55E3D7F}" Name="Type" Type="Single-Line Text" />
+      <Field Id="{0E23BB51-C071-41B5-9D83-AC410B89B85A}" Name="Parameters" Type="Single-Line Text" />
+      <Field Id="{3D0FE806-D0E3-4254-96BE-A60899C7D2E6}" Name="Enabled" Type="Checkbox" />
+      <Field Id="{8A3AC1B8-8CC1-4DD4-8766-9803F1601741}" Name="Minimum Number of Items" Type="Number" />
+      <Field Id="{7F42ED80-33F0-4C98-A1E7-B15BE7551C36}" Name="Client Side Handle" Type="Multi-Line Text" />
+      <Field Id="{182BD0F4-C902-4A19-A1BA-D189CAA18E1B}" Name="Global" Type="Checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{087DCAF1-4778-4849-99B4-599B901DBE09}" Database="core" Name="Field Search Type" Path="/sitecore/templates/System/Item Buckets/Field Search Type" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{D137845A-C613-4DAA-9309-A7547B825A47}" Name="Search Type">
+      <Field Id="{A434E593-D2B2-4591-8916-74564962D6D5}" Name="Icon" Type="Icon" />
+      <Field Id="{D94CDB6A-D0FD-42F2-8370-0346A17B3D5A}" Name="Name" Type="Single-Line Text" />
+      <Field Id="{759A7BD8-C40A-475E-A650-D7C9DFD89CD0}" Name="Field" Type="Single-Line Text" />
+      <Field Id="{9D2E8C51-5921-498A-BFF6-D6AA99D3EEEE}" Name="Control Type" Type="Droplink" />
+      <Field Id="{261FA916-09F7-440F-A9D6-069311C609BB}" Name="Control Type Parameters" Type="Single-Line Text" />
+      <Field Id="{CC084D53-FA58-4591-B7C7-20E7A60C8A4A}" Name="Display Text" Type="Single-Line Text" />
+      <Field Id="{1635FB77-9AF7-4C2F-BACE-81D0C8462E18}" Name="WebMethod" Type="Single-Line Text" />
+      <Field Id="{D5CA4991-EA12-4FBD-B797-1DE976A79540}" Name="Client Side Hook" Type="Droplist" />
+    </Section>
+  </Template>
+  <Template Id="{9F6E14E6-C593-410B-A57E-21F6B5A413AD}" Database="core" Name="Item Buckets Settings" Path="/sitecore/templates/System/Item Buckets/Item Buckets Settings" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{91DADC0A-9D8F-490C-B6CE-882D7597D060}" Name="Settings">
+      <Field Id="{5A81D794-7364-4CC5-8AA9-A921D5DDA4AF}" Name="Opening Search Results" Type="Droplist" />
+      <Field Id="{37AC831A-7CB4-4962-AEBD-A269649E5D35}" Name="Tag Parent" Type="Droptree" />
+    </Section>
+  </Template>
+  <Template Id="{F7F0FE7B-8A99-4881-AA35-DC5018ABF68A}" Database="core" Name="Open Result Type" Path="/sitecore/templates/System/Item Buckets/Open Result Type" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{7F7A3339-D823-4556-9814-42C3DBD68C7A}" Database="core" Name="Quick Action" Path="/sitecore/templates/System/Item Buckets/Quick Action" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{0ED28DA0-E802-436E-BB0C-1943F62B1407}" Name="Command">
+      <Field Id="{CD521D55-CFD4-447A-B386-8FC9F122B01E}" Name="Command" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{98EC37BF-BCA6-40C6-A772-5C52190EF205}" Database="core" Name="Saved Search" Path="/sitecore/templates/System/Item Buckets/Saved Search" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{73452E69-1DA0-4738-B0F6-7C078EA4EF1B}" Database="core" Name="Search Control Type" Path="/sitecore/templates/System/Item Buckets/Search Control Type" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{4216A0AB-3A03-45DE-B7B8-14FBE63BE2F8}" Name="Search Filter Control Details">
+      <Field Id="{98ACD4D7-0DDE-4CAA-8F73-CB1DB5438884}" Name="Control Type" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{5986D8C8-3A31-4160-A816-ACAA26DFB54F}" Database="core" Name="Tab Option" Path="/sitecore/templates/System/Item Buckets/Tab Option" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{68BA23FD-8270-4675-97EA-4FAFC7CF3AB9}" Database="core" Name="Tag" Path="/sitecore/templates/System/Item Buckets/Tag" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{FDC83839-F632-4D65-837D-D58968C0132B}" Database="core" Name="Tag Repository" Path="/sitecore/templates/System/Item Buckets/Tag Repository" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{6EEE625C-C16E-4A7F-A717-C043CF638222}" Name="Repository Details">
+      <Field Id="{847B401C-2FCD-43BC-A8B1-83CFF8D5D24D}" Name="Type" Type="Single-Line Text" />
+      <Field Id="{11D1D923-00F9-4CB4-BDD9-421FB11C47C2}" Name="Enabled" Type="Checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{1D3553FF-20C0-486D-ADA9-B258CE6D7F12}" Database="core" Name="Tip" Path="/sitecore/templates/System/Item Buckets/Tip" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{C077CC22-0CD7-4805-B254-F7F9D14245B5}" Name="Tip">
+      <Field Id="{DCABF4BD-3AD9-426F-A295-9BF2785CE151}" Name="Tip Title" Type="Single-Line Text" />
+      <Field Id="{E4671EDD-3EB2-4634-A944-B5D86397D111}" Name="Tip Text" Type="Rich Text" />
+    </Section>
+  </Template>
+  <Template Id="{6C534F05-6B39-4AFD-BAF1-4CCE81B29376}" Database="core" Name="View" Path="/sitecore/templates/System/Item Buckets/View" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{D3362EBE-F40D-4082-BA70-957B888B91FD}" Name="View Details">
+      <Field Id="{BB7FF36D-6368-4117-AB7C-01AEFF56BEA2}" Name="Name" Type="Single-Line Text" />
+      <Field Id="{58ADB0C0-51C2-46CA-84FB-538498AD0494}" Name="Icon" Type="Image" />
+      <Field Id="{2EDEF3FC-7264-443A-B0F4-3A2E3B602882}" Name="Header Template" Type="Multi-Line Text" />
+      <Field Id="{3A13DAFA-0E96-4214-8C42-BC114CEA529B}" Name="Item Template" Type="Multi-Line Text" />
+      <Field Id="{390576A2-5452-4CAE-AB91-116A8892CFD2}" Name="Footer Template" Type="Multi-Line Text" />
+      <Field Id="{336CBFAB-6D9A-4FEA-B78D-D2BF1D4F29D9}" Name="Default" Type="Checkbox" />
+      <Field Id="{B41248A7-5111-4A19-907D-4E7EE4358069}" Name="Enabled" Type="Checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{8961DA70-F922-4917-8AAE-695E621A6775}" Database="core" Name="Item section" Path="/sitecore/templates/System/Item section" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{8E9F51C8-6772-4A04-AAA0-ACC0DC1695A2}" Name="Data">
+      <Field Id="{E470B315-91E0-4E68-8A95-1013DB1C574E}" Name="Header" Type="text" />
+      <Field Id="{D991558B-68A2-42A5-8EE3-0096665F22EC}" Name="Icon" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{F68F13A6-3395-426A-B9A1-FA2DC60D94EB}" Database="core" Name="Language" Path="/sitecore/templates/System/Language" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{15D7E7A7-36CF-4FE4-938D-229098EDD7E4}" Name="Data">
+      <Field Id="{49E5E8F3-ED4A-4A06-ABE1-B9408951DEE9}" Name="Charset" Type="text" />
+      <Field Id="{990596CE-0024-43F3-BF4C-A991BFA69B45}" Name="Code page" Type="text" />
+      <Field Id="{60669E54-7B9C-4B55-A0C4-8F25059D8B94}" Name="Dictionary" Type="text" />
+      <Field Id="{8728D8FF-66D9-40C2-8B34-C4FC1466942E}" Name="Encoding" Type="text" />
+      <Field Id="{C437E416-8948-427D-A982-8ED37AE3F553}" Name="Iso" Type="text" />
+      <Field Id="{0620F810-9294-4F14-AF9F-F5772EFCA0B2}" Name="Regional ISO Code" Type="text" />
+      <Field Id="{4CDBAACD-1CB5-47C0-A4A5-8119632F3C69}" Name="WorldLingo Language Identifier" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{473F22C2-3C94-4D1D-B9AE-3D1FC3D3D3F2}" Database="core" Name="Controller" Path="/sitecore/templates/System/Layout/Controller" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{6FFE630A-29C4-4DE7-ACA8-DDC9CDF856A6}" Name="Data">
+      <Field Id="{1A0AE537-291C-4CC8-B53F-7CA307A0FEF5}" Name="Controller Name" Type="text" />
+      <Field Id="{298F7E71-8AEB-488B-BC93-CE6F2B09E130}" Name="Action Name" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{B6F7EEB4-E8D7-476F-8936-5ACE6A76F20B}" Database="core" Name="Device" Path="/sitecore/templates/System/Layout/Device" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{B767EF3D-25C0-4DFD-999B-A8635C442A36}" Name="Data">
+      <Field Id="{3A5475C5-D476-45F2-933F-67B73B1888A2}" Name="Default" Type="checkbox" />
+      <Field Id="{160B90C2-4011-4E89-9C5E-C617DDFBC8C7}" Name="Fallback device" Type="reference" />
+      <Field Id="{DC7B67C1-0278-4004-9F17-10241DEE6407}" Name="Capabilities Type" Type="text" />
+      <Field Id="{45C2550C-E38E-48FA-A1D7-484F390F126C}" Name="Default Simulator" Type="Droplink" />
+    </Section>
+    <Section Id="{5D5C85F6-9659-42F4-8AC4-98BD623037E0}" Name="Detection">
+      <Field Id="{E2E60CB8-AFAE-4465-8443-40D3A95EEF0F}" Name="Agent" Type="text" />
+      <Field Id="{32326F99-C0DA-4817-9DBE-79E6DE8005E4}" Name="Query string" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{3A45A723-64EE-4919-9D41-02FD40FD1466}" Database="core" Name="Layout" Path="/sitecore/templates/System/Layout/Layout" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{7DE9EE2B-7CE1-483F-B7B2-5F985E88D287}" Name="Data">
+      <Field Id="{A036B2BC-BA04-44F6-A75F-BAE6CD242ABF}" Name="Path" Type="text" />
+      <Field Id="{E9CC5A73-3C8A-4D7D-92AC-3B88C18A996A}" Name="Model" Type="Internal Link" />
+    </Section>
+    <Section Id="{4CEBF83F-2574-4865-B4FC-A4379D55AA98}" Name="Designer Options">
+      <Field Id="{3DFC14ED-3B91-4D2C-86CF-88B42EA0F7D5}" Name="Place Holders" Type="Multi-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{93227C5D-4FEF-474D-94C0-F252EC8E8219}" Database="core" Name="Layout Folder" Path="/sitecore/templates/System/Layout/Layout Folder" BaseTemplates="" />
+  <Template Id="{85B7F5D9-6F3A-4AD1-B218-D9FBE1DF8BB3}" Database="core" Name="Layout group" Path="/sitecore/templates/System/Layout/Layout group" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{BECD2136-596F-4405-9D70-92EAFC70A349}" Database="core" Name="Layout Preset" Path="/sitecore/templates/System/Layout/Layout Preset" BaseTemplates="">
+    <Section Id="{D44EE370-84FE-4911-8DB5-F2BC31AB8EEF}" Name="Data">
+      <Field Id="{E44B54E1-72DF-40A9-9854-6877BD208CF4}" Name="Layout" Type="memo" />
+    </Section>
+  </Template>
+  <Template Id="{FED6A14F-0D05-4E18-B160-17C0588A2005}" Database="core" Name="Model" Path="/sitecore/templates/System/Layout/Model" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{D3B67E7A-27F2-4CED-9F9B-F5B73A553E5A}" Name="Data">
+      <Field Id="{EE9E23D2-181D-4172-A929-0E0B8D10313C}" Name="Model Type" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{4B8AD536-4FA6-4122-A31E-32BB6BC42806}" Database="core" Name="Rendering group" Path="/sitecore/templates/System/Layout/Rendering group" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}" Database="core" Name="Controller rendering" Path="/sitecore/templates/System/Layout/Renderings/Controller rendering" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}|{E8D2DD19-1347-4562-AE3F-310DC0B21A6C}|{D1592226-3898-4CE2-B190-090FD5F84A4C}">
+    <Section Id="{3B00DDE4-9810-474E-8D18-ADEE5207C5D3}" Name="Data">
+      <Field Id="{E64AD073-DFCC-4D20-8C0B-FE5AA6226CD7}" Name="Controller" Type="text" />
+      <Field Id="{DED9E431-3604-4921-A4B3-A6EC7636A5B6}" Name="Controller Action" Type="text" />
+      <Field Id="{1C0AF338-70A8-455F-8366-173135E03BE6}" Name="Placeholder" Type="text" />
+      <Field Id="{5A14936F-2100-4541-B700-2F122E88F3F8}" Name="Data source" Type="text" />
+      <Field Id="{E144D9D4-B135-42D4-A5A0-53C09704671C}" Name="Parameters" Type="memo" />
+      <Field Id="{B120865D-607D-4EE8-BF08-96C087800B53}" Name="Login rendering" Type="Droptree" />
+    </Section>
+    <Section Id="{6C33A367-3DA3-465E-B0F5-60C415A2A8F0}" Name="Editor Options">
+      <Field Id="{3008735D-B41C-4B56-986C-F4513218EB65}" Name="Description" Type="Rich Text" />
+      <Field Id="{13F89250-AD6B-4548-882E-118A12C18094}" Name="Parameters Template" Type="Droptree" />
+      <Field Id="{94069F66-609C-48B0-8281-521C30FB269D}" Name="Open Properties after Add" Type="Tristate" />
+      <Field Id="{AA428851-C304-44DF-BA11-06D4D457CD52}" Name="Customize Page" Type="link" />
+    </Section>
+  </Template>
+  <Template Id="{86776923-ECA5-4310-8DC0-AE65FE88D078}" Database="core" Name="Item rendering" Path="/sitecore/templates/System/Layout/Renderings/Item rendering" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}|{E8D2DD19-1347-4562-AE3F-310DC0B21A6C}|{D1592226-3898-4CE2-B190-090FD5F84A4C}">
+    <Section Id="{3BB82EF2-02F5-4114-8D61-BFBEF18B5B96}" Name="Data">
+      <Field Id="{09A60FEA-D91A-4BE3-87B3-654B7E22531B}" Name="Placeholder" Type="text" />
+      <Field Id="{4F2E35EA-658F-4C4F-9C00-4E0184DF82EB}" Name="Data source" Type="text" />
+      <Field Id="{E02B144C-0B21-4A9C-BE58-C189E03611D6}" Name="Parameters" Type="memo" />
+      <Field Id="{8D2A7D4E-E079-438E-AFD6-85B53A32E2E9}" Name="Login rendering" Type="Droptree" />
+    </Section>
+    <Section Id="{691BC0E5-3357-4DC3-8245-8EE3D37BBD98}" Name="Editor Options">
+      <Field Id="{97F8F85E-4D5A-49EC-9D51-82A1DAB04112}" Name="Description" Type="Rich Text" />
+      <Field Id="{04F2D6D8-7748-425C-A435-B63C4FFBF43E}" Name="Parameters Template" Type="Droptree" />
+      <Field Id="{A6ABF68E-B797-475E-A913-4DD945BBD83F}" Name="Open Properties after Add" Type="Tristate" />
+      <Field Id="{E4D25F7C-11C8-4ED0-83E0-1B196D432AFB}" Name="Customize Page" Type="link" />
+    </Section>
+  </Template>
+  <Template Id="{39587D7D-F06D-4CB4-A25E-AA7D847EDDD0}" Database="core" Name="Method Rendering" Path="/sitecore/templates/System/Layout/Renderings/Method Rendering" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{05D027D5-279D-4CD0-858F-F5855BDC9A9D}" Name="Caching">
+      <Field Id="{E5F2E793-8E0C-49A1-823C-885CBCF15859}" Name="Cacheable" Type="checkbox" />
+      <Field Id="{FBB25C6D-5A10-451F-9C05-33C3C3A6810D}" Name="VaryByData" Type="checkbox" />
+      <Field Id="{99B65D5A-C6B8-4B12-8102-99E12998E299}" Name="VaryByDevice" Type="checkbox" />
+      <Field Id="{4F652D8B-D576-47A6-B47C-08C30C4998DD}" Name="VaryByLogin" Type="checkbox" />
+      <Field Id="{5CABA8C4-F447-4595-B018-A1FEE62F25A3}" Name="VaryByParm" Type="checkbox" />
+      <Field Id="{DDD21AC9-5736-4E70-9CB2-BFDF442D06A9}" Name="VaryByQueryString" Type="checkbox" />
+      <Field Id="{2B181B43-F7D4-47D3-BE2C-D2D6302EC39C}" Name="VaryByUser" Type="checkbox" />
+    </Section>
+    <Section Id="{F6D4C844-D99E-42C2-B6A9-EEB7FEB0C6C6}" Name="Data">
+      <Field Id="{67CF836A-D8DA-41C4-89AA-60226864C1CE}" Name="Assembly" Type="text" />
+      <Field Id="{BA2C331E-89A7-4D46-AC29-7D444801CAF6}" Name="Class" Type="text" />
+      <Field Id="{2FB6F99F-4486-4C52-9FFC-E43C15003614}" Name="Customize page" Type="link" />
+      <Field Id="{C51390E2-C2BA-4F51-B944-EC26D2A1D8DF}" Name="Data source" Type="text" />
+      <Field Id="{DB0C0085-097F-40FB-984F-49812E506D37}" Name="Login rendering" Type="lookup" />
+      <Field Id="{BA5E7B23-491E-40C6-A7F4-931101255077}" Name="Method" Type="text" />
+      <Field Id="{60404BEB-6E5D-4EEF-8785-021AC36702A3}" Name="Parameters" Type="memo" />
+      <Field Id="{14B8780B-60FB-444A-A6B4-CFEC99655CC8}" Name="Placeholder" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{92D4A8C4-5754-4E1A-96A6-095BD193E12B}" Database="core" Name="Rendering" Path="/sitecore/templates/System/Layout/Renderings/Rendering" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{CA2DB5F3-AA6C-4B84-BD76-86F84B68D44D}" Name="Data">
+      <Field Id="{72EEC748-E047-4F08-B97B-16D09B1A1DFF}" Name="Placeholder" Type="text" />
+      <Field Id="{362C1401-6906-47FA-8902-1219A258DE83}" Name="Rendering" Type="lookup" />
+    </Section>
+  </Template>
+  <Template Id="{7EE0975B-0698-493E-B3A2-0B2EF33D0522}" Database="core" Name="Rendering Folder" Path="/sitecore/templates/System/Layout/Renderings/Rendering Folder" BaseTemplates="" />
+  <Template Id="{0A98E368-CDB9-4E1E-927C-8E0C24A003FB}" Database="core" Name="Sublayout" Path="/sitecore/templates/System/Layout/Renderings/Sublayout" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{690301DB-B491-4375-B10B-40C3E396D59F}" Name="Data">
+      <Field Id="{05FCCF51-6825-4041-8D60-4D6263210207}" Name="Customize page" Type="link" />
+      <Field Id="{42654CFD-393A-4FD5-8FDF-71061374A99D}" Name="Login rendering" Type="lookup" />
+      <Field Id="{E42081B6-8A95-4A11-89CE-DF70ED502F57}" Name="Path" Type="text" />
+      <Field Id="{32CEE5FB-EFCE-4CA6-B697-3B97900C40D3}" Name="Placeholder" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{83E993C5-C0FC-4472-86A9-2F6CFED694E4}" Database="core" Name="Url Rendering" Path="/sitecore/templates/System/Layout/Renderings/Url Rendering" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{7B3F1573-D3EA-4DD7-8B65-4F6E548C591E}" Name="Caching">
+      <Field Id="{4CB2E557-FA38-4073-8F13-A6E46747A93B}" Name="Cacheable" Type="checkbox" />
+      <Field Id="{1B36F146-6601-437F-981A-FA5917597259}" Name="VaryByData" Type="checkbox" />
+      <Field Id="{FC3E4849-14FB-4C63-9C93-4C74CC151EF8}" Name="VaryByDevice" Type="checkbox" />
+      <Field Id="{A5F979D6-011E-45B2-9F78-BF67B64F32D7}" Name="VaryByLogin" Type="checkbox" />
+      <Field Id="{03FD4FAC-539D-4560-BBA8-99E69A7B6A36}" Name="VaryByQueryString" Type="checkbox" />
+      <Field Id="{577E03F7-FF86-40FF-A502-A5AC58D5F6BE}" Name="VaryByUser" Type="checkbox" />
+    </Section>
+    <Section Id="{28646053-3074-4ACB-AF8C-585AF386CE55}" Name="Data">
+      <Field Id="{055AA90A-39D7-4830-A935-EBDAC6C9CB2C}" Name="Customize page" Type="link" />
+      <Field Id="{1D43657E-76A4-49C4-911A-D430E0DC5EBE}" Name="Login rendering" Type="lookup" />
+      <Field Id="{D7C8A16C-2E43-43F7-9176-271334992745}" Name="Placeholder" Type="text" />
+      <Field Id="{4CF70E19-DD41-4AB2-B097-17E81C86288B}" Name="Url" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}" Database="core" Name="View rendering" Path="/sitecore/templates/System/Layout/Renderings/View rendering" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}|{E8D2DD19-1347-4562-AE3F-310DC0B21A6C}|{D1592226-3898-4CE2-B190-090FD5F84A4C}">
+    <Section Id="{CBA7C9A0-B79F-464F-8661-23D6A9B6E1BB}" Name="Data">
+      <Field Id="{51B435BC-F7B9-478A-9C51-52916AF96FF5}" Name="Path" Type="text" />
+      <Field Id="{DDAB263E-B42E-419A-AA6F-081B7393CA38}" Name="Model" Type="Internal Link" />
+      <Field Id="{F4069D71-74D7-4422-941D-54B517CF3001}" Name="Placeholder" Type="text" />
+      <Field Id="{2E51DF70-D3E4-458C-B03A-95C734DD39E7}" Name="Data source" Type="text" />
+      <Field Id="{FE7C64B6-FCF8-4F00-A5E8-C2D9A8CF3048}" Name="Parameters" Type="memo" />
+      <Field Id="{36E3E51C-5E13-4938-A07A-0DBD877A5640}" Name="Form Controller Name" Type="text" />
+      <Field Id="{8FC23A62-6B1F-4B6A-B910-30D38DF54617}" Name="Form Controller Action" Type="text" />
+      <Field Id="{9944B188-50BF-4DFE-84BB-9BF0476C7755}" Name="Login rendering" Type="Droptree" />
+    </Section>
+    <Section Id="{52806CF1-96F4-4539-86F0-01385EC88856}" Name="Editor Options">
+      <Field Id="{2F9EBA13-2283-4C8B-B060-5CE622DE0A9A}" Name="Description" Type="Rich Text" />
+      <Field Id="{7D24E54F-5C16-4314-90C9-6051AA1A7DA1}" Name="Parameters Template" Type="Droptree" />
+      <Field Id="{EF7C5528-7307-4E19-863B-DA19EED6A9ED}" Name="Open Properties after Add" Type="Tristate" />
+      <Field Id="{041110FB-9293-40DE-8AE8-7B5F04F425BE}" Name="Customize Page" Type="link" />
+    </Section>
+    <Section Id="{BD9BDB47-E514-448C-B4E8-D35D6317FE8E}" Name="Designer Options">
+      <Field Id="{C42199F1-21A1-4993-BAC6-C4FC771B3081}" Name="Place Holders" Type="Multi-Line Text" />
+      <Field Id="{989631C3-8CD3-4D04-A996-7C1F4EEC75A4}" Name="Default Parameters" Type="Name Value List" />
+    </Section>
+  </Template>
+  <Template Id="{1DDE3F02-0BD7-4779-867A-DC578ADF91EA}" Database="core" Name="Webcontrol" Path="/sitecore/templates/System/Layout/Renderings/Webcontrol" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{31C89398-F2B9-4305-A9D1-67F5ADD71D63}" Name="Caching">
+      <Field Id="{A8DA47D8-B976-47B0-B112-56C059F0D12E}" Name="Cacheable" Type="checkbox" />
+      <Field Id="{0C0B4B0B-804C-453D-9E1E-F54EE4DB56B0}" Name="VaryByData" Type="checkbox" />
+      <Field Id="{FBF7D2E0-3B9A-4CA2-9244-D3115C7CEC8A}" Name="VaryByDevice" Type="checkbox" />
+      <Field Id="{AA5C4790-87F4-4BED-A012-4CB563BAE356}" Name="VaryByLogin" Type="checkbox" />
+      <Field Id="{891AE490-D659-44BD-80ED-2B39B0E060B0}" Name="VaryByQueryString" Type="checkbox" />
+      <Field Id="{EB315A54-C379-4263-BA8A-571336DAD4F3}" Name="VaryByUser" Type="checkbox" />
+    </Section>
+    <Section Id="{BB711533-25A5-48C6-898F-57E12D161F43}" Name="Data">
+      <Field Id="{C50B1F5B-26DA-476A-AAC6-9B734975971C}" Name="Assembly" Type="text" />
+      <Field Id="{CA07D29A-01F7-44E7-A590-6933BCB6B919}" Name="Customize page" Type="link" />
+      <Field Id="{B6ADCF38-9BC1-48DD-8C0C-4C239940F888}" Name="Login rendering" Type="lookup" />
+      <Field Id="{1F424EB0-6138-4BC4-93B0-BD45EC6B1CB2}" Name="Namespace" Type="text" />
+      <Field Id="{A116F3A4-0D3A-4DD9-BD7C-0F37470BE5DC}" Name="Parameters" Type="memo" />
+      <Field Id="{6D6A0DA0-F3EA-4799-9CAE-CE748E0B6A24}" Name="Placeholder" Type="text" />
+      <Field Id="{B8979E80-7623-4B3A-BFD2-3F3F05883D58}" Name="Tag" Type="text" />
+      <Field Id="{E2ABDEC6-83A6-4B68-97D1-B3CD79F10A8E}" Name="TagPrefix" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{B658CE99-894A-4CB1-936B-F23F17C63B5B}" Database="core" Name="XmlControl" Path="/sitecore/templates/System/Layout/Renderings/XmlControl" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{EEDE5D14-B3F6-47B0-8207-9B06B28BABB7}" Name="Caching">
+      <Field Id="{B93AEB58-7AFF-448A-9DCC-ACDA9244F4AD}" Name="Cacheable" Type="checkbox" />
+      <Field Id="{2B27ABCD-F3E6-4977-A0CE-7389ED7C2525}" Name="VaryByData" Type="checkbox" />
+      <Field Id="{125650D4-FE6B-4443-A98F-3D49EC3977C4}" Name="VaryByDevice" Type="checkbox" />
+      <Field Id="{F5669B97-5290-48D4-80DF-583A7E4152C6}" Name="VaryByLogin" Type="checkbox" />
+      <Field Id="{CA62B3F7-C81F-4BAB-8741-3C672F22CBC1}" Name="VaryByParm" Type="checkbox" />
+      <Field Id="{07BB5871-2CE2-4D7B-9A3E-93CEBA6ACED1}" Name="VaryByQueryString" Type="checkbox" />
+      <Field Id="{F37A885C-AED9-4DB1-B7BC-5B721364B1E9}" Name="VaryByUser" Type="checkbox" />
+    </Section>
+    <Section Id="{B528C2CA-AD66-41E0-BF47-BDF7EDE586C7}" Name="Data">
+      <Field Id="{07C0CAB1-A744-42EB-BA83-AFD313D598D3}" Name="Control name" Type="text" />
+      <Field Id="{F1B05793-A93F-4FDA-A418-30C7E0400172}" Name="Data source" Type="text" />
+      <Field Id="{EFA28A93-5A35-44A5-9F6E-AF530B51DDC9}" Name="Login rendering" Type="lookup" />
+      <Field Id="{42952B25-5D75-4F3A-81B0-E1573B75A935}" Name="Parameters" Type="memo" />
+      <Field Id="{1D86C159-939E-48A5-B55D-DDCE9714D545}" Name="Placeholder" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{F1F1D639-4F54-40C2-8BE0-81266B392CEB}" Database="core" Name="Xsl Rendering" Path="/sitecore/templates/System/Layout/Renderings/Xsl Rendering" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{65FD4C82-8184-432F-A8A3-C236155ECC12}" Name="Data">
+      <Field Id="{78783F79-1411-4B91-958D-AD81F81E2485}" Name="Path" Type="text" />
+      <Field Id="{8AA9BB12-1A7B-4BC0-851A-25B7A1FF3A88}" Name="Placeholder" Type="text" />
+      <Field Id="{E67044AD-FB48-489E-83A6-263A89A8C948}" Name="Data source" Type="text" />
+      <Field Id="{CCA35CD7-DC3D-4A2F-8E7F-F6EC68D49E74}" Name="Parameters" Type="memo" />
+      <Field Id="{CEDEFAC5-C7C3-4CF3-9AED-B5301F22DA64}" Name="Customize page" Type="link" />
+      <Field Id="{3FD02019-D7B6-4003-BC75-A04262C3CF49}" Name="Login rendering" Type="lookup" />
+    </Section>
+  </Template>
+  <Template Id="{B9C92DB0-1EA4-4816-B83A-6B163E1660DE}" Database="core" Name="BaseSection" Path="/sitecore/templates/System/Layout/Sections/BaseSection" BaseTemplates="{00000000-0000-0000-0000-000000000000}" />
+  <Template Id="{E8D2DD19-1347-4562-AE3F-310DC0B21A6C}" Database="core" Name="Caching" Path="/sitecore/templates/System/Layout/Sections/Caching" BaseTemplates="{B9C92DB0-1EA4-4816-B83A-6B163E1660DE}">
+    <Section Id="{64CA39AE-89D3-4A78-B1F9-9E907CAAE6BC}" Name="Caching">
+      <Field Id="{3D08DB46-2267-41B0-BC52-BE69FD618633}" Name="Cacheable" Type="Checkbox" />
+      <Field Id="{F3E7E552-D7C8-469B-A150-69E4E14AB35C}" Name="ClearOnIndexUpdate" Type="Checkbox" />
+      <Field Id="{8B6D532B-6128-4486-A044-CA06D90948BA}" Name="VaryByData" Type="Checkbox" />
+      <Field Id="{C98CF969-BA71-42DA-833D-B3FC1368BA27}" Name="VaryByDevice" Type="Checkbox" />
+      <Field Id="{8D9232B0-613F-440B-A2FA-DCDD80FBD33E}" Name="VaryByLogin" Type="Checkbox" />
+      <Field Id="{3AD2506A-DC39-4B1E-959F-9D524ADDBF50}" Name="VaryByParm" Type="Checkbox" />
+      <Field Id="{1084D3D2-0457-456A-ABBC-EB4CC0966072}" Name="VaryByQueryString" Type="Checkbox" />
+      <Field Id="{0E54A8DC-72AD-4372-A7C7-BB4773FAD44D}" Name="VaryByUser" Type="Checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{D1592226-3898-4CE2-B190-090FD5F84A4C}" Database="core" Name="Rendering Options" Path="/sitecore/templates/System/Layout/Sections/Rendering Options" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{A1715151-F48E-4B22-BE3A-BABF4E18584F}" Name="Editor Options">
+      <Field Id="{308E88F5-CD6E-4F8F-BAFE-95A47DEDEFDC}" Name="Editable" Type="Checkbox" />
+      <Field Id="{B5B27AF1-25EF-405C-87CE-369B3A004016}" Name="Datasource Location" Type="Datasource" />
+      <Field Id="{1A7C85E5-DC0B-490D-9187-BB1DBCB4C72F}" Name="Datasource Template" Type="Internal Link" />
+      <Field Id="{E441ABE7-2CA3-4640-AE26-3789967925D7}" Name="Compatible Renderings" Type="Treelist" />
+      <Field Id="{A2F5D9DF-8CBA-4A1D-99EB-51ACB94CB057}" Name="Page Editor Buttons" Type="Treelist" />
+      <Field Id="{F172B787-7B88-4BD5-AE4D-6308E102EF11}" Name="Enable Datasource Query" Type="Checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{1163DA83-B2EF-4381-BF09-B2FF714B1B3F}" Database="core" Name="Xml layout" Path="/sitecore/templates/System/Layout/Xml layout" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{A72A2049-FB34-4980-B5E2-4021EA720D99}" Name="Data">
+      <Field Id="{5851D498-15F9-4B1A-BB02-0B736C13AFE3}" Name="Control" Type="text" />
+      <Field Id="{C155D613-6F1E-42B8-96B1-15CE7C845850}" Name="Path" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{E3E2D58C-DF95-4230-ADC9-279924CECE84}" Database="core" Name="Main section" Path="/sitecore/templates/System/Main section" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{B4D19D07-B3EB-4F7D-98EC-8BCB41CCC58E}" Database="core" Name="Insert Rule" Path="/sitecore/templates/System/Masters/Insert Rule" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{A16FB230-6642-4FC5-B115-1E3A838B1E83}" Name="Data">
+      <Field Id="{4A6DFA44-4706-4B98-8C88-ADA44F8FDB7C}" Name="Type" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{35E75C72-4985-4E09-88C3-0EAC6CD1E64F}" Database="core" Name="Master" Path="/sitecore/templates/System/Masters/Master" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{E7C088EC-8938-412F-AEFE-B328A86F11E2}" Name="Data">
+      <Field Id="{6E2B3BBD-BA2D-4DEC-952A-4BB24CC65DF0}" Name="Master security" Type="security" />
+    </Section>
+    <Section Id="{608EB616-0355-440C-BA20-1780DE24AF45}" Name="Actions">
+      <Field Id="{51D82B41-D286-4C53-A9B2-6084EFBC55BB}" Name="Action after" Type="text" />
+      <Field Id="{45586BDC-5F3D-4687-B024-478E3E209BC0}" Name="Action before" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{85ADBF5B-E836-4932-A333-FE0F9FA1ED1E}" Database="core" Name="Master folder" Path="/sitecore/templates/System/Masters/Master folder" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{FE5DD826-48C6-436D-B87A-7C4210C7413B}" Database="core" Name="Media folder" Path="/sitecore/templates/System/Media/Media folder" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{D56DB3AA-7373-4651-837E-8D3977A0B544}" Database="core" Name="Audio" Path="/sitecore/templates/System/Media/Unversioned/Audio" BaseTemplates="{962B53C4-F93B-4DF9-9821-415C867B8903}" />
+  <Template Id="{16692733-9A61-45E6-B0D4-4C0C06F8DD3C}" Database="core" Name="Doc" Path="/sitecore/templates/System/Media/Unversioned/Doc" BaseTemplates="{777F0C76-D712-46EA-9F40-371ACDA18A1C}" />
+  <Template Id="{777F0C76-D712-46EA-9F40-371ACDA18A1C}" Database="core" Name="Document" Path="/sitecore/templates/System/Media/Unversioned/Document" BaseTemplates="{962B53C4-F93B-4DF9-9821-415C867B8903}" />
+  <Template Id="{7BB0411F-50CD-4C21-AD8F-1FCDE7C3AFFE}" Database="core" Name="Docx" Path="/sitecore/templates/System/Media/Unversioned/Docx" BaseTemplates="{777F0C76-D712-46EA-9F40-371ACDA18A1C}" />
+  <Template Id="{962B53C4-F93B-4DF9-9821-415C867B8903}" Database="core" Name="File" Path="/sitecore/templates/System/Media/Unversioned/File" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{F6DE3B13-0696-49B9-A83F-9B6C08B86E9D}" Name="Media">
+      <Field Id="{40E50ED9-BA07-4702-992E-A912738D32DC}" Name="Blob" Type="attachment" />
+    </Section>
+    <Section Id="{69FB081B-F3A5-4216-ACAF-6E3A44BE990A}" Name="Information">
+      <Field Id="{3F4B20E9-36E6-4D45-A423-C86567373F82}" Name="Title" Type="text" />
+      <Field Id="{2FAFE7CB-2691-4800-8848-255EFA1D31AA}" Name="Keywords" Type="memo" />
+      <Field Id="{BA8341A1-FF30-47B8-AE6A-F4947E4113F0}" Name="Description" Type="text" />
+      <Field Id="{C06867FE-9A43-4C7D-B739-48780492D06F}" Name="Extension" Type="text" />
+      <Field Id="{6F47A0A5-9C94-4B48-ABEB-42D38DEF6054}" Name="Mime Type" Type="text" />
+    </Section>
+    <Section Id="{32959E67-80A6-470C-9B5D-DEE627AE4C41}" Name="Properties">
+      <Field Id="{FBD90442-DB0C-48F1-A0F4-0427CD9AFCCE}" Name="Format" Type="text" />
+      <Field Id="{6954B7C7-2487-423F-8600-436CB3B6DC0E}" Name="Size" Type="text" />
+    </Section>
+    <Section Id="{DE7922B7-41ED-447A-AA37-2C252E82267D}" Name="Location">
+      <Field Id="{CE05C5D8-A6C8-4632-A702-A7DDD5BEC544}" Name="CountryCode" Type="Single-Line Text" />
+      <Field Id="{3C937188-B359-4359-B7E6-693BFABB0DED}" Name="Latitude" Type="Number" />
+      <Field Id="{1CF5251E-158E-4857-929A-FB0CE122A62D}" Name="LocationDescription" Type="Single-Line Text" />
+      <Field Id="{BCC90423-EB05-4399-9957-ACA3D2DF382B}" Name="Longitude" Type="Number" />
+      <Field Id="{5E09EEBF-5467-43F8-8D99-7BC0EC6E51F7}" Name="ZipCode" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{9867C0B9-A7BE-4D96-AD7E-4AD18109ED20}" Database="core" Name="Flash" Path="/sitecore/templates/System/Media/Unversioned/Flash" BaseTemplates="{E76ADBDF-87D1-4FCB-BA71-274F7DBF5670}">
+    <Section Id="{92AC2550-95AB-47BF-B7F4-90A1F22E5F29}" Name="Flash">
+      <Field Id="{E15D042D-3031-487A-9FCF-C178E3AA2EF4}" Name="Width" Type="Single-Line Text" />
+      <Field Id="{22B3E3E9-13D4-47E4-B718-B3E75224F6D8}" Name="Height" Type="Single-Line Text" />
+      <Field Id="{C685BFBC-C618-44EA-94E1-6245203F1DE8}" Name="Version" Type="Single-Line Text" />
+      <Field Id="{50CE79C9-9A3C-4B10-BA94-6198B34F3A15}" Name="FrameRate" Type="Single-Line Text" />
+      <Field Id="{147CB11B-9BBB-4B25-9558-F1642B693810}" Name="FrameCount" Type="Single-Line Text" />
+    </Section>
+    <Section Id="{DC9FDA45-B351-480F-8CAC-B095CD13E3EC}" Name="Properties">
+      <Field Id="{AF131F8D-10B2-4ACF-B2F4-6A1476DB7290}" Name="Dimensions" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{F1828A2C-7E5D-4BBD-98CA-320474871548}" Database="core" Name="Image" Path="/sitecore/templates/System/Media/Unversioned/Image" BaseTemplates="{962B53C4-F93B-4DF9-9821-415C867B8903}">
+    <Section Id="{E5030D6C-AD6A-44B5-8268-D8C16CEFADF9}" Name="Image">
+      <Field Id="{65885C44-8FCD-4A7F-94F1-EE63703FE193}" Name="Alt" Type="text" />
+      <Field Id="{22EAC599-F13B-4607-A89D-C091763A467D}" Name="Width" Type="text" />
+      <Field Id="{DE2CA9E4-C117-4C8A-A139-1FF4B199D15A}" Name="Height" Type="text" />
+    </Section>
+    <Section Id="{E13AFA7B-8B1B-4247-9F7E-D726AAA7A12C}" Name="Properties">
+      <Field Id="{CB09946F-3218-4823-87D2-D5007C199A96}" Name="Dimensions" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{DAF085E8-602E-43A6-8299-038FF171349F}" Database="core" Name="Jpeg" Path="/sitecore/templates/System/Media/Unversioned/Jpeg" BaseTemplates="{F1828A2C-7E5D-4BBD-98CA-320474871548}">
+    <Section Id="{3F6316E8-74C6-42B9-B390-FB79DF8AE578}" Name="Exif">
+      <Field Id="{327878C4-28C8-4E71-8914-5DE34E00E716}" Name="Artist" Type="text" />
+      <Field Id="{0AD015CB-E1A7-4CD7-BFBB-F8B50AB1FC8C}" Name="Copyright" Type="text" />
+      <Field Id="{90A6FE48-F3E0-42F3-A18A-EDAA7DB9CA57}" Name="DateTime" Type="text" />
+      <Field Id="{95AF1A8C-9FAB-4915-A0D8-E1669AF18B1B}" Name="ImageDescription" Type="text" />
+      <Field Id="{7798CD59-76DC-4869-8BDA-2952A64B8687}" Name="Make" Type="text" />
+      <Field Id="{1A25C485-C7F4-4488-AD5A-B8D72E4A66DF}" Name="Model" Type="text" />
+      <Field Id="{B0145335-8735-414B-9169-A1D4E4DC9641}" Name="Software" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{E76ADBDF-87D1-4FCB-BA71-274F7DBF5670}" Database="core" Name="Movie" Path="/sitecore/templates/System/Media/Unversioned/Movie" BaseTemplates="{962B53C4-F93B-4DF9-9821-415C867B8903}" />
+  <Template Id="{B60424A5-CE06-4C2E-9F49-A6D732F55D4B}" Database="core" Name="Mp3" Path="/sitecore/templates/System/Media/Unversioned/Mp3" BaseTemplates="{D56DB3AA-7373-4651-837E-8D3977A0B544}">
+    <Section Id="{09E02F7E-3DBA-43B3-AD8D-C6FEA59D1DF4}" Name="ID3">
+      <Field Id="{8A2C49C5-C9BD-41B1-B37E-89B6D6F29216}" Name="Song Title" Type="text" />
+      <Field Id="{A5046C9A-E783-46AE-B3FA-2E984F144238}" Name="Track Number" Type="text" />
+      <Field Id="{0B6B65DA-A422-49E9-8D34-07434EEDAA4A}" Name="Year" Type="text" />
+      <Field Id="{2EF2D6AD-ED90-4546-8DBD-ADB1F99B1972}" Name="Comment" Type="memo" />
+    </Section>
+    <Section Id="{019A8C79-E3EC-440F-844A-44D4DE17A811}" Name="Properties">
+      <Field Id="{A0F8B87D-694B-4D1E-AC7F-E2266C7D62BB}" Name="Artist" Type="text" />
+      <Field Id="{7833428C-0E27-4720-90CC-178FFCEB07C1}" Name="Album" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{0603F166-35B8-469F-8123-E8D87BEDC171}" Database="core" Name="Pdf" Path="/sitecore/templates/System/Media/Unversioned/Pdf" BaseTemplates="{777F0C76-D712-46EA-9F40-371ACDA18A1C}" />
+  <Template Id="{4F4A3A3B-239F-4988-98E1-DA3779749CBC}" Database="core" Name="Zip" Path="/sitecore/templates/System/Media/Unversioned/Zip" BaseTemplates="{962B53C4-F93B-4DF9-9821-415C867B8903}">
+    <Section Id="{CD7BA37C-ECAE-4D9C-9A30-3FCEB377E058}" Name="Properties">
+      <Field Id="{2611ED8C-ECFF-4449-B25A-20D84B62363A}" Name="File Count" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{E19A2758-F802-4FDC-B497-5FF7B3BAC54B}" Database="core" Name="Audio" Path="/sitecore/templates/System/Media/Versioned/Audio" BaseTemplates="{611933AC-CE0C-4DDC-9683-F830232DB150}" />
+  <Template Id="{3DB3A3CA-A0A9-4228-994B-F70C8E99A1CE}" Database="core" Name="Doc" Path="/sitecore/templates/System/Media/Versioned/Doc" BaseTemplates="{2A130D0C-A2A9-4443-B418-917F857BF6C9}" />
+  <Template Id="{2A130D0C-A2A9-4443-B418-917F857BF6C9}" Database="core" Name="Document" Path="/sitecore/templates/System/Media/Versioned/Document" BaseTemplates="{611933AC-CE0C-4DDC-9683-F830232DB150}" />
+  <Template Id="{F57FB07D-332A-4934-AA67-0A629C5396E2}" Database="core" Name="Docx" Path="/sitecore/templates/System/Media/Versioned/Docx" BaseTemplates="{2A130D0C-A2A9-4443-B418-917F857BF6C9}" />
+  <Template Id="{611933AC-CE0C-4DDC-9683-F830232DB150}" Database="core" Name="File" Path="/sitecore/templates/System/Media/Versioned/File" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{CA6A7C5A-8A0C-45D4-A8BD-158B7AC82B53}" Name="Media">
+      <Field Id="{DBBE7D99-1388-4357-BB34-AD71EDF18ED3}" Name="Blob" Type="attachment" />
+    </Section>
+    <Section Id="{142F8036-9E6B-44B1-A61D-C794313B2516}" Name="Information">
+      <Field Id="{E625E7DA-F988-4442-A598-D21040EC9815}" Name="Title" Type="text" />
+      <Field Id="{1CC29119-82E2-449F-B208-33790D434B95}" Name="Keywords" Type="memo" />
+      <Field Id="{EBEB197C-376E-47C4-95D7-7FC26682D12E}" Name="Description" Type="text" />
+      <Field Id="{3EB149F8-DE14-4220-A8F4-9E723CFAE5D9}" Name="Extension" Type="text" />
+      <Field Id="{ABA5CE58-6D8F-43A4-B4FA-B181651347DD}" Name="Mime Type" Type="text" />
+    </Section>
+    <Section Id="{5B859D38-2197-4F0E-B508-18E17B71CA1C}" Name="Properties">
+      <Field Id="{AC8BF2AC-D76E-4BE3-A6E3-187689CE77F2}" Name="Format" Type="text" />
+      <Field Id="{5BE6C122-84C9-4661-A0C9-3718909C8DAD}" Name="Size" Type="text" />
+    </Section>
+    <Section Id="{4F62F66F-250C-4E54-913E-D59F5A8927F8}" Name="Location">
+      <Field Id="{48AA0061-6F55-4845-A663-4F22512E14B5}" Name="CountryCode" Type="Single-Line Text" />
+      <Field Id="{44712FD4-BE04-4040-B01F-E00B73247704}" Name="Latitude" Type="Number" />
+      <Field Id="{0B52DB25-C019-4496-8404-954DA257C2CE}" Name="LocationDescription" Type="Single-Line Text" />
+      <Field Id="{D6B4A04E-7124-4854-B007-EB690641931A}" Name="Longitude" Type="Number" />
+      <Field Id="{6FE31602-9225-4437-BC77-337BA8C144A9}" Name="ZipCode" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{2E16714D-8406-4445-98B7-CD70F658611B}" Database="core" Name="Flash" Path="/sitecore/templates/System/Media/Versioned/Flash" BaseTemplates="{374D3A99-C098-4CD2-8FBC-DC2D1CA1C904}">
+    <Section Id="{B6907B6C-AC66-44EE-8326-FEE3EF42B6ED}" Name="Flash">
+      <Field Id="{BEE879B4-F3F4-4F3D-8AC1-E58055479730}" Name="Width" Type="Single-Line Text" />
+      <Field Id="{6E2BA32E-F831-4719-9364-698F1319D74B}" Name="Height" Type="Single-Line Text" />
+      <Field Id="{F6D3E005-747E-4D74-A34F-05305CC86C9B}" Name="Version" Type="Single-Line Text" />
+      <Field Id="{CAF7A3C0-DD82-4089-8A50-2A78898494D5}" Name="FrameRate" Type="Single-Line Text" />
+      <Field Id="{440A3125-A076-4359-A4EC-200459CDA166}" Name="FrameCount" Type="Single-Line Text" />
+    </Section>
+    <Section Id="{F2C69C5E-4E98-4E7E-9DF5-0512967B295F}" Name="Properties">
+      <Field Id="{417D95A5-AC69-4FBF-89A5-1223DB1A4A22}" Name="Dimensions" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{C97BA923-8009-4858-BDD5-D8BE5FCCECF7}" Database="core" Name="Image" Path="/sitecore/templates/System/Media/Versioned/Image" BaseTemplates="{611933AC-CE0C-4DDC-9683-F830232DB150}">
+    <Section Id="{DE439165-658F-4D81-B209-0A712D863BC1}" Name="Image">
+      <Field Id="{8CF45D0E-ADD4-4772-911A-AC6FC50F9C7D}" Name="Alt" Type="text" />
+      <Field Id="{D8E619C3-2D16-47F4-AD3B-C68103DF86C2}" Name="Width" Type="text" />
+      <Field Id="{611BA5DD-8D26-4C9B-A95D-900AC94CB32A}" Name="Height" Type="text" />
+    </Section>
+    <Section Id="{41A6C217-C173-42A7-9C8F-75AA5EF6F6E4}" Name="Properties">
+      <Field Id="{6405CC9E-9CA1-44A1-ADF8-0DECF05071CE}" Name="Dimensions" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{EB3FB96C-D56B-4AC9-97F8-F07B24BB9BF7}" Database="core" Name="Jpeg" Path="/sitecore/templates/System/Media/Versioned/Jpeg" BaseTemplates="{C97BA923-8009-4858-BDD5-D8BE5FCCECF7}">
+    <Section Id="{E0D0E309-67C6-4DF1-9481-3176AA231788}" Name="Exif">
+      <Field Id="{7F8F7C90-6737-4B6B-9482-DE34AADA13BA}" Name="Artist" Type="text" />
+      <Field Id="{ED74C2C9-20B3-47A4-B021-A652E1E808AA}" Name="Copyright" Type="text" />
+      <Field Id="{8AB38406-B79E-491C-84E0-9919C37168FB}" Name="DateTime" Type="text" />
+      <Field Id="{A67BA51F-0D2F-4C64-A080-A933D9DA4A00}" Name="ImageDescription" Type="text" />
+      <Field Id="{10B97380-7DD1-44B6-BD3F-9FC8B2C7F21E}" Name="Make" Type="text" />
+      <Field Id="{27807440-63B2-429B-B74E-3A6A5C960AAB}" Name="Model" Type="text" />
+      <Field Id="{861A4C20-B8F6-410B-9E40-E2A3A03B7663}" Name="Software" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{374D3A99-C098-4CD2-8FBC-DC2D1CA1C904}" Database="core" Name="Movie" Path="/sitecore/templates/System/Media/Versioned/Movie" BaseTemplates="{611933AC-CE0C-4DDC-9683-F830232DB150}" />
+  <Template Id="{2449F96D-620E-4E8A-A3E0-D354F78BBD73}" Database="core" Name="Mp3" Path="/sitecore/templates/System/Media/Versioned/Mp3" BaseTemplates="{E19A2758-F802-4FDC-B497-5FF7B3BAC54B}">
+    <Section Id="{DA4F6592-596F-42AC-A3D0-7FB7B70D6E00}" Name="ID3">
+      <Field Id="{BAC32193-93B3-46E7-9BDF-A3D33E70E580}" Name="Song Title" Type="text" />
+      <Field Id="{FA58C2D1-DD4B-41B0-A503-7D9FCB96D04D}" Name="Track Number" Type="text" />
+      <Field Id="{CDF85973-AE7A-436D-A475-2B1F7F178E5F}" Name="Year" Type="text" />
+      <Field Id="{7C0A47E5-A543-45D0-9CC0-19A367A8C92D}" Name="Comment" Type="memo" />
+    </Section>
+    <Section Id="{DB97FC5C-6873-4E6A-9FC5-CBAAF9B01969}" Name="Properties">
+      <Field Id="{2CF72593-419C-4837-9C8C-6A51771DA43A}" Name="Artist" Type="text" />
+      <Field Id="{AAAF88C7-F6F7-4186-A0A0-7B6E6E76D3F8}" Name="Album" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{CC80011D-8EAE-4BFC-84F1-67ECD0223E9E}" Database="core" Name="Pdf" Path="/sitecore/templates/System/Media/Versioned/Pdf" BaseTemplates="{2A130D0C-A2A9-4443-B418-917F857BF6C9}" />
+  <Template Id="{1743421C-0D7F-4870-9F7B-70E6F0B63308}" Database="core" Name="Zip" Path="/sitecore/templates/System/Media/Versioned/Zip" BaseTemplates="{611933AC-CE0C-4DDC-9683-F830232DB150}">
+    <Section Id="{B26FD5E6-7B18-4CA1-99AE-77BD2DCB5D3E}" Name="Properties">
+      <Field Id="{D8FD9B99-2227-46BC-8906-0E873720073D}" Name="File Count" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{35753BF3-8A94-4DA6-A5D7-DBD945D1AA59}" Database="core" Name="Menu divider" Path="/sitecore/templates/System/Menus/Menu divider" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{ED6552DB-2852-400E-9E22-58C0554E5639}" Database="core" Name="Menu Header" Path="/sitecore/templates/System/Menus/Menu Header" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{089EEB0B-1827-4C15-A455-8F6CBDFEF0C8}" Name="Data">
+      <Field Id="{C838666C-41DA-4A2E-AFED-1F4EF0598F85}" Name="Header" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{998B965E-6AB8-4568-810F-8101D60D0CC3}" Database="core" Name="Menu item" Path="/sitecore/templates/System/Menus/Menu item" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{4C5A0AED-46C9-43EB-AE72-FDAFA36F5928}" Name="Data">
+      <Field Id="{6516B18C-7103-422D-B4F1-B1E37C3D9A22}" Name="Action" Type="text" />
+      <Field Id="{861F1312-64F9-49E3-8880-8FA1082F98AA}" Name="Checkbox" Type="Checkbox" />
+      <Field Id="{9B72A62B-2775-423D-B17A-EC34A9F31AF8}" Name="Display name" Type="text" />
+      <Field Id="{3B825E23-4C26-4910-BF7B-1265D57048CB}" Name="Hotkey" Type="text" />
+      <Field Id="{335C6760-6C0E-4C6C-814C-A53D203F553E}" Name="Icon" Type="Icon" />
+      <Field Id="{AFC50ABC-3ED5-49F7-AA38-32DE0034E17C}" Name="ID" Type="text" />
+      <Field Id="{CAB694FC-E37C-44EB-9012-488B775CF638}" Name="Message" Type="text" />
+      <Field Id="{DAEC87AC-3A74-4946-8A60-9B419388FB94}" Name="Radiogroup" Type="text" />
+      <Field Id="{953B8F86-0E4E-47EA-8CBB-2772499C6790}" Name="Show In Field Editor" Type="Checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Database="core" Name="Node" Path="/sitecore/templates/System/Node" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{35ABD142-200F-43F7-ADB6-0E10EDB82C0B}" Database="core" Name="Notification" Path="/sitecore/templates/System/Notification/Notification" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{7EE12DE8-0FF1-43D6-8195-8D38EEAA2D3D}" Name="Data">
+      <Field Id="{E7243EDD-198E-4C53-BE74-2F8BCACA82FE}" Name="Text" Type="Multi-Line Text" />
+      <Field Id="{AD6FE7CB-1DDE-4250-AFC2-75C768F2227E}" Name="Action" Type="Single-Line Text" />
+      <Field Id="{C60553A0-D775-42FA-BE98-F269182A2661}" Name="Users" Type="UserList" />
+    </Section>
+  </Template>
+  <Template Id="{22A11D20-5F1D-4216-BF3F-18C016F1F98E}" Database="core" Name="Package registration" Path="/sitecore/templates/System/Packages/Package registration" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{79226A4B-5A84-4AD9-A232-B728B89C218A}" Name="Data">
+      <Field Id="{AAFA3255-E19D-4C2B-A4A3-9C90D0623CDF}" Name="Package ID" Type="text" />
+      <Field Id="{D79648F3-1351-4A3C-822E-86809DB16479}" Name="Package name" Type="text" />
+      <Field Id="{5322A457-A605-4A38-A0D1-F944B7F781D9}" Name="Package version" Type="text" />
+      <Field Id="{5E6442EC-78CE-4D20-8673-3670222E404D}" Name="Package author" Type="text" />
+      <Field Id="{8403A346-67C5-4616-B239-18BF4675852D}" Name="Package publisher" Type="text" />
+      <Field Id="{4C116EA6-9312-4930-8C0F-6663554D8CEA}" Name="Package readme" Type="text" />
+      <Field Id="{1ECBAC78-C866-4665-B95A-57F0AE2801B9}" Name="Package revision" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{E48AFDB0-7F63-4F94-863A-7295218E5392}" Database="core" Name="Portal" Path="/sitecore/templates/System/Portal/Portal" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{A506D5C7-DC3A-48EC-BA30-1397E799E758}" Name="Data">
+      <Field Id="{D1F29110-70C2-4ADE-8341-64EB4B2A4442}" Name="Window" Type="" />
+    </Section>
+  </Template>
+  <Template Id="{BEEBC988-14CE-441A-B9E2-2A38D6E4A87D}" Database="core" Name="Portlet" Path="/sitecore/templates/System/Portal/Portlet" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{E3356D15-4BBD-4655-9851-9810D41CF7A6}" Name="Data">
+      <Field Id="{D28BEE28-9C28-4EFA-B649-0A071E0C541C}" Name="Description" Type="memo" />
+      <Field Id="{60C16492-C95A-4668-8573-1376DBB4A6B7}" Name="Parameters" Type="memo" />
+      <Field Id="{0BDE2986-E19D-4E02-B998-D4DCE9D8FFA5}" Name="ID" Type="text" />
+      <Field Id="{AED5E3E1-570B-436A-8D8D-4F688E7444EF}" Name="Control name" Type="text" />
+      <Field Id="{93E0C773-2747-4391-AB8E-70EC95025419}" Name="Zone" Type="text" />
+      <Field Id="{732F96AC-2796-472A-917A-EFB209CF535B}" Name="Order" Type="text" />
+      <Field Id="{3070B56F-9B3C-48B7-8FBD-DE8CA6E61179}" Name="Default" Type="checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{97D75760-CF8B-4740-810B-7727B564EF4D}" Database="core" Name="Property" Path="/sitecore/templates/System/Property" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{0CE7382D-4C1E-4AD5-8158-CC544E24C0C3}" Name="Data">
+      <Field Id="{0C48B9E7-5A26-42AA-90EF-8DABE2A6CB9D}" Name="Value" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{CB3942DC-CBBA-4332-A7FB-C4E4204C538A}" Database="core" Name="Proxy" Path="/sitecore/templates/System/Proxy" BaseTemplates="">
+    <Section Id="{543260F7-6CB9-4D68-9417-62858B6B6AF2}" Name="Data">
+      <Field Id="{E4A55896-CF58-4C9C-8284-F01B141B0E85}" Name="Proxy type" Type="" />
+      <Field Id="{C5211535-E9A7-4214-84BC-93F240A23602}" Name="Source item" Type="reference" />
+      <Field Id="{98B1EE13-D363-49FE-93C4-F48DC1191008}" Name="Target item" Type="reference" />
+      <Field Id="{02BD4E57-EBAC-4C04-935A-8A6B6D551C5C}" Name="Source database" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{E130C748-C13B-40D5-B6C6-4B150DC3FAB3}" Database="core" Name="Publishing target" Path="/sitecore/templates/System/Publishing target" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{D1DEA036-973A-4B52-BAB7-874083F9A9F1}" Name="Data">
+      <Field Id="{39ECFD90-55D2-49D8-B513-99D15573DE41}" Name="Target database" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{EF295CD8-19D4-4E02-9438-94C926EF5284}" Database="core" Name="Reference" Path="/sitecore/templates/System/Reference" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{3EADE592-94FD-49F8-BAD6-AB15B757E127}" Name="Data">
+      <Field Id="{C9CE97FB-3E8E-4384-9430-7DBA75B275DD}" Name="Reference" Type="tree" />
+    </Section>
+  </Template>
+  <Template Id="{8F3D8F9B-2D76-4ACE-803F-35415D2B230A}" Database="core" Name="Chunk" Path="/sitecore/templates/System/Ribbon/Chunk" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{992321DF-30B7-4446-8661-DAED490A5030}" Name="Data">
+      <Field Id="{C95D21BD-66C3-444B-A37F-D346CBAF2B55}" Name="Header" Type="text" />
+      <Field Id="{661C7D82-2C92-47D2-B41D-AFC2DC5379AA}" Name="Click" Type="text" />
+      <Field Id="{89730EC0-79CE-4B64-AA50-8C45D38D2D0D}" Name="Access Key" Type="text" />
+      <Field Id="{4061C1C7-DC71-4C1D-932D-22FD5A37ADAC}" Name="Tooltip" Type="text" />
+      <Field Id="{8BB9A5E3-CAE8-49C6-B830-258A51D970C9}" Name="ID" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{AC2CF483-11AE-4C35-AAA8-C4796423A501}" Database="core" Name="Command" Path="/sitecore/templates/System/Ribbon/Command" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{03F08F8C-609C-4606-A8B7-D0BA0EBC9603}" Name="Data">
+      <Field Id="{4F19C5F5-6C80-4FE6-A645-47C912622D16}" Name="Command" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{B8D7200A-15D2-42CE-AB24-79FEF4DDCF86}" Database="core" Name="Custom Control" Path="/sitecore/templates/System/Ribbon/Custom Control" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{C41F1D60-170C-4AB3-B62D-2D67380A5EBB}" Name="Data">
+      <Field Id="{F18EB3B1-214B-47E7-976C-75385370198C}" Name="Type" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{1DB34C92-03B0-4475-9A39-DA14E4D9D8FC}" Database="core" Name="Large Button" Path="/sitecore/templates/System/Ribbon/Large Button" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{DA4941C3-AFCA-4A64-AD4D-5B1B6F0593DD}" Name="Data">
+      <Field Id="{4DF6DA21-E745-444C-956E-1D4A96AB8821}" Name="Header" Type="text" />
+      <Field Id="{D47ED548-84D5-4622-9886-5CC164727507}" Name="Icon" Type="icon" />
+      <Field Id="{DBBF9EE3-C30E-4456-A81F-ED8C2E8DF91B}" Name="Click" Type="text" />
+      <Field Id="{A1A31A93-C4A0-4396-B629-67C33001A3CF}" Name="Tooltip" Type="text" />
+      <Field Id="{FE8A178D-8ED7-4A24-9BCA-7722D2A06834}" Name="Access Key" Type="text" />
+      <Field Id="{CCD6BDE9-0A7A-4DA3-B0ED-D3C0F65379FE}" Name="KeyCode" Type="text" />
+      <Field Id="{1193B1A3-0148-413F-A979-49B39AA4A2AF}" Name="ID" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{8A63ABCF-1CA6-4FD2-ABEE-5DFC2D7B0C75}" Database="core" Name="Large Combo Button" Path="/sitecore/templates/System/Ribbon/Large Combo Button" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{E0D969C1-67F8-4277-9AF1-4D94C6FEBE72}" Name="Data">
+      <Field Id="{FACECAC8-C923-4847-834C-C917268F8F6B}" Name="Header" Type="text" />
+      <Field Id="{4CC38D95-0C13-48A1-820B-904C9966C0F1}" Name="Icon" Type="icon" />
+      <Field Id="{65B60C8C-D114-49E0-A897-1F64DAA7409E}" Name="Click" Type="text" />
+      <Field Id="{E9F2581A-FBFC-4AC6-90CB-04CA5C02B70D}" Name="Tooltip" Type="text" />
+      <Field Id="{5D268910-71DD-4D01-B8D3-296E6EBD738E}" Name="Access Key" Type="text" />
+      <Field Id="{279A36E4-DB2D-4DCD-911F-2942F192EA96}" Name="KeyCode" Type="text" />
+      <Field Id="{3B269BC4-FE34-4FB6-97A2-2BB02A346BF5}" Name="Gallery" Type="text" />
+      <Field Id="{B79A37FF-1255-4FCC-9CEC-423DF792B0DE}" Name="Gallery Width" Type="text" />
+      <Field Id="{35E17D86-CA92-4903-AA4F-951B4B4795B9}" Name="Gallery Height" Type="text" />
+      <Field Id="{5AC48389-FB8A-4390-A41C-DE51B0282534}" Name="Gallery Parameters" Type="text" />
+      <Field Id="{7B390CD3-0E7F-4279-97B3-F2A05B5A3BB1}" Name="ID" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{19054D88-FED7-48AD-87CD-CF458590C303}" Database="core" Name="Large Gallery Button" Path="/sitecore/templates/System/Ribbon/Large Gallery Button" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{8A75ADEB-143C-4761-8211-AA4F0AF5E638}" Name="Data">
+      <Field Id="{2AC65C2F-127B-43BC-8687-5689E1FB3D78}" Name="Header" Type="text" />
+      <Field Id="{E792E033-3264-4F34-BEBF-B2BD82B0FC5A}" Name="Icon" Type="icon" />
+      <Field Id="{B6D7D860-0ABA-49DD-85D5-4D537646EF7F}" Name="Command" Type="text" />
+      <Field Id="{81B23074-63AF-4A28-9B45-AB27B3B2F619}" Name="Tooltip" Type="text" />
+      <Field Id="{CBE74A68-B272-4CBD-8C4A-176DB292DF27}" Name="Access Key" Type="text" />
+      <Field Id="{218BDDA0-C2BA-4BE9-9BB9-87B8376907DB}" Name="KeyCode" Type="text" />
+      <Field Id="{9383F6DD-2D09-40A4-8004-4F63125DBDF6}" Name="Gallery" Type="" />
+      <Field Id="{0A734AF1-CBD3-4896-8615-6374D2D5DCEE}" Name="Gallery Width" Type="text" />
+      <Field Id="{C13FE317-1F69-42D1-B8EF-EE783D372926}" Name="Gallery Height" Type="text" />
+      <Field Id="{34E35181-9D95-4344-B5CF-EE333C37F5A7}" Name="ID" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{97B61451-9A75-4F59-93A5-DBD8D4F44421}" Database="core" Name="Large Menu Combo Button" Path="/sitecore/templates/System/Ribbon/Large Menu Combo Button" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{8E2AA090-AB1A-4470-84CB-FEB75EBA67F7}" Name="Data">
+      <Field Id="{B11F9F5F-88FC-48C5-9501-2E827EF40EAD}" Name="Header" Type="text" />
+      <Field Id="{F5A07916-7BCA-4FBA-857C-A5D166C332D4}" Name="Icon" Type="icon" />
+      <Field Id="{FC6B80F1-406D-47F0-A2B3-FCD7A8EA9D74}" Name="Click" Type="text" />
+      <Field Id="{DB8C4E34-586C-4DED-BC95-B993FC3A01A8}" Name="Tooltip" Type="text" />
+      <Field Id="{BD63F469-07B3-47D9-B8CC-C100191BF509}" Name="Access Key" Type="text" />
+      <Field Id="{A0B2E8B4-CD06-47F1-A721-68E108495046}" Name="KeyCode" Type="text" />
+      <Field Id="{3F5BD18E-8CEE-4CD5-9EE3-77863947B312}" Name="Menu" Type="text" />
+      <Field Id="{F21ADBBD-E45D-4426-B5BF-8F28627D4F73}" Name="ID" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{3619F992-4177-4124-89DD-DABFC2BAF6BB}" Database="core" Name="Panel" Path="/sitecore/templates/System/Ribbon/Panel" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{B4E5B775-9FBE-47FA-B6FC-15DBE0A51598}" Name="Data">
+      <Field Id="{C78D9B41-FFEB-402D-93E8-E1270D8BB787}" Name="Type" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{C3443118-77AC-44C2-BAA0-F1ACCB31813A}" Database="core" Name="Separator" Path="/sitecore/templates/System/Ribbon/Separator" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{9F62EBD5-2280-4A35-BE51-A210D831D687}" Database="core" Name="Small Button" Path="/sitecore/templates/System/Ribbon/Small Button" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{80D607C2-A9A3-431C-9150-80F18E3237E9}" Name="Data">
+      <Field Id="{C184F18B-B452-44D6-8376-FACD6CEF8A42}" Name="Header" Type="text" />
+      <Field Id="{8E40AB40-8C83-4FF7-9D33-38ED9458DE1E}" Name="Icon" Type="icon" />
+      <Field Id="{4C2DEDB4-40FB-4166-8221-C4DD3E914478}" Name="Click" Type="text" />
+      <Field Id="{A47CD065-C361-4332-B22B-7E2148DE06F4}" Name="Tooltip" Type="text" />
+      <Field Id="{E7FDF8DA-BA96-42AE-B302-867E4CD25724}" Name="Access Key" Type="text" />
+      <Field Id="{0CEBD9E7-1008-4EFA-B87C-2445364E286B}" Name="KeyCode" Type="text" />
+      <Field Id="{2E263167-B30F-45C0-8105-567960961874}" Name="ID" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{ABC069D5-3627-4A20-841E-D199B0EB4957}" Database="core" Name="Small Check Button" Path="/sitecore/templates/System/Ribbon/Small Check Button" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{1DDA0D1C-45C1-4547-A0A0-392AA6388985}" Name="Data">
+      <Field Id="{C7A8B822-2B9D-4E1D-9E5F-82326FCBBFC1}" Name="Header" Type="text" />
+      <Field Id="{FA8FFAB1-6269-480D-B746-F6BED5A178A2}" Name="Click" Type="text" />
+      <Field Id="{455D570D-77B9-4AA6-B84E-D7DCAB7079C0}" Name="Tooltip" Type="text" />
+      <Field Id="{6E08B9B5-8E70-4C5D-B3B0-69943E03E6F0}" Name="Access Key" Type="text" />
+      <Field Id="{AAB26AF0-8215-4589-B580-52350714B06C}" Name="KeyCode" Type="text" />
+      <Field Id="{CC65212F-C5F2-437A-965E-7F0690A82F21}" Name="ID" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{33D5BE89-B49B-411E-9175-8E4F872B5CDF}" Database="core" Name="Small Combo Button" Path="/sitecore/templates/System/Ribbon/Small Combo Button" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{FEBBF077-8EAB-41C9-B49C-75A88732D7A2}" Name="Data">
+      <Field Id="{5BF8FABD-FF78-45F4-A118-DB7FB5122599}" Name="Header" Type="text" />
+      <Field Id="{C780373F-3A87-4225-95D4-D3E9E9DEA25C}" Name="Icon" Type="icon" />
+      <Field Id="{11B89183-3538-4307-8266-130035B17ECE}" Name="Command" Type="text" />
+      <Field Id="{2962EFE4-22E9-40B9-A7CC-0CE903733CDE}" Name="Tooltip" Type="text" />
+      <Field Id="{CCA0D7BE-8BED-4474-8EEC-34B47A59C2A0}" Name="Access Key" Type="text" />
+      <Field Id="{E4DE1AE7-0361-4DDB-ACA8-42CEBF00F1CA}" Name="KeyCode" Type="text" />
+      <Field Id="{B03FBF83-8405-43EF-8B68-02E1B2AB40A1}" Name="Gallery" Type="" />
+      <Field Id="{AD18BF8E-499E-4281-9C33-DD28BA812AE4}" Name="Gallery Width" Type="text" />
+      <Field Id="{CA0D4BEE-1771-402D-8A75-EB9D88EBA0AD}" Name="Gallery Height" Type="text" />
+      <Field Id="{F343FF64-3260-43A3-91B4-C453042E093A}" Name="Gallery Parameters" Type="text" />
+      <Field Id="{1E464F92-E7D1-47CB-9AE0-69EF3D07ACB1}" Name="ID" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{53E2B718-D0F1-4AFA-A227-8D81C639B68A}" Database="core" Name="Small Drop Down Box" Path="/sitecore/templates/System/Ribbon/Small Drop Down Box" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{8C52920B-358D-4C2E-9C0F-385BB77C47FE}" Name="Data">
+      <Field Id="{557B37A2-93C1-400B-8104-DFE2F634ABAF}" Name="Header" Type="text" />
+      <Field Id="{631318AB-F31D-4034-8472-3D46B22238F3}" Name="Icon" Type="icon" />
+      <Field Id="{791000D6-F141-4971-8B3A-4F56F79636E0}" Name="Items" Type="text" />
+      <Field Id="{B9135CD9-A732-47E9-A8E4-083F568AD3C0}" Name="Click" Type="text" />
+      <Field Id="{58297BB6-54CB-48C2-BF0C-461D514B9D73}" Name="Tooltip" Type="text" />
+      <Field Id="{94C7D053-2644-4609-B3C4-1B09FD02DD8F}" Name="Access Key" Type="text" />
+      <Field Id="{83C54BD8-0EA5-4173-929F-23CB64720965}" Name="KeyCode" Type="text" />
+      <Field Id="{94CAC870-4996-49E3-8890-62DBA37CFD77}" Name="ID" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{6B84BD97-60E8-4E18-B1FC-9F92AE0659C5}" Database="core" Name="Small Gallery Button" Path="/sitecore/templates/System/Ribbon/Small Gallery Button" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{442B5181-9C12-4F6D-B29F-251F691E80DE}" Name="Data">
+      <Field Id="{CF5BB092-1A85-4C78-B486-A79FD6D84771}" Name="Header" Type="text" />
+      <Field Id="{601EBEC8-1D78-4D06-8228-45C28D9FABD8}" Name="Icon" Type="icon" />
+      <Field Id="{1BA953EE-84AD-4753-870E-ABE82AF900C4}" Name="Command" Type="text" />
+      <Field Id="{37103048-B73C-4621-88EB-77912CACA135}" Name="Tooltip" Type="text" />
+      <Field Id="{231728AF-8031-45B9-AC7D-9B329815B550}" Name="Access Key" Type="text" />
+      <Field Id="{71219CB2-BD4F-4BCB-8891-A821870E6197}" Name="KeyCode" Type="text" />
+      <Field Id="{29D3164D-DE97-4ACE-BCB4-83CB6954BEE3}" Name="Gallery" Type="" />
+      <Field Id="{47AB3889-0DA4-418C-B4A0-CA58F0AE4C1F}" Name="Gallery Width" Type="text" />
+      <Field Id="{212B99DF-C246-46CE-9E51-86DB77E3BC97}" Name="Gallery Height" Type="text" />
+      <Field Id="{120EC6E4-B5C5-4DD0-B00B-649A8AE557D0}" Name="Gallery Parameters" Type="text" />
+      <Field Id="{75DC5AB6-2449-4CF5-A5F4-18342E945D9A}" Name="ID" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{E037642C-CE8E-437F-8A61-8D32D0CE54E1}" Database="core" Name="Small Input Box" Path="/sitecore/templates/System/Ribbon/Small Input Box" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{4F1BE3E9-1564-4673-97B7-7DDA0762777A}" Name="Data">
+      <Field Id="{7FE3A2CB-A592-46AB-837E-1F2354EF7E9F}" Name="Header" Type="text" />
+      <Field Id="{11A849FF-E8A4-4335-8143-CE8EA8CEE0E3}" Name="Icon" Type="icon" />
+      <Field Id="{F3E500BC-9C6A-48CB-B40A-8CCE8DDCFB13}" Name="Click" Type="text" />
+      <Field Id="{D0F0A77D-3BAC-47E2-BDF4-E284CDAD5654}" Name="Tooltip" Type="text" />
+      <Field Id="{B9B2D23E-411C-4AF2-B656-400D6ED8FB32}" Name="Access Key" Type="text" />
+      <Field Id="{547AD1ED-AA34-489A-B9DF-1166202F4EB5}" Name="KeyCode" Type="text" />
+      <Field Id="{ED8FBC7C-3AD5-45B6-AC54-E4DA0FAC4002}" Name="ID" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{BF349A5E-C6C3-4BAF-BD58-DE98727C5233}" Database="core" Name="Small Menu Combo Button" Path="/sitecore/templates/System/Ribbon/Small Menu Combo Button" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{ED92DC4D-C463-423D-A0A9-947009275D51}" Name="Data">
+      <Field Id="{CCB68ADB-5889-4480-8788-55E643A32100}" Name="Header" Type="text" />
+      <Field Id="{8B7F2C0A-3AFE-4213-B517-82AF53125ACC}" Name="Icon" Type="icon" />
+      <Field Id="{3FC2B182-A6CA-425D-8333-9F47A2AACD8F}" Name="Command" Type="text" />
+      <Field Id="{FB3205FE-81FB-42DA-8A0B-F0B6028B14C9}" Name="Tooltip" Type="text" />
+      <Field Id="{46380D3F-E4FD-489A-86B3-4B05C280726A}" Name="Access Key" Type="text" />
+      <Field Id="{2A378151-8962-4AA1-9323-D0174C1A6891}" Name="KeyCode" Type="text" />
+      <Field Id="{393E6B6B-B6BA-4B3C-B0AE-57FE2EF3AD8B}" Name="Menu" Type="" />
+      <Field Id="{8ABD440A-2FF7-4D43-B436-1C321C7CF796}" Name="ID" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{EC6D62A5-5D00-4329-8958-8AC1AD100EBB}" Database="core" Name="Strip" Path="/sitecore/templates/System/Ribbon/Strip" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{9DB498BC-2EA4-4DD1-93E4-68F71F5D1C69}" Name="Data">
+      <Field Id="{5453DC07-6A17-48BA-8D05-17DB90A2E795}" Name="Header" Type="text" />
+      <Field Id="{4C9DC598-B43A-4B65-8425-BF2C4A9D132E}" Name="Contextual Header" Type="text" />
+      <Field Id="{12C1CEB4-F549-472A-97ED-99BFF70EB84E}" Name="ID" Type="text" />
+      <Field Id="{59DE8E82-A9BC-4862-BBEE-F5567DD63B65}" Name="Access Key" Type="text" />
+      <Field Id="{68CACD41-FC33-49B5-8555-71FB4EBBBBEE}" Name="Tooltip" Type="text" />
+      <Field Id="{E3B67C2C-69B5-4CC8-853F-9F2684314C04}" Name="Type" Type="text" />
+      <Field Id="{453004DB-0396-4D30-80D6-39CFDF244F32}" Name="Hidden by Default" Type="checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{DBC60382-0FED-4B55-8EAE-178F9099BD75}" Database="core" Name="Tool Button" Path="/sitecore/templates/System/Ribbon/Tool Button" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{81FB6AA2-E7DE-4C83-B25E-D81B4F5E75E9}" Name="Data">
+      <Field Id="{86AB52D3-8941-4D2F-A1CE-14F32AA12380}" Name="Header" Type="text" />
+      <Field Id="{A6BC1B34-38E3-4AD4-B2AE-747A3D95E269}" Name="Icon" Type="icon" />
+      <Field Id="{ED98A41E-34CC-42A4-B87F-02B2FE4C0225}" Name="Click" Type="text" />
+      <Field Id="{8BD7B4AE-FC85-4319-B193-C597F6A75DAB}" Name="KeyCode" Type="text" />
+      <Field Id="{14FA59C6-B9BB-40F1-8617-05E8606B5901}" Name="ID" Type="text" />
+      <Field Id="{0B0C4DB5-BC07-440F-90F1-ED080334D98E}" Name="Tooltip" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{32DF7EF0-56D8-4CFF-AE46-884A7533BC9D}" Database="core" Name="Tool Button Group" Path="/sitecore/templates/System/Ribbon/Tool Button Group" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{6400BD3F-E8A1-4C38-8319-131448492439}" Database="core" Name="Tool Button New Line" Path="/sitecore/templates/System/Ribbon/Tool Button New Line" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{3A1A3B48-3434-4E5A-8F05-AD6E1687D888}" Database="core" Name="Toolbar" Path="/sitecore/templates/System/Ribbon/Toolbar" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{53AD8375-10B0-48B8-BF34-641D12739A89}" Name="Data">
+      <Field Id="{77280BFA-35A9-4F0A-9642-D5C8B21C9EAE}" Name="Sticky Chunk" Type="tree" />
+    </Section>
+  </Template>
+  <Template Id="{C6576836-910C-4A3D-BA03-C277DBD3B827}" Database="core" Name="Root" Path="/sitecore/templates/System/Root" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{F90052A5-B4E6-4E6D-9812-1E1B88A6FCEA}" Database="core" Name="Action" Path="/sitecore/templates/System/Rules/Action" BaseTemplates="{34E1F0D9-CCFF-4F03-A38D-933437AA3A2A}">
+    <Section Id="{BC64D6DB-BB61-4615-ADA9-B1B6D599CD33}" Name="Data">
+      <Field Id="{EEB36A3B-40D9-4AF5-862A-DE257B84DCA3}" Name="Text" Type="Single-Line Text" />
+    </Section>
+    <Section Id="{3AC4B854-6CF9-4B30-9D52-1E5518AFF0E8}" Name="Script">
+      <Field Id="{FF55D5A7-6D4B-4CD1-83E0-BAC268073F66}" Name="Type" Type="Single-Line Text" />
+      <Field Id="{0B8B930B-8916-4462-BD4D-700303EADFD6}" Name="Code" Type="Multi-Line Text" />
+      <Field Id="{CDE63811-197E-49B5-B16A-9F6EA642E3F9}" Name="References" Type="Multi-Line Text" />
+      <Field Id="{3CA03025-B5C0-4D42-8197-0F037F9A1857}" Name="Language" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{F0D16EEE-3A05-4E43-A082-795A32B873C0}" Database="core" Name="Condition" Path="/sitecore/templates/System/Rules/Condition" BaseTemplates="{34E1F0D9-CCFF-4F03-A38D-933437AA3A2A}">
+    <Section Id="{6D301EB6-124D-4131-884C-AEBD48E76164}" Name="Data">
+      <Field Id="{AF321234-4EB9-4EF5-9197-65903351939C}" Name="Text" Type="Multi-Line Text" />
+    </Section>
+    <Section Id="{DF23B990-55C1-401F-8F77-4698EDBD6FA9}" Name="Script">
+      <Field Id="{AB51C8B2-F0E1-4471-9AAE-CC080D774923}" Name="Type" Type="Single-Line Text" />
+      <Field Id="{884E9630-AB42-4023-95D9-F221F3479950}" Name="Code" Type="Multi-Line Text" />
+      <Field Id="{E3819B13-AB95-4D8E-BC21-3DD39F0284F0}" Name="References" Type="Multi-Line Text" />
+      <Field Id="{BCEAB607-95C1-46CE-818D-D0C4B55ECD1E}" Name="Language" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{550B5CEF-242C-463F-8ED5-983922A39863}" Database="core" Name="Conditional Rendering Rule" Path="/sitecore/templates/System/Rules/Conditional Rendering Rule" BaseTemplates="{34E1F0D9-CCFF-4F03-A38D-933437AA3A2A}">
+    <Section Id="{0FB3069F-24B1-43FF-9D3B-17D09F52C28B}" Name="Data">
+      <Field Id="{062041C0-682E-4BD3-A778-85451EA11956}" Name="Name" Type="Single-Line Text" />
+      <Field Id="{5C29555E-6565-4984-A692-115B49C047A0}" Name="Rule" Type="Rules" />
+    </Section>
+  </Template>
+  <Template Id="{71A2C881-FBB3-4A23-A187-7FD50A20F924}" Database="core" Name="Content Editor Warning Rule" Path="/sitecore/templates/System/Rules/Content Editor Warning Rule" BaseTemplates="{34E1F0D9-CCFF-4F03-A38D-933437AA3A2A}">
+    <Section Id="{D65B012A-3E1A-4916-90EE-A4D9563455F6}" Name="Data">
+      <Field Id="{52A38DF4-8193-4BDD-896E-FB4C9AC48F5B}" Name="Rule" Type="Rules" />
+    </Section>
+  </Template>
+  <Template Id="{664E5035-EB8C-4BA1-9731-A098FCC9127A}" Database="core" Name="Insert Options Rule" Path="/sitecore/templates/System/Rules/Insert Options Rule" BaseTemplates="{34E1F0D9-CCFF-4F03-A38D-933437AA3A2A}">
+    <Section Id="{B2EB699D-920A-4243-A6E0-E06233969624}" Name="Data">
+      <Field Id="{9E0287D9-AF90-41AD-8D36-332375E194D6}" Name="Name" Type="Single-Line Text" />
+      <Field Id="{FA307B86-DA2A-44BD-887D-E2057CDB4948}" Name="Rule" Type="Rules" />
+    </Section>
+  </Template>
+  <Template Id="{40CA4912-1224-4F0B-919F-C4FE11A7A004}" Database="core" Name="Macro" Path="/sitecore/templates/System/Rules/Macro" BaseTemplates="{34E1F0D9-CCFF-4F03-A38D-933437AA3A2A}">
+    <Section Id="{6F349FAF-5BEA-44D7-92BE-458613AA0ED1}" Name="Script">
+      <Field Id="{E90B394E-9C00-48FF-A0CA-4E812E84B05F}" Name="Type" Type="Single-Line Text" />
+      <Field Id="{878B62D2-ECA4-43BF-8E39-6FE86EA77747}" Name="Code" Type="Multi-Line Text" />
+      <Field Id="{E223D6E4-B5ED-400C-9F97-17EEFBA6BD54}" Name="References" Type="Multi-Line Text" />
+      <Field Id="{69EABA8A-7BB5-4061-8777-72CF561BD05B}" Name="Language" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{D9BDF22F-6E17-47F3-AB64-49C717BA92DA}" Database="core" Name="Rule" Path="/sitecore/templates/System/Rules/Rule" BaseTemplates="{34E1F0D9-CCFF-4F03-A38D-933437AA3A2A}">
+    <Section Id="{8DCE0111-4490-4670-9404-2E4B47496F89}" Name="Data">
+      <Field Id="{45CF9130-802A-41BE-B3EB-C02F657DCC2E}" Name="Name" Type="Single-Line Text" />
+      <Field Id="{908EF45D-4940-4B6A-857D-3739BA4ACF8F}" Name="Rule" Type="Rules" />
+    </Section>
+  </Template>
+  <Template Id="{34E1F0D9-CCFF-4F03-A38D-933437AA3A2A}" Database="core" Name="RuleBase" Path="/sitecore/templates/System/Rules/RuleBase" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{AB6DD55D-75E3-4A02-9793-7054ED90FCB6}" Database="core" Name="Script" Path="/sitecore/templates/System/Rules/Script" BaseTemplates="{34E1F0D9-CCFF-4F03-A38D-933437AA3A2A}">
+    <Section Id="{E611EE46-7BEF-48F3-A11E-E2EB5ABF4CCA}" Name="Script">
+      <Field Id="{202E50FC-F9EC-4DEC-AA5D-D331FA4F16F2}" Name="Type" Type="Single-Line Text" />
+      <Field Id="{CF38A704-11E9-41AE-AC2D-E229BCA83BF5}" Name="Code" Type="Multi-Line Text" />
+      <Field Id="{94BEDF45-D773-46FA-8622-6C0E62797C8B}" Name="References" Type="Multi-Line Text" />
+      <Field Id="{C5770705-C48E-4E7C-AE1F-9D1D8CAD4358}" Name="Language" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{54DAE7CD-BFD8-4E69-9679-75F2AE9F9034}" Database="core" Name="Element Folder" Path="/sitecore/templates/System/Rules/Taxonomy/Element Folder" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{C1A652CD-501B-4B6C-BF69-D2ACB72A173E}" Name="Taxonomy">
+      <Field Id="{78003371-B463-4F9A-8A26-2D88CDCD1435}" Name="Group" Type="Droplink" />
+    </Section>
+  </Template>
+  <Template Id="{5B5D706C-9EF9-4470-9B60-1A77EE8179FA}" Database="core" Name="Group" Path="/sitecore/templates/System/Rules/Taxonomy/Group" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{271F5CF1-95C7-474D-9F04-06C6EBB20D8F}" Database="core" Name="Rule Elements Visibility Rule" Path="/sitecore/templates/System/Rules/Taxonomy/Rule Elements Visibility Rule" BaseTemplates="{34E1F0D9-CCFF-4F03-A38D-933437AA3A2A}">
+    <Section Id="{F9572F6A-BD83-425F-9AE1-E5D661572017}" Name="Data">
+      <Field Id="{664CECEB-0446-4063-92A3-1E14837F4D0C}" Name="Rule" Type="Rules" />
+      <Field Id="{F9ABBE04-6A99-49DA-906D-8B0A709C377F}" Name="Name" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{DDA66314-03F3-4C89-84A9-39DFFB235B06}" Database="core" Name="Rules Context Folder" Path="/sitecore/templates/System/Rules/Taxonomy/Rules Context Folder" BaseTemplates="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" />
+  <Template Id="{8EA2CF67-4250-47A2-AECA-4F70FD200DC7}" Database="core" Name="Rules Folder" Path="/sitecore/templates/System/Rules/Taxonomy/Rules Folder" BaseTemplates="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" />
+  <Template Id="{1A9B6300-4652-477C-A4B5-B2A64E86B29F}" Database="core" Name="Tag" Path="/sitecore/templates/System/Rules/Taxonomy/Tag" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{854BA861-63EA-4A0C-8C7B-541E9A7EC4C1}" Database="core" Name="Tags Definition" Path="/sitecore/templates/System/Rules/Taxonomy/Tags Definition" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{2C1B5692-FF55-478C-80B2-F538CC4AE2D2}" Name="Taxonomy">
+      <Field Id="{42F77151-098F-496A-94CF-590B7EDEEABE}" Name="Tags" Type="Multilist" />
+    </Section>
+  </Template>
+  <Template Id="{96C8E5DD-63C3-496B-A97C-A3E37E1DACBA}" Database="core" Name="Tags Definitions Folder" Path="/sitecore/templates/System/Rules/Taxonomy/Tags Definitions Folder" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{AA91A868-02F2-41D3-8B78-1CAD91B4DCAE}" Database="core" Name="Visibility" Path="/sitecore/templates/System/Rules/Taxonomy/Visibility" BaseTemplates="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" />
+  <Template Id="{29045375-C15F-4E69-B873-75C3F5C1814B}" Database="core" Name="Validation Result" Path="/sitecore/templates/System/Rules/Validation Result" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{0512BDE9-5696-42C4-8C7D-B349EDA9CEF9}" Database="core" Name="Validation Rule" Path="/sitecore/templates/System/Rules/Validation Rule" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{1E864834-620E-450A-B84D-F98B44CC494B}" Name="Data">
+      <Field Id="{5481ADF8-53BD-4EE8-88C5-2A48AB162E63}" Name="Name" Type="Single-Line Text" />
+      <Field Id="{DE992F87-5EA4-4D75-84CF-F744A9FA2EC0}" Name="Rule" Type="Rules" />
+    </Section>
+  </Template>
+  <Template Id="{F215D39D-F9C7-40B5-A8EF-A9C9A311C1F9}" Database="core" Name="Password Recovery Email" Path="/sitecore/templates/System/Security/Password Recovery Email" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{D7C5F08A-E63E-4625-B122-59F31B1C8FFC}" Name="Email">
+      <Field Id="{0CA82EC4-B30E-4194-A4AB-7D520F61D828}" Name="Sender email address" Type="Single-Line Text" />
+      <Field Id="{ACB495EC-3271-4519-A56B-AC4DAFCECE90}" Name="Sender display name" Type="Single-Line Text" />
+      <Field Id="{AD02E483-A31E-41BC-901A-AEB1E882EA8A}" Name="Subject" Type="Single-Line Text" />
+      <Field Id="{B7CB789B-213F-4394-B130-77EAF02CD88E}" Name="Email content" Type="Multi-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{A7DF04B4-4C4B-44B7-BE1E-AD901BD53DAD}" Database="core" Name="Role" Path="/sitecore/templates/System/Security/Role" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{78B1C1F8-8B3A-4B27-8AE7-09D06D4FA709}" Name="Data">
+      <Field Id="{CCB11355-CD36-4785-BFFA-4F12484348EA}" Name="Roles" Type="" />
+    </Section>
+  </Template>
+  <Template Id="{AAD4C04A-EAA6-4824-87D2-E01F2325D422}" Database="core" Name="Security folder" Path="/sitecore/templates/System/Security/Security folder" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{276B6E7F-72E3-4208-AB59-1892D6084666}" Database="core" Name="Security Preset" Path="/sitecore/templates/System/Security/Security Preset" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{581B1CD9-8F51-433A-896F-FB9CC4042269}" Name="Data">
+      <Field Id="{15D6931A-A373-4220-83CE-63BBB7F69F89}" Name="Users" Type="text" />
+      <Field Id="{E0A711D0-D236-4717-BD69-9FB24E93C3FE}" Name="Domain" Type="text" />
+      <Field Id="{D0D809CE-4DAA-4A55-9837-B8EE61478669}" Name="Security Preset" Type="security" />
+      <Field Id="{12A14F74-5B97-47FF-8956-DECF11556E18}" Name="Overwrite" Type="checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{642C9A7E-EE31-4979-86F0-39F338C10AFB}" Database="core" Name="User" Path="/sitecore/templates/System/Security/User" BaseTemplates="">
+    <Section Id="{FBF76612-6EE2-412D-8D33-602D552E35FE}" Name="Data">
+      <Field Id="{8E9497D4-0BC1-4BDC-9038-B31EBDD01EC7}" Name="Portrait" Type="" />
+      <Field Id="{E20FD18B-6F85-4A71-A086-BEE3C0546277}" Name="Wallpaper" Type="" />
+      <Field Id="{731CDB8D-D6A6-4444-973A-26B63DA62A08}" Name="Engagement Value" Type="Number" />
+      <Field Id="{E4CA38E1-9F3D-430D-88B2-A0CB1956DA4F}" Name="Current Position" Type="Number" />
+      <Field Id="{99500DD3-4547-4B59-B18F-B1D0840B67CD}" Name="Badges" Type="Multilist" />
+      <Field Id="{3C31DEF4-3530-4B13-9407-A6CD237EA065}" Name="Notifications" Type="Multilist with Search" />
+    </Section>
+    <Section Id="{0778537B-743B-44DE-AFCF-45D1279B2A68}" Name="Social">
+      <Field Id="{3F8218B3-F354-4BB5-BCCE-7E66DE33D5A6}" Name="Hashes" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{ACDE682B-A8C7-4E5C-B8BA-78FDE04651A4}" Database="core" Name="Snippet" Path="/sitecore/templates/System/Snippet" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{E448E8C3-AB3A-4F20-949B-FE337FC51B60}" Name="Data">
+      <Field Id="{F1AA3BC0-D787-4D9B-B870-99E466AB3590}" Name="Icon" Type="text" />
+      <Field Id="{CD2DC446-FFB3-41FE-A078-00F34EA30678}" Name="Snippet" Type="html" />
+      <Field Id="{C0A90EAE-7A06-47C0-80E1-6513AE2D3F33}" Name="Title" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{58119A3E-560E-4DA6-97C6-1ACE8A5B1219}" Database="core" Name="Command" Path="/sitecore/templates/System/Tasks/Command" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{34EE06CF-B186-41AA-9BA6-B6FDDA19189A}" Name="Data">
+      <Field Id="{752579A7-EF2F-45B7-B9D1-9B682308B7A5}" Name="Type" Type="text" />
+      <Field Id="{4BC75539-D5C4-487B-AF35-FF13D62BD286}" Name="Method" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{70244923-FA84-477C-8CBD-62F39642C42B}" Database="core" Name="Schedule" Path="/sitecore/templates/System/Tasks/Schedule" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{81F4896F-38C2-4A26-AC7A-7009BFE0259B}" Name="Data">
+      <Field Id="{62E64DBB-0A39-4DD7-BA05-7BD08C5404E0}" Name="Command" Type="reference" />
+      <Field Id="{70893EF5-98E6-4721-844A-C364D0D9E48E}" Name="Items" Type="text" />
+      <Field Id="{50BE51F8-746D-4DC2-9C3B-B14ABC5CE9B7}" Name="Schedule" Type="text" />
+      <Field Id="{B1E16562-F3F9-4DDD-84CA-6E099950ECC0}" Name="Last run" Type="datetime" />
+      <Field Id="{A2C0C7A2-697D-40E2-9516-54E0C2D6028E}" Name="Async" Type="checkbox" />
+      <Field Id="{470A5C23-5361-4260-96EB-3668E5933303}" Name="Auto remove" Type="checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{646F4B34-708C-41C2-9F4B-2661849777F3}" Database="core" Name="Advanced" Path="/sitecore/templates/System/Templates/Sections/Advanced" BaseTemplates="{00000000-0000-0000-0000-000000000000}">
+    <Section Id="{1AD573E7-F081-4714-AA19-945EDDB7C15A}" Name="Advanced">
+      <Field Id="{F7D48A55-2158-4F02-9356-756654404F73}" Name="__Standard values" Type="reference" />
+    </Section>
+  </Template>
+  <Template Id="{F5BC7AE4-F62D-47CD-9AFB-2C9F85D8313B}" Database="core" Name="Appearance" Path="/sitecore/templates/System/Templates/Sections/Appearance" BaseTemplates="{00000000-0000-0000-0000-000000000000}">
+    <Section Id="{CD312499-F3D0-4AFC-B7BD-FD58AD20667B}" Name="Appearance">
+      <Field Id="{D3AE7222-425D-4B77-95D8-EE33AC2B6730}" Name="__Context Menu" Type="tree" />
+      <Field Id="{B5E02AD9-D56F-4C41-A065-A133DB87BDEB}" Name="__Display name" Type="text" />
+      <Field Id="{D85DB4EC-FF89-4F9C-9E7C-A9E0654797FC}" Name="__Editor" Type="server file" />
+      <Field Id="{A0CB3965-8884-4C7A-8815-B6B2E5CED162}" Name="__Editors" Type="tree list" />
+      <Field Id="{39C4902E-9960-4469-AEEF-E878E9C8218F}" Name="__Hidden" Type="checkbox" />
+      <Field Id="{06D5295C-ED2F-4A54-9BF2-26228D113318}" Name="__Icon" Type="icon" />
+      <Field Id="{9C6106EA-7A5A-48E2-8CAD-F0F693B1E2D4}" Name="__Read Only" Type="checkbox" />
+      <Field Id="{0C894AAB-962B-4A84-B923-CB24B05E60D2}" Name="__Ribbon" Type="tree" />
+      <Field Id="{079AFCFE-8ACA-4863-BDA7-07893541E2F5}" Name="__Skin" Type="text" />
+      <Field Id="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" Name="__Sortorder" Type="text" />
+      <Field Id="{A791F095-2521-4B4D-BEF9-21DDA221F608}" Name="__Style" Type="text" />
+      <Field Id="{6FD695E7-7F6D-4CA5-8B49-A829E5950AE9}" Name="__Subitems Sorting" Type="lookup" />
+      <Field Id="{F6D8A61C-2F84-4401-BD24-52D2068172BC}" Name="__Originator" Type="reference" />
+    </Section>
+  </Template>
+  <Template Id="{18420296-D8FC-4D93-A79E-2A2B0367A92C}" Database="core" Name="Help" Path="/sitecore/templates/System/Templates/Sections/Help" BaseTemplates="{00000000-0000-0000-0000-000000000000}">
+    <Section Id="{FED9FE33-1719-4C66-B836-CE9CAB192EDF}" Name="Help">
+      <Field Id="{56776EDF-261C-4ABC-9FE7-70C618795239}" Name="__Help link" Type="link" />
+      <Field Id="{577F1689-7DE4-4AD2-A15F-7FDC1759285F}" Name="__Long description" Type="memo" />
+      <Field Id="{9541E67D-CE8C-4225-803D-33F7F29F09EF}" Name="__Short description" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{38A2F441-DB17-4039-90E2-6A32F7A81706}" Database="core" Name="Indexing" Path="/sitecore/templates/System/Templates/Sections/Indexing" BaseTemplates="{00000000-0000-0000-0000-000000000000}">
+    <Section Id="{4C5A4706-8418-4EDB-9819-AFDC0641EA09}" Name="Indexing">
+      <Field Id="{93D1B217-B8F4-462E-BABF-68298C9CE667}" Name="__Boost" Type="Single-Line Text" />
+      <Field Id="{8C181989-2794-4B28-8EE4-6BB5CB928DC2}" Name="__Boosting Rules" Type="TreelistEx" />
+      <Field Id="{21F74F6E-42D4-42A2-A4B4-4CEFBCFBD2BB}" Name="__Facets" Type="Treelist" />
+    </Section>
+  </Template>
+  <Template Id="{AF530C7B-8B87-458B-80CE-239D1E1B9E60}" Database="core" Name="Item Buckets" Path="/sitecore/templates/System/Templates/Sections/Item Buckets" BaseTemplates="{00000000-0000-0000-0000-000000000000}">
+    <Section Id="{8CD28288-DAFB-439B-B9B0-F33044794D6C}" Name="Item Buckets">
+      <Field Id="{9DAFCA1D-D618-4616-86B8-A8ACD6B28A63}" Name="__Bucket Parent Reference" Type="Droptree" />
+      <Field Id="{D312103C-B36C-4CA5-864A-C85F9ABDA503}" Name="__Is Bucket" Type="Checkbox" />
+      <Field Id="{C9283D9E-7C29-4419-9C28-5A5C8FF53E84}" Name="__Bucketable" Type="Checkbox" />
+      <Field Id="{F7B94D8C-A842-49F8-AB7A-2169D00426B0}" Name="__Should Not Organize In Bucket" Type="Checkbox" />
+      <Field Id="{AC51462C-8A8D-493B-9492-34D1F26F20F1}" Name="__Default Bucket Query" Type="Query Builder" />
+      <Field Id="{C7815F60-96E1-40CB-BB06-B5F833F73B61}" Name="__Persistent Bucket Filter" Type="Query Builder" />
+      <Field Id="{F2DB8BA1-E477-41F5-8EF5-22EEFA8D2F6E}" Name="__Enabled Views" Type="Multilist" />
+      <Field Id="{3607F9C7-DDA3-43C3-9720-39A7A5B3A4C3}" Name="__Default View" Type="Droplist" />
+      <Field Id="{C0E276BB-8807-40AA-8138-E5C38B0C5DAB}" Name="__Quick Actions" Type="Multilist" />
+    </Section>
+  </Template>
+  <Template Id="{4D30906D-0B49-4FA7-969D-BF90157357EA}" Database="core" Name="Layout" Path="/sitecore/templates/System/Templates/Sections/Layout" BaseTemplates="{00000000-0000-0000-0000-000000000000}">
+    <Section Id="{A6C594A4-4AAB-4C88-ADCB-463B72D5A223}" Name="Layout">
+      <Field Id="{B03569B1-1534-43F2-8C83-BD064B7D782C}" Name="__Renderers" Type="memo" />
+      <Field Id="{F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}" Name="__Renderings" Type="layout" />
+      <Field Id="{04BF00DB-F5FB-41F7-8AB7-22408372A981}" Name="__Final Renderings" Type="Layout" />
+    </Section>
+  </Template>
+  <Template Id="{6EF07334-7FBA-4845-BF0A-CD5B2000C75A}" Database="core" Name="Lifetime" Path="/sitecore/templates/System/Templates/Sections/Lifetime" BaseTemplates="{00000000-0000-0000-0000-000000000000}">
+    <Section Id="{80011BFC-8ECE-4354-BBBE-F4F4F1D2B7CE}" Name="Lifetime">
+      <Field Id="{B8F42732-9CB8-478D-AE95-07E25345FB0F}" Name="__Hide version" Type="checkbox" />
+      <Field Id="{C8F93AFE-BFD4-4E8F-9C61-152559854661}" Name="__Valid from" Type="datetime" />
+      <Field Id="{4C346442-E859-4EFD-89B2-44AEDF467D21}" Name="__Valid to" Type="datetime" />
+    </Section>
+  </Template>
+  <Template Id="{823ECF5F-AE72-40B5-BC87-CB425FE7E5F6}" Database="core" Name="Masters" Path="/sitecore/templates/System/Templates/Sections/Masters" BaseTemplates="{00000000-0000-0000-0000-000000000000}">
+    <Section Id="{8234FC73-BAE3-412A-A9D4-5D8E1344677E}" Name="Masters">
+      <Field Id="{83798D75-DF25-4C28-9327-E8BAC2B75292}" Name="__Insert Rules" Type="tree list" />
+      <Field Id="{1172F251-DAD4-4EFB-A329-0C63500E4F1E}" Name="__Masters" Type="tree list" />
+    </Section>
+  </Template>
+  <Template Id="{6495CF23-DE9C-48B7-9D3C-05E2418B3CAE}" Database="core" Name="Publishing" Path="/sitecore/templates/System/Templates/Sections/Publishing" BaseTemplates="{00000000-0000-0000-0000-000000000000}">
+    <Section Id="{BD6DB3D1-78E2-4A9A-A64B-486DB6528B3B}" Name="Publishing">
+      <Field Id="{9135200A-5626-4DD8-AB9D-D665B8C11748}" Name="__Never publish" Type="checkbox" />
+      <Field Id="{86FE4F77-4D9A-4EC3-9ED9-263D03BD1965}" Name="__Publish" Type="datetime" />
+      <Field Id="{74484BDF-7C86-463C-B49F-7B73B9AFC965}" Name="__Publishing groups" Type="checklist" />
+      <Field Id="{7EAD6FD6-6CF1-4ACA-AC6B-B200E7BAFE88}" Name="__Unpublish" Type="datetime" />
+    </Section>
+  </Template>
+  <Template Id="{AB811AF4-393C-4A46-ACD7-81D30917E7F4}" Database="core" Name="Security" Path="/sitecore/templates/System/Templates/Sections/Security" BaseTemplates="{00000000-0000-0000-0000-000000000000}">
+    <Section Id="{43F1E052-8338-45CD-AEE7-CA6C1B6D50F3}" Name="Security">
+      <Field Id="{52807595-0F8F-4B20-8D2A-CB71D28C6103}" Name="__Owner" Type="Single-Line Text" />
+      <Field Id="{DEC8D2D5-E3CF-48B6-A653-8E69E2716641}" Name="__Security" Type="security" />
+    </Section>
+  </Template>
+  <Template Id="{1597272C-C823-4AAC-86F8-CA9CC4D573B5}" Database="core" Name="Statistics" Path="/sitecore/templates/System/Templates/Sections/Statistics" BaseTemplates="{00000000-0000-0000-0000-000000000000}">
+    <Section Id="{B2DB1246-85F8-477D-938C-B41A8F00480E}" Name="Statistics">
+      <Field Id="{25BED78C-4957-4165-998A-CA1B52F67497}" Name="__Created" Type="datetime" />
+      <Field Id="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" Name="__Created by" Type="text" />
+      <Field Id="{8CDC337E-A112-42FB-BBB4-4143751E123F}" Name="__Revision" Type="text" />
+      <Field Id="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" Name="__Updated" Type="datetime" />
+      <Field Id="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" Name="__Updated by" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{0AA6D3F8-C9D0-401F-83AA-A41433C24767}" Database="core" Name="Tagging" Path="/sitecore/templates/System/Templates/Sections/Tagging" BaseTemplates="{00000000-0000-0000-0000-000000000000}">
+    <Section Id="{751E1934-F317-4F8D-AE92-5D14B6CB39FF}" Name="Tagging">
+      <Field Id="{A14F1B0C-4384-49EC-8790-28A440F3670C}" Name="__Semantics" Type="Multilist with Search" />
+    </Section>
+  </Template>
+  <Template Id="{93F3A8FA-9E5A-4848-A5AD-42AAD11A4871}" Database="core" Name="Tasks" Path="/sitecore/templates/System/Templates/Sections/Tasks" BaseTemplates="{00000000-0000-0000-0000-000000000000}">
+    <Section Id="{4331FA5B-F639-440C-96A2-5902DDC481C0}" Name="Tasks">
+      <Field Id="{56C15C6D-FD5A-40CA-BB37-64CEEC6A9BD5}" Name="__Archive date" Type="datetime" />
+      <Field Id="{ABE5D54C-59D7-41E6-8D3F-C1A3E4EC9B9E}" Name="__Reminder date" Type="datetime" />
+      <Field Id="{2ED9C4D0-9EFF-490D-A40A-B5D856499C40}" Name="__Reminder recipients" Type="text" />
+      <Field Id="{BB6C8540-118E-4C49-9157-830576D7345A}" Name="__Reminder text" Type="memo" />
+    </Section>
+  </Template>
+  <Template Id="{2491819E-0C61-4F5A-903C-E10FCD9D302A}" Database="core" Name="Validation Rules" Path="/sitecore/templates/System/Templates/Sections/Validation Rules" BaseTemplates="{00000000-0000-0000-0000-000000000000}">
+    <Section Id="{382D613D-1550-4BA4-AF2B-948419B66F3E}" Name="Validation Rules">
+      <Field Id="{C2F5B2B5-71C1-431E-BF7F-DBDC1E5A2F83}" Name="__Quick Action Bar Validation Rules" Type="Treelist" />
+      <Field Id="{57CBCA4C-8C94-446C-B8CA-7D8DC54F4285}" Name="__Validate Button Validation Rules" Type="Treelist" />
+      <Field Id="{B7E5B151-B145-4CED-85C5-FBDB566DFA4D}" Name="__Validator Bar Validation Rules" Type="Treelist" />
+      <Field Id="{86B52EEF-078E-4D9E-80BF-888287070E6C}" Name="__Workflow Validation Rules" Type="Treelist" />
+    </Section>
+  </Template>
+  <Template Id="{06F366E6-A7E6-470B-9EC9-CD29A4F6C8E8}" Database="core" Name="Workflow" Path="/sitecore/templates/System/Templates/Sections/Workflow" BaseTemplates="{00000000-0000-0000-0000-000000000000}">
+    <Section Id="{D0CDA191-49A9-4E30-ACAC-40F7F2643C97}" Name="Workflow">
+      <Field Id="{CA9B9F52-4FB0-4F87-A79F-24DEA62CDA65}" Name="__Default workflow" Type="reference" />
+      <Field Id="{001DD393-96C5-490B-924A-B0F25CD9EFD8}" Name="__Lock" Type="memo" />
+      <Field Id="{A4F985D9-98B3-4B52-AAAF-4344F6E747C6}" Name="__Workflow" Type="reference" />
+      <Field Id="{3E431DE1-525E-47A3-B6B0-1CCBEC3A8C98}" Name="__Workflow state" Type="reference" />
+    </Section>
+  </Template>
+  <Template Id="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" Database="core" Name="Standard template" Path="/sitecore/templates/System/Templates/Standard template" BaseTemplates="{646F4B34-708C-41C2-9F4B-2661849777F3}|{F5BC7AE4-F62D-47CD-9AFB-2C9F85D8313B}|{18420296-D8FC-4D93-A79E-2A2B0367A92C}|{38A2F441-DB17-4039-90E2-6A32F7A81706}|{AF530C7B-8B87-458B-80CE-239D1E1B9E60}|{4D30906D-0B49-4FA7-969D-BF90157357EA}|{6EF07334-7FBA-4845-BF0A-CD5B2000C75A}|{823ECF5F-AE72-40B5-BC87-CB425FE7E5F6}|{6495CF23-DE9C-48B7-9D3C-05E2418B3CAE}|{AB811AF4-393C-4A46-ACD7-81D30917E7F4}|{1597272C-C823-4AAC-86F8-CA9CC4D573B5}|{0AA6D3F8-C9D0-401F-83AA-A41433C24767}|{93F3A8FA-9E5A-4848-A5AD-42AAD11A4871}|{2491819E-0C61-4F5A-903C-E10FCD9D302A}|{06F366E6-A7E6-470B-9EC9-CD29A4F6C8E8}" />
+  <Template Id="{AB86861A-6030-46C5-B394-E8F99E8B87DB}" Database="core" Name="Template" Path="/sitecore/templates/System/Templates/Template" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{7BA6137D-34AD-499A-80BC-E0C1607AE46B}" Name="Data">
+      <Field Id="{12C33F3F-86C5-43A5-AEB4-5598CEC45116}" Name="__Base template" Type="tree list" />
+    </Section>
+  </Template>
+  <Template Id="{28DB08C1-AFB5-40EF-977D-054FCFFD7A77}" Database="core" Name="__Standard Values" Path="/sitecore/templates/System/Templates/Template/__Standard Values" BaseTemplates="" />
+  <Template Id="{455A3E98-A627-4B40-8035-E683A0331AC7}" Database="core" Name="Template field" Path="/sitecore/templates/System/Templates/Template field" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{5D44F8DB-1F5C-40F5-9206-E6107E93CAE3}" Name="Data">
+      <Field Id="{AB162CC0-DC80-4ABF-8871-998EE5D7BA32}" Name="Type" Type="Grouped Droplist" />
+      <Field Id="{19A69332-A23E-4E70-8D16-B2640CB24CC8}" Name="Title" Type="text" />
+      <Field Id="{1EB8AE32-E190-44A6-968D-ED904C794EBF}" Name="Source" Type="Template Field Source" />
+      <Field Id="{FF8A2D01-8A77-4F1B-A966-65806993CD31}" Name="Blob" Type="checkbox" />
+      <Field Id="{BE351A73-FCB0-4213-93FA-C302D8AB4F51}" Name="Shared" Type="checkbox" />
+      <Field Id="{39847666-389D-409B-95BD-F2016F11EED5}" Name="Unversioned" Type="checkbox" />
+      <Field Id="{B118496A-0F78-4A27-B55F-0A6C4B0B0FE1}" Name="Default value" Type="text" />
+      <Field Id="{074F44CA-359A-4C13-B3AA-4A6BE2A675B1}" Name="Validation" Type="text" />
+      <Field Id="{B12E4906-B96B-495E-B343-CD2E92DC6347}" Name="ValidationText" Type="memo" />
+      <Field Id="{BF110AA2-F46C-4B8C-8FA5-FA4CEACCF99D}" Name="Reset blank" Type="checkbox" />
+      <Field Id="{9CD5874F-0EED-481C-8E75-AE162E613B59}" Name="Exclude From Text Search" Type="checkbox" />
+      <Field Id="{285B7992-78DF-4D0E-8F4F-53B782CF6F81}" Name="Ignore Dictionary Translations" Type="Checkbox" />
+    </Section>
+    <Section Id="{1534D000-E04D-401C-BEA8-EDBDA28A4AA4}" Name="Validation Rules">
+      <Field Id="{337E20E1-999A-4EEA-85AD-B58A03AE75CC}" Name="Quick Action Bar" Type="tree list" />
+      <Field Id="{21828437-EA4B-40A1-8C61-4CE60EA41DB6}" Name="Validate Button" Type="tree list" />
+      <Field Id="{9C903E29-650D-4AF2-B9BD-526D5C14A1A5}" Name="Validator Bar" Type="tree list" />
+      <Field Id="{53C432C4-7122-4E2D-8296-DB4184FD1735}" Name="Workflow" Type="tree list" />
+    </Section>
+    <Section Id="{92EEE356-5A0C-4FBB-AED4-F2D1762C19B8}" Name="Search Results">
+      <Field Id="{DCA13350-3EC5-408A-A190-D8FC9F63DCD1}" Name="Is Displayed in Search Results" Type="Checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{F8A17D6A-118E-4CD7-B5F5-88FF37A4F237}" Database="core" Name="Template field type" Path="/sitecore/templates/System/Templates/Template field type" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{0E945CCD-E579-4434-9900-47AE24F9E060}" Name="Data">
+      <Field Id="{6BF5ED07-BC70-42F4-BB77-C017D340950E}" Name="Assembly" Type="text" />
+      <Field Id="{9FE6154A-A16E-4827-99F6-F51533C34EC8}" Name="Class" Type="text" />
+      <Field Id="{0F0A5388-0467-4A45-95C0-729B1D6DB9FD}" Name="Control" Type="text" />
+      <Field Id="{D9215042-BC5E-46DA-B4D4-7425F9062872}" Name="Parameters" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{0437FEE2-44C9-46A6-ABE9-28858D9FEE8C}" Database="core" Name="Template Folder" Path="/sitecore/templates/System/Templates/Template Folder" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
+  <Template Id="{E269FBB5-3750-427A-9149-7AA950B49301}" Database="core" Name="Template section" Path="/sitecore/templates/System/Templates/Template section" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{389E8A5C-546F-4746-894D-CF74ED6F80C6}" Name="Data">
+      <Field Id="{E2E2B75D-A2F7-4075-BDE2-D13306E9E350}" Name="Collapsed by Default" Type="checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{79C087E2-960B-4312-A3D2-FE4018FD1854}" Database="core" Name="Field Type Validation Rules" Path="/sitecore/templates/System/Validation/Field Type Validation Rules" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{F7AB9BFD-1600-4F7C-82DF-2D75D5317128}" Name="Validation Rules">
+      <Field Id="{08D10FD3-F3FE-4BC3-B351-7E41D4A70381}" Name="Quick Action Bar" Type="tree list" />
+      <Field Id="{8E33FBE0-6412-42F8-A445-6A61E0D5660B}" Name="Validate Button" Type="tree list" />
+      <Field Id="{0B446E61-8BF3-4616-AF42-8A4017B3C886}" Name="Validator Bar" Type="tree list" />
+      <Field Id="{BAE1F484-EFFA-4F4D-910E-0180FB8B53C5}" Name="Workflow" Type="tree list" />
+    </Section>
+  </Template>
+  <Template Id="{AA94E5DE-83D4-4166-872E-740ECF9CBA5D}" Database="core" Name="Global Validation Rules" Path="/sitecore/templates/System/Validation/Global Validation Rules" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{81B8D100-8468-4DC6-8872-8501DC3C3110}" Name="Validation Rules">
+      <Field Id="{8803DD3E-7DFF-4563-8DAE-3F0146C62E31}" Name="Quick Action Bar" Type="tree list" />
+      <Field Id="{FC02A5B2-F28C-4787-8A22-05333EA6C965}" Name="Validate Button" Type="tree list" />
+      <Field Id="{51A0506A-F172-44ED-8EFC-A8E8B7E07B1E}" Name="Validator Bar" Type="tree list" />
+      <Field Id="{B2942AC8-B432-4C2B-BE30-7C0A5085270D}" Name="Workflow" Type="tree list" />
+    </Section>
+  </Template>
+  <Template Id="{8F8E2549-C77F-4860-B83B-54FA31E2BEFA}" Database="core" Name="Validation Rule" Path="/sitecore/templates/System/Validation/Validation Rule" BaseTemplates="">
+    <Section Id="{FE37171E-70E1-4038-A683-6C20EA03A771}" Name="Data">
+      <Field Id="{43A829D1-43DA-465C-B772-EBAA0D515E3E}" Name="Type" Type="text" />
+      <Field Id="{8F9D8603-2E34-4C5F-B0BB-F0D91EB956CA}" Name="Parameters" Type="memo" />
+      <Field Id="{B3607D43-E523-494E-9AFF-102678D11670}" Name="Use Thread" Type="checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{B0666CFE-8C7B-4CC1-8E32-8253742EBFA9}" Database="core" Name="Edit Frame Button Folder" Path="/sitecore/templates/System/WebEdit/Edit Frame Button Folder" BaseTemplates="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}">
+    <Section Id="{D4028292-376F-401B-B1B2-3FB75D30BFCC}" Name="Data">
+      <Field Id="{80D9E45B-DEAF-4F9E-835B-62B43B715BFB}" Name="Default Title" Type="Single-Line Text" />
+      <Field Id="{9A8DDA2F-E364-42F1-BD4F-F1722802C418}" Name="Default Tooltip" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{3EFFA15A-C432-493E-A3E4-C6DD5F79CC16}" Database="core" Name="Edit Frame Small Button" Path="/sitecore/templates/System/WebEdit/Edit Frame Small Button" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{431A57B8-E649-4985-813A-AE9921AF45CE}" Name="Data">
+      <Field Id="{987DA0BF-AEDB-48AA-8D5A-252A3DA4D8D4}" Name="Header" Type="text" />
+      <Field Id="{064BFD82-19BB-4C90-B2FC-8882D38EEE76}" Name="Icon" Type="Icon" />
+      <Field Id="{8CB881A0-545F-4121-BB8E-78EAE18E1848}" Name="Click" Type="text" />
+      <Field Id="{EC7256E4-7B46-4E51-9266-7DF0A07C1537}" Name="Tooltip" Type="text" />
+      <Field Id="{8976B58C-E126-429A-A10F-D0337BB70EAF}" Name="Parameters" Type="Name Value List" />
+    </Section>
+  </Template>
+  <Template Id="{1AB4F9AD-B004-413C-8924-3E07143A614B}" Database="core" Name="Field Editor Button" Path="/sitecore/templates/System/WebEdit/Field Editor Button" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{B751DFEF-3654-4A52-BE8D-8872124DEA62}" Name="Data">
+      <Field Id="{108D3A63-BAAA-4560-86D8-3A112ED84717}" Name="Header" Type="text" />
+      <Field Id="{4431914A-C40B-437C-8ADD-D2ED12CC8CC3}" Name="Icon" Type="Icon" />
+      <Field Id="{CF738220-908D-4C3F-9482-32E625DAF13C}" Name="Fields" Type="Multi-Line Text" />
+      <Field Id="{5F0812AF-D370-4292-AFEE-F26A39B7406D}" Name="Tooltip" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{02404208-46D4-49BF-988B-EB363A52A1C9}" Database="core" Name="WebEdit Button" Path="/sitecore/templates/System/WebEdit/WebEdit Button" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{5A66E1C4-57E2-4A2E-8366-839D359E6E37}" Name="Data">
+      <Field Id="{C523ABA8-D1A1-4DCB-AEEE-52635A4AB2AE}" Name="Header" Type="text" />
+      <Field Id="{E8CC41C7-C304-4282-B782-E21CA32D324C}" Name="Icon" Type="Icon" />
+      <Field Id="{1BB289D6-44D7-4FCC-AF15-DB32B841F957}" Name="Click" Type="text" />
+      <Field Id="{371E0D96-4F00-4B80-AD14-6284E00493BA}" Name="Tooltip" Type="text" />
+      <Field Id="{A54EC0DF-3193-44E4-B7BA-CDABBBFA2D46}" Name="Parameters" Type="Name Value List" />
+      <Field Id="{B6CECDEF-740C-406F-BCE4-06AB367E623A}" Name="Type" Type="Droplist" />
+    </Section>
+  </Template>
+  <Template Id="{E45F42B8-9192-48D6-B8FD-B536B0B7ABB7}" Database="core" Name="WebEdit Texts" Path="/sitecore/templates/System/WebEdit/WebEdit Texts" BaseTemplates="">
+    <Section Id="{79846306-E415-4367-B462-E2A07F9661D4}" Name="Data">
+      <Field Id="{A50C3FD1-6175-42D2-AAD1-85F1917F89F7}" Name="Default Text" Type="Single-Line Text" />
+      <Field Id="{D5F652E6-64D4-43A9-9B7C-D3C238314557}" Name="Default Image" Type="Single-Line Text" />
+    </Section>
+  </Template>
+  <Template Id="{66882E97-C8AA-4E37-8901-7A8AA35ED2ED}" Database="core" Name="Action" Path="/sitecore/templates/System/Workflow/Action" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{6BE8891D-5C72-4341-A88A-16FB8256C3C9}" Name="Data">
+      <Field Id="{A291A22B-99E2-46BB-A27B-8EC744275396}" Name="Type" Type="text" />
+      <Field Id="{1507131D-CEE3-49E9-AF32-DE5403A37B49}" Name="Parameters" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{CB01F9FC-C187-46B3-AB0B-97A8468D8303}" Database="core" Name="Command" Path="/sitecore/templates/System/Workflow/Command" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{7FF9F0AE-A9D1-49D2-984D-BFD68E9031D7}" Name="Data">
+      <Field Id="{DCBEBC58-6124-4100-A248-FC717D6C78D5}" Name="Next state" Type="reference" />
+      <Field Id="{82A7C02F-9A55-4BFE-B494-D1713D4BE9FF}" Name="Suppress Comment" Type="checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{A37FF052-48BF-414E-BAB8-AB1700D9B5E8}" Database="core" Name="Email action" Path="/sitecore/templates/System/Workflow/Email action" BaseTemplates="">
+    <Section Id="{B399FE5D-5073-4D64-B00B-EC13CD625882}" Name="Data">
+      <Field Id="{424DF68D-CA9F-4B95-8C9C-C3D37862E420}" Name="To" Type="text" />
+      <Field Id="{351A6771-A1FE-4E92-B164-8B5D5B295B0F}" Name="From" Type="text" />
+      <Field Id="{0399700D-23E1-42BC-A8CA-F1A51190029A}" Name="Subject" Type="text" />
+      <Field Id="{C5E6E8A7-5465-48FD-B6D1-046E48809F07}" Name="Message" Type="memo" />
+      <Field Id="{B6699A12-8C1F-4C91-A370-2BCC6938A609}" Name="Mail server" Type="text" />
+      <Field Id="{AC4AF2F7-6121-4F99-A313-20F192A60B02}" Name="Type" Type="text" />
+    </Section>
+  </Template>
+  <Template Id="{4B7E2DA9-DE43-4C83-88C3-02F042031D04}" Database="core" Name="State" Path="/sitecore/templates/System/Workflow/State" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{F633F83F-602C-4FF6-968B-6E6568666171}" Name="Data">
+      <Field Id="{FB8ABC73-7ACF-45A0-898C-D3CCB889C3EE}" Name="Final" Type="checkbox" />
+    </Section>
+  </Template>
+  <Template Id="{1C0ACC50-37BE-4742-B43C-96A07A7410A5}" Database="core" Name="Workflow" Path="/sitecore/templates/System/Workflow/Workflow" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
+    <Section Id="{C41C76F5-9908-49C0-8C5A-5B15C833AAEF}" Name="Data">
+      <Field Id="{B5166B38-E4BF-4410-953C-2037F2BF6A56}" Name="Initial state" Type="reference" />
+    </Section>
+  </Template>
+  <Item Id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}" Database="core" Name="Internet Explorer" Path="/sitecore/layout/Devices/Internet Explorer" Template="/sitecore/templates/System/Layout/Device" />
+  <Item Id="{3AC0D3A4-D6AE-429F-A79C-F42157D0004E}" Database="core" Name="Firefox" Path="/sitecore/layout/Devices/Firefox" Template="/sitecore/templates/System/Layout/Device" />
+</Exports>

@@ -51,7 +51,12 @@ namespace Sitecore.Pathfinder.Tasks
 
             var taskList = tasks;
 
-            if (string.IsNullOrEmpty(tasks) || tasks == "b" || tasks == "build" || tasks == "build-project")
+            if (string.IsNullOrEmpty(tasks))
+            {
+                taskList = "help";
+            }
+
+            if (tasks == "b" || tasks == "build" || tasks == "build-project")
             {
                 // use the build-project:tasks configuration 
                 taskList = context.Configuration.GetString(Constants.Configuration.BuildProject.Tasks);

@@ -220,6 +220,21 @@
       <LastGenOutput>TemplateIds.project1.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="files\references\Sitecore..BusinessComponentLibrary.1.0.0exports.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\references\Sitecore.Core.1.0.0.exports.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\references\Sitecore.Master.1.0.0.exports.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\references\Sitecore.Pathfinder.Core.1.0.0.exports.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\references\Sitecore.Speak.1.0.0.exports.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="licenses\ICSharpCode.SharpZipLib.txt" />
     <Content Include="licenses\MarkdownSharp.txt" />
     <Content Include="licenses\Sitecore.Pathfinder.txt">
@@ -645,10 +660,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Features\Sitecore.Pathfinder.Roslyn\Sitecore.Pathfinder.Roslyn.csproj">
-      <Project>{2776f71a-6b50-478e-a0a0-e2151ebe8a98}</Project>
-      <Name>Sitecore.Pathfinder.Roslyn</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Features\Sitecore.Pathfinder.T4\Sitecore.Pathfinder.T4.csproj">
       <Project>{bc0ec297-60e6-4d8f-a846-e1da920cfc26}</Project>
       <Name>Sitecore.Pathfinder.T4</Name>

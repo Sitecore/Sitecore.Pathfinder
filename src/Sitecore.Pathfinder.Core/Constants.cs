@@ -80,6 +80,7 @@ namespace Sitecore.Pathfinder
             public const string DefaultLanguage= "default-language";
 
             public const string Dependencies = "dependencies";
+            public const string References = "references";
 
             public const string DisableExtensions = "disable-extensions";
 
