@@ -134,11 +134,9 @@
     <Compile Include="Snapshots\StringTextNode.cs" />
     <Compile Include="Tasks\Building\BuildContext.cs" />
     <Compile Include="Tasks\Building\IBuildTask.cs" />
-    <Compile Include="Tasks\Building\IWebsiteUpdateService.cs" />
     <Compile Include="Tasks\Building\NuGetOutputFile.cs" />
     <Compile Include="Tasks\Building\OutputFile.cs" />
     <Compile Include="Tasks\Building\WebRequest.cs" />
-    <Compile Include="Tasks\Building\WebsiteUpdateService.cs" />
     <Compile Include="Tasks\IOptionPicker.cs" />
     <Compile Include="Tasks\IIgnoreAbortedTask.cs" />
     <Compile Include="Tasks\IPostRunTask.cs" />

@@ -27,9 +27,6 @@ namespace Sitecore.Pathfinder.Tasks.Building
         string ToolsDirectory { get; }
 
         [NotNull]
-        string WebsiteDirectory { get; }
-
-        [NotNull]
         IProject LoadProject();
 
         [NotNull]

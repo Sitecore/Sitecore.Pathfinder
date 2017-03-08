@@ -159,11 +159,6 @@ namespace Sitecore.Pathfinder
                 public const string TreatWarningsAsErrors = "check-project:treat-warnings-as-errors";
             }
 
-            public static class CopyDependencies
-            {
-                public const string SourceDirectory = "copy-dependencies:source-directory";
-            }
-
             public static class Extensions
             {
                 public const string AssemblyFileName = "extensions:project-extensions-assembly-filename";

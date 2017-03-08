@@ -105,9 +105,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Compile Include="Tasks\AddProject.cs" />
-    <Compile Include="Tasks\CheckWebsite.cs" />
-    <Compile Include="Tasks\CleanWebsite.cs" />
-    <Compile Include="Tasks\ClearCaches.cs" />
     <Compile Include="Tasks\ComparePackages.cs" />
     <Compile Include="Tasks\GenerateFile.cs" />
     <Compile Include="Tasks\InitProject.cs" />
@@ -125,18 +122,13 @@
     <Compile Include="Tasks\ShowStatus.cs" />
     <Compile Include="Tasks\ShowWebsite.cs" />
     <Compile Include="Tasks\ShowConfig.cs" />
-    <Compile Include="Tasks\UpdateWebsiteFiles.cs" />
     <Compile Include="Tasks\WriteExports.cs" />
     <Compile Include="Tasks\WriteSerialization.cs" />
     <Compile Include="Tasks\CheckProject.cs" />
     <Compile Include="Tasks\GenerateCode.cs" />
-    <Compile Include="Tasks\ImportWebsite.cs" />
     <Compile Include="Tasks\ListFiles.cs" />
     <Compile Include="Tasks\ListItems.cs" />
     <Compile Include="Tasks\ListProject.cs" />
-    <Compile Include="Tasks\CopyPackage.cs" />
-    <Compile Include="Tasks\InstallPackage.cs" />
-    <Compile Include="Tasks\InstallProject.cs" />
     <Compile Include="Tasks\PublishDatabase.cs" />
     <Compile Include="Tasks\WatchProject.cs" />
     <Compile Include="Tasks\CheckScconfig.cs" />
@@ -144,38 +136,12 @@
     <Compile Include="Tasks\Help.cs" />
     <Compile Include="Tasks\NewProject.cs" />
     <Compile Include="Tasks\ResetWebsite.cs" />
-    <Compile Include="Tasks\SynchronizeWebsite.cs" />
-    <Compile Include="Tasks\WriteWebsiteExports.cs" />
     <Compile Include="Tasks\FindReferences.cs" />
     <Compile Include="Tasks\FindUsages.cs" />
     <Compile Include="Building\Builder.cs" />
     <Compile Include="Tasks\QueryBuildTaskBase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\img\document_text.png">
-      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\img\document_text.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\img\folder.png">
-      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\img\folder.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\img\folder_document2.png">
-      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\img\folder_document2.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\packageDefaultIcon-50x50.png">
-      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\packageDefaultIcon-50x50.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\Packages.css">
-      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\Packages.css</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\PackageSources.txt">
-      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\PackageSources.txt</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="files\architecture\templates.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -249,22 +215,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="licenses\Unicorn.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\Packages.cshtml">
-      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\Packages.cshtml</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\web.config">
-      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\web.config</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\InstalledPackages.cshtml">
-      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\InstalledPackages.cshtml</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Sitecore.Pathfinder.Server\sitecore\shell\client\Applications\Pathfinder\Package.cshtml">
-      <Link>files\website\sitecore\shell\client\Applications\Pathfinder\Package.cshtml</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="files\generators\Atom-configuration\.atom-build.json">
@@ -397,12 +347,6 @@
     <None Include="files\starterkits\TodoMvc.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\website\App_Config\include\Sitecore.Pathfinder\zzz.Sitecore.Pathfinder.LiveMode.config.disabled">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="files\website\App_Config\include\Sitecore.Pathfinder\zzz.Sitecore.Pathfinder.DevConfig.config,disabled">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="help\index.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -421,12 +365,6 @@
     <None Include="help\tasks\list-output.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="help\tasks\check-website.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="help\tasks\update-website-files.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="help\tasks\compare-projects.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -439,9 +377,6 @@
     <None Include="help\tasks\check-scconfig.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="help\tasks\import-website.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="help\tasks\generate-code.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -449,12 +384,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="help\tasks\find-references.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="help\tasks\copy-package.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="help\tasks\clean-website.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="help\tasks\check-project.md">
@@ -473,12 +402,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="help\tasks\list-files.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="help\tasks\install-project.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="help\tasks\install-package.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="help\tasks\new-project.md">
@@ -502,9 +425,6 @@
     <None Include="help\tasks\show-website.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="help\tasks\synchronize-website.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="help\tasks\watch-project.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -512,9 +432,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="help\tasks\write-serialization.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="help\tasks\write-website-exports.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Properties\app.manifest" />
@@ -587,14 +504,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="..\Sitecore.Pathfinder.Server\bin\Sitecore.Pathfinder.Server.dll">
-      <Link>files\website\bin\Sitecore.Pathfinder.Server.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="files\project\scconfig.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="files\website\App_Config\include\Sitecore.Pathfinder\Sitecore.Pathfinder.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="scconfig.json">

@@ -37,8 +37,6 @@ namespace Sitecore.Pathfinder.Tasks.Building
 
         public string ToolsDirectory => Configuration.GetToolsDirectory();
 
-        public string WebsiteDirectory => Configuration.GetWebsiteDirectory();
-
         public IProject LoadProject()
         {
             if (_project != null)

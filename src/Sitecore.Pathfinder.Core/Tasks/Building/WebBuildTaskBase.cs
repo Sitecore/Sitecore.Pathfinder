@@ -51,8 +51,6 @@ namespace Sitecore.Pathfinder.Tasks.Building
         [NotNull]
         protected virtual WebRequest GetWebRequest([NotNull] ITaskContext context)
         {
-            UpdateWebsiteFiles(context);
-
             return new WebRequest(context.Configuration).WithCredentials().WithProjectDirectory(context.Configuration.GetProjectDirectory()).WithToolsDirectory(context.Configuration.GetToolsDirectory()).WithCommandLine();
         }
 
@@ -85,8 +83,6 @@ namespace Sitecore.Pathfinder.Tasks.Building
 
         protected virtual bool Post([NotNull] ITaskContext context, [NotNull] WebRequest webRequest)
         {
-            UpdateWebsiteFiles(context);
-
             var webClient = GetWebClient(context.Configuration);
             try
             {
@@ -124,12 +120,6 @@ namespace Sitecore.Pathfinder.Tasks.Building
         private WebClient GetWebClient([NotNull] IConfiguration configuration)
         {
             return new WebClientWithTimeout(configuration);
-        }
-
-        protected virtual void UpdateWebsiteFiles([NotNull] ITaskContext context)
-        {
-            var websiteUpdateService = context.CompositionService.Resolve<IWebsiteUpdateService>();
-            websiteUpdateService.UpdateWebsiteFiles();
         }
 
         protected class WebClientWithTimeout : WebClient
