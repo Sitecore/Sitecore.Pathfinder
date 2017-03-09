@@ -185,7 +185,8 @@ namespace Sitecore.Pathfinder.Projects
 
             var result = writer.ToString();
 
-            Assert.IsNotNullOrEmpty(result);
+            Assert.IsNotNull(result);
+            Assert.IsNotEmpty(result);
         }
     }
 }
