@@ -36,7 +36,21 @@
       <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Composition.AttributedModel, Version=1.0.31.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Composition.AttributedModel.1.0.31\lib\portable-net45+win8+wp8+wpa81\System.Composition.AttributedModel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Composition.Convention, Version=1.0.31.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Composition.Convention.1.0.31\lib\portable-net45+win8+wp8+wpa81\System.Composition.Convention.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Composition.Hosting, Version=1.0.31.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Composition.Hosting.1.0.31\lib\portable-net45+win8+wp8+wpa81\System.Composition.Hosting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Composition.Runtime, Version=1.0.31.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Composition.Runtime.1.0.31\lib\portable-net45+win8+wp8+wpa81\System.Composition.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Composition.TypedParts, Version=1.0.31.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Composition.TypedParts.1.0.31\lib\portable-net45+win8+wp8+wpa81\System.Composition.TypedParts.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.IO.Compression" />
@@ -53,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Checking\Checkers\ArchitectureCheckers.cs" />
+    <Compile Include="Checking\Checkers\CheckAttribute.cs" />
     <Compile Include="Checking\Checkers\ConfigurationCheckers.cs" />
     <Compile Include="Checking\Checkers\FieldCheckers.cs" />
     <Compile Include="Checking\Checkers\FileCheckers.cs" />
@@ -96,7 +111,9 @@
     <Compile Include="Emitting\ItemsAndFilesEmitting\SqlItemEmitter.cs" />
     <Compile Include="Emitting\IProjectEmitter.cs" />
     <Compile Include="Emitting\ProjectEmitter.cs" />
+    <Compile Include="Extensibility\CompositionService.cs" />
     <Compile Include="Extensibility\ExtensionContext.cs" />
+    <Compile Include="Extensibility\ICompositionService.cs" />
     <Compile Include="Extensibility\IExtensionContext.cs" />
     <Compile Include="Extensions\DiagnosticCollectionExtensions.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />

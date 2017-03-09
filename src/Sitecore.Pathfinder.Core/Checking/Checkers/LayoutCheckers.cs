@@ -1,9 +1,10 @@
 // © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Checking;
+using Sitecore.Pathfinder.Checking.Checkers;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.Renderings;
 using Sitecore.Pathfinder.Projects;
@@ -11,9 +12,10 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checkers
 {
+    [Export(typeof(Checker)), Shared]
     public class LayoutCheckers : Checker
     {
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> PlaceholdersShouldHaveAPlaceholderSettingsName(ICheckerContext context)
         {
             return from rendering in context.Project.ProjectItems.OfType<Rendering>()
@@ -22,7 +24,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1105, "Placeholders should have a Placeholder Settings item", new StringTextNode("Placeholder(\""+ placeholder + "\")", rendering.Snapshot), $"To fix, create a '/sitecore/layout/Placeholder Settings/{placeholder}' item");
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> RenderingNameAndFileNameShouldMatch(ICheckerContext context)
         {
             return from rendering in context.Project.ProjectItems.OfType<Rendering>()

@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System.Composition;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.Content;
@@ -7,6 +8,7 @@ using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Emitting.Emitters
 {
+    [Export(typeof(IEmitter)), Shared]
     public class ContentFileEmitter : EmitterBase
     {
         public ContentFileEmitter() : base(Constants.Emitters.BinFiles)

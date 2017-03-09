@@ -1,12 +1,13 @@
 // © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
+    [Export(typeof(ITask)), Shared]
     public class ListOutput : BuildTaskBase
     {
         [ImportingConstructor]

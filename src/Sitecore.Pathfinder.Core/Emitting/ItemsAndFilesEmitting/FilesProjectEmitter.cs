@@ -1,9 +1,10 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensibility;
 
 namespace Sitecore.Pathfinder.Emitting.ItemsAndFilesEmitting
 {

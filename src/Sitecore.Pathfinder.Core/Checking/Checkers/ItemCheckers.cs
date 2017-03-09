@@ -2,9 +2,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Checking;
+using Sitecore.Pathfinder.Checking.Checkers;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
@@ -13,9 +14,10 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checkers
 {
+    [Export(typeof(Checker)), Shared]
     public class ItemCheckers : Checker
     {
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> AvoidManyChildren(ICheckerContext context)
         {
             return from item in context.Project.Items
@@ -24,7 +26,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1009, "Avoid items with many children", TraceHelper.GetTextNode(item), $"The item has {count} children. Items with more than 100 children decrease performance. Change the structure of the tree to reduce the number of children");
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> AvoidManyVersions(ICheckerContext context)
         {
             return from item in context.Project.Items
@@ -34,7 +36,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1010, "Avoid items with many version", TraceHelper.GetTextNode(item), $"The item has {count} versions in the {language} language. Items with more than 10 version decrease performance. Remove some of the older versions.");
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> AvoidSpacesInItemNames(ICheckerContext context)
         {
             return from item in context.Project.Items
@@ -42,7 +44,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1003, "Avoid spaces in item names. Use a display name instead", TraceHelper.GetTextNode(item.ItemNameProperty), item.ItemName);
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> FieldIsNotDefinedInTemplate(ICheckerContext context)
         {
             return from item in context.Project.Items
@@ -54,7 +56,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1005, "Field is not defined in the template", TraceHelper.GetTextNode(field.FieldNameProperty, field, field.Item), "field: " + field.FieldName + ", template: " + item.TemplateName);
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> ItemsWithSameDisplayName(ICheckerContext context)
         {
             var parents = new HashSet<Item>();
@@ -102,7 +104,7 @@ namespace Sitecore.Pathfinder.Checkers
             }
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> ItemsWithSameName(ICheckerContext context)
         {
             var parents = new HashSet<Item>();
@@ -140,7 +142,7 @@ namespace Sitecore.Pathfinder.Checkers
             }
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> ItemTemplateNotFound(ICheckerContext context)
         {
             return from item in context.Project.Items
@@ -148,7 +150,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1004, "Template not found", TraceHelper.GetTextNode(item.TemplateIdOrPathProperty, item, item.ItemNameProperty), item.TemplateIdOrPath);
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> ReminderDateIsAfterArchiveDate(ICheckerContext context)
         {
             return from item in context.Project.Items
@@ -158,7 +160,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1002, "The Reminder date is after the Archive date", TraceHelper.GetTextNode(item.Fields[Constants.Fields.ArchiveDate], item.Fields[Constants.Fields.ReminderDate], item), "Change either the Reminder date or the Archive date.");
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> UnpublishDateIsBeforePublishDate(ICheckerContext context)
         {
             return from item in context.Project.Items
@@ -169,7 +171,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1011, "The Publish date is after the Unpublish date", TraceHelper.GetTextNode(item.Fields[Constants.Fields.PublishDate], item.Fields[Constants.Fields.UnpublishDate], item), "Change either the Publish date or the Unpublish date");
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> ValidToDateIsBeforeValidFromDate(ICheckerContext context)
         {
             return from item in context.Project.Items

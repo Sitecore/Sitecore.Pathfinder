@@ -1,12 +1,14 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Composition;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.IO.PathMappers.Pipelines
 {
+    [Export(typeof(IPipelineProcessor)), Shared]
     public class ParsePathMappers : PipelineProcessorBase<ParsePathMappersPipeline>
     {
         public ParsePathMappers() : base(1000)

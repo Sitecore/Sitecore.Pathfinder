@@ -1,6 +1,6 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Diagnostics;
@@ -10,6 +10,7 @@ using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 {
+    [Export(typeof(IPipelineProcessor)), Shared]
     public class CompileProjectItems : PipelineProcessorBase<CompilePipeline>
     {
         [ImportingConstructor]

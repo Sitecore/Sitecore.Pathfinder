@@ -1,12 +1,12 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.ProjectTrees
 {
-    [Export, PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export]
     public class ProjectTreeVisitor
     {
         public virtual void Visit([NotNull] IProjectTree projectTree, [NotNull, ItemNotNull] ICollection<string> sourceFileNames)

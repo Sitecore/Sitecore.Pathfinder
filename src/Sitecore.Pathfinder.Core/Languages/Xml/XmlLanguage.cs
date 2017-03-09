@@ -1,6 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Composition;
 using System.IO;
 using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Projects.Items;
@@ -8,6 +9,7 @@ using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.Languages.Xml
 {
+    [Export(typeof(ILanguage)), Shared]
     public class XmlLanguage : LanguageBase
     {
         public override bool CanHandleExtension(string extension)

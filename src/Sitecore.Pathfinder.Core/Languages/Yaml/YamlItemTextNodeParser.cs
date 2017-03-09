@@ -1,6 +1,6 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Parsing;
@@ -10,6 +10,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Yaml
 {
+    [Export(typeof(ITextNodeParser)), Shared]
     public class YamlItemTextNodeParser : ItemTextNodeParserBase
     {
         [ImportingConstructor]

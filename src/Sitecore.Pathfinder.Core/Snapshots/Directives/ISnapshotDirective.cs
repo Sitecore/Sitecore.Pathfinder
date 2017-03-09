@@ -1,12 +1,12 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Parsing.Items;
 
 namespace Sitecore.Pathfinder.Snapshots.Directives
 {
-    [InheritedExport]
     public interface ISnapshotDirective
     {
         bool CanParse([NotNull] ITextNode textNode);

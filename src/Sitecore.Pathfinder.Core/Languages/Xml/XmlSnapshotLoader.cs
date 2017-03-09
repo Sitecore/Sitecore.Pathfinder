@@ -1,19 +1,21 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Xsl;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Xml
 {
+    [Export(typeof(ISnapshotLoader)), Shared]
     public class XmlSnapshotLoader : SnapshotLoaderBase
     {
         [ImportingConstructor]

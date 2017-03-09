@@ -1,11 +1,10 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
+using System.Composition;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Parsing
 {
-    [InheritedExport]
     public interface IParser
     {
         double Priority { get; }

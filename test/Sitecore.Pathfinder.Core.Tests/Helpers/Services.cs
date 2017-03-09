@@ -1,12 +1,11 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
 using Sitecore.Pathfinder.Checking;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages;
 using Sitecore.Pathfinder.Parsing;

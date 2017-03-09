@@ -76,7 +76,6 @@
     <Compile Include="Extensions\StringExtensionsTests.cs" />
     <Compile Include="IO\PathMapperTests.cs" />
     <Compile Include="Languages\LanguageTests.cs" />
-    <Compile Include="Projects\Items\FieldTests.cs" />
     <Compile Include="Projects\ProjectTests.XmlTransform.cs" />
     <Compile Include="Projects\ProjectTests.Json.cs" />
     <Compile Include="Projects\ProjectTests.SerializedItem.cs" />

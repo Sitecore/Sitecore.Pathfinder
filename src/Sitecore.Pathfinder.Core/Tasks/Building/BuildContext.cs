@@ -2,16 +2,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Tasks.Building
 {
-    [Export(typeof(IBuildContext)), PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export(typeof(IBuildContext))]
     public class BuildContext : TaskContext, IBuildContext
     {
         [NotNull]

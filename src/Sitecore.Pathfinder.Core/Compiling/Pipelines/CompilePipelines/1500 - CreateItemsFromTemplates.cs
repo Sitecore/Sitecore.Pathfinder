@@ -1,5 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Diagnostics;
@@ -12,6 +13,7 @@ using Sitecore.Pathfinder.Projects.Templates;
 namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 {
     // must come after CompileProjectItems as CreateTemplateFromFields may create a new template
+    [Export(typeof(IPipelineProcessor)), Shared]
     public class CreateItemsFromTemplates : PipelineProcessorBase<CompilePipeline>
     {
         public CreateItemsFromTemplates() : base(1500)

@@ -1,7 +1,7 @@
 // © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.IO;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Compiling.FieldCompilers;
@@ -17,6 +17,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
 {
+    [Export(typeof(ILayoutFileCompiler)), Shared]
     public class SnapshotLayoutFileCompiler : LayoutFileCompilerBase
     {
         [ImportingConstructor]

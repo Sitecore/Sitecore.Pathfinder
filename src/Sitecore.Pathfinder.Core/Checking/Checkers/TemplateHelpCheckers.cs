@@ -1,17 +1,19 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Checking;
+using Sitecore.Pathfinder.Checking.Checkers;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checkers
 {
+    [Export(typeof(Checker)), Shared]
     public class TemplateHelpCheckers : Checker
     {
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> TemplateFieldLongHelpShouldEndWithDot(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -20,7 +22,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1018, "Template field long help text should end with '.'", TraceHelper.GetTextNode(field.LongHelpProperty, field), field.FieldName);
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> TemplateFieldLongHelpShouldStartWithCapitalLetter(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -29,7 +31,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1018, "Template field long help text should start with a capital letter", TraceHelper.GetTextNode(field.LongHelpProperty, field), field.FieldName);
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> TemplateFieldShortHelpShouldEndWithDot(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -38,7 +40,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1018, "Template field short help text should end with '.'", TraceHelper.GetTextNode(field.ShortHelpProperty, field), field.FieldName);
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> TemplateFieldShortHelpShouldStartWithCapitalLetter(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -47,7 +49,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1018, "Template field short help text should start with a capital letter", TraceHelper.GetTextNode(field.ShortHelpProperty, field), field.FieldName);
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> TemplateFieldShouldHaveLongHelp(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -56,7 +58,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1017, "Template field should have a long help text", TraceHelper.GetTextNode(field.LongHelpProperty, field), field.FieldName);
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> TemplateFieldShouldHaveShortHelp(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -65,7 +67,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1017, "Template field should have a short help text", TraceHelper.GetTextNode(field.ShortHelpProperty, field), field.FieldName);
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> TemplateLongHelpShouldEndWithDot(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -73,7 +75,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1018, "Template long help text should end with '.'", TraceHelper.GetTextNode(template), template.ItemName);
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> TemplateLongHelpShouldStartWithCapitalLetter(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -81,7 +83,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1019, "Template long help text should start with a capital letter", TraceHelper.GetTextNode(template), template.ItemName);
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> TemplateShortHelpShouldEndWithDot(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -89,7 +91,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1015, "Template short help text should end with '.'", TraceHelper.GetTextNode(template), template.ItemName);
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> TemplateShortHelpShouldStartWithCapitalLetter(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -97,7 +99,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1016, "Template short help text should start with a capital letter", TraceHelper.GetTextNode(template), template.ItemName);
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> TemplateShouldHaveLongHelp(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -105,7 +107,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1017, "Template should have a long help text", TraceHelper.GetTextNode(template), template.ItemName);
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> TemplateShouldHaveShortHelp(ICheckerContext context)
         {
             return from template in context.Project.Templates

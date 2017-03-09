@@ -1,10 +1,12 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Composition;
 using Sitecore.Pathfinder.Parsing;
 
 namespace Sitecore.Pathfinder.Languages.Serialization
 {
+    [Export(typeof(IParser)), Shared]
     public class SerializationFileParser : ParserBase
     {
         private const string FileExtension = ".item";

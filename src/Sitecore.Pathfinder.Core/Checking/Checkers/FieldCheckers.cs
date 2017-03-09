@@ -2,18 +2,20 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Checking;
+using Sitecore.Pathfinder.Checking.Checkers;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checkers
 {
+    [Export(typeof(Checker)), Shared]
     public class FieldCheckers : Checker
     {
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> FieldContainsLoremIpsum(ICheckerContext context)
         {
             return from field in context.Project.Items.SelectMany(i => i.Fields)
@@ -21,7 +23,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1008, "Field contains 'Lorem Ipsum' text", TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), $"The field \"{field.FieldName}\" contains the test data text: \"Lorem Ipsum...\". Replace or remove the text data.");
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> NumberIsNotValid(ICheckerContext context)
         {
             foreach (var field in context.Project.Items.SelectMany(i => i.Fields).Where(f => string.Equals(f.TemplateField.Type, "Number", StringComparison.OrdinalIgnoreCase)))
@@ -39,7 +41,7 @@ namespace Sitecore.Pathfinder.Checkers
             }
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> DateIsNotValid(ICheckerContext context)
         {
             return from field in context.Project.Items.SelectMany(i => i.Fields).Where(f => string.Equals(f.TemplateField.Type, "Date", StringComparison.OrdinalIgnoreCase))
@@ -49,7 +51,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1066, "Date is not valid", TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), $"The field \"{field.FieldName}\" has a type of 'Date', but the value is not a valid date. Replace or remove the value.");
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> DateTimeIsNotValid(ICheckerContext context)
         {
             return from field in context.Project.Items.SelectMany(i => i.Fields).Where(f => string.Equals(f.TemplateField.Type, "Datetime", StringComparison.OrdinalIgnoreCase))

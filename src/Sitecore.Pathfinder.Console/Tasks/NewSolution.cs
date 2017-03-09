@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.IO;
 using Newtonsoft.Json;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
@@ -13,6 +13,7 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
+    [Export(typeof(ITask)), Shared]
     public class NewSolution : NewProjectTaskBase
     {
         [ImportingConstructor]

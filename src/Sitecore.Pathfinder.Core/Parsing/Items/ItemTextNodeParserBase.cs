@@ -1,6 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Composition;
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;

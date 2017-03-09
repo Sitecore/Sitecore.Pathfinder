@@ -1,10 +1,12 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
+    [Export(typeof(ITask)), Shared]
     public class ListItems : BuildTaskBase
     {
         public ListItems() : base("list-items")

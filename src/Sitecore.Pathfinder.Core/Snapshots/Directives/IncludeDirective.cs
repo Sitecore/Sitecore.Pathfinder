@@ -2,11 +2,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Snapshots.Directives
 {
+    [Export(typeof(ISnapshotDirective)), Shared]
     public class IncludeDirective : SnapshotDirectiveBase
     {
         public override bool CanParse(ITextNode textNode)

@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,6 +12,7 @@ using Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -26,7 +27,7 @@ namespace Sitecore.Pathfinder.Projects
 {
     public delegate void ProjectChangedEventHandler([NotNull] object sender);
 
-    [Export, Export(typeof(IProject)), PartCreationPolicy(CreationPolicy.NonShared), DebuggerDisplay("{GetType().Name,nq}: {ProjectDirectory}")]
+    [Export, Export(typeof(IProject)), DebuggerDisplay("{GetType().Name,nq}: {ProjectDirectory}")]
     public class Project : SourcePropertyBag, IProject, IDiagnosticCollector
     {
         [NotNull]

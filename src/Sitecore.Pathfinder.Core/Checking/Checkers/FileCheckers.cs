@@ -1,19 +1,21 @@
 // © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Checking;
+using Sitecore.Pathfinder.Checking.Checkers;
 using Sitecore.Pathfinder.Languages.Media;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checkers
 {
+    [Export(typeof(Checker)), Shared]
     public class FileCheckers : Checker
     {
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> AvoidLargeMediaFiles(ICheckerContext context)
         {
             return from mediaFile in context.Project.ProjectItems.OfType<MediaFile>()

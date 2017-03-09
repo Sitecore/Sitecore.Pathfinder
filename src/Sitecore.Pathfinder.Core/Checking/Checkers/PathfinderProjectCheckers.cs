@@ -1,15 +1,17 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using Sitecore.Pathfinder.Checking;
+using Sitecore.Pathfinder.Checking.Checkers;
 using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Checkers
 {
+    [Export(typeof(Checker)), Shared]
     public class PathfinderProjectCheckers : Checker
     {
-        [Export("Check")]
+        [Check]
         protected IEnumerable<Diagnostic> MissingCoreSitecoreDirectory(ICheckerContext context)
         {
             if (DirectoryExists(context, "~/items/core") && !DirectoryExists(context, "~/items/core/sitecore"))
@@ -18,7 +20,7 @@ namespace Sitecore.Pathfinder.Checkers
             }
         }
 
-        [Export("Check")]
+        [Check]
         protected IEnumerable<Diagnostic> MissingItemsDirectory(ICheckerContext context)
         {
             if (!DirectoryExists(context, "~/items"))
@@ -27,7 +29,7 @@ namespace Sitecore.Pathfinder.Checkers
             }
         }
 
-        [Export("Check")]
+        [Check]
         protected IEnumerable<Diagnostic> MissingMasterOrCoreItemsDirectory(ICheckerContext context)
         {
             if (!DirectoryExists(context, "~/items/master") && !DirectoryExists(context, "~/items/core"))
@@ -36,7 +38,7 @@ namespace Sitecore.Pathfinder.Checkers
             }
         }
 
-        [Export("Check")]
+        [Check]
         protected IEnumerable<Diagnostic> MissingMasterSitecoreDirectory(ICheckerContext context)
         {
             if (DirectoryExists(context, "~/items/master") && !DirectoryExists(context, "~/items/master/sitecore"))
@@ -45,7 +47,7 @@ namespace Sitecore.Pathfinder.Checkers
             }
         }
 
-        [Export("Check")]
+        [Check]
         protected IEnumerable<Diagnostic> MissingSccCmdFile(ICheckerContext context)
         {
             if (!FileExists(context, "~/scc.cmd"))
@@ -54,7 +56,7 @@ namespace Sitecore.Pathfinder.Checkers
             }
         }
 
-        [Export("Check")]
+        [Check]
         protected IEnumerable<Diagnostic> MissingScconfigJsonFile(ICheckerContext context)
         {
             if (!FileExists(context, "~/scconfig.json"))
@@ -63,7 +65,7 @@ namespace Sitecore.Pathfinder.Checkers
             }
         }
 
-        [Export("Check")]
+        [Check]
         protected IEnumerable<Diagnostic> MissingSitecoreProjectDirectory(ICheckerContext context)
         {
             if (!DirectoryExists(context, "~/sitecore.project"))
@@ -72,7 +74,7 @@ namespace Sitecore.Pathfinder.Checkers
             }
         }
 
-        [Export("Check")]
+        [Check]
         protected IEnumerable<Diagnostic> MissingSitecoreProjectSchemasDirectory(ICheckerContext context)
         {
             if (!DirectoryExists(context, "~/sitecore.project/schemas"))
@@ -81,7 +83,7 @@ namespace Sitecore.Pathfinder.Checkers
             }
         }
 
-        [Export("Check")]
+        [Check]
         protected IEnumerable<Diagnostic> MissingWebSitecoreDirectory(ICheckerContext context)
         {
             if (DirectoryExists(context, "~/items/web") && !DirectoryExists(context, "~/items/web/sitecore"))
@@ -90,7 +92,7 @@ namespace Sitecore.Pathfinder.Checkers
             }
         }
 
-        [Export("Check")]
+        [Check]
         protected IEnumerable<Diagnostic> MissingWwwRootDirectory(ICheckerContext context)
         {
             if (!DirectoryExists(context, "~/wwwroot"))

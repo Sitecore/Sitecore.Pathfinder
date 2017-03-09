@@ -1,12 +1,14 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 {
+    [Export(typeof(IFieldCompiler)), Shared]
     public class CheckboxFieldCompiler : FieldCompilerBase
     {
         public CheckboxFieldCompiler() : base(Constants.FieldCompilers.Normal)

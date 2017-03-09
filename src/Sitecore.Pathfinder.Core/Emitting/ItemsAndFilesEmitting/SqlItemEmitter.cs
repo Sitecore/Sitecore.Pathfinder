@@ -1,5 +1,6 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
+using System.Composition;
 using Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitting.ItemsAndFilesEmitting;
@@ -8,6 +9,7 @@ using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Emitting.FileAndSqlEmitting
 {
+    [Export(typeof(IEmitter)), Shared]
     public class SqlItemEmitter : EmitterBase
     {
         public SqlItemEmitter() : base(Constants.Emitters.Items)

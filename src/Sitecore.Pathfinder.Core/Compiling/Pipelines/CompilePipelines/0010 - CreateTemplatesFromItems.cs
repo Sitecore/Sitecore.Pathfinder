@@ -1,6 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Diagnostics;
@@ -11,6 +12,7 @@ using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 {
+    [Export(typeof(IPipelineProcessor)), Shared]
     public class CreateTemplatesFromItems : PipelineProcessorBase<CompilePipeline>
     {
         public const int CreateTemplatesFromItemsPriority = 10;

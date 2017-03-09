@@ -1,32 +1,39 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Diagnostics;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Tasks;
 
 namespace Sitecore.Pathfinder
 {
+    [Export(typeof(IHostService))]
     public class HostService : IHostService
     {
-        public HostService([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [CanBeNull] Stopwatch stopwatch)
+        [ImportingConstructor]
+        public HostService([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService)
         {
             Configuration = configuration;
             CompositionService = compositionService;
-            Stopwatch = stopwatch;
         }
 
         public ICompositionService CompositionService { get; }
 
         public IConfiguration Configuration { get; }
 
-        public Stopwatch Stopwatch { get; }
+        public Stopwatch Stopwatch { get; private set;  }
 
         public T GetTaskRunner<T>() where T : ITaskRunner
         {
             return CompositionService.Resolve<T>();
+        }
+
+        public IHostService With(Stopwatch stopwatch)
+        {
+            Stopwatch = stopwatch;
+            return this;
         }
     }
 }

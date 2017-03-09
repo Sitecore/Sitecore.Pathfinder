@@ -1,7 +1,7 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.IO;
 using System.Xml.Linq;
 using Sitecore.Pathfinder.Configuration;

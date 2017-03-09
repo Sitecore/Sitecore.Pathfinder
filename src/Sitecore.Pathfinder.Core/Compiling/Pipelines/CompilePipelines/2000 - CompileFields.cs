@@ -1,5 +1,6 @@
 // © 2016 Sitecore Corporation A/S. All rights reserved.
 
+using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Compiling.FieldCompilers;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
@@ -7,6 +8,7 @@ using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 {
+    [Export(typeof(IPipelineProcessor)), Shared]
     public class CompileFields : PipelineProcessorBase<CompilePipeline>
     {
         public CompileFields() : base(2000)

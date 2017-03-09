@@ -1,6 +1,6 @@
 // © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Runtime.Caching;
 using Sitecore.Pathfinder.Diagnostics;
 

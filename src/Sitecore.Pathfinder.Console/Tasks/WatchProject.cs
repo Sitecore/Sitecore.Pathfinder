@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -10,6 +10,7 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
+    [Export(typeof(ITask)), Shared]
     public class WatchProject : WatchTaskBase
     {
         private bool _publishDatabase;

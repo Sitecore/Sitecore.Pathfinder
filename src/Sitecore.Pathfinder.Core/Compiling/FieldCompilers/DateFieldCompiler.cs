@@ -1,6 +1,7 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Composition;
 using System.Globalization;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Items;
@@ -8,6 +9,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 {
+    [Export(typeof(IFieldCompiler)), Shared]
     public class DateFieldCompiler : FieldCompilerBase
     {
         public DateFieldCompiler() : base(Constants.FieldCompilers.Normal)

@@ -2,9 +2,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Checking;
+using Sitecore.Pathfinder.Checking.Checkers;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Templates;
@@ -12,9 +13,10 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checkers
 {
+    [Export(typeof(Checker)), Shared]
     public class TemplateCheckers : Checker
     {
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> AvoidDeprecatedFieldType(ICheckerContext context)
         {
             foreach (var template in context.Project.Templates)
@@ -66,7 +68,7 @@ namespace Sitecore.Pathfinder.Checkers
             }
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> AvoidDuplicateFieldNames(ICheckerContext context)
         {
             foreach (var template in context.Project.Templates)
@@ -89,7 +91,7 @@ namespace Sitecore.Pathfinder.Checkers
             }
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> AvoidEmptyTemplate(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -97,7 +99,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1013, "Empty templates should be avoided. Consider using the 'Folder' template instead", TraceHelper.GetTextNode(template), template.ItemName);
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> AvoidEmptyTemplateSection(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -106,7 +108,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1118, "Avoid empty template section", TraceHelper.GetTextNode(section, template), section.SectionName);
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> AvoidSpacesInTemplateNames(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -114,7 +116,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1012, "Avoid spaces in template names. Use a display name instead", TraceHelper.GetTextNode(template.ItemNameProperty, template), template.ItemName);
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> DeleteUnusedTemplates(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -123,7 +125,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1025, "Template is not referenced and can be deleted", TraceHelper.GetTextNode(template), template.ItemName);
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> FieldIdTemplateFieldId(ICheckerContext context)
         {
             return from item in context.Project.Items
@@ -133,7 +135,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1024, "Field ID and Template Field ID differ", TraceHelper.GetTextNode(field.FieldIdProperty, field, item), $"FieldId: {field.FieldId.Format()}, TemplateFieldId: {templateField.Uri.Guid.Format()}");
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> TemplateShouldHaveIcon(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -141,7 +143,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1020, "Template should should have an icon", TraceHelper.GetTextNode(template), template.ItemName);
         }
 
-        [Export("Check")]
+        [Check]
         protected IEnumerable<Diagnostic> AvoidSettingSharedAndUnversionedInItems(ICheckerContext context)
         {
             return from item in context.Project.Items
@@ -149,7 +151,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1119, "In a template field, the 'Shared' field overrides the 'Unversioned' field. To fix, clear the 'Unversioned' field (the field remains shared)", TraceHelper.GetTextNode(item), item.ItemName);
         }
 
-        [Export("Check")]
+        [Check]
         protected IEnumerable<Diagnostic> AvoidSettingSharedAndUnversionedInTemplates(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -159,7 +161,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1120, "In a template field, the 'Shared' field overrides the 'Unversioned' field. To fix, clear the 'Unversioned' field (the field remains shared)", TraceHelper.GetTextNode(templateField, template), templateField.FieldName);
         }
 
-        [Export("Check")]
+        [Check]
         protected IEnumerable<Diagnostic> DefaultValueFieldIsObsolete(ICheckerContext context)
         {
             return from item in context.Project.Items
@@ -169,7 +171,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1121, "In a template field, the 'Default value' field is no longer used. To fix, clear the 'Default value' field and set the value on the Standard Values item", TraceHelper.GetTextNode(defaultValueField, item), item.ItemName);
         }
 
-        [Export("Check")]
+        [Check]
         protected IEnumerable<Diagnostic> TemplateIdOfStandardValuesShouldMatchParentId(ICheckerContext context)
         {
             return from item in context.Project.Items
@@ -178,7 +180,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1122, "The Template ID of a Standard Values item should be match the ID of the parent item. To fix, moved the Standard Values item under the correct template", TraceHelper.GetTextNode(item), item.ItemName);
         }
 
-        [Export("Check")]
+        [Check]
         protected IEnumerable<Diagnostic> TemplateMustLocatedInTemplatesSection(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -186,7 +188,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1123, "All templates should be located in the '/sitecore/templates' section. To fix, move the template into the '/sitecore/templates' section", TraceHelper.GetTextNode(template), template.ItemName);
         }
 
-        [Export("Check")]
+        [Check]
         protected IEnumerable<Diagnostic> TemplateNodeOrFolderShouldBeTemplateFolder(ICheckerContext context)
         {
             return from item in context.Project.Items
@@ -195,7 +197,7 @@ namespace Sitecore.Pathfinder.Checkers
                 item.ItemIdOrPath);
         }
 
-        [Export("Check")]
+        [Check]
         protected IEnumerable<Diagnostic> TemplateSectionShouldOnlyContainTemplates(ICheckerContext context)
         {
             return from item in context.Project.Items
@@ -203,7 +205,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1125, "The '/sitecore/templates' section should only contain item with template 'Template', 'Template section', 'Template field', 'Template folder' or standard values items. To fix, move the item outside the '/sitecore/templates' section", TraceHelper.GetTextNode(item), item.TemplateName);
         }
 
-        [Export("Check")]
+        [Check]
         protected IEnumerable<Diagnostic> TemplatesMustLocatedInTemplatesSection(ICheckerContext context)
         {
             return from item in context.Project.Items
@@ -212,7 +214,7 @@ namespace Sitecore.Pathfinder.Checkers
         }
 
         /*
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> UseIdInsteadOfPath(ICheckerContext context)
         {
             return from template in context.Project.Templates

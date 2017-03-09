@@ -1,11 +1,13 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Composition;
 using Sitecore.Pathfinder.Parsing.Items;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Yaml
 {
+    [Export(typeof(ITextNodeParser)), Shared]
     public class YamlLayoutTextNodeParser : LayoutTextNodeParserBase
     {
         public YamlLayoutTextNodeParser() : base(Constants.TextNodeParsers.Layouts)

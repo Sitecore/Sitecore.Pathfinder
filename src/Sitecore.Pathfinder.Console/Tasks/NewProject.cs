@@ -1,6 +1,6 @@
 // © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
@@ -9,10 +9,11 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
+    [Export(typeof(ITask)), Shared]
     public class NewProject : NewProjectTaskBase
     {
         [ImportingConstructor]
-        protected NewProject([NotNull] IConsoleService console, [NotNull] IFileSystemService fileSystem) : base(console, fileSystem, "new-project")
+        public NewProject([NotNull] IConsoleService console, [NotNull] IFileSystemService fileSystem) : base(console, fileSystem, "new-project")
         {
             Alias = "new";
             Shortcut = "n";

@@ -1,11 +1,13 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
+using System.Composition;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using Sitecore.Pathfinder.Configuration;
+using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
@@ -19,6 +21,7 @@ namespace Sitecore.Pathfinder
             ToolsDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
         }
 
+
         [CanBeNull, ItemNotNull]
         public IEnumerable<string> AssemblyFileNames { get; private set; }
 
@@ -29,9 +32,6 @@ namespace Sitecore.Pathfinder
         public string[] CommandLine { get; private set; }
 
         public Extensibility.StartupExtensions.CompositionOptions CompositionOptions { get; private set; } = Extensibility.StartupExtensions.CompositionOptions.None;
-
-        [NotNull]
-        public string Configuration { get; private set; }
 
         public ConfigurationOptions ConfigurationOptions { get; private set; } = ConfigurationOptions.Noninteractive;
 
@@ -142,11 +142,10 @@ namespace Sitecore.Pathfinder
             }
 
             // create the host
-            var host = new HostService(configuration, compositionService, Stopwatch);
-            compositionService.Set((IHostService)host);
+            var host = compositionService.Resolve<IHostService>().With(Stopwatch);
 
             // initialize extension - only called at start up
-            foreach (var extension in compositionService.GetExportedValues<IExtension>())
+            foreach (var extension in compositionService.ResolveMany<IExtension>())
             {
                 extension.Start();
             }

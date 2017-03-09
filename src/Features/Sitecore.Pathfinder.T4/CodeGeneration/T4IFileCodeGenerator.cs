@@ -1,9 +1,10 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.IO;
 using System.Linq;
+using Sitecore.Pathfinder.CodeGeneration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -13,6 +14,7 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.T4.CodeGeneration
 {
+    [Export(typeof(IProjectCodeGenerator)), Shared]
     public class T4IFileCodeGenerator : T4GeneratorBase
     {
         [ImportingConstructor]

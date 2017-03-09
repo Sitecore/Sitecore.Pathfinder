@@ -6,10 +6,7 @@ using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
-using Sitecore.Pathfinder.Tasks;
-using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder
 {
@@ -24,11 +21,6 @@ namespace Sitecore.Pathfinder
 
         [Diagnostics.NotNull]
         public Helpers.Services Services { get; private set; }
-
-        protected void Mock<T>([Diagnostics.NotNull] T value)
-        {
-            Services.CompositionService.Set(value);
-        }
 
         [Diagnostics.NotNull]
         protected T Resolve<T>()

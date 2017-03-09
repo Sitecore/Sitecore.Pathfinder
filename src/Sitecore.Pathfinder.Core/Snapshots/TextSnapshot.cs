@@ -1,13 +1,13 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Parsing;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
-    [Export, PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export]
     public class TextSnapshot : Snapshot, ITextSnapshot
     {
         [ImportingConstructor]

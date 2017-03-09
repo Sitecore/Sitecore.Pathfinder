@@ -1,6 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
+using System.Composition;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Parsing.Items;
@@ -9,6 +9,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Xml
 {
+    [Export(typeof(ITextNodeParser)), Shared]
     public class XmlItemTextNodeParser : ItemTextNodeParserBase
     {
         [ImportingConstructor]

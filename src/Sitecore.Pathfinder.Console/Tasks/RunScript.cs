@@ -1,7 +1,7 @@
 // © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Diagnostics;
 using System.IO;
 using System.Management.Automation.Runspaces;
@@ -13,6 +13,7 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
+    [Export(typeof(ITask)), Shared]
     public class RunScript : BuildTaskBase, IScriptTask
     {
         [CanBeNull]

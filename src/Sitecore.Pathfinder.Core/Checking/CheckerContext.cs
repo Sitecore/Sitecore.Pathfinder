@@ -1,7 +1,7 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Globalization;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
@@ -12,7 +12,7 @@ using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Checking
 {
-    [Export(typeof(ICheckerContext)), PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export(typeof(ICheckerContext))]
     public class CheckerContext : ICheckerContext
     {
         [ImportingConstructor]

@@ -2,13 +2,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Linq;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using Sitecore.Pathfinder.Checking;
+using Sitecore.Pathfinder.Checking.Checkers;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -20,6 +21,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checkers
 {
+    [Export(typeof(Checker)), Shared]
     public class ConfigurationCheckers : Checker
     {
         [ImportingConstructor]
@@ -35,7 +37,7 @@ namespace Sitecore.Pathfinder.Checkers
         [NotNull]
         protected IFileSystemService FileSystem { get; }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> TypeNotFound(ICheckerContext context)
         {
             var ignoreAssemblies = Configuration.GetStringList(Constants.Configuration.CheckProject.ConfigurationCheckerDevAssemblies, GetStringListOptions.UseKey).ToArray();

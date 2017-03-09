@@ -2,10 +2,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Checking;
+using Sitecore.Pathfinder.Checking.Checkers;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -18,7 +19,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checkers
 {
-    [Export]
+    [Export(typeof(Checker)), Shared]
     public class HabitatCheckers : Checker
     {
         protected static readonly Guid StandardRenderingParametersGuid = new Guid("{8CA06D6A-B353-44E8-BC31-B528C7306971}");
@@ -42,7 +43,7 @@ namespace Sitecore.Pathfinder.Checkers
         [NotNull]
         protected string Module => _moduleName ?? (_moduleName = Configuration.GetString("habitat:module"));
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> AvoidUsingFolderTemplate(ICheckerContext context)
         {
             return from item in context.Project.Items
@@ -50,7 +51,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1068, "Avoid using the 'Folder' template. To fix, create a new 'Folder' template, assign Insert Options and change the template of this item", TraceHelper.GetTextNode(item));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> ConfigFileMustBeInCorrectModuleDirectory(ICheckerContext context)
         {
             var path = "/App_Config/include/" + Layer + "/" + Module;
@@ -60,7 +61,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1069, "Config file must be the correct module directory", configFile.Snapshot.SourceFile, $"To fix, move the file to the '{path}' directory");
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> ControllerRenderingNotAllowedInLayer(ICheckerContext context)
         {
             if (Configuration.GetBool("habitat:" + Layer.ToLowerInvariant() + ":allow-controller-rendering"))
@@ -73,7 +74,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1070, $"Controller renderings are not allowed in the '{Layer}' layer", TraceHelper.GetTextNode(item));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> DataSourceTemplatesMustInheritFromDataTemplates(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -83,7 +84,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1071, $"Data Source templates must not inherit from {baseTemplate.ItemName} as it is not a Data Template. To fix, either remove the inheritance or make the base template a Data Template", TraceHelper.GetTextNode(template));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> DataSourceTemplatesMustNotFields(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -91,7 +92,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1072, "Page Type Templates must not have fields. To fix, move the fields to a Data Template", TraceHelper.GetTextNode(template));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> DataSourceTemplatesMustNotHaveLayout(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -99,7 +100,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1073, "Data Source Templates must not have a layout. To fix, remove the layout from the template", TraceHelper.GetTextNode(template));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> DataTemplatesMustNotBeInstantiated(ICheckerContext context)
         {
             return from item in context.Project.Items
@@ -107,7 +108,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1074, "Data Templates must not be instantiated. To fix, change the template of the item to a Page Type template or Data Source template", TraceHelper.GetTextNode(item));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> DataTemplatesMustNotHaveLayout(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -115,7 +116,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1075, "Data Templates must not have a layout. To fix, create a Page Type Template that inherits from this template and assign the layout to that template", TraceHelper.GetTextNode(template));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> DataTemplatesNotAllowedInLayer(ICheckerContext context)
         {
             if (Configuration.GetBool("habitat:" + Layer.ToLowerInvariant() + ":allow-data-templates"))
@@ -128,7 +129,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1076, $"Data Templates are not allowed in the '{Layer}' layer. To fix, move the template to another layer", TraceHelper.GetTextNode(template));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> FolderTemplatesMustHaveFolderPostfix(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -136,7 +137,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1077, $"Templates without fields should have the 'Folder' postfix. To fix, rename the template to '{template.ItemName}Folder'", TraceHelper.GetTextNode(template));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> FolderTemplatesMustNotHaveFields(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -144,7 +145,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1078, "Folder templates must not have any fields. To fix, remove the fields", TraceHelper.GetTextNode(template));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> FolderTemplatesShouldHaveInsertOptions(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -152,7 +153,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1079, "Folder templates should specify Insert Options on their Standard Values item. To fix, assign appropriate Insert Options to the Standard Values item", TraceHelper.GetTextNode(template));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> LayoutMustBeInCorrectLayer(ICheckerContext context)
         {
             var path = "/sitecore/layout/Layouts/" + Layer;
@@ -162,7 +163,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1080, $"Layout items should be located in the correct layer '{path}'. To fix, move the layout item into the '{path}' layer", TraceHelper.GetTextNode(item));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> LayoutMustBeInCorrectModule(ICheckerContext context)
         {
             var path = "/sitecore/layout/Layouts/" + Layer + "/" + Module;
@@ -172,7 +173,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1081, $"Layout items should be located in the correct module '{path}'. To fix, move the layout item into the '{path}' module", TraceHelper.GetTextNode(item));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> MissingCodeDirectory(ICheckerContext context)
         {
             if (!DirectoryExists(context, "~/code"))
@@ -181,7 +182,7 @@ namespace Sitecore.Pathfinder.Checkers
             }
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> MissingSerializationDirectory(ICheckerContext context)
         {
             if (!DirectoryExists(context, "~/serialization"))
@@ -190,7 +191,7 @@ namespace Sitecore.Pathfinder.Checkers
             }
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> MissingTestsDirectory(ICheckerContext context)
         {
             if (!DirectoryExists(context, "~/tests"))
@@ -199,7 +200,7 @@ namespace Sitecore.Pathfinder.Checkers
             }
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> ModelsMustBeInCorrectLayer(ICheckerContext context)
         {
             var path = "/sitecore/layout/Models/" + Layer;
@@ -208,7 +209,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1085, $"Model items should be located in the correct layer '{path}'. To fix, move the Model item into the '{path}' layer", TraceHelper.GetTextNode(item));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> ModelsMustBeInCorrectModule(ICheckerContext context)
         {
             var path = "/sitecore/layout/Models/" + Layer + "/" + Module;
@@ -217,7 +218,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1086, $"Model items should be located in the correct module '{path}'. To fix, move the Model item into the '{path}' module", TraceHelper.GetTextNode(item));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> PageTypeTemplatesMustHaveLayout(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -225,7 +226,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1087, "Page Type Templates must have a layout. To fix, assign a layout to the template", TraceHelper.GetTextNode(template));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> PageTypeTemplatesMustInheritFromDataTemplates(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -235,7 +236,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1088, $"Page Type templates cannot inherit from {baseTemplate.ItemName} as it is not a Data Template. Fix fix, either remove the inheritance or make the base template a Data Template", TraceHelper.GetTextNode(template));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> PageTypeTemplatesMustNotHaveFields(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -243,7 +244,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1089, "Page Type Templates must not have fields. To fix, move the fields to a Data Template", TraceHelper.GetTextNode(template));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> PageTypeTemplatesNotAllowedInLayer(ICheckerContext context)
         {
             if (Configuration.GetBool("habitat:" + Layer.ToLowerInvariant() + ":allow-page-type-templates"))
@@ -256,7 +257,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1090, $"Page Type templates are not allowed in the '{Layer}' layer", TraceHelper.GetTextNode(template));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> PageTypeTemplatesShouldHaveStandardValues(ICheckerContext context)
         {
             return from template in context.Project.Templates
@@ -264,7 +265,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1091, "Page Type templates should have a Standard Values item. To fix, create a Standard Value item", TraceHelper.GetTextNode(template));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> PlaceholderSettingsMustBeInCorrectLayer(ICheckerContext context)
         {
             var path = "/sitecore/layout/Placeholder Settings/" + Layer;
@@ -273,7 +274,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1092, $"Placeholder Settings items should be located in the correct layer '{path}'. To fix, move the Placeholder Settings item into the '{path}' layer", TraceHelper.GetTextNode(item));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> PlaceholderSettingsMustBeInCorrectModule(ICheckerContext context)
         {
             var path = "/sitecore/layout/Placeholder Settings/" + Layer + "/" + Module;
@@ -282,7 +283,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1093, $"Placeholder Settings items should be located in the correct module '{path}'. To fix, move the Placeholder Settings item into the '{path}' module", TraceHelper.GetTextNode(item));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> RenderingParametersTemplateMustDeriveFromStandardRenderingParameters(ICheckerContext context)
         {
             var standardRenderingParametersTemplate = context.Project.ProjectItems.OfType<Template>().FirstOrDefault(t => t.Uri.Guid == StandardRenderingParametersGuid);
@@ -299,7 +300,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1095, "Folder templates should specify Insert Options on their Standard Values item. To fix, assign appropriate Insert Options to the Standard Values item", TraceHelper.GetTextNode(template));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> RenderingShouldBeInViewsFolder(ICheckerContext context)
         {
             return from rendering in context.Project.ProjectItems.OfType<Rendering>()
@@ -307,7 +308,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Warning(Msg.C1096, "View rendering should be located in the ~/views/ directory", rendering.Snapshot.SourceFile, "To fix, move the file to the ~/views/ directory");
         }                                      
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> RenderingsMustBeInCorrectLayer(ICheckerContext context)
         {
             var path = "/sitecore/layout/Renderings/" + Layer;
@@ -317,7 +318,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1097, $"Rendering items should be located in the correct layer '{path}'. To fix, move the rendering item into the '{path}' layer", TraceHelper.GetTextNode(item));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> RenderingsMustBeInCorrectModule(ICheckerContext context)
         {
             var path = "/sitecore/layout/Renderings/" + Layer + "/" + Module;
@@ -327,7 +328,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1098, $"Rendering items should be located in the correct module '{path}'. To fix, move the rendering item into the '{path}' module", TraceHelper.GetTextNode(item));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> RootDirectoryNameDoesNotMatchModuleName(ICheckerContext context)
         {
             if (Path.GetFileName(Directory.GetCurrentDirectory()) != Module)
@@ -336,7 +337,7 @@ namespace Sitecore.Pathfinder.Checkers
             }
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> SettingsItemsNotAllowedInLayer(ICheckerContext context)
         {
             if (Configuration.GetBool("habitat:" + Layer.ToLowerInvariant() + ":allow-settings-items"))
@@ -349,7 +350,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1100, $"Settings items are not allowed in the '{Layer}' layer", TraceHelper.GetTextNode(item));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> SettingsMustBeInCorrectLayer(ICheckerContext context)
         {
             var path = "/sitecore/system/Settings/" + Layer;
@@ -358,7 +359,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1101, $"Settings items should be located in the correct layer '{path}'. To fix, move the settings item into the '{path}' layer", TraceHelper.GetTextNode(item));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> SettingsMustBeInCorrectModule(ICheckerContext context)
         {
             var path = "/sitecore/system/Settings/" + Layer + "/" + Module;
@@ -367,7 +368,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1102, $"Settings items should be located in the correct module '{path}'. To fix, move the settings item into the '{path}' module", TraceHelper.GetTextNode(item));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> TemplateMustBeInCorrectLayer(ICheckerContext context)
         {
             var path = "/sitecore/templates/" + Layer;
@@ -376,7 +377,7 @@ namespace Sitecore.Pathfinder.Checkers
                 select Error(Msg.C1103, $"Templates should be located in the correct layer '{path}'. To fix, move the template into the '{path}' layer", TraceHelper.GetTextNode(template));
         }
 
-        [Export("Check")]
+        [Check]
         public IEnumerable<Diagnostic> TemplateMustBeInCorrectModule(ICheckerContext context)
         {
             var path = "/sitecore/templates/" + Layer + "/" + Module;

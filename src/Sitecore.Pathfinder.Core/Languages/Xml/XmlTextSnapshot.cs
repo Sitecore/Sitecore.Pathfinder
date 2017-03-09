@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -16,7 +16,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Xml
 {
-    [Export, PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export]
     public class XmlTextSnapshot : TextSnapshot
     {
         [NotNull]

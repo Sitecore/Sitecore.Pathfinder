@@ -1,10 +1,12 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
+using System.Composition;
 using System.Linq;
 
 namespace Sitecore.Pathfinder.Snapshots.Directives
 {
+    [Export(typeof(ISnapshotDirective)), Shared]
     public class PlaceholderDirective : SnapshotDirectiveBase
     {
         public override bool CanParse(ITextNode textNode)

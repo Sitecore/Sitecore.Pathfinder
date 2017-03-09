@@ -1,6 +1,5 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -8,7 +7,6 @@ using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Extensibility
 {
-    [InheritedExport(typeof(IExtension))]
     public abstract class ExtensionBase : IExtension
     {
         public virtual void RemoveWebsiteFiles(IExtensionContext context)

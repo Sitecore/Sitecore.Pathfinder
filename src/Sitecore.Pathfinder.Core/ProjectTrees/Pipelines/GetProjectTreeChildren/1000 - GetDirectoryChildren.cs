@@ -1,6 +1,6 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System;
+using System.Composition;
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
@@ -8,6 +8,7 @@ using Sitecore.Pathfinder.Extensibility.Pipelines;
 
 namespace Sitecore.Pathfinder.ProjectTrees.Pipelines.GetProjectTreeChildren
 {
+    [Export(typeof(IPipelineProcessor)), Shared]
     public class GetDirectoryChildren : PipelineProcessorBase<GetProjectTreeChildrenPipeline>
     {
         public GetDirectoryChildren() : base(1000)

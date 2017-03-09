@@ -1,7 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.Linq;
+using System.Composition;
 using System.Reflection;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Diagnostics;
@@ -12,6 +12,7 @@ using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Languages.BinFiles
 {
+    [Export(typeof(ICompiler)), Shared]
     public class BinFileCompiler : CompilerBase
     {
         public BinFileCompiler() : base(1000)

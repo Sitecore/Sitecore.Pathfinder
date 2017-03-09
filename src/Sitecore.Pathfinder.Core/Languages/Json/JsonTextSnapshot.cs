@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -12,7 +12,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Json
 {
-    [Export, PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export]
     public class JsonTextSnapshot : TextSnapshot
     {
         [CanBeNull]

@@ -1,7 +1,7 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Diagnostics;
 using Sitecore.Pathfinder.Diagnostics;
 
@@ -19,7 +19,7 @@ namespace Sitecore.Pathfinder.Snapshots
         All = SupportTildeInFileNames | SupportsTrueAndFalseForBooleanFields
     }
 
-    [Export, PartCreationPolicy(CreationPolicy.NonShared), DebuggerDisplay("\\{{GetType().Name,nq}\\}: ProjectFileName: {SourceFile.ProjectFileName}")]
+    [Export, DebuggerDisplay("\\{{GetType().Name,nq}\\}: ProjectFileName: {SourceFile.ProjectFileName}")]
     public class Snapshot : ISnapshot
     {
         [NotNull]

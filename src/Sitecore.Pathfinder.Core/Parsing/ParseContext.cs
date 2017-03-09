@@ -1,6 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Globalization;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
@@ -13,7 +13,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Parsing
 {
-    [Export(typeof(IParseContext)), PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export(typeof(IParseContext))]
     public class ParseContext : IParseContext
     {
         [ImportingConstructor]

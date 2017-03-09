@@ -1,5 +1,6 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.Files;
@@ -7,6 +8,7 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
+    [Export(typeof(ITask)), Shared]
     public class ListProject : BuildTaskBase
     {
         public ListProject() : base("list-project")

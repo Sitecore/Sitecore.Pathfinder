@@ -2,7 +2,6 @@
 
 using System;
 using System.CodeDom.Compiler;
-using System.ComponentModel.Composition;
 using System.Linq;
 using System.Web;
 using System.Xml;
@@ -29,7 +28,6 @@ namespace Sitecore.Pathfinder.T4.CodeGeneration
 
             host.Refs.Add(typeof(Enumerable).Assembly.Location); // System.Core
             host.Refs.Add(typeof(HttpContext).Assembly.Location); // System.Web
-            host.Refs.Add(typeof(ICompositionService).Assembly.Location); // System.ComponentModel.Composition
             host.Refs.Add(typeof(XmlDocument).Assembly.Location); // System.Xml
             host.Refs.Add(typeof(XElement).Assembly.Location); // System.Xml.Linq
 

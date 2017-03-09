@@ -1,9 +1,11 @@
 // © 2015 Sitecore Corporation A/S. All rights reserved.
 
+using System.Composition;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
+    [Export(typeof(ITask)), Shared]
     public class ResetWebsite : WebBuildTaskBase
     {
         public ResetWebsite() : base("reset-website")

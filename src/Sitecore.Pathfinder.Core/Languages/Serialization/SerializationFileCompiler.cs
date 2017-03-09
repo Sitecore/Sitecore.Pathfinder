@@ -1,6 +1,6 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.Linq;
+using System.Composition;
 using System.Text;
 using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Compiling.Compilers;
@@ -12,6 +12,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Serialization
 {
+    [Export(typeof(ICompiler)), Shared]
     public class SerializationFileCompiler : CompilerBase
     {
         public SerializationFileCompiler() : base(1000)

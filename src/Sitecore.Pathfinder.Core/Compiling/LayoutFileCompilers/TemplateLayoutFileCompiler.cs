@@ -1,7 +1,7 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Parsing.LayoutFiles;
@@ -10,6 +10,7 @@ using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
 {
+    [Export(typeof(ICompiler)), Shared]
     public class TemplateLayoutFileCompiler : CompilerBase
     {
         // must come after RenderingCompiler, or renderings will not be found

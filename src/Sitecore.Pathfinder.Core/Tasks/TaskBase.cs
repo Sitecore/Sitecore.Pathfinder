@@ -1,7 +1,7 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Linq;
 using System.Reflection;
 using Sitecore.Pathfinder.Diagnostics;
@@ -9,7 +9,6 @@ using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    [InheritedExport(typeof(ITask))]
     public abstract class TaskBase : ITask
     {
         /// <summary>Creates new task.</summary>

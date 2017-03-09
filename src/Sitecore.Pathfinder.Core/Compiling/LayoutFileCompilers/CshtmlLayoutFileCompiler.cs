@@ -1,4 +1,5 @@
 using System;
+using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Diagnostics;
@@ -11,6 +12,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
 {
+    [Export(typeof(ILayoutFileCompiler)), Shared]
     public class CshtmlLayoutFileCompiler : LayoutFileCompilerBase
     {
         public override bool CanCompile(ICompileContext context, IProjectItem projectItem, SourceProperty<string> property)

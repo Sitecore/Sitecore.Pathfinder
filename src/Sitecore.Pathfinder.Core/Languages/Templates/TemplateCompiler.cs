@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Diagnostics;
@@ -10,6 +11,7 @@ using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Languages.Templates
 {
+    [Export(typeof(ICompiler)), Shared]
     public class TemplateCompiler : CompilerBase
     {
         public TemplateCompiler() : base(1000)
