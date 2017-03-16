@@ -1,13 +1,11 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
-using System.Composition;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using Sitecore.Pathfinder.Configuration;
-using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
@@ -18,7 +16,7 @@ namespace Sitecore.Pathfinder
     {
         public Startup()
         {
-            ToolsDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
+            ToolsDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) ?? string.Empty;
         }
 
 
@@ -94,7 +92,7 @@ namespace Sitecore.Pathfinder
                 ProjectDirectory = GetProjectDirectory();
             }
 
-            var assembly = Assembly.GetEntryAssembly() ?? Assembly.GetCallingAssembly();
+            var assembly = Assembly.GetEntryAssembly() ?? Assembly.GetEntryAssembly();
             var assemblyFileNames = new List<string>
             {
                 assembly.Location
@@ -265,7 +263,7 @@ namespace Sitecore.Pathfinder
         [NotNull]
         public Startup WithTraceListeners()
         {
-            Trace.Listeners.Add(new ConsoleTraceListener());
+            // Trace.Listeners.Add(new ConsoleTraceListener());
             return this;
         }
 

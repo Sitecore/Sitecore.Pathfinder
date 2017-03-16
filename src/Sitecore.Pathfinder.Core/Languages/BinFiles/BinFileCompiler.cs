@@ -2,7 +2,7 @@
 
 using System;
 using System.Composition;
-using System.Reflection;
+using System.Runtime.Loader;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -45,7 +45,7 @@ namespace Sitecore.Pathfinder.Languages.BinFiles
 
             try
             {
-                var assembly = Assembly.LoadFrom(binFile.Snapshot.SourceFile.AbsoluteFileName);
+                var assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(binFile.Snapshot.SourceFile.AbsoluteFileName);
 
                 foreach (var type in assembly.GetExportedTypes())
                 {

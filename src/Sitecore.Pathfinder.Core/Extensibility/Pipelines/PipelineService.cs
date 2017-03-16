@@ -29,9 +29,7 @@ namespace Sitecore.Pathfinder.Extensibility.Pipelines
         [NotNull]
         protected virtual T PopulateProcessors<T>([NotNull] T result) where T : IPipeline<T>
         {
-            var processorType = typeof(IPipelineProcessor<T>);
-
-            var processors = PipelineProcessors.Where(p => processorType.IsInstanceOfType(p)).OrderBy(p => p.Sortorder).ToList();
+            var processors = PipelineProcessors.Where(p => p is IPipelineProcessor<T>).OrderBy(p => p.Sortorder).ToList();
             foreach (var processor in processors)
             {
                 result.Processors.Add((IPipelineProcessor<T>)processor);

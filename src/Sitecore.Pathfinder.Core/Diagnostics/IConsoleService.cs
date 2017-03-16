@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Sitecore.Patfhfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Diagnostics
 {

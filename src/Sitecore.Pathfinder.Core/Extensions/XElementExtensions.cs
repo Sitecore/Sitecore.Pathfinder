@@ -3,6 +3,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Xml.Linq;
+using Sitecore.Patfhfinder.Diagnostics;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Extensions

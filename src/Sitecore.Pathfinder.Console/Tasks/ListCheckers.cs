@@ -2,6 +2,7 @@
 
 using System.Composition;
 using System.Linq;
+using System.Reflection;
 using Sitecore.Pathfinder.Checking;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Tasks.Building;
@@ -22,11 +23,12 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
-            foreach (var checker in CheckerService.Checkers.OrderBy(c => c.Method.Name))
+            foreach (var checker in CheckerService.Checkers.OrderBy(c => c.GetMethodInfo().Name))
             {
-                var name = checker.Method.Name;
+                var methodInfo = checker.GetMethodInfo();
+                var name = methodInfo.Name;
 
-                var type = checker.Method.DeclaringType;
+                var type = methodInfo.DeclaringType;
                 if (type != null)
                 {
                     var category = type.Name;

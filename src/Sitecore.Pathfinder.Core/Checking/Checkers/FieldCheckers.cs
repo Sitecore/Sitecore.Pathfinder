@@ -19,7 +19,7 @@ namespace Sitecore.Pathfinder.Checkers
         public IEnumerable<Diagnostic> FieldContainsLoremIpsum(ICheckerContext context)
         {
             return from field in context.Project.Items.SelectMany(i => i.Fields)
-                where field.Value.IndexOf("Lorem Ipsum", StringComparison.InvariantCultureIgnoreCase) >= 0
+                where field.Value.IndexOf("Lorem Ipsum", StringComparison.OrdinalIgnoreCase) >= 0
                 select Warning(Msg.C1008, "Field contains 'Lorem Ipsum' text", TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), $"The field \"{field.FieldName}\" contains the test data text: \"Lorem Ipsum...\". Replace or remove the text data.");
         }
 

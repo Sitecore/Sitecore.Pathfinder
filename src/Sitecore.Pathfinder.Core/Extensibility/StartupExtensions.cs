@@ -11,6 +11,7 @@ using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using System.Composition.Hosting;
 using System.Composition.Hosting.Core;
+using System.Runtime.Loader;
 
 namespace Sitecore.Pathfinder.Extensibility
 {
@@ -33,29 +34,13 @@ namespace Sitecore.Pathfinder.Extensibility
         {
             var toolsDirectory = configuration.GetToolsDirectory();
 
-            if (options.HasFlag(CompositionOptions.AddWebsiteAssemblyResolver))
-            {
-                // add an assembly resolver that points to the website/bin directory - this will load files like Sitecore.Kernel.dll
-                var websiteDirectory = configuration.GetWebsiteDirectory();
-                if (!string.IsNullOrEmpty(websiteDirectory))
-                {
-                    AppDomain.CurrentDomain.AssemblyResolve += (sender, args) => ResolveWebsiteAssembly(args, websiteDirectory);
-                }
-            }
-
-            // add an assembly resolver for external assemblies
-            var directories = configuration.GetDictionary(Constants.Configuration.Extensions.ExternalAssemblyDirectories);
-            if (directories.Count > 0)
-            {
-                AppDomain.CurrentDomain.AssemblyResolve += (sender, args) => ResolveAssembly(args, directories.Values);
-            }
-
             // add application assemblies
-            var coreAssembly = typeof(Constants).Assembly;
+            var coreAssembly = typeof(Constants).GetTypeInfo().Assembly;
 
             var assemblies = new List<Assembly>
             {
-                coreAssembly
+                coreAssembly,
+                Assembly.GetEntryAssembly()
             };
 
             var disableExtensions = configuration.GetBool(Constants.Configuration.DisableExtensions);
@@ -143,14 +128,14 @@ namespace Sitecore.Pathfinder.Extensibility
         {
             var fileName = Path.GetFileName(assemblyFileName);
 
-            if (assemblies.OfType<Assembly>().Any(a => string.Equals(Path.GetFileName(a.Location), fileName, StringComparison.OrdinalIgnoreCase)))
+            if (assemblies.Any(a => string.Equals(Path.GetFileName(a.Location), fileName, StringComparison.OrdinalIgnoreCase)))
             {
                 return;
             }
 
             try
             {
-                var assembly = Assembly.LoadFrom(assemblyFileName);
+                var assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(assemblyFileName);
                 assemblies.Add(assembly);
             }
             catch (ReflectionTypeLoadException ex)
@@ -235,56 +220,9 @@ namespace Sitecore.Pathfinder.Extensibility
                 AddAssembliesFromDirectory(options, catalogs, directory);
             }
         }
-
-        [CanBeNull]
-        private static Assembly ResolveAssembly([NotNull] ResolveEventArgs args, [ItemNotNull, NotNull] IEnumerable<string> directories)
-        {
-            var fileName = args.Name;
-            var n = fileName.IndexOf(',');
-            if (n >= 0)
-            {
-                fileName = fileName.Left(n).Trim();
-            }
-
-            if (!fileName.EndsWith(".dll", StringComparison.OrdinalIgnoreCase))
-            {
-                fileName += ".dll";
-            }
-
-            foreach (var directory in directories)
-            {
-                var assemblyFileName = Path.Combine(directory, fileName);
-                if (File.Exists(assemblyFileName))
-                {
-                    return Assembly.LoadFrom(assemblyFileName);
-                }
-            }
-
-            return null;
-        }
-
-        [CanBeNull]
-        private static Assembly ResolveWebsiteAssembly([NotNull] ResolveEventArgs args, [NotNull] string websiteDirectory)
-        {
-            var fileName = args.Name;
-            var n = fileName.IndexOf(',');
-            if (n >= 0)
-            {
-                fileName = fileName.Left(n).Trim();
-            }
-
-            if (!fileName.EndsWith(".dll", StringComparison.OrdinalIgnoreCase))
-            {
-                fileName += ".dll";
-            }
-
-            fileName = Path.Combine(websiteDirectory, "bin\\" + fileName);
-            return File.Exists(fileName) ? Assembly.LoadFrom(fileName) : null;
-        }
-
     }
 
-    public class ConfigurationExportDescriptorProvider : ExportDescriptorProvider
+    internal class ConfigurationExportDescriptorProvider : ExportDescriptorProvider
     {
         [NotNull]
         readonly IConfiguration _configuration;

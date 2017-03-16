@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "Sitecore.Pathfinder.Console": {
+      "commandName": "Project",
+      "commandLineArgs": "b --pause",
+      "workingDirectory": "E:\\Sitecore\\Sitecore.Pathfinder\\core\\Sitecore.Pathfinder\\test\\good-website"
+    }
+  }
+}

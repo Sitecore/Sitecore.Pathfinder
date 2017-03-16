@@ -1,12 +1,15 @@
 // © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
+using System.Text;
 using System.Xml;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
-using Sitecore.Pathfinder.Languages.Xml;
+using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
@@ -36,25 +39,85 @@ namespace Sitecore.Pathfinder.Tasks
 
             using (var writer = FileSystem.OpenStreamWriter(fileName))
             {
-                using (var output = new XmlTextWriter(writer))
+                var settings = new XmlWriterSettings
                 {
-                    output.Formatting = Formatting.Indented;
+                    Encoding = new UTF8Encoding(false),
+                    Indent = true
+                };
 
+                using (var output = XmlWriter.Create(writer, settings))
+                {
                     output.WriteStartElement("Exports");
 
                     foreach (var template in project.Templates)
                     {
-                        template.WriteAsExportXml(output);
+                        WriteAsExportXml(output, template);
                     }
 
                     foreach (var item in project.Items)
                     {
-                        item.WriteAsExportXml(output, fieldToWrite);
+                        WriteAsExportXml(output, item, fieldToWrite);
                     }
 
                     output.WriteEndElement();
                 }
             }
+        }
+
+        public static void WriteAsExportXml([NotNull] XmlWriter output, [NotNull] Template template)
+        {
+            output.WriteStartElement("Template");
+            output.WriteAttributeString("Id", template.Uri.Guid.Format());
+            output.WriteAttributeString("Database", template.DatabaseName);
+            output.WriteAttributeString("Name", template.ItemName);
+            output.WriteAttributeString("Path", template.ItemIdOrPath);
+            output.WriteAttributeString("BaseTemplates", template.BaseTemplates);
+
+            foreach (var section in template.Sections)
+            {
+                output.WriteStartElement("Section");
+                output.WriteAttributeString("Id", section.Uri.Guid.Format());
+                output.WriteAttributeString("Name", section.SectionName);
+
+                foreach (var field in section.Fields)
+                {
+                    output.WriteStartElement("Field");
+                    output.WriteAttributeString("Id", field.Uri.Guid.Format());
+                    output.WriteAttributeString("Name", field.FieldName);
+                    output.WriteAttributeString("Type", field.Type);
+                    output.WriteEndElement();
+                }
+
+                output.WriteEndElement();
+            }
+
+            output.WriteEndElement();
+        }
+
+
+        public static void WriteAsExportXml([NotNull] XmlWriter output, [NotNull] Item item, [NotNull, ItemNotNull]  IEnumerable<string> fieldsToWrite)
+        {
+            output.WriteStartElement("Item");
+            output.WriteAttributeString("Id", item.Uri.Guid.Format());
+            output.WriteAttributeString("Database", item.DatabaseName);
+            output.WriteAttributeString("Name", item.ItemName);
+            output.WriteAttributeString("Path", item.ItemIdOrPath);
+            output.WriteAttributeString("Template", item.TemplateIdOrPath);
+
+            foreach (var field in item.Fields)
+            {
+                if (!fieldsToWrite.Contains(field.FieldName.ToLowerInvariant()))
+                {
+                    continue;
+                }
+
+                output.WriteStartElement("Field");
+                output.WriteAttributeString("Name", field.FieldName);
+                output.WriteAttributeString("Value", field.Value);
+                output.WriteEndElement();
+            }
+
+            output.WriteEndElement();
         }
     }
 }

@@ -36,24 +36,27 @@ namespace Sitecore.Pathfinder.Tasks
 
             var solutionFileName = Path.Combine(solutionDirectory, "scconfig.solution.json");
 
-            using (var writer = new StreamWriter(solutionFileName))
+            using (var stream = new FileStream(solutionFileName, FileMode.Create))
             {
-                var output = new JsonTextWriter(writer);
-                output.Formatting = Formatting.Indented;
-
-                output.WriteStartObject();
-                output.WriteStartObject("projects");
-
-                foreach (var projectDirectory in projectDirectories)
+                using (var writer = new StreamWriter(stream))
                 {
-                    var relativePath = PathHelper.NormalizeItemPath(PathHelper.UnmapPath(solutionDirectory, projectDirectory));
-                    var projectName = relativePath.Replace("/", ".");
+                    var output = new JsonTextWriter(writer);
+                    output.Formatting = Formatting.Indented;
 
-                    output.WritePropertyString(projectName, relativePath);
+                    output.WriteStartObject();
+                    output.WriteStartObject("projects");
+
+                    foreach (var projectDirectory in projectDirectories)
+                    {
+                        var relativePath = PathHelper.NormalizeItemPath(PathHelper.UnmapPath(solutionDirectory, projectDirectory));
+                        var projectName = relativePath.Replace("/", ".");
+
+                        output.WritePropertyString(projectName, relativePath);
+                    }
+
+                    output.WriteEndObject();
+                    output.WriteEndObject();
                 }
-
-                output.WriteEndObject();
-                output.WriteEndObject();
             }
         }
 

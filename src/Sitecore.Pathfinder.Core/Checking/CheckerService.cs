@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
@@ -68,7 +69,7 @@ namespace Sitecore.Pathfinder.Checking
             var treatWarningsAsErrors = Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
             var isMultiThreaded = Configuration.GetBool(Constants.Configuration.System.MultiThreaded, true);
 
-            var checkers = Checkers.Where(c => checkerNames.Contains(c.Method.Name)).Select(c => new CheckerInfo(c)).ToArray();
+            var checkers = Checkers.Where(c => checkerNames.Contains(c.GetMethodInfo().Name)).Select(c => new CheckerInfo(c)).ToArray();
 
             CheckProject(context, checkers, isMultiThreaded, treatWarningsAsErrors);
         }
@@ -226,8 +227,9 @@ namespace Sitecore.Pathfinder.Checking
             {
                 Checker = checker;
 
-                Name = checker.Method.Name;
-                Category = checker.Method.DeclaringType?.Name ?? string.Empty;
+                var methodInfo = checker.GetMethodInfo();
+                Name = methodInfo.Name;
+                Category = methodInfo.DeclaringType?.Name ?? string.Empty;
             }
 
             [NotNull]

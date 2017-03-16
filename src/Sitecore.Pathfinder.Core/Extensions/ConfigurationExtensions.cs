@@ -8,7 +8,6 @@ using System.Linq;
 using Newtonsoft.Json;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel.Json;
-using Sitecore.Pathfinder.Configuration.ConfigurationModel.Xml;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Extensions
@@ -46,10 +45,6 @@ namespace Sitecore.Pathfinder.Extensions
                 case ".js":
                 case ".user":
                     configuration.AddJsonFile(path);
-                    break;
-
-                case ".xml":
-                    configuration.AddXmlFile(path);
                     break;
             }
 

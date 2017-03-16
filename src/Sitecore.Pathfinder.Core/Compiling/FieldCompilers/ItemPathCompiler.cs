@@ -177,9 +177,9 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 }
             }
 
-            foreach (string key in url.Parameters)
+            foreach (var pair in url.Parameters)
             {
-                var v = url.Parameters[key];
+                var v = pair.Value;
 
                 if (PathHelper.IsProbablyItemPath(v) && !ReferenceParser.IsIgnoredReference(v))
                 {
@@ -201,7 +201,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                     }
                 }
 
-                result[key] = v;
+                result[pair.Key] = v;
             }
 
             return result.ToString();

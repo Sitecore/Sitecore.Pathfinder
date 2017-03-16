@@ -57,7 +57,7 @@ namespace Sitecore.Pathfinder.Projects
         {
             unchecked
             {
-                return (StringComparer.OrdinalIgnoreCase.GetHashCode(Guid) * 397) ^ StringComparer.OrdinalIgnoreCase.GetHashCode(FileOrDatabaseName);
+                return (StringComparer.OrdinalIgnoreCase.GetHashCode(Guid.ToString()) * 397) ^ StringComparer.OrdinalIgnoreCase.GetHashCode(FileOrDatabaseName);
             }
         }
 

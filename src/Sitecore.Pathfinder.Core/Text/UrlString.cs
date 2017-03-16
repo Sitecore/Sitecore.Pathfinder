@@ -1,10 +1,9 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.Collections.Specialized;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.Text;
-using System.Web;
+using Sitecore.Patfhfinder.Diagnostics;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 
@@ -12,9 +11,8 @@ namespace Sitecore.Pathfinder.Text
 {
     public class UrlString
     {
-        [NotNull]
-        [ItemNotNull]
-        private readonly NameValueCollection _parameters = new NameValueCollection();
+        [NotNull, ItemNotNull]
+        private readonly Dictionary<string, string> _parameters = new Dictionary<string, string>();
 
         [NotNull]
         private string _protocol = string.Empty;
@@ -28,9 +26,9 @@ namespace Sitecore.Pathfinder.Text
             Parse(url);
         }
 
-        public UrlString([NotNull][ItemNotNull] NameValueCollection parameters)
+        public UrlString([NotNull] Dictionary<string, string> parameters)
         {
-            _parameters.Add(parameters);
+            _parameters.AddRange(parameters);
         }
 
         [NotNull]
@@ -52,22 +50,15 @@ namespace Sitecore.Pathfinder.Text
         public string HostName { get; set; } = string.Empty;
 
         [CanBeNull]
-        public string this[[NotNull] [Localizable(false)] string key]
+        public string this[[NotNull, Localizable(false)]  string key]
         {
-            get
-            {
-                return _parameters[key];
-            }
+            get { return _parameters[key]; }
 
-            set
-            {
-                Append(key, value ?? string.Empty);
-            }
+            set { Append(key, value ?? string.Empty); }
         }
 
         [NotNull]
-        [ItemNotNull]
-        public NameValueCollection Parameters => _parameters;
+        public Dictionary<string, string> Parameters => _parameters;
 
         [NotNull]
         public string Path { get; set; } = string.Empty;
@@ -86,19 +77,13 @@ namespace Sitecore.Pathfinder.Text
                 return @"http";
             }
 
-            set
-            {
-                _protocol = value;
-            }
+            set { _protocol = value; }
         }
 
         [NotNull]
         public string Query
         {
-            get
-            {
-                return GetQuery();
-            }
+            get { return GetQuery(); }
 
             set
             {
@@ -110,19 +95,19 @@ namespace Sitecore.Pathfinder.Text
         [NotNull]
         public string Add([NotNull] string key, [NotNull] string value)
         {
-            _parameters[key] = HttpUtility.UrlEncode(value);
+            _parameters[key] = value; // HttpUtility.UrlEncode(value);
 
             return GetUrl();
         }
 
         public void Append([NotNull] string key, [NotNull] string value)
         {
-            _parameters[key] = HttpUtility.UrlEncode(value);
+            _parameters[key] = value; // HttpUtility.UrlEncode(value);
         }
 
-        public void Append([NotNull][ItemNotNull] NameValueCollection arguments)
+        public void Append([NotNull] Dictionary<string, string> arguments)
         {
-            foreach (string key in arguments.Keys)
+            foreach (var key in arguments.Keys)
             {
                 Append(key, arguments[key]);
             }
@@ -197,7 +182,7 @@ namespace Sitecore.Pathfinder.Text
         {
             var result = new StringBuilder();
             var first = true;
-            foreach (string key in _parameters.Keys)
+            foreach (var key in _parameters.Keys)
             {
                 if (!first)
                 {

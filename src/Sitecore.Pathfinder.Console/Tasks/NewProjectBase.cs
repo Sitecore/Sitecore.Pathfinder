@@ -1306,9 +1306,9 @@ namespace Sitecore.Pathfinder.Tasks
             }
 
             _hostName = Console.ReadLine($"Enter the hostname of the website [{defaultHostName}]: ", defaultHostName, "host");
-            if (!_hostName.Contains(Uri.SchemeDelimiter))
+            if (!_hostName.Contains("://"))
             {
-                _hostName = Uri.UriSchemeHttp + Uri.SchemeDelimiter + _hostName.TrimStart('/');
+                _hostName = "http://" + _hostName.TrimStart('/');
             }
 
             /*

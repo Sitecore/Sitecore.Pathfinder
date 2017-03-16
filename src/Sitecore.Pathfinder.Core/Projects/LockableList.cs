@@ -39,7 +39,7 @@ namespace Sitecore.Pathfinder.Projects
                     case Locking.CopyOnWrite:
                         lock (_syncObject)
                         {
-                            List = new SynchronizedCollection<T>(List)
+                            List = new ConcurrentList<T>(List)
                             {
                                 [index] = value
                             };
@@ -50,7 +50,7 @@ namespace Sitecore.Pathfinder.Projects
         }
 
         [NotNull, ItemNotNull]
-        private SynchronizedCollection<T> List { get; set; } = new SynchronizedCollection<T>();
+        private ConcurrentList<T> List { get; set; } = new ConcurrentList<T>();
 
         [NotNull]
         private ILockable Owner { get; }
@@ -69,7 +69,7 @@ namespace Sitecore.Pathfinder.Projects
                 case Locking.CopyOnWrite:
                     lock (_syncObject)
                     {
-                        List = new SynchronizedCollection<T>(List)
+                        List = new ConcurrentList<T>(List)
                         {
                             item
                         };
@@ -92,7 +92,7 @@ namespace Sitecore.Pathfinder.Projects
                 case Locking.CopyOnWrite:
                     lock (_syncObject)
                     {
-                        List = new SynchronizedCollection<T>();
+                        List = new ConcurrentList<T>();
                     }
                     break;
             }
@@ -129,7 +129,7 @@ namespace Sitecore.Pathfinder.Projects
                 case Locking.CopyOnWrite:
                     lock (_syncObject)
                     {
-                        List = new SynchronizedCollection<T>(List);
+                        List = new ConcurrentList<T>(List);
                         List.Insert(index, item);
                     }
                     break;
@@ -149,7 +149,7 @@ namespace Sitecore.Pathfinder.Projects
                 case Locking.CopyOnWrite:
                     lock (_syncObject)
                     {
-                        List = new SynchronizedCollection<T>(List);
+                        List = new ConcurrentList<T>(List);
                         return List.Remove(item);
                     }
             }
@@ -171,7 +171,7 @@ namespace Sitecore.Pathfinder.Projects
                 case Locking.CopyOnWrite:
                     lock (_syncObject)
                     {
-                        List = new SynchronizedCollection<T>(List);
+                        List = new ConcurrentList<T>(List);
                         List.RemoveAt(index);
                     }
                     break;

@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 using Sitecore.Pathfinder.Diagnostics;
@@ -92,8 +91,8 @@ namespace Sitecore.Pathfinder.Extensions
         [NotNull]
         public static string Escape([NotNull] this string str, char character, char escapeCharacter = '\\')
         {
-            var c = character.ToString(CultureInfo.CurrentCulture);
-            var es = escapeCharacter.ToString(CultureInfo.CurrentCulture);
+            var c = character.ToString();
+            var es = escapeCharacter.ToString();
 
             return str.Replace(es, es + es).Replace(c, es + character);
         }
@@ -151,7 +150,7 @@ namespace Sitecore.Pathfinder.Extensions
 
                     if (ticks.Length > 0)
                     {
-                        isUtc = ticks.EndsWith(IsoDateTimeUtcMarker, StringComparison.InvariantCultureIgnoreCase);
+                        isUtc = ticks.EndsWith(IsoDateTimeUtcMarker, StringComparison.OrdinalIgnoreCase);
                         if (isUtc)
                         {
                             ticks = ticks.Replace(IsoDateTimeUtcMarker, string.Empty);
@@ -345,8 +344,8 @@ namespace Sitecore.Pathfinder.Extensions
         [NotNull]
         public static string Unescape([NotNull] this string str, char character, char escapeCharacter = '\\')
         {
-            var c = character.ToString(CultureInfo.CurrentCulture);
-            var es = escapeCharacter.ToString(CultureInfo.CurrentCulture);
+            var c = character.ToString();
+            var es = escapeCharacter.ToString();
 
             return str.Replace(es + character, c).Replace(es + es, es);
         }
@@ -424,7 +423,7 @@ namespace Sitecore.Pathfinder.Extensions
                 parts[5] = GetInt(isoDate.Substring(13, 2), 0);
             }
 
-            isUtc = isoDate.EndsWith(IsoDateTimeUtcMarker, StringComparison.InvariantCultureIgnoreCase);
+            isUtc = isoDate.EndsWith(IsoDateTimeUtcMarker, StringComparison.OrdinalIgnoreCase);
 
             return parts;
         }

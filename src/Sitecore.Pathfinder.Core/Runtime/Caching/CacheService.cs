@@ -1,7 +1,7 @@
 // © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System.Collections.Generic;
 using System.Composition;
-using System.Runtime.Caching;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Runtime.Caching
@@ -10,17 +10,13 @@ namespace Sitecore.Pathfinder.Runtime.Caching
     public class CacheService : ICacheService
     {
         [NotNull]
-        private readonly MemoryCache _cache;
-
-        public CacheService()
-        {
-            _cache = new MemoryCache("CacheService");
-        }
+        private readonly Dictionary<string, object> _cache = new Dictionary<string, object>();
 
         public T Get<T>(string cacheKey)
         {
-            var value = _cache.Get(cacheKey);
-            if (value == null)
+            object value;
+                
+            if (!_cache.TryGetValue(cacheKey, out value))
             {
                 return default(T);
             }
@@ -35,7 +31,7 @@ namespace Sitecore.Pathfinder.Runtime.Caching
 
         public void Set(string cacheKey, object value)
         {
-            _cache.Set(cacheKey, value, new CacheItemPolicy());
+            _cache[cacheKey] = value;
         }
     }
 }

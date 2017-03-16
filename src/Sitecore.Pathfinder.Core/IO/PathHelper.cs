@@ -190,7 +190,7 @@ namespace Sitecore.Pathfinder.IO
 
         public static bool IsProbablyItemPath([NotNull] string itemPath)
         {
-            if (!itemPath.StartsWith("/sitecore/", StringComparison.InvariantCultureIgnoreCase))
+            if (!itemPath.StartsWith("/sitecore/", StringComparison.OrdinalIgnoreCase))
             {
                 return false;
             }

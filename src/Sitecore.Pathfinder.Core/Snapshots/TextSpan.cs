@@ -20,13 +20,6 @@ namespace Sitecore.Pathfinder.Snapshots
             Length = length;
         }
 
-        public TextSpan([NotNull] IXmlLineInfo lineInfo)
-        {
-            LineNumber = lineInfo.LineNumber;
-            LinePosition = lineInfo.LinePosition;
-            Length = 0;
-        }
-
         public int Length { get; }
 
         public int LineNumber { get; }

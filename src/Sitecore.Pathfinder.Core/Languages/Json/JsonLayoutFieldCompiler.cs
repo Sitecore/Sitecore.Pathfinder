@@ -81,7 +81,7 @@ namespace Sitecore.Pathfinder.Languages.Json
                 return base.GetPlaceholders(context, childTextNode, projectItem);
             }
 
-            protected override void WriteRendering(LayoutCompileContext context, XmlTextWriter output, IEnumerable<Item> renderingItems, ITextNode renderingTextNode, string placeholders)
+            protected override void WriteRendering(LayoutCompileContext context, XmlWriter output, IEnumerable<Item> renderingItems, ITextNode renderingTextNode, string placeholders)
             {
                 var childNode = renderingTextNode.ChildNodes.FirstOrDefault();
                 if (childNode != null)
