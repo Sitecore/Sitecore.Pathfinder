@@ -38,7 +38,7 @@ namespace Sitecore.Pathfinder.Tasks
             var errors = diagnostics.Count(d => d.Severity == Severity.Error);
             var warnings = diagnostics.Count(d => d.Severity == Severity.Warning);
             var messages = diagnostics.Count(d => d.Severity == Severity.Information);
-            var checkers = CheckerService.EnabledCheckersCount;
+            var checkersCount = CheckerService.EnabledCheckersCount;
             var references = project.ProjectItems.Sum(i => i.References.Count);
 
             if (treatWarningsAsErrors)
@@ -47,7 +47,7 @@ namespace Sitecore.Pathfinder.Tasks
                 warnings = 0;
             }
 
-            context.Trace.TraceInformation(Msg.C1042, $"Checks: {checkers}, references: {references}, errors: {errors}, warnings: {warnings}, messages: {messages}");
+            context.Trace.TraceInformation(Msg.C1042, $"Checks: {checkersCount}, references: {references}, errors: {errors}, warnings: {warnings}, messages: {messages}");
 
             if (context.Configuration.GetBool(Constants.Configuration.CheckProject.StopOnErrors, true) && errors > 0)
             {

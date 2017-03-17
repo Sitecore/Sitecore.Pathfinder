@@ -10,7 +10,7 @@ namespace Sitecore.Pathfinder.Checking
     public interface ICheckerService
     {
         [NotNull, ItemNotNull]
-        IEnumerable<Func<ICheckerContext, IEnumerable<Diagnostic>>> Checkers { get; }
+        IEnumerable<CheckerInfo> Checkers { get; }
 
         int EnabledCheckersCount { get; }
 

@@ -6,9 +6,7 @@ namespace Sitecore.Pathfinder.Projects
     {
         ReadWrite,
 
-        ReadOnly,
-
-        CopyOnWrite
+        ReadOnly
     }
 
     public interface ILockable

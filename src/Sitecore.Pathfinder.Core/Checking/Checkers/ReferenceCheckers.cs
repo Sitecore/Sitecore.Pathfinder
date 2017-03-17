@@ -1,17 +1,14 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
-using Sitecore.Pathfinder.Checking;
-using Sitecore.Pathfinder.Checking.Checkers;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.References;
 
-namespace Sitecore.Pathfinder.Checkers
+namespace Sitecore.Pathfinder.Checking.Checkers
 {
-    [Export(typeof(Checker)), Shared]
+    [Export(typeof(IChecker)), Shared]
     public class ReferenceCheckers : Checker
     {
         [Check]

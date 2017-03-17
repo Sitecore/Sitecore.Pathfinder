@@ -1,17 +1,16 @@
-// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using System.Composition;
-using Sitecore.Pathfinder.Checking;
-using Sitecore.Pathfinder.Checking.Checkers;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
 
-namespace Sitecore.Pathfinder.Checkers
+namespace Sitecore.Pathfinder.Checking.Checkers
 {
-    [Export(typeof(Checker)), Shared]
+    [Export(typeof(IChecker)), Shared]
     public class ProjectCheckers : Checker
     {
-        [Check]
+        [Check, ItemNotNull]
         public IEnumerable<Diagnostic> ProjectMustBeOutsideWebsite(ICheckerContext context)
         {
             if (FileExists(context, "~/sitecore/shell/sitecore.version.xml"))

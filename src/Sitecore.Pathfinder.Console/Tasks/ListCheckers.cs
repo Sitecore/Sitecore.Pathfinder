@@ -1,8 +1,7 @@
-// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Composition;
 using System.Linq;
-using System.Reflection;
 using Sitecore.Pathfinder.Checking;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Tasks.Building;
@@ -23,19 +22,9 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
-            foreach (var checker in CheckerService.Checkers.OrderBy(c => c.GetMethodInfo().Name))
+            foreach (var checker in CheckerService.Checkers.OrderBy(c => c.Name))
             {
-                var methodInfo = checker.GetMethodInfo();
-                var name = methodInfo.Name;
-
-                var type = methodInfo.DeclaringType;
-                if (type != null)
-                {
-                    var category = type.Name;
-
-                    name += " [" + category + "]";
-                }
-
+                var name = checker.Name + " [" + checker.Category + "]";
                 context.Trace.WriteLine(name);
             }
         }

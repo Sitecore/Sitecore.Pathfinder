@@ -8,6 +8,10 @@
         "sitecore-master": {
             "id": "Sitecore.Master",
             "version": "1.0.0"
+        },
+        "sitecore-core": {
+            "id": "Sitecore.Core",
+            "version": "1.0.0"
         }
     },
 
@@ -387,7 +391,9 @@
             "HabitatCheckers": "disabled",
             "PathfinderProjectCheckers": "disabled",
             "TemplateCheckers": "enabled",
-            "TemplateHelpCheckers": "disabled"
+            "TemplateHelpCheckers": "disabled",
+            "TemplateShouldHaveIcon": "disabled",
+            "DeleteUnusedTemplates": "disabled"
         },
 
         // Habitat project

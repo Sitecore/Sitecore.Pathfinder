@@ -261,12 +261,6 @@ namespace Sitecore.Pathfinder
         }
 
         [NotNull]
-        public Startup WithTraceListeners()
-        {
-            return this;
-        }
-
-        [NotNull]
         public virtual Startup WithWebsiteAssemblyResolver()
         {
             CompositionOptions |= Extensibility.StartupExtensions.CompositionOptions.AddWebsiteAssemblyResolver;

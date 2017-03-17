@@ -4,19 +4,18 @@ using System.Collections.Generic;
 using System.Composition;
 using System.IO;
 using System.Linq;
-using Sitecore.Pathfinder.Checking;
-using Sitecore.Pathfinder.Checking.Checkers;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Languages.Media;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
 
-namespace Sitecore.Pathfinder.Checkers
+namespace Sitecore.Pathfinder.Checking.Checkers
 {
-    [Export(typeof(Checker)), Shared]
+    [Export(typeof(IChecker)), Shared]
     public class FileCheckers : Checker
     {
-        [Check]
-        public IEnumerable<Diagnostic> AvoidLargeMediaFiles(ICheckerContext context)
+        [ItemNotNull, NotNull, Check]
+        public IEnumerable<Diagnostic> AvoidLargeMediaFiles([NotNull] ICheckerContext context)
         {
             return from mediaFile in context.Project.ProjectItems.OfType<MediaFile>()
                 let fileInfo = new FileInfo(mediaFile.Snapshot.SourceFile.AbsoluteFileName)

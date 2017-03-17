@@ -70,7 +70,7 @@ namespace Sitecore.Pathfinder.Building
                 var projectDirectory = PathHelper.Combine(solutionDirectory, PathHelper.NormalizeFilePath(relativePath));
 
                 // create a new host for each project, so they do not interfer
-                var host = new Startup().WithStopWatch().WithTraceListeners().AsInteractive().WithWebsiteAssemblyResolver().WithProjectDirectory(projectDirectory).Start();
+                var host = new Startup().WithStopWatch().AsInteractive().WithWebsiteAssemblyResolver().WithProjectDirectory(projectDirectory).Start();
                 if (host == null)
                 {
                     return -1;

@@ -17,7 +17,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checking.Checkers
 {
-    [Export(typeof(Checker)), Shared]
+    [Export(typeof(IChecker)), Shared]
     public class ArchitectureCheckers : Checker
     {
         [ImportingConstructor]

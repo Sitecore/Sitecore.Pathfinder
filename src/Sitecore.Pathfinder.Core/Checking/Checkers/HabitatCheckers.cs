@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.Composition;
 using System.IO;
 using System.Linq;
-using Sitecore.Pathfinder.Checking;
-using Sitecore.Pathfinder.Checking.Checkers;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -17,9 +15,9 @@ using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 
-namespace Sitecore.Pathfinder.Checkers
+namespace Sitecore.Pathfinder.Checking.Checkers
 {
-    [Export(typeof(Checker)), Shared]
+    [Export(typeof(IChecker)), Shared]
     public class HabitatCheckers : Checker
     {
         protected static readonly Guid StandardRenderingParametersGuid = new Guid("{8CA06D6A-B353-44E8-BC31-B528C7306971}");

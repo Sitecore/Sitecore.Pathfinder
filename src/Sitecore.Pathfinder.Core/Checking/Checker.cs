@@ -11,7 +11,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checking
 {
-    public class Checker
+    public class Checker : IChecker
     {
         protected virtual bool DirectoryExists([NotNull] ICheckerContext context, [NotNull] string directory)
         {

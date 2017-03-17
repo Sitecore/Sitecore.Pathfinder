@@ -40,7 +40,7 @@ namespace Sitecore.Pathfinder.Projects
         private readonly object _databasesSyncObject = new object();
 
         [NotNull, ItemNotNull]
-        private readonly IList<Diagnostic> _diagnostics = new ConcurrentList<Diagnostic>();
+        private readonly IList<Diagnostic> _diagnostics;
 
         [NotNull]
         private readonly Dictionary<string, Language> _languages = new Dictionary<string, Language>();
@@ -78,6 +78,7 @@ namespace Sitecore.Pathfinder.Projects
             Index = index;
 
             _projectItems = new LockableList<IProjectItem>(this);
+            _diagnostics = new SynchronizedList<Diagnostic>();
 
             Options = ProjectOptions.Empty;
         }

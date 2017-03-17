@@ -4,15 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
-using Sitecore.Pathfinder.Checking;
-using Sitecore.Pathfinder.Checking.Checkers;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
 
-namespace Sitecore.Pathfinder.Checkers
+namespace Sitecore.Pathfinder.Checking.Checkers
 {
-    [Export(typeof(Checker)), Shared]
+    [Export(typeof(IChecker)), Shared]
     public class FieldCheckers : Checker
     {
         [Check]

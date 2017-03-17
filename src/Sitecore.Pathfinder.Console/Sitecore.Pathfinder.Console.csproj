@@ -3,6 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp1.1</TargetFramework>
+    <RuntimeIdentifiers>win10-x64;osx.10.11-x64</RuntimeIdentifiers>
     <RootNamespace>Sitecore.Pathfinder</RootNamespace>
     <Authors>Jakob Christensen</Authors>
     <Company>Sitecore</Company>
@@ -13,6 +14,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <TreatSpecificWarningsAsErrors />
+    <OutputPath>E:\Sitecore\Sitecore.Pathfinder\code\bin</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -112,6 +114,21 @@
     <None Update="files\generators\yaml.layout\__name__.master.layout.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="files\references\Sitecore.BusinessComponentLibrary.1.0.0.exports.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="files\references\Sitecore.Core.1.0.0.exports.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="files\references\Sitecore.Master.1.0.0.exports.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="files\references\Sitecore.Pathfinder.Core.1.0.0.exports.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="files\references\Sitecore.Speak.1.0.0.exports.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="help\index.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -197,6 +214,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="help\tasks\write-serialization.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="scc.cmd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="scconfig.json">
