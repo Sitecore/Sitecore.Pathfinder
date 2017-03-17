@@ -13,7 +13,7 @@ using Sitecore.Pathfinder.Tasks.Building;
 namespace Sitecore.Pathfinder.Tasks
 {
     [Export(typeof(ITask)), Shared]
-    public class GenerateFile : BuildTaskBase, IOptionPicker
+    public class GenerateFile : BuildTaskBase
     {
         [ImportingConstructor]
         public GenerateFile([NotNull] IPathMapperService pathMapper) : base("generate-file")
@@ -138,22 +138,19 @@ namespace Sitecore.Pathfinder.Tasks
             return text;
         }
 
-        Dictionary<string, string> IOptionPicker.GetOptions(string optionName, ITaskContext context)
+        [NotNull, OptionValues("GeneratorDirectory")]
+        protected IEnumerable<(string Name, string Value)> GetInformationOptions([NotNull] ITaskContext context)
         {
-            var options = new Dictionary<string, string>();
-
             var generatorsDirectory = Path.Combine(context.Configuration.GetToolsDirectory(), "files\\generators");
             if (!context.FileSystem.DirectoryExists(generatorsDirectory))
             {
-                return options;
+                yield break;
             }
 
             foreach (var directory in context.FileSystem.GetDirectories(generatorsDirectory))
             {
-                options[Path.GetFileName(directory).Replace("-", " ")] = directory;
+                yield return (Path.GetFileName(directory).Replace("-", " "), directory);
             }
-
-            return options;
         }
     }
 }

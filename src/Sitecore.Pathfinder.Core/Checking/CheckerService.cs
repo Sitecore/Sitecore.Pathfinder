@@ -113,10 +113,10 @@ namespace Sitecore.Pathfinder.Checking
             }
         }
 
-        public virtual IEnumerable<Func<ICheckerContext, IEnumerable<Diagnostic>>> GetEnabledCheckers()
+        public virtual IEnumerable<CheckerInfo> GetEnabledCheckers()
         {
             var context = CompositionService.Resolve<ICheckerContext>();
-            return GetCheckers(context).Select(c => c.Checker);
+            return GetCheckers(context);
         }
 
         protected virtual void EnableCheckers([NotNull] ICheckerContext context, [NotNull, ItemNotNull] IEnumerable<CheckerInfo> checkers, [NotNull] string configurationKey)

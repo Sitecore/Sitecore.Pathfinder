@@ -20,6 +20,7 @@
   <ItemGroup>
     <PackageReference Include="ResharperCodeContractNullability" Version="1.0.7" />
     <PackageReference Include="System.Composition" Version="1.0.31" />
+    <PackageReference Include="System.ValueTuple" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -162,22 +163,7 @@
     <None Update="help\tasks\init-project.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="help\tasks\list-checkers.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="help\tasks\list-files.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="help\tasks\list-items.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="help\tasks\list-output.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="help\tasks\list-project-roles.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="help\tasks\list-project.md">
+    <None Update="help\tasks\list-information.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="help\tasks\new-project.md">

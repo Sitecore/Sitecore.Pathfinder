@@ -1,6 +1,7 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Sitecore.Pathfinder.Diagnostics;
@@ -125,16 +126,33 @@ namespace Sitecore.Pathfinder.Tasks
             // get from user using pick list
             if (attribute.HasOptions)
             {
-                var optionPicker = this as IOptionPicker;
-                if (optionPicker != null)
+                var options = new Dictionary<string, string>();
+
+                foreach (var method in property.DeclaringType.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                 {
-                    var options = optionPicker.GetOptions(attribute.Name, context);
+                    var valuesAttribute = method.GetCustomAttribute<OptionValuesAttribute>();
+                    if (valuesAttribute == null || valuesAttribute.Name != property.Name)
+                    {
+                        continue;
+                    }
+
+                    var tuples = (IEnumerable<(string Name, string Value)>)method.Invoke(this, new object[] { context });
+                    foreach (var tuple in tuples)
+                    {
+                        options[tuple.Name] = tuple.Value;
+                    }
+
+                    break;
+                }
+
+                if (options.Any())
+                {
                     do
                     {
                         value = context.Console.Pick(attribute.PromptText + @": ", options);
                         if (!string.IsNullOrEmpty(value) || !attribute.IsRequired)
                         {
-                            return value;          
+                            return value;
                         }
                     }
                     while (true);
