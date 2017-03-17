@@ -139,28 +139,8 @@ namespace Sitecore.Pathfinder.Tasks
             }
         }
 
-        protected virtual void RunTask([NotNull] ITaskContext context, [NotNull] ITask task, LifeCycle lifeCycle)
+        protected virtual void RunTask([NotNull] ITaskContext context, [NotNull] ITask task)
         {
-            if (context.IsAborted && !(task is IIgnoreAbortedTask))
-            {
-                return;
-            }
-
-            if (lifeCycle == LifeCycle.PreRun && !(task is IPreRunTask))
-            {
-                return;
-            }
-
-            if (lifeCycle == LifeCycle.PostRun && !(task is IPostRunTask))
-            {
-                return;
-            }
-
-            if (lifeCycle == LifeCycle.Run && (task is IPreRunTask || task is IPostRunTask))
-            {
-                return;
-            }
-
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
@@ -199,17 +179,7 @@ namespace Sitecore.Pathfinder.Tasks
 
             foreach (var task in tasks)
             {
-                RunTask(context, task, LifeCycle.PreRun);
-            }
-
-            foreach (var task in tasks)
-            {
-                RunTask(context, task, LifeCycle.Run);
-            }
-
-            foreach (var task in tasks)
-            {
-                RunTask(context, task, LifeCycle.PostRun);
+                RunTask(context, task);
             }
 
             if (context.IsAborted)
@@ -222,15 +192,6 @@ namespace Sitecore.Pathfinder.Tasks
             }
 
             PauseAfterRun();
-        }
-
-        protected enum LifeCycle
-        {
-            PreRun,
-
-            Run,
-
-            PostRun
         }
     }
 }

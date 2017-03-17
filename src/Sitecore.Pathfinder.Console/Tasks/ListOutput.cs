@@ -1,8 +1,8 @@
 // © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.Composition;
 using System.Linq;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
@@ -10,9 +10,13 @@ namespace Sitecore.Pathfinder.Tasks
     [Export(typeof(ITask)), Shared]
     public class ListOutput : BuildTaskBase
     {
+        [NotNull]
+        protected IConsoleService Console { get; }
+
         [ImportingConstructor]
-        public ListOutput() : base("list-output")
+        public ListOutput([NotNull] IConsoleService console) : base("list-output")
         {
+            Console = console;
         }
 
         public override void Run(IBuildContext context)

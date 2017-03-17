@@ -263,7 +263,6 @@ namespace Sitecore.Pathfinder
         [NotNull]
         public Startup WithTraceListeners()
         {
-            // Trace.Listeners.Add(new ConsoleTraceListener());
             return this;
         }
 

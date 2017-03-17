@@ -1,6 +1,5 @@
 ﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
 
-using System.Composition;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
 

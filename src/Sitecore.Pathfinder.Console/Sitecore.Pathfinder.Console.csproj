@@ -16,6 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ResharperCodeContractNullability" Version="1.0.7" />
     <PackageReference Include="System.Composition" Version="1.0.31" />
   </ItemGroup>
 

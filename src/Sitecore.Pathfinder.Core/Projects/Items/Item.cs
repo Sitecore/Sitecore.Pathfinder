@@ -1,10 +1,9 @@
-// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+// ï¿½ 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;

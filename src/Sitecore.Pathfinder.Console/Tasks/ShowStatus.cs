@@ -10,7 +10,7 @@ using Sitecore.Pathfinder.Tasks.Building;
 namespace Sitecore.Pathfinder.Tasks
 {
     [Export(typeof(ITask)), Shared]
-    public class ShowStatus : BuildTaskBase, IIgnoreAbortedTask
+    public class ShowStatus : BuildTaskBase
     {
         [ImportingConstructor]
         public ShowStatus([NotNull] IHostService host, [NotNull] IConsoleService console) : base("show-status")

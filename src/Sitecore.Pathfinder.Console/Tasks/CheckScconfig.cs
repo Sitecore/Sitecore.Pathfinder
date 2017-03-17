@@ -12,7 +12,7 @@ using Sitecore.Pathfinder.Tasks.Building;
 namespace Sitecore.Pathfinder.Tasks
 {
     [Export(typeof(ITask)), Shared]
-    public class CheckScconfig : BuildTaskBase, IPreRunTask
+    public class CheckScconfig : BuildTaskBase
     {
         [ImportingConstructor]
         public CheckScconfig([NotNull] IFileSystemService fileSystem, [NotNull] IPipelineService pipelineService) : base("check-scconfig")
