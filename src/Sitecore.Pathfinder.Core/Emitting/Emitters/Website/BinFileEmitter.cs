@@ -1,15 +1,16 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Composition;
 using System.Diagnostics;
 using System.IO;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.BinFiles;
 using Sitecore.Pathfinder.Projects;
 
-namespace Sitecore.Pathfinder.Emitting.Emitters
+namespace Sitecore.Pathfinder.Emitting.Emitters.Website
 {
     [Export(typeof(IEmitter)), Shared]
     public class BinFileEmitter : EmitterBase
@@ -20,12 +21,18 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 
         public override bool CanEmit(IEmitContext context, IProjectItem projectItem)
         {
-            return projectItem is BinFile;
+            if (context.ProjectEmitter is WebsiteProjectEmitter)
+            {
+                return projectItem is BinFile;
+            }
+
+            return false;
         }
 
         public override void Emit(IEmitContext context, IProjectItem projectItem)
         {
             var binFile = (BinFile)projectItem;
+            var projectEmitter = (WebsiteProjectEmitter)context.ProjectEmitter;
 
             var filePath = PathHelper.NormalizeFilePath(binFile.FilePath);
             if (filePath.StartsWith("~\\"))
@@ -35,20 +42,19 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 
             var destinationFileName = PathHelper.Combine(context.Configuration.GetWebsiteDirectory(), filePath);
 
-            if (!CanCopyBinFile(context, binFile, destinationFileName))
+            if (!CanCopyBinFile(context, projectEmitter, binFile, destinationFileName))
             {
                 return;
             }
 
             context.Trace.TraceInformation(Msg.I1011, "Installing bin file", filePath);
 
-            context.FileSystem.CreateDirectory(Path.GetDirectoryName(destinationFileName));
-            context.FileSystem.Copy(projectItem.Snapshot.SourceFile.AbsoluteFileName, destinationFileName, context.ForceUpdate);
+            projectEmitter.Copy(projectItem.Snapshot.SourceFile.AbsoluteFileName, destinationFileName);
         }
 
-        private bool CanCopyBinFile([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] IProjectItem projectItem, [Diagnostics.NotNull] string destinationFileName)
+        private bool CanCopyBinFile([NotNull] IEmitContext context, [NotNull] WebsiteProjectEmitter projectEmitter, [NotNull] IProjectItem projectItem, [NotNull] string destinationFileName)
         {
-            if (!context.FileSystem.FileExists(destinationFileName))
+            if (!projectEmitter.FileSystem.FileExists(destinationFileName))
             {
                 return true;
             }
@@ -78,8 +84,8 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
             return true;
         }
 
-        [Diagnostics.NotNull]
-        private Version GetFileVersion([Diagnostics.NotNull] string fileName)
+        [NotNull]
+        private Version GetFileVersion([NotNull] string fileName)
         {
             var info = FileVersionInfo.GetVersionInfo(fileName);
             return new Version(info.FileMajorPart, info.FileMinorPart, info.FileBuildPart, info.FilePrivatePart);

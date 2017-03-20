@@ -122,6 +122,13 @@ namespace Sitecore.Pathfinder
 
             public const string WebsiteDirectory = "website-directory";
 
+            public static class Output
+            {
+                public const string Directory = "output:directory";
+
+                public const string Format = "output:format";
+            }
+
             public static class BuildProject
             {
                 public const string CompileBinFilesExclude = "build-project:compile-bin-files:exclude";
@@ -131,8 +138,6 @@ namespace Sitecore.Pathfinder
                 public const string ForceUpdate = "build-project:force-update";
 
                 public const string MediaTemplate = "build-project:media:template";
-
-                public const string ParseAllFiles = "build-project:parse-all-files";
 
                 public const string RunValidators = "build-project:run-sitecore-validators";
 
@@ -261,15 +266,6 @@ namespace Sitecore.Pathfinder
 
             public static class ProjectWebsiteMappings
             {
-                public const string ContentFiles = "project-website-mappings:content-files";
-
-                public const string ExcludedFields = "project-website-mappings:excluded-fields";
-
-                public const string FileSearchPattern = "project-website-mappings:file-search-pattern";
-
-                public const string IgnoreDirectories = "project-website-mappings:ignore-directories";
-
-                public const string IgnoreFileNames = "project-website-mappings:ignore-filenames";
             }
 
             public static class PublishDatabases
@@ -548,9 +544,9 @@ namespace Sitecore.Pathfinder
 
         public static class Parsers
         {
-            public const double BinFiles = 9999;
+            public const double BinFiles = 9900;
 
-            public const double ContentFiles = 9000;
+            public const double ContentFiles = 9999;
 
             public const double Items = 3000;
 

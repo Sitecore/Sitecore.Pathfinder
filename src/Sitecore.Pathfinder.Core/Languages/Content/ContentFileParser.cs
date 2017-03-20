@@ -1,9 +1,6 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.Composition;
-using System.IO;
-using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Parsing;
 
 namespace Sitecore.Pathfinder.Languages.Content
@@ -17,16 +14,7 @@ namespace Sitecore.Pathfinder.Languages.Content
 
         public override bool CanParse(IParseContext context)
         {
-            if (string.IsNullOrEmpty(context.FilePath))
-            {
-                return false;
-            }
-
-            // todo: potential incorrect as an extension might match part of another extension
-            var fileExtensions = context.Configuration.GetString(Constants.Configuration.ProjectWebsiteMappings.ContentFiles);
-            var extension = Path.GetExtension(context.Snapshot.SourceFile.AbsoluteFileName);
-
-            return fileExtensions.IndexOf(extension, StringComparison.OrdinalIgnoreCase) >= 0;
+            return !string.IsNullOrEmpty(context.FilePath);
         }
 
         public override void Parse(IParseContext context)

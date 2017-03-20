@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -9,19 +9,17 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
-using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Emitting
 {
-    [Export(typeof(ProjectEmitter))]
-    public class ProjectEmitter : IProjectEmitter
+    public abstract class ProjectEmitterBase : IProjectEmitter
     {
         [NotNull]
         private readonly object _syncObject = new object();
 
         [ImportingConstructor]
-        public ProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] ITraceService traceService, [ImportMany, NotNull, ItemNotNull] IEnumerable<IEmitter> emitters)
+        protected ProjectEmitterBase([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] ITraceService traceService, [ImportMany, NotNull, ItemNotNull] IEnumerable<IEmitter> emitters)
         {
             Configuration = configuration;
             CompositionService = compositionService;
@@ -40,6 +38,8 @@ namespace Sitecore.Pathfinder.Emitting
 
         [NotNull]
         protected ITraceService Trace { get; }
+
+        public abstract bool CanEmit(string format);
 
         public virtual void Emit(IProject project)
         {
@@ -67,57 +67,53 @@ namespace Sitecore.Pathfinder.Emitting
             EmitProjectItems(context, project.ProjectItems, emitters, retries);
         }
 
-        protected virtual void EmitProjectItem([NotNull] IEmitContext context, [NotNull] IProjectItem projectItem, [NotNull, ItemNotNull] List<IEmitter> emitters, [NotNull, ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
+        protected virtual void EmitProjectItem([NotNull] IEmitContext context, [NotNull] IEmitter emitter, [NotNull] IProjectItem projectItem, [NotNull, ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
         {
-            var isEmitted = false;
-            foreach (var emitter in emitters)
+            try
             {
-                if (!emitter.CanEmit(context, projectItem))
+                emitter.Emit(context, projectItem);
+            }
+            catch (RetryableEmitException ex)
+            {
+                lock (_syncObject)
                 {
-                    continue;
-                }
-
-                isEmitted = true;
-                try
-                {
-                    emitter.Emit(context, projectItem);
-                }
-                catch (RetryableEmitException ex)
-                {
-                    lock (_syncObject)
-                    {
-                        retries.Add(new Tuple<IProjectItem, Exception>(projectItem, ex));
-                    }
-                }
-                catch (EmitException ex)
-                {
-                    Trace.TraceError(ex.Msg, ex.Text, ex.FileName, ex.Span, ex.Details);
-                }
-                catch (Exception ex)
-                {
-                    lock (_syncObject)
-                    {
-                        retries.Add(new Tuple<IProjectItem, Exception>(projectItem, ex));
-                    }
+                    retries.Add(new Tuple<IProjectItem, Exception>(projectItem, ex));
                 }
             }
-
-            if (!isEmitted)
+            catch (EmitException ex)
             {
-                // Trace.TraceWarning(Msg.E1039, "No emitter found", projectItem.Snapshot.SourceFile, projectItem.QualifiedName);
+                Trace.TraceError(ex.Msg, ex.Text, ex.FileName, ex.Span, ex.Details);
+            }
+            catch (Exception ex)
+            {
+                lock (_syncObject)
+                {
+                    retries.Add(new Tuple<IProjectItem, Exception>(projectItem, ex));
+                }
             }
         }
 
         protected virtual void EmitProjectItems([NotNull] IEmitContext context, [NotNull, ItemNotNull] IEnumerable<IProjectItem> projectItems, [NotNull, ItemNotNull] List<IEmitter> emitters, [NotNull, ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)
         {
-            // process templates before anything else
-            var templates = projectItems.Where(p => p is Template).ToArray();
-            var nonTemplates = projectItems.Where(p => !(p is Template)).ToArray();
+            var unemitted = new List<IProjectItem>(projectItems);
 
-            // always emit templates synchronized - Sitecore Template Engine does not perform well 
-            foreach (var projectItem in templates)
+            foreach (var emitter in emitters.OrderBy(e => e.Sortorder))
             {
-                EmitProjectItem(context, projectItem, emitters, retries);
+                foreach (var projectItem in projectItems)
+                {
+                    if (!emitter.CanEmit(context, projectItem))
+                    {
+                        continue;
+                    }
+
+                    EmitProjectItem(context, emitter, projectItem, retries);
+                    unemitted.Remove(projectItem);
+                }
+            }
+
+            foreach (var projectItem in unemitted)
+            {
+                Trace.TraceWarning(Msg.E1039, "No emitter found", projectItem.Snapshot.SourceFile, projectItem.QualifiedName);
             }
 
             /*
@@ -134,10 +130,6 @@ namespace Sitecore.Pathfinder.Emitting
                 }
             }
             */
-            foreach (var projectItem in nonTemplates)
-            {
-                EmitProjectItem(context, projectItem, emitters, retries);
-            }
         }
 
         protected virtual void EmitRetry([NotNull] IEmitContext context, [NotNull, ItemNotNull] List<IEmitter> emitters, [NotNull, ItemNotNull] ICollection<Tuple<IProjectItem, Exception>> retries)

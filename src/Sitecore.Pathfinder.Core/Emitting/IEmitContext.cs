@@ -2,7 +2,6 @@
 
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Emitting
@@ -11,11 +10,6 @@ namespace Sitecore.Pathfinder.Emitting
     {
         [NotNull]
         IConfiguration Configuration { get; }
-
-        [NotNull]
-        IFileSystemService FileSystem { get; }
-
-        bool ForceUpdate { get; }
 
         [NotNull]
         IProjectBase Project { get; }

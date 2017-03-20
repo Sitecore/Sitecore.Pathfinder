@@ -1,7 +1,7 @@
 {
     // external references
     "references": {
-        "sitecore-pathfinder-core": {
+        "sitecore-pathfinder-core": { 
             "id": "Sitecore.Pathfinder.Core",
             "version": "1.0.0"
         },
@@ -21,6 +21,11 @@
         "exclude": ".vscode, .git, node_modules, bower_components, packages, roslyn, includes, Properties, obj, scc.cmd, project.json, readme.md, web.config, packages.config"
     },
 
+    "output": {
+        "directory": "./dist",
+        "format": "directory" 
+    },
+
     // old stuff =========================================================================
 
     "website-directory": "",
@@ -38,17 +43,14 @@
 
     // mapping between project files and website files and items
     "project-website-mappings": {
-        // files to copy to website
-        "content-files": ".js, .map, .css, .htm, .ashx, .asmx, .asax, .eot, .svg, .ttf, .woff, .woff2, .less, .php, .ico, .gif",
-
-        // default file search pattern
-        "search-pattern": "*",
-
         // fields to exclude when importing a website
         "excluded-fields": "__Created, __Created by, __Owner, __Revision, __Updated, __Updated by, Blob, Originator, __PathfinderProjectUniqueIds",
 
         // mapping items and files to website when building a project
         "project-to-website": {
+            "default": {
+                "project-directory-to-website-directory": "/ => /"
+            }
         },
 
         // mapping items and files to project when importing a website
@@ -59,7 +61,7 @@
     // tasks
     "build-project": {
         // default build pipeline - show help
-        "tasks": "check-project show-status",
+        "tasks": "check-project publish-project show-status",
 
         // bin files to compile for code generation
         "compile-bin-files": {
@@ -89,9 +91,6 @@
                 "m4v": "/sitecore/templates/System/Media/Unversioned/Movie"
             }
         },
-
-        // if true, all files are parsed and processed, otherwise only mapped files are processed (mapped files are specifed in project-website-mappings:project-to-website)
-        "parse-all-files": true,
 
         "renderings": {
             "create-items-for-partial-views": false
@@ -240,11 +239,6 @@
         "directory": "files/packages"
     },
 
-    "serve-website": {
-        "port": 4200,
-        "default-port": 4200
-    },
-
     "start-website": {
         // specifies the port, e.g. "http://localhost:3000/"
         "port": 3000,
@@ -285,18 +279,6 @@
                 "namespace": "http://www.sitecore.net/pathfinder/content/core"
             }
         }
-    },
-
-    "watch-project": {
-        // specifies which files to watch for
-        "exclude": "**/*.nupkg",
-        "include": "**/*",
-
-        // specifies if the database should be published
-        "publish-database": true,
-
-        // specifies if the website is reset before installing
-        "reset-website": false
     },
 
     "write-exports": {
@@ -366,11 +348,6 @@
         }
     },
 
-    // NuGet source repositories
-    "nuget-repositories": {
-        // "nuget.org": "https://www.nuget.org/api/v2"
-    },
-
     // directories, that hold packages
     "packages": {
         "include-packages-config-as-dependencies": true,
@@ -433,10 +410,6 @@
             "AvoidSpacesInItemNames": "disabled",
             "ArchitectureCheckers": "disabled"
         }
-    },
-
-    "scripts": {
-        "file-extensions": ".ps1 .cmd .bat"
     },
 
     // global search and replace tokens - case-sensitive
@@ -520,16 +493,12 @@
 
     "system": {
         // support for multi-threading
-        "multi-threaded": true,
+        "multi-threaded": false,
 
         // show stack trace on errors
         "show-stack-trace": true,
 
         // show time spent by each task
-        "show-task-time": false,
-
-        "web-requests": {
-            "time-out": 300 // seconds
-        }
+        "show-task-time": false
     }
 }
