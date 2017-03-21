@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<item name="MoveItemsTo" key="moveitemsto" id="{7B0E08E0-6B3B-FAFA-D51A-7BC3DD9F40C3}" tid="{E6830BE9-9720-969D-F0F3-B24881F589E2}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="200" language="en" version="1" template="ribbonlargebuttonresource" parentid="{28C73E45-48DA-D6A0-3E43-39FF44ECA742}">
+  <fields>
+    <field tfid="{16421FFC-9327-83F4-7AE5-F092CAAE6D6D}" key="icon" type="Icon">
+      <content>mail-reply</content>
+    </field>
+    <field tfid="{D1758F07-50EE-4FF5-BA69-C157273F4C92}" key="command" type="Single-Line Text">
+      <content>works.moveItemsTo</content>
+    </field>
+    <field tfid="{845F139D-6FAC-9071-F0EB-B23B03788EC1}" key="text" type="Single-Line Text">
+      <content>Move To</content>
+    </field>
+  </fields>
+</item>

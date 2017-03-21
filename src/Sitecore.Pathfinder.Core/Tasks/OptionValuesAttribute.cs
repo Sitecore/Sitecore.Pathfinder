@@ -5,7 +5,7 @@ using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    [AttributeUsage(AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Method), MeansImplicitUse]
     public class OptionValuesAttribute : Attribute
     {
         public OptionValuesAttribute([NotNull] string name)

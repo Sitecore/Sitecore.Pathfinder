@@ -1,7 +1,7 @@
 {
     // external references
     "references": {
-        "sitecore-pathfinder-core": { 
+        "sitecore-pathfinder-core": {
             "id": "Sitecore.Pathfinder.Core",
             "version": "1.0.0"
         },
@@ -18,12 +18,17 @@
     // comma separated list of files and directories to ignore
     "files": {
         "include": "**/*",
-        "exclude": ".vscode, .git, node_modules, bower_components, packages, roslyn, includes, Properties, obj, scc.cmd, project.json, readme.md, web.config, packages.config"
+        "exclude": "dist, .vscode, .git, node_modules, bower_components, packages, roslyn, includes, Properties, obj, scc.cmd, project.json, readme.md, web.config, packages.config"
+    },
+
+    "items": {
+        "include": "**/*.content.yaml",
+        "exclude": ""
     },
 
     "output": {
         "directory": "./dist",
-        "format": "directory" 
+        "format": "directory"
     },
 
     // old stuff =========================================================================

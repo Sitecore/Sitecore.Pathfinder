@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<item name="Versions" key="versions" id="{93F4236C-707F-EC0C-F967-D497C9543751}" tid="{E99C1F95-5D90-BC56-6494-B4468E33CCC7}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" language="en" version="1" template="ribbongroupresource" parentid="{D4F72FE6-EBFD-E612-9087-17CD2289CD4E}">
+  <fields>
+    <field tfid="{8640887B-4E77-4773-9496-C2937D736A75}" key="text" type="Single-Line Text">
+      <content>Versions</content>
+    </field>
+  </fields>
+</item>

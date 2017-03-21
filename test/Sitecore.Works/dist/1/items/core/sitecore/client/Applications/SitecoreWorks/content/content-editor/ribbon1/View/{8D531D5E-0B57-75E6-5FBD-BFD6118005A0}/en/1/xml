@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<item name="View" key="view" id="{8D531D5E-0B57-75E6-5FBD-BFD6118005A0}" tid="{BCDB5015-EF81-4FE9-2672-693CBACE1C41}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="500" language="en" version="1" template="ribbontabresource" parentid="{C41363A7-00A6-646C-8B1A-D214DD536F76}">
+  <fields>
+    <field tfid="{E1BEBA6A-75EF-AA44-A321-960AC21CCC50}" key="text" type="Single-Line Text">
+      <content>View</content>
+    </field>
+  </fields>
+</item>

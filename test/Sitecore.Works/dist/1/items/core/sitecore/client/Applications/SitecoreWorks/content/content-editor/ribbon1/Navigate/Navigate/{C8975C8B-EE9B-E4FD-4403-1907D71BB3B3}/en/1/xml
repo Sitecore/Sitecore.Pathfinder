@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<item name="Navigate" key="navigate" id="{C8975C8B-EE9B-E4FD-4403-1907D71BB3B3}" tid="{E99C1F95-5D90-BC56-6494-B4468E33CCC7}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" language="en" version="1" template="ribbongroupresource" parentid="{49844675-567E-1267-D319-5E6F0D0E2515}">
+  <fields>
+    <field tfid="{8640887B-4E77-4773-9496-C2937D736A75}" key="text" type="Single-Line Text">
+      <content>Navigate</content>
+    </field>
+  </fields>
+</item>

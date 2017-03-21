@@ -180,6 +180,13 @@ namespace Sitecore.Pathfinder
                 public const string Include = "files:include";
             }
 
+            public static class Items
+            {
+                public const string Exclude = "items:exclude";
+
+                public const string Include = "items:include";
+            }
+
             public static class GenerateCode
             {
                 public const string Imports = "generate-code:t4-imports";

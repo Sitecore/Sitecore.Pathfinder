@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project>
+  <Metadata>
+    <metadata>
+      <PackageName>Pathfinder</PackageName>
+      <Author>Author</Author>
+      <Version>1.0.0</Version>
+      <Revision />
+      <License />
+      <Comment />
+      <Attributes />
+      <Readme />
+      <Publisher />
+      <PostStep />
+      <PackageID />
+    </metadata>
+  </Metadata>
+  <SaveProject>True</SaveProject>
+  <Sources>
+    <xitems>
+      <Entries>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonResource/__Standard Values/{A1755755-6D6A-2736-2A6A-BC05098C0DB8}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonTabResource/__Standard Values/{1B9CF626-DB6B-B6F4-C750-122EBE4FDD7F}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonGroupResource/__Standard Values/{E91DF985-59C3-4CD1-410A-3E65335AB752}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonSmallButtonGroupResource/__Standard Values/{F23BFD2E-3F09-7A3A-EB85-DABA1FEA9CE5}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonLargeButtonResource/__Standard Values/{EFF0F5DE-BDBB-9FC0-9568-2441154FC3C5}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonSmallButtonResource/__Standard Values/{E94FB957-09E5-AF96-A531-8FFFEDCEFDE2}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonCheckBoxResource/__Standard Values/{FED14762-0F18-86C5-5D31-A44076C53CAA}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/templates/Ribbons/{604BFDEA-A074-867B-CCB0-E68ED08E5504}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/Write/Save/{B18EBF6B-B0CD-35ED-AC94-9CC1E4EB0598}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/Write/{82E95401-6ED3-5405-B9DF-B26FD9B5625E}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/View/Dashboard/{39DFAD32-C2E7-2F72-0A32-BBD9F632BEA0}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/View/Content/{DD435D33-47D6-7468-81A9-3CD17E2F3A48}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/View/System/{58F9E625-B3C3-4E4F-A544-4DE1E6466CC3}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/View/Preview/{C58B6E95-AA9D-FC7F-98AC-A2937B666CC9}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/View/{6C91426D-5399-A7C4-27DF-0AA63A10BB9D}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/New/Add/{63D646B1-3A8E-A928-7DF1-2D010615D7F2}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/New/NewFolder/{4DAB2D16-06F8-87A0-9FB5-8CD7B50FD4E0}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/New/Duplicate/{86AD7FB4-DCD3-7A9D-22FC-88D83A6A6F0A}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/New/{69A60154-962D-A6EB-3C3C-135C0A50FD95}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/Actions/CopyItemsTo/{29B90E04-A0D5-1052-9E9C-7BD55DAD84A8}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/Actions/MoveItemsTo/{7B0E08E0-6B3B-FAFA-D51A-7BC3DD9F40C3}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/Actions/Delete/{F10084F3-24F0-7926-5C55-9D8D30329FA0}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/Actions/Rename/{FBB134CE-2617-B52A-6B43-BB2F15CA2600}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/Actions/{28C73E45-48DA-D6A0-3E43-39FF44ECA742}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/{4C7CC86A-21C9-622A-0D34-313461767613}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Navigate/Navigate/References/{66BC0780-D340-D262-1B5C-A2A936BF7650}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Navigate/Navigate/Referrers/{894CB032-AA96-2A46-3CB0-22C31FA8BCD6}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Navigate/Navigate/Template/{8FFD43AA-FD00-12E8-6EB6-FCDEAE517965}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Navigate/Navigate/{C8975C8B-EE9B-E4FD-4403-1907D71BB3B3}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Navigate/History/Back/{126326DD-FCFA-8B18-9394-2012196AE768}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Navigate/History/Forward/{1B698C76-C6CB-3604-9E9F-D7CF80733231}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Navigate/History/{5FDD38DD-B1F3-89EB-2EE3-CA62769C30CD}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Navigate/Search/Search/{A379B393-B3F4-8517-0C06-6E233FDA633C}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Navigate/Search/{01C4A4F5-5CDB-7423-82B7-CD6BF8138164}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Navigate/{49844675-567E-1267-D319-5E6F0D0E2515}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Publish/Items/Publish/{ADCD62FB-2484-5997-2FAF-378DDF7CDA8E}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Publish/Items/{C0C2C4B9-B79A-CBB2-6B0A-04A7FB20C0D8}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Publish/Database/Incremental/{B9535A4B-1312-095C-16F6-E464D008DD0D}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Publish/Database/Smart/{CC474180-EF2C-8683-A6A0-3CA732A2D521}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Publish/Database/{08ACA4A1-2827-8121-3819-5BECB9710E49}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Publish/{047D6E37-5D5D-9C72-7D2F-1D5F531D123F}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Versions/Versions/AddVersion/{BBCF7DA6-F11D-D2E8-8612-8387FB60384A}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Versions/Versions/RemoveVersion/{78786808-62F4-E867-3C44-7693D360FAAE}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Versions/Versions/{93F4236C-707F-EC0C-F967-D497C9543751}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Versions/Translate/TranslateItem/{E7A9A903-C6AB-BBD7-F08B-4919D3A0DD08}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Versions/Translate/{85590F92-C5A2-937F-0DB6-945D17B42CE7}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Versions/{D4F72FE6-EBFD-E612-9087-17CD2289CD4E}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/View/View/RawValues/{0DA58E95-EC44-33ED-11F0-D0988B9C6615}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/View/View/{13B9237E-FDB9-81B5-D4E4-FC7AC20D798A}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/View/{8D531D5E-0B57-75E6-5FBD-BFD6118005A0}/invariant/0</x-item>
+        <x-item>/core/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/{C41363A7-00A6-646C-8B1A-D214DD536F76}/invariant/0</x-item>
+      </Entries>
+      <SkipVersions>False</SkipVersions>
+      <Converter>
+        <ItemToEntryConverter>
+          <Transforms />
+        </ItemToEntryConverter>
+      </Converter>
+      <Include />
+      <Exclude />
+      <Name>Items</Name>
+    </xitems>
+    <xfiles>
+      <Entries>
+        <x-item>/javascript.js</x-item>
+        <x-item>/index.html</x-item>
+      </Entries>
+      <Converter>
+        <FileToEntryConverter>
+          <Root />
+          <Transforms />
+        </FileToEntryConverter>
+      </Converter>
+      <Include />
+      <Exclude />
+      <Name>Files</Name>
+    </xfiles>
+  </Sources>
+  <Converter>
+    <TrivialConverter>
+      <Transforms />
+    </TrivialConverter>
+  </Converter>
+  <Include />
+  <Exclude />
+  <Name />
+</project>

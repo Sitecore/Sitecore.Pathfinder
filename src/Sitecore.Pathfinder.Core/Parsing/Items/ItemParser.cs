@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
+using Sitecore.Pathfinder.Configuration;
+using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -14,27 +16,17 @@ namespace Sitecore.Pathfinder.Parsing.Items
     [Export(typeof(IParser)), Shared]
     public class ItemParser : ParserBase
     {
-        [NotNull, ItemNotNull]
-        private static readonly string[] FileExtensions =
-        {
-            ".item.xml",
-            ".content.xml",
-            ".layout.xml",
-            ".item.json",
-
-            // ".content.json",
-            ".layout.json",
-            ".item.yaml",
-            ".content.yaml",
-            ".layout.yaml"
-        };
-
         [ImportingConstructor]
-        public ItemParser([NotNull] ISchemaService schemaService, [ImportMany, NotNull, ItemNotNull] IEnumerable<ITextNodeParser> textNodeParsers) : base(Constants.Parsers.Items)
+        public ItemParser([NotNull] IConfiguration configuration, [NotNull] ISchemaService schemaService, [ImportMany, NotNull, ItemNotNull] IEnumerable<ITextNodeParser> textNodeParsers) : base(Constants.Parsers.Items)
         {
             SchemaService = schemaService;
             TextNodeParsers = textNodeParsers;
+
+            PathMatcher = new PathMatcher(configuration.GetString(Constants.Configuration.Items.Include), configuration.GetString(Constants.Configuration.Items.Exclude));
         }
+
+        [NotNull]
+        protected PathMatcher PathMatcher { get; }
 
         [NotNull]
         protected ISchemaService SchemaService { get; }
@@ -45,7 +37,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
         public override bool CanParse(IParseContext context)
         {
             var fileName = context.Snapshot.SourceFile.AbsoluteFileName;
-            return FileExtensions.Any(extension => fileName.EndsWith(extension, StringComparison.OrdinalIgnoreCase)) && context.Snapshot is ITextSnapshot;
+            return context.Snapshot is ITextSnapshot && PathMatcher.IsMatch(fileName);
         }
 
         public override void Parse(IParseContext context)

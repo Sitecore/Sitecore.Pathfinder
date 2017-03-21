@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<item name="Translate" key="translate" id="{85590F92-C5A2-937F-0DB6-945D17B42CE7}" tid="{E99C1F95-5D90-BC56-6494-B4468E33CCC7}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="200" language="da" version="1" template="ribbongroupresource" parentid="{D4F72FE6-EBFD-E612-9087-17CD2289CD4E}">
+  <fields>
+    <field tfid="{8640887B-4E77-4773-9496-C2937D736A75}" key="text" type="Single-Line Text">
+      <content>Oversæt</content>
+    </field>
+  </fields>
+</item>

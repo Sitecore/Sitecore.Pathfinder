@@ -21,6 +21,9 @@ namespace Sitecore.Pathfinder.Tasks
             Shortcut = "p";
         }
 
+        [NotNull, Option("format", Alias = "f", IsRequired = true, PromptText = "Select output format", HelpText = "Output format", PositionalArg = 1, HasOptions = true, DefaultValue = "default")]
+        public string Format { get; set; } = "directory";
+
         [ItemNotNull, NotNull]
         protected IEnumerable<IProjectEmitter> ProjectEmitters { get; }
 
@@ -28,7 +31,11 @@ namespace Sitecore.Pathfinder.Tasks
         {
             context.Trace.TraceInformation(Msg.D1029, "Publishing project...");
 
-            var format = context.Configuration.GetString(Constants.Configuration.Output.Format, "directory");
+            var format = Format;
+            if (format == "default")
+            {
+                format = context.Configuration.GetString(Constants.Configuration.Output.Format, "directory");
+            }
 
             var projectEmitters = ProjectEmitters.Where(p => p.CanEmit(format)).ToArray();
             if (!projectEmitters.Any())
@@ -43,6 +50,13 @@ namespace Sitecore.Pathfinder.Tasks
             {
                 projectEmitter.Emit(project);
             }
+        }
+
+        [NotNull, OptionValues("Format")]
+        protected IEnumerable<(string Name, string Value)> GetFormatOptions([NotNull] ITaskContext context)
+        {
+            yield return ("Directory", "directory");
+            yield return ("Package", "package");
         }
     }
 }

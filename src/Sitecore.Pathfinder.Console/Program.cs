@@ -7,7 +7,7 @@ namespace Sitecore.Pathfinder
 {
     internal class Program
     {
-        private static int Main([NotNull, ItemNotNull] string[] args)
+        public static int Main([NotNull, ItemNotNull] string[] args)
         {
             var host = new Startup().WithStopWatch().AsInteractive().WithWebsiteAssemblyResolver().Start();
             if (host == null)

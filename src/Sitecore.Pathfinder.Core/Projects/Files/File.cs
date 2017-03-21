@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Diagnostics;
 using System.IO;
@@ -36,6 +36,9 @@ namespace Sitecore.Pathfinder.Projects.Files
 
         [NotNull]
         public string FilePath { get; }
+
+        /// <summary>Indicates if the item or template will saved to the database during installation.</summary>
+        public bool IsEmittable { get; set; } = true;
 
         public override string QualifiedName => Snapshot.SourceFile.AbsoluteFileName;
 

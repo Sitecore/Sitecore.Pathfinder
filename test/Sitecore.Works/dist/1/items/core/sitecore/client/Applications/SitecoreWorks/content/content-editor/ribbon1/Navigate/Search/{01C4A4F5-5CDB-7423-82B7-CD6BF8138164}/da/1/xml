@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<item name="Search" key="search" id="{01C4A4F5-5CDB-7423-82B7-CD6BF8138164}" tid="{E99C1F95-5D90-BC56-6494-B4468E33CCC7}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="300" language="da" version="1" template="ribbongroupresource" parentid="{49844675-567E-1267-D319-5E6F0D0E2515}">
+  <fields>
+    <field tfid="{8640887B-4E77-4773-9496-C2937D736A75}" key="text" type="Single-Line Text">
+      <content>Søg</content>
+    </field>
+  </fields>
+</item>
