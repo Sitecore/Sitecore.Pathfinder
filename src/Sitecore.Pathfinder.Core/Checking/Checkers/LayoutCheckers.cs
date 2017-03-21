@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.Renderings;
 using Sitecore.Pathfinder.Projects;
@@ -13,8 +14,8 @@ namespace Sitecore.Pathfinder.Checking.Checkers
     [Export(typeof(IChecker)), Shared]
     public class LayoutCheckers : Checker
     {
-        [Check]
-        public IEnumerable<Diagnostic> PlaceholdersShouldHaveAPlaceholderSettingsName(ICheckerContext context)
+        [ItemNotNull, NotNull, Check]
+        public IEnumerable<Diagnostic> PlaceholdersShouldHaveAPlaceholderSettingsName([NotNull] ICheckerContext context)
         {
             return from rendering in context.Project.ProjectItems.OfType<Rendering>()
                 from placeholder in rendering.Placeholders
@@ -22,8 +23,8 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                 select Warning(Msg.C1105, "Placeholders should have a Placeholder Settings item", new StringTextNode("Placeholder(\""+ placeholder + "\")", rendering.Snapshot), $"To fix, create a '/sitecore/layout/Placeholder Settings/{placeholder}' item");
         }
 
-        [Check]
-        public IEnumerable<Diagnostic> RenderingNameAndFileNameShouldMatch(ICheckerContext context)
+        [ItemNotNull, NotNull, Check]
+        public IEnumerable<Diagnostic> RenderingNameAndFileNameShouldMatch([NotNull] ICheckerContext context)
         {
             return from rendering in context.Project.ProjectItems.OfType<Rendering>()
                 where rendering.ItemName != PathHelper.GetFileNameWithoutExtensions(rendering.FilePath)

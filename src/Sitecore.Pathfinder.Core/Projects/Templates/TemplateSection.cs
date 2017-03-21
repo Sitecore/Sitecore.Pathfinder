@@ -17,8 +17,8 @@ namespace Sitecore.Pathfinder.Projects.Templates
             IconProperty = NewSourceProperty("Icon", string.Empty);
             SectionNameProperty = NewSourceProperty("Name", string.Empty);
             SortorderProperty = NewSourceProperty("Sortorder", 0);
-            Fields = new LockableList<TemplateField>(this);
 
+            Fields = new LockableList<TemplateField>(this);
             Uri = new ProjectItemUri(template.DatabaseName, guid);
         }
 

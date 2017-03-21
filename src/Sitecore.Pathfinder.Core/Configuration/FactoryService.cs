@@ -24,7 +24,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Configuration
 {
-    [Export(typeof(IFactoryService))]
+    [Export(typeof(IFactoryService)), Shared]
     public class FactoryService : IFactoryService
     {
         [ImportingConstructor]

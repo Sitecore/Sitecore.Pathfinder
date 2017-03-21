@@ -1,6 +1,5 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
@@ -32,8 +31,6 @@ namespace Sitecore.Pathfinder.Checking
     public class CheckerService : ICheckerService
     {
         private const string BasedOn = "based-on";
-
-        // Func<ICheckerContext, IEnumerable<Diagnostic>>>
 
         [ImportingConstructor]
         public CheckerService([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull, ItemNotNull, ImportMany] IEnumerable<IChecker> checkers)

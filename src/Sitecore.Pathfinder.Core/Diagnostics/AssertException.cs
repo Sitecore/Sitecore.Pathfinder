@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using Sitecore.Patfhfinder.Diagnostics;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Diagnostics

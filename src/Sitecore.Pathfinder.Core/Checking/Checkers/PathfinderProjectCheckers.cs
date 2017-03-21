@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Composition;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Checking.Checkers
@@ -9,8 +10,8 @@ namespace Sitecore.Pathfinder.Checking.Checkers
     [Export(typeof(IChecker)), Shared]
     public class PathfinderProjectCheckers : Checker
     {
-        [Check]
-        protected IEnumerable<Diagnostic> MissingCoreSitecoreDirectory(ICheckerContext context)
+        [ItemNotNull, NotNull, Check]
+        protected IEnumerable<Diagnostic> MissingCoreSitecoreDirectory([NotNull] ICheckerContext context)
         {
             if (DirectoryExists(context, "~/items/core") && !DirectoryExists(context, "~/items/core/sitecore"))
             {
@@ -18,8 +19,8 @@ namespace Sitecore.Pathfinder.Checking.Checkers
             }
         }
 
-        [Check]
-        protected IEnumerable<Diagnostic> MissingItemsDirectory(ICheckerContext context)
+        [ItemNotNull, NotNull, Check]
+        protected IEnumerable<Diagnostic> MissingItemsDirectory([NotNull] ICheckerContext context)
         {
             if (!DirectoryExists(context, "~/items"))
             {
@@ -27,8 +28,8 @@ namespace Sitecore.Pathfinder.Checking.Checkers
             }
         }
 
-        [Check]
-        protected IEnumerable<Diagnostic> MissingMasterOrCoreItemsDirectory(ICheckerContext context)
+        [ItemNotNull, NotNull, Check]
+        protected IEnumerable<Diagnostic> MissingMasterOrCoreItemsDirectory([NotNull] ICheckerContext context)
         {
             if (!DirectoryExists(context, "~/items/master") && !DirectoryExists(context, "~/items/core"))
             {
@@ -36,8 +37,8 @@ namespace Sitecore.Pathfinder.Checking.Checkers
             }
         }
 
-        [Check]
-        protected IEnumerable<Diagnostic> MissingMasterSitecoreDirectory(ICheckerContext context)
+        [ItemNotNull, NotNull, Check]
+        protected IEnumerable<Diagnostic> MissingMasterSitecoreDirectory([NotNull] ICheckerContext context)
         {
             if (DirectoryExists(context, "~/items/master") && !DirectoryExists(context, "~/items/master/sitecore"))
             {
@@ -45,8 +46,8 @@ namespace Sitecore.Pathfinder.Checking.Checkers
             }
         }
 
-        [Check]
-        protected IEnumerable<Diagnostic> MissingSccCmdFile(ICheckerContext context)
+        [ItemNotNull, NotNull, Check]
+        protected IEnumerable<Diagnostic> MissingSccCmdFile([NotNull] ICheckerContext context)
         {
             if (!FileExists(context, "~/scc.cmd"))
             {
@@ -54,8 +55,8 @@ namespace Sitecore.Pathfinder.Checking.Checkers
             }
         }
 
-        [Check]
-        protected IEnumerable<Diagnostic> MissingScconfigJsonFile(ICheckerContext context)
+        [ItemNotNull, NotNull, Check]
+        protected IEnumerable<Diagnostic> MissingScconfigJsonFile([NotNull] ICheckerContext context)
         {
             if (!FileExists(context, "~/scconfig.json"))
             {
@@ -63,8 +64,8 @@ namespace Sitecore.Pathfinder.Checking.Checkers
             }
         }
 
-        [Check]
-        protected IEnumerable<Diagnostic> MissingSitecoreProjectDirectory(ICheckerContext context)
+        [ItemNotNull, NotNull, Check]
+        protected IEnumerable<Diagnostic> MissingSitecoreProjectDirectory([NotNull] ICheckerContext context)
         {
             if (!DirectoryExists(context, "~/sitecore.project"))
             {
@@ -72,8 +73,8 @@ namespace Sitecore.Pathfinder.Checking.Checkers
             }
         }
 
-        [Check]
-        protected IEnumerable<Diagnostic> MissingSitecoreProjectSchemasDirectory(ICheckerContext context)
+        [ItemNotNull, NotNull, Check]
+        protected IEnumerable<Diagnostic> MissingSitecoreProjectSchemasDirectory([NotNull] ICheckerContext context)
         {
             if (!DirectoryExists(context, "~/sitecore.project/schemas"))
             {
@@ -81,8 +82,8 @@ namespace Sitecore.Pathfinder.Checking.Checkers
             }
         }
 
-        [Check]
-        protected IEnumerable<Diagnostic> MissingWebSitecoreDirectory(ICheckerContext context)
+        [ItemNotNull, NotNull, Check]
+        protected IEnumerable<Diagnostic> MissingWebSitecoreDirectory([NotNull] ICheckerContext context)
         {
             if (DirectoryExists(context, "~/items/web") && !DirectoryExists(context, "~/items/web/sitecore"))
             {
@@ -90,8 +91,8 @@ namespace Sitecore.Pathfinder.Checking.Checkers
             }
         }
 
-        [Check]
-        protected IEnumerable<Diagnostic> MissingWwwRootDirectory(ICheckerContext context)
+        [ItemNotNull, NotNull, Check]
+        protected IEnumerable<Diagnostic> MissingWwwRootDirectory([NotNull] ICheckerContext context)
         {
             if (!DirectoryExists(context, "~/wwwroot"))
             {

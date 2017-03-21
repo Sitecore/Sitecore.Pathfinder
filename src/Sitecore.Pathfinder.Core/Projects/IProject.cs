@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects

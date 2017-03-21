@@ -10,8 +10,8 @@ namespace Sitecore.Pathfinder.Checking.Checkers
     [Export(typeof(IChecker)), Shared]
     public class ProjectCheckers : Checker
     {
-        [Check, ItemNotNull]
-        public IEnumerable<Diagnostic> ProjectMustBeOutsideWebsite(ICheckerContext context)
+        [ItemNotNull, NotNull, Check]
+        public IEnumerable<Diagnostic> ProjectMustBeOutsideWebsite([NotNull] ICheckerContext context)
         {
             if (FileExists(context, "~/sitecore/shell/sitecore.version.xml"))
             {

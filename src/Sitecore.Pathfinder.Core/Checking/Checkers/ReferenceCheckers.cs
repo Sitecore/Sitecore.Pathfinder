@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.References;
 
@@ -11,8 +12,8 @@ namespace Sitecore.Pathfinder.Checking.Checkers
     [Export(typeof(IChecker)), Shared]
     public class ReferenceCheckers : Checker
     {
-        [Check]
-        public IEnumerable<Diagnostic> ReferenceNotFound(ICheckerContext context)
+        [ItemNotNull, NotNull, Check]
+        public IEnumerable<Diagnostic> ReferenceNotFound([NotNull] ICheckerContext context)
         {
             return from projectItem in context.Project.ProjectItems
                 from reference in projectItem.References

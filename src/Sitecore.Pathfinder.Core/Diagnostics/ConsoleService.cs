@@ -9,7 +9,7 @@ using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Diagnostics
 {
-    [Export(typeof(IConsoleService))]
+    [Export(typeof(IConsoleService)), Shared]
     public class ConsoleService : IConsoleService
     {
         [ImportingConstructor]

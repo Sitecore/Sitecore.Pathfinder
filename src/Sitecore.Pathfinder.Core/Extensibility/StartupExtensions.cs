@@ -225,7 +225,7 @@ namespace Sitecore.Pathfinder.Extensibility
     internal class ConfigurationExportDescriptorProvider : ExportDescriptorProvider
     {
         [NotNull]
-        readonly IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
         public ConfigurationExportDescriptorProvider([NotNull] IConfiguration configuration)
         {

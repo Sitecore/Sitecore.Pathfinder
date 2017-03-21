@@ -12,7 +12,7 @@ using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Configuration
 {
-    [Export(typeof(IConfigurationService))]
+    [Export(typeof(IConfigurationService)), Shared]
     public class ConfigurationService : IConfigurationService
     {
         [ImportingConstructor]

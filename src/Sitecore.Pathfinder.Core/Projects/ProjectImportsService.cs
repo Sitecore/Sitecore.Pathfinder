@@ -12,7 +12,7 @@ using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Projects
 {
-    [Export]
+    [Export, Shared]
     public class ProjectImportsService
     {
         [ImportingConstructor]

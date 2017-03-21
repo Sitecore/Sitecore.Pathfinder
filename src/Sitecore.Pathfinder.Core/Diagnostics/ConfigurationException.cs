@@ -2,7 +2,6 @@
 
 using System;
 using System.ComponentModel;
-using Sitecore.Patfhfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Diagnostics
 {

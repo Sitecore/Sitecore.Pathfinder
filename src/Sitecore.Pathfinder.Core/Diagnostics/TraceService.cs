@@ -19,7 +19,7 @@ namespace Sitecore.Pathfinder.Diagnostics
         Error
     }
 
-    [Export(typeof(ITraceService))]
+    [Export(typeof(ITraceService)), Shared]
     public class TraceService : ITraceService
     {
         [ImportingConstructor]

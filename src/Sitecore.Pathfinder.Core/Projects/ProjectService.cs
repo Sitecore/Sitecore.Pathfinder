@@ -11,7 +11,7 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Projects
 {
-    [Export(typeof(IProjectService))]
+    [Export(typeof(IProjectService)), Shared]
     public class ProjectService : IProjectService
     {
         [ImportingConstructor]

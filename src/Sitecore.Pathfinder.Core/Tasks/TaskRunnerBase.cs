@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
@@ -38,15 +37,6 @@ namespace Sitecore.Pathfinder.Tasks
             if (string.IsNullOrEmpty(tasks))
             {
                 tasks = context.Configuration.GetString(Constants.Configuration.Run);
-            }
-
-            // check if the is a script task
-            if (IsScriptTask(context, tasks))
-            {
-                return new List<string>
-                {
-                    tasks
-                };
             }
 
             var taskList = tasks;
@@ -91,44 +81,30 @@ namespace Sitecore.Pathfinder.Tasks
 
             foreach (var taskName in taskNames)
             {
-                ITask task;
-                if (IsScriptTask(context, taskName))
+                var task = Tasks.FirstOrDefault(t => string.Equals(t.TaskName, taskName, StringComparison.OrdinalIgnoreCase));
+
+                // find task by alias
+                if (task == null)
                 {
-                    task = Tasks.OfType<IScriptTask>().First().With(taskName);
+                    task = Tasks.FirstOrDefault(t => string.Equals(t.Alias, taskName, StringComparison.OrdinalIgnoreCase));
                 }
-                else
+
+                // find task by shortcut
+                if (task == null)
                 {
-                    task = Tasks.FirstOrDefault(t => string.Equals(t.TaskName, taskName, StringComparison.OrdinalIgnoreCase));
+                    task = Tasks.FirstOrDefault(t => string.Equals(t.Shortcut, taskName, StringComparison.OrdinalIgnoreCase));
+                }
 
-                    // find task by alias
-                    if (task == null)
-                    {
-                        task = Tasks.FirstOrDefault(t => string.Equals(t.Alias, taskName, StringComparison.OrdinalIgnoreCase));
-                    }
-
-                    // find task by shortcut
-                    if (task == null)
-                    {
-                        task = Tasks.FirstOrDefault(t => string.Equals(t.Shortcut, taskName, StringComparison.OrdinalIgnoreCase));
-                    }
-
-                    if (task == null)
-                    {
-                        context.Trace.TraceError(Msg.I1006, Texts.Task_not_found__Skipping, taskName);
-                        return null;
-                    }
+                if (task == null)
+                {
+                    context.Trace.TraceError(Msg.I1006, Texts.Task_not_found__Skipping, taskName);
+                    return null;
                 }
 
                 tasks.Add(task);
             }
 
             return tasks;
-        }
-
-        protected virtual bool IsScriptTask([NotNull] ITaskContext context, [NotNull] string taskName)
-        {
-            var extension = Path.GetExtension(taskName);
-            return !string.IsNullOrEmpty(extension) && context.Configuration.GetString(Constants.Configuration.Scripts.Extensions).IndexOf(extension, StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         protected virtual void PauseAfterRun()

@@ -21,7 +21,6 @@ namespace Sitecore.Pathfinder.Tasks
             FileSystem = fileSystem;
         }
 
-        [NotNull]
         public ICompositionService CompositionService { get; }
 
         public IConfiguration Configuration { get; }

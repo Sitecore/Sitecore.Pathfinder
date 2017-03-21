@@ -23,8 +23,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Website.Good", "test\Websit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Website.Bad", "test\Website.Bad\Website.Bad.csproj", "{0509C6A8-74D0-4F23-ABF1-2FFB16E9E467}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "features", "features", "{5325B39E-6883-47AA-BD17-291B7608E834}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{2913B82E-EAB7-452F-AB67-97DD577A7439}"
 	ProjectSection(SolutionItems) = preProject
 		docs\01. Home.md = docs\01. Home.md

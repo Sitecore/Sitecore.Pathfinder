@@ -5,7 +5,6 @@ using System.Composition;
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility;
-using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Serialization
@@ -31,7 +30,6 @@ namespace Sitecore.Pathfinder.Languages.Serialization
         public override ISnapshot Load(SnapshotParseContext snapshotParseContext, ISourceFile sourceFile)
         {
             var textSnapshot = CompositionService.Resolve<SerializationTextSnapshot>().With(sourceFile);
-
             return textSnapshot;
         }
     }
