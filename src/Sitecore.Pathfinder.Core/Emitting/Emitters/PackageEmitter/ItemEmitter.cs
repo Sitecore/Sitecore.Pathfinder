@@ -1,6 +1,7 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Composition;
+using Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 
@@ -21,14 +22,13 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.PackageEmitter
         public override void Emit(IEmitContext context, IProjectItem projectItem)
         {
             var item = (Item)projectItem;
+            var sourcePropertyBag = (ISourcePropertyBag)item;
             var projectEmitter = (PackageProjectEmitter)context.ProjectEmitter;
 
-            if (!item.IsEmittable)
+            if (item.IsEmittable || sourcePropertyBag.GetValue<string>("__origin_reason") == nameof(CreateItemsFromTemplates))
             {
-                return;
+                projectEmitter.AddItem(context, item);
             }
-
-            projectEmitter.AddItem(context, item);
         }
     }
 }
