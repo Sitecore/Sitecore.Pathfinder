@@ -86,7 +86,7 @@ namespace Sitecore.Pathfinder.Emitting
             }
             catch (Exception ex)
             {
-                _lock (_syncObject)
+                lock (_syncObject)
                 {
                     retries.Add(new Tuple<IProjectItem, Exception>(projectItem, ex));
                 }

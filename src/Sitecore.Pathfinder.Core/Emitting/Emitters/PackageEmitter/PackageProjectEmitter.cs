@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -13,6 +12,7 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.IO.Zip;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 
@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.PackageEmitter
         public IFileSystemService FileSystem { get; }
 
         [NotNull]
-        public ZipArchive Zip { get; protected set; }
+        public ZipWriter Zip { get; protected set; }
 
         public virtual void AddFile([NotNull] IEmitContext context, [NotNull] string sourceFileAbsoluteFileName, [NotNull] string filePath)
         {
@@ -51,26 +51,23 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.PackageEmitter
 
             context.Trace.TraceInformation(Msg.I1011, "Publishing", "~\\" + fileName);
 
-            var entry = Zip.CreateEntry("files\\" + fileName);
-            using (var sourceStream = new FileStream(sourceFileAbsoluteFileName, FileMode.Open))
-            {
-                using (var targetStream = entry.Open())
-                {
-                    sourceStream.CopyTo(targetStream);
-                    targetStream.Dispose();
-                }
-            }
+            Zip.AddEntry("files/" + NormalizeZipPath(fileName), sourceFileAbsoluteFileName);
 
-            entry = Zip.CreateEntry("properties\\files\\" + fileName);
-            using (var stream = entry.Open())
+            using (var stream = new MemoryStream())
             {
                 using (var writer = new StreamWriter(stream))
                 {
                     writer.WriteLine("type=file");
                 }
 
-                stream.Dispose();
+                Zip.AddEntry("properties/files/" + NormalizeZipPath(fileName), stream.ToArray());
             }
+        }
+
+        [NotNull]
+        private string NormalizeZipPath([NotNull] string fileName)
+        {
+            return fileName.Replace("\\", "/").TrimEnd('/');
         }
 
         public virtual void AddItem([NotNull] IEmitContext context, [NotNull] Item item)
@@ -103,8 +100,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.PackageEmitter
                 foreach (var version in versions)
                 {
                     var fileName = item.DatabaseName + PathHelper.NormalizeFilePath(item.ItemIdOrPath) + "\\" + item.Uri.Guid.Format() + "\\" + language.LanguageName + "\\" + version.Number + "\\xml";
-                    var entry = Zip.CreateEntry("items\\" + fileName);
-                    using (var stream = entry.Open())
+                    using (var stream = new MemoryStream())
                     {
                         using (var writer = new StreamWriter(stream, Encoding.UTF8))
                         {
@@ -147,12 +143,11 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.PackageEmitter
                                 output.WriteEndElement();
                             }
 
-                            stream.Dispose();
+                            Zip.AddEntry("items/" + NormalizeZipPath(fileName), stream.ToArray());
                         }
                     }
 
-                    entry = Zip.CreateEntry("properties\\items\\" + fileName);
-                    using (var stream = entry.Open())
+                    using (var stream = new MemoryStream())
                     {
                         using (var writer = new StreamWriter(stream, Encoding.UTF8))
                         {
@@ -164,7 +159,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.PackageEmitter
                             writer.WriteLine("fieldproperties=" + string.Join("|", item.Fields.GetFields(language, version).Select(f => f.FieldId.Format() + ":" + (f.TemplateField.Shared ? "Shared" : f.TemplateField.Unversioned ? "Unversioned" : "Versioned"))));
                         }
 
-                        stream.Dispose();
+                        Zip.AddEntry("properties/items/" + NormalizeZipPath(fileName), stream.ToArray());
                     }
                 }
             }
@@ -178,112 +173,100 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.PackageEmitter
         public override void Emit(IProject project)
         {
             var outputDirectory = PathHelper.Combine(Configuration.GetProjectDirectory(), Configuration.GetString(Constants.Configuration.Output.Directory));
-            var fileName = Path.Combine(outputDirectory, "package.zip");
+            var fileName = Path.Combine(outputDirectory, "sitecore.package.zip");
 
             FileSystem.CreateDirectoryFromFileName(fileName);
 
-            using (var fileStream = new FileStream(fileName, FileMode.Create))
+            using (Zip = new ZipWriter(fileName))
             {
+                base.Emit(project);
 
-                using (Zip = new ZipArchive(new GZipStream(fileStream, CompressionMode.Compress, true), ZipArchiveMode.Create, true))
-                {
-                    base.Emit(project);
-
-                    AddProject();
-                    AddVersion();
-                    AddMetaData();
-                }
+                AddProject();
+                AddVersion();
+                AddMetaData();
             }
         }
 
         protected virtual void AddMetaData()
         {
-            var entry = Zip.CreateEntry("metadata\\sc_author.txt");
-            using (var stream = entry.Open())
+            using (var stream = new MemoryStream())
             {
                 using (var writer = new StreamWriter(stream, Encoding.UTF8))
                 {
                     writer.Write(string.Empty);
                 }
 
-                stream.Dispose();
+                Zip.AddEntry("metadata/sc_author.txt", stream.ToArray());
             }
 
-            entry = Zip.CreateEntry("metadata\\sc_comment.txt");
-            using (var stream = entry.Open())
+            using (var stream = new MemoryStream())
             {
                 using (var writer = new StreamWriter(stream, Encoding.UTF8))
                 {
                     writer.Write(string.Empty);
                 }
 
-                stream.Dispose();
+                Zip.AddEntry("metadata/sc_comment.txt", stream.ToArray());
             }
 
-            entry = Zip.CreateEntry("metadata\\sc_license.txt");
-            using (var stream = entry.Open())
+            using (var stream = new MemoryStream())
             {
                 using (var writer = new StreamWriter(stream, Encoding.UTF8))
                 {
                     writer.Write(string.Empty);
                 }
 
-                stream.Dispose();
+                Zip.AddEntry("metadata/sc_license.txt", stream.ToArray());
             }
 
-            entry = Zip.CreateEntry("metadata\\sc_name.txt");
-            using (var stream = entry.Open())
+            using (var stream = new MemoryStream())
             {
                 using (var writer = new StreamWriter(stream, Encoding.UTF8))
                 {
                     writer.Write(string.Empty);
                 }
 
-                stream.Dispose();
+                Zip.AddEntry("metadata/sc_name.txt", stream.ToArray());
             }
 
-            entry = Zip.CreateEntry("metadata\\sc_poststep.txt");
-            using (var stream = entry.Open())
+            using (var stream = new MemoryStream())
             {
                 using (var writer = new StreamWriter(stream, Encoding.UTF8))
                 {
                     writer.Write(string.Empty);
                 }
 
-                stream.Dispose();
+                Zip.AddEntry("metadata/sc_poststep.txt", stream.ToArray());
             }
 
-            entry = Zip.CreateEntry("metadata\\sc_publisher.txt");
-            using (var stream = entry.Open())
+            using (var stream = new MemoryStream())
             {
                 using (var writer = new StreamWriter(stream, Encoding.UTF8))
                 {
                     writer.Write(string.Empty);
                 }
 
-                stream.Dispose();
+                Zip.AddEntry("metadata/sc_publisher.txt", stream.ToArray());
             }
 
-            entry = Zip.CreateEntry("metadata\\sc_readme.txt");
-            using (var stream = entry.Open())
+            using (var stream = new MemoryStream())
             {
                 using (var writer = new StreamWriter(stream, Encoding.UTF8))
                 {
                     writer.Write(string.Empty);
                 }
 
-                stream.Dispose();
+                Zip.AddEntry("metadata/sc_readme.txt", stream.ToArray());
             }
 
-            entry = Zip.CreateEntry("metadata\\sc_version.txt");
-            using (var stream = entry.Open())
+            using (var stream = new MemoryStream())
             {
                 using (var writer = new StreamWriter(stream, Encoding.UTF8))
                 {
                     writer.Write(string.Empty);
                 }
 
-                stream.Dispose();
+                Zip.AddEntry("metadata/sc_version.txt", stream.ToArray());
             }
         }
 
@@ -295,8 +278,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.PackageEmitter
                 Indent = true
             };
 
-            var entry = Zip.CreateEntry("installer\\project");
-            using (var stream = entry.Open())
+            using (var stream = new MemoryStream())
             {
                 using (var output = XmlWriter.Create(stream, settings))
                 {
@@ -385,21 +367,20 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.PackageEmitter
                     output.WriteEndElement();
                 }
 
-                stream.Dispose();
+                Zip.AddEntry("installer/project", stream.ToArray());
             }
         }
 
         protected virtual void AddVersion()
         {
-            var entry = Zip.CreateEntry("installer\\version");
-            using (var stream = entry.Open())
+            using (var stream = new MemoryStream())
             {
                 using (var writer = new StreamWriter(stream, Encoding.UTF8))
                 {
                     writer.Write("10.00.000000.000000");
                 }
 
-                stream.Dispose();
+                Zip.AddEntry("installer/version", stream.ToArray());
             }
         }
     }
