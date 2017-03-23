@@ -5,7 +5,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Text;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Zip.Utils;
 
 namespace Sitecore.Pathfinder.IO.Zip
 {

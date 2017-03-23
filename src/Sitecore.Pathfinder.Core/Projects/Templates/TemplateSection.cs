@@ -1,4 +1,4 @@
-// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -22,9 +22,6 @@ namespace Sitecore.Pathfinder.Projects.Templates
             Uri = new ProjectItemUri(template.DatabaseName, guid);
         }
 
-        [NotNull]
-        public SourceProperty<int> SortorderProperty { get;  }
-
         [NotNull, ItemNotNull]
         public ICollection<TemplateField> Fields { get; }
 
@@ -33,11 +30,6 @@ namespace Sitecore.Pathfinder.Projects.Templates
         {
             get { return IconProperty.GetValue(); }
             set { IconProperty.SetValue(value); }
-        }
-        public int Sortorder
-{
-            get { return SortorderProperty.GetValue(); }
-            set { SortorderProperty.SetValue(value); }
         }
 
         [NotNull]
@@ -54,6 +46,15 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
         [NotNull]
         public SourceProperty<string> SectionNameProperty { get; }
+
+        public int Sortorder
+        {
+            get { return SortorderProperty.GetValue(); }
+            set { SortorderProperty.SetValue(value); }
+        }
+
+        [NotNull]
+        public SourceProperty<int> SortorderProperty { get; }
 
         [NotNull]
         public Template Template { get; }

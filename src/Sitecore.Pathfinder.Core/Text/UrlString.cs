@@ -49,7 +49,7 @@ namespace Sitecore.Pathfinder.Text
         public string HostName { get; set; } = string.Empty;
 
         [CanBeNull]
-        public string this[[NotNull, Localizable(false)]  string key]
+        public string this[[NotNull, Localizable(false)] string key]
         {
             get { return _parameters[key]; }
 

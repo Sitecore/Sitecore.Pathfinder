@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +10,13 @@ namespace Sitecore.Pathfinder.Languages.Json
 {
     public class JsonInnerTextNode : ITextNode, IMutableTextNode
     {
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         private readonly JToken _token;
 
         [CanBeNull]
         private string _value;
 
-        public JsonInnerTextNode([NotNull] JsonTextNode textNode, [NotNull] [ItemNotNull] JToken token)
+        public JsonInnerTextNode([NotNull] JsonTextNode textNode, [NotNull, ItemNotNull]  JToken token)
         {
             TextNode = textNode;
             _token = token;
@@ -52,6 +51,11 @@ namespace Sitecore.Pathfinder.Languages.Json
             return string.Empty;
         }
 
+        public ITextNode GetInnerTextNode()
+        {
+            return null;
+        }
+
         public ITextNode GetSnapshotLanguageSpecificChildNode(string name)
         {
             return null;
@@ -60,11 +64,6 @@ namespace Sitecore.Pathfinder.Languages.Json
         public bool HasAttribute(string attributeName)
         {
             return false;
-        }
-
-        public ITextNode GetInnerTextNode()
-        {
-            return null;
         }
 
         bool IMutableTextNode.SetKey(string newKey)

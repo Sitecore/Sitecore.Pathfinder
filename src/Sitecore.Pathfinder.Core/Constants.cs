@@ -62,6 +62,8 @@ namespace Sitecore.Pathfinder
 
         public static class Configuration
         {
+            public const string Author = "author";
+
             public const string BinDirectory = "bin-directory";
 
             public const string Checkers = "checkers";
@@ -82,6 +84,8 @@ namespace Sitecore.Pathfinder
 
             public const string Dependencies = "dependencies";
 
+            public const string Description = "description";
+
             public const string DisableExtensions = "disable-extensions";
 
             public const string FeaturesDirectory = "features-directory";
@@ -89,6 +93,10 @@ namespace Sitecore.Pathfinder
             public const string HostName = "host-name";
 
             public const string IsProjectConfigured = "is-project-configured";
+
+            public const string License = "license";
+
+            public const string Name = "name";
 
             public const string NugetPackageRootDirectory = "system:nuget-package-root-directory";
 
@@ -106,6 +114,8 @@ namespace Sitecore.Pathfinder
 
             public const string ProjectUniqueId = "project-unique-id";
 
+            public const string Publisher = "publisher";
+
             public const string References = "references";
 
             public const string Run = "run";
@@ -120,26 +130,9 @@ namespace Sitecore.Pathfinder
 
             public const string UserName = "user-name";
 
-            public const string WebsiteDirectory = "website-directory";
-
-            public const string Author = "author";
-            public const string Description = "description";
-            public const string License = "license";
-            public const string Name = "name";
-            public const string Publisher = "publisher";
             public const string Version = "version";
 
-            public static class Output
-            {
-                public const string Directory = "output:directory";
-
-                public const string Format = "output:format";
-
-                public static class Package
-                {
-                    public const string FileName = "output:package:filename";
-                }
-            }
+            public const string WebsiteDirectory = "website-directory";
 
             public static class BuildProject
             {
@@ -192,13 +185,6 @@ namespace Sitecore.Pathfinder
                 public const string Include = "files:include";
             }
 
-            public static class Items
-            {
-                public const string Exclude = "items:exclude";
-
-                public const string Include = "items:include";
-            }
-
             public static class GenerateCode
             {
                 public const string Imports = "generate-code:t4-imports";
@@ -238,6 +224,13 @@ namespace Sitecore.Pathfinder
                 public const string ThreeWayMergeOverwriteDatabase = "install-package:three-way-merge-overwrite-database";
             }
 
+            public static class Items
+            {
+                public const string Exclude = "items:exclude";
+
+                public const string Include = "items:include";
+            }
+
             public static class Messages
             {
                 public const string Disabled = "messages:disabled";
@@ -252,6 +245,18 @@ namespace Sitecore.Pathfinder
                 public const string DefaultWebsiteDirectory = "new-project:default-wwwroot-directory";
 
                 public const string WwwrootDirectory = "new-project:wwwroot-directory";
+            }
+
+            public static class Output
+            {
+                public const string Directory = "output:directory";
+
+                public const string Format = "output:format";
+
+                public static class Package
+                {
+                    public const string FileName = "output:package:filename";
+                }
             }
 
             public static class Packages

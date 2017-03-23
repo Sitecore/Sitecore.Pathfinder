@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using System.Composition;
@@ -25,9 +25,6 @@ namespace Sitecore.Pathfinder.IO
             LoadFromConfiguration(configuration);
         }
 
-        [NotNull]
-        protected IPipelineService Pipelines { get; }
-
         public ICollection<IProjectToWebsiteFileNameMapper> ProjectDirectoryToWebsiteDirectories { get; } = new List<IProjectToWebsiteFileNameMapper>();
 
         public ICollection<IProjectFileNameToItemPathMapper> ProjectDirectoryToWebsiteItemPaths { get; } = new List<IProjectFileNameToItemPathMapper>();
@@ -37,6 +34,9 @@ namespace Sitecore.Pathfinder.IO
         public ICollection<IWebsiteToProjectFileNameMapper> WebsiteDirectoryToProjectDirectories { get; } = new List<IWebsiteToProjectFileNameMapper>();
 
         public ICollection<IItemPathToProjectFileNameMapper> WebsiteItemPathToProjectDirectories { get; } = new List<IItemPathToProjectFileNameMapper>();
+
+        [NotNull]
+        protected IPipelineService Pipelines { get; }
 
         public void Clear()
         {

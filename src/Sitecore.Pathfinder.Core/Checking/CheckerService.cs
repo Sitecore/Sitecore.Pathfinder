@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using System.Composition;
@@ -46,7 +46,10 @@ namespace Sitecore.Pathfinder.Checking
                 {
                     if (method.GetCustomAttribute<CheckAttribute>() != null)
                     {
-                        var checkerInfo = new CheckerInfo(method.DeclaringType.Name, method.Name, context => method.Invoke(checker, new object[] { context }) as IEnumerable<Diagnostic>);
+                        var checkerInfo = new CheckerInfo(method.DeclaringType.Name, method.Name, context => method.Invoke(checker, new object[]
+                        {
+                            context
+                        }) as IEnumerable<Diagnostic>);
                         list.Add(checkerInfo);
                     }
                 }
@@ -88,6 +91,12 @@ namespace Sitecore.Pathfinder.Checking
             CheckProject(context, checkers, isMultiThreaded, treatWarningsAsErrors);
         }
 
+        public virtual IEnumerable<CheckerInfo> GetEnabledCheckers()
+        {
+            var context = CompositionService.Resolve<ICheckerContext>();
+            return GetCheckers(context);
+        }
+
         protected virtual void CheckProject([NotNull] ICheckerContext context, [NotNull, ItemNotNull] CheckerInfo[] checkers, bool isMultiThreaded, bool treatWarningsAsErrors)
         {
             EnabledCheckersCount = checkers.Length;
@@ -108,12 +117,6 @@ namespace Sitecore.Pathfinder.Checking
                     TraceDiagnostics(context, checker, diagnostics, treatWarningsAsErrors);
                 }
             }
-        }
-
-        public virtual IEnumerable<CheckerInfo> GetEnabledCheckers()
-        {
-            var context = CompositionService.Resolve<ICheckerContext>();
-            return GetCheckers(context);
         }
 
         protected virtual void EnableCheckers([NotNull] ICheckerContext context, [NotNull, ItemNotNull] IEnumerable<CheckerInfo> checkers, [NotNull] string configurationKey)

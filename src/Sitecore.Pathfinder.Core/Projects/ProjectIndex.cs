@@ -1,4 +1,4 @@
-﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -47,7 +47,7 @@ namespace Sitecore.Pathfinder.Projects
         }
 
         public void Remove([NotNull] TV projectItem)
-        {                                        
+        {
             var key = _getKey(projectItem);
             Remove(key, projectItem);
         }

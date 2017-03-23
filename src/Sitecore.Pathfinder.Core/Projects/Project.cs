@@ -1,4 +1,4 @@
-﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -372,7 +372,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public void Lock(Locking locking)
         {
-            if ((locking != Locking.ReadWrite) && (_locking != Locking.ReadWrite))
+            if (locking != Locking.ReadWrite && _locking != Locking.ReadWrite)
             {
                 throw new InvalidOperationException("Project is already unlocked");
             }

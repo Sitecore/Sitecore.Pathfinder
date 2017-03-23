@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Composition;
 using System.Linq;
@@ -18,20 +18,6 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
     {
         public CreateItemsFromTemplates() : base(1500)
         {
-        }
-
-        protected override void Process(CompilePipeline pipeline)
-        {
-            // todo: consider if imports should be omitted or not
-            var templates = pipeline.Context.Project.Templates.ToList();
-
-            foreach (var template in templates)
-            {
-                if (pipeline.Context.Project.FindQualifiedItem<Item>(template.Uri) == null)
-                {
-                    CreateItems(pipeline.Context, pipeline.Context.Project, template);
-                }
-            }
         }
 
         protected virtual void CreateItems([NotNull] ICompileContext context, [NotNull] IProject project, [NotNull] Template template)
@@ -80,6 +66,20 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
             }
 
             project.AddOrMerge(item);
+        }
+
+        protected override void Process(CompilePipeline pipeline)
+        {
+            // todo: consider if imports should be omitted or not
+            var templates = pipeline.Context.Project.Templates.ToList();
+
+            foreach (var template in templates)
+            {
+                if (pipeline.Context.Project.FindQualifiedItem<Item>(template.Uri) == null)
+                {
+                    CreateItems(pipeline.Context, pipeline.Context.Project, template);
+                }
+            }
         }
     }
 }

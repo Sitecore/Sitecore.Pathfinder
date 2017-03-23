@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using Sitecore.Pathfinder.Diagnostics;
@@ -33,6 +33,7 @@ namespace Sitecore.Pathfinder.Projects
             {
                 return false;
             }
+
             return Equals((ID)obj);
         }
 

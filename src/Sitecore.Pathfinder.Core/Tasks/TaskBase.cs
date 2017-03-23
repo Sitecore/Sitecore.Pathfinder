@@ -136,7 +136,10 @@ namespace Sitecore.Pathfinder.Tasks
                         continue;
                     }
 
-                    var tuples = (IEnumerable<(string Name, string Value)>)method.Invoke(this, new object[] { context });
+                    var tuples = (IEnumerable<(string Name, string Value)>)method.Invoke(this, new object[]
+                    {
+                        context
+                    });
                     foreach (var tuple in tuples)
                     {
                         options[tuple.Name] = tuple.Value;

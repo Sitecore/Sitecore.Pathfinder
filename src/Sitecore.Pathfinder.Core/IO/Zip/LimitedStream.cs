@@ -1,17 +1,19 @@
+// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
+
 using System;
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
 
-namespace Sitecore.Zip.Utils
+namespace Sitecore.Pathfinder.IO.Zip
 {
-    class LimitedReadOnlyStream : Stream
+    internal class LimitedReadOnlyStream : Stream
     {
         [NotNull]
-        readonly Stream _innerStream;
+        private readonly Stream _innerStream;
 
-        readonly long _limit = 0;
+        private readonly long _limit;
 
-        long _totalBytesRead = 0;
+        private long _totalBytesRead;
 
         public LimitedReadOnlyStream([NotNull] Stream innerStream, int limit)
         {
@@ -25,10 +27,6 @@ namespace Sitecore.Zip.Utils
 
         public override bool CanWrite => false;
 
-        public override void Flush()
-        {
-        }
-
         public override long Length => _limit;
 
         public override long Position
@@ -37,16 +35,24 @@ namespace Sitecore.Zip.Utils
             set { throw new Exception("The method or operation are not accessible."); }
         }
 
+        public override void Flush()
+        {
+        }
+
         public override int Read(byte[] buffer, int offset, int count)
         {
             if (!CanRead)
+            {
                 throw new Exception("You cannot read this stream");
+            }
 
             if (_totalBytesRead == _limit)
+            {
                 return 0;
+            }
 
             count = (int)Math.Min(_limit - _totalBytesRead, count);
-            int bytesRead = _innerStream.Read(buffer, offset, count);
+            var bytesRead = _innerStream.Read(buffer, offset, count);
             _totalBytesRead += bytesRead;
             return bytesRead;
         }

@@ -1,4 +1,4 @@
-// � 2015-2016 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -86,6 +86,15 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public ItemPublishing Publishing => _publishing ?? (_publishing = new ItemPublishing(this));
 
+        public int Sortorder
+        {
+            get { return SortorderProperty.GetValue(); }
+            set { SortorderProperty.SetValue(value); }
+        }
+
+        [NotNull]
+        public SourceProperty<int> SortorderProperty { get; }
+
         [NotNull]
         public ItemStatistics Statistics => _statistics ?? (_statistics = new ItemStatistics(this));
 
@@ -117,17 +126,8 @@ namespace Sitecore.Pathfinder.Projects.Items
             set { TemplateIdOrPathProperty.SetValue(value); }
         }
 
-        public int Sortorder
-        {
-            get { return SortorderProperty.GetValue(); }
-            set { SortorderProperty.SetValue(value); }
-        }
-
         [NotNull]
         public SourceProperty<string> TemplateIdOrPathProperty { get; }
-
-        [NotNull]
-        public SourceProperty<int> SortorderProperty { get; }
 
         public string TemplateName => Template.ItemName;
 
@@ -158,7 +158,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         [NotNull, ItemNotNull]
         public IEnumerable<Version> GetVersions([NotNull] Language language)
-        {                 
+        {
             return Fields.Where(f => f.Language == language && f.Version != Version.Undefined).Select(f => f.Version).Distinct();
         }
 

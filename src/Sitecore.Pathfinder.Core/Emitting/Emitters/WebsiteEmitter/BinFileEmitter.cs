@@ -10,7 +10,7 @@ using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.BinFiles;
 using Sitecore.Pathfinder.Projects;
 
-namespace Sitecore.Pathfinder.Emitting.Emitters.Website
+namespace Sitecore.Pathfinder.Emitting.Emitters.WebsiteEmitter
 {
     [Export(typeof(IEmitter)), Shared]
     public class BinFileEmitter : EmitterBase

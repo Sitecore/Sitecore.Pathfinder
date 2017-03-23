@@ -1,4 +1,4 @@
-// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
@@ -14,12 +14,12 @@ namespace Sitecore.Pathfinder.Parsing.Items
             VersionProperty = new SourceProperty<Version>(this, "Number", Version.Undefined);
         }
 
-        Locking ILockable.Locking => Locking.ReadWrite;
-
         [NotNull]
         public SourceProperty<Language> LanguageProperty { get; }
 
         [NotNull]
         public SourceProperty<Version> VersionProperty { get; }
+
+        Locking ILockable.Locking => Locking.ReadWrite;
     }
 }

@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -26,8 +26,6 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public string AbsoluteFileName { get; }
 
-        public string RelativeFileName { get; }
-
         [NotNull]
         public static ISourceFile Empty { get; } = new EmptySourceFile();
 
@@ -36,6 +34,8 @@ namespace Sitecore.Pathfinder.Snapshots
         public DateTime LastWriteTimeUtc { get; }
 
         public string ProjectFileName { get; }
+
+        public string RelativeFileName { get; }
 
         public virtual string GetFileNameWithoutExtensions()
         {

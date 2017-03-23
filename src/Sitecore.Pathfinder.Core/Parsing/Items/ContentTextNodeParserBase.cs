@@ -1,7 +1,6 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.Composition;
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
@@ -91,25 +90,6 @@ namespace Sitecore.Pathfinder.Parsing.Items
             }
         }
 
-        protected abstract void ParseLayoutTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode textNode);
-
-        protected virtual void ParseUnversionedTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode childNode)
-        {
-            var languageVersionContext = new LanguageVersionContext();
-            languageVersionContext.LanguageProperty.Parse(childNode);
-
-            ParseAttributes(context, item, languageVersionContext, childNode);
-        }
-
-        protected virtual void ParseVersionedTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode childNode)
-        {
-            var languageVersionContext = new LanguageVersionContext();
-            languageVersionContext.LanguageProperty.Parse(childNode);
-            languageVersionContext.VersionProperty.Parse("Version", childNode);
-
-            ParseAttributes(context, item, languageVersionContext, childNode);
-        }
-
         protected virtual void ParseFieldTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] LanguageVersionContext languageVersionContext, [NotNull] ITextNode textNode)
         {
             var fieldName = textNode.Key.UnescapeXmlElementName();
@@ -139,6 +119,25 @@ namespace Sitecore.Pathfinder.Parsing.Items
             {
                 item.References.AddRange(context.ParseContext.ReferenceParser.ParseReferences(field));
             }
+        }
+
+        protected abstract void ParseLayoutTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode textNode);
+
+        protected virtual void ParseUnversionedTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode childNode)
+        {
+            var languageVersionContext = new LanguageVersionContext();
+            languageVersionContext.LanguageProperty.Parse(childNode);
+
+            ParseAttributes(context, item, languageVersionContext, childNode);
+        }
+
+        protected virtual void ParseVersionedTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode childNode)
+        {
+            var languageVersionContext = new LanguageVersionContext();
+            languageVersionContext.LanguageProperty.Parse(childNode);
+            languageVersionContext.VersionProperty.Parse("Version", childNode);
+
+            ParseAttributes(context, item, languageVersionContext, childNode);
         }
     }
 }

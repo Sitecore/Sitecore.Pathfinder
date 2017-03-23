@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using System.Composition;
@@ -11,13 +11,12 @@ namespace Sitecore.Pathfinder.Extensibility.Pipelines
     public class PipelineService : IPipelineService
     {
         [ImportingConstructor]
-        public PipelineService([ImportMany] [NotNull] [ItemNotNull] IEnumerable<IPipelineProcessor> pipelineProcessors)
+        public PipelineService([ImportMany, NotNull, ItemNotNull]   IEnumerable<IPipelineProcessor> pipelineProcessors)
         {
             PipelineProcessors = pipelineProcessors;
         }
 
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         protected IEnumerable<IPipelineProcessor> PipelineProcessors { get; }
 
         public virtual T Resolve<T>() where T : IPipeline<T>, new()

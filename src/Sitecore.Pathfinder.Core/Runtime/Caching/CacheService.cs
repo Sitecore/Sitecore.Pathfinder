@@ -1,4 +1,4 @@
-// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using System.Composition;
@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Runtime.Caching
         public T Get<T>(string cacheKey)
         {
             object value;
-                
+
             if (!_cache.TryGetValue(cacheKey, out value))
             {
                 return default(T);

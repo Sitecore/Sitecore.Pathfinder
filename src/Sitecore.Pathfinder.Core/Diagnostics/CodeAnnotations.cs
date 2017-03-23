@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 
@@ -289,8 +289,7 @@ namespace Sitecore.Pathfinder.Diagnostics
     /// [Component] // ComponentAttribute requires implementing IComponent interface
     /// public class MyComponent : IComponent { }
     /// </code></example>
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    [BaseTypeRequired(typeof(Attribute))]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true), BaseTypeRequired(typeof(Attribute))]
     public sealed class BaseTypeRequiredAttribute : Attribute
     {
         public BaseTypeRequiredAttribute([NotNull] Type baseType)
@@ -384,7 +383,7 @@ namespace Sitecore.Pathfinder.Diagnostics
         InstantiatedWithFixedConstructorSignature = 4,
 
         /// <summary>Indicates implicit instantiation of a type</summary>
-        InstantiatedNoFixedConstructorSignature = 8,
+        InstantiatedNoFixedConstructorSignature = 8
     }
 
     /// <summary>
@@ -817,15 +816,14 @@ namespace Sitecore.Pathfinder.Diagnostics
         IS_NULL = 2,
 
         /// <summary>Marked parameter should be evaluated to not null value</summary>
-        IS_NOT_NULL = 3,
+        IS_NOT_NULL = 3
     }
 
     /// <summary>
     /// Indicates that the marked method unconditionally terminates control flow execution.
     /// For example, it could unconditionally throw exception
     /// </summary>
-    [Obsolete("Use [ContractAnnotation('=> halt')] instead")]
-    [AttributeUsage(AttributeTargets.Method)]
+    [Obsolete("Use [ContractAnnotation('=> halt')] instead"), AttributeUsage(AttributeTargets.Method)]
     public sealed class TerminatesProgramAttribute : Attribute
     {
     }

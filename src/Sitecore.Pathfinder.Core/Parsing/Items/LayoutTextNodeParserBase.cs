@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using System.Linq;
@@ -52,7 +52,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             item.Fields.Add(field);
         }
 
-        protected virtual void ParseDeviceReferences([NotNull] ItemParseContext context, [NotNull, ItemNotNull]  ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode deviceTextNode)
+        protected virtual void ParseDeviceReferences([NotNull] ItemParseContext context, [NotNull, ItemNotNull] ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode deviceTextNode)
         {
             var deviceNameProperty = new SourceProperty<string>(projectItem, "Name", string.Empty, SourcePropertyFlags.IsShort);
             deviceNameProperty.Parse(deviceTextNode);
@@ -93,7 +93,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             return result;
         }
 
-        protected virtual void ParseRenderingReferences([NotNull] ItemParseContext context, [NotNull, ItemNotNull]  ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode renderingTextNode)
+        protected virtual void ParseRenderingReferences([NotNull] ItemParseContext context, [NotNull, ItemNotNull] ICollection<IReference> references, [NotNull] IProjectItem projectItem, [NotNull] ITextNode renderingTextNode)
         {
             if (!string.IsNullOrEmpty(renderingTextNode.Key))
             {

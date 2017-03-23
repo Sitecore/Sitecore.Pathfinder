@@ -1,7 +1,6 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.Composition;
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
@@ -35,7 +34,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             }
             else if (itemNameTextNode.Value != Path.GetFileName(itemIdOrPath))
             {
-               context.ParseContext.Trace.TraceError(Msg.P1000, Texts.Item_name_in__ItemPath__and__Name__does_not_match__Using__Name_);
+                context.ParseContext.Trace.TraceError(Msg.P1000, Texts.Item_name_in__ItemPath__and__Name__does_not_match__Using__Name_);
             }
 
             var guid = StringHelper.GetGuid(context.ParseContext.Project, textNode.GetAttributeValue("Id", itemIdOrPath));
@@ -46,6 +45,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             var item = context.ParseContext.Factory.Item(context.ParseContext.Project, guid, databaseName, itemNameTextNode.Value, itemIdOrPath, templateIdOrPath).With(textNode);
             item.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
             item.IconProperty.Parse(textNode);
+
             // todo: yuck
             item.IsEmittable = !string.Equals(textNode.GetAttributeValue(Constants.Fields.IsEmittable), "False", StringComparison.OrdinalIgnoreCase);
             item.IsImport = string.Equals(textNode.GetAttributeValue(Constants.Fields.IsImport, context.IsImport.ToString()), "True", StringComparison.OrdinalIgnoreCase);

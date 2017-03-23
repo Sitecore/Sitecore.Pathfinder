@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using System.Composition;
@@ -76,7 +76,6 @@ namespace Sitecore.Pathfinder.Snapshots
                 ParseDirectives(snapshotParseContext, textNode);
                 return;
             }
-
 
             // todo: remove direct cast
             var childNodes = (List<ITextNode>)mutableParentTextNode.ChildNodeCollection;

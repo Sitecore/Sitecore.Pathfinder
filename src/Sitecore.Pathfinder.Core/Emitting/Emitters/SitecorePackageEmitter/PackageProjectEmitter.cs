@@ -16,7 +16,7 @@ using Sitecore.Pathfinder.IO.Zip;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 
-namespace Sitecore.Pathfinder.Emitting.Emitters.PackageEmitter
+namespace Sitecore.Pathfinder.Emitting.Emitters.SitecorePackageEmitter
 {
     [Export(typeof(IProjectEmitter)), Shared]
     public class PackageProjectEmitter : ProjectEmitterBase

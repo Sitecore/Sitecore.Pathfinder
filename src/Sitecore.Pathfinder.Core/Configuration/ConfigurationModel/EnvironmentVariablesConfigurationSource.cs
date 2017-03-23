@@ -76,9 +76,12 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
             else
             {
                 yield return entry;
+
                 yield break;
             }
+
             yield return new DictionaryEntry($"Data:{key.Substring(prefix.Length)}:ConnectionString", entry.Value);
+
             if (!string.IsNullOrEmpty(provider))
             {
                 yield return new DictionaryEntry($"Data:{key.Substring(prefix.Length)}:ProviderName", provider);

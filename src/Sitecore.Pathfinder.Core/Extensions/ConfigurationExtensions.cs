@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -57,12 +57,6 @@ namespace Sitecore.Pathfinder.Extensions
             return configuration.TryGet(key, out value) ? string.Equals(value, "true", StringComparison.OrdinalIgnoreCase) : defaultValue;
         }
 
-        [NotNull]
-        public static string GetCommandLineArg([NotNull] this IConfiguration configuration, int position)
-        {
-            return configuration.GetString("arg" + position);
-        }
-
         [NotNull, ItemNotNull]
         public static string[] GetCommandLine([NotNull] this IConfiguration configuration)
         {
@@ -117,6 +111,12 @@ namespace Sitecore.Pathfinder.Extensions
             }
 
             return args.ToArray();
+        }
+
+        [NotNull]
+        public static string GetCommandLineArg([NotNull] this IConfiguration configuration, int position)
+        {
+            return configuration.GetString("arg" + position);
         }
 
         [NotNull]
@@ -181,7 +181,7 @@ namespace Sitecore.Pathfinder.Extensions
                     break;
                 }
 
-                var replace = value.Mid(n + 1, e - n - 1);                               
+                var replace = value.Mid(n + 1, e - n - 1);
                 string with;
                 switch (replace.ToLowerInvariant())
                 {
@@ -192,6 +192,7 @@ namespace Sitecore.Pathfinder.Extensions
                         with = configuration.GetProjectDirectory();
                         break;
                     default:
+
                         // danger: might be recursive
                         with = configuration.GetString(replace);
                         break;

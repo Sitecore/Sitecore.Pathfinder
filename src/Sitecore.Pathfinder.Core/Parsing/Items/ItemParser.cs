@@ -1,10 +1,9 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
-using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -25,14 +24,14 @@ namespace Sitecore.Pathfinder.Parsing.Items
             PathMatcher = new PathMatcher(configuration.GetString(Constants.Configuration.Items.Include), configuration.GetString(Constants.Configuration.Items.Exclude));
         }
 
+        [NotNull, ItemNotNull]
+        public IEnumerable<ITextNodeParser> TextNodeParsers { get; }
+
         [NotNull]
         protected PathMatcher PathMatcher { get; }
 
         [NotNull]
         protected ISchemaService SchemaService { get; }
-
-        [NotNull, ItemNotNull]
-        public IEnumerable<ITextNodeParser> TextNodeParsers { get; }
 
         public override bool CanParse(IParseContext context)
         {
@@ -99,7 +98,6 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 if (!parsed)
                 {
                     context.ParseContext.Trace.TraceError(Msg.P1025, Texts.Unknown_text_node, textNode, textNode.Key);
-
                 }
             }
             catch (Exception ex)

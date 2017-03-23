@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Composition;
 using System.Diagnostics;
@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder
 
         public IConfiguration Configuration { get; }
 
-        public Stopwatch Stopwatch { get; private set;  }
+        public Stopwatch Stopwatch { get; private set; }
 
         public T GetTaskRunner<T>() where T : ITaskRunner
         {

@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Composition;
@@ -19,22 +19,6 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
         public CreateTemplatesFromItems() : base(CreateTemplatesFromItemsPriority)
         {
-        }
-
-        protected override void Process(CompilePipeline pipeline)
-        {
-            // todo: consider if imports should be omitted
-            var templateItems = pipeline.Context.Project.ProjectItems.OfType<Item>().Where(i => i.TemplateIdOrPath == Constants.Templates.TemplateId || string.Equals(i.TemplateIdOrPath, Constants.Templates.TemplatePathId, StringComparison.OrdinalIgnoreCase)).ToList();
-
-            foreach (var templateItem in templateItems)
-            {
-                if (pipeline.Context.Project.FindQualifiedItem<Template>(templateItem.Uri) != null)
-                {
-                    continue;
-                }
-
-                CreateTemplate(pipeline.Context, pipeline.Context.Project, templateItem);
-            }
         }
 
         protected virtual void CreateTemplate([NotNull] ICompileContext context, [NotNull] IProject project, [NotNull] Item templateItem)
@@ -90,6 +74,22 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
             }
 
             project.AddOrMerge(template);
+        }
+
+        protected override void Process(CompilePipeline pipeline)
+        {
+            // todo: consider if imports should be omitted
+            var templateItems = pipeline.Context.Project.ProjectItems.OfType<Item>().Where(i => i.TemplateIdOrPath == Constants.Templates.TemplateId || string.Equals(i.TemplateIdOrPath, Constants.Templates.TemplatePathId, StringComparison.OrdinalIgnoreCase)).ToList();
+
+            foreach (var templateItem in templateItems)
+            {
+                if (pipeline.Context.Project.FindQualifiedItem<Template>(templateItem.Uri) != null)
+                {
+                    continue;
+                }
+
+                CreateTemplate(pipeline.Context, pipeline.Context.Project, templateItem);
+            }
         }
     }
 }

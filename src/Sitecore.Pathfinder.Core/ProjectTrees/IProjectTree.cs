@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
@@ -27,11 +27,11 @@ namespace Sitecore.Pathfinder.ProjectTrees
         [NotNull, ItemNotNull]
         IEnumerable<string> GetSourceFiles();
 
-        [NotNull]
-        IProjectTree With([NotNull] string toolsDirectory, [NotNull] string projectDirectory);
-
         bool IsDirectoryIncluded([NotNull] string directory);
 
         bool IsFileIncluded([NotNull] string fileName);
+
+        [NotNull]
+        IProjectTree With([NotNull] string toolsDirectory, [NotNull] string projectDirectory);
     }
 }

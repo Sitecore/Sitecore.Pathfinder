@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
@@ -18,9 +18,9 @@ namespace Sitecore.Pathfinder.Languages.Yaml
             Indent = indent;
         }
 
-        public int Indentation { get; set; } = 4;
-
         public int Indent { get; protected set; }
+
+        public int Indentation { get; set; } = 4;
 
         [NotNull]
         protected TextWriter InnerWriter { get; }

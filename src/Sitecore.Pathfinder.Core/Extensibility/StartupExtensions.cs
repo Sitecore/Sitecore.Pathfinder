@@ -1,17 +1,17 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
+using System.Composition.Hosting;
+using System.Composition.Hosting.Core;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Loader;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
-using System.Composition.Hosting;
-using System.Composition.Hosting.Core;
-using System.Runtime.Loader;
 
 namespace Sitecore.Pathfinder.Extensibility
 {
@@ -86,7 +86,7 @@ namespace Sitecore.Pathfinder.Extensibility
 
             // todo: breaks DI
             var compositionService = ((CompositionService)compositionHost.GetExport<ICompositionService>()).With(compositionHost);
-            
+
             return compositionService;
         }
 

@@ -23,11 +23,6 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.DirectoryEmitter
         [NotNull]
         public IFileSystemService FileSystem { get; }
 
-        public override bool CanEmit(string format)
-        {
-            return string.Equals(format, "directory", StringComparison.OrdinalIgnoreCase);
-        }
-
         public void AddFile([NotNull] IEmitContext context, [NotNull] string sourceFileAbsoluteFileName, [NotNull] string filePath)
         {
             var fileName = PathHelper.NormalizeFilePath(filePath);
@@ -44,6 +39,11 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.DirectoryEmitter
 
             FileSystem.CreateDirectoryFromFileName(destinationFileName);
             FileSystem.Copy(sourceFileAbsoluteFileName, destinationFileName, forceUpdate);
+        }
+
+        public override bool CanEmit(string format)
+        {
+            return string.Equals(format, "directory", StringComparison.OrdinalIgnoreCase);
         }
     }
 }

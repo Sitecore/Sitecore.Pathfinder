@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -86,6 +86,26 @@ namespace Sitecore.Pathfinder.Projects
 
         public ITextNode SourceTextNode => _sourceTextNodes.FirstOrDefault() ?? TextNode.Empty;
 
+        [NotNull]
+        protected DatabaseProjectItem AddAdditionalSourceTextNode([NotNull] ITextNode textNode)
+        {
+            if (!_sourceTextNodes.Contains(textNode))
+            {
+                _sourceTextNodes.Add(textNode);
+            }
+
+            return this;
+        }
+
+        [NotNull]
+        protected DatabaseProjectItem AddSourceTextNode([NotNull] ITextNode textNode)
+        {
+            _sourceTextNodes.Remove(textNode);
+            _sourceTextNodes.Insert(0, textNode);
+
+            return this;
+        }
+
         protected override void Merge(IProjectItem newProjectItem, bool overwrite)
         {
             base.Merge(newProjectItem, overwrite);
@@ -117,26 +137,6 @@ namespace Sitecore.Pathfinder.Projects
             IsImport = IsImport && databaseProjectItem.IsImport;
 
             References.AddRange(databaseProjectItem.References);
-        }
-
-        [NotNull]
-        protected DatabaseProjectItem AddSourceTextNode([NotNull] ITextNode textNode)
-        {
-            _sourceTextNodes.Remove(textNode);
-            _sourceTextNodes.Insert(0, textNode);
-
-            return this;
-        }
-
-        [NotNull]
-        protected DatabaseProjectItem AddAdditionalSourceTextNode([NotNull] ITextNode textNode)
-        {
-            if (!_sourceTextNodes.Contains(textNode))
-            {
-                _sourceTextNodes.Add(textNode);
-            }
-
-            return this;
         }
     }
 }

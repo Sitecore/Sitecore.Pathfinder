@@ -38,6 +38,7 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Json
                 {
                     throw new FileNotFoundException(string.Format(Json.Resources.Error_FileNotFound, Path), Path);
                 }
+
                 Data = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             }
             else
@@ -62,6 +63,7 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Json
                 {
                     throw new FormatException(Json.Resources.FormatError_RootMustBeAnObject(jsonTextReader.Path, jsonTextReader.LineNumber, jsonTextReader.LinePosition));
                 }
+
                 do
                 {
                     SkipComments(jsonTextReader);
@@ -87,6 +89,7 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Json
                             {
                                 throw new FormatException(Json.Resources.FormatError_KeyIsDuplicated(key));
                             }
+
                             dictionary[key] = jsonTextReader.Value.ToString();
                             goto case JsonToken.PropertyName;
                         case JsonToken.EndObject:
@@ -98,6 +101,7 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Json
                 }
                 while (num > 0);
             }
+
             Data = dictionary;
         }
 

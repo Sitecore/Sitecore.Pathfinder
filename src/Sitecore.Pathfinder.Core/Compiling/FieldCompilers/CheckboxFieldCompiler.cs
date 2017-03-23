@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Composition;
@@ -26,9 +26,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         {
             var value = field.Value.Trim();
 
-            if (!string.Equals(value, "true", StringComparison.OrdinalIgnoreCase) && !string.Equals(value, "false", StringComparison.OrdinalIgnoreCase) && 
-                field.Item.Snapshot.Capabilities.HasFlag(SnapshotCapabilities.SupportsTrueAndFalseForBooleanFields) &&
-                field.Item.AdditionalSnapshots.All(s => s.Capabilities.HasFlag(SnapshotCapabilities.SupportsTrueAndFalseForBooleanFields)))
+            if (!string.Equals(value, "true", StringComparison.OrdinalIgnoreCase) && !string.Equals(value, "false", StringComparison.OrdinalIgnoreCase) && field.Item.Snapshot.Capabilities.HasFlag(SnapshotCapabilities.SupportsTrueAndFalseForBooleanFields) && field.Item.AdditionalSnapshots.All(s => s.Capabilities.HasFlag(SnapshotCapabilities.SupportsTrueAndFalseForBooleanFields)))
             {
                 context.Trace.TraceError(Msg.C1043, Texts.Checkbox_field_value_must_be__true__or__false__, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), value);
             }

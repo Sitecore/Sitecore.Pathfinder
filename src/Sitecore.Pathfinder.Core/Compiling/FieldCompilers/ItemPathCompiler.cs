@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Composition;
@@ -169,7 +169,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
             var project = field.Item.Project;
 
-            foreach (string key in url.Parameters.Keys)
+            foreach (var key in url.Parameters.Keys)
             {
                 if (string.Equals(key, "database", StringComparison.OrdinalIgnoreCase) || string.Equals(key, "databasename", StringComparison.OrdinalIgnoreCase))
                 {

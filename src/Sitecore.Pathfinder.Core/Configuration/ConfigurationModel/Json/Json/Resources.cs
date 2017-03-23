@@ -152,6 +152,7 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Json.Json
                     str = str.Replace("{" + formatterNames[index] + "}", "{" + index + "}");
                 }
             }
+
             return str;
         }
     }

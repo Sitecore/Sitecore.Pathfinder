@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -87,6 +87,26 @@ namespace Sitecore.Pathfinder.Projects
             }
         }
 
+        public virtual T FindQualifiedItem<T>(Guid guid) where T : class, IProjectItem
+        {
+            return GuidIndex.FirstOrDefault<T>(guid.Format());
+        }
+
+        public virtual T FindQualifiedItem<T>(string qualifiedName) where T : class, IProjectItem
+        {
+            return QualifiedNameIndex.FirstOrDefault<T>(qualifiedName.ToUpperInvariant());
+        }
+
+        public virtual T FindQualifiedItem<T>(Database database, string qualifiedName) where T : DatabaseProjectItem
+        {
+            return DatabaseQualifiedNameIndex.FirstOrDefault<T>(database.DatabaseName.ToUpperInvariant() + ":" + qualifiedName.ToUpperInvariant());
+        }
+
+        public virtual T FindQualifiedItem<T>(IProjectItemUri uri) where T : class, IProjectItem
+        {
+            return UriIndex.FirstOrDefault<T>(uri.ToString());
+        }
+
         public IEnumerable<IReference> FindUsages(string qualifiedName)
         {
             var target = FindQualifiedItem<IProjectItem>(qualifiedName);
@@ -120,29 +140,34 @@ namespace Sitecore.Pathfinder.Projects
             }
         }
 
-        public virtual T FindQualifiedItem<T>(Guid guid) where T : class, IProjectItem
-        {
-            return GuidIndex.FirstOrDefault<T>(guid.Format());
-        }
-
         public virtual T FirstOrDefault<T>(Database database, Guid guid) where T : DatabaseProjectItem
         {
             return DatabaseGuidIndex.FirstOrDefault<T>(database.DatabaseName.ToUpperInvariant() + ":" + guid.Format());
         }
 
-        public virtual T FindQualifiedItem<T>(string qualifiedName) where T : class, IProjectItem
+        public IEnumerable<T> GetByQualifiedName<T>(Database database, string qualifiedName) where T : DatabaseProjectItem
         {
-            return QualifiedNameIndex.FirstOrDefault<T>(qualifiedName.ToUpperInvariant());
+            return DatabaseQualifiedNameIndex.Where<T>(database.DatabaseName.ToUpperInvariant() + ":" + qualifiedName.ToUpperInvariant());
         }
 
-        public virtual T FindQualifiedItem<T>(Database database, string qualifiedName) where T : DatabaseProjectItem
+        public IEnumerable<T> GetByQualifiedName<T>(string qualifiedName) where T : class, IProjectItem
         {
-            return DatabaseQualifiedNameIndex.FirstOrDefault<T>(database.DatabaseName.ToUpperInvariant() + ":" + qualifiedName.ToUpperInvariant());
+            return QualifiedNameIndex.Where<T>(qualifiedName.ToUpperInvariant());
         }
 
-        public virtual T FindQualifiedItem<T>(IProjectItemUri uri) where T : class, IProjectItem
+        public IEnumerable<T> GetByShortName<T>(Database database, string shortName) where T : DatabaseProjectItem
         {
-            return UriIndex.FirstOrDefault<T>(uri.ToString());
+            return DatabaseShortNameIndex.Where<T>(database.DatabaseName.ToUpperInvariant() + ":" + shortName.ToUpperInvariant());
+        }
+
+        public IEnumerable<T> GetByShortName<T>(string shortName) where T : class, IProjectItem
+        {
+            return ShortNameIndex.Where<T>(shortName.ToUpperInvariant());
+        }
+
+        public IEnumerable<Item> GetChildren(Item item)
+        {
+            return ChildIndex.Where<Item>(item.DatabaseName.ToUpperInvariant() + ":" + item.ItemIdOrPath.ToUpperInvariant());
         }
 
         public virtual void Remove(IProjectItem projectItem)
@@ -189,31 +214,6 @@ namespace Sitecore.Pathfinder.Projects
         public virtual IEnumerable<T> Where<T>(ISourceFile sourceFile) where T : class, IProjectItem
         {
             return SourceFileIndex.Where<T>(sourceFile.GetFileNameWithoutExtensions().ToUpperInvariant());
-        }
-
-        public IEnumerable<Item> GetChildren(Item item)
-        {
-            return ChildIndex.Where<Item>(item.DatabaseName.ToUpperInvariant() + ":" + item.ItemIdOrPath.ToUpperInvariant());
-        }
-
-        public IEnumerable<T> GetByQualifiedName<T>(Database database, string qualifiedName) where T : DatabaseProjectItem
-        {
-            return DatabaseQualifiedNameIndex.Where<T>(database.DatabaseName.ToUpperInvariant() + ":" + qualifiedName.ToUpperInvariant());
-        }
-
-        public IEnumerable<T> GetByQualifiedName<T>(string qualifiedName) where T : class, IProjectItem
-        {
-            return QualifiedNameIndex.Where<T>(qualifiedName.ToUpperInvariant());
-        }
-
-        public IEnumerable<T> GetByShortName<T>(Database database, string shortName) where T : DatabaseProjectItem
-        {
-            return DatabaseShortNameIndex.Where<T>(database.DatabaseName.ToUpperInvariant() + ":" + shortName.ToUpperInvariant());
-        }
-
-        public IEnumerable<T> GetByShortName<T>(string shortName) where T : class, IProjectItem
-        {
-            return ShortNameIndex.Where<T>(shortName.ToUpperInvariant());
         }
     }
 }

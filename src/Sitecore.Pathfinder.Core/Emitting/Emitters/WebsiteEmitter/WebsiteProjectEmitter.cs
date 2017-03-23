@@ -9,7 +9,7 @@ using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 
-namespace Sitecore.Pathfinder.Emitting.Emitters.Website
+namespace Sitecore.Pathfinder.Emitting.Emitters.WebsiteEmitter
 {
     [Export(typeof(IProjectEmitter)), Shared]
     public class WebsiteProjectEmitter : ProjectEmitterBase

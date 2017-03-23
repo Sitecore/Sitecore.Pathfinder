@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.IO;
@@ -75,7 +75,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
                     writer.WriteLine("revision: ");
                     writer.WriteLine();
 
-                    foreach (var field in item.Fields.Where(f => f.Language == language & f.Version == version))
+                    foreach (var field in item.Fields.Where(f => (f.Language == language) & (f.Version == version)))
                     {
                         var value = options.HasFlag(WriteAsSerializationOptions.WriteCompiledFieldValues) ? field.CompiledValue : field.Value;
 

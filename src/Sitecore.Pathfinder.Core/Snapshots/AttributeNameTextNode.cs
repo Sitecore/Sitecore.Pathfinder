@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
@@ -46,6 +46,11 @@ namespace Sitecore.Pathfinder.Snapshots
             return TextNode.GetAttributeValue(attributeName, defaultValue);
         }
 
+        public ITextNode GetInnerTextNode()
+        {
+            return null;
+        }
+
         public ITextNode GetSnapshotLanguageSpecificChildNode(string name)
         {
             return null;
@@ -54,11 +59,6 @@ namespace Sitecore.Pathfinder.Snapshots
         public bool HasAttribute(string attributeName)
         {
             return GetAttribute(attributeName) != null;
-        }
-
-        public ITextNode GetInnerTextNode()
-        {
-            return null;
         }
 
         bool IMutableTextNode.SetKey(string newKey)

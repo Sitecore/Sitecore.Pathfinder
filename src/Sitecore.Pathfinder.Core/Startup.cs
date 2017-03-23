@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,7 +18,6 @@ namespace Sitecore.Pathfinder
         {
             ToolsDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) ?? string.Empty;
         }
-
 
         [CanBeNull, ItemNotNull]
         public IEnumerable<string> AssemblyFileNames { get; private set; }
@@ -152,26 +151,6 @@ namespace Sitecore.Pathfinder
         }
 
         [NotNull]
-        protected virtual string GetProjectDirectory()
-        {
-            // search in current and parent directories for scconfig.json
-            var projectDirectory = new DirectoryInfo(Directory.GetCurrentDirectory());
-            do
-            {
-                var configurationFileName = Path.Combine(projectDirectory.FullName, SystemConfigurationFileName);
-                if (File.Exists(configurationFileName))
-                {
-                    return projectDirectory.FullName;
-                }
-
-                projectDirectory = projectDirectory.Parent;
-            }
-            while (projectDirectory != null);
-
-            return Directory.GetCurrentDirectory();
-        }
-
-        [NotNull]
         public virtual Startup WithAssemblies([NotNull, ItemNotNull] IEnumerable<string> assemblyFileNames)
         {
             AssemblyFileNames = assemblyFileNames;
@@ -272,6 +251,26 @@ namespace Sitecore.Pathfinder
         {
             WebsiteDirectory = websiteDirectory;
             return this;
+        }
+
+        [NotNull]
+        protected virtual string GetProjectDirectory()
+        {
+            // search in current and parent directories for scconfig.json
+            var projectDirectory = new DirectoryInfo(Directory.GetCurrentDirectory());
+            do
+            {
+                var configurationFileName = Path.Combine(projectDirectory.FullName, SystemConfigurationFileName);
+                if (File.Exists(configurationFileName))
+                {
+                    return projectDirectory.FullName;
+                }
+
+                projectDirectory = projectDirectory.Parent;
+            }
+            while (projectDirectory != null);
+
+            return Directory.GetCurrentDirectory();
         }
     }
 }

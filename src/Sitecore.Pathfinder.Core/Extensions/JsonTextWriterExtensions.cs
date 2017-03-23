@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using Newtonsoft.Json;
 using Sitecore.Pathfinder.Diagnostics;
@@ -18,6 +18,12 @@ namespace Sitecore.Pathfinder.Extensions
         }
 
         public static void WritePropertyString([NotNull] this JsonTextWriter jsonTextWriter, [NotNull] string propertyName, [NotNull] string value)
+        {
+            jsonTextWriter.WritePropertyName(propertyName);
+            jsonTextWriter.WriteValue(value);
+        }
+
+        public static void WritePropertyString([NotNull] this JsonTextWriter jsonTextWriter, [NotNull] string propertyName, bool value)
         {
             jsonTextWriter.WritePropertyName(propertyName);
             jsonTextWriter.WriteValue(value);
@@ -52,12 +58,6 @@ namespace Sitecore.Pathfinder.Extensions
                 return;
             }
 
-            jsonTextWriter.WritePropertyName(propertyName);
-            jsonTextWriter.WriteValue(value);
-        }
-
-        public static void WritePropertyString([NotNull] this JsonTextWriter jsonTextWriter, [NotNull] string propertyName, bool value)
-        {
             jsonTextWriter.WritePropertyName(propertyName);
             jsonTextWriter.WriteValue(value);
         }

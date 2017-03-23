@@ -4,7 +4,7 @@ using System.Composition;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Templates;
 
-namespace Sitecore.Pathfinder.Emitting.Emitters.PackageEmitter
+namespace Sitecore.Pathfinder.Emitting.Emitters.SitecorePackageEmitter
 {
     [Export(typeof(IEmitter)), Shared]
     public class TemplateEmitter : EmitterBase

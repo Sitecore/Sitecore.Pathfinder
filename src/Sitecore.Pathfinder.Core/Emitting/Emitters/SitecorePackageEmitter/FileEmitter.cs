@@ -4,7 +4,7 @@ using System.Composition;
 using Sitecore.Pathfinder.Languages.Content;
 using Sitecore.Pathfinder.Projects;
 
-namespace Sitecore.Pathfinder.Emitting.Emitters.PackageEmitter
+namespace Sitecore.Pathfinder.Emitting.Emitters.SitecorePackageEmitter
 {
     [Export(typeof(IEmitter)), Shared]
     public class FileEmitter : EmitterBase

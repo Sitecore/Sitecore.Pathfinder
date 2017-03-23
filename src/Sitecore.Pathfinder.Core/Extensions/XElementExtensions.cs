@@ -1,6 +1,5 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel;
 using System.Linq;
 using System.Xml.Linq;
 using Sitecore.Pathfinder.Diagnostics;
@@ -29,13 +28,7 @@ namespace Sitecore.Pathfinder.Extensions
         }
 
         [NotNull]
-        public static string GetElementValue([NotNull] this XElement element, [NotNull] [Localizable(false)] string elementName)
-        {
-            return GetElementValue(element, elementName, string.Empty);
-        }
-
-        [NotNull]
-        public static string GetAttributeValue([NotNull] this XElement element, [NotNull] [Localizable(false)] string attributeName)
+        public static string GetAttributeValue([NotNull] this XElement element, [NotNull, Localizable(false)]  string attributeName)
         {
             if (!element.HasAttributes)
             {
@@ -48,7 +41,7 @@ namespace Sitecore.Pathfinder.Extensions
         }
 
         [CanBeNull]
-        public static string GetAttributeValue([NotNull] this XElement element, [NotNull] [Localizable(false)] string attributeName, [CanBeNull] string defaultValue)
+        public static string GetAttributeValue([NotNull] this XElement element, [NotNull, Localizable(false)]  string attributeName, [CanBeNull] string defaultValue)
         {
             if (!element.HasAttributes)
             {
@@ -61,14 +54,20 @@ namespace Sitecore.Pathfinder.Extensions
         }
 
         [NotNull]
-        public static string GetElementValue([NotNull] this XElement element, [NotNull] [Localizable(false)] string elementName, [NotNull] string defaultValue)
+        public static string GetElementValue([NotNull] this XElement element, [NotNull, Localizable(false)]  string elementName)
+        {
+            return GetElementValue(element, elementName, string.Empty);
+        }
+
+        [NotNull]
+        public static string GetElementValue([NotNull] this XElement element, [NotNull, Localizable(false)]  string elementName, [NotNull] string defaultValue)
         {
             var e = element.Element(elementName);
 
             return e?.Value ?? defaultValue;
         }
 
-        public static int GetElementValueInt([NotNull] this XElement element, [NotNull] [Localizable(false)] string elementName, int defaultValue = 0)
+        public static int GetElementValueInt([NotNull] this XElement element, [NotNull, Localizable(false)]  string elementName, int defaultValue = 0)
         {
             var e = element.Element(elementName);
             if (string.IsNullOrEmpty(e?.Value))
@@ -85,7 +84,7 @@ namespace Sitecore.Pathfinder.Extensions
             return defaultValue;
         }
 
-        public static bool HasAttribute([NotNull] this XElement element, [NotNull] [Localizable(false)] string attributeName)
+        public static bool HasAttribute([NotNull] this XElement element, [NotNull, Localizable(false)]  string attributeName)
         {
             if (!element.HasAttributes)
             {

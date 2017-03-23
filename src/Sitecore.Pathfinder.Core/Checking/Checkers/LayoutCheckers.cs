@@ -1,4 +1,4 @@
-// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using System.Composition;
@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
             return from rendering in context.Project.ProjectItems.OfType<Rendering>()
                 from placeholder in rendering.Placeholders
                 where context.Project.Items.FirstOrDefault(i => i.ItemName == placeholder && i.TemplateName == "Placeholder") == null
-                select Warning(Msg.C1105, "Placeholders should have a Placeholder Settings item", new StringTextNode("Placeholder(\""+ placeholder + "\")", rendering.Snapshot), $"To fix, create a '/sitecore/layout/Placeholder Settings/{placeholder}' item");
+                select Warning(Msg.C1105, "Placeholders should have a Placeholder Settings item", new StringTextNode("Placeholder(\"" + placeholder + "\")", rendering.Snapshot), $"To fix, create a '/sitecore/layout/Placeholder Settings/{placeholder}' item");
         }
 
         [ItemNotNull, NotNull, Check]
