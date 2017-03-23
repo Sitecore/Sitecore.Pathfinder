@@ -70,13 +70,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Hello world", "2. Hello 
 		docs\walkthroughs\2. Hello world\README.md = docs\walkthroughs\2. Hello world\README.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "buildfiles", "buildfiles", "{8BCC4338-81A1-4B6C-99F9-89ABFF7812BE}"
-	ProjectSection(SolutionItems) = preProject
-		gulpfile.js = gulpfile.js
-		package.json = package.json
-		src\buildfiles\npm\package.json = src\buildfiles\npm\package.json
-	EndProjectSection
-EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "SitecorePathfinderCore", "test\SitecorePathfinderCore\", "{A746E909-84DD-409F-9900-C0BF80FAD1D5}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
