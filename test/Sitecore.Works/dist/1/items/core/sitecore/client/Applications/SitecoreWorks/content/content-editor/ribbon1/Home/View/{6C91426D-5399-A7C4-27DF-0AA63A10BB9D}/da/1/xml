@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<item name="View" key="view" id="{6C91426D-5399-A7C4-27DF-0AA63A10BB9D}" tid="{E99C1F95-5D90-BC56-6494-B4468E33CCC7}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="200" language="da" version="1" template="ribbongroupresource" parentid="{4C7CC86A-21C9-622A-0D34-313461767613}">
-  <fields>
-    <field tfid="{8640887B-4E77-4773-9496-C2937D736A75}" key="text" type="Single-Line Text">
-      <content>Visning</content>
-    </field>
-  </fields>
-</item>

@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<item name="Navigate" key="navigate" id="{49844675-567E-1267-D319-5E6F0D0E2515}" tid="{BCDB5015-EF81-4FE9-2672-693CBACE1C41}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="200" language="en" version="1" template="ribbontabresource" parentid="{C41363A7-00A6-646C-8B1A-D214DD536F76}">
-  <fields>
-    <field tfid="{E1BEBA6A-75EF-AA44-A321-960AC21CCC50}" key="text" type="Single-Line Text">
-      <content>Navigate</content>
-    </field>
-  </fields>
-</item>

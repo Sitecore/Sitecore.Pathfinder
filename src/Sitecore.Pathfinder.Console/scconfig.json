@@ -61,7 +61,7 @@
     // mapping between project files and website files and items
     "project-website-mappings": {
         // fields to exclude when importing a website
-        "excluded-fields": "__Created, __Created by, __Owner, __Revision, __Updated, __Updated by, Blob, Originator, __PathfinderProjectUniqueIds",
+        "excluded-fields": "__Created, __Created by, __Owner, __Revision, __Updated, __Updated by, Blob, Originator",
 
         // mapping items and files to website when building a project
         "project-to-website": {
@@ -225,77 +225,11 @@
         "wwwroot-directory": "c:\\inetpub\\wwwroot"
     },
 
-    "pack-nuget": {
-        // base path relative to the project directory
-        "base-path": "",
-
-        // all .nuspec files in this directory are created
-        "directory": "sitecore.project",
-        "exclude": "",
-        "include": "**/*.nuspec",
-
-        // tokens to be replaced
-        "tokens": {
-            // "replace" : "with"
-        }
-    },
-
-    "pack-npm": {
-        "output-file": "sitecore.project/sitecore.tgz",
-        "package-json-file": "sitecore.project/package.json"
-    },
-
-    "publish-databases": {
-        "publish-url": "/sitecore/shell/client/Applications/Pathfinder/Publish"
-    },
-
     "reset-website": {
     },
 
     "restore-packages": {
         "directory": "files/packages"
-    },
-
-    "start-website": {
-        // specifies the port, e.g. "http://localhost:3000/"
-        "port": 3000,
-
-        // specifies which files to watch for
-        "exclude": "**/*",
-        "include": "**/*"
-    },
-
-    "sync-website": {
-        "files": {
-            "system-0": {
-                "file": "sitecore.project/schemas/master.layout.schema.json",
-                "database": "master"
-            },
-            "system-1": {
-                "file": "sitecore.project/schemas/core.layout.schema.json",
-                "database": "core"
-            },
-            "system-2": {
-                "file": "sitecore.project/schemas/master.layout.xsd",
-                "database": "master",
-                "namespace": "http://www.sitecore.net/pathfinder/layouts/master"
-            },
-            "system-3": {
-                "file": "sitecore.project/schemas/core.layout.xsd",
-                "database": "core",
-                "namespace": "http://www.sitecore.net/pathfinder/layouts/core"
-            },
-            "system-4": {
-                "file": "sitecore.project/schemas/master.content.xsd",
-                "database": "master",
-                "namespace": "http://www.sitecore.net/pathfinder/content/master"
-            },
-            "system-5": {
-                "file": "sitecore.project/schemas/core.content.xsd",
-                "database": "core",
-                "namespace": "http://www.sitecore.net/pathfinder/content/core"
-            }
-        }
     },
 
     "write-exports": {
@@ -359,7 +293,7 @@
     },
 
     "messages": {
-        "system-0": {
+        "system": {
             // comma separated list of message numbers to ignore
             "disabled": ""
         }
