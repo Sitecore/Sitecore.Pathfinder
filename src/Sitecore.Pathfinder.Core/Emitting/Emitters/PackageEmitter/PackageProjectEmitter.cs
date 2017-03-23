@@ -64,12 +64,6 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.PackageEmitter
             }
         }
 
-        [NotNull]
-        private string NormalizeZipPath([NotNull] string fileName)
-        {
-            return fileName.Replace("\\", "/").TrimEnd('/');
-        }
-
         public virtual void AddItem([NotNull] IEmitContext context, [NotNull] Item item)
         {
             _items.Add(item);
@@ -173,7 +167,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.PackageEmitter
         public override void Emit(IProject project)
         {
             var outputDirectory = PathHelper.Combine(Configuration.GetProjectDirectory(), Configuration.GetString(Constants.Configuration.Output.Directory));
-            var fileName = Path.Combine(outputDirectory, "sitecore.package.zip");
+            var fileName = Path.Combine(outputDirectory, Configuration.GetString(Constants.Configuration.Output.Package.FileName, "package.zip"));
 
             FileSystem.CreateDirectoryFromFileName(fileName);
 
@@ -193,7 +187,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.PackageEmitter
             {
                 using (var writer = new StreamWriter(stream, Encoding.UTF8))
                 {
-                    writer.Write(string.Empty);
+                    writer.Write(Configuration.GetString(Constants.Configuration.Author, string.Empty));
                 }
 
                 Zip.AddEntry("metadata/sc_author.txt", stream.ToArray());
@@ -213,7 +207,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.PackageEmitter
             {
                 using (var writer = new StreamWriter(stream, Encoding.UTF8))
                 {
-                    writer.Write(string.Empty);
+                    writer.Write(Configuration.GetString(Constants.Configuration.License, string.Empty));
                 }
 
                 Zip.AddEntry("metadata/sc_license.txt", stream.ToArray());
@@ -223,7 +217,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.PackageEmitter
             {
                 using (var writer = new StreamWriter(stream, Encoding.UTF8))
                 {
-                    writer.Write(string.Empty);
+                    writer.Write(Configuration.GetString(Constants.Configuration.Name, string.Empty));
                 }
 
                 Zip.AddEntry("metadata/sc_name.txt", stream.ToArray());
@@ -243,7 +237,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.PackageEmitter
             {
                 using (var writer = new StreamWriter(stream, Encoding.UTF8))
                 {
-                    writer.Write(string.Empty);
+                    writer.Write(Configuration.GetString(Constants.Configuration.Publisher, string.Empty));
                 }
 
                 Zip.AddEntry("metadata/sc_publisher.txt", stream.ToArray());
@@ -253,7 +247,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.PackageEmitter
             {
                 using (var writer = new StreamWriter(stream, Encoding.UTF8))
                 {
-                    writer.Write(string.Empty);
+                    writer.Write(Configuration.GetString(Constants.Configuration.Description, string.Empty));
                 }
 
                 Zip.AddEntry("metadata/sc_readme.txt", stream.ToArray());
@@ -263,7 +257,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.PackageEmitter
             {
                 using (var writer = new StreamWriter(stream, Encoding.UTF8))
                 {
-                    writer.Write(string.Empty);
+                    writer.Write(Configuration.GetString(Constants.Configuration.Version, string.Empty));
                 }
 
                 Zip.AddEntry("metadata/sc_version.txt", stream.ToArray());
@@ -287,16 +281,16 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.PackageEmitter
                     output.WriteStartElement("Metadata");
                     output.WriteStartElement("metadata");
                     output.WriteElementString("PackageName", "Pathfinder");
-                    output.WriteElementString("Author", "Author");
-                    output.WriteElementString("Version", "1.0.0");
+                    output.WriteElementString("Author", Configuration.GetString(Constants.Configuration.Author, string.Empty));
+                    output.WriteElementString("Version", Configuration.GetString(Constants.Configuration.Version, string.Empty));
                     output.WriteElementString("Revision", string.Empty);
-                    output.WriteElementString("License", string.Empty);
+                    output.WriteElementString("License", Configuration.GetString(Constants.Configuration.License, string.Empty));
                     output.WriteElementString("Comment", string.Empty);
                     output.WriteElementString("Attributes", string.Empty);
-                    output.WriteElementString("Readme", string.Empty);
-                    output.WriteElementString("Publisher", string.Empty);
+                    output.WriteElementString("Readme", Configuration.GetString(Constants.Configuration.Description, string.Empty));
+                    output.WriteElementString("Publisher", Configuration.GetString(Constants.Configuration.Publisher, string.Empty));
                     output.WriteElementString("PostStep", string.Empty);
-                    output.WriteElementString("PackageID", string.Empty);
+                    output.WriteElementString("PackageID", Configuration.GetString(Constants.Configuration.ProjectUniqueId, string.Empty));
                     output.WriteEndElement();
                     output.WriteEndElement();
 
@@ -382,6 +376,12 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.PackageEmitter
 
                 Zip.AddEntry("installer/version", stream.ToArray());
             }
+        }
+
+        [NotNull]
+        private string NormalizeZipPath([NotNull] string fileName)
+        {
+            return fileName.Replace("\\", "/").TrimEnd('/');
         }
     }
 }

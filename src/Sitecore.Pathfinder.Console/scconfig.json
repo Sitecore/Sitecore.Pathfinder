@@ -1,4 +1,13 @@
 {
+    "project-unique-id": "Sitecore-Pathfinder", 
+
+    "author": "Sitecore Pathfinder",
+    "description": "",
+    "license": "",
+    "name": "",
+    "publisher": "",
+    "version": "1.0.0",
+
     // external references
     "references": {
         "sitecore-pathfinder-core": {
@@ -28,7 +37,10 @@
 
     "output": {
         "directory": "./dist",
-        "format": "directory"
+        "format": "directory",
+        "package": {
+            "filename": "package.zip"
+        }
     },
 
     // old stuff =========================================================================

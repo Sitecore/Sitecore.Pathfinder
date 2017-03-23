@@ -122,11 +122,23 @@ namespace Sitecore.Pathfinder
 
             public const string WebsiteDirectory = "website-directory";
 
+            public const string Author = "author";
+            public const string Description = "description";
+            public const string License = "license";
+            public const string Name = "name";
+            public const string Publisher = "publisher";
+            public const string Version = "version";
+
             public static class Output
             {
                 public const string Directory = "output:directory";
 
                 public const string Format = "output:format";
+
+                public static class Package
+                {
+                    public const string FileName = "output:package:filename";
+                }
             }
 
             public static class BuildProject
