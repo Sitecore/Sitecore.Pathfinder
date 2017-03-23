@@ -1,0 +1,21 @@
+Item : 
+    Id : {D6A45FC4-7C09-F586-EBB5-69514D862FD8}
+    Database : core
+    Name : Text
+    ItemPath : /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonTabResource/Fields/Text
+    Template : {455A3E98-A627-4B40-8035-E683A0331AC7}
+    - Fields : 
+        - Field : __Long description
+            Value : 
+        - Field : __Short description
+            Value : 
+        - Field : Shared
+            Value : False
+        - Field : Unversioned
+            Value : True
+        - Field : Source
+            Value : 
+        - Field : __Sortorder
+            Value : 0
+        - Field : Type
+            Value : Single-Line Text

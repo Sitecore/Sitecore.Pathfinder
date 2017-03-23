@@ -1,0 +1,11 @@
+----item----
+version: 1
+id: {16C00E00-8EE5-ED5C-3685-4D44CB35CA9F}
+database: core
+path: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Versions
+parent: {9E3E3376-87E5-52E5-638D-6C4AE9FA017E}
+name: Versions
+master: {00000000-0000-0000-0000-000000000000}
+template: {816D85B7-2FAD-C0F4-8056-15FC96815984}
+templatekey: RibbonTabResource
+

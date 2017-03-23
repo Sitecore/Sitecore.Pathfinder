@@ -1,0 +1,11 @@
+----item----
+version: 1
+id: {870F1A01-9BD5-4D17-18BF-10D1CA63DB42}
+database: core
+path: /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonLargeButtonResource/__Standard Values
+parent: {6C9DBEC3-5685-4C6B-88B8-BAD0DA77A01A}
+name: __Standard Values
+master: {00000000-0000-0000-0000-000000000000}
+template: {6C9DBEC3-5685-4C6B-88B8-BAD0DA77A01A}
+templatekey: RibbonLargeButtonResource
+

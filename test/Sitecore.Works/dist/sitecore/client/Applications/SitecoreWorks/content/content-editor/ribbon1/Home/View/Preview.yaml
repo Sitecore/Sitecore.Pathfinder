@@ -1,0 +1,18 @@
+Item : 
+    Id : {9BBD3027-A314-715F-27DA-3E3B66C6A1C6}
+    Database : core
+    Name : Preview
+    ItemPath : /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/View/Preview
+    Template : RibbonLargeButtonResource
+    - Fields : 
+        - Field : Icon
+            Value : eye
+        - Field : Command
+            Value : works.preview
+        - Unversioned : 
+            - en : 
+                - Field : Text
+                    Value : Preview
+            - da : 
+                - Field : Text
+                    Value : Preview

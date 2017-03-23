@@ -1,0 +1,25 @@
+----item----
+version: 1
+id: {671C6B6E-8A7C-5951-5C93-82B342AAA49A}
+database: core
+path: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/View/Content
+parent: {6C09760F-D488-3562-CFE8-06E3A00E052D}
+name: Content
+master: {00000000-0000-0000-0000-000000000000}
+template: {6C9DBEC3-5685-4C6B-88B8-BAD0DA77A01A}
+templatekey: RibbonLargeButtonResource
+
+----field----
+field: {BE463D80-DA38-2B56-9EAD-2FB8F6BF3AF2}
+name: Icon
+key: icon
+content-length: 15
+
+pencil-square-o
+----field----
+field: {89F9119C-47E5-A51A-28DD-4E029E9C2661}
+name: Command
+key: command
+content-length: 31
+
+works.contentEditor.viewContent

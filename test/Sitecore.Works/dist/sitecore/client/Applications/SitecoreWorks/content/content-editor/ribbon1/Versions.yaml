@@ -1,0 +1,14 @@
+Item : 
+    Id : {16C00E00-8EE5-ED5C-3685-4D44CB35CA9F}
+    Database : core
+    Name : Versions
+    ItemPath : /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Versions
+    Template : RibbonTabResource
+    - Fields : 
+        - Unversioned : 
+            - en : 
+                - Field : Text
+                    Value : Versions
+            - da : 
+                - Field : Text
+                    Value : Versioner

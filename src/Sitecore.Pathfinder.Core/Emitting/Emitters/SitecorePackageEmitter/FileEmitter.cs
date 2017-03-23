@@ -15,13 +15,13 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.SitecorePackageEmitter
 
         public override bool CanEmit(IEmitContext context, IProjectItem projectItem)
         {
-            return context.ProjectEmitter is PackageProjectEmitter && projectItem is ContentFile;
+            return context.ProjectEmitter is SitecorePackageProjectEmitter && projectItem is ContentFile;
         }
 
         public override void Emit(IEmitContext context, IProjectItem projectItem)
         {
             var contentFile = (ContentFile)projectItem;
-            var projectEmitter = (PackageProjectEmitter)context.ProjectEmitter;
+            var projectEmitter = (SitecorePackageProjectEmitter)context.ProjectEmitter;
 
             projectEmitter.AddFile(context, projectItem.Snapshot.SourceFile.AbsoluteFileName, contentFile.FilePath);
         }

@@ -1,0 +1,18 @@
+Item : 
+    Id : {D2945CB1-AED3-6AE6-F789-BF11AE85BCDC}
+    Database : core
+    Name : Dashboard
+    ItemPath : /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/View/Dashboard
+    Template : RibbonLargeButtonResource
+    - Fields : 
+        - Field : Icon
+            Value : dashboard
+        - Field : Command
+            Value : works.contentEditor.viewDashboard
+        - Unversioned : 
+            - en : 
+                - Field : Text
+                    Value : Dashboard
+            - da : 
+                - Field : Text
+                    Value : Oversigt

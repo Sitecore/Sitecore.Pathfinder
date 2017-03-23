@@ -1,0 +1,11 @@
+----item----
+version: 1
+id: {377D9524-16FF-26B6-F272-F7A66DD39DBE}
+database: core
+path: /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonGroupResource/Fields
+parent: {4194F0B6-982F-757E-6373-F2A2718972C1}
+name: Fields
+master: {00000000-0000-0000-0000-000000000000}
+template: {E269FBB5-3750-427A-9149-7AA950B49301}
+templatekey: Template section
+

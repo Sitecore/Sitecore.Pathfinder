@@ -1,0 +1,14 @@
+Item : 
+    Id : {0C243647-8F14-8762-6DBC-6E9B56ABBA1E}
+    Database : core
+    Name : Write
+    ItemPath : /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/Write
+    Template : RibbonGroupResource
+    - Fields : 
+        - Unversioned : 
+            - en : 
+                - Field : Text
+                    Value : Item
+            - da : 
+                - Field : Text
+                    Value : Item

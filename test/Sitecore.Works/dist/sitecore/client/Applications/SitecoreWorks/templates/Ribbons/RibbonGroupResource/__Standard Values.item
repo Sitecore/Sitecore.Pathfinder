@@ -1,0 +1,11 @@
+----item----
+version: 1
+id: {4841CBA5-F3C5-153D-D438-07034C4BFF64}
+database: core
+path: /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonGroupResource/__Standard Values
+parent: {4194F0B6-982F-757E-6373-F2A2718972C1}
+name: __Standard Values
+master: {00000000-0000-0000-0000-000000000000}
+template: {4194F0B6-982F-757E-6373-F2A2718972C1}
+templatekey: RibbonGroupResource
+

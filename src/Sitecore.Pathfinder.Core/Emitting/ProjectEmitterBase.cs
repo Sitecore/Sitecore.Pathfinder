@@ -41,10 +41,8 @@ namespace Sitecore.Pathfinder.Emitting
 
         public abstract bool CanEmit(string format);
 
-        public virtual void Emit(IProject project)
+        public virtual void Emit(IEmitContext context, IProject project)
         {
-            var context = CompositionService.Resolve<IEmitContext>().With(this, project);
-
             if (Configuration.GetBool(Constants.Configuration.InstallPackage.ShowDiagnostics))
             {
                 var treatWarningsAsErrors = Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);

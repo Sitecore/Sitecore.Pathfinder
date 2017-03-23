@@ -1,0 +1,21 @@
+Item : 
+    Id : {B49AD811-1B58-34A7-A735-D8D7681A8F80}
+    Database : core
+    Name : Text
+    ItemPath : /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonLargeButtonResource/Fields/Text
+    Template : {455A3E98-A627-4B40-8035-E683A0331AC7}
+    - Fields : 
+        - Field : __Long description
+            Value : 
+        - Field : __Short description
+            Value : 
+        - Field : Shared
+            Value : False
+        - Field : Unversioned
+            Value : True
+        - Field : Source
+            Value : 
+        - Field : __Sortorder
+            Value : 0
+        - Field : Type
+            Value : Single-Line Text

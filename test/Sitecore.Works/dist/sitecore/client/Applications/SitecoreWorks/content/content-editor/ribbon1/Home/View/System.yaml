@@ -1,0 +1,18 @@
+Item : 
+    Id : {2FEA1030-DD39-3071-31C5-3C857F5F1477}
+    Database : core
+    Name : System
+    ItemPath : /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/View/System
+    Template : RibbonLargeButtonResource
+    - Fields : 
+        - Field : Icon
+            Value : gear
+        - Field : Command
+            Value : works.contentEditor.viewSystem
+        - Unversioned : 
+            - en : 
+                - Field : Text
+                    Value : System
+            - da : 
+                - Field : Text
+                    Value : System

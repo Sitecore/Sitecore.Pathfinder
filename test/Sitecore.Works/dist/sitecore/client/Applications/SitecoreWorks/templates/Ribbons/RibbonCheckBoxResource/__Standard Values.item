@@ -1,0 +1,11 @@
+----item----
+version: 1
+id: {11DFE2C6-5DCA-D272-B4B9-E1D373EA7208}
+database: core
+path: /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonCheckBoxResource/__Standard Values
+parent: {2D8353BC-462F-4632-A7A9-7745F4729637}
+name: __Standard Values
+master: {00000000-0000-0000-0000-000000000000}
+template: {2D8353BC-462F-4632-A7A9-7745F4729637}
+templatekey: RibbonCheckBoxResource
+

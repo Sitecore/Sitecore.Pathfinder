@@ -1,0 +1,7 @@
+Item : 
+    Id : {F81358D6-8572-5BDD-5AAD-DE798AA9D152}
+    Database : core
+    Name : Fields
+    ItemPath : /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonCheckBoxResource/Fields
+    Template : {E269FBB5-3750-427A-9149-7AA950B49301}
+    - Fields : 

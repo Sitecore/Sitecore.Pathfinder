@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.SitecorePackageEmitter
 
         public override bool CanEmit(IEmitContext context, IProjectItem projectItem)
         {
-            return context.ProjectEmitter is PackageProjectEmitter && projectItem is Template;
+            return context.ProjectEmitter is SitecorePackageProjectEmitter && projectItem is Template;
         }
 
         public override void Emit(IEmitContext context, IProjectItem projectItem)

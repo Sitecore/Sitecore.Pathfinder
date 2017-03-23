@@ -1,0 +1,18 @@
+Item : 
+    Id : {A52662CA-D71D-6173-428A-AA78D7D42C86}
+    Database : core
+    Name : TranslateItem
+    ItemPath : /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Versions/Translate/TranslateItem
+    Template : RibbonLargeButtonResource
+    - Fields : 
+        - Field : Icon
+            Value : globe
+        - Field : Command
+            Value : works.contentEditor.translateItem
+        - Unversioned : 
+            - en : 
+                - Field : Text
+                    Value : Translate
+            - da : 
+                - Field : Text
+                    Value : Oversæt

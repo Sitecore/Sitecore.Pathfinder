@@ -1,0 +1,18 @@
+Item : 
+    Id : {601D87BA-5EC9-FB2D-FAB2-D25B70C9FA6B}
+    Database : core
+    Name : References
+    ItemPath : /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Navigate/Navigate/References
+    Template : RibbonLargeButtonResource
+    - Fields : 
+        - Field : Icon
+            Value : sign-out
+        - Field : Command
+            Value : works.navigateReferences
+        - Unversioned : 
+            - en : 
+                - Field : Text
+                    Value : References
+            - da : 
+                - Field : Text
+                    Value : Referancer

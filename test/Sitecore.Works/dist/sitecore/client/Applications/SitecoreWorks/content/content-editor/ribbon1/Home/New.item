@@ -1,0 +1,11 @@
+----item----
+version: 1
+id: {F9B228E8-3965-8250-871F-4D02E14A01EB}
+database: core
+path: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/New
+parent: {F2CF73E9-AD3F-1964-8C34-AA5F04B333BD}
+name: New
+master: {00000000-0000-0000-0000-000000000000}
+template: {4194F0B6-982F-757E-6373-F2A2718972C1}
+templatekey: RibbonGroupResource
+

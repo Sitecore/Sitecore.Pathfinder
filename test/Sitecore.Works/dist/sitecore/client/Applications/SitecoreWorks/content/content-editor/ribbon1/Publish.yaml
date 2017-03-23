@@ -1,0 +1,14 @@
+Item : 
+    Id : {74729243-E31C-CC36-14D9-5531106CB501}
+    Database : core
+    Name : Publish
+    ItemPath : /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Publish
+    Template : RibbonTabResource
+    - Fields : 
+        - Unversioned : 
+            - en : 
+                - Field : Text
+                    Value : Publish
+            - da : 
+                - Field : Text
+                    Value : Publiser

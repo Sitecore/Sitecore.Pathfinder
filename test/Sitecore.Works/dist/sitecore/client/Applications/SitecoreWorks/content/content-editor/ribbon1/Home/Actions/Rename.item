@@ -1,0 +1,25 @@
+----item----
+version: 1
+id: {8CBB142D-C148-5FA0-685B-A67EB786685A}
+database: core
+path: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/Actions/Rename
+parent: {BC83995A-913E-77E0-8073-6DEF26252E4B}
+name: Rename
+master: {00000000-0000-0000-0000-000000000000}
+template: {6C9DBEC3-5685-4C6B-88B8-BAD0DA77A01A}
+templatekey: RibbonLargeButtonResource
+
+----field----
+field: {BE463D80-DA38-2B56-9EAD-2FB8F6BF3AF2}
+name: Icon
+key: icon
+content-length: 8
+
+i-cursor
+----field----
+field: {89F9119C-47E5-A51A-28DD-4E029E9C2661}
+name: Command
+key: command
+content-length: 16
+
+works.renameItem

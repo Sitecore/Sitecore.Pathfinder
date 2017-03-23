@@ -1,0 +1,18 @@
+Item : 
+    Id : {671C6B6E-8A7C-5951-5C93-82B342AAA49A}
+    Database : core
+    Name : Content
+    ItemPath : /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/View/Content
+    Template : RibbonLargeButtonResource
+    - Fields : 
+        - Field : Icon
+            Value : pencil-square-o
+        - Field : Command
+            Value : works.contentEditor.viewContent
+        - Unversioned : 
+            - en : 
+                - Field : Text
+                    Value : Content
+            - da : 
+                - Field : Text
+                    Value : Indhold

@@ -1,0 +1,18 @@
+Item : 
+    Id : {A9713FFE-7776-B700-5474-59349121514E}
+    Database : core
+    Name : AddVersion
+    ItemPath : /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Versions/Versions/AddVersion
+    Template : RibbonLargeButtonResource
+    - Fields : 
+        - Field : Icon
+            Value : plus-square
+        - Field : Command
+            Value : works.contentEditor.addVersion
+        - Unversioned : 
+            - en : 
+                - Field : Text
+                    Value : Add
+            - da : 
+                - Field : Text
+                    Value : Tilføj

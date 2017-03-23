@@ -1,0 +1,14 @@
+Item : 
+    Id : {B6A301BE-131B-60EE-FADD-B2C1D6A24551}
+    Database : core
+    Name : Search
+    ItemPath : /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Navigate/Search
+    Template : RibbonGroupResource
+    - Fields : 
+        - Unversioned : 
+            - en : 
+                - Field : Text
+                    Value : Search
+            - da : 
+                - Field : Text
+                    Value : Søg

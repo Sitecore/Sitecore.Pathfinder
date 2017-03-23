@@ -1,0 +1,14 @@
+Item : 
+    Id : {F9B228E8-3965-8250-871F-4D02E14A01EB}
+    Database : core
+    Name : New
+    ItemPath : /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/New
+    Template : RibbonGroupResource
+    - Fields : 
+        - Unversioned : 
+            - en : 
+                - Field : Text
+                    Value : New
+            - da : 
+                - Field : Text
+                    Value : Ny

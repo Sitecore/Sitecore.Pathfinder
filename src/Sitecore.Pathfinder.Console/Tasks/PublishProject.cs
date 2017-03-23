@@ -5,6 +5,7 @@ using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitting;
+using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Tasks.Building;
 
@@ -14,15 +15,23 @@ namespace Sitecore.Pathfinder.Tasks
     public class PublishProject : BuildTaskBase
     {
         [ImportingConstructor]
-        public PublishProject([ItemNotNull, NotNull, ImportMany] IEnumerable<IProjectEmitter> projectEmitters) : base("publish-project")
+        public PublishProject([NotNull] ICompositionService compositionService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IProjectEmitter> projectEmitters) : base("publish-project")
         {
+            CompositionService = compositionService;
             ProjectEmitters = projectEmitters;
+
             Alias = "publish";
             Shortcut = "p";
         }
 
-        [NotNull, Option("format", Alias = "f", IsRequired = true, PromptText = "Select output format", HelpText = "Output format", PositionalArg = 1, HasOptions = true, DefaultValue = "default")]
+        [NotNull, Option("format", Alias = "f", IsRequired = true, PromptText = "Select output format", HelpText = "Output format", PositionalArg = 1, HasOptions = true)]
         public string Format { get; set; } = "directory";
+
+        [NotNull, Option("item-format", Alias = "if", IsRequired = false, PromptText = "Select item format", HelpText = "Item format", PositionalArg = 2, HasOptions = true)]
+        public string ItemFormat { get; set; }
+
+        [NotNull]
+        public ICompositionService CompositionService { get; }
 
         [ItemNotNull, NotNull]
         protected IEnumerable<IProjectEmitter> ProjectEmitters { get; }
@@ -32,7 +41,7 @@ namespace Sitecore.Pathfinder.Tasks
             context.Trace.TraceInformation(Msg.D1029, "Publishing project...");
 
             var format = Format;
-            if (format == "default")
+            if (string.IsNullOrEmpty(format))
             {
                 format = context.Configuration.GetString(Constants.Configuration.Output.Format, "directory");
             }
@@ -48,7 +57,9 @@ namespace Sitecore.Pathfinder.Tasks
 
             foreach (var projectEmitter in projectEmitters)
             {
-                projectEmitter.Emit(project);
+                var emitContext = CompositionService.Resolve<IEmitContext>().With(projectEmitter, project, ItemFormat);
+
+                projectEmitter.Emit(emitContext, project);
             }
         }
 
@@ -57,6 +68,14 @@ namespace Sitecore.Pathfinder.Tasks
         {
             yield return ("Directory", "directory");
             yield return ("Package", "package");
+        }
+
+        [NotNull, OptionValues("ItemFormat")]
+        protected IEnumerable<(string Name, string Value)> GetItemFormatOptions([NotNull] ITaskContext context)
+        {
+            yield return ("Yaml", "yaml");
+            yield return ("Json", "json");
+            yield return ("Serialization", "serialization");
         }
     }
 }

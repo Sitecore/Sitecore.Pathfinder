@@ -1,0 +1,11 @@
+----item----
+version: 1
+id: {8FEB569D-0B5A-7263-2CBA-3DBBC49A36E1}
+database: core
+path: /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonSmallButtonResource/__Standard Values
+parent: {C0826BB5-CC9C-074C-EDD0-2DF369D73AF5}
+name: __Standard Values
+master: {00000000-0000-0000-0000-000000000000}
+template: {C0826BB5-CC9C-074C-EDD0-2DF369D73AF5}
+templatekey: RibbonSmallButtonResource
+

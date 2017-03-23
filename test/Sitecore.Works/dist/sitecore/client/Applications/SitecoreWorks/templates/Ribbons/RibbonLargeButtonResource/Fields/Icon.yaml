@@ -1,0 +1,21 @@
+Item : 
+    Id : {BE463D80-DA38-2B56-9EAD-2FB8F6BF3AF2}
+    Database : core
+    Name : Icon
+    ItemPath : /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonLargeButtonResource/Fields/Icon
+    Template : {455A3E98-A627-4B40-8035-E683A0331AC7}
+    - Fields : 
+        - Field : __Long description
+            Value : 
+        - Field : __Short description
+            Value : 
+        - Field : Shared
+            Value : True
+        - Field : Unversioned
+            Value : False
+        - Field : Source
+            Value : 
+        - Field : __Sortorder
+            Value : 100
+        - Field : Type
+            Value : Icon

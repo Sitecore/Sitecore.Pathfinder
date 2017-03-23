@@ -12,6 +12,9 @@ namespace Sitecore.Pathfinder.Emitting
         IConfiguration Configuration { get; }
 
         [NotNull]
+        string ItemFormat { get; }
+
+        [NotNull]
         IProjectBase Project { get; }
 
         [NotNull]
@@ -21,6 +24,6 @@ namespace Sitecore.Pathfinder.Emitting
         ITraceService Trace { get; }
 
         [NotNull]
-        IEmitContext With([NotNull] IProjectEmitter projectEmitter, [NotNull] IProjectBase project);
+        IEmitContext With([NotNull] IProjectEmitter projectEmitter, [NotNull] IProjectBase project, [NotNull] string itemFormat);
     }
 }

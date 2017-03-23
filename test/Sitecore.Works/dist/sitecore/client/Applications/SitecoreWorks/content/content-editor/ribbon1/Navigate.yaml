@@ -1,0 +1,14 @@
+Item : 
+    Id : {FAF1F92C-9B89-239A-EFD5-BDB68250FC94}
+    Database : core
+    Name : Navigate
+    ItemPath : /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Navigate
+    Template : RibbonTabResource
+    - Fields : 
+        - Unversioned : 
+            - en : 
+                - Field : Text
+                    Value : Navigate
+            - da : 
+                - Field : Text
+                    Value : Naviger

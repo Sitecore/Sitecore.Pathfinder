@@ -19,7 +19,7 @@ using Sitecore.Pathfinder.Projects.Items;
 namespace Sitecore.Pathfinder.Emitting.Emitters.SitecorePackageEmitter
 {
     [Export(typeof(IProjectEmitter)), Shared]
-    public class PackageProjectEmitter : ProjectEmitterBase
+    public class SitecorePackageProjectEmitter : ProjectEmitterBase
     {
         [ItemNotNull, NotNull]
         private readonly List<string> _files = new List<string>();
@@ -28,7 +28,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.SitecorePackageEmitter
         private readonly List<Item> _items = new List<Item>();
 
         [ImportingConstructor]
-        public PackageProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] ITraceService traceService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, compositionService, traceService, emitters)
+        public SitecorePackageProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] ITraceService traceService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, compositionService, traceService, emitters)
         {
             FileSystem = fileSystem;
         }
@@ -164,7 +164,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.SitecorePackageEmitter
             return string.Equals(format, "package", StringComparison.OrdinalIgnoreCase);
         }
 
-        public override void Emit(IProject project)
+        public override void Emit(IEmitContext context, IProject project)
         {
             var outputDirectory = PathHelper.Combine(Configuration.GetProjectDirectory(), Configuration.GetString(Constants.Configuration.Output.Directory));
             var fileName = Path.Combine(outputDirectory, Configuration.GetString(Constants.Configuration.Output.Package.FileName, "package.zip"));
@@ -173,7 +173,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.SitecorePackageEmitter
 
             using (Zip = new ZipWriter(fileName))
             {
-                base.Emit(project);
+                base.Emit(context, project);
 
                 AddProject();
                 AddVersion();

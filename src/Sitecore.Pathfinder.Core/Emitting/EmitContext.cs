@@ -19,16 +19,19 @@ namespace Sitecore.Pathfinder.Emitting
 
         public IConfiguration Configuration { get; }
 
+        public string ItemFormat { get; private set; } = "file";
+
         public IProjectBase Project { get; private set; }
 
         public IProjectEmitter ProjectEmitter { get; protected set; }
 
         public ITraceService Trace { get; }
 
-        public virtual IEmitContext With(IProjectEmitter projectEmitter, IProjectBase project)
+        public virtual IEmitContext With(IProjectEmitter projectEmitter, IProjectBase project, string itemFormat)
         {
             ProjectEmitter = projectEmitter;
             Project = project;
+            ItemFormat = itemFormat;
 
             return this;
         }

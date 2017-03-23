@@ -1,0 +1,11 @@
+----item----
+version: 1
+id: {C37D6F92-4E65-121F-2E0F-284B632D4924}
+database: core
+path: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Navigate/Navigate
+parent: {FAF1F92C-9B89-239A-EFD5-BDB68250FC94}
+name: Navigate
+master: {00000000-0000-0000-0000-000000000000}
+template: {4194F0B6-982F-757E-6373-F2A2718972C1}
+templatekey: RibbonGroupResource
+

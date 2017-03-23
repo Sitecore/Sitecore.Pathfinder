@@ -1,0 +1,25 @@
+----item----
+version: 1
+id: {0988D9C2-CC78-B517-884D-1F4B66AEC0B7}
+database: core
+path: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Navigate/Navigate/Template
+parent: {C37D6F92-4E65-121F-2E0F-284B632D4924}
+name: Template
+master: {00000000-0000-0000-0000-000000000000}
+template: {6C9DBEC3-5685-4C6B-88B8-BAD0DA77A01A}
+templatekey: RibbonLargeButtonResource
+
+----field----
+field: {BE463D80-DA38-2B56-9EAD-2FB8F6BF3AF2}
+name: Icon
+key: icon
+content-length: 8
+
+list-alt
+----field----
+field: {89F9119C-47E5-A51A-28DD-4E029E9C2661}
+name: Command
+key: command
+content-length: 22
+
+works.navigateTemplate

@@ -1,0 +1,11 @@
+----item----
+version: 1
+id: {81851869-C32B-913F-1C89-20BEBAF905F9}
+database: core
+path: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Versions/Versions
+parent: {16C00E00-8EE5-ED5C-3685-4D44CB35CA9F}
+name: Versions
+master: {00000000-0000-0000-0000-000000000000}
+template: {4194F0B6-982F-757E-6373-F2A2718972C1}
+templatekey: RibbonGroupResource
+

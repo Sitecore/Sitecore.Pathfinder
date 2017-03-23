@@ -1,0 +1,18 @@
+Item : 
+    Id : {0988D9C2-CC78-B517-884D-1F4B66AEC0B7}
+    Database : core
+    Name : Template
+    ItemPath : /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Navigate/Navigate/Template
+    Template : RibbonLargeButtonResource
+    - Fields : 
+        - Field : Icon
+            Value : list-alt
+        - Field : Command
+            Value : works.navigateTemplate
+        - Unversioned : 
+            - en : 
+                - Field : Text
+                    Value : Template
+            - da : 
+                - Field : Text
+                    Value : Template

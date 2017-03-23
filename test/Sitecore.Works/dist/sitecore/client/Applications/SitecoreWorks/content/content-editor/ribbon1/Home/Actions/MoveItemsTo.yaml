@@ -1,0 +1,18 @@
+Item : 
+    Id : {0DD82950-E83F-3ED5-5010-20963B4C9036}
+    Database : core
+    Name : MoveItemsTo
+    ItemPath : /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/Actions/MoveItemsTo
+    Template : RibbonLargeButtonResource
+    - Fields : 
+        - Field : Icon
+            Value : mail-reply
+        - Field : Command
+            Value : works.moveItemsTo
+        - Unversioned : 
+            - en : 
+                - Field : Text
+                    Value : Move To
+            - da : 
+                - Field : Text
+                    Value : Flyt Til

@@ -1,0 +1,18 @@
+Item : 
+    Id : {25A6A976-9529-0AEC-A1AE-F4D06E9FC1AA}
+    Database : core
+    Name : Save
+    ItemPath : /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/Write/Save
+    Template : RibbonLargeButtonResource
+    - Fields : 
+        - Field : Icon
+            Value : save
+        - Field : Command
+            Value : works.saveItems
+        - Unversioned : 
+            - en : 
+                - Field : Text
+                    Value : Save
+            - da : 
+                - Field : Text
+                    Value : Gem

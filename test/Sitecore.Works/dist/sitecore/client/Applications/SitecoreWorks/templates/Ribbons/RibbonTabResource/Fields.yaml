@@ -1,0 +1,7 @@
+Item : 
+    Id : {149394F2-11D5-4D4D-7041-AEE6B9EB914E}
+    Database : core
+    Name : Fields
+    ItemPath : /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonTabResource/Fields
+    Template : {E269FBB5-3750-427A-9149-7AA950B49301}
+    - Fields : 

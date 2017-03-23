@@ -1,0 +1,13 @@
+Item : 
+    Id : {C0826BB5-CC9C-074C-EDD0-2DF369D73AF5}
+    Database : core
+    Name : RibbonSmallButtonResource
+    ItemPath : /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonSmallButtonResource
+    Template : {AB86861A-6030-46C5-B394-E8F99E8B87DB}
+    - Fields : 
+        - Field : __Base template
+            Value : {1930BBEB-7805-471A-A3BE-4858AC7CF696}
+        - Field : __Long description
+            Value : 
+        - Field : __Short description
+            Value : 

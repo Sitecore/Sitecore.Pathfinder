@@ -1,0 +1,13 @@
+Item : 
+    Id : {83482D70-E77C-FA78-3867-68597A8FF921}
+    Database : core
+    Name : RibbonResource
+    ItemPath : /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonResource
+    Template : {AB86861A-6030-46C5-B394-E8F99E8B87DB}
+    - Fields : 
+        - Field : __Base template
+            Value : {1930BBEB-7805-471A-A3BE-4858AC7CF696}
+        - Field : __Long description
+            Value : 
+        - Field : __Short description
+            Value : 

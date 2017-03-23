@@ -9,6 +9,6 @@ namespace Sitecore.Pathfinder.Emitting
     {
         bool CanEmit([NotNull] string format);
 
-        void Emit([NotNull] IProject project);
+        void Emit([NotNull] IEmitContext context, [NotNull] IProject project);
     }
 }

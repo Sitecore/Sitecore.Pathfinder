@@ -1,0 +1,11 @@
+----item----
+version: 1
+id: {AAC6D587-BAAE-32EA-0690-E7C3305DAA0B}
+database: core
+path: /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonLargeButtonResource/Fields
+parent: {6C9DBEC3-5685-4C6B-88B8-BAD0DA77A01A}
+name: Fields
+master: {00000000-0000-0000-0000-000000000000}
+template: {E269FBB5-3750-427A-9149-7AA950B49301}
+templatekey: Template section
+
