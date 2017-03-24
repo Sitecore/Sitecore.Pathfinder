@@ -157,6 +157,8 @@ namespace Sitecore.Pathfinder.Projects
                             var templateField = Factory.TemplateField(template, fieldGuid);
                             templateField.FieldName = fieldElement.GetAttributeValue("Name");
                             templateField.Type = fieldElement.GetAttributeValue("Type");
+                            templateField.Shared = fieldElement.GetAttributeValue("Sharing") == "Shared";
+                            templateField.Unversioned = fieldElement.GetAttributeValue("Sharing") == "Unversioned";
 
                             templateSection.Fields.Add(templateField);
                         }

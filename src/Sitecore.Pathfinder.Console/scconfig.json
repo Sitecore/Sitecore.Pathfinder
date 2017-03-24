@@ -10,10 +10,6 @@
 
     // external references
     "references": {
-        "sitecore-pathfinder-core": {
-            "id": "Sitecore.Pathfinder.Core",
-            "version": "1.0.0"
-        },
         "sitecore-master": {
             "id": "Sitecore.Master",
             "version": "1.0.0"
@@ -31,7 +27,7 @@
     },
 
     "items": {
-        "include": "**/*.content.yaml",
+        "include": "**/*.content.yaml, **/*.content.json",
         "exclude": ""
     },
 

@@ -1,7 +1,0 @@
-Item : 
-    Id : {B7B5A650-3FD5-576D-D832-A89D49BD6C8B}
-    Database : core
-    Name : __Standard Values
-    ItemPath : /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonResource/__Standard Values
-    Template : /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonResource
-    - Fields : 

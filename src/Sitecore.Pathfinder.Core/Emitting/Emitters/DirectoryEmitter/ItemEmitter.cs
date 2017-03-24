@@ -29,7 +29,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.DirectoryEmitter
 
             if (item.IsEmittable || sourcePropertyBag.GetValue<string>("__origin_reason") == nameof(CreateItemsFromTemplates))
             {
-                projectEmitter.AddItem(context, item);
+                projectEmitter.EmitItem(context, item);
             }
         }
     }

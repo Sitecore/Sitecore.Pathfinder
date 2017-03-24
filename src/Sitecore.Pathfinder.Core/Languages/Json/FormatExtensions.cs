@@ -14,6 +14,75 @@ namespace Sitecore.Pathfinder.Languages.Json
 {
     public static class FormatExtensions
     {
+        public static void WriteAsContentJson([NotNull] this Item item, [NotNull] TextWriter writer, [CanBeNull] Action<TextWriter> writeInner = null)
+        {
+            var output = new JsonTextWriter(writer)
+            {
+                Formatting = Formatting.Indented
+            };
+
+            output.WriteStartObject();
+            output.WriteStartObject(item.TemplateName);
+            output.WritePropertyString("Name", item.ItemName);
+            output.WritePropertyString("Id", item.Uri.Guid.Format());
+            output.WritePropertyStringIf("ItemPath", item.ItemIdOrPath);
+            output.WritePropertyStringIf("Database", item.DatabaseName);
+
+            foreach (var field in item.Fields.Where(f => f.TemplateField.Shared).OrderBy(f => f.FieldName))
+            {
+                output.WritePropertyStringIf(field.FieldName, field.Value);
+            }
+
+            if (item.Fields.Any(f => !f.TemplateField.Shared && f.Language != Language.Undefined && f.Language != Language.Empty))
+            {
+                output.WriteStartObject("..versions");
+
+                var languages = item.Fields.Select(f => f.Language).Where(l => l != Language.Undefined && l != Language.Empty).Distinct().ToArray();
+
+                foreach (var language in languages.OrderBy(l => l.LanguageName))
+                {
+                    var unversionedFields = item.Fields.Where(f => f.Language == language && f.TemplateField.Unversioned && !f.TemplateField.Shared).ToArray();
+                    var versionedFields = item.Fields.Where(f => f.Language == language && !f.TemplateField.Unversioned && !f.TemplateField.Shared).ToArray();
+                    if (!unversionedFields.Any() && !versionedFields.Any())
+                    {
+                        continue;
+                    }
+
+                    output.WriteStartObject(language.LanguageName);
+
+                    foreach (var field in unversionedFields.OrderBy(f => f.FieldName))
+                    {
+                        output.WritePropertyStringIf(field.FieldName, field.Value);
+                    }
+
+                    var versions = versionedFields.Select(f => f.Version).Distinct().ToArray();
+                    foreach (var version in versions.OrderByDescending(v => v.Number))
+                    {
+                        output.WriteStartObject(version.Number.ToString());
+
+                        foreach (var field in versionedFields.Where(f => f.Version == version).OrderBy(f => f.FieldName))
+                        {
+                            output.WritePropertyStringIf(field.FieldName, field.Value);
+                        }
+
+                        output.WriteEndObject();
+                    }
+
+                    output.WriteEndObject();
+                }
+
+                output.WriteEndObject();
+            }
+
+            output.WriteEndObject();
+            output.WriteEndObject();
+
+            if (writeInner != null)
+            {
+                writeInner(writer);
+            }
+        }
+
         public static void WriteAsJson([NotNull] this LayoutBuilder layoutBuilder, [NotNull] TextWriter writer)
         {
             var output = new JsonTextWriter(writer)

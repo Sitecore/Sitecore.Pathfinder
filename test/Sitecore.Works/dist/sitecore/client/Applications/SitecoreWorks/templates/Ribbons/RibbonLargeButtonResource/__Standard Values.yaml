@@ -1,7 +1,0 @@
-Item : 
-    Id : {870F1A01-9BD5-4D17-18BF-10D1CA63DB42}
-    Database : core
-    Name : __Standard Values
-    ItemPath : /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonLargeButtonResource/__Standard Values
-    Template : /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonLargeButtonResource
-    - Fields : 

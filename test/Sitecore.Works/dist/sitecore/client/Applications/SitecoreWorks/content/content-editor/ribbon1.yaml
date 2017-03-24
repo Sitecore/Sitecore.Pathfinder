@@ -1,7 +1,0 @@
-Item : 
-    Id : {9E3E3376-87E5-52E5-638D-6C4AE9FA017E}
-    Database : core
-    Name : ribbon1
-    ItemPath : /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1
-    Template : RibbonResource
-    - Fields : 

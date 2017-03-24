@@ -24,10 +24,10 @@ namespace Sitecore.Pathfinder.Tasks
             Shortcut = "p";
         }
 
-        [NotNull, Option("format", Alias = "f", IsRequired = true, PromptText = "Select output format", HelpText = "Output format", PositionalArg = 1, HasOptions = true)]
+        [NotNull, Option("format", Alias = "f", IsRequired = true, PromptText = "Select output format", HelpText = "Output format", PositionalArg = 1, HasOptions = true, DefaultValue = "directory")]
         public string Format { get; set; } = "directory";
 
-        [NotNull, Option("item-format", Alias = "if", IsRequired = false, PromptText = "Select item format", HelpText = "Item format", PositionalArg = 2, HasOptions = true)]
+        [NotNull, Option("item-format", Alias = "if", IsRequired = false, PromptText = "Select item format", HelpText = "Item format", PositionalArg = 2, HasOptions = true, DefaultValue = "yaml")]
         public string ItemFormat { get; set; }
 
         [NotNull]

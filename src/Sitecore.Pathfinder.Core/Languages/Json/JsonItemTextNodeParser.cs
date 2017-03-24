@@ -1,5 +1,6 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
@@ -21,7 +22,7 @@ namespace Sitecore.Pathfinder.Languages.Json
 
         public override bool CanParse(ItemParseContext context, ITextNode textNode)
         {
-            return textNode.Key == "Item" && textNode.Snapshot is JsonTextSnapshot;
+            return textNode.Key == "Item" && textNode.Snapshot is JsonTextSnapshot && string.Equals(textNode.Snapshot.SourceFile.GetExtension(), ".item.json", StringComparison.OrdinalIgnoreCase);
         }
 
         protected override void ParseChildrenTextNodes(ItemParseContext context, Item item, ITextNode textNode)

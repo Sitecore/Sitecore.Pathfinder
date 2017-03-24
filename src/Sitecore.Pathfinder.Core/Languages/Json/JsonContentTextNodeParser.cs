@@ -1,24 +1,22 @@
-﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
-
-using System;
+﻿using System;
 using System.Composition;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Parsing.Items;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 
-namespace Sitecore.Pathfinder.Languages.Yaml
+namespace Sitecore.Pathfinder.Languages.Json
 {
     [Export(typeof(ITextNodeParser)), Shared]
-    public class YamlContentTextNodeParser : ContentTextNodeParserBase
+    public class JsonContentTextNodeParser : ContentTextNodeParserBase
     {
-        public YamlContentTextNodeParser() : base(Constants.TextNodeParsers.Content)
+        public JsonContentTextNodeParser() : base(Constants.TextNodeParsers.Content)
         {
         }
 
         public override bool CanParse(ItemParseContext context, ITextNode textNode)
         {
-            return textNode.Key == "Item" && textNode.Snapshot is YamlTextSnapshot && string.Equals(textNode.Snapshot.SourceFile.GetExtension(), ".content.yaml", StringComparison.OrdinalIgnoreCase);
+            return textNode.Key == "Item" && textNode.Snapshot is JsonTextSnapshot && string.Equals(textNode.Snapshot.SourceFile.GetExtension(), ".content.json", StringComparison.OrdinalIgnoreCase);
         }
 
         protected override ITextNode GetItemNameTextNode(IParseContext context, ITextNode textNode, string attributeName = "Name")
@@ -28,7 +26,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
 
         protected override void ParseLayoutTextNode(ItemParseContext context, Item item, ITextNode textNode)
         {
-            var parser = new YamlLayoutTextNodeParser();
+            var parser = new JsonLayoutTextNodeParser();
             parser.Parse(context, textNode, item);
         }
 

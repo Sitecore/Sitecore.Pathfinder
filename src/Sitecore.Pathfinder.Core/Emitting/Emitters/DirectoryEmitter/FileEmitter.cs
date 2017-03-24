@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.DirectoryEmitter
             var contentFile = (File)projectItem;
             var projectEmitter = (DirectoryProjectEmitter)context.ProjectEmitter;
 
-            projectEmitter.AddFile(context, projectItem.Snapshot.SourceFile.AbsoluteFileName, contentFile.FilePath);
+            projectEmitter.EmitFile(context, projectItem.Snapshot.SourceFile.AbsoluteFileName, contentFile.FilePath);
         }
     }
 }

@@ -1,7 +1,0 @@
-Item : 
-    Id : {11DFE2C6-5DCA-D272-B4B9-E1D373EA7208}
-    Database : core
-    Name : __Standard Values
-    ItemPath : /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonCheckBoxResource/__Standard Values
-    Template : /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonCheckBoxResource
-    - Fields : 

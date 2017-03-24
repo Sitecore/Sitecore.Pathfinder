@@ -37,6 +37,11 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public string RelativeFileName { get; }
 
+        public string GetExtension()
+        {
+            return PathHelper.GetExtension(AbsoluteFileName);
+        }
+
         public virtual string GetFileNameWithoutExtensions()
         {
             return _fileNameWithoutExtensions ?? (_fileNameWithoutExtensions = PathHelper.GetDirectoryAndFileNameWithoutExtensions(AbsoluteFileName));

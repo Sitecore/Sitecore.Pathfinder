@@ -13,6 +13,65 @@ namespace Sitecore.Pathfinder.Languages.Yaml
 {
     public static class FormatExtensions
     {
+        public static void WriteAsContentYaml([NotNull] this Item item, [NotNull] TextWriter writer, [CanBeNull] Action<TextWriter, int> writeInner = null)
+        {
+            var output = new YamlTextWriter(writer);
+
+            output.WriteStartElement(item.TemplateName, item.ItemName);
+            output.WriteAttributeString("Id", item.Uri.Guid.Format());
+            output.WriteAttributeStringIf("ItemPath", item.ItemIdOrPath);
+            output.WriteAttributeStringIf("Database", item.DatabaseName);
+
+            foreach (var field in item.Fields.Where(f => f.TemplateField.Shared).OrderBy(f => f.FieldName))
+            {
+                output.WriteAttributeStringIf(field.FieldName, field.Value);
+            }
+
+            if (item.Fields.Any(f => !f.TemplateField.Shared))
+            {
+                output.WriteStartElement("..versions");
+
+                var languages = item.Fields.Select(f => f.Language).Where(l => l != Language.Undefined && l != Language.Empty).Distinct();
+
+                foreach (var language in languages.OrderBy(l => l.LanguageName))
+                {
+                    var unversionedFields = item.Fields.Where(f => f.Language == language && f.TemplateField.Unversioned && !f.TemplateField.Shared).ToArray();
+                    var versionedFields = item.Fields.Where(f => f.Language == language && !f.TemplateField.Unversioned && !f.TemplateField.Shared).ToArray();
+                    if (!unversionedFields.Any() && !versionedFields.Any())
+                    {
+                        continue;
+                    }
+
+                    output.WriteStartElement(language.LanguageName);
+
+                    foreach (var field in unversionedFields.OrderBy(f => f.FieldName))
+                    {
+                        output.WriteAttributeStringIf(field.FieldName, field.Value);
+                    }
+
+                    var versions = versionedFields.Select(f => f.Version).Distinct().ToArray();
+                    foreach (var version in versions.OrderByDescending(v => v.Number))
+                    {
+                        output.WriteStartElement(version.Number.ToString());
+
+                        foreach (var field in versionedFields.Where(f => f.Version == version).OrderBy(f => f.FieldName))
+                        {
+                            output.WriteAttributeStringIf(field.FieldName, field.Value);
+                        }
+
+                        output.WriteEndElement();
+                    }
+
+                    output.WriteEndElement();
+                }
+            }
+
+            if (writeInner != null)
+            {
+                writeInner(writer, output.Indent);
+            }
+        }
+
         public static void WriteAsYaml([NotNull] this LayoutBuilder layoutBuilder, [NotNull] TextWriter writer)
         {
             var output = new YamlTextWriter(writer);

@@ -115,19 +115,10 @@
     <None Update="files\generators\yaml.layout\__name__.master.layout.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="files\references\Sitecore.BusinessComponentLibrary.1.0.0.exports.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="files\references\Sitecore.Core.1.0.0.exports.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="files\references\Sitecore.Master.1.0.0.exports.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="files\references\Sitecore.Pathfinder.Core.1.0.0.exports.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="files\references\Sitecore.Speak.1.0.0.exports.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="help\index.md">

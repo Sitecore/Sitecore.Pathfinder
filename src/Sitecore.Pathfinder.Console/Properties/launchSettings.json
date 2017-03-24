@@ -2,7 +2,7 @@
   "profiles": {
     "Sitecore.Pathfinder.Console": {
       "commandName": "Project",
-      "commandLineArgs": "b package",
+      "commandLineArgs": "b directory yaml --pause",
       "workingDirectory": "E:\\Sitecore\\Sitecore.Pathfinder\\code\\test\\Sitecore.Works"
     }
   }

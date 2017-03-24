@@ -1,5 +1,6 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
@@ -20,7 +21,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
 
         public override bool CanParse(ItemParseContext context, ITextNode textNode)
         {
-            return textNode.Key == "Item" && textNode.Snapshot is YamlTextSnapshot;
+            return textNode.Snapshot is YamlTextSnapshot && string.Equals(textNode.Snapshot.SourceFile.GetExtension(), ".item.yaml", StringComparison.OrdinalIgnoreCase);
         }
 
         protected override ITextNode GetItemNameTextNode(IParseContext context, ITextNode textNode, string attributeName = "Name")

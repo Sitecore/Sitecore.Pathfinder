@@ -24,6 +24,9 @@ namespace Sitecore.Pathfinder.Snapshots
         string RelativeFileName { get; }
 
         [NotNull]
+        string GetExtension();
+
+        [NotNull]
         string GetFileNameWithoutExtensions();
 
         [NotNull, ItemNotNull]

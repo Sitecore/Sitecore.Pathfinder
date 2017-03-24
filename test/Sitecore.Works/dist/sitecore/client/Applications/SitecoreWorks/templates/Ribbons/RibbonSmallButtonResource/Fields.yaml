@@ -1,7 +1,0 @@
-Item : 
-    Id : {0469BF3A-4F13-AAB5-1BD8-DFE7BB7BF330}
-    Database : core
-    Name : Fields
-    ItemPath : /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonSmallButtonResource/Fields
-    Template : {E269FBB5-3750-427A-9149-7AA950B49301}
-    - Fields : 

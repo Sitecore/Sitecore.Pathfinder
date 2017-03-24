@@ -1,7 +1,0 @@
-Item : 
-    Id : {8FEB569D-0B5A-7263-2CBA-3DBBC49A36E1}
-    Database : core
-    Name : __Standard Values
-    ItemPath : /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonSmallButtonResource/__Standard Values
-    Template : /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonSmallButtonResource
-    - Fields : 

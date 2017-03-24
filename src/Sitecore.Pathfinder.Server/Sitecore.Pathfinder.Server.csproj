@@ -130,6 +130,9 @@
     <Compile Include="Install\PackageWatcher.cs" />
     <Compile Include="Install\SitecorePackageInstaller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="sitecore modules\shell\pathfinder\export-database.ashx.cs">
+      <DependentUpon>export-database.ashx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -141,6 +144,7 @@
   <ItemGroup>
     <None Include="Properties\PublishProfiles\PublishToPathfinder.pubxml" />
     <Content Include="Sitecore.Pathfinder.package" />
+    <Content Include="sitecore modules\shell\pathfinder\export-database.ashx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\include\Sitecore.Pathfinder\Sitecore.Pathfinder.config" />

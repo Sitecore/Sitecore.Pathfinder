@@ -29,7 +29,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
         {
             InnerWriter.Write(new string(' ', Indent * Indentation));
             InnerWriter.Write(key);
-            InnerWriter.Write(" : ");
+            InnerWriter.Write(": ");
             InnerWriter.WriteLine(value);
         }
 
@@ -42,7 +42,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
 
             InnerWriter.Write(new string(' ', Indent * Indentation));
             InnerWriter.Write(key);
-            InnerWriter.Write(" : ");
+            InnerWriter.Write(": ");
             InnerWriter.WriteLine(value);
         }
 
@@ -55,7 +55,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
 
             InnerWriter.Write(new string(' ', Indent * Indentation));
             InnerWriter.Write(key);
-            InnerWriter.Write(" : ");
+            InnerWriter.Write(": ");
             InnerWriter.WriteLine(value);
         }
 
@@ -68,7 +68,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
 
             InnerWriter.Write(new string(' ', Indent * Indentation));
             InnerWriter.Write(key);
-            InnerWriter.Write(" : ");
+            InnerWriter.Write(": ");
             InnerWriter.WriteLine(value);
         }
 
@@ -79,14 +79,14 @@ namespace Sitecore.Pathfinder.Languages.Yaml
 
         public void WriteStartElement([NotNull] string key, [NotNull] string value = "")
         {
-            if (Indent > 0 && !key.StartsWith("-"))
+            if (!key.StartsWith("-"))
             {
                 key = "- " + key;
             }
 
             InnerWriter.Write(new string(' ', Indent * Indentation));
             InnerWriter.Write(key);
-            InnerWriter.Write(" : ");
+            InnerWriter.Write(": ");
             InnerWriter.WriteLine(value);
             Indent++;
         }

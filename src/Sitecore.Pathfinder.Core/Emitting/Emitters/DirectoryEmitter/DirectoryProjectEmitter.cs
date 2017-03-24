@@ -12,6 +12,7 @@ using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.Json;
 using Sitecore.Pathfinder.Languages.Serialization;
 using Sitecore.Pathfinder.Languages.Yaml;
+using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Emitting.Emitters.DirectoryEmitter
@@ -28,7 +29,20 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.DirectoryEmitter
         [NotNull]
         public IFileSystemService FileSystem { get; }
 
-        public void AddFile([NotNull] IEmitContext context, [NotNull] string sourceFileAbsoluteFileName, [NotNull] string filePath)
+        public override bool CanEmit(string format)
+        {
+            return string.Equals(format, "directory", StringComparison.OrdinalIgnoreCase);
+        }
+
+        public override void Emit(IEmitContext context, IProject project)
+        {
+            var outputDirectory = PathHelper.Combine(context.Configuration.GetProjectDirectory(), context.Configuration.GetString(Constants.Configuration.Output.Directory));
+            FileSystem.DeleteDirectory(outputDirectory);
+
+            base.Emit(context, project);
+        }
+
+        public void EmitFile([NotNull] IEmitContext context, [NotNull] string sourceFileAbsoluteFileName, [NotNull] string filePath)
         {
             var fileName = PathHelper.NormalizeFilePath(filePath);
             if (fileName.StartsWith("~\\"))
@@ -46,7 +60,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.DirectoryEmitter
             FileSystem.Copy(sourceFileAbsoluteFileName, destinationFileName, forceUpdate);
         }
 
-        public void AddItem([NotNull] IEmitContext context, [NotNull] Item item)
+        public void EmitItem([NotNull] IEmitContext context, [NotNull] Item item)
         {
             context.Trace.TraceInformation(Msg.I1011, "Publishing", item.ItemIdOrPath);
 
@@ -56,7 +70,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.DirectoryEmitter
             switch (context.ItemFormat.ToLowerInvariant())
             {
                 case "json":
-                    destinationFileName += ".json";
+                    destinationFileName += ".content.json";
                     break;
 
                 case "serialization":
@@ -64,7 +78,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.DirectoryEmitter
                     break;
 
                 default:
-                    destinationFileName += ".yaml";
+                    destinationFileName += ".content.yaml";
                     break;
             }
 
@@ -77,25 +91,19 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.DirectoryEmitter
                     switch (context.ItemFormat.ToLowerInvariant())
                     {
                         case "json":
-                            item.WriteAsJson(writer);
+                            item.WriteAsContentJson(writer);
                             break;
 
                         case "serialization":
-                            item.WriteAsSerialization(writer);
+                            item.WriteAsSerialization(writer, WriteAsSerializationOptions.WriteCompiledFieldValues);
                             break;
 
                         default:
-                            item.WriteAsYaml(writer);
+                            item.WriteAsContentYaml(writer);
                             break;
                     }
                 }
-
             }
-        }
-
-        public override bool CanEmit(string format)
-        {
-            return string.Equals(format, "directory", StringComparison.OrdinalIgnoreCase);
         }
     }
 }
