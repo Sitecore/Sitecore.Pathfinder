@@ -1,0 +1,9 @@
+- RibbonGroupResource: View
+    Id: {4D18B66C-2EC2-DFD5-4EEC-0ACD0A09AD5D}
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/View/View
+    Database: core
+    - ..versions: 
+        - da: 
+            Text: Vis
+        - en: 
+            Text: View

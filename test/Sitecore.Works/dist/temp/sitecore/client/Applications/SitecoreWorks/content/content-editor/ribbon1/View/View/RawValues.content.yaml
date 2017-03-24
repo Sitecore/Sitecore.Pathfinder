@@ -1,0 +1,10 @@
+- RibbonCheckBoxResource: RawValues
+    Id: {828AD739-C97F-2F32-5676-3A4F54C73A20}
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/View/View/RawValues
+    Database: core
+    Command: works.contentEditor.viewRawValues
+    - ..versions: 
+        - da: 
+            Text: Rå Værdier
+        - en: 
+            Text: Raw Values

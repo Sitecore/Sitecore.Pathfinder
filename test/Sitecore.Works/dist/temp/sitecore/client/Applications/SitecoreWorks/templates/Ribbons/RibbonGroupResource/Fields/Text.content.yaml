@@ -1,0 +1,9 @@
+- Template field: Text
+    Id: {4840A055-8435-F59A-7457-67B55E8132A7}
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonGroupResource/Fields/Text
+    Database: core
+    __Sortorder: 0
+    Shared: False
+    Type: Single-Line Text
+    Unversioned: True
+    - ..versions: 

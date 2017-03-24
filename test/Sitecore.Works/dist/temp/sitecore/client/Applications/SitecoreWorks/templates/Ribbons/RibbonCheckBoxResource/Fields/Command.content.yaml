@@ -1,0 +1,9 @@
+- Template field: Command
+    Id: {CDE87297-88AF-7DF4-972D-EDED42A374A3}
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonCheckBoxResource/Fields/Command
+    Database: core
+    __Sortorder: 200
+    Shared: True
+    Type: Single-Line Text
+    Unversioned: False
+    - ..versions: 

@@ -1,0 +1,11 @@
+- RibbonLargeButtonResource: CopyItemsTo
+    Id: {FD61E8C1-10B7-696B-6DE5-4C4E6ED152E6}
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/Actions/CopyItemsTo
+    Database: core
+    Command: works.copyItemsTo
+    Icon: mail-reply-all
+    - ..versions: 
+        - da: 
+            Text: Kopier Til
+        - en: 
+            Text: Copy To

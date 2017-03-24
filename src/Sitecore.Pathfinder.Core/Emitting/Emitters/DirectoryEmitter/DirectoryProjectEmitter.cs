@@ -24,10 +24,14 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.DirectoryEmitter
         public DirectoryProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] ITraceService traceService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, compositionService, traceService, emitters)
         {
             FileSystem = fileSystem;
+            OutputDirectory = PathHelper.Combine(Configuration.GetProjectDirectory(), Configuration.GetString(Constants.Configuration.Output.Directory));
         }
 
         [NotNull]
         public IFileSystemService FileSystem { get; }
+
+        [NotNull]
+        public string OutputDirectory { get; protected set; }
 
         public override bool CanEmit(string format)
         {
@@ -36,13 +40,13 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.DirectoryEmitter
 
         public override void Emit(IEmitContext context, IProject project)
         {
-            var outputDirectory = PathHelper.Combine(context.Configuration.GetProjectDirectory(), context.Configuration.GetString(Constants.Configuration.Output.Directory));
-            FileSystem.DeleteDirectory(outputDirectory);
+
+            FileSystem.DeleteDirectory(OutputDirectory);
 
             base.Emit(context, project);
         }
 
-        public void EmitFile([NotNull] IEmitContext context, [NotNull] string sourceFileAbsoluteFileName, [NotNull] string filePath)
+        public virtual void EmitFile([NotNull] IEmitContext context, [NotNull] string sourceFileAbsoluteFileName, [NotNull] string filePath)
         {
             var fileName = PathHelper.NormalizeFilePath(filePath);
             if (fileName.StartsWith("~\\"))
@@ -53,19 +57,17 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.DirectoryEmitter
             context.Trace.TraceInformation(Msg.I1011, "Publishing", "~\\" + fileName);
 
             var forceUpdate = Configuration.GetBool(Constants.Configuration.BuildProject.ForceUpdate, true);
-            var outputDirectory = PathHelper.Combine(context.Configuration.GetProjectDirectory(), context.Configuration.GetString(Constants.Configuration.Output.Directory));
-            var destinationFileName = PathHelper.Combine(outputDirectory, fileName);
+            var destinationFileName = PathHelper.Combine(OutputDirectory, fileName);
 
             FileSystem.CreateDirectoryFromFileName(destinationFileName);
             FileSystem.Copy(sourceFileAbsoluteFileName, destinationFileName, forceUpdate);
         }
 
-        public void EmitItem([NotNull] IEmitContext context, [NotNull] Item item)
+        public virtual void EmitItem([NotNull] IEmitContext context, [NotNull] Item item)
         {
             context.Trace.TraceInformation(Msg.I1011, "Publishing", item.ItemIdOrPath);
 
-            var outputDirectory = PathHelper.Combine(context.Configuration.GetProjectDirectory(), context.Configuration.GetString(Constants.Configuration.Output.Directory));
-            var destinationFileName = PathHelper.Combine(outputDirectory, PathHelper.NormalizeFilePath(item.ItemIdOrPath).TrimStart('\\'));
+            var destinationFileName = PathHelper.Combine(OutputDirectory, PathHelper.NormalizeFilePath(item.ItemIdOrPath).TrimStart('\\'));
 
             switch (context.ItemFormat.ToLowerInvariant())
             {

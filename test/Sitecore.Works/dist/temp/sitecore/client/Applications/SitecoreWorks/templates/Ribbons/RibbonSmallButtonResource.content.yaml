@@ -1,0 +1,6 @@
+- Template: RibbonSmallButtonResource
+    Id: {C0826BB5-CC9C-074C-EDD0-2DF369D73AF5}
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonSmallButtonResource
+    Database: core
+    __Base template: {1930BBEB-7805-471A-A3BE-4858AC7CF696}
+    - ..versions: 

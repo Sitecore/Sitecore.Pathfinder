@@ -1,0 +1,11 @@
+- RibbonLargeButtonResource: Rename
+    Id: {8CBB142D-C148-5FA0-685B-A67EB786685A}
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/Actions/Rename
+    Database: core
+    Command: works.renameItem
+    Icon: i-cursor
+    - ..versions: 
+        - da: 
+            Text: Omdøb
+        - en: 
+            Text: Rename

@@ -1,0 +1,9 @@
+- RibbonGroupResource: Versions
+    Id: {81851869-C32B-913F-1C89-20BEBAF905F9}
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Versions/Versions
+    Database: core
+    - ..versions: 
+        - da: 
+            Text: Versioner
+        - en: 
+            Text: Versions

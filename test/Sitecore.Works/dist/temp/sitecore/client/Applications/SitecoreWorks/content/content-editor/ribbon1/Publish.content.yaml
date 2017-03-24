@@ -1,0 +1,9 @@
+- RibbonTabResource: Publish
+    Id: {74729243-E31C-CC36-14D9-5531106CB501}
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Publish
+    Database: core
+    - ..versions: 
+        - da: 
+            Text: Publiser
+        - en: 
+            Text: Publish

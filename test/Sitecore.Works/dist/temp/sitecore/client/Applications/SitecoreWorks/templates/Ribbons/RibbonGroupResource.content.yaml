@@ -1,0 +1,6 @@
+- Template: RibbonGroupResource
+    Id: {4194F0B6-982F-757E-6373-F2A2718972C1}
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonGroupResource
+    Database: core
+    __Base template: {1930BBEB-7805-471A-A3BE-4858AC7CF696}
+    - ..versions: 

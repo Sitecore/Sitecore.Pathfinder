@@ -1,0 +1,9 @@
+- RibbonGroupResource: View
+    Id: {6C09760F-D488-3562-CFE8-06E3A00E052D}
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/View
+    Database: core
+    - ..versions: 
+        - da: 
+            Text: Visning
+        - en: 
+            Text: View

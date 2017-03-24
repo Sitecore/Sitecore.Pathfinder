@@ -1,0 +1,4 @@
+- RibbonLargeButtonResource: __Standard Values
+    Id: {870F1A01-9BD5-4D17-18BF-10D1CA63DB42}
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonLargeButtonResource/__Standard Values
+    Database: core

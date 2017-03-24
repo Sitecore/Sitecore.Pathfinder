@@ -1,0 +1,9 @@
+- RibbonGroupResource: New
+    Id: {F9B228E8-3965-8250-871F-4D02E14A01EB}
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/New
+    Database: core
+    - ..versions: 
+        - da: 
+            Text: Ny
+        - en: 
+            Text: New

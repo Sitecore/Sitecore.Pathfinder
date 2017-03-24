@@ -1,0 +1,6 @@
+- Template: RibbonCheckBoxResource
+    Id: {2D8353BC-462F-4632-A7A9-7745F4729637}
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonCheckBoxResource
+    Database: core
+    __Base template: {1930BBEB-7805-471A-A3BE-4858AC7CF696}
+    - ..versions: 

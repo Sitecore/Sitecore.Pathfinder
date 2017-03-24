@@ -1,0 +1,9 @@
+- Template field: IsActive
+    Id: {DC0BB6A9-6960-1035-49D2-BF53B2D194BA}
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonTabResource/Fields/IsActive
+    Database: core
+    __Sortorder: 100
+    Shared: True
+    Type: Checkbox
+    Unversioned: False
+    - ..versions: 

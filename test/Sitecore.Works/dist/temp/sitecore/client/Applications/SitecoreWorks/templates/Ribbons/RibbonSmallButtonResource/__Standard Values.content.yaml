@@ -1,0 +1,4 @@
+- RibbonSmallButtonResource: __Standard Values
+    Id: {8FEB569D-0B5A-7263-2CBA-3DBBC49A36E1}
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonSmallButtonResource/__Standard Values
+    Database: core

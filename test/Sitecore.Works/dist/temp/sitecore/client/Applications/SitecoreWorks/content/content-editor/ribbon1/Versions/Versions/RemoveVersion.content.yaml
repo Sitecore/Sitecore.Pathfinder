@@ -1,0 +1,11 @@
+- RibbonLargeButtonResource: RemoveVersion
+    Id: {26E349C5-E9B1-C259-619D-C97A0AC24897}
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Versions/Versions/RemoveVersion
+    Database: core
+    Command: works.contentEditor.removeVersion
+    Icon: minus-square
+    - ..versions: 
+        - da: 
+            Text: Fjern
+        - en: 
+            Text: Remove

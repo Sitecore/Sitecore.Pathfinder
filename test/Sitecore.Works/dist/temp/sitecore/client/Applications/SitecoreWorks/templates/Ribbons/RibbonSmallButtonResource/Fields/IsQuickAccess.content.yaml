@@ -1,0 +1,9 @@
+- Template field: IsQuickAccess
+    Id: {BD971ED2-FDEE-7337-7056-EB627A8BB576}
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonSmallButtonResource/Fields/IsQuickAccess
+    Database: core
+    __Sortorder: 300
+    Shared: True
+    Type: Checkbox
+    Unversioned: False
+    - ..versions: 

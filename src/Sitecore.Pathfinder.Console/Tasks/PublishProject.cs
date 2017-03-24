@@ -68,6 +68,7 @@ namespace Sitecore.Pathfinder.Tasks
         {
             yield return ("Directory", "directory");
             yield return ("Package", "package");
+            yield return ("Nuget", "nuget");
         }
 
         [NotNull, OptionValues("ItemFormat")]

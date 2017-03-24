@@ -1,0 +1,9 @@
+- Template field: Text
+    Id: {B49AD811-1B58-34A7-A735-D8D7681A8F80}
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonLargeButtonResource/Fields/Text
+    Database: core
+    __Sortorder: 0
+    Shared: False
+    Type: Single-Line Text
+    Unversioned: True
+    - ..versions: 

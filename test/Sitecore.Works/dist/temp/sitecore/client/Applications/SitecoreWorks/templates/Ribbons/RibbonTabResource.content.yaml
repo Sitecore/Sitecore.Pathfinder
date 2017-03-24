@@ -1,0 +1,6 @@
+- Template: RibbonTabResource
+    Id: {816D85B7-2FAD-C0F4-8056-15FC96815984}
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonTabResource
+    Database: core
+    __Base template: {1930BBEB-7805-471A-A3BE-4858AC7CF696}
+    - ..versions: 

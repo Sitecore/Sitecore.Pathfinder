@@ -1,0 +1,9 @@
+- RibbonGroupResource: Search
+    Id: {B6A301BE-131B-60EE-FADD-B2C1D6A24551}
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Navigate/Search
+    Database: core
+    - ..versions: 
+        - da: 
+            Text: Søg
+        - en: 
+            Text: Search

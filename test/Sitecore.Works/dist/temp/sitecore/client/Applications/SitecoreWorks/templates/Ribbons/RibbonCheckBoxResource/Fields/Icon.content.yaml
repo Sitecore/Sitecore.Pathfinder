@@ -1,0 +1,9 @@
+- Template field: Icon
+    Id: {71AA50BB-0100-4A5F-2418-D8CD0DC478C7}
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonCheckBoxResource/Fields/Icon
+    Database: core
+    __Sortorder: 100
+    Shared: True
+    Type: Icon
+    Unversioned: False
+    - ..versions: 

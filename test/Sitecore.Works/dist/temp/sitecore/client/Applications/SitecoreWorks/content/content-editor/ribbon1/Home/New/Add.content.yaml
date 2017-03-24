@@ -1,0 +1,11 @@
+- RibbonLargeButtonResource: Add
+    Id: {9D3D9B7F-22D6-4C94-6D35-1146C7F1B7CA}
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/New/Add
+    Database: core
+    Command: works.addFromTemplate
+    Icon: plus
+    - ..versions: 
+        - da: 
+            Text: Tilføj
+        - en: 
+            Text: Add

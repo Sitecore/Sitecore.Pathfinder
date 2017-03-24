@@ -1,0 +1,11 @@
+- RibbonLargeButtonResource: Search
+    Id: {C72B4AD2-BF73-EA6B-08C7-4F5095730E7E}
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Navigate/Search/Search
+    Database: core
+    Command: works.searchItems
+    Icon: search
+    - ..versions: 
+        - da: 
+            Text: Søg
+        - en: 
+            Text: Search

@@ -1,0 +1,11 @@
+- RibbonLargeButtonResource: Dashboard
+    Id: {D2945CB1-AED3-6AE6-F789-BF11AE85BCDC}
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/View/Dashboard
+    Database: core
+    Command: works.contentEditor.viewDashboard
+    Icon: dashboard
+    - ..versions: 
+        - da: 
+            Text: Oversigt
+        - en: 
+            Text: Dashboard

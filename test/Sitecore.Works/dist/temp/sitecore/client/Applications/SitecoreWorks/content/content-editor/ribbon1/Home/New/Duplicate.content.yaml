@@ -1,0 +1,11 @@
+- RibbonLargeButtonResource: Duplicate
+    Id: {BE9510ED-CC49-9F7E-3556-34678C0200A6}
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/New/Duplicate
+    Database: core
+    Command: works.duplicateItems
+    Icon: copy
+    - ..versions: 
+        - da: 
+            Text: Dupliker
+        - en: 
+            Text: Duplicate
