@@ -12,13 +12,13 @@ namespace Sitecore.Pathfinder.Languages.Yaml
     [Export(typeof(ITextNodeParser)), Shared]
     public class YamlContentTextNodeParser : ContentTextNodeParserBase
     {
-        public YamlContentTextNodeParser() : base(Constants.TextNodeParsers.Content)
+        public YamlContentTextNodeParser() : base(Constants.TextNodeParsers.Items)
         {
         }
 
         public override bool CanParse(ItemParseContext context, ITextNode textNode)
         {
-            return textNode.Key == "Item" && textNode.Snapshot is YamlTextSnapshot && string.Equals(textNode.Snapshot.SourceFile.GetExtension(), ".content.yaml", StringComparison.OrdinalIgnoreCase);
+            return textNode.Snapshot is YamlTextSnapshot && textNode.Snapshot.SourceFile.AbsoluteFileName.EndsWith(".content.yaml", StringComparison.OrdinalIgnoreCase);
         }
 
         protected override ITextNode GetItemNameTextNode(IParseContext context, ITextNode textNode, string attributeName = "Name")

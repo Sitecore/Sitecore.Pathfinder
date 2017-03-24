@@ -34,6 +34,8 @@ namespace Sitecore.Pathfinder.IO
         [NotNull]
         protected Regex GetRegex([NotNull] string wildcard)
         {
+            wildcard = wildcard.Trim();
+
             // todo: consider caching this
             var pattern = '^' + Regex.Escape(wildcard).Replace("/", @"\\").Replace(@"\*\*\\", ".*").Replace(@"\*\*", ".*").Replace(@"\*", @"[^\\]*(\\)?").Replace(@"\?", ".") + '$';
 

@@ -10,13 +10,13 @@ namespace Sitecore.Pathfinder.Languages.Json
     [Export(typeof(ITextNodeParser)), Shared]
     public class JsonContentTextNodeParser : ContentTextNodeParserBase
     {
-        public JsonContentTextNodeParser() : base(Constants.TextNodeParsers.Content)
+        public JsonContentTextNodeParser() : base(Constants.TextNodeParsers.Items)
         {
         }
 
         public override bool CanParse(ItemParseContext context, ITextNode textNode)
         {
-            return textNode.Key == "Item" && textNode.Snapshot is JsonTextSnapshot && string.Equals(textNode.Snapshot.SourceFile.GetExtension(), ".content.json", StringComparison.OrdinalIgnoreCase);
+            return textNode.Snapshot is JsonTextSnapshot && textNode.Snapshot.SourceFile.AbsoluteFileName.EndsWith(".content.json", StringComparison.OrdinalIgnoreCase);
         }
 
         protected override ITextNode GetItemNameTextNode(IParseContext context, ITextNode textNode, string attributeName = "Name")

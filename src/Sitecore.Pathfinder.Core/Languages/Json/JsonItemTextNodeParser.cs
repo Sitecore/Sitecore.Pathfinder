@@ -22,7 +22,7 @@ namespace Sitecore.Pathfinder.Languages.Json
 
         public override bool CanParse(ItemParseContext context, ITextNode textNode)
         {
-            return textNode.Key == "Item" && textNode.Snapshot is JsonTextSnapshot && string.Equals(textNode.Snapshot.SourceFile.GetExtension(), ".item.json", StringComparison.OrdinalIgnoreCase);
+            return textNode.Key == "Item" && textNode.Snapshot is JsonTextSnapshot && textNode.Snapshot.SourceFile.AbsoluteFileName.EndsWith(".item.json", StringComparison.OrdinalIgnoreCase);
         }
 
         protected override void ParseChildrenTextNodes(ItemParseContext context, Item item, ITextNode textNode)
