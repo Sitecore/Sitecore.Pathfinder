@@ -1,6 +1,0 @@
-- Template: RibbonResource
-    Id: {83482D70-E77C-FA78-3867-68597A8FF921}
-    ItemPath: /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonResource
-    Database: core
-    __Base template: {1930BBEB-7805-471A-A3BE-4858AC7CF696}
-    - ..versions: 

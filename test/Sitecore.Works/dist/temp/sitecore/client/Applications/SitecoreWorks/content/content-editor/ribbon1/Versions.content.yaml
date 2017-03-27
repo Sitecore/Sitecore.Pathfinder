@@ -1,9 +1,0 @@
-- RibbonTabResource: Versions
-    Id: {16C00E00-8EE5-ED5C-3685-4D44CB35CA9F}
-    ItemPath: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Versions
-    Database: core
-    - ..versions: 
-        - da: 
-            Text: Versioner
-        - en: 
-            Text: Versions

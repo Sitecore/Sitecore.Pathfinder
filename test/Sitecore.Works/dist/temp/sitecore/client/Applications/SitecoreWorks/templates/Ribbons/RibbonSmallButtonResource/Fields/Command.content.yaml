@@ -1,9 +1,0 @@
-- Template field: Command
-    Id: {DFFB23D3-6A8B-1516-ECD4-EFB2A98935D4}
-    ItemPath: /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonSmallButtonResource/Fields/Command
-    Database: core
-    __Sortorder: 200
-    Shared: True
-    Type: Single-Line Text
-    Unversioned: False
-    - ..versions: 

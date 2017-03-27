@@ -1,6 +1,0 @@
-- Template: RibbonLargeButtonResource
-    Id: {6C9DBEC3-5685-4C6B-88B8-BAD0DA77A01A}
-    ItemPath: /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonLargeButtonResource
-    Database: core
-    __Base template: {1930BBEB-7805-471A-A3BE-4858AC7CF696}
-    - ..versions: 

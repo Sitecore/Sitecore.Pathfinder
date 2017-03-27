@@ -1,9 +1,0 @@
-- RibbonTabResource: Navigate
-    Id: {FAF1F92C-9B89-239A-EFD5-BDB68250FC94}
-    ItemPath: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Navigate
-    Database: core
-    - ..versions: 
-        - da: 
-            Text: Naviger
-        - en: 
-            Text: Navigate

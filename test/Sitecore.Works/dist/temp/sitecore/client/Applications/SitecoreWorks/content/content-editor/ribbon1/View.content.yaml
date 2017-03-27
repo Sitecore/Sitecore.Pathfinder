@@ -1,9 +1,0 @@
-- RibbonTabResource: View
-    Id: {E46C885C-1390-EFA3-4D18-5570041CEABD}
-    ItemPath: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/View
-    Database: core
-    - ..versions: 
-        - da: 
-            Text: Vis
-        - en: 
-            Text: View

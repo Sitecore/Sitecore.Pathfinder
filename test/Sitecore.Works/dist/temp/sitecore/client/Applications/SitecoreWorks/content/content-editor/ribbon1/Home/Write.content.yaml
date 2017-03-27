@@ -1,9 +1,0 @@
-- RibbonGroupResource: Write
-    Id: {0C243647-8F14-8762-6DBC-6E9B56ABBA1E}
-    ItemPath: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/Write
-    Database: core
-    - ..versions: 
-        - da: 
-            Text: Item
-        - en: 
-            Text: Item

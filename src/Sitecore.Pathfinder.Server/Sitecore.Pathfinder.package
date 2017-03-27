@@ -59,6 +59,7 @@ SOFTWARE.</License>
       <Entries>
         <x-item>/App_Config/Include/Sitecore.Pathfinder/Sitecore.Pathfinder.config</x-item>
         <x-item>/bin/Sitecore.Pathfinder.Server.dll</x-item>
+        <x-item>/bin/NuGet.Core.dll</x-item>
       </Entries>
       <Converter>
         <FileToEntryConverter>

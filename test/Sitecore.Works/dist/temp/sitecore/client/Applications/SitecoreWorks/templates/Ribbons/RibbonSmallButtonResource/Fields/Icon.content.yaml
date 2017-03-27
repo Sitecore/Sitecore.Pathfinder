@@ -1,9 +1,0 @@
-- Template field: Icon
-    Id: {0FE004A0-B708-C151-AB6E-5A8F1EA33206}
-    ItemPath: /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonSmallButtonResource/Fields/Icon
-    Database: core
-    __Sortorder: 100
-    Shared: True
-    Type: Icon
-    Unversioned: False
-    - ..versions: 

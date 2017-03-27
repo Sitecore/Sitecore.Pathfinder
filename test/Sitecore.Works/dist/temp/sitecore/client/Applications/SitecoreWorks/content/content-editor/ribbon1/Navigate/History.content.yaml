@@ -1,9 +1,0 @@
-- RibbonGroupResource: History
-    Id: {FDDF9AF5-C3D4-69AE-6464-AA1AFDF624F5}
-    ItemPath: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Navigate/History
-    Database: core
-    - ..versions: 
-        - da: 
-            Text: Historie
-        - en: 
-            Text: History

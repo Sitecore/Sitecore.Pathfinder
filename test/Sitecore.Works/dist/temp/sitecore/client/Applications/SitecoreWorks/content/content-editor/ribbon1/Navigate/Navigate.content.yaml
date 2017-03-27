@@ -1,9 +1,0 @@
-- RibbonGroupResource: Navigate
-    Id: {C37D6F92-4E65-121F-2E0F-284B632D4924}
-    ItemPath: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Navigate/Navigate
-    Database: core
-    - ..versions: 
-        - da: 
-            Text: Naviger
-        - en: 
-            Text: Navigate

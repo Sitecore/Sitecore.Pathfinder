@@ -1,9 +1,0 @@
-- Template field: Text
-    Id: {D6A45FC4-7C09-F586-EBB5-69514D862FD8}
-    ItemPath: /sitecore/client/Applications/SitecoreWorks/templates/Ribbons/RibbonTabResource/Fields/Text
-    Database: core
-    __Sortorder: 0
-    Shared: False
-    Type: Single-Line Text
-    Unversioned: True
-    - ..versions: 

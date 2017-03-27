@@ -40,7 +40,6 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.DirectoryEmitter
 
         public override void Emit(IEmitContext context, IProject project)
         {
-
             FileSystem.DeleteDirectory(OutputDirectory);
 
             base.Emit(context, project);

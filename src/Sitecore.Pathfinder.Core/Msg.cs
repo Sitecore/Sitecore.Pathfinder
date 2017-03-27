@@ -416,6 +416,8 @@ namespace Sitecore.Pathfinder
 
         public const int E1043 = E + 43;
 
+        public const int E1044 = E + 44;
+
         private const int G = 7000;
 
         public const int G1000 = G;

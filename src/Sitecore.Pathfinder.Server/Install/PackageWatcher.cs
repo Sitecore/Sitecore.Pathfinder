@@ -60,6 +60,9 @@ namespace Sitecore.Pathfinder.Install
                     case ".zip":
                         new SitecorePackageInstaller().Install(fileName);
                         break;
+                    case ".nupkg":
+                        new NugetPackageInstaller().Install(fileName);
+                        break;
                 }
             }
             catch (Exception ex)
@@ -91,7 +94,7 @@ namespace Sitecore.Pathfinder.Install
             var extension = Path.GetExtension(fileName);
 
             // todo: make extendable
-            return string.Equals(extension, ".zip", StringComparison.OrdinalIgnoreCase);
+            return string.Equals(extension, ".zip", StringComparison.OrdinalIgnoreCase) || string.Equals(extension, ".nupkg", StringComparison.OrdinalIgnoreCase);
         }
 
         private bool IsPackageChanged(string fileName)

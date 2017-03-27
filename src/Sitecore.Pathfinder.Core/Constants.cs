@@ -82,13 +82,9 @@ namespace Sitecore.Pathfinder
 
             public const string DefaultLanguage = "default-language";
 
-            public const string Dependencies = "dependencies";
-
             public const string Description = "description";
 
             public const string DisableExtensions = "disable-extensions";
-
-            public const string FeaturesDirectory = "features-directory";
 
             public const string HostName = "host-name";
 
@@ -256,6 +252,12 @@ namespace Sitecore.Pathfinder
                 public static class Package
                 {
                     public const string FileName = "output:package:filename";
+                }
+                public static class Nuget
+                {
+                    public const string FileName = "output:nuget:filename";
+
+                    public const string NuspecFileName = "output:nuget:nuspec-filename";
                 }
             }
 

@@ -166,8 +166,14 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.SitecorePackageEmitter
 
         public override void Emit(IEmitContext context, IProject project)
         {
+            var packageFileName = Configuration.GetString(Constants.Configuration.Output.Package.FileName, "package");
+            if (!packageFileName.EndsWith(".zip"))
+            {
+                packageFileName += ".zip";
+            }
+
             var outputDirectory = PathHelper.Combine(Configuration.GetProjectDirectory(), Configuration.GetString(Constants.Configuration.Output.Directory));
-            var fileName = Path.Combine(outputDirectory, Configuration.GetString(Constants.Configuration.Output.Package.FileName, "package.zip"));
+            var fileName = Path.Combine(outputDirectory, packageFileName);
 
             FileSystem.CreateDirectoryFromFileName(fileName);
 

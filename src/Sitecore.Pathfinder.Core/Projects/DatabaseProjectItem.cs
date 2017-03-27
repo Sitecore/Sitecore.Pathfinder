@@ -19,6 +19,9 @@ namespace Sitecore.Pathfinder.Projects
         [CanBeNull]
         private ID _id;
 
+        [CanBeNull]
+        private int? itemPathLevel;
+
         protected DatabaseProjectItem([NotNull] IProjectBase project, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, new ProjectItemUri(databaseName, guid))
         {
             ItemNameProperty = NewSourceProperty("ItemName", string.Empty, SourcePropertyFlags.IsShort);
@@ -73,6 +76,8 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull]
         public SourceProperty<string> ItemNameProperty { get; }
+
+        public int ItemPathLevel => itemPathLevel ?? (int)(itemPathLevel = ItemIdOrPath.Split('/').Length);
 
         /// <summary>The name of the item or template. Same as ItemName and ShortName.</summary>
         [NotNull, Obsolete("Use ItemName instead", false)]

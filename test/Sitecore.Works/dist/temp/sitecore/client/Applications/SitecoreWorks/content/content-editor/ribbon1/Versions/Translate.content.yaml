@@ -1,9 +1,0 @@
-- RibbonGroupResource: Translate
-    Id: {BD20A31D-60EF-206B-D97C-4B80540AC533}
-    ItemPath: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Versions/Translate
-    Database: core
-    - ..versions: 
-        - da: 
-            Text: Oversæt
-        - en: 
-            Text: Translate

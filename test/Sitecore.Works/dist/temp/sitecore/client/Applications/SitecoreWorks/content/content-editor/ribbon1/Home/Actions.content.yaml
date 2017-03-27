@@ -1,9 +1,0 @@
-- RibbonGroupResource: Actions
-    Id: {BC83995A-913E-77E0-8073-6DEF26252E4B}
-    ItemPath: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1/Home/Actions
-    Database: core
-    - ..versions: 
-        - da: 
-            Text: Operationer
-        - en: 
-            Text: Actions

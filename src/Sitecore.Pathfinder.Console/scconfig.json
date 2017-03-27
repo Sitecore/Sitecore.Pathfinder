@@ -34,8 +34,14 @@
     "output": {
         "directory": "./dist",
         "format": "directory",
+
         "package": {
-            "filename": "package.zip"
+            "filename": "Package.zip"
+        },
+
+        "nuget": {
+            "filename": "Package.nupkg",
+            "nuspec-filename": ""
         }
     },
 
