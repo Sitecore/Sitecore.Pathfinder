@@ -94,22 +94,7 @@
     <None Update="files\generators\rendering\__name__.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="files\generators\xml.content\__name__.master.content.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="files\generators\xml.item\__name__.item.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="files\generators\xml.layout\__name__.master.layout.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="files\generators\xml.template\__name__.item.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="files\generators\yaml.content\__name__.master.content.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="files\generators\yaml.item\__name__.item.yaml">
+    <None Update="files\generators\yaml.content\__name__.content.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="files\generators\yaml.layout\__name__.master.layout.yaml">
