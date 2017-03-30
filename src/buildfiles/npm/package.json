@@ -1,21 +1,14 @@
 {
-    "name": "sitecore-pathfinder-dependencies",
-    "version": "0.8.0",
-    "description": "Sitecore Pathfinder Node Dependencies",
+    "name": "sitecore-pathfinder",
+    "version": "0.9.0-v1",
+    "description": "Sitecore Pathfinder",
     "main": "gulpfile.js",
     "dependencies": {
     },
     "devDependencies": {
-        "gulp": "^3.9.0",
-        "gulp-msbuild": "^0.4.6",
-        "del": "^2.2.0",
-        "gulp-nuget-pack": "0.0.6",
-        "gulp-zip": "^3.0.2",
-        "run-sequence": "^1.1.4",
-        "vinyl": "^1.1.0"
     },
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "scc": "./dotnet Sitecore.Pathfinder.Console.dll"
     },
     "repository": {
         "type": "git",

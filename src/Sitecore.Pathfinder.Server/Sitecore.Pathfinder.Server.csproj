@@ -133,15 +133,18 @@
     <Compile Include="Diagnostics\RetryableEmitException.cs" />
     <Compile Include="Extensions\DatabaseExtensions.cs" />
     <Compile Include="Hooks\InitializeSitecorePathfinder.cs" />
-    <Compile Include="Install\NugetPackageInstaller.cs" />
-    <Compile Include="Install\PackageWatcher.cs" />
-    <Compile Include="Install\Parsing\Template.cs" />
-    <Compile Include="Install\Parsing\TemplateField.cs" />
-    <Compile Include="Install\Parsing\TemplateSection.cs" />
-    <Compile Include="Install\SitecorePackageInstaller.cs" />
-    <Compile Include="Install\Emitting\TemplateFieldWriter.cs" />
-    <Compile Include="Install\Emitting\TemplateSectionWriter.cs" />
-    <Compile Include="Install\Emitting\TemplateWriter.cs" />
+    <Compile Include="Emitting\Writers\ItemWriter.cs" />
+    <Compile Include="Emitting\Nuget\NugetPackageInstaller.cs" />
+    <Compile Include="Emitting\PackageWatcher.cs" />
+    <Compile Include="Emitting\Parsing\Field.cs" />
+    <Compile Include="Emitting\Parsing\Item.cs" />
+    <Compile Include="Emitting\Parsing\Template.cs" />
+    <Compile Include="Emitting\Parsing\TemplateField.cs" />
+    <Compile Include="Emitting\Parsing\TemplateSection.cs" />
+    <Compile Include="Emitting\SitecorePackages\SitecorePackageInstaller.cs" />
+    <Compile Include="Emitting\Writers\TemplateFieldWriter.cs" />
+    <Compile Include="Emitting\Writers\TemplateSectionWriter.cs" />
+    <Compile Include="Emitting\Writers\TemplateWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="sitecore modules\shell\pathfinder\export-database.ashx.cs">
       <DependentUpon>export-database.ashx</DependentUpon>
@@ -154,6 +157,9 @@
     <None Include="Properties\PublishProfiles\PublishToPathfinder.pubxml" />
     <Content Include="Sitecore.Pathfinder.package" />
     <Content Include="sitecore modules\shell\pathfinder\export-database.ashx" />
+    <Content Include="Sitecore.Pathfinder.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\include\Sitecore.Pathfinder\Sitecore.Pathfinder.config" />

@@ -21,6 +21,7 @@ test/TodoMvc/packages
 test/Website.Good/packages
 test/Website.Bad/packages
 [Bb]in-old/
+dist/
 
 # Build results
 [Dd]ebug/

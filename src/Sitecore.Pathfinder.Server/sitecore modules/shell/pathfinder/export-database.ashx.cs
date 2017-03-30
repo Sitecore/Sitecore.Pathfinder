@@ -6,11 +6,9 @@ using System.Xml;
 using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
-using Sitecore.Data.Managers;
-using Sitecore.Data.Templates;
 using Sitecore.SecurityModel;
 
-namespace Sitecore.Pathfinder.Shell
+namespace Sitecore.Pathfinder.shell.pathfinder
 {
     public class ExportDatabase : IHttpHandler
     {

@@ -10,7 +10,7 @@
 //
 // 9. Done
 
-var version = "0.8.0-alpha";
+var version = "0.9.0";
 
 var gulp = require("gulp");
 var del = require("del");
@@ -33,7 +33,7 @@ gulp.task("build-project", function() {
         logCommand: false,
         verbosity: "minimal",
         maxcpucount: 0,
-        toolsVersion: 14.0
+        toolsVersion: 15.0
     }));
 });
 
@@ -44,7 +44,7 @@ gulp.task("clean-dist-directory", function() {
 });
 
 gulp.task("build-dist-directory", ["clean-dist-directory"], function() {
-    return gulp.src(["./bin/files/**/*", "./bin/licenses/**/*", "./bin/*.dll", "./bin/scc.exe", "./bin/scc.exe.config", "./bin/scconfig.json"], { base: "./bin/" }).
+    return gulp.src(["./bin/netcoreapp1.1/files/**/*", "./bin/netcoreapp1.1/help/**/*", "./bin/netcoreapp1.1/licenses/**/*", "./bin/netcoreapp1.1/*.dll", "./bin/netcoreapp1.1/*.zip", "./bin/netcoreapp1.1/scconfig.json"], { base: "./bin/netcoreapp1.1/" }).
         pipe(gulp.dest("./build/dist"));
 });
 
@@ -128,13 +128,13 @@ gulp.task("default", ["build"], function() {
 });
 
 gulp.task("build", function() {
-    runSequence("build-project", "build-dist-directory", ["build-zip-file", "build-npm-package", "build-nuget-package"]);
+    runSequence("build-project", "build-dist-directory", ["build-npm-package"]);
 });
 
 gulp.task("publish", function() {
-    runSequence("build-project", "build-dist-directory", ["publish-nuget-package", "publish-npm-package"]);
+    runSequence("build-project", "build-dist-directory", ["publish-npm-package"]);
 });
 
 gulp.task("appveyor", function() {
-    runSequence("build-dist-directory", ["build-zip-file", "build-npm-package", "build-nuget-package"]);
+    runSequence("build-dist-directory", ["build-npm-package"]);
 });

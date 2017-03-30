@@ -10,7 +10,6 @@ namespace Sitecore.Pathfinder.Diagnostics
         public EmitException([Localizable(true), NotNull] string text) : base(text)
         {
             Text = text;
-
             Details = string.Empty;
         }
 

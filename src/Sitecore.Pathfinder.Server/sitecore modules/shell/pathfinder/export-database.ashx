@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="export-database.ashx.cs" Class="Sitecore.Pathfinder.Shell.ExportDatabase" %>
+﻿<%@ WebHandler Language="C#" CodeBehind="export-database.ashx.cs" Class="Sitecore.Pathfinder.shell.pathfinder.ExportDatabase" %>

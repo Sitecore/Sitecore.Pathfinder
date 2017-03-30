@@ -2,10 +2,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Sitecore.Data.Items;
-using Sitecore.Pathfinder.Install.Parsing;
+using Sitecore.Pathfinder.Emitting.Parsing;
 
-namespace Sitecore.Pathfinder.Install.Emitting
+namespace Sitecore.Pathfinder.Emitting.Writers
 {
     public class TemplateSectionWriter
     {
@@ -24,12 +23,12 @@ namespace Sitecore.Pathfinder.Install.Emitting
         }
 
         [CanBeNull]
-        public Item Item { get; set; }
+        public Data.Items.Item Item { get; set; }
 
         [NotNull]
         public TemplateSection TemplateSection { get; }
 
-        public void ResolveItem([CanBeNull] Item templateItem)
+        public void ResolveItem([CanBeNull] Data.Items.Item templateItem)
         {
             if (Item == null && templateItem != null)
             {

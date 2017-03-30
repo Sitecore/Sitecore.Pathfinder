@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using Sitecore.Extensions.XElementExtensions;
 
-namespace Sitecore.Pathfinder.Install.Parsing
+namespace Sitecore.Pathfinder.Emitting.Parsing
 {
     public class TemplateSection
     {

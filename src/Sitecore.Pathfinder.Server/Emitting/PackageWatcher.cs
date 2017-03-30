@@ -6,8 +6,11 @@ using System.IO;
 using System.Threading;
 using Sitecore.Diagnostics;
 using Sitecore.IO;
+using Sitecore.Pathfinder.Emitting.Nuget;
+using Sitecore.Pathfinder.Emitting.SitecorePackages;
+using Sitecore.SecurityModel;
 
-namespace Sitecore.Pathfinder.Install
+namespace Sitecore.Pathfinder.Emitting
 {
     public class PackageWatcher
     {
@@ -23,7 +26,7 @@ namespace Sitecore.Pathfinder.Install
             InstallPackages();
 
             Watcher = new FileSystemWatcher(SourceDirectory);
-            Watcher.IncludeSubdirectories = true;
+            Watcher.IncludeSubdirectories = false;
             Watcher.Created += OnFileCreated;
             Watcher.Changed += OnFileCreated;
             Watcher.Renamed += OnFileCreated;
@@ -50,24 +53,27 @@ namespace Sitecore.Pathfinder.Install
 
         private void InstallPackage([NotNull] string fileName)
         {
-            try
+            using (new SecurityDisabler())
             {
-                var extension = Path.GetExtension(fileName);
-
-                // todo: make extendable
-                switch (extension.ToLowerInvariant())
+                try
                 {
-                    case ".zip":
-                        new SitecorePackageInstaller().Install(fileName);
-                        break;
-                    case ".nupkg":
-                        new NugetPackageInstaller().Install(fileName);
-                        break;
+                    var extension = Path.GetExtension(fileName);
+
+                    // todo: make extendable
+                    switch (extension.ToLowerInvariant())
+                    {
+                        case ".zip":
+                            new SitecorePackageInstaller().Install(fileName);
+                            break;
+                        case ".nupkg":
+                            new NugetPackageInstaller().Install(fileName);
+                            break;
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                Log.Error("Failed to install package", ex, GetType());
+                catch (Exception ex)
+                {
+                    Log.Error("Failed to install package", ex, GetType());
+                }
             }
         }
 

@@ -14,7 +14,7 @@ using Sitecore.Install.Zip;
 using Sitecore.IO;
 using Sitecore.SecurityModel;
 
-namespace Sitecore.Pathfinder.Install
+namespace Sitecore.Pathfinder.Emitting.SitecorePackages
 {
     public class SitecorePackageInstaller
     {

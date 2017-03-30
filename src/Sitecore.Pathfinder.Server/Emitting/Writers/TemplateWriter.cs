@@ -9,10 +9,10 @@ using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Extensions.StringExtensions;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Emitting.Parsing;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.Install.Parsing;
 
-namespace Sitecore.Pathfinder.Install.Emitting
+namespace Sitecore.Pathfinder.Emitting.Writers
 {
     public class TemplateWriter
     {
@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Install.Emitting
         }
 
         [CanBeNull]
-        public Item Item { get; set; }
+        public Data.Items.Item Item { get; set; }
 
         [NotNull]
         public IEnumerable<TemplateSectionWriter> Sections
@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Install.Emitting
         public Template Template { get; }
 
         [CanBeNull]
-        public Item Write()
+        public Data.Items.Item Write()
         {
             List<Data.Templates.TemplateField> inheritedFields;
             string baseTemplates;
@@ -75,7 +75,7 @@ namespace Sitecore.Pathfinder.Install.Emitting
                 return;
             }
 
-            foreach (Item child in templateSectionWriter.Item.Children)
+            foreach (Data.Items.Item child in templateSectionWriter.Item.Children)
             {
                 if (child.TemplateID != TemplateIDs.TemplateField)
                 {
@@ -112,7 +112,7 @@ namespace Sitecore.Pathfinder.Install.Emitting
                 return;
             }
 
-            foreach (Item child in Item.Children)
+            foreach (Data.Items.Item child in Item.Children)
             {
                 if (child.TemplateID != TemplateIDs.TemplateSection)
                 {
@@ -149,7 +149,7 @@ namespace Sitecore.Pathfinder.Install.Emitting
             fields = new List<Data.Templates.TemplateField>();
 
             var database = Factory.GetDatabase(template.Database);
-            var baseTemplateList = new List<Item>();
+            var baseTemplateList = new List<Data.Items.Item>();
 
             var templates = template.BaseTemplates.Split(new [] { '|' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var templateId in templates)
@@ -184,7 +184,7 @@ namespace Sitecore.Pathfinder.Install.Emitting
         }
 
         [CanBeNull]
-        protected virtual Item GetParentItem([NotNull] Database database)
+        protected virtual Data.Items.Item GetParentItem([NotNull] Database database)
         {
             var parentPath = GetItemParentPath(Template.Path);
             if (string.IsNullOrEmpty(parentPath))
@@ -519,6 +519,5 @@ namespace Sitecore.Pathfinder.Install.Emitting
             var n = itemPath.LastIndexOf('/');
             return n >= 0 ? itemPath.Left(n) : itemPath;
         }
-
     }
 }
