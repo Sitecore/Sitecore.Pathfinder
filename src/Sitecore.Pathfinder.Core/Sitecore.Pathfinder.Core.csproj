@@ -6,6 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Runtime\**" />
+    <EmbeddedResource Remove="Runtime\**" />
+    <None Remove="Runtime\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Configuration\FileContext.cs" />
   </ItemGroup>
 

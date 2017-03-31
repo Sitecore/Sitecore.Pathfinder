@@ -25,8 +25,6 @@ using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Projects
 {
-    public delegate void ProjectChangedEventHandler([NotNull] object sender);
-
     [Export, Export(typeof(IProject)), DebuggerDisplay("{GetType().Name,nq}: {ProjectDirectory}")]
     public class Project : SourcePropertyBag, IProject, IDiagnosticCollector
     {
@@ -119,6 +117,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public string ProjectUniqueId => _projectUniqueId ?? (_projectUniqueId = Configuration.GetString(Constants.Configuration.ProjectUniqueId));
 
+        [NotNull]
         public IDictionary<string, ISourceFile> SourceFiles { get; } = new Dictionary<string, ISourceFile>();
 
         public IEnumerable<Template> Templates => Index.Templates;
@@ -144,7 +143,8 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         protected ITraceService Trace { get; }
 
-        public virtual IProjectBase Add(string absoluteFileName)
+        [NotNull]
+        public virtual IProjectBase Add([NotNull] string absoluteFileName)
         {
             if (Locking == Locking.ReadOnly)
             {
@@ -180,7 +180,8 @@ namespace Sitecore.Pathfinder.Projects
             return this;
         }
 
-        public virtual IProjectBase Add(IEnumerable<string> sourceFileNames)
+        [NotNull]
+        public virtual IProjectBase Add([ItemNotNull] [NotNull] IEnumerable<string> sourceFileNames)
         {
             if (Locking == Locking.ReadOnly)
             {
@@ -220,7 +221,7 @@ namespace Sitecore.Pathfinder.Projects
                     addedProjectItem = (T)MergeItem(newItem);
                 }
 
-                var newTemplate = projectItem as Template;
+                var newTemplate = projectItem as Template;                          
                 if (newTemplate != null)
                 {
                     addedProjectItem = (T)MergeTemplate(newTemplate);
@@ -235,8 +236,6 @@ namespace Sitecore.Pathfinder.Projects
             }
 
             _isChecked = false;
-
-            OnProjectChanged();
 
             return addedProjectItem;
         }
@@ -385,9 +384,7 @@ namespace Sitecore.Pathfinder.Projects
             _locking = locking;
         }
 
-        public event ProjectChangedEventHandler ProjectChanged;
-
-        public virtual void Remove(IProjectItem projectItem)
+        public virtual void Remove([NotNull] IProjectItem projectItem)
         {
             if (Locking == Locking.ReadOnly)
             {
@@ -397,11 +394,9 @@ namespace Sitecore.Pathfinder.Projects
             _projectItems.Remove(projectItem);
 
             Index.Remove(projectItem);
-
-            OnProjectChanged();
         }
 
-        public virtual void Remove(string absoluteSourceFileName)
+        public virtual void Remove([NotNull] string absoluteSourceFileName)
         {
             if (Locking == Locking.ReadOnly)
             {
@@ -524,15 +519,6 @@ namespace Sitecore.Pathfinder.Projects
             Index.Add(template);
 
             return template;
-        }
-
-        protected virtual void OnProjectChanged()
-        {
-            var handler = ProjectChanged;
-            if (handler != null)
-            {
-                handler(this);
-            }
         }
 
         void IDiagnosticCollector.Add(Diagnostic diagnostic) => _diagnostics.Add(diagnostic);
