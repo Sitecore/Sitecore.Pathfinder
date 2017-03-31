@@ -5,6 +5,7 @@ using System.Composition;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -18,10 +19,14 @@ namespace Sitecore.Pathfinder.Tasks
     public class WriteExports : BuildTaskBase
     {
         [ImportingConstructor]
-        public WriteExports([NotNull] IFileSystemService fileSystem) : base("write-exports")
+        public WriteExports([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem) : base("write-exports")
         {
+            Configuration = configuration;
             FileSystem = fileSystem;
         }
+
+        [NotNull]
+        protected IConfiguration Configuration { get; }
 
         [NotNull]
         protected IFileSystemService FileSystem { get; }
@@ -31,8 +36,8 @@ namespace Sitecore.Pathfinder.Tasks
             context.Trace.TraceInformation(Msg.D1015, Texts.Writing_package_exports___);
 
             var fieldToWrite = context.Configuration.GetStringList(Constants.Configuration.WriteExports.FieldsToWrite).Select(f => f.ToLowerInvariant()).ToList();
+            var fileName = PathHelper.Combine(Configuration.GetProjectDirectory(), Configuration.GetString(Constants.Configuration.Output.Directory) + "\\" + context.Configuration.GetString(Constants.Configuration.WriteExports.FileName));
 
-            var fileName = PathHelper.Combine(context.ProjectDirectory, PathHelper.NormalizeFilePath(context.Configuration.GetString(Constants.Configuration.WriteExports.FileName)));
             FileSystem.CreateDirectoryFromFileName(fileName);
 
             var project = context.LoadProject();

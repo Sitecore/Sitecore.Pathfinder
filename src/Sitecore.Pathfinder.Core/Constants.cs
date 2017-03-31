@@ -114,6 +114,8 @@ namespace Sitecore.Pathfinder
 
             public const string References = "references";
 
+            public const string ResetWebsite = "reset-website";
+
             public const string Run = "run";
 
             public const string SearchAndReplaceTokens = "search-and-replace-tokens";
@@ -249,15 +251,16 @@ namespace Sitecore.Pathfinder
 
                 public const string Format = "output:format";
 
-                public static class Package
-                {
-                    public const string FileName = "output:package:filename";
-                }
                 public static class Nuget
                 {
                     public const string FileName = "output:nuget:filename";
 
                     public const string NuspecFileName = "output:nuget:nuspec-filename";
+                }
+
+                public static class Package
+                {
+                    public const string FileName = "output:package:filename";
                 }
             }
 

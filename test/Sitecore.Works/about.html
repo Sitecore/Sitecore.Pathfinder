@@ -69,14 +69,14 @@
 
     <!-- Page Header -->
     <!-- Set your background image for this header on the line below. -->
-    <header class="intro-header" style="background-image: url('/~/media/CleanBlog/home-bg')">
+    <header class="intro-header" style="background-image: url('/~/media/CleanBlog/about-bg')">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <div class="site-heading">
+                    <div class="page-heading">
                         <h1>{{Header}}</h1>
                         <hr class="small">
-                        <span class="subheading">{{Subheader}}</span>
+                        <span class="subheading">{{SubHeader}}</span>
                     </div>
                 </div>
             </div>
@@ -87,26 +87,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-              {{# /sitecore/content/Home/CleanBlog/Posts}}
-                <div class="post-preview">
-                    <a href="{{@url}}">
-                        <h2 class="post-title">
-                            {{Title}}
-                        </h2>
-                        <h3 class="post-subtitle">
-                            {{Subtitle}}
-                        </h3>
-                    </a>
-                    <p class="post-meta">{{Posted}}</p>
-                </div>
-                <hr>
-              {{/ /sitecore/content/Home/CleanBlog/Posts}}
-                <!-- Pager -->
-                <ul class="pager">
-                    <li class="next">
-                        <a href="#">{{OlderPosts}}</a>
-                    </li>
-                </ul>
+              {{Text}}
             </div>
         </div>
     </div>

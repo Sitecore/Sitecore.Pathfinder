@@ -32,7 +32,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.NugetEmitter
         public NugetProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] ITraceService traceService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, compositionService, traceService, emitters)
         {
             FileSystem = fileSystem;
-            OutputDirectory = PathHelper.Combine(Configuration.GetProjectDirectory(), Configuration.GetString(Constants.Configuration.Output.Directory) + "\\temp\\content");
+            OutputDirectory = PathHelper.Combine(Configuration.GetProjectDirectory(), Configuration.GetString(Constants.Configuration.Output.Directory) + "\\content");
         }
 
         [NotNull]
@@ -50,6 +50,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.NugetEmitter
         {
             base.Emit(context, project);
 
+            EmitResetItems();
             EmitItems();
             EmitNugetPackage();
         }
@@ -140,7 +141,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.NugetEmitter
 
             using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(manifest)))
             {
-                var packageBuilder = new PackageBuilder(stream, outputDirectory + "\\temp");
+                var packageBuilder = new PackageBuilder(stream, outputDirectory);
 
                 using (var nupkg = FileSystem.OpenWrite(fileName))
                 {
@@ -149,9 +150,47 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.NugetEmitter
             }
         }
 
+        protected virtual void EmitResetItems()
+        {
+            var pairs = Configuration.GetSubKeys(Constants.Configuration.ResetWebsite).ToArray();
+            if (!pairs.Any())
+            {
+                return;
+            }
+
+            var fileName = PathHelper.Combine(Configuration.GetProjectDirectory(), Configuration.GetString(Constants.Configuration.Output.Directory) + "\\reset.xml");
+            using (var stream = new FileStream(fileName, FileMode.Create))
+            {
+                var settings = new XmlWriterSettings
+                {
+                    Encoding = new UTF8Encoding(false),
+                    Indent = true
+                };
+
+                using (var writer = XmlWriter.Create(stream, settings))
+                {
+                    writer.WriteStartElement("reset");
+
+                    foreach (var pair in pairs)
+                    {
+                        var value = Configuration.GetString(Constants.Configuration.ResetWebsite + ":" + pair.Key);
+
+                        writer.WriteStartElement("item");
+
+                        writer.WriteAttributeString("database", value);
+                        writer.WriteAttributeString("id", pair.Key);
+
+                        writer.WriteEndElement();
+                    }
+
+                    writer.WriteEndElement();
+                }
+            }
+        }
+
         private void EmitItems()
         {
-            var fileName = PathHelper.Combine(Configuration.GetProjectDirectory(), Configuration.GetString(Constants.Configuration.Output.Directory) + "\\temp\\content.xml");
+            var fileName = PathHelper.Combine(Configuration.GetProjectDirectory(), Configuration.GetString(Constants.Configuration.Output.Directory) + "\\content.xml");
             using (var stream = new FileStream(fileName, FileMode.Create))
             {
                 var settings = new XmlWriterSettings

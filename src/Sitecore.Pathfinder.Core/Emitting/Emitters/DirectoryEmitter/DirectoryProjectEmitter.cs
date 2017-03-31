@@ -12,7 +12,6 @@ using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.Json;
 using Sitecore.Pathfinder.Languages.Serialization;
 using Sitecore.Pathfinder.Languages.Yaml;
-using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Emitting.Emitters.DirectoryEmitter
@@ -36,13 +35,6 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.DirectoryEmitter
         public override bool CanEmit(string format)
         {
             return string.Equals(format, "directory", StringComparison.OrdinalIgnoreCase);
-        }
-
-        public override void Emit(IEmitContext context, IProject project)
-        {
-            FileSystem.DeleteDirectory(OutputDirectory);
-
-            base.Emit(context, project);
         }
 
         public virtual void EmitFile([NotNull] IEmitContext context, [NotNull] string sourceFileAbsoluteFileName, [NotNull] string filePath)

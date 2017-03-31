@@ -1,5 +1,5 @@
 {
-    "project-unique-id": "Sitecore-Pathfinder", 
+    "project-unique-id": "Sitecore-Pathfinder",
 
     "author": "Sitecore Pathfinder",
     "description": "",
@@ -45,6 +45,10 @@
         }
     },
 
+    "reset-website": {
+        // "/sitecore/content/home": "master"
+    },
+
     // old stuff =========================================================================
 
     "website-directory": "",
@@ -79,8 +83,8 @@
 
     // tasks
     "build-project": {
-        // default build pipeline - show help
-        "tasks": "check-project publish-project show-status",
+        // default build pipeline
+        "tasks": "check-project clean-output write-exports publish-project show-status",
 
         // bin files to compile for code generation
         "compile-bin-files": {
@@ -114,9 +118,6 @@
         "renderings": {
             "create-items-for-partial-views": false
         },
-
-        // execute Sitecore validators after item or template has been updated
-        "run-sitecore-validators": true,
 
         // poor mans schema for item files
         "schema": {
@@ -206,7 +207,7 @@
         // comma separated list of filepaths to search for include files
         "t4-include-paths": "",
 
-        // comma separated list of filepaths to search for reference fifffles
+        // comma separated list of filepaths to search for reference
         "t4-reference-paths": "",
 
         // mapping between T4 template extensions and project item types.
@@ -227,15 +228,12 @@
         "wwwroot-directory": "c:\\inetpub\\wwwroot"
     },
 
-    "reset-website": {
-    },
-
     "restore-packages": {
         "directory": "files/packages"
     },
 
     "write-exports": {
-        "filename": "sitecore.project/build/exports.xml",
+        "filename": "project.exports.xml",
         "fields-to-write": "Place Holders"
     },
 

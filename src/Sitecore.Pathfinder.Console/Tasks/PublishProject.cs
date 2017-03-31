@@ -24,7 +24,7 @@ namespace Sitecore.Pathfinder.Tasks
             Shortcut = "p";
         }
 
-        [NotNull, Option("format", Alias = "f", IsRequired = true, PromptText = "Select output format", HelpText = "Output format", PositionalArg = 1, HasOptions = true, DefaultValue = "directory")]
+        [NotNull, Option("format", Alias = "f", IsRequired = true, PromptText = "Select output format", HelpText = "Output format", PositionalArg = 1, HasOptions = true, DefaultValue = "package")]
         public string Format { get; set; } = "directory";
 
         [NotNull, Option("item-format", Alias = "if", IsRequired = false, PromptText = "Select item format", HelpText = "Item format", PositionalArg = 2, HasOptions = true, DefaultValue = "yaml")]
@@ -43,7 +43,7 @@ namespace Sitecore.Pathfinder.Tasks
             var format = Format;
             if (string.IsNullOrEmpty(format))
             {
-                format = context.Configuration.GetString(Constants.Configuration.Output.Format, "directory");
+                format = context.Configuration.GetString(Constants.Configuration.Output.Format, "package");
             }
 
             var projectEmitters = ProjectEmitters.Where(p => p.CanEmit(format)).ToArray();
