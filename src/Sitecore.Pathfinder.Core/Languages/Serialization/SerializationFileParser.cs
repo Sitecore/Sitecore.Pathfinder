@@ -11,17 +11,12 @@ namespace Sitecore.Pathfinder.Languages.Serialization
     {
         private const string FileExtension = ".item";
 
-        public SerializationFileParser() : base(Constants.Parsers.ContentFiles)
+        public SerializationFileParser() : base(Constants.Parsers.Items)
         {
         }
 
         public override bool CanParse(IParseContext context)
         {
-            if (string.IsNullOrEmpty(context.ItemPath))
-            {
-                return false;
-            }
-
             return context.Snapshot.SourceFile.AbsoluteFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
         }
 

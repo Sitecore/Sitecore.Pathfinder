@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26228.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documentation", "documentation", "{3FD15219-6CAE-4865-A054-8E9E2A5EDF4E}"
 	ProjectSection(SolutionItems) = preProject
@@ -18,10 +18,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.Core", "src\Sitecore.Pathfinder.Core\Sitecore.Pathfinder.Core.csproj", "{C674EEBF-BBF6-4EDA-AF5B-A4D58D0BE986}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{049B9C99-6613-43BB-BF14-A60D7C9F7F57}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Website.Good", "test\Website.Good\Website.Good.csproj", "{E2B6E3D8-1D5D-4CDB-ACA9-6F2108560ED9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Website.Bad", "test\Website.Bad\Website.Bad.csproj", "{0509C6A8-74D0-4F23-ABF1-2FFB16E9E467}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{2913B82E-EAB7-452F-AB67-97DD577A7439}"
 	ProjectSection(SolutionItems) = preProject
@@ -70,28 +66,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Hello world", "2. Hello 
 		docs\walkthroughs\2. Hello world\README.md = docs\walkthroughs\2. Hello world\README.md
 	EndProjectSection
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "SitecorePathfinderCore", "test\SitecorePathfinderCore\", "{A746E909-84DD-409F-9900-C0BF80FAD1D5}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_51161"
-		Debug.AspNetCompiler.PhysicalPath = "test\SitecorePathfinderCore\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_51161\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_51161"
-		Release.AspNetCompiler.PhysicalPath = "test\SitecorePathfinderCore\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_51161\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "51161"
-		SlnRelativePath = "test\SitecorePathfinderCore\"
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.Server", "src\Sitecore.Pathfinder.Server\Sitecore.Pathfinder.Server.csproj", "{42808013-7A25-4C07-91FA-BE4F7AA8E0B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.UnitTests", "test\Sitecore.Pathfinder.UnitTests\Sitecore.Pathfinder.UnitTests.csproj", "{D1AD9A66-2EF0-4D84-873F-10E6C8BBA929}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -107,31 +84,23 @@ Global
 		{C674EEBF-BBF6-4EDA-AF5B-A4D58D0BE986}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C674EEBF-BBF6-4EDA-AF5B-A4D58D0BE986}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C674EEBF-BBF6-4EDA-AF5B-A4D58D0BE986}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E2B6E3D8-1D5D-4CDB-ACA9-6F2108560ED9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E2B6E3D8-1D5D-4CDB-ACA9-6F2108560ED9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E2B6E3D8-1D5D-4CDB-ACA9-6F2108560ED9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0509C6A8-74D0-4F23-ABF1-2FFB16E9E467}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0509C6A8-74D0-4F23-ABF1-2FFB16E9E467}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0509C6A8-74D0-4F23-ABF1-2FFB16E9E467}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A746E909-84DD-409F-9900-C0BF80FAD1D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A746E909-84DD-409F-9900-C0BF80FAD1D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A746E909-84DD-409F-9900-C0BF80FAD1D5}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{A746E909-84DD-409F-9900-C0BF80FAD1D5}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{42808013-7A25-4C07-91FA-BE4F7AA8E0B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{42808013-7A25-4C07-91FA-BE4F7AA8E0B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42808013-7A25-4C07-91FA-BE4F7AA8E0B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42808013-7A25-4C07-91FA-BE4F7AA8E0B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1AD9A66-2EF0-4D84-873F-10E6C8BBA929}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1AD9A66-2EF0-4D84-873F-10E6C8BBA929}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1AD9A66-2EF0-4D84-873F-10E6C8BBA929}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1AD9A66-2EF0-4D84-873F-10E6C8BBA929}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{E2B6E3D8-1D5D-4CDB-ACA9-6F2108560ED9} = {049B9C99-6613-43BB-BF14-A60D7C9F7F57}
-		{0509C6A8-74D0-4F23-ABF1-2FFB16E9E467} = {049B9C99-6613-43BB-BF14-A60D7C9F7F57}
 		{2913B82E-EAB7-452F-AB67-97DD577A7439} = {3FD15219-6CAE-4865-A054-8E9E2A5EDF4E}
 		{626A72A8-4461-4E2E-BB10-2A36D9D1BB5D} = {3FD15219-6CAE-4865-A054-8E9E2A5EDF4E}
 		{ED92B747-FD90-4DE5-BB52-96DC808B58C0} = {626A72A8-4461-4E2E-BB10-2A36D9D1BB5D}
 		{B86678EC-8111-4D28-9B60-1DF723E2CB6E} = {626A72A8-4461-4E2E-BB10-2A36D9D1BB5D}
-		{A746E909-84DD-409F-9900-C0BF80FAD1D5} = {049B9C99-6613-43BB-BF14-A60D7C9F7F57}
+		{D1AD9A66-2EF0-4D84-873F-10E6C8BBA929} = {049B9C99-6613-43BB-BF14-A60D7C9F7F57}
 	EndGlobalSection
 EndGlobal

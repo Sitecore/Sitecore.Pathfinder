@@ -1,9 +1,7 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Composition;
-using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing;
 
@@ -13,9 +11,8 @@ namespace Sitecore.Pathfinder.Languages.Content
     public class ContentFileParser : ParserBase
     {
         [ImportingConstructor]
-        public ContentFileParser([NotNull] IConfiguration configuration) : base(Constants.Parsers.ContentFiles)
+        public ContentFileParser() : base(Constants.Parsers.ContentFiles)
         {
-            PathMatcher = new PathMatcher(configuration.GetString(Constants.Configuration.Items.Include), configuration.GetString(Constants.Configuration.Items.Exclude));
         }
 
         [NotNull]
@@ -23,9 +20,7 @@ namespace Sitecore.Pathfinder.Languages.Content
 
         public override bool CanParse(IParseContext context)
         {
-            // exclude items files
-            var fileName = context.Snapshot.SourceFile.AbsoluteFileName;
-            return !string.IsNullOrEmpty(context.FilePath) && !PathMatcher.IsMatch(fileName);
+            return !context.IsParsed && !string.IsNullOrEmpty(context.FilePath);
         }
 
         public override void Parse(IParseContext context)

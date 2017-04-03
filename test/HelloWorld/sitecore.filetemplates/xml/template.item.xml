@@ -1,6 +1,0 @@
-﻿<Template xmlns="http://www.sitecore.net/pathfinder/item">
-    <Section Name="Fields">
-        <Field Name="Title" Sharing="Unversioned" />
-        <Field Name="Text" Type="Rich Text" />
-    </Section>
-</Template>

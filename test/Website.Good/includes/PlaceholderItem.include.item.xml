@@ -1,7 +1,0 @@
-﻿<Item xmlns="http://www.sitecore.net/pathfinder/item" Name="$ItemName" Template="/sitecore/templates/Sample/PlaceholderItemTemplate" Template.CreateFromFields="True"
-    Template.ShortHelp="Hello World." Template.LongHelp="Hello World." Template.Icon="Applications/16x16/about.png">
-
-    <Fields>
-        <File.Placeholder />
-    </Fields>
-</Item>

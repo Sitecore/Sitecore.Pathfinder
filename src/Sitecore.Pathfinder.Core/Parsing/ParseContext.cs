@@ -39,6 +39,8 @@ namespace Sitecore.Pathfinder.Parsing
 
         public virtual string FilePath { get; private set; }
 
+        public bool IsParsed { get; set; }
+
         public virtual string ItemName { get; private set; }
 
         public virtual string ItemPath { get; private set; }

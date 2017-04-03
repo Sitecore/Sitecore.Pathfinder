@@ -28,6 +28,8 @@ namespace Sitecore.Pathfinder.Parsing
         [NotNull]
         string FilePath { get; }
 
+        bool IsParsed { get; set; }
+
         [NotNull]
         string ItemName { get; }
 
