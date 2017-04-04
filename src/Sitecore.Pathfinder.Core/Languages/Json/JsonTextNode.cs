@@ -40,7 +40,12 @@ namespace Sitecore.Pathfinder.Languages.Json
 
         public override ITextNode GetSnapshotLanguageSpecificChildNode(string name)
         {
-            return ChildNodes.FirstOrDefault(n => n.Key == name);
+            return this; // ChildNodes.FirstOrDefault(n => n.Key == name);
+        }
+
+        public override ITextNode GetAttribute(string attributeName)
+        {
+            return Attributes.FirstOrDefault(a => a.Key == attributeName);
         }
 
         private static TextSpan GetTextSpan([NotNull] IJsonLineInfo lineInfo)

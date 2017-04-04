@@ -14,8 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Projects\ProjectTests.Json.cs" />
-    <Compile Remove="Projects\ProjectTests.JsonTemplates.cs" />
     <Compile Remove="Projects\ProjectTests.SerializedItem.cs" />
     <Compile Remove="Projects\ProjectTests.Xml.cs" />
     <Compile Remove="Projects\ProjectTests.XmlTemplates.cs" />
@@ -40,6 +38,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="items\json\toolbar.content.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="items\json\toolbar.templates.content.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="items\master\sitecore\content\Home\JsonItem.item.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>

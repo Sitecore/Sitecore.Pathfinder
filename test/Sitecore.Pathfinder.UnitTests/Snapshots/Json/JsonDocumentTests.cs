@@ -54,10 +54,9 @@ namespace Sitecore.Pathfinder.Snapshots.Json
             Assert.AreEqual("Item", root.Key);
             Assert.AreEqual(1, root.ChildNodes.Count());
 
-            var fields = root.ChildNodes.First();
-            Assert.AreEqual(1, fields.ChildNodes.Count());
+            var fields = root.ChildNodes;
 
-            var field = fields.ChildNodes.First();
+            var field = fields.First();
             Assert.AreEqual("Text", field.GetAttributeValue("Name"));
             Assert.AreEqual("123", field.GetAttributeValue("Value"));
             Assert.AreEqual(0, field.ChildNodes.Count());

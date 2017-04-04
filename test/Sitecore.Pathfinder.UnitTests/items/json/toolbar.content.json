@@ -1,0 +1,115 @@
+{
+    "ToolbarResource": {
+        "Name": "toolbar1",
+        "ItemPath": "/sitecore/client/Applications/SitecoreWorks/content/content-editor/toolbar1",
+        "Database": "core",
+        "ToolbarTabResource": [
+            {
+                "Name": "Home",
+                "IsActive": true,
+                "..versions": {
+                    "en": {
+                        "Text": "Home"
+                    },
+                    "da": {
+                        "Text": "Hjem"
+                    }
+                },
+                "ToolbarGroupResource": [
+                    {
+                        "Name": "Write",
+                        "..versions": {
+                            "en": {
+                                "Text": "Item"
+                            },
+                            "da": {
+                                "Text": "Item"
+                            }
+                        },
+
+                        "ToolbarLargeButtonResource": {
+                            "Name": "Save",
+                            "Icon": "save",
+                            "Command": "works.saveItems",
+                            "..versions": {
+                                "en": {
+                                    "Text": "Save"
+                                },
+                                "da": {
+                                    "Text": "Gem"
+                                }
+                            }
+
+                        }
+                    },
+                    {
+                        "Name": "View",
+                        "..versions": {
+                            "en": {
+                                "Text": "View"
+                            },
+                            "da": {
+                                "Text": "Visning"
+                            }
+                        },
+
+                        "ToolbarLargeButtonResource": [
+                            {
+                                "Name": "Dashboard",
+                                "Icon": "dashboard",
+                                "Command": "works.contentEditor.viewDashboard",
+                                "..versions": {
+                                    "en": {
+                                        "Text": "Dashbord"
+                                    },
+                                    "da": {
+                                        "Text": "Oversigt"
+                                    }
+                                }
+                            },
+                            {
+                                "Name": "Content",
+                                "Icon": "pencil-square-o",
+                                "Command": "works.contentEditor.viewContent",
+                                "..versions": {
+                                    "en": {
+                                        "Text": "Content"
+                                    },
+                                    "da": {
+                                        "Text": "Indhold"
+                                    }
+                                }
+                            },
+                            {
+                                "Name": "System",
+                                "Icon": "gear",
+                                "Command": "works.contentEditor.viewSystem",
+                                "..versions": {
+                                    "en": {
+                                        "Text": "System"
+                                    },
+                                    "da": {
+                                        "Text": "System"
+                                    }
+                                }
+                            },
+                            {
+                                "Name": "Preview",
+                                "Icon": "gear",
+                                "Command": "works.preview",
+                                "..versions": {
+                                    "en": {
+                                        "Text": "Preview"
+                                    },
+                                    "da": {
+                                        "Text": "Preview"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

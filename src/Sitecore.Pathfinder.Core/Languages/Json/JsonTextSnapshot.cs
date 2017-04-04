@@ -78,7 +78,7 @@ namespace Sitecore.Pathfinder.Languages.Json
                     return TextNode.Empty;
                 }
 
-                _root = Parse(property.Name, value, null);
+                _root = Parse(property.Name, value);
             }
 
             var jarray = RootToken as JArray;
@@ -89,7 +89,8 @@ namespace Sitecore.Pathfinder.Languages.Json
 
                 foreach (var jobj in jarray.OfType<JObject>())
                 {
-                    Parse(string.Empty, jobj, jsonTextNode);
+                    var textNode = Parse(string.Empty, jobj);
+                    ((ICollection<ITextNode>)jsonTextNode.ChildNodes).Add(textNode);
                 }
             }
 
@@ -97,12 +98,9 @@ namespace Sitecore.Pathfinder.Languages.Json
         }
 
         [NotNull]
-        protected virtual ITextNode Parse([NotNull] string name, [NotNull, ItemNotNull] JObject jobject, [CanBeNull] JsonTextNode parent)
+        protected virtual ITextNode Parse([NotNull] string name, [NotNull, ItemNotNull] JObject jobject)
         {
-            var textNodes = parent?.ChildNodes as ICollection<ITextNode>;
-
             var treeNode = new JsonTextNode(this, name, jobject);
-            textNodes?.Add(treeNode);
 
             var childNodes = (ICollection<ITextNode>)treeNode.ChildNodes;
             var attributes = (ICollection<ITextNode>)treeNode.Attributes;
@@ -112,19 +110,18 @@ namespace Sitecore.Pathfinder.Languages.Json
                 switch (property.Value.Type)
                 {
                     case JTokenType.Object:
-                        Parse(property.Name, property.Value.Value<JObject>(), treeNode);
+                        var objectTextNode = Parse(property.Name, property.Value.Value<JObject>());
+                        childNodes.Add(objectTextNode);
                         break;
 
                     case JTokenType.Array:
                         var array = property.Value.Value<JArray>();
-                        var arrayTreeNode = new JsonTextNode(this, property.Name, array);
-
                         foreach (var element in array.OfType<JObject>())
                         {
-                            Parse(string.Empty, element, arrayTreeNode);
+                            var arrayTextNode = Parse(property.Name, element);
+                            childNodes.Add(arrayTextNode);
                         }
 
-                        childNodes.Add(arrayTreeNode);
                         break;
 
                     case JTokenType.Boolean:

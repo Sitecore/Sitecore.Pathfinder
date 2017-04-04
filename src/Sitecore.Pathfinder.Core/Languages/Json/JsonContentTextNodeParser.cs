@@ -16,7 +16,8 @@ namespace Sitecore.Pathfinder.Languages.Json
 
         public override bool CanParse(ItemParseContext context, ITextNode textNode)
         {
-            return textNode.Snapshot is JsonTextSnapshot && textNode.Snapshot.SourceFile.AbsoluteFileName.EndsWith(".content.json", StringComparison.OrdinalIgnoreCase);
+            var canParse = textNode.Snapshot is JsonTextSnapshot && textNode.Snapshot.SourceFile.AbsoluteFileName.EndsWith(".content.json", StringComparison.OrdinalIgnoreCase);
+            return canParse;
         }
 
         protected override ITextNode GetItemNameTextNode(IParseContext context, ITextNode textNode, string attributeName = "Name")

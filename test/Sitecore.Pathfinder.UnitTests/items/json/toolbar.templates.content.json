@@ -1,0 +1,138 @@
+{
+    "Folder": {
+        "Name": "Toolbars",
+        "ItemPath": "/sitecore/client/Applications/SitecoreWorks/templates/Toolbars",
+        "Database": "core",
+        "Template": [
+            {
+                "Name": "ToolbarResource"
+            },
+            {
+                "Name": "ToolbarTabResource",
+                "Icon": "Applications/16x16/about.png",
+                "ShortHelp": "Short help.",
+                "LongHelp": "Long help.",
+                "Section": [
+                    {
+                        "Name": "Fields",
+                        "Field": [
+                            {
+                                "Name": "Text",
+                                "Type": "Single-Line Text",
+                                "Sharing": "Unversioned"
+                            },
+                            {
+                                "Name": "IsActive",
+                                "Type": "Checkbox",
+                                "Sharing": "Shared"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "Name": "ToolbarGroupResource",
+                "Section": [
+                    {
+                        "Name": "Fields",
+                        "Field": [
+                            {
+                                "Name": "Text",
+                                "Type": "Single-Line Text",
+                                "Sharing": "Unversioned"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "Name": "ToolbarSmallButtonGroupResource"
+            },
+            {
+                "Name": "ToolbarLargeButtonResource",
+                "Section": [
+                    {
+                        "Name": "Fields",
+                        "Field": [
+                           {
+                                "Name": "Text",
+                                "Type": "Single-Line Text",
+                                "Sharing": "Unversioned"
+                            },
+                            {
+                                "Name": "Icon",
+                                "Type": "Icon",
+                                "Sharing": "Shared"
+                            },
+                            {
+                                "Name": "Command",
+                                "Type": "Single-Line Text",
+                                "Sharing": "Shared"
+                            },
+                            {
+                                "Name": "IsQuickAccess",
+                                "Type": "Checkbox",
+                                "Sharing": "Shared"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "Name": "ToolbarSmallButtonResource",
+                "Section": [
+                    {
+                        "Name": "Fields",
+                        "Field": [
+                            {
+                                "Name": "Text",
+                                "Type": "Single-Line Text",
+                                "Sharing": "Unversioned"
+                            },
+                            {
+                                "Name": "Icon",
+                                "Type": "Icon",
+                                "Sharing": "Shared"
+                            },
+                            {
+                                "Name": "Command",
+                                "Type": "Single-Line Text",
+                                "Sharing": "Shared"
+                            },
+                            {
+                                "Name": "IsQuickAccess",
+                                "Type": "Checkbox",
+                                "Sharing": "Shared"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "Name": "ToolbarCheckboxResource",
+                "Section": [
+                    {
+                        "Name": "Fields",
+                        "Field": [
+                            {
+                                "Name": "Text",
+                                "Type": "Single-Line Text",
+                                "Sharing": "Unversioned"
+                            },
+                            {
+                                "Name": "Icon",
+                                "Type": "Icon",
+                                "Sharing": "Shared"
+                            },
+                            {
+                                "Name": "Command",
+                                "Type": "Single-Line Text",
+                                "Sharing": "Shared"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
