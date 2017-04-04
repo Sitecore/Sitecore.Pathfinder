@@ -7,7 +7,7 @@
             {
                 "Name": "Home",
                 "IsActive": true,
-                "..versions": {
+                "..Versions": {
                     "en": {
                         "Text": "Home"
                     },
@@ -18,7 +18,7 @@
                 "ToolbarGroupResource": [
                     {
                         "Name": "Write",
-                        "..versions": {
+                        "..Versions": {
                             "en": {
                                 "Text": "Item"
                             },
@@ -31,7 +31,7 @@
                             "Name": "Save",
                             "Icon": "save",
                             "Command": "works.saveItems",
-                            "..versions": {
+                            "..Versions": {
                                 "en": {
                                     "Text": "Save"
                                 },
@@ -39,12 +39,11 @@
                                     "Text": "Gem"
                                 }
                             }
-
                         }
                     },
                     {
                         "Name": "View",
-                        "..versions": {
+                        "..Versions": {
                             "en": {
                                 "Text": "View"
                             },
@@ -58,7 +57,7 @@
                                 "Name": "Dashboard",
                                 "Icon": "dashboard",
                                 "Command": "works.contentEditor.viewDashboard",
-                                "..versions": {
+                                "..Versions": {
                                     "en": {
                                         "Text": "Dashbord"
                                     },
@@ -71,7 +70,7 @@
                                 "Name": "Content",
                                 "Icon": "pencil-square-o",
                                 "Command": "works.contentEditor.viewContent",
-                                "..versions": {
+                                "..Versions": {
                                     "en": {
                                         "Text": "Content"
                                     },
@@ -84,7 +83,7 @@
                                 "Name": "System",
                                 "Icon": "gear",
                                 "Command": "works.contentEditor.viewSystem",
-                                "..versions": {
+                                "..Versions": {
                                     "en": {
                                         "Text": "System"
                                     },
@@ -97,7 +96,7 @@
                                 "Name": "Preview",
                                 "Icon": "gear",
                                 "Command": "works.preview",
-                                "..versions": {
+                                "..Versions": {
                                     "en": {
                                         "Text": "Preview"
                                     },
