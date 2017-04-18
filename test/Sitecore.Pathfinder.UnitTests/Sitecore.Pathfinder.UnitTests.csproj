@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <Compile Remove="Projects\ProjectTests.SerializedItem.cs" />
-    <Compile Remove="Projects\ProjectTests.Xml.cs" />
     <Compile Remove="Projects\ProjectTests.XmlTemplates.cs" />
     <Compile Remove="Projects\ProjectTests.XmlTransform.cs" />
     <Compile Remove="Snapshots\AttributeNameTextNodeTests.cs" />
@@ -126,6 +125,15 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="items\serialization\home.item">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="items\xml\home.content.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="items\xml\menu.content.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="items\xml\menu.templates.content.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="items\yaml\home.content.yaml">

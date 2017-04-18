@@ -27,7 +27,7 @@
     },
 
     "items": {
-        "include": "**/*.content.yaml, **/*.content.json",
+        "include": "**/*.content.yaml, **/*.content.json, **/*.content.xml",
         "exclude": ""
     },
 
@@ -121,7 +121,7 @@
 
         // poor mans schema for item files
         "schema": {
-            "Item-attributes": "Name, Id, Database, ItemPath, ParentItemPath, Icon, Template, IsEmittable, IsExternalReference, Layout.File, Template.CreateFromFields, Template.Id, Template.Icon, Template.BaseTemplates, Template.ShortHelp, Template.LongHelp",
+            "Item-attributes": "Name, Id, TemplateName, Database, ItemPath, ParentItemPath, Icon, Template, IsEmittable, IsExternalReference, Layout.File, Template.CreateFromFields, Template.Id, Template.Icon, Template.BaseTemplates, Template.ShortHelp, Template.LongHelp",
             "Item-childnodes": "Fields, Unversioned-Fields, Versioned-Fields, Children, Template",
             "Fields-childnodes": "Field, Unversioned, Versioned, Layout",
             "Field-attributes": "Name, Value, Language, Version, Field.Type, Field.SortOrder, Field.Sharing, Field.Source, Field.ShortHelp, Field.LongHelp",

@@ -34,7 +34,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
             var guid = StringHelper.GetGuid(context.ParseContext.Project, textNode.GetAttributeValue("Id", itemIdOrPath));
             var databaseName = textNode.GetAttributeValue("Database", context.DatabaseName);
-            var templateIdOrPath = textNode.Key.UnescapeXmlElementName();
+            var templateIdOrPath = textNode.GetAttributeValue("TemplateName", textNode.Key.UnescapeXmlElementName());
 
             var item = context.ParseContext.Factory.Item(context.ParseContext.Project, guid, databaseName, itemNameTextNode.Value, itemIdOrPath, templateIdOrPath).With(textNode);
             item.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
@@ -71,11 +71,13 @@ namespace Sitecore.Pathfinder.Parsing.Items
             {
                 switch (childNode.Key)
                 {
+                    case "Versions":
                     case "..Versions":
                     case "..versions":
                         ParseUnversionedTextNode(context, item, childNode);
                         break;
 
+                    case "Layout":
                     case "..Layout":
                     case "..layout":
                         ParseLayoutTextNode(context, item, childNode);
@@ -93,7 +95,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
         protected virtual void ParseFieldTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] LanguageVersionContext languageVersionContext, [NotNull] ITextNode textNode)
         {
             var fieldName = textNode.Key.UnescapeXmlElementName();
-            if (fieldName == "Name" || fieldName == "Id" || fieldName == "ItemPath" || fieldName == "ParentItemPath" || fieldName == Constants.Fields.IsEmittable || fieldName == Constants.Fields.IsImport || fieldName == "Database")
+            if (fieldName == "Name" || fieldName == "Id" || fieldName == "TemplateName" || fieldName == "ItemPath" || fieldName == "ParentItemPath" || fieldName == Constants.Fields.IsEmittable || fieldName == Constants.Fields.IsImport || fieldName == "Database")
             {
                 return;
             }
