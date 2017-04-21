@@ -13,9 +13,6 @@ namespace Sitecore.Pathfinder.Emitting
         [NotNull]
         IConfiguration Configuration { get; }
 
-        [NotNull]
-        string ItemFormat { get; }
-
         [NotNull, ItemNotNull]
         ICollection<OutputFile> OutputFiles { get; }
 
@@ -29,6 +26,6 @@ namespace Sitecore.Pathfinder.Emitting
         ITraceService Trace { get; }
 
         [NotNull]
-        IEmitContext With([NotNull] IProjectEmitter projectEmitter, [NotNull] IProjectBase project, [NotNull] string itemFormat);
+        IEmitContext With([NotNull] IProjectEmitter projectEmitter, [NotNull] IProjectBase project);
     }
 }

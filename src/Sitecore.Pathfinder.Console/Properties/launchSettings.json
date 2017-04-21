@@ -2,8 +2,8 @@
   "profiles": {
     "Sitecore.Pathfinder.Console": {
       "commandName": "Project",
-      "commandLineArgs": "b n --pause",
-      "workingDirectory": "E:\\Sitecore\\Sitecore.Pathfinder\\code\\test\\Sitecore.Pathfinder.UnitTests"
+      "commandLineArgs": "b package --pause",
+      "workingDirectory": "E:\\Sitecore\\Sitecore.Pathfinder\\code\\test\\Sitecore.Works"
     }
   }
 }

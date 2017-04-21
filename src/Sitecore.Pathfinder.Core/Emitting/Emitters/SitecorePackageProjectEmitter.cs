@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility;
@@ -15,9 +16,10 @@ using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.IO.Zip;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Tasks.Building;
 
-namespace Sitecore.Pathfinder.Emitting.Emitters.SitecorePackageEmitter
+namespace Sitecore.Pathfinder.Emitting.Emitters
 {
     [Export(typeof(IProjectEmitter)), Shared]
     public class SitecorePackageProjectEmitter : ProjectEmitterBase
@@ -392,5 +394,38 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.SitecorePackageEmitter
         {
             return fileName.Replace("\\", "/").TrimEnd('/');
         }
+
+        protected override void EmitProjectItems(IEmitContext context, IEnumerable<IProjectItem> projectItems, List<IEmitter> emitters, ICollection<Tuple<IProjectItem, Exception>> retries)
+        {
+            var unemittedItems = new List<IProjectItem>(projectItems);
+
+            foreach (var projectItem in projectItems)
+            {
+                if (projectItem is Projects.Files.File file)
+                {
+                    AddFile(context, projectItem.Snapshot.SourceFile.AbsoluteFileName, file.FilePath);
+                    unemittedItems.Remove(projectItem);
+                }
+
+                if (projectItem is Item item)
+                {
+                    var sourcePropertyBag = (ISourcePropertyBag)item;
+                    if (item.IsEmittable || sourcePropertyBag.GetValue<string>("__origin_reason") == nameof(CreateItemsFromTemplates))
+                    {
+                        AddItem(context, item);
+                    }
+
+                    unemittedItems.Remove(projectItem);
+                }
+
+                if (projectItem is Template)
+                {
+                    unemittedItems.Remove(projectItem);
+                }
+            }
+
+            base.EmitProjectItems(context, unemittedItems, emitters, retries);
+        }
+
     }
 }

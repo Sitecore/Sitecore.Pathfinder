@@ -21,8 +21,6 @@ namespace Sitecore.Pathfinder.Emitting
 
         public IConfiguration Configuration { get; }
 
-        public string ItemFormat { get; private set; } = "file";
-
         public ICollection<OutputFile> OutputFiles { get; } = new List<OutputFile>();
 
         public IProjectBase Project { get; private set; }
@@ -31,11 +29,10 @@ namespace Sitecore.Pathfinder.Emitting
 
         public ITraceService Trace { get; }
 
-        public virtual IEmitContext With(IProjectEmitter projectEmitter, IProjectBase project, string itemFormat)
+        public virtual IEmitContext With(IProjectEmitter projectEmitter, IProjectBase project)
         {
             ProjectEmitter = projectEmitter;
             Project = project;
-            ItemFormat = itemFormat;
 
             return this;
         }

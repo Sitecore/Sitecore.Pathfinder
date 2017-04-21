@@ -15,62 +15,101 @@ namespace Sitecore.Pathfinder.Languages.Xml
 {
     public static class FormatExtensions
     {
-        public static void WriteAsContentXml([NotNull] this Item item, [NotNull] XmlWriter output, [CanBeNull] Action<XmlWriter> writeInner = null)
+        public static void WriteAsContentXml([NotNull] this Item item, [NotNull] TextWriter writer, [CanBeNull] Action<XmlWriter> writeInner = null)
         {
-            output.WriteStartElement(item.Template.ItemName.EscapeXmlElementName());
-            output.WriteAttributeString("xmlns", "http://www.sitecore.net/pathfinder/content/" + item.DatabaseName.ToLowerInvariant());
-            output.WriteAttributeString("Name", item.ItemName);
-            output.WriteAttributeStringIf("Id", item.Uri.Guid.Format());
-            output.WriteAttributeStringIf("Database", item.DatabaseName);
-            output.WriteAttributeStringIf("Template", item.TemplateIdOrPath);
-
-            // todo: write parent item path
-
-            var sharedFields = item.Fields.Where(f => f.Language == Language.Undefined && f.Version == Projects.Items.Version.Undefined).ToList();
-            var unversionedFields = item.Fields.Where(f => f.Language != Language.Undefined && f.Version == Projects.Items.Version.Undefined).ToList();
-            var versionedFields = item.Fields.Where(f => f.Language != Language.Undefined && f.Version != Projects.Items.Version.Undefined).ToList();
-
-            foreach (var field in sharedFields)
+            var settings = new XmlWriterSettings
             {
-                output.WriteAttributeString(field.FieldName, field.Value);
-            }
+                Indent = true
+            };
 
-            foreach (var language in unversionedFields.Select(f => f.Language).Distinct())
+            using (var output = XmlWriter.Create(writer, settings))
             {
-                output.WriteStartElement("Fields.Unversioned");
-                output.WriteAttributeString("Language", language.LanguageName);
+                output.WriteStartElement(item.Template.ItemName.EscapeXmlElementName());
+                // output.WriteAttributeString("xmlns", "http://www.sitecore.net/pathfinder/content/" + item.DatabaseName.ToLowerInvariant());
+                output.WriteAttributeString("Id", item.Uri.Guid.Format());
+                output.WriteAttributeString("Database", item.DatabaseName);
+                output.WriteAttributeString("Name", item.ItemName);
+                output.WriteAttributeString("ItemPath", item.ItemIdOrPath);
 
-                foreach (var field in unversionedFields.Where(f => f.Language == language))
+                if (item.Template.ItemName.EscapeXmlElementName() != item.Template.ItemName)
                 {
-                    output.WriteAttributeString(field.FieldName, field.Value);
+                    output.WriteAttributeString("TemplateName", item.Template.ItemName);
                 }
 
-                output.WriteEndElement();
-            }
+                var sharedFields = item.Fields.Where(f => f.Language == Language.Undefined && f.Version == Projects.Items.Version.Undefined).ToList();
+                var unversionedFields = item.Fields.Where(f => f.Language != Language.Undefined && f.Version == Projects.Items.Version.Undefined).ToList();
+                var versionedFields = item.Fields.Where(f => f.Language != Language.Undefined && f.Version != Projects.Items.Version.Undefined).ToList();
 
-            foreach (var language in versionedFields.Select(f => f.Language).Distinct())
-            {
-                foreach (var version in versionedFields.Where(f => f.Language == language).Select(f => f.Version).Distinct())
+                foreach (var field in sharedFields)
                 {
-                    output.WriteStartElement("Fields.Versioned");
-                    output.WriteAttributeString("Language", language.LanguageName);
-                    output.WriteAttributeString("Version", version.ToString());
-
-                    foreach (var field in versionedFields.Where(f => f.Language == language && f.Version == version))
+                    output.WriteStartElement(field.FieldName.EscapeXmlElementName());
+                    if (field.FieldName.EscapeXmlElementName() != field.FieldName)
                     {
-                        output.WriteAttributeString(field.FieldName, field.Value);
+                        output.WriteAttributeString("Name", field.FieldName);
+                    }
+
+                    output.WriteValue(field.Value);
+                    output.WriteEndElement();
+                }
+
+                if (unversionedFields.Any() || versionedFields.Any())
+                {
+                    output.WriteStartElement("Versions");
+
+                    foreach (var language in unversionedFields.Select(f => f.Language).Distinct())
+                    {
+                        output.WriteStartElement(language.LanguageName.EscapeXmlElementName());
+                        if (language.LanguageName.EscapeXmlElementName() != language.LanguageName)
+                        {
+                            output.WriteAttributeString("Name", language.LanguageName);
+                        }
+
+                        foreach (var field in unversionedFields.Where(f => f.Language == language))
+                        {
+                            output.WriteStartElement(field.FieldName.EscapeXmlElementName());
+                            if (field.FieldName.EscapeXmlElementName() != field.FieldName)
+                            {
+                                output.WriteAttributeString("Name", field.FieldName);
+                            }
+
+                            output.WriteValue(field.Value);
+                            output.WriteEndElement();
+                        }
+
+                        foreach (var version in versionedFields.Where(f => f.Language == language).Select(f => f.Version).Distinct())
+                        {
+                            output.WriteStartElement("Version");
+                            output.WriteAttributeString("Number", version.ToString());
+
+                            foreach (var field in versionedFields.Where(f => f.Language == language && f.Version == version))
+                            {
+                                output.WriteStartElement(field.FieldName.EscapeXmlElementName());
+                                if (field.FieldName.EscapeXmlElementName() != field.FieldName)
+                                {
+                                    output.WriteAttributeString("Name", field.FieldName);
+                                }
+
+                                output.WriteValue(field.Value);
+                                output.WriteEndElement();
+                            }
+
+                            output.WriteEndElement();
+                        }
+
+                        output.WriteEndElement();
                     }
 
                     output.WriteEndElement();
                 }
-            }
 
-            if (writeInner != null)
-            {
-                writeInner(output);
-            }
 
-            output.WriteEndElement();
+                if (writeInner != null)
+                {
+                    writeInner(output);
+                }
+
+                output.WriteEndElement();
+            }
         }
 
         public static void WriteAsExportXml([NotNull] this Item item, [NotNull] XmlWriter output, [NotNull, ItemNotNull]  IEnumerable<string> fieldsToWrite)

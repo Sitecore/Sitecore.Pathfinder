@@ -4,7 +4,11 @@
         "ItemPath": "/sitecore/client/Applications/SitecoreWorks/content/content-editor/toolbar1",
         "Database": "core",
         "ToolbarCheckboxResource":{
-            "Icon": "123"
+            "Icon": "123",
+            "Command": "123",
+            "Security Preset":{
+                
+            }
         },
 
         "ToolbarTabResource": [

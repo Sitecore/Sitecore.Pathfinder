@@ -29,10 +29,7 @@ namespace Sitecore.Pathfinder.Tasks
         public ICompositionService CompositionService { get; }
 
         [NotNull, Option("format", Alias = "f", IsRequired = true, PromptText = "Select output format", HelpText = "Output format", PositionalArg = 1, HasOptions = true, DefaultValue = "package")]
-        public string Format { get; set; } = "directory";
-
-        [NotNull, Option("item-format", Alias = "if", IsRequired = false, PromptText = "Select item format", HelpText = "Item format", PositionalArg = 2, HasOptions = true, DefaultValue = "yaml")]
-        public string ItemFormat { get; set; }
+        public string Format { get; set; } = "package";
 
         [ItemNotNull, NotNull]
         protected IEnumerable<IProjectEmitter> ProjectEmitters { get; }
@@ -58,7 +55,7 @@ namespace Sitecore.Pathfinder.Tasks
 
             foreach (var projectEmitter in projectEmitters)
             {
-                var emitContext = CompositionService.Resolve<IEmitContext>().With(projectEmitter, project, ItemFormat);
+                var emitContext = CompositionService.Resolve<IEmitContext>().With(projectEmitter, project);
 
                 projectEmitter.Emit(emitContext, project);
 
@@ -95,16 +92,11 @@ namespace Sitecore.Pathfinder.Tasks
         [NotNull, OptionValues("Format")]
         protected IEnumerable<(string Name, string Value)> GetFormatOptions([NotNull] ITaskContext context)
         {
-            yield return ("Directory", "directory");
             yield return ("Package", "package");
             yield return ("Nuget", "nuget");
-        }
-
-        [NotNull, OptionValues("ItemFormat")]
-        protected IEnumerable<(string Name, string Value)> GetItemFormatOptions([NotNull] ITaskContext context)
-        {
             yield return ("Yaml", "yaml");
             yield return ("Json", "json");
+            yield return ("Xml", "xml");
             yield return ("Serialization", "serialization");
         }
     }
