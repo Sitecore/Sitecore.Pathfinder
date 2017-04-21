@@ -24,7 +24,7 @@ namespace Sitecore.Pathfinder.Languages.Json
             FileSystem = fileSystem;
         }
 
-        public override ITextNode Root => _root ?? (_root = RootToken != null ? ParseDirectives(ParseContext, Parse()) : TextNode.Empty);
+        public override ITextNode Root => _root ?? (_root = RootToken != null ? Parse() : TextNode.Empty);
 
         [NotNull]
         protected IFileSystemService FileSystem { get; }

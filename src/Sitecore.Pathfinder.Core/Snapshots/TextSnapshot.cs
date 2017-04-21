@@ -1,6 +1,5 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
-using System.Collections.Generic;
 using System.Composition;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Parsing;
@@ -37,56 +36,6 @@ namespace Sitecore.Pathfinder.Snapshots
             Root = new SnapshotTextNode(this);
 
             return this;
-        }
-
-        [NotNull]
-        protected virtual ITextNode ParseDirectives([NotNull] SnapshotParseContext snapshotParseContext, [NotNull] ITextNode textNode)
-        {
-            // todo: dangereous cast
-            var childNodes = (List<ITextNode>)textNode.ChildNodes;
-
-            for (var index = childNodes.Count - 1; index >= 0; index--)
-            {
-                ParseDirectives(snapshotParseContext, textNode, childNodes[index]);
-            }
-
-            return textNode;
-        }
-
-        protected virtual void ParseDirectives([NotNull] SnapshotParseContext snapshotParseContext, [NotNull] ITextNode parentTextNode, [NotNull] ITextNode textNode)
-        {
-            var mutableParentTextNode = parentTextNode as IMutableTextNode;
-            Assert.Cast(mutableParentTextNode, nameof(mutableParentTextNode));
-
-            IEnumerable<ITextNode> newTextNodes = null;
-
-            foreach (var directive in SnapshotService.Directives)
-            {
-                if (!directive.CanParse(textNode))
-                {
-                    continue;
-                }
-
-                newTextNodes = directive.Parse(snapshotParseContext, textNode);
-                break;
-            }
-
-            if (newTextNodes == null)
-            {
-                ParseDirectives(snapshotParseContext, textNode);
-                return;
-            }
-
-            // todo: remove direct cast
-            var childNodes = (List<ITextNode>)mutableParentTextNode.ChildNodeCollection;
-            var index = childNodes.IndexOf(textNode);
-            childNodes.Remove(textNode);
-            childNodes.InsertRange(index, newTextNodes);
-
-            foreach (var newTextNode in newTextNodes)
-            {
-                ParseDirectives(snapshotParseContext, newTextNode);
-            }
         }
     }
 }

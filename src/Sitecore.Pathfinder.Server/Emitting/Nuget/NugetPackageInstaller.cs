@@ -2,17 +2,21 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 using NuGet;
 using Sitecore.Configuration;
+using Sitecore.Data.Managers;
 using Sitecore.Diagnostics;
+using Sitecore.Extensions.StringExtensions;
 using Sitecore.Extensions.XElementExtensions;
 using Sitecore.IO;
 using Sitecore.Pathfinder.Emitting.Parsing;
 using Sitecore.Pathfinder.Emitting.Writers;
+using Sitecore.Publishing;
 using Sitecore.Xml;
 using Sitecore.Zip;
 
@@ -67,6 +71,69 @@ namespace Sitecore.Pathfinder.Emitting.Nuget
             }
         }
 
+        protected virtual bool CanCopyBinFile([NotNull] string sourceFileName, [NotNull] string destinationFileName)
+        {
+            if (!File.Exists(destinationFileName))
+            {
+                return true;
+            }
+
+            var destinationVersion = GetFileVersion(destinationFileName);
+            var sourceVersion = GetFileVersion(sourceFileName);
+
+            if (sourceVersion <= destinationVersion)
+            {
+                return false;
+            }
+
+            var destinationFileInfo = new FileInfo(destinationFileName);
+            var sourceFileInfo = new FileInfo(sourceFileName);
+
+            if (sourceFileInfo.Length == destinationFileInfo.Length && sourceFileInfo.LastWriteTimeUtc <= destinationFileInfo.LastWriteTimeUtc)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        protected virtual void CopyFiles([NotNull] string rootDirectory, [NotNull] string sourceDirectory)
+        {
+            foreach (var sourceFileName in Directory.GetFiles(sourceDirectory))
+            {
+                var destination = FileUtil.MapPath(sourceFileName.Mid(rootDirectory.Length + 1));
+
+                if (string.Equals(Path.GetExtension(sourceFileName), ".dll", StringComparison.OrdinalIgnoreCase) && !CanCopyBinFile(sourceFileName, destination))
+                {
+                    continue;
+                }
+
+                try
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(destination) ?? string.Empty);
+                    File.Copy(sourceFileName, destination, true);
+                }
+                catch (Exception ex)
+                {
+                    TraceError("Could not copy", ex.Message + ": " + sourceDirectory + " => " + destination);
+                }
+            }
+
+            foreach (var subdirectory in Directory.GetDirectories(sourceDirectory))
+            {
+                CopyFiles(rootDirectory, subdirectory);
+            }
+        }
+
+        protected virtual void CopyFiles([NotNull] string path)
+        {
+            var sourceDirectory = path + "\\content";
+            if (Directory.Exists(sourceDirectory))
+            {
+                CopyFiles(sourceDirectory, sourceDirectory);
+            }
+        }
+
         protected virtual void ExtractPackageId([NotNull] string fileName, out string packageId, out string version)
         {
             packageId = string.Empty;
@@ -112,6 +179,13 @@ namespace Sitecore.Pathfinder.Emitting.Nuget
             }
         }
 
+        [NotNull]
+        protected virtual Version GetFileVersion([NotNull] string fileName)
+        {
+            var info = FileVersionInfo.GetVersionInfo(fileName);
+            return new Version(info.FileMajorPart, info.FileMinorPart, info.FileBuildPart, info.FilePrivatePart);
+        }
+
         protected virtual IPackageRepository GetLocalRepository([NotNull] string directory)
         {
             Directory.CreateDirectory(directory);
@@ -133,7 +207,44 @@ namespace Sitecore.Pathfinder.Emitting.Nuget
             }
         }
 
-        protected virtual void InstallContent([NotNull] string contentFileName)
+        protected virtual void InstallItems([NotNull] XElement root)
+        {
+            var itemsElement = root.Element("items");
+            if (itemsElement != null)
+            {
+                foreach (var itemElement in itemsElement.Elements())
+                {
+                    var item = Item.Parse(itemElement);
+                    new ItemWriter(item).Write();
+                }
+            }
+        }
+
+        protected virtual void InstallPackage(object sender, PackageOperationEventArgs e)
+        {
+            var contentFileName = Path.Combine(e.InstallPath, "content.xml");
+            if (File.Exists(contentFileName))
+            {
+                ProcessContent(contentFileName);
+            }
+
+            CopyFiles(e.InstallPath);
+        }
+
+        protected virtual void InstallTemplates([NotNull] XElement root)
+        {
+            var templatesElement = root.Element("templates");
+            if (templatesElement != null)
+            {
+                foreach (var templateElement in templatesElement.Elements())
+                {
+                    var template = Template.Parse(templateElement);
+                    new TemplateWriter(template).Write();
+                }
+            }
+        }
+
+        protected virtual void ProcessContent([NotNull] string contentFileName)
         {
             var root = ReadXmlFile(contentFileName);
             if (root == null)
@@ -141,52 +252,59 @@ namespace Sitecore.Pathfinder.Emitting.Nuget
                 return;
             }
 
-            var templatesElement = root.Element("templates");
-            if (templatesElement != null)
+            ResetContent(root);
+
+            InstallTemplates(root);
+
+            InstallItems(root);
+
+            PublishDatabases(root);
+        }
+
+        private void PublishDatabases(XElement root)
+        {
+            var publishElement = root.Element("publish");
+            if (publishElement == null)
             {
-                foreach (var templateElement in templatesElement.Elements())
+                return;
+            }
+
+            foreach (var attribute in publishElement.Attributes())
+            {
+                var databaseName = attribute.Name.LocalName;
+                var mode = attribute.Value;
+
+                var database = Factory.GetDatabase(databaseName);
+
+                var publishingTargets = PublishManager.GetPublishingTargets(database);
+
+                var targetDatabases = publishingTargets.Select(target => Factory.GetDatabase(target["Target database"])).ToArray();
+                if (!targetDatabases.Any())
                 {
-                    InstallTemplate(templateElement);
+                    continue;
+                }
+
+                var languages = LanguageManager.GetLanguages(database).ToArray();
+
+                switch (mode)
+                {
+                    case "republish":
+                        PublishManager.Republish(database, targetDatabases, languages);
+                        break;
+
+                    case "incremental":
+                        PublishManager.PublishIncremental(database, targetDatabases, languages);
+                        break;
+
+                    case "smart":
+                        PublishManager.PublishSmart(database, targetDatabases, languages);
+                        break;
+
+                    case "rebuild":
+                        PublishManager.RebuildDatabase(database, targetDatabases);
+                        break;
                 }
             }
-
-            var itemsElement = root.Element("items");
-            if (itemsElement != null)
-            {
-                foreach (var itemElement in itemsElement.Elements())
-                {
-                    InstallItem(itemElement);
-                }
-            }
-        }
-
-        protected virtual void InstallItem(XElement itemElement)
-        {
-            var item = Item.Parse(itemElement);
-
-            new ItemWriter(item).Write();
-        }
-
-        protected virtual void InstallPackage(object sender, PackageOperationEventArgs e)
-        {
-            var resetFileName = Path.Combine(e.InstallPath, "reset.xml");
-            if (File.Exists(resetFileName))
-            {
-                ResetContent(resetFileName);
-            }
-
-            var contentFileName = Path.Combine(e.InstallPath, "content.xml");
-            if (File.Exists(contentFileName))
-            {
-                InstallContent(contentFileName);
-            }
-        }
-
-        protected virtual void InstallTemplate(XElement templateElement)
-        {
-            var template = Template.Parse(templateElement);
-
-            new TemplateWriter(template).Write();
         }
 
         protected virtual XElement ReadXmlFile([NotNull] string fileName)
@@ -215,15 +333,15 @@ namespace Sitecore.Pathfinder.Emitting.Nuget
             return root;
         }
 
-        protected virtual void ResetContent([NotNull] string resetFileName)
+        protected virtual void ResetContent([NotNull] XElement root)
         {
-            var root = ReadXmlFile(resetFileName);
-            if (root == null)
+            var resetElement = root.Element("reset");
+            if (resetElement == null)
             {
                 return;
             }
 
-            foreach (var itemElement in root.Elements())
+            foreach (var itemElement in resetElement.Elements())
             {
                 var databaseName = itemElement.GetAttributeValue("database");
                 var itemId = itemElement.GetAttributeValue("id");

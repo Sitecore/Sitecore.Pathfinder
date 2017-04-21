@@ -13,10 +13,6 @@ namespace Sitecore.Pathfinder
 {
     public static class Constants
     {
-        public const string ExtensionsAssemblyFileName = "Sitecore.Pathfinder.Checker.dll";
-
-        public const string SafeProjectUniqueIdRegex = @"[^a-zA-Z0-9_\.]";
-
         [NotNull]
         public static readonly char[] Comma =
         {
@@ -52,13 +48,6 @@ namespace Sitecore.Pathfinder
         {
             ' '
         };
-
-        public static class Cache
-        {
-            public const string NugetRepositories = "NugetRepositories";
-
-            public const string ProjectPackages = "ProjectPackages";
-        }
 
         public static class Configuration
         {
@@ -114,8 +103,6 @@ namespace Sitecore.Pathfinder
 
             public const string References = "references";
 
-            public const string ResetWebsite = "reset-website";
-
             public const string Run = "run";
 
             public const string SearchAndReplaceTokens = "search-and-replace-tokens";
@@ -142,8 +129,6 @@ namespace Sitecore.Pathfinder
 
                 public const string MediaTemplate = "build-project:media:template";
 
-                public const string RunValidators = "build-project:run-sitecore-validators";
-
                 public const string Tasks = "build-project:tasks";
 
                 public static class Renderings
@@ -156,8 +141,6 @@ namespace Sitecore.Pathfinder
             {
                 public const string Checkers = "check-project:checkers";
 
-                public const string ConfigurationCheckerDevAssemblies = "check-project:ConfigurationChecker:dev-assemblies";
-
                 public const string IgnoredReferences = "check-project:ignored-references";
 
                 public const string PathFields = "check-project:path-fields";
@@ -169,11 +152,7 @@ namespace Sitecore.Pathfinder
 
             public static class Extensions
             {
-                public const string AssemblyFileName = "extensions:project-extensions-assembly-filename";
-
                 public const string Directory = "extensions:project-extensions-directory";
-
-                public const string ExternalAssemblyDirectories = "extensions:external-assembly-directories";
             }
 
             public static class Files
@@ -256,6 +235,10 @@ namespace Sitecore.Pathfinder
                     public const string FileName = "output:nuget:filename";
 
                     public const string NuspecFileName = "output:nuget:nuspec-filename";
+
+                    public const string PublishDatabases = "output:publish-databases";
+
+                    public const string ResetWebsite = "output:reset-website";
                 }
 
                 public static class Package
@@ -266,71 +249,14 @@ namespace Sitecore.Pathfinder
 
             public static class Packages
             {
-                public const string IncludePackagesConfigAsDependencies = "packages:include-packages-config-as-dependencies";
-
                 public const string NpmDirectory = "packages:npm-directory";
 
                 public const string NugetDirectory = "packages:nuget-directory";
             }
 
-            public static class PackNpm
-            {
-                public const string OutputFile = "pack-npm:output-file";
-
-                public const string PackageJsonFile = "pack-npm:package-json-file";
-            }
-
-            public static class PackNuGet
-            {
-                public const string BasePath = "pack-nuget:base-path";
-
-                public const string Directory = "pack-nuget:directory";
-
-                public const string Exclude = "pack-nuget:exclude";
-
-                public const string Include = "pack-nuget:include";
-
-                public const string Tokens = "pack-nuget:tokens";
-            }
-
-            public static class ProjectWebsiteMappings
-            {
-            }
-
-            public static class PublishDatabases
-            {
-                public const string PublishUrl = "publish-databases:publish-url";
-            }
-
-            public static class RestorePackages
-            {
-                public const string Directory = "restore-packages:directory";
-            }
-
-            public static class Scripts
-            {
-                public const string Extensions = "scripts:file-extensions";
-            }
-
-            public static class ServeWebsite
-            {
-                public const string DefaultPort = "serve-website:default-port";
-
-                public const string Port = "serve-website:port";
-            }
-
             public static class ShowWebsite
             {
                 public const string StartUrl = "show-website:start-url";
-            }
-
-            public static class StartWebsite
-            {
-                public const string Exclude = "start-website:exclude";
-
-                public const string Include = "start-website:include";
-
-                public const string Port = "start-website:port";
             }
 
             public static class System
@@ -340,22 +266,6 @@ namespace Sitecore.Pathfinder
                 public const string ShowStackTrace = "system:show-stack-trace";
 
                 public const string ShowTaskTime = "system:show-task-time";
-
-                public static class WebRequests
-                {
-                    public const string Timeout = "system:web-requests: time-out";
-                }
-            }
-
-            public static class WatchProject
-            {
-                public const string Exclude = "watch-project:exclude";
-
-                public const string Include = "watch-project:include";
-
-                public const string PublishDatabase = "watch-project:publish-database";
-
-                public const string ResetWebsite = "watch-project:reset-website";
             }
 
             public static class WriteExports
@@ -363,13 +273,6 @@ namespace Sitecore.Pathfinder
                 public const string FieldsToWrite = "write-exports:fields-to-write";
 
                 public const string FileName = "write-exports:filename";
-            }
-
-            public static class WriteSerialization
-            {
-                public const string Directory = "write-serialization:directory";
-
-                public const string Flat = "write-serialization:flat";
             }
         }
 
@@ -564,11 +467,6 @@ namespace Sitecore.Pathfinder
             public static readonly Guid Workflow = new Guid("{A4F985D9-98B3-4B52-AAAF-4344F6E747C6}");
 
             public static readonly Guid WorkflowState = new Guid("{3E431DE1-525E-47A3-B6B0-1CCBEC3A8C98}");
-        }
-
-        public static class Layouts
-        {
-            public const string MvcLayout = "/sitecore/layout/layouts/Pathfinder/MvcLayout";
         }
 
         public static class Parsers

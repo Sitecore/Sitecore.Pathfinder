@@ -16,6 +16,7 @@ using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
+using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Emitting.Emitters.NugetEmitter
 {
@@ -50,9 +51,48 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.NugetEmitter
         {
             base.Emit(context, project);
 
-            EmitResetItems();
-            EmitItems();
-            EmitNugetPackage();
+            var fileName = PathHelper.Combine(Configuration.GetProjectDirectory(), Configuration.GetString(Constants.Configuration.Output.Directory) + "\\content.xml");
+            using (var stream = new FileStream(fileName, FileMode.Create))
+            {
+                var settings = new XmlWriterSettings
+                {
+                    Encoding = new UTF8Encoding(false),
+                    Indent = true
+                };
+
+                using (var writer = XmlWriter.Create(stream, settings))
+                {
+                    writer.WriteStartElement("content");
+
+                    EmitReset(writer);
+                    EmitTemplates(writer);
+                    EmitItems(writer);
+                    EmitPublish(writer);
+
+                    writer.WriteEndElement();
+                }
+            }
+
+            EmitNugetPackage(context);
+        }
+
+        protected virtual void EmitPublish([NotNull] XmlWriter writer)
+        {
+            var pairs = Configuration.GetSubKeys(Constants.Configuration.Output.Nuget.PublishDatabases).ToArray();
+            if (!pairs.Any())
+            {
+                return;
+            }
+
+            writer.WriteStartElement("publish");
+
+            foreach (var pair in pairs)
+            {
+                var value = Configuration.GetString(Constants.Configuration.Output.Nuget.PublishDatabases + ":" + pair.Key);
+                writer.WriteAttributeString(pair.Key, value);
+            }
+
+            writer.WriteEndElement();
         }
 
         public virtual void EmitFile([NotNull] IEmitContext context, [NotNull] string sourceFileAbsoluteFileName, [NotNull] string filePath)
@@ -86,7 +126,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.NugetEmitter
             _templates.Add(item);
         }
 
-        protected virtual void EmitNugetPackage()
+        protected virtual void EmitNugetPackage([NotNull] IEmitContext context)
         {
             var packageFileName = Configuration.GetString(Constants.Configuration.Output.Nuget.FileName, "package");
             if (!packageFileName.EndsWith(".nupkg"))
@@ -148,150 +188,126 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.NugetEmitter
                     packageBuilder.Save(nupkg);
                 }
             }
+
+            context.OutputFiles.Add(new OutputFile(fileName));
         }
 
-        protected virtual void EmitResetItems()
+        protected virtual void EmitReset([NotNull] XmlWriter writer)
         {
-            var pairs = Configuration.GetSubKeys(Constants.Configuration.ResetWebsite).ToArray();
+            var pairs = Configuration.GetSubKeys(Constants.Configuration.Output.Nuget.ResetWebsite).ToArray();
             if (!pairs.Any())
             {
                 return;
             }
 
-            var fileName = PathHelper.Combine(Configuration.GetProjectDirectory(), Configuration.GetString(Constants.Configuration.Output.Directory) + "\\reset.xml");
-            using (var stream = new FileStream(fileName, FileMode.Create))
+            writer.WriteStartElement("reset");
+
+            foreach (var pair in pairs)
             {
-                var settings = new XmlWriterSettings
-                {
-                    Encoding = new UTF8Encoding(false),
-                    Indent = true
-                };
+                var value = Configuration.GetString(Constants.Configuration.Output.Nuget.ResetWebsite + ":" + pair.Key);
 
-                using (var writer = XmlWriter.Create(stream, settings))
-                {
-                    writer.WriteStartElement("reset");
+                writer.WriteStartElement("item");
 
-                    foreach (var pair in pairs)
-                    {
-                        var value = Configuration.GetString(Constants.Configuration.ResetWebsite + ":" + pair.Key);
+                writer.WriteAttributeString("database", value);
+                writer.WriteAttributeString("id", pair.Key);
 
-                        writer.WriteStartElement("item");
-
-                        writer.WriteAttributeString("database", value);
-                        writer.WriteAttributeString("id", pair.Key);
-
-                        writer.WriteEndElement();
-                    }
-
-                    writer.WriteEndElement();
-                }
+                writer.WriteEndElement();
             }
+
+            writer.WriteEndElement();
         }
 
-        private void EmitItems()
+        protected virtual void EmitItems([NotNull] XmlWriter writer)
         {
-            var fileName = PathHelper.Combine(Configuration.GetProjectDirectory(), Configuration.GetString(Constants.Configuration.Output.Directory) + "\\content.xml");
-            using (var stream = new FileStream(fileName, FileMode.Create))
+            writer.WriteStartElement("items");
+
+            foreach (var item in _items.OrderBy(t => t.ItemPathLevel).ThenBy(t => t.ItemName))
             {
-                var settings = new XmlWriterSettings
+                writer.WriteStartElement("item");
+                writer.WriteAttributeString("id", item.Uri.Guid.Format());
+                writer.WriteAttributeString("database", item.DatabaseName);
+                writer.WriteAttributeString("name", item.ItemName);
+                writer.WriteAttributeString("path", item.ItemIdOrPath);
+                writer.WriteAttributeString("template", item.Template.Uri.Guid.Format());
+                writer.WriteAttributeStringIf("icon", item.Icon);
+                writer.WriteAttributeStringIf("sortorder", item.Sortorder.ToString());
+
+                foreach (var field in item.Fields)
                 {
-                    Encoding = new UTF8Encoding(false),
-                    Indent = true
-                };
-
-                using (var writer = XmlWriter.Create(stream, settings))
-                {
-                    writer.WriteStartElement("content");
-
-                    writer.WriteStartElement("templates");
-
-                    foreach (var template in _templates.OrderBy(t => t.ItemPathLevel).ThenBy(t => t.ItemName))
+                    writer.WriteStartElement("field");
+                    writer.WriteAttributeString("id", field.FieldId.Format());
+                    writer.WriteAttributeString("name", field.FieldName);
+                    if (!field.TemplateField.Shared)
                     {
-                        writer.WriteStartElement("template");
-                        writer.WriteAttributeString("id", template.Uri.Guid.Format());
-                        writer.WriteAttributeString("database", template.DatabaseName);
-                        writer.WriteAttributeString("name", template.ItemName);
-                        writer.WriteAttributeString("path", template.ItemIdOrPath);
-                        writer.WriteAttributeStringIf("longhelp", template.LongHelp);
-                        writer.WriteAttributeStringIf("shorthelp", template.ShortHelp);
-                        writer.WriteAttributeStringIf("basetemplates", template.BaseTemplates);
-                        writer.WriteAttributeStringIf("icon", template.Icon);
-
-                        if (template.StandardValuesItem != null && template.StandardValuesItem != Item.Empty)
-                        {
-                            writer.WriteAttributeString("standardvaluesid", template.StandardValuesItem.Uri.Guid.Format());
-                        }
-
-                        foreach (var section in template.Sections)
-                        {
-                            writer.WriteStartElement("section");
-                            writer.WriteAttributeString("id", section.Uri.Guid.Format());
-                            writer.WriteAttributeString("name", section.SectionName);
-                            writer.WriteAttributeStringIf("icon", section.Icon);
-                            writer.WriteAttributeStringIf("sortorder", section.Sortorder.ToString());
-
-                            foreach (var field in section.Fields)
-                            {
-                                writer.WriteStartElement("field");
-                                writer.WriteAttributeString("id", field.Uri.Guid.Format());
-                                writer.WriteAttributeString("name", field.FieldName);
-                                writer.WriteAttributeStringIf("icon", field.Icon);
-                                writer.WriteAttributeStringIf("longhelp", field.LongHelp);
-                                writer.WriteAttributeStringIf("shorthelp", field.ShortHelp);
-                                writer.WriteAttributeStringIf("source", field.Source);
-                                writer.WriteAttributeStringIf("type", field.Type);
-                                writer.WriteAttributeStringIf("sharing", field.Shared ? "shared" : field.Unversioned ? "unversioned" : string.Empty);
-                                writer.WriteAttributeStringIf("sortorder", field.Sortorder.ToString());
-                                writer.WriteEndElement();
-                            }
-
-                            writer.WriteEndElement();
-                        }
-
-                        writer.WriteEndElement();
+                        writer.WriteAttributeString("language", field.Language.LanguageName);
+                    }
+                    if (!field.TemplateField.Shared && !field.TemplateField.Unversioned)
+                    {
+                        writer.WriteAttributeString("version", field.Version.Number.ToString());
                     }
 
-                    writer.WriteEndElement();
+                    writer.WriteValue(field.CompiledValue);
 
-                    writer.WriteStartElement("items");
-
-                    foreach (var item in _items.OrderBy(t => t.ItemPathLevel).ThenBy(t => t.ItemName))
-                    {
-                        writer.WriteStartElement("item");
-                        writer.WriteAttributeString("id", item.Uri.Guid.Format());
-                        writer.WriteAttributeString("database", item.DatabaseName);
-                        writer.WriteAttributeString("name", item.ItemName);
-                        writer.WriteAttributeString("path", item.ItemIdOrPath);
-                        writer.WriteAttributeString("template", item.Template.Uri.Guid.Format());
-                        writer.WriteAttributeStringIf("icon", item.Icon);
-                        writer.WriteAttributeStringIf("sortorder", item.Sortorder.ToString());
-
-                        foreach (var field in item.Fields)
-                        {
-                            writer.WriteStartElement("field");
-                            writer.WriteAttributeString("id", field.FieldId.Format());
-                            writer.WriteAttributeString("name", field.FieldName);
-                            if (!field.TemplateField.Shared)
-                            {
-                                writer.WriteAttributeString("language", field.Language.LanguageName);
-                            }
-                            if (!field.TemplateField.Shared && !field.TemplateField.Unversioned)
-                            {
-                                writer.WriteAttributeString("version", field.Version.Number.ToString());
-                            }
-
-                            writer.WriteValue(field.CompiledValue);
-
-                            writer.WriteEndElement();
-                        }
-
-                        writer.WriteEndElement();
-                    }
-
-                    writer.WriteEndElement();
                     writer.WriteEndElement();
                 }
+
+                writer.WriteEndElement();
             }
+
+            writer.WriteEndElement();
+        }
+
+        protected virtual void EmitTemplates([NotNull] XmlWriter writer)
+        {
+            writer.WriteStartElement("templates");
+
+            foreach (var template in _templates.OrderBy(t => t.ItemPathLevel).ThenBy(t => t.ItemName))
+            {
+                writer.WriteStartElement("template");
+                writer.WriteAttributeString("id", template.Uri.Guid.Format());
+                writer.WriteAttributeString("database", template.DatabaseName);
+                writer.WriteAttributeString("name", template.ItemName);
+                writer.WriteAttributeString("path", template.ItemIdOrPath);
+                writer.WriteAttributeStringIf("longhelp", template.LongHelp);
+                writer.WriteAttributeStringIf("shorthelp", template.ShortHelp);
+                writer.WriteAttributeStringIf("basetemplates", template.BaseTemplates);
+                writer.WriteAttributeStringIf("icon", template.Icon);
+
+                if (template.StandardValuesItem != null && template.StandardValuesItem != Item.Empty)
+                {
+                    writer.WriteAttributeString("standardvaluesid", template.StandardValuesItem.Uri.Guid.Format());
+                }
+
+                foreach (var section in template.Sections)
+                {
+                    writer.WriteStartElement("section");
+                    writer.WriteAttributeString("id", section.Uri.Guid.Format());
+                    writer.WriteAttributeString("name", section.SectionName);
+                    writer.WriteAttributeStringIf("icon", section.Icon);
+                    writer.WriteAttributeStringIf("sortorder", section.Sortorder.ToString());
+
+                    foreach (var field in section.Fields)
+                    {
+                        writer.WriteStartElement("field");
+                        writer.WriteAttributeString("id", field.Uri.Guid.Format());
+                        writer.WriteAttributeString("name", field.FieldName);
+                        writer.WriteAttributeStringIf("icon", field.Icon);
+                        writer.WriteAttributeStringIf("longhelp", field.LongHelp);
+                        writer.WriteAttributeStringIf("shorthelp", field.ShortHelp);
+                        writer.WriteAttributeStringIf("source", field.Source);
+                        writer.WriteAttributeStringIf("type", field.Type);
+                        writer.WriteAttributeStringIf("sharing", field.Shared ? "shared" : field.Unversioned ? "unversioned" : string.Empty);
+                        writer.WriteAttributeStringIf("sortorder", field.Sortorder.ToString());
+                        writer.WriteEndElement();
+                    }
+
+                    writer.WriteEndElement();
+                }
+
+                writer.WriteEndElement();
+            }
+
+            writer.WriteEndElement();
         }
     }
 }

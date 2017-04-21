@@ -28,11 +28,6 @@ namespace Sitecore.Pathfinder.Languages.Yaml
             var tokenizer = new Tokenizer(contents);
             Root = Parse(tokenizer, null) ?? TextNode.Empty;
 
-            if (Root != null)
-            {
-                Root = ParseDirectives(ParseContext, Root);
-            }
-
             return this;
         }
 

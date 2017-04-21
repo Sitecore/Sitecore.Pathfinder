@@ -1,8 +1,10 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
+using System.Collections.Generic;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Emitting
 {
@@ -13,6 +15,9 @@ namespace Sitecore.Pathfinder.Emitting
 
         [NotNull]
         string ItemFormat { get; }
+
+        [NotNull, ItemNotNull]
+        ICollection<OutputFile> OutputFiles { get; }
 
         [NotNull]
         IProjectBase Project { get; }

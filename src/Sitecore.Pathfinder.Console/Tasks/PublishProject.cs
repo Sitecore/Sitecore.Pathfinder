@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Composition;
+using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitting;
@@ -24,14 +25,14 @@ namespace Sitecore.Pathfinder.Tasks
             Shortcut = "p";
         }
 
+        [NotNull]
+        public ICompositionService CompositionService { get; }
+
         [NotNull, Option("format", Alias = "f", IsRequired = true, PromptText = "Select output format", HelpText = "Output format", PositionalArg = 1, HasOptions = true, DefaultValue = "package")]
         public string Format { get; set; } = "directory";
 
         [NotNull, Option("item-format", Alias = "if", IsRequired = false, PromptText = "Select item format", HelpText = "Item format", PositionalArg = 2, HasOptions = true, DefaultValue = "yaml")]
         public string ItemFormat { get; set; }
-
-        [NotNull]
-        public ICompositionService CompositionService { get; }
 
         [ItemNotNull, NotNull]
         protected IEnumerable<IProjectEmitter> ProjectEmitters { get; }
@@ -60,6 +61,34 @@ namespace Sitecore.Pathfinder.Tasks
                 var emitContext = CompositionService.Resolve<IEmitContext>().With(projectEmitter, project, ItemFormat);
 
                 projectEmitter.Emit(emitContext, project);
+
+                context.OutputFiles.AddRange(emitContext.OutputFiles);
+            }
+
+            CopyToWebsite(context);
+        }
+
+        protected virtual void CopyToWebsite([NotNull] IBuildContext context)
+        {
+            if (string.IsNullOrEmpty(context.DataFolderDirectory))
+            {
+                return;
+            }
+
+            var directory = Path.Combine(context.DataFolderDirectory, "pathfinder");
+
+            foreach (var outputFile in context.OutputFiles)
+            {
+                var destination = Path.Combine(directory, Path.GetFileName(outputFile.FileName));
+
+                try
+                {
+                    context.FileSystem.CopyIfNewer(outputFile.FileName, destination);
+                }
+                catch
+                {
+                    context.Trace.TraceError(Msg.E1000, "Could not copy package", outputFile.FileName + " => " + destination);
+                }
             }
         }
 

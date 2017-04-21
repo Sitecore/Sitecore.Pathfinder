@@ -15,6 +15,7 @@ using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.IO.Zip;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Emitting.Emitters.SitecorePackageEmitter
 {
@@ -185,6 +186,8 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.SitecorePackageEmitter
                 AddVersion();
                 AddMetaData();
             }
+
+            context.OutputFiles.Add(new OutputFile(fileName));
         }
 
         protected virtual void AddMetaData()

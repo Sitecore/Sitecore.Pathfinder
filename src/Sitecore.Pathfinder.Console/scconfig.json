@@ -1,12 +1,54 @@
 {
     "project-unique-id": "Sitecore-Pathfinder",
 
+    // manifest
     "author": "Sitecore Pathfinder",
     "description": "",
     "license": "",
     "name": "",
     "publisher": "",
     "version": "1.0.0",
+
+    // website
+    "host-name": "",
+    "website-directory": "",
+    "data-folder-directory": "",
+
+    // the project roles enables/disables checkers and conventions - comma seperated list of roles
+    "project-role": "default",
+
+    // comma separated list of files and directories to ignore
+    "files": {
+        "include": "**/*",
+        "exclude": "dist, .vscode, .git, node_modules, bower_components, packages, roslyn, includes, Properties, obj, scc.cmd, project.json, readme.md, web.config, packages.config"
+    },
+
+    // item content files globs
+    "items": {
+        "include": "**/*.content.yaml, **/*.content.json, **/*.content.xml",
+        "exclude": ""
+    },
+
+    // output
+    "output": {
+        "directory": "./dist",
+        "format": "directory",
+
+        "package": {
+            "filename": "Package.zip"
+        },
+
+        "nuget": {
+            "filename": "Package.nupkg",
+            "nuspec-filename": "",
+            "reset-website": {
+                // "/sitecore/content/home": "master"
+            },
+            "publish-databases": {
+                // "master": "incremental"
+            }
+        }
+    },
 
     // external references
     "references": {
@@ -19,50 +61,6 @@
             "version": "1.0.0"
         }
     },
-
-    // comma separated list of files and directories to ignore
-    "files": {
-        "include": "**/*",
-        "exclude": "dist, .vscode, .git, node_modules, bower_components, packages, roslyn, includes, Properties, obj, scc.cmd, project.json, readme.md, web.config, packages.config"
-    },
-
-    "items": {
-        "include": "**/*.content.yaml, **/*.content.json, **/*.content.xml",
-        "exclude": ""
-    },
-
-    "output": {
-        "directory": "./dist",
-        "format": "directory",
-
-        "package": {
-            "filename": "Package.zip"
-        },
-
-        "nuget": {
-            "filename": "Package.nupkg",
-            "nuspec-filename": ""
-        }
-    },
-
-    "reset-website": {
-        // "/sitecore/content/home": "master"
-    },
-
-    // old stuff =========================================================================
-
-    "website-directory": "",
-    "data-folder-directory": "",
-    "host-name": "",
-
-    // default database name (master, core or web)
-    "database": "master",
-
-    // project configuration file
-    "project": "scconfig.json",
-
-    // the project roles enables/disables checkers and conventions - comma seperated list of roles
-    "project-role": "default",
 
     // mapping between project files and website files and items
     "project-website-mappings": {
@@ -81,7 +79,8 @@
         }
     },
 
-    // tasks
+    // === TASKS ===
+
     "build-project": {
         // default build pipeline
         "tasks": "check-project clean-output write-exports publish-project show-status",
@@ -121,23 +120,17 @@
 
         // poor mans schema for item files
         "schema": {
-            "Item-attributes": "Name, Id, TemplateName, Database, ItemPath, ParentItemPath, Icon, Template, IsEmittable, IsExternalReference, Layout.File, Template.CreateFromFields, Template.Id, Template.Icon, Template.BaseTemplates, Template.ShortHelp, Template.LongHelp",
-            "Item-childnodes": "Fields, Unversioned-Fields, Versioned-Fields, Children, Template",
+            "Item-attributes": "Name, Id, TemplateName, Database, ItemPath, ParentItemPath, Icon, Template, IsEmittable, IsExternalReference, Template.CreateFromFields, Template.Id, Template.Icon, Template.BaseTemplates, Template.ShortHelp, Template.LongHelp",
+            "Item-childnodes": "..Versions",
             "Fields-childnodes": "Field, Unversioned, Versioned, Layout",
             "Field-attributes": "Name, Value, Language, Version, Field.Type, Field.SortOrder, Field.Sharing, Field.Source, Field.ShortHelp, Field.LongHelp",
-            "Template-attributes": "Name, Id, Database, Path, Icon, IsEmittable, IsExternalReference, ShortHelp, LongHelp, BaseTemplates, Layout.File",
-            "Template-childnodes": "Section, Sections",
+            "Template-attributes": "Name, Id, Database, ItemPath, Icon, IsEmittable, IsExternalReference, ShortHelp, LongHelp, BaseTemplates",
+            "Template-childnodes": "Section",
             "TemplateSection-attributes": "Name, Id, Icon",
             "TemplateSection-childnodes": "Field",
-            "TemplateField-attributes": "Name, Id, Type, Sharing, Source, ShortHelp, LongHelp, SortOrder, StandardValue",
+            "TemplateField-attributes": "Name, Id, Type, Sharing, Source, ShortHelp, LongHelp, SortOrder",
             "TemplateField-childnodes": "",
             "Children-childnodes": "Item, Template"
-        },
-
-        // CLR type name to field type map
-        "type-name-to-field-type": {
-            "System.Boolean": "Checkbox",
-            "System.Int32": "Integer"
         }
     },
 
@@ -180,15 +173,6 @@
             "{1,2}": "equals"
         },
 
-        "ConfigurationChecker": {
-            "dev-assemblies": {
-                "Rainbow": "ignore",
-                "Unicorn": "ignore",
-                "Unicorn.Roles": "ignore",
-                "": "ignore"
-            }
-        },
-
         "path-fields": "{E42081B6-8A95-4A11-89CE-DF70ED502F57},{51B435BC-F7B9-478A-9C51-52916AF96FF5},{78783F79-1411-4B91-958D-AD81F81E2485}",
 
         "treat-warnings-as-errors": false
@@ -228,8 +212,8 @@
         "wwwroot-directory": "c:\\inetpub\\wwwroot"
     },
 
-    "restore-packages": {
-        "directory": "files/packages"
+    "show-website": {
+        "start-url": ""
     },
 
     "write-exports": {
@@ -237,13 +221,13 @@
         "fields-to-write": "Place Holders"
     },
 
-    "write-serialization": {
-        "directory": "sitecore.project/serialization",
-        "flat": false
-    },
+    // === SETTINGS ===
 
     // specifies the .NET CultureInfo name to use when parsing date/times and numbers
     "culture": "en-US",
+
+    // default database name (master, core or web)
+    "database": "master",
 
     // specifies the default language
     "default-language": "en",
@@ -253,13 +237,7 @@
 
     // extensions directory and dynamically compiled extensions assembly filename
     "extensions": {
-        "project-extensions-directory": "sitecore.project/extensions",
-        "project-extensions-assembly-filename": "Sitecore.Pathfinder.Extensions.dll",
-
-        // directories to search for assemblies
-        "external-assembly-directories": {
-            // "fakedb" : "c:\\FakeDB"
-        }
+        "project-extensions-directory": "sitecore.project/extensions"
     },
 
     // settings for habitat projects
@@ -301,10 +279,12 @@
 
     // directories, that hold packages
     "packages": {
-        "include-packages-config-as-dependencies": true,
         "nuget-directory": "packages",
         "npm-directory": "node_modules"
     },
+
+    // project configuration file
+    "project": "scconfig.json",
 
     // maps project role to checkers - checkers are enabled by default - possible values: "disabled", "enabled", "error", "warning", "information"
     "project-role-checkers": {

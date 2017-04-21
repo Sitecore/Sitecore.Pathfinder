@@ -11,7 +11,6 @@ using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects;
-using Sitecore.Pathfinder.Snapshots.Directives;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
@@ -19,16 +18,13 @@ namespace Sitecore.Pathfinder.Snapshots
     public class SnapshotService : ISnapshotService
     {
         [ImportingConstructor]
-        public SnapshotService([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [ImportMany, NotNull, ItemNotNull] IEnumerable<ISnapshotLoader> loaders, [ImportMany, NotNull, ItemNotNull] IEnumerable<ISnapshotDirective> directives)
+        public SnapshotService([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [ImportMany, NotNull, ItemNotNull] IEnumerable<ISnapshotLoader> loaders)
         {
             Configuration = configuration;
             Factory = factory;
             FileSystem = fileSystem;
             Loaders = loaders;
-            Directives = directives;
         }
-
-        public IEnumerable<ISnapshotDirective> Directives { get; }
 
         [NotNull]
         public IFileSystemService FileSystem { get; }
@@ -41,34 +37,6 @@ namespace Sitecore.Pathfinder.Snapshots
 
         [NotNull, ItemNotNull]
         protected IEnumerable<ISnapshotLoader> Loaders { get; }
-
-        public virtual ITextNode LoadIncludeFile(SnapshotParseContext snapshotParseContext, ISnapshot snapshot, string includeFileName)
-        {
-            var extension = PathHelper.GetExtension(snapshot.SourceFile.AbsoluteFileName);
-            var projectDirectory = snapshot.SourceFile.AbsoluteFileName.Left(snapshot.SourceFile.AbsoluteFileName.Length - snapshot.SourceFile.ProjectFileName.Length - extension.Length + 1);
-
-            string absoluteFileName;
-            if (includeFileName.StartsWith("~/"))
-            {
-                absoluteFileName = PathHelper.Combine(projectDirectory, includeFileName.Mid(2));
-            }
-            else
-            {
-                absoluteFileName = PathHelper.Combine(Path.GetDirectoryName(snapshot.SourceFile.AbsoluteFileName) ?? string.Empty, includeFileName);
-            }
-
-            if (!FileSystem.FileExists(absoluteFileName))
-            {
-                throw new FileNotFoundException("Include file not found", absoluteFileName);
-            }
-
-            var sourceFile = Factory.SourceFile(FileSystem, absoluteFileName);
-
-            var includeSnapshot = LoadSnapshot(snapshotParseContext, sourceFile) as TextSnapshot;
-            Assert.Cast(includeSnapshot, nameof(includeSnapshot));
-
-            return includeSnapshot.Root;
-        }
 
         public virtual ISnapshot LoadSnapshot(SnapshotParseContext snapshotParseContext, ISourceFile sourceFile)
         {

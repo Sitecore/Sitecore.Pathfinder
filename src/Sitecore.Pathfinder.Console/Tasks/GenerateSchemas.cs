@@ -39,7 +39,7 @@ namespace Sitecore.Pathfinder.Tasks
             var project = context.LoadProject();
 
             WriteJsonSchema(project);
-            WriteXmlSchema(project);
+            // WriteXmlSchema(project);
         }
 
         [NotNull]
