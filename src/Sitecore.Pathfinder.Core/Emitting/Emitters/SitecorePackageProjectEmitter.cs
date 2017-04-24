@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
         private readonly List<Item> _items = new List<Item>();
 
         [ImportingConstructor]
-        public SitecorePackageProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] ITraceService traceService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, compositionService, traceService, emitters)
+        public SitecorePackageProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, traceService, emitters)
         {
             FileSystem = fileSystem;
         }

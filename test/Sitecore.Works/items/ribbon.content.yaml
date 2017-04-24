@@ -5,9 +5,9 @@
         IsActive: True
         - ..versions:
             - en:
-                  Text: Home
+                  Text: Home ABC
             - da:
-                  Text: Hjem
+                  Text: Hjem 456
         - RibbonGroupResource: Write
             - ..versions:
                 - en:

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Composition;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
@@ -18,7 +17,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
     public abstract class DirectoryProjectEmitterBase : ProjectEmitterBase
     {
         [ImportingConstructor]
-        protected DirectoryProjectEmitterBase([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] ITraceService traceService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, compositionService, traceService, emitters)
+        protected DirectoryProjectEmitterBase([NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, traceService, emitters)
         {
             FileSystem = fileSystem;
             OutputDirectory = PathHelper.Combine(Configuration.GetProjectDirectory(), Configuration.GetString(Constants.Configuration.Output.Directory));
@@ -57,23 +56,37 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
             {
                 if (projectItem is File file)
                 {
-                    EmitFile(context, projectItem.Snapshot.SourceFile.AbsoluteFileName, file.FilePath);
                     unemittedItems.Remove(projectItem);
+                    if (file.IsEmittable)
+                    {
+                        EmitFile(context, projectItem.Snapshot.SourceFile.AbsoluteFileName, file.FilePath);
+                    }
                 }
 
                 if (projectItem is Item item)
                 {
-                    EmitItem(context, item);
                     unemittedItems.Remove(projectItem);
+                    if (item.IsEmittable)
+                    {
+                        EmitItem(context, item);
+                    }
                 }
 
-                if (projectItem is Template)
+                if (projectItem is Template template)
                 {
                     unemittedItems.Remove(projectItem);
+                    if (template.IsEmittable)
+                    {
+                        EmitTemplate(context, template);
+                    }
                 }
             }
 
             base.EmitProjectItems(context, unemittedItems, emitters, retries);
+        }
+
+        protected virtual void EmitTemplate([NotNull] IEmitContext context, [NotNull] Template template)
+        {
         }
     }
 }

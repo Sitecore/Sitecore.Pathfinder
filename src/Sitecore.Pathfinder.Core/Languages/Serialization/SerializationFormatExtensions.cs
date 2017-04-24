@@ -18,7 +18,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
         WriteCompiledFieldValues = 1
     }
 
-    public static class FormatExtensions
+    public static class SerializationFormatExtensions
     {
         public static void WriteAsSerialization([NotNull] this Item item, [NotNull] TextWriter writer, WriteAsSerializationOptions options = WriteAsSerializationOptions.None)
         {

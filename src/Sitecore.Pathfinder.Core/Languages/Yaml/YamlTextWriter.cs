@@ -25,6 +25,11 @@ namespace Sitecore.Pathfinder.Languages.Yaml
         [NotNull]
         protected TextWriter InnerWriter { get; }
 
+        public void Write([NotNull] string text)
+        {
+            InnerWriter.Write(text);
+        }
+
         public void WriteAttributeString([NotNull] string key, [NotNull] string value = "")
         {
             InnerWriter.Write(new string(' ', Indent * Indentation));
@@ -75,6 +80,11 @@ namespace Sitecore.Pathfinder.Languages.Yaml
         public void WriteEndElement()
         {
             Indent--;
+        }
+
+        public void WriteLine([NotNull] string text)
+        {
+            InnerWriter.WriteLine(text);
         }
 
         public void WriteStartElement([NotNull] string key, [NotNull] string value = "")

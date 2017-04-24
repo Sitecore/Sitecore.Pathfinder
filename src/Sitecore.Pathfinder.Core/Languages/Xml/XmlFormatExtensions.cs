@@ -13,7 +13,7 @@ using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.Languages.Xml
 {
-    public static class FormatExtensions
+    public static class XmlFormatExtensions
     {
         public static void WriteAsContentXml([NotNull] this Item item, [NotNull] TextWriter writer, [CanBeNull] Action<XmlWriter> writeInner = null)
         {

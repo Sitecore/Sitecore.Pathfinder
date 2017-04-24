@@ -11,7 +11,7 @@ using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.Languages.Yaml
 {
-    public static class FormatExtensions
+    public static class YamlFormatExtensions
     {
         public static void WriteAsContentYaml([NotNull] this Item item, [NotNull] TextWriter writer, [CanBeNull] Action<TextWriter, int> writeInner = null)
         {

@@ -12,7 +12,7 @@ using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.Languages.Json
 {
-    public static class FormatExtensions
+    public static class JsonFormatExtensions
     {
         public static void WriteAsContentJson([NotNull] this Item item, [NotNull] TextWriter writer, [CanBeNull] Action<TextWriter> writeInner = null)
         {

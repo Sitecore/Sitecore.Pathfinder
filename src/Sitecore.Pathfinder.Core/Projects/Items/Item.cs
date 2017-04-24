@@ -147,7 +147,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull, ItemNotNull]
         public IEnumerable<Language> GetLanguages()
         {
-            return Fields.Where(f => f.Language != Language.Undefined).Select(f => f.Language).Distinct();
+            return Fields.Where(f => f.Language != Language.Undefined && f.Language != Language.Empty).Select(f => f.Language).Distinct();
         }
 
         [CanBeNull]

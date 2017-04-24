@@ -64,7 +64,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
                 return templateField.Uri.Guid;
             }
-            set { FieldIdProperty.SetValue(value); }
+            set => FieldIdProperty.SetValue(value);
         }
 
         [NotNull]

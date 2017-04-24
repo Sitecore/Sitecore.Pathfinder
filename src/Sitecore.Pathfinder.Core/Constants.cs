@@ -245,6 +245,17 @@ namespace Sitecore.Pathfinder
                 {
                     public const string FileName = "output:package:filename";
                 }
+
+                public static class Unicorn
+                {
+                    public const string ItemsDirectory = "output:unicorn:items-directory";
+
+                    public const string MirrorItems = "output:unicorn:mirror-items-to-unicorn-physicalRootPath";
+
+                    public const string MirrorItemsSourceDirectory = "output:unicorn:mirror-items-source-directory";
+
+                    public const string UnicornRootPath = "output:unicorn:unicorn-physicalRootPath";
+                }
             }
 
             public static class Packages

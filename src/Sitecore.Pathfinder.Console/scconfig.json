@@ -32,7 +32,7 @@
     // output
     "output": {
         "directory": "./dist",
-        "format": "directory",
+        "format": "package",
 
         "package": {
             "filename": "Package.zip"
@@ -47,6 +47,12 @@
             "publish-databases": {
                 // "master": "incremental"
             }
+        },
+        "unicorn": {
+            "items-directory": "items",
+            "mirror-items-to-unicorn-physicalRootPath": true,
+            "mirror-items-source-directory": "/sitecore/client/Applications",
+            "unicorn-physicalRootPath": "e:\\inetpub\\wwwroot\\Pathfinder\\Data\\Unicorn\\items"
         }
     },
 

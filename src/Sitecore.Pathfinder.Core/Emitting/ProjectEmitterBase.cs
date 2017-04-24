@@ -6,7 +6,6 @@ using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
@@ -19,16 +18,12 @@ namespace Sitecore.Pathfinder.Emitting
         private readonly object _syncObject = new object();
 
         [ImportingConstructor]
-        protected ProjectEmitterBase([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] ITraceService traceService, [ImportMany, NotNull, ItemNotNull] IEnumerable<IEmitter> emitters)
+        protected ProjectEmitterBase([NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [ImportMany, NotNull, ItemNotNull] IEnumerable<IEmitter> emitters)
         {
             Configuration = configuration;
-            CompositionService = compositionService;
             Trace = traceService;
             Emitters = emitters;
         }
-
-        [NotNull]
-        protected ICompositionService CompositionService { get; }
 
         [NotNull]
         protected IConfiguration Configuration { get; }

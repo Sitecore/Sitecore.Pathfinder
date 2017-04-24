@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Composition;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 
@@ -15,7 +14,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters.WebsiteEmitter
     public class WebsiteProjectEmitter : ProjectEmitterBase
     {
         [ImportingConstructor]
-        public WebsiteProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] ITraceService traceService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, compositionService, traceService, emitters)
+        public WebsiteProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, traceService, emitters)
         {
             FileSystem = fileSystem;
         }

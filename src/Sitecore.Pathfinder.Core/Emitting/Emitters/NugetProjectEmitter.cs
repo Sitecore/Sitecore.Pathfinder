@@ -10,7 +10,6 @@ using System.Xml;
 using NuGet.Packaging;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
@@ -30,7 +29,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
         private readonly List<Template> _templates = new List<Template>();
 
         [ImportingConstructor]
-        public NugetProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] ITraceService traceService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, compositionService, traceService, emitters)
+        public NugetProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, traceService, emitters)
         {
             FileSystem = fileSystem;
             OutputDirectory = PathHelper.Combine(Configuration.GetProjectDirectory(), Configuration.GetString(Constants.Configuration.Output.Directory) + "\\content");
