@@ -29,7 +29,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             }
             else if (itemNameTextNode.Value != Path.GetFileName(itemIdOrPath))
             {
-                context.ParseContext.Trace.TraceError(Msg.P1000, "Item name in 'ItemPath' and 'Name' does not match. Using 'Name'");
+                context.ParseContext.Trace.TraceError(Msg.P1027, "Item name in 'ItemPath' and 'Name' does not match. Using 'Name'");
             }
 
             var guid = StringHelper.GetGuid(context.ParseContext.Project, textNode.GetAttributeValue("Id", itemIdOrPath));
@@ -48,9 +48,11 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 item.References.AddRange(context.ParseContext.ReferenceParser.ParseReferences(item, item.TemplateIdOrPathProperty));
             }
 
+            // parse shared fields
             var fieldContext = new LanguageVersionContext();
             ParseAttributes(context, item, fieldContext, textNode);
 
+            // parse Fields, Layout and Items child text nodes
             ParseChildNodes(context, item, textNode);
 
             context.ParseContext.Project.AddOrMerge(item);
@@ -71,40 +73,44 @@ namespace Sitecore.Pathfinder.Parsing.Items
             {
                 switch (childNode.Key)
                 {
-                    case "Versions":
-                    case "..Versions":
-                    case "..versions":
-                        ParseUnversionedTextNode(context, item, childNode);
+                    case "Fields":
+                    case "fields":
+                        ParseFieldsTextNode(context, item, childNode);
                         break;
 
                     case "Layout":
-                    case "..Layout":
-                    case "..layout":
+                    case "layout":
                         ParseLayoutTextNode(context, item, childNode);
                         break;
 
-                    default:
-                        var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, item.ItemIdOrPath, item.IsImport).With(sortorder);
-                        context.Parser.ParseTextNode(newContext, childNode);
+                    case "Items":
+                    case "items":
+                        ParseItemsTextNode(context, item, childNode, sortorder);
                         sortorder += 100;
+                        break;
+
+                    default:
+                        context.ParseContext.Trace.TraceError(Msg.P1026, "Unexpected text node", childNode, childNode.Key);
                         break;
                 }
             }
         }
 
-        protected virtual void ParseFieldTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] LanguageVersionContext languageVersionContext, [NotNull] ITextNode textNode)
+        protected abstract void ParseFieldsTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode fieldsTextNode);
+
+        protected virtual void ParseFieldTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] LanguageVersionContext languageVersionContext, [NotNull] ITextNode fieldTextNode)
         {
-            var fieldName = textNode.Key.UnescapeXmlElementName();
-            if (fieldName == "Name" || fieldName == "Id" || fieldName == "TemplateName" || fieldName == "ItemPath" || fieldName == "ParentItemPath" || fieldName == Constants.Fields.IsEmittable || fieldName == Constants.Fields.IsImport || fieldName == "Database")
+            var fieldName = fieldTextNode.Key.UnescapeXmlElementName();
+            if (fieldName == "Name" || fieldName == "Id" || fieldName == "Database" || fieldName == "TemplateName" || fieldName == "ItemPath" || fieldName == "ParentItemPath" || fieldName == Constants.Fields.IsEmittable || fieldName == Constants.Fields.IsImport)
             {
                 return;
             }
 
-            var field = context.ParseContext.Factory.Field(item).With(textNode);
-            field.FieldNameProperty.SetValue(new AttributeNameTextNode(textNode));
+            var field = context.ParseContext.Factory.Field(item).With(fieldTextNode);
+            field.FieldNameProperty.SetValue(new AttributeNameTextNode(fieldTextNode));
             field.LanguageProperty.SetValue(languageVersionContext.LanguageProperty);
             field.VersionProperty.SetValue(languageVersionContext.VersionProperty);
-            field.ValueProperty.SetValue(textNode);
+            field.ValueProperty.SetValue(fieldTextNode);
 
             // check if field is already defined
             var duplicate = item.Fields.FirstOrDefault(f => string.Equals(f.FieldName, field.FieldName, StringComparison.OrdinalIgnoreCase) && f.Language == field.Language && f.Version == field.Version);
@@ -114,7 +120,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             }
             else
             {
-                context.ParseContext.Trace.TraceError(Msg.P1008, Texts.Field_is_already_defined, textNode, duplicate.FieldName);
+                context.ParseContext.Trace.TraceError(Msg.P1008, Texts.Field_is_already_defined, fieldTextNode, duplicate.FieldName);
             }
 
             if (!item.IsImport)
@@ -123,23 +129,15 @@ namespace Sitecore.Pathfinder.Parsing.Items
             }
         }
 
-        protected abstract void ParseLayoutTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode textNode);
-
-        protected virtual void ParseUnversionedTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode childNode)
+        protected virtual void ParseItemsTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode itemsTextNode, int sortorder)
         {
-            var languageVersionContext = new LanguageVersionContext();
-            languageVersionContext.LanguageProperty.Parse(childNode);
-
-            ParseAttributes(context, item, languageVersionContext, childNode);
+            foreach (var childNode in itemsTextNode.ChildNodes)
+            {
+                var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, item.ItemIdOrPath, item.IsImport).With(sortorder);
+                context.Parser.ParseTextNode(newContext, childNode);
+            }
         }
 
-        protected virtual void ParseVersionedTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode childNode)
-        {
-            var languageVersionContext = new LanguageVersionContext();
-            languageVersionContext.LanguageProperty.Parse(childNode);
-            languageVersionContext.VersionProperty.Parse("Version", childNode);
-
-            ParseAttributes(context, item, languageVersionContext, childNode);
-        }
+        protected abstract void ParseLayoutTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] ITextNode layoutTextNode);
     }
 }

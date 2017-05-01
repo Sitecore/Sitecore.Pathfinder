@@ -1,172 +1,182 @@
 <MenuResource Name="menu1" ItemPath="/sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1" Database="core">
     <MenuTabResource Name="Home" IsActive="True">
-        <Versions>
+        <Fields>
             <en>
                 <Text>Home</Text>
             </en>
             <da>
                 <Text>Hjem</Text>
             </da>
-        </Versions>
-        <MenuGroupResource Name="Write">
-            <Versions>
-                <en>
-                    <Text>Item</Text>
-                </en>
-                <da>
-                    <Text>Item</Text>
-                </da>
-            </Versions>
-            <MenuLargeButtonResource Name="Save" Icon="save" Command="works.saveItems">
-                <Versions>
+        </Fields>
+        <Items>
+            <MenuGroupResource Name="Write">
+                <Fields>
                     <en>
-                        <Text>Save</Text>
+                        <Text>Item</Text>
                     </en>
                     <da>
-                        <Text>Gem</Text>
+                        <Text>Item</Text>
                     </da>
-                </Versions>
-            </MenuLargeButtonResource>
-        </MenuGroupResource>
-        <MenuGroupResource Name="View">
-            <Versions>
-                <en>
-                    <Text>View</Text>
-                </en>
-                <da>
-                    <Text>Visning</Text>
-                </da>
-            </Versions>
-            <MenuLargeButtonResource Name="Dashboard" Icon="dashboard" Command="works.contentEditor.viewDashboard">
-                <Versions>
+                </Fields>
+                <Items>
+                    <MenuLargeButtonResource Name="Save" Icon="save" Command="works.saveItems">
+                        <Fields>
+                            <en>
+                                <Text>Save</Text>
+                            </en>
+                            <da>
+                                <Text>Gem</Text>
+                            </da>
+                        </Fields>
+                    </MenuLargeButtonResource>
+                </Items>
+            </MenuGroupResource>
+            <MenuGroupResource Name="View">
+                <Fields>
                     <en>
-                        <Text>Dashboard</Text>
+                        <Text>View</Text>
                     </en>
                     <da>
-                        <Text>Oversigt</Text>
+                        <Text>Visning</Text>
                     </da>
-                </Versions>
-            </MenuLargeButtonResource>
-            <MenuLargeButtonResource Name="Content" Icon="pencil-square-o" Command="works.contentEditor.viewContent">
-                <Versions>
+                </Fields>
+                <Items>
+                    <MenuLargeButtonResource Name="Dashboard" Icon="dashboard" Command="works.contentEditor.viewDashboard">
+                        <Fields>
+                            <en>
+                                <Text>Dashboard</Text>
+                            </en>
+                            <da>
+                                <Text>Oversigt</Text>
+                            </da>
+                        </Fields>
+                    </MenuLargeButtonResource>
+                    <MenuLargeButtonResource Name="Content" Icon="pencil-square-o" Command="works.contentEditor.viewContent">
+                        <Fields>
+                            <en>
+                                <Text>Content</Text>
+                            </en>
+                            <da>
+                                <Text>Indhold</Text>
+                            </da>
+                        </Fields>
+                    </MenuLargeButtonResource>
+                    <MenuLargeButtonResource Name="System" Icon="gear" Command="works.contentEditor.viewSystem">
+                        <Fields>
+                            <en>
+                                <Text>System</Text>
+                            </en>
+                            <da>
+                                <Text>System</Text>
+                            </da>
+                        </Fields>
+                    </MenuLargeButtonResource>
+                    <MenuLargeButtonResource Name="Preview" Icon="eye" Command="works.preview">
+                        <Fields>
+                            <en>
+                                <Text>Preview</Text>
+                            </en>
+                            <da>
+                                <Text>Preview</Text>
+                            </da>
+                        </Fields>
+                    </MenuLargeButtonResource>
+                </Items>
+            </MenuGroupResource>
+            <MenuGroupResource Name="New">
+                <Fields>
                     <en>
-                        <Text>Content</Text>
+                        <Text>New</Text>
                     </en>
                     <da>
-                        <Text>Indhold</Text>
+                        <Text>Ny</Text>
                     </da>
-                </Versions>
-            </MenuLargeButtonResource>
-            <MenuLargeButtonResource Name="System" Icon="gear" Command="works.contentEditor.viewSystem">
-                <Versions>
+                </Fields>
+                <Items>
+                    <MenuLargeButtonResource Name="Add" Icon="plus" Command="works.addFromTemplate">
+                        <Fields>
+                            <en>
+                                <Text>Add</Text>
+                            </en>
+                            <da>
+                                <Text>Tilføj</Text>
+                            </da>
+                        </Fields>
+                    </MenuLargeButtonResource>
+                    <MenuLargeButtonResource Name="NewFolder" Icon="folder-o" Command="works.newFolder">
+                        <Fields>
+                            <en>
+                                <Text>Folder</Text>
+                            </en>
+                            <da>
+                                <Text>Mappe</Text>
+                            </da>
+                        </Fields>
+                    </MenuLargeButtonResource>
+                    <MenuLargeButtonResource Name="Duplicate" Icon="copy" Command="works.duplicateItems">
+                        <Fields>
+                            <en>
+                                <Text>Duplicate</Text>
+                            </en>
+                            <da>
+                                <Text>Dupliker</Text>
+                            </da>
+                        </Fields>
+                    </MenuLargeButtonResource>
+                </Items>
+            </MenuGroupResource>
+            <MenuGroupResource Name="Actions">
+                <Fields>
                     <en>
-                        <Text>System</Text>
+                        <Text>Actions</Text>
                     </en>
                     <da>
-                        <Text>System</Text>
+                        <Text>Operationer</Text>
                     </da>
-                </Versions>
-            </MenuLargeButtonResource>
-            <MenuLargeButtonResource Name="Preview" Icon="eye" Command="works.preview">
-                <Versions>
-                    <en>
-                        <Text>Preview</Text>
-                    </en>
-                    <da>
-                        <Text>Preview</Text>
-                    </da>
-                </Versions>
-            </MenuLargeButtonResource>
-        </MenuGroupResource>
-        <MenuGroupResource Name="New">
-            <Versions>
-                <en>
-                    <Text>New</Text>
-                </en>
-                <da>
-                    <Text>Ny</Text>
-                </da>
-            </Versions>
-            <MenuLargeButtonResource Name="Add" Icon="plus" Command="works.addFromTemplate">
-                <Versions>
-                    <en>
-                        <Text>Add</Text>
-                    </en>
-                    <da>
-                        <Text>Tilføj</Text>
-                    </da>
-                </Versions>
-            </MenuLargeButtonResource>
-            <MenuLargeButtonResource Name="NewFolder" Icon="folder-o" Command="works.newFolder">
-                <Versions>
-                    <en>
-                        <Text>Folder</Text>
-                    </en>
-                    <da>
-                        <Text>Mappe</Text>
-                    </da>
-                </Versions>
-            </MenuLargeButtonResource>
-            <MenuLargeButtonResource Name="Duplicate" Icon="copy" Command="works.duplicateItems">
-                <Versions>
-                    <en>
-                        <Text>Duplicate</Text>
-                    </en>
-                    <da>
-                        <Text>Dupliker</Text>
-                    </da>
-                </Versions>
-            </MenuLargeButtonResource>
-        </MenuGroupResource>
-        <MenuGroupResource Name="Actions">
-            <Versions>
-                <en>
-                    <Text>Actions</Text>
-                </en>
-                <da>
-                    <Text>Operationer</Text>
-                </da>
-            </Versions>
-            <MenuLargeButtonResource Name="CopyItemsTo" Icon="mail-reply-all" Command="works.copyItemsTo">
-                <Versions>
-                    <en>
-                        <Text>Copy To</Text>
-                    </en>
-                    <da>
-                        <Text>Kopier Til</Text>
-                    </da>
-                </Versions>
-            </MenuLargeButtonResource>
-            <MenuLargeButtonResource Name="MoveItemsTo" Icon="mail-reply" Command="works.moveItemsTo">
-                <Versions>
-                    <en>
-                        <Text>Move To</Text>
-                    </en>
-                    <da>
-                        <Text>Flyt Til</Text>
-                    </da>
-                </Versions>
-            </MenuLargeButtonResource>
-            <MenuLargeButtonResource Name="Delete" Icon="remove" Command="works.deleteItems">
-                <Versions>
-                    <en>
-                        <Text>Delete</Text>
-                    </en>
-                    <da>
-                        <Text>Slet</Text>
-                    </da>
-                </Versions>
-            </MenuLargeButtonResource>
-            <MenuLargeButtonResource Name="Rename" Icon="i-cursor" Command="works.renameItem">
-                <Versions>
-                    <en>
-                        <Text>Rename</Text>
-                    </en>
-                    <da>
-                        <Text>Omdøb</Text>
-                    </da>
-                </Versions>
-            </MenuLargeButtonResource>
-        </MenuGroupResource>
+                </Fields>
+                <Items>
+                    <MenuLargeButtonResource Name="CopyItemsTo" Icon="mail-reply-all" Command="works.copyItemsTo">
+                        <Fields>
+                            <en>
+                                <Text>Copy To</Text>
+                            </en>
+                            <da>
+                                <Text>Kopier Til</Text>
+                            </da>
+                        </Fields>
+                    </MenuLargeButtonResource>
+                    <MenuLargeButtonResource Name="MoveItemsTo" Icon="mail-reply" Command="works.moveItemsTo">
+                        <Fields>
+                            <en>
+                                <Text>Move To</Text>
+                            </en>
+                            <da>
+                                <Text>Flyt Til</Text>
+                            </da>
+                        </Fields>
+                    </MenuLargeButtonResource>
+                    <MenuLargeButtonResource Name="Delete" Icon="remove" Command="works.deleteItems">
+                        <Fields>
+                            <en>
+                                <Text>Delete</Text>
+                            </en>
+                            <da>
+                                <Text>Slet</Text>
+                            </da>
+                        </Fields>
+                    </MenuLargeButtonResource>
+                    <MenuLargeButtonResource Name="Rename" Icon="i-cursor" Command="works.renameItem">
+                        <Fields>
+                            <en>
+                                <Text>Rename</Text>
+                            </en>
+                            <da>
+                                <Text>Omdøb</Text>
+                            </da>
+                        </Fields>
+                    </MenuLargeButtonResource>
+                </Items>
+            </MenuGroupResource>
+        </Items>
     </MenuTabResource>
 </MenuResource>

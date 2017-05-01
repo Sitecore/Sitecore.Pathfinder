@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Composition;
 using System.Linq;
@@ -21,9 +21,22 @@ namespace Sitecore.Pathfinder.Languages.Xml
             return textNode.Snapshot is XmlTextSnapshot;
         }
 
-        protected override void ParseUnversionedTextNode(ItemParseContext context, Item item, ITextNode textNode)
+        protected void ParseFields([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] LanguageVersionContext languageVersionContext, [NotNull] ITextNode parentTextNode)
         {
-            foreach (var languageChildNode in textNode.ChildNodes)
+            foreach (var childNode in parentTextNode.ChildNodes.Where(c => c.Key != "Version"))
+            {
+                ParseFieldTextNode(context, item, languageVersionContext, childNode);
+            }
+        }
+
+        protected override void ParseFieldsTextNode(ItemParseContext context, Item item, ITextNode fieldsTextNode)
+        {
+            // parse shared fields
+            var fieldContext = new LanguageVersionContext();
+            ParseAttributes(context, item, fieldContext, fieldsTextNode);
+
+            // parse unversioned and versioned fields
+            foreach (var languageChildNode in fieldsTextNode.ChildNodes)
             {
                 var languageVersionContext = new LanguageVersionContext();
                 languageVersionContext.LanguageProperty.SetValue(new AttributeNameTextNode(languageChildNode));
@@ -43,17 +56,9 @@ namespace Sitecore.Pathfinder.Languages.Xml
             }
         }
 
-        protected void ParseFields([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] LanguageVersionContext languageVersionContext, [NotNull] ITextNode parentTextNode)
+        protected override void ParseLayoutTextNode(ItemParseContext context, Item item, ITextNode layoutTextNode)
         {
-            foreach (var childNode in parentTextNode.ChildNodes.Where(c => c.Key != "Version"))
-            {
-                ParseFieldTextNode(context, item, languageVersionContext, childNode);
-            }
-        }
-
-        protected override void ParseLayoutTextNode(ItemParseContext context, Item item, ITextNode textNode)
-        {
-            var childNode = textNode.ChildNodes.FirstOrDefault();
+            var childNode = layoutTextNode.ChildNodes.FirstOrDefault();
             if (childNode == null)
             {
                 return;

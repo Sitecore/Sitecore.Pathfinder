@@ -26,15 +26,20 @@ namespace Sitecore.Pathfinder.Languages.Yaml
             return string.IsNullOrEmpty(textNode.Value) ? base.GetItemNameTextNode(context, textNode, attributeName) : textNode;
         }
 
-        protected override void ParseLayoutTextNode(ItemParseContext context, Item item, ITextNode textNode)
+        protected override void ParseLayoutTextNode(ItemParseContext context, Item item, ITextNode layoutTextNode)
         {
             var parser = new YamlLayoutTextNodeParser();
-            parser.Parse(context, textNode, item);
+            parser.Parse(context, layoutTextNode, item);
         }
 
-        protected override void ParseUnversionedTextNode(ItemParseContext context, Item item, ITextNode childNode)
+        protected override void ParseFieldsTextNode(ItemParseContext context, Item item, ITextNode fieldsTextNode)
         {
-            foreach (var languageChildNode in childNode.ChildNodes)
+            // parse shared fields
+            var fieldContext = new LanguageVersionContext();
+            ParseAttributes(context, item, fieldContext, fieldsTextNode);
+
+            // parse unversioned and versioned fields
+            foreach (var languageChildNode in fieldsTextNode.ChildNodes)
             {
                 var languageVersionContext = new LanguageVersionContext();
                 languageVersionContext.LanguageProperty.SetValue(new AttributeNameTextNode(languageChildNode));

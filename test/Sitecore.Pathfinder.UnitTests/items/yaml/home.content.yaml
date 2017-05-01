@@ -1,19 +1,25 @@
 - Sample Item: Home
     ItemPath: /sitecore/content/Yaml/Home
     Database: master
-    - ..versions:
+    - Fields:
+        IsActive: 1
         - en:
+            Title: Sitecore
+            Text: Welcome to Sitecore
+            - 1:
                 Title: Sitecore
                 Text: Welcome to Sitecore
         - da:
-                Title: Sitecore
-                Text: Velkommen til Sitecore
-    - Folder: Articles
-        - Sample Item: TestingPathfinder
-            - ..versions:
-                - en:
-                        Title: How to test Pathfinder
-                        Text: Testing is easy
-                - da:
-                        Title: Sådan tester man Pathfinder
-                        Text: Det er nemt at teste
+            Title: Sitecore
+            Text: Velkommen til Sitecore
+    - Items:
+        - Folder: Articles
+            - Items:
+                - Sample Item: TestingPathfinder
+                    - Fields:
+                        - en:
+                            Title: How to test Pathfinder
+                            Text: Testing is easy
+                        - da:
+                            Title: Sådan tester man Pathfinder
+                            Text: Det er nemt at teste

@@ -193,8 +193,6 @@ namespace Sitecore.Pathfinder.Tasks
             output.WritePropertyString("additionalProperties", false);
             output.WriteStartObject("properties");
 
-            var allFields = pair.Value.GetAllFields().OrderBy(f => f.FieldName).ToArray();
-
             output.WriteSchemaPropertyObject("Id", "type", "string");
             output.WriteSchemaPropertyObject("Name", "type", "string");
             output.WriteSchemaPropertyObject("Database", "type", "string");
@@ -202,17 +200,19 @@ namespace Sitecore.Pathfinder.Tasks
             output.WriteSchemaPropertyObject("Database", "type", "string");
             output.WriteSchemaPropertyObject("ItemPath", "type", "string");
 
-            foreach (var field in allFields.Where(f => f.Shared))
-            {
-                WriteJsonField(output, field);
-            }
+            var allFields = pair.Value.GetAllFields().OrderBy(f => f.FieldName).ToArray();
 
             if (allFields.Any(f => !f.Shared))
             {
-                output.WriteStartObject("..Versions");
+                output.WriteStartObject("Fields");
                 output.WritePropertyString("type", "object");
                 output.WritePropertyString("additionalProperties", false);
                 output.WriteStartObject("properties");
+
+                foreach (var field in allFields.Where(f => f.Shared))
+                {
+                    WriteJsonField(output, field);
+                }
 
                 foreach (var language in languages)
                 {
@@ -251,6 +251,11 @@ namespace Sitecore.Pathfinder.Tasks
                 output.WriteEndObject();
             }
 
+            output.WriteStartObject("Items");
+            output.WritePropertyString("type", "object");
+            output.WritePropertyString("additionalProperties", false);
+            output.WriteStartObject("properties");
+
             foreach (var t in templates.OrderBy(t => t.Key))
             {
                 // avoid field and template clashes
@@ -263,6 +268,9 @@ namespace Sitecore.Pathfinder.Tasks
                 output.WritePropertyString("$ref", "#/definitions/" + t.Key);
                 output.WriteEndObject();
             }
+
+            output.WriteEndObject();
+            output.WriteEndObject();
 
             output.WriteEndObject();
             output.WriteEndObject();

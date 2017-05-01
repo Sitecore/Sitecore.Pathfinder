@@ -581,6 +581,8 @@ namespace Sitecore.Pathfinder
         public const int P1024 = P + 24;
 
         public const int P1025 = P + 25;
+        public const int P1026 = P + 26;
+        public const int P1027 = P + 27;
 
         private const int S = 6500;
 

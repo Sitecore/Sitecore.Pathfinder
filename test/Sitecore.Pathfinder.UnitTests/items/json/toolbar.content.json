@@ -3,120 +3,118 @@
         "Name": "toolbar1",
         "ItemPath": "/sitecore/client/Applications/SitecoreWorks/content/content-editor/toolbar1",
         "Database": "core",
-        "ToolbarCheckboxResource":{
-            "Icon": "123",
-            "Command": "123",
-            "Security Preset":{
-                
-            }
-        },
-
-        "ToolbarTabResource": [
-            {
-                "Name": "Home",
-                "IsActive": true,
-                "..Versions": {
-                    "en": {
-                        "Text": ""
-                    },
-                    "da": {
-                        "Text": "Hjem"
-                    }
-                },
-                "ToolbarGroupResource": [
-                    {
-                        "Name": "Write",
-                        "..Versions": {
-                            "en": {
-                                "Text": "Item"
-                            },
-                            "da": {
-                                "Text": "Item"
-                            }
+        "Items": {
+            "ToolbarTabResource": [
+                {
+                    "Name": "Home",
+                    "Fields": {
+                        "IsActive": true,
+                        "en": {
+                            "Text": ""
                         },
-
-                        "ToolbarLargeButtonResource": {
-                            "Name": "Save",
-                            "Icon": "save",
-                            "Command": "works.saveItems",
-                            "..Versions": {
-                                "en": {
-                                    "Text": "Save"
-                                },
-                                "da": {
-                                    "Text": "Gem"
-                                }
-                            }
+                        "da": {
+                            "Text": "Hjem"
                         }
                     },
-                    {
-                        "Name": "View",
-                        "..Versions": {
-                            "en": {
-                                "Text": "View"
-                            },
-                            "da": {
-                                "Text": "Visning"
-                            }
-                        },
-
-                        "ToolbarLargeButtonResource": [
+                    "Items": {
+                        "ToolbarGroupResource": [
                             {
-                                "Name": "Dashboard",
-                                "Icon": "dashboard",
-                                "Command": "works.contentEditor.viewDashboard",
-                                "..Versions": {
+                                "Name": "Write",
+                                "Fields": {
                                     "en": {
-                                        "Text": "123"
+                                        "Text": "Item"
                                     },
                                     "da": {
-                                        "Text": "Oversigt"
+                                        "Text": "Item"
+                                    }
+                                },
+                                "Items": {
+                                    "ToolbarLargeButtonResource": {
+                                        "Name": "Save",
+                                        "Fields": {
+                                            "Icon": "save",
+                                            "Command": "works.saveItems",
+                                            "en": {
+                                                "Text": "Save"
+                                            },
+                                            "da": {
+                                                "Text": "Gem"
+                                            }
+                                        }
                                     }
                                 }
                             },
                             {
-                                "Name": "Content",
-                                "Icon": "pencil-square-o",
-                                "Command": "works.contentEditor.viewContent",
-                                "..Versions": {
+                                "Name": "View",
+                                "Fields": {
                                     "en": {
-                                        "Text": "Content"
+                                        "Text": "View"
                                     },
                                     "da": {
-                                        "Text": "Indhold"
+                                        "Text": "Visning"
                                     }
-                                }
-                            },
-                            {
-                                "Name": "System",
-                                "Icon": "gear",
-                                "Command": "works.contentEditor.viewSystem",
-                                "..Versions": {
-                                    "en": {
-                                        "Text": "System"
-                                    },
-                                    "da": {
-                                        "Text": "System"
-                                    }
-                                }
-                            },
-                            {
-                                "Name": "Preview",
-                                "Icon": "gear",
-                                "Command": "works.preview",
-                                "..Versions": {
-                                    "en": {
-                                        "Text": "Preview"
-                                    },
-                                    "da": {
-                                        "Text": "Preview"
-                                    }
+                                },
+                                "Items": {
+                                    "ToolbarLargeButtonResource": [
+                                        {
+                                            "Name": "Dashboard",
+                                            "Fields": {
+                                                "Icon": "dashboard",
+                                                "Command": "works.contentEditor.viewDashboard",
+                                                "en": {
+                                                    "Text": "123"
+                                                },
+                                                "da": {
+                                                    "Text": "Oversigt"
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "Name": "Content",
+                                            "Fields": {
+                                                "Icon": "pencil-square-o",
+                                                "Command": "works.contentEditor.viewContent",
+                                                "en": {
+                                                    "Text": "Content"
+                                                },
+                                                "da": {
+                                                    "Text": "Indhold"
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "Name": "System",
+                                            "Fields": {
+                                                "Icon": "gear",
+                                                "Command": "works.contentEditor.viewSystem",
+                                                "en": {
+                                                    "Text": "System"
+                                                },
+                                                "da": {
+                                                    "Text": "System"
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "Name": "Preview",
+                                            "Fields": {
+                                                "Icon": "gear",
+                                                "Command": "works.preview",
+                                                "en": {
+                                                    "Text": "Preview"
+                                                },
+                                                "da": {
+                                                    "Text": "Preview"
+                                                }
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         ]
                     }
-                ]
-            }
-        ]
+                }
+            ]
+        }
     }
 }
