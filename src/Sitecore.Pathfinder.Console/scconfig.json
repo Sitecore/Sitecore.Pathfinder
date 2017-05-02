@@ -14,6 +14,9 @@
     "website-directory": "",
     "data-folder-directory": "",
 
+    "user-name": "",
+    "password": "",
+
     // the project roles enables/disables checkers and conventions - comma seperated list of roles
     "project-role": "default",
 

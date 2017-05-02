@@ -1,7 +1,6 @@
 // © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Composition;
-using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Tasks.Building;
@@ -28,6 +27,7 @@ namespace Sitecore.Pathfinder.Tasks
                 FileSystem.CreateDirectory(projectDirectory);
             }
 
+            /*
             if (FileSystem.GetFiles(projectDirectory).Any() || FileSystem.GetDirectories(projectDirectory).Any())
             {
                 Console.WriteLine();
@@ -38,9 +38,10 @@ namespace Sitecore.Pathfinder.Tasks
                     return;
                 }
             }
+            */
 
             // CreateProject(context, NewProjectOptions.CreateEditor | NewProjectOptions.CreateStarterKit | NewProjectOptions.CreateTaskRunner | NewProjectOptions.CopyProjectTemplate);
-            CreateProject(context, NewProjectOptions.CreateStarterKit | NewProjectOptions.CopyProjectTemplate);
+            CreateProject(context, NewProjectOptions.CopyConfig);
         }
     }
 }

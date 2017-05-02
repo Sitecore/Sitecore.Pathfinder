@@ -309,7 +309,7 @@ namespace Sitecore.Pathfinder.IO
             {
                 StartInfo =
                 {
-                    UseShellExecute = true,
+                    UseShellExecute = false,
                     FileName = "xcopy.exe",
                     CreateNoWindow = true,
                     Arguments = $"\"{sourceDirectory}\" \"{destinationDirectory}\" /E /I /Y"
