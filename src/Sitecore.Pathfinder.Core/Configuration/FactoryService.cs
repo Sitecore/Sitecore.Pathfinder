@@ -78,7 +78,7 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual MediaFile MediaFile(IProjectBase project, ISnapshot snapshot, string databaseName, string itemName, string itemPath, string filePath) => new MediaFile(project, snapshot, databaseName, itemName, itemPath, filePath);
 
-        public virtual ProjectOptions ProjectOptions(string projectDirectory, string databaseName) => new ProjectOptions(projectDirectory, databaseName);
+        public virtual ProjectOptions ProjectOptions(string databaseName) => new ProjectOptions(databaseName);
 
         public virtual IReference Reference(IProjectItem projectItem, SourceProperty<string> sourceSourceProperty, string referenceText, string databaseName) => new Reference(projectItem, sourceSourceProperty, referenceText, databaseName);
 

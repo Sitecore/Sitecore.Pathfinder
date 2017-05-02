@@ -1,4 +1,6 @@
-﻿using System;
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
+
+using System;
 using System.Composition;
 using System.Diagnostics;
 using Sitecore.Pathfinder.Diagnostics;
@@ -41,10 +43,9 @@ namespace Sitecore.Pathfinder.Tasks
             var result = hostName.TrimEnd('/') + "/" + url.TrimStart('/');
 
             Process.Start(result);
-                                                                                                                    
+
             context.Trace.TraceInformation(Msg.G1013, Texts.Showing_website___);
             context.Trace.TraceInformation(Msg.G1014, Texts._____if_this_annoys_you__remove_the__show_website__task_from_the__build_project_tasks__setting_);
         }
-
     }
 }

@@ -5,9 +5,7 @@ using System.Collections.Generic;
 using System.Composition;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Tasks.Building
@@ -22,15 +20,13 @@ namespace Sitecore.Pathfinder.Tasks.Building
         private IProject _project;
 
         [ImportingConstructor]
-        public BuildContext([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] IConsoleService console, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystem) : base(configuration, compositionService, console, traceService, fileSystem)
+        public BuildContext([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] ITraceService traceService) : base(configuration, console, traceService)
         {
         }
 
         public string DataFolderDirectory => Configuration.GetString(Constants.Configuration.DataFolderDirectory);
 
         public bool IsProjectLoaded => _project != null;
-
-        public ICollection<IProjectItem> ModifiedProjectItems { get; } = new List<IProjectItem>();
 
         public ICollection<OutputFile> OutputFiles { get; } = new List<OutputFile>();
 

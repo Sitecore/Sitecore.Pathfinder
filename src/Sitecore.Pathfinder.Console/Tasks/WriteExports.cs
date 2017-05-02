@@ -36,7 +36,7 @@ namespace Sitecore.Pathfinder.Tasks
             context.Trace.TraceInformation(Msg.D1015, Texts.Writing_package_exports___);
 
             var fieldToWrite = context.Configuration.GetStringList(Constants.Configuration.WriteExports.FieldsToWrite).Select(f => f.ToLowerInvariant()).ToList();
-            var fileName = PathHelper.Combine(Configuration.GetProjectDirectory(), Configuration.GetString(Constants.Configuration.Output.Directory) + "\\" + context.Configuration.GetString(Constants.Configuration.WriteExports.FileName));
+            var fileName = PathHelper.Combine(context.ProjectDirectory, Configuration.GetString(Constants.Configuration.Output.Directory) + "\\" + context.Configuration.GetString(Constants.Configuration.WriteExports.FileName));
 
             FileSystem.CreateDirectoryFromFileName(fileName);
 

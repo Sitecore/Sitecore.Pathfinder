@@ -175,7 +175,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
                 packageFileName += ".zip";
             }
 
-            var outputDirectory = PathHelper.Combine(Configuration.GetProjectDirectory(), Configuration.GetString(Constants.Configuration.Output.Directory));
+            var outputDirectory = PathHelper.Combine(project.ProjectDirectory, Configuration.GetString(Constants.Configuration.Output.Directory));
             var fileName = Path.Combine(outputDirectory, packageFileName);
 
             FileSystem.CreateDirectoryFromFileName(fileName);

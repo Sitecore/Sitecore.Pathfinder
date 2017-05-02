@@ -34,7 +34,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             if (item == null)
             {
                 context.Trace.TraceError(Msg.C1045, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), value);
-                return string.Empty;
+                return value;
             }
 
             return item.Uri.Guid.Format();

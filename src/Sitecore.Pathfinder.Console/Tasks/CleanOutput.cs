@@ -27,7 +27,7 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
-            var outputDirectory = PathHelper.Combine(Configuration.GetProjectDirectory(), Configuration.GetString(Constants.Configuration.Output.Directory));
+            var outputDirectory = PathHelper.Combine(context.ProjectDirectory, Configuration.GetString(Constants.Configuration.Output.Directory));
             FileSystem.DeleteDirectory(outputDirectory);
         }
     }

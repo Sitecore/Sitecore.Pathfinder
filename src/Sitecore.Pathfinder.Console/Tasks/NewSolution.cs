@@ -29,7 +29,7 @@ namespace Sitecore.Pathfinder.Tasks
         {
             CreateProject(context, NewProjectOptions.CopyConfig | NewProjectOptions.CopyCmd);
 
-            var solutionDirectory = Configuration.GetProjectDirectory();
+            var solutionDirectory = context.ProjectDirectory;
 
             var projectDirectories = new List<string>();
             GetProjectDirectories(solutionDirectory, projectDirectories);

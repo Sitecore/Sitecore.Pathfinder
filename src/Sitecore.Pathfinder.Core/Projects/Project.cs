@@ -111,7 +111,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public ProjectOptions Options { get; private set; }
 
-        public string ProjectDirectory => Options.ProjectDirectory;
+        public string ProjectDirectory => Configuration.GetProjectDirectory();
 
         public IEnumerable<IProjectItem> ProjectItems => _projectItems;
 

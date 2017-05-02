@@ -50,7 +50,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
         {
             base.Emit(context, project);
 
-            var fileName = PathHelper.Combine(Configuration.GetProjectDirectory(), Configuration.GetString(Constants.Configuration.Output.Directory) + "\\content.xml");
+            var fileName = PathHelper.Combine(project.ProjectDirectory, Configuration.GetString(Constants.Configuration.Output.Directory) + "\\content.xml");
             using (var stream = new FileStream(fileName, FileMode.Create))
             {
                 var settings = new XmlWriterSettings
@@ -133,7 +133,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
                 packageFileName += ".nupkg";
             }
 
-            var outputDirectory = PathHelper.Combine(Configuration.GetProjectDirectory(), Configuration.GetString(Constants.Configuration.Output.Directory));
+            var outputDirectory = PathHelper.Combine(context.Project.ProjectDirectory, Configuration.GetString(Constants.Configuration.Output.Directory));
             var fileName = Path.Combine(outputDirectory, packageFileName);
 
             var packageId = Path.GetFileNameWithoutExtension(fileName);
@@ -148,7 +148,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
             var nuspecFileName = Configuration.GetString(Constants.Configuration.Output.Nuget.NuspecFileName);
             if (!string.IsNullOrEmpty(nuspecFileName))
             {
-                nuspecFileName = PathHelper.Combine(Configuration.GetProjectDirectory(), nuspecFileName);
+                nuspecFileName = PathHelper.Combine(context.Project.ProjectDirectory, nuspecFileName);
 
                 if (!FileSystem.FileExists(nuspecFileName))
                 {

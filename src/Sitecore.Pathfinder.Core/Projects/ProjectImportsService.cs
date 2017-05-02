@@ -165,7 +165,7 @@ namespace Sitecore.Pathfinder.Projects
 
                 if (!string.IsNullOrEmpty(fileName))
                 {
-                    fileName = PathHelper.Combine(Configuration.GetProjectDirectory(), fileName);
+                    fileName = PathHelper.Combine(project.ProjectDirectory, fileName);
                 }
                 else
                 {
@@ -178,7 +178,7 @@ namespace Sitecore.Pathfinder.Projects
 
         protected virtual void ImportReferencesFromNodeModulesDirectory([NotNull] IProject project)
         {
-            var nodeModulesDirectory = Path.Combine(Configuration.GetProjectDirectory(), "node_modules");
+            var nodeModulesDirectory = Path.Combine(project.ProjectDirectory, "node_modules");
             if (FileSystem.DirectoryExists(nodeModulesDirectory))
             {
                 foreach (var fileName in Directory.GetFiles(nodeModulesDirectory, "project.exports.xml", SearchOption.AllDirectories))
@@ -190,7 +190,7 @@ namespace Sitecore.Pathfinder.Projects
 
         protected virtual void ImportReferencesFromPackagesDirectory([NotNull] IProject project)
         {
-            var packagesDirectory = Path.Combine(Configuration.GetProjectDirectory(), "packages");
+            var packagesDirectory = Path.Combine(project.ProjectDirectory, "packages");
             if (FileSystem.DirectoryExists(packagesDirectory))
             {
                 foreach (var fileName in Directory.GetFiles(packagesDirectory, "project.exports.xml", SearchOption.AllDirectories))

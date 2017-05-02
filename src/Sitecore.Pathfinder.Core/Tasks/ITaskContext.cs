@@ -2,16 +2,11 @@
 
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensibility;
-using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Tasks
 {
     public interface ITaskContext
     {
-        [NotNull]
-        ICompositionService CompositionService { get; }
-
         [NotNull]
         IConfiguration Configuration { get; }
 
@@ -19,9 +14,6 @@ namespace Sitecore.Pathfinder.Tasks
         IConsoleService Console { get; }
 
         int ErrorCode { get; set; }
-
-        [NotNull]
-        IFileSystemService FileSystem { get; }
 
         bool IsAborted { get; set; }
 

@@ -70,7 +70,7 @@ namespace Sitecore.Pathfinder.Configuration
         MediaFile MediaFile([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemPath, [NotNull] string filePath);
 
         [NotNull]
-        ProjectOptions ProjectOptions([NotNull] string projectDirectory, [NotNull] string databaseName);
+        ProjectOptions ProjectOptions([NotNull] string databaseName);
 
         [NotNull]
         IReference Reference([NotNull] IProjectItem projectItem, [NotNull] ITextNode textNode, [NotNull] string referenceText, [NotNull] string databaseName);

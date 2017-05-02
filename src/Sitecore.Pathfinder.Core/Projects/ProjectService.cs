@@ -42,10 +42,9 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual IProject LoadProjectFromConfiguration()
         {
-            var projectDirectory = Configuration.GetProjectDirectory();
             var databaseName = Configuration.GetString(Constants.Configuration.Database);
 
-            var projectOptions = Factory.ProjectOptions(projectDirectory, databaseName);
+            var projectOptions = Factory.ProjectOptions(databaseName);
 
             projectOptions.LoadStandardTemplateFields(Configuration);
             projectOptions.LoadTokens(Configuration);
@@ -76,7 +75,7 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         protected virtual IProjectTree GetProjectTree([NotNull] ProjectOptions projectOptions)
         {
-            return ProjectTreeFactory.New().With(Configuration.GetToolsDirectory(), projectOptions.ProjectDirectory);
+            return ProjectTreeFactory.New().With(Configuration.GetToolsDirectory(), Configuration.GetProjectDirectory());
         }
     }
 }

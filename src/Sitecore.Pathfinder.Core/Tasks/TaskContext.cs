@@ -3,8 +3,6 @@
 using System.Composition;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensibility;
-using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Tasks
 {
@@ -12,24 +10,18 @@ namespace Sitecore.Pathfinder.Tasks
     public class TaskContext : ITaskContext
     {
         [ImportingConstructor]
-        public TaskContext([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] IConsoleService console, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystem)
+        public TaskContext([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] ITraceService traceService)
         {
             Configuration = configuration;
-            CompositionService = compositionService;
             Console = console;
             Trace = traceService;
-            FileSystem = fileSystem;
         }
-
-        public ICompositionService CompositionService { get; }
 
         public IConfiguration Configuration { get; }
 
         public IConsoleService Console { get; }
 
         public int ErrorCode { get; set; }
-
-        public IFileSystemService FileSystem { get; }
 
         public bool IsAborted { get; set; }
 
