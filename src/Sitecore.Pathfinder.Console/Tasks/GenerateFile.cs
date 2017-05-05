@@ -28,8 +28,8 @@ namespace Sitecore.Pathfinder.Tasks
         [NotNull, Option("generator", Alias = "g", PositionalArg = 1, HasOptions = true, PromptText = "Pick generator")]
         public string GeneratorDirectory { get; set; } = string.Empty;
 
-        [NotNull, Option("name", Alias = "n", PositionalArg = 2, DefaultValue = "file")]
-        public string Name { get; set; } = string.Empty;
+        [NotNull, Option("filename", Alias = "f", PositionalArg = 2, DefaultValue = "file")]
+        public string FileName { get; set; } = string.Empty;
 
         [NotNull]
         public IFileSystemService FileSystem { get; }
@@ -60,7 +60,7 @@ namespace Sitecore.Pathfinder.Tasks
                     {
                         if (!string.IsNullOrEmpty(dir))
                         {
-                            context.Trace.TraceError(Msg.G1019, "Ambigious generator");
+                            context.Trace.TraceError(Msg.G1019, "Ambiguous generator");
                             return;
                         }
 
@@ -78,7 +78,7 @@ namespace Sitecore.Pathfinder.Tasks
             }
 
             var macros = new Dictionary<string, string>();
-            macros["name"] = Name;
+            macros["name"] = FileName;
 
             var textFileExtensions = context.Configuration.GetStringList(Constants.Configuration.GenerateFile.TextFileExtensions);
 

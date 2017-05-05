@@ -2,8 +2,8 @@
   "profiles": {
     "Sitecore.Pathfinder.Console": {
       "commandName": "Project",
-      "commandLineArgs": "b package --pause",
-      "workingDirectory": "E:\\Sitecore\\Sitecore.Pathfinder\\code\\test\\Sitecore.Works"
+      "commandLineArgs": "g y pipper --pause",
+      "workingDirectory": "E:\\Sitecore\\Sitecore.Pathfinder\\code\\1"
     }
   }
 }

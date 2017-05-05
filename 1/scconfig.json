@@ -1,0 +1,14 @@
+﻿{
+    // manifest
+    "author": "Sitecore Pathfinder",
+    "description": "",
+    "license": "",
+    "name": "",
+    "publisher": "",
+    "version": "1.0.0",
+
+    // tasks to execute when building
+    "build-project": {
+        "tasks": "check-project clean-output write-exports publish-project show-status"
+    }
+}

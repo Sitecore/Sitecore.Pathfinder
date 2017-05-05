@@ -1,0 +1,60 @@
+﻿{
+    "Sample Item": {
+        "Name": "<%= name %>",
+        "ItemPath": "<%= itemPath %>",
+        "Database": "master",
+        "Fields": {
+            "en": {
+                "Title": "Sitecore",
+                "Text": "Welcome to Sitecore"
+            },
+            "da": {
+                "Title": "Sitecore",
+                "Text": "Velkommen til Sitecore"
+            }
+        },
+        "Items": {
+            "Sample Item": [
+                {
+                    "Name": "Subitem",
+                    "Fields": {
+                        "en": {
+                            "Title": "Sitecore",
+                            "Text": "Welcome to Sitecore"
+                        },
+                        "da": {
+                            "Title": "Sitecore",
+                            "Text": "Velkommen til Sitecore"
+                        }
+                    }
+                }
+            ],
+
+            "Template": [
+                {
+                    "Name": "MyTemplate",
+                    "Icon": "Applications/16x16/about.png",
+                    "ShortHelp": "Short help.",
+                    "LongHelp": "Long help.",
+                    "Section": [
+                        {
+                            "Name": "Fields",
+                            "Field": [
+                                {
+                                    "Name": "IsActive",
+                                    "Type": "Checkbox",
+                                    "Sharing": "Shared"
+                                },
+                                {
+                                    "Name": "Text",
+                                    "Type": "Single-Line Text",
+                                    "Sharing": "Unversioned"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

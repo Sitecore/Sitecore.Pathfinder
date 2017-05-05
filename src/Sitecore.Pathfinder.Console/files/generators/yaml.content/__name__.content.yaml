@@ -1,9 +1,0 @@
-﻿- Sample Item: MyItem
-    ItemPath: <%= itemPath %>
-    Database: database
-    - Sample Item: Subitem
-        - ..versions:
-            - en:
-                  Title: Welcome to Sitecore
-            - da:
-                  Title: Velkommen til Sitecore

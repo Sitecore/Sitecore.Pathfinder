@@ -1,0 +1,31 @@
+﻿- Sample Item: file
+    ItemPath: 
+    Database: master
+    - Fields:
+        - en:
+            Title: Sitecore
+            Text: Welcome to Sitecore
+        - da:
+            Title: Sitecore
+            Text: Velkommen til Sitecore
+    - Items: 
+        - Sample Item: Subitem
+            - Fields:
+                - en:
+                    Title: Sitecore
+                    Text: Welcome to Sitecore
+                - da:
+                   Title: Sitecore
+                   Text: Velkommen til Sitecore
+        - Template:
+            Name: MyTemplate
+            - Section:
+                Name: Fields
+                - Field:
+                    Name: IsActive
+                    Type: Checkbox
+                    Sharing: Shared
+                - Field:
+                    Name: Text
+                    Type: Single-Line Text
+                    Sharing: Unversioned

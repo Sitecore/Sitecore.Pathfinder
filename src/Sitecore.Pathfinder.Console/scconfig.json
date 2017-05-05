@@ -23,7 +23,7 @@
     // comma separated list of files and directories to ignore
     "files": {
         "include": "**/*",
-        "exclude": "dist, .vscode, .git, node_modules, bower_components, packages, roslyn, includes, Properties, obj, scc.cmd, project.json, readme.md, web.config, packages.config"
+        "exclude": "dist, scconfig.json, .vscode, .git, node_modules, bower_components, packages, roslyn, includes, Properties, obj, scc.cmd, project.json, readme.md, web.config, packages.config"
     },
 
     // item content files globs
