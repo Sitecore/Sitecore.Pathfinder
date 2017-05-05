@@ -31,6 +31,12 @@ namespace Sitecore.Pathfinder.Languages.Unicorn
         public override void Emit(IEmitContext context, IProject project)
         {
             base.Emit(context, project);
+
+            if (Configuration.GetBool(Constants.Configuration.Output.Unicorn.EmitMissingItems))
+            {
+                EmitImportedItems(context, project);
+            }
+
             MirrorItems(context);
         }
 
@@ -38,10 +44,7 @@ namespace Sitecore.Pathfinder.Languages.Unicorn
         {
             context.Trace.TraceInformation(Msg.I1011, "Publishing", item.ItemIdOrPath);
 
-            var outputDirectory = PathHelper.Combine(OutputDirectory, Configuration.GetString(Constants.Configuration.Output.Unicorn.ItemsDirectory));
-            var destinationFileName = PathHelper.Combine(outputDirectory, PathHelper.NormalizeFilePath(item.ItemIdOrPath).TrimStart('\\'));
-
-            destinationFileName += ".yml";
+            var destinationFileName = GetItemFileName(item.DatabaseName, item.ItemIdOrPath);
 
             FileSystem.CreateDirectoryFromFileName(destinationFileName);
 
@@ -52,6 +55,49 @@ namespace Sitecore.Pathfinder.Languages.Unicorn
                     item.WriteAsUnicornYaml(writer);
                 }
             }
+        }
+
+        protected virtual void EmitImportedItems([NotNull] IEmitContext context, [NotNull] IProject project)
+        {
+            // Unicorn requires item files for the entire path, so fill in the gaps
+
+            foreach (var item in project.Items)
+            {
+                var parentItem = item.GetParent();
+                if (parentItem != null && parentItem.IsEmittable)
+                {
+                    continue;
+                }
+
+                var itemPath = PathHelper.GetItemParentPath(item.ItemIdOrPath);
+
+                while (!string.IsNullOrEmpty(itemPath))
+                {
+                    var fileName = GetItemFileName(item.DatabaseName, itemPath);
+                    if (!FileSystem.FileExists(fileName))
+                    {
+                        var i = item.Database.GetItem(itemPath);
+                        if (i == null)
+                        {
+                            context.Trace.TraceError(Msg.E1045, "Required item not found for Unicorn serialization", itemPath);
+                            break;
+                        }
+
+                        EmitItem(context, i);
+                    }
+
+                    itemPath = PathHelper.GetItemParentPath(itemPath);
+                }
+            }
+        }
+
+        [NotNull]
+        protected virtual string GetItemFileName([NotNull] string databaseName, [NotNull] string itemIdOrPath)
+        {
+            var outputDirectory = PathHelper.Combine(OutputDirectory, Configuration.GetString(Constants.Configuration.Output.Unicorn.ItemsDirectory));
+            var destinationFileName = PathHelper.Combine(outputDirectory, databaseName + "\\" + PathHelper.NormalizeFilePath(itemIdOrPath).TrimStart('\\')) + ".yml";
+
+            return destinationFileName;
         }
 
         protected virtual void MirrorItems([NotNull] IEmitContext context)

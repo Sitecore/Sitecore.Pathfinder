@@ -255,6 +255,8 @@ namespace Sitecore.Pathfinder
                     public const string MirrorItemsSourceDirectory = "output:unicorn:mirror-items-source-directory";
 
                     public const string UnicornRootPath = "output:unicorn:unicorn-physicalRootPath";
+
+                    public const string EmitMissingItems = "output:unicorn:emit-missing-items";
                 }
             }
 

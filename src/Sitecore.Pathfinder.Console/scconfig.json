@@ -55,7 +55,9 @@
             "items-directory": "items",
             "mirror-items-to-unicorn-physicalRootPath": false,
             "mirror-items-source-directory": "/sitecore/client/Applications",
-            "unicorn-physicalRootPath": "c:\\inetpub\\wwwroot\\Pathfinder\\Data\\Unicorn\\items"
+            "unicorn-physicalRootPath": "c:\\inetpub\\wwwroot\\Pathfinder\\Data\\Unicorn\\items",
+            // unicorn requires item files for all parent items - set to true to emit missing items
+            "emit-missing-items": false 
         }
     },
 
