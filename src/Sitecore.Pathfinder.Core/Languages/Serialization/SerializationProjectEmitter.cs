@@ -26,6 +26,11 @@ namespace Sitecore.Pathfinder.Languages.Serialization
 
         public override void EmitItem(IEmitContext context, Item item)
         {
+            if (!item.IsEmittable)
+            {
+                return;
+            }
+
             context.Trace.TraceInformation(Msg.I1011, "Publishing", item.ItemIdOrPath);
 
             var destinationFileName = PathHelper.Combine(OutputDirectory, PathHelper.NormalizeFilePath(item.ItemIdOrPath).TrimStart('\\'));

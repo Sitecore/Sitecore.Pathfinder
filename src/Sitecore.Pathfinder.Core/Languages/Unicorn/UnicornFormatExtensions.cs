@@ -123,11 +123,6 @@ namespace Sitecore.Pathfinder.Languages.Unicorn
             output.WriteStartElement("Version", "1");
             output.WriteAttributeString("Fields");
 
-            output.WriteStartElement("ID", "\"25bed78c-4957-4165-998a-ca1b52f67497\"");
-            output.WriteAttributeString("Hint", "__Created");
-            output.WriteAttributeString("Value", DateTime.UtcNow.ToString(@"yyyyMMddTHHmmss") + "Z");
-            output.WriteEndElement();
-
             output.WriteStartElement("ID", "\"5dd74568-4d4b-44c1-b513-0af5f4cda34f\"");
             output.WriteAttributeString("Hint", "__Created by");
             output.WriteAttributeString("Value", "sitecore\\admin");

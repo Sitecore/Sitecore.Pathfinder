@@ -29,8 +29,13 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
         [NotNull]
         public string OutputDirectory { get; protected set; }
 
-        public virtual void EmitFile([NotNull] IEmitContext context, [NotNull] string sourceFileAbsoluteFileName, [NotNull] string filePath)
+        public virtual void EmitFile([NotNull] IEmitContext context, [NotNull] File file, [NotNull] string sourceFileAbsoluteFileName, [NotNull] string filePath)
         {
+            if (!file.IsEmittable)
+            {
+                return;
+            }
+
             var fileName = PathHelper.NormalizeFilePath(filePath);
             if (fileName.StartsWith("~\\"))
             {
@@ -56,29 +61,20 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
             {
                 if (projectItem is File file)
                 {
-                    unemittedItems.Remove(projectItem);
-                    if (file.IsEmittable)
-                    {
-                        EmitFile(context, projectItem.Snapshot.SourceFile.AbsoluteFileName, file.FilePath);
-                    }
+                   unemittedItems.Remove(projectItem);
+                   EmitFile(context, file, projectItem.Snapshot.SourceFile.AbsoluteFileName, file.FilePath);
                 }
 
                 if (projectItem is Item item)
                 {
                     unemittedItems.Remove(projectItem);
-                    if (item.IsEmittable)
-                    {
-                        EmitItem(context, item);
-                    }
+                    EmitItem(context, item);
                 }
 
                 if (projectItem is Template template)
                 {
                     unemittedItems.Remove(projectItem);
-                    if (template.IsEmittable)
-                    {
-                        EmitTemplate(context, template);
-                    }
+                    EmitTemplate(context, template);
                 }
             }
 

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.IO;
+using Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitting;
@@ -42,6 +43,13 @@ namespace Sitecore.Pathfinder.Languages.Unicorn
 
         public override void EmitItem(IEmitContext context, Item item)
         {
+            var sourceBag = item as ISourcePropertyBag;
+
+            if (!item.IsEmittable && sourceBag.GetValue<string>("__origin_reason") != nameof(CreateItemsFromTemplates))
+            {
+                return;
+            }
+
             context.Trace.TraceInformation(Msg.I1011, "Publishing", item.ItemIdOrPath);
 
             var destinationFileName = GetItemFileName(item.DatabaseName, item.ItemIdOrPath);
@@ -112,7 +120,7 @@ namespace Sitecore.Pathfinder.Languages.Unicorn
 
             var destinationDirectory = Configuration.GetString(Constants.Configuration.Output.Unicorn.UnicornRootPath);
 
-            context.Trace.TraceInformation(Msg.I1011, "Mirroring item files", sourceDirectory + " => " + destinationDirectory);
+            context.Trace.TraceInformation(Msg.E1046, "Mirroring item files", sourceDirectory + " => " + destinationDirectory);
 
             FileSystem.CreateDirectory(destinationDirectory);
             FileSystem.Mirror(sourceDirectory, destinationDirectory);
