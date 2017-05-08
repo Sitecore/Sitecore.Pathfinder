@@ -13,11 +13,10 @@ using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Parsing.Items
 {
-    [Export(typeof(ITextNodeParser)), Shared]
-    public class TemplateTextNodeParser : TextNodeParserBase
+    public abstract class TemplateTextNodeParserBase : TextNodeParserBase
     {
         [ImportingConstructor]
-        public TemplateTextNodeParser([NotNull] ISchemaService schemaService) : base(Constants.TextNodeParsers.Templates)
+        protected TemplateTextNodeParserBase([NotNull] ISchemaService schemaService, double priority) : base(priority)
         {
             SchemaService = schemaService;
         }
@@ -25,13 +24,10 @@ namespace Sitecore.Pathfinder.Parsing.Items
         [NotNull]
         protected ISchemaService SchemaService { get; }
 
-        public override bool CanParse(ItemParseContext context, ITextNode textNode)
-        {
-            return textNode.Key == "Template";
-        }
-
         public override void Parse(ItemParseContext context, ITextNode textNode)
         {
+            SchemaService.ValidateTextNodeSchema(textNode, "Template");
+
             var itemNameTextNode = GetItemNameTextNode(context.ParseContext, textNode);
             var parentItemPath = textNode.GetAttributeValue("ParentItemPath", context.ParentItemPath);
             var itemIdOrPath = textNode.GetAttributeValue("ItemPath");
@@ -89,22 +85,22 @@ namespace Sitecore.Pathfinder.Parsing.Items
         {
             SchemaService.ValidateTextNodeSchema(templateFieldTextNode, "TemplateField");
 
-            var fieldName = templateFieldTextNode.GetAttribute("Name");
-            if (fieldName == null)
+            var fieldNameTextNode = GetItemNameTextNode(context.ParseContext, templateFieldTextNode);
+            if (string.IsNullOrEmpty(fieldNameTextNode.Value))
             {
                 context.ParseContext.Trace.TraceError(Msg.P1005, Texts._Field__element_must_have_a__Name__attribute, templateFieldTextNode.Snapshot.SourceFile.AbsoluteFileName, templateFieldTextNode.TextSpan);
                 return;
             }
 
-            var templateField = templateSection.Fields.FirstOrDefault(f => string.Equals(f.FieldName, fieldName.Value, StringComparison.OrdinalIgnoreCase));
+            var templateField = templateSection.Fields.FirstOrDefault(f => string.Equals(f.FieldName, fieldNameTextNode.Value, StringComparison.OrdinalIgnoreCase));
             if (templateField == null)
             {
-                var itemIdOrPath = template.ItemIdOrPath + "/" + templateSection.SectionName + "/" + fieldName.Value;
+                var itemIdOrPath = template.ItemIdOrPath + "/" + templateSection.SectionName + "/" + fieldNameTextNode.Value;
                 var guid = StringHelper.GetGuid(template.Project, templateFieldTextNode.GetAttributeValue("Id", itemIdOrPath));
 
                 templateField = context.ParseContext.Factory.TemplateField(template, guid).With(templateFieldTextNode);
                 templateSection.Fields.Add(templateField);
-                templateField.FieldNameProperty.SetValue(fieldName);
+                templateField.FieldNameProperty.SetValue(fieldNameTextNode);
             }
 
             templateField.TypeProperty.Parse(templateFieldTextNode, "Single-Line Text");
@@ -128,7 +124,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 {
                     // todo: support language and version
                     var field = context.ParseContext.Factory.Field(template.StandardValuesItem).With(standardValueTextNode);
-                    field.FieldNameProperty.SetValue(fieldName);
+                    field.FieldNameProperty.SetValue(fieldNameTextNode);
                     field.ValueProperty.SetValue(standardValueTextNode);
 
                     template.StandardValuesItem.Fields.Add(field);
@@ -142,21 +138,21 @@ namespace Sitecore.Pathfinder.Parsing.Items
         {
             SchemaService.ValidateTextNodeSchema(templateSectionTextNode, "TemplateSection");
 
-            var sectionName = templateSectionTextNode.GetAttribute("Name");
-            if (sectionName == null)
+            var sectionNameTextNode = GetItemNameTextNode(context.ParseContext, templateSectionTextNode);
+            if (string.IsNullOrEmpty(sectionNameTextNode.Value))
             {
-                context.ParseContext.Trace.TraceError(Msg.P1007, Texts._Section__element_must_have_a__Name__attribute, templateSectionTextNode);
+                context.ParseContext.Trace.TraceError(Msg.P1007, Texts._Section__element_must_have_a__Name__attribute, sectionNameTextNode);
                 return;
             }
 
-            var templateSection = template.Sections.FirstOrDefault(s => string.Equals(s.SectionName, sectionName.Value, StringComparison.OrdinalIgnoreCase));
+            var templateSection = template.Sections.FirstOrDefault(s => string.Equals(s.SectionName, sectionNameTextNode.Value, StringComparison.OrdinalIgnoreCase));
             if (templateSection == null)
             {
-                var itemIdOrPath = template.ItemIdOrPath + "/" + sectionName.Value;
+                var itemIdOrPath = template.ItemIdOrPath + "/" + sectionNameTextNode.Value;
                 var guid = StringHelper.GetGuid(template.Project, templateSectionTextNode.GetAttributeValue("Id", itemIdOrPath));
 
                 templateSection = context.ParseContext.Factory.TemplateSection(template, guid).With(templateSectionTextNode);
-                templateSection.SectionNameProperty.SetValue(sectionName);
+                templateSection.SectionNameProperty.SetValue(sectionNameTextNode);
 
                 template.Sections.Add(templateSection);
             }

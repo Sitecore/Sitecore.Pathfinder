@@ -132,16 +132,15 @@
         // poor mans schema for item files
         "schema": {
             "Item-attributes": "Name, Id, TemplateName, Database, ItemPath, ParentItemPath, Icon, Template, IsEmittable, IsExternalReference, Template.CreateFromFields, Template.Id, Template.Icon, Template.BaseTemplates, Template.ShortHelp, Template.LongHelp",
-            "Item-childnodes": "..Versions",
-            "Fields-childnodes": "Field, Unversioned, Versioned, Layout",
-            "Field-attributes": "Name, Value, Language, Version, Field.Type, Field.SortOrder, Field.Sharing, Field.Source, Field.ShortHelp, Field.LongHelp",
+            "Item-childnodes": "Fields, Layout, Items",
+            "Field-childnodes": "",
+            "Field-attributes": "Name, Value, Field.Type, Field.SortOrder, Field.Sharing, Field.Source, Field.ShortHelp, Field.LongHelp",
             "Template-attributes": "Name, Id, Database, ItemPath, Icon, IsEmittable, IsExternalReference, ShortHelp, LongHelp, BaseTemplates",
             "Template-childnodes": "Section",
             "TemplateSection-attributes": "Name, Id, Icon",
             "TemplateSection-childnodes": "Field",
             "TemplateField-attributes": "Name, Id, Type, Sharing, Source, ShortHelp, LongHelp, SortOrder",
-            "TemplateField-childnodes": "",
-            "Children-childnodes": "Item, Template"
+            "TemplateField-childnodes": ""
         }
     },
 

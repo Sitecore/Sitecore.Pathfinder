@@ -14,12 +14,18 @@ namespace Sitecore.Pathfinder.Parsing.Items
 {
     public abstract class ContentTextNodeParserBase : TextNodeParserBase
     {
-        protected ContentTextNodeParserBase(double priority) : base(priority)
+        [NotNull]
+        protected ISchemaService SchemaService { get; }
+
+        protected ContentTextNodeParserBase([NotNull] ISchemaService schemaService, double priority) : base(priority)
         {
+            SchemaService = schemaService;
         }
 
         public override void Parse(ItemParseContext context, ITextNode textNode)
         {
+            SchemaService.ValidateTextNodeSchema(textNode, "Item");
+
             var itemNameTextNode = GetItemNameTextNode(context.ParseContext, textNode);
             var parentItemPath = textNode.GetAttributeValue("ParentItemPath", context.ParentItemPath);
             var itemIdOrPath = textNode.GetAttributeValue("ItemPath");
@@ -100,6 +106,8 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
         protected virtual void ParseFieldTextNode([NotNull] ItemParseContext context, [NotNull] Item item, [NotNull] LanguageVersionContext languageVersionContext, [NotNull] ITextNode fieldTextNode)
         {
+            SchemaService.ValidateTextNodeSchema(fieldTextNode, "Field");
+
             var fieldName = fieldTextNode.Key.UnescapeXmlElementName();
             if (fieldName == "Name" || fieldName == "Id" || fieldName == "Database" || fieldName == "TemplateName" || fieldName == "ItemPath" || fieldName == "ParentItemPath" || fieldName == Constants.Fields.IsEmittable || fieldName == Constants.Fields.IsImport)
             {

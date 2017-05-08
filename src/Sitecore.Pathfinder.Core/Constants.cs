@@ -622,9 +622,9 @@ namespace Sitecore.Pathfinder
         {
             public const double Content = 9999;
 
-            public const double Items = 1000;
+            public const double Items = 5000;
 
-            public const double Layouts = 1000;
+            public const double Layouts = 6000;
 
             public const double Templates = 1000;
         }
