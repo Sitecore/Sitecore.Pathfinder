@@ -7,6 +7,7 @@ using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checking.Checkers
@@ -57,6 +58,51 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                 {
                     yield return Warning(Msg.C1057, "Number is not valid", TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), $"The field \"{field.FieldName}\" has a type of 'Number', but the value is not a valid number. Replace or remove the value.");
                 }
+            }
+        }
+
+        [ItemNotNull, NotNull, Check]
+        public IEnumerable<Diagnostic> FieldSharing([NotNull] ICheckerContext context)
+        {
+            foreach (var field in context.Project.Items.SelectMany(i => i.Fields))
+            {
+                if (field.TemplateField.Shared)
+                {
+                    if (field.Language != Language.Empty && field.Language != Language.Undefined)
+                    {
+                        yield return Warning(Msg.P1028, "Field is shared, but is specified in the language", field.SourceTextNode, field.FieldName);
+                    }
+
+                    if (field.Version != Projects.Items.Version.Undefined)
+                    {
+                        yield return Warning(Msg.P1029, "Field is shared, but has a version", field.SourceTextNode, field.FieldName);
+                    }
+                }
+                else if (field.TemplateField.Unversioned)
+                {
+                    if (field.Language == Language.Empty || field.Language == Language.Undefined)
+                    {
+                        yield return Warning(Msg.P1030, "Field is unversioned, but no language is specified", field.SourceTextNode, field.FieldName);
+                    }
+
+                    if (field.Version != Projects.Items.Version.Undefined)
+                    {
+                        yield return Warning(Msg.P1031, "Field is unversioned, but has a version", field.SourceTextNode, field.FieldName);
+                    }
+                }
+                else
+                {
+                    if (field.Language == Language.Empty || field.Language == Language.Undefined)
+                    {
+                        yield return Warning(Msg.P1032, "Field is versioned, but no language is specified", field.SourceTextNode, field.FieldName);
+                    }
+
+                    if (field.Version == Projects.Items.Version.Undefined)
+                    {
+                        yield return Warning(Msg.P1033, "Field is versioned, but no version is specified", field.SourceTextNode, field.FieldName);
+                    }
+                }
+
             }
         }
     }

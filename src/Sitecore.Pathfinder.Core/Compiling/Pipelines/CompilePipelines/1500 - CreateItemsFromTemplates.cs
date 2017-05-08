@@ -27,8 +27,19 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
             item.IsImport = template.IsImport;
             item.IconProperty.SetValue(template.IconProperty);
             item.Fields.Add(context.Factory.Field(item, "__Base template", template.BaseTemplates).With(template.BaseTemplatesProperty.SourceTextNode));
-            item.Fields.Add(context.Factory.Field(item, "__Long description", template.LongHelp).With(template.LongHelpProperty.SourceTextNode));
-            item.Fields.Add(context.Factory.Field(item, "__Short description", template.ShortHelp).With(template.ShortHelpProperty.SourceTextNode));
+
+            if (!string.IsNullOrEmpty(template.LongHelp))
+            {
+                // todo: set language 
+                item.Fields.Add(context.Factory.Field(item, "__Long description", template.LongHelp).With(template.LongHelpProperty.SourceTextNode));
+            }
+
+            if (!string.IsNullOrEmpty(template.ShortHelp))
+            {
+                // todo: set language 
+                item.Fields.Add(context.Factory.Field(item, "__Short description", template.ShortHelp).With(template.ShortHelpProperty.SourceTextNode));
+            }
+
             ((ISourcePropertyBag)item).NewSourceProperty("__origin", item.Uri);
             ((ISourcePropertyBag)item).NewSourceProperty("__origin_reason", nameof(CreateItemsFromTemplates));
 
@@ -49,8 +60,18 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
                     templateFieldItem.IsEmittable = false;
                     templateFieldItem.IsImport = template.IsImport;
 
-                    templateFieldItem.Fields.Add(context.Factory.Field(templateFieldItem, "__Long description", templateField.LongHelp).With(templateField.LongHelpProperty.SourceTextNode));
-                    templateFieldItem.Fields.Add(context.Factory.Field(templateFieldItem, "__Short description", templateField.ShortHelp).With(templateField.ShortHelpProperty.SourceTextNode));
+                    if (!string.IsNullOrEmpty(templateField.LongHelp))
+                    {
+                        // todo: set language 
+                        templateFieldItem.Fields.Add(context.Factory.Field(templateFieldItem, "__Long description", templateField.LongHelp).With(templateField.LongHelpProperty.SourceTextNode));
+                    }
+
+                    if (!string.IsNullOrEmpty(templateField.ShortHelp))
+                    {
+                        // todo: set language 
+                        templateFieldItem.Fields.Add(context.Factory.Field(templateFieldItem, "__Short description", templateField.ShortHelp).With(templateField.ShortHelpProperty.SourceTextNode));
+                    }
+
                     templateFieldItem.Fields.Add(context.Factory.Field(templateFieldItem, "Shared", templateField.Shared ? "True" : "False"));
                     templateFieldItem.Fields.Add(context.Factory.Field(templateFieldItem, "Unversioned", templateField.Unversioned ? "True" : "False"));
                     templateFieldItem.Fields.Add(context.Factory.Field(templateFieldItem, "Source", templateField.Source).With(templateField.SourceProperty.SourceTextNode));
