@@ -282,10 +282,7 @@
     },
 
     "messages": {
-        "system": {
-            // comma separated list of message numbers to ignore
-            "disabled": ""
-        }
+        // "SCC1011": "disabled"
     },
 
     // directories, that hold packages

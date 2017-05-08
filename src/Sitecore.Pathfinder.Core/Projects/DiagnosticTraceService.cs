@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Projects
 
         protected override void Write(int msg, string text, Severity severity, string fileName, TextSpan span, string details)
         {
-            if (IgnoredMessages.Contains(msg))
+            if (IgnoredMessages.Contains("SCC" + msg))
             {
                 return;
             }
