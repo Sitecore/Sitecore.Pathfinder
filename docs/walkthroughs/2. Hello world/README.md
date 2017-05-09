@@ -11,25 +11,12 @@ Sitecore website, so you project folder only contains the project files.
 
 ![CreateFolder](CreateFolder.png)
 
-## Create project files
-
-Create an empty project by executing `scc add-project`. The will copy a number of files to your projects.
-
-![AddProject](AddProject.png)
-
-## Edit scconfig.json
-
-Open the `scconfig.json` file in Notepad and change the `project-unique-id`, `website-directory`,
-`data-folder-directory` and `host-name` settings to appropriate values.
-
-![EditConfig](EditConfig.png)
-
 ## Create HelloWorld item file
 
-Create a new item file by copying the item.item.json file to the `/items/master/sitecore/content/Home/` directory.
+Create a new item file by executing the `generate-file` task.
 
 ```
-copy sitecore.filetemplates\json\item.item.json items\master\sitecore\content\Home\HelloWorld.item.json
+scc g y HelloWorld
 ```
 
 ![CreateItemFile](CreateItemFile.png)
@@ -38,161 +25,27 @@ copy sitecore.filetemplates\json\item.item.json items\master\sitecore\content\Ho
 
 Open the file in Notepad and paste the following text into it.
 
-```js
-{
-    "Item": {
-        "Template": "/sitecore/templates/Sample/HelloWorld",
-        "Template.CreateFromFields": true,
-        "Template.ShortHelp": "Short help.",
-        "Template.LongHelp": "Short help.",
-        "Template.Icon": "Applications/16x16/about.png",
-        "Fields": {
-            "Title": {
-                "Value": "Pathfinder",
-                "Field.LongHelp": "Long help.",
-                "Field.ShortHelp": "Short help."
-            },
-            "Text": {
-                "Value": "Welcome to Sitecore Pathfinder",
-                "Field.ShortHelp": "Short.",
-                "Field.LongHelp": "Longer help."
-            },
-            "Image": {
-                "Value": "",
-                "Field.Type": "Image",
-                "Field.ShortHelp": "Short.",
-                "Field.LongHelp": "Longer help."
-            }
-        }
-    }
-}
+```yaml
+- Sample Item: HelloWorld
+    ItemPath: /sitecore/content/Home/HelloWorld
+    Database: master
+    - Fields:
+        - en:
+            Title: Hello World
+            Text: Hello from Pathfinder
 ```
 
-This item file create the /sitecore/content/Home/HelloWorld item and /sitecore/templates/Sample/HelloWorld template.
+This item file create the /sitecore/content/Home/HelloWorld item.
 
 ## Compile the project
 
-Compile the project by executing `scc` in the command prompt. 
+Compile the project by executing `scc b` in the command prompt. 
 
 ![CompileProject](CompileProject.png)
 
-Check that there are no errors or warnings. Additional you can open Sitecore and check that the HelloWorld
-item has been created in the master database in `/sitecore/content/Home/HelloWorld`.
+Check that there are no errors or warnings.
 
-## Adding an image
+There should now be a Package.zip file in the ./dist directory. 
 
-Copy an image file to the `/items/master/sitecore/media library`, e.g. 'lighthouse.jpg'.
+Try installing the Package.zip file in Sitecore and check that the /sitecore/content/Home/HelloWorld has been created.
 
-![CopyImage](CopyImage.png)
-
-## Add a reference to the image
-
-Open the `/items/master/sitecore/content/Home/HelloWorld.item.json` file in Notepad and edit the Image field value
-to point to the image item. This is the name of the image item - not the file name.
-
-```js
-{
-    "Item": {
-        "Template": "/sitecore/templates/Sample/HelloWorld",
-        "Template.CreateFromFields": true,
-        "Template.ShortHelp": "Short help.",
-        "Template.LongHelp": "Short help.",
-        "Template.Icon": "Applications/16x16/about.png",
-        "Fields": {
-            "Title": {
-                "Value": "Pathfinder",
-                "Field.LongHelp": "Long help.",
-                "Field.ShortHelp": "Short help."
-            },
-            "Text": {
-                "Value": "Welcome to Sitecore Pathfinder",
-                "Field.ShortHelp": "Short.",
-                "Field.LongHelp": "Longer help."
-            },
-            "Image": {
-                "Value": "/sitecore/media library/lighthouse",
-                "Field.Type": "Image",
-                "Field.ShortHelp": "Short.",
-                "Field.LongHelp": "Longer help."
-            }
-        }
-    }
-}
-```
-
-Compile the project again to make sure there are no errors or warnings.
-
-## Add a new rendering
-
-Copy a Razor view to the `items/master/sitecore/layout/renderings/` directory.
-```
-copy sitecore.filetemplates\cshtml\rendering.cshtml items\master\sitecore\layout\renderings\HelloWorld.cshtml
-```
-
-Open the HelloWorld.cshtml file in Notepad and paste the following text:
-
-```
-@model Sitecore.Mvc.Presentation.RenderingModel
-@{
-}
-<h1>@Model.Item["Title"]</h1>
-<p>@Model.Item["Text"]</p>
-@Html.Sitecore().Field("Image")
-```
-
-This will render the image field.
-
-## Edit the layout
-
-Edit the layout on the HelloWorld item to include the new rendering.
-
-```js
-{
-    "Item": {
-        "Template": "/sitecore/templates/Sample/HelloWorld",
-        "Template.CreateFromFields": true,
-        "Template.ShortHelp": "Short help.",
-        "Template.LongHelp": "Short help.",
-        "Template.Icon": "Applications/16x16/about.png",
-        "Fields": {
-            "Title": {
-                "Value": "Pathfinder",
-                "Field.LongHelp": "Long help.",
-                "Field.ShortHelp": "Short help."
-            },
-            "Text": {
-                "Value": "Welcome to Sitecore Pathfinder",
-                "Field.ShortHelp": "Short.",
-                "Field.LongHelp": "Longer help."
-            },
-            "Image": {
-                "Value": "/sitecore/media library/lighthouse",
-                "Field.Type": "Image",
-                "Field.ShortHelp": "Short.",
-                "Field.LongHelp": "Longer help."
-            },
-            "Layout": {
-                "Devices": [
-                    {
-                        "Name": "Default",
-                        "Layout": "/sitecore/layout/Layouts/MvcLayout",
-                        "Renderings": [
-                            {
-                                "HelloWorld": { }
-                            }
-                        ]
-                    }
-                ]
-            }
-        }
-    }
-}
-```
-
-Compile the project again.
-
-## Open in browser
-
-Open the URL [website]/Home/HelloWorld in a browser.
-
-![Browser](Browser.png)

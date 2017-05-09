@@ -1,7 +1,5 @@
 # How to contribute
-Pathfinder is envisioned to be an open source project with many contributors.
-
-So feel free to clone the repo and submit pull requests.
+Feel free to clone the repo and submit pull requests.
 
 ## General feedback and discussions?
 Please start a discussion in the [issues](https://github.com/JakobChristensen/Sitecore.Pathfinder/issues) section.
@@ -10,36 +8,20 @@ Please start a discussion in the [issues](https://github.com/JakobChristensen/Si
 Also please start a discussion in the [issues](https://github.com/JakobChristensen/Sitecore.Pathfinder/issues) section.
 
 ## Getting started
-Clone the project from [GitHub](https://github.com/JakobChristensen/Sitecore.Pathfinder), and copy the following assemblies 
-to the /lib/Sitecore directory.
-
-* Sitecore.ContentSearch.dll
-* Sitecore.ContentSearch.Linq.dll
-* Sitecore.Kernel.dll
-* Sitecore.Mvc.dll
-* Sitecore.Zip.dll 
+Clone the project from [GitHub](https://github.com/JakobChristensen/Sitecore.Pathfinder).
 
 The Sitecore.Pathfinder.Console project is the default project and you should set it as StartUp Project. 
 
 # Architecture
 
 ## Project overview
-Pathfinder consists of two parts - a part that runs on a development machine and a part that runs inside a Sitecore website.
-The development (client) part is responsible for building the deployment package and the Sitecore (server) part is responsible 
-for installing the package. Both parts share the Pathfinder compiler which loads the projects and compiles it.
-
-### Client  
-The client is the command line tool. It provides a number of tasks that can be executed, like building the project or 
-initializing the development folder. Some tasks communicate with the server. 
-
-### Server 
-The server responds to any requests that the client might make. It has access to the Sitecore API. It's primary task is to
-install deployment packages.
+Pathfinder is a CLI (command line tool). It provides a number of tasks that can be executed, like building the project or 
+initializing the development folder. 
 
 ## Pathfinder compiler
 The Pathfinder compiler loads and compiles a project from a list of source files while collecting diagnostics. 
 
-Internally the compiler goes through a number of steps. 
+Internally the compiler goes through a number of steps:
 
 * Initializing
 * Parsing
@@ -49,7 +31,7 @@ Internally the compiler goes through a number of steps.
 
 
 #### Initializing
-During initialization the compiler loads external references located in the /sitecore.project/external directory. The external
+During initialization the compiler loads external references files which contains standard items from Sitecore. The external
 references are needed because the project must hold the whole truth. 
 
 #### Parsing
@@ -73,7 +55,7 @@ project items. A references is typically a Guid or a value that starts with "/si
 The compiler collects diagnostics throughout the entire parsing and compiling processes. The checking step validates the
 entire project. The executes the dynamically compiled checkers and checks that all references are valid.
 
-Checks:
+Examples of checks are:
 
 * The project item has a unique Guid
 * Reference not found
@@ -98,8 +80,7 @@ Checks:
 * Template section is empty.
 
 ## Emitting
-On the server, the final step is emitting the project model to Sitecore. This step copies files to the website directory and
-create or modifies any items in Sitecore.
+The final step is emitting the project model to the output folder in a deployable format (files, Sitecore Package, Unicorn files).
 
 ## Coding 
 
@@ -160,11 +141,11 @@ public class MyClass
 
 Alternatively the ``IFactoryService`` can be used to instantiate new objects.
 
-To enable plugins, Pathfinder adds any assemblies in the /sitecore.project/extensions and /sitecore.tools/extensions directories to 
+To enable plugins, Pathfinder adds any assemblies in the /sitecore.project/extensions directory to 
 the MEF graph. This means that developers can xcopy an assembly to an extensions folder, and Pathfinder will automatically
 include the assembly without any configuration.
 
-### Services
+### Some services
 
 Services                | Description
 ------------------------|-------------
@@ -186,14 +167,13 @@ Pathfinder usually uses the Command pattern to provide functionality that can be
 functionality in a single class which makes the system more robust.
 
 ```cs
-[InheritedExport]
 public interface IMyCommand
 {
     bool CanExecute([NotNull] IMyContext context);
     void Execute([NotNull] IMyContext context);
 }
 
-[Export]
+[Export(typeof(IMyCommand)), Shared]
 public class MyClass 
 {
   [ImportingConstructor]
@@ -218,9 +198,6 @@ public class MyClass
 }
 ```
 
-Any class that implements the ``IMyCommand``, is exported to MEF, since ``IMyCommand`` is annotated with the ``[InheritedExport]`` attribute.
 The list of registered commands is injected in the MyClass constructor by MEF using the ``[ImportMany]`` attribute.
 
 Any assembly that contains a command, will be discovered by MEF and supplied to MyClass for execution. 
-
-

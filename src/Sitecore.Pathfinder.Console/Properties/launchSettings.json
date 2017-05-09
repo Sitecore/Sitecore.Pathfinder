@@ -2,8 +2,8 @@
   "profiles": {
     "Sitecore.Pathfinder.Console": {
       "commandName": "Project",
-      "commandLineArgs": "b u --pause",
-      "workingDirectory": "E:\\Sitecore\\Sitecore.Works\\code\\src\\client"
+      "commandLineArgs": "b --pause",
+      "workingDirectory": "E:\\Sitecore\\Sitecore.Pathfinder\\websites\\HelloWorld"
     }
   }
 }

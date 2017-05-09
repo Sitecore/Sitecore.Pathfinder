@@ -25,18 +25,6 @@ Developers.
 
 Pathfinder is aimed at the development process.
 
-#### _I don't want to edit items as files - I want Content Editor, Experience Editor Sitecore Rocks, or DB Browser?_
-
-You can use TDS or Unicorn to serialize changed items back to the Pathfinder project. Pathfinder supports both 
-.item (TDS) and .yml (Unicorn) formats. 
-
-You configure TDS or Unicorn to serialize the items to your Pathfinder project folder, and whenever you make 
-a change on the website, make sure you serialize it, before compiling with Pathfinder. 
-
-If you do not use TDS or Unicorn, you can serialize item using either the Sitecore Rocks serialization commands
-or use the Developer ribbon tab in the Content Editor. Make sure you config the serialization folder correctly
-in the web.config.
-
 #### _Xml is so old school / you have to type so much in Xml_
 
 Well, use Json or Yaml instead.

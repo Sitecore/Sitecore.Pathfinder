@@ -92,6 +92,7 @@ namespace Sitecore.Pathfinder.Tasks
                 var destinationFileName = Path.Combine(destinationDirectory, Path.GetFileName(sourceFileName));
 
                 destinationFileName = ReplaceMacros(destinationFileName, macros, "__", "__");
+                context.Trace.TraceInformation(Msg.G1000, "Generating file", PathHelper.UnmapPath(context.ProjectDirectory, destinationFileName));
 
                 var extension = Path.GetExtension(sourceFileName);
                 if (textFileExtensions.Any(t => string.Equals(t, extension, StringComparison.OrdinalIgnoreCase)))

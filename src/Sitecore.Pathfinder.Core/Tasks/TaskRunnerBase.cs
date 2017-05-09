@@ -59,7 +59,21 @@ namespace Sitecore.Pathfinder.Tasks
                 var task = Tasks.FirstOrDefault(t => string.Equals(t.TaskName, part, StringComparison.OrdinalIgnoreCase));
                 if (task != null)
                 {
-                    taskNames.Add(part);
+                    taskNames.Add(task.TaskName);
+                    continue;
+                }
+
+                task = Tasks.FirstOrDefault(t => string.Equals(t.Alias, part, StringComparison.OrdinalIgnoreCase));
+                if (task != null)
+                {
+                    taskNames.Add(task.TaskName);
+                    continue;
+                }
+
+                task = Tasks.FirstOrDefault(t => string.Equals(t.Shortcut, part, StringComparison.OrdinalIgnoreCase));
+                if (task != null)
+                {
+                    taskNames.Add(task.TaskName);
                     continue;
                 }
 
@@ -78,34 +92,7 @@ namespace Sitecore.Pathfinder.Tasks
         [NotNull, ItemNotNull]
         protected virtual IEnumerable<ITask> GetTasks([NotNull] ITaskContext context, [NotNull, ItemNotNull] IEnumerable<string> taskNames)
         {
-            var tasks = new List<ITask>();
-
-            foreach (var taskName in taskNames)
-            {
-                var task = Tasks.FirstOrDefault(t => string.Equals(t.TaskName, taskName, StringComparison.OrdinalIgnoreCase));
-
-                // find task by alias
-                if (task == null)
-                {
-                    task = Tasks.FirstOrDefault(t => string.Equals(t.Alias, taskName, StringComparison.OrdinalIgnoreCase));
-                }
-
-                // find task by shortcut
-                if (task == null)
-                {
-                    task = Tasks.FirstOrDefault(t => string.Equals(t.Shortcut, taskName, StringComparison.OrdinalIgnoreCase));
-                }
-
-                if (task == null)
-                {
-                    context.Trace.TraceError(Msg.I1006, Texts.Task_not_found__Skipping, taskName);
-                    continue;
-                }
-
-                tasks.Add(task);
-            }
-
-            return tasks;
+            return taskNames.Select(taskName => Tasks.FirstOrDefault(t => string.Equals(t.TaskName, taskName, StringComparison.OrdinalIgnoreCase))).ToList();
         }
 
         protected virtual void PauseAfterRun()
