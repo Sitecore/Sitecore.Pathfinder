@@ -119,6 +119,8 @@ namespace Sitecore.Pathfinder
 
             public const string WebsiteDirectory = "website-directory";
 
+            public const string Tasks = "tasks";
+
             public static class BuildProject
             {
                 public const string CompileBinFilesExclude = "build-project:compile-bin-files:exclude";
@@ -129,8 +131,6 @@ namespace Sitecore.Pathfinder
 
                 public const string MediaTemplate = "build-project:media:template";
 
-                public const string Tasks = "build-project:tasks";
-
                 public static class Renderings
                 {
                     public const string CreateItemsForPartialViews = "build-project:renderings:create-items-for-partial-views";
@@ -139,8 +139,6 @@ namespace Sitecore.Pathfinder
 
             public static class CheckProject
             {
-                public const string Checkers = "check-project:checkers";
-
                 public const string IgnoredReferences = "check-project:ignored-references";
 
                 public const string PathFields = "check-project:path-fields";
@@ -306,11 +304,11 @@ namespace Sitecore.Pathfinder
 
         public static class FieldCompilers
         {
-            public const double High = 500;
+            public const double High = 1000;
 
-            public const double Low = 2000;
+            public const double Low = 3000;
 
-            public const double Normal = 1000;
+            public const double Normal = 2000;
         }
 
         public static class Fields

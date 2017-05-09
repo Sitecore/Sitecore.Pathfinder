@@ -7,8 +7,23 @@
     "publisher": "",
     "version": "1.0.0",
 
-    // tasks to execute when building
-    "build-project": {
-        "tasks": "check-project clean-output write-exports publish-project show-status"
+    // list of files and directories to compile
+    "files": {
+        "include": ["**/*"]
+    },
+
+    // list of tasks to execute when building
+    "tasks": {
+        "build": ["check-project", "clean-output", "write-exports", "publish-project", "show-status"]
+    },
+
+    // disabled checkers
+    "checkers": {
+        // "AvoidSpacesInItemNames": "disabled"
+    },
+
+    // disabled messages
+    "messages": {
+        // "SCC1011": "disabled"
     }
 }

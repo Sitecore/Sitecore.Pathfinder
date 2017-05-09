@@ -28,53 +28,54 @@ namespace Sitecore.Pathfinder.Tasks
         public abstract int Start();
 
         [NotNull, ItemNotNull]
-        protected virtual IList<string> GetTaskNames([NotNull] ITaskContext context)
+        protected virtual IEnumerable<string> GetTaskNames([NotNull] ITaskContext context)
         {
             // get first positional command line argument or the run parameter
-            var tasks = context.Configuration.GetCommandLineArg(0);
-
-            // if no task on command line, look for one in configuration
-            if (string.IsNullOrEmpty(tasks))
+            var taskName = context.Configuration.GetCommandLineArg(0);
+            if (string.IsNullOrEmpty(taskName))
             {
-                tasks = context.Configuration.GetString(Constants.Configuration.Run);
+                taskName = "help";
             }
 
-            var taskList = tasks;
+            var taskNames = new List<string>();
 
-            if (string.IsNullOrEmpty(tasks))
-            {
-                taskList = "help";
-            }
+            GetTaskNames(context, taskNames, taskName);
 
-            if (tasks == "b" || tasks == "build" || tasks == "build-project")
-            {
-                // use the build-project:tasks configuration 
-                taskList = context.Configuration.GetString(Constants.Configuration.BuildProject.Tasks);
-            }
-            else
-            {
-                // look for named task
-                var task = Tasks.FirstOrDefault(t => string.Equals(t.TaskName, tasks, StringComparison.OrdinalIgnoreCase));
-                if (task != null)
-                {
-                    return new List<string>
-                    {
-                        tasks
-                    };
-                }
-
-                // look for '*:tasks' in configuration
-                var alias = context.Configuration.GetString(tasks + ":tasks");
-                if (!string.IsNullOrEmpty(alias))
-                {
-                    taskList = alias;
-                }
-            }
-
-            return taskList.Split(Constants.Space, StringSplitOptions.RemoveEmptyEntries).Select(t => t.Trim()).ToList();
+            return taskNames;
         }
 
-        [CanBeNull, ItemNotNull]
+        protected virtual void GetTaskNames([NotNull] ITaskContext context, [ItemNotNull, NotNull] ICollection<string> taskNames, [NotNull] string taskName)
+        {
+            if (taskName == "b" || taskName == "build-project")
+            {
+                // use the tasks:build configuration 
+                taskName = context.Configuration.GetString(Constants.Configuration.Tasks + ":build");
+            }
+
+            var taskNameList = taskName.Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(t => t.Trim()).ToList();
+
+            foreach (var part in taskNameList)
+            {
+                var task = Tasks.FirstOrDefault(t => string.Equals(t.TaskName, part, StringComparison.OrdinalIgnoreCase));
+                if (task != null)
+                {
+                    taskNames.Add(part);
+                    continue;
+                }
+
+                // look for task in tasks:* configuration
+                var subtask = context.Configuration.GetString(Constants.Configuration.Tasks + ":" + part);
+                if (string.IsNullOrEmpty(subtask))
+                {
+                    context.Trace.TraceError(Msg.I1006, Texts.Task_not_found__Skipping, part);
+                    continue;
+                }
+
+                GetTaskNames(context, taskNames, subtask);
+            }
+        }
+
+        [NotNull, ItemNotNull]
         protected virtual IEnumerable<ITask> GetTasks([NotNull] ITaskContext context, [NotNull, ItemNotNull] IEnumerable<string> taskNames)
         {
             var tasks = new List<ITask>();
@@ -98,7 +99,7 @@ namespace Sitecore.Pathfinder.Tasks
                 if (task == null)
                 {
                     context.Trace.TraceError(Msg.I1006, Texts.Task_not_found__Skipping, taskName);
-                    return null;
+                    continue;
                 }
 
                 tasks.Add(task);
@@ -147,12 +148,6 @@ namespace Sitecore.Pathfinder.Tasks
             }
 
             var tasks = GetTasks(context, taskNames);
-            if (tasks == null)
-            {
-                PauseAfterRun();
-                return;
-            }
-
             foreach (var task in tasks)
             {
                 RunTask(context, task);

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Json
 {
@@ -71,12 +72,44 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Json
                     {
                         case JsonToken.None:
                             throw new FormatException(Json.Resources.FormatError_UnexpectedEnd(jsonTextReader.Path, jsonTextReader.LineNumber, jsonTextReader.LinePosition));
+                        case JsonToken.StartArray:
+                            var arrayKey = GetKey(jsonTextReader.Path);
+                            if (dictionary.ContainsKey(arrayKey))
+                            {
+                                throw new FormatException(Json.Resources.FormatError_KeyIsDuplicated(arrayKey));
+                            }
+
+                            var arrayValues = new List<string>();
+                            while(jsonTextReader.Read() && jsonTextReader.TokenType != JsonToken.EndArray)
+                            {
+                                SkipComments(jsonTextReader);
+                                switch (jsonTextReader.TokenType)
+                                {
+                                    case JsonToken.Raw:
+                                    case JsonToken.Integer:
+                                    case JsonToken.Float:
+                                    case JsonToken.String:
+                                    case JsonToken.Boolean:
+                                    case JsonToken.Null:
+                                    case JsonToken.Bytes:
+                                        arrayValues.Add(jsonTextReader.Value.ToString().Escape(','));
+                                        break;
+                                    case JsonToken.EndArray:
+                                        break;
+                                    default:
+                                        throw new FormatException(Json.Resources.FormatError_UnsupportedJSONToken(jsonTextReader.TokenType, jsonTextReader.Path, jsonTextReader.LineNumber, jsonTextReader.LinePosition));
+                                }
+                            }
+
+                            dictionary[arrayKey] = string.Join(",", arrayValues);
+                            goto case JsonToken.PropertyName;
                         case JsonToken.StartObject:
                             ++num;
                             goto case JsonToken.PropertyName;
                         case JsonToken.PropertyName:
                             jsonTextReader.Read();
                             continue;
+
                         case JsonToken.Raw:
                         case JsonToken.Integer:
                         case JsonToken.Float:
@@ -84,13 +117,13 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Json
                         case JsonToken.Boolean:
                         case JsonToken.Null:
                         case JsonToken.Bytes:
-                            var key = GetKey(jsonTextReader.Path);
-                            if (dictionary.ContainsKey(key))
+                            var propertyKey = GetKey(jsonTextReader.Path);
+                            if (dictionary.ContainsKey(propertyKey))
                             {
-                                throw new FormatException(Json.Resources.FormatError_KeyIsDuplicated(key));
+                                throw new FormatException(Json.Resources.FormatError_KeyIsDuplicated(propertyKey));
                             }
 
-                            dictionary[key] = jsonTextReader.Value.ToString();
+                            dictionary[propertyKey] = jsonTextReader.Value.ToString();
                             goto case JsonToken.PropertyName;
                         case JsonToken.EndObject:
                             --num;
@@ -108,28 +141,33 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Json
         [NotNull]
         private string GetKey([NotNull] string jsonPath)
         {
+            if (jsonPath.IndexOf("['", StringComparison.Ordinal) < 0)
+            {
+                return jsonPath.Replace('.', ':');
+            }
+
             var stringList = new List<string>();
 
             int n;
             for (var startIndex1 = 0; startIndex1 < jsonPath.Length; startIndex1 = n + 2)
             {
-                var startIndex2 = jsonPath.IndexOf("['", startIndex1);
+                var startIndex2 = jsonPath.IndexOf("['", startIndex1, StringComparison.Ordinal);
                 if (startIndex2 < 0)
                 {
-                    stringList.Add(jsonPath.Substring(startIndex1).Replace('.', ':'));
+                    stringList.Add(jsonPath.Substring(startIndex1));
                     break;
                 }
 
                 if (startIndex2 > startIndex1)
                 {
-                    stringList.Add(jsonPath.Substring(startIndex1, startIndex2 - startIndex1).Replace('.', ':'));
+                    stringList.Add(jsonPath.Substring(startIndex1, startIndex2 - startIndex1));
                 }
 
-                n = jsonPath.IndexOf("']", startIndex2);
+                n = jsonPath.IndexOf("']", startIndex2, StringComparison.Ordinal);
                 stringList.Add(jsonPath.Substring(startIndex2 + 2, n - startIndex2 - 2));
             }
 
-            return string.Join(string.Empty, stringList);
+            return string.Join(":", stringList);
         }
 
         private void SkipComments([NotNull] JsonReader reader)

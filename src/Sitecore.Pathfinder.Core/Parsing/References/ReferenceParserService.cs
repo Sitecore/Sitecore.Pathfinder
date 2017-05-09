@@ -113,7 +113,7 @@ namespace Sitecore.Pathfinder.Parsing.References
             }
 
             // check for fields that contains paths
-            var pathFields = Configuration.GetStringList(Constants.Configuration.CheckProject.PathFields);
+            var pathFields = Configuration.GetArray(Constants.Configuration.CheckProject.PathFields);
             if (pathFields.Contains(field.FieldId.Format()))
             {
                 var sourceProperty = field.ValueProperty;

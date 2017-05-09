@@ -67,7 +67,7 @@ namespace Sitecore.Pathfinder.ProjectTrees
 
         public virtual bool IsDirectoryIncluded(string directory)
         {
-            return true;
+            return !PathMatcher.IsExcluded(directory);
         }
 
         public virtual bool IsFileIncluded(string fileName)

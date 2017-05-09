@@ -24,6 +24,20 @@ namespace Sitecore.Pathfinder.IO
         [NotNull, ItemNotNull]
         protected List<Regex> Includes { get; }
 
+        public bool IsExcluded([NotNull] string fileName)
+        {
+            fileName = PathHelper.NormalizeFilePath(fileName);
+
+            return Excludes.Any(exclude => exclude.IsMatch(fileName));
+        }
+
+        public bool IsIncluded([NotNull] string fileName)
+        {
+            fileName = PathHelper.NormalizeFilePath(fileName);
+
+            return Includes.Any(include => include.IsMatch(fileName));
+        }
+
         public bool IsMatch([NotNull] string fileName)
         {
             fileName = PathHelper.NormalizeFilePath(fileName);

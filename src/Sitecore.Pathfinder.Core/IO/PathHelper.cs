@@ -28,9 +28,14 @@ namespace Sitecore.Pathfinder.IO
                 return f1;
             }
 
+            if (f2.StartsWith(".\\", StringComparison.Ordinal))
+            {
+                f2 = f2.Mid(2);
+            }
+
             var path = Path.Combine(f1, f2);
 
-            if (path.IndexOf("..", StringComparison.OrdinalIgnoreCase) >= 0)
+            if (path.IndexOf("..", StringComparison.Ordinal) >= 0)
             {
                 path = Path.GetFullPath(path);
             }

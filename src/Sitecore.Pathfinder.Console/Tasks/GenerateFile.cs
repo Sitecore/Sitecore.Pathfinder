@@ -80,7 +80,7 @@ namespace Sitecore.Pathfinder.Tasks
             var macros = new Dictionary<string, string>();
             macros["name"] = FileName;
 
-            var textFileExtensions = context.Configuration.GetStringList(Constants.Configuration.GenerateFile.TextFileExtensions);
+            var textFileExtensions = context.Configuration.GetArray(Constants.Configuration.GenerateFile.TextFileExtensions);
 
             Copy(context, GeneratorDirectory, Directory.GetCurrentDirectory(), macros, textFileExtensions);
         }

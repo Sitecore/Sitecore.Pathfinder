@@ -195,14 +195,11 @@ namespace Sitecore.Pathfinder.Checking
             }
 
             // apply project roles
-            var projectRoles = Configuration.GetStringList(Constants.Configuration.ProjectRole);
+            var projectRoles = Configuration.GetArray(Constants.Configuration.ProjectRole);
             foreach (var projectRole in projectRoles)
             {
                 EnableCheckers(context, Checkers, Constants.Configuration.ProjectRoleCheckers + ":" + projectRole);
             }
-
-            // apply check-project:checkers
-            EnableCheckers(context, Checkers, Constants.Configuration.CheckProject.Checkers);
 
             // apply checkers
             EnableCheckers(context, Checkers, Constants.Configuration.Checkers);

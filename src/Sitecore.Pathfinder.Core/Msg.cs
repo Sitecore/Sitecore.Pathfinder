@@ -489,6 +489,7 @@ namespace Sitecore.Pathfinder
         public const int I1011 = I + 11;
 
         public const int I1012 = I + 12;
+        public const int I1013 = I + 13;
 
         private const int M = 6000;
 

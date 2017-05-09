@@ -159,17 +159,27 @@ namespace Sitecore.Pathfinder.Projects
         {
             foreach (var pair in Configuration.GetSubKeys(Constants.Configuration.References))
             {
-                var id = Configuration.GetString(Constants.Configuration.References + ":" + pair.Key + ":id");
-                var version = Configuration.GetString(Constants.Configuration.References + ":" + pair.Key + ":version");
-                var fileName = Configuration.GetString(Constants.Configuration.References + ":" + pair.Key);
+                var id = pair.Key;
+                var version = Configuration.GetString(Constants.Configuration.References + ":" + id);
+                var fileName = PathHelper.NormalizeFilePath(id);
 
-                if (!string.IsNullOrEmpty(fileName))
+                if (fileName.IndexOf('\\') >= 0)
                 {
                     fileName = PathHelper.Combine(project.ProjectDirectory, fileName);
+                    if (!fileName.EndsWith(".exports.xml", StringComparison.OrdinalIgnoreCase))
+                    {
+                        fileName += "." + version + ".exports.xml";
+                    }
                 }
                 else
                 {
                     fileName = Path.Combine(Configuration.GetToolsDirectory() + "\\files\\references", id + "." + version + ".exports.xml");
+                }
+
+                if (!FileSystem.FileExists(fileName))
+                {
+                    Trace.TraceError(Msg.I1013, "Reference file not found", fileName);
+                    continue;
                 }
 
                 ImportReferencesFromFile(project, fileName);

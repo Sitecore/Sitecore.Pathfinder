@@ -11,7 +11,8 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    [Export(typeof(ITask)), Shared]
+    // todo: reenable generate-code when a suitable T4 processor for .NET core has been found
+    // [Export(typeof(ITask)), Shared]
     public class GenerateCode : BuildTaskBase
     {
         [ImportingConstructor]

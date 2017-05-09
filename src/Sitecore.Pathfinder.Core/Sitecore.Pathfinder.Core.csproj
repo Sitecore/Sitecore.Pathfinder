@@ -3,6 +3,17 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <RootNamespace>Sitecore.Pathfinder</RootNamespace>
+    <Version>0.9.0</Version>
+    <Description>Core assembly for Sitecore Pathfinder</Description>
+    <Copyright>Copyright (C) 2017 by Sitecore A/S</Copyright>
+    <PackageProjectUrl>https://github.com/JakobChristensen/Sitecore.Pathfinder</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/JakobChristensen/Sitecore.Pathfinder</RepositoryUrl>
+    <PackageTags>Sitecore</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <TreatSpecificWarningsAsErrors />
   </PropertyGroup>
 
   <ItemGroup>
