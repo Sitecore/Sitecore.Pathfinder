@@ -1,5 +1,5 @@
 using System;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -8,6 +8,7 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
+    [Export(typeof(ITask)), Shared]
     public class InitHabitat : BuildTaskBase
     {
         [ImportingConstructor]

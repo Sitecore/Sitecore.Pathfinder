@@ -1,8 +1,0 @@
-﻿Item :
-    Name     : <%= itemName %>
-    Template : /sitecore/templates/Sample/Sample Item
-    ItemPath : <%= itemPath %>
-    - Fields :
-        - Field : Title
-          Value : Hello friend
-        - Text  : Welcome here

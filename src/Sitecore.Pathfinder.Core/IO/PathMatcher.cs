@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -24,6 +24,20 @@ namespace Sitecore.Pathfinder.IO
         [NotNull, ItemNotNull]
         protected List<Regex> Includes { get; }
 
+        public bool IsExcluded([NotNull] string fileName)
+        {
+            fileName = PathHelper.NormalizeFilePath(fileName);
+
+            return Excludes.Any(exclude => exclude.IsMatch(fileName));
+        }
+
+        public bool IsIncluded([NotNull] string fileName)
+        {
+            fileName = PathHelper.NormalizeFilePath(fileName);
+
+            return Includes.Any(include => include.IsMatch(fileName));
+        }
+
         public bool IsMatch([NotNull] string fileName)
         {
             fileName = PathHelper.NormalizeFilePath(fileName);
@@ -34,6 +48,8 @@ namespace Sitecore.Pathfinder.IO
         [NotNull]
         protected Regex GetRegex([NotNull] string wildcard)
         {
+            wildcard = wildcard.Trim();
+
             // todo: consider caching this
             var pattern = '^' + Regex.Escape(wildcard).Replace("/", @"\\").Replace(@"\*\*\\", ".*").Replace(@"\*\*", ".*").Replace(@"\*", @"[^\\]*(\\)?").Replace(@"\?", ".") + '$';
 

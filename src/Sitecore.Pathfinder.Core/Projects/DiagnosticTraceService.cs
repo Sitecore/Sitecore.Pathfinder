@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Linq;
 using Sitecore.Pathfinder.Configuration;
@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Projects
 
         protected override void Write(int msg, string text, Severity severity, string fileName, TextSpan span, string details)
         {
-            if (IgnoredMessages.Contains(msg))
+            if (IgnoredMessages.Contains("SCC" + msg))
             {
                 return;
             }

@@ -1,4 +1,7 @@
+// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
+
 using System;
+using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Diagnostics;
@@ -11,6 +14,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
 {
+    [Export(typeof(ILayoutFileCompiler)), Shared]
     public class AspxLayoutFileCompiler : LayoutFileCompilerBase
     {
         public override bool CanCompile(ICompileContext context, IProjectItem projectItem, SourceProperty<string> property)
@@ -48,6 +52,7 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
                 context.Trace.TraceError(Msg.C1060, Texts.Rendering_reference_not_found, TraceHelper.GetTextNode(property), value);
                 return;
             }
+
             if (renderings.Count > 1)
             {
                 context.Trace.TraceError(Msg.C1062, Texts.Ambiguous_file_name, TraceHelper.GetTextNode(property), value);

@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.IO;
 using Newtonsoft.Json;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
@@ -13,6 +13,7 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
+    [Export(typeof(ITask)), Shared]
     public class NewSolution : NewProjectTaskBase
     {
         [ImportingConstructor]
@@ -28,31 +29,34 @@ namespace Sitecore.Pathfinder.Tasks
         {
             CreateProject(context, NewProjectOptions.CopyConfig | NewProjectOptions.CopyCmd);
 
-            var solutionDirectory = Configuration.GetProjectDirectory();
+            var solutionDirectory = context.ProjectDirectory;
 
             var projectDirectories = new List<string>();
             GetProjectDirectories(solutionDirectory, projectDirectories);
 
             var solutionFileName = Path.Combine(solutionDirectory, "scconfig.solution.json");
 
-            using (var writer = new StreamWriter(solutionFileName))
+            using (var stream = new FileStream(solutionFileName, FileMode.Create))
             {
-                var output = new JsonTextWriter(writer);
-                output.Formatting = Formatting.Indented;
-
-                output.WriteStartObject();
-                output.WriteStartObject("projects");
-
-                foreach (var projectDirectory in projectDirectories)
+                using (var writer = new StreamWriter(stream))
                 {
-                    var relativePath = PathHelper.NormalizeItemPath(PathHelper.UnmapPath(solutionDirectory, projectDirectory));
-                    var projectName = relativePath.Replace("/", ".");
+                    var output = new JsonTextWriter(writer);
+                    output.Formatting = Formatting.Indented;
 
-                    output.WritePropertyString(projectName, relativePath);
+                    output.WriteStartObject();
+                    output.WriteStartObject("projects");
+
+                    foreach (var projectDirectory in projectDirectories)
+                    {
+                        var relativePath = PathHelper.NormalizeItemPath(PathHelper.UnmapPath(solutionDirectory, projectDirectory));
+                        var projectName = relativePath.Replace("/", ".");
+
+                        output.WritePropertyString(projectName, relativePath);
+                    }
+
+                    output.WriteEndObject();
+                    output.WriteEndObject();
                 }
-
-                output.WriteEndObject();
-                output.WriteEndObject();
             }
         }
 

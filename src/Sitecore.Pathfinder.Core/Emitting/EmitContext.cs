@@ -1,32 +1,27 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
+using System.Collections.Generic;
+using System.Composition;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Emitting
 {
-    [Export(typeof(IEmitContext)), PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export(typeof(IEmitContext))]
     public class EmitContext : IEmitContext
     {
         [ImportingConstructor]
-        public EmitContext([NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystemService)
+        public EmitContext([NotNull] IConfiguration configuration, [NotNull] ITraceService traceService)
         {
             Configuration = configuration;
             Trace = traceService;
-            FileSystem = fileSystemService;
-
-            ForceUpdate = Configuration.GetBool(Constants.Configuration.BuildProject.ForceUpdate, true);
         }
 
         public IConfiguration Configuration { get; }
 
-        public IFileSystemService FileSystem { get; }
-
-        public bool ForceUpdate { get; }
+        public ICollection<OutputFile> OutputFiles { get; } = new List<OutputFile>();
 
         public IProjectBase Project { get; private set; }
 

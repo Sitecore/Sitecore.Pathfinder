@@ -1,6 +1,6 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
-using System;
+using System.Composition;
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
@@ -8,6 +8,7 @@ using Sitecore.Pathfinder.Extensibility.Pipelines;
 
 namespace Sitecore.Pathfinder.ProjectTrees.Pipelines.GetProjectTreeChildren
 {
+    [Export(typeof(IPipelineProcessor)), Shared]
     public class GetDirectoryChildren : PipelineProcessorBase<GetProjectTreeChildrenPipeline>
     {
         public GetDirectoryChildren() : base(1000)
@@ -36,7 +37,7 @@ namespace Sitecore.Pathfinder.ProjectTrees.Pipelines.GetProjectTreeChildren
                 var directoryName = Path.GetFileName(dir);
                 Assert.IsNotNullOrEmpty(directoryName);
 
-                if (!projectTree.IgnoreDirectories.Contains(directoryName, StringComparer.OrdinalIgnoreCase))
+                if (projectTree.IsDirectoryIncluded(directoryName))
                 {
                     pipeline.Children.Add(new DirectoryProjectTreeItem(projectTree, dir));
                 }
@@ -47,7 +48,7 @@ namespace Sitecore.Pathfinder.ProjectTrees.Pipelines.GetProjectTreeChildren
                 var name = Path.GetFileName(fileName);
                 Assert.IsNotNullOrEmpty(name);
 
-                if (!projectTree.IgnoreFileNames.Contains(name, StringComparer.OrdinalIgnoreCase))
+                if (projectTree.IsFileIncluded(name))
                 {
                     pipeline.Children.Add(new FileProjectTreeItem(projectTree, fileName));
                 }

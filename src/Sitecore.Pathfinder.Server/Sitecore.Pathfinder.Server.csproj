@@ -56,6 +56,9 @@
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="NuGet.Core, Version=2.14.0.832, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NuGet.Core.2.14.0\lib\net40-Client\NuGet.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Sitecore.ContentSearch, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Sitecore.ContentSearch.NoReferences.8.2.160729\lib\NET452\Sitecore.ContentSearch.dll</HintPath>
       <Private>False</Private>
@@ -126,119 +129,44 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="sitecore\shell\client\Applications\Pathfinder\img\document_text.png" />
-    <Content Include="sitecore\shell\client\Applications\Pathfinder\img\folder.png" />
-    <Content Include="sitecore\shell\client\Applications\Pathfinder\img\folder_document2.png" />
-    <Content Include="sitecore\shell\client\Applications\Pathfinder\packageDefaultIcon-50x50.png" />
-    <Content Include="sitecore\shell\client\Applications\Pathfinder\Packages.css" />
-    <Content Include="sitecore\shell\client\Applications\Pathfinder\PackageSources.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Checking\Checkers\SecurityCheckers.cs" />
-    <Compile Include="Checking\WebsiteChecker.cs" />
-    <Compile Include="Checking\Checkers\WorkflowCheckers.cs" />
-    <Compile Include="Checking\Checkers\WebConfigCheckers.cs" />
-    <Compile Include="Checking\Checkers\WebsiteCheckers.cs" />
-    <Compile Include="Checking\ItemSourceFile.cs" />
-    <Compile Include="Checking\WebsiteProject.cs" />
-    <Compile Include="Controllers\PathfinderCheckWebsiteController.cs" />
-    <Compile Include="Controllers\PathfinderInstalledController.cs" />
-    <Compile Include="Controllers\PathfinderInstallPackageController.cs" />
-    <Compile Include="Controllers\PathfinderPackageController.cs" />
-    <Compile Include="Controllers\PathfinderPackagesController.cs" />
-    <Compile Include="Controllers\PathfinderPublishController.cs" />
-    <Compile Include="Controllers\PathfinderTaskController.cs" />
-    <Compile Include="Emitting\EmitterService.cs" />
-    <Compile Include="Emitting\Emitters\ItemEmitter.cs" />
-    <Compile Include="Emitting\ThreeWayMergeProjectEmitter.cs" />
-    <Compile Include="Emitting\ITrackingProjectEmitter.cs" />
-    <Compile Include="Emitting\Writers\FieldWriter.cs" />
+    <Compile Include="Diagnostics\EmitException.cs" />
+    <Compile Include="Diagnostics\RetryableEmitException.cs" />
+    <Compile Include="Extensions\DatabaseExtensions.cs" />
+    <Compile Include="Hooks\InitializeSitecorePathfinder.cs" />
     <Compile Include="Emitting\Writers\ItemWriter.cs" />
-    <Compile Include="Emitting\Writers\TemplateWriter.cs" />
+    <Compile Include="Emitting\Nuget\NugetPackageInstaller.cs" />
+    <Compile Include="Emitting\PackageWatcher.cs" />
+    <Compile Include="Emitting\Parsing\Field.cs" />
+    <Compile Include="Emitting\Parsing\Item.cs" />
+    <Compile Include="Emitting\Parsing\Template.cs" />
+    <Compile Include="Emitting\Parsing\TemplateField.cs" />
+    <Compile Include="Emitting\Parsing\TemplateSection.cs" />
+    <Compile Include="Emitting\SitecorePackages\SitecorePackageInstaller.cs" />
     <Compile Include="Emitting\Writers\TemplateFieldWriter.cs" />
     <Compile Include="Emitting\Writers\TemplateSectionWriter.cs" />
-    <Compile Include="Emitting\Emitters\MediaFileEmitter.cs" />
-    <Compile Include="Emitting\Emitters\SerializationFileEmitter.cs" />
-    <Compile Include="Emitting\Emitters\TemplateEmitter.cs" />
-    <Compile Include="Extensions\ControllerExtensions.cs" />
-    <Compile Include="Extensions\DatabaseExtensions.cs" />
-    <Compile Include="Extensions\ItemExtensions.cs" />
-    <Compile Include="Importing\FieldImporters\CheckboxValueImporter.cs" />
-    <Compile Include="Importing\ItemImporters\IItemImporterService.cs" />
-    <Compile Include="Importing\ItemImporters\ItemImporterService.cs" />
-    <Compile Include="Tasks\BackgroundJob.cs" />
-    <Compile Include="Mvc\Presentation\IRenderer.cs" />
-    <Compile Include="Mvc\Presentation\RendererWrapper.cs" />
-    <Compile Include="Mvc\Response\GetRenderer\GetRenderer.cs" />
-    <Compile Include="Mvc\Response\GetRenderer\GetRendererPipeline.cs" />
-    <Compile Include="Pipelines\Loader\LoaderPipeline.cs" />
-    <Compile Include="Pipelines\Loader\MapRoutes.cs" />
-    <Compile Include="Pipelines\Loader\ExecuteLoaderPipeline.cs" />
+    <Compile Include="Emitting\Writers\TemplateWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServerConstants.cs" />
-    <Compile Include="Tasks\CheckWebsite.cs" />
-    <Compile Include="Tasks\ClearCaches.cs" />
-    <Compile Include="Tasks\ImportWebsite.cs" />
-    <Compile Include="Importing\FieldImporters\FieldValueImporterBase.cs" />
-    <Compile Include="Importing\FieldImporters\IdFieldValueImporter.cs" />
-    <Compile Include="Importing\FieldImporters\IFieldValueImporter.cs" />
-    <Compile Include="Importing\FieldImporters\ImageFieldValueImporter.cs" />
-    <Compile Include="Importing\FieldImporters\LayoutFieldValueImporter.cs" />
-    <Compile Include="Importing\FieldImporters\LinkFieldValueImporter.cs" />
-    <Compile Include="Tasks\IWebsiteTaskContext.cs" />
-    <Compile Include="Tasks\SynchronizeWebsites\ISynchronizer.cs" />
-    <Compile Include="Tasks\SynchronizeWebsites\SynchronizeWebsite.cs" />
-    <Compile Include="Tasks\SynchronizeWebsites\ContentXmlSynchronizer.cs" />
-    <Compile Include="Tasks\SynchronizeWebsites\JsonLayoutSchemaSynchronizer.cs" />
-    <Compile Include="Tasks\SynchronizeWebsites\XsdLayoutSchemaSynchronizer.cs" />
-    <Compile Include="Tasks\SynchronizeWebsites\XsdContentSchemaSynchronizer.cs" />
-    <Compile Include="Tasks\InstallProject.cs" />
-    <Compile Include="Tasks\IWebsiteTask.cs" />
-    <Compile Include="Tasks\ResetWebsite.cs" />
-    <Compile Include="Tasks\TroubleshootWebsites\1000 - RebuildClassicIndexesTroubleshooter.cs" />
-    <Compile Include="Tasks\TroubleshootWebsites\2000 - RepublishMasterDatabaseTroubleshooter.cs" />
-    <Compile Include="Tasks\TroubleshootWebsites\3000 - RebuildLinkDatabaseTroubleshooter.cs" />
-    <Compile Include="Tasks\TroubleshootWebsites\TroubleshootWebsite.cs" />
-    <Compile Include="Tasks\WebsiteTaskBase.cs" />
-    <Compile Include="Tasks\WebsiteTaskContext.cs" />
-    <Compile Include="Tasks\WriteWebsiteExports.cs" />
-    <Compile Include="WebsiteHost.cs" />
+    <Compile Include="sitecore modules\shell\pathfinder\export-database.ashx.cs">
+      <DependentUpon>export-database.ashx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Features\Sitecore.Pathfinder.NuGet\Sitecore.Pathfinder.NuGet.csproj">
-      <Project>{a67c9ed1-949c-49d8-8d1a-b3774f38c128}</Project>
-      <Name>Sitecore.Pathfinder.NuGet</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Sitecore.Pathfinder.Core\Sitecore.Pathfinder.Core.csproj">
-      <Project>{c674eebf-bbf6-4eda-af5b-a4d58d0be986}</Project>
-      <Name>Sitecore.Pathfinder.Core</Name>
-      <Private>False</Private>
-    </ProjectReference>
+    <None Include="Properties\PublishProfiles\PublishToPathfinder.pubxml" />
+    <Content Include="Sitecore.Pathfinder.package" />
+    <Content Include="sitecore modules\shell\pathfinder\export-database.ashx" />
+    <Content Include="Sitecore.Pathfinder.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="web.config" />
-    <Content Include="sitecore\shell\client\Applications\Pathfinder\InstalledPackages.cshtml" />
-    <Content Include="sitecore\shell\client\Applications\Pathfinder\Packages.cshtml" />
-    <Content Include="sitecore\shell\client\Applications\Pathfinder\CheckWebsite.cshtml" />
-    <None Include="sitecore\shell\client\Applications\Pathfinder\web.config">
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="sitecore\shell\client\Applications\Pathfinder\Package.cshtml" />
-    <Content Include="Readme.md" />
-    <None Include="web.Debug.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
-    <None Include="web.Release.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
+    <Content Include="App_Config\include\Sitecore.Pathfinder\Sitecore.Pathfinder.config" />
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.6\analyzers\dotnet\cs\CodeContractNullability.dll" />
-    <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.6\analyzers\dotnet\cs\MsgPack.dll" />
+    <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.7\analyzers\dotnet\cs\CodeContractNullability.dll" />
+    <Analyzer Include="..\..\packages\ResharperCodeContractNullability.1.0.7\analyzers\dotnet\cs\MsgPack.dll" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

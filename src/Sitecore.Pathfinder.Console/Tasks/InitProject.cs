@@ -1,17 +1,17 @@
 // © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
-using System.Linq;
+using System.Composition;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
+    [Export(typeof(ITask)), Shared]
     public class InitProject : NewProjectTaskBase
     {
         [ImportingConstructor]
-        protected InitProject([NotNull] IConsoleService console, [NotNull] IFileSystemService fileSystem) : base(console, fileSystem, "init-project")
+        public InitProject([NotNull] IConsoleService console, [NotNull] IFileSystemService fileSystem) : base(console, fileSystem, "init-project")
         {
             Alias = "init";
             Shortcut = "i";
@@ -27,6 +27,7 @@ namespace Sitecore.Pathfinder.Tasks
                 FileSystem.CreateDirectory(projectDirectory);
             }
 
+            /*
             if (FileSystem.GetFiles(projectDirectory).Any() || FileSystem.GetDirectories(projectDirectory).Any())
             {
                 Console.WriteLine();
@@ -37,9 +38,10 @@ namespace Sitecore.Pathfinder.Tasks
                     return;
                 }
             }
+            */
 
             // CreateProject(context, NewProjectOptions.CreateEditor | NewProjectOptions.CreateStarterKit | NewProjectOptions.CreateTaskRunner | NewProjectOptions.CopyProjectTemplate);
-            CreateProject(context, NewProjectOptions.CreateStarterKit | NewProjectOptions.CopyProjectTemplate);
+            CreateProject(context, NewProjectOptions.CopyConfig);
         }
     }
 }

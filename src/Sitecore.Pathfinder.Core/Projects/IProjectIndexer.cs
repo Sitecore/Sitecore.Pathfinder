@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -20,14 +20,8 @@ namespace Sitecore.Pathfinder.Projects
 
         void Add([NotNull] IProjectItem projectItem);
 
-        [NotNull, ItemNotNull]
-        IEnumerable<IReference> FindUsages([NotNull] string qualifiedName);
-
         [CanBeNull]
         T FindQualifiedItem<T>(Guid guid) where T : class, IProjectItem;
-
-        [CanBeNull]
-        T FirstOrDefault<T>([NotNull] Database database, Guid guid) where T : DatabaseProjectItem;
 
         [CanBeNull]
         T FindQualifiedItem<T>([NotNull] string qualifiedName) where T : class, IProjectItem;
@@ -38,13 +32,11 @@ namespace Sitecore.Pathfinder.Projects
         [CanBeNull]
         T FindQualifiedItem<T>([NotNull] IProjectItemUri uri) where T : class, IProjectItem;
 
-        void Remove([NotNull] IProjectItem projectItem);
-
         [NotNull, ItemNotNull]
-        IEnumerable<T> Where<T>([NotNull] ISourceFile sourceFile) where T : class, IProjectItem;
+        IEnumerable<IReference> FindUsages([NotNull] string qualifiedName);
 
-        [NotNull, ItemNotNull]
-        IEnumerable<Item> GetChildren([NotNull] Item item);
+        [CanBeNull]
+        T FirstOrDefault<T>([NotNull] Database database, Guid guid) where T : DatabaseProjectItem;
 
         [NotNull, ItemNotNull]
         IEnumerable<T> GetByQualifiedName<T>([NotNull] string qualifiedName) where T : class, IProjectItem;
@@ -57,5 +49,13 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull, ItemNotNull]
         IEnumerable<T> GetByShortName<T>([NotNull] Database database, [NotNull] string shortName) where T : DatabaseProjectItem;
+
+        [NotNull, ItemNotNull]
+        IEnumerable<Item> GetChildren([NotNull] Item item);
+
+        void Remove([NotNull] IProjectItem projectItem);
+
+        [NotNull, ItemNotNull]
+        IEnumerable<T> Where<T>([NotNull] ISourceFile sourceFile) where T : class, IProjectItem;
     }
 }

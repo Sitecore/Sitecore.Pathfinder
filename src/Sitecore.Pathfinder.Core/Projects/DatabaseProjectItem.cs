@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -18,6 +18,9 @@ namespace Sitecore.Pathfinder.Projects
 
         [CanBeNull]
         private ID _id;
+
+        [CanBeNull]
+        private int? itemPathLevel;
 
         protected DatabaseProjectItem([NotNull] IProjectBase project, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, new ProjectItemUri(databaseName, guid))
         {
@@ -74,6 +77,8 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         public SourceProperty<string> ItemNameProperty { get; }
 
+        public int ItemPathLevel => itemPathLevel ?? (int)(itemPathLevel = ItemIdOrPath.Split('/').Length);
+
         /// <summary>The name of the item or template. Same as ItemName and ShortName.</summary>
         [NotNull, Obsolete("Use ItemName instead", false)]
         public string Name => ItemName;
@@ -85,6 +90,26 @@ namespace Sitecore.Pathfinder.Projects
         public override ISnapshot Snapshot => SourceTextNode.Snapshot;
 
         public ITextNode SourceTextNode => _sourceTextNodes.FirstOrDefault() ?? TextNode.Empty;
+
+        [NotNull]
+        protected DatabaseProjectItem AddAdditionalSourceTextNode([NotNull] ITextNode textNode)
+        {
+            if (!_sourceTextNodes.Contains(textNode))
+            {
+                _sourceTextNodes.Add(textNode);
+            }
+
+            return this;
+        }
+
+        [NotNull]
+        protected DatabaseProjectItem AddSourceTextNode([NotNull] ITextNode textNode)
+        {
+            _sourceTextNodes.Remove(textNode);
+            _sourceTextNodes.Insert(0, textNode);
+
+            return this;
+        }
 
         protected override void Merge(IProjectItem newProjectItem, bool overwrite)
         {
@@ -114,29 +139,9 @@ namespace Sitecore.Pathfinder.Projects
             }
 
             IsEmittable = IsEmittable || databaseProjectItem.IsEmittable;
-            IsImport = IsImport || databaseProjectItem.IsImport;
+            IsImport = IsImport && databaseProjectItem.IsImport;
 
             References.AddRange(databaseProjectItem.References);
-        }
-
-        [NotNull]
-        protected DatabaseProjectItem AddSourceTextNode([NotNull] ITextNode textNode)
-        {
-            _sourceTextNodes.Remove(textNode);
-            _sourceTextNodes.Insert(0, textNode);
-
-            return this;
-        }
-
-        [NotNull]
-        protected DatabaseProjectItem AddAdditionalSourceTextNode([NotNull] ITextNode textNode)
-        {
-            if (!_sourceTextNodes.Contains(textNode))
-            {
-                _sourceTextNodes.Add(textNode);
-            }
-
-            return this;
         }
     }
 }

@@ -1,15 +1,17 @@
 // © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Languages.Media;
 using Sitecore.Pathfinder.Languages.Renderings;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    public class ShowStatus : BuildTaskBase, IIgnoreAbortedTask
+    [Export(typeof(ITask)), Shared]
+    public class ShowStatus : BuildTaskBase
     {
         [ImportingConstructor]
         public ShowStatus([NotNull] IHostService host, [NotNull] IConsoleService console) : base("show-status")
@@ -39,7 +41,20 @@ namespace Sitecore.Pathfinder.Tasks
             var media = project.ProjectItems.OfType<MediaFile>().Count();
             var files = project.Files.Count();
 
-            context.Trace.WriteLine($"Project metrics: {items} items, {templates} templates, {media} media files, {renderings} renderings, {files} files");
+            var diagnostics = project.Diagnostics.ToArray();
+
+            var errors = diagnostics.Count(d => d.Severity == Severity.Error);
+            var warnings = diagnostics.Count(d => d.Severity == Severity.Warning);
+            var messages = diagnostics.Count(d => d.Severity == Severity.Information);
+
+            var treatWarningsAsErrors = context.Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
+            if (treatWarningsAsErrors)
+            {
+                errors += warnings;
+                warnings = 0;
+            }
+
+            context.Trace.WriteLine($"Project metrics: {items} items, {templates} templates, {media} media files, {renderings} renderings, {files} files, {errors} errors, {warnings} warnings, {messages} messages");
 
             context.ErrorCode = project.Diagnostics.Any(d => d.Severity == Severity.Warning || d.Severity == Severity.Error) ? 1 : 0;
 

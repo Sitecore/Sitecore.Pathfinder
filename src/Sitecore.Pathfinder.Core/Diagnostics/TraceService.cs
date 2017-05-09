@@ -1,8 +1,8 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Extensions;
@@ -19,7 +19,7 @@ namespace Sitecore.Pathfinder.Diagnostics
         Error
     }
 
-    [Export(typeof(ITraceService))]
+    [Export(typeof(ITraceService)), Shared]
     public class TraceService : ITraceService
     {
         [ImportingConstructor]
@@ -28,10 +28,14 @@ namespace Sitecore.Pathfinder.Diagnostics
             Configuration = configuration;
             Console = console;
 
-            var ignoredMessages = new List<int>();
+            var ignoredMessages = new List<string>();
+
             foreach (var pair in configuration.GetSubKeys("messages"))
             {
-                ignoredMessages.AddRange(configuration.GetStringList("messages:" + pair.Key + ":disabled").Select(int.Parse));
+                if (configuration.GetString("messages:" + pair.Key) == "disabled")
+                {
+                    ignoredMessages.Add(pair.Key);
+                }
             }
 
             IgnoredMessages = ignoredMessages;
@@ -44,7 +48,7 @@ namespace Sitecore.Pathfinder.Diagnostics
         protected IConsoleService Console { get; }
 
         [NotNull]
-        protected IEnumerable<int> IgnoredMessages { get; }
+        protected IEnumerable<string> IgnoredMessages { get; }
 
         public void TraceError(string text, string details = "")
         {
@@ -168,7 +172,7 @@ namespace Sitecore.Pathfinder.Diagnostics
 
         protected virtual void Write(int msg, [NotNull] string text, Severity severity, [NotNull] string fileName, TextSpan textSpan, [NotNull] string details)
         {
-            if (IgnoredMessages.Contains(msg))
+            if (IgnoredMessages.Contains("SCC" + msg))
             {
                 return;
             }

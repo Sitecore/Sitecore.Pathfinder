@@ -1,0 +1,30 @@
+<SampleItem TemplateName="Sample Item" Name="Home" ItemPath="/sitecore/content/Xml/Home" Database="master">
+    <Fields>
+        <en>
+            <Title>Sitecore</Title>
+            <Text>Welcome to Sitecore</Text>
+        </en>
+        <da>
+            <Title>Sitecore</Title>
+            <Text>Velkommen til Sitecore</Text>
+        </da>
+    </Fields>
+    <Items>
+        <Folder Name="Articles">
+            <Items>
+                <SampleItem TemplateName="Sample Item" Name="TestingPathfinder">
+                    <Fields>
+                        <en>
+                            <Title>How to test Pathfinder</Title>
+                            <Text>Testing is easy</Text>
+                        </en>
+                        <da>
+                            <Title>Sådan tester man Pathfinder</Title>
+                            <Text>Det er nemt at teste</Text>
+                        </da>
+                    </Fields>
+                </SampleItem>
+            </Items>
+        </Folder>
+    </Items>
+</SampleItem>

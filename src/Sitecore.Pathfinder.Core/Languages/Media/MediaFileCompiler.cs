@@ -1,7 +1,7 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
+using System.Composition;
 using System.IO;
-using System.Linq;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -12,6 +12,7 @@ using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Languages.Media
 {
+    [Export(typeof(ICompiler)), Shared]
     public class MediaFileCompiler : CompilerBase
     {
         public MediaFileCompiler() : base(1000)

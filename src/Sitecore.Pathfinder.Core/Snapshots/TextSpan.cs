@@ -1,8 +1,7 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Diagnostics;
 using System.Linq;
-using System.Xml;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 
@@ -18,13 +17,6 @@ namespace Sitecore.Pathfinder.Snapshots
             LineNumber = lineNumber;
             LinePosition = linePosition;
             Length = length;
-        }
-
-        public TextSpan([NotNull] IXmlLineInfo lineInfo)
-        {
-            LineNumber = lineInfo.LineNumber;
-            LinePosition = lineInfo.LinePosition;
-            Length = 0;
         }
 
         public int Length { get; }

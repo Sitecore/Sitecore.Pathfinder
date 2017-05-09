@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -8,13 +8,12 @@ using System.Linq;
 using Newtonsoft.Json;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel.Json;
-using Sitecore.Pathfinder.Configuration.ConfigurationModel.Xml;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Extensions
 {
     [Flags]
-    public enum GetStringListOptions
+    public enum GetArrayOptions
     {
         UseKey = 0x01,
 
@@ -47,25 +46,47 @@ namespace Sitecore.Pathfinder.Extensions
                 case ".user":
                     configuration.AddJsonFile(path);
                     break;
-
-                case ".xml":
-                    configuration.AddXmlFile(path);
-                    break;
             }
 
             return configuration;
+        }
+
+        [NotNull, ItemNotNull]
+        public static string[] GetArray([NotNull] this IConfiguration configuration, [NotNull] string key, GetArrayOptions options = GetArrayOptions.UseValue)
+        {
+            var value = string.Empty;
+
+            if (configuration.GetSubKeys(key).Any())
+            {
+                foreach (var subkey in configuration.GetSubKeys(key))
+                {
+                    if (value.Length > 0)
+                    {
+                        value += ",";
+                    }
+
+                    if ((options & GetArrayOptions.UseValue) == GetArrayOptions.UseValue)
+                    {
+                        value += configuration.Get(key + ":" + subkey.Key);
+                    }
+                    else if ((options & GetArrayOptions.UseKey) == GetArrayOptions.UseKey)
+                    {
+                        value += subkey.Key;
+                    }
+                }
+            }
+            else
+            {
+                value = configuration.GetString(key);
+            }
+
+            return value.Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToArray();
         }
 
         public static bool GetBool([NotNull] this IConfiguration configuration, [NotNull] string key, bool defaultValue = false)
         {
             string value;
             return configuration.TryGet(key, out value) ? string.Equals(value, "true", StringComparison.OrdinalIgnoreCase) : defaultValue;
-        }
-
-        [NotNull]
-        public static string GetCommandLineArg([NotNull] this IConfiguration configuration, int position)
-        {
-            return configuration.GetString("arg" + position);
         }
 
         [NotNull, ItemNotNull]
@@ -122,6 +143,12 @@ namespace Sitecore.Pathfinder.Extensions
             }
 
             return args.ToArray();
+        }
+
+        [NotNull]
+        public static string GetCommandLineArg([NotNull] this IConfiguration configuration, int position)
+        {
+            return configuration.GetString("arg" + position);
         }
 
         [NotNull]
@@ -186,7 +213,7 @@ namespace Sitecore.Pathfinder.Extensions
                     break;
                 }
 
-                var replace = value.Mid(n + 1, e - n - 1);                               
+                var replace = value.Mid(n + 1, e - n - 1);
                 string with;
                 switch (replace.ToLowerInvariant())
                 {
@@ -197,6 +224,7 @@ namespace Sitecore.Pathfinder.Extensions
                         with = configuration.GetProjectDirectory();
                         break;
                     default:
+
                         // danger: might be recursive
                         with = configuration.GetString(replace);
                         break;
@@ -206,38 +234,6 @@ namespace Sitecore.Pathfinder.Extensions
             }
 
             return value;
-        }
-
-        [NotNull, ItemNotNull]
-        public static IEnumerable<string> GetStringList([NotNull] this IConfiguration configuration, [NotNull] string key, GetStringListOptions options = GetStringListOptions.UseValue)
-        {
-            var value = string.Empty;
-
-            if (configuration.GetSubKeys(key).Any())
-            {
-                foreach (var subkey in configuration.GetSubKeys(key))
-                {
-                    if (value.Length > 0)
-                    {
-                        value += ",";
-                    }
-
-                    if ((options & GetStringListOptions.UseValue) == GetStringListOptions.UseValue)
-                    {
-                        value += configuration.Get(key + ":" + subkey.Key);
-                    }
-                    else if ((options & GetStringListOptions.UseKey) == GetStringListOptions.UseKey)
-                    {
-                        value += subkey.Key;
-                    }
-                }
-            }
-            else
-            {
-                value = configuration.GetString(key);
-            }
-
-            return value.Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToList();
         }
 
         [NotNull]

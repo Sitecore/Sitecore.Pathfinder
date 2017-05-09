@@ -9,9 +9,6 @@ namespace Sitecore.Pathfinder.Projects.References
     [DebuggerDisplay("{GetType().Name,nq}: {ReferenceText}")]
     public class Reference : IReference
     {
-        [NotNull]
-        private readonly object _syncRoot = new object();
-
         public Reference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceProperty, [NotNull] string referenceText, [NotNull] string databaseName)
         {
             // the reference text might be different from the source property value. 

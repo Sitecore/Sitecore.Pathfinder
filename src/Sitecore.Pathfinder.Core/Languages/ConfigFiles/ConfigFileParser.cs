@@ -1,18 +1,20 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Composition;
 using System.IO;
 using Sitecore.Pathfinder.Parsing;
 
 namespace Sitecore.Pathfinder.Languages.ConfigFiles
 {
+    [Export(typeof(IParser)), Shared]
     public class ConfigFileParser : ParserBase
     {
+        private const string AssemblyConfigFileExtension = ".dll.config";
+
         private const string ConfigFileExtension = ".config";
 
         private const string DisabledConfigFileExtension = ".config.disabled";
-
-        private const string AssemblyConfigFileExtension = ".dll.config";
 
         private const string ExampleConfigFileExtension = ".config.example";
 

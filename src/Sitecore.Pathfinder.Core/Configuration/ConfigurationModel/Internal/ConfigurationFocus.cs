@@ -28,6 +28,7 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Internal
             {
                 return _root.Get(_prefix.Substring(0, _prefix.Length - 1));
             }
+
             return _root.Get(_prefix + key);
         }
 
@@ -57,6 +58,7 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel.Internal
             {
                 return _root.TryGet(_prefix.Substring(0, _prefix.Length - 1), out value);
             }
+
             return _root.TryGet(_prefix + key, out value);
         }
     }

@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using Newtonsoft.Json;
 using Sitecore.Pathfinder.Diagnostics;
@@ -7,6 +7,18 @@ namespace Sitecore.Pathfinder.Extensions
 {
     public static class JsonTextWriterExtensions
     {
+        public static void WriteArrayString([NotNull] this JsonTextWriter jsonTextWriter, [NotNull] string arrayName, [ItemNotNull, NotNull] params string[] values)
+        {
+            jsonTextWriter.WritePropertyName(arrayName);
+            jsonTextWriter.WriteStartArray();
+            foreach (var value in values)
+            {
+                jsonTextWriter.WriteValue(value);
+            }
+
+            jsonTextWriter.WriteEndArray();
+        }
+
         public static void WriteObjectString([NotNull] this JsonTextWriter jsonTextWriter, [NotNull] string propertyName, [NotNull] string propertyName2, [NotNull] string value)
         {
             jsonTextWriter.WritePropertyName(propertyName);
@@ -18,6 +30,12 @@ namespace Sitecore.Pathfinder.Extensions
         }
 
         public static void WritePropertyString([NotNull] this JsonTextWriter jsonTextWriter, [NotNull] string propertyName, [NotNull] string value)
+        {
+            jsonTextWriter.WritePropertyName(propertyName);
+            jsonTextWriter.WriteValue(value);
+        }
+
+        public static void WritePropertyString([NotNull] this JsonTextWriter jsonTextWriter, [NotNull] string propertyName, bool value)
         {
             jsonTextWriter.WritePropertyName(propertyName);
             jsonTextWriter.WriteValue(value);
@@ -56,10 +74,13 @@ namespace Sitecore.Pathfinder.Extensions
             jsonTextWriter.WriteValue(value);
         }
 
-        public static void WritePropertyString([NotNull] this JsonTextWriter jsonTextWriter, [NotNull] string propertyName, bool value)
+        public static void WriteSchemaPropertyObject([NotNull] this JsonTextWriter jsonTextWriter, [NotNull] string propertyName, [NotNull] string objectPropertyName, [NotNull] string objectPropertyValue)
         {
             jsonTextWriter.WritePropertyName(propertyName);
-            jsonTextWriter.WriteValue(value);
+            jsonTextWriter.WriteStartObject();
+            jsonTextWriter.WritePropertyName(objectPropertyName);
+            jsonTextWriter.WriteValue(objectPropertyValue);
+            jsonTextWriter.WriteEndObject();
         }
 
         public static void WriteStartArray([NotNull] this JsonTextWriter jsonTextWriter, [NotNull] string propertyName)

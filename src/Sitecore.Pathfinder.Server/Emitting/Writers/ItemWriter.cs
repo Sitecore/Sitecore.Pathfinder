@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -8,61 +8,45 @@ using Sitecore.Data;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
+using Sitecore.Extensions.StringExtensions;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.IO;
-using Sitecore.Pathfinder.Projects.Items;
-using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Emitting.Writers
 {
     public class ItemWriter
     {
-        [Diagnostics.NotNull]
-        public string DatabaseName { get; set; } = string.Empty;
-
-        [Diagnostics.NotNull, ItemNotNull]
-        public ICollection<FieldWriter> Fields { get; } = new List<FieldWriter>();
-
-        public Guid Guid { get; set; } = Guid.Empty;
-
-        [Diagnostics.NotNull]
-        public string ItemIdOrPath { get; set; } = string.Empty;
-
-        [Diagnostics.NotNull]
-        public string ItemName { get; set; } = string.Empty;
-
-        [Diagnostics.NotNull]
-        public ISnapshot Snapshot { get; set; }
-
-        public int Sortorder { get; set; }
-
-        [Diagnostics.NotNull]
-        public string TemplateIdOrPath { get; set; } = string.Empty;
-
         [NotNull]
         private static readonly object SyncRoot = new object();
 
-        [Diagnostics.NotNull]
-        public virtual Data.Items.Item Write([Diagnostics.NotNull] IEmitContext context)
+        public ItemWriter([NotNull] Parsing.Item item)
         {
-            var database = Factory.GetDatabase(DatabaseName);
+            Item = item;
+        }
+
+        [NotNull]
+        public Parsing.Item Item { get; }
+
+        [NotNull]
+        public virtual Item Write()
+        {
+            var database = Factory.GetDatabase(Item.Database);
             if (database == null)
             {
-                throw new EmitException(Msg.E1023, Texts.Database_not_found, Snapshot, DatabaseName);
+                throw new EmitException("Database not found", Item.Database);
             }
 
-            var existingItem = database.GetItem(ItemIdOrPath);
+            var existingItem = database.GetItem(Item.Path);
 
-            Data.Items.Item item;
-            Data.Items.Item templateItem;
+            Item item;
+            Item templateItem;
 
             // make sure items are only create once
             // todo: hackish!
             lock (SyncRoot)
             {
-                item = database.GetItem(new ID(Guid));
-                templateItem = database.GetItem(TemplateIdOrPath);
+                item = database.GetItem(new ID(Item.Id));
+                templateItem = database.GetItem(Item.Template);
                 if (templateItem == null && item != null)
                 {
                     templateItem = item.Template;
@@ -70,20 +54,20 @@ namespace Sitecore.Pathfinder.Emitting.Writers
 
                 if (templateItem == null)
                 {
-                    throw new RetryableEmitException(Msg.E1024, Texts.Template_missing, Snapshot, TemplateIdOrPath);
+                    throw new RetryableEmitException("Template missing", Item.Template);
                 }
 
                 if (item == null)
                 {
-                    item = CreateNewItem(context, database, templateItem);
+                    item = CreateNewItem(database, templateItem);
                 }
             }
 
-            UpdateItem(context, item, templateItem);
+            UpdateItem(item, templateItem);
 
             if (existingItem != null && existingItem.ID != item.ID)
             {
-                foreach (Data.Items.Item child in existingItem.Children)
+                foreach (Item child in existingItem.Children)
                 {
                     child.MoveTo(item);
                 }
@@ -94,82 +78,79 @@ namespace Sitecore.Pathfinder.Emitting.Writers
             return item;
         }
 
-        [Diagnostics.NotNull]
-        protected virtual Data.Items.Item CreateNewItem([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] Database database, [Diagnostics.NotNull] Data.Items.Item templateItem)
+        [NotNull]
+        protected virtual Item CreateNewItem([NotNull] Database database, [NotNull] Item templateItem)
         {
-            var parentItemPath = PathHelper.GetItemParentPath(ItemIdOrPath);
+            var parentItemPath = GetItemParentPath(Item.Path);
             if (string.IsNullOrEmpty(parentItemPath))
             {
-                throw new EmitException(Msg.E1025, Texts.Parent_not_found, Snapshot, ItemIdOrPath);
+                throw new EmitException("Parent not found", Item.Path);
             }
 
             var parentItem = database.CreateItemPathSynchronized(parentItemPath);
             if (parentItem == null)
             {
-                throw new RetryableEmitException(Msg.E1026, Texts.Failed_to_create_item_path, Snapshot, parentItemPath);
+                throw new RetryableEmitException("Failed to create Item Path", parentItemPath);
             }
 
-            var item = database.AddFromTemplateSynchronized(ItemName, templateItem.ID, parentItem, new ID(Guid));
+            var item = database.AddFromTemplateSynchronized(Item.Name, templateItem.ID, parentItem, new ID(Item.Id));
             if (item == null)
             {
-                throw new RetryableEmitException(Msg.E1027, Texts.Failed_to_create_item_path, Snapshot, ItemIdOrPath);
+                throw new RetryableEmitException("Failed to create item path", Item.Path);
             }
 
-            ItemIdOrPath = item.ID.ToString();
+            Item.Path = item.ID.ToString();
 
             return item;
         }
 
-        protected virtual void SetFieldValue([NotNull] IEmitContext context, [Diagnostics.NotNull] Data.Items.Item item, [Diagnostics.NotNull] FieldWriter fieldWriter, [NotNull] string fieldName)
+        protected virtual string GetItemParentPath(string itemPath)
         {
-            var fieldValue = fieldWriter.DatabaseValue.Trim();
-            var field = item.Fields[fieldName];
+            var n = itemPath.LastIndexOf('/');
+            return n >= 0 ? itemPath.Left(n) : itemPath;
+        }
 
-            var trackingProjectEmitter = context.ProjectEmitter as ITrackingProjectEmitter;
-            if (trackingProjectEmitter != null)
-            {
-                if (!trackingProjectEmitter.CanSetFieldValue(item, fieldWriter, fieldValue))
-                {
-                    return;
-                }
-            }
+        protected virtual void SetFieldValue([NotNull] Item item, [NotNull] Parsing.Field field, [NotNull] string fieldName)
+        {
+            var fieldValue = field.Value.Trim();
+            var f = item.Fields[fieldName];
 
             if (!item.Editing.IsEditing)
             {
                 item.Editing.BeginEdit();
             }
 
-            if (!string.Equals(field.Type, "layout", StringComparison.OrdinalIgnoreCase))
+            if (!string.Equals(f.Type, "layout", StringComparison.OrdinalIgnoreCase))
             {
-                field.Value = fieldValue;
+                f.Value = fieldValue;
             }
             else
             {
                 // support layout deltas - may throw a MissingMethod exception on older Sitecore systems
                 try
                 {
-                    SetLayoutFieldValue(field, fieldValue);
+                    SetLayoutFieldValue(f, fieldValue);
                 }
                 catch
                 {
-                    field.Value = fieldValue;
+                    f.Value = fieldValue;
                 }
             }
         }
 
-        protected virtual void SetLayoutFieldValue([Diagnostics.NotNull] Data.Fields.Field field, [Diagnostics.NotNull] string value)
+        protected virtual void SetLayoutFieldValue([NotNull] Field field, [NotNull] string value)
         {
             // handle layout deltas
             var layoutField = new LayoutField(field);
             layoutField.Value = value;
         }
 
-        protected virtual void UpdateItem([Diagnostics.NotNull] IEmitContext context, [Diagnostics.NotNull] Data.Items.Item item, [Diagnostics.NotNull] Data.Items.Item templateItem)
+        protected virtual void UpdateItem([NotNull] Item item, [NotNull] Item templateItem)
         {
             // move
-            if (!string.Equals(item.Paths.Path, ItemIdOrPath, StringComparison.OrdinalIgnoreCase) && !string.Equals(item.ID.ToString(), ItemIdOrPath, StringComparison.OrdinalIgnoreCase))
+            if (!string.Equals(item.Paths.Path, Item.Path, StringComparison.OrdinalIgnoreCase) && !string.Equals(item.ID.ToString(), Item.Path, StringComparison.OrdinalIgnoreCase))
             {
-                var parentItemPath = PathHelper.GetItemParentPath(ItemIdOrPath);
+                var parentItemPath = GetItemParentPath(Item.Path);
 
                 var parentItem = item.Database.GetItem(parentItemPath);
                 if (parentItem == null)
@@ -177,7 +158,7 @@ namespace Sitecore.Pathfinder.Emitting.Writers
                     parentItem = item.Database.CreateItemPathSynchronized(parentItemPath);
                     if (parentItem == null)
                     {
-                        throw new RetryableEmitException(Msg.E1028, Texts.Could_not_create_item, Snapshot, parentItemPath);
+                        throw new RetryableEmitException("Could not create item", parentItemPath);
                     }
                 }
 
@@ -187,9 +168,9 @@ namespace Sitecore.Pathfinder.Emitting.Writers
             // rename and update fields
             using (new EditContext(item))
             {
-                if (item.Name != ItemName)
+                if (item.Name != Item.Name)
                 {
-                    item.Name = ItemName;
+                    item.Name = Item.Name;
                 }
 
                 if (item.TemplateID != templateItem.ID)
@@ -200,57 +181,46 @@ namespace Sitecore.Pathfinder.Emitting.Writers
                     }
                     catch (Exception ex)
                     {
-                        throw new RetryableEmitException(Msg.E1029, Texts.Failed_to_change_template_of_the_item, Snapshot, ex.Message);
+                        throw new RetryableEmitException("Failed to change template of the item", ex.Message);
                     }
                 }
 
-                if (item.Appearance.Sortorder!= Sortorder)
+                if (item.Appearance.Sortorder != Item.Sortorder)
                 {
-                    item.Appearance.Sortorder = Sortorder;
+                    item.Appearance.Sortorder = Item.Sortorder;
                 }
 
-                foreach (var fieldWriter in Fields.Where(i => i.Language == Language.Undefined && i.Version == Projects.Items.Version.Undefined))
+                foreach (var field in Item.Fields.Where(i => string.IsNullOrEmpty(i.Language) && i.Version == 0))
                 {
-                    var fieldName = fieldWriter.FieldName;
-                    if (string.IsNullOrEmpty(fieldName))
-                    {
-                        fieldName = fieldWriter.FieldId.Format();
-                    }
+                    var fieldName = field.Name;
 
-                    SetFieldValue(context, item, fieldWriter, fieldName);
+                    SetFieldValue(item, field, fieldName);
                 }
-
-                item.UpdateProjectUniqueIds(context);
             }
 
-            var versionedItems = new List<Data.Items.Item>();
+            var versionedItems = new List<Item>();
 
-            foreach (var field in Fields.Where(i => i.Language != Language.Undefined || i.Version != Projects.Items.Version.Undefined))
+            foreach (var field in Item.Fields.Where(i => !string.IsNullOrEmpty(i.Language) || i.Version != 0))
             {
                 // language has already been validated
-                var language = LanguageManager.GetLanguage(field.Language.LanguageName, item.Database);
+                var language = LanguageManager.GetLanguage(field.Language, item.Database);
 
-                var versionedItem = versionedItems.FirstOrDefault(i => i.Language == language && i.Version.Number == field.Version.Number);
+                var versionedItem = versionedItems.FirstOrDefault(i => i.Language == language && i.Version.Number == field.Version);
                 if (versionedItem == null)
                 {
-                    versionedItem = item.Database.GetItem(item.ID, language, Data.Version.Parse(field.Version.Number));
+                    versionedItem = item.Database.GetItem(item.ID, language, Data.Version.Parse(field.Version));
                     if (versionedItem == null)
                     {
                         // todo: validate this before updating the item
-                        context.Trace.TraceError(Msg.E1006, Texts.Item_not_found, TraceHelper.GetTextNode(field.FieldNameProperty), $"language: {field.Language}, version; {field.Version}");
-                        continue;
+                        throw new RetryableEmitException("Item not found", $"language: {field.Language}, version; {field.Version}");
                     }
 
                     versionedItems.Add(versionedItem);
                 }
 
-                var fieldName = field.FieldName;
-                if (string.IsNullOrEmpty(fieldName))
-                {
-                    fieldName = field.FieldId.Format();
-                }
+                var fieldName = field.Name;
 
-                SetFieldValue(context, versionedItem, field, fieldName);
+                SetFieldValue(versionedItem, field, fieldName);
             }
 
             foreach (var i in versionedItems)

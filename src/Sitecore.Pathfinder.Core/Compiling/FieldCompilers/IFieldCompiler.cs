@@ -1,17 +1,15 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 {
-    [InheritedExport]
     public interface IFieldCompiler
     {
-        double Priority { get; }
-
         bool IsExclusive { get; }
+
+        double Priority { get; }
 
         bool CanCompile([NotNull] IFieldCompileContext context, [NotNull] Field field);
 

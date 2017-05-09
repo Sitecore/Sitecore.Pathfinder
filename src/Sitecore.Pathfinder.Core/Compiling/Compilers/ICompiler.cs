@@ -1,12 +1,10 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Compiling.Compilers
 {
-    [InheritedExport]
     public interface ICompiler
     {
         double Priority { get; }

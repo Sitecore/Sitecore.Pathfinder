@@ -1,15 +1,15 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Diagnostics
 {
-    [Export(typeof(IConsoleService))]
+    [Export(typeof(IConsoleService)), Shared]
     public class ConsoleService : IConsoleService
     {
         [ImportingConstructor]

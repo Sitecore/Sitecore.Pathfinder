@@ -1,8 +1,8 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.Linq;
-using System.Reflection;
+using System.Composition;
+using System.Runtime.Loader;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -12,6 +12,7 @@ using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Languages.BinFiles
 {
+    [Export(typeof(ICompiler)), Shared]
     public class BinFileCompiler : CompilerBase
     {
         public BinFileCompiler() : base(1000)
@@ -44,7 +45,7 @@ namespace Sitecore.Pathfinder.Languages.BinFiles
 
             try
             {
-                var assembly = Assembly.LoadFrom(binFile.Snapshot.SourceFile.AbsoluteFileName);
+                var assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(binFile.Snapshot.SourceFile.AbsoluteFileName);
 
                 foreach (var type in assembly.GetExportedTypes())
                 {

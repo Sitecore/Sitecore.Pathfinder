@@ -1,6 +1,7 @@
-﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 
@@ -39,6 +40,12 @@ namespace Sitecore.Pathfinder.Projects.Items
         {
             // todo: handle languages and versions
             return this.FirstOrDefault(f => f.FieldId == fieldId);
+        }
+
+        [ItemNotNull, NotNull]
+        public IEnumerable<Field> GetFields([NotNull] Language language, [NotNull] Version version)
+        {
+            return this.Where(f => f.TemplateField.Shared || !f.TemplateField.Shared && f.TemplateField.Unversioned && f.Language == language || !f.TemplateField.Shared && !f.TemplateField.Unversioned && f.Language == language && f.Version == version);
         }
 
         [NotNull]

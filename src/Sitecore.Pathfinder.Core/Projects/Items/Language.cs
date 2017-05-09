@@ -1,14 +1,11 @@
-﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
-using System;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Globalization;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Projects.Items
 {
-    [DebuggerDisplay("Language: {LanguageName}"), TypeConverter(typeof(StringToLanguageConverter))]
+    [DebuggerDisplay("Language: {{LanguageName}}")]
     public class Language
     {
         [NotNull]
@@ -68,19 +65,6 @@ namespace Sitecore.Pathfinder.Projects.Items
         protected bool Equals([NotNull] Language other)
         {
             return string.Equals(LanguageName, other.LanguageName);
-        }
-
-        private class StringToLanguageConverter : TypeConverter
-        {
-            public override bool CanConvertFrom([NotNull] ITypeDescriptorContext context, Type sourceType)
-            {
-                return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
-            }
-
-            public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
-            {
-                return value != null ? new Language(value.ToString()) : base.ConvertFrom(context, culture, value);
-            }
         }
     }
 }

@@ -1,13 +1,14 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.Diagnostics;
+using System.Composition;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using Sitecore.Pathfinder.Checking.Checkers;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 
@@ -26,20 +27,38 @@ namespace Sitecore.Pathfinder.Checking
         Error
     }
 
-    [Export(typeof(ICheckerService))]
+    [Export(typeof(ICheckerService)), Shared]
     public class CheckerService : ICheckerService
     {
         private const string BasedOn = "based-on";
 
         [ImportingConstructor]
-        public CheckerService([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull, ItemNotNull, ImportMany("Check")] IEnumerable<Func<ICheckerContext, IEnumerable<Diagnostic>>> checkers)
+        public CheckerService([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull, ItemNotNull, ImportMany] IEnumerable<IChecker> checkers)
         {
             Configuration = configuration;
             CompositionService = compositionService;
-            Checkers = checkers;
+
+            var list = new List<CheckerInfo>();
+
+            foreach (var checker in checkers)
+            {
+                foreach (var method in checker.GetType().GetMethods(BindingFlags.Public | BindingFlags.Instance))
+                {
+                    if (method.GetCustomAttribute<CheckAttribute>() != null)
+                    {
+                        var checkerInfo = new CheckerInfo(method.DeclaringType.Name, method.Name, context => method.Invoke(checker, new object[]
+                        {
+                            context
+                        }) as IEnumerable<Diagnostic>);
+                        list.Add(checkerInfo);
+                    }
+                }
+            }
+
+            Checkers = list;
         }
 
-        public IEnumerable<Func<ICheckerContext, IEnumerable<Diagnostic>>> Checkers { get; }
+        public IEnumerable<CheckerInfo> Checkers { get; }
 
         public int EnabledCheckersCount { get; protected set; }
 
@@ -67,9 +86,15 @@ namespace Sitecore.Pathfinder.Checking
             var treatWarningsAsErrors = Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
             var isMultiThreaded = Configuration.GetBool(Constants.Configuration.System.MultiThreaded, true);
 
-            var checkers = Checkers.Where(c => checkerNames.Contains(c.Method.Name)).Select(c => new CheckerInfo(c)).ToArray();
+            var checkers = Checkers.Where(c => checkerNames.Contains(c.Name)).ToArray();
 
             CheckProject(context, checkers, isMultiThreaded, treatWarningsAsErrors);
+        }
+
+        public virtual IEnumerable<CheckerInfo> GetEnabledCheckers()
+        {
+            var context = CompositionService.Resolve<ICheckerContext>();
+            return GetCheckers(context);
         }
 
         protected virtual void CheckProject([NotNull] ICheckerContext context, [NotNull, ItemNotNull] CheckerInfo[] checkers, bool isMultiThreaded, bool treatWarningsAsErrors)
@@ -92,12 +117,6 @@ namespace Sitecore.Pathfinder.Checking
                     TraceDiagnostics(context, checker, diagnostics, treatWarningsAsErrors);
                 }
             }
-        }
-
-        public virtual IEnumerable<Func<ICheckerContext, IEnumerable<Diagnostic>>> GetEnabledCheckers()
-        {
-            var context = CompositionService.Resolve<ICheckerContext>();
-            return GetCheckers(context).Select(c => c.Checker);
         }
 
         protected virtual void EnableCheckers([NotNull] ICheckerContext context, [NotNull, ItemNotNull] IEnumerable<CheckerInfo> checkers, [NotNull] string configurationKey)
@@ -169,28 +188,23 @@ namespace Sitecore.Pathfinder.Checking
         [NotNull, ItemNotNull]
         protected virtual IEnumerable<CheckerInfo> GetCheckers([NotNull] ICheckerContext context)
         {
-            var checkers = Checkers.Select(c => new CheckerInfo(c)).ToList();
-
-            foreach (var checker in checkers)
+            foreach (var checker in Checkers)
             {
                 context.Checkers[checker.Name] = CheckerSeverity.Default;
                 context.Checkers[checker.Category] = CheckerSeverity.Default;
             }
 
             // apply project roles
-            var projectRoles = Configuration.GetStringList(Constants.Configuration.ProjectRole);
+            var projectRoles = Configuration.GetArray(Constants.Configuration.ProjectRole);
             foreach (var projectRole in projectRoles)
             {
-                EnableCheckers(context, checkers, Constants.Configuration.ProjectRoleCheckers + ":" + projectRole);
+                EnableCheckers(context, Checkers, Constants.Configuration.ProjectRoleCheckers + ":" + projectRole);
             }
 
-            // apply check-project:checkers
-            EnableCheckers(context, checkers, Constants.Configuration.CheckProject.Checkers);
-
             // apply checkers
-            EnableCheckers(context, checkers, Constants.Configuration.Checkers);
+            EnableCheckers(context, Checkers, Constants.Configuration.Checkers);
 
-            return checkers.Where(c => c.Severity != CheckerSeverity.Disabled).ToArray();
+            return Checkers.Where(c => c.Severity != CheckerSeverity.Disabled).ToArray();
         }
 
         protected virtual void TraceDiagnostics([NotNull] ICheckerContext context, [NotNull] CheckerInfo checker, [NotNull, ItemNotNull] Diagnostic[] diagnostics, bool treatWarningsAsErrors)
@@ -216,29 +230,6 @@ namespace Sitecore.Pathfinder.Checking
             }
 
             context.Trace.TraceDiagnostics(diagnostics, severity, treatWarningsAsErrors);
-        }
-
-        [DebuggerDisplay("{GetType().Name,nq}: {Name}, {Category}")]
-        protected class CheckerInfo
-        {
-            public CheckerInfo([NotNull] Func<ICheckerContext, IEnumerable<Diagnostic>> checker)
-            {
-                Checker = checker;
-
-                Name = checker.Method.Name;
-                Category = checker.Method.DeclaringType?.Name ?? string.Empty;
-            }
-
-            [NotNull]
-            public string Category { get; }
-
-            [NotNull]
-            public Func<ICheckerContext, IEnumerable<Diagnostic>> Checker { get; }
-
-            [NotNull]
-            public string Name { get; }
-
-            public CheckerSeverity Severity { get; set; } = CheckerSeverity.Default;
         }
     }
 }

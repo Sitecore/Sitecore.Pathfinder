@@ -2,16 +2,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Tasks.Building
 {
-    [Export(typeof(IBuildContext)), PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export(typeof(IBuildContext))]
     public class BuildContext : TaskContext, IBuildContext
     {
         [NotNull]
@@ -21,7 +20,7 @@ namespace Sitecore.Pathfinder.Tasks.Building
         private IProject _project;
 
         [ImportingConstructor]
-        public BuildContext([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] IConsoleService console, [NotNull] ITraceService traceService, [NotNull] IFileSystemService fileSystem) : base(configuration, compositionService, console, traceService, fileSystem)
+        public BuildContext([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] ITraceService traceService) : base(configuration, console, traceService)
         {
         }
 
@@ -29,15 +28,11 @@ namespace Sitecore.Pathfinder.Tasks.Building
 
         public bool IsProjectLoaded => _project != null;
 
-        public ICollection<IProjectItem> ModifiedProjectItems { get; } = new List<IProjectItem>();
-
         public ICollection<OutputFile> OutputFiles { get; } = new List<OutputFile>();
 
         public string ProjectDirectory => Configuration.GetProjectDirectory();
 
         public string ToolsDirectory => Configuration.GetToolsDirectory();
-
-        public string WebsiteDirectory => Configuration.GetWebsiteDirectory();
 
         public IProject LoadProject()
         {

@@ -1,9 +1,10 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
+using System.Collections.Generic;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Emitting
 {
@@ -12,10 +13,8 @@ namespace Sitecore.Pathfinder.Emitting
         [NotNull]
         IConfiguration Configuration { get; }
 
-        [NotNull]
-        IFileSystemService FileSystem { get; }
-
-        bool ForceUpdate { get; }
+        [NotNull, ItemNotNull]
+        ICollection<OutputFile> OutputFiles { get; }
 
         [NotNull]
         IProjectBase Project { get; }

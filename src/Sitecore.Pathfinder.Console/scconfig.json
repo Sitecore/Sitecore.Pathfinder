@@ -1,39 +1,95 @@
 {
+    // manifest
+    "author": "Sitecore Pathfinder",
+    "description": "",
+    "license": "",
+    "name": "",
+    "publisher": "",
+    "version": "1.0.0",
+
+    // website
+    "host-name": "",
     "website-directory": "",
     "data-folder-directory": "",
-    "host-name": "",
 
-    // default database name (master, core or web)
-    "database": "master",
+    "user-name": "",
+    "password": "",
 
-    // project configuration file
-    "project": "scconfig.json",
+    // list of files and directories
+    "files": {
+        "include": ["**/*"],
+        "exclude": [ 
+            "dist", "scconfig.json", ".vscode", ".git", "node_modules", "bower_components", "packages", "roslyn",
+            "includes", "Properties", "obj", "scc.cmd", "project.json", "readme.md", "web.config", "packages.config"
+        ]
+    },
+
+    // item content files globs
+    "items": {
+        "include": ["**/*.content.yaml", "**/*.content.json", "**/*.content.xml"],
+        "exclude": []
+    },
+
+    // output
+    "output": {
+        "directory": "./dist",
+        "format": "package",
+
+        "package": {
+            "filename": "Package.zip"
+        },
+
+        "nuget": {
+            "filename": "Package.nupkg",
+            "nuspec-filename": "",
+            "reset-website": {
+                // "/sitecore/content/home": "master"
+            
+            },
+            "publish-databases": {
+                // "master": "incremental"
+            
+            }
+        },
+        "unicorn": {
+            // subdirectory for unicorn files in output directory
+            "items-directory": "items",
+
+            // mirror Unicorn files from output directory to Unicorn directory in website
+            "mirror-items-to-unicorn-physicalRootPath": false,
+            "mirror-items-source-directory": "", // "/master/sitecore/content/items",
+            "unicorn-physicalRootPath": "", // "c:\\inetpub\\wwwroot\\Website\\Data\\Unicorn\\items",
+
+            // unicorn requires item files for all parent items - set to true to emit missing items
+            "emit-missing-items": false
+        }
+    },
 
     // the project roles enables/disables checkers and conventions - comma seperated list of roles
     "project-role": "default",
 
     // mapping between project files and website files and items
     "project-website-mappings": {
-        // files to copy to website
-        "content-files": ".js, .map, .css, .htm, .ashx, .asmx, .asax, .eot, .svg, .ttf, .woff, .woff2, .less, .php, .ico, .gif",
-
-        // comma separated list of files and directories to ignore
-        "ignore-directories": {
-            "default": ".vscode, .git, sitecore.filetemplates, sitecore.project, sitecore.tools, node_modules, bower_components, packages, roslyn, includes, Properties, obj"
-        },
-
-        "ignore-filenames": {
-            "default": "scc.cmd, project.json, readme.md, web.config, packages.config"
-        },
-
-        // default file search pattern
-        "search-pattern": "*",
-
         // fields to exclude when importing a website
-        "excluded-fields": "__Created, __Created by, __Owner, __Revision, __Updated, __Updated by, Blob, Originator, __PathfinderProjectUniqueIds",
+        "excluded-fields": [
+            "__Created", "__Created by", "__Owner", "__Revision", "__Updated", "__Updated by", "Blob", "Originator"
+        ],
 
         // mapping items and files to website when building a project
         "project-to-website": {
+            "master": {
+                "project-directory-to-item-path": "/items/master/sitecore => /sitecore",
+                "database": "master"
+            },
+
+            "core": {
+                "project-directory-to-item-path": "/items/core/sitecore => /sitecore",
+                "database": "core"
+            },
+
+            "root": {
+                "project-directory-to-website-directory": "/ => /"
+            }
         },
 
         // mapping items and files to project when importing a website
@@ -41,11 +97,21 @@
         }
     },
 
-    // tasks
-    "build-project": {
-        // default build pipeline - show help
-        "tasks": "help",
+    // external references
+    "references": {
+        "Sitecore.Master": "1.0.0",
+        "Sitecore.Core": "1.0.0"
+    },
 
+    // tasks 
+    "tasks": {
+        "build": ["test", "clean-output", "write-exports", "publish-project", "show-status"],
+        "test": ["check-project"]
+    },
+
+    // === TASKS ===
+
+    "build-project": {
         // bin files to compile for code generation
         "compile-bin-files": {
             "include": "",
@@ -75,45 +141,27 @@
             }
         },
 
-        // if true, all files are parsed and processed, otherwise only mapped files are processed (mapped files are specifed in project-website-mappings:project-to-website)
-        "parse-all-files": true,
-
         "renderings": {
             "create-items-for-partial-views": false
         },
 
-        // execute Sitecore validators after item or template has been updated
-        "run-sitecore-validators": true,
-
         // poor mans schema for item files
         "schema": {
-            "Item-attributes": "Name, Id, Database, ItemPath, ParentItemPath, Icon, Template, IsEmittable, IsExternalReference, Layout.File, Template.CreateFromFields, Template.Id, Template.Icon, Template.BaseTemplates, Template.ShortHelp, Template.LongHelp",
-            "Item-childnodes": "Fields, Unversioned-Fields, Versioned-Fields, Children, Template",
-            "Fields-childnodes": "Field, Unversioned, Versioned, Layout",
-            "Field-attributes": "Name, Value, Language, Version, Field.Type, Field.SortOrder, Field.Sharing, Field.Source, Field.ShortHelp, Field.LongHelp",
-            "Template-attributes": "Name, Id, Database, Path, Icon, IsEmittable, IsExternalReference, ShortHelp, LongHelp, BaseTemplates, Layout.File",
-            "Template-childnodes": "Section, Sections",
+            "Item-attributes": "Name, Id, TemplateName, Database, ItemPath, ParentItemPath, Icon, Template, IsEmittable, IsExternalReference, Template.CreateFromFields, Template.Id, Template.Icon, Template.BaseTemplates, Template.ShortHelp, Template.LongHelp",
+            "Item-childnodes": "Fields, Layout, Items",
+            "Field-childnodes": "",
+            "Field-attributes": "Name, Value, Field.Type, Field.SortOrder, Field.Sharing, Field.Source, Field.ShortHelp, Field.LongHelp",
+            "Template-attributes": "Name, Id, Database, ItemPath, Icon, IsEmittable, IsExternalReference, ShortHelp, LongHelp, BaseTemplates",
+            "Template-childnodes": "Section",
             "TemplateSection-attributes": "Name, Id, Icon",
             "TemplateSection-childnodes": "Field",
-            "TemplateField-attributes": "Name, Id, Type, Sharing, Source, ShortHelp, LongHelp, SortOrder, StandardValue",
-            "TemplateField-childnodes": "",
-            "Children-childnodes": "Item, Template"
-        },
-
-        // CLR type name to field type map
-        "type-name-to-field-type": {
-            "System.Boolean": "Checkbox",
-            "System.Int32": "Integer"
+            "TemplateField-attributes": "Name, Id, Type, Sharing, Source, ShortHelp, LongHelp, SortOrder",
+            "TemplateField-childnodes": ""
         }
     },
 
     "check-project": {
         "stop-on-errors": true,
-
-        // list of enabled and disabled checkers
-        "checkers": {
-            // "TemplateHelp": "disabled"
-        },
 
         // reference text that will not be treated as a reference
         "ignored-references": {
@@ -146,59 +194,12 @@
             "{1,2}": "equals"
         },
 
-        "ConfigurationChecker": {
-            "dev-assemblies": {
-                "Rainbow": "ignore",
-                "Unicorn": "ignore",
-                "Unicorn.Roles": "ignore",
-                "": "ignore"
-            }
-        },
-
-        "path-fields": "{E42081B6-8A95-4A11-89CE-DF70ED502F57},{51B435BC-F7B9-478A-9C51-52916AF96FF5},{78783F79-1411-4B91-958D-AD81F81E2485}",
+        "path-fields": [
+            "{E42081B6-8A95-4A11-89CE-DF70ED502F57}", "{51B435BC-F7B9-478A-9C51-52916AF96FF5}",
+            "{78783F79-1411-4B91-958D-AD81F81E2485}"
+        ],
 
         "treat-warnings-as-errors": false
-    },
-
-    "copy-dependencies": {
-        // source directory for dependency packages
-        "source-directory": "sitecore.project/packages"
-    },
-
-    "copy-package": {
-        // "*.nupkg" :  "..\\..\\packages"
-    },
-
-    "install-package": {
-        // specifies whether the project directories are added as feeds. This requires the website to have read access to the project directory.
-        "add-project-directories-as-feeds": true,
-
-        // checks that the version of the source bin file is larger than the destination before copying.
-        // when developing this should probably be combined with auto-incrementing the file version of the assembly.
-        // see http://stackoverflow.com/questions/356543/can-i-automatically-increment-the-file-build-version-when-using-visual-studio
-        "check-bin-file-version": false,
-
-        // checks that the size and timestamp of the source bin file is larger than the destination before copying
-        "check-bin-file-size-and-timestamp": true,
-
-        // deletes items, that are no longer in the project, from the website after installation
-        "delete-projects-items": false,
-
-        "install-url": "/sitecore/shell/client/Applications/Pathfinder/InstallPackage",
-
-        // marks each updated item with project unique id - this solves deletions and renames
-        "mark-items-with-pathfinder-project-unique-id": true,
-
-        // trace project diagnostics from server-side
-        "show-project-diagnostics": true,
-
-        // use three way merge for non-destructive updating - may take more time
-        "three-way-merge": false,
-
-        // overwrite field values in the database in three way merge - ensures database has values from project
-        "three-way-merge-overwrite-database": false,
-
-        "uninstall-directory": "../.uninstall"
     },
 
     "generate-code": {
@@ -214,7 +215,7 @@
         // comma separated list of filepaths to search for include files
         "t4-include-paths": "",
 
-        // comma separated list of filepaths to search for reference fifffles
+        // comma separated list of filepaths to search for reference
         "t4-reference-paths": "",
 
         // mapping between T4 template extensions and project item types.
@@ -226,7 +227,10 @@
     },
 
     "generate-file": {
-        "text-file-extensions": ".txt, .json, .xml, .yaml, .js, .html, .htm, .css, .cs, .config, .aspx, .ascx, .ashx"
+        "text-file-extensions": [
+            ".txt", ".json", ".xml", ".yaml", ".js", ".html", ".htm", ".css", ".cs", ".config", ".aspx", ".ascx",
+            ".ashx"
+        ]
     },
 
     "new-project": {
@@ -235,229 +239,28 @@
         "wwwroot-directory": "c:\\inetpub\\wwwroot"
     },
 
-    "pack-nuget": {
-        // base path relative to the project directory
-        "base-path": "",
-
-        // all .nuspec files in this directory are created
-        "directory": "sitecore.project",
-        "exclude": "",
-        "include": "**/*.nuspec",
-
-        // tokens to be replaced
-        "tokens": {
-            // "replace" : "with"
-        }
-    },
-
-    "pack-npm": {
-        "output-file": "sitecore.project/sitecore.tgz",
-        "package-json-file": "sitecore.project/package.json"
-    },
-
-    "publish-databases": {
-        "publish-url": "/sitecore/shell/client/Applications/Pathfinder/Publish"
-    },
-
-    "reset-website": {
-    },
-
-    "restore-packages": {
-        "directory": "files/packages"
-    },
-
-    "serve-website": {
-        "port": 4200,
-        "default-port": 4200
-    },
-
-    "start-website": {
-        // specifies the port, e.g. "http://localhost:3000/"
-        "port": 3000,
-
-        // specifies which files to watch for
-        "exclude": "**/*",
-        "include": "**/*"
-    },
-
-    "sync-website": {
-        "files": {
-            "system-0": {
-                "file": "sitecore.project/schemas/master.layout.schema.json",
-                "database": "master"
-            },
-            "system-1": {
-                "file": "sitecore.project/schemas/core.layout.schema.json",
-                "database": "core"
-            },
-            "system-2": {
-                "file": "sitecore.project/schemas/master.layout.xsd",
-                "database": "master",
-                "namespace": "http://www.sitecore.net/pathfinder/layouts/master"
-            },
-            "system-3": {
-                "file": "sitecore.project/schemas/core.layout.xsd",
-                "database": "core",
-                "namespace": "http://www.sitecore.net/pathfinder/layouts/core"
-            },
-            "system-4": {
-                "file": "sitecore.project/schemas/master.content.xsd",
-                "database": "master",
-                "namespace": "http://www.sitecore.net/pathfinder/content/master"
-            },
-            "system-5": {
-                "file": "sitecore.project/schemas/core.content.xsd",
-                "database": "core",
-                "namespace": "http://www.sitecore.net/pathfinder/content/core"
-            }
-        }
-    },
-
-    "watch-project": {
-        // specifies which files to watch for
-        "exclude": "**/*.nupkg",
-        "include": "**/*",
-
-        // specifies if the database should be published
-        "publish-database": true,
-        
-        // specifies if the website is reset before installing
-        "reset-website": false
-    },
-
     "write-exports": {
-        "filename": "sitecore.project/build/exports.xml",
+        "filename": "project.exports.xml",
         "fields-to-write": "Place Holders"
     },
 
-    "write-serialization": {
-        "directory": "sitecore.project/serialization",
-        "flat": false
-    },
-
-    "write-website-exports": {
-        "system-0": {
-            "filename": "sitecore.project/packages/Sitecore.Master.nupkg",
-            "queries": {
-                "system-0": {
-                    "query": "/sitecore",
-                    "database": "master"
-                },
-                "system-1": {
-                    "query": "/sitecore/*",
-                    "database": "master"
-                },
-                "system-2": {
-                    "query": "/sitecore/content/Home",
-                    "database": "master"
-                },
-                "system-3": {
-                    "query": "/sitecore/templates/System//*[@@templatekey='template']",
-                    "database": "master",
-                    "fields": "__Base template"
-                },
-                "system-4": {
-                    "query": "/sitecore/templates/Common//*[@@templatekey='template']",
-                    "database": "master",
-                    "fields": "__Base template"
-                },
-                "system-5": {
-                    "query": "/sitecore/templates/Sample/Sample Item",
-                    "database": "master",
-                    "fields": "__Base template"
-                },
-                "system-6": {
-                    "query": "/sitecore/layout//*[@@templatekey='view rendering' or @@templatekey='xsl rendering' or @@templatekey='sublayout' or @@templatekey='layout' or @@templatekey='device' or @@templatekey='webcontrol']",
-                    "database": "master",
-                    "fields": "Path, Place Holders, Parameters Template"
-                }
-            }
-        },
-
-        "system-1": {
-            "filename": "sitecore.project/packages/Sitecore.Core.nupkg",
-            "queries": {
-                "system-0": {
-                    "query": "/sitecore",
-                    "database": "core"
-                },
-                "system-1": {
-                    "query": "/sitecore/*",
-                    "database": "core"
-                },
-                "system-2": {
-                    "query": "/sitecore/client/Applications",
-                    "database": "core"
-                },
-                "system-3": {
-                    "query": "/sitecore/templates//*[@@templatekey='template']",
-                    "database": "core",
-                    "fields": "__Base template"
-                },
-                "system-4": {
-                    "query": "/sitecore/layout//*[@@templatekey='device']",
-                    "database": "core"
-                }
-            }
-        },
-
-        "system-2": {
-            "filename": "sitecore.project/packages/Sitecore.Speak.nupkg",
-            "queries": {
-                "system-1": {
-                    "query": "/sitecore/client/Speak//*[@@templatekey='template' or @@templatekey='view rendering' or @@templatekey='layout']",
-                    "database": "core",
-                    "fields": "Path, Place Holders, Parameters Template"
-                }
-            }
-        },
-
-        "system-3": {
-            "filename": "sitecore.project/packages/Sitecore.BusinessComponentLibrary.nupkg",
-            "queries": {
-                "system-1": {
-                    "query": "/sitecore/client/Business Component Library//*[@@templatekey='template' or @@templatekey='view rendering' or @@templatekey='layout']",
-                    "database": "core",
-                    "fields": "Path, Place Holders, Parameters Template"
-                }
-            }
-        },
-
-        "system-4": {
-            "filename": "sitecore.project/packages/Sitecore.Launchpad.nupkg",
-            "queries": {
-                "system-1": {
-                    "query": "/sitecore/client/Applications/Launchpad//*[@@templatekey='template' or @@templatekey='view rendering' or @@templatekey='layout']",
-                    "database": "core",
-                    "fields": "Path, Place Holders, Parameters Template"
-                }
-            }
-        }
-    },
+    // === SETTINGS ===
 
     // specifies the .NET CultureInfo name to use when parsing date/times and numbers
     "culture": "en-US",
 
+    // default database name (master, core or web)
+    "database": "master",
+
     // specifies the default language
     "default-language": "en",
-
-    // dependency packages
-    "dependencies": {
-        "sitecore-pathfinder-core": { "id": "Sitecore.Pathfinder.Core", "version": "1.0.0" }
-    },
 
     // if true, disable all extensions and just load Sitecore.Pathfinder.Core.dll
     "disable-extensions": false,
 
     // extensions directory and dynamically compiled extensions assembly filename
     "extensions": {
-        "project-extensions-directory": "sitecore.project/extensions",
-        "project-extensions-assembly-filename": "Sitecore.Pathfinder.Extensions.dll",
-
-        // directories to search for assemblies
-        "external-assembly-directories": {
-            // "fakedb" : "c:\\FakeDB"
-        } 
+        "project-extensions-directory": "sitecore.project/extensions"
     },
 
     // settings for habitat projects
@@ -491,23 +294,21 @@
     },
 
     "messages": {
-        "system-0": {
-            // comma separated list of message numbers to ignore
-            "disabled": ""
-        }
-    },
-
-    // NuGet source repositories
-    "nuget-repositories": {
-        // "nuget.org": "https://www.nuget.org/api/v2"
+        // "SCC1011": "disabled"
+    
     },
 
     // directories, that hold packages
     "packages": {
-        "include-packages-config-as-dependencies": true,
         "nuget-directory": "packages",
         "npm-directory": "node_modules"
     },
+
+    // project configuration file
+    "project": "scconfig.json",
+
+    // base unique id for item ID generation
+    "project-unique-id": "Sitecore.Pathfinder",
 
     // maps project role to checkers - checkers are enabled by default - possible values: "disabled", "enabled", "error", "warning", "information"
     "project-role-checkers": {
@@ -522,7 +323,9 @@
             "HabitatCheckers": "disabled",
             "PathfinderProjectCheckers": "disabled",
             "TemplateCheckers": "enabled",
-            "TemplateHelpCheckers": "disabled"
+            "TemplateHelpCheckers": "disabled",
+            "TemplateShouldHaveIcon": "disabled",
+            "DeleteUnusedTemplates": "disabled"
         },
 
         // Habitat project
@@ -564,13 +367,10 @@
         }
     },
 
-    "scripts": {
-        "file-extensions": ".ps1 .cmd .bat"
-    },
-
     // global search and replace tokens - case-sensitive
     "search-and-replace-tokens": {
         // "replace" : "with"
+    
     },
 
     "standard-template-fields": {
@@ -652,13 +452,9 @@
         "multi-threaded": true,
 
         // show stack trace on errors
-        "show-stack-trace": true,
+        "show-stack-trace": false,
 
         // show time spent by each task
-        "show-task-time": false,
-
-        "web-requests": {
-            "time-out": 300 // seconds
-        }
+        "show-task-time": false
     }
 }

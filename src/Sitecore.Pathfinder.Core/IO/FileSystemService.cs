@@ -1,15 +1,14 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
-using System.Xml.Serialization;
 using Sitecore.Pathfinder.Diagnostics;
 using ZetaLongPaths;
 using FileHelper = ZetaLongPaths.ZlpIOHelper;
@@ -32,7 +31,7 @@ namespace Sitecore.Pathfinder.IO
         {
             try
             {
-                Directory.GetAccessControl(directory);
+                // Directory.GetAccessControl(directory);
                 return true;
             }
             catch (UnauthorizedAccessException)
@@ -129,15 +128,6 @@ namespace Sitecore.Pathfinder.IO
             FileHelper.DeleteFile(fileName);
         }
 
-        public object Deserialize(string fileName, Type type)
-        {
-            var serializer = new XmlSerializer(type);
-            using (var stream = OpenRead(fileName))
-            {
-                return serializer.Deserialize(stream);
-            }
-        }
-
         public virtual bool DirectoryExists(string directory)
         {
             return FileHelper.DirectoryExists(directory);
@@ -220,7 +210,6 @@ namespace Sitecore.Pathfinder.IO
                     Arguments = $"\"{sourceDirectory.TrimEnd('\\')}\" \"{destinationDirectory.TrimEnd('\\')}\" /mir /njh /njs /ndl /nc /ns /np",
                     CreateNoWindow = true,
                     UseShellExecute = false,
-                    WindowStyle = ProcessWindowStyle.Hidden,
                     FileName = "robocopy"
                 }
             };
@@ -236,13 +225,13 @@ namespace Sitecore.Pathfinder.IO
 
         public StreamReader OpenStreamReader(string fileName)
         {
-            return new StreamReader(fileName);
+            return new StreamReader(new FileStream(fileName, FileMode.Open));
         }
 
         public StreamWriter OpenStreamWriter(string fileName)
         {
             // todo: there is a weird bug in ZetaLongPath that does not truncate the file
-            return new StreamWriter(fileName);
+            return new StreamWriter(new FileStream(fileName, FileMode.Create));
         }
 
         public Stream OpenWrite(string fileName)
@@ -270,16 +259,6 @@ namespace Sitecore.Pathfinder.IO
         public void Rename(string oldFileName, string newFileName)
         {
             FileHelper.MoveFile(oldFileName, newFileName);
-        }
-
-        public void Serialize(string fileName, Type type, object value)
-        {
-            // do not use ZetaLongPath - has weird bug
-            var serializer = new XmlSerializer(type);
-            using (var stream = new StreamWriter(fileName))
-            {
-                serializer.Serialize(stream, value);
-            }
         }
 
         public void Unzip(string zipFileName, string destinationDirectory)
@@ -330,10 +309,9 @@ namespace Sitecore.Pathfinder.IO
             {
                 StartInfo =
                 {
-                    UseShellExecute = true,
+                    UseShellExecute = false,
                     FileName = "xcopy.exe",
                     CreateNoWindow = true,
-                    WindowStyle = ProcessWindowStyle.Hidden,
                     Arguments = $"\"{sourceDirectory}\" \"{destinationDirectory}\" /E /I /Y"
                 }
             };

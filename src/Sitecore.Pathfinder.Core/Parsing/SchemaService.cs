@@ -1,7 +1,7 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Parsing
 
             foreach (var pair in Configuration.GetSubKeys("build-project:schema"))
             {
-                var attributes = configuration.GetStringList("build-project:schema:" + pair.Key);
+                var attributes = configuration.GetArray("build-project:schema:" + pair.Key);
                 _schema[pair.Key] = new HashSet<string>(attributes);
             }
         }

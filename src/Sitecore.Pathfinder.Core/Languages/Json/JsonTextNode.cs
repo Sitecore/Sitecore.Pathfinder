@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using System.Linq;
@@ -14,17 +14,17 @@ namespace Sitecore.Pathfinder.Languages.Json
         [NotNull, ItemCanBeNull]
         private JToken _jtoken;
 
-        public JsonTextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull, ItemCanBeNull]  JObject jobject) : base(snapshot, key, string.Empty, GetTextSpan(jobject))
+        public JsonTextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull, ItemCanBeNull] JObject jobject) : base(snapshot, key, string.Empty, GetTextSpan(jobject))
         {
             _jtoken = jobject;
         }
 
-        public JsonTextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull, ItemCanBeNull]  JArray jarray) : base(snapshot, key, string.Empty, GetTextSpan(jarray))
+        public JsonTextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull, ItemCanBeNull] JArray jarray) : base(snapshot, key, string.Empty, GetTextSpan(jarray))
         {
             _jtoken = jarray;
         }
 
-        public JsonTextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull, ItemCanBeNull]  JProperty jproperty) : base(snapshot, key, jproperty.Value?.ToString() ?? string.Empty, GetTextSpan(jproperty))
+        public JsonTextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull, ItemCanBeNull] JProperty jproperty) : base(snapshot, key, jproperty.Value?.ToString() ?? string.Empty, GetTextSpan(jproperty))
         {
             _jtoken = jproperty;
         }
@@ -40,7 +40,12 @@ namespace Sitecore.Pathfinder.Languages.Json
 
         public override ITextNode GetSnapshotLanguageSpecificChildNode(string name)
         {
-            return ChildNodes.FirstOrDefault(n => n.Key == name);
+            return this; // ChildNodes.FirstOrDefault(n => n.Key == name);
+        }
+
+        public override ITextNode GetAttribute(string attributeName)
+        {
+            return Attributes.FirstOrDefault(a => a.Key == attributeName);
         }
 
         private static TextSpan GetTextSpan([NotNull] IJsonLineInfo lineInfo)

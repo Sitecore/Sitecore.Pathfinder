@@ -1,10 +1,11 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
+using System.Composition;
 using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.BinFiles;
@@ -23,7 +24,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Configuration
 {
-    [Export(typeof(IFactoryService))]
+    [Export(typeof(IFactoryService)), Shared]
     public class FactoryService : IFactoryService
     {
         [ImportingConstructor]
@@ -77,7 +78,7 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual MediaFile MediaFile(IProjectBase project, ISnapshot snapshot, string databaseName, string itemName, string itemPath, string filePath) => new MediaFile(project, snapshot, databaseName, itemName, itemPath, filePath);
 
-        public virtual ProjectOptions ProjectOptions(string projectDirectory, string databaseName) => new ProjectOptions(projectDirectory, databaseName);
+        public virtual ProjectOptions ProjectOptions(string databaseName) => new ProjectOptions(databaseName);
 
         public virtual IReference Reference(IProjectItem projectItem, SourceProperty<string> sourceSourceProperty, string referenceText, string databaseName) => new Reference(projectItem, sourceSourceProperty, referenceText, databaseName);
 

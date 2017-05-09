@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using System.IO;
@@ -13,8 +13,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
     {
         protected class Tokenizer
         {
-            [ItemNotNull]
-            [NotNull]
+            [ItemNotNull, NotNull]
             private readonly string[] _lines;
 
             private int _lineNumber;

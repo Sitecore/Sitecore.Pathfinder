@@ -1,5 +1,6 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
+using System.Composition;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Parsing.Pipelines.ItemParserPipelines;
 using Sitecore.Pathfinder.Projects;
@@ -7,6 +8,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Parsing.LayoutFiles
 {
+    [Export(typeof(IPipelineProcessor)), Shared]
     public class LayoutFileItemParser : PipelineProcessorBase<ItemParserPipeline>
     {
         public const string LayoutFile = "Layout.File";

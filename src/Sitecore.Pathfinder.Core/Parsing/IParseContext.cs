@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Globalization;
 using Sitecore.Pathfinder.Configuration;
@@ -27,6 +27,8 @@ namespace Sitecore.Pathfinder.Parsing
 
         [NotNull]
         string FilePath { get; }
+
+        bool IsParsed { get; set; }
 
         [NotNull]
         string ItemName { get; }

@@ -1,7 +1,7 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.IO;
 using Sitecore.Pathfinder.CodeGeneration;
 using Sitecore.Pathfinder.Diagnostics;
@@ -11,6 +11,8 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
+    // todo: reenable generate-code when a suitable T4 processor for .NET core has been found
+    // [Export(typeof(ITask)), Shared]
     public class GenerateCode : BuildTaskBase
     {
         [ImportingConstructor]

@@ -1,8 +1,8 @@
-// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Configuration;
@@ -113,7 +113,7 @@ namespace Sitecore.Pathfinder.Parsing.References
             }
 
             // check for fields that contains paths
-            var pathFields = Configuration.GetStringList(Constants.Configuration.CheckProject.PathFields);
+            var pathFields = Configuration.GetArray(Constants.Configuration.CheckProject.PathFields);
             if (pathFields.Contains(field.FieldId.Format()))
             {
                 var sourceProperty = field.ValueProperty;
@@ -129,6 +129,7 @@ namespace Sitecore.Pathfinder.Parsing.References
                 }
 
                 yield return Factory.FileReference(field.Item, sourceProperty, referenceText);
+
                 yield break;
             }
 

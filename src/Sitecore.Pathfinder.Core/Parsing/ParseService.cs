@@ -1,8 +1,8 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
@@ -46,25 +46,20 @@ namespace Sitecore.Pathfinder.Parsing
             var pathMappingContext = new PathMappingContext(PathMapper);
             pathMappingContext.Parse(project, sourceFile);
 
-            var parseAllFiles = Configuration.GetBool(Constants.Configuration.BuildProject.ParseAllFiles);
-            if (!parseAllFiles && !pathMappingContext.IsMapped)
-            {
-                return;
-            }
-
             var snapshot = SnapshotService.LoadSnapshot(project, sourceFile, pathMappingContext);
 
             var parseContext = ParseContextFactory.New().With(project, diagnosticColletor, snapshot, pathMappingContext);
-            var parsed = false;
             foreach (var parser in Parsers.OrderBy(p => p.Priority))
             {
                 try
                 {
-                    if (parser.CanParse(parseContext))
+                    if (!parser.CanParse(parseContext))
                     {
-                        parser.Parse(parseContext);
-                        parsed = true;
+                        continue;
                     }
+
+                    parser.Parse(parseContext);
+                    parseContext.IsParsed = true;
                 }
                 catch (Exception ex)
                 {
@@ -78,7 +73,7 @@ namespace Sitecore.Pathfinder.Parsing
                 }
             }
 
-            if (!parseAllFiles && !parsed)
+            if (!parseContext.IsParsed)
             {
                 parseContext.Trace.TraceWarning(Msg.P1024, Texts.No_parser_found_for_file__If_the_file_is_a_content_file__add_the_file_extension_to_the__project_website_mappings_content_files__setting, sourceFile);
             }

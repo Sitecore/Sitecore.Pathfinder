@@ -1,25 +1,22 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Composition;
 using Sitecore.Pathfinder.Parsing;
 
 namespace Sitecore.Pathfinder.Languages.Serialization
 {
+    [Export(typeof(IParser)), Shared]
     public class SerializationFileParser : ParserBase
     {
         private const string FileExtension = ".item";
 
-        public SerializationFileParser() : base(Constants.Parsers.ContentFiles)
+        public SerializationFileParser() : base(Constants.Parsers.Items)
         {
         }
 
         public override bool CanParse(IParseContext context)
         {
-            if (string.IsNullOrEmpty(context.ItemPath))
-            {
-                return false;
-            }
-
             return context.Snapshot.SourceFile.AbsoluteFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
         }
 

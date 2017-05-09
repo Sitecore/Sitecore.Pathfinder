@@ -1,0 +1,342 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "$schema": {
+            "type": "string"
+        },
+        "Folder": {
+            "$ref": "#/definitions/Folder"
+        },
+        "ToolbarResource": {
+            "$ref": "#/definitions/ToolbarResource"
+        },
+        "ToolbarTabResource": {
+            "$ref": "#/definitions/ToolbarTabResource"
+        },
+        "ToolbarGroupResource": {
+            "$ref": "#/definitions/ToolbarGroupResource"
+        },
+        "ToolbarLargeButtonResource": {
+            "$ref": "#/definitions/ToolbarLargeButtonResource"
+        },
+        "Template": {
+            "$ref": "#/definitions/Template"
+        }
+    },
+    "definitions": {
+        "CommonObject": {
+            "type": "object",
+            "properties": {
+                "Name": {
+                    "type": "string"
+                },
+                "TemplateName": {
+                    "type": "string"
+                },
+                "ItemPath": {
+                    "type": "string"
+                },
+                "Database": {
+                    "type": "string"
+                },
+                "..Versions": {
+                    "type": "object",
+                    "properties": {
+                        "123": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                },
+                "Folder": {
+                    "$ref": "#/definitions/Folder"
+                },
+                "ToolbarResource": {
+                    "$ref": "#/definitions/ToolbarResource"
+                },
+                "ToolbarTabResource": {
+                    "$ref": "#/definitions/ToolbarTabResource"
+                },
+                "ToolbarGroupResource": {
+                    "$ref": "#/definitions/ToolbarGroupResource"
+                },
+                "ToolbarLargeButtonResource": {
+                    "$ref": "#/definitions/ToolbarLargeButtonResource"
+                },
+                "Template": {
+                    "$ref": "#/definitions/Template"
+                }
+            }
+        },
+        "Folder": {
+            "oneOf": [
+                {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/CommonObject"
+                        }
+                    ]
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "allOf": [
+                            {
+                                "$ref": "#/definitions/CommonObject"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "ToolbarResource": {
+            "oneOf": [
+                {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/CommonObject"
+                        }
+                    ]
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "allOf": [
+                            {
+                                "$ref": "#/definitions/CommonObject"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "ToolbarGroupResource": {
+            "oneOf": [
+                {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/CommonObject"
+                        }
+                    ]
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "allOf": [
+                            {
+                                "$ref": "#/definitions/CommonObject"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "ToolbarTabResourceFields": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/CommonObject"
+                },
+                {
+                    "properties": {
+                        "Text": {
+                            "type": "string"
+                        },
+                        "IsActive": {
+                            "type": "boolean"
+                        }
+                    }
+                }
+            ]
+        },
+        "ToolbarTabResource": {
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/ToolbarTabResourceFields"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ToolbarTabResourceFields"
+                    }
+                }
+            ]
+        },
+        "ToolbarLargeButtonResourceFields": {
+            "type": "object",
+            "additionalProperties": false,
+            "allOf": [
+                {
+                    "properties": {
+                        "Text": {
+                            "type": "string"
+                        },
+                        "Icon": {
+                            "type": "string"
+                        },
+                        "Command": {
+                            "type": "string"
+                        }
+                    }
+                },
+                {
+                    "$ref": "#/definitions/CommonObject"
+                }
+            ]
+        },
+        "ToolbarLargeButtonResource": {
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/ToolbarLargeButtonResourceFields"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ToolbarLargeButtonResourceFields"
+                    }
+                }
+            ]
+        },
+        "Template": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "Name": {
+                        "type": "string"
+                    },
+                    "Icon": {
+                        "type": "string"
+                    },
+                    "ShortHelp": {
+                        "type": "string"
+                    },
+                    "LongHelp": {
+                        "type": "string"
+                    },
+                    "Section": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "Name": {
+                                    "type": "string"
+                                },
+                                "Icon": {
+                                    "type": "string"
+                                },
+                                "Field": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "additionalProperties": false,
+                                        "properties": {
+                                            "Name": {
+                                                "type": "string"
+                                            },
+                                            "Type": {
+                                                "$ref": "#/definitions/FieldType"
+                                            },
+                                            "Sharing": {
+                                                "$ref": "#/definitions/Sharing"
+                                            },
+                                            "ShortHelp": {
+                                                "type": "string"
+                                            },
+                                            "LongHelp": {
+                                                "type": "string"
+                                            },
+                                            "SortOrder": {
+                                                "type": "integer"
+                                            },
+                                            "StandardValue": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "Name"
+                                        ]
+                                    }
+                                }
+                            },
+                            "required": [
+                                "Name",
+                                "Field"
+                            ]
+                        }
+                    }
+                },
+                "required": [
+                    "Name"
+                ]
+            }
+        },
+        "FieldType": {
+            "enum": [
+                "Single-Line Text",
+                "Checkbox",
+                "Rich Text",
+                "Image",
+                "Multi-Line Text",
+                "Date",
+                "Datetime",
+                "Accounts Multilist",
+                "AccountSelector",
+                "Attachment",
+                "Campaign Tree",
+                "Checklist",
+                "Countable Edit",
+                "Custom",
+                "Datasource",
+                "Droplink",
+                "Droplist",
+                "Droptree",
+                "File",
+                "File Drop Area",
+                "General Link",
+                "General Link with Search",
+                "Grouped Droplink",
+                "Grouped Droplist",
+                "Icon",
+                "IFrame",
+                "Integer",
+                "Internal Link",
+                "Layout",
+                "Multilist",
+                "Multilist with Search",
+                "Name Lookup Value List",
+                "Name Value List",
+                "Number",
+                "Page Preview",
+                "Password",
+                "Profile Card Value",
+                "Profile Cards",
+                "Query Builder",
+                "Query Datasource",
+                "Rendering Datasource",
+                "Rules",
+                "Security",
+                "Sitecore User",
+                "Template Field Source",
+                "Thumbnail",
+                "Tracking",
+                "tree",
+                "Treelist",
+                "TreelistEx",
+                "Tristate",
+                "Version Link",
+                "Word Document"
+            ]
+        },
+        "Sharing": {
+            "enum": [
+                "Shared",
+                "Unversioned",
+                "Versioned"
+            ]
+        }
+    }
+}

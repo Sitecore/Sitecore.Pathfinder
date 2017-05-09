@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -44,6 +44,11 @@ namespace Sitecore.Pathfinder.Snapshots
             return !string.IsNullOrEmpty(value) ? value : defaultValue;
         }
 
+        public virtual ITextNode GetInnerTextNode()
+        {
+            return null;
+        }
+
         public virtual ITextNode GetSnapshotLanguageSpecificChildNode(string name)
         {
             // overwritten in JsonTextNode to find the appropriate text node
@@ -53,11 +58,6 @@ namespace Sitecore.Pathfinder.Snapshots
         public bool HasAttribute(string attributeName)
         {
             return GetAttribute(attributeName) != null;
-        }
-
-        public virtual ITextNode GetInnerTextNode()
-        {
-            return null;
         }
     }
 }

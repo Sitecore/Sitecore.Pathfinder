@@ -15,9 +15,9 @@ namespace Sitecore.Pathfinder.Tasks
     {
         None = 0x00,
 
-        // CreateEditor = 0x01,
+        ConfigureWebsite = 0x01,
 
-        // CreateTaskRunner = 0x02,
+        ConfigureProjectUniqueId = 0x02,
 
         CreateStarterKit = 0x04,
 
@@ -25,7 +25,11 @@ namespace Sitecore.Pathfinder.Tasks
 
         CopyConfig = 0x10,
 
-        CopyCmd = 0x20
+        CopyCmd = 0x20, 
+
+        // CreateEditor = 0x01,
+
+        // CreateTaskRunner = 0x02,
     }
 
     public abstract class NewProjectTaskBase : BuildTaskBase
@@ -1160,7 +1164,7 @@ namespace Sitecore.Pathfinder.Tasks
         private string _hostName = string.Empty;
 
         [NotNull]
-        private string _projectUniqueId = string.Empty;
+        private string _projectUniqueId = "Sitecore.Pathfinder";
 
         [NotNull]
         private string _starterKitFileName = string.Empty;
@@ -1244,6 +1248,7 @@ namespace Sitecore.Pathfinder.Tasks
                 projectDirectory = Path.Combine(projectDirectory, appName);
             }
 
+            /*
             Console.WriteLine();
             Console.WriteLine(Texts.Pathfinder_needs_4_pieces_of_information_to_create_a_new_project__a_unique_Id_for_the_project__the_Sitecore_website_and_data_folder_directories_to_deploy_to__and_the_hostname_of_the_website__If_you_have_not_yet_created_a_Sitecore_website__use_a_tool_like_Sitecore_Instance_Manager_to_create_it_for_you_);
             Console.WriteLine();
@@ -1251,64 +1256,72 @@ namespace Sitecore.Pathfinder.Tasks
             Console.WriteLine();
             Console.WriteLine(Texts.You_should__not__change_the_project_unique_ID_at_a_later_point__since_Sitecore_item_IDs_are_dependent_on_it_);
             Console.WriteLine();
-
-            var rnd = new Random();
-            _projectUniqueId = _codeNames[rnd.Next(_codeNames.Length)] + " " + Guid.NewGuid().ToString("P");
-            _projectUniqueId = Console.ReadLine("Enter the project unique ID [" + _projectUniqueId + "]: ", _projectUniqueId, "projectid");
-
-            Console.WriteLine();
-            Console.WriteLine(Texts.Pathfinder_requires_physical_access_to_both_the_Website_and_DataFolder_directories_to_deploy_packages_);
-            Console.WriteLine();
+            */
 
             var projectName = "Sitecore";
-            Guid guid;
-            if (!Guid.TryParse(_projectUniqueId, out guid))
+
+            if ((options & NewProjectOptions.ConfigureProjectUniqueId) == NewProjectOptions.ConfigureProjectUniqueId)
             {
-                projectName = _projectUniqueId;
+                var rnd = new Random();
+                _projectUniqueId = _codeNames[rnd.Next(_codeNames.Length)] + " " + Guid.NewGuid().ToString("P");
+                _projectUniqueId = Console.ReadLine("Enter the project unique ID [" + _projectUniqueId + "]: ", _projectUniqueId, "projectid");
+
+                Console.WriteLine();
+                Console.WriteLine(Texts.Pathfinder_requires_physical_access_to_both_the_Website_and_DataFolder_directories_to_deploy_packages_);
+                Console.WriteLine();
+
+                Guid guid;
+                if (!Guid.TryParse(_projectUniqueId, out guid))
+                {
+                    projectName = _projectUniqueId;
+                }
             }
 
-            var defaultWebsiteDirectory = context.Configuration.GetString(Constants.Configuration.NewProject.DefaultWebsiteDirectory).TrimEnd('\\');
-            if (string.IsNullOrEmpty(defaultWebsiteDirectory))
+            if ((options & NewProjectOptions.ConfigureWebsite) == NewProjectOptions.ConfigureWebsite)
             {
-                var wwwrootDirectory = context.Configuration.GetString(Constants.Configuration.NewProject.WwwrootDirectory, "c:\\inetpub\\wwwroot").TrimEnd('\\');
-                defaultWebsiteDirectory = $"{wwwrootDirectory}\\{projectName}\\Website";
-            }
+                var defaultWebsiteDirectory = context.Configuration.GetString(Constants.Configuration.NewProject.DefaultWebsiteDirectory).TrimEnd('\\');
+                if (string.IsNullOrEmpty(defaultWebsiteDirectory))
+                {
+                    var wwwrootDirectory = context.Configuration.GetString(Constants.Configuration.NewProject.WwwrootDirectory, "c:\\inetpub\\wwwroot").TrimEnd('\\');
+                    defaultWebsiteDirectory = $"{wwwrootDirectory}\\{projectName}\\Website";
+                }
 
-            do
-            {
-                var website = Console.ReadLine($"Enter the directory of the Website [{defaultWebsiteDirectory}]: ", defaultWebsiteDirectory, "website");
-                _websiteDirectory = PathHelper.Combine(defaultWebsiteDirectory, website);
-            }
-            while (!ValidateWebsiteDirectory(context));
+                do
+                {
+                    var website = Console.ReadLine($"Enter the directory of the Website [{defaultWebsiteDirectory}]: ", defaultWebsiteDirectory, "website");
+                    _websiteDirectory = PathHelper.Combine(defaultWebsiteDirectory, website);
+                }
+                while (!ValidateWebsiteDirectory(context));
 
-            Console.WriteLine();
+                Console.WriteLine();
 
-            var defaultDataFolderDirectory = context.Configuration.GetString(Constants.Configuration.NewProject.DefaultDataFolderDirectory).TrimEnd('\\');
-            if (string.IsNullOrEmpty(defaultDataFolderDirectory))
-            {
-                defaultDataFolderDirectory = Path.Combine(Path.GetDirectoryName(_websiteDirectory), "Data");
-            }
+                var defaultDataFolderDirectory = context.Configuration.GetString(Constants.Configuration.NewProject.DefaultDataFolderDirectory).TrimEnd('\\');
+                if (string.IsNullOrEmpty(defaultDataFolderDirectory))
+                {
+                    defaultDataFolderDirectory = Path.Combine(Path.GetDirectoryName(_websiteDirectory), "Data");
+                }
 
-            do
-            {
-                _dataFolderDirectory = Console.ReadLine("Enter the directory of the DataFolder [" + defaultDataFolderDirectory + "]: ", defaultDataFolderDirectory, "datafolder");
-            }
-            while (!ValidateDataFolderDirectory(context));
+                do
+                {
+                    _dataFolderDirectory = Console.ReadLine("Enter the directory of the DataFolder [" + defaultDataFolderDirectory + "]: ", defaultDataFolderDirectory, "datafolder");
+                }
+                while (!ValidateDataFolderDirectory(context));
 
-            Console.WriteLine();
-            Console.WriteLine(Texts.Finally_Pathfinder_requires_the_hostname_of_the_Sitecore_website_);
-            Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine(Texts.Finally_Pathfinder_requires_the_hostname_of_the_Sitecore_website_);
+                Console.WriteLine();
 
-            var defaultHostName = context.Configuration.GetString(Constants.Configuration.NewProject.DefaultHostName);
-            if (string.IsNullOrEmpty(defaultHostName))
-            {
-                defaultHostName = $"http://{projectName.ToLowerInvariant()}";
-            }
+                var defaultHostName = context.Configuration.GetString(Constants.Configuration.NewProject.DefaultHostName);
+                if (string.IsNullOrEmpty(defaultHostName))
+                {
+                    defaultHostName = $"http://{projectName.ToLowerInvariant()}";
+                }
 
-            _hostName = Console.ReadLine($"Enter the hostname of the website [{defaultHostName}]: ", defaultHostName, "host");
-            if (!_hostName.Contains(Uri.SchemeDelimiter))
-            {
-                _hostName = Uri.UriSchemeHttp + Uri.SchemeDelimiter + _hostName.TrimStart('/');
+                _hostName = Console.ReadLine($"Enter the hostname of the website [{defaultHostName}]: ", defaultHostName, "host");
+                if (!_hostName.Contains("://"))
+                {
+                    _hostName = "http://" + _hostName.TrimStart('/');
+                }
             }
 
             /*

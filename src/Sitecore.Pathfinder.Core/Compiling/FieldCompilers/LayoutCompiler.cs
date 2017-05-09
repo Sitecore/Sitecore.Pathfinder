@@ -1,9 +1,10 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using Sitecore.Pathfinder.Diagnostics;
@@ -46,13 +47,17 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         [NotNull]
         public virtual string Compile([NotNull] LayoutCompileContext context, [NotNull] ITextNode textNode)
         {
-            var writer = new StringWriter();
-            var output = new XmlTextWriter(writer)
+            var settings = new XmlWriterSettings
             {
-                Formatting = Formatting.Indented
+                Encoding = new UTF8Encoding(false),
+                Indent = true
             };
 
-            WriteLayout(context, output, textNode);
+            var writer = new StringBuilder();
+            using (var output = XmlWriter.Create(writer, settings))
+            {
+                WriteLayout(context, output, textNode);
+            }
 
             var result = writer.ToString();
             return result;
@@ -120,7 +125,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         {
             var path = "/" + renderingItemId.Replace(".", "/");
 
-            return renderingItems.Where(r => r.ItemIdOrPath.EndsWith(path, StringComparison.InvariantCultureIgnoreCase)).ToArray();
+            return renderingItems.Where(r => r.ItemIdOrPath.EndsWith(path, StringComparison.OrdinalIgnoreCase)).ToArray();
         }
 
         [NotNull, ItemNotNull]
@@ -141,7 +146,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             return matches;
         }
 
-        protected virtual void WriteBool([NotNull] LayoutCompileContext context, [NotNull] XmlTextWriter output, [NotNull] ITextNode renderingTextNode, [NotNull] string id, [NotNull] string attributeName, [NotNull] string name, bool ignoreValue = false)
+        protected virtual void WriteBool([NotNull] LayoutCompileContext context, [NotNull] XmlWriter output, [NotNull] ITextNode renderingTextNode, [NotNull] string id, [NotNull] string attributeName, [NotNull] string name, bool ignoreValue = false)
         {
             var value = renderingTextNode.GetAttributeValue(attributeName);
             if (string.IsNullOrEmpty(value))
@@ -164,7 +169,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             output.WriteAttributeString(name, b ? "1" : "0");
         }
 
-        protected virtual void WriteDataSource([NotNull] LayoutCompileContext context, [NotNull] XmlTextWriter output, [NotNull] ITextNode renderingTextNode)
+        protected virtual void WriteDataSource([NotNull] LayoutCompileContext context, [NotNull] XmlWriter output, [NotNull] ITextNode renderingTextNode)
         {
             var dataSource = renderingTextNode.GetAttributeValue("DataSource");
             if (string.IsNullOrEmpty(dataSource))
@@ -182,7 +187,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             output.WriteAttributeString("ds", item.Uri.Guid.Format());
         }
 
-        protected virtual void WriteDevice([NotNull] LayoutCompileContext context, [NotNull] XmlTextWriter output, [NotNull, ItemNotNull] IEnumerable<Item> renderingItems, [NotNull] ITextNode deviceTextNode)
+        protected virtual void WriteDevice([NotNull] LayoutCompileContext context, [NotNull] XmlWriter output, [NotNull, ItemNotNull] IEnumerable<Item> renderingItems, [NotNull] ITextNode deviceTextNode)
         {
             output.WriteStartElement("d");
 
@@ -243,7 +248,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             output.WriteEndElement();
         }
 
-        protected virtual void WriteLayout([NotNull] LayoutCompileContext context, [NotNull] XmlTextWriter output, [NotNull] ITextNode layoutTextNode)
+        protected virtual void WriteLayout([NotNull] LayoutCompileContext context, [NotNull] XmlWriter output, [NotNull] ITextNode layoutTextNode)
         {
             var databaseName = context.Database.DatabaseName;
 
@@ -267,7 +272,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             output.WriteEndElement();
         }
 
-        protected virtual void WritePlaceholder([NotNull] LayoutCompileContext context, [NotNull] XmlTextWriter output, [NotNull] ITextNode renderingTextNode, [NotNull] string id, [NotNull] string parentPlaceholders)
+        protected virtual void WritePlaceholder([NotNull] LayoutCompileContext context, [NotNull] XmlWriter output, [NotNull] ITextNode renderingTextNode, [NotNull] string id, [NotNull] string parentPlaceholders)
         {
             var placeholderTextNode = renderingTextNode.GetAttribute("Placeholder");
             var placeholder = placeholderTextNode?.Value ?? string.Empty;
@@ -275,7 +280,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             // get the first placeholder from the parent rendering
             if (string.IsNullOrEmpty(placeholder) && !string.IsNullOrEmpty(parentPlaceholders))
             {
-                var n = parentPlaceholders.IndexOf(",", 1, StringComparison.InvariantCultureIgnoreCase);
+                var n = parentPlaceholders.IndexOf(",", 1, StringComparison.OrdinalIgnoreCase);
                 if (n >= 0)
                 {
                     placeholder = parentPlaceholders.Mid(1, n - 1);
@@ -289,7 +294,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
             if (placeholderTextNode != null && !string.IsNullOrEmpty(parentPlaceholders))
             {
-                if (parentPlaceholders.IndexOf("," + placeholder + ",", StringComparison.InvariantCultureIgnoreCase) < 0)
+                if (parentPlaceholders.IndexOf("," + placeholder + ",", StringComparison.OrdinalIgnoreCase) < 0)
                 {
                     var text = parentPlaceholders.Mid(1, parentPlaceholders.Length - 2);
                     if (string.IsNullOrEmpty(text))
@@ -304,7 +309,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             output.WriteAttributeString("ph", placeholder);
         }
 
-        protected virtual void WriteRendering([NotNull] LayoutCompileContext context, [NotNull] XmlTextWriter output, [NotNull, ItemNotNull] IEnumerable<Item> renderingItems, [NotNull] ITextNode renderingTextNode, [NotNull] string placeholders)
+        protected virtual void WriteRendering([NotNull] LayoutCompileContext context, [NotNull] XmlWriter output, [NotNull, ItemNotNull] IEnumerable<Item> renderingItems, [NotNull] ITextNode renderingTextNode, [NotNull] string placeholders)
         {
             string renderingItemId;
 
@@ -487,7 +492,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             return matches.OfType<Match>().Select(i => i.Groups[1].ToString().Trim());
         }
 
-        private void WriteParameters([NotNull] LayoutCompileContext context, [NotNull] XmlTextWriter output, [NotNull] ITextNode renderingTextNode, [NotNull] Item renderingItem, [NotNull] string id)
+        private void WriteParameters([NotNull] LayoutCompileContext context, [NotNull] XmlWriter output, [NotNull] ITextNode renderingTextNode, [NotNull] Item renderingItem, [NotNull] string id)
         {
             var fields = new Dictionary<string, string>();
 
@@ -554,7 +559,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                     context.Trace.TraceWarning(Msg.C1040, Texts._1___Parameter___0___is_not_defined_in_the_parameters_template_, renderingTextNode, id + "." + attributeName);
                 }
 
-                if (value.StartsWith("/sitecore", StringComparison.InvariantCultureIgnoreCase))
+                if (value.StartsWith("/sitecore", StringComparison.OrdinalIgnoreCase))
                 {
                     var item = context.Project.FindQualifiedItem<IProjectItem>(value);
                     if (item != null)

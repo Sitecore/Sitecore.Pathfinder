@@ -1,2 +1,0 @@
-@echo off
-scc new-project /overwrite=true /projectid=TodoMvc /website=e:\inetpub\wwwroot\Pathfinder\Website /datafolder=e:\inetpub\wwwroot\Pathfinder\Data /host=pathfinder /editor=VSCode /starterkit=TodoMvc /silent /interactive=false

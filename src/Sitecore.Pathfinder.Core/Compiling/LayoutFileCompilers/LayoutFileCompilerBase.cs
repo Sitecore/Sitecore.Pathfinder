@@ -1,9 +1,8 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
-using System.IO;
 using System.Linq;
+using System.Text;
 using System.Xml;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Diagnostics;
@@ -13,7 +12,6 @@ using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
 {
-    [InheritedExport(typeof(ILayoutFileCompiler))]
     public abstract class LayoutFileCompilerBase : ILayoutFileCompiler
     {
         public abstract bool CanCompile(ICompileContext context, IProjectItem projectItem, SourceProperty<string> property);
@@ -22,61 +20,73 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
 
         protected virtual void CreateLayout([NotNull] ICompileContext context, [NotNull] Item item, Guid layoutId)
         {
-            var writer = new StringWriter();
-            var output = new XmlTextWriter(writer);
-            output.Formatting = Formatting.Indented;
-
-            output.WriteStartElement("r");
-
-            var deviceItems = item.Project.ProjectItems.OfType<Item>().Where(i => string.Equals(i.TemplateIdOrPath, "/sitecore/templates/System/Layout/Device", StringComparison.OrdinalIgnoreCase) || string.Equals(i.TemplateIdOrPath, "{B6F7EEB4-E8D7-476F-8936-5ACE6A76F20B}", StringComparison.OrdinalIgnoreCase));
-            foreach (var deviceItem in deviceItems)
+            var settings = new XmlWriterSettings
             {
-                if (!deviceItem.ItemIdOrPath.StartsWith("/sitecore/layout/Devices/"))
-                {
-                    continue;
-                }
+                Encoding = new UTF8Encoding(false),
+                Indent = true
+            };
 
-                output.WriteStartElement("d");
-                output.WriteAttributeString("id", deviceItem.Uri.Guid.Format());
-                output.WriteAttributeString("l", layoutId.Format());
+            var writer = new StringBuilder();
+            using (var output = XmlWriter.Create(writer, settings))
+            {
+                output.WriteStartElement("r");
+
+                var deviceItems = item.Project.ProjectItems.OfType<Item>().Where(i => string.Equals(i.TemplateIdOrPath, "/sitecore/templates/System/Layout/Device", StringComparison.OrdinalIgnoreCase) || string.Equals(i.TemplateIdOrPath, "{B6F7EEB4-E8D7-476F-8936-5ACE6A76F20B}", StringComparison.OrdinalIgnoreCase));
+                foreach (var deviceItem in deviceItems)
+                {
+                    if (!deviceItem.ItemIdOrPath.StartsWith("/sitecore/layout/Devices/"))
+                    {
+                        continue;
+                    }
+
+                    output.WriteStartElement("d");
+                    output.WriteAttributeString("id", deviceItem.Uri.Guid.Format());
+                    output.WriteAttributeString("l", layoutId.Format());
+
+                    output.WriteEndElement();
+                }
 
                 output.WriteEndElement();
             }
-
-            output.WriteEndElement();
 
             SetRenderingsField(context, item, writer.ToString());
         }
 
         protected virtual void CreateLayoutWithRendering([NotNull] ICompileContext context, [NotNull] Item item, Guid layoutId, Guid renderingId, [NotNull] string placeholderKey)
         {
-            var writer = new StringWriter();
-            var output = new XmlTextWriter(writer);
-            output.Formatting = Formatting.Indented;
-
-            output.WriteStartElement("r");
-
-            var deviceItems = item.Project.ProjectItems.OfType<Item>().Where(i => string.Equals(i.TemplateIdOrPath, "/sitecore/templates/System/Layout/Device", StringComparison.OrdinalIgnoreCase) || string.Equals(i.TemplateIdOrPath, "{B6F7EEB4-E8D7-476F-8936-5ACE6A76F20B}", StringComparison.OrdinalIgnoreCase));
-            foreach (var deviceItem in deviceItems)
+            var settings = new XmlWriterSettings
             {
-                if (!deviceItem.ItemIdOrPath.StartsWith("/sitecore/layout/Devices/"))
-                {
-                    continue;
-                }
+                Encoding = new UTF8Encoding(false),
+                Indent = true
+            };
 
-                output.WriteStartElement("d");
-                output.WriteAttributeString("id", deviceItem.Uri.Guid.Format());
-                output.WriteAttributeString("l", layoutId.Format());
-
+            var writer = new StringBuilder();
+            using (var output = XmlWriter.Create(writer, settings))
+            {
                 output.WriteStartElement("r");
-                output.WriteAttributeString("id", renderingId.Format());
-                output.WriteAttributeString("ph", placeholderKey);
-                output.WriteEndElement();
+
+                var deviceItems = item.Project.ProjectItems.OfType<Item>().Where(i => string.Equals(i.TemplateIdOrPath, "/sitecore/templates/System/Layout/Device", StringComparison.OrdinalIgnoreCase) || string.Equals(i.TemplateIdOrPath, "{B6F7EEB4-E8D7-476F-8936-5ACE6A76F20B}", StringComparison.OrdinalIgnoreCase));
+                foreach (var deviceItem in deviceItems)
+                {
+                    if (!deviceItem.ItemIdOrPath.StartsWith("/sitecore/layout/Devices/"))
+                    {
+                        continue;
+                    }
+
+                    output.WriteStartElement("d");
+                    output.WriteAttributeString("id", deviceItem.Uri.Guid.Format());
+                    output.WriteAttributeString("l", layoutId.Format());
+
+                    output.WriteStartElement("r");
+                    output.WriteAttributeString("id", renderingId.Format());
+                    output.WriteAttributeString("ph", placeholderKey);
+                    output.WriteEndElement();
+
+                    output.WriteEndElement();
+                }
 
                 output.WriteEndElement();
             }
-
-            output.WriteEndElement();
 
             SetRenderingsField(context, item, writer.ToString());
         }

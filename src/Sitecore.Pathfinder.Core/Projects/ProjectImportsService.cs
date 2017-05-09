@@ -1,7 +1,7 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.IO;
 using System.Xml.Linq;
 using Sitecore.Pathfinder.Configuration;
@@ -9,29 +9,23 @@ using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
-using Sitecore.Pathfinder.Packaging.ProjectPackages;
-using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects
 {
-    [Export]
+    [Export, Shared]
     public class ProjectImportsService
     {
         [ImportingConstructor]
-        public ProjectImportsService([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [NotNull] IProjectPackageService projectPackages)
+        public ProjectImportsService([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem)
         {
             Configuration = configuration;
             Trace = trace;
             Factory = factory;
             FileSystem = fileSystem;
-            ProjectPackages = projectPackages;
         }
 
         [NotNull]
         protected IConfiguration Configuration { get; }
-
-        [NotNull]
-        protected ITraceService Trace { get; }
 
         [NotNull]
         protected IFactoryService Factory { get; }
@@ -40,55 +34,20 @@ namespace Sitecore.Pathfinder.Projects
         protected IFileSystemService FileSystem { get; }
 
         [NotNull]
-        protected IProjectPackageService ProjectPackages { get; }
+        protected ITraceService Trace { get; }
 
         public virtual void Import([NotNull] IProject project)
         {
             // todo: consider making this a pipeline
-            ImportProjectPackages(project);
+
+            ImportReferencesFromConfiguration(project);
+
+            ImportReferencesFromPackagesDirectory(project);
+
+            ImportReferencesFromNodeModulesDirectory(project);
         }
 
-        protected virtual void ImportElements([NotNull] IProject project, [NotNull] string fileName, [NotNull] XElement root)
-        {
-            foreach (var element in root.Elements())
-            {
-                ImportElement(project, fileName, element);
-            }
-        }
-                                                                                                
-        protected virtual void ImportProjectPackages([NotNull] IProject project)
-        {
-            // todo: NuGet: handle noconfig
-            foreach (var packageInfo in ProjectPackages.GetPackages())
-            {
-                var fileName = Path.Combine(packageInfo.ProjectDirectory, PathHelper.NormalizeFilePath(Configuration.GetString(Constants.Configuration.WriteExports.FileName)));
-                if (!FileSystem.FileExists(fileName))
-                {
-                    Trace.TraceError(Msg.I1010, "Could not find dependency package", fileName);
-                    continue;
-                }
-
-                try
-                {
-                    var doc = FileSystem.ReadXml(fileName);
-
-                    var root = doc.Root;
-                    if (root == null)
-                    {
-                        Trace.TraceError(Msg.I1001, Texts.Could_not_read_exports_xml_in_dependency_package, fileName);
-                        continue;
-                    }
-
-                    ImportElements(project, fileName, root);
-                }
-                catch
-                {
-                    Trace.TraceError(Msg.I1002, Texts.Could_not_read_exports_xml_in_dependency_package, fileName);
-                }
-            }
-        }
-
-        private void ImportElement([NotNull] IProject project, [NotNull] string fileName, [NotNull] XElement element)
+        protected virtual void ImportElement([NotNull] IProject project, [NotNull] string fileName, [NotNull] XElement element)
         {
             Guid guid;
             if (!Guid.TryParse(element.GetAttributeValue("Id"), out guid))
@@ -151,6 +110,8 @@ namespace Sitecore.Pathfinder.Projects
                             var templateField = Factory.TemplateField(template, fieldGuid);
                             templateField.FieldName = fieldElement.GetAttributeValue("Name");
                             templateField.Type = fieldElement.GetAttributeValue("Type");
+                            templateField.Shared = fieldElement.GetAttributeValue("Sharing") == "Shared";
+                            templateField.Unversioned = fieldElement.GetAttributeValue("Sharing") == "Unversioned";
 
                             templateSection.Fields.Add(templateField);
                         }
@@ -160,6 +121,92 @@ namespace Sitecore.Pathfinder.Projects
 
                     project.AddOrMerge(template);
                     break;
+            }
+        }
+
+        protected virtual void ImportElements([NotNull] IProject project, [NotNull] string fileName, [NotNull] XElement root)
+        {
+            foreach (var element in root.Elements())
+            {
+                ImportElement(project, fileName, element);
+            }
+        }
+
+        protected virtual void ImportReferencesFromFile([NotNull] IProject project, [NotNull] string fileName)
+        {
+            Trace.TraceInformation(Msg.I1012, "Importing references", Path.GetFileName(fileName));
+
+            try
+            {
+                var doc = FileSystem.ReadXml(fileName);
+
+                var root = doc.Root;
+                if (root == null)
+                {
+                    Trace.TraceError(Msg.I1001, Texts.Could_not_read_exports_xml_in_dependency_package, fileName);
+                    return;
+                }
+
+                ImportElements(project, fileName, root);
+            }
+            catch
+            {
+                Trace.TraceError(Msg.I1002, Texts.Could_not_read_exports_xml_in_dependency_package, fileName);
+            }
+        }
+
+        protected virtual void ImportReferencesFromConfiguration([NotNull] IProject project)
+        {
+            foreach (var pair in Configuration.GetSubKeys(Constants.Configuration.References))
+            {
+                var id = pair.Key;
+                var version = Configuration.GetString(Constants.Configuration.References + ":" + id);
+                var fileName = PathHelper.NormalizeFilePath(id);
+
+                if (fileName.IndexOf('\\') >= 0)
+                {
+                    fileName = PathHelper.Combine(project.ProjectDirectory, fileName);
+                    if (!fileName.EndsWith(".exports.xml", StringComparison.OrdinalIgnoreCase))
+                    {
+                        fileName += "." + version + ".exports.xml";
+                    }
+                }
+                else
+                {
+                    fileName = Path.Combine(Configuration.GetToolsDirectory() + "\\files\\references", id + "." + version + ".exports.xml");
+                }
+
+                if (!FileSystem.FileExists(fileName))
+                {
+                    Trace.TraceError(Msg.I1013, "Reference file not found", fileName);
+                    continue;
+                }
+
+                ImportReferencesFromFile(project, fileName);
+            }
+        }
+
+        protected virtual void ImportReferencesFromNodeModulesDirectory([NotNull] IProject project)
+        {
+            var nodeModulesDirectory = Path.Combine(project.ProjectDirectory, "node_modules");
+            if (FileSystem.DirectoryExists(nodeModulesDirectory))
+            {
+                foreach (var fileName in Directory.GetFiles(nodeModulesDirectory, "project.exports.xml", SearchOption.AllDirectories))
+                {
+                    ImportReferencesFromFile(project, fileName);
+                }
+            }
+        }
+
+        protected virtual void ImportReferencesFromPackagesDirectory([NotNull] IProject project)
+        {
+            var packagesDirectory = Path.Combine(project.ProjectDirectory, "packages");
+            if (FileSystem.DirectoryExists(packagesDirectory))
+            {
+                foreach (var fileName in Directory.GetFiles(packagesDirectory, "project.exports.xml", SearchOption.AllDirectories))
+                {
+                    ImportReferencesFromFile(project, fileName);
+                }
             }
         }
     }

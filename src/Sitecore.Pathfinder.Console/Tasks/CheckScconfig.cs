@@ -1,7 +1,7 @@
 // © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
+using System.Composition;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
@@ -11,7 +11,8 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    public class CheckScconfig : BuildTaskBase, IPreRunTask
+    [Export(typeof(ITask)), Shared]
+    public class CheckScconfig : BuildTaskBase
     {
         [ImportingConstructor]
         public CheckScconfig([NotNull] IFileSystemService fileSystem, [NotNull] IPipelineService pipelineService) : base("check-scconfig")

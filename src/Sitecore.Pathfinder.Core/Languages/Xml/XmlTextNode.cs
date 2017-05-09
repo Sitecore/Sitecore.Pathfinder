@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
         [NotNull]
         private XObject _node;
 
-        public XmlTextNode([NotNull] ITextSnapshot snapshot, [NotNull] XElement element) : base(snapshot, element.Name.LocalName, string.Empty, GetTextSpan(element, element.Name.LocalName.Length))
+        public XmlTextNode([NotNull] ITextSnapshot snapshot, [NotNull] XElement element) : base(snapshot, element.Name.LocalName, element.Value, GetTextSpan(element, element.Name.LocalName.Length))
         {
             _node = element;
         }

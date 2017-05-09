@@ -1,9 +1,10 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Linq;
+using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -11,45 +12,31 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Parsing.Items
 {
+    [Export(typeof(IParser)), Shared]
     public class ItemParser : ParserBase
     {
-        [NotNull, ItemNotNull]
-        private static readonly string[] FileExtensions =
-        {
-            ".item.xml",
-            ".content.xml",
-            ".layout.xml",
-            ".item.json",
-
-            // ".content.json",
-            ".layout.json",
-            ".item.yaml",
-            ".content.yaml",
-            ".layout.yaml"
-        };
-
         [ImportingConstructor]
-        public ItemParser([NotNull] ISchemaService schemaService, [ImportMany, NotNull, ItemNotNull] IEnumerable<ITextNodeParser> textNodeParsers) : base(Constants.Parsers.Items)
+        public ItemParser([NotNull] IConfiguration configuration, [NotNull] ISchemaService schemaService, [ImportMany, NotNull, ItemNotNull] IEnumerable<ITextNodeParser> textNodeParsers) : base(Constants.Parsers.Items)
         {
             SchemaService = schemaService;
             TextNodeParsers = textNodeParsers;
-        }
 
-        [NotNull]
-        protected ISchemaService SchemaService { get; }
+            PathMatcher = new PathMatcher(configuration.GetString(Constants.Configuration.Items.Include), configuration.GetString(Constants.Configuration.Items.Exclude));
+        }
 
         [NotNull, ItemNotNull]
         public IEnumerable<ITextNodeParser> TextNodeParsers { get; }
 
+        [NotNull]
+        protected PathMatcher PathMatcher { get; }
+
+        [NotNull]
+        protected ISchemaService SchemaService { get; }
+
         public override bool CanParse(IParseContext context)
         {
-            if (string.IsNullOrEmpty(context.ItemPath))
-            {
-                return false;
-            }
-
             var fileName = context.Snapshot.SourceFile.AbsoluteFileName;
-            return FileExtensions.Any(extension => fileName.EndsWith(extension, StringComparison.OrdinalIgnoreCase)) && context.Snapshot is ITextSnapshot;
+            return context.Snapshot is ITextSnapshot && PathMatcher.IsMatch(fileName);
         }
 
         public override void Parse(IParseContext context)
@@ -111,7 +98,6 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 if (!parsed)
                 {
                     context.ParseContext.Trace.TraceError(Msg.P1025, Texts.Unknown_text_node, textNode, textNode.Key);
-
                 }
             }
             catch (Exception ex)

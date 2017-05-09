@@ -15,9 +15,6 @@ namespace Sitecore.Pathfinder.Tasks.Building
         bool IsProjectLoaded { get; }
 
         [NotNull, ItemNotNull]
-        ICollection<IProjectItem> ModifiedProjectItems { get; }
-
-        [NotNull, ItemNotNull]
         ICollection<OutputFile> OutputFiles { get; }
 
         [NotNull]
@@ -25,9 +22,6 @@ namespace Sitecore.Pathfinder.Tasks.Building
 
         [NotNull]
         string ToolsDirectory { get; }
-
-        [NotNull]
-        string WebsiteDirectory { get; }
 
         [NotNull]
         IProject LoadProject();

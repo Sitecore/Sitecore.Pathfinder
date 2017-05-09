@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -15,17 +15,18 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
+    [Export(typeof(ITask)), Shared]
     public class Help : BuildTaskBase
     {
         [ImportingConstructor]
-        public Help([NotNull] ICompositionService compositionService, [NotNull] IFileSystemService fileSystem) : base("help")
+        public Help([NotNull] Sitecore.Pathfinder.Extensibility.ICompositionService compositionService, [NotNull] IFileSystemService fileSystem) : base("help")
         {
             CompositionService = compositionService;
             FileSystem = fileSystem;
         }
 
         [NotNull]
-        protected ICompositionService CompositionService { get; }
+        protected Sitecore.Pathfinder.Extensibility.ICompositionService CompositionService { get; }
 
         [NotNull]
         protected IFileSystemService FileSystem { get; }
@@ -46,7 +47,7 @@ namespace Sitecore.Pathfinder.Tasks
         [NotNull]
         protected virtual string GetSummary([NotNull] IBuildContext context, [NotNull] ITask task)
         {
-            var directory = Path.GetDirectoryName(task.GetType().Assembly.Location);
+            var directory = Path.GetDirectoryName(task.GetType().GetTypeInfo().Assembly.Location);
             if (string.IsNullOrEmpty(directory))
             {
                 return "[No help available]";
@@ -169,7 +170,7 @@ namespace Sitecore.Pathfinder.Tasks
                 return;
             }
 
-            var directory = Path.GetDirectoryName(task.GetType().Assembly.Location);
+            var directory = Path.GetDirectoryName(task.GetType().GetTypeInfo().Assembly.Location);
             if (string.IsNullOrEmpty(directory))
             {
                 context.Trace.WriteLine("Help is not available for this task");
@@ -235,7 +236,7 @@ namespace Sitecore.Pathfinder.Tasks
 
         private void WriteGeneralHelp([NotNull] IBuildContext context)
         {
-            var assembly = Assembly.GetExecutingAssembly();
+            var assembly = GetType().GetTypeInfo().Assembly;
             var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
             var version = fvi.FileVersion;
 

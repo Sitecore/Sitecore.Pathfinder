@@ -1,4 +1,4 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using Sitecore.Pathfinder.Configuration;
@@ -69,7 +69,7 @@ namespace Sitecore.Pathfinder.Compiling.Builders
         [NotNull]
         public ITextNode VersionTextNode { get; set; } = TextNode.Empty;
 
-        [NotNull]                                                                                                               
+        [NotNull]
         protected IFactoryService Factory { get; }
 
         [NotNull]

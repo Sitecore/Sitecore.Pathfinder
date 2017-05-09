@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections;
@@ -10,7 +10,7 @@ namespace Sitecore.Pathfinder.Projects
     public class LockableList<T> : IList<T>
     {
         [NotNull]
-        private readonly object _syncObject = new object();
+        private readonly object _sync = new object();
 
         public LockableList([NotNull] ILockable owner)
         {
@@ -24,88 +24,73 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         public T this[int index]
         {
-            get { return List[index]; }
+            get
+            {
+                lock (_sync)
+                {
+                    return List[index];
+                }
+            }
             set
             {
-                switch (Owner.Locking)
+                if (IsReadOnly)
                 {
-                    case Locking.ReadWrite:
-                        List[index] = value;
-                        break;
+                    throw new InvalidOperationException("List is locked");
+                }
 
-                    case Locking.ReadOnly:
-                        throw new InvalidOperationException("List is locked");
-
-                    case Locking.CopyOnWrite:
-                        lock (_syncObject)
-                        {
-                            List = new SynchronizedCollection<T>(List)
-                            {
-                                [index] = value
-                            };
-                        }
-                        break;
+                lock (_sync)
+                {
+                    List[index] = value;
                 }
             }
         }
 
         [NotNull, ItemNotNull]
-        private SynchronizedCollection<T> List { get; set; } = new SynchronizedCollection<T>();
+        private List<T> List { get; } = new List<T>();
 
         [NotNull]
         private ILockable Owner { get; }
 
         public void Add([NotNull] T item)
         {
-            switch (Owner.Locking)
+            if (IsReadOnly)
             {
-                case Locking.ReadWrite:
-                    List.Add(item);
-                    break;
+                throw new InvalidOperationException("List is locked");
+            }
 
-                case Locking.ReadOnly:
-                    throw new InvalidOperationException("List is locked");
-
-                case Locking.CopyOnWrite:
-                    lock (_syncObject)
-                    {
-                        List = new SynchronizedCollection<T>(List)
-                        {
-                            item
-                        };
-                    }
-                    break;
+            lock (_sync)
+            {
+                List.Add(item);
             }
         }
 
         public void Clear()
         {
-            switch (Owner.Locking)
+            if (IsReadOnly)
             {
-                case Locking.ReadWrite:
-                    List.Clear();
-                    break;
+                throw new InvalidOperationException("List is locked");
+            }
 
-                case Locking.ReadOnly:
-                    throw new InvalidOperationException("List is locked");
-
-                case Locking.CopyOnWrite:
-                    lock (_syncObject)
-                    {
-                        List = new SynchronizedCollection<T>();
-                    }
-                    break;
+            lock (_sync)
+            {
+                List.Clear();
             }
         }
 
         public bool Contains([NotNull] T item)
         {
-            return List.Contains(item);
+            lock (_sync)
+            {
+                return List.Contains(item);
+            }
         }
 
         public void CopyTo([ItemNotNull] T[] array, int arrayIndex)
         {
-            List.CopyTo(array, arrayIndex);
+            lock (_sync)
+            {
+                List.CopyTo(array, arrayIndex);
+            }
         }
 
         public IEnumerator<T> GetEnumerator()
@@ -117,64 +102,40 @@ namespace Sitecore.Pathfinder.Projects
 
         public void Insert(int index, [NotNull] T item)
         {
-            switch (Owner.Locking)
+            if (IsReadOnly)
             {
-                case Locking.ReadWrite:
-                    List.Insert(index, item);
-                    break;
+                throw new InvalidOperationException("List is locked");
+            }
 
-                case Locking.ReadOnly:
-                    throw new InvalidOperationException("List is locked");
-
-                case Locking.CopyOnWrite:
-                    lock (_syncObject)
-                    {
-                        List = new SynchronizedCollection<T>(List);
-                        List.Insert(index, item);
-                    }
-                    break;
+            lock (_sync)
+            {
+                List.Insert(index, item);
             }
         }
 
         public bool Remove([NotNull] T item)
         {
-            switch (Owner.Locking)
+            if (IsReadOnly)
             {
-                case Locking.ReadWrite:
-                    return List.Remove(item);
-
-                case Locking.ReadOnly:
-                    throw new InvalidOperationException("List is locked");
-
-                case Locking.CopyOnWrite:
-                    lock (_syncObject)
-                    {
-                        List = new SynchronizedCollection<T>(List);
-                        return List.Remove(item);
-                    }
+                throw new InvalidOperationException("List is locked");
             }
 
-            return false;
+            lock (_sync)
+            {
+                return List.Remove(item);
+            }
         }
 
         public void RemoveAt(int index)
         {
-            switch (Owner.Locking)
+            if (IsReadOnly)
             {
-                case Locking.ReadWrite:
-                    List.RemoveAt(index);
-                    break;
+                throw new InvalidOperationException("List is locked");
+            }
 
-                case Locking.ReadOnly:
-                    throw new InvalidOperationException("List is locked");
-
-                case Locking.CopyOnWrite:
-                    lock (_syncObject)
-                    {
-                        List = new SynchronizedCollection<T>(List);
-                        List.RemoveAt(index);
-                    }
-                    break;
+            lock (_sync)
+            {
+                List.RemoveAt(index);
             }
         }
 

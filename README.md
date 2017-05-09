@@ -4,26 +4,25 @@
 
 Get started, get far, get happy!
 
-An experimental tool chain for Sitecore.
+An experimental CLI for Sitecore.
 
 ![Pathfinder](docs/img/SitecorePathfinder.png)
  
-Watch the videos on YouTube:
-
-* [01 - Idea and concepts](https://www.youtube.com/watch?v=TcJ0IoI7sVM)
-* [06 - Visual Studio, T4 templates, unit testing with FakeDB](https://youtu.be/_v6-1NKgxT0)
-* [07 - Linting a Habitat project with Pathfinder](https://www.youtube.com/watch?v=KS4Mq-fm9aU)
-* [08 - Linting a website with Pathfinder](https://www.youtube.com/watch?v=MkmXtEOT54U)
-
-_Please notice that some details in these videos are out of date._
-
-* [02 - HelloWorld](https://www.youtube.com/watch?v=jQz5hAVOTzU)
-* [03 - Unit Testing](https://www.youtube.com/watch?v=DWU6D7L8ykg) (Functionality removed) 
-* [04 - Html Templates](https://www.youtube.com/watch?v=9aTGhW6ErYM)
-* [05 - Code Generation, Visual Studio and Grunt](http://youtu.be/ZM3ve1WhwwQ)
-
 Download [the latest Pathfinder build](https://github.com/JakobChristensen/Sitecore.Pathfinder/releases) to 
 try it out.
+
+## Common commands 
+
+Command | Description
+------- | -----------
+scc build | Build a Sitecore Package
+scc build unicorn | Build a directory of Unicorn files
+scc build nuget | Build a Nuget package
+scc test | Validate the project againt many checkers (currently more that 130 checks)
+scc generate yaml [filename] | Create a new Yaml item file
+scc generate json [filename] | Create a new Json item file
+scc generate xml [filename] | Create a new Xml item file
+scc init | Create an initial configuration file (scconfig.json) - Optional
 
 Follow the walk-throughs:
 
@@ -31,16 +30,16 @@ Follow the walk-throughs:
 * [HelloWorld](docs/walkthroughs/2. Hello world/README.md)
 
 ## Introduction
-Pathfinder is an experimental toolchain for Sitecore, that allows developers to use their favorite tools 
+Pathfinder is an experimental CLI for Sitecore, that allows developers to use their favorite tools 
 in a familiar fashion to develop Sitecore websites.
 
-The toolchain creates a deliverable package from the source files in a project directory and deploys 
-the package to a website where an installer installs the new files and Sitecore items.
+The CLI creates a deliverable package from the source files in a project directory. The package can
+be installed in Sitecore using the Package Installer, Unicorn or a custom installer.
 
 The developer process is familiar; edit source files, build and install the package, run tests or review the 
 changes on website, repeat.
 
-Pathfinder works with TDS, Unicorn, Sitecore Rocks and many other Sitecore tools.
+Pathfinder works with Unicorn, Sitecore Rocks and many other Sitecore tools.
 
 _Please notice that this document is a brain dump, so concepts and functionality are probably not explained 
 in a friendly manner._
@@ -50,17 +49,9 @@ in a friendly manner._
 * Text editor agnostic (Visual Studio not required - use Notepad, Notepad++, SublimeText, Atom, VS Code etc.)
 * Build process agnostic (command-line tool, so it integrates easily with Grunt, Gulp, MSBuild etc.)
 * Everything is a file (easy to edit, search and replace across multiple files, source control friendly)
-* If you don't like editing items as files, use TDS or Unicorn to serialize items back to the Pathfinder project
 * Project directory has whole and single truth (source is not spread across development projects, databases and websites) (contineous integration friendly) 
-* Project is packaged into a NuGet package and deployed to the website
-  * Dependency tracking through NuGet dependencies
-  * NuGet package installer on the Sitecore website
-  * Sitecore.Pathfinder.Core NuGet package tweaks Sitecore defaults to be easier to work with (e.g. removes initial workflow)
+* Project is packaged into a Sitecore Package, NuGet package, Unicorn files or a directory of files
 * Lint or check you project and website with over 120 checkers
-* Support for Html files as Sitecore Layout definitions
-* Support for Html Templates (with [Mustache](https://mustache.github.io/mustache.5.html) tags) makes getting started with the Sitecore Rendering Engine easier
-* Support for React renderings (.jsx)
-* Code Generation for generating strongly typed item models, factories and unit tests
 
 ## FAQ
 Read the [FAQ](FAQ.md)

@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 namespace Sitecore.Pathfinder.Projects
 {
@@ -6,9 +6,7 @@ namespace Sitecore.Pathfinder.Projects
     {
         ReadWrite,
 
-        ReadOnly,
-
-        CopyOnWrite
+        ReadOnly
     }
 
     public interface ILockable

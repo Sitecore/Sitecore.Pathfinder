@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -24,9 +24,6 @@ namespace Sitecore.Pathfinder.IO
         void DeleteDirectory([NotNull] string directory);
 
         void DeleteFile([NotNull] string fileName);
-
-        [CanBeNull]
-        object Deserialize([NotNull] string fileName, [NotNull] Type type);
 
         bool DirectoryExists([NotNull] string directory);
 
@@ -72,8 +69,6 @@ namespace Sitecore.Pathfinder.IO
         XDocument ReadXml([NotNull] string fileName, LoadOptions loadOptions = LoadOptions.None);
 
         void Rename([NotNull] string oldFileName, [NotNull] string newFileName);
-
-        void Serialize([NotNull] string fileName, [NotNull] Type type, [NotNull] object value);
 
         void Unzip([NotNull] string zipFileName, [NotNull] string destinationDirectory);
 

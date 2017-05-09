@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using Sitecore.Pathfinder.Projects.Items;
 
@@ -11,9 +11,9 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             Priority = priority;
         }
 
-        public double Priority { get; }
-
         public virtual bool IsExclusive => false;
+
+        public double Priority { get; }
 
         public abstract bool CanCompile(IFieldCompileContext context, Field field);
 

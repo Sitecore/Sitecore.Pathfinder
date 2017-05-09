@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.IO;
@@ -28,9 +28,14 @@ namespace Sitecore.Pathfinder.IO
                 return f1;
             }
 
+            if (f2.StartsWith(".\\", StringComparison.Ordinal))
+            {
+                f2 = f2.Mid(2);
+            }
+
             var path = Path.Combine(f1, f2);
 
-            if (path.IndexOf("..", StringComparison.OrdinalIgnoreCase) >= 0)
+            if (path.IndexOf("..", StringComparison.Ordinal) >= 0)
             {
                 path = Path.GetFullPath(path);
             }
@@ -190,7 +195,7 @@ namespace Sitecore.Pathfinder.IO
 
         public static bool IsProbablyItemPath([NotNull] string itemPath)
         {
-            if (!itemPath.StartsWith("/sitecore/", StringComparison.InvariantCultureIgnoreCase))
+            if (!itemPath.StartsWith("/sitecore/", StringComparison.OrdinalIgnoreCase))
             {
                 return false;
             }

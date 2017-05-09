@@ -1,62 +1,29 @@
 {
-    // every project must have a unique id, since the project-unique-id is used to calculate item ids
-    "project-unique-id": "{project-unique-id}",
+    // manifest
+    "author": "Sitecore Pathfinder",
+    "description": "",
+    "license": "",
+    "name": "",
+    "publisher": "",
+    "version": "1.0.0",
 
-    // website directories and host name
-    "website-directory": "c:\\inetpub\\wwwroot\\Sitecore.Default\\Website",
-    "data-folder-directory": "c:\\inetpub\\wwwroot\\Sitecore.Default\\Data",
-    "host-name": "http://sitecore.default",
-
-    // user name and password
-    "user-name": "sitecore\\admin",
-    "password": "b",
-
-    // default Sitecore database name (master, core, or web)
-    "database": "master",
-
-    // the project roles enables/disables checkers and conventions - comma seperated list of roles
-    "project-role": "default",
-
-    // mapping between project files and website files and items
-    "project-website-mappings": {
-
-        // mapping items and files to website when building a project
-        "project-to-website": {
-            "master": {
-                "project-directory-to-item-path": "/items/master/sitecore => /sitecore",
-                "project-directory-to-website-directory": "/items/master/sitecore => /"
-            },
-
-            "core": {
-                "project-directory-to-item-path": "/items/core/sitecore => /sitecore",
-                "project-directory-to-website-directory": "/items/core/sitecore => /",
-                "database": "core"
-            },
-
-            "bin": {
-                "project-directory-to-website-directory": "/bin => /bin",
-                "file-name-include": "*.dll"
-            },
-
-            "wwwroot": {
-                "project-directory-to-item-path": "/wwwroot => /",
-                "project-directory-to-website-directory": "/wwwroot => /",
-                "upload-media": false
-            },
-
-            "views": {
-                "project-directory-to-item-path": "/views => /sitecore/layout/renderings",
-                "project-directory-to-website-directory": "/views => /views"
-            }
-        },
-
-        // mapping items and files to project when importing a website
-        "website-to-project": {
-        }
+    // list of files and directories to compile
+    "files": {
+        "include": ["**/*"]
     },
 
-    // tasks to execute when building
-    "build-project": {
-        "tasks": "restore-packages check-project write-exports pack-nuget copy-package install-package publish-database show-website show-status"
+    // list of tasks to execute when building
+    "tasks": {
+        "build": ["check-project", "clean-output", "write-exports", "publish-project", "show-status"]
+    },
+
+    // disabled checkers
+    "checkers": {
+        // "AvoidSpacesInItemNames": "disabled"
+    },
+
+    // disabled messages
+    "messages": {
+        // "SCC1011": "disabled"
     }
 }

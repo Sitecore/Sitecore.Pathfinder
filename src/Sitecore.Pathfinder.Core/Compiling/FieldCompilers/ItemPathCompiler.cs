@@ -1,7 +1,7 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Text;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -14,6 +14,7 @@ using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 {
+    [Export(typeof(IFieldCompiler)), Shared]
     public class ItemPathCompiler : FieldCompilerBase
     {
         [ImportingConstructor]
@@ -168,7 +169,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
             var project = field.Item.Project;
 
-            foreach (string key in url.Parameters.Keys)
+            foreach (var key in url.Parameters.Keys)
             {
                 if (string.Equals(key, "database", StringComparison.OrdinalIgnoreCase) || string.Equals(key, "databasename", StringComparison.OrdinalIgnoreCase))
                 {
@@ -176,9 +177,9 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 }
             }
 
-            foreach (string key in url.Parameters)
+            foreach (var pair in url.Parameters)
             {
-                var v = url.Parameters[key];
+                var v = pair.Value;
 
                 if (PathHelper.IsProbablyItemPath(v) && !ReferenceParser.IsIgnoredReference(v))
                 {
@@ -200,7 +201,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                     }
                 }
 
-                result[key] = v;
+                result[pair.Key] = v;
             }
 
             return result.ToString();

@@ -1,4 +1,4 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
@@ -18,18 +18,23 @@ namespace Sitecore.Pathfinder.Languages.Yaml
             Indent = indent;
         }
 
-        public int Indentation { get; set; } = 4;
-
         public int Indent { get; protected set; }
+
+        public int Indentation { get; set; } = 4;
 
         [NotNull]
         protected TextWriter InnerWriter { get; }
+
+        public void Write([NotNull] string text)
+        {
+            InnerWriter.Write(text);
+        }
 
         public void WriteAttributeString([NotNull] string key, [NotNull] string value = "")
         {
             InnerWriter.Write(new string(' ', Indent * Indentation));
             InnerWriter.Write(key);
-            InnerWriter.Write(" : ");
+            InnerWriter.Write(": ");
             InnerWriter.WriteLine(value);
         }
 
@@ -42,7 +47,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
 
             InnerWriter.Write(new string(' ', Indent * Indentation));
             InnerWriter.Write(key);
-            InnerWriter.Write(" : ");
+            InnerWriter.Write(": ");
             InnerWriter.WriteLine(value);
         }
 
@@ -55,7 +60,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
 
             InnerWriter.Write(new string(' ', Indent * Indentation));
             InnerWriter.Write(key);
-            InnerWriter.Write(" : ");
+            InnerWriter.Write(": ");
             InnerWriter.WriteLine(value);
         }
 
@@ -68,7 +73,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
 
             InnerWriter.Write(new string(' ', Indent * Indentation));
             InnerWriter.Write(key);
-            InnerWriter.Write(" : ");
+            InnerWriter.Write(": ");
             InnerWriter.WriteLine(value);
         }
 
@@ -77,16 +82,21 @@ namespace Sitecore.Pathfinder.Languages.Yaml
             Indent--;
         }
 
+        public void WriteLine([NotNull] string text)
+        {
+            InnerWriter.WriteLine(text);
+        }
+
         public void WriteStartElement([NotNull] string key, [NotNull] string value = "")
         {
-            if (Indent > 0 && !key.StartsWith("-"))
+            if (!key.StartsWith("-"))
             {
                 key = "- " + key;
             }
 
             InnerWriter.Write(new string(' ', Indent * Indentation));
             InnerWriter.Write(key);
-            InnerWriter.Write(" : ");
+            InnerWriter.Write(": ");
             InnerWriter.WriteLine(value);
             Indent++;
         }

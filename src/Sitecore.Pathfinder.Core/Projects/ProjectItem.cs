@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -53,6 +53,26 @@ namespace Sitecore.Pathfinder.Projects
             return Uri.ToString();
         }
 
+        [NotNull]
+        protected ProjectItem AddAdditionalSnapshot([NotNull] ISnapshot snapshot)
+        {
+            if (!_snapshots.Contains(snapshot))
+            {
+                _snapshots.Add(snapshot);
+            }
+
+            return this;
+        }
+
+        [NotNull]
+        protected ProjectItem AddSnapshot([NotNull] ISnapshot snapshot)
+        {
+            _snapshots.Remove(snapshot);
+            _snapshots.Insert(0, snapshot);
+
+            return this;
+        }
+
         protected virtual void Merge([NotNull] IProjectItem newProjectItem, bool overwrite)
         {
             _snapshots.Merge(Snapshot, newProjectItem.AdditionalSnapshots, newProjectItem.Snapshot, overwrite);
@@ -70,26 +90,6 @@ namespace Sitecore.Pathfinder.Projects
             {
                 Uri = newProjectItem.Uri;
             }
-        }
-
-        [NotNull]
-        protected ProjectItem AddSnapshot([NotNull] ISnapshot snapshot)
-        {
-            _snapshots.Remove(snapshot);
-            _snapshots.Insert(0, snapshot);
-
-            return this;
-        }
-
-        [NotNull]
-        protected ProjectItem AddAdditionalSnapshot([NotNull] ISnapshot snapshot)
-        {
-            if (!_snapshots.Contains(snapshot))
-            {
-                _snapshots.Add(snapshot);
-            }
-
-            return this;
         }
     }
 }

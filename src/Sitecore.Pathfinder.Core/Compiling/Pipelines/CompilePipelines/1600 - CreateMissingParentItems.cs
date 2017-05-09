@@ -1,6 +1,7 @@
 // © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
@@ -10,6 +11,7 @@ using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 {
+    [Export(typeof(IPipelineProcessor)), Shared]
     public class CreateMissingParentItems : PipelineProcessorBase<CompilePipeline>
     {
         public CreateMissingParentItems() : base(1600)

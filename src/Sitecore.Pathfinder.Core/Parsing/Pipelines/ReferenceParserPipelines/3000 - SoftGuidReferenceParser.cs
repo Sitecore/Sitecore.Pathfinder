@@ -1,10 +1,12 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
+using System.Composition;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Parsing.Pipelines.ReferenceParserPipelines
 {
+    [Export(typeof(IPipelineProcessor)), Shared]
     public class SoftGuidReferenceParser : PipelineProcessorBase<ReferenceParserPipeline>
     {
         public SoftGuidReferenceParser() : base(3000)
@@ -25,7 +27,7 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.ReferenceParserPipelines
             }
 
             // if the reference also contains a ", it is probably a Json string
-            if (pipeline.ReferenceText.IndexOf('\"') >= 0 || pipeline.ReferenceText.IndexOf('\'') >= 0 || pipeline.ReferenceText.IndexOf(':') >= 0) 
+            if (pipeline.ReferenceText.IndexOf('\"') >= 0 || pipeline.ReferenceText.IndexOf('\'') >= 0 || pipeline.ReferenceText.IndexOf(':') >= 0)
             {
                 return;
             }

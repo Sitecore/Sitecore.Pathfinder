@@ -1,0 +1,150 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>    
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Snapshots\Xml\**" />
+    <Compile Remove="Websites\**" />
+    <EmbeddedResource Remove="Snapshots\Xml\**" />
+    <EmbeddedResource Remove="Websites\**" />
+    <None Remove="Snapshots\Xml\**" />
+    <None Remove="Websites\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Projects\ProjectTests.SerializedItem.cs" />
+    <Compile Remove="Projects\ProjectTests.XmlTemplates.cs" />
+    <Compile Remove="Projects\ProjectTests.XmlTransform.cs" />
+    <Compile Remove="Snapshots\AttributeNameTextNodeTests.cs" />
+    <Compile Remove="Snapshots\FileNameTextNodeTests.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.1.11" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.1.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Sitecore.Pathfinder.Console\Sitecore.Pathfinder.Console.csproj" />
+    <ProjectReference Include="..\..\src\Sitecore.Pathfinder.Core\Sitecore.Pathfinder.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="items\json\toolbar.content.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="items\json\toolbar.templates.content.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\content\Home\JsonItem.item.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\content\Home\JsonLayout.item.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\content\Home\JsonLayout.layout.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\content\Home\PageHtml.item.xml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\content\Home\SerializedItem.item">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\content\Home\Welcome.item.xml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\content\Home\XmlContentItem.master.content.xml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\content\Home\XmlItem.item.xml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\content\Home\XmlLayout.item.xml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\content\Home\XmlLayout.layout.xml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\content\Home\XmlTransform.loremipsum.item.xml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\content\Home\YamlItem.item.yaml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\content\Home\YamlLayout.item.yaml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\content\Home\YamlLayout.layout.yaml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\content\Home\YmlItem.yml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\layout\layouts\Pathfinder\MvcLayout.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\layout\layouts\Pathfinder\MvcLayout.item.xml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\layout\renderings\HelloWorld.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\layout\renderings\Literal.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\layout\renderings\timer.jsx">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\layout\web.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\media library\mushrooms.item.xml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\media library\mushrooms.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\templates\JsonTemplate.item.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\templates\XmlTemplate.item.xml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\templates\XmlTemplateMerge.item.xml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="items\master\sitecore\templates\XmlTemplateMerge1.item.xml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="items\serialization\home.item">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="items\xml\home.content.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="items\xml\menu.content.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="items\xml\menu.templates.content.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="items\yaml\home.content.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="items\yaml\ribbon.content.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="items\yaml\ribbon.templates.content.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

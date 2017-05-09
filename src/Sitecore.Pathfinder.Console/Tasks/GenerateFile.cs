@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
@@ -12,11 +12,13 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    public class GenerateFile : BuildTaskBase, IOptionPicker
+    [Export(typeof(ITask)), Shared]
+    public class GenerateFile : BuildTaskBase
     {
         [ImportingConstructor]
-        public GenerateFile([NotNull] IPathMapperService pathMapper) : base("generate-file")
+        public GenerateFile([NotNull] IFileSystemService fileSystem, [NotNull] IPathMapperService pathMapper) : base("generate-file")
         {
+            FileSystem = fileSystem;
             PathMapper = pathMapper;
 
             Alias = "generate";
@@ -26,19 +28,22 @@ namespace Sitecore.Pathfinder.Tasks
         [NotNull, Option("generator", Alias = "g", PositionalArg = 1, HasOptions = true, PromptText = "Pick generator")]
         public string GeneratorDirectory { get; set; } = string.Empty;
 
-        [NotNull, Option("name", Alias = "n", PositionalArg = 2, DefaultValue = "file")]
-        public string Name { get; set; } = string.Empty;
+        [NotNull, Option("filename", Alias = "f", PositionalArg = 2, DefaultValue = "file")]
+        public string FileName { get; set; } = string.Empty;
+
+        [NotNull]
+        public IFileSystemService FileSystem { get; }
 
         [NotNull]
         protected IPathMapperService PathMapper { get; }
 
         public override void Run(IBuildContext context)
         {
-            var generatorsDirectory = Path.Combine(context.Configuration.GetToolsDirectory(), "files\\generators");
+            var generatorsDirectory = Path.Combine(context.ToolsDirectory, "files\\generators");
 
             context.Trace.TraceInformation(Msg.G1009, Texts.Generating_files___);
 
-            if (!context.FileSystem.DirectoryExists(GeneratorDirectory))
+            if (!FileSystem.DirectoryExists(GeneratorDirectory))
             {
                 if (GeneratorDirectory.IndexOf('/') < 0 && GeneratorDirectory.IndexOf('\\') < 0)
                 {
@@ -46,16 +51,16 @@ namespace Sitecore.Pathfinder.Tasks
                 }
             }
 
-            if (!context.FileSystem.DirectoryExists(GeneratorDirectory))
+            if (!FileSystem.DirectoryExists(GeneratorDirectory))
             {
                 var dir = string.Empty;
-                foreach (var directory in context.FileSystem.GetDirectories(generatorsDirectory).OrderBy(d => d))
+                foreach (var directory in FileSystem.GetDirectories(generatorsDirectory).OrderBy(d => d))
                 {
                     if (directory.StartsWith(GeneratorDirectory, StringComparison.OrdinalIgnoreCase))
                     {
                         if (!string.IsNullOrEmpty(dir))
                         {
-                            context.Trace.TraceError(Msg.G1019, "Ambigious generator");
+                            context.Trace.TraceError(Msg.G1019, "Ambiguous generator");
                             return;
                         }
 
@@ -66,32 +71,33 @@ namespace Sitecore.Pathfinder.Tasks
                 GeneratorDirectory = dir;
             }
 
-            if (!context.FileSystem.DirectoryExists(GeneratorDirectory))
+            if (!FileSystem.DirectoryExists(GeneratorDirectory))
             {
                 context.Trace.TraceError(Msg.G1018, Texts.Generator_not_found, GeneratorDirectory);
                 return;
             }
 
             var macros = new Dictionary<string, string>();
-            macros["name"] = Name;
+            macros["name"] = FileName;
 
-            var textFileExtensions = context.Configuration.GetStringList(Constants.Configuration.GenerateFile.TextFileExtensions);
+            var textFileExtensions = context.Configuration.GetArray(Constants.Configuration.GenerateFile.TextFileExtensions);
 
             Copy(context, GeneratorDirectory, Directory.GetCurrentDirectory(), macros, textFileExtensions);
         }
 
         protected virtual void Copy([NotNull] IBuildContext context, [NotNull] string sourceDirectory, [NotNull] string destinationDirectory, [NotNull] Dictionary<string, string> macros, [ItemNotNull, NotNull] IEnumerable<string> textFileExtensions)
         {
-            foreach (var sourceFileName in context.FileSystem.GetFiles(sourceDirectory))
+            foreach (var sourceFileName in FileSystem.GetFiles(sourceDirectory))
             {
                 var destinationFileName = Path.Combine(destinationDirectory, Path.GetFileName(sourceFileName));
 
                 destinationFileName = ReplaceMacros(destinationFileName, macros, "__", "__");
+                context.Trace.TraceInformation(Msg.G1000, "Generating file", PathHelper.UnmapPath(context.ProjectDirectory, destinationFileName));
 
                 var extension = Path.GetExtension(sourceFileName);
                 if (textFileExtensions.Any(t => string.Equals(t, extension, StringComparison.OrdinalIgnoreCase)))
                 {
-                    var projectFileName = PathHelper.UnmapPath(context.Configuration.GetProjectDirectory(), destinationFileName);
+                    var projectFileName = PathHelper.UnmapPath(context.ProjectDirectory, destinationFileName);
 
                     string itemPath;
                     string databaseName;
@@ -105,21 +111,21 @@ namespace Sitecore.Pathfinder.Tasks
                     PathMapper.TryGetWebsiteFileName(projectFileName, out websiteFileName);
                     macros["fileName"] = websiteFileName;
 
-                    var content = context.FileSystem.ReadAllText(sourceFileName);
+                    var content = FileSystem.ReadAllText(sourceFileName);
 
                     content = ReplaceMacros(content, macros, "<%= ", " %>");
 
-                    context.FileSystem.CreateDirectoryFromFileName(destinationFileName);
-                    context.FileSystem.WriteAllText(destinationFileName, content);
+                    FileSystem.CreateDirectoryFromFileName(destinationFileName);
+                    FileSystem.WriteAllText(destinationFileName, content);
                 }
                 else
                 {
-                    context.FileSystem.CreateDirectoryFromFileName(destinationFileName);
-                    context.FileSystem.Copy(sourceFileName, destinationFileName);
+                    FileSystem.CreateDirectoryFromFileName(destinationFileName);
+                    FileSystem.Copy(sourceFileName, destinationFileName);
                 }
             }
 
-            foreach (var sourceSubdirectory in context.FileSystem.GetDirectories(sourceDirectory))
+            foreach (var sourceSubdirectory in FileSystem.GetDirectories(sourceDirectory))
             {
                 var destinationSubdirectory = Path.Combine(destinationDirectory, Path.GetFileName(sourceSubdirectory));
                 Copy(context, sourceSubdirectory, destinationSubdirectory, macros, textFileExtensions);
@@ -137,22 +143,19 @@ namespace Sitecore.Pathfinder.Tasks
             return text;
         }
 
-        Dictionary<string, string> IOptionPicker.GetOptions(string optionName, ITaskContext context)
+        [NotNull, OptionValues("GeneratorDirectory")]
+        protected IEnumerable<(string Name, string Value)> GetInformationOptions([NotNull] ITaskContext context)
         {
-            var options = new Dictionary<string, string>();
-
             var generatorsDirectory = Path.Combine(context.Configuration.GetToolsDirectory(), "files\\generators");
-            if (!context.FileSystem.DirectoryExists(generatorsDirectory))
+            if (!FileSystem.DirectoryExists(generatorsDirectory))
             {
-                return options;
+                yield break;
             }
 
-            foreach (var directory in context.FileSystem.GetDirectories(generatorsDirectory))
+            foreach (var directory in FileSystem.GetDirectories(generatorsDirectory))
             {
-                options[Path.GetFileName(directory).Replace("-", " ")] = directory;
+                yield return (Path.GetFileName(directory).Replace("-", " "), directory);
             }
-
-            return options;
         }
     }
 }

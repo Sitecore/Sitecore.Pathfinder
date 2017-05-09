@@ -1,2 +1,0 @@
-@echo off
-scc new-project /overwrite=true /projectid=HelloWorld /website=e:\inetpub\wwwroot\Pathfinder\Website /datafolder=e:\inetpub\wwwroot\Pathfinder\Data /host=pathfinder /editor=VSCode /starterkit=HelloWorld /silent /interactive=false

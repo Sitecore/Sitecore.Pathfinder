@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.Projects
 {
@@ -64,6 +65,18 @@ namespace Sitecore.Pathfinder.Projects
         public Language GetLanguage([NotNull] string languageName)
         {
             return Project.GetLanguage(languageName);
+        }
+
+        [ItemNotNull, NotNull]
+        public IEnumerable<Language> GetLanguages()
+        {
+            return GetItems().SelectMany(i => i.GetLanguages()).Distinct();
+        }
+
+        [NotNull, ItemNotNull]
+        public IEnumerable<Template> GetTemplates()
+        {
+            return Project.Templates.Where(i => string.Equals(i.DatabaseName, DatabaseName, StringComparison.OrdinalIgnoreCase));
         }
 
         public static bool operator ==([CanBeNull] Database left, [CanBeNull] Database right)

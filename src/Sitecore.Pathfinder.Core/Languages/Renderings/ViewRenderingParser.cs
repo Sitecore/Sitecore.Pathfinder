@@ -1,13 +1,16 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
+using System.Composition;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Parsing;
 
 namespace Sitecore.Pathfinder.Languages.Renderings
 {
+    [Export(typeof(IParser)), Shared]
     public class ViewRenderingParser : RenderingParser
     {
         [NotNull]

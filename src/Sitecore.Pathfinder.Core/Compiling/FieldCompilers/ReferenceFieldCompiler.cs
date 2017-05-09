@@ -1,6 +1,7 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
+using System.Composition;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
@@ -8,6 +9,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 {
+    [Export(typeof(IFieldCompiler)), Shared]
     public class ReferenceFieldCompiler : FieldCompilerBase
     {
         public ReferenceFieldCompiler() : base(Constants.FieldCompilers.Normal)
@@ -32,7 +34,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             if (item == null)
             {
                 context.Trace.TraceError(Msg.C1045, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), value);
-                return string.Empty;
+                return value;
             }
 
             return item.Uri.Guid.Format();

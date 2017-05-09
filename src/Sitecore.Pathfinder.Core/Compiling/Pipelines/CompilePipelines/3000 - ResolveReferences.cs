@@ -1,9 +1,11 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
+using System.Composition;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 
 namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 {
+    [Export(typeof(IPipelineProcessor)), Shared]
     public class ResolveReferences : PipelineProcessorBase<CompilePipeline>
     {
         public ResolveReferences() : base(3000)

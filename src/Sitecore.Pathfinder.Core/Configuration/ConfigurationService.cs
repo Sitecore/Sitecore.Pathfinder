@@ -1,8 +1,8 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
@@ -12,7 +12,7 @@ using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Configuration
 {
-    [Export(typeof(IConfigurationService))]
+    [Export(typeof(IConfigurationService)), Shared]
     public class ConfigurationService : IConfigurationService
     {
         [ImportingConstructor]
@@ -123,21 +123,6 @@ namespace Sitecore.Pathfinder.Configuration
             else
             {
                 GetProjectConfigurationFiles(configurationFileNames, options, toolsDirectory, projectDirectory);
-            }
-
-            // check if there are only tool configuration files
-            if (configurationFileNames.All(f => f.StartsWith(toolsDirectory, StringComparison.OrdinalIgnoreCase)))
-            {
-                // check if project directory is empty or not
-                if (Directory.GetFiles(projectDirectory).Any() || Directory.GetDirectories(projectDirectory).Any())
-                {
-                    // there are files or directories, but no config file, so let's try the default project config file
-                    var projectConfigFileName = PathHelper.Combine(toolsDirectory, "files\\project.noconfig\\scconfig.json");
-                    if (File.Exists(projectConfigFileName))
-                    {
-                        configurationFileNames.Add(projectConfigFileName);
-                    }
-                }
             }
         }
 

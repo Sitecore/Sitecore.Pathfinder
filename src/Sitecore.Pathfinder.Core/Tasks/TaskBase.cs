@@ -1,7 +1,7 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel.Composition;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Sitecore.Pathfinder.Diagnostics;
@@ -9,7 +9,6 @@ using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    [InheritedExport(typeof(ITask))]
     public abstract class TaskBase : ITask
     {
         /// <summary>Creates new task.</summary>
@@ -105,7 +104,7 @@ namespace Sitecore.Pathfinder.Tasks
             {
                 if (context.Configuration.TryGet(attribute.Alias, out value))
                 {
-                    return value ?? string.Empty;
+                    return MatchPartialStringValue(context, attribute, property, value ?? string.Empty);
                 }
             }
 
@@ -114,7 +113,7 @@ namespace Sitecore.Pathfinder.Tasks
             {
                 if (context.Configuration.TryGet("arg" + attribute.PositionalArg, out value))
                 {
-                    return value ?? string.Empty;
+                    return MatchPartialStringValue(context, attribute, property, value ?? string.Empty);
                 }
             }
 
@@ -127,16 +126,36 @@ namespace Sitecore.Pathfinder.Tasks
             // get from user using pick list
             if (attribute.HasOptions)
             {
-                var optionPicker = this as IOptionPicker;
-                if (optionPicker != null)
+                var options = new Dictionary<string, string>();
+
+                foreach (var method in property.DeclaringType.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                 {
-                    var options = optionPicker.GetOptions(attribute.Name, context);
+                    var valuesAttribute = method.GetCustomAttribute<OptionValuesAttribute>();
+                    if (valuesAttribute == null || valuesAttribute.Name != property.Name)
+                    {
+                        continue;
+                    }
+
+                    var tuples = (IEnumerable<(string Name, string Value)>)method.Invoke(this, new object[]
+                    {
+                        context
+                    });
+                    foreach (var tuple in tuples)
+                    {
+                        options[tuple.Name] = tuple.Value;
+                    }
+
+                    break;
+                }
+
+                if (options.Any())
+                {
                     do
                     {
                         value = context.Console.Pick(attribute.PromptText + @": ", options);
                         if (!string.IsNullOrEmpty(value) || !attribute.IsRequired)
                         {
-                            return value;          
+                            return value;
                         }
                     }
                     while (true);
@@ -149,7 +168,7 @@ namespace Sitecore.Pathfinder.Tasks
                 value = context.Console.ReadLine(attribute.PromptText + @": ", string.Empty);
                 if (!string.IsNullOrEmpty(value) || !attribute.IsRequired)
                 {
-                    return value;
+                    return MatchPartialStringValue(context, attribute, property, value);
                 }
             }
             while (true);
@@ -165,6 +184,61 @@ namespace Sitecore.Pathfinder.Tasks
             context.Trace.TraceError(Msg.I1009, Texts.Cannot_run_task_without_a_configuration_file, TaskName);
             context.IsAborted = true;
             return false;
+        }
+
+        [NotNull]
+        protected virtual string MatchPartialStringValue([NotNull] ITaskContext context, [NotNull] OptionAttribute attribute, [NotNull] PropertyInfo property, [NotNull] string value)
+        {
+            if (!attribute.HasOptions)
+            {
+                return value;
+            }
+
+            var options = new Dictionary<string, string>();
+
+            foreach (var method in property.DeclaringType.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            {
+                var valuesAttribute = method.GetCustomAttribute<OptionValuesAttribute>();
+                if (valuesAttribute == null || valuesAttribute.Name != property.Name)
+                {
+                    continue;
+                }
+
+                var tuples = (IEnumerable<(string Name, string Value)>)method.Invoke(this, new object[]
+                {
+                    context
+                });
+
+                foreach (var tuple in tuples)
+                {
+                    options[tuple.Name] = tuple.Value;
+                }
+
+                break;
+            }
+
+            if (!options.Any())
+            {
+                return value;
+            }
+
+            var found = 0;
+            var partialKey = value;
+            foreach (var option in options)
+            {
+                if (option.Key.StartsWith(partialKey, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    value = option.Value;
+                    found++;
+                }
+            }
+
+            if (found > 1)
+            {
+                throw new InvalidOperationException("Ambiguous parameter: " + partialKey);
+            }
+
+            return value;
         }
 
         protected virtual void ProcessOptions([NotNull] ITaskContext context)

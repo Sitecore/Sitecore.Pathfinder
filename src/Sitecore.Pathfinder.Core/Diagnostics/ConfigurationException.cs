@@ -1,13 +1,12 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.ComponentModel;
 
 namespace Sitecore.Pathfinder.Diagnostics
 {
     public class ConfigurationException : Exception
     {
-        public ConfigurationException([NotNull, Localizable(true)]  string text, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
+        public ConfigurationException([NotNull, Localizable(true)] string text, [NotNull] string details = "") : base(text + (string.IsNullOrEmpty(details) ? ": " + details : string.Empty))
         {
             Text = text;
             Details = details;

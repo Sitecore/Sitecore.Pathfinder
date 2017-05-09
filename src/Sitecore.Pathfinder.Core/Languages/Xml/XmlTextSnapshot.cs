@@ -2,26 +2,19 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.IO;
+using System.Composition;
 using System.Xml;
 using System.Xml.Linq;
-using System.Xml.Schema;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
-using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Xml
 {
-    [Export, PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export]
     public class XmlTextSnapshot : TextSnapshot
     {
-        [NotNull]
-        protected static readonly Dictionary<string, XmlSchemaSet> Schemas = new Dictionary<string, XmlSchemaSet>();
-
         [NotNull]
         protected static readonly object SchemasSync = new object();
 
@@ -34,7 +27,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
             FileSystem = fileSystem;
         }
 
-        public override ITextNode Root => _root ?? (_root = RootElement != null ? ParseDirectives(ParseContext, Parse(null, RootElement)) : TextNode.Empty);
+        public override ITextNode Root => _root ?? (_root = RootElement != null ? Parse(null, RootElement) : TextNode.Empty);
 
         [NotNull]
         public string SchemaFileName { get; private set; }
@@ -53,69 +46,6 @@ namespace Sitecore.Pathfinder.Languages.Xml
 
         [CanBeNull]
         protected XElement RootElement { get; private set; }
-
-        public override bool ValidateSchema(IParseContext context)
-        {
-            if (string.IsNullOrEmpty(SchemaFileName) || string.IsNullOrEmpty(SchemaNamespace))
-            {
-                return true;
-            }
-
-            var doc = RootElement?.Document;
-            if (doc == null)
-            {
-                return true;
-            }
-
-            XmlSchemaSet schema;
-            lock (SchemasSync)
-            {
-                if (!Schemas.TryGetValue(SchemaNamespace, out schema))
-                {
-                    schema = GetSchema(context, SchemaFileName, SchemaNamespace);
-                    Schemas[SchemaNamespace] = schema;
-                }
-            }
-
-            if (schema == null)
-            {
-                return true;
-            }
-
-            var isValid = true;
-
-            ValidationEventHandler validateHandler = delegate(object sender, ValidationEventArgs args)
-            {
-                var length = 0;
-                var element = sender as XElement;
-                if (element != null)
-                {
-                    length = element.Name.LocalName.Length;
-                }
-
-                switch (args.Severity)
-                {
-                    case XmlSeverityType.Error:
-                        context.Trace.TraceError(Msg.P1001, args.Message, SourceFile.AbsoluteFileName, new TextSpan(args.Exception.LineNumber, args.Exception.LinePosition, length));
-                        isValid = false;
-                        break;
-                    case XmlSeverityType.Warning:
-                        context.Trace.TraceWarning(Msg.P1002, args.Message, SourceFile.AbsoluteFileName, new TextSpan(args.Exception.LineNumber, args.Exception.LinePosition, length));
-                        break;
-                }
-            };
-
-            try
-            {
-                doc.Validate(schema, validateHandler);
-            }
-            catch (Exception ex)
-            {
-                context.Trace.TraceError(Msg.P1003, Texts.The_file_does_not_contain_valid_XML, context.Snapshot.SourceFile.AbsoluteFileName, TextSpan.Empty, ex.Message);
-            }
-
-            return isValid;
-        }
 
         [NotNull]
         public virtual XmlTextSnapshot With([NotNull] SnapshotParseContext parseContext, [NotNull] ISourceFile sourceFile, [NotNull] string contents, [NotNull] string schemaNamespace, [NotNull] string schemaFileName)
@@ -144,21 +74,6 @@ namespace Sitecore.Pathfinder.Languages.Xml
             }
 
             return this;
-        }
-
-        [CanBeNull]
-        protected virtual XmlSchemaSet GetSchema([NotNull] IParseContext context, [NotNull] string schemaFileName, [NotNull] string schemaNamespace)
-        {
-            var fileName = Path.Combine(context.Configuration.GetToolsDirectory(), "schemas\\" + schemaFileName);
-            if (!FileSystem.FileExists(fileName))
-            {
-                return null;
-            }
-
-            var schemas = new XmlSchemaSet();
-            schemas.Add(schemaNamespace, fileName);
-
-            return schemas;
         }
 
         [NotNull]

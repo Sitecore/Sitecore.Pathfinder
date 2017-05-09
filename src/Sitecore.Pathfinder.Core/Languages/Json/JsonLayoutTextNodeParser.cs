@@ -1,7 +1,8 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
+using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Parsing.Items;
 using Sitecore.Pathfinder.Projects;
@@ -10,6 +11,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Json
 {
+    [Export(typeof(ITextNodeParser)), Shared]
     public class JsonLayoutTextNodeParser : LayoutTextNodeParserBase
     {
         public JsonLayoutTextNodeParser() : base(Constants.TextNodeParsers.Layouts)

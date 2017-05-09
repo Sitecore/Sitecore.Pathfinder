@@ -1,8 +1,8 @@
-// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
@@ -13,9 +13,10 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checking.Checkers
 {
+    [Export(typeof(IChecker)), Shared]
     public class GuidCheckers : Checker
     {
-        [NotNull, ItemNotNull, Export("Check")]
+        [NotNull, ItemNotNull, Check]
         public IEnumerable<Diagnostic> GuidClash([NotNull] ICheckerContext context)
         {
             var items = context.Project.ProjectItems.ToArray();

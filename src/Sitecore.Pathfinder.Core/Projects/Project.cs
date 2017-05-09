@@ -1,8 +1,8 @@
-﻿// © 2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,6 +12,7 @@ using Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -24,9 +25,7 @@ using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Projects
 {
-    public delegate void ProjectChangedEventHandler([NotNull] object sender);
-
-    [Export, Export(typeof(IProject)), PartCreationPolicy(CreationPolicy.NonShared), DebuggerDisplay("{GetType().Name,nq}: {ProjectDirectory}")]
+    [Export, Export(typeof(IProject)), DebuggerDisplay("{GetType().Name,nq}: {ProjectDirectory}")]
     public class Project : SourcePropertyBag, IProject, IDiagnosticCollector
     {
         [NotNull]
@@ -39,7 +38,7 @@ namespace Sitecore.Pathfinder.Projects
         private readonly object _databasesSyncObject = new object();
 
         [NotNull, ItemNotNull]
-        private readonly IList<Diagnostic> _diagnostics = new SynchronizedCollection<Diagnostic>();
+        private readonly IList<Diagnostic> _diagnostics;
 
         [NotNull]
         private readonly Dictionary<string, Language> _languages = new Dictionary<string, Language>();
@@ -77,6 +76,7 @@ namespace Sitecore.Pathfinder.Projects
             Index = index;
 
             _projectItems = new LockableList<IProjectItem>(this);
+            _diagnostics = new SynchronizedList<Diagnostic>();
 
             Options = ProjectOptions.Empty;
         }
@@ -111,12 +111,13 @@ namespace Sitecore.Pathfinder.Projects
 
         public ProjectOptions Options { get; private set; }
 
-        public string ProjectDirectory => Options.ProjectDirectory;
+        public string ProjectDirectory => Configuration.GetProjectDirectory();
 
         public IEnumerable<IProjectItem> ProjectItems => _projectItems;
 
         public string ProjectUniqueId => _projectUniqueId ?? (_projectUniqueId = Configuration.GetString(Constants.Configuration.ProjectUniqueId));
 
+        [NotNull]
         public IDictionary<string, ISourceFile> SourceFiles { get; } = new Dictionary<string, ISourceFile>();
 
         public IEnumerable<Template> Templates => Index.Templates;
@@ -142,7 +143,8 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         protected ITraceService Trace { get; }
 
-        public virtual IProjectBase Add(string absoluteFileName)
+        [NotNull]
+        public virtual IProjectBase Add([NotNull] string absoluteFileName)
         {
             if (Locking == Locking.ReadOnly)
             {
@@ -178,7 +180,8 @@ namespace Sitecore.Pathfinder.Projects
             return this;
         }
 
-        public virtual IProjectBase Add(IEnumerable<string> sourceFileNames)
+        [NotNull]
+        public virtual IProjectBase Add([ItemNotNull] [NotNull] IEnumerable<string> sourceFileNames)
         {
             if (Locking == Locking.ReadOnly)
             {
@@ -218,7 +221,7 @@ namespace Sitecore.Pathfinder.Projects
                     addedProjectItem = (T)MergeItem(newItem);
                 }
 
-                var newTemplate = projectItem as Template;
+                var newTemplate = projectItem as Template;                          
                 if (newTemplate != null)
                 {
                     addedProjectItem = (T)MergeTemplate(newTemplate);
@@ -233,8 +236,6 @@ namespace Sitecore.Pathfinder.Projects
             }
 
             _isChecked = false;
-
-            OnProjectChanged();
 
             return addedProjectItem;
         }
@@ -370,7 +371,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public void Lock(Locking locking)
         {
-            if ((locking != Locking.ReadWrite) && (_locking != Locking.ReadWrite))
+            if (locking != Locking.ReadWrite && _locking != Locking.ReadWrite)
             {
                 throw new InvalidOperationException("Project is already unlocked");
             }
@@ -383,9 +384,7 @@ namespace Sitecore.Pathfinder.Projects
             _locking = locking;
         }
 
-        public event ProjectChangedEventHandler ProjectChanged;
-
-        public virtual void Remove(IProjectItem projectItem)
+        public virtual void Remove([NotNull] IProjectItem projectItem)
         {
             if (Locking == Locking.ReadOnly)
             {
@@ -395,11 +394,9 @@ namespace Sitecore.Pathfinder.Projects
             _projectItems.Remove(projectItem);
 
             Index.Remove(projectItem);
-
-            OnProjectChanged();
         }
 
-        public virtual void Remove(string absoluteSourceFileName)
+        public virtual void Remove([NotNull] string absoluteSourceFileName)
         {
             if (Locking == Locking.ReadOnly)
             {
@@ -522,15 +519,6 @@ namespace Sitecore.Pathfinder.Projects
             Index.Add(template);
 
             return template;
-        }
-
-        protected virtual void OnProjectChanged()
-        {
-            var handler = ProjectChanged;
-            if (handler != null)
-            {
-                handler(this);
-            }
         }
 
         void IDiagnosticCollector.Add(Diagnostic diagnostic) => _diagnostics.Add(diagnostic);

@@ -1,6 +1,6 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
-using System.Linq;
+using System.Composition;
 using System.Text;
 using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Compiling.Compilers;
@@ -12,6 +12,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Serialization
 {
+    [Export(typeof(ICompiler)), Shared]
     public class SerializationFileCompiler : CompilerBase
     {
         public SerializationFileCompiler() : base(1000)
@@ -59,7 +60,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
             return new TextSpan(lineNumber + 1, linePosition, length);
         }
 
-        protected virtual int ParseField([NotNull] ICompileContext context, [NotNull] ITextSnapshot textSnapshot, [NotNull] ItemBuilder itemBuilder, [NotNull] LanguageVersionBuilder languageVersionBuilder, [NotNull, ItemNotNull]  string[] lines, int lineNumber)
+        protected virtual int ParseField([NotNull] ICompileContext context, [NotNull] ITextSnapshot textSnapshot, [NotNull] ItemBuilder itemBuilder, [NotNull] LanguageVersionBuilder languageVersionBuilder, [NotNull, ItemNotNull] string[] lines, int lineNumber)
         {
             var textNode = context.Factory.TextNode(textSnapshot, GetTextSpan(lineNumber, 0, 0), string.Empty, string.Empty);
 
@@ -224,7 +225,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
             return lines.Length;
         }
 
-        protected virtual int ParseVersion([NotNull] ICompileContext context, [NotNull] ITextSnapshot textSnapshot, [NotNull] LanguageVersionBuilder languageVersionBuilder, [NotNull, ItemNotNull]  string[] lines, int lineNumber)
+        protected virtual int ParseVersion([NotNull] ICompileContext context, [NotNull] ITextSnapshot textSnapshot, [NotNull] LanguageVersionBuilder languageVersionBuilder, [NotNull, ItemNotNull] string[] lines, int lineNumber)
         {
             for (var n = lineNumber; n < lines.Length; n++)
             {

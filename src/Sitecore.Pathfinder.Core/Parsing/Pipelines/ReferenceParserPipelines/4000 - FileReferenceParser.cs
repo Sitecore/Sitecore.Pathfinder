@@ -1,10 +1,12 @@
-// © 2015 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
+using System.Composition;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Parsing.Pipelines.ReferenceParserPipelines
 {
+    [Export(typeof(IPipelineProcessor)), Shared]
     public class FileReferenceParser : PipelineProcessorBase<ReferenceParserPipeline>
     {
         public FileReferenceParser() : base(4000)

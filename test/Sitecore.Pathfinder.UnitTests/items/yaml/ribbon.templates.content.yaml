@@ -1,0 +1,89 @@
+- Folder: Ribbons
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/templates/Ribbons
+    Database: core
+    - Template:
+        Name: RibbonResource
+
+    - Template:
+        Name: RibbonTabResource
+        - Section:
+            Name: Fields
+            - Field:
+                Name: Text
+                Type: Single-Line Text
+                Sharing: Unversioned
+            - Field:
+                Name: IsActive
+                Type: Checkbox
+                Sharing: Shared
+
+    - Template:
+        Name: RibbonGroupResource
+        - Section:
+            Name: Fields
+            - Field:
+                Name: Text
+                Type: Single-Line Text
+                Sharing: Unversioned
+
+    - Template:
+        Name: RibbonSmallButtonGroupResource
+
+    - Template:
+        Name: RibbonLargeButtonResource
+        - Section:
+            Name: Fields
+            - Field:
+                Name: Text
+                Type: Single-Line Text
+                Sharing: Unversioned
+            - Field:
+                Name: Icon
+                Type: Icon
+                Sharing: Shared
+            - Field:
+                Name: Command
+                Type: Single-Line Text
+                Sharing: Shared
+            - Field:
+                Name: IsQuickAccess
+                Type: Checkbox
+                Sharing: Shared
+
+    - Template:
+        Name: RibbonSmallButtonResource
+        - Section:
+            Name: Fields
+            - Field:
+                Name: Text
+                Type: Single-Line Text
+                Sharing: Unversioned
+            - Field:
+                Name: Icon
+                Type: Icon
+                Sharing: Shared
+            - Field:
+                Name: Command
+                Type: Single-Line Text
+                Sharing: Shared
+            - Field:
+                Name: IsQuickAccess
+                Type: Checkbox
+                Sharing: Shared
+
+    - Template:
+        Name: RibbonCheckBoxResource
+        - Section:
+            Name: Fields
+            - Field:
+                Name: Text
+                Type: Single-Line Text
+                Sharing: Unversioned
+            - Field:
+                Name: Icon
+                Type: Icon
+                Sharing: Shared
+            - Field:
+                Name: Command
+                Type: Single-Line Text
+                Sharing: Shared

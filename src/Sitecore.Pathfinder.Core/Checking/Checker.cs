@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.IO;
@@ -11,7 +11,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checking
 {
-    public class Checker
+    public class Checker : IChecker
     {
         protected virtual bool DirectoryExists([NotNull] ICheckerContext context, [NotNull] string directory)
         {

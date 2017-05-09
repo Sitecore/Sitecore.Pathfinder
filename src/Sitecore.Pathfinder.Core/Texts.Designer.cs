@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Reflection;
+
 namespace Sitecore.Pathfinder {
     using System;
     
@@ -39,7 +41,7 @@ namespace Sitecore.Pathfinder {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sitecore.Pathfinder.Texts", typeof(Texts).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sitecore.Pathfinder.Texts", typeof(Texts).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

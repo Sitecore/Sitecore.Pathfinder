@@ -1,9 +1,9 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
 using System.Diagnostics;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Tasks;
 
 namespace Sitecore.Pathfinder
@@ -21,5 +21,8 @@ namespace Sitecore.Pathfinder
 
         [NotNull]
         T GetTaskRunner<T>() where T : ITaskRunner;
+
+        [NotNull]
+        IHostService With([CanBeNull] Stopwatch stopwatch);
     }
 }

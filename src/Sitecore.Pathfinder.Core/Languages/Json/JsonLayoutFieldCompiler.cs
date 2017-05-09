@@ -1,8 +1,8 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Linq;
 using System.Xml;
 using Sitecore.Pathfinder.Compiling.FieldCompilers;
@@ -14,6 +14,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Json
 {
+    [Export(typeof(IFieldCompiler)), Shared]
     public class JsonLayoutFieldCompiler : FieldCompilerBase
     {
         [ImportingConstructor]
@@ -80,7 +81,7 @@ namespace Sitecore.Pathfinder.Languages.Json
                 return base.GetPlaceholders(context, childTextNode, projectItem);
             }
 
-            protected override void WriteRendering(LayoutCompileContext context, XmlTextWriter output, IEnumerable<Item> renderingItems, ITextNode renderingTextNode, string placeholders)
+            protected override void WriteRendering(LayoutCompileContext context, XmlWriter output, IEnumerable<Item> renderingItems, ITextNode renderingTextNode, string placeholders)
             {
                 var childNode = renderingTextNode.ChildNodes.FirstOrDefault();
                 if (childNode != null)

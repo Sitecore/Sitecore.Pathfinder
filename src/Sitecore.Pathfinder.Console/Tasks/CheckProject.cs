@@ -1,6 +1,6 @@
 // © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Checking;
 using Sitecore.Pathfinder.Diagnostics;
@@ -9,14 +9,15 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
+    [Export(typeof(ITask)), Shared]
     public class CheckProject : BuildTaskBase
     {
         [ImportingConstructor]
         public CheckProject([NotNull] ICheckerService checkerService) : base("check-project")
         {
             CheckerService = checkerService;
-            Alias = "test";
-            Shortcut = "t";
+            Alias = "check";
+            Shortcut = "c";
         }
 
         [NotNull]
@@ -37,7 +38,7 @@ namespace Sitecore.Pathfinder.Tasks
             var errors = diagnostics.Count(d => d.Severity == Severity.Error);
             var warnings = diagnostics.Count(d => d.Severity == Severity.Warning);
             var messages = diagnostics.Count(d => d.Severity == Severity.Information);
-            var checkers = CheckerService.EnabledCheckersCount;
+            var checkersCount = CheckerService.EnabledCheckersCount;
             var references = project.ProjectItems.Sum(i => i.References.Count);
 
             if (treatWarningsAsErrors)
@@ -46,7 +47,7 @@ namespace Sitecore.Pathfinder.Tasks
                 warnings = 0;
             }
 
-            context.Trace.TraceInformation(Msg.C1042, $"Checks: {checkers}, references: {references}, errors: {errors}, warnings: {warnings}, messages: {messages}");
+            context.Trace.TraceInformation(Msg.C1042, $"Checks: {checkersCount}, references: {references}, errors: {errors}, warnings: {warnings}, messages: {messages}");
 
             if (context.Configuration.GetBool(Constants.Configuration.CheckProject.StopOnErrors, true) && errors > 0)
             {

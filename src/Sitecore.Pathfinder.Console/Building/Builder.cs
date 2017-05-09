@@ -1,11 +1,8 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.IO;
-using System.Linq;
-using System.Xml.Linq;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -54,8 +51,6 @@ namespace Sitecore.Pathfinder.Building
         {
             var context = BuildContextFactory.New().With(LoadProject);
 
-            RegisterProjectDirectory(context);
-
             RunTasks(context);
 
             return context.ErrorCode;
@@ -75,7 +70,7 @@ namespace Sitecore.Pathfinder.Building
                 var projectDirectory = PathHelper.Combine(solutionDirectory, PathHelper.NormalizeFilePath(relativePath));
 
                 // create a new host for each project, so they do not interfer
-                var host = new Startup().WithStopWatch().WithTraceListeners().AsInteractive().WithWebsiteAssemblyResolver().WithProjectDirectory(projectDirectory).Start();
+                var host = new Startup().WithStopWatch().AsInteractive().WithWebsiteAssemblyResolver().WithProjectDirectory(projectDirectory).Start();
                 if (host == null)
                 {
                     return -1;
@@ -110,44 +105,6 @@ namespace Sitecore.Pathfinder.Building
         protected virtual IProject LoadProject()
         {
             return ProjectService.LoadProjectFromConfiguration();
-        }
-
-        protected virtual void RegisterProjectDirectory([NotNull] IBuildContext context)
-        {
-            // registering a project directory in the website Data Folder allows the website and other tools
-            // to locate the project 
-            var dataFolder = context.Configuration.GetString(Constants.Configuration.DataFolderDirectory);
-            if (!FileSystem.DirectoryExists(dataFolder))
-            {
-                return;
-            }
-
-            var pathfinderFolder = Path.Combine(dataFolder, "Pathfinder");
-            FileSystem.CreateDirectory(pathfinderFolder);
-
-            var fileName = Path.Combine(pathfinderFolder, "projects." + Environment.MachineName + ".xml");
-
-            var xml = FileSystem.FileExists(fileName) ? FileSystem.ReadAllText(fileName) : "<projects />";
-
-            var root = xml.ToXElement() ?? "<projects />".ToXElement();
-            if (root == null)
-            {
-                // silent
-                return;
-            }
-
-            // check if already registered
-            if (root.Elements().Any(e => string.Equals(e.GetAttributeValue("projectdirectory"), context.ProjectDirectory, StringComparison.OrdinalIgnoreCase)))
-            {
-                return;
-            }
-
-            root.Add(new XElement("project", new XAttribute("toolsdirectory", context.ToolsDirectory), new XAttribute("projectdirectory", context.ProjectDirectory)));
-
-            if (root.Document != null)
-            {
-                root.Document.Save(fileName);
-            }
         }
     }
 }

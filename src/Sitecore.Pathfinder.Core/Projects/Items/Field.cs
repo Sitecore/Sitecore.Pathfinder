@@ -1,4 +1,4 @@
-// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.ComponentModel;
@@ -64,7 +64,7 @@ namespace Sitecore.Pathfinder.Projects.Items
 
                 return templateField.Uri.Guid;
             }
-            set { FieldIdProperty.SetValue(value); }
+            set => FieldIdProperty.SetValue(value);
         }
 
         [NotNull]
@@ -198,19 +198,19 @@ namespace Sitecore.Pathfinder.Projects.Items
             IsCompiled = false;
         }
 
+        [NotNull]
+        public Field With([NotNull] ITextNode textNode)
+        {
+            WithSourceTextNode(textNode);
+            return this;
+        }
+
         private void HandlePropertyChanged([NotNull] object sender, [NotNull] PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Value")
             {
                 Invalidate();
             }
-        }
-
-        [NotNull]
-        public Field With([NotNull] ITextNode textNode)
-        {
-            WithSourceTextNode(textNode);
-            return this;
         }
     }
 }

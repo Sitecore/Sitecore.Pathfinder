@@ -1,8 +1,8 @@
-// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Configuration;
@@ -17,6 +17,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checking.Checkers
 {
+    [Export(typeof(IChecker)), Shared]
     public class ArchitectureCheckers : Checker
     {
         [ImportingConstructor]
@@ -44,7 +45,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         [NotNull]
         protected ISnapshotService SnapshotService { get; }
 
-        [NotNull, ItemNotNull, Export("Check")]
+        [NotNull, ItemNotNull, Check]
         public IEnumerable<Diagnostic> ArchitectureSchema([NotNull] ICheckerContext context)
         {
             var roots = LoadSchemas(context).ToArray();
@@ -83,6 +84,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                 {
                     case "item":
                         yield return childNode;
+
                         break;
 
                     case "element":

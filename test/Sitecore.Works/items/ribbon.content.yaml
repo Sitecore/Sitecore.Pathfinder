@@ -1,0 +1,305 @@
+- RibbonResource : ribbon1
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/content/content-editor/ribbon1
+    Database: core
+    - RibbonTabResource: Home
+        IsActive: True
+        - ..versions:
+            - en:
+                  Text: Home ABC
+            - da:
+                  Text: Hjem 456
+        - RibbonGroupResource: Write
+            - ..versions:
+                - en:
+                    Text: Item
+                - da:
+                    Text: Item
+            - RibbonLargeButtonResource: Save
+                Icon: save
+                Command: works.saveItems
+                - ..versions:
+                    - en:
+                        Text: Save
+                    - da:
+                        Text: Gem
+        - RibbonGroupResource: View
+            - ..versions:
+                - en:
+                    Text: View
+                - da:
+                    Text: Visning
+            - RibbonLargeButtonResource: Dashboard
+                Icon: dashboard
+                Command: works.contentEditor.viewDashboard
+                - ..versions:
+                    - en:
+                        Text: Dashboard
+                    - da:
+                        Text: Oversigt
+            - RibbonLargeButtonResource: Content
+                Icon: pencil-square-o
+                Command: works.contentEditor.viewContent
+                - ..versions:
+                    - en:
+                        Text: Content
+                    - da:
+                        Text: Indhold
+            - RibbonLargeButtonResource: System
+                Icon: gear
+                Command: works.contentEditor.viewSystem
+                - ..versions:
+                    - en:
+                        Text: System
+                    - da:
+                        Text: System
+            - RibbonLargeButtonResource: Preview
+                Icon: eye
+                Command: works.preview
+                - ..versions:
+                    - en:
+                        Text: Preview
+                    - da:
+                        Text: Preview
+        - RibbonGroupResource: New
+            - ..versions:
+                - en:
+                    Text: New
+                - da:
+                    Text: Ny
+            - RibbonLargeButtonResource: Add
+                Icon: plus
+                Command: works.addFromTemplate
+                - ..versions:
+                    - en:
+                        Text: Add
+                    - da:
+                        Text: Tilføj
+            - RibbonLargeButtonResource: NewFolder
+                Icon: folder-o
+                Command: works.newFolder
+                - ..versions:
+                    - en:
+                        Text: Folder
+                    - da:
+                        Text: Mappe
+            - RibbonLargeButtonResource: Duplicate
+                Icon: copy
+                Command: works.duplicateItems
+                - ..versions:
+                    - en:
+                        Text: Duplicate
+                    - da:
+                        Text: Dupliker
+        - RibbonGroupResource: Actions
+            - ..versions:
+                - en:
+                    Text: Actions
+                - da:
+                    Text: Operationer
+            - RibbonLargeButtonResource: CopyItemsTo
+                Icon: mail-reply-all
+                Command: works.copyItemsTo
+                - ..versions:
+                    - en:
+                        Text: Copy To
+                    - da:
+                        Text: Kopier Til
+            - RibbonLargeButtonResource: MoveItemsTo
+                Icon: mail-reply
+                Command: works.moveItemsTo
+                - ..versions:
+                    - en:
+                        Text: Move To
+                    - da:
+                        Text: Flyt Til
+            - RibbonLargeButtonResource: Delete
+                Icon: remove
+                Command: works.deleteItems
+                - ..versions:
+                    - en:
+                        Text: Delete
+                    - da:
+                        Text: Slet
+            - RibbonLargeButtonResource: Rename
+                Icon: i-cursor
+                Command: works.renameItem
+                - ..versions:
+                    - en:
+                        Text: Rename
+                    - da:
+                        Text: Omdøb
+    - RibbonTabResource: Navigate
+        - ..versions:
+            - en:
+                Text: Navigate
+            - da:
+                Text: Naviger
+        - RibbonGroupResource: Navigate
+            - ..versions:
+                - en:
+                    Text: Navigate
+                - da:
+                    Text: Naviger
+            - RibbonLargeButtonResource: References
+                Icon: sign-out
+                Command: works.navigateReferences
+                - ..versions:
+                    - en:
+                        Text: References
+                    - da:
+                        Text: Referancer
+            - RibbonLargeButtonResource: Referrers
+                Icon: sign-in
+                Command: works.navigateReferrers
+                - ..versions:
+                    - en:
+                        Text: Referrers
+                    - da:
+                        Text: Referanter
+            - RibbonLargeButtonResource: Template
+                Icon: list-alt
+                Command: works.navigateTemplate
+                - ..versions:
+                    - en:
+                        Text: Template
+                    - da:
+                        Text: Template
+        - RibbonGroupResource: History
+            - ..versions:
+                - en:
+                    Text: History
+                - da:
+                    Text: Historie
+            - RibbonLargeButtonResource: Back
+                Icon: arrow-left
+                Command: works.contentEditor.navigateBack
+                - ..versions:
+                    - en:
+                        Text: Back
+                    - da:
+                        Text: Tilbage
+            - RibbonLargeButtonResource: Forward
+                Icon: arrow-right
+                Command: works.contentEditor.navigateForward
+                - ..versions:
+                    - en:
+                        Text: Forward
+                    - da:
+                        Text: Frem
+        - RibbonGroupResource: Search
+            - ..versions:
+                - en:
+                    Text: Search
+                - da:
+                    Text: Søg
+            - RibbonLargeButtonResource: Search
+                Icon: search
+                Command: works.searchItems
+                - ..versions:
+                    - en:
+                        Text: Search
+                    - da:
+                        Text: Søg
+    - RibbonTabResource: Publish
+        - ..versions:
+            - en:
+                Text: Publish
+            - da:
+                Text: Publiser
+        - RibbonGroupResource: Items
+            - ..versions:
+                - en:
+                    Text: Item
+                - da:
+                    Text: Item
+            - RibbonLargeButtonResource: Publish
+                Icon: chevron-up
+                Command: works.publishItems
+                - ..versions:
+                    - en:
+                        Text: Item
+                    - da:
+                        Text: Item
+        - RibbonGroupResource: Database
+            - ..versions:
+                - en:
+                    Text: Database
+                - da:
+                    Text: Database
+            - RibbonLargeButtonResource: Incremental
+                Icon: angle-up
+                Command: works.publishDatabaseIncremental
+                - ..versions:
+                    - en:
+                        Text: Incremental
+                    - da:
+                        Text: Incrementel
+            - RibbonLargeButtonResource: Smart
+                Icon: angle-double-up
+                Command: works.publishDatabaseSmart
+                - ..versions:
+                    - en:
+                        Text: Smart
+                    - da:
+                        Text: Smart
+    - RibbonTabResource: Versions
+        - ..versions:
+            - en:
+                Text: Versions
+            - da:
+                Text: Versioner
+        - RibbonGroupResource: Versions
+            - ..versions:
+                - en:
+                    Text: Versions
+                - da:
+                    Text: Versioner
+            - RibbonLargeButtonResource: AddVersion
+                Icon: plus-square
+                Command: works.contentEditor.addVersion
+                - ..versions:
+                    - en:
+                        Text: Add
+                    - da:
+                        Text: Tilføj
+            - RibbonLargeButtonResource: RemoveVersion
+                Icon: minus-square
+                Command: works.contentEditor.removeVersion
+                - ..versions:
+                    - en:
+                        Text: Remove
+                    - da:
+                        Text: Fjern
+        - RibbonGroupResource: Translate
+            - ..versions:
+                - en:
+                    Text: Translate
+                - da:
+                    Text: Oversæt
+            - RibbonLargeButtonResource: TranslateItem
+                Icon: globe
+                Command: works.contentEditor.translateItem
+                - ..versions:
+                    - en:
+                        Text: Translate
+                    - da:
+                        Text: Oversæt
+    - RibbonTabResource: View
+        - ..versions:
+            - en:
+                Text: View
+            - da:
+                Text: Vis
+        - RibbonGroupResource: View
+            - ..versions:
+                - en:
+                    Text: View
+                - da:
+                    Text: Vis
+            - RibbonCheckBoxResource: RawValues
+                Command: works.contentEditor.viewRawValues
+                - ..versions:
+                    - en:
+                        Text: Raw Values
+                    - da:
+                        Text: Rå Værdier

@@ -1,4 +1,4 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,7 +16,7 @@ namespace Sitecore.Pathfinder
     {
         public Startup()
         {
-            ToolsDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
+            ToolsDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) ?? string.Empty;
         }
 
         [CanBeNull, ItemNotNull]
@@ -29,9 +29,6 @@ namespace Sitecore.Pathfinder
         public string[] CommandLine { get; private set; }
 
         public Extensibility.StartupExtensions.CompositionOptions CompositionOptions { get; private set; } = Extensibility.StartupExtensions.CompositionOptions.None;
-
-        [NotNull]
-        public string Configuration { get; private set; }
 
         public ConfigurationOptions ConfigurationOptions { get; private set; } = ConfigurationOptions.Noninteractive;
 
@@ -94,7 +91,7 @@ namespace Sitecore.Pathfinder
                 ProjectDirectory = GetProjectDirectory();
             }
 
-            var assembly = Assembly.GetEntryAssembly() ?? Assembly.GetCallingAssembly();
+            var assembly = Assembly.GetEntryAssembly() ?? Assembly.GetEntryAssembly();
             var assemblyFileNames = new List<string>
             {
                 assembly.Location
@@ -142,36 +139,15 @@ namespace Sitecore.Pathfinder
             }
 
             // create the host
-            var host = new HostService(configuration, compositionService, Stopwatch);
-            compositionService.Set((IHostService)host);
+            var host = compositionService.Resolve<IHostService>().With(Stopwatch);
 
             // initialize extension - only called at start up
-            foreach (var extension in compositionService.GetExportedValues<IExtension>())
+            foreach (var extension in compositionService.ResolveMany<IExtension>())
             {
                 extension.Start();
             }
 
             return host;
-        }
-
-        [NotNull]
-        protected virtual string GetProjectDirectory()
-        {
-            // search in current and parent directories for scconfig.json
-            var projectDirectory = new DirectoryInfo(Directory.GetCurrentDirectory());
-            do
-            {
-                var configurationFileName = Path.Combine(projectDirectory.FullName, SystemConfigurationFileName);
-                if (File.Exists(configurationFileName))
-                {
-                    return projectDirectory.FullName;
-                }
-
-                projectDirectory = projectDirectory.Parent;
-            }
-            while (projectDirectory != null);
-
-            return Directory.GetCurrentDirectory();
         }
 
         [NotNull]
@@ -264,13 +240,6 @@ namespace Sitecore.Pathfinder
         }
 
         [NotNull]
-        public Startup WithTraceListeners()
-        {
-            Trace.Listeners.Add(new ConsoleTraceListener());
-            return this;
-        }
-
-        [NotNull]
         public virtual Startup WithWebsiteAssemblyResolver()
         {
             CompositionOptions |= Extensibility.StartupExtensions.CompositionOptions.AddWebsiteAssemblyResolver;
@@ -282,6 +251,26 @@ namespace Sitecore.Pathfinder
         {
             WebsiteDirectory = websiteDirectory;
             return this;
+        }
+
+        [NotNull]
+        protected virtual string GetProjectDirectory()
+        {
+            // search in current and parent directories for scconfig.json
+            var projectDirectory = new DirectoryInfo(Directory.GetCurrentDirectory());
+            do
+            {
+                var configurationFileName = Path.Combine(projectDirectory.FullName, SystemConfigurationFileName);
+                if (File.Exists(configurationFileName))
+                {
+                    return projectDirectory.FullName;
+                }
+
+                projectDirectory = projectDirectory.Parent;
+            }
+            while (projectDirectory != null);
+
+            return Directory.GetCurrentDirectory();
         }
     }
 }

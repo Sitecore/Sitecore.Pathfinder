@@ -1,0 +1,44 @@
+<Folder Name="Menus" ItemPath="/sitecore/client/Applications/SitecoreWorks/templates/Menus" Database="core">
+    <Template Name="MenuResource" />
+
+    <Template Name="MenuTabResource">
+        <Section Name="Fields">
+            <Field Name="Text" Type="Single-Line Text" Sharing="Unversioned" />
+            <Field Name="IsActive" Type="Checkbox" Sharing="Shared" />
+        </Section>
+    </Template>
+
+    <Template Name="MenuGroupResource">
+        <Section Name="Fields">
+            <Field Name="Text" Type="Single-Line Text" Sharing="Unversioned" />
+        </Section>
+    </Template>
+
+    <Template Name="MenuSmallButtonGroupResource" />
+
+    <Template Name="MenuLargeButtonResource">
+        <Section Name="Fields">
+            <Field Name="Text" Type="Single-Line Text" Sharing="Unversioned" />
+            <Field Name="Icon" Type="Icon" Sharing="Shared" />
+            <Field Name="Command" Type="Icon" Sharing="Shared" />
+            <Field Name="IsQuickAccess" Type="Checkbox" Sharing="Shared" />
+        </Section>
+    </Template>
+
+    <Template Name="MenuSmallButtonResource">
+        <Section Name="Fields">
+            <Field Name="Text" Type="Single-Line Text" Sharing="Unversioned" />
+            <Field Name="Icon" Type="Icon" Sharing="Shared" />
+            <Field Name="Command" Type="Icon" Sharing="Shared" />
+            <Field Name="IsQuickAccess" Type="Checkbox" Sharing="Shared" />
+        </Section>
+    </Template>
+
+    <Template Name="MenuCheckBoxResource">
+        <Section Name="Fields">
+            <Field Name="Text" Type="Single-Line Text" Sharing="Unversioned" />
+            <Field Name="Icon" Type="Icon" Sharing="Shared" />
+            <Field Name="Command" Type="Icon" Sharing="Shared" />
+        </Section>
+    </Template>
+</Folder>

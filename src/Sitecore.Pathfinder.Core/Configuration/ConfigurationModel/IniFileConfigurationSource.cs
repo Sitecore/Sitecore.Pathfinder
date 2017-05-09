@@ -24,7 +24,7 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
             Path = PathResolver.ResolveAppRelativePath(path);
         }
 
-        public bool Optional { get;  }
+        public bool Optional { get; }
 
         [NotNull]
         public string Path { get; }
@@ -37,6 +37,7 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
                 {
                     throw new FileNotFoundException(string.Format(Resources.Error_FileNotFound, Path), Path);
                 }
+
                 Data = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             }
             else

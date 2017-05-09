@@ -1,8 +1,8 @@
-﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -12,7 +12,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Json
 {
-    [Export, PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export]
     public class JsonTextSnapshot : TextSnapshot
     {
         [CanBeNull]
@@ -24,7 +24,7 @@ namespace Sitecore.Pathfinder.Languages.Json
             FileSystem = fileSystem;
         }
 
-        public override ITextNode Root => _root ?? (_root = RootToken != null ? ParseDirectives(ParseContext, Parse()) : TextNode.Empty);
+        public override ITextNode Root => _root ?? (_root = RootToken != null ? Parse() : TextNode.Empty);
 
         [NotNull]
         protected IFileSystemService FileSystem { get; }
@@ -78,7 +78,7 @@ namespace Sitecore.Pathfinder.Languages.Json
                     return TextNode.Empty;
                 }
 
-                _root = Parse(property.Name, value, null);
+                _root = Parse(property.Name, value);
             }
 
             var jarray = RootToken as JArray;
@@ -89,7 +89,8 @@ namespace Sitecore.Pathfinder.Languages.Json
 
                 foreach (var jobj in jarray.OfType<JObject>())
                 {
-                    Parse(string.Empty, jobj, jsonTextNode);
+                    var textNode = Parse(string.Empty, jobj);
+                    ((ICollection<ITextNode>)jsonTextNode.ChildNodes).Add(textNode);
                 }
             }
 
@@ -97,12 +98,9 @@ namespace Sitecore.Pathfinder.Languages.Json
         }
 
         [NotNull]
-        protected virtual ITextNode Parse([NotNull] string name, [NotNull, ItemNotNull] JObject jobject, [CanBeNull] JsonTextNode parent)
+        protected virtual ITextNode Parse([NotNull] string name, [NotNull, ItemNotNull] JObject jobject)
         {
-            var textNodes = parent?.ChildNodes as ICollection<ITextNode>;
-
             var treeNode = new JsonTextNode(this, name, jobject);
-            textNodes?.Add(treeNode);
 
             var childNodes = (ICollection<ITextNode>)treeNode.ChildNodes;
             var attributes = (ICollection<ITextNode>)treeNode.Attributes;
@@ -112,19 +110,18 @@ namespace Sitecore.Pathfinder.Languages.Json
                 switch (property.Value.Type)
                 {
                     case JTokenType.Object:
-                        Parse(property.Name, property.Value.Value<JObject>(), treeNode);
+                        var objectTextNode = Parse(property.Name, property.Value.Value<JObject>());
+                        childNodes.Add(objectTextNode);
                         break;
 
                     case JTokenType.Array:
                         var array = property.Value.Value<JArray>();
-                        var arrayTreeNode = new JsonTextNode(this, property.Name, array);
-
                         foreach (var element in array.OfType<JObject>())
                         {
-                            Parse(string.Empty, element, arrayTreeNode);
+                            var arrayTextNode = Parse(property.Name, element);
+                            childNodes.Add(arrayTextNode);
                         }
 
-                        childNodes.Add(arrayTreeNode);
                         break;
 
                     case JTokenType.Boolean:
