@@ -61,6 +61,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
                 Token token;
                 var line = _lines[_lineNumber];
                 var indent = line.IndexOfNotWhitespace();
+                var tabbedIndent = line.Left(indent).Replace("\t", "    ").Length;
                 var isNested = line[indent] == '-';
 
                 var keyStartIndex = isNested ? line.IndexOfNotWhitespace(indent + 1) : indent;
@@ -92,7 +93,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
                         valueTextSpan = new TextSpan(_lineNumber, n + 1, line.Length - n);
                     }
 
-                    token = new Token(key, keyTextSpan, value, valueTextSpan, indent, isNested);
+                    token = new Token(key, keyTextSpan, value, valueTextSpan, tabbedIndent, isNested);
                 }
 
                 _lineNumber++;

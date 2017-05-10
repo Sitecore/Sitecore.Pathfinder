@@ -20,32 +20,32 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{049B9C99
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{2913B82E-EAB7-452F-AB67-97DD577A7439}"
 	ProjectSection(SolutionItems) = preProject
-		docs\01. Home.md = docs\01. Home.md
-		docs\02. Getting started.md = docs\02. Getting started.md
-		docs\03. Basic concepts.md = docs\03. Basic concepts.md
-		docs\03.01. Tasks and Scripts.md = docs\03.01. Tasks and Scripts.md
-		docs\03.02. Project configuration.md = docs\03.02. Project configuration.md
-		docs\03.03. Building a project.md = docs\03.03. Building a project.md
-		docs\03.04. Sitecore items as files.md = docs\03.04. Sitecore items as files.md
-		docs\03.05. Layouts as files.md = docs\03.05. Layouts as files.md
-		docs\04. Tasks.md = docs\04. Tasks.md
-		docs\04.01. Checking a project.md = docs\04.01. Checking a project.md
-		docs\04.10. Code generation.md = docs\04.10. Code generation.md
-		docs\04.19. Extensibility.md = docs\04.19. Extensibility.md
-		docs\07. Developer Environment.md = docs\07. Developer Environment.md
-		docs\08. External Tools.md = docs\08. External Tools.md
-		docs\09. Checkers.md = docs\09. Checkers.md
+		docs\Basic concepts.md = docs\Basic concepts.md
+		docs\Building a project.md = docs\Building a project.md
+		docs\Checkers.md = docs\Checkers.md
+		docs\Checking a project.md = docs\Checking a project.md
+		docs\Code generation.md = docs\Code generation.md
+		docs\Developer Environment.md = docs\Developer Environment.md
+		docs\Extensibility.md = docs\Extensibility.md
+		docs\External Tools.md = docs\External Tools.md
+		docs\Getting started.md = docs\Getting started.md
+		docs\Home.md = docs\Home.md
+		docs\Layouts as files.md = docs\Layouts as files.md
+		docs\Project configuration.md = docs\Project configuration.md
 		docs\README.md = docs\README.md
+		docs\Sitecore items as files.md = docs\Sitecore items as files.md
+		docs\Tasks and Scripts.md = docs\Tasks and Scripts.md
+		docs\Tasks.md = docs\Tasks.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Walkthroughs", "Walkthroughs", "{626A72A8-4461-4E2E-BB10-2A36D9D1BB5D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Setting up", "1. Setting up", "{ED92B747-FD90-4DE5-BB52-96DC808B58C0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Setting up", "Setting up", "{ED92B747-FD90-4DE5-BB52-96DC808B58C0}"
 	ProjectSection(SolutionItems) = preProject
 		docs\walkthroughs\1. Setting up\README.md = docs\walkthroughs\1. Setting up\README.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Hello world", "2. Hello world", "{B86678EC-8111-4D28-9B60-1DF723E2CB6E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hello world", "Hello world", "{B86678EC-8111-4D28-9B60-1DF723E2CB6E}"
 	ProjectSection(SolutionItems) = preProject
 		docs\walkthroughs\2. Hello world\README.md = docs\walkthroughs\2. Hello world\README.md
 	EndProjectSection

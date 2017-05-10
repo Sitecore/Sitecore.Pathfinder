@@ -58,3 +58,38 @@ Read the [FAQ](FAQ.md)
 
 ## Documentation
 For more documentation see [Pathfinder Documentation](docs/README.md).
+
+## Deploying
+Pathfinder only outputs a package (Sitecore Packages, Nuget packages, Unicorn files etc.) - 
+it does *not* install the package in the website.
+
+### Sitecore Packages
+To install a Sitecore Package, use the Sitecore Package Installer to install the packages.
+
+### Unicorn
+Pathfinder can write Unicorn files in the output directory. You can configure Pathfinder to mirror these
+files to the Unicorn serialization directory, then have Unicorn deserialize these files.
+
+You can configure the mirroring in the output section of the scconfig.json file, like this:
+
+```js
+{
+    "output": {
+        "unicorn": {
+            "items-directory": "items",
+            "mirror-items-to-unicorn-physicalRootPath": true,
+            "mirror-items-source-directory": "/master/sitecore/content/Home",
+            "unicorn-physicalRootPath": "c:\\inetpub\\wwwroot\\Pathfinder\\Data\\Unicorn\\items\\Home"
+        }
+    }
+}
+```
+
+You need to be careful setting the directories, and be aware that Unicorn does not like empty folders.
+
+### Nuget packages
+To install Nuget packages, you can use Sitecore.Pathfinder.Server. It monitors the [Data]/Pathfinder
+directory for files and installs any new files.
+
+Install the Sitecore.Pathfinder.zip Sitecore Package in the website, and configure the output
+directory to point to the [Data]/Pathfinder directory. 
