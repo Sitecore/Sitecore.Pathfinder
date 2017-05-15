@@ -41,7 +41,7 @@ namespace Sitecore.Pathfinder.Emitting.Parsing
                 Path = itemElement.GetAttributeValue("path"),
                 Icon = itemElement.GetAttributeValue("icon"),
                 Template = itemElement.GetAttributeValue("template"),
-                Sortorder = int.Parse(itemElement.GetAttributeValue("sortorder"))
+                Sortorder = int.Parse(itemElement.GetAttributeValue("sortorder")),
             };
 
             foreach (var fieldElement in itemElement.Elements())

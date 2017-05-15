@@ -97,43 +97,6 @@ namespace Sitecore.Pathfinder.Emitting.Nuget
             return true;
         }
 
-        protected virtual void CopyFiles([NotNull] string rootDirectory, [NotNull] string sourceDirectory)
-        {
-            foreach (var sourceFileName in Directory.GetFiles(sourceDirectory))
-            {
-                var destination = FileUtil.MapPath(sourceFileName.Mid(rootDirectory.Length + 1));
-
-                if (string.Equals(Path.GetExtension(sourceFileName), ".dll", StringComparison.OrdinalIgnoreCase) && !CanCopyBinFile(sourceFileName, destination))
-                {
-                    continue;
-                }
-
-                try
-                {
-                    Directory.CreateDirectory(Path.GetDirectoryName(destination) ?? string.Empty);
-                    File.Copy(sourceFileName, destination, true);
-                }
-                catch (Exception ex)
-                {
-                    TraceError("Could not copy", ex.Message + ": " + sourceDirectory + " => " + destination);
-                }
-            }
-
-            foreach (var subdirectory in Directory.GetDirectories(sourceDirectory))
-            {
-                CopyFiles(rootDirectory, subdirectory);
-            }
-        }
-
-        protected virtual void CopyFiles([NotNull] string path)
-        {
-            var sourceDirectory = path + "\\content";
-            if (Directory.Exists(sourceDirectory))
-            {
-                CopyFiles(sourceDirectory, sourceDirectory);
-            }
-        }
-
         protected virtual void ExtractPackageId([NotNull] string fileName, out string packageId, out string version)
         {
             packageId = string.Empty;
@@ -222,13 +185,8 @@ namespace Sitecore.Pathfinder.Emitting.Nuget
 
         protected virtual void InstallPackage(object sender, PackageOperationEventArgs e)
         {
-            var contentFileName = Path.Combine(e.InstallPath, "content.xml");
-            if (File.Exists(contentFileName))
-            {
-                ProcessContent(contentFileName);
-            }
-
-            CopyFiles(e.InstallPath);
+            ProcessItems(e.InstallPath);
+            ProcessFiles(e.InstallPath);
         }
 
         protected virtual void InstallTemplates([NotNull] XElement root)
@@ -244,8 +202,14 @@ namespace Sitecore.Pathfinder.Emitting.Nuget
             }
         }
 
-        protected virtual void ProcessContent([NotNull] string contentFileName)
+        protected virtual void ProcessItems([NotNull] string installPath)
         {
+            var contentFileName = Path.Combine(installPath, "content.xml");
+            if (!File.Exists(contentFileName))
+            {
+                return;
+            }
+
             var root = ReadXmlFile(contentFileName);
             if (root == null)
             {
@@ -261,49 +225,40 @@ namespace Sitecore.Pathfinder.Emitting.Nuget
             PublishDatabases(root);
         }
 
-        private void PublishDatabases(XElement root)
+        protected virtual void ProcessFiles([NotNull] string rootDirectory, [NotNull] string sourceDirectory)
         {
-            var publishElement = root.Element("publish");
-            if (publishElement == null)
+            foreach (var sourceFileName in Directory.GetFiles(sourceDirectory))
             {
-                return;
-            }
+                var destination = FileUtil.MapPath(sourceFileName.Mid(rootDirectory.Length + 1));
 
-            foreach (var attribute in publishElement.Attributes())
-            {
-                var databaseName = attribute.Name.LocalName;
-                var mode = attribute.Value;
-
-                var database = Factory.GetDatabase(databaseName);
-
-                var publishingTargets = PublishManager.GetPublishingTargets(database);
-
-                var targetDatabases = publishingTargets.Select(target => Factory.GetDatabase(target["Target database"])).ToArray();
-                if (!targetDatabases.Any())
+                if (string.Equals(Path.GetExtension(sourceFileName), ".dll", StringComparison.OrdinalIgnoreCase) && !CanCopyBinFile(sourceFileName, destination))
                 {
                     continue;
                 }
 
-                var languages = LanguageManager.GetLanguages(database).ToArray();
-
-                switch (mode)
+                try
                 {
-                    case "republish":
-                        PublishManager.Republish(database, targetDatabases, languages);
-                        break;
-
-                    case "incremental":
-                        PublishManager.PublishIncremental(database, targetDatabases, languages);
-                        break;
-
-                    case "smart":
-                        PublishManager.PublishSmart(database, targetDatabases, languages);
-                        break;
-
-                    case "rebuild":
-                        PublishManager.RebuildDatabase(database, targetDatabases);
-                        break;
+                    Directory.CreateDirectory(Path.GetDirectoryName(destination) ?? string.Empty);
+                    File.Copy(sourceFileName, destination, true);
                 }
+                catch (Exception ex)
+                {
+                    TraceError("Could not copy", ex.Message + ": " + sourceDirectory + " => " + destination);
+                }
+            }
+
+            foreach (var subdirectory in Directory.GetDirectories(sourceDirectory))
+            {
+                ProcessFiles(rootDirectory, subdirectory);
+            }
+        }
+
+        protected virtual void ProcessFiles([NotNull] string path)
+        {
+            var sourceDirectory = path + "\\content";
+            if (Directory.Exists(sourceDirectory))
+            {
+                ProcessFiles(sourceDirectory, sourceDirectory);
             }
         }
 
@@ -370,6 +325,52 @@ namespace Sitecore.Pathfinder.Emitting.Nuget
             var s = text + (string.IsNullOrEmpty(details) ? string.Empty : ": " + details);
 
             File.AppendAllText(_fileName, s);
+        }
+
+        private void PublishDatabases(XElement root)
+        {
+            var publishElement = root.Element("publish");
+            if (publishElement == null)
+            {
+                return;
+            }
+
+            foreach (var attribute in publishElement.Attributes())
+            {
+                var databaseName = attribute.Name.LocalName;
+                var mode = attribute.Value;
+
+                var database = Factory.GetDatabase(databaseName);
+
+                var publishingTargets = PublishManager.GetPublishingTargets(database);
+
+                var targetDatabases = publishingTargets.Select(target => Factory.GetDatabase(target["Target database"])).ToArray();
+                if (!targetDatabases.Any())
+                {
+                    continue;
+                }
+
+                var languages = LanguageManager.GetLanguages(database).ToArray();
+
+                switch (mode)
+                {
+                    case "republish":
+                        PublishManager.Republish(database, targetDatabases, languages);
+                        break;
+
+                    case "incremental":
+                        PublishManager.PublishIncremental(database, targetDatabases, languages);
+                        break;
+
+                    case "smart":
+                        PublishManager.PublishSmart(database, targetDatabases, languages);
+                        break;
+
+                    case "rebuild":
+                        PublishManager.RebuildDatabase(database, targetDatabases);
+                        break;
+                }
+            }
         }
     }
 }

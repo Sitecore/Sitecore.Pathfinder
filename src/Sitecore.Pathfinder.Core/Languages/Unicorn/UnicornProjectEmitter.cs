@@ -11,6 +11,7 @@ using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Emitting.Emitters;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Languages.Media;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 
@@ -95,6 +96,35 @@ namespace Sitecore.Pathfinder.Languages.Unicorn
                     }
 
                     itemPath = PathHelper.GetItemParentPath(itemPath);
+                }
+            }
+        }
+
+        protected override void EmitMediaFile(IEmitContext context, MediaFile mediaFile)
+        {
+            if (!mediaFile.IsEmittable)
+            {
+                return;
+            }
+
+            var item = context.Project.FindQualifiedItem<Item>(mediaFile.MediaItemUri);
+            if (item == null)
+            {
+                context.Trace.TraceInformation(Msg.E1047, "No media item - skipping", mediaFile.Snapshot.SourceFile);
+                return;
+            }
+
+            context.Trace.TraceInformation(Msg.I1011, "Publishing", item.ItemIdOrPath);
+
+            var destinationFileName = GetItemFileName(item.DatabaseName, item.ItemIdOrPath);
+
+            FileSystem.CreateDirectoryFromFileName(destinationFileName);
+
+            using (var stream = new FileStream(destinationFileName, FileMode.Create))
+            {
+                using (var writer = new StreamWriter(stream))
+                {
+                    item.WriteAsUnicornYaml(writer);
                 }
             }
         }

@@ -2,6 +2,7 @@
 
 using System;
 using System.Composition;
+using System.Linq;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
@@ -38,6 +39,12 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             }
 
             var item = field.Item.Project.FindQualifiedItem<IProjectItem>(qualifiedName);
+
+            if (item == null)
+            {
+                item = field.Item.Project.Files.FirstOrDefault(f => string.Equals(f.FilePath, qualifiedName, StringComparison.OrdinalIgnoreCase));
+            }
+
             if (item == null)
             {
                 context.Trace.TraceError(Msg.C1049, Texts.Link_field_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), qualifiedName);

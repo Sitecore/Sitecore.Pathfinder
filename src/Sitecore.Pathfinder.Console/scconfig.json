@@ -26,8 +26,17 @@
 
     // item content files globs
     "items": {
-        "include": ["**/*.content.yaml", "**/*.content.json", "**/*.content.xml"],
+        "include": [ "**/*.content.yaml", "**/*.content.json", "**/*.content.xml" ],
         "exclude": []
+    },
+
+    "databases": {
+        "master": {
+            "languages": [ "en" ]
+        },
+        "core": {
+            "languages": [ "en", "da", "de-DE", "ja-JP" ]
+        }
     },
 
     // output
@@ -79,13 +88,22 @@
         "project-to-website": {
             "master": {
                 "project-directory-to-item-path": "/items/master/sitecore => /sitecore",
-                "database": "master"
+                "database": "master",
+                "upload-media": true
+
             },
 
             "core": {
                 "project-directory-to-item-path": "/items/core/sitecore => /sitecore",
-                "database": "core"
+                "database": "core",
+                "upload-media": true
             },
+
+            "views": {
+                "project-directory-to-item-path": "/views => /sitecore/layout/renderings",
+                "project-directory-to-website-directory": "/views => /views"
+            },
+
 
             "root": {
                 "project-directory-to-website-directory": "/ => /"

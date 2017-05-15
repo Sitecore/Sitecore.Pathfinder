@@ -7,6 +7,7 @@ using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Languages.Media;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Files;
 using Sitecore.Pathfinder.Projects.Items;
@@ -16,7 +17,6 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 {
     public abstract class DirectoryProjectEmitterBase : ProjectEmitterBase
     {
-        [ImportingConstructor]
         protected DirectoryProjectEmitterBase([NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, traceService, emitters)
         {
             FileSystem = fileSystem;
@@ -29,14 +29,14 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
         [NotNull]
         public string OutputDirectory { get; protected set; }
 
-        public virtual void EmitFile([NotNull] IEmitContext context, [NotNull] File file, [NotNull] string sourceFileAbsoluteFileName, [NotNull] string filePath)
+        public virtual void EmitFile([NotNull] IEmitContext context, [NotNull] File file)
         {
             if (!file.IsEmittable)
             {
                 return;
             }
 
-            var fileName = PathHelper.NormalizeFilePath(filePath);
+            var fileName = PathHelper.NormalizeFilePath(file.FilePath);
             if (fileName.StartsWith("~\\"))
             {
                 fileName = fileName.Mid(2);
@@ -48,10 +48,17 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
             var destinationFileName = PathHelper.Combine(OutputDirectory, fileName);
 
             FileSystem.CreateDirectoryFromFileName(destinationFileName);
-            FileSystem.Copy(sourceFileAbsoluteFileName, destinationFileName, forceUpdate);
+            FileSystem.Copy(file.Snapshot.SourceFile.AbsoluteFileName, destinationFileName, forceUpdate);
         }
 
-        public abstract void EmitItem([NotNull] IEmitContext context, [NotNull] Item item);
+        public virtual void EmitItem([NotNull] IEmitContext context, [NotNull] Item item)
+        {
+        }
+
+        protected virtual void EmitMediaFile([NotNull] IEmitContext context, [NotNull] MediaFile mediaFile)
+        {
+            EmitFile(context, mediaFile);
+        }
 
         protected override void EmitProjectItems(IEmitContext context, IEnumerable<IProjectItem> projectItems, List<IEmitter> emitters, ICollection<Tuple<IProjectItem, Exception>> retries)
         {
@@ -59,19 +66,22 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 
             foreach (var projectItem in projectItems)
             {
-                if (projectItem is File file)
+                if (projectItem is MediaFile mediaFile)
                 {
-                   unemittedItems.Remove(projectItem);
-                   EmitFile(context, file, projectItem.Snapshot.SourceFile.AbsoluteFileName, file.FilePath);
+                    unemittedItems.Remove(projectItem);
+                    EmitMediaFile(context, mediaFile);
                 }
-
-                if (projectItem is Item item)
+                else if (projectItem is File file)
+                {
+                    unemittedItems.Remove(projectItem);
+                    EmitFile(context, file);
+                }
+                else if (projectItem is Item item)
                 {
                     unemittedItems.Remove(projectItem);
                     EmitItem(context, item);
                 }
-
-                if (projectItem is Template template)
+                else if (projectItem is Template template)
                 {
                     unemittedItems.Remove(projectItem);
                     EmitTemplate(context, template);

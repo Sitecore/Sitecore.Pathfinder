@@ -46,6 +46,20 @@ namespace Sitecore.Pathfinder.Languages.Media
             item.ItemNameProperty.AddSourceTextNode(new FileNameTextNode(mediaFile.ItemName, snapshot));
             item.TemplateIdOrPathProperty.SetValue(templateIdOrPath);
 
+            var fileInfo = new FileInfo(mediaFile.Snapshot.SourceFile.AbsoluteFileName);
+
+            item.Fields.Add(context.Factory.Field(item, "Extension", mediaFile.Extension.Mid(1)).With(item.SourceTextNode));
+            item.Fields.Add(context.Factory.Field(item, "Size", fileInfo.Length.ToString()).With(item.SourceTextNode));
+            item.Fields.Add(context.Factory.Field(item, "Blob", mediaFile.Uri.Guid.Format()).With(item.SourceTextNode));
+
+            foreach (var language in context.Configuration.GetLanguages(item.Database))
+            {
+                var altField = context.Factory.Field(item, "Alt", mediaFile.ItemName).With(item.SourceTextNode);
+                altField.Language = language;
+                altField.Version = new Version(1);
+                item.Fields.Add(altField);
+            }
+
             var addedItem = project.AddOrMerge(item);
             mediaFile.MediaItemUri = addedItem.Uri;
         }

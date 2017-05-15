@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Sitecore.Configuration;
 using Sitecore.Data;
@@ -11,6 +12,7 @@ using Sitecore.Data.Managers;
 using Sitecore.Extensions.StringExtensions;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Resources.Media;
 
 namespace Sitecore.Pathfinder.Emitting.Writers
 {
@@ -221,6 +223,16 @@ namespace Sitecore.Pathfinder.Emitting.Writers
                 var fieldName = field.Name;
 
                 SetFieldValue(versionedItem, field, fieldName);
+
+                if (!string.IsNullOrEmpty(field.Blob))
+                {
+                    using (var memoryStream = new MemoryStream(System.Convert.FromBase64String(field.Blob)))
+                    {
+                        var media = MediaManager.GetMedia(new MediaItem(item));
+                        media.MediaData.DataFieldName = field.Name;
+                        media.SetStream(memoryStream, field.BlobExtension);
+                    }
+                }
             }
 
             foreach (var i in versionedItems)

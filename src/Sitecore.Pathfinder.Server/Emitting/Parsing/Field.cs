@@ -8,6 +8,12 @@ namespace Sitecore.Pathfinder.Emitting.Parsing
 {
     public class Field
     {
+        [NotNull]
+        public string Blob { get; private set; }
+
+        [NotNull]
+        public string BlobExtension { get; private set; }
+
         public Guid Id { get; private set; }
 
         [NotNull]
@@ -29,6 +35,8 @@ namespace Sitecore.Pathfinder.Emitting.Parsing
                 Value = fieldElement.Value,
                 Name = fieldElement.GetAttributeValue("name"),
                 Language = fieldElement.GetAttributeValue("language"),
+                Blob = fieldElement.GetAttributeValue("blob"),
+                BlobExtension = fieldElement.GetAttributeValue("blobExtension")
             };
 
             int version;

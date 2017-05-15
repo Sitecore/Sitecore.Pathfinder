@@ -12,6 +12,7 @@ using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Languages.Media;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
@@ -65,7 +66,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 
                     EmitReset(writer);
                     EmitTemplates(writer);
-                    EmitItems(writer);
+                    EmitItems(context, writer);
                     EmitPublish(writer);
 
                     writer.WriteEndElement();
@@ -94,9 +95,29 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
             writer.WriteEndElement();
         }
 
-        public virtual void EmitFile([NotNull] IEmitContext context, [NotNull] string sourceFileAbsoluteFileName, [NotNull] string filePath)
+        public virtual void EmitMediaFile([NotNull] IEmitContext context, [NotNull] MediaFile mediaFile)
         {
-            var fileName = PathHelper.NormalizeFilePath(filePath);
+            var fileName = PathHelper.NormalizeFilePath(mediaFile.FilePath);
+            if (fileName.StartsWith("~\\"))
+            {
+                fileName = fileName.Mid(2);
+            }
+
+            context.Trace.TraceInformation(Msg.I1011, "Publishing", "~\\" + fileName);
+
+            var item = context.Project.FindQualifiedItem<Item>(mediaFile.MediaItemUri);
+            if (item == null)
+            {
+                context.Trace.TraceInformation(Msg.E1047, "No media item - skipping", mediaFile.Snapshot.SourceFile);
+                return;
+            }
+
+            EmitItem(context, item);
+        }
+
+        public virtual void EmitFile([NotNull] IEmitContext context, [NotNull] Projects.Files.File file)
+        {
+            var fileName = PathHelper.NormalizeFilePath(file.FilePath);
             if (fileName.StartsWith("~\\"))
             {
                 fileName = fileName.Mid(2);
@@ -108,7 +129,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
             var destinationFileName = PathHelper.Combine(OutputDirectory, fileName);
 
             FileSystem.CreateDirectoryFromFileName(destinationFileName);
-            FileSystem.Copy(sourceFileAbsoluteFileName, destinationFileName, forceUpdate);
+            FileSystem.Copy(file.Snapshot.SourceFile.AbsoluteFileName, destinationFileName, forceUpdate);
         }
 
         public virtual void EmitItem([NotNull] IEmitContext context, [NotNull] Item item)
@@ -216,7 +237,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
             writer.WriteEndElement();
         }
 
-        protected virtual void EmitItems([NotNull] XmlWriter writer)
+        protected virtual void EmitItems([NotNull] IEmitContext context, [NotNull] XmlWriter writer)
         {
             writer.WriteStartElement("items");
 
@@ -236,13 +257,32 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
                     writer.WriteStartElement("field");
                     writer.WriteAttributeString("id", field.FieldId.Format());
                     writer.WriteAttributeString("name", field.FieldName);
+
                     if (!field.TemplateField.Shared)
                     {
                         writer.WriteAttributeString("language", field.Language.LanguageName);
                     }
+
                     if (!field.TemplateField.Shared && !field.TemplateField.Unversioned)
                     {
                         writer.WriteAttributeString("version", field.Version.Number.ToString());
+                    }
+
+                    if (string.Equals(field.TemplateField.Type, "attachment", StringComparison.OrdinalIgnoreCase))
+                    {
+                        var mediaFile = context.Project.FindQualifiedItem<MediaFile>(field.Value);
+                        if (mediaFile == null)
+                        {
+                            context.Trace.TraceInformation(Msg.E1047, "No media item", item.SourceTextNode);
+                        }
+                        else
+                        {
+                            var bytes = File.ReadAllBytes(mediaFile.Snapshot.SourceFile.AbsoluteFileName);
+                            var blob = Convert.ToBase64String(bytes);
+
+                            writer.WriteAttributeString("blob", blob);
+                            writer.WriteAttributeString("blobExtension", Path.GetExtension(mediaFile.Snapshot.SourceFile.AbsoluteFileName).TrimStart('.'));
+                        }
                     }
 
                     writer.WriteValue(field.CompiledValue);
@@ -255,6 +295,8 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 
             writer.WriteEndElement();
         }
+
+
 
         protected virtual void EmitTemplates([NotNull] XmlWriter writer)
         {
@@ -315,13 +357,17 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 
             foreach (var projectItem in projectItems)
             {
-                if (projectItem is Projects.Files.File file)
+                if (projectItem is MediaFile mediaFile)
                 {
-                    EmitFile(context, projectItem.Snapshot.SourceFile.AbsoluteFileName, file.FilePath);
+                    EmitMediaFile(context, mediaFile);
                     unemittedItems.Remove(projectItem);
                 }
-
-                if (projectItem is Item item)
+                else if (projectItem is Projects.Files.File file)
+                {
+                    EmitFile(context, file);
+                    unemittedItems.Remove(projectItem);
+                }
+                else if (projectItem is Item item)
                 {
                     if (item.IsEmittable)
                     {
@@ -330,8 +376,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 
                     unemittedItems.Remove(projectItem);
                 }
-
-                if (projectItem is Template template)
+                else if (projectItem is Template template)
                 {
                     if (template.IsEmittable)
                     {

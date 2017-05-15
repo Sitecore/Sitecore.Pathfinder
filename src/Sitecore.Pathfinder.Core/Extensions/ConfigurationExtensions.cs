@@ -9,6 +9,8 @@ using Newtonsoft.Json;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel.Json;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Projects;
+using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Extensions
 {
@@ -181,6 +183,12 @@ namespace Sitecore.Pathfinder.Extensions
 
             int result;
             return int.TryParse(value, out result) ? result : defaultValue;
+        }
+
+        [ItemNotNull, NotNull]
+        public static IEnumerable<Language> GetLanguages([NotNull] this IConfiguration configuration, [NotNull] Database database)
+        {
+            return configuration.GetArray("databases:" + database.DatabaseName).Select(database.GetLanguage);
         }
 
         [NotNull]

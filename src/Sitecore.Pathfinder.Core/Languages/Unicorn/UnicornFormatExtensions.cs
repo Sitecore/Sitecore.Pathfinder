@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Languages.Media;
 using Sitecore.Pathfinder.Languages.Yaml;
 using Sitecore.Pathfinder.Projects.Items;
 
@@ -109,6 +110,22 @@ namespace Sitecore.Pathfinder.Languages.Unicorn
             output.WriteAttributeString("Hint", field.FieldName);
 
             var type = field.TemplateField.Type;
+            if (string.Equals(type, "attachment", StringComparison.OrdinalIgnoreCase))
+            {
+                var mediaFile = field.Item.Project.Files.OfType<MediaFile>().FirstOrDefault(f => f.MediaItemUri == field.Item.Uri);
+                if (mediaFile != null)
+                {
+                    // todo: use IFileSystemService
+                    var bytes = File.ReadAllBytes(mediaFile.Snapshot.SourceFile.AbsoluteFileName);
+                    var value = Convert.ToBase64String(bytes);
+
+                    output.WriteAttributeString("BlobID", "\"" + Guid.Parse(field.CompiledValue).ToString("D") + "\"");
+                    output.WriteAttributeString("Value", value);
+
+                    return;
+                }
+            }
+
             if (!string.Equals(type, "text", StringComparison.OrdinalIgnoreCase) && !string.Equals(type, "single-line text", StringComparison.OrdinalIgnoreCase))
             {
                 output.WriteAttributeString("Type", type);

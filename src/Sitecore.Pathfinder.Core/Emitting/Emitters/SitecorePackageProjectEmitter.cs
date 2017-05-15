@@ -10,10 +10,10 @@ using System.Xml;
 using Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.IO.Zip;
+using Sitecore.Pathfinder.Languages.Media;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
@@ -42,9 +42,41 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
         [NotNull]
         public ZipWriter Zip { get; protected set; }
 
-        public virtual void AddFile([NotNull] IEmitContext context, [NotNull] string sourceFileAbsoluteFileName, [NotNull] string filePath)
+        public override bool CanEmit(string format)
         {
-            var fileName = PathHelper.NormalizeFilePath(filePath);
+            return string.Equals(format, "package", StringComparison.OrdinalIgnoreCase);
+        }
+
+        public override void Emit(IEmitContext context, IProject project)
+        {
+            var packageFileName = Configuration.GetString(Constants.Configuration.Output.Package.FileName, "package");
+            if (!packageFileName.EndsWith(".zip"))
+            {
+                packageFileName += ".zip";
+            }
+
+            var outputDirectory = PathHelper.Combine(project.ProjectDirectory, Configuration.GetString(Constants.Configuration.Output.Directory));
+            var fileName = Path.Combine(outputDirectory, packageFileName);
+
+            FileSystem.CreateDirectoryFromFileName(fileName);
+
+            using (Zip = new ZipWriter(fileName))
+            {
+                base.Emit(context, project);
+
+                EmitProject();
+                EmitVersion();
+                EmitMetaData();
+            }
+
+            context.OutputFiles.Add(new OutputFile(fileName));
+        }
+
+        public virtual void EmitFile([NotNull] IEmitContext context, [NotNull] Projects.Files.File file)
+        {
+            var sourceFileAbsoluteFileName = file.Snapshot.SourceFile.AbsoluteFileName;
+
+            var fileName = PathHelper.NormalizeFilePath(file.FilePath);
             if (fileName.StartsWith("~\\"))
             {
                 fileName = fileName.Mid(2);
@@ -67,7 +99,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
             }
         }
 
-        public virtual void AddItem([NotNull] IEmitContext context, [NotNull] Item item)
+        public virtual void EmitItem([NotNull] IEmitContext context, [NotNull] Item item)
         {
             _items.Add(item);
 
@@ -162,37 +194,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
             }
         }
 
-        public override bool CanEmit(string format)
-        {
-            return string.Equals(format, "package", StringComparison.OrdinalIgnoreCase);
-        }
-
-        public override void Emit(IEmitContext context, IProject project)
-        {
-            var packageFileName = Configuration.GetString(Constants.Configuration.Output.Package.FileName, "package");
-            if (!packageFileName.EndsWith(".zip"))
-            {
-                packageFileName += ".zip";
-            }
-
-            var outputDirectory = PathHelper.Combine(project.ProjectDirectory, Configuration.GetString(Constants.Configuration.Output.Directory));
-            var fileName = Path.Combine(outputDirectory, packageFileName);
-
-            FileSystem.CreateDirectoryFromFileName(fileName);
-
-            using (Zip = new ZipWriter(fileName))
-            {
-                base.Emit(context, project);
-
-                AddProject();
-                AddVersion();
-                AddMetaData();
-            }
-
-            context.OutputFiles.Add(new OutputFile(fileName));
-        }
-
-        protected virtual void AddMetaData()
+        protected virtual void EmitMetaData()
         {
             using (var stream = new MemoryStream())
             {
@@ -275,7 +277,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
             }
         }
 
-        protected virtual void AddProject()
+        protected virtual void EmitProject()
         {
             var settings = new XmlWriterSettings
             {
@@ -376,7 +378,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
             }
         }
 
-        protected virtual void AddVersion()
+        protected virtual void EmitVersion()
         {
             using (var stream = new MemoryStream())
             {
@@ -389,10 +391,24 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
             }
         }
 
-        [NotNull]
-        private string NormalizeZipPath([NotNull] string fileName)
+        protected virtual void EmitMediaFile([NotNull] IEmitContext context, [NotNull] MediaFile mediaFile)
         {
-            return fileName.Replace("\\", "/").TrimEnd('/');
+            if (!mediaFile.UploadMedia)
+            {
+                EmitFile(context, mediaFile);
+                return;
+            }
+
+            var item = context.Project.FindQualifiedItem<Item>(mediaFile.MediaItemUri);
+            if (item == null)
+            {
+                context.Trace.TraceInformation(Msg.E1047, "No media item - skipping", mediaFile.Snapshot.SourceFile);
+                return;
+            }
+
+            EmitItem(context, item);
+
+            Zip.AddEntry("blob/" + mediaFile.DatabaseName + "/" + mediaFile.Uri.Guid.ToString("D"), mediaFile.Snapshot.SourceFile.AbsoluteFileName);
         }
 
         protected override void EmitProjectItems(IEmitContext context, IEnumerable<IProjectItem> projectItems, List<IEmitter> emitters, ICollection<Tuple<IProjectItem, Exception>> retries)
@@ -401,24 +417,27 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 
             foreach (var projectItem in projectItems)
             {
-                if (projectItem is Projects.Files.File file)
+                if (projectItem is MediaFile mediaFile)
                 {
-                    AddFile(context, projectItem.Snapshot.SourceFile.AbsoluteFileName, file.FilePath);
+                    EmitMediaFile(context, mediaFile);
                     unemittedItems.Remove(projectItem);
                 }
-
-                if (projectItem is Item item)
+                else if (projectItem is Projects.Files.File file)
+                {
+                    EmitFile(context, file);
+                    unemittedItems.Remove(projectItem);
+                }
+                else if (projectItem is Item item)
                 {
                     var sourcePropertyBag = (ISourcePropertyBag)item;
                     if (item.IsEmittable || sourcePropertyBag.GetValue<string>("__origin_reason") == nameof(CreateItemsFromTemplates))
                     {
-                        AddItem(context, item);
+                        EmitItem(context, item);
                     }
 
                     unemittedItems.Remove(projectItem);
                 }
-
-                if (projectItem is Template)
+                else if (projectItem is Template)
                 {
                     unemittedItems.Remove(projectItem);
                 }
@@ -427,5 +446,10 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
             base.EmitProjectItems(context, unemittedItems, emitters, retries);
         }
 
+        [NotNull]
+        private string NormalizeZipPath([NotNull] string fileName)
+        {
+            return fileName.Replace("\\", "/").TrimEnd('/');
+        }
     }
 }
