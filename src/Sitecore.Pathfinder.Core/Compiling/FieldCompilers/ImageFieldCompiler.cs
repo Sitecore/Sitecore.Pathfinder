@@ -4,6 +4,7 @@ using System;
 using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Languages.Media;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
@@ -41,7 +42,11 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
             if (item == null)
             {
-                item = field.Item.Project.Files.FirstOrDefault(f => string.Equals(f.FilePath, qualifiedName, StringComparison.OrdinalIgnoreCase));
+                var mediaFile = field.Item.Project.Files.FirstOrDefault(f => string.Equals(f.FilePath, qualifiedName, StringComparison.OrdinalIgnoreCase)) as MediaFile;
+                if (mediaFile != null)
+                {
+                    item = field.Item.Project.FindQualifiedItem<Item>(mediaFile.MediaItemUri);
+                }
             }
 
             if (item == null)

@@ -104,6 +104,10 @@
                 "project-directory-to-website-directory": "/views => /views"
             },
 
+            "layouts": {
+                "project-directory-to-item-path": "/layouts => /sitecore/layout/layouts",
+                "project-directory-to-website-directory": "/layouts => /layouts"
+            },
 
             "root": {
                 "project-directory-to-website-directory": "/ => /"
@@ -343,7 +347,8 @@
             "TemplateCheckers": "enabled",
             "TemplateHelpCheckers": "disabled",
             "TemplateShouldHaveIcon": "disabled",
-            "DeleteUnusedTemplates": "disabled"
+            "DeleteUnusedTemplates": "disabled",
+            "PlaceholdersShouldHaveAPlaceholderSettingsName": "disabled"
         },
 
         // Habitat project

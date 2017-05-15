@@ -2,10 +2,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Xml;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -50,7 +48,8 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             var settings = new XmlWriterSettings
             {
                 Encoding = new UTF8Encoding(false),
-                Indent = true
+                Indent = true,
+                OmitXmlDeclaration = true
             };
 
             var writer = new StringBuilder();
@@ -75,44 +74,6 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             renderingItemId = renderingItemId.Mid(n + 1);
 
             return renderingItems.Where(r => r.ShortName == renderingItemId).ToArray();
-        }
-
-        [NotNull]
-        protected virtual string GetPlaceholders([NotNull] LayoutCompileContext context, [NotNull] ITextNode renderingTextNode, [NotNull] IProjectItem projectItem)
-        {
-            var item = projectItem as Item;
-            if (item == null)
-            {
-                return string.Empty;
-            }
-
-            var id = renderingTextNode.GetAttributeValue("Id");
-            var result = ",";
-
-            var placeHoldersField = item.Fields.FirstOrDefault(f => string.Equals(f.FieldName, "Place Holders", StringComparison.OrdinalIgnoreCase));
-            if (placeHoldersField != null)
-            {
-                foreach (var s in placeHoldersField.Value.Split(','))
-                {
-                    if (string.IsNullOrEmpty(s))
-                    {
-                        continue;
-                    }
-
-                    var placeholderName = s.Replace("$Id", id).Trim();
-
-                    result += placeholderName + ",";
-                }
-
-                return result;
-            }
-
-            foreach (var placeholderName in AnalyzeFile(context, item, true))
-            {
-                result += placeholderName + ",";
-            }
-
-            return result;
         }
 
         protected virtual bool IsContentProperty([NotNull] ITextNode renderingTextNode, [NotNull] ITextNode childTextNode)
@@ -191,8 +152,13 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         {
             output.WriteStartElement("d");
 
-            var deviceNameTextNode = deviceTextNode.GetAttribute("Name");
-            if (deviceNameTextNode == null)
+            var deviceName = deviceTextNode.Key;
+            if (string.IsNullOrEmpty(deviceName))
+            {
+                deviceName = deviceTextNode.GetAttributeValue("Name");
+            }
+
+            if (string.IsNullOrEmpty(deviceName))
             {
                 context.Trace.TraceError(Msg.C1029, Texts.Device_element_is_missing__Name__attribute_, deviceTextNode);
             }
@@ -201,15 +167,14 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 var devices = context.Project.ProjectItems.OfType<Item>().Where(i => string.Equals(i.TemplateIdOrPath, "/sitecore/templates/System/Layout/Device", StringComparison.OrdinalIgnoreCase) || string.Equals(i.TemplateIdOrPath, "{B6F7EEB4-E8D7-476F-8936-5ACE6A76F20B}", StringComparison.OrdinalIgnoreCase)).ToList();
                 if (!devices.Any())
                 {
-                    context.Trace.TraceError(Msg.C1031, Texts.Device_item_not_found, deviceNameTextNode);
+                    context.Trace.TraceError(Msg.C1031, Texts.Device_item_not_found, deviceTextNode);
                 }
                 else
                 {
-                    var deviceName = deviceNameTextNode.Value;
                     var device = devices.FirstOrDefault(d => string.Equals(d.ItemName, deviceName, StringComparison.OrdinalIgnoreCase));
                     if (device == null)
                     {
-                        context.Trace.TraceError(Msg.C1032, Texts.Device_not_found, deviceNameTextNode, deviceName);
+                        context.Trace.TraceError(Msg.C1032, Texts.Device_not_found, deviceTextNode, deviceName);
                     }
                     else
                     {
@@ -218,34 +183,63 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 }
             }
 
-            var layoutPlaceholders = string.Empty;
-            var layoutPath = deviceTextNode.GetAttribute("Layout");
-            if (layoutPath != null && !string.IsNullOrEmpty(layoutPath.Value))
+            var layoutPath = deviceTextNode.Value;
+            if (string.IsNullOrEmpty(layoutPath))
             {
-                var l = context.Project.FindQualifiedItem<IProjectItem>(layoutPath.Value);
+                layoutPath = deviceTextNode.GetAttributeValue("Layout");
+            }
+
+            if (!string.IsNullOrEmpty(layoutPath))
+            {
+                var l = context.Project.FindQualifiedItem<IProjectItem>(layoutPath);
+
                 if (l == null)
                 {
-                    context.Trace.TraceError(Msg.C1033, Texts.Layout_not_found_, layoutPath, layoutPath.Value);
+                    var layouts = ResolveRenderingItem(renderingItems, layoutPath);
+                    if (layouts.Length > 1)
+                    {
+                        context.Trace.TraceError(Msg.C1130, "Ambiguous layout", layoutPath);
+                        return;
+                    }
+
+                    l = layouts.FirstOrDefault();
+                }
+
+                if (l == null)
+                {
+                    context.Trace.TraceError(Msg.C1033, Texts.Layout_not_found_, layoutPath);
                     return;
                 }
 
                 output.WriteAttributeString("l", l.Uri.Guid.Format());
-                layoutPlaceholders = GetPlaceholders(context, deviceTextNode, l);
             }
 
-            var renderings = deviceTextNode.GetSnapshotLanguageSpecificChildNode("Renderings");
-            if (renderings == null)
+            foreach (var placeholderTextNode in deviceTextNode.ChildNodes)
             {
-                // silent
-                return;
-            }
-
-            foreach (var renderingTextNode in renderings.ChildNodes)
-            {
-                WriteRendering(context, output, renderingItems, renderingTextNode, layoutPlaceholders);
+                WritePlaceholder(context, output, renderingItems, placeholderTextNode);
             }
 
             output.WriteEndElement();
+        }
+
+        protected virtual void WritePlaceholder([NotNull] LayoutCompileContext context, [NotNull] XmlWriter output, [NotNull, ItemNotNull] IEnumerable<Item> renderingItems, [NotNull] ITextNode placeholderTextNode)
+        {
+            var placeholderName = placeholderTextNode.Key;
+            if (string.IsNullOrEmpty(placeholderName))
+            {
+                placeholderName = placeholderTextNode.GetAttributeValue("Placeholder");
+            }
+
+            if (string.IsNullOrEmpty(placeholderName))
+            {
+                context.Trace.TraceError(Msg.C1129, "Placeholder name missing", placeholderTextNode);
+                return;
+            }
+
+            foreach (var renderingTextNode in placeholderTextNode.ChildNodes)
+            {
+                WriteRendering(context, output, renderingItems, placeholderName, renderingTextNode);
+            }
         }
 
         protected virtual void WriteLayout([NotNull] LayoutCompileContext context, [NotNull] XmlWriter output, [NotNull] ITextNode layoutTextNode)
@@ -272,44 +266,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             output.WriteEndElement();
         }
 
-        protected virtual void WritePlaceholder([NotNull] LayoutCompileContext context, [NotNull] XmlWriter output, [NotNull] ITextNode renderingTextNode, [NotNull] string id, [NotNull] string parentPlaceholders)
-        {
-            var placeholderTextNode = renderingTextNode.GetAttribute("Placeholder");
-            var placeholder = placeholderTextNode?.Value ?? string.Empty;
-
-            // get the first placeholder from the parent rendering
-            if (string.IsNullOrEmpty(placeholder) && !string.IsNullOrEmpty(parentPlaceholders))
-            {
-                var n = parentPlaceholders.IndexOf(",", 1, StringComparison.OrdinalIgnoreCase);
-                if (n >= 0)
-                {
-                    placeholder = parentPlaceholders.Mid(1, n - 1);
-                }
-            }
-
-            if (string.IsNullOrEmpty(placeholder))
-            {
-                return;
-            }
-
-            if (placeholderTextNode != null && !string.IsNullOrEmpty(parentPlaceholders))
-            {
-                if (parentPlaceholders.IndexOf("," + placeholder + ",", StringComparison.OrdinalIgnoreCase) < 0)
-                {
-                    var text = parentPlaceholders.Mid(1, parentPlaceholders.Length - 2);
-                    if (string.IsNullOrEmpty(text))
-                    {
-                        text = "[None]";
-                    }
-
-                    context.Trace.TraceWarning(Msg.C1034, string.Format(Texts._2___Placeholder___0___is_not_defined_in_the_parent_rendering__Parent_rendering_has_these_placeholders___1__, placeholder, text, id), placeholderTextNode);
-                }
-            }
-
-            output.WriteAttributeString("ph", placeholder);
-        }
-
-        protected virtual void WriteRendering([NotNull] LayoutCompileContext context, [NotNull] XmlWriter output, [NotNull, ItemNotNull] IEnumerable<Item> renderingItems, [NotNull] ITextNode renderingTextNode, [NotNull] string placeholders)
+        protected virtual void WriteRendering([NotNull] LayoutCompileContext context, [NotNull] XmlWriter output, [NotNull, ItemNotNull] IEnumerable<Item> renderingItems, [NotNull] string placeholderName,  [NotNull] ITextNode renderingTextNode)
         {
             string renderingItemId;
 
@@ -374,7 +331,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             output.WriteAttributeString("id", renderingItem.Uri.Guid.Format());
             WriteDataSource(context, output, renderingTextNode);
             WriteParameters(context, output, renderingTextNode, renderingItem, id);
-            WritePlaceholder(context, output, renderingTextNode, id, placeholders);
+            output.WriteAttributeString("ph", placeholderName);
 
             // WriteAttributeStringNotEmpty(@"uid", this.UniqueId);
             WriteBool(context, output, renderingTextNode, id, "VaryByData", "vbd");
@@ -386,110 +343,10 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
             output.WriteEndElement();
 
-            /*
-            if (renderingTextNode.ChildNodes.Any(child => !IsContentProperty(renderingTextNode, child)))
+            foreach (var placeholderTextNode in renderingTextNode.ChildNodes)
             {
-                var placeHolders = renderingItem["Place Holders"];
-
-                if (string.IsNullOrEmpty(placeHolders))
-                {
-                    context.Trace.TraceError($"The \"{renderingTextNode.Name}\" element cannot have any child elements as it does not define any placeholders in its 'Place Holders' field.", renderingTextNode);
-                }
-                else if (placeHolders.IndexOf("$Id", StringComparison.InvariantCulture) >= 0 && string.IsNullOrEmpty(renderingTextNode.GetAttributeValue("Id")))
-                {
-                    context.Trace.TraceError($"The \"{renderingTextNode.Name}\" element must have an ID as it has child elements.", renderingTextNode);
-                }
+                WritePlaceholder(context, output, renderingItems, placeholderTextNode);
             }
-            */
-
-            var renderingsTextNode = renderingTextNode.GetSnapshotLanguageSpecificChildNode("Renderings");
-            if (renderingsTextNode == null)
-            {
-                // silent
-                return;
-            }
-
-            var renderingPlaceholders = GetPlaceholders(context, renderingTextNode, renderingItem);
-
-            foreach (var childNode in renderingsTextNode.ChildNodes)
-            {
-                if (!IsContentProperty(renderingTextNode, childNode))
-                {
-                    WriteRendering(context, output, renderingItems, childNode, renderingPlaceholders);
-                }
-            }
-        }
-
-        [NotNull, ItemNotNull]
-        private IEnumerable<string> AnalyzeFile([NotNull] LayoutCompileContext context, [NotNull] Item item, bool includeDynamicPlaceholders)
-        {
-            var pathField = item.Fields.FirstOrDefault(f => string.Equals(f.FieldName, "Path", StringComparison.OrdinalIgnoreCase));
-            if (pathField == null)
-            {
-                return Enumerable.Empty<string>();
-            }
-
-            var path = PathHelper.Combine(item.Project.ProjectDirectory, pathField.Value.TrimStart('/'));
-            if (!FileSystem.FileExists(path))
-            {
-                return Enumerable.Empty<string>();
-            }
-
-            var source = FileSystem.ReadAllText(path);
-
-            if (string.Compare(Path.GetExtension(path), ".ascx", StringComparison.CurrentCultureIgnoreCase) == 0 || string.Compare(Path.GetExtension(path), ".aspx", StringComparison.CurrentCultureIgnoreCase) == 0)
-            {
-                return AnalyzeWebFormsFile(source);
-            }
-
-            if (string.Compare(Path.GetExtension(path), ".cshtml", StringComparison.CurrentCultureIgnoreCase) == 0)
-            {
-                return includeDynamicPlaceholders ? AnalyzeViewFileWithDynamicPlaceholders(source) : AnalyzeViewFile(source);
-            }
-
-            return Enumerable.Empty<string>();
-        }
-
-        [ItemNotNull, NotNull]
-        private IEnumerable<string> AnalyzeViewFile([NotNull] string source)
-        {
-            var matches = Regex.Matches(source, "\\@Html\\.Sitecore\\(\\)\\.Placeholder\\(\"([^\"]*)\"\\)", RegexOptions.IgnoreCase);
-            return matches.OfType<Match>().Select(i => i.Groups[1].ToString().Trim());
-        }
-
-        [ItemNotNull, NotNull]
-        private IEnumerable<string> AnalyzeViewFileWithDynamicPlaceholders([NotNull] string source)
-        {
-            var matches = Regex.Matches(source, "\\@Html\\.Sitecore\\(\\)\\.Placeholder\\(([^\"\\)]*)\"([^\"]*)\"\\)", RegexOptions.IgnoreCase);
-
-            var result = new List<string>();
-            foreach (var match in matches.OfType<Match>())
-            {
-                var prefix = match.Groups[1].ToString().Trim();
-                var name = match.Groups[2].ToString().Trim();
-
-                if (!string.IsNullOrEmpty(prefix))
-                {
-                    if (name.StartsWith("."))
-                    {
-                        name = name.Mid(1);
-                    }
-
-                    name = "$Id." + name;
-                }
-
-                result.Add(name);
-            }
-
-            return result;
-        }
-
-        [ItemNotNull, NotNull]
-        private IEnumerable<string> AnalyzeWebFormsFile([NotNull] string source)
-        {
-            var matches = Regex.Matches(source, "<[^>]*Placeholder[^>]*Key=\"([^\"]*)\"[^>]*>", RegexOptions.IgnoreCase);
-
-            return matches.OfType<Match>().Select(i => i.Groups[1].ToString().Trim());
         }
 
         private void WriteParameters([NotNull] LayoutCompileContext context, [NotNull] XmlWriter output, [NotNull] ITextNode renderingTextNode, [NotNull] Item renderingItem, [NotNull] string id)

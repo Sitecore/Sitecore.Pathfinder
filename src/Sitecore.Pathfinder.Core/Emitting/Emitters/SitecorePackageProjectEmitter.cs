@@ -105,13 +105,22 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 
             context.Trace.TraceInformation(Msg.I1011, "Publishing", item.ItemIdOrPath);
 
+            var sharedOnly = false;
             var languages = item.GetLanguages().ToList();
             if (!languages.Any())
             {
-                // todo: only shared fields - replace language with something else
+                sharedOnly = true;
+
+                var language = context.Configuration.GetLanguages(item.Database).FirstOrDefault();
+                if (language == null)
+                {
+                    context.Trace.TraceError(Msg.E1000, "No languages defined in configuration");
+                    return;
+                }
+
                 languages = new List<Language>
                 {
-                    new Language("en")
+                    language
                 };
             }
 
@@ -164,6 +173,20 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 
                                     output.WriteStartElement("content");
                                     output.WriteValue(field.CompiledValue);
+                                    output.WriteEndElement();
+                                    output.WriteEndElement();
+                                }
+
+                                if (sharedOnly)
+                                {
+                                    // make sure there is a version
+                                    output.WriteStartElement("field");
+                                    output.WriteAttributeString("tfid", Constants.Fields.CreatedBy.Format());
+                                    output.WriteAttributeString("key", "__created by");
+                                    output.WriteAttributeString("type", "text");
+
+                                    output.WriteStartElement("content");
+                                    output.WriteValue("sitecore\\admin");
                                     output.WriteEndElement();
                                     output.WriteEndElement();
                                 }

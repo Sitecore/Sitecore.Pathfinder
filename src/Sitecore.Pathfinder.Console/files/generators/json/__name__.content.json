@@ -13,6 +13,22 @@
                 "Text": "Velkommen til Sitecore"
             }
         },
+        "Layout": {
+            "Default": {
+                "Layout": "Sample Layout",
+                "main": {
+                    "Sample Sublayout": {
+                        "centercolumn": {
+                            "Sample Inner Sublayout": {
+                                "content": {
+                                    "Sample Rendering": {}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "Items": {
             "Sample Item": [
                 {

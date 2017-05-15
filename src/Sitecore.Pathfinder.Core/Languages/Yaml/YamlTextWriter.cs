@@ -35,7 +35,26 @@ namespace Sitecore.Pathfinder.Languages.Yaml
             InnerWriter.Write(new string(' ', Indent * Indentation));
             InnerWriter.Write(key);
             InnerWriter.Write(": ");
-            InnerWriter.WriteLine(value);
+            WriteAttributeValue(value);
+        }
+
+        private void WriteAttributeValue([NotNull] string value)
+        {
+            if (value.IndexOf('\r') < 0 && value.IndexOf('\n') < 0)
+            {
+                InnerWriter.WriteLine(value);
+                return;
+            }
+
+            InnerWriter.WriteLine('|');
+
+            var lines = value.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
+            var indentation = new string(' ', (Indent + 1) * Indentation);
+            foreach (var line in lines)
+            {
+                InnerWriter.Write(indentation);
+                InnerWriter.WriteLine(line);
+            }
         }
 
         public void WriteAttributeStringIf([NotNull] string key, [NotNull] string value)
@@ -48,7 +67,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
             InnerWriter.Write(new string(' ', Indent * Indentation));
             InnerWriter.Write(key);
             InnerWriter.Write(": ");
-            InnerWriter.WriteLine(value);
+            WriteAttributeValue(value);
         }
 
         public void WriteAttributeStringIf([NotNull] string key, int value, int defaultValue = 0)

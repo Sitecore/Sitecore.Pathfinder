@@ -8,6 +8,14 @@
         - da:
             Title: Sitecore
             Text: Velkommen til Sitecore
+    - Layout:
+        - Default: Sample Layout
+            - main:
+                - Sample Sublayout:
+                    - centercolumn:
+                        - Sample Inner Sublayout: 
+                            - content:
+                                - Sample Rendering:
     - Items: 
         - Sample Item: Subitem
             - Fields:

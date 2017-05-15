@@ -64,31 +64,6 @@ namespace Sitecore.Pathfinder.Languages.Json
             public JsonLayoutCompiler([NotNull] IFileSystemService fileSystem) : base(fileSystem)
             {
             }
-
-            protected override string GetPlaceholders(LayoutCompileContext context, ITextNode renderingTextNode, IProjectItem projectItem)
-            {
-                var childTextNode = renderingTextNode;
-                /*
-                if (childTextNode.ParentNode != null && childTextNode.ParentNode.Key == "Renderings")
-                {
-                    childTextNode = childTextNode.ChildNodes.FirstOrDefault();
-                    if (childTextNode == null)
-                    {
-                        return string.Empty;
-                    }
-                }
-                */
-                return base.GetPlaceholders(context, childTextNode, projectItem);
-            }
-
-            protected override void WriteRendering(LayoutCompileContext context, XmlWriter output, IEnumerable<Item> renderingItems, ITextNode renderingTextNode, string placeholders)
-            {
-                var childNode = renderingTextNode.ChildNodes.FirstOrDefault();
-                if (childNode != null)
-                {
-                    base.WriteRendering(context, output, renderingItems, childNode, placeholders);
-                }
-            }
         }
     }
 }

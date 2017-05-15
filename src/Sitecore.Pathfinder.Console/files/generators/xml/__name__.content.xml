@@ -3,6 +3,21 @@
         <en Title="Sitecore" Text="Welcome to Sitecore" />
         <da Title="Sitecore" Text="Velkommen til Sitecore" />
     </Fields>
+    <Layout>
+        <Default Layout="Sample Layout">
+            <main>
+                <SampleSublayout Rendering="Sample Sublayout">
+                    <centercolumn>
+                        <SampleInnerSublayout Rendering="Sample Inner Sublayout">
+                            <content>
+                                <SampleRendering Rendering="Sample Rendering" />
+                            </content>
+                        </SampleInnerSublayout>
+                    </centercolumn>
+                </SampleSublayout>
+            </main>
+        </Default>
+    </Layout>
     <Items>
         <SampleItem TemplateName="Sample Item" Name="Subitem">
             <Fields>
