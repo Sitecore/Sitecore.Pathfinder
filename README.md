@@ -11,19 +11,6 @@ An experimental CLI for Sitecore.
 Download [the latest Pathfinder build](https://github.com/JakobChristensen/Sitecore.Pathfinder/releases) to 
 try it out.
 
-## Common commands 
-
-Command | Description
-------- | -----------
-scc build | Build a Sitecore Package
-scc build unicorn | Build a directory of Unicorn files
-scc build nuget | Build a Nuget package
-scc test | Validate the project againt many checkers (currently more that 130 checks)
-scc generate yaml [filename] | Create a new Yaml item file
-scc generate json [filename] | Create a new Json item file
-scc generate xml [filename] | Create a new Xml item file
-scc init | Create an initial configuration file (scconfig.json) - Optional
-
 Follow the walk-throughs:
 
 * [Setting up](docs/walkthroughs/1. Setting up/README.md)
@@ -51,7 +38,28 @@ in a friendly manner._
 * Everything is a file (easy to edit, search and replace across multiple files, source control friendly)
 * Project directory has whole and single truth (source is not spread across development projects, databases and websites) (contineous integration friendly) 
 * Project is packaged into a Sitecore Package, NuGet package, Unicorn files or a directory of files
-* Lint or check you project and website with over 120 checkers
+* Lint or check you project and website with more than 120 checkers
+
+## Quickstart
+
+1. Create an new empty directory
+1. Execute `scc g hello` - this creates the files for the HelloWorld sample
+1. Execute `scc b` - this creates a Sitecore Package in the ./dist directory containing files and items
+1. Install the package in a Sitecore website
+1. Navigate to http://mysite/home/HelloWorld
+
+## Common commands 
+
+Command | Description
+------- | -----------
+scc build | Build a Sitecore Package
+scc build unicorn | Build a directory of Unicorn files
+scc build nuget | Build a Nuget package
+scc test | Validate the project againt many checkers (currently more that 130 checks)
+scc generate yaml [filename] | Create a new Yaml item file
+scc generate json [filename] | Create a new Json item file
+scc generate xml [filename] | Create a new Xml item file
+scc init | Create an initial configuration file (scconfig.json) - Optional
 
 ## FAQ
 Read the [FAQ](FAQ.md)

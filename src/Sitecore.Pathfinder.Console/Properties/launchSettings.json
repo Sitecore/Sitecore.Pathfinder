@@ -3,7 +3,7 @@
     "Sitecore.Pathfinder.Console": {
       "commandName": "Project",
       "commandLineArgs": "b u --pause",
-      "workingDirectory": "E:\\Sitecore\\Sitecore.Pathfinder\\websites\\HelloWorld"
+      "workingDirectory": "E:\\Sitecore\\Sitecore.Pathfinder\\websites\\Todo"
     }
   }
 }

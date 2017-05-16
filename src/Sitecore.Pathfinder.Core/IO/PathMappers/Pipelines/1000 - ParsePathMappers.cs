@@ -17,6 +17,8 @@ namespace Sitecore.Pathfinder.IO.PathMappers.Pipelines
 
         protected virtual void AddProjectToWebsiteMappings([NotNull] ParsePathMappersPipeline pipeline)
         {
+            var defaultDatabase = pipeline.Configuration.GetString(Constants.Configuration.Database, "master");
+
             foreach (var pair in pipeline.Configuration.GetSubKeys("project-website-mappings:project-to-website"))
             {
                 var key = "project-website-mappings:project-to-website:" + pair.Key;
@@ -32,7 +34,7 @@ namespace Sitecore.Pathfinder.IO.PathMappers.Pipelines
 
                     var projectDirectory = projectDirectoryToItemPath.Left(n).Trim();
                     var itemPath = projectDirectoryToItemPath.Mid(n + 2).Trim();
-                    var databaseName = pipeline.Configuration.GetString(key + ":database", "master");
+                    var databaseName = pipeline.Configuration.GetString(key + ":database", defaultDatabase);
                     var include = pipeline.Configuration.GetString(key + ":file-name-include");
                     var exclude = pipeline.Configuration.GetString(key + ":file-name-exclude");
                     var isImport = pipeline.Configuration.GetBool(key + ":is-import");
@@ -82,6 +84,8 @@ namespace Sitecore.Pathfinder.IO.PathMappers.Pipelines
 
         protected virtual void AddWebsiteToProjectMappings([NotNull] ParsePathMappersPipeline pipeline)
         {
+            var defaultDatabase = pipeline.Configuration.GetString(Constants.Configuration.Database, "master");
+
             foreach (var pair in pipeline.Configuration.GetSubKeys("project-website-mappings:website-to-project"))
             {
                 var key = "project-website-mappings:website-to-project:" + pair.Key;
@@ -95,7 +99,7 @@ namespace Sitecore.Pathfinder.IO.PathMappers.Pipelines
                         throw new ConfigurationException(Texts.Missing_Mapping);
                     }
 
-                    var databaseName = pipeline.Configuration.GetString(key + ":database", "master");
+                    var databaseName = pipeline.Configuration.GetString(key + ":database", defaultDatabase);
                     var itemPath = itemPathToProjectDirectory.Left(n).Trim();
                     var projectDirectory = itemPathToProjectDirectory.Mid(n + 2).Trim();
                     var format = pipeline.Configuration.GetString(key + ":format", "item.json");

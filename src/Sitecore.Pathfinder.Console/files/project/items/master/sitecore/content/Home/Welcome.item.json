@@ -1,9 +1,0 @@
-﻿{
-    "Item": {
-        "Template": "/sitecore/templates/Sample/Sample Item",
-        "Fields": {
-            "Title": "Pathfinder",
-            "Text": "Welcome to Sitecore Pathfinder"
-        }
-    }
-}

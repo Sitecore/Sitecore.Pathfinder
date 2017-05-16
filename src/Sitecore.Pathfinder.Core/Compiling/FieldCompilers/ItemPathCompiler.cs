@@ -28,6 +28,11 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
         public override bool CanCompile(IFieldCompileContext context, Field field)
         {
+            if (field.ValueProperty.Flags.HasFlag(SourcePropertyFlags.IsFileName))
+            {
+                return false;
+            }
+
             // if the value contains a dot (.) it is probably a file name
             return field.Value.IndexOf("/sitecore", StringComparison.OrdinalIgnoreCase) >= 0 && !field.Item.IsImport;
         }

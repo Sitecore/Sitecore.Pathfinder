@@ -1,5 +1,6 @@
 // © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
@@ -33,14 +34,14 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
+            var project = context.LoadProject();
+
             context.Trace.TraceInformation(Msg.D1015, Texts.Writing_package_exports___);
 
             var fieldToWrite = context.Configuration.GetArray(Constants.Configuration.WriteExports.FieldsToWrite).Select(f => f.ToLowerInvariant()).ToList();
             var fileName = PathHelper.Combine(context.ProjectDirectory, Configuration.GetString(Constants.Configuration.Output.Directory) + "\\" + context.Configuration.GetString(Constants.Configuration.WriteExports.FileName));
 
             FileSystem.CreateDirectoryFromFileName(fileName);
-
-            var project = context.LoadProject();
 
             using (var writer = FileSystem.OpenStreamWriter(fileName))
             {
@@ -50,18 +51,21 @@ namespace Sitecore.Pathfinder.Tasks
                     Indent = true
                 };
 
+                var defaultDatabase = context.Configuration.GetString(Constants.Configuration.Database, "master");
+
                 using (var output = XmlWriter.Create(writer, settings))
                 {
                     output.WriteStartElement("Exports");
+                    output.WriteAttributeString("Database", defaultDatabase);
 
-                    foreach (var template in project.Templates)
+                    foreach (var template in project.Templates.Where(t => t.IsEmittable).OrderBy(t => t.ItemIdOrPath))
                     {
-                        WriteAsExportXml(output, template);
+                        WriteAsExportXml(output, defaultDatabase, template);
                     }
 
-                    foreach (var item in project.Items)
+                    foreach (var item in project.Items.Where(i => i.IsEmittable).OrderBy(i => i.ItemIdOrPath))
                     {
-                        WriteAsExportXml(output, item, fieldToWrite);
+                        WriteAsExportXml(output, defaultDatabase, item, fieldToWrite);
                     }
 
                     output.WriteEndElement();
@@ -69,14 +73,20 @@ namespace Sitecore.Pathfinder.Tasks
             }
         }
 
-        public static void WriteAsExportXml([NotNull] XmlWriter output, [NotNull] Template template)
+        public static void WriteAsExportXml([NotNull] XmlWriter output, [NotNull] string defaultDatabase, [NotNull] Template template)
         {
             output.WriteStartElement("Template");
             output.WriteAttributeString("Id", template.Uri.Guid.Format());
-            output.WriteAttributeString("Database", template.DatabaseName);
-            output.WriteAttributeString("Name", template.ItemName);
+            if (!string.Equals(template.DatabaseName, defaultDatabase, StringComparison.OrdinalIgnoreCase))
+            {
+                output.WriteAttributeString("Database", template.DatabaseName);
+            }
+
             output.WriteAttributeString("Path", template.ItemIdOrPath);
-            output.WriteAttributeString("BaseTemplates", template.BaseTemplates);
+            if (!string.IsNullOrEmpty(template.BaseTemplates))
+            {
+                output.WriteAttributeString("BaseTemplates", template.BaseTemplates);
+            }
 
             foreach (var section in template.Sections)
             {
@@ -89,7 +99,16 @@ namespace Sitecore.Pathfinder.Tasks
                     output.WriteStartElement("Field");
                     output.WriteAttributeString("Id", field.Uri.Guid.Format());
                     output.WriteAttributeString("Name", field.FieldName);
-                    output.WriteAttributeString("Type", field.Type);
+                    if (!string.Equals(field.Type, "text", StringComparison.OrdinalIgnoreCase) && !string.Equals(field.Type, "Single-Line Text", StringComparison.OrdinalIgnoreCase))
+                    {
+                        output.WriteAttributeString("Type", field.Type);
+                    }
+
+                    if (!field.Shared)
+                    {
+                        output.WriteAttributeString("Sharing", field.Unversioned ? "Unversioned" : "Versioned");
+                    }
+
                     output.WriteEndElement();
                 }
 
@@ -100,18 +119,30 @@ namespace Sitecore.Pathfinder.Tasks
         }
 
 
-        public static void WriteAsExportXml([NotNull] XmlWriter output, [NotNull] Item item, [NotNull, ItemNotNull]  IEnumerable<string> fieldsToWrite)
+        public static void WriteAsExportXml([NotNull] XmlWriter output, [NotNull] string defaultDatabase, [NotNull] Item item, [NotNull, ItemNotNull] IEnumerable<string> fieldsToWrite)
         {
+            var templateIdOrPath = item.TemplateIdOrPath;
+
+            var template = item.Project.FindItemByIdOrPath<Template>(item.Database, item.TemplateIdOrPath);
+            if (template != null)
+            {
+                templateIdOrPath = template.Uri.Guid.Format();
+            }
+
             output.WriteStartElement("Item");
             output.WriteAttributeString("Id", item.Uri.Guid.Format());
-            output.WriteAttributeString("Database", item.DatabaseName);
-            output.WriteAttributeString("Name", item.ItemName);
-            output.WriteAttributeString("Path", item.ItemIdOrPath);
-            output.WriteAttributeString("Template", item.TemplateIdOrPath);
-
-            foreach (var field in item.Fields)
+            if (!string.Equals(item.DatabaseName, defaultDatabase, StringComparison.OrdinalIgnoreCase))
             {
-                if (!fieldsToWrite.Contains(field.FieldName.ToLowerInvariant()))
+                output.WriteAttributeString("Database", item.DatabaseName);
+            }
+
+            output.WriteAttributeString("Template", templateIdOrPath);
+            output.WriteAttributeString("Path", item.ItemIdOrPath);
+
+            foreach (var fieldName in fieldsToWrite)
+            {
+                var field = item.Fields[fieldName];
+                if (field == null)
                 {
                     continue;
                 }

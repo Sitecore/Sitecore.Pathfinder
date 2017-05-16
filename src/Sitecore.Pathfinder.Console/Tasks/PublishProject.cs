@@ -41,6 +41,8 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
+            var project = context.LoadProject();
+
             context.Trace.TraceInformation(Msg.D1029, "Publishing project...");
 
             var format = Format;
@@ -55,8 +57,6 @@ namespace Sitecore.Pathfinder.Tasks
                 context.Trace.TraceError(Msg.E1043, "No project emitters found");
                 return;
             }
-
-            var project = context.LoadProject();
 
             foreach (var projectEmitter in projectEmitters)
             {

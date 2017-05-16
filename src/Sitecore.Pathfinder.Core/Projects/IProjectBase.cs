@@ -66,5 +66,8 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull, ItemNotNull]
         IEnumerable<IProjectItem> GetUsages([NotNull] string qualifiedName);
+
+        [CanBeNull]
+        T FindItemByIdOrPath<T>([NotNull] Database database, [NotNull] string idOrPath) where T: DatabaseProjectItem;
     }
 }

@@ -105,12 +105,11 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 
             context.Trace.TraceInformation(Msg.I1011, "Publishing", item.ItemIdOrPath);
 
-            var sharedOnly = false;
+            var hasVersions = item.Fields.Any(f => !f.TemplateField.Shared && !f.TemplateField.Unversioned);
+
             var languages = item.GetLanguages().ToList();
             if (!languages.Any())
             {
-                sharedOnly = true;
-
                 var language = context.Configuration.GetLanguages(item.Database).FirstOrDefault();
                 if (language == null)
                 {
@@ -177,7 +176,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
                                     output.WriteEndElement();
                                 }
 
-                                if (sharedOnly)
+                                if (!hasVersions)
                                 {
                                     // make sure there is a version
                                     output.WriteStartElement("field");

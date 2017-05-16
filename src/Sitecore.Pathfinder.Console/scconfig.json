@@ -19,7 +19,7 @@
     "files": {
         "include": ["**/*"],
         "exclude": [ 
-            "dist", "scconfig.json", ".vscode", ".git", "node_modules", "bower_components", "packages", "roslyn",
+            "dist", "scconfig.*", ".vscode", ".git", "node_modules", "bower_components", "packages", "roslyn",
             "includes", "Properties", "obj", "scc.cmd", "project.json", "readme.md", "web.config", "packages.config"
         ]
     },
@@ -107,6 +107,16 @@
             "layouts": {
                 "project-directory-to-item-path": "/layouts => /sitecore/layout/layouts",
                 "project-directory-to-website-directory": "/layouts => /layouts"
+            },
+
+            "sitecore-shell": {
+                "project-directory-to-item-path": "/sitecore/shell => /sitecore",
+                "project-directory-to-website-directory": "/sitecore/shell => /sitecore/shell"
+            },
+
+            "sitecore": {
+                "project-directory-to-item-path": "/sitecore => /sitecore",
+                "project-directory-to-website-directory": "/sitecore => /sitecore"
             },
 
             "root": {
@@ -263,7 +273,7 @@
 
     "write-exports": {
         "filename": "project.exports.xml",
-        "fields-to-write": "Place Holders"
+        "fields-to-write": ""
     },
 
     // === SETTINGS ===

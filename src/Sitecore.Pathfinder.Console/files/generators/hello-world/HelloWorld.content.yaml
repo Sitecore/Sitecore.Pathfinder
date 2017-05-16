@@ -1,0 +1,13 @@
+﻿- HelloWorldTemplate: HelloWorld
+    ItemPath: /sitecore/content/Home/HelloWorld
+    Database: master
+    - Fields:
+        Image: ~/items/master/sitecore/media library/Pathfinder.png
+        - en:
+            - 1:
+                Title: Hello World
+                Text: Hello from Pathfinder
+    - Layout:
+        - Default: HelloWorldLayout
+            - Body:
+                - HelloWorld:

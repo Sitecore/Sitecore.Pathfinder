@@ -1,0 +1,14 @@
+﻿- Template: HelloWorldTemplate
+    ItemPath: /sitecore/templates/HelloWorldTemplate
+    Database: master
+    - Section: Data
+        - Field: Title
+            Type: Single-Line Text
+            Sharing: Versioned
+        - Field: Text
+            Type: Rich Text
+            Sharing: Versioned
+        - Field: Image
+            Type: Image
+            Sharing: Shared
+

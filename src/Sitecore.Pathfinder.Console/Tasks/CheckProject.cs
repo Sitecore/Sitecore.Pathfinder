@@ -25,11 +25,11 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
+            var project = context.LoadProject();
+
             context.Trace.TraceInformation(Msg.C1041, Texts.Checking___);
 
             var treatWarningsAsErrors = context.Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
-
-            var project = context.LoadProject();
 
             var diagnostics = project.Diagnostics.ToArray();
 

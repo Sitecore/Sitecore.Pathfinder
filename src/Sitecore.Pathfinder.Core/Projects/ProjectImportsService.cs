@@ -47,7 +47,7 @@ namespace Sitecore.Pathfinder.Projects
             ImportReferencesFromNodeModulesDirectory(project);
         }
 
-        protected virtual void ImportElement([NotNull] IProject project, [NotNull] string fileName, [NotNull] XElement element)
+        protected virtual void ImportElement([NotNull] IProject project, [NotNull] string fileName, [NotNull] string defaultDatabaseName, [NotNull] XElement element)
         {
             Guid guid;
             if (!Guid.TryParse(element.GetAttributeValue("Id"), out guid))
@@ -56,9 +56,9 @@ namespace Sitecore.Pathfinder.Projects
                 return;
             }
 
-            var databaseName = element.GetAttributeValue("Database");
-            var itemName = element.GetAttributeValue("Name");
+            var databaseName = element.GetAttributeValue("Database", defaultDatabaseName) ?? defaultDatabaseName;
             var itemIdOrPath = element.GetAttributeValue("Path");
+            var itemName = itemIdOrPath.Mid(itemIdOrPath.LastIndexOf('/') + 1);
 
             switch (element.Name.LocalName)
             {
@@ -109,9 +109,19 @@ namespace Sitecore.Pathfinder.Projects
 
                             var templateField = Factory.TemplateField(template, fieldGuid);
                             templateField.FieldName = fieldElement.GetAttributeValue("Name");
-                            templateField.Type = fieldElement.GetAttributeValue("Type");
-                            templateField.Shared = fieldElement.GetAttributeValue("Sharing") == "Shared";
-                            templateField.Unversioned = fieldElement.GetAttributeValue("Sharing") == "Unversioned";
+                            templateField.Type = fieldElement.GetAttributeValue("Type", "Single-Line Text") ?? "Single-Line Text";
+
+                            switch (fieldElement.GetAttributeValue("Sharing"))
+                            {
+                                case "Unversioned":
+                                    templateField.Unversioned = true;
+                                    break;
+                                case "Versioned":
+                                    break;
+                                default:
+                                    templateField.Shared = true;
+                                    break;
+                            }
 
                             templateSection.Fields.Add(templateField);
                         }
@@ -126,9 +136,11 @@ namespace Sitecore.Pathfinder.Projects
 
         protected virtual void ImportElements([NotNull] IProject project, [NotNull] string fileName, [NotNull] XElement root)
         {
+            var defaultDatabaseName = root.GetAttributeValue("Database", "master") ?? "master";
+
             foreach (var element in root.Elements())
             {
-                ImportElement(project, fileName, element);
+                ImportElement(project, fileName, defaultDatabaseName, element);
             }
         }
 
@@ -161,8 +173,12 @@ namespace Sitecore.Pathfinder.Projects
             {
                 var id = pair.Key;
                 var version = Configuration.GetString(Constants.Configuration.References + ":" + id);
-                var fileName = PathHelper.NormalizeFilePath(id);
+                if (version == "disabled")
+                {
+                    continue;
+                }
 
+                var fileName = PathHelper.NormalizeFilePath(id);
                 if (fileName.IndexOf('\\') >= 0)
                 {
                     fileName = PathHelper.Combine(project.ProjectDirectory, fileName);

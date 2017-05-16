@@ -35,34 +35,19 @@
     <None Update="files\architecture\templates.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="files\filetemplates\codefirst\readme.md">
+    <None Update="files\generators\hello-world\HelloWorld.content.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="files\filetemplates\codegenerators\readme.md">
+    <None Update="files\generators\hello-world\HelloWorld.template.content.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="files\filetemplates\t4\FakeDbFactory.cs.project.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
+    <None Update="files\generators\hello-world\items\master\sitecore\media library\Pathfinder.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="files\filetemplates\t4\HabitatTemplates.cs.project.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
+    <None Update="files\generators\hello-world\views\HelloWorld.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="files\filetemplates\t4\NameFactory.cs.template.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="files\filetemplates\t4\NameFactoryTests.cs.template.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="files\filetemplates\t4\NameItem.cs.template.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="files\filetemplates\t4\TemplateIds.cs.project.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
+    <None Update="files\generators\hello-world\views\HelloWorldLayout.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="files\generators\json\__name__.content.json">
@@ -81,6 +66,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="files\project\scconfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="files\references\Sitecore.Speak.1.0.0.exports.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="files\references\Sitecore.Core.1.0.0.exports.xml">
@@ -174,9 +162,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="scconfig.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Sitecore.Pathfinder.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

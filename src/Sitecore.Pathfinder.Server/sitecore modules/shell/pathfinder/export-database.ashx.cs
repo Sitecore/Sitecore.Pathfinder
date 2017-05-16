@@ -1,5 +1,6 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Linq;
 using System.Web;
 using System.Xml;
@@ -18,7 +19,21 @@ namespace Sitecore.Pathfinder.shell.pathfinder
         {
             context.Response.ContentType = "text/plain";
 
-            var databaseName = context.Request.QueryString["db"] ?? "master";
+            var exports = (context.Request.QueryString["r"] ?? "master").ToLowerInvariant();
+            string databaseName;
+
+            switch (exports)
+            {
+                case "master":
+                    databaseName = "master";
+                    break;
+                case "core":
+                case "speak":
+                    databaseName = "core";
+                    break;
+                default:
+                    throw new InvalidOperationException("Unknown exports");
+            } 
 
             using (new SecurityDisabler())
             {
@@ -29,20 +44,48 @@ namespace Sitecore.Pathfinder.shell.pathfinder
                     output.Formatting = Formatting.Indented;
 
                     output.WriteStartElement("Exports");
+                    output.WriteAttributeString("Database", databaseName);
 
-                    WriteItem(output, database, "/sitecore");
-                    WriteItem(output, database, "/sitecore/client");
-                    WriteItem(output, database, "/sitecore/client/Applications");
-                    WriteItem(output, database, "/sitecore/content");
-                    WriteItem(output, database, "/sitecore/content/Home");
-                    WriteItem(output, database, "/sitecore/layout");
-                    WriteItems(output, database, "/sitecore/layout/devices");
-                    WriteItem(output, database, "/sitecore/media library");
-                    WriteItem(output, database, "/sitecore/system");
-                    WriteItems(output, database, "/sitecore/system/field types");
-                    WriteItems(output, database, "/sitecore/system/languages");
-                    WriteItems(output, database, "/sitecore/system/workflows");
-                    WriteItems(output, database, "/sitecore/templates");
+                    switch (exports)
+                    {
+                        case "master":
+                            WriteItem(output, database, "/sitecore");
+                            WriteItem(output, database, "/sitecore/content");
+                            WriteItem(output, database, "/sitecore/content/Home");
+                            WriteItem(output, database, "/sitecore/layout");
+                            WriteItems(output, database, "/sitecore/layout/devices");
+                            WriteItem(output, database, "/sitecore/media library");
+                            WriteItem(output, database, "/sitecore/system");
+                            WriteItems(output, database, "/sitecore/system/languages");
+                            WriteItems(output, database, "/sitecore/system/workflows");
+                            WriteItems(output, database, "/sitecore/templates");
+                            break;
+
+                        case "core":
+                            WriteItem(output, database, "/sitecore");
+                            WriteItem(output, database, "/sitecore/client");
+                            WriteItem(output, database, "/sitecore/client/Applications");
+                            WriteItem(output, database, "/sitecore/layout");
+                            WriteItems(output, database, "/sitecore/layout/devices");
+                            WriteItem(output, database, "/sitecore/media library");
+                            WriteItem(output, database, "/sitecore/system");
+                            WriteItems(output, database, "/sitecore/system/field types");
+                            WriteItems(output, database, "/sitecore/system/languages");
+                            WriteItems(output, database, "/sitecore/templates");
+                            break;
+
+                        case "speak":
+                            WriteItems(output, database, "/sitecore/client/Speak");
+                            WriteItem(output, database, "/sitecore/client/Business Component Library");
+                            WriteItems(output, database, "/sitecore/client/Business Component Library/version 2", "/sitecore/client/Business Component Library/version 2/Content");
+                            WriteItem(output, database, "/sitecore/client/Applications/Launchpad");
+                            WriteItem(output, database, "/sitecore/client/Applications/Launchpad/PagesSettings");
+                            WriteItems(output, database, "/sitecore/client/Applications/Launchpad/PagesSettings/Buttons");
+                            WriteItems(output, database, "/sitecore/client/Applications/Launchpad/PagesSettings/Tiles");
+                            WriteItems(output, database, "/sitecore/client/Applications/Launchpad/PagesSettings/Renderings");
+                            WriteItems(output, database, "/sitecore/client/Applications/Launchpad/PagesSettings/Templates");
+                            break;
+                    }
 
                     output.WriteEndElement();
                 }
@@ -66,10 +109,13 @@ namespace Sitecore.Pathfinder.shell.pathfinder
             {
                 output.WriteStartElement("Template");
                 output.WriteAttributeString("Id", item.ID.ToString());
-                output.WriteAttributeString("Database", item.Database.Name);
-                output.WriteAttributeString("Name", item.Name);
                 output.WriteAttributeString("Path", item.Paths.Path);
-                output.WriteAttributeString("BaseTemplates", string.Join("|", item[FieldIDs.BaseTemplate]));
+
+                var baseTemplates = string.Join("|", item[FieldIDs.BaseTemplate]);
+                if (!string.IsNullOrEmpty(baseTemplates))
+                {
+                    output.WriteAttributeString("BaseTemplates", baseTemplates);
+                }
 
                 foreach (Item templateSection in item.Children.OfType<Item>().Where(c => c.TemplateID == TemplateIDs.TemplateSection))
                 {
@@ -82,8 +128,17 @@ namespace Sitecore.Pathfinder.shell.pathfinder
                         output.WriteStartElement("Field");
                         output.WriteAttributeString("Id", field.ID.ToString());
                         output.WriteAttributeString("Name", field.Name);
-                        output.WriteAttributeString("Type", field["Type"]);
-                        output.WriteAttributeString("Sharing", field["Shared"] == "1" ? "Shared" : field["Unversioned"] == "1" ? "Unversioned" : "Versioned");
+
+                        if (!string.Equals(field["Type"], "text", StringComparison.OrdinalIgnoreCase) && !string.Equals(field["Type"], "Single-Line Text", StringComparison.OrdinalIgnoreCase))
+                        {
+                            output.WriteAttributeString("Type", field["Type"]);
+                        }
+
+                        if (field["Shared"] != "1")
+                        {
+                            output.WriteAttributeString("Sharing", field["Unversioned"] == "1" ? "Unversioned" : "Versioned");
+                        }
+
                         output.WriteEndElement();
                     }
 
@@ -96,15 +151,13 @@ namespace Sitecore.Pathfinder.shell.pathfinder
             {
                 output.WriteStartElement("Item");
                 output.WriteAttributeString("Id", item.ID.ToString());
-                output.WriteAttributeString("Database", item.Database.Name);
-                output.WriteAttributeString("Name", item.Name);
+                output.WriteAttributeString("Template", item.Template.InnerItem.ID.ToString());
                 output.WriteAttributeString("Path", item.Paths.Path);
-                output.WriteAttributeString("Template", item.Template.InnerItem.Paths.Path);
                 output.WriteEndElement();
             }
         }
 
-        private void WriteItems(XmlTextWriter output, Database database, string itemPath)
+        private void WriteItems(XmlTextWriter output, Database database, string itemPath, params string[] exclude)
         {
             var item = database.GetItem(itemPath);
             if (item == null)
@@ -112,18 +165,23 @@ namespace Sitecore.Pathfinder.shell.pathfinder
                 return;
             }
 
-            WriteItems(output, item);
+            WriteItems(output, item, exclude);
         }
 
-        private void WriteItems(XmlTextWriter output, Item item)
+        private void WriteItems(XmlTextWriter output, Item item, string[] exclude)
         {
             WriteItem(output, item);
 
             foreach (Item child in item.GetChildren())
             {
+                if (exclude.Contains(child.Paths.Path))
+                {
+                    continue; 
+                }
+
                 if (child.TemplateID != TemplateIDs.TemplateSection)
                 {
-                    WriteItems(output, child);
+                    WriteItems(output, child, exclude);
                 }
             }
         }

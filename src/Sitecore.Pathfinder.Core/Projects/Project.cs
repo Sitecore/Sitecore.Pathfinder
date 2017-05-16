@@ -369,6 +369,22 @@ namespace Sitecore.Pathfinder.Projects
 
         public IEnumerable<IProjectItem> GetUsages(string qualifiedName) => Index.FindUsages(qualifiedName).Select(r => r.Resolve());
 
+        public T FindItemByIdOrPath<T>(Database database, string idOrPath) where T : DatabaseProjectItem
+        {
+            if (idOrPath.IsGuid())
+            {
+                return FindQualifiedItem<T>(database, idOrPath);
+            }
+
+            if (idOrPath.IndexOf('/') >= 0)
+            {
+                return FindQualifiedItem<T>(database, idOrPath);
+            }
+
+            var items = GetByShortName<T>(database, idOrPath).ToArray();
+            return items.Length == 1 ? items[0] : null;
+        }
+
         public void Lock(Locking locking)
         {
             if (locking != Locking.ReadWrite && _locking != Locking.ReadWrite)
