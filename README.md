@@ -13,8 +13,8 @@ try it out.
 
 Follow the walk-throughs:
 
-* [Setting up](docs/walkthroughs/1. Setting up/README.md)
-* [HelloWorld](docs/walkthroughs/2. Hello world/README.md)
+* [Setting up](docs/walkthroughs/Setting up/README.md)
+* [HelloWorld](docs/walkthroughs/Hello world/README.md)
 
 ## Introduction
 Pathfinder is an experimental CLI for Sitecore, that allows developers to use their favorite tools 
