@@ -40,14 +40,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{2913B82E-E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Walkthroughs", "Walkthroughs", "{626A72A8-4461-4E2E-BB10-2A36D9D1BB5D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Setting up", "Setting up", "{ED92B747-FD90-4DE5-BB52-96DC808B58C0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SettingUp", "SettingUp", "{ED92B747-FD90-4DE5-BB52-96DC808B58C0}"
 	ProjectSection(SolutionItems) = preProject
-		docs\walkthroughs\Setting up\README.md = docs\walkthroughs\Setting up\README.md
+		docs\walkthroughs\SettingUp\README.md = docs\walkthroughs\SettingUp\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hello world", "Hello world", "{B86678EC-8111-4D28-9B60-1DF723E2CB6E}"
 	ProjectSection(SolutionItems) = preProject
-		docs\walkthroughs\Hello world\README.md = docs\walkthroughs\Hello world\README.md
+		docs\walkthroughs\HelloWorld\README.md = docs\walkthroughs\HelloWorld\README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.Server", "src\Sitecore.Pathfinder.Server\Sitecore.Pathfinder.Server.csproj", "{42808013-7A25-4C07-91FA-BE4F7AA8E0B1}"
