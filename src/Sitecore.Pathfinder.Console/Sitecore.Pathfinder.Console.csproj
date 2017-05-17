@@ -35,6 +35,24 @@
     <None Update="files\architecture\templates.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="files\generators\hello-world-starterkit\HelloWorld.content.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="files\generators\hello-world-starterkit\HelloWorld.template.content.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="files\generators\hello-world-starterkit\items\master\sitecore\media library\Pathfinder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="files\generators\hello-world-starterkit\README.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="files\generators\hello-world-starterkit\views\HelloWorld.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="files\generators\hello-world-starterkit\views\HelloWorldLayout.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="files\generators\hello-world\HelloWorld.content.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -56,6 +74,30 @@
     <None Update="files\generators\rendering\__name__.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="files\generators\todo-starterkit\README.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="files\generators\todo-starterkit\scconfig.todomvc.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="files\generators\todo-starterkit\sitecore\shell\client\Applications\TodoMvc\content\TodoMvcService.ashx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="files\generators\todo-starterkit\sitecore\shell\client\Applications\TodoMvc\layout\renderings\TodoMvcList.content.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="files\generators\todo-starterkit\sitecore\shell\client\Applications\TodoMvc\layout\renderings\TodoMvcList.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="files\generators\todo-starterkit\sitecore\shell\client\Applications\TodoMvc\layout\renderings\TodoMvcList.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="files\generators\todo-starterkit\sitecore\shell\client\Applications\TodoMvc\layout\renderings\TodoMvcPageCode.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="files\generators\todo-starterkit\TodoMvc.content.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="files\generators\xml\__name__.content.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -68,7 +110,10 @@
     <None Update="files\project\scconfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="files\references\Sitecore.Speak.1.0.0.exports.xml">
+    <None Update="files\references\Sitecore.Speak1.1.0.0.exports.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="files\references\Sitecore.Speak2.1.0.0.exports.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="files\references\Sitecore.Core.1.0.0.exports.xml">

@@ -28,11 +28,12 @@ namespace Sitecore.Pathfinder.shell.pathfinder
                     databaseName = "master";
                     break;
                 case "core":
-                case "speak":
+                case "speak1":
+                case "speak2":
                     databaseName = "core";
                     break;
                 default:
-                    throw new InvalidOperationException("Unknown exports");
+                    throw new InvalidOperationException("Unknown export - use ?r=master|core|speak1|speak2");
             } 
 
             using (new SecurityDisabler())
@@ -74,7 +75,19 @@ namespace Sitecore.Pathfinder.shell.pathfinder
                             WriteItems(output, database, "/sitecore/templates");
                             break;
 
-                        case "speak":
+                        case "speak1":
+                            WriteItems(output, database, "/sitecore/client/Speak");
+                            WriteItem(output, database, "/sitecore/client/Business Component Library");
+                            WriteItems(output, database, "/sitecore/client/Business Component Library/version 1", "/sitecore/client/Business Component Library/version 1/Content");
+                            WriteItem(output, database, "/sitecore/client/Applications/Launchpad");
+                            WriteItem(output, database, "/sitecore/client/Applications/Launchpad/PagesSettings");
+                            WriteItems(output, database, "/sitecore/client/Applications/Launchpad/PagesSettings/Buttons");
+                            WriteItems(output, database, "/sitecore/client/Applications/Launchpad/PagesSettings/Tiles");
+                            WriteItems(output, database, "/sitecore/client/Applications/Launchpad/PagesSettings/Renderings");
+                            WriteItems(output, database, "/sitecore/client/Applications/Launchpad/PagesSettings/Templates");
+                            break;
+
+                        case "speak2":
                             WriteItems(output, database, "/sitecore/client/Speak");
                             WriteItem(output, database, "/sitecore/client/Business Component Library");
                             WriteItems(output, database, "/sitecore/client/Business Component Library/version 2", "/sitecore/client/Business Component Library/version 2/Content");

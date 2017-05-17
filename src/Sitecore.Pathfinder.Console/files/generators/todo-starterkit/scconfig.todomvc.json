@@ -1,0 +1,11 @@
+{
+    "project-role": "speak",
+
+    "database": "core",
+
+    "references": {
+        "Sitecore.Speak1": "1.0.0",
+        "Sitecore.Core": "1.0.0",
+        "Sitecore.Master": "disabled"
+    }
+}

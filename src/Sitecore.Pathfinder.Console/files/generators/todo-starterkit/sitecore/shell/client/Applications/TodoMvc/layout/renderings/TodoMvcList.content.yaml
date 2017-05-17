@@ -1,0 +1,15 @@
+- View Rendering: TodoMvcList
+  Database: core
+  - Fields:
+      Parameters Template: /sitecore/client/Applications/TodoMvc/layout/renderings/TodoMvcList/TodoMvcListParameters
+      Model: Sitecore.Mvc.Presentation.SpeakRenderingModel,Sitecore.Speak.Client
+  - Items:
+      - Template: TodoMvcListParameters
+          - Section: Data
+              - Field: Items
+                  Type: Single-Line Text
+                  Source: bindmode=read
+                  Sharing: Shared
+              - Field: Filter
+                  Type : Single-Line Text
+                  Sharing: Shared

@@ -1,0 +1,71 @@
+- Folder: TodoMvc
+  ItemPath: /sitecore/client/Applications/TodoMvc
+  Database: core
+  - Items:
+      - Folder: content
+          - Items:
+              - TodoMvcApp: TodoMvc
+                  - Fields:
+                      - en:
+                          Title: todos
+                          Watermark: What needs to done?
+                  - Layout:
+                      - Internet Explorer: /sitecore/client/Speak/Layouts/Layouts/Speak-Layout
+                          - Placeholder: Page.Code
+                              - Rendering: PageCode
+                                  PageCodeScriptFileName: /sitecore/shell/client/Applications/TodoMvc/layout/renderings/TodoMvcPageCode.js
+                          - Placeholder: Page.Body
+                              - Rendering: QueryDataSource
+                                  Id: TodoItemDataSource
+                                  Database: core
+                                  Query: /sitecore/client/Applications/TodoMvc/content/TodoMvc/*
+                              - Rendering: Dashboard
+                                  - Placeholder: GlobalHeader
+                                      - Rendering: GlobalLogo
+                                  - Placeholder: GlobalHeader.LoginInfo
+                                      - Rendering: AccountInformation
+                                  - Placeholder: ApplicationContent
+                                      - Rendering: ApplicationContentM
+                                          - Placeholder: ApplicationHeader
+                                              - Rendering: ApplicationHeader
+                                                  ShowHeader: false
+                                                  - Placeholder: ApplicationHeader.Title
+                                                      - Rendering: Text
+                                                          Text: {@Title}
+                                      - Rendering: TextBox
+                                          Id: InputTextBox
+                                          Watermark: {@Watermark}
+                                      - Rendering: Border
+                                          Id: ErrorTextBorder
+                                          UsePadding: true
+                                          - Placeholder: ErrorTextBorder.Content
+                                              - Rendering: Text
+                                                  Id: ErrorMessageText
+                                                  TextType: Text
+                                                  IsVisible: false
+                                      - Rendering: TodoMvcList
+                                          Id: TodoList
+                                          Items: {Binding TodoItemDataSource.Items}
+      - Folder: layout
+          - Items:
+              - Rendering Folder: renderings
+      - Template Folder: templates
+          - Items:
+              - Template: TodoMvcApp
+                  Icon: Applications/16x16/About.png
+                  - Section: Fields
+                      - Field: Title
+                          Type: Single-Line Text
+                          Sharing: Unversioned
+                      - Field: Watermark
+                          Type: Single-Line Text
+                          Sharing: Unversioned
+              - Template: TodoItem
+                  - Section: Fields
+                      - Field: Text
+                          Type: Multi-Line Text
+                          Sharing: Versioned
+                      - Field: Done
+                          Type: Checkbox
+                          Sharing: Shared
+

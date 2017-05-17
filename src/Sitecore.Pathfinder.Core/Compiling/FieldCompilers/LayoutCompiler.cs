@@ -237,6 +237,12 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 return;
             }
 
+            if (!placeholderTextNode.ChildNodes.Any())
+            {
+                context.Trace.TraceWarning(Msg.C1131, "Placeholder contains no renderings", placeholderTextNode, placeholderName);
+                return;
+            }
+
             foreach (var renderingTextNode in placeholderTextNode.ChildNodes)
             {
                 WriteRendering(context, output, renderingItems, placeholderName, renderingTextNode);
