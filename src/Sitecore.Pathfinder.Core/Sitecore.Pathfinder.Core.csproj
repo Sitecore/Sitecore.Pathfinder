@@ -29,6 +29,7 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
     <PackageReference Include="NuGet.Packaging" Version="4.0.0" />
+    <PackageReference Include="RazorLight" Version="1.1.0" />
     <PackageReference Include="ResharperCodeContractNullability" Version="1.0.7" />
     <PackageReference Include="System.Composition" Version="1.0.31" />
     <PackageReference Include="System.Diagnostics.FileVersionInfo" Version="4.3.0" />

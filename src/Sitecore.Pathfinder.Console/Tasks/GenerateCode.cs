@@ -11,14 +11,14 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
 {
-    // todo: reenable generate-code when a suitable T4 processor for .NET core has been found
-    // [Export(typeof(ITask)), Shared]
+    [Export(typeof(ITask)), Shared]
     public class GenerateCode : BuildTaskBase
     {
         [ImportingConstructor]
-        public GenerateCode([NotNull] IFileSystemService fileSystem, [NotNull, ImportMany, ItemNotNull] IEnumerable<IProjectCodeGenerator> projectCodeGenerators, [NotNull, ImportMany, ItemNotNull] IEnumerable<IProjectItemCodeGenerator> projectItemCodeGenerators) : base("generate-code")
+        public GenerateCode([NotNull] IFileSystemService fileSystem, [NotNull] ITextTemplatingEngine textTemplatingEngine,  [NotNull, ImportMany, ItemNotNull] IEnumerable<IProjectCodeGenerator> projectCodeGenerators, [NotNull, ImportMany, ItemNotNull] IEnumerable<IProjectItemCodeGenerator> projectItemCodeGenerators) : base("generate-code")
         {
             FileSystem = fileSystem;
+            TextTemplatingEngine = textTemplatingEngine;
             ProjectCodeGenerators = projectCodeGenerators;
             ProjectItemCodeGenerators = projectItemCodeGenerators;
         }
@@ -29,18 +29,21 @@ namespace Sitecore.Pathfinder.Tasks
         [NotNull]
         protected IFileSystemService FileSystem { get; }
 
+        [NotNull]
+        public ITextTemplatingEngine TextTemplatingEngine { get; }
+
         [NotNull, ItemNotNull]
         protected IEnumerable<IProjectItemCodeGenerator> ProjectItemCodeGenerators { get; }
 
         public override void Run(IBuildContext context)
         {
-            context.Trace.TraceInformation(Msg.G1009, Texts.Generating_code___);
-
             var project = context.LoadProject();
+
+            context.Trace.TraceInformation(Msg.G1009, Texts.Generating_code___);
 
             foreach (var projectCodeGenerator in ProjectCodeGenerators)
             {
-                projectCodeGenerator.Generate(context, project);
+                projectCodeGenerator.Generate(context, TextTemplatingEngine, project);
             }
 
             foreach (var projectItem in project.ProjectItems)
@@ -49,22 +52,22 @@ namespace Sitecore.Pathfinder.Tasks
                 {
                     if (projectItemCodeGenerator.CanGenerate(projectItem))
                     {
-                        Generate(context, projectItemCodeGenerator, projectItem);
+                        Generate(context, TextTemplatingEngine, projectItemCodeGenerator, projectItem);
                     }
                 }
             }
         }
 
-        protected virtual void Generate([NotNull] IBuildContext context, [NotNull] IProjectItemCodeGenerator projectItemCodeGenerator, [NotNull] IProjectItem projectItem)
+        protected virtual void Generate([NotNull] IBuildContext context, [NotNull] ITextTemplatingEngine textTemplatingEngine, [NotNull] IProjectItemCodeGenerator projectItemCodeGenerator, [NotNull] IProjectItem projectItem)
         {
             var baseFileName = Path.GetDirectoryName(projectItem.Snapshot.SourceFile.AbsoluteFileName) ?? string.Empty;
             baseFileName = Path.Combine(baseFileName, projectItem.ShortName);
 
             FileSystem.CreateDirectoryFromFileName(baseFileName);
 
-            projectItemCodeGenerator.Generate(baseFileName, projectItem);
-
             context.Trace.TraceInformation(Msg.G1010, PathHelper.UnmapPath(context.ProjectDirectory, baseFileName));
+
+            projectItemCodeGenerator.Generate(context, textTemplatingEngine, projectItem, baseFileName);
         }
     }
 }

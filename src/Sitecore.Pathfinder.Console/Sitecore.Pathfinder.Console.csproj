@@ -13,6 +13,7 @@
     <Copyright>Copyright (C) 2017 by Sitecore A/S</Copyright>
     <PackageProjectUrl>https://github.com/JakobChristensen/Sitecore.Pathfinder</PackageProjectUrl>
     <RepositoryUrl>https://github.com/JakobChristensen/Sitecore.Pathfinder</RepositoryUrl>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -72,6 +73,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="files\generators\rendering\__name__.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="files\generators\texttemplate\TemplateIds.cs.rzp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="files\generators\todo-starterkit\README.md">
