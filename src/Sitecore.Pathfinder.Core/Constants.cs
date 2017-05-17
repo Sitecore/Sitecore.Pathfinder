@@ -73,8 +73,6 @@ namespace Sitecore.Pathfinder
 
             public const string Description = "description";
 
-            public const string DisableExtensions = "disable-extensions";
-
             public const string HostName = "host-name";
 
             public const string IsProjectConfigured = "is-project-configured";
@@ -150,6 +148,8 @@ namespace Sitecore.Pathfinder
 
             public static class Extensions
             {
+                public const string Disabled = "extensions:disabled";
+
                 public const string Directory = "extensions:project-extensions-directory";
             }
 

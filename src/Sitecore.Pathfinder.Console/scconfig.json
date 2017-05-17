@@ -17,7 +17,7 @@
 
     // list of files and directories
     "files": {
-        "include": ["**/*"],
+        "include": [ "**/*" ],
         "exclude": [ 
             "dist", "scconfig.*", ".vscode", ".git", "node_modules", "bower_components", "packages", "roslyn",
             "includes", "Properties", "obj", "scc.cmd", "project.json", "readme.md", "web.config", "packages.config"
@@ -30,6 +30,7 @@
         "exclude": []
     },
 
+    // database languages
     "databases": {
         "master": {
             "languages": [ "en" ]
@@ -53,11 +54,9 @@
             "nuspec-filename": "",
             "reset-website": {
                 // "/sitecore/content/home": "master"
-            
             },
             "publish-databases": {
                 // "master": "incremental"
-            
             }
         },
         "unicorn": {
@@ -74,8 +73,8 @@
         }
     },
 
-    // the project roles enables/disables checkers and conventions - comma seperated list of roles
-    "project-role": "default",
+    // the project roles enables/disables checkers and conventions
+    "project-role": [ "default" ],
 
     // mapping between project files and website files and items
     "project-website-mappings": {
@@ -193,8 +192,6 @@
     },
 
     "check-project": {
-        "stop-on-errors": true,
-
         // reference text that will not be treated as a reference
         "ignored-references": {
             "~/icon/": "contains",
@@ -227,10 +224,12 @@
         },
 
         "path-fields": [
-            "{E42081B6-8A95-4A11-89CE-DF70ED502F57}", "{51B435BC-F7B9-478A-9C51-52916AF96FF5}",
+            "{E42081B6-8A95-4A11-89CE-DF70ED502F57}",
+            "{51B435BC-F7B9-478A-9C51-52916AF96FF5}",
             "{78783F79-1411-4B91-958D-AD81F81E2485}"
         ],
 
+        "stop-on-errors": true,
         "treat-warnings-as-errors": false
     },
 
@@ -273,7 +272,7 @@
 
     "write-exports": {
         "filename": "project.exports.xml",
-        "fields-to-write": ""
+        "fields-to-write": []
     },
 
     // === SETTINGS ===
@@ -287,11 +286,9 @@
     // specifies the default language
     "default-language": "en",
 
-    // if true, disable all extensions and just load Sitecore.Pathfinder.Core.dll
-    "disable-extensions": false,
-
-    // extensions directory and dynamically compiled extensions assembly filename
     "extensions": {
+        // if true, disable all extensions and just load Sitecore.Pathfinder.Core.dll
+        "disabled": false,
         "project-extensions-directory": "sitecore.project/extensions"
     },
 
@@ -327,7 +324,6 @@
 
     "messages": {
         // "SCC1011": "disabled"
-    
     },
 
     // directories, that hold packages

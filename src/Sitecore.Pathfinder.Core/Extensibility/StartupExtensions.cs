@@ -43,7 +43,7 @@ namespace Sitecore.Pathfinder.Extensibility
                 Assembly.GetEntryAssembly()
             };
 
-            var disableExtensions = configuration.GetBool(Constants.Configuration.DisableExtensions);
+            var disableExtensions = configuration.GetBool(Constants.Configuration.Extensions.Disabled);
             if (!disableExtensions && !options.HasFlag(CompositionOptions.DisableExtensions))
             {
                 // add additional assemblies - this is used in Sitecore.Pathfinder.Server to load assemblies from the /bin folder
