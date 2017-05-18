@@ -75,7 +75,10 @@
     <None Update="files\generators\rendering\__name__.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="files\generators\texttemplate\TemplateIds.cs.rzp">
+    <None Update="files\generators\ttfiles\__name__.cs.tt.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="files\generators\tt\__name__.cs.tt.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="files\generators\todo-starterkit\README.md">

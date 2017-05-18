@@ -18,9 +18,24 @@
     // list of files and directories
     "files": {
         "include": [ "**/*" ],
-        "exclude": [ 
-            "dist", "scconfig.*", ".vscode", ".git", "node_modules", "bower_components", "packages", "roslyn",
-            "includes", "Properties", "obj", "scc.cmd", "project.json", "readme.md", "web.config", "packages.config"
+        "exclude": [
+            "dist",
+            "scconfig.*",
+            ".vscode",
+            ".git",
+            "node_modules",
+            "bower_components",
+            "packages",
+            "roslyn",
+            "includes",
+            "Properties",
+            "obj",
+            "scc.cmd",
+            "project.json",
+            "readme.md",
+            "web.config",
+            "packages.config",
+            "**/*.tt.cshtml"
         ]
     },
 
@@ -235,26 +250,14 @@
 
     "generate-code": {
         // the token in the file name that will be replace by the ShortName of the project item
-        "name-replacement-token": "Name",
+        "name-replacement-token": "__name__",
 
-        // comma separated list of absolute assembly filenames to add as references (https://msdn.microsoft.com/en-us/library/gg586946.aspx)
-        "t4-refs": "",
+        "include": [ "**/*.tt.cshtml" ],
+        "exclude": [],
+        "extension": ".tt.cshtml",
 
-        // comma separated list of namespaces to import (https://msdn.microsoft.com/en-us/library/gg586948.aspx)
-        "t4-imports": "",
-
-        // comma separated list of filepaths to search for include files
-        "t4-include-paths": "",
-
-        // comma separated list of filepaths to search for reference
-        "t4-reference-paths": "",
-
-        // mapping between T4 template extensions and project item types.
-        // eg. the T4 template file 'AllItem.cs.item.tt' will be generated for all project items with type "Sitecore.Pathfinder.Projects.Item"
-        "items": {
-            "item": "Sitecore.Pathfinder.Projects.Items.Item,Sitecore.Pathfinder.Core.dll",
-            "template": "Sitecore.Pathfinder.Projects.Templates.Template,Sitecore.Pathfinder.Core.dll"
-        }
+        // list of namespaces to import
+        "imports": []
     },
 
     "generate-file": {

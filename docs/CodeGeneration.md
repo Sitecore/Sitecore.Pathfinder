@@ -1,18 +1,13 @@
-generate-code
-===========
-Generates code from items and files in the project.
+# Code Generation
+Pathfinder can generate code based on your project. The most obvious thing is to generate a C# class for each template in
+the project.
 
-Remarks
--------
-Pathfinder can generate code based on your project. The most obvious thing is to generate a C# class for each template in the project.
-
-To generate code, execute the task `generate-code`. This wil iterate through the elements in the project and check if a code generator 
-is available for that item. If so, the code generator is executed.
+To generate code, execute the task `generate-code`. This wil iterate through the elements in the project and check if
+a code generator is available for that item. If so, the code generator is executed.
 
 Normally you want to run the `generate-code` task before building an assembly, so the C# source files are up-to-date.
 
-Razor
------
+## Razor
 Pathfinder supports code generation using Razor text templating. 
 
 By default Pathfinder will look for files with the extension ".tt.cshtml" in the [Project] directory and below. For each

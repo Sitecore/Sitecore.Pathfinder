@@ -6,7 +6,7 @@ using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.CodeGeneration
 {
-    public interface IProjectCodeGenerator
+    public interface ICodeGenerator
     {
         void Generate([NotNull] IBuildContext context, [NotNull] ITextTemplatingEngine textTemplatingEngine, [NotNull] IProjectBase project);
     }

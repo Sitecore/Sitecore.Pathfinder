@@ -20,22 +20,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{049B9C99
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{2913B82E-EAB7-452F-AB67-97DD577A7439}"
 	ProjectSection(SolutionItems) = preProject
-		docs\Basic concepts.md = docs\Basic concepts.md
-		docs\Building a project.md = docs\Building a project.md
+		docs\BasicConcepts.md = docs\BasicConcepts.md
+		docs\BuildingAProject.md = docs\BuildingAProject.md
 		docs\Checkers.md = docs\Checkers.md
-		docs\Checking a project.md = docs\Checking a project.md
-		docs\Code generation.md = docs\Code generation.md
-		docs\Developer Environment.md = docs\Developer Environment.md
+		docs\CheckingAProject.md = docs\CheckingAProject.md
+		docs\CodeGeneration.md = docs\CodeGeneration.md
+		docs\DeveloperEnvironment.md = docs\DeveloperEnvironment.md
 		docs\Extensibility.md = docs\Extensibility.md
-		docs\External Tools.md = docs\External Tools.md
-		docs\Getting started.md = docs\Getting started.md
+		docs\ExternalTools.md = docs\ExternalTools.md
+		docs\GettingStarted.md = docs\GettingStarted.md
 		docs\Home.md = docs\Home.md
-		docs\Layouts as files.md = docs\Layouts as files.md
-		docs\Project configuration.md = docs\Project configuration.md
+		docs\LayoutsAsFiles.md = docs\LayoutsAsFiles.md
+		docs\ProjectConfiguration.md = docs\ProjectConfiguration.md
 		docs\README.md = docs\README.md
-		docs\Sitecore items as files.md = docs\Sitecore items as files.md
-		docs\Tasks and Scripts.md = docs\Tasks and Scripts.md
+		docs\SitecoreItemsAsFiles.md = docs\SitecoreItemsAsFiles.md
 		docs\Tasks.md = docs\Tasks.md
+		docs\TasksAndScripts.md = docs\TasksAndScripts.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Walkthroughs", "Walkthroughs", "{626A72A8-4461-4E2E-BB10-2A36D9D1BB5D}"

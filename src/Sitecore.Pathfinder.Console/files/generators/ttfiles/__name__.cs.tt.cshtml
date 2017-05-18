@@ -1,28 +1,3 @@
-generate-code
-===========
-Generates code from items and files in the project.
-
-Remarks
--------
-Pathfinder can generate code based on your project. The most obvious thing is to generate a C# class for each template in the project.
-
-To generate code, execute the task `generate-code`. This wil iterate through the elements in the project and check if a code generator 
-is available for that item. If so, the code generator is executed.
-
-Normally you want to run the `generate-code` task before building an assembly, so the C# source files are up-to-date.
-
-Razor
------
-Pathfinder supports code generation using Razor text templating. 
-
-By default Pathfinder will look for files with the extension ".tt.cshtml" in the [Project] directory and below. For each
-file found, it will invoke the text templating engine and pass the project model object as a parameter. The output file will
-be located in the same directory as the ".tt.cshtml" file, but the extension ".tt.cshtml" will be removed. To create a 
-"MyProject.cs" output file, name the Razor template file "MyProject.cs.tt.cshtml".
-
-Example of a template file:
-
-``` 
 @model Sitecore.Pathfinder.Projects.IProject
 @using Sitecore.Pathfinder.Extensions
 
@@ -83,7 +58,3 @@ namespace Sitecore
 #pragma warning restore 1591
 </text>
 }
-
-``` 
-
-This template generates a file per template in the project (notice the &lt;pagebreak file=""&gt; tag).

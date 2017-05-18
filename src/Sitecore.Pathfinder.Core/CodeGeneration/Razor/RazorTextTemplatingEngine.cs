@@ -22,7 +22,7 @@ namespace Sitecore.Pathfinder.CodeGeneration.Razor
         }
 
         [NotNull]
-        public IConfiguration Configuration { get; }
+        protected IConfiguration Configuration { get; }
 
         public string Generate(string template, object model)
         {

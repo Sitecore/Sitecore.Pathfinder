@@ -162,15 +162,12 @@ namespace Sitecore.Pathfinder
 
             public static class GenerateCode
             {
-                public const string Imports = "generate-code:t4-imports";
-
-                public const string IncludePaths = "generate-code:t4-include-paths";
+                public const string Imports = "generate-code:imports";
 
                 public const string NameToken = "generate-code:name-replacement-token";
-
-                public const string ReferencePaths = "generate-code:t4-reference-paths";
-
-                public const string Refs = "generate-code:t4-refs";
+                public const string Include = "generate-code:include";
+                public const string Exclude = "generate-code:exclude";
+                public const string Extension = "generate-code:extension";
             }
 
             public static class GenerateFile
