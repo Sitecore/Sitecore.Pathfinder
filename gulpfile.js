@@ -44,7 +44,7 @@ gulp.task("clean-dist-directory", function() {
 });
 
 gulp.task("build-dist-directory", ["clean-dist-directory"], function() {
-    return gulp.src(["./bin/netcoreapp1.1/files/**/*", "./bin/netcoreapp1.1/help/**/*", "./bin/netcoreapp1.1/licenses/**/*", "./bin/netcoreapp1.1/*.dll", "./bin/netcoreapp1.1/*.zip", "./bin/netcoreapp1.1/scconfig.json"], { base: "./bin/netcoreapp1.1/" }).
+    return gulp.src(["./bin/netcoreapp1.1/files/**/*", "./bin/netcoreapp1.1/help/**/*", "./bin/netcoreapp1.1/licenses/**/*", "./bin/netcoreapp1.1/*.dll", "./bin/netcoreapp1.1/*.zip", "./bin/netcoreapp1.1/scconfig.json", "./bin/netcoreapp1.1/scc.cmd"], { base: "./bin/netcoreapp1.1/" }).
         pipe(gulp.dest("./build/dist"));
 });
 
@@ -136,5 +136,5 @@ gulp.task("publish", function() {
 });
 
 gulp.task("appveyor", function() {
-    runSequence("build-dist-directory", ["build-npm-package"]);
+    runSequence("build-dist-directory", ["build-npm-package", "build-zip-file"]);
 });

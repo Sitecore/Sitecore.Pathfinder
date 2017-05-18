@@ -1,6 +1,7 @@
 # Sitecore Pathfinder
 
-[![Build status](https://ci.appveyor.com/api/projects/status/21a8xc3s80mcic81?svg=true)](https://ci.appveyor.com/project/JakobChristensen/sitecore-pathfinder) [![MyGet Prerelease](https://img.shields.io/myget/sitecore-pathfinder/vpre/Sitecore.Pathfinder.svg?label=version)](https://www.myget.org/feed/sitecore-pathfinder/package/nuget/Sitecore.Pathfinder) 
+[![Build status](https://ci.appveyor.com/api/projects/status/21a8xc3s80mcic81?svg=true)](https://ci.appveyor.com/project/JakobChristensen/sitecore-pathfinder) 
+[![npm version](https://badge.fury.io/js/sitecore-pathfinder.svg)](https://badge.fury.io/js/sitecore-pathfinder)
 
 Get started, get far, get happy!
 
@@ -39,6 +40,7 @@ in a friendly manner._
 * Project directory has whole and single truth (source is not spread across development projects, databases and websites) (contineous integration friendly) 
 * Project is packaged into a Sitecore Package, NuGet package, Unicorn files or a directory of files
 * Lint or check you project and website with more than 120 checkers
+* Code Generation for generating strongly typed item models, factories and unit tests
 
 ## Quickstart
 

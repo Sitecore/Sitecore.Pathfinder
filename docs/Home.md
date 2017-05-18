@@ -52,6 +52,7 @@ in a friendly manner._
 * Project directory has whole and single truth (source is not spread across development projects, databases and websites) (contineous integration friendly) 
 * Project is packaged into a Sitecore Package, NuGet package, Unicorn files or a directory of files
 * Lint or check you project and website with over 120 checkers
+* Code Generation for generating strongly typed item models, factories and unit tests
 
 ## Open source
 Pathfinder is open source and you are free to make changes. 

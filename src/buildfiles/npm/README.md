@@ -1,19 +1,18 @@
 Get started, get far, get happy!
 
-An experimental tool chain for Sitecore.
+An experimental CLI for Sitecore.
 
 ## Introduction
-Pathfinder is an experimental toolchain for Sitecore, that allows developers to use their favorite tools 
+Pathfinder is an experimental CLI for Sitecore, that allows developers to use their favorite tools 
 in a familiar fashion to develop Sitecore websites.
 
-The toolchain creates a deliverable package from the source files in a project directory and deploys 
-the package to a website where an installer installs the new files and Sitecore items.
+The CLI creates a deliverable package from the source files in a project directory. The package can
+be installed in Sitecore using the Package Installer, Unicorn or a custom installer.
 
 The developer process is familiar; edit source files, build and install the package, run tests or review the 
 changes on website, repeat.
 
-_Please notice that this document is a brain dump, so concepts and functionality are probably not explained 
-in a friendly manner._
+Pathfinder works with Unicorn, Sitecore Rocks and many other Sitecore tools.
 
 ### How does Pathfinder make Sitecore development easier
 * Familiar developer experience: Edit source files, build project, test, repeat...
@@ -21,11 +20,8 @@ in a friendly manner._
 * Build process agnostic (command-line tool, so it integrates easily with Grunt, Gulp, MSBuild etc.)
 * Everything is a file (easy to edit, search and replace across multiple files, source control friendly)
 * Project directory has whole and single truth (source is not spread across development projects, databases and websites) (contineous integration friendly) 
-* Project is packaged into a NuGet package and deployed to the website
-  * Dependency tracking through NuGet dependencies
-  * NuGet package installer on the Sitecore website
-  * Sitecore.Pathfinder.Core NuGet package tweaks Sitecore defaults to be easier to work with (e.g. removes initial workflow)
-* Support for Html Templates (with [Mustache](https://mustache.github.io/mustache.5.html) tags) makes getting started with the Sitecore Rendering Engine easier
+* Project is packaged into a Sitecore Package, NuGet package, Unicorn files or a directory of files
+* Lint or check you project and website with more than 120 checkers
 * Code Generation for generating strongly typed item models, factories and unit tests
 
 ## Documentation
