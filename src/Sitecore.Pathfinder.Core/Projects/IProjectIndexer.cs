@@ -33,7 +33,7 @@ namespace Sitecore.Pathfinder.Projects
         T FindQualifiedItem<T>([NotNull] IProjectItemUri uri) where T : class, IProjectItem;
 
         [NotNull, ItemNotNull]
-        IEnumerable<IReference> FindUsages([NotNull] string qualifiedName);
+        IEnumerable<IReference> GetUsages([NotNull] string qualifiedName);
 
         [CanBeNull]
         T FirstOrDefault<T>([NotNull] Database database, Guid guid) where T : DatabaseProjectItem;

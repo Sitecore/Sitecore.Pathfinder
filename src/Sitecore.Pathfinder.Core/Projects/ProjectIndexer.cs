@@ -107,7 +107,7 @@ namespace Sitecore.Pathfinder.Projects
             return UriIndex.FirstOrDefault<T>(uri.ToString());
         }
 
-        public IEnumerable<IReference> FindUsages(string qualifiedName)
+        public IEnumerable<IReference> GetUsages(string qualifiedName)
         {
             var target = FindQualifiedItem<IProjectItem>(qualifiedName);
             if (target == null)

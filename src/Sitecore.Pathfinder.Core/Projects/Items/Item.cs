@@ -65,7 +65,8 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public ItemHelp Help => _help ?? (_help = new ItemHelp(this));
 
-        public string this[string fieldName] => Fields.GetFieldValue(fieldName);
+        [NotNull]
+        public string this[[NotNull] string fieldName] => Fields.GetFieldValue(fieldName);
 
         [NotNull]
         public string this[Guid guid] => Fields.GetFieldValue(guid);

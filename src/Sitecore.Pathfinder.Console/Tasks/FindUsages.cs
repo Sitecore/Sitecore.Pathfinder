@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Tasks
             }
 
             var project = context.LoadProject();
-            var references = project.Index.FindUsages(qualifiedName).ToList();
+            var references = project.Indexer.GetUsages(qualifiedName).ToList();
 
             Display(context, references);
 

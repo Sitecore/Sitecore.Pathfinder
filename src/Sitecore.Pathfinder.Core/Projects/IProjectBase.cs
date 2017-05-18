@@ -10,6 +10,9 @@ namespace Sitecore.Pathfinder.Projects
 {
     public interface IProjectBase : ILockable
     {
+        [ItemNotNull, NotNull]
+        IEnumerable<Database> Databases { get; }
+
         [NotNull, ItemNotNull]
         IEnumerable<File> Files { get; }
 
@@ -30,6 +33,9 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull, ItemNotNull]
         IEnumerable<Template> Templates { get; }
+
+        [CanBeNull]
+        T FindByIdOrPath<T>([NotNull] Database database, [NotNull] string idOrPath) where T : DatabaseProjectItem;
 
         [CanBeNull]
         T FindQualifiedItem<T>([NotNull] IProjectItemUri uri) where T : class, IProjectItem;
@@ -63,8 +69,5 @@ namespace Sitecore.Pathfinder.Projects
 
         [NotNull, ItemNotNull]
         IEnumerable<IProjectItem> GetUsages([NotNull] string qualifiedName);
-
-        [CanBeNull]
-        T FindByIdOrPath<T>([NotNull] Database database, [NotNull] string idOrPath) where T: DatabaseProjectItem;
     }
 }

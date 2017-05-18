@@ -36,7 +36,7 @@ namespace Sitecore.Pathfinder.Projects
         public string DatabaseName { get; }
 
         [NotNull, ItemNotNull]
-        public IEnumerable<Item> Items => Project.Items.Where(i => string.Equals(i.DatabaseName, DatabaseName, StringComparison.OrdinalIgnoreCase));
+        public IEnumerable<Item> Items => Project.Items.Where(i => i.Database == this);
 
         [ItemNotNull, NotNull]
         public IEnumerable<Language> Languages => _languages.Values;
@@ -48,7 +48,7 @@ namespace Sitecore.Pathfinder.Projects
         public IProjectBase Project { get; }
 
         [NotNull, ItemNotNull]
-        public IEnumerable<Template> Templates => Project.Templates.Where(i => string.Equals(i.DatabaseName, DatabaseName, StringComparison.OrdinalIgnoreCase));
+        public IEnumerable<Template> Templates => Project.Templates.Where(t => t.Database == this);
 
         public override bool Equals([CanBeNull] object obj)
         {

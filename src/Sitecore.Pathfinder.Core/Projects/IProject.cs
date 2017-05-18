@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Projects
         long Ducats { get; set; }
 
         [NotNull]
-        IProjectIndexer Index { get; }
+        IProjectIndexer Indexer { get; }
 
         [NotNull]
         T AddOrMerge<T>([NotNull] T projectItem) where T : class, IProjectItem;
