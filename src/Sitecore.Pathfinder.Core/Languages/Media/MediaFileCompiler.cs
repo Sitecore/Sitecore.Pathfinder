@@ -36,9 +36,10 @@ namespace Sitecore.Pathfinder.Languages.Media
             var project = context.Project;
             var snapshot = mediaFile.Snapshot;
 
+            var database = project.GetDatabase(mediaFile.DatabaseName);
             var guid = StringHelper.GetGuid(project, mediaFile.ItemPath);
 
-            var item = context.Factory.Item(project, guid, mediaFile.DatabaseName, mediaFile.ItemName, mediaFile.ItemPath, string.Empty).With(new SnapshotTextNode(snapshot));
+            var item = context.Factory.Item(database, guid, mediaFile.ItemName, mediaFile.ItemPath, string.Empty).With(new SnapshotTextNode(snapshot));
             item.IsEmittable = false;
             item.OverwriteWhenMerging = true;
             item.MergingMatch = MergingMatch.MatchUsingSourceFile;
@@ -52,7 +53,7 @@ namespace Sitecore.Pathfinder.Languages.Media
             item.Fields.Add(context.Factory.Field(item, "Size", fileInfo.Length.ToString()).With(item.SourceTextNode));
             item.Fields.Add(context.Factory.Field(item, "Blob", mediaFile.Uri.Guid.Format()).With(item.SourceTextNode));
 
-            foreach (var language in context.Configuration.GetLanguages(item.Database))
+            foreach (var language in item.Database.Languages)
             {
                 var altField = context.Factory.Field(item, "Alt", mediaFile.ItemName).With(item.SourceTextNode);
                 altField.Language = language;

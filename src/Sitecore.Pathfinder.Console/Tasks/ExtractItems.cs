@@ -104,7 +104,8 @@ namespace Sitecore.Pathfinder.Tasks
             var guid = Guid.Parse(element.GetAttributeValue("id"));
             var templateIdOrPath = element.GetAttributeValue("tid");
 
-            var item = Factory.Item(project, guid, databaseName, itemName, itemIdOrPath, templateIdOrPath);
+            var database = project.GetDatabase(databaseName);
+            var item = Factory.Item(database, guid, itemName, itemIdOrPath, templateIdOrPath);
             item.IsEmittable = true;
 
             item.Sortorder = int.Parse(element.GetAttributeValue("sortorder"));

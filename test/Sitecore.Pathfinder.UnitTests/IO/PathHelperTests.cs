@@ -76,6 +76,7 @@ namespace Sitecore.Pathfinder.IO
             Assert.AreEqual(string.Empty, PathHelper.GetItemParentPath(string.Empty));
         }
 
+        /*
         [TestMethod]
         public void GetItemPathTests()
         {
@@ -88,6 +89,7 @@ namespace Sitecore.Pathfinder.IO
             Assert.AreEqual("/sitecore/test", PathHelper.GetItemPath(Project.Empty, new SourceFile(Services.FileSystem, "test", "test", "test"), string.Empty, string.Empty));
             Assert.ThrowsException<ArgumentException>(() => PathHelper.GetItemPath(Project.Empty, new SourceFile(Services.FileSystem, string.Empty, string.Empty, string.Empty), string.Empty, string.Empty));
         }
+        */
 
         [TestMethod]
         public void MatchesPattern()

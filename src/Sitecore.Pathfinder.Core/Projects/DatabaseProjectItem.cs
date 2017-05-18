@@ -20,16 +20,16 @@ namespace Sitecore.Pathfinder.Projects
         private ID _id;
 
         [CanBeNull]
-        private int? itemPathLevel;
+        private int? _itemPathLevel;
 
-        protected DatabaseProjectItem([NotNull] IProjectBase project, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, new ProjectItemUri(databaseName, guid))
+        protected DatabaseProjectItem([NotNull] Database database, Guid guid, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(database.Project, new ProjectItemUri(database.DatabaseName, guid))
         {
             ItemNameProperty = NewSourceProperty("ItemName", string.Empty, SourcePropertyFlags.IsShort);
             IconProperty = NewSourceProperty("Icon", string.Empty);
 
             _sourceTextNodes = new LockableList<ITextNode>(this);
 
-            DatabaseName = databaseName;
+            Database = database;
             ItemName = itemName;
             ItemIdOrPath = itemIdOrPath;
         }
@@ -39,16 +39,16 @@ namespace Sitecore.Pathfinder.Projects
         public IEnumerable<ITextNode> AdditionalSourceTextNodes => _sourceTextNodes.Skip(1);
 
         [NotNull]
-        public Database Database => Project.GetDatabase(DatabaseName);
+        public Database Database { get; }
 
         [NotNull]
-        public string DatabaseName { get; private set; }
+        public string DatabaseName => Database.DatabaseName;
 
         [NotNull]
         public string Icon
         {
-            get { return IconProperty.GetValue(); }
-            set { IconProperty.SetValue(value); }
+            get => IconProperty.GetValue();
+            set => IconProperty.SetValue(value);
         }
 
         [NotNull]
@@ -70,14 +70,14 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         public string ItemName
         {
-            get { return ItemNameProperty.GetValue(); }
-            set { ItemNameProperty.SetValue(value); }
+            get => ItemNameProperty.GetValue();
+            set => ItemNameProperty.SetValue(value);
         }
 
         [NotNull]
         public SourceProperty<string> ItemNameProperty { get; }
 
-        public int ItemPathLevel => itemPathLevel ?? (int)(itemPathLevel = ItemIdOrPath.Split('/').Length);
+        public int ItemPathLevel => _itemPathLevel ?? (int)(_itemPathLevel = ItemIdOrPath.Split('/').Length);
 
         /// <summary>The name of the item or template. Same as ItemName and ShortName.</summary>
         [NotNull, Obsolete("Use ItemName instead", false)]
@@ -115,8 +115,14 @@ namespace Sitecore.Pathfinder.Projects
         {
             base.Merge(newProjectItem, overwrite);
 
+
             var databaseProjectItem = newProjectItem as DatabaseProjectItem;
             Assert.Cast(databaseProjectItem, nameof(databaseProjectItem));
+
+            if (databaseProjectItem.Database != Database)
+            {
+                throw new InvalidOperationException("Cannot merge items from different databases");
+            }
 
             _sourceTextNodes.Merge(SourceTextNode, databaseProjectItem.AdditionalSourceTextNodes, databaseProjectItem.SourceTextNode, overwrite);
 
@@ -125,12 +131,6 @@ namespace Sitecore.Pathfinder.Projects
                 ItemNameProperty.SetValue(databaseProjectItem.ItemNameProperty);
 
                 ItemIdOrPath = databaseProjectItem.ItemIdOrPath;
-                DatabaseName = databaseProjectItem.DatabaseName;
-            }
-
-            if (!string.IsNullOrEmpty(databaseProjectItem.DatabaseName))
-            {
-                DatabaseName = databaseProjectItem.DatabaseName;
             }
 
             if (!string.IsNullOrEmpty(databaseProjectItem.Icon))

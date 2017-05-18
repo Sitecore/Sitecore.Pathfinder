@@ -147,7 +147,7 @@ namespace Sitecore.Pathfinder.Tasks
         protected virtual void WriteJsonSchema([NotNull] JsonTextWriter output, [NotNull] IProject project, [NotNull] Database database)
         {
             var pairs = GetTemplates(project, database);
-            var languages = database.GetLanguages().ToArray();
+            var languages = database.Languages.ToArray();
 
             output.WriteStartObject();
 

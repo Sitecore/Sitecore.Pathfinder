@@ -47,7 +47,7 @@ namespace Sitecore.Pathfinder.Languages.Templates
 
             var itemName = itemIdOrPath.Mid(itemIdOrPath.LastIndexOf('/') + 1);
             var guid = StringHelper.GetGuid(item.Project, itemTextNode.GetAttributeValue("Template.Id", itemIdOrPath));
-            var template = context.Factory.Template(item.Project, guid, item.DatabaseName, itemName, itemIdOrPath).With(itemTextNode);
+            var template = context.Factory.Template(item.Database, guid, itemName, itemIdOrPath).With(itemTextNode);
 
             template.ItemNameProperty.AddSourceTextNode(templateIdOrPathTextNode);
             template.ItemNameProperty.Flags = SourcePropertyFlags.IsQualified;

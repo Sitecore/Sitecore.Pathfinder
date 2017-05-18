@@ -42,8 +42,9 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
             var guid = StringHelper.GetGuid(context.ParseContext.Project, textNode.GetAttributeValue("Id", itemIdOrPath));
             var databaseName = textNode.GetAttributeValue("Database", context.DatabaseName);
+            var database = context.ParseContext.Project.GetDatabase(databaseName);
 
-            var template = context.ParseContext.Factory.Template(context.ParseContext.Project, guid, databaseName, itemNameTextNode.Value, itemIdOrPath).With(textNode);
+            var template = context.ParseContext.Factory.Template(database, guid, itemNameTextNode.Value, itemIdOrPath).With(textNode);
             template.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
             template.BaseTemplatesProperty.Parse(textNode, Constants.Templates.StandardTemplateId);
             template.IconProperty.Parse(textNode);
@@ -59,7 +60,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             // create standard values item
             var standardValuesItemIdOrPath = itemIdOrPath + "/__Standard Values";
             var standardValuesGuid = StringHelper.GetGuid(context.ParseContext.Project, standardValuesItemIdOrPath);
-            var standardValuesItem = context.ParseContext.Factory.Item(context.ParseContext.Project, standardValuesGuid, databaseName, "__Standard Values", standardValuesItemIdOrPath, itemIdOrPath).With(textNode);
+            var standardValuesItem = context.ParseContext.Factory.Item(database, standardValuesGuid, "__Standard Values", standardValuesItemIdOrPath, itemIdOrPath).With(textNode);
             standardValuesItem.IsImport = template.IsImport;
 
             // todo: should be Uri

@@ -22,7 +22,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
         protected virtual void CreateItems([NotNull] ICompileContext context, [NotNull] IProject project, [NotNull] Template template)
         {
-            var item = context.Factory.Item(project, template.Uri.Guid, template.DatabaseName, template.ItemName, template.ItemIdOrPath, Constants.Templates.TemplateId).With(template.SourceTextNode);
+            var item = context.Factory.Item(template.Database, template.Uri.Guid, template.ItemName, template.ItemIdOrPath, Constants.Templates.TemplateId).With(template.SourceTextNode);
             item.IsEmittable = false;
             item.IsImport = template.IsImport;
             item.IconProperty.SetValue(template.IconProperty);
@@ -46,7 +46,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
             foreach (var templateSection in template.Sections)
             {
                 var templateSectionItemIdOrPath = template.ItemIdOrPath + "/" + templateSection.SectionName;
-                var templateSectionItem = context.Factory.Item(project, templateSection.Uri.Guid, template.DatabaseName, templateSection.SectionName, templateSectionItemIdOrPath, Constants.Templates.TemplateSection.Format()).With(templateSection.SourceTextNode);
+                var templateSectionItem = context.Factory.Item(template.Database, templateSection.Uri.Guid, templateSection.SectionName, templateSectionItemIdOrPath, Constants.Templates.TemplateSection.Format()).With(templateSection.SourceTextNode);
                 templateSectionItem.IsEmittable = false;
                 templateSectionItem.IsImport = template.IsImport;
                 templateSectionItem.IconProperty.SetValue(templateSection.IconProperty);
@@ -56,7 +56,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
                 foreach (var templateField in templateSection.Fields)
                 {
                     var templateFieldItemIdOrPath = templateSectionItemIdOrPath + "/" + templateField.FieldName;
-                    var templateFieldItem = context.Factory.Item(project, templateField.Uri.Guid, template.DatabaseName, templateField.FieldName, templateFieldItemIdOrPath, Constants.Templates.TemplateFieldId).With(templateField.SourceTextNode);
+                    var templateFieldItem = context.Factory.Item(template.Database, templateField.Uri.Guid, templateField.FieldName, templateFieldItemIdOrPath, Constants.Templates.TemplateFieldId).With(templateField.SourceTextNode);
                     templateFieldItem.IsEmittable = false;
                     templateFieldItem.IsImport = template.IsImport;
 

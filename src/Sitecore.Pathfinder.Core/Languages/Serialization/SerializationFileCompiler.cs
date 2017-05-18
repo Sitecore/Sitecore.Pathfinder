@@ -174,7 +174,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
 
                 if (line == "----version----")
                 {
-                    n = ParseVersion(context, textSnapshot, languageVersionBuilder, lines, n + 1);
+                    n = ParseVersion(context, context.Project.GetDatabase(itemBuilder.DatabaseName), textSnapshot, languageVersionBuilder, lines, n + 1);
                     continue;
                 }
 
@@ -225,7 +225,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
             return lines.Length;
         }
 
-        protected virtual int ParseVersion([NotNull] ICompileContext context, [NotNull] ITextSnapshot textSnapshot, [NotNull] LanguageVersionBuilder languageVersionBuilder, [NotNull, ItemNotNull] string[] lines, int lineNumber)
+        protected virtual int ParseVersion([NotNull] ICompileContext context, [NotNull] Database database, [NotNull] ITextSnapshot textSnapshot, [NotNull] LanguageVersionBuilder languageVersionBuilder, [NotNull, ItemNotNull] string[] lines, int lineNumber)
         {
             for (var n = lineNumber; n < lines.Length; n++)
             {
@@ -247,12 +247,11 @@ namespace Sitecore.Pathfinder.Languages.Serialization
                 switch (name)
                 {
                     case "language":
-                        languageVersionBuilder.Language = context.Project.GetLanguage(value);
+                        languageVersionBuilder.Language = database.GetLanguage(value);
                         languageVersionBuilder.LanguageTextNode = context.Factory.TextNode(textSnapshot, GetTextSpan(n, 0, line.Length), "language", value);
                         break;
                     case "version":
-                        Version version;
-                        if (Version.TryParse(value, out version))
+                        if (Version.TryParse(value, out Version version))
                         {
                             languageVersionBuilder.Version = version;
                             languageVersionBuilder.VersionTextNode = context.Factory.TextNode(textSnapshot, GetTextSpan(n, 0, line.Length), "version", value);

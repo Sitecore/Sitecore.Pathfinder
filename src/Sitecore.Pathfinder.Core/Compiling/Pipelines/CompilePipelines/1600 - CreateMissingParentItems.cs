@@ -60,7 +60,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
                         newPath += "/" + parts[newIndex];
                         var guid = StringHelper.GetGuid(pipeline.Context.Project, newPath);
 
-                        var newItem = pipeline.Context.Factory.Item(pipeline.Context.Project, guid, item.DatabaseName, parts[newIndex], newPath, Constants.Templates.Folder.Format());
+                        var newItem = pipeline.Context.Factory.Item(item.Database, guid, parts[newIndex], newPath, Constants.Templates.Folder.Format());
                         newItem.IsEmittable = false;
                         newItem.IsImport = item.IsImport;
                         newItem.OverwriteWhenMerging = true;

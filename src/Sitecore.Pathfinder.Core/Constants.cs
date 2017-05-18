@@ -64,6 +64,7 @@ namespace Sitecore.Pathfinder
             public const string Culture = "culture";
 
             public const string Database = "database";
+            public const string Databases = "databases";
 
             public const string DataFolderDirectory = "data-folder-directory";
 

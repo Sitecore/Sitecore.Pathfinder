@@ -93,7 +93,7 @@ namespace Sitecore.Pathfinder.Emitting.Writers
             if (parentItem == null)
             {
                 throw new RetryableEmitException("Failed to create Item Path", parentItemPath);
-            }
+            }                         
 
             var item = database.AddFromTemplateSynchronized(Item.Name, templateItem.ID, parentItem, new ID(Item.Id));
             if (item == null)

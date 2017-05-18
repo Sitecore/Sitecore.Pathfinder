@@ -52,7 +52,7 @@ namespace Sitecore.Pathfinder.Configuration
         FileReference FileReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceSourceProperty, [NotNull] string referenceText);
 
         [NotNull]
-        Item Item([NotNull] IProjectBase project, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath);
+        Item Item([NotNull] Database database, Guid guid, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath);
 
         [NotNull]
         ItemBuilder ItemBuilder();
@@ -92,7 +92,7 @@ namespace Sitecore.Pathfinder.Configuration
 
         // todo: swap guid and textnode parameters
         [NotNull]
-        Template Template([NotNull] IProjectBase project, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath);
+        Template Template([NotNull] Database database, Guid guid, [NotNull] string itemName, [NotNull] string itemIdOrPath);
 
         [NotNull]
         TemplateField TemplateField([NotNull] Template template, Guid guid);

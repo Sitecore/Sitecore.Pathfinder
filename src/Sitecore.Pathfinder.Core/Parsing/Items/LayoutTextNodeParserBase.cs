@@ -24,8 +24,9 @@ namespace Sitecore.Pathfinder.Parsing.Items
             var itemIdOrPath = PathHelper.CombineItemPath(context.ParentItemPath, itemNameTextNode.Value);
             var guid = StringHelper.GetGuid(context.ParseContext.Project, textNode.GetAttributeValue("Id", itemIdOrPath));
             var databaseName = textNode.GetAttributeValue("Database", context.DatabaseName);
+            var database = context.ParseContext.Project.GetDatabase(databaseName);
 
-            var item = context.ParseContext.Factory.Item(context.ParseContext.Project, guid, databaseName, itemNameTextNode.Value, itemIdOrPath, string.Empty).With(textNode);
+            var item = context.ParseContext.Factory.Item(database, guid, itemNameTextNode.Value, itemIdOrPath, string.Empty).With(textNode);
             item.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
 
             Parse(context, textNode, item);

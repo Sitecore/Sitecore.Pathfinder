@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Projects.Items
     public class Item : DatabaseProjectItem
     {
         [NotNull]
-        public static readonly Item Empty = new Item(Projects.Project.Empty, new Guid("{935B8D6C-D25A-48B8-8167-2C0443D77027}"), "emptydatabase", string.Empty, string.Empty, string.Empty);
+        public static readonly Item Empty = new Item(Database.Empty, new Guid("{935B8D6C-D25A-48B8-8167-2C0443D77027}"), string.Empty, string.Empty, string.Empty);
 
         [CanBeNull]
         private ItemAppearance _appearance;
@@ -46,7 +46,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         [CanBeNull]
         private ItemStatistics _statistics;
 
-        public Item([NotNull] IProjectBase project, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath) : base(project, guid, databaseName, itemName, itemIdOrPath)
+        public Item([NotNull] Database database, Guid guid, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath) : base(database, guid, itemName, itemIdOrPath)
         {
             TemplateIdOrPathProperty = NewSourceProperty("Template", string.Empty, SourcePropertyFlags.IsQualified);
             TemplateIdOrPath = templateIdOrPath;
@@ -88,8 +88,8 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         public int Sortorder
         {
-            get { return SortorderProperty.GetValue(); }
-            set { SortorderProperty.SetValue(value); }
+            get => SortorderProperty.GetValue();
+            set => SortorderProperty.SetValue(value);
         }
 
         [NotNull]
@@ -122,13 +122,14 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public string TemplateIdOrPath
         {
-            get { return TemplateIdOrPathProperty.GetValue(); }
-            set { TemplateIdOrPathProperty.SetValue(value); }
+            get => TemplateIdOrPathProperty.GetValue();
+            set => TemplateIdOrPathProperty.SetValue(value);
         }
 
         [NotNull]
         public SourceProperty<string> TemplateIdOrPathProperty { get; }
 
+        [NotNull]
         public string TemplateName => Template.ItemName;
 
         [NotNull, ItemNotNull]

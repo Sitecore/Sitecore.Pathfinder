@@ -52,6 +52,9 @@
         },
         "core": {
             "languages": [ "en", "da", "de-DE", "ja-JP" ]
+        },
+        "web": {
+            "languages": [ "en" ]
         }
     },
 

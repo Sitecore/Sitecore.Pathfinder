@@ -70,7 +70,8 @@ namespace Sitecore.Pathfinder.Compiling.Builders
         {
             var guid = StringHelper.GetGuid(project, Guid);
 
-            var template = Factory.Template(project, guid, DatabaseName, TemplateName, ItemIdOrPath).With(rootTextNode);
+            var database = project.GetDatabase(DatabaseName);
+            var template = Factory.Template(database, guid, TemplateName, ItemIdOrPath).With(rootTextNode);
             if (TemplateNameTextNode != TextNode.Empty)
             {
                 template.ItemNameProperty.AddSourceTextNode(TemplateNameTextNode);

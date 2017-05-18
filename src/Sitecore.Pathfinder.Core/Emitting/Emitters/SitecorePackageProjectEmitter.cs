@@ -110,10 +110,10 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
             var languages = item.GetLanguages().ToList();
             if (!languages.Any())
             {
-                var language = context.Configuration.GetLanguages(item.Database).FirstOrDefault();
+                var language = item.Database.Languages.FirstOrDefault();
                 if (language == null)
                 {
-                    context.Trace.TraceError(Msg.E1000, "No languages defined in configuration");
+                    context.Trace.TraceError(Msg.E1000, "No languages defined");
                     return;
                 }
 

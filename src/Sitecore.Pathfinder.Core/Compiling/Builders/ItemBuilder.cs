@@ -74,8 +74,9 @@ namespace Sitecore.Pathfinder.Compiling.Builders
         public Item Build([NotNull] IProjectBase project, [NotNull] ITextNode rootTextNode)
         {
             var guid = StringHelper.GetGuid(project, Guid);
+            var database = project.GetDatabase(DatabaseName);
 
-            var item = Factory.Item(project, guid, DatabaseName, ItemName, ItemIdOrPath, TemplateIdOrPath).With(rootTextNode);
+            var item = Factory.Item(database, guid, ItemName, ItemIdOrPath, TemplateIdOrPath).With(rootTextNode);
 
             if (ItemNameTextNode != TextNode.Empty)
             {

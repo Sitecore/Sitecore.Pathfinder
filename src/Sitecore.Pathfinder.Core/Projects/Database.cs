@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
 
@@ -11,20 +12,43 @@ namespace Sitecore.Pathfinder.Projects
 {
     public class Database
     {
-        public Database([NotNull] IProjectBase project, [NotNull] string databaseName)
+        [NotNull]
+        public static readonly Database Empty = new Database(Projects.Project.Empty, string.Empty, new string[0]);
+
+        [NotNull]
+        private readonly Dictionary<string, Language> _languages = new Dictionary<string, Language>();
+
+        [NotNull]
+        private readonly object _languagesSyncObject = new object();
+
+        public Database([NotNull] IProjectBase project, [NotNull] string databaseName, [ItemNotNull, NotNull] IEnumerable<string> languageNames)
         {
             Project = project;
             DatabaseName = databaseName;
+
+            foreach (var languageName in languageNames)
+            {
+                _languages[languageName] = new Language(languageName);
+            }
         }
 
         [NotNull]
         public string DatabaseName { get; }
+
+        [NotNull, ItemNotNull]
+        public IEnumerable<Item> Items => Project.Items.Where(i => string.Equals(i.DatabaseName, DatabaseName, StringComparison.OrdinalIgnoreCase));
+
+        [ItemNotNull, NotNull]
+        public IEnumerable<Language> Languages => _languages.Values;
 
         [NotNull, Obsolete("Use DatabaseName property", false)]
         public string Name => DatabaseName;
 
         [NotNull]
         public IProjectBase Project { get; }
+
+        [NotNull, ItemNotNull]
+        public IEnumerable<Template> Templates => Project.Templates.Where(i => string.Equals(i.DatabaseName, DatabaseName, StringComparison.OrdinalIgnoreCase));
 
         public override bool Equals([CanBeNull] object obj)
         {
@@ -50,33 +74,49 @@ namespace Sitecore.Pathfinder.Projects
         }
 
         [CanBeNull]
-        public Item GetItem([NotNull] string path)
+        public Item GetItem([NotNull] string itemPath)
         {
-            return Project.FindQualifiedItem<Item>(this, path);
+            if (itemPath.IsGuid())
+            {
+                return Project.FindQualifiedItem<Item>(new ProjectItemUri(DatabaseName, Guid.Parse(itemPath)));
+            }
+
+            return Project.FindQualifiedItem<Item>(this, itemPath);
         }
 
-        [NotNull, ItemNotNull]
-        public IEnumerable<Item> GetItems()
+        [CanBeNull]
+        public Item GetItem(Guid guid)
         {
-            return Project.Items.Where(i => string.Equals(i.DatabaseName, DatabaseName, StringComparison.OrdinalIgnoreCase));
+            return Project.FindQualifiedItem<Item>(new ProjectItemUri(DatabaseName, guid));
+        }
+
+        [CanBeNull]
+        public Item GetItem([NotNull] ProjectItemUri uri)
+        {
+            if (!string.Equals(uri.FileOrDatabaseName, DatabaseName, StringComparison.OrdinalIgnoreCase))
+            {
+                return null;
+            }
+
+            return Project.FindQualifiedItem<Item>(uri);
         }
 
         [NotNull]
         public Language GetLanguage([NotNull] string languageName)
         {
-            return Project.GetLanguage(languageName);
-        }
+            var key = languageName.ToUpperInvariant();
 
-        [ItemNotNull, NotNull]
-        public IEnumerable<Language> GetLanguages()
-        {
-            return GetItems().SelectMany(i => i.GetLanguages()).Distinct();
-        }
+            Language language;
+            lock (_languagesSyncObject)
+            {
+                if (!_languages.TryGetValue(key, out language))
+                {
+                    language = new Language(languageName);
+                    _languages[key] = language;
+                }
+            }
 
-        [NotNull, ItemNotNull]
-        public IEnumerable<Template> GetTemplates()
-        {
-            return Project.Templates.Where(i => string.Equals(i.DatabaseName, DatabaseName, StringComparison.OrdinalIgnoreCase));
+            return language;
         }
 
         public static bool operator ==([CanBeNull] Database left, [CanBeNull] Database right)

@@ -36,8 +36,10 @@ namespace Sitecore.Pathfinder.Languages.Renderings
             var project = rendering.Project;
             var snapshot = rendering.Snapshot;
             var snapshotTextNode = new SnapshotTextNode(snapshot);
+            var database = project.GetDatabase(rendering.DatabaseName);
             var guid = StringHelper.GetGuid(project, rendering.ItemPath);
-            var item = context.Factory.Item(project, guid, rendering.DatabaseName, rendering.ItemName, rendering.ItemPath, rendering.TemplateIdOrPath).With(snapshotTextNode);
+
+            var item = context.Factory.Item(database, guid, rendering.ItemName, rendering.ItemPath, rendering.TemplateIdOrPath).With(snapshotTextNode);
             item.ItemNameProperty.AddSourceTextNode(new FileNameTextNode(rendering.ItemName, snapshot));
             item.OverwriteWhenMerging = true;
 

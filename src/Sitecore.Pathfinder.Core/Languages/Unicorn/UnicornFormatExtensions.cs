@@ -94,7 +94,7 @@ namespace Sitecore.Pathfinder.Languages.Unicorn
             }
             else
             {
-                output.WriteStartElement("Language", item.Database.GetLanguages().First().LanguageName);
+                output.WriteStartElement("Language", item.Database.Languages.First().LanguageName);
                 output.WriteAttributeString("Fields");
 
                 output.WriteAttributeString("Versions");

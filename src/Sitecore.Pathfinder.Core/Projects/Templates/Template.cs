@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
     public class Template : DatabaseProjectItem
     {
         [NotNull]
-        public static readonly Template Empty = new Template(Projects.Project.Empty, new Guid("{00000000-0000-0000-0000-000000000000}"), string.Empty, string.Empty, string.Empty);
+        public static readonly Template Empty = new Template(Database.Empty, new Guid("{00000000-0000-0000-0000-000000000000}"), string.Empty, string.Empty);
 
         [NotNull]
         private readonly object _syncObject = new object();
@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [CanBeNull, ItemNotNull]
         private ID[] _baseTemplateIDs;
 
-        public Template([NotNull] IProjectBase project, Guid guid, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(project, guid, databaseName, itemName, itemIdOrPath)
+        public Template([NotNull] Database database, Guid guid, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(database, guid, itemName, itemIdOrPath)
         {
             BaseTemplatesProperty = NewSourceProperty("BaseTemplates", string.Empty);
             LongHelpProperty = NewSourceProperty("LongHelp", string.Empty);
@@ -38,7 +38,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull]
         public string BaseTemplates
         {
-            get { return BaseTemplatesProperty.GetValue(); }
+            get => BaseTemplatesProperty.GetValue();
             set
             {
                 BaseTemplatesProperty.SetValue(value);
@@ -55,8 +55,8 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull]
         public string LongHelp
         {
-            get { return LongHelpProperty.GetValue(); }
-            set { LongHelpProperty.SetValue(value); }
+            get => LongHelpProperty.GetValue();
+            set => LongHelpProperty.SetValue(value);
         }
 
         [NotNull]
@@ -68,8 +68,8 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull]
         public string ShortHelp
         {
-            get { return ShortHelpProperty.GetValue(); }
-            set { ShortHelpProperty.SetValue(value); }
+            get => ShortHelpProperty.GetValue();
+            set => ShortHelpProperty.SetValue(value);
         }
 
         [NotNull]

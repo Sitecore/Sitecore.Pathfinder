@@ -123,7 +123,7 @@ namespace Sitecore.Pathfinder.Tasks
         {
             var templateIdOrPath = item.TemplateIdOrPath;
 
-            var template = item.Project.FindItemByIdOrPath<Template>(item.Database, item.TemplateIdOrPath);
+            var template = item.Project.FindByIdOrPath<Template>(item.Database, item.TemplateIdOrPath);
             if (template != null)
             {
                 templateIdOrPath = template.Uri.Guid.Format();

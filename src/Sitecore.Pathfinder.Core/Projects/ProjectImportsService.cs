@@ -57,13 +57,14 @@ namespace Sitecore.Pathfinder.Projects
             }
 
             var databaseName = element.GetAttributeValue("Database", defaultDatabaseName) ?? defaultDatabaseName;
+            var database = project.GetDatabase(databaseName);
             var itemIdOrPath = element.GetAttributeValue("Path");
             var itemName = itemIdOrPath.Mid(itemIdOrPath.LastIndexOf('/') + 1);
 
             switch (element.Name.LocalName)
             {
                 case "Item":
-                    var item = Factory.Item(project, guid, databaseName, itemName, itemIdOrPath, element.GetAttributeValue("Template"));
+                    var item = Factory.Item(database, guid, itemName, itemIdOrPath, element.GetAttributeValue("Template"));
                     item.IsImport = true;
                     item.IsEmittable = false;
 
@@ -76,7 +77,7 @@ namespace Sitecore.Pathfinder.Projects
                     break;
 
                 case "Template":
-                    var template = Factory.Template(project, guid, databaseName, itemName, itemIdOrPath);
+                    var template = Factory.Template(database, guid, itemName, itemIdOrPath);
                     template.IsImport = true;
                     template.IsEmittable = false;
                     template.BaseTemplates = element.GetAttributeValue("BaseTemplates");

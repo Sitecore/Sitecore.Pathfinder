@@ -185,12 +185,6 @@ namespace Sitecore.Pathfinder.Extensions
             return int.TryParse(value, out result) ? result : defaultValue;
         }
 
-        [ItemNotNull, NotNull]
-        public static IEnumerable<Language> GetLanguages([NotNull] this IConfiguration configuration, [NotNull] Database database)
-        {
-            return configuration.GetArray("databases:" + database.DatabaseName).Select(database.GetLanguage);
-        }
-
         [NotNull]
         public static string GetProjectDirectory([NotNull] this IConfiguration configuration)
         {

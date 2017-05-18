@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
         protected virtual void CreateTemplate([NotNull] ICompileContext context, [NotNull] IProject project, [NotNull] Item templateItem)
         {
-            var template = context.Factory.Template(project, templateItem.Uri.Guid, templateItem.DatabaseName, templateItem.ItemName, templateItem.ItemIdOrPath).With(templateItem.SourceTextNode, false, templateItem.IsImport);
+            var template = context.Factory.Template(templateItem.Database, templateItem.Uri.Guid, templateItem.ItemName, templateItem.ItemIdOrPath).With(templateItem.SourceTextNode, false, templateItem.IsImport);
 
             var baseTemplateField = templateItem.Fields.FirstOrDefault(f => f.FieldName == "__Base template");
             if (baseTemplateField != null)

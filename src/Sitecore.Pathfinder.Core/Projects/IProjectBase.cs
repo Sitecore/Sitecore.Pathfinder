@@ -61,13 +61,10 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         Database GetDatabase([NotNull] string databaseName);
 
-        [NotNull]
-        Language GetLanguage([NotNull] string languageName);
-
         [NotNull, ItemNotNull]
         IEnumerable<IProjectItem> GetUsages([NotNull] string qualifiedName);
 
         [CanBeNull]
-        T FindItemByIdOrPath<T>([NotNull] Database database, [NotNull] string idOrPath) where T: DatabaseProjectItem;
+        T FindByIdOrPath<T>([NotNull] Database database, [NotNull] string idOrPath) where T: DatabaseProjectItem;
     }
 }

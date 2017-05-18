@@ -32,19 +32,10 @@ namespace Sitecore.Pathfinder.Projects
         public static readonly IProjectBase Empty = new Project();
 
         [NotNull]
-        private readonly Dictionary<string, Database> _databases = new Dictionary<string, Database>();
-
-        [NotNull]
-        private readonly object _databasesSyncObject = new object();
+        private readonly IDictionary<string, Database> _databases = new Dictionary<string, Database>();
 
         [NotNull, ItemNotNull]
         private readonly IList<Diagnostic> _diagnostics;
-
-        [NotNull]
-        private readonly Dictionary<string, Language> _languages = new Dictionary<string, Language>();
-
-        [NotNull]
-        private readonly object _languagesSyncObject = new object();
 
         [NotNull, ItemNotNull]
         private readonly IList<IProjectItem> _projectItems;
@@ -79,6 +70,12 @@ namespace Sitecore.Pathfinder.Projects
             _diagnostics = new SynchronizedList<Diagnostic>();
 
             Options = ProjectOptions.Empty;
+
+            foreach (var pair in Configuration.GetSubKeys(Constants.Configuration.Databases))
+            {
+                var languageNames = Configuration.GetArray(Constants.Configuration.Databases + ":" + pair.Key + ":languages");
+                _databases[pair.Key.ToUpperInvariant()] = new Database(this, pair.Key, languageNames);
+            }
         }
 
         private Project()
@@ -86,6 +83,9 @@ namespace Sitecore.Pathfinder.Projects
             Options = ProjectOptions.Empty;
             _projectUniqueId = Guid.Empty.Format();
         }
+
+        [ItemNotNull, NotNull]
+        public IEnumerable<Database> Databases => _databases.Values;
 
         public IEnumerable<Diagnostic> Diagnostics
         {
@@ -101,7 +101,7 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         public IFactoryService Factory { get; }
 
-        public IEnumerable<File> Files => ProjectItems.OfType<File>();
+        public IEnumerable<File> Files => ProjectItems.OfType<File>().Where(f => f.IsEmittable);
 
         public IProjectIndexer Index { get; }
 
@@ -181,7 +181,7 @@ namespace Sitecore.Pathfinder.Projects
         }
 
         [NotNull]
-        public virtual IProjectBase Add([ItemNotNull] [NotNull] IEnumerable<string> sourceFileNames)
+        public virtual IProjectBase Add([ItemNotNull, NotNull] IEnumerable<string> sourceFileNames)
         {
             if (Locking == Locking.ReadOnly)
             {
@@ -221,7 +221,7 @@ namespace Sitecore.Pathfinder.Projects
                     addedProjectItem = (T)MergeItem(newItem);
                 }
 
-                var newTemplate = projectItem as Template;                          
+                var newTemplate = projectItem as Template;
                 if (newTemplate != null)
                 {
                     addedProjectItem = (T)MergeTemplate(newTemplate);
@@ -269,6 +269,22 @@ namespace Sitecore.Pathfinder.Projects
             Pipelines.Resolve<CompilePipeline>().Execute(context, this);
 
             return this;
+        }
+
+        public T FindByIdOrPath<T>(Database database, string idOrPath) where T : DatabaseProjectItem
+        {
+            if (idOrPath.IsGuid())
+            {
+                return FindQualifiedItem<T>(database, idOrPath);
+            }
+
+            if (idOrPath.IndexOf('/') >= 0)
+            {
+                return FindQualifiedItem<T>(database, idOrPath);
+            }
+
+            var items = GetByShortName<T>(database, idOrPath).ToArray();
+            return items.Length == 1 ? items[0] : null;
         }
 
         public T FindQualifiedItem<T>(string qualifiedName) where T : class, IProjectItem
@@ -335,55 +351,16 @@ namespace Sitecore.Pathfinder.Projects
 
         public Database GetDatabase(string databaseName)
         {
-            var key = databaseName.ToUpperInvariant();
-
-            Database database;
-            lock (_databasesSyncObject)
+            var database = _databases[databaseName.ToUpperInvariant()];
+            if (database == null)
             {
-                if (!_databases.TryGetValue(key, out database))
-                {
-                    database = new Database(this, databaseName);
-                    _databases[key] = database;
-                }
+                throw new InvalidOperationException("Database not defined in configuration: " + databaseName);
             }
 
             return database;
         }
 
-        public Language GetLanguage(string languageName)
-        {
-            var key = languageName.ToUpperInvariant();
-
-            Language language;
-            lock (_languagesSyncObject)
-            {
-                if (!_languages.TryGetValue(key, out language))
-                {
-                    language = new Language(languageName);
-                    _languages[key] = language;
-                }
-            }
-
-            return language;
-        }
-
         public IEnumerable<IProjectItem> GetUsages(string qualifiedName) => Index.FindUsages(qualifiedName).Select(r => r.Resolve());
-
-        public T FindItemByIdOrPath<T>(Database database, string idOrPath) where T : DatabaseProjectItem
-        {
-            if (idOrPath.IsGuid())
-            {
-                return FindQualifiedItem<T>(database, idOrPath);
-            }
-
-            if (idOrPath.IndexOf('/') >= 0)
-            {
-                return FindQualifiedItem<T>(database, idOrPath);
-            }
-
-            var items = GetByShortName<T>(database, idOrPath).ToArray();
-            return items.Length == 1 ? items[0] : null;
-        }
 
         public void Lock(Locking locking)
         {

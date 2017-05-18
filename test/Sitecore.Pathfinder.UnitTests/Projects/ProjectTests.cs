@@ -53,8 +53,9 @@ namespace Sitecore.Pathfinder.Projects
             var project = Services.CompositionService.Resolve<IProject>();
 
             var sameGuid = new Guid("{11CDDC59-0F73-4A6E-90E2-6614418F173E}");
-            var projectItem1 = new Item(project, sameGuid, string.Empty, "SameId", string.Empty, string.Empty);
-            var projectItem2 = new Item(project, sameGuid, string.Empty, "SameId", string.Empty, string.Empty);
+            var database = project.GetDatabase("master");
+            var projectItem1 = new Item(database, sameGuid, "SameId", string.Empty, string.Empty);
+            var projectItem2 = new Item(database, sameGuid, "SameId", string.Empty, string.Empty);
 
             project.AddOrMerge(projectItem1);
             project.AddOrMerge(projectItem2);
